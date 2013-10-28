@@ -11,6 +11,8 @@ module.exports = function (grunt) {
   require('load-grunt-tasks')(grunt);
   require('time-grunt')(grunt);
 
+  grunt.loadNpmTasks('grunt-bower-install');
+  
   grunt.initConfig({
     yeoman: {
       // configurable paths
@@ -292,7 +294,13 @@ module.exports = function (grunt) {
           ]
         }
       }
+    },
+  'bower-install': {
+    target: {
+      html: 'app/index.html',
+      ignorePath: 'app/'
     }
+  }
   });
 
   grunt.registerTask('server', function (target) {

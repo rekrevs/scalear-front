@@ -5,10 +5,21 @@
   'ngCookies',
   'ngResource',
   'ngSanitize',
-  'ui.router'
+  'ui.router',
+  'ui.bootstrap.accordion',
+  'ui.bootstrap.tabs',
+  'ui.bootstrap.collapse',
+  'ui.bootstrap.transition', 
+  'ui.sortable',
+  'ngDragDrop', 
+  'pasvaz.bindonce', 
+  'infinite-scroll'
 ])
-  .config(function ($stateProvider, $urlRouterProvider) {
-    //delete $httpProvider.defaults.headers.common['X-Requested-With'];
+  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
+    $httpProvider.defaults.withCredentials = true;
+
     $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('index', {

@@ -1,0 +1,28 @@
+<link rel="stylesheet" href="styles/lecture.css" type="text/css" media="screen" />
+
+<loading_big ng-hide="hideLoading" />
+<center><h3>{{lecture.name}}</h3></center>
+<div id="notify"></div>
+<center ng-hide='true' ><a class ="btn big fullscreenLink" ng-click="resize()">Edit In Fullscreen</a></center>
+<center>
+	<video_container >
+		<div ng-show="editingMode">
+			<quiz ng-dblclick="addDoubleClickBind($event)" >
+				<answervideo ng-if="selectedQuiz.quiz_type == 'invideo'" ng-repeat="answer in selectedQuiz.answers" data="answer" list="allPos" type="selectedQuiz.question_type" remove="remove_answer($index)"/>
+				<answerform  ng-if="selectedQuiz.quiz_type == 'html'" quiz="selectedQuiz" add="add_html_answer" remove="remove_html_answer"/>
+			</quiz>
+		</div>
+		<youtube ng-class="lecture.aspect_ratio" />
+	</video_container>
+	<br />
+	<div id="all_tables" >
+		<edit_panel ng-show="editingMode" />
+		<div id="foo" class="btn-toolbar">
+			<dropdown_list  list="quizTypesList" method="insert_quiz" quiztype="invideo" title="Over Video" />
+			<dropdown_list  list="quizTypesList" method="insert_quiz" quiztype="html" title="Text" />
+		</div>
+		<br />
+		<div ui-view="quizList"></div>
+	</div>
+</center>
+

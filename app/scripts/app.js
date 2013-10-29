@@ -37,6 +37,13 @@
         templateUrl: 'views/teacher/course_editor/course_editor.html',
         controller: 'courseEditorCtrl'
       })
+      .state('course.course_editor.module',{
+        url:'/module/:module_id',
+        views:{
+          // "details" :{templateUrl: 'views/teacher/course_editor/module.details.html', controller: "moduleDetailsCtrl"},
+          "middle"  :{templateUrl: 'views/teacher/course_editor/module.middle.html',  controller: "moduleMiddleCtrl"}
+        }
+      })
       .state('course.course_editor.lecture', {
         resolve:{ 
           lecture:function($http, $stateParams, $rootScope, scalear_api, headers){

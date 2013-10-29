@@ -47,13 +47,26 @@ angular.module('scalearAngularApp')
 
   })
 .factory('Online_quizzes', function ($resource, $http, $stateParams, scalear_api, headers){
+
   	$http.defaults.useXDomain = true;
   	return $resource(scalear_api.host+'/en/online_quizzes/:param', {},
-      { 'create': { method: 'POST' },
-        'index': { method: 'GET', isArray: true},
-        'update': { method: 'PUT'},
-        'destroy': { method: 'DELETE' },
-			  'show':{method: 'GET'},
+      { 'create': { method: 'POST', headers:headers },
+        'index': { method: 'GET', isArray: true, headers:headers},
+        'update': { method: 'PUT', headers:headers},
+        'destroy': { method: 'DELETE', headers:headers },
+			  'show':{method: 'GET', headers:headers},
 			  'get_quiz_list':{method:'GET', params:{param:'get_quiz_list_angular'}, headers:headers},
 			});
+  })
+.factory('Module', function ($resource, $http, $stateParams, scalear_api, headers){
+  
+    $http.defaults.useXDomain = true;
+    return $resource(scalear_api.host+'/en/courses/:course_id/groups/:module_id/:action', {course_id:$stateParams.course_id},
+      { 'create': { method: 'POST', headers:headers },
+        'index': { method: 'GET', isArray: true, headers:headers},
+        'update': { method: 'PUT', headers:headers},
+        'destroy': { method: 'DELETE', headers:headers },
+        'show':{method: 'GET', headers:headers},
+        'new_module':{method:'GET', params:{action:'new_module_angular'}, headers:headers},
+      });
   });

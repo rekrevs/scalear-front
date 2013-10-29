@@ -5,21 +5,30 @@ angular.module('scalearAngularApp')
 	return {
 		restrict: "E",
 		scope: {
-			name:"@",
-			id:"@"
+			name:"=",
+			id:'=',
+			remove:"&"
 		},
 		template: "<h5>"+
 					"<img src='images/move2.png' class='handle' title='drag to reorder' />"+
-					"<a class='trigger' ng-class='{open:isOpen}' ng-click='isOpen = !isOpen' href=''>{{name}}</a>"+
-					// "<a href='/en/courses/{{course.id}}/groups/{{id}}' data-confirm='Are you sure you want to delete {{name}} and all of its"+ "contents?' data-method='delete' data-remote='true' id='removeB' rel='nofollow' style='float:right;' title='Delete'><img alt='Trash3'"+
-					// "src='images/trash3.png'>"+
-					// "</a>"+
-				  "</h5>"
+					"<a class='trigger' ng-class='{open:isOpen}' ng-click='isOpen = !isOpen' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
+					"<a ng-click='remove();stopEvent($event)' style='float:right;' title='Delete'>"+
+						"<img alt='Trash3' src='images/trash3.png'>"+
+					"</a>"+
+				  "</h5>",
+	  	link:function(scope){
+	  		scope.stopEvent = function(event){
+	  			if (event) {
+		      		event.preventDefault();
+		      		event.stopPropagation();
+	    		}
+	  		}
+	  	}
 	}
  }).directive('item',function(){
 	return {
 		 scope: {
-		 	name:'@',
+		 	name:'=',
 		 	id:'='
 		 },
 		 restrict: 'E', 
@@ -31,10 +40,9 @@ angular.module('scalearAngularApp')
 	return {
 		 scope: {
 		 	title:"@",
-		 	type:"@",
-		 	groupid:"@"
+		 	action: "&"
 		 },
 		 restrict: 'E', 
-		 template: '<a href="/en/courses/{{course.id}}/lectures/new_or_edit?group={{groupid}}&type={{type}}" >{{title}}</a>'
+		 template: '<div ng-click="action()" >{{title}}</div>'
 	};
 });

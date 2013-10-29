@@ -1,21 +1,58 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('courseEditorCtrl', function ($rootScope, $stateParams, $scope, $state, Course) {
+    .controller('courseEditorCtrl', function ($rootScope, $stateParams, $scope, $state, Course, Module) {
 
  	var init = function(){
  		Course.get_course_editor(function(data){
 	 		$scope.course=data.course
-	 		$scope.groups=data.groups
-		  	$scope.groups.forEach(function(group,index){
-		  		group.items = data.items[index]
-		  		group.items.forEach(function(item,ind){
+	 		$scope.modules=data.groups
+		  	$scope.modules.forEach(function(module,index){
+		  		module.items = data.items[index]
+		  		module.items.forEach(function(item,ind){
 		  			item.className= data.className[index][ind]
 		  		});  		
 		  	});
-	 		console.log($scope.groups);
+	 		console.log($scope.modules);
 	    });
  	}
+
+ 	$scope.add_module=function(){
+    	console.log("adding mod")
+    	Module.new_module({},
+	    	function(module){
+	    		console.log(module)
+	    		$scope.modules.push(module)
+	    	}, 
+	    	function(){
+
+	    	}
+		);
+    }
+
+    $scope.remove_module=function(index){
+    	console.log("remove mod")    	
+    	if(confirm("Are you sure you want to delete module?")){
+	    	Module.destroy(
+	    		{module_id: $scope.modules[index].id},
+	    		function(response){
+	    			console.log(response)
+	    			if(response.error.lecture_quiz_exist)
+	    				console.log("Sorry, You must delete all items in the module before deleting the module itself.")
+	    			else{
+	    				$scope.modules.splice(index, 1)
+	    				$state.go('course.course_editor')
+	    			}
+	    		},
+	    		function(){
+	    			alert("Failed to delete module, please check network connection")
+	    		}
+			);
+		}
+    }
+
+
+    
 
  	init();
 
@@ -44,6 +81,8 @@ angular.module('scalearAngularApp')
   		init();
   		console.log("event emitted: title in left bar");
     });
+
+    
 
  // 	$scope.item_path = function(group_index, item_index){
 	// 	var item=$scope.groups[group_index].items[item_index].className;

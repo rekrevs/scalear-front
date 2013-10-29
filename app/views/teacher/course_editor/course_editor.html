@@ -4,29 +4,29 @@
 <div class="row" style="width:1200px;">
 	<div class="span3" id="tree">
 		<accordion  close-others="oneAtATime" id="acc1" class="accordion" ui-sortable="moduleSortableOptions" ng-model='groups'>
-			<accordion-group  id='{{group.id}}' ng-repeat="group in groups" >
+			<accordion-group ng-repeat="module in modules" >
 				<accordion-heading>
-		        	<module name="{{group.name}}" id="{{group.id}}"></module>
+		        	<module name="module.name" id="module.id" remove="remove_module($index)" ></module>
 	        	</accordion-heading>
-	        	<div class="outer">
-		        <div class="inner" id="modules">
-	          		<ul class="items" id="group_items_{{group.id}}" ui-sortable="itemSortableOptions" ng-model='group.items'>
-		            	<li class="last-child" ng-repeat= "item in group.items" >
-	             			<item name="{{item.name}}" id="item.id" ></item>
-		            	</li>
-		            	<li class="item-buttons">
-				            <center>
-				            	<button_link title="Add Lecture" class="btn btn-mini adding"  groupid="{{group.id}}" />
-				            	<button_link title="Add Quiz" type="quiz" class="btn btn-mini adding"  groupid="{{group.id}}" />
-				            	<button_link title="Add Survey" type="survey" class="btn btn-mini adding"  groupid="{{group.id}}" />
-			                </center>	           
-		            	</li>
-		          	</ul> 
-		        </div></div>
+        		<div class="outer">
+		        	<div class="inner" id="modules">
+	          			<ul class="items" id="module_items_{{module.id}}" ui-sortable="itemSortableOptions" ng-model='module.items'>
+		            		<li class="last-child" ng-repeat= "item in module.items" >
+	             				<item name="item.name" id="item.id" ></item>
+		            		</li>
+		            		<li class="item-buttons">
+					            <center>
+					            	<button_link title="Add Lecture" class="btn btn-mini adding"/>
+					            	<button_link title="Add Quiz"    class="btn btn-mini adding"/>
+					            	<button_link title="Add Survey"  class="btn btn-mini adding"/>
+				                </center>	           
+			            	</li>
+		          		</ul> 
+		        	</div>
+		    	</div>
 	      	</accordion-group>	
 		</accordion>
-		<button_link title="Add Module" class="btn adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;" />
-		<!-- <a href="/en/courses/{{course_editor.course.id}}/groups/new_or_edit"></a> -->	
+		<button_link title="Add Module" action="add_module()" class="btn adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
 		<hr />
 	</div>
 	<div class="span6" id="middle"  ui-view="middle"></div>

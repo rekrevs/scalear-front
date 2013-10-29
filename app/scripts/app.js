@@ -15,6 +15,9 @@
   'pasvaz.bindonce', 
   'infinite-scroll'
 ])
+  .constant('scalear_api', {host:"http://localhost:3000"})
+  .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
+
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
@@ -38,13 +41,21 @@
         controller: 'courseEditorCtrl'
       })
       .state('course.course_editor.module',{
+        resolve:{
+          module:function($http, $stateParams, $rootScope, scalear_api, headers){
+            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/groups/'+$stateParams.module_id+'/get_group_angular'})
+             .success(function (module) {
+              console.log(module)
+                $rootScope.module = module
+             });
+          }
+        },
         url:'/module/:module_id',
         views:{
-          // "details" :{templateUrl: 'views/teacher/course_editor/module.details.html', controller: "moduleDetailsCtrl"},
+          "details" :{templateUrl: 'views/teacher/course_editor/module.details.html', controller: "moduleDetailsCtrl"},
           "middle"  :{templateUrl: 'views/teacher/course_editor/module.middle.html',  controller: "moduleMiddleCtrl"}
         }
-      })
-      .state('course.course_editor.lecture', {
+      }).state('course.course_editor.lecture', {
         resolve:{ 
           lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})

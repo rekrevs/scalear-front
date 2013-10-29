@@ -3,7 +3,7 @@
 
 <div class="row" style="width:1200px;">
 	<div class="span3" id="tree">
-		<accordion  close-others="oneAtATime" id="acc1" class="accordion" ui-sortable="moduleSortableOptions" ng-model='groups'>
+		<accordion  close-others="oneAtATime" id="acc1" class="accordion" ui-sortable="moduleSortableOptions" ng-model='modules'>
 			<accordion-group ng-repeat="module in modules" >
 				<accordion-heading>
 		        	<module name="module.name" id="module.id" remove="remove_module($index)" ></module>
@@ -16,9 +16,9 @@
 		            		</li>
 		            		<li class="item-buttons">
 					            <center>
-					            	<button_link title="Add Lecture" class="btn btn-mini adding"/>
-					            	<button_link title="Add Quiz"    class="btn btn-mini adding"/>
-					            	<button_link title="Add Survey"  class="btn btn-mini adding"/>
+					            	<button_link title="Add Lecture" class="btn-mini adding"/>
+					            	<button_link title="Add Quiz"    class="btn-mini adding"/>
+					            	<button_link title="Add Survey"  class="btn-mini adding"/>
 				                </center>	           
 			            	</li>
 		          		</ul> 
@@ -26,7 +26,8 @@
 		    	</div>
 	      	</accordion-group>	
 		</accordion>
-		<button_link title="Add Module" action="add_module()" class="btn adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
+		<center><loading size="small" show="showLoading" /></center>
+		<button_link title="Add Module" action="add_module()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
 		<hr />
 	</div>
 	<div class="span6" id="middle"  ui-view="middle"></div>

@@ -52,7 +52,6 @@ angular.module('scalearAngularApp')
 							'</div>'+
 							'<a class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="save_btn()">Save</a>'+
 							'<a class="btn" id="done" style="margin-top:5px;" ng-click="exit_btn()">Exit</a>'+
-							'<div style="width:20px;display:none" id={{"loading_"+selectedQuiz.id}}><img src="images/loading_small.gif"/></div>'+
 						'</div>'+
 					'</div>',
 	};

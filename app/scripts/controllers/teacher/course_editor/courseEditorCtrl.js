@@ -19,10 +19,12 @@ angular.module('scalearAngularApp')
 
  	$scope.add_module=function(){
     	console.log("adding mod")
+    	$scope.showLoading=true
     	Module.new_module({},
 	    	function(module){
 	    		console.log(module)
 	    		$scope.modules.push(module)
+    			$scope.showLoading=false
 	    	}, 
 	    	function(){
 
@@ -31,7 +33,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.remove_module=function(index){
-    	console.log("remove mod")    	
+    	console.log("remove mod") 
+    	event.preventDefault();
+  		event.stopPropagation();   	
     	if(confirm("Are you sure you want to delete module?")){
 	    	Module.destroy(
 	    		{module_id: $scope.modules[index].id},
@@ -52,7 +56,7 @@ angular.module('scalearAngularApp')
     }
 
 
-    
+
 
  	init();
 

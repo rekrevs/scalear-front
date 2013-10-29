@@ -1,21 +1,37 @@
 <center>
-	<h3>group name</h3>
+	<h3>{{module.name}}</h3>
 	<table class="table table-striped table-bordered" style="width:90%;font-size:12px;text-align: center">
 		<tr>
-			<td>Total Time</td><td>time</td>
+			<td>Total Time</td><td>{{module.total_time}}</td>
 		</tr>
 		<tr>
-			<td>Total number of Lecture Questions:</td><td>qus</td>
+			<td>Total number of Lecture Questions:</td><td>{{module.total_questions}}</td>
 		</tr>
 		<tr>
-			<td>Total number of Quiz Questions:</td><td>quiz</td>
+			<td>Total number of Quiz Questions:</td><td>{{module.total_quiz_questions}}</td>
 		</tr>
 	</table>
+	<br /><br />
+	<div style="width:80%">
+		Link to External Documents:
+		<br /><br />
+		<table class="table">
+			<tr>
+				<td>Name</td><td>URL</td><td></td>
+			</tr>
+			<tr ng-repeat="doc in module.documents">
+				<td>
+					<editable_text value="doc.name" action="update_document($index)">
+				</td>
+				<td style="max-width:120px;overflow-wrap:break-word;word-wrap: break-word;">
+					<editable_text value="doc.url" action="update_document($index)">
+				</td>
+				<td>
+					<delete_button size="big" action="remove_document($index)" />
+				</td>
+			</tr>
+		</table>
+		<loading size="small" show="showLoading" />
+		<button_link title="Add Document" action="add_document()" class="btn" />
+	</div>
 </center>
-
-<br />
-<br />
-<center>
-	<div ui-view="documents" style="width:80%"></div>
-</center>
-<!--<%= render "documents", :group => group2 %>-->

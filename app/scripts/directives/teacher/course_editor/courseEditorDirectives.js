@@ -12,18 +12,8 @@ angular.module('scalearAngularApp')
 		template: "<h5>"+
 					"<img src='images/move2.png' class='handle' title='drag to reorder' />"+
 					"<a class='trigger' ng-class='{open:isOpen}' ng-click='isOpen = !isOpen' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
-					"<a ng-click='remove();stopEvent($event)' style='float:right;' title='Delete'>"+
-						"<img alt='Trash3' src='images/trash3.png'>"+
-					"</a>"+
+					"<delete_button size='small' action='remove()'/>"+
 				  "</h5>",
-	  	link:function(scope){
-	  		scope.stopEvent = function(event){
-	  			if (event) {
-		      		event.preventDefault();
-		      		event.stopPropagation();
-	    		}
-	  		}
-	  	}
 	}
  }).directive('item',function(){
 	return {
@@ -43,6 +33,44 @@ angular.module('scalearAngularApp')
 		 	action: "&"
 		 },
 		 restrict: 'E', 
-		 template: '<div ng-click="action()" >{{title}}</div>'
+		 replace:true,
+		 template: '<div ng-click="action()" class="btn" >{{title}}</div>'
 	};
+}).directive('editableText', function($timeout){
+	return {
+		 scope: {
+		 	value:"=",
+		 	action:"&"
+		 },
+		 restrict: 'E', 
+		 template: '<b ng-dblclick="editingMode=true;focus()" ng-hide="editingMode">{{value}}</b>'+
+				   '<input ng-show="editingMode" ng-blur="action();editingMode=false" ng-model="value" type="text" style="width:130px;" required/>',
+	   	link:function(scope, element){
+	   		scope.focus=function(){
+	   			$timeout(function() {
+	            	element[0].children[1].focus(); 
+	          	});
+	   		}
+	   	}
+	};
+}).directive('loading',function(){
+	return {
+		scope:{
+			size:'@',
+			show:"="
+		},
+		restrict:'E',
+		template: '<div ng-show="show" ><img ng-src="images/loading_{{size}}.gif"/> Please wait....</div>'
+	}
+}).directive('deleteButton',function(){
+	return {
+		scope:{
+			size:"@",
+			action:"&"
+		},
+		restrict:'E',
+		template: 	'<a style="float:right;width:20px;" title="delete" ng-click="action()">'+
+						'<img alt="Trash" ng-src="images/trash_{{size}}.png">'+
+					'</a>'
+	}
 });

@@ -36,12 +36,12 @@ angular.module('scalearAngularApp')
 ////////////////////////////////////////////////////FUNCTIONS//////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	$scope.load_video = function(){
-		angular.element("#loading").show();
+		$scope.hideLoading=false;
 		if($scope.player)
 			Popcorn.destroy($scope.player)
 		$scope.player = Popcorn.youtube( "#youtube", $scope.lecture.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
 		$scope.player.controls( false ); 
-		$scope.player.on("loadeddata", function(){angular.element("#loading").hide();});
+		$scope.player.on("loadeddata", function(){$scope.hideLoading=true; $scope.$apply();});
 	}
 	
 	$scope.insert_quiz=function(quizType, questionType){

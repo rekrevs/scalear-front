@@ -1,10 +1,6 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-
-  .constant('scalear_api', {host:"http://localhost:3000"})
-  .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
-
   .run(function($rootScope) {
 	    $rootScope.$on('detailsUpdatedEmit', function(event) {
 	        $rootScope.$broadcast('update');
@@ -57,6 +53,7 @@ angular.module('scalearAngularApp')
 			  'show':{method: 'GET', headers:headers},
 			  'get_quiz_list':{method:'GET', params:{param:'get_quiz_list_angular'}, headers:headers},
 			});
+
   })
 .factory('Module', function ($resource, $http, $stateParams, scalear_api, headers){
   
@@ -67,6 +64,20 @@ angular.module('scalearAngularApp')
         'update': { method: 'PUT', headers:headers},
         'destroy': { method: 'DELETE', headers:headers },
         'show':{method: 'GET', headers:headers},
-        'new_module':{method:'GET', params:{action:'new_module_angular'}, headers:headers},
+        'new_module':{method:'POST', params:{action:'new_module_angular'}, headers:headers},
+        'new_document':{method:'POST', params:{action:'new_document_angular'}, headers:headers}
       });
+
+  })
+.factory('Documents', function ($resource, $http, $stateParams, scalear_api, headers){
+  
+    $http.defaults.useXDomain = true;
+    return $resource(scalear_api.host+'/en/documents/:document_id', {},
+      { 'create': { method: 'POST', headers:headers },
+        'index': { method: 'GET', isArray: true, headers:headers},
+        'update': { method: 'PUT', headers:headers},
+        'destroy': { method: 'DELETE', headers:headers },
+        'show':{method: 'GET', headers:headers}
+      });
+
   });

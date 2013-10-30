@@ -15,6 +15,8 @@
   'pasvaz.bindonce', 
   'infinite-scroll'
 ])
+  .constant('scalear_api', {host: 'http://localhost:3000'})
+  .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        

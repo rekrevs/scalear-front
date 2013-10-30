@@ -10,10 +10,12 @@
   'ui.bootstrap.tabs',
   'ui.bootstrap.collapse',
   'ui.bootstrap.transition', 
+  'ui.bootstrap.datepicker',
   'ui.sortable',
   'ngDragDrop', 
   'pasvaz.bindonce', 
-  'infinite-scroll'
+  'infinite-scroll',
+  'xeditable',  
 ])
   .constant('scalear_api', {host:"http://localhost:3000"})
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
@@ -73,6 +75,25 @@
       .state('course.course_editor.lecture.quizList', {
         views:{         
           "quizList":{templateUrl: 'views/teacher/course_editor/lecture.middle.quiz_list.html', controller: "lectureQuizListCtrl"}
+        }        
+      })
+      .state('course.course_editor.quiz', {
+        resolve:{ 
+          quiz:function($http, $q, $stateParams, $rootScope, scalear_api, headers){
+            console.log(scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id)
+            var deferred= $q.defer();
+             $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
+             .success(function (quiz) {
+              deferred.resolve(quiz);
+              //$rootScope.quiz = quiz
+             });
+            return deferred.promise; 
+          }
+        },
+        url: "/quizzes/:quiz_id",
+        views:{
+          "details" :{templateUrl: 'views/teacher/course_editor/quiz.details.html', controller: "quizDetailsCtrl"},
+          "middle"  :{templateUrl: 'views/teacher/course_editor/quiz.middle.html',  controller: "quizMiddleCtrl"}
         }        
       })
   })

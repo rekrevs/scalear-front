@@ -3,6 +3,8 @@
 angular.module('scalearAngularApp')
     .controller('lectureMiddleCtrl', function ($state, $stateParams, $scope, $http, Lecture) {
     	console.log("into middle ")
+
+	$scope.$emit('accordianUpdate',$scope.lecture.group_id);	
 	$scope.quizTypesList=[{type:'MCQ', text:"MCQ - Multiple Correct Answers"},{type:'OCQ', text:"OCQ - One Correct Answer"}, {type:'drag', text:"Drag Into Order"}]	
 
 	window.onresize=function resizeit(){

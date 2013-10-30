@@ -3,6 +3,15 @@
 angular.module('scalearAngularApp')
     .controller('courseEditorCtrl', function ($rootScope, $stateParams, $scope, $state, Course, Module) {
 
+    $scope.open_id="-1";
+    $scope.open={};
+    $scope.oneAtATime = true;
+
+	$rootScope.$on('accordianUpdate', function(event, message) {
+			$scope.open_id=message;
+			$scope.open[message]= true;
+	});
+
  	var init = function(){
  		Course.get_course_editor(function(data){
 	 		$scope.course=data.course

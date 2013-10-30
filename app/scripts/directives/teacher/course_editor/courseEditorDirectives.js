@@ -7,23 +7,40 @@ angular.module('scalearAngularApp')
 		scope: {
 			name:"=",
 			id:'=',
-			remove:"&"
+			remove:"&",
+			isOpen2: "="
 		},
-		template: "<h5>"+
+		template: "<h5 ng-click='invert_open()'>"+
 					"<img src='images/move2.png' class='handle' title='drag to reorder' />"+
-					"<a class='trigger' ng-class='{open:isOpen}' ng-click='isOpen = !isOpen' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
+					"<a class='trigger' ng-class='{open:isOpen2[id]==true}' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
 					"<delete_button size='small' action='remove()'/>"+
 				  "</h5>",
+	  link: function(scope){
+			scope.invert_open = function()
+			{
+				console.log(scope.isOpen2[scope.id]);
+				if(scope.isOpen2[scope.id]==true)
+					scope.isOpen2[scope.id] = false
+				else{ 
+					for(var e in scope.isOpen2){
+						console.log(e);
+						scope.isOpen2[e]=false;
+					}
+					scope.isOpen2[scope.id] = true
+				}
+			}
+		}
 	}
  }).directive('item',function(){
 	return {
 		 scope: {
 		 	name:'=',
-		 	id:'='
+		 	id:'=',
+		 	className:'='
 		 },
 		 restrict: 'E', 
 		 template: '<img src="images/move2.png" class="handle" title="drag to reorder" />'+
-	               '<a class="trigger2" ui-sref="course.course_editor.lecture.quizList({ lecture_id: id })" >{{name}}</a>'//+
+	               '<a class="trigger2" ui-sref="course.course_editor.{{className}}({ {{className}}_id: id })" >{{name}}</a>'//+
 	               // '<a href="/en/courses/{{course.id}}/lectures/{{id}}" data-confirm="Are you sure you want to delete {{name}} and all of its contents?" data-method="delete" data-remote="true" id="removeB" rel="nofollow" style="float:right;display:inline-table;" title="Delete"><img alt="Trash3" src="images/trash3.png"></a>'
 	};
 }).directive('buttonLink', function(){

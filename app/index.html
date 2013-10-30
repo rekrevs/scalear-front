@@ -15,6 +15,8 @@
     <link rel="shortcut icon" type="image/x-icon" href="/logo.ico">
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+
     <!-- endbuild -->
   </head>
   <body ng-app="scalearAngularApp">
@@ -54,12 +56,15 @@
     <script src="bower_components/angular-dragdrop/src/angular-dragdrop.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
     <script src="bower_components/ng-infinite-scroller/build/ng-infinite-scroll.js"></script>
+    <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
     <!-- endbower -->
 
     <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/accordion/accordion.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/collapse/collapse.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/transition/transition.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/position/position.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/datepicker/datepicker.js"></script>
     
     <!-- build:js scripts/plugins.js -->
     <script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
@@ -90,7 +95,8 @@
     <script src="scripts/filters/filters.js"></script>
 
     <script src="scripts/directives/teacher/course_editor/courseEditorDirectives.js"></script>        
-    <script src="scripts/directives/teacher/course_editor/lectureMiddleDirctives.js"></script>
+    <script src="scripts/directives/teacher/course_editor/lectureMiddleDirectives.js"></script>
+    <script src="scripts/directives/teacher/course_editor/quizDetailsDirectives.js"></script>
 
     <script src="scripts/services/teacher/courseEditorService.js"></script>
 
@@ -101,6 +107,8 @@
     <script src="scripts/controllers/teacher/course_editor/lectureDetailsCtrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/lectureMiddleCtrl.js"></script>        
     <script src="scripts/controllers/teacher/course_editor/lectureQuizListCtrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/quizDetailsCtrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/quizMiddleCtrl.js"></script> 
     <!-- endbuild -->
 </body>
 </html>

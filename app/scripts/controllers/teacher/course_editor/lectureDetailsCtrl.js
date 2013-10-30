@@ -12,6 +12,7 @@ angular.module('scalearAngularApp')
 		Lecture.update({lecture_id:$scope.lecture.id},{lecture:$scope.lecture},
 			function(data){
 				$scope.$emit('detailsUpdatedEmit')
+				$scope.$emit('accordianUpdate',$scope.lecture.group_id);
 		});	
 	}
 

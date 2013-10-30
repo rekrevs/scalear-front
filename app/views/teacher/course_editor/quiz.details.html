@@ -6,45 +6,45 @@
 			<tr>
 				<td>Quiz Title:</td>
 				<td>
-					<details-text m="quiz" name="name" callfn="updateQuiz()"></details-text>
+					<details-text value="quiz.name" save="updateQuiz()"></details-text>
   				</td>
 			</tr>
 			<tr ng-show="quiz.quiz_type=='quiz'">
 				<td>Required:</td>
 				<td>
-					<details-check m="quiz" name="required" callfn="updateQuiz()" yes="This Quiz is Required" no="This Quiz is Not Required" etitle="Required?"></details-check> <br />
+					<details-check checked="quiz.required" save="updateQuiz()" yes="This Quiz is Required" no="This Quiz is Not Required" title="Required?"></details-check> <br />
   				</td>
 			</tr>
 			<tr ng-show="quiz.quiz_type=='quiz'">
 				<td>Retries:</td>
 				<td>
-					<details-number m="quiz" min="0" name="retries" callfn="updateQuiz()"></details-text><br />
+					<details-number min="0" value="quiz.retries" save="updateQuiz()"></details-number><br />
   				</td>
 			</tr>
 			<tr>
 				<td>Appearance Date</td>
 				<td>
-					<details-check m="quiz" name="appearance_time_module" callfn="updateQuiz()" yes="Using Module's Appearance Date" no="Not Using Module's Appearance Date" etitle="Use Module's?"></details-check> <br />
+					<details-check checked="quiz.appearance_time_module" save="updateQuiz()" yes="Using Module's Appearance Date" no="Not Using Module's Appearance Date" etitle="Use Module's?"></details-check> <br />
   					<p ng-hide="quiz.appearance_time_module">
   						Set Date:<br>
-  						<details-date m="quiz" name="appearance_time" callfn="updateQuiz()"></details-date>
+  						<details-date date="quiz.appearance_time" save="updateQuiz()"></details-date>
   					</p>
 				</td>
 			</tr>
 			<tr>
 				<td>Due Date</td>
 				<td>
-					<details-check m="quiz" name="due_date_module" callfn="updateQuiz()" yes="Using Module's Due Date" no="Not Using Module's Due Date" etitle="Use Module's?"></details-check> <br />
+					<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="Using Module's Due Date" no="Not Using Module's Due Date" etitle="Use Module's?"></details-check> <br />
   					<p ng-hide="quiz.due_date_module">
   						Set Date:<br>
-  						<details-date m="quiz" name="due_date" callfn="updateQuiz()"></details-date>
+  						<details-date date="quiz.due_date" save="updateQuiz()"></details-date>
   					</p>
 				</td>
 			</tr>
 			<tr>
 				<td>Instructions:</td>
 				<td>
-					<details-area m="quiz" name="instructions" callfn="updateQuiz()"></details-area>
+					<details-area value="quiz.instructions" save="updateQuiz()"></details-area>
 				</td>
 			</tr>
 		</table>

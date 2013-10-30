@@ -13,15 +13,17 @@
   'ui.sortable',
   'ngDragDrop', 
   'pasvaz.bindonce', 
-  'infinite-scroll'
+  'infinite-scroll',
+  'ui.calendar'
 ])
-  .constant('scalear_api', {host: 'http://localhost:3000'})
+  .constant('scalear_api', {host: 'http://0.0.0.0:3000'})
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
     $httpProvider.defaults.withCredentials = true;
 
+    
     $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('index', {
@@ -29,6 +31,16 @@
         templateUrl: 'views/main.html',
         controller:'MainCtrl'
       })
+      .state('calendar', {
+        resolve:{
+          events:function($http,headers,scalear_api){
+            return $http({method:'GET', headers:headers, url:scalear_api.host+'/en/courses/13/events'})
+          }
+        },
+        url: '/teacher/calendar',
+      templateUrl: 'views/teacher/calendar.html',
+      controller: 'TeacherCalendarCtrl'
+    })
   })
 
 

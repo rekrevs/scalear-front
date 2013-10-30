@@ -1,22 +1,34 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', function ($stateParams, $scope, $http, $state, Lecture) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$state', 'Lecture', 'lecture', function ($stateParams, $scope, $http, $state, Lecture, lecture) {
 
 	console.log("made it in details!!");
-
+    $scope.lecture=lecture.data
 	getYoutubeDetails();
 
-	$scope.updateDetails= function(){
+	$scope.updateLecture= function(){
 		console.log($scope.lecture)
-		Lecture.update({lecture_id:$scope.lecture.id},{lecture:$scope.lecture},
-			function(data){
-				$scope.$emit('detailsUpdatedEmit')
-				$scope.$emit('accordianUpdate',$scope.lecture.group_id);
-		});	
+		Lecture.update(
+			{lecture_id:$scope.lecture.id},
+			{lecture:$scope.lecture},
+			function(data){	
+				$scope.$emit('detailsUpdate')			
+				$scope.$emit('accordianUpdate',$scope.lecture.group_id);				
+			},
+			function(){
+				alert("Failed to update lecture, please check your internet connection")
+			}
+		);	
 	}
 
-	$scope.urlFormat =function()
+	$scope.updateLectureUrl= function(){
+		urlFormat()
+		$scope.updateLecture()
+		$scope.$emit('refreshVideo')
+	}
+
+	var urlFormat =function()
 	{
 		var url=$scope.lecture.url
 		var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
@@ -53,4 +65,4 @@ angular.module('scalearAngularApp')
 			});
 		}
 	}
-});
+}]);

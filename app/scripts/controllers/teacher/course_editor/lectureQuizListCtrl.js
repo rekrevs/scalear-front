@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl', function ($scope, $http, $stateParams, $state, $filter, Online_quizzes) {
+    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'Online_quizzes' ,function ($scope, $http, $stateParams, $state, $filter, Online_quizzes) {
 
 	console.log("loading quiz list")
 	$scope.editingMode = false
@@ -14,8 +14,7 @@ angular.module('scalearAngularApp')
 		function(){
 			alert("Failed to Load Quiz List")
 		}
-	);
-	
+	);	
 
 	var update_online_quiz=function(quiz){
 		console.log(quiz)
@@ -93,7 +92,7 @@ angular.module('scalearAngularApp')
 		$scope.player.currentTime(quiz.time);
 		$scope.player.pause();
 	 }
-});
+}]);
 
 
 // check_enter = function(ev,the_id)

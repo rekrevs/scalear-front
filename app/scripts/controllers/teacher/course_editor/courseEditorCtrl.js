@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('courseEditorCtrl', function ($rootScope, $stateParams, $scope, $state, Course, Module) {
+    .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', function ($rootScope, $stateParams, $scope, $state, Course, Module) {
 
     $scope.open_id="-1";
     $scope.open={};
@@ -11,6 +11,12 @@ angular.module('scalearAngularApp')
 			$scope.open_id=message;
 			$scope.open[message]= true;
 	});
+
+	$rootScope.$on("detailsUpdate", function(event, args) {
+  		init();
+  		console.log("event emitted: title in left bar");
+    });
+
 
  	var init = function(){
  		Course.get_course_editor(function(data){
@@ -64,9 +70,6 @@ angular.module('scalearAngularApp')
 		}
     }
 
-
-
-
  	init();
 
  	$scope.moduleSortableOptions={
@@ -90,11 +93,7 @@ angular.module('scalearAngularApp')
  	}
 
 
- 	$scope.$on("update", function(event, args) {
-  		init();
-  		console.log("event emitted: title in left bar");
-    });
-
+ 	
     
 
  // 	$scope.item_path = function(group_index, item_index){
@@ -131,7 +130,7 @@ angular.module('scalearAngularApp')
 
 	
     
-});
+}]);
 
 
 

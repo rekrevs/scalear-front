@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', function ($scope, $state, Module, Documents) {
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Documents', 'module' ,function ($scope, $state, Module, Documents, module) {
+        $scope.module=module.data
 		$scope.$emit('accordianUpdate',$scope.module.id);
     	$scope.add_document=function(){
     		console.log($scope.module.id)
@@ -34,7 +35,7 @@ angular.module('scalearAngularApp')
     	}
 
     	$scope.update_document=function(index){
-    		console.log("blurr")
+    		console.log($scope.module.documents[index])
     		Documents.update(
     			{document_id: $scope.module.documents[index].id},
     			{"document":{
@@ -50,4 +51,4 @@ angular.module('scalearAngularApp')
     			}
 			);
     	}
-    });
+    }]);

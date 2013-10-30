@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive("videoContainer",function(){
+	.directive("videoContainer",function($rootScope){
 		return{
 			transclude: true,
 			restrict: "E",
@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
 						'<div id="side_bar" class="sidebar_big" ng-show="fullscreen" ui-view="quizList" ></div>'+
 					  '</div>',
 		  	link: function($scope, element){
-			  	$scope.$on("update", function(event, args) {
+			  	$rootScope.$on("refreshVideo", function(event, args) {
 			  		element.find('iframe').remove();
 			  		$scope.load_video();
 			  		console.log("event emitted: updating video player");

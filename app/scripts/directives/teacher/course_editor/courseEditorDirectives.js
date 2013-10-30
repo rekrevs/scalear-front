@@ -57,18 +57,20 @@ angular.module('scalearAngularApp')
 	return {
 		 scope: {
 		 	value:"=",
-		 	action:"&"
+		 	save:"&"
 		 },
 		 restrict: 'E', 
-		 template: '<b ng-dblclick="editingMode=true;focus()" ng-hide="editingMode">{{value}}</b>'+
-				   '<input ng-show="editingMode" ng-blur="action();editingMode=false" ng-model="value" type="text" style="width:130px;" required/>',
-	   	link:function(scope, element){
-	   		scope.focus=function(){
-	   			$timeout(function() {
-	            	element[0].children[1].focus(); 
-	          	});
-	   		}
-	   	}
+		 template: 	'<div ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" onaftersave="save_data()" ng-click="textBtnForm.$show()">'+
+			 			'{{ value || "empty" }}'+
+			 			'<i ng-class="overclass"></i>'+
+	 				'</div>',
+		link:function(scope){
+			scope.save_data=function(){
+				$timeout(function(){
+					scope.save()
+				})
+			}
+		}
 	};
 }).directive('loading',function(){
 	return {

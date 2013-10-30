@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', function ($state, $stateParams, $scope, $http, Lecture) {
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', 'Lecture', 'lecture' ,function ($state, $stateParams, $scope, $http, Lecture, lecture) {
     	console.log("into middle ")
-
+    	console.log(lecture.data)
+    $scope.lecture=lecture.data
 	$scope.$emit('accordianUpdate',$scope.lecture.group_id);	
 	$scope.quizTypesList=[{type:'MCQ', text:"MCQ - Multiple Correct Answers"},{type:'OCQ', text:"OCQ - One Correct Answer"}, {type:'drag', text:"Drag Into Order"}]	
 
@@ -323,4 +324,4 @@ angular.module('scalearAngularApp')
 		console.log("exiting")		
 	}	
  	
-});
+}]);

@@ -19,7 +19,9 @@
 ])
   .constant('scalear_api', {host:"http://localhost:3000"})
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
-
+  .run(function(editableOptions) {
+      editableOptions.theme = 'bs2';
+  })  
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
@@ -46,10 +48,6 @@
         resolve:{
           module:function($http, $stateParams, $rootScope, scalear_api, headers){
             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/groups/'+$stateParams.module_id+'/get_group_angular'})
-             .success(function (module) {
-              console.log(module)
-                $rootScope.module = module
-             });
           }
         },
         url:'/module/:module_id',
@@ -61,9 +59,6 @@
         resolve:{ 
           lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
-             .success(function (lecture) {
-                $rootScope.lecture = lecture
-             });
           }
         },
         url: "/lecture/:lecture_id",
@@ -79,15 +74,8 @@
       })
       .state('course.course_editor.quiz', {
         resolve:{ 
-          quiz:function($http, $q, $stateParams, $rootScope, scalear_api, headers){
-            console.log(scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id)
-            var deferred= $q.defer();
-             $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
-             .success(function (quiz) {
-              deferred.resolve(quiz);
-              //$rootScope.quiz = quiz
-             });
-            return deferred.promise; 
+          quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
+            return $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
           }
         },
         url: "/quizzes/:quiz_id",

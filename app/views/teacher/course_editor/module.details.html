@@ -1,58 +1,31 @@
+<link rel="stylesheet" href="styles/teacher/course_editor.details.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 <center>
   <h3>Details</h3>  
   <!-- <%= render 'shared/error_messages' , object: f.object, success: @success %>-->
-  <form ng-submit="updateDetails()">
-    <table class="table table-striped table-bordered" style="width:90%;font-size:12px;text-align: center">
-      <tr>
-        <td>Module Name:</td>
-        <td><input ng-model="module.name" type="text" size=15 style="height:17px;width:140px;font-size:12px;" /></td>
-      </tr>
-      <tr>
-        <td>Appearance Date:</td>
-        <td><input ng-model="module.appearance_time" type="text" class="date_picker" style="height:25px;width: 120px;font-size:12px;" /></td>
-      </tr>
-      <tr>
-        <td>Due Date:</td>
-        <td><input ng-model="module.due_date" type="text" class="date_picker" style="height:25px;width: 120px;font-size:12px;"/></td>
-      </tr>
-      <tr>
-        <td>Description:</td>
-        <td><textarea ng-model="module.description" size=15 style="width:140px;font-size:12px;height:80px;"/></td>
-      </tr>
-    </table>
-    <input type="submit" value="Save Module" class ="btn" />
-  </form>
+  <table class="table table-striped table-bordered" style="width:95%;font-size:12px;text-align: center">
+    <tr>
+      <td style="width:50%;">Module Name:</td>
+      <td>
+        <details-text value="module.name" save="updateModule()"></details-text>
+      </td>
+    </tr>
+    <tr>
+      <td>Appearance Date:</td>
+      <td>
+        <details-date date="module.appearance_time" save="updateModule()"></details-date>
+      </td>
+    </tr>
+    <tr>
+      <td>Due Date:</td>
+      <td>
+        <details-date date="module.due_date" save="updateModule()"></details-date>
+      </td>
+    </tr>
+    <tr>
+      <td>Description:</td>
+      <td>
+        <details-area value="module.description" save="updateModule()"></details-area>
+      </td>
+    </tr>
+  </table>
 </center>
-
-<!-- Trying a new date and time picker-->
-<!-- <div class="well">
-  <div id="datetimepicker2" class="input-append">
-    <input data-format="yyyy-MM-dd HH:mm:ss PP" type="text"></input>
-    <span class="add-on">
-      <i data-time-icon="icon-time" data-date-icon="icon-calendar">
-      </i>
-    </span>
-  </div>
-</div>
-<script type="text/javascript">
-  $(function() {
-    $('#datetimepicker2').datetimepicker({
-      language: 'en',
-      pick12HourFormat: true
-    });
-  });
-</script> -->
-
-<script>
-
-
-
-// $(document).ready(function(){
-// console.log("inn ready");
-//	$(".edit_group").submit(function(){
-//		//console.log("in click")
-//		$(this).children("#details_group_btn").attr("disabled","disabled");
-//	  });
-// });
-
-</script>

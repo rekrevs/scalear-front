@@ -17,14 +17,14 @@
 		<br /><br />
 		<table class="table">
 			<tr>
-				<td>Name</td><td>URL</td><td></td>
+				<td style="width:44%;">Name</td><td>URL</td><td></td>
 			</tr>
 			<tr ng-repeat="doc in module.documents">
 				<td>
-					<editable_text value="doc.name" action="update_document($index)">
+					<editable_text value="doc.name" save="update_document($index)" >
 				</td>
 				<td style="max-width:120px;overflow-wrap:break-word;word-wrap: break-word;">
-					<editable_text value="doc.url" action="update_document($index)">
+					<editable_text value="doc.url" save="update_document($index)">
 				</td>
 				<td>
 					<delete_button size="big" action="remove_document($index)" />

@@ -36,7 +36,7 @@
         controller:'MainCtrl'
       })
       .state('course', {
-        url: "/course/:course_id",
+        url: "/courses/:course_id",
         template: '<ui-view/>',
         abstract:true
       })
@@ -51,7 +51,7 @@
             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/groups/'+$stateParams.module_id+'/get_group_angular'})
           }
         },
-        url:'/module/:module_id',
+        url:'/modules/:module_id',
         views:{
           "details" :{templateUrl: 'views/teacher/course_editor/module.details.html', controller: "moduleDetailsCtrl"},
           "middle"  :{templateUrl: 'views/teacher/course_editor/module.middle.html',  controller: "moduleMiddleCtrl"}
@@ -62,7 +62,7 @@
             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
           }
         },
-        url: "/lecture/:lecture_id",
+        url: "/lectures/:lecture_id",
         views:{
           "details" :{templateUrl: 'views/teacher/course_editor/lecture.details.html', controller: "lectureDetailsCtrl"},
           "middle"  :{templateUrl: 'views/teacher/course_editor/lecture.middle.html',  controller: "lectureMiddleCtrl"}
@@ -77,7 +77,6 @@
         resolve:{ 
           quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
             return $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
-
           }
         },
         url: "/quizzes/:quiz_id",

@@ -8,6 +8,7 @@ angular.module('scalearAngularApp')
     $scope.oneAtATime = true;
 
 	$rootScope.$on('accordianUpdate', function(event, message) {
+		   console.log("in accordian update");
 			$scope.open_id=message;
 			$scope.open[message]= true;
 	});

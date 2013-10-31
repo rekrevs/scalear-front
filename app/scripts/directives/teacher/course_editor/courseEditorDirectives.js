@@ -18,8 +18,9 @@ angular.module('scalearAngularApp')
 	  link: function(scope){
 			scope.invert_open = function()
 			{
-				console.log(scope.isOpen2[scope.id]);
-				if(scope.isOpen2[scope.id]==true)
+				//console.log("is it open?")
+				//console.log(scope.isOpen2[scope.id]);
+				if(scope.isOpen2[scope.id]==true || scope.isOpen2[scope.id]=="true")
 					scope.isOpen2[scope.id] = false
 				else{ 
 					for(var e in scope.isOpen2){
@@ -28,6 +29,7 @@ angular.module('scalearAngularApp')
 					}
 					scope.isOpen2[scope.id] = true
 				}
+				//console.log(scope.isOpen2[scope.id]);
 			}
 		}
 	}

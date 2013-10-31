@@ -1,0 +1,52 @@
+<link rel="stylesheet" href="styles/teacher/course_editor.details.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+<center>
+	<h3>Details</h3>
+	
+		<table class="table table-striped table-bordered" style="width:95%;font-size:12px;text-align: center">
+			<tr>
+				<td style="width:50%">Quiz Title:</td>
+				<td>
+					<details-text value="quiz.name" save="updateQuiz()"></details-text>
+  				</td>
+			</tr>
+			<tr ng-show="quiz.quiz_type=='quiz'">
+				<td>Required:</td>
+				<td>
+					<details-check checked="quiz.required" save="updateQuiz()" yes="This Quiz is Required" no="This Quiz is Not Required" title="Required?"></details-check> <br />
+  				</td>
+			</tr>
+			<tr ng-show="quiz.quiz_type=='quiz'">
+				<td>Retries:</td>
+				<td>
+					<details-number min="0" value="quiz.retries" save="updateQuiz()"></details-number><br />
+  				</td>
+			</tr>
+			<tr>
+				<td>Appearance Date</td>
+				<td>
+					<details-check checked="quiz.appearance_time_module" save="updateQuiz()" yes="Using Module's Appearance Date" no="Not Using Module's Appearance Date" etitle="Use Module's?"></details-check> <br />
+  					<p ng-hide="quiz.appearance_time_module">
+  						Set Date:<br>
+  						<details-date date="quiz.appearance_time" save="updateQuiz()"></details-date>
+  					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>Due Date</td>
+				<td>
+					<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="Using Module's Due Date" no="Not Using Module's Due Date" etitle="Use Module's?"></details-check> <br />
+  					<p ng-hide="quiz.due_date_module">
+  						Set Date:<br>
+  						<details-date date="quiz.due_date" save="updateQuiz()"></details-date>
+  					</p>
+				</td>
+			</tr>
+			<tr>
+				<td>Instructions:</td>
+				<td>
+					<details-area value="quiz.instructions" save="updateQuiz()"></details-area>
+				</td>
+			</tr>
+		</table>
+		
+</center>

@@ -1,0 +1,89 @@
+<link rel="stylesheet" href="styles/teacher/course_editor.details.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+<center>
+	<h3>Details</h3>
+	<!-- <%= render 'shared/error_messages' , object: f.object, success: @success %> -->
+	<table class="table table-striped table-bordered" style="width:90%;font-size:12px;text-align: center;">
+		<tr>
+			<td>Lecture Title:</td>
+			<td> 
+    			<details-text value="lecture.name" save="updateLecture()"></details-text>
+			</td>
+		</tr>
+		<tr>
+			<td>Lecture URL:</td>
+			<td style="overflow-wrap:break-word;word-wrap: break-word;">
+    			<details-text value="lecture.url" save="updateLectureUrl()" ></details-text> 
+				<!-- <input type="text" id="lecture_url" size=15 style="height:17px;width:140px;font-size:12px;" ng-change="urlFormat()" ng-model="lecture.url" /> -->
+			</td>
+		</tr>
+		<tr>
+			<td>Thumbnail:</td>
+			<td id="lecture_thumbnail" ng-bind-html="video.thumbnail" ></td>
+		</tr>
+		<tr>
+			<td>Author:</td>
+			<td>
+				<label style= "width:140px;font-size:10px;" >{{video.author}}</label>
+			</td>
+		</tr>
+		<tr>
+			<td>Detected Aspect Ratio:</td>
+			<td>
+				<label style="width:140px;font-size:10px;">{{lecture.aspect_ratio}}</label>
+			</td>
+		</tr>
+		<tr>
+			<td>Aspect Ratio:</td>
+			<td>
+				<select id="lecture_aspect_ratio" name="lecture[aspect_ratio]" style="width: 120px;" >
+					<option value="widescreen">widescreen</option>
+					<option value="smallscreen" ng-selected="lecture.aspect_ratio=='smallscreen'">smallscreen</option>
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td>Duration:</td>
+			<td>
+				<label style="width:140px;font-size:10px;">{{lecture.duration}} Seconds</label>
+			</td>
+		</tr>
+		<tr>
+			<td>Title:</td>
+			<td>
+				<label style ="width:140px;font-size:10px;">{{video.title}}</label>
+			</td>
+		</tr>
+		<tr>
+			<td>Use Module's Appearance Date?</td>
+			<td> 
+				<details-check checked="lecture.appearance_time_module" save="updateLecture()" yes="Using Module's Appearance Date" no="Not Using Module's Appearance Date" etitle="Use Module's?"></details-check> <br />
+					<p ng-hide="lecture.appearance_time_module">
+						Set Date:<br>
+						<details-date date="lecture.appearance_time" save="updateLecture()"></details-date>
+					</p>
+			</td>
+		</tr>
+		<tr>
+			<td>Use Module's Due Date?</td>
+			<td>
+				<details-check checked="lecture.due_date_module" save="updateLecture()" yes="Using Module's Due Date" no="Not Using Module's Due Date" etitle="Use Module's?"></details-check> <br />
+				<p ng-hide="lecture.due_date_module">
+					Set Date:<br>
+					<details-date date="lecture.due_date" save="updateLecture()"></details-date>
+				</p> 
+			</td>
+		</tr>
+		<tr>
+			<td>Slides:</td>
+			<td style="overflow-wrap:break-word;word-wrap: break-word;">
+    			<details-text value="lecture.slides" save="updateLecture()"></details-text>
+			</td>
+		</tr>
+		<tr>
+			<td>Description:</td>
+			<td>
+				<details-area value="lecture.description" save="updateLecture()"></details-area>
+			</td>
+		</tr>
+	</table>
+</center>

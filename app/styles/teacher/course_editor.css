@@ -1,17 +1,6 @@
-
-/* --------
-  The CSS rules offered here are just an example. You can style the 'accordion' in any way you like.
-  The styles for the Page Structure are needed just for the purpose of this demo page.
-  If you decide to use the CSS rules in 'Accordion' (see below) as a base, 
-  be sure to rename the selectors as to satisfy the elements in your site.
- --------- */
-
 /* --- Page Structure  --- */
 
-
-
 #acc1{margin:0px; padding: 0px;}
-
 
 /*p {margin: 0 10px 1em}*/
 .strong{font-weight:700}
@@ -34,8 +23,6 @@ h5, h6 a {font-size:12px;}
 h2 {background-color:#f0f0f0}
 
 ul, ol {margin:0;}
-
-.trigger2{font-size:12px;font-weight:normal;color:#0088cc}
 
 /* --- Links --- */
 #acc1 .last-child a{border-width: 0px 0px;}
@@ -78,19 +65,19 @@ ul.accordion ul {margin:0; padding:0 0 0 0px;}
 .accordion a {...}
 */    
 
-a.trigger {width: 80%;display:inline-block !important; padding-left:20px; background-image: url('/images/plus.gif'); background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
+a.trigger {display:inline-block !important; padding-left:20px; background-image: url('../../images/plus.gif'); background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
 
-a.trigger.open {background-image: url('/images/minus.gif');background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
+a.trigger.open {border-color:#dadada; background-image: url('../../images/minus.gif');background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
 
 .last-child a.trigger{padding-left:1px; background-image:none; font-weight:normal}
 
 .h, .last-child {background-color:#f0f0f0}
 
-a.trigger.open {border-color:#dadada; }
-
 a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:#bcd}
 
 .trigger{width:180px;}
+
+.trigger2{font-size:12px;font-weight:normal;color:#0088cc}
 
 .trigger2{display:inline-block; width:180px;}
 
@@ -124,7 +111,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	overflow:auto;
 	margin-left:75%;
 	margin-right:5%;*/
-	width:270px;
+	width:280px;
 }
 
 .datepicker2{
@@ -139,10 +126,10 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	color:red;
 	font-style: italic;
 }
-.handle:hover, .handle2:hover{
+.handle:hover{
 	cursor: crosshair;
 	vertical-align: top;
 }
-.handle, .handle2{
+.handle{
 	vertical-align: top;
 }

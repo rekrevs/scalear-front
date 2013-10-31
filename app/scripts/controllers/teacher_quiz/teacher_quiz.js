@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
 	    });
  	}
 
- 	init(95);
+ 	init();
 	
 	$rootScope.$on('accordianUpdate', function(event, message) {
 		$scope.open_id=message;

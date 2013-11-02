@@ -17,7 +17,8 @@ angular.module('scalearAngularApp')
 		'add_answer':{method:'POST',params:{action:'add_answer_angular'}}, headers:headers,
 		'add_html_answer':{method:'POST', params:{action:'add_html_answer_angular'}, headers:headers},
 		'remove_html_answer':{method:'POST', params:{action:'remove_html_answer_angular'}, headers:headers},
-		'remove_answer':{method:'POST', params:{action:'remove_answer_angular'}, headers:headers}
+		'remove_answer':{method:'POST', params:{action:'remove_answer_angular'}, headers:headers},
+		'save_sort':{method:'POST', params:{action:'sort'}, headers:headers}
 	});
 
   })

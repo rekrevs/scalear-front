@@ -19,6 +19,7 @@
 ])
   .constant('scalear_api', {host:"http://localhost:3000"})
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
+  .value('$anchorScroll',angular.noop)
   .run(function(editableOptions) {
       editableOptions.theme = 'bs2';
   })  
@@ -27,6 +28,7 @@
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
     $httpProvider.defaults.withCredentials = true;
 
+    
     $urlRouterProvider.otherwise('/');
     $stateProvider
       .state('index', {

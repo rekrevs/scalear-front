@@ -3,7 +3,8 @@
 angular.module('scalearAngularApp')
   .controller('quizDetailsCtrl',['$stateParams','$rootScope','$scope','Quiz','quiz', function ($stateParams, $rootScope,$scope, Quiz,quiz) {
     $scope.quiz = quiz.data
-    $scope.$emit('accordianUpdate',quiz.group_id); // to parent -> teacher_quiz.js controller
+    console.log()
+    $scope.$emit('accordianUpdate',quiz.data.group_id); // to parent -> teacher_quiz.js controller
     
    $scope.updateQuiz = function() {
    		

@@ -1,1 +1,6 @@
-Middle
+<div ng-repeat="question in questions">
+	<answerform quiz="question" column="content" add="add_html_answer" remove="remove_html_answer" removeq="remove_question" index="$index"/>	
+</div>
+
+<center><input type="button" value="Add Question" class="btn" ng-click="add_question()"/>
+<input type="button" value="Save" class="btn btn-primary" ng-click="save_all()"/></center>

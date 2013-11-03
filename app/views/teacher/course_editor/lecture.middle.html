@@ -9,7 +9,7 @@
 		<div ng-show="editingMode">
 			<quiz ng-dblclick="addDoubleClickBind($event)" >
 				<answervideo ng-if="selectedQuiz.quiz_type == 'invideo'" ng-repeat="answer in selectedQuiz.answers" data="answer" list="allPos" type="selectedQuiz.question_type" remove="remove_answer($index)"/>
-				<answerform  ng-if="selectedQuiz.quiz_type == 'html'" quiz="selectedQuiz" add="add_html_answer" remove="remove_html_answer"/>
+				<answerform  ng-if="selectedQuiz.quiz_type == 'html'" quiz="selectedQuiz" column="question" add="add_html_answer" remove="remove_html_answer"/>
 			</quiz>
 		</div>
 		<youtube ng-class="lecture.aspect_ratio" />

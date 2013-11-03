@@ -200,28 +200,44 @@ angular.module('scalearAngularApp')
             }
 		}
 	};
-}).directive('answerform', function(Lecture, $stateParams){
+}).directive('answerform', function(Lecture, $stateParams, CourseEditor){
 	return {
 		scope: {
 			quiz:"=",
 			add:"&",
-			remove:"&"
+			remove:"&",
+			removeq:"&",
+			column: "@",
+			index: "="
 		},
 		restrict: 'E',
 		template: "<div style='text-align:left;margin:10px;'>"+
-						"<label class='q_label'>Question</label>"+
-						"<br/>"+
-						"<input type='text' ng-model='quiz.question' value='{{quiz.question}}' />"+
+						"<label class='q_label'>Question:</label>"+
+						"<input type='text' ng-model='quiz[column]' />"+
+						// ADD QUESTION TYPE IF ITS A QUIZ QUESTION.. SELECT LIST.
+						"<br />"+
+						"<label ng-if='show_question()' class='q_label'>Question Type:</label>"+
+						"<select ng-if='show_question()' ng-model='quiz.question_type' required  class='choices'><option value='MCQ'>MCQ</option><option value='OCQ' >OCQ</option><option value='DRAG' >DRAG</option></select>"+
+						"<a ng-if='show_question()' href='' title='Delete' style='float:right;' class='delete_option' ng-click='remove_question(index)'><img src='images/trash3.png' /></a>"+
 						"<br/>"+
 						"<div class='answer_div'>"+
 								"<htmlanswer />"+
-								"<a class='add_multiple_answer' ng-click='add_answer()' href=''>Add Answer</a>"+
+								"<a class='add_multiple_answer' ng-click='add_answer(\"\",quiz)' href=''>Add Answer</a>"+
 								"<br/>"+
 							"</div>"+
 					"</div>",
 		link: function(scope, iElm, iAttrs, controller) {
-
+			console.log("QUIZZ is ");
+			console.log(scope.quiz);
+			//scope.quiz.type=scope.quiz.question_type;
 			scope.add_answer=scope.add()
+			scope.remove_question=scope.removeq()
+			
+			
+			scope.show_question = function()
+			{
+				return "content" in scope.quiz
+			}
 			
 			scope.radio_change=function(corr_ans){
 				scope.quiz.answers.forEach(function(ans){
@@ -234,39 +250,53 @@ angular.module('scalearAngularApp')
 }).directive('htmlanswer',function(){
 	return {
 	 	restrict: 'E',
-	 	template: "<div ng-switch on='quiz.question_type'>"+					
+	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+					
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
-					"<ul  ng-switch-when='drag' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
+					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
 						"<html_drag ng-repeat='answer in quiz.answers' />"+
 					"</ul>"+
 				"</div>",
 		link:function(scope){
 			scope.remove_answer=scope.remove()
+			
+			scope.show = function()
+			{
+				 return !"content" in scope.quiz
+				console.log("in show");
+			}
 		}
 	};
 }).directive('htmlMcq',function(){
-	return {
+	
+	var result={
 		restrict:'E',
-		template:"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer.answer' value='{{answer.answer}}' />"+
+		template:"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
 				"<input type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
-				"<br/>"+
-				"<input type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index)'>"+
-					"<img src='images/trash3.png' />"+
-				"</a>"
+				"<br ng-if='show()'/><input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /><a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'><img src='images/trash3.png' /></a><br/>",
+		link: function(scope)
+		{
+			//console.log("mcq answers areee ");
+			//console.log(scope.answer);
+		}
 	}
+	return result
 	
 }).directive('htmlOcq',function(){
 	return {
 		restrict:'E',
-		template:"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer.answer' value='{{answer.answer}}' />"+
+		template:"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
 				"<input type='radio' name='ocq' style='margin:5px 10px 15px;' ng-checked='answer.correct' value='true' ng-click='radio_change(answer)'/>"+
-				"<br/>"+
-				"<input type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index)'>"+
+				"<br ng-if='show()'/>"+
+				"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
+				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'>"+
 					"<img src='images/trash3.png' />"+
-				"</a>"
+				"</a><br>",
+		link: function(scope)
+		{
+			//console.log("ocq answers areee "+scope.answer);
+			//console.log(scope.answer);
+		}
 	}
 	
 }).directive('htmlDrag',function(){
@@ -275,8 +305,8 @@ angular.module('scalearAngularApp')
 		replace:true,
 		template:"<li class='ui-state-default'  >"+
 					"<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"+
-					"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer.answer' value='{{answer.answer}}' />"+
-					"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='remove_answer($index)' ><img src='images/trash3.png' /></a>"+
+					"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
+					"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='remove_answer($index, quiz)' ><img src='images/trash3.png' /></a>"+
 				"</li>"				 
 	}
 	

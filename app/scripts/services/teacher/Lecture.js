@@ -10,6 +10,7 @@ angular.module('scalearAngularApp')
 		'update': { method: 'PUT', headers:headers},
 		'destroy': { method: 'DELETE', headers:headers },
 		'show':{method: 'GET', headers:headers},
+		'new_lecture':{method:'GET', params:{action:'new_lecture_angular'}, headers:headers},
 		'get_quiz_data': {method: 'GET', params: {action: 'get_old_data_angular'}, headers:headers},
 		'get_html_data':{method:'GET', params:{action:'get_html_data_angular'}, headers:headers},
 		'new_quiz':{method: 'GET', params:{action: 'new_quiz_angular'}, headers:headers},

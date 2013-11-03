@@ -290,7 +290,7 @@ angular.module('scalearAngularApp')
 	        $q.when(getter(scope) != null).then(function(){
 
 	        	var options = getter(scope)
-	        	console.log(options)
+	        	// console.log(options)
 		        
 		        if(options.content){
 

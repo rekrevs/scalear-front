@@ -10,13 +10,13 @@
 	        	</accordion-heading>
         		<div class="outer">
 		        	<div class="inner" id="modules">
-	          			<ul class="items" id="module_items_{{module.id}}" ui-sortable="itemSortableOptions" ng-model='module.items'>
+	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child" ng-repeat= "item in module.items" >
-	             				<item name="item.name" id="item.id" class_name="item.className"></item>
+	             				<item name="item.name" id="item.id" class_name="item.className" remove="$parent['remove_'+item.className]($parent.$index, $index)" ></item>
 		            		</li>
 		            		<li class="item-buttons">
 					            <center>
-					            	<button_link title="Add Lecture" class="btn-mini adding"/>
+					            	<button_link title="Add Lecture" class="btn-mini adding" action="add_lecture($parent.$index)"/>
 					            	<button_link title="Add Quiz"    class="btn-mini adding"/>
 					            	<button_link title="Add Survey"  class="btn-mini adding"/>
 				                </center>	           

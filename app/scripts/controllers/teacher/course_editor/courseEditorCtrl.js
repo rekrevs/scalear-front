@@ -1,23 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', function ($rootScope, $stateParams, $scope, $state, Course, Module) {
+    .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture) {
 
-    $scope.open_id="-1";
-    $scope.open={};
-    $scope.oneAtATime = true;
-
-	$rootScope.$on('accordianUpdate', function(event, message) {
-			$scope.open_id=message;
-			$scope.open[message]= true;
-	});
-
-	$rootScope.$on("detailsUpdate", function(event, args) {
-  		init();
-  		console.log("event emitted: title in left bar");
-    });
-
-
+ 	/***********************Functions*******************************/
  	var init = function(){
  		Course.get_course_editor(function(data){
 	 		$scope.course=data.course
@@ -42,7 +28,7 @@ angular.module('scalearAngularApp')
     			$scope.showLoading=false
 	    	}, 
 	    	function(){
-
+	    		alert("Failed to create module, please check network connection")
 	    	}
 		);
     }
@@ -70,7 +56,62 @@ angular.module('scalearAngularApp')
 		}
     }
 
- 	init();
+    $scope.add_lecture=function(module_index){
+    	console.log("adding lec "+ module_index)
+    	$scope.showLoading=true
+    	Lecture.new_lecture({group: $scope.modules[module_index].id},
+	    	function(lecture){
+	    		console.log(lecture)
+	    	    $scope.modules[module_index].items.push(lecture)
+    			$scope.showLoading=false
+	    	}, 
+	    	function(){
+	    		alert("Failed to create lecture, please check network connection")
+	    	}
+		);
+    }
+
+    $scope.remove_lecture=function(module_index, item_index){
+    	console.log("remove lec " + module_index + " " + item_index) 
+    // 	event.preventDefault();
+  		// event.stopPropagation();   	
+    	if(confirm("Are you sure you want to delete lecture?")){
+	    	Lecture.destroy(
+	    		{lecture_id: $scope.modules[module_index].items[item_index].id},
+	    		function(response){
+	    			 console.log(response)
+	    			 $scope.modules[module_index].items.splice(item_index, 1)
+	    			 $state.go('course.course_editor')
+	    			// if(response.error.lecture_quiz_exist)
+	    			// 	console.log("Sorry, You must delete all items in the module before deleting the module itself.")
+	    			// else{
+	    			 	
+	    			// 	$state.go('course.course_editor')
+	    			// }
+	    		},
+	    		function(){
+	    			alert("Failed to delete lecture, please check network connection")
+	    		}
+			);
+		}
+    }
+
+    /*************************************************************************************/
+
+
+    $scope.open_id="-1";
+    $scope.open={};
+    $scope.oneAtATime = true;
+
+	$rootScope.$on('accordianUpdate', function(event, message) {
+			$scope.open_id=message;
+			$scope.open[message]= true;
+	});
+
+	$rootScope.$on("detailsUpdate", function(event, args) {
+  		init();
+  		console.log("event emitted: title in left bar");
+    });
 
  	$scope.moduleSortableOptions={
  		axis: 'y',
@@ -91,6 +132,8 @@ angular.module('scalearAngularApp')
 		opacity: 0.4,
 		scroll: true
  	}
+
+ 	init();
 
 
  	

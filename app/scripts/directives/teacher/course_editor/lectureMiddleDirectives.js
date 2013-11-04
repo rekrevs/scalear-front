@@ -85,6 +85,7 @@ angular.module('scalearAngularApp')
 }).directive('answervideo', function($compile){
 	return {
 		 scope: {
+		 	quiz:"=",
 		 	data:"=",
 		 	type:"=",
 		 	list:'=',
@@ -98,16 +99,18 @@ angular.module('scalearAngularApp')
 		 				"<drag ng-switch-when='drag' />"+
 	 				"</div>",
 	};
-}).directive('answer', function($compile){
+}).directive('answer', function($compile, $rootScope){
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div><img ng-src='images/{{imgName}}' ng-class=imgClass ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculate_position'}\" pop-over='popover_options' unique='true'/></div>",
+		 template: "<img ng-src='images/{{imgName}}' ng-class=imgClass ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculate_position'}\" pop-over='popover_options' unique='true'/>",
 
 		link: function(scope, element, attrs, controller) {
 
 			//===FUNCTIONS===//
 			scope.setQuizImg=function(){
+				console.log("image change")
+				console.log(scope.data.correct)
 				if(scope.type == "OCQ")
 					scope.imgName = scope.data.correct? 'button_green.png' : 'button8.png';
 				else
@@ -115,9 +118,23 @@ angular.module('scalearAngularApp')
 			}
 
 			scope.calculate_position=function(){
+				console.log(scope.data)
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() - 26);
 			}
+
+			scope.radio_change=function(corr_ans){
+				console.log("radio_change")
+				scope.quiz.answers.forEach(function(ans){
+					ans.correct=false
+				})
+				corr_ans.correct=true
+				$rootScope.$emit("radio_change")
+			}
+			
+			$rootScope.$on("radio_change",function(){
+				scope.setQuizImg()
+			})
 			//===============//
 			
 			// COULD BE FILTER //	
@@ -134,7 +151,7 @@ angular.module('scalearAngularApp')
 
 			scope.setQuizImg()						
 
-			var template = "<p>Correct:<input class='must_save_check' ng-change='setQuizImg()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' /><br>Answer: <textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/><br>Explanation:<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} /><br><input type='button' ng-click='remove()' class='btn btn-danger remove_button' value='Remove'/></p>"
+			var template = "<p>Correct:<input class='must_save_check' ng-change='radio_change(data);setQuizImg()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct'  /><br>Answer: <textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/><br>Explanation:<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} /><br><input type='button' ng-click='remove()' class='btn btn-danger remove_button' value='Remove'/></p>"
 
            	scope.popover_options={
             	html:true,

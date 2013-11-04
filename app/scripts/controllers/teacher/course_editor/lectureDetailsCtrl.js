@@ -5,13 +5,23 @@ angular.module('scalearAngularApp')
 
 	console.log("made it in details!!");
     $scope.lecture=lecture.data
+
+	$scope.screen_options = [
+		{value: "widescreen", text: 'widescreen'},
+		{value: "smallscreen", text: 'smallscreen'}
+	]
+
 	getYoutubeDetails();
 
 	$scope.updateLecture= function(){
 		console.log($scope.lecture)
+		var modified_lecture=angular.copy($scope.lecture);
+   		delete modified_lecture["created_at"];
+   		delete modified_lecture["updated_at"];
+   		delete modified_lecture["id"];
 		Lecture.update(
 			{lecture_id:$scope.lecture.id},
-			{lecture:$scope.lecture},
+			{lecture:modified_lecture},
 			function(data){	
 				$scope.$emit('detailsUpdate')			
 				$scope.$emit('accordianUpdate',$scope.lecture.group_id);				
@@ -24,6 +34,10 @@ angular.module('scalearAngularApp')
 
 	$scope.updateLectureUrl= function(){
 		urlFormat()
+		$scope.updateLectureVideo()
+	}
+
+	$scope.updateLectureVideo= function(){
 		$scope.updateLecture()
 		$scope.$emit('refreshVideo')
 	}

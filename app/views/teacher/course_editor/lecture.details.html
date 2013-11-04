@@ -15,9 +15,16 @@
     			<details-text value="lecture.url" save="updateLectureUrl()" ></details-text> 
 			</td>
 		</tr>
+
 		<tr>
 			<td>Thumbnail:</td>
 			<td id="lecture_thumbnail" ng-bind-html="video.thumbnail" ></td>
+		</tr>
+		<tr>
+			<td>Title:</td>
+			<td>
+				<label style ="width:140px;font-size:10px;cursor:text;">{{video.title}}</label>
+			</td>
 		</tr>
 		<tr>
 			<td>Author:</td>
@@ -26,30 +33,25 @@
 			</td>
 		</tr>
 		<tr>
-			<td>Detected Aspect Ratio:</td>
-			<td>
-				<label style="width:140px;font-size:10px;cursor:text;">{{lecture.aspect_ratio}}</label>
-			</td>
-		</tr>
-		<tr>
-			<td>Aspect Ratio:</td>
-			<td>
-				<select id="lecture_aspect_ratio" name="lecture[aspect_ratio]" style="width: 120px;" >
-					<option value="widescreen">widescreen</option>
-					<option value="smallscreen" ng-selected="lecture.aspect_ratio=='smallscreen'">smallscreen</option>
-				</select>
-			</td>
-		</tr>
-		<tr>
 			<td>Duration:</td>
 			<td>
 				<label style="width:140px;font-size:10px;cursor:text;">{{lecture.duration}} Seconds</label>
 			</td>
 		</tr>
-		<tr>
-			<td>Title:</td>
+<!-- 		<tr>
+			<td>Detected Aspect Ratio:</td>
 			<td>
-				<label style ="width:140px;font-size:10px;cursor:text;">{{video.title}}</label>
+				<label style="width:140px;font-size:10px;cursor:text;">{{lecture.aspect_ratio}}</label>
+			</td>
+		</tr> -->
+		<tr>
+			<td>Aspect Ratio:</td>
+			<td>
+				<details-select value="lecture.aspect_ratio" options="screen_options" save="updateLectureVideo()"></details-select>
+				<!-- <select style="width: 120px;" >
+					<option value="widescreen">widescreen</option>
+					<option value="smallscreen" ng-selected="lecture.aspect_ratio=='smallscreen'">smallscreen</option>
+				</select> -->
 			</td>
 		</tr>
 		<tr>

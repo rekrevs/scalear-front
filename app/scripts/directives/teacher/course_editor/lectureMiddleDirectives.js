@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 		return{
 			transclude: true,
 			restrict: "E",
-			template: '<div class="ontop3" ng-class="lecture.aspect_ratio" style="width:500px;height:306px;margin-top:0px;" >'+
+			template: '<div class="ontop3" ng-class="lecture.aspect_ratio" style="margin-top:0px;" >'+
 						'<div class="ontop2 {{lecture.aspect_ratio}}" ng-class="{ontop2_big: fullscreen}" style="width:500px;position:absolute;border:8px solid;margin-top:0px;" ng-transclude>'+
 						'</div>'+
 						'<div id="side_bar" class="sidebar_big" ng-show="fullscreen" ui-view="quizList" ></div>'+
@@ -28,7 +28,7 @@ angular.module('scalearAngularApp')
 }).directive('youtube',function(){
 		return {
 			restrict: 'E', 
-			template: '<div id="youtube" style="width:500px;height:306px;"></div>',
+			template: '<div id="youtube" ng-class="lecture.aspect_ratio"></div>',
 			link: function($scope, element){
 			  	$scope.load_video();
 		    }

@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
   })
   .directive('detailsDate', function ($timeout) {
     return {
-      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-date="date" onaftersave="save_data()">{{ (date | date:"dd/MM/yyyy") || \'empty\' }}<i ng-class="overclass"></i></a>',
+      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-date="date" onaftersave="save_data()">{{ (date | date:"MM/dd/yyyy") || \'empty\' }}<i ng-class="overclass"></i></a>',
       restrict: 'E',
       scope:{
       	date: "=",
@@ -82,6 +82,29 @@ angular.module('scalearAngularApp')
       	min: "@"
       },
       link:function(scope){
+        scope.save_data=function(){
+          $timeout(function(){
+            scope.save()
+          })
+        }
+      }
+    };
+
+  })
+  .directive('detailsSelect', function ($timeout, $filter) {
+    return {
+      template: '<a href="#" editable-select="value" buttons="no" e-ng-options="s.value as s.text for s in options" onaftersave="save_data()">{{ showStatus() }}<i ng-class="overclass"></i></a> ',
+      restrict: 'E',
+      scope:{
+        value: "=",
+        options: "=",
+        save: "&",        
+      },
+      link:function(scope){
+        scope.showStatus = function() {
+          var selected = $filter('filter')(scope.options, {value: scope.value});
+          return selected.length ? selected[0].text : 'Not set';
+        };
         scope.save_data=function(){
           $timeout(function(){
             scope.save()

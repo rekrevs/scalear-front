@@ -11,6 +11,7 @@
   'ui.bootstrap.collapse',
   'ui.bootstrap.transition', 
   'ui.bootstrap.datepicker',
+  'ui.bootstrap.alert',
   'ui.sortable',
   'ngDragDrop', 
   'pasvaz.bindonce', 

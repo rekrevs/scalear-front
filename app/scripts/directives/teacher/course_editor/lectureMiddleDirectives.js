@@ -208,12 +208,14 @@ angular.module('scalearAngularApp')
 			remove:"&",
 			removeq:"&",
 			column: "@",
-			index: "="
+			index: "=",
+			submitted: "=",
 		},
 		restrict: 'E',
-		template: "<div style='text-align:left;margin:10px;'>"+
+		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
 						"<label class='q_label'>Question:</label>"+
-						"<input type='text' ng-model='quiz[column]' />"+
+						"<input required name='qlabel' type='text' ng-model='quiz[column]' />"+
+						"<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'>Required!</span>"+
 						// ADD QUESTION TYPE IF ITS A QUIZ QUESTION.. SELECT LIST.
 						"<br />"+
 						"<label ng-if='show_question()' class='q_label'>Question Type:</label>"+
@@ -225,7 +227,7 @@ angular.module('scalearAngularApp')
 								"<a class='add_multiple_answer' ng-click='add_answer(\"\",quiz)' href=''>Add Answer</a>"+
 								"<br/>"+
 							"</div>"+
-					"</div>",
+					"</div></ng-form>",
 		link: function(scope, iElm, iAttrs, controller) {
 			console.log("QUIZZ is ");
 			console.log(scope.quiz);
@@ -239,12 +241,7 @@ angular.module('scalearAngularApp')
 				return "content" in scope.quiz
 			}
 			
-			scope.radio_change=function(corr_ans){
-				scope.quiz.answers.forEach(function(ans){
-					ans.correct=false
-				})
-				corr_ans.correct=true
-			}
+			
 		}
 	};
 }).directive('htmlanswer',function(){
@@ -260,20 +257,53 @@ angular.module('scalearAngularApp')
 		link:function(scope){
 			scope.remove_answer=scope.remove()
 			
+			
+			scope.updateValues= function()
+			{
+				console.log("in value update")
+				console.log(scope.quiz.answers);
+				scope.values=0
+				for(var element in scope.quiz.answers)
+				{
+					console.log(scope.quiz.answers[element].correct)
+					if(scope.quiz.answers[element].correct==true)
+					{
+						console.log("in true");
+						scope.values+=1
+					}
+				}
+				console.log(scope.values)
+				//scope.values= [];
+			}
+			
+			
+			scope.radio_change=function(corr_ans){
+				scope.quiz.answers.forEach(function(ans){
+					ans.correct=false
+				})
+				corr_ans.correct=true
+				
+				scope.updateValues();
+			}
+			
 			scope.show = function()
 			{
 				 return !"content" in scope.quiz
 				console.log("in show");
 			}
+			
+			scope.updateValues();
 		}
 	};
 }).directive('htmlMcq',function(){
 	
 	var result={
 		restrict:'E',
-		template:"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
-				"<input type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
-				"<br ng-if='show()'/><input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /><a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'><img src='images/trash3.png' /></a><br/>",
+		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
+				"<input ng-change='updateValues()' atleastone type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
+				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
+				"<span class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone'>Choose atleast one</span>"+
+				"<br ng-if='show()'/><input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /><a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'><img src='images/trash3.png' /></a><br/></ng-form>",
 		link: function(scope)
 		{
 			//console.log("mcq answers areee ");
@@ -285,13 +315,15 @@ angular.module('scalearAngularApp')
 }).directive('htmlOcq',function(){
 	return {
 		restrict:'E',
-		template:"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
-				"<input type='radio' name='ocq' style='margin:5px 10px 15px;' ng-checked='answer.correct' value='true' ng-click='radio_change(answer)'/>"+
+		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
+				"<input atleastone type='radio' name='ocq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=\"true\" ng-click='radio_change(answer)'/>"+
+				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
+				"<span class='help-inline' ng-show='submitted && aform.ocq.$error.atleastone'>Check one answer</span>"+
 				"<br ng-if='show()'/>"+
 				"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
 				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'>"+
 					"<img src='images/trash3.png' />"+
-				"</a><br>",
+				"</a><br></ng-form>",
 		link: function(scope)
 		{
 			//console.log("ocq answers areee "+scope.answer);
@@ -304,12 +336,33 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		replace:true,
 		template:"<li class='ui-state-default'  >"+
+					"<ng-form name='aform'>"+
 					"<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"+
-					"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
+					"<input type='text' required name='answer' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
+					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
 					"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='remove_answer($index, quiz)' ><img src='images/trash3.png' /></a>"+
+					"</ng-form>"+
 				"</li>"				 
 	}
 	
+}).directive('atleastone', function() {
+  return {
+  	require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+    
+      scope.validate = function(value) {
+   				 if (scope.values<1) {
+        			ctrl.$setValidity('atleastone', false);
+    			} else {
+        			ctrl.$setValidity('atleastone', true);
+    			}
+		}
+		
+		scope.$watch('values',function(){
+			scope.validate();
+		});
+    }
+  };
 }).directive('popOver',function ($parse, $compile, $q) {
     return{
   		restrict: 'A',

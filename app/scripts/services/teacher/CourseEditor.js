@@ -14,12 +14,15 @@ angular.module('scalearAngularApp')
 			console.log("here");
 			answers=[answers];
 		}
-			answers.forEach(function(answer){
-				var new_ans=x.new_answer(answer,"","","","",type, question_id);
-				new_ans.id=id;
+			
+			for(var answer in answers)
+			{
+				var new_ans=x.new_answer(answers[answer],"","","","",type, question_id);
+				if(answer==0)
+					new_ans.id=id;
 				console.log(new_ans);
 				allAnswers.push(new_ans);
-			});
+			}
 		return allAnswers;
 	},
 

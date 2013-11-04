@@ -25,11 +25,11 @@ angular.module('scalearAngularApp')
 				console.log(data)
 			},
 			function(){ //error
-
+				alert("Could not update quiz, please check your internet connection")
 			}
 		);
 	}
- 	var validate_time=function(time) {
+ 	$scope.validate_time=function(time) {
  		
 		var intRegex = /^\d\d:\d\d:\d\d$/;  //checking format
 		if(intRegex.test(time)) { 
@@ -38,38 +38,48 @@ angular.module('scalearAngularApp')
 		    var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
 		    var seconds = parseInt(hhmm[2]);
 		    // check if hours or minutes are incorrect
+		    console.log()
 		    var total_duration=(hours*60*60)+(minutes*60)+(seconds);
+		    console.log(total_duration)
+		    console.log($scope.player.duration()-1)
 		    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
-	       		$scope.alertMsg="Incorrect Time Format"
-	        	return false;
+	       		return "Incorrect Time Format"
+	        	// return false;
 		    }
 		    else if( ($scope.player.duration()-1) < total_duration || total_duration <= 0 ){
-	       		$scope.alertMsg="Time Outside Video Range"
-	        	return false;
+	       		return "Time Outside Video Range"
+	        	// return false;
 		    }
-		    else
-		    	return true;
 		}
 	    else{
-	   		$scope.alertMsg="Incorrect Time Format"
-	    	return false;
+	   		return "Incorrect Time Format"
+	    	// return false;
 	    }
 	}
 
-	$scope.validate_edit=function(quiz){
-		if(!quiz.formatedTime)
-			quiz.formatedTime = $filter('format')(quiz.time)
+	$scope.save_edit=function(quiz){
 
-		if(validate_time(quiz.formatedTime)){				
-			var a = quiz.formatedTime.split(':'); // split it at the colons			
-			var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); // minutes are worth 60 seconds. Hours are worth 60 minutes.
-			quiz.time = seconds
-			$scope.alertMsg=""
-			update_online_quiz(quiz)	
-			return false			
-		}
-		else
-			return true		
+		var a = quiz.formatedTime.split(':'); // split it at the colons			
+		var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); // minutes are worth 60 seconds. Hours are worth 60 minutes.
+		quiz.time = seconds
+		// $scope.alertMsg=""
+		update_online_quiz(quiz)
+		// if(!quiz.formatedTime)
+		// 	quiz.formatedTime = $filter('format')(quiz.time)
+
+		// var alertMsg = $scope.validate_time(quiz.formatedTime)
+		// console.log(alertMsg)
+
+		// if(!alertMsg){				
+		// 	var a = quiz.formatedTime.split(':'); // split it at the colons			
+		// 	var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); // minutes are worth 60 seconds. Hours are worth 60 minutes.
+		// 	quiz.time = seconds
+		// 	$scope.alertMsg=""
+		// 	update_online_quiz(quiz)	
+		// 	// return true			
+		// }
+		// else
+		// 	return alertMsg		
 	}
 
 	$scope.delete_quiz=function(index){

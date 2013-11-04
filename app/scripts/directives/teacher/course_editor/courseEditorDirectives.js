@@ -58,10 +58,12 @@ angular.module('scalearAngularApp')
 	return {
 		 scope: {
 		 	value:"=",
-		 	save:"&"
+		 	save:"&",
+		 	validation:"&",
+		 	action:"&"
 		 },
 		 restrict: 'E', 
-		 template: 	'<div ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" onaftersave="save_data()" ng-click="textBtnForm.$show()">'+
+		 template: 	'<div ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" onbeforesave="validation()($data)" onaftersave="save_data()" ng-click="action()" ng-dblclick="textBtnForm.$show()" style="cursor:pointer;">'+
 			 			'{{ value || "empty" }}'+
 			 			'<i ng-class="overclass"></i>'+
 	 				'</div>',

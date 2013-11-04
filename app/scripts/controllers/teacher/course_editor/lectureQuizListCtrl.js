@@ -19,7 +19,7 @@ angular.module('scalearAngularApp')
 	var update_online_quiz=function(quiz){
 		Online_quizzes.update(
 			{param: quiz.id},
-			{ online_quiz: {time:Math.round(quiz.time), question:quiz.question}},
+			{online_quiz: {time:Math.round(quiz.time), question:quiz.question}},
 			function(data){ //success
 				console.log(data)
 			},
@@ -43,16 +43,13 @@ angular.module('scalearAngularApp')
 		    console.log($scope.player.duration()-1)
 		    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
 	       		return "Incorrect Time Format"
-	        	// return false;
 		    }
 		    else if( ($scope.player.duration()-1) < total_duration || total_duration <= 0 ){
 	       		return "Time Outside Video Range"
-	        	// return false;
 		    }
 		}
 	    else{
 	   		return "Incorrect Time Format"
-	    	// return false;
 	    }
 	}
 

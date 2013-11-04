@@ -197,7 +197,9 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.remove_html_answer = function(index){
-		if(confirm("Are you sure?"))
+		if($scope.selectedQuiz.answers.length <=1)
+			alert("Cannot delete, there must be alteast one answer")
+		else if(confirm("Are you sure?"))
 			if ($scope.selectedQuiz.question_type == 'drag')
 				$scope.selectedQuiz.answers.splice(index, 1);
 			else	
@@ -283,11 +285,11 @@ angular.module('scalearAngularApp')
 		);
 	}
 
-	var update_answers=function(ans){
+	var update_answers=function(ans, ques){
 		console.log("savingAll")
 		Lecture.update_answers(
 			{lecture_id:$scope.lecture.id},
-			{answer: ans},
+			{answer: ans, question: ques},
 			function(data){ //success
 				console.log(data)
 			},
@@ -308,14 +310,13 @@ angular.module('scalearAngularApp')
 					return 
 				}
 			})
-			//obj.id = $scope.selectedQuiz.answers[0].id 				
 			data=[obj]
 		}
 		else
 			data = $scope.selectedQuiz.answers
 
 		console.log(data)
-		update_answers(data);
+		update_answers(data, $scope.selectedQuiz.question);
 	}
 
 	$scope.exit_btn = function(){

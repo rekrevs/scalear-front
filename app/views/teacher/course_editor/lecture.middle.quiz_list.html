@@ -7,7 +7,7 @@
 		<td></td>
 	</tr>
 	<tr ng-repeat="quiz in quizList|orderBy:'time'" ng-class="{active: quiz.id == $parent.selectedQuiz.id}">
-		<td>
+		<td style="width:50%">
 			<editable_text value="quiz.question" save="save_edit(quiz)" action="showOnlineQuiz(quiz);">
 		</td>
 		<td ng-init="quiz.formatedTime = (quiz.time|format)" style="width:20%">			

@@ -6,13 +6,13 @@ angular.module('scalearAngularApp')
 		$scope.$emit('accordianUpdate',$scope.module.id);
     	$scope.add_document=function(){
     		console.log($scope.module.id)
-    		$scope.showLoading=true
+    		$scope.showDocumentLoading=true
     		Module.new_document({module_id:$scope.module.id},
     			{},
     			function(doc){
     				console.log(doc)
     				$scope.module.documents.push(doc)
-    				$scope.showLoading=false
+    				$scope.showDocumentLoading=false
     			}, 
     			function(){
     				alert("Failed to add document, please check your internet connection")

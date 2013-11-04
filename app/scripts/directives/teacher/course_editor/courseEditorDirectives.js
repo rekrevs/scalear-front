@@ -91,7 +91,7 @@ angular.module('scalearAngularApp')
 			action:"&"
 		},
 		restrict:'E',
-		template: 	'<a style="float:right;width:20px;" title="delete" ng-click="action()">'+
+		template: 	'<a style="float:right;width:20px;cursor:pointer;" title="delete" ng-click="action()">'+
 						'<img alt="Trash" ng-src="images/trash_{{size}}.png">'+
 					'</a>'
 	}

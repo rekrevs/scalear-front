@@ -17,7 +17,6 @@ angular.module('scalearAngularApp')
 	);	
 
 	var update_online_quiz=function(quiz){
-		console.log(quiz)
 		Online_quizzes.update(
 			{param: quiz.id},
 			{ online_quiz: {time:Math.round(quiz.time), question:quiz.question}},
@@ -62,24 +61,7 @@ angular.module('scalearAngularApp')
 		var a = quiz.formatedTime.split(':'); // split it at the colons			
 		var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); // minutes are worth 60 seconds. Hours are worth 60 minutes.
 		quiz.time = seconds
-		// $scope.alertMsg=""
 		update_online_quiz(quiz)
-		// if(!quiz.formatedTime)
-		// 	quiz.formatedTime = $filter('format')(quiz.time)
-
-		// var alertMsg = $scope.validate_time(quiz.formatedTime)
-		// console.log(alertMsg)
-
-		// if(!alertMsg){				
-		// 	var a = quiz.formatedTime.split(':'); // split it at the colons			
-		// 	var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); // minutes are worth 60 seconds. Hours are worth 60 minutes.
-		// 	quiz.time = seconds
-		// 	$scope.alertMsg=""
-		// 	update_online_quiz(quiz)	
-		// 	// return true			
-		// }
-		// else
-		// 	return alertMsg		
 	}
 
 	$scope.delete_quiz=function(index){

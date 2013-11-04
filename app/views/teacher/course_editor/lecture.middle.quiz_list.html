@@ -1,37 +1,21 @@
-
-<p style='list-style-type: none' id='attention'>
-	<li style='font-size:10px;' ng-show="pleaseWait">
-		<center><img src='images/loading_small.gif'/>Please Wait</center>
-	</li>
-</p>
-<!-- <% if defined?@alert and !@alert.blank? %> -->
-<!-- <div class="alert alert-info"><button type="button" class="close" data-dismiss="alert">×</button><%= @alert %></div> -->
-<!-- <% end %> -->
-<div id="val_problem">
-	<div class='alert alert-danger' ng-show='alertMsg'><b>{{alertMsg}}</b></div>
-</div>
+<loading size="small" show="pleaseWait"/>
 <table class="table">
 	<tr>
 		<td>Question</td>
 		<td>Time</td>
+		<td>Type</td>
 		<td></td>
 	</tr>
 	<tr ng-repeat="quiz in quizList|orderBy:'time'" ng-class="{active: quiz.id == $parent.selectedQuiz.id}">
-		<td class="quiz_title">
+		<td>
 			<editable_text value="quiz.question" save="save_edit(quiz)" action="showOnlineQuiz(quiz);">
-			<!-- <a class="question_link" ng-click="showOnlineQuiz(quiz);" ng-hide='editingMode' >{{quiz.question}}</a>
-			<textarea value={{quiz.question}} type="text" style="width:160px;" ng-model="quiz.question" ng-show='editingMode'/> -->
 		</td>
 		<td ng-init="quiz.formatedTime = (quiz.time|format)" style="width:20%">			
 			<editable_text value="quiz.formatedTime" validation="validate_time" save="save_edit(quiz)" action="showOnlineQuiz(quiz);">
-			<!-- <b ng-hide='editingMode'> {{quiz.time|format}} </b>
-			<input value={{quiz.time|format}}  type="text" style="width:60px;" ng-model="quiz.formatedTime" ng-show='editingMode'/> -->
 		</td>
 		<td>{{quiz.question_type}}</td>
 		<td>
-			<a class="delete_online_quiz" style="float:right;width:20px;" ng-click="delete_quiz($index)" ng-hide='editingMode'><img alt="Trash2" src="images/trash2.png" ></a>
-			<!-- <a class="edit_question" href="" ng-click="edit_quiz(quiz); editingMode= !editingMode" style="float:right;" ng-hide='editingMode'><img src="images/pencil3.png"/></a>
-			<a class="btn btn-mini" href="" ng-click="editingMode=validate_edit(quiz)" style="float:right;" ng-show='editingMode'>Done</a> -->
+			<delete_button size="big" action="delete_quiz($index)" />
 		</td>
 	</tr>
 </table>

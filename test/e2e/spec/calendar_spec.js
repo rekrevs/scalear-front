@@ -91,7 +91,7 @@ describe('Scalear 2.0', function() {
             ptor.get('/#/teacher/calendar');
             ptor.findElements(protractor.By.className('fc-event-title')).
                 then(function(promise){
-                    expect(promise.length).toEqual(2)
+                    expect(promise.length).toEqual(4)
                 });
         }, 20000);
         it ('should display all the events for the current month', function() {

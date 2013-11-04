@@ -8,6 +8,21 @@ describe('Scalear 2.0', function() {
 //			ptor.get('/#/teacher/calendar');
 //		});
 
+        var current_date = new Date();
+        var month = new Array();
+        month[0] = "January";
+        month[1] = "February";
+        month[2] = "March";
+        month[3] = "April";
+        month[4] = "May";
+        month[5] = "June";
+        month[6] = "July";
+        month[7] = "August";
+        month[8] = "September";
+        month[9] = "October";
+        month[10] = "November";
+        month[11] = "December";
+
         var findByName = function(name) {
             return driver.findElement(protractor.By.name(name));
         };
@@ -45,7 +60,7 @@ describe('Scalear 2.0', function() {
             ptor.get('/#/teacher/calendar');
             ptor.findElement(protractor.By.tagName('h2')).
                 then(function(promise){
-                    expect(promise.getText()).toEqual('November 2013')
+                    expect(promise.getText()).toEqual(month[current_date.getMonth()]+" "+current_date.getFullYear())
                 });
         }, 10000);
 

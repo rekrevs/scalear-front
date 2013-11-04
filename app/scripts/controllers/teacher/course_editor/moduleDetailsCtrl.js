@@ -3,6 +3,28 @@
 angular.module('scalearAngularApp')
     .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Documents', 'module', function ($scope, $state, Module, Documents, module) {
       $scope.module=module.data
+
+      $scope.updateModule=function(){
+        console.log("module update")
+        var modified_module=angular.copy($scope.module);
+        delete modified_module["id"];
+        delete modified_module["documents"];
+        delete modified_module["created_at"];
+        delete modified_module["updated_at"];
+        delete modified_module["total_time"];
+        delete modified_module["total_questions"];
+        delete modified_module["total_quiz_questions"];
+        Module.update(
+          {module_id: $scope.module.id},
+          {group: modified_module},
+          function(response){
+            console.log(response)
+          },
+          function(){
+            alert("Failed to update module, please check your internet connection")
+          }
+        );
+      }
     }]);
 
 

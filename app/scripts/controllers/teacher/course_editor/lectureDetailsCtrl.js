@@ -9,9 +9,14 @@ angular.module('scalearAngularApp')
 
 	$scope.updateLecture= function(){
 		console.log($scope.lecture)
+		var modified_lecture=angular.copy($scope.lecture);
+		delete modified_lecture["id"];
+		delete modified_lecture["created_at"];
+		delete modified_lecture["updated_at"];
+		delete modified_lecture["className"];
 		Lecture.update(
 			{lecture_id:$scope.lecture.id},
-			{lecture:$scope.lecture},
+			{lecture:modified_lecture},
 			function(data){	
 				$scope.$emit('detailsUpdate')			
 				$scope.$emit('accordianUpdate',$scope.lecture.group_id);				

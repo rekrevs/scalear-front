@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
   })
   .directive('detailsDate', function ($timeout) {
     return {
-      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-date="date" onaftersave="save_data()">{{ (date | date:"dd/MM/yyyy") || \'empty\' }}<i ng-class="overclass"></i></a>',
+      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-date="date" onaftersave="save_data()">{{ (date | date:"MM/dd/yyyy") || \'empty\' }}<i ng-class="overclass"></i></a>',
       restrict: 'E',
       scope:{
       	date: "=",

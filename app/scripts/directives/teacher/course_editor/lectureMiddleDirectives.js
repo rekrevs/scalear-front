@@ -33,14 +33,6 @@ angular.module('scalearAngularApp')
 			  	$scope.load_video();
 		    }
 		};
-}).directive('loadingBig',function(){
-	return {		
-		 restrict: 'E',
-		 template: '<div id="loading" ng-style="loadingStyle">'+
- 						'<img src="images/loading2.gif" id ="loading-image" />'+
-  						'<b id="please" ng-style="pleaseStyle">Please wait... </b>'+
-					'</div>',
-	};
 }).directive('editPanel',function(){
 	return {		
 		 restrict: 'E',

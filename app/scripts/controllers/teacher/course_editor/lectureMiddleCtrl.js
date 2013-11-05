@@ -16,38 +16,17 @@ angular.module('scalearAngularApp')
 			resize();
 	};
 
-	var loadingLeft = $("#middle").position().left
-	var loadingTop  = $("#middle").position().top
-	var loadingHeight=$("#middle").height();
-	var loadingWidth =$("#details").position().left - $("#middle").position().left
-	
-	$scope.loadingStyle={
-		'left':loadingLeft, 
-		'top': loadingTop,
-		'width': loadingWidth,
-		'height': loadingHeight
-	}
-
-	var newh=$("#loading-image").position().top + $("#loading-image").height();
-	var neww=$("#loading-image").position().left - 10;
-
-	$scope.pleaseStyle={
-		'top': newh,
-		'left': neww
-	}
-
     $state.go('course.course_editor.lecture.quizList');
 
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////FUNCTIONS//////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////FUNCTIONS/////////////////////////////////////////////
+
 	$scope.load_video = function(){
-		$scope.hideLoading=false;
+		$scope.hide_overlay=false;
 		if($scope.player)
 			Popcorn.destroy($scope.player)
 		$scope.player = Popcorn.youtube( "#youtube", $scope.lecture.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
 		$scope.player.controls( false ); 
-		$scope.player.on("loadeddata", function(){$scope.hideLoading=true; $scope.$apply();});
+		$scope.player.on("loadeddata", function(){$scope.hide_overlay=true; $scope.$apply();});
 	}
 	
 	$scope.insert_quiz=function(quizType, questionType){
@@ -71,7 +50,6 @@ angular.module('scalearAngularApp')
 
 	}
 
-	/*, quiz_name ,quiz_duration ,quiz_id, lecture_id, ques_type, quiz_type, quiz_question*/
 	$scope.showOnlineQuiz= function(quiz){
 
 		console.log("SHOWONLINEQUIX")

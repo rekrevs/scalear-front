@@ -75,15 +75,34 @@ angular.module('scalearAngularApp')
 			}
 		}
 	};
-}).directive('loading',function(){
+})
+.directive('overlay',function(){
+	return{
+		transclude: true,
+		restrict: 'E',
+	 	replace:true,
+	 	template: '<div class="loading_big" ng-transclude></div>',
+		link:function(scope, element){
+			var parent = element.parent();
+	        scope.getWidth = function(){
+                return parent.width()
+            };
+	        scope.$watch(scope.getWidth, function (newValue, oldValue) {
+	        	 element.css("width", newValue)
+	        });
+		}
+	}
+})
+.directive('loading',function(){
 	return {
 		scope:{
 			size:'@',
 			show:"="
-		},
-		restrict:'E',
-		template: '<div ng-show="show" ><img ng-src="images/loading_{{size}}.gif"/> Please wait....</div>'
-	}
+		},		
+	 	restrict: 'E',
+	 	replace:true,
+	 	template: '<div ng-show="show"><img ng-src="images/loading_{{size}}.gif" ng-class=\'{loading_image: size=="big"}\' /></br><b> Please wait...</b></div>'
+	};
 }).directive('deleteButton',function(){
 	return {
 		scope:{

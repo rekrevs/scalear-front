@@ -138,3 +138,18 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 .handle{
 	vertical-align: top;
 }
+
+.loading_big {
+  height: 200%;
+  position: absolute;
+  display: block;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+  text-align: center;
+}
+
+.loading_image {
+  width:80px;
+  z-index: 100;
+}

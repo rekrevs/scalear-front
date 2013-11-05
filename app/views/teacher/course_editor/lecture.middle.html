@@ -1,6 +1,7 @@
 <link rel="stylesheet" href="styles/teacher/course_editor.lecture.css" type="text/css" media="screen" />
-
-<loading_big ng-hide="hideLoading" />
+<overlay ng-hide="hide_overlay">
+	<loading size="big" show="true" style="position:absolute;top:30%;left:42%;z-index: 1;" />
+</overlay>
 <center><h3>{{lecture.name}}</h3></center>
 <div id="notify"></div>
 <center ng-hide='true' ><a class ="btn big fullscreenLink" ng-click="resize()">Edit In Fullscreen</a></center>

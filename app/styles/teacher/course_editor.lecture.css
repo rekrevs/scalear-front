@@ -123,15 +123,12 @@
   background-color: rgb(252,248,227);
 }
 
-.sidebar_big{
+.sidebar{
+  width:400px;
   position:absolute;
   overflow-x:auto;
   right:0px;
   background-color:white;
   height:100%;
-}
-
-.ontop2_big{
-  border:0px solid;
-  width:10px;
+  top: 0px;
 }

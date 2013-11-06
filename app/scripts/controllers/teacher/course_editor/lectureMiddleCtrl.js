@@ -1,20 +1,24 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', 'Lecture', 'lecture' ,function ($state, $stateParams, $scope, $http, Lecture, lecture) {
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', '$window', 'Lecture', 'lecture' ,function ($state, $stateParams, $scope, $http, $window, Lecture, lecture) {
 	
 	console.log("into middle ")
 	console.log(lecture.data)
 
     $scope.lecture=lecture.data
-	$scope.quizTypesList=[{type:'MCQ', text:"MCQ - Multiple Correct Answers"},{type:'OCQ', text:"OCQ - One Correct Answer"}, {type:'drag', text:"Drag Into Order"}]	
+	$scope.quizTypesList=[
+		{type:'MCQ', text:"MCQ - Multiple Correct Answers"},
+		{type:'OCQ', text:"OCQ - One Correct Answer"}, 
+		{type:'drag',text:"Drag Into Order"}
+	]	
 	
 	$scope.$emit('accordianUpdate',$scope.lecture.group_id);	
 
-	window.onresize=function resizeit(){
-		if($(".ontop3").css("position")=="fixed")
-			resize();
-	};
+	// window.onresize=function resizeit(){
+	// 	if($(".ontop3").css("position")=="fixed")
+	// 		resize();
+	// };
 
     $state.go('course.course_editor.lecture.quizList');
 
@@ -61,13 +65,13 @@ angular.module('scalearAngularApp')
 
 		if(quiz.quiz_type =="invideo"){
 			$scope.doubleClickMsg = "<br>Double click on the video to add a new answer";
-			$scope.ontopStyle = {backgroundColor: "transparent"}
+			$scope.quiz_layer2= {backgroundColor: "transparent"}
 			getQuizData();
 		}
 		else{ // html quiz
 			console.log("HTML quiz")
 			$scope.doubleClickMsg=""
-			$scope.ontopStyle = {backgroundColor: "white", overflow: 'auto'}
+			$scope.quiz_layer2 = {backgroundColor: "white", overflow: 'auto'}
 			getHTMLData()
 		}
 	}
@@ -306,4 +310,115 @@ angular.module('scalearAngularApp')
 		console.log("exiting")		
 	}	
  	
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+$scope.resize_small = function()
+{	
+	var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+
+	$scope.showSidebar = false
+
+	angular.element(".sidebar").children().appendTo("#all_tables");
+	angular.element("body").css("overflow","auto");
+
+	$scope.videoStyle={
+		"position":"static",
+		"width":'500px',
+		"height":(500*1.0/factor + 26) +'px'
+	};
+
+	$scope.quiz_layer={
+		"width":"500px",
+		"height":(500*1.0/factor + 26)+ 'px',
+		"margin-left": "0px"
+	}		
+}
+
+$scope.resize = function()
+{	
+	var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+	var win = angular.element($window)
+
+	$scope.showSidebar = true
+
+	angular.element("#all_tables").children().appendTo(".sidebar");
+	angular.element("body").css("overflow","hidden");
+
+	win.scrollTop("0px")
+
+	$scope.videoStyle={
+		"top":0, 
+		"left":0, 
+		"position":"fixed",
+		"width":win.width()-400,
+		"height":win.height()
+	};
+
+	var video_width = (win.height()-26)*factor
+	
+	if(video_width>win.width()-400){ // if width will get cut out.
+		$scope.quiz_layer={
+			"top":0,
+			"left":0,
+			"width":win.width()-400,
+			"height":(win.width()-400)*1.0/factor +26,
+		}		
+	}
+	else{		
+		var mergin_left= ((win.width()-400) - video_width)/2.0;
+		$scope.quiz_layer={
+			"top":0,
+			"left":0,
+			"width":video_width,
+			"height":win.height(),
+			"margin-left": mergin_left+"px"
+		}		
+	 }
+
+	// if there is a quiz right now
+	// if($("#editing").html()!="" &&  typeof storedData!=="undefined") //editing a quiz (not including html quiz)
+	// {
+	// 	for(x in storedData)
+	// 	{
+	// 		var toadd= $("#"+x)		
+			
+	// 		if(quesType=="drag")
+	// 		{
+	// 			var top3= parseFloat(list_of_points[x][0]*($(".ontop").height()-26));
+	// 			var left= parseFloat((list_of_points[x][1])*$(".ontop").width());
+	// 			toadd.css({"top":top3+"px", "left":left+"px"});
+	// 			toadd.width(parseFloat(list_of_points[x][3]*$(".ontop").width()));
+	// 			toadd.height(parseFloat(list_of_points[x][2]*($(".ontop").height()-26)));
+	// 			toadd.children().children("textarea").width(toadd.width()-50);
+	// 			toadd.children().children("textarea").height(toadd.height()-20);
+	// 		}
+	// 		else{
+	// 			var top3= parseFloat(list_of_points[x][0]*($(".ontop").height()-26));
+	// 			var left= parseFloat((list_of_points[x][1])*$(".ontop").width());
+	// 			w=parseFloat(list_of_points[x][3]*$(".ontop").width())
+	// 			h=parseFloat(list_of_points[x][2]*($(".ontop").height()-26));
+	// 			toadd_left=(w-13)/2
+	// 			toadd_top=(h-13)/2
+	// 			toadd.width(13);
+	// 			toadd.height(13);
+	// 			toadd.css({"top":top3+toadd_top+"px", "left":left+toadd_left+"px"});
+	// 		}
+	// 	}
+	// }
+	// 					
+	// take care of ontop, correct aspect ratio, background..position., and correct point position
+	// on resize, make small again, get fullscreen and minimize button working.
+	// make sure progress bar working right..
+	// make player page and flash entire size but video correct aspect ratio.
+	//$("#timer_video_youVideo").height($(window).height());
+
+	// ok so when display points, display fil makan el sa7 AND when they are there already and we're resizing.
+	// play by default when enter page.
+	// but before kol da store points aslan as %
+}
+
+
 }]);
+
+

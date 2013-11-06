@@ -1,22 +1,27 @@
 <link rel="stylesheet" href="styles/teacher/course_editor.lecture.css" type="text/css" media="screen" />
+
 <overlay ng-hide="hide_overlay">
-	<loading size="big" show="true" style="position:absolute;top:30%;left:42%;z-index: 1;" />
+	<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
 </overlay>
 <center><h3>{{lecture.name}}</h3></center>
 <div id="notify"></div>
-<center ng-hide='true' ><a class ="btn big fullscreenLink" ng-click="resize()">Edit In Fullscreen</a></center>
+<center ><a class ="btn big fullscreenLink" ng-click="resize()">Edit In Fullscreen</a></center>
 <center>
 	<video_container >
 		<div ng-show="editingMode">
-			<quiz ng-dblclick="addDoubleClickBind($event)" >
+			<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" >
 				<answervideo ng-if="selectedQuiz.quiz_type == 'invideo'" ng-repeat="answer in selectedQuiz.answers" data="answer" list="allPos" type="selectedQuiz.question_type" quiz="selectedQuiz" remove="remove_answer($index)"/>
 				<answerform  ng-if="selectedQuiz.quiz_type == 'html'" quiz="selectedQuiz" add="add_html_answer" remove="remove_html_answer"/>
 			</quiz>
 		</div>
-		<youtube />
+		<youtube ng-style="videoStyle"/>
+		<div class="sidebar" ng-show="showSidebar" >
+			
+		</div>
 	</video_container>
 	<br />
 	<div id="all_tables" >
+		<center ng-show="showSidebar"><a class='btn small fullscreenLink' ng-click="resize_small()" >Exit Fullscreen</a></center>
 		<edit_panel ng-show="editingMode" />
 		<div id="foo" class="btn-toolbar">
 			<dropdown_list  list="quizTypesList" method="insert_quiz" quiztype="invideo" title="Over Video" />

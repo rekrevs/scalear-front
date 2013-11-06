@@ -81,7 +81,7 @@ angular.module('scalearAngularApp')
 		transclude: true,
 		restrict: 'E',
 	 	replace:true,
-	 	template: '<div class="loading_big" ng-transclude></div>',
+	 	template: '<div class="overlay" ng-transclude></div>',
 		link:function(scope, element){
 			var parent = element.parent();
 	        scope.getWidth = function(){

@@ -139,7 +139,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	vertical-align: top;
 }
 
-.loading_big {
+.overlay {
   height: 200%;
   position: absolute;
   display: block;

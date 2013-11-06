@@ -5,11 +5,7 @@ angular.module('scalearAngularApp')
 		return{
 			transclude: true,
 			restrict: "E",
-			template: '<div class="ontop3" ng-class="lecture.aspect_ratio" style="margin-top:0px;" >'+
-						'<div class="ontop2 {{lecture.aspect_ratio}}" ng-class="{ontop2_big: fullscreen}" style="width:500px;position:absolute;border:8px solid;margin-top:0px;" ng-transclude>'+
-						'</div>'+
-						'<div id="side_bar" class="sidebar_big" ng-show="fullscreen" ui-view="quizList" ></div>'+
-					  '</div>',
+			template: '<div ng-class="lecture.aspect_ratio" style="border:4px solid" ng-transclude></div>',
 		  	link: function($scope, element){
 			  	$rootScope.$on("refreshVideo", function(event, args) {
 			  		element.find('iframe').remove();
@@ -21,13 +17,14 @@ angular.module('scalearAngularApp')
 }).directive('quiz',function(){
 		return {
 			transclude: true,
+			replace:true,
 			restrict: 'E', 
-			template: '<div class="wall" id="wall"></div>'+
-					  '<div class="ontop" id="ontop" ng-class="lecture.aspect_ratio" ng-style="ontopStyle" ng-transclude></div>'
+			template: '<div class="ontop" id="ontop" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
 }).directive('youtube',function(){
 		return {
-			restrict: 'E', 
+			restrict: 'E',
+			replace:true, 
 			template: '<div id="youtube" ng-class="lecture.aspect_ratio"></div>',
 			link: function($scope, element){
 			  	$scope.load_video();
@@ -58,7 +55,7 @@ angular.module('scalearAngularApp')
 		 restrict: 'E',
 		 template: 	'<div class="btn-group">'+
 						'<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="">'+
-							'Insert Quiz ({{title}})'+
+							'Insert Quiz ({{title}}) '+
 							'<span class="caret"></span>'+
 						'</a>'+
 						'<ul class="dropdown-menu">'+

@@ -3,6 +3,7 @@
 angular.module('scalearAngularApp')
 .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture) {
 
+
  	/***********************Functions*******************************/
  	var init = function(){
  		Course.get_course_editor(function(data){
@@ -118,23 +119,48 @@ angular.module('scalearAngularApp')
 		dropOnEmpty: false,
 		handle: '.handle',
 		cursor: 'crosshair',
-		items: 'li.modules',
+		items: '.module',
 		opacity: 0.4,
-		scroll: true
+		scroll: true,
+		update: function(e, ui) {
+			Module.save_sort({},
+				{group: $scope.modules},
+				function(response){
+					console.log(response)
+				}, 
+				function(){
+					console.log('Error')
+				}
+			);
+		},
  	}
 
  	$scope.itemSortableOptions={
 		axis: 'y',
 		dropOnEmpty: false,
-		handle: '.handle2',
+		handle: '.handle',
 		cursor: 'crosshair',
-		items: 'li.last-child',
+		items: '.item',
 		opacity: 0.4,
-		scroll: true
+		scroll: true,
+		update: function(e, ui) {
+			var group_id=ui.item.scope().item.group_id
+			var group_position=ui.item.scope().$parent.$parent.module.position -1
+			Lecture.save_sort(
+				{group: ui.item.scope().item.group_id},
+				{items: $scope.modules[group_position].items},
+				function(response){
+					console.log(response)
+				},
+				function(){
+					console.log('error')
+				}
+			);
+		},
  	}
 
- 	init();
- 
+	init();
+
 }]);
 
 

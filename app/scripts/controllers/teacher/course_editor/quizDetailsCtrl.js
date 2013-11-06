@@ -2,10 +2,11 @@
 
 angular.module('scalearAngularApp')
   .controller('quizDetailsCtrl',['$stateParams','$rootScope','$scope','Quiz','quiz', function ($stateParams, $rootScope,$scope, Quiz,quiz) {
-    $scope.quiz = quiz.data
-
-    $scope.$emit('accordianUpdate',$scope.quiz.group_id);
     
+    $scope.quiz = quiz.data
+    
+    $scope.$emit('accordianUpdate',$scope.quiz.group_id);
+
     $scope.updateQuiz = function() {   		
      		var sending=angular.copy($scope.quiz);
      		delete sending["created_at"];

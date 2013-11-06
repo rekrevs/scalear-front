@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
     .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', '$window', 'Lecture', 'lecture','CourseEditor' ,function ($state, $stateParams, $scope, $http, $window, Lecture, lecture, CourseEditor) {
 
     $scope.lecture=lecture.data
+    $scope.quiz_layer={}
     $scope.alert={
     	type:"error", 
     	msg:"You've got some errors."
@@ -69,13 +70,14 @@ angular.module('scalearAngularApp')
 
 		if(quiz.quiz_type =="invideo"){
 			$scope.doubleClickMsg = "<br>Double click on the video to add a new answer";
-			$scope.quiz_layer2= {backgroundColor: "transparent"}
+			$scope.quiz_layer.backgroundColor="transparent"
 			getQuizData();
 		}
 		else{ // html quiz
 			console.log("HTML quiz")
 			$scope.doubleClickMsg=""
-			$scope.quiz_layer2 = {backgroundColor: "white", overflow: 'auto'}
+			$scope.quiz_layer.backgroundColor= "white"
+			$scope.quiz_layer.overflow= 'auto'
 			getHTMLData()
 		}
 	}
@@ -280,11 +282,13 @@ $scope.resize_small = function()
 		"height":(500*1.0/factor + 26) +'px'
 	};
 
-	$scope.quiz_layer={
+	var layer={
 		"width":"500px",
 		"height":(500*1.0/factor + 26)+ 'px',
 		"margin-left": "0px"
-	}		
+	}
+
+	angular.extend($scope.quiz_layer, layer)		
 }
 
 $scope.resize = function()
@@ -308,9 +312,10 @@ $scope.resize = function()
 	};
 
 	var video_width = (win.height()-26)*factor
-	
+	var layer={}
 	if(video_width>win.width()-400){ // if width will get cut out.
-		$scope.quiz_layer={
+		
+		layer={
 			"top":0,
 			"left":0,
 			"width":win.width()-400,
@@ -319,7 +324,7 @@ $scope.resize = function()
 	}
 	else{		
 		var mergin_left= ((win.width()-400) - video_width)/2.0;
-		$scope.quiz_layer={
+		layer={
 			"top":0,
 			"left":0,
 			"width":video_width,
@@ -327,6 +332,8 @@ $scope.resize = function()
 			"margin-left": mergin_left+"px"
 		}		
 	 }
+
+	 angular.extend($scope.quiz_layer, layer)
 
 	// if there is a quiz right now
 	// if($("#editing").html()!="" &&  typeof storedData!=="undefined") //editing a quiz (not including html quiz)

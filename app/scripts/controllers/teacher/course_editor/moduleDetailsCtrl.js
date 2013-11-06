@@ -19,6 +19,7 @@ angular.module('scalearAngularApp')
           {group: modified_module},
           function(response){
             console.log(response)
+            $scope.$emit('detailsUpdate')
           },
           function(){
             alert("Failed to update module, please check your internet connection")

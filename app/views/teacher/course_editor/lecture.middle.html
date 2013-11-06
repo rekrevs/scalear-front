@@ -7,21 +7,20 @@
 <div id="notify"></div>
 <center ><a class ="btn big fullscreenLink" ng-click="resize()">Edit In Fullscreen</a></center>
 <center>
-	<form name="answer_form" novalidate>
+	<form name="answer_form" novalidate style="margin:0">
 	<video_container >
 		<div ng-show="editing_mode">
-			<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" >
+			<quiz ng-dblclick="addDoubleClickBind($event)" >
 				<answervideo ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" type="selected_quiz.question_type" quiz="selected_quiz" remove="removeAnswer($index)"/>
 				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 			</quiz>
 		</div>
-		<youtube ng-style="video_style"/>
+		<youtube />
 		<div class="sidebar" ng-show="show_sidebar" >
 			
 		</div>
 	</video_container>
 	</form>
-	<br />
 	<div id="all_tables" >
 		<center ng-show="show_sidebar"><a class='btn small fullscreenLink' ng-click="resizeSmall()" >Exit Fullscreen</a></center>
 		<edit_panel ng-show="editing_mode" />
@@ -29,8 +28,8 @@
 			<alert type="alert.type" close="closeAlerts()">{{alert.msg}}</alert>
 		</div>
 		<div id="foo" class="btn-toolbar">
-			<dropdown_list  list="quiz_types_list" method="insertQuiz" quiztype="invideo" title="Over Video" />
-			<dropdown_list  list="quiz_types_list" method="insertQuiz" quiztype="html" title="Text" />
+			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="invideo" title="Over Video" />
+			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="html" title="Text" />
 		</div>
 		<br />
 		<div ui-view="quizList"></div>

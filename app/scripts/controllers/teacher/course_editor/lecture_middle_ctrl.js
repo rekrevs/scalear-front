@@ -42,7 +42,7 @@ angular.module('scalearAngularApp')
 		$scope.quiz_loading = true;
 		Lecture.newQuiz({
 			lecture_id: $scope.lecture.id,
-			time: Math.round($scope.player.currentTime()), 
+			time: Math.floor($scope.player.currentTime()), 
 			quiz_type: quiz_type, 
 			ques_type: question_type
 		},
@@ -161,6 +161,9 @@ angular.module('scalearAngularApp')
 
 	    	var left= event.pageX - element.offsetParent.offsetLeft - 14 //event.offsetX - 6
 		  	var top = event.pageY - element.offsetParent.offsetTop - 14 //event.offsetY - 6
+
+	    	console.log(event)
+	    	console.log(left+" "+top)
 
 		  	var the_top = top / (element.clientHeight -26);
 	      	var the_left= left / element.clientWidth

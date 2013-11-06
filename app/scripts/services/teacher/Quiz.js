@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
         'destroy': { method: 'DELETE', headers: headers },
         'show':{method: 'GET', headers: headers},
         "getQuestions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
-        "updateQuestions": {method: 'PUT', params: {action: 'updateQuestions_angular'},headers: headers},
+        "updateQuestions": {method: 'PUT', params: {action: 'update_questions_angular'},headers: headers},
         "validate_quiz": {method: 'PUT', params: {action: 'validate_quiz_angular'},headers: headers},
         
       });

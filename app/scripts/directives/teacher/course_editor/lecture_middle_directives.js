@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
 		 	title:"@",
 		 	quiztype:'@',
 		 	list:"=",
-		 	method:"&"
+		 	action:"&"
 		 },
 		 restrict: 'E',
 		 template: 	'<div class="btn-group">'+
@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
 			}
 
 			scope.calculatePosition=function(){
-				console.log(scope.data)
+				console.log(element.position())
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() - 26);
 			}

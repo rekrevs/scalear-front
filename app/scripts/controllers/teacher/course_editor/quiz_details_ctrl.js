@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
       );	
   	};
 
-    $scope.validate_quiz = function(column,data) {
+    $scope.validateQuiz = function(column,data) {
       var d = $q.defer();
       quiz={}
       quiz[column]=data;

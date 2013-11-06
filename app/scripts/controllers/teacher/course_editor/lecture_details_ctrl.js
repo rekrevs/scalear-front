@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
 
 	getYoutubeDetails();
 
- 	$scope.validate_lecture = function(column,data) {
+ 	$scope.validateLecture = function(column,data) {
 	    var d = $q.defer();
 	    lecture={}
 	    lecture[column]=data;

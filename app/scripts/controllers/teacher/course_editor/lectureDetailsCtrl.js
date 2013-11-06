@@ -16,9 +16,12 @@ angular.module('scalearAngularApp')
 	$scope.updateLecture= function(){
 		console.log($scope.lecture)
 		var modified_lecture=angular.copy($scope.lecture);
-   		delete modified_lecture["created_at"];
-   		delete modified_lecture["updated_at"];
-   		delete modified_lecture["id"];
+
+		delete modified_lecture["id"];
+		delete modified_lecture["created_at"];
+		delete modified_lecture["updated_at"];
+		delete modified_lecture["className"];
+		
 		Lecture.update(
 			{lecture_id:$scope.lecture.id},
 			{lecture:modified_lecture},

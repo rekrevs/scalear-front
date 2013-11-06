@@ -6,21 +6,19 @@ angular.module('scalearAngularApp')
   
   var x={	
    expand_drag_answers:function(id, answers, type, question_id){
-		console.log("add_drag_answer2 ");
-		console.log(!(answers instanceof Array));
-		var allAnswers=[];
-		if(!(answers instanceof Array))
-		{
-			console.log("here");
-			answers=[answers];
-		}
+			var allAnswers=[];
+			if(!(answers instanceof Array))
+			{
+				answers=[answers];
+			}
 			
 			for(var answer in answers)
 			{
 				var new_ans=x.new_answer(answers[answer],"","","","",type, question_id);
+				
 				if(answer==0)
 					new_ans.id=id;
-				console.log(new_ans);
+				
 				allAnswers.push(new_ans);
 			}
 		return allAnswers;

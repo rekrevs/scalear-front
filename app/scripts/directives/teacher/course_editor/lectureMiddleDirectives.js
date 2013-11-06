@@ -208,8 +208,10 @@ angular.module('scalearAngularApp')
 			remove:"&",
 			removeq:"&",
 			column: "@",
+			columna:"@",
 			index: "=",
 			submitted: "=",
+			subtype:"="
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
@@ -219,10 +221,10 @@ angular.module('scalearAngularApp')
 						// ADD QUESTION TYPE IF ITS A QUIZ QUESTION.. SELECT LIST.
 						"<br />"+
 						"<label ng-if='show_question()' class='q_label'>Question Type:</label>"+
-						"<select ng-if='show_question()' ng-model='quiz.question_type' required  class='choices'><option value='MCQ'>MCQ</option><option value='OCQ' >OCQ</option><option value='DRAG' >DRAG</option></select>"+
+						"<select ng-if='show_question()' ng-model='quiz.question_type' required  class='choices'><option value='MCQ'>MCQ</option><option value='OCQ' >OCQ</option><option value='DRAG' ng-if='!isSurvey()' >DRAG</option><option ng-if='isSurvey()' value='Free Text Question'>Free Text Question</option></select>"+
 						"<a ng-if='show_question()' href='' title='Delete' style='float:right;' class='delete_option' ng-click='remove_question(index)'><img src='images/trash3.png' /></a>"+
 						"<br/>"+
-						"<div class='answer_div'>"+
+						"<div ng-hide='hideAnswer()' class='answer_div'>"+
 								"<htmlanswer />"+
 								"<a class='add_multiple_answer' ng-click='add_answer(\"\",quiz)' href=''>Add Answer</a>"+
 								"<br/>"+
@@ -235,6 +237,17 @@ angular.module('scalearAngularApp')
 			scope.add_answer=scope.add()
 			scope.remove_question=scope.removeq()
 			
+			scope.isSurvey = function()
+			{
+				if(scope.subtype)
+					return scope.subtype.toUpperCase()=="SURVEY"
+				else
+					return false
+			}
+			scope.hideAnswer = function()
+			{
+				return (scope.isSurvey() && scope.quiz.question_type=="Free Text Question")
+			}
 			
 			scope.show_question = function()
 			{
@@ -261,6 +274,7 @@ angular.module('scalearAngularApp')
 			scope.updateValues= function()
 			{
 				console.log("in value update")
+				console.log(scope.quiz);
 				console.log(scope.quiz.answers);
 				scope.values=0
 				for(var element in scope.quiz.answers)
@@ -288,21 +302,23 @@ angular.module('scalearAngularApp')
 			
 			scope.show = function()
 			{
-				 return !"content" in scope.quiz
-				console.log("in show");
+				 return !("content" in scope.quiz)
 			}
 			
-			scope.updateValues();
+			scope.$watch('quiz.answers', function(){
+				scope.updateValues();	
+			})
+			
 		}
 	};
 }).directive('htmlMcq',function(){
 	
 	var result={
 		restrict:'E',
-		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
-				"<input ng-change='updateValues()' atleastone type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
+		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+				"<input ng-if='!isSurvey()' ng-change='updateValues()' atleastone type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
 				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-				"<span class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone'>Choose atleast one</span>"+
+				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone'>Choose atleast one</span>"+
 				"<br ng-if='show()'/><input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /><a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'><img src='images/trash3.png' /></a><br/></ng-form>",
 		link: function(scope)
 		{
@@ -315,10 +331,10 @@ angular.module('scalearAngularApp')
 }).directive('htmlOcq',function(){
 	return {
 		restrict:'E',
-		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
-				"<input atleastone type='radio' name='ocq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=\"true\" ng-click='radio_change(answer)'/>"+
+		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+				"<input ng-if='!isSurvey()' atleastone type='radio' name='ocq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=\"true\" ng-click='radio_change(answer)'/>"+
 				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-				"<span class='help-inline' ng-show='submitted && aform.ocq.$error.atleastone'>Check one answer</span>"+
+				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.ocq.$error.atleastone'>Check one answer</span>"+
 				"<br ng-if='show()'/>"+
 				"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
 				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'>"+
@@ -338,7 +354,7 @@ angular.module('scalearAngularApp')
 		template:"<li class='ui-state-default'  >"+
 					"<ng-form name='aform'>"+
 					"<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"+
-					"<input type='text' required name='answer' placeholder='Answer' title='Enter Answer' ng-model='answer[column]' />"+
+					"<input type='text' required name='answer' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
 					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
 					"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='remove_answer($index, quiz)' ><img src='images/trash3.png' /></a>"+
 					"</ng-form>"+

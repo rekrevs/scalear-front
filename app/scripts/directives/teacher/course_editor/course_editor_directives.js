@@ -10,13 +10,13 @@ angular.module('scalearAngularApp')
 			remove:"&",
 			isOpen2: "="
 		},
-		template: "<h5 ng-click='invert_open()'>"+
+		template: "<h5 ng-click='invertOpen()'>"+
 					"<img src='images/move2.png' class='handle' title='drag to reorder' />"+
 					"<a class='trigger' ng-class='{open:isOpen2[id]==true}' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
 					"<delete_button size='small' action='remove()'/>"+
 				  "</h5>",
 	  link: function(scope){
-			scope.invert_open = function()
+			scope.invertOpen = function()
 			{
 				//console.log("is it open?")
 				//console.log(scope.isOpen2[scope.id]);
@@ -65,12 +65,12 @@ angular.module('scalearAngularApp')
 		 	action:"&"
 		 },
 		 restrict: 'E', 
-		 template: 	'<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" onbeforesave="validation()($data)" onaftersave="save_data()" ng-click="action()" ng-dblclick="textBtnForm.$show()" style="cursor:pointer;">'+
+		 template: 	'<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" onbeforesave="validation()($data)" onaftersave="saveData()" ng-click="action()" ng-dblclick="textBtnForm.$show()" style="cursor:pointer;">'+
 			 			'{{ value || "empty" }}'+
 			 			'<i ng-class="overclass"></i>'+
 	 				'</a>',
 		link:function(scope){
-			scope.save_data=function(){
+			scope.saveData=function(){
 				$timeout(function(){
 					scope.save()
 				})

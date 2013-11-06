@@ -6,27 +6,28 @@ angular.module('scalearAngularApp')
 
  	/***********************Functions*******************************/
  	var init = function(){
- 		Course.get_course_editor(function(data){
+ 		Course.getCourseEditor(function(data){
 	 		$scope.course=data.course
 	 		$scope.modules=data.groups
 		  	$scope.modules.forEach(function(module,index){
 		  		module.items = data.items[index]
 		  		module.items.forEach(function(item,ind){
-		  			item.className= data.className[index][ind]
+		  			item.class_name= data.className[index][ind]
 		  		});  		
 		  	});
 	 		console.log($scope.modules);
 	    });
  	}
 
- 	$scope.add_module=function(){
+ 	$scope.addModule=function(){
     	console.log("adding mod")
-    	$scope.showLoading=true
+    	$scope.module_loading=true
     	Module.new_module({},
 	    	function(module){
 	    		console.log(module)
+	    		module.items=[]
 	    		$scope.modules.push(module)
-    			$scope.showLoading=false
+    			$scope.module_loading=false
 	    	}, 
 	    	function(){
 	    		alert("Failed to create module, please check network connection")
@@ -34,7 +35,7 @@ angular.module('scalearAngularApp')
 		);
     }
 
-    $scope.remove_module=function(index){
+    $scope.removeModule=function(index){
     	console.log("remove mod") 
     	event.preventDefault();
   		event.stopPropagation();   	
@@ -57,14 +58,16 @@ angular.module('scalearAngularApp')
 		}
     }
 
-    $scope.add_lecture=function(module_index){
+    $scope.addLecture=function(module_index){
     	console.log("adding lec "+ module_index)
-    	$scope.showLoading=true
-    	Lecture.new_lecture({group: $scope.modules[module_index].id},
+    	console.log($scope.modules)
+    	$scope.item_loading=true
+    	Lecture.newLecture({group: $scope.modules[module_index].id},
 	    	function(lecture){
 	    		console.log(lecture)
+	    		lecture.class_name='lecture'
 	    	    $scope.modules[module_index].items.push(lecture)
-    			$scope.showLoading=false
+    			$scope.item_loading=false
 	    	}, 
 	    	function(){
 	    		alert("Failed to create lecture, please check network connection")
@@ -72,10 +75,8 @@ angular.module('scalearAngularApp')
 		);
     }
 
-    $scope.remove_lecture=function(module_index, item_index){
+    $scope.removelecture=function(module_index, item_index){
     	console.log("remove lec " + module_index + " " + item_index) 
-    // 	event.preventDefault();
-  		// event.stopPropagation();   	
     	if(confirm("Are you sure you want to delete lecture?")){
 	    	Lecture.destroy(
 	    		{lecture_id: $scope.modules[module_index].items[item_index].id},
@@ -83,12 +84,6 @@ angular.module('scalearAngularApp')
 	    			 console.log(response)
 	    			 $scope.modules[module_index].items.splice(item_index, 1)
 	    			 $state.go('course.course_editor')
-	    			// if(response.error.lecture_quiz_exist)
-	    			// 	console.log("Sorry, You must delete all items in the module before deleting the module itself.")
-	    			// else{
-	    			 	
-	    			// 	$state.go('course.course_editor')
-	    			// }
 	    		},
 	    		function(){
 	    			alert("Failed to delete lecture, please check network connection")
@@ -105,8 +100,8 @@ angular.module('scalearAngularApp')
     $scope.oneAtATime = true;
 
 	$rootScope.$on('accordianUpdate', function(event, message) {
-			$scope.open_id=message;
-			$scope.open[message]= true;
+		$scope.open_id=message;
+		$scope.open[message]= true;
 	});
 
 	$rootScope.$on("detailsUpdate", function(event, args) {
@@ -123,7 +118,7 @@ angular.module('scalearAngularApp')
 		opacity: 0.4,
 		scroll: true,
 		update: function(e, ui) {
-			Module.save_sort({},
+			Module.saveSort({},
 				{group: $scope.modules},
 				function(response){
 					console.log(response)
@@ -146,7 +141,7 @@ angular.module('scalearAngularApp')
 		update: function(e, ui) {
 			var group_id=ui.item.scope().item.group_id
 			var group_position=ui.item.scope().$parent.$parent.module.position -1
-			Lecture.save_sort(
+			Lecture.saveSort(
 				{group: ui.item.scope().item.group_id},
 				{items: $scope.modules[group_position].items},
 				function(response){

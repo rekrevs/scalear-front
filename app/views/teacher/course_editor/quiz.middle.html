@@ -1,16 +1,16 @@
 <link rel="stylesheet" href="styles/teacher/course_editor.lecture.css" type="text/css" media="screen" />
 <form name='tform' novalidate>
 	<div ng-repeat="question in questions">
-			<answerform submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="add_html_answer" remove="remove_html_answer" removeq="remove_question" index="$index"/>
+			<answerform submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index"/>
 	</div>
 	
 	<center>
-		<div ng-show="submitted && !hideAlerts">
+		<div ng-show="submitted && !hide_alerts">
 			<alert type="alert.type" close="closeAlerts()">{{alert.msg}}</alert>
 		</div>
 		
-		<input type="button" value="Add Question" class="btn" ng-click="add_question()"/>
-		<button value="Save" class="btn btn-primary" ng-click="save_all()">Save</button>
+		<input type="button" value="Add Question" class="btn" ng-click="addQuestion()"/>
+		<button value="Save" class="btn btn-primary" ng-click="saveAll()">Save</button>
 	</center>
 	
 </form>

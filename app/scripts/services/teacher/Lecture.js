@@ -10,16 +10,16 @@ angular.module('scalearAngularApp')
 		'update': { method: 'PUT', headers:headers},
 		'destroy': { method: 'DELETE', headers:headers },
 		'show':{method: 'GET', headers:headers},
-		'new_lecture':{method:'GET', params:{action:'new_lecture_angular'}, headers:headers},
-		'get_quiz_data': {method: 'GET', params: {action: 'get_old_data_angular'}, headers:headers},
-		'get_html_data':{method:'GET', params:{action:'get_html_data_angular'}, headers:headers},
-		'new_quiz':{method: 'GET', params:{action: 'new_quiz_angular'}, headers:headers},
-		'update_answers':{method:'POST', params:{action:'save_answers_angular'}, headers:headers},
-		'add_answer':{method:'POST',params:{action:'add_answer_angular'}}, headers:headers,
-		'add_html_answer':{method:'POST', params:{action:'add_html_answer_angular'}, headers:headers},
-		'remove_html_answer':{method:'POST', params:{action:'remove_html_answer_angular'}, headers:headers},
-		'remove_answer':{method:'POST', params:{action:'remove_answer_angular'}, headers:headers},
-		'save_sort':{method:'POST', params:{action:'sort'}, headers:headers}
+		'newLecture':{method:'GET', params:{action:'new_lecture_angular'}, headers:headers},
+		'getQuizData': {method: 'GET', params: {action: 'get_old_data_angular'}, headers:headers},
+		'getHtmlData':{method:'GET', params:{action:'get_html_data_angular'}, headers:headers},
+		'newQuiz':{method: 'GET', params:{action: 'new_quiz_angular'}, headers:headers},
+		'updateAnswers':{method:'POST', params:{action:'save_answers_angular'}, headers:headers},
+		'addAnswer':{method:'POST',params:{action:'addAnswer_angular'}}, headers:headers,
+		'addHtmlAnswer':{method:'POST', params:{action:'addHtmlAnswer_angular'}, headers:headers},
+		'removeHtmlAnswer':{method:'POST', params:{action:'removeHtmlAnswer_angular'}, headers:headers},
+		'removeAnswer':{method:'POST', params:{action:'removeAnswer_angular'}, headers:headers},
+		'saveSort':{method:'POST', params:{action:'sort'}, headers:headers}
 	});
 
   })

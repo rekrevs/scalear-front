@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
 		  	link: function($scope, element){
 			  	$rootScope.$on("refreshVideo", function(event, args) {
 			  		element.find('iframe').remove();
-			  		$scope.load_video();
+			  		$scope.loadVideo();
 			  		console.log("event emitted: updating video player");
 			    });
 		  	}
@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
 			replace:true, 
 			template: '<div id="youtube" ng-class="lecture.aspect_ratio"></div>',
 			link: function($scope, element){
-			  	$scope.load_video();
+			  	$scope.loadVideo();
 		    }
 		};
 }).directive('editPanel',function(){
@@ -36,11 +36,11 @@ angular.module('scalearAngularApp')
 		 template: '<div id="editing">'+
 						'<div class="alert" >'+
 							'<div>'+
-								'Editing quiz {{selectedQuiz.question}} at {{selectedQuiz.time|format}}'+
-								'<b ng-bind-html="doubleClickMsg"></b>'+
+								'Editing quiz {{selected_quiz.question}} at {{selected_quiz.time|format}}'+
+								'<b ng-bind-html="double_click_msg"></b>'+
 							'</div>'+
-							'<a class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="save_btn()">Save</a>'+
-							'<a class="btn" id="done" style="margin-top:5px;" ng-click="exit_btn()">Exit</a>'+
+							'<a class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="saveBtn()">Save</a>'+
+							'<a class="btn" id="done" style="margin-top:5px;" ng-click="exitBtn()">Exit</a>'+
 						'</div>'+
 					'</div>',
 	};
@@ -60,16 +60,10 @@ angular.module('scalearAngularApp')
 						'</a>'+
 						'<ul class="dropdown-menu">'+
 				              '<li ng-repeat="item in list">'+
-				              		'<a href="" class="insert_quiz" ng-click="action(quiztype,item.type)">{{item.text}}</a>'+
+				              		'<a href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{item.text}}</a>'+
 				              '</li>'+ 
 						'</ul>'+
-				  	'</div>',
-		  link: function(scope){
-		  		scope.action=function(a,b){
-		  			var func =scope.method()
-		  			func(a,b);		  			
-		  		}
-		  }
+				  	'</div>'
 	};
 }).directive('answervideo', function($compile){
 	return {
@@ -92,7 +86,7 @@ angular.module('scalearAngularApp')
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<img ng-src='images/{{imgName}}' ng-class=imgClass ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculate_position'}\" pop-over='popover_options' unique='true'/>",
+		 template: "<img ng-src='images/{{imgName}}' ng-class=imgClass ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" pop-over='popover_options' unique='true'/>",
 
 		link: function(scope, element, attrs, controller) {
 
@@ -106,22 +100,22 @@ angular.module('scalearAngularApp')
 					scope.imgName = scope.data.correct? 'checkbox_green.gif' : 'checkbox.gif';
 			}
 
-			scope.calculate_position=function(){
+			scope.calculatePosition=function(){
 				console.log(scope.data)
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() - 26);
 			}
 
-			scope.radio_change=function(corr_ans){
-				console.log("radio_change")
+			scope.radioChange=function(corr_ans){
+				console.log("radioChange")
 				scope.quiz.answers.forEach(function(ans){
 					ans.correct=false
 				})
 				corr_ans.correct=true
-				$rootScope.$emit("radio_change")
+				$rootScope.$emit("radioChange")
 			}
 			
-			$rootScope.$on("radio_change",function(){
+			$rootScope.$on("radioChange",function(){
 				scope.setQuizImg()
 			})
 			//===============//
@@ -140,7 +134,7 @@ angular.module('scalearAngularApp')
 
 			scope.setQuizImg()						
 
-			var template = "<p>Correct:<input class='must_save_check' ng-change='radio_change(data);setQuizImg()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct'  /><br>Answer: <textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/><br>Explanation:<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} /><br><input type='button' ng-click='remove()' class='btn btn-danger remove_button' value='Remove'/></p>"
+			var template = "<p>Correct:<input class='must_save_check' ng-change='radioChange(data);setQuizImg()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct'  /><br>Answer: <textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/><br>Explanation:<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} /><br><input type='button' ng-click='remove()' class='btn btn-danger remove_button' value='Remove'/></p>"
 
            	scope.popover_options={
             	html:true,
@@ -153,7 +147,7 @@ angular.module('scalearAngularApp')
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculate_position'}\" >"+
+		 template: "<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 				"<div class='input-prepend' pop-over='popover_options' unique='true' >"+
 		 					"<span class='add-on'>{{data.pos}}</span>"+
 		 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-model='data.answer' value='{{data.answer}}' />"+
@@ -163,7 +157,7 @@ angular.module('scalearAngularApp')
 		link: function(scope, element, attrs, controller) {
 			 
 			//===FUNCTIONS===//
-			scope.calculate_position=function(){
+			scope.calculatePosition=function(){
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() - 26);
 			}
@@ -228,11 +222,11 @@ angular.module('scalearAngularApp')
 						"<br />"+
 						"<label ng-if='show_question()' class='q_label'>Question Type:</label>"+
 						"<select ng-if='show_question()' ng-model='quiz.question_type' required  class='choices'><option value='MCQ'>MCQ</option><option value='OCQ' >OCQ</option><option value='DRAG' ng-if='!isSurvey()' >DRAG</option><option ng-if='isSurvey()' value='Free Text Question'>Free Text Question</option></select>"+
-						"<a ng-if='show_question()' href='' title='Delete' style='float:right;' class='delete_option' ng-click='remove_question(index)'><img src='images/trash3.png' /></a>"+
+						"<a ng-if='show_question()' href='' title='Delete' style='float:right;' class='delete_option' ng-click='removeQuestion(index)'><img src='images/trash3.png' /></a>"+
 						"<br/>"+
 						"<div ng-hide='hideAnswer()' class='answer_div'>"+
 								"<htmlanswer />"+
-								"<a class='add_multiple_answer' ng-click='add_answer(\"\",quiz)' href=''>Add Answer</a>"+
+								"<a class='add_multiple_answer' ng-click='addAnswer(\"\",quiz)' href=''>Add Answer</a>"+
 								"<br/>"+
 							"</div>"+
 					"</div></ng-form>",
@@ -240,8 +234,8 @@ angular.module('scalearAngularApp')
 			console.log("QUIZZ is ");
 			console.log(scope.quiz);
 			//scope.quiz.type=scope.quiz.question_type;
-			scope.add_answer=scope.add()
-			scope.remove_question=scope.removeq()
+			scope.addAnswer=scope.add()
+			scope.removeQuestion=scope.removeq()
 			
 			scope.isSurvey = function()
 			{
@@ -274,7 +268,7 @@ angular.module('scalearAngularApp')
 					"</ul>"+
 				"</div>",
 		link:function(scope){
-			scope.remove_answer=scope.remove()
+			scope.removeAnswer=scope.remove()
 			
 			
 			scope.updateValues= function()
@@ -297,7 +291,7 @@ angular.module('scalearAngularApp')
 			}
 			
 			
-			scope.radio_change=function(corr_ans){
+			scope.radioChange=function(corr_ans){
 				scope.quiz.answers.forEach(function(ans){
 					ans.correct=false
 				})
@@ -317,40 +311,34 @@ angular.module('scalearAngularApp')
 			
 		}
 	};
-}).directive('htmlMcq',function(){
-	
-	var result={
+}).directive('htmlMcq',function(){	
+	return{
 		restrict:'E',
 		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
 				"<input ng-if='!isSurvey()' ng-change='updateValues()' atleastone type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
 				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
 				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone'>Choose atleast one</span>"+
-				"<br ng-if='show()'/><input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /><a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'><img src='images/trash3.png' /></a><br/></ng-form>",
-		link: function(scope)
-		{
-			//console.log("mcq answers areee ");
-			//console.log(scope.answer);
-		}
+				"<br ng-if='show()'/><input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /><a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'><img src='images/trash3.png' /></a><br/></ng-form>"
+		
 	}
-	return result
 	
 }).directive('htmlOcq',function($timeout){
 	return {
 		restrict:'E',
 		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
-				"<input ng-if='!isSurvey()' atleastone type='radio' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=true ng-click='radio_change(answer)'/>"+
+				"<input ng-if='!isSurvey()' atleastone type='radio' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
 				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
 				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone'>Check one answer</span>"+
 				"<br ng-if='show()'/>"+
 				"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'>"+
+				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'>"+
 					"<img src='images/trash3.png' />"+
 				"</a><br></ng-form>",
 		link: function(scope)
 		{
 			if(scope.answer.correct)
 			{
-				scope.radio_change(scope.answer);
+				scope.radioChange(scope.answer);
 			}
 			scope.getName= function()
 			{
@@ -363,12 +351,12 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		replace:true,
-		template:"<li class='ui-state-default'  >"+
+		template:"<li class='ui-state-default'>"+
 					"<ng-form name='aform'>"+
 					"<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"+
 					"<input type='text' required name='answer' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
 					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-					"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='remove_answer($index, quiz)' ><img src='images/trash3.png' /></a>"+
+					"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='removeAnswer($index, quiz)' ><img src='images/trash3.png' /></a>"+
 					"</ng-form>"+
 				"</li>"				 
 	}

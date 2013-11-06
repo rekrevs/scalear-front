@@ -1,4 +1,4 @@
-<loading size="small" show="pleaseWait"/>
+<loading size="small" show="quiz_loading"/>
 <table class="table">
 	<tr>
 		<td>Question</td>
@@ -6,16 +6,16 @@
 		<td>Type</td>
 		<td></td>
 	</tr>
-	<tr ng-repeat="quiz in quizList|orderBy:'time'" ng-class="{active: quiz.id == $parent.selectedQuiz.id}">
+	<tr ng-repeat="quiz in quiz_list|orderBy:'time'" ng-class="{active: quiz.id == $parent.selected_quiz.id}">
 		<td style="width:50%">
-			<editable_text value="quiz.question" save="save_edit(quiz)" action="showOnlineQuiz(quiz);">
+			<editable_text value="quiz.question" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);">
 		</td>
 		<td ng-init="quiz.formatedTime = (quiz.time|format)" style="width:25%">			
-			<editable_text value="quiz.formatedTime" validation="validate_time" save="save_edit(quiz)" action="showOnlineQuiz(quiz);">
+			<editable_text value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);">
 		</td>
 		<td>{{quiz.question_type}}</td>
 		<td>
-			<delete_button size="big" action="delete_quiz($index)" />
+			<delete_button size="big" action="deleteQuiz($index)" />
 		</td>
 	</tr>
 </table>

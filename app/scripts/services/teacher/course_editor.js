@@ -5,8 +5,8 @@ angular.module('scalearAngularApp')
 
   
   var x={	
-   expand_drag_answers:function(id, answers, type, question_id){
-			var allAnswers=[];
+   expandDragAnswers:function(id, answers, type, question_id){
+			var all_answers=[];
 			if(!(answers instanceof Array))
 			{
 				answers=[answers];
@@ -14,39 +14,39 @@ angular.module('scalearAngularApp')
 			
 			for(var answer in answers)
 			{
-				var new_ans=x.new_answer(answers[answer],"","","","",type, question_id);
+				var new_ans=x.newAnswer(answers[answer],"","","","",type, question_id);
 				
 				if(answer==0)
 					new_ans.id=id;
 				
-				allAnswers.push(new_ans);
+				all_answers.push(new_ans);
 			}
-		return allAnswers;
+		return all_answers;
 	},
 
-	 merge_drag_answers:function(answers, type, question_id){
-		var allAnswers=[]
+	 mergeDragAnswers:function(answers, type, question_id){
+		var all_answers=[]
 		answers.forEach(function(elem){
 			if(type=="quiz")
-				allAnswers.push(elem.content)
+				all_answers.push(elem.content)
 			else
-				allAnswers.push(elem.answer)
+				all_answers.push(elem.answer)
 			
-			console.log(allAnswers)
+			console.log(all_answers)
 		});
-		return x.new_answer(allAnswers,"","","","",type, question_id);
+		return x.newAnswer(all_answers,"","","","",type, question_id);
 	},
 
-	merge_drag_pos:function(answers){
-		var allPos=[]
+	mergeDragPos:function(answers){
+		var all_pos=[]
 		answers.forEach(function(elem){
-			allPos.push(parseInt(elem.pos))
-			console.log(allPos)
+			all_pos.push(parseInt(elem.pos))
+			console.log(all_pos)
 		});
-		return allPos
+		return all_pos
 	},
 	
-	new_answer: function(ans, h, w,l, t, type, question_id){
+	newAnswer: function(ans, h, w,l, t, type, question_id){
 		
 		if(type!="quiz")
 		{
@@ -54,7 +54,7 @@ angular.module('scalearAngularApp')
 				answer: ans || "",
 				correct:false,
 				explanation:"",
-				online_quiz_id:question_id, //$scope.selectedQuiz.id
+				online_quiz_id:question_id, //$scope.selected_quiz.id
 				height:h || 0,
 				width:w  || 0,
 				xcoor:l  || 0,

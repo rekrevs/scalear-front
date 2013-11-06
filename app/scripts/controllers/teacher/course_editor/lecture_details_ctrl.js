@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$state', 'Lecture', 'lecture', function ($stateParams, $scope, $http, $state, Lecture, lecture) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$state', '$q', 'Lecture', 'lecture', function ($stateParams, $scope, $http, $q, $state, Lecture, lecture) {
 
 	console.log("made it in details!!");
     $scope.lecture=lecture.data
@@ -12,6 +12,27 @@ angular.module('scalearAngularApp')
 	]
 
 	getYoutubeDetails();
+
+ 	$scope.validate_lecture = function(column,data) {
+	    var d = $q.defer();
+	    lecture={}
+	    lecture[column]=data;
+	    Lecture.validate_lecture(
+	    	{lecture_id:$scope.lecture.id},
+	    	lecture,
+	    	function(data){
+				d.resolve()
+			},function(data){
+				console.log(data.status);
+				console.log(data);
+			if(data.status==422)
+			 	d.resolve(data.data[column].join());
+			else
+				d.reject('Server Error');
+			}
+	    )
+	    return d.promise;
+    };
 
 	$scope.updateLecture= function(){
 		console.log($scope.lecture)
@@ -48,9 +69,9 @@ angular.module('scalearAngularApp')
 	var urlFormat =function()
 	{
 		var url=$scope.lecture.url
-		var videoid = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
-		if(videoid != null) {
-		   $scope.lecture.url= "http://www.youtube.com/watch?v="+videoid[1];
+		var video_id = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+		if(video_id != null) {
+		   $scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
 		}
 		getYoutubeDetails();
 	}

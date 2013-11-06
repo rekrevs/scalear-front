@@ -21,17 +21,17 @@
 			</tr>
 			<tr ng-repeat="doc in module.documents">
 				<td>
-					<editable_text value="doc.name" save="update_document($index)" >
+					<editable_text value="doc.name" save="updateDocument($index)" >
 				</td>
 				<td style="max-width:120px;overflow-wrap:break-word;word-wrap: break-word;">
-					<editable_text value="doc.url" save="update_document($index)">
+					<editable_text value="doc.url" save="updateDocument($index)">
 				</td>
 				<td>
-					<delete_button size="big" action="remove_document($index)" />
+					<delete_button size="big" action="removeDocument($index)" />
 				</td>
 			</tr>
 		</table>
-		<loading size="small" show="showDocumentLoading" />
-		<button_link title="Add Document" action="add_document()" class="btn" />
+		<loading size="small" show="document_loading" />
+		<button_link title="Add Document" action="addDocument()" class="btn" />
 	</div>
 </center>

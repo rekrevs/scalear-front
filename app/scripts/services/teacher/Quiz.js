@@ -10,8 +10,8 @@ angular.module('scalearAngularApp')
         'update': { method: 'PUT', headers: headers},
         'destroy': { method: 'DELETE', headers: headers },
         'show':{method: 'GET', headers: headers},
-        "get_questions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
-        "update_questions": {method: 'PUT', params: {action: 'update_questions_angular'},headers: headers},
+        "getQuestions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
+        "updateQuestions": {method: 'PUT', params: {action: 'updateQuestions_angular'},headers: headers},
         
       });
 
@@ -25,7 +25,7 @@ angular.module('scalearAngularApp')
         'update': { method: 'PUT', headers: headers},
         'destroy': { method: 'DELETE', headers: headers },
         'show':{method: 'GET', headers: headers},
-        "get_questions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
+        "getQuestions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
         
       });
 
@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
         'update': { method: 'PUT', headers: headers},
         'destroy': { method: 'DELETE', headers: headers },
         'show':{method: 'GET', headers: headers},
-        "get_questions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
+        "getQuestions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
         
       });
 

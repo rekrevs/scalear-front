@@ -6,17 +6,17 @@
 		<accordion  close-others="true" id="acc1" class="accordion" ui-sortable="moduleSortableOptions" ng-model='modules' >
 			<accordion-group ng-repeat="module in modules" is-open="module.id==open_id" class='module'>
 				<accordion-heading>
-		        	<module name="module.name" id="module.id" remove="remove_module($index)" is-open2="open" />
+		        	<module name="module.name" id="module.id" remove="removeModule($index)" is-open2="open" />
 	        	</accordion-heading>
         		<div class="outer">
 		        	<div class="inner" id="modules">
-	          			<ul class="items" id="module_items_{{module.id}}" ui-sortable="itemSortableOptions" ng-model='module.items'>
+	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child item" ng-repeat="item in module.items" >
-	             				<item name="item.name" id="item.id" class_name="item.className" remove="$parent['remove_'+item.className]($parent.$index, $index)" ></item>
+	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+item.class_name]($parent.$index, $index)" ></item>
 		            		</li>
 		            	</ul>
 			            <center class="item-buttons">
-			            	<button_link title="Add Lecture" class="btn-mini adding" action="add_lecture($parent.$index)" />
+			            	<button_link title="Add Lecture" class="btn-mini adding" action="addLecture($parent.$index)" />
 			            	<button_link title="Add Quiz"    class="btn-mini adding"/>
 			            	<button_link title="Add Survey"  class="btn-mini adding"/>
 		                </center>
@@ -24,8 +24,8 @@
 		    	</div>
 	      	</accordion-group>	
 		</accordion>
-		<center><loading size="small" show="showLoading" /></center>
-		<button_link title="Add Module" action="add_module()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
+		<center><loading size="small" show="module_loading" /></center>
+		<button_link title="Add Module" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
 		<hr />
 	</div>
 	<div class="span6" id="middle"  ui-view="middle"></div>

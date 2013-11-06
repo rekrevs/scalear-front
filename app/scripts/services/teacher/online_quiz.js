@@ -9,8 +9,8 @@ angular.module('scalearAngularApp')
       'index': { method: 'GET', isArray: true, headers:headers},
       'update': { method: 'PUT', headers:headers},
       'destroy': { method: 'DELETE', headers:headers },
-		  'show':{method: 'GET', headers:headers},
-		  'get_quiz_list':{method:'GET', params:{param:'get_quiz_list_angular'}, headers:headers},
-		});
+	  'show':{method: 'GET', headers:headers},
+	  'getQuizList':{method:'GET', params:{param:'get_quiz_list_angular'}, headers:headers},
+	});
 
 })

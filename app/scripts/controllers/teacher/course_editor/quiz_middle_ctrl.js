@@ -6,28 +6,28 @@ angular.module('scalearAngularApp')
  	$scope.quiz= quiz.data;
  	$scope.alert={type:"error", msg:"You've got some errors."}
  
- 	$scope.closeAlerts= function()
- 	{
- 		$scope.hideAlerts=true;
+ 	$scope.closeAlerts= function(){
+ 		$scope.hide_alerts=true;
  	}
+
  	var init = function(){
- 		Quiz.get_questions({quiz_id: $stateParams.quiz_id},function(data){
+ 		Quiz.getQuestions({quiz_id: $stateParams.quiz_id},function(data){
 	 		$scope.questions=data.questions
 		  	$scope.questions.forEach(function(question,index){
 		  		if(question.question_type.toUpperCase() == 'DRAG'){
 					question.answers = []
 					if(!data.answers[index].length)
-						$scope.add_html_answer("", question)
+						$scope.addHtmlAnswer("", question)
 					else
-						question.answers= CourseEditor.expand_drag_answers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id)
+						question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id)
 				}else if(question.question_type == 'Free Text Question'){
 					question.answers=[];
-					$scope.add_html_answer("",question)
+					$scope.addHtmlAnswer("",question)
 				}
 				else{
 					question.answers = data.answers[index]
 					if(!data.answers[index].length)
-						$scope.add_html_answer("",question)				
+						$scope.addHtmlAnswer("",question)				
 				}	
 		  	});
 	    });
@@ -35,9 +35,9 @@ angular.module('scalearAngularApp')
  	
  	init();
  	
- 	var update_questions=function(ans){
+ 	var updateQuestions=function(ans){
 		console.log("savingAll");
-		Quiz.update_questions(
+		Quiz.updateQuestions(
 			{quiz_id:$scope.quiz.id},
 			{questions: ans},
 			function(data){ //success
@@ -49,17 +49,17 @@ angular.module('scalearAngularApp')
 		);
 	}
  	
- 	$scope.save_all=function(){
+ 	$scope.saveAll=function(){
  		if($scope.tform.$valid)
  		{
  		$scope.submitted=false;
- 		$scope.hideAlerts=true;
+ 		$scope.hide_alerts=true;
 		var data=[]
 		for(var elem in $scope.questions)
 		{
 			
 			if($scope.questions[elem].question_type.toUpperCase() == 'DRAG'){
-				var obj = CourseEditor.merge_drag_answers($scope.questions[elem].answers, "quiz", $scope.questions[elem].id)
+				var obj = CourseEditor.mergeDragAnswers($scope.questions[elem].answers, "quiz", $scope.questions[elem].id)
 				$scope.questions[elem].answers.forEach(function(ans){
 					if(ans.id && obj.id==null){
 						obj.id = ans.id
@@ -79,30 +79,30 @@ angular.module('scalearAngularApp')
 			else
 				data[elem] = $scope.questions[elem]
 		}
- 		update_questions(data);
+ 		updateQuestions(data);
  	}
  	else{
  		$scope.submitted=true;
- 		$scope.hideAlerts=false;
+ 		$scope.hide_alerts=false;
  	}
  	}
  	
- 	$scope.add_question=function(){
+ 	$scope.addQuestion=function(){
  			var new_question={quiz_id:$scope.quiz.id, content:"", question_type:"MCQ"}
  			new_question.answers = [];
  			$scope.questions.push(new_question);
- 			$scope.add_html_answer("", new_question);
+ 			$scope.addHtmlAnswer("", new_question);
  	}
 
-	$scope.add_html_answer=function(ans, question){
+	$scope.addHtmlAnswer=function(ans, question){
 		console.log("in add answer");
 		console.log("question is ");
 		console.log(question);
-		$scope.new_answer=CourseEditor.new_answer(ans,"","","","","quiz", question.id)
+		$scope.new_answer=CourseEditor.newAnswer(ans,"","","","","quiz", question.id)
 		question.answers.push($scope.new_answer)
 	}
  	
- 	$scope.remove_html_answer = function(index, question){
+ 	$scope.removeHtmlAnswer = function(index, question){
 		if(question.answers.length>1)
 		{
 			if(confirm("Are you sure?"))
@@ -112,7 +112,7 @@ angular.module('scalearAngularApp')
 		}
 	}
 	
-	$scope.remove_question = function(index){
+	$scope.removeQuestion = function(index){
  		 if(confirm("Are you sure?"))
 		  	$scope.questions.splice(index, 1);
 	}

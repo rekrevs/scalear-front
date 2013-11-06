@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
     	type:"error", 
     	msg:"You've got some errors."
     }
-	$scope.quizTypesList=[
+	$scope.quiz_types_list=[
 		{type:'MCQ', text:"MCQ - Multiple Correct Answers"},
 		{type:'OCQ', text:"OCQ - One Correct Answer"}, 
 		{type:'drag',text:"Drag Into Order"}
@@ -27,9 +27,9 @@ angular.module('scalearAngularApp')
 //////////////////////////////////////FUNCTIONS/////////////////////////////////////////////
 
 	$scope.closeAlerts= function(){
- 		$scope.hideAlerts=true;
+ 		$scope.hide_alerts=true;
  	}
-	$scope.load_video = function(){
+	$scope.loadVideo = function(){
 		$scope.hide_overlay=false;
 		if($scope.player)
 			Popcorn.destroy($scope.player)
@@ -38,22 +38,22 @@ angular.module('scalearAngularApp')
 		$scope.player.on("loadeddata", function(){$scope.hide_overlay=true; $scope.$apply();});
 	}
 	
-	$scope.insert_quiz=function(quizType, questionType){
-		$scope.pleaseWait = true;
-		Lecture.new_quiz({
+	$scope.insertQuiz=function(quiz_type, question_type){
+		$scope.quiz_loading = true;
+		Lecture.newQuiz({
 			lecture_id: $scope.lecture.id,
 			time: Math.round($scope.player.currentTime()), 
-			quiz_type: quizType, 
-			ques_type: questionType
+			quiz_type: quiz_type, 
+			ques_type: question_type
 		},
 		function(data){ //success
 			console.log(data);
 			$scope.showOnlineQuiz(data.quiz)
-			$scope.quizList.push(data.quiz)
-			$scope.pleaseWait = false;
+			$scope.quiz_list.push(data.quiz)
+			$scope.quiz_loading = false;
 		}, 
 		function(){ //error
-			$scope.pleaseWait = false;
+			$scope.quiz_loading = false;
 		    alert("Could not insert new quiz, please check network connection.");
 		})
 
@@ -63,19 +63,19 @@ angular.module('scalearAngularApp')
 
 		console.log("SHOWONLINEQUIX")
 		console.log(quiz)
-		$scope.editingMode = true;
-		$scope.selectedQuiz = quiz
+		$scope.editing_mode = true;
+		$scope.selected_quiz = quiz
 		$scope.player.currentTime(quiz.time);
 		$scope.player.pause();
 
 		if(quiz.quiz_type =="invideo"){
-			$scope.doubleClickMsg = "<br>Double click on the video to add a new answer";
+			$scope.double_click_msg = "<br>Double click on the video to add a new answer";
 			$scope.quiz_layer.backgroundColor="transparent"
 			getQuizData();
 		}
 		else{ // html quiz
 			console.log("HTML quiz")
-			$scope.doubleClickMsg=""
+			$scope.double_click_msg=""
 			$scope.quiz_layer.backgroundColor= "white"
 			$scope.quiz_layer.overflow= 'auto'
 			getHTMLData()
@@ -83,13 +83,13 @@ angular.module('scalearAngularApp')
 	}
 
  	var getQuizData =function(){
-		Lecture.get_quiz_data(
-			{"lecture_id":$scope.lecture.id ,"quiz": $scope.selectedQuiz.id},
+		Lecture.getQuizData(
+			{"lecture_id":$scope.lecture.id ,"quiz": $scope.selected_quiz.id},
 			function(data){ //success
 				console.log(data)
-				$scope.selectedQuiz.answers= data.answers
-				if($scope.selectedQuiz.question_type=="drag"){
-					$scope.allPos=merge_drag_pos(data.answers)
+				$scope.selected_quiz.answers= data.answers
+				if($scope.selected_quiz.question_type=="drag"){
+					$scope.allPos=mergeDragPos(data.answers)
 					console.log($scope.allPos)
 				}
 			},
@@ -100,21 +100,21 @@ angular.module('scalearAngularApp')
 	}
 
 	var getHTMLData=function(){
-		Lecture.get_html_data(
-			{"lecture_id":$scope.lecture.id ,"quiz":  $scope.selectedQuiz.id},
+		Lecture.getHtmlData(
+			{"lecture_id":$scope.lecture.id ,"quiz":  $scope.selected_quiz.id},
 			function(data){ //success	
-				if($scope.selectedQuiz.question_type == 'drag'){
+				if($scope.selected_quiz.question_type == 'drag'){
 					console.log(data)
-					$scope.selectedQuiz.answers = []
+					$scope.selected_quiz.answers = []
 					if(!data.answers.length)
-						$scope.add_html_answer()
+						$scope.addHtmlAnswer()
 					else
-						$scope.selectedQuiz.answers= CourseEditor.expand_drag_answers(data.answers[0].id ,data.answers[0].answer, "lecture", $scope.selectedQuiz.id)
+						$scope.selected_quiz.answers= CourseEditor.expandDragAnswers(data.answers[0].id ,data.answers[0].answer, "lecture", $scope.selected_quiz.id)
 				}
 				else{
-					$scope.selectedQuiz.answers= data.answers
-					if(!$scope.selectedQuiz.answers.length)
-						$scope.add_html_answer()				
+					$scope.selected_quiz.answers= data.answers
+					if(!$scope.selected_quiz.answers.length)
+						$scope.addHtmlAnswer()				
 				}			
 			},
 			function(){ //error
@@ -123,31 +123,31 @@ angular.module('scalearAngularApp')
 		);
 	}
 
-	var merge_drag_pos=function(answers){
-		var allPos=[]
+	var mergeDragPos=function(answers){
+		var all_pos=[]
 		answers.forEach(function(elem){
-			allPos.push(parseInt(elem.pos))
-			console.log(allPos)
+			all_pos.push(parseInt(elem.pos))
+			console.log(all_pos)
 		});
-		return allPos
+		return all_pos
 	}
 
 	
-	$scope.add_html_answer=function(ans){
-		$scope.new_answer=CourseEditor.new_answer(ans,"","","","","lecture", $scope.selectedQuiz.id)
-		$scope.selectedQuiz.answers.push($scope.new_answer)
+	$scope.addHtmlAnswer=function(ans){
+		$scope.new_answer=CourseEditor.newAnswer(ans,"","","","","lecture", $scope.selected_quiz.id)
+		$scope.selected_quiz.answers.push($scope.new_answer)
 	}
 
-	$scope.remove_html_answer = function(index){
-		if($scope.selectedQuiz.answers.length <=1)
+	$scope.removeHtmlAnswer = function(index){
+		if($scope.selected_quiz.answers.length <=1)
 			alert("Cannot delete, there must be alteast one answer")
 		else if(confirm("Are you sure?"))
-			$scope.selectedQuiz.answers.splice(index, 1);			
+			$scope.selected_quiz.answers.splice(index, 1);			
 	}
 
  	$scope.addDoubleClickBind= function(event){
  		var answer_width, answer_height
- 		if($scope.selectedQuiz.question_type == 'drag'){
+ 		if($scope.selected_quiz.question_type == 'drag'){
  			answer_width = 300
  			answer_height= 40
  		}
@@ -166,24 +166,24 @@ angular.module('scalearAngularApp')
 	      	var the_left= left / element.clientWidth
 	     	var the_width = answer_width/element.clientWidth;
 	      	var the_height= answer_height/(element.clientHeight-26);
-	      	$scope.add_answer("", the_height, the_width, the_left, the_top)
+	      	$scope.addAnswer("", the_height, the_width, the_left, the_top)
       }    	
 	}
 
-	$scope.add_answer= function(ans,h,w,l,t){
+	$scope.addAnswer= function(ans,h,w,l,t){
 		console.log("adding answer")
-  		$scope.new_answer=CourseEditor.new_answer(ans,h,w,l,t,"lecture", $scope.selectedQuiz.id)
-  		$scope.selectedQuiz.answers.push($scope.new_answer)
+  		$scope.new_answer=CourseEditor.newAnswer(ans,h,w,l,t,"lecture", $scope.selected_quiz.id)
+  		$scope.selected_quiz.answers.push($scope.new_answer)
 
-		Lecture.add_answer(
+		Lecture.addAnswer(
 			{lecture_id:$scope.lecture.id},
 			{answer:$scope.new_answer, "flag":true},
 			function(data){
 				console.log(data)
 				$scope.new_answer.id= data.current.id
-				if($scope.selectedQuiz.question_type=="drag"){
+				if($scope.selected_quiz.question_type=="drag"){
 					$scope.new_answer.pos = data.current.pos
-					$scope.allPos=merge_drag_pos($scope.selectedQuiz.answers)
+					$scope.allPos=mergeDragPos($scope.selected_quiz.answers)
 				}
 				console.log($scope.new_answer)
 			},
@@ -192,33 +192,33 @@ angular.module('scalearAngularApp')
 			});
 	}
 	
-	$scope.remove_answer = function(index){
+	$scope.removeAnswer = function(index){
 		console.log("removing answer")
-		var backup = angular.copy($scope.selectedQuiz.answers[index])
-		$scope.selectedQuiz.answers.splice(index, 1);
+		var backup = angular.copy($scope.selected_quiz.answers[index])
+		$scope.selected_quiz.answers.splice(index, 1);
 		console.log(backup)
-		Lecture.remove_answer(
+		Lecture.removeAnswer(
 			{lecture_id: $scope.lecture.id},
 			{answer_id:backup.id},
 			function(data){
 				console.log(data)
-				if($scope.selectedQuiz.question_type=="drag"){
-					$scope.allPos=merge_drag_pos($scope.selectedQuiz.answers)
+				if($scope.selected_quiz.question_type=="drag"){
+					$scope.allPos=mergeDragPos($scope.selected_quiz.answers)
 					console.log($scope.allPos)
 				}
 			},
 			function(){
-				$scope.selectedQuiz.answers.push(backup)
+				$scope.selected_quiz.answers.push(backup)
 				 alert("Could not remove element, please check network connection.");
 			}
 		);
 	}
 
-	var update_answers=function(ans, title){
+	var updateAnswers=function(ans, title){
 		console.log("savingAll")
-		Lecture.update_answers(
+		Lecture.updateAnswers(
 			{lecture_id:$scope.lecture.id,
-			online_quiz_id: $scope.selectedQuiz.id},
+			online_quiz_id: $scope.selected_quiz.id},
 			{answer: ans, quiz_title:title },
 			function(data){ //success
 				console.log(data)
@@ -229,17 +229,17 @@ angular.module('scalearAngularApp')
 		);
 	}
 
-	$scope.save_btn = function(){
+	$scope.saveBtn = function(){
 		
-		if($scope.answer_form.$valid || $scope.selectedQuiz.quiz_type != 'html')
+		if($scope.answer_form.$valid || $scope.selected_quiz.quiz_type != 'html')
  		{
 	 		$scope.submitted=false;
-	 		$scope.hideAlerts=true;
+	 		$scope.hide_alerts=true;
 			console.log("saving")
 			var data
-			if($scope.selectedQuiz.question_type.toUpperCase() == 'DRAG' && $scope.selectedQuiz.quiz_type == 'html'){
-				var obj = CourseEditor.merge_drag_answers($scope.selectedQuiz.answers, "lecture", $scope.selectedQuiz.id)
-				$scope.selectedQuiz.answers.forEach(function(ans){
+			if($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' && $scope.selected_quiz.quiz_type == 'html'){
+				var obj = CourseEditor.mergeDragAnswers($scope.selected_quiz.answers, "lecture", $scope.selected_quiz.id)
+				$scope.selected_quiz.answers.forEach(function(ans){
 					if(ans.id && obj.id==null){
 						obj.id = ans.id
 						return 
@@ -248,35 +248,35 @@ angular.module('scalearAngularApp')
 				data=[obj]
 			}
 			else
-				data = $scope.selectedQuiz.answers
+				data = $scope.selected_quiz.answers
 
-			update_answers(data, $scope.selectedQuiz.question);
+			updateAnswers(data, $scope.selected_quiz.question);
 		}
 		else{
 			$scope.submitted=true;
-			$scope.hideAlerts=false;
+			$scope.hide_alerts=false;
 		}
 	}
 
-	$scope.exit_btn = function(){
-		$scope.editingMode = false;
-		$scope.selectedQuiz={}
+	$scope.exitBtn = function(){
+		$scope.editing_mode = false;
+		$scope.selected_quiz={}
 		console.log("exiting")		
 	}	
  	
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-$scope.resize_small = function()
+$scope.resizeSmall = function()
 {	
 	var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 
-	$scope.showSidebar = false
+	$scope.show_sidebar = false
 
 	angular.element(".sidebar").children().appendTo("#all_tables");
 	angular.element("body").css("overflow","auto");
 
-	$scope.videoStyle={
+	$scope.video_style={
 		"position":"static",
 		"width":'500px',
 		"height":(500*1.0/factor + 26) +'px'
@@ -296,14 +296,14 @@ $scope.resize = function()
 	var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 	var win = angular.element($window)
 
-	$scope.showSidebar = true
+	$scope.show_sidebar = true
 
 	angular.element("#all_tables").children().appendTo(".sidebar");
 	angular.element("body").css("overflow","hidden");
 
 	win.scrollTop("0px")
 
-	$scope.videoStyle={
+	$scope.video_style={
 		"top":0, 
 		"left":0, 
 		"position":"fixed",

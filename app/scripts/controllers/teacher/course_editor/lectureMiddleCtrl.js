@@ -1,12 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', '$window', 'Lecture', 'lecture' ,function ($state, $stateParams, $scope, $http, $window, Lecture, lecture) {
-	
-	console.log("into middle ")
-	console.log(lecture.data)
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', '$window', 'Lecture', 'lecture','CourseEditor' ,function ($state, $stateParams, $scope, $http, $window, Lecture, lecture, CourseEditor) {
 
     $scope.lecture=lecture.data
+    $scope.alert={
+    	type:"error", 
+    	msg:"You've got some errors."
+    }
 	$scope.quizTypesList=[
 		{type:'MCQ', text:"MCQ - Multiple Correct Answers"},
 		{type:'OCQ', text:"OCQ - One Correct Answer"}, 
@@ -24,6 +25,9 @@ angular.module('scalearAngularApp')
 
 //////////////////////////////////////FUNCTIONS/////////////////////////////////////////////
 
+	$scope.closeAlerts= function(){
+ 		$scope.hideAlerts=true;
+ 	}
 	$scope.load_video = function(){
 		$scope.hide_overlay=false;
 		if($scope.player)
@@ -103,7 +107,7 @@ angular.module('scalearAngularApp')
 					if(!data.answers.length)
 						$scope.add_html_answer()
 					else
-						$scope.selectedQuiz.answers= expand_drag_answers(data.answers[0].id ,data.answers[0].answer)
+						$scope.selectedQuiz.answers= CourseEditor.expand_drag_answers(data.answers[0].id ,data.answers[0].answer, "lecture", $scope.selectedQuiz.id)
 				}
 				else{
 					$scope.selectedQuiz.answers= data.answers
@@ -117,28 +121,6 @@ angular.module('scalearAngularApp')
 		);
 	}
 
-	var expand_drag_answers=function(id, answers){
-		console.log("add_drag_answer2 ");
-		console.log(answers);
-		var allAnswers=[];
-		answers.forEach(function(answer){
-			var new_ans=new_answer(answer);
-			new_ans.id=id;
-			console.log(new_ans);
-			allAnswers.push(new_ans);
-		});
-		return allAnswers;
-	}
-
-	var merge_drag_answers=function(answers){
-		var allAnswers=[]
-		answers.forEach(function(elem){
-			allAnswers.push(elem.answer)
-			console.log(allAnswers)
-		});
-		return new_answer(allAnswers)
-	}
-
 	var merge_drag_pos=function(answers){
 		var allPos=[]
 		answers.forEach(function(elem){
@@ -148,57 +130,17 @@ angular.module('scalearAngularApp')
 		return allPos
 	}
 
-	var new_answer=function(ans, h, w,l, t){
-		return {
-			answer: ans || "",
-			correct:false,
-			explanation:"",
-			online_quiz_id:$scope.selectedQuiz.id,
-			height:h || 0,
-			width:w  || 0,
-			xcoor:l  || 0,
-			ycoor:t  || 0
-		}
-	}
-
+	
 	$scope.add_html_answer=function(ans){
-		$scope.new_answer=new_answer(ans)
+		$scope.new_answer=CourseEditor.new_answer(ans,"","","","","lecture", $scope.selectedQuiz.id)
 		$scope.selectedQuiz.answers.push($scope.new_answer)
-
-		if($scope.selectedQuiz.question_type != 'drag' || !$scope.selectedQuiz.answers[0].id)
-			Lecture.add_html_answer(
-				{lecture_id: $scope.lecture.id},
-				{answer: $scope.new_answer},
-				function(data){ //success
-					console.log("add html answer success")
-					console.log(data)
-					$scope.new_answer.id= data.current.id
-					console.log($scope.new_answer)
-				},
-				function(){ //error
-		 			alert("Could not add element, please check network connection.");
-				}
-			);
 	}
 
 	$scope.remove_html_answer = function(index){
 		if($scope.selectedQuiz.answers.length <=1)
 			alert("Cannot delete, there must be alteast one answer")
 		else if(confirm("Are you sure?"))
-			if ($scope.selectedQuiz.question_type == 'drag')
-				$scope.selectedQuiz.answers.splice(index, 1);
-			else	
-				Lecture.remove_html_answer(
-					{lecture_id: $scope.lecture.id},
-					{answer_id:$scope.selectedQuiz.answers[index].id},
-					function(data){
-						console.log(data)
-						$scope.selectedQuiz.answers.splice(index, 1);
-					},
-					function(){
-						 alert("Could not remove element, please check network connection.");
-					}
-				);			
+			$scope.selectedQuiz.answers.splice(index, 1);			
 	}
 
  	$scope.addDoubleClickBind= function(event){
@@ -228,7 +170,7 @@ angular.module('scalearAngularApp')
 
 	$scope.add_answer= function(ans,h,w,l,t){
 		console.log("adding answer")
-  		$scope.new_answer=new_answer(ans,h,w,l,t)
+  		$scope.new_answer=CourseEditor.new_answer(ans,h,w,l,t,"lecture", $scope.selectedQuiz.id)
   		$scope.selectedQuiz.answers.push($scope.new_answer)
 
 		Lecture.add_answer(
@@ -270,11 +212,12 @@ angular.module('scalearAngularApp')
 		);
 	}
 
-	var update_answers=function(ans, ques){
+	var update_answers=function(ans, title){
 		console.log("savingAll")
 		Lecture.update_answers(
-			{lecture_id:$scope.lecture.id},
-			{answer: ans, question: ques},
+			{lecture_id:$scope.lecture.id,
+			online_quiz_id: $scope.selectedQuiz.id},
+			{answer: ans, quiz_title:title },
 			function(data){ //success
 				console.log(data)
 			},
@@ -284,24 +227,33 @@ angular.module('scalearAngularApp')
 		);
 	}
 
-	$scope.save_btn = function(){		
-		console.log("saving")
-		var data
-		if($scope.selectedQuiz.question_type == 'drag' && $scope.selectedQuiz.quiz_type == 'html'){
-			var obj = merge_drag_answers($scope.selectedQuiz.answers)
-			$scope.selectedQuiz.answers.forEach(function(ans){
-				if(ans.id){
-					obj.id = ans.id
-					return 
-				}
-			})
-			data=[obj]
-		}
-		else
-			data = $scope.selectedQuiz.answers
+	$scope.save_btn = function(){
+		
+		if($scope.answer_form.$valid || $scope.selectedQuiz.quiz_type != 'html')
+ 		{
+	 		$scope.submitted=false;
+	 		$scope.hideAlerts=true;
+			console.log("saving")
+			var data
+			if($scope.selectedQuiz.question_type.toUpperCase() == 'DRAG' && $scope.selectedQuiz.quiz_type == 'html'){
+				var obj = CourseEditor.merge_drag_answers($scope.selectedQuiz.answers, "lecture", $scope.selectedQuiz.id)
+				$scope.selectedQuiz.answers.forEach(function(ans){
+					if(ans.id && obj.id==null){
+						obj.id = ans.id
+						return 
+					}
+				})
+				data=[obj]
+			}
+			else
+				data = $scope.selectedQuiz.answers
 
-		console.log(data)
-		update_answers(data, $scope.selectedQuiz.question);
+			update_answers(data, $scope.selectedQuiz.question);
+		}
+		else{
+			$scope.submitted=true;
+			$scope.hideAlerts=false;
+		}
 	}
 
 	$scope.exit_btn = function(){

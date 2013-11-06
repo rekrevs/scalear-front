@@ -7,4 +7,10 @@ angular.module('scalearAngularApp')
       'AngularJS',
       'Karma'
     ];
+    
+    $scope.user = {
+    name: 'awesome user'
+  }; 
+  
   }]);
+

@@ -64,6 +64,7 @@
 }
 
 .answer_div{
+	width: 400px;
 	margin-left:100px;
 	margin-bottom:20px;	
 	position: relative;
@@ -103,7 +104,7 @@
           border-radius: 4px 0 4px 0;
 }
 .sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
-.sortable li { width: 250px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 25px; }
+.sortable li { width: 350px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 25px; }
 .sortable li span { position: absolute; margin-left: -1.3em; }
 
 .widescreen{
@@ -132,3 +133,10 @@
   height:100%;
   top: 0px;
 }
+
+.ontop2_big{
+  border:0px solid;
+  width:10px;
+}
+.ng-invalid ~ span { color:red; display:inline;font-size:12px;left:300px; }
+input.ng-invalid{ border:1px solid red; }

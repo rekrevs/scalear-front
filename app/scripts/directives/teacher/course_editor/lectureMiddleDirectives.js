@@ -206,73 +206,151 @@ angular.module('scalearAngularApp')
             }
 		}
 	};
-}).directive('answerform', function(Lecture, $stateParams){
+}).directive('answerform', function(Lecture, $stateParams, CourseEditor){
 	return {
 		scope: {
 			quiz:"=",
 			add:"&",
-			remove:"&"
+			remove:"&",
+			removeq:"&",
+			column: "@",
+			columna:"@",
+			index: "=",
+			submitted: "=",
+			subtype:"="
 		},
 		restrict: 'E',
-		template: "<div style='text-align:left;margin:10px;'>"+
-						"<label class='q_label'>Question</label>"+
+		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
+						"<label class='q_label'>Question:</label>"+
+						"<input required name='qlabel' type='text' ng-model='quiz[column]' />"+
+						"<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'>Required!</span>"+
+						// ADD QUESTION TYPE IF ITS A QUIZ QUESTION.. SELECT LIST.
+						"<br />"+
+						"<label ng-if='show_question()' class='q_label'>Question Type:</label>"+
+						"<select ng-if='show_question()' ng-model='quiz.question_type' required  class='choices'><option value='MCQ'>MCQ</option><option value='OCQ' >OCQ</option><option value='DRAG' ng-if='!isSurvey()' >DRAG</option><option ng-if='isSurvey()' value='Free Text Question'>Free Text Question</option></select>"+
+						"<a ng-if='show_question()' href='' title='Delete' style='float:right;' class='delete_option' ng-click='remove_question(index)'><img src='images/trash3.png' /></a>"+
 						"<br/>"+
-						"<input type='text' ng-model='quiz.question' value='{{quiz.question}}' />"+
-						"<br/>"+
-						"<div class='answer_div'>"+
+						"<div ng-hide='hideAnswer()' class='answer_div'>"+
 								"<htmlanswer />"+
-								"<a class='add_multiple_answer' ng-click='add_answer()' href=''>Add Answer</a>"+
+								"<a class='add_multiple_answer' ng-click='add_answer(\"\",quiz)' href=''>Add Answer</a>"+
 								"<br/>"+
 							"</div>"+
-					"</div>",
+					"</div></ng-form>",
 		link: function(scope, iElm, iAttrs, controller) {
-
+			console.log("QUIZZ is ");
+			console.log(scope.quiz);
+			//scope.quiz.type=scope.quiz.question_type;
 			scope.add_answer=scope.add()
+			scope.remove_question=scope.removeq()
+			
+			scope.isSurvey = function()
+			{
+				if(scope.subtype)
+					return scope.subtype.toUpperCase()=="SURVEY"
+				else
+					return false
+			}
+			scope.hideAnswer = function()
+			{
+				return (scope.isSurvey() && scope.quiz.question_type=="Free Text Question")
+			}
+			
+			scope.show_question = function()
+			{
+				return "content" in scope.quiz
+			}
+			
+			
+		}
+	};
+}).directive('htmlanswer',function(){
+	return {
+	 	restrict: 'E',
+	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+					
+					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
+					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
+					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
+						"<html_drag ng-repeat='answer in quiz.answers' />"+
+					"</ul>"+
+				"</div>",
+		link:function(scope){
+			scope.remove_answer=scope.remove()
+			
+			
+			scope.updateValues= function()
+			{
+				console.log("in value update")
+				console.log(scope.quiz);
+				console.log(scope.quiz.answers);
+				scope.values=0
+				for(var element in scope.quiz.answers)
+				{
+					console.log(scope.quiz.answers[element].correct)
+					if(scope.quiz.answers[element].correct==true)
+					{
+						console.log("in true");
+						scope.values+=1
+					}
+				}
+				console.log(scope.values)
+				//scope.values= [];
+			}
+			
 			
 			scope.radio_change=function(corr_ans){
 				scope.quiz.answers.forEach(function(ans){
 					ans.correct=false
 				})
 				corr_ans.correct=true
+				
+				scope.updateValues();
 			}
-		}
-	};
-}).directive('htmlanswer',function(){
-	return {
-	 	restrict: 'E',
-	 	template: "<div ng-switch on='quiz.question_type'>"+					
-					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
-					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
-					"<ul  ng-switch-when='drag' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
-						"<html_drag ng-repeat='answer in quiz.answers' />"+
-					"</ul>"+
-				"</div>",
-		link:function(scope){
-			scope.remove_answer=scope.remove()
+			
+			scope.show = function()
+			{
+				 return !("content" in scope.quiz)
+			}
+			
+			scope.$watch('quiz.answers', function(){
+				scope.updateValues();	
+			})
+			
 		}
 	};
 }).directive('htmlMcq',function(){
-	return {
+	
+	var result={
 		restrict:'E',
-		template:"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer.answer' value='{{answer.answer}}' />"+
-				"<input type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
-				"<br/>"+
-				"<input type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index)'>"+
-					"<img src='images/trash3.png' />"+
-				"</a>"
+		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+				"<input ng-if='!isSurvey()' ng-change='updateValues()' atleastone type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
+				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
+				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone'>Choose atleast one</span>"+
+				"<br ng-if='show()'/><input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /><a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'><img src='images/trash3.png' /></a><br/></ng-form>",
+		link: function(scope)
+		{
+			//console.log("mcq answers areee ");
+			//console.log(scope.answer);
+		}
 	}
+	return result
 	
 }).directive('htmlOcq',function(){
 	return {
 		restrict:'E',
-		template:"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer.answer' value='{{answer.answer}}' />"+
-				"<input type='radio' name='ocq' style='margin:5px 10px 15px;' ng-checked='answer.correct' value='true' ng-click='radio_change(answer)'/>"+
-				"<br/>"+
-				"<input type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index)'>"+
+		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+				"<input ng-if='!isSurvey()' atleastone type='radio' name='ocq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=\"true\" ng-click='radio_change(answer)'/>"+
+				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
+				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.ocq.$error.atleastone'>Check one answer</span>"+
+				"<br ng-if='show()'/>"+
+				"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
+				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'>"+
 					"<img src='images/trash3.png' />"+
-				"</a>"
+				"</a><br></ng-form>",
+		link: function(scope)
+		{
+			//console.log("ocq answers areee "+scope.answer);
+			//console.log(scope.answer);
+		}
 	}
 	
 }).directive('htmlDrag',function(){
@@ -280,12 +358,33 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		replace:true,
 		template:"<li class='ui-state-default'  >"+
+					"<ng-form name='aform'>"+
 					"<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"+
-					"<input type='text' placeholder='Answer' title='Enter Answer' ng-model='answer.answer' value='{{answer.answer}}' />"+
-					"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='remove_answer($index)' ><img src='images/trash3.png' /></a>"+
+					"<input type='text' required name='answer' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
+					"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='remove_answer($index, quiz)' ><img src='images/trash3.png' /></a>"+
+					"</ng-form>"+
 				"</li>"				 
 	}
 	
+}).directive('atleastone', function() {
+  return {
+  	require: 'ngModel',
+    link: function(scope, elm, attrs, ctrl) {
+    
+      scope.validate = function(value) {
+   				 if (scope.values<1) {
+        			ctrl.$setValidity('atleastone', false);
+    			} else {
+        			ctrl.$setValidity('atleastone', true);
+    			}
+		}
+		
+		scope.$watch('values',function(){
+			scope.validate();
+		});
+    }
+  };
 }).directive('popOver',function ($parse, $compile, $q) {
     return{
   		restrict: 'A',

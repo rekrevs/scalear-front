@@ -11,6 +11,7 @@
   'ui.bootstrap.collapse',
   'ui.bootstrap.transition', 
   'ui.bootstrap.datepicker',
+  'ui.bootstrap.alert',
   'ui.sortable',
   'ngDragDrop', 
   'pasvaz.bindonce', 
@@ -19,9 +20,11 @@
 ])
   .constant('scalear_api', {host:"http://localhost:3000"})
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
+  .value('$anchorScroll', angular.noop)
   .run(function(editableOptions) {
       editableOptions.theme = 'bs2';
   })  
+
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
@@ -35,7 +38,7 @@
         controller:'MainCtrl'
       })
       .state('course', {
-        url: "/course/:course_id",
+        url: "/courses/:course_id",
         template: '<ui-view/>',
         abstract:true
       })
@@ -50,7 +53,7 @@
             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/groups/'+$stateParams.module_id+'/get_group_angular'})
           }
         },
-        url:'/module/:module_id',
+        url:'/modules/:module_id',
         views:{
           "details" :{templateUrl: 'views/teacher/course_editor/module.details.html', controller: "moduleDetailsCtrl"},
           "middle"  :{templateUrl: 'views/teacher/course_editor/module.middle.html',  controller: "moduleMiddleCtrl"}
@@ -61,7 +64,7 @@
             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
           }
         },
-        url: "/lecture/:lecture_id",
+        url: "/lectures/:lecture_id",
         views:{
           "details" :{templateUrl: 'views/teacher/course_editor/lecture.details.html', controller: "lectureDetailsCtrl"},
           "middle"  :{templateUrl: 'views/teacher/course_editor/lecture.middle.html',  controller: "lectureMiddleCtrl"}
@@ -80,11 +83,13 @@
         },
         url: "/quizzes/:quiz_id",
         views:{
+
           "details" :{templateUrl: 'views/teacher/course_editor/quiz.details.html', controller: "quizDetailsCtrl"},
           "middle"  :{templateUrl: 'views/teacher/course_editor/quiz.middle.html',  controller: "quizMiddleCtrl"}
         }        
       })
   })
+
 
 
 

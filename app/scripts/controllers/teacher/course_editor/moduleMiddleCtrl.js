@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
     .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Documents', 'module' ,function ($scope, $state, Module, Documents, module) {
         $scope.module=module.data
-		$scope.$emit('accordianUpdate',$scope.module.id);
+		//$scope.$emit('accordianUpdate',$scope.module.id);
     	$scope.add_document=function(){
     		console.log($scope.module.id)
     		$scope.showDocumentLoading=true

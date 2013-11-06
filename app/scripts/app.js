@@ -43,17 +43,6 @@
         templateUrl: 'views/teacher/calendar.html',
         controller: 'TeacherCalendarCtrl'
       })
-      .state('student_calendar', {
-        resolve:{
-          events:function($http, headers, scalear_api){
-            //need to change the course id as well
-            return $http({method:'GET', headers:headers, url:scalear_api.host+'/en/courses/13/events'})
-          }
-        },
-        url: '/student/calendar',
-        templateUrl: 'views/student/calendar.html',
-        controller: 'StudentCalendarCtrl'
-      })
   })
 
 

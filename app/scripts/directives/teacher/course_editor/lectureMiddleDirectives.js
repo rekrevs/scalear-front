@@ -328,13 +328,13 @@ angular.module('scalearAngularApp')
 	}
 	return result
 	
-}).directive('htmlOcq',function(){
+}).directive('htmlOcq',function($timeout){
 	return {
 		restrict:'E',
 		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
-				"<input ng-if='!isSurvey()' atleastone type='radio' name='ocq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=\"true\" ng-click='radio_change(answer)'/>"+
+				"<input ng-if='!isSurvey()' atleastone type='radio' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=true ng-click='radio_change(answer)'/>"+
 				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.ocq.$error.atleastone'>Check one answer</span>"+
+				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone'>Check one answer</span>"+
 				"<br ng-if='show()'/>"+
 				"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
 				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='remove_answer($index, quiz)'>"+
@@ -342,8 +342,14 @@ angular.module('scalearAngularApp')
 				"</a><br></ng-form>",
 		link: function(scope)
 		{
-			//console.log("ocq answers areee "+scope.answer);
-			//console.log(scope.answer);
+			if(scope.answer.correct)
+			{
+				scope.radio_change(scope.answer);
+			}
+			scope.getName= function()
+			{
+				return "ocq"+scope.index+scope.$index
+			}
 		}
 	}
 	
@@ -368,6 +374,7 @@ angular.module('scalearAngularApp')
     
       scope.validate = function(value) {
    				 if (scope.values<1) {
+   				 	console.log("errorrr");
         			ctrl.$setValidity('atleastone', false);
     			} else {
         			ctrl.$setValidity('atleastone', true);

@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
         'show':{method: 'GET', headers: headers},
         "getQuestions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
         "updateQuestions": {method: 'PUT', params: {action: 'update_questions_angular'},headers: headers},
-        "validate_quiz": {method: 'PUT', params: {action: 'validate_quiz_angular'},headers: headers},
+        "validateQuiz": {method: 'PUT', params: {action: 'validate_quiz_angular'},headers: headers},
         
       });
 

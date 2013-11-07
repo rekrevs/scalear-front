@@ -5,24 +5,25 @@
 </overlay>
 <center><h3>{{lecture.name}}</h3></center>
 <div id="notify"></div>
-<center ><a class ="btn big fullscreenLink" ng-click="resize()">Edit In Fullscreen</a></center>
+<center ><a class ="btn big fullscreenLink" ng-click="resizeBig()">Edit In Fullscreen</a></center>
 <center>
 	<form name="answer_form" novalidate style="margin:0">
-	<video_container >
+	<video_container ng-style="video_style">
 		<div ng-show="editing_mode">
-			<quiz ng-dblclick="addDoubleClickBind($event)" >
-				<answervideo ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" type="selected_quiz.question_type" quiz="selected_quiz" remove="removeAnswer($index)"/>
+			<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
+				<answervideo ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
 				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 			</quiz>
 		</div>
-		<youtube />
-		<div class="sidebar" ng-show="show_sidebar" >
+		<youtube ng-style="video_style"/>
+		<div class="sidebar" ng-show="fullscreen" >
 			
 		</div>
 	</video_container>
 	</form>
+	</br>
 	<div id="all_tables" >
-		<center ng-show="show_sidebar"><a class='btn small fullscreenLink' ng-click="resizeSmall()" >Exit Fullscreen</a></center>
+		<center ng-show="fullscreen"><a class='btn small fullscreenLink' ng-click="resizeSmall()" >Exit Fullscreen</a></center>
 		<edit_panel ng-show="editing_mode" />
 		<div ng-show="submitted && !hide_alerts">
 			<alert type="alert.type" close="closeAlerts()">{{alert.msg}}</alert>

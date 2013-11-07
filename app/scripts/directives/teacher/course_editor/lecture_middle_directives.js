@@ -4,8 +4,9 @@ angular.module('scalearAngularApp')
 	.directive("videoContainer",function($rootScope){
 		return{
 			transclude: true,
+			replace:true,
 			restrict: "E",
-			template: '<div ng-class="lecture.aspect_ratio" style="border:4px solid" ng-transclude></div>',
+			template: '<div class="videoborder" ng-class="lecture.aspect_ratio" style="border:4px solid" ng-transclude></div>',
 		  	link: function($scope, element){
 			  	$rootScope.$on("refreshVideo", function(event, args) {
 			  		element.find('iframe').remove();
@@ -70,13 +71,12 @@ angular.module('scalearAngularApp')
 		 scope: {
 		 	quiz:"=",
 		 	data:"=",
-		 	type:"=",
 		 	list:'=',
 		 	remove:"&"
 		 },
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-switch on='type'>"+
+		 template: "<div ng-switch on='quiz.question_type'>"+
 		 				"<answer ng-switch-when='MCQ' />"+
 		 				"<answer ng-switch-when='OCQ' />"+
 		 				"<drag ng-switch-when='drag' />"+
@@ -86,55 +86,71 @@ angular.module('scalearAngularApp')
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<img ng-src='images/{{imgName}}' ng-class=imgClass ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" pop-over='popover_options' unique='true'/>",
+		 template: "<div ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.videoborder'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" ><img ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' /></div>",
 
 		link: function(scope, element, attrs, controller) {
 
 			//===FUNCTIONS===//
-			scope.setQuizImg=function(){
+			var setAnswerLocation=function(){
+				console.log("setting answer location")
+				var ontop=angular.element('.ontop');		
+				var w = scope.data.width * ontop.width();
+				var h = scope.data.height* (ontop.height() - 26);
+				var add_left= (w-13)/2.0
+				var add_top = (h-13)/2.0
+				scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
+				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26)) + add_top;
+			}	
+
+			scope.setAnswerColor=function(){
 				console.log("image change")
 				console.log(scope.data.correct)
-				if(scope.type == "OCQ")
+				if(scope.quiz.question_type == "OCQ")
 					scope.imgName = scope.data.correct? 'button_green.png' : 'button8.png';
 				else
 					scope.imgName = scope.data.correct? 'checkbox_green.gif' : 'checkbox.gif';
 			}
 
 			scope.calculatePosition=function(){
-				console.log(element.position())
+				var ontop=angular.element('.ontop');		
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() - 26);
+				scope.calculateSize()				
+			}
+
+			scope.calculateSize=function(){
+				var ontop=angular.element('.ontop');	
+				scope.data.width= element.width()/ontop.width();
+				scope.data.height= element.height()/(ontop.height()-26);
 			}
 
 			scope.radioChange=function(corr_ans){
-				console.log("radioChange")
-				scope.quiz.answers.forEach(function(ans){
-					ans.correct=false
-				})
-				corr_ans.correct=true
-				$rootScope.$emit("radioChange")
+				if(scope.quiz.question_type == "OCQ"){
+					console.log("radioChange")
+					scope.quiz.answers.forEach(function(ans){
+						ans.correct=false
+					})
+					corr_ans.correct=true
+					$rootScope.$emit("radioChange")
+				}
+				
 			}
-			
-			$rootScope.$on("radioChange",function(){
-				scope.setQuizImg()
-			})
 			//===============//
-			
-			// COULD BE FILTER //	
-			var ontop=angular.element('.ontop');		
-			var w = scope.data.width * ontop.width();
-			var h = scope.data.height* (ontop.height() - 26);
-			var add_left= (w-13)/2.0
-			var add_top = (h-13)/2.0 
-			scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;
-			scope.ycoor = (scope.data.ycoor * (ontop.height() - 26)) + add_top;
-			// // // // // // //
+	
+			$rootScope.$on("radioChange",function(){
+				scope.setAnswerColor()
+			})
+			$rootScope.$on("updatePosition",function(){
+				console.log("event emiited updated position")
+				setAnswerLocation()
+			})		
 
-			scope.imgClass = "component dropped answer_img"
+			setAnswerLocation()
+			scope.setAnswerColor()
 
-			scope.setQuizImg()						
+			scope.answerClass = "component dropped answer_img"						
 
-			var template = "<p>Correct:<input class='must_save_check' ng-change='radioChange(data);setQuizImg()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct'  /><br>Answer: <textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/><br>Explanation:<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} /><br><input type='button' ng-click='remove()' class='btn btn-danger remove_button' value='Remove'/></p>"
+			var template = "<p>Correct:<input class='must_save_check' ng-change='radioChange(data);setAnswerColor()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' /><br>Answer: <textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/><br>Explanation:<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} /><br><input type='button' ng-click='remove()' class='btn btn-danger remove_button' value='Remove'/></p>"
 
            	scope.popover_options={
             	html:true,
@@ -143,45 +159,60 @@ angular.module('scalearAngularApp')
 
 		}
 	};
-}).directive('drag', function($compile){
+}).directive('drag', function($compile, $rootScope){
 	return {
 		 replace:true,
 		 restrict: 'E',
 		 template: "<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
-		 				"<div class='input-prepend' pop-over='popover_options' unique='true' >"+
+		 				"<div class='input-prepend'>"+
 		 					"<span class='add-on'>{{data.pos}}</span>"+
-		 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-model='data.answer' value='{{data.answer}}' />"+
+		 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true'/>"+
 	 					"</div>"+
  					"</div>",
 
 		link: function(scope, element, attrs, controller) {
 			 
 			//===FUNCTIONS===//
+			var setAnswerLocation=function(){
+				var ontop=angular.element('.ontop');
+				scope.width  = scope.data.width * ontop.width();
+				scope.height = scope.data.height* (ontop.height() - 26);
+				scope.xcoor = (scope.data.xcoor * ontop.width())
+				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26))
+				scope.area_width= scope.width - 50
+				scope.area_height= scope.height - 20
+			}
+
 			scope.calculatePosition=function(){
+				var ontop=angular.element('.ontop');
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() - 26);
+				scope.calculateSize()
 			}
+			scope.calculateSize=function(){
+				var ontop=angular.element('.ontop');
+				scope.data.width= element.width()/ontop.width();
+				scope.data.height= element.height()/(ontop.height()-26);
+			}			
 			//===============//	
 			
-			var ontop=angular.element('.ontop');
-			scope.width = scope.data.width * ontop.width();
-			scope.height = scope.data.height* (ontop.height() - 26);
-			scope.xcoor = (scope.data.xcoor * ontop.width())
-			scope.ycoor = (scope.data.ycoor * (ontop.height() - 26))
+			$rootScope.$on("updatePosition",function(){
+				console.log("event emiited updated position")
+				setAnswerLocation()
+			})	
 
+			setAnswerLocation()
 			scope.dragClass = "component dropped answer_drag" 
-
 			
-			if(!(scope.data.explanation instanceof Array)) 
-			{
+			if(!(scope.data.explanation instanceof Array)){
 				console.log("not an array")
 				scope.data.explanation = new Array()
 				for(var i in scope.list)
 					scope.data.explanation[i]=""
 			}
 
-			if(scope.data.pos == null)
-			{	console.log("pos undefined")
+			if(scope.data.pos == null){	
+				console.log("pos undefined")
 				var max = Math.max.apply(Math,scope.list)
 				max = max ==-Infinity? -1 : max
 				console.log("max= "+max)
@@ -189,8 +220,6 @@ angular.module('scalearAngularApp')
 				scope.list.push(scope.data.pos)
 			}
 			scope.pos= parseInt(scope.data.pos)
-			console.log(scope.pos)
-			console.log(scope.list)
 
 			var template = '<ul><p>Correct Because:<br><textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" /><br/><div ng-repeat="num in list|filter:\'!\'+pos" >{{num}} Incorrect Because:<br><textarea rows=3 class="must_save" type="text" ng-model="data.explanation[num]" /><br></div><input type="button" ng-click="remove()" class="btn btn-danger remove_button" value="Remove"/></p></ul>'
 
@@ -198,6 +227,17 @@ angular.module('scalearAngularApp')
             	content: template,
             	html: true
             }
+
+            element.resizable({containment: ".videoborder",  alsoResize: element.find('.area'), minHeight:40, minWidth:40,
+		  		stop: function( event, ui ) {
+		  			console.log("haallaaa resizing")
+		  			console.log(ui)
+		  			scope.calculateSize()
+		  			//scope.data.width = 
+	        		// element.find('.area').width($(this).width()-50)
+	        		// $(this).find('.area').height($(this).height()-25)
+        		}
+        	});
 		}
 	};
 }).directive('answerform', function(Lecture, $stateParams, CourseEditor){
@@ -287,7 +327,6 @@ angular.module('scalearAngularApp')
 					}
 				}
 				console.log(scope.values)
-				//scope.values= [];
 			}
 			
 			
@@ -390,7 +429,9 @@ angular.module('scalearAngularApp')
 	        $q.when(getter(scope) != null).then(function(){
 
 	        	var options = getter(scope)
-	        	// console.log(options)
+
+	        	element.popover(options);
+	          	var popover = element.data('popover');
 		        
 		        if(options.content){
 
@@ -400,22 +441,34 @@ angular.module('scalearAngularApp')
 		                		var $this = $(this)
 		                		var popover = $this.data('popover');
 		                		if (popover && !popover.$element.is(element)) {
-		                  			$this.popover('hide');
+		                  			$this.popover('hide');		                  			
 		                		}
 	              			});
-		            	});
+		              	});
+              			
 		          	}
 
-	          		element.popover(options);
-		          	var popover = element.data('popover');
-		          
 		          	popover.getPosition = function(){
 			            var r = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
 			            $compile(this.$tip)(scope);
 			            scope.$digest();
 			            this.$tip.data('popover', this);
 			            return r;
-		          	};	         
+		          	};
+
+		          	$(document).on("click", function (e) {
+	            		console.log("trying to hide")
+					    var $target = $(e.target)
+					    var inPopover = $(e.target).closest('.popover').length > 0
+					    var isElem = $(e.target).is(element)
+					    if (!inPopover && !isElem) 
+					    {
+					    	console.log(inPopover)
+					    	console.log(isElem)
+					    	element.popover('hide');
+					    }
+					    	//
+					});	         
 		        }
 	        });
       	}

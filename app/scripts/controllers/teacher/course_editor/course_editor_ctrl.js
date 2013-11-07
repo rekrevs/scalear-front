@@ -75,7 +75,7 @@ angular.module('scalearAngularApp')
 		);
     }
 
-    $scope.removelecture=function(module_index, item_index){
+    $scope.removeLecture=function(module_index, item_index){
     	console.log("remove lec " + module_index + " " + item_index) 
     	if(confirm("Are you sure you want to delete lecture?")){
 	    	Lecture.destroy(

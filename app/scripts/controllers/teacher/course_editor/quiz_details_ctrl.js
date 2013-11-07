@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizDetailsCtrl',['$stateParams','$rootScope','$scope',,'Quiz','quiz', function ($stateParams, $rootScope,$scope, Quiz,quiz) {
+  .controller('quizDetailsCtrl',['$stateParams','$rootScope','$scope','$q','Quiz','quiz', function ($stateParams, $rootScope, $scope, $q, Quiz,quiz) {
     
     $scope.quiz = quiz.data
     
@@ -25,7 +25,7 @@ angular.module('scalearAngularApp')
       var d = $q.defer();
       quiz={}
       quiz[column]=data;
-      Quiz.validate_quiz({quiz_id:$scope.quiz.id},quiz,function(data){
+      Quiz.validateQuiz({quiz_id:$scope.quiz.id},quiz,function(data){
         d.resolve()
       },function(data){
         console.log(data.status);

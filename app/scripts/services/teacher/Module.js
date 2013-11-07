@@ -12,7 +12,8 @@ angular.module('scalearAngularApp')
 	    'show':{method: 'GET', headers:headers},
 	    'new_module':{method:'POST', params:{action:'new_module_angular'}, headers:headers},
 	    'new_document':{method:'POST', params:{action:'new_document_angular'}, headers:headers},
-	    'saveSort':{method:'POST', params:{action:'sort'}, headers:headers}
+	    'saveSort':{method:'POST', params:{action:'sort'}, headers:headers},
+	    "validateModule": {method: 'PUT', params: {action: 'validate_group_angular'},headers: headers},
 	  });
 
 })

@@ -5,6 +5,10 @@ angular.module('scalearAngularApp')
 
   
   var x={	
+  	capitalize: function(s)
+	{
+    return s[0].toUpperCase() + s.slice(1);
+	},
    expandDragAnswers:function(id, answers, type, question_id){
 			var all_answers=[];
 			if(!(answers instanceof Array))

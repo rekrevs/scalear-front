@@ -27,9 +27,10 @@
 
   .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
+	
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
     $httpProvider.defaults.withCredentials = true;
-
+	$httpProvider.interceptors.push('ServerInterceptor');
     
     $urlRouterProvider.otherwise('/');
     $stateProvider
@@ -59,7 +60,7 @@
           "details" :{templateUrl: 'views/teacher/course_editor/module.details.html', controller: "moduleDetailsCtrl"},
           "middle"  :{templateUrl: 'views/teacher/course_editor/module.middle.html',  controller: "moduleMiddleCtrl"}
         }
-      }).state('course.course_editor.lecture', {
+      }).state('course.course_editor.lecture', { 
         resolve:{ 
           lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})

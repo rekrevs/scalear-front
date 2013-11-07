@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location) {
 
 
  	/***********************Functions*******************************/
@@ -17,6 +17,11 @@ angular.module('scalearAngularApp')
 		  	});
 	 		console.log($scope.modules);
 	    });
+ 	}
+ 	
+ 	$scope.capitalize = function(s)
+ 	{
+ 		return CourseEditor.capitalize(s)
  	}
 
  	$scope.addModule=function(){
@@ -38,17 +43,21 @@ angular.module('scalearAngularApp')
     $scope.removeModule=function(index){
     	console.log("remove mod") 
     	event.preventDefault();
-  		event.stopPropagation();   	
+  		event.stopPropagation();  
+  		var m_id= $scope.modules[index].id;
     	if(confirm("Are you sure you want to delete module?")){
 	    	Module.destroy(
-	    		{module_id: $scope.modules[index].id},
+	    		{module_id: m_id},
 	    		function(response){
 	    			console.log(response)
 	    			if(response.error.lecture_quiz_exist)
 	    				console.log("Sorry, You must delete all items in the module before deleting the module itself.")
 	    			else{
 	    				$scope.modules.splice(index, 1)
-	    				$state.go('course.course_editor')
+	    			 	var str = $location.path();
+					 	var res = str.match(/.*\/modules\/(\d+)/);
+					 	if(res && res[1]==m_id)
+	    			 		$state.go('course.course_editor')
 	    			}
 	    		},
 	    		function(){
@@ -75,18 +84,60 @@ angular.module('scalearAngularApp')
 		);
     }
 
-    $scope.removelecture=function(module_index, item_index){
+    $scope.removeLecture=function(module_index, item_index){
     	console.log("remove lec " + module_index + " " + item_index) 
+    	var l_id=$scope.modules[module_index].items[item_index].id
     	if(confirm("Are you sure you want to delete lecture?")){
 	    	Lecture.destroy(
 	    		{lecture_id: $scope.modules[module_index].items[item_index].id},
 	    		function(response){
 	    			 console.log(response)
 	    			 $scope.modules[module_index].items.splice(item_index, 1)
-	    			 $state.go('course.course_editor')
+	    			  
+	    			 var str = $location.path();
+					 var res = str.match(/.*\/lectures\/(\d+)/);
+					 if(res && res[1]==l_id)
+	    			 	$state.go('course.course_editor')
 	    		},
 	    		function(){
 	    			alert("Failed to delete lecture, please check network connection")
+	    		}
+			);
+		}
+    }
+    
+    $scope.addQuiz=function(module_index, type){
+    	console.log("adding quiz "+ module_index)
+    	console.log($scope.modules)
+    	$scope.item_loading=true
+    	Quiz.newQuiz({group: $scope.modules[module_index].id, type:type},
+	    	function(quiz){
+	    		console.log(quiz)
+	    		quiz.class_name='quiz'
+	    	    $scope.modules[module_index].items.push(quiz)
+    			$scope.item_loading=false
+	    	}, 
+	    	function(){
+	    		alert("Failed to create quiz, please check network connection")
+	    	}
+		);
+    }
+    
+    $scope.removeQuiz=function(module_index, item_index){
+    	console.log("remove quiz " + module_index + " " + item_index) 
+    	var q_id=$scope.modules[module_index].items[item_index].id;
+    	if(confirm("Are you sure you want to delete Quiz?")){
+	    	Quiz.destroy(
+	    		{quiz_id: q_id},
+	    		function(response){
+	    			 $scope.modules[module_index].items.splice(item_index, 1)
+	    			 var str = $location.path();
+					 var res = str.match(/.*\/quizzes\/(\d+)/);
+					 if(res && res[1]==q_id)
+	    			 	$state.go('course.course_editor')
+	    		},
+	    		function(){
+	    			alert("Failed to delete Quiz, please check network connection")
 	    		}
 			);
 		}

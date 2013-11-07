@@ -6,25 +6,25 @@
     <tr>
       <td style="width:50%;">Module Name:</td>
       <td>
-        <details-text value="module.name" save="updateModule()"></details-text>
+        <details-text value="module.name" save="updateModule()" validate="validateModule" column="name"></details-text>
       </td>
     </tr>
     <tr>
       <td>Appearance Date:</td>
       <td>
-        <details-date date="module.appearance_time" save="updateModule()"></details-date>
+        <details-date date="module.appearance_time" save="updateModule()" validate="validateModule" column="appearance_time"></details-date>
       </td>
     </tr>
     <tr>
       <td>Due Date:</td>
       <td>
-        <details-date date="module.due_date" save="updateModule()"></details-date>
+        <details-date date="module.due_date" save="updateModule()" validate="validateModule" column="due_date"></details-date>
       </td>
     </tr>
     <tr>
       <td>Description:</td>
       <td>
-        <details-area value="module.description" save="updateModule()"></details-area>
+        <details-area value="module.description" save="updateModule()" validate="validateModule" column="description"></details-area>
       </td>
     </tr>
   </table>

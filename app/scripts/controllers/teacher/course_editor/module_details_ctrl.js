@@ -1,9 +1,31 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Documents', 'module', function ($scope, $state, Module, Documents, module) {
+    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Documents', 'module','$q', function ($scope, $state, Module, Documents, module, $q) {
       $scope.module=module.data
 
+
+	  $scope.validateModule = function(column,data) {
+	    var d = $q.defer();
+	    var group={}
+	    group[column]=data;
+	    Module.validateModule(
+	    	{module_id:$scope.module.id},
+	    	group,
+	    	function(data){
+				d.resolve()
+			},function(data){
+				console.log(data.status);
+				console.log(data);
+			if(data.status==422)
+			 	d.resolve(data.data[column].join());
+			else
+				d.reject('Server Error');
+			}
+	    )
+	    return d.promise;
+    };
+    
       $scope.updateModule=function(){
         console.log("module update")
         var modified_module=angular.copy($scope.module);

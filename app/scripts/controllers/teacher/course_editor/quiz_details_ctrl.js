@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizDetailsCtrl',['$stateParams','$rootScope','$scope',,'Quiz','quiz', function ($stateParams, $rootScope,$scope, Quiz,quiz) {
+  .controller('quizDetailsCtrl',['$stateParams','$rootScope','$scope','Quiz','quiz','$q', function ($stateParams, $rootScope,$scope, Quiz,quiz,$q) {
     
+    console.log("state params detilas quiz is ");
+    console.log($stateParams);
     $scope.quiz = quiz.data
     
     $scope.$emit('accordianUpdate',$scope.quiz.group_id);
@@ -23,9 +25,9 @@ angular.module('scalearAngularApp')
 
     $scope.validateQuiz = function(column,data) {
       var d = $q.defer();
-      quiz={}
+      var quiz={}
       quiz[column]=data;
-      Quiz.validate_quiz({quiz_id:$scope.quiz.id},quiz,function(data){
+      Quiz.validateQuiz({quiz_id:$scope.quiz.id},quiz,function(data){
         d.resolve()
       },function(data){
         console.log(data.status);

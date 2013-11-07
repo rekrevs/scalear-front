@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$state', '$q', 'Lecture', 'lecture', function ($stateParams, $scope, $http, $q, $state, Lecture, lecture) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', 'lecture', function ($stateParams, $scope, $http, $q, $state, Lecture, lecture) {
 
 	console.log("made it in details!!");
     $scope.lecture=lecture.data
@@ -15,9 +15,9 @@ angular.module('scalearAngularApp')
 
  	$scope.validateLecture = function(column,data) {
 	    var d = $q.defer();
-	    lecture={}
+	    var lecture={}
 	    lecture[column]=data;
-	    Lecture.validate_lecture(
+	    Lecture.validateLecture(
 	    	{lecture_id:$scope.lecture.id},
 	    	lecture,
 	    	function(data){

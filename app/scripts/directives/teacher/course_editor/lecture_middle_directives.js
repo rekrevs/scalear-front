@@ -86,7 +86,9 @@ angular.module('scalearAngularApp')
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.videoborder'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" ><img ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' /></div>",
+		 template: "<div ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.videoborder'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
+		 				"<img ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' />"+
+	 				"</div>",
 
 		link: function(scope, element, attrs, controller) {
 
@@ -100,6 +102,7 @@ angular.module('scalearAngularApp')
 				var add_top = (h-13)/2.0
 				scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
 				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26)) + add_top;
+				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
 			}	
 
 			scope.setAnswerColor=function(){
@@ -143,20 +146,29 @@ angular.module('scalearAngularApp')
 			$rootScope.$on("updatePosition",function(){
 				console.log("event emiited updated position")
 				setAnswerLocation()
-			})		
-
-			setAnswerLocation()
-			scope.setAnswerColor()
+			})	
 
 			scope.answerClass = "component dropped answer_img"						
 
-			var template = "<p>Correct:<input class='must_save_check' ng-change='radioChange(data);setAnswerColor()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' /><br>Answer: <textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/><br>Explanation:<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} /><br><input type='button' ng-click='remove()' class='btn btn-danger remove_button' value='Remove'/></p>"
+			var template = "<p>"+
+								"Correct:"+
+								"<input class='must_save_check' ng-change='radioChange(data);setAnswerColor()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' />"+
+								"<br>Answer:"+ 
+								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/>"+
+								"<br>Explanation:"+
+								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} />"+
+								"<br>"+
+								"<input type='button' ng-click='remove()' class='btn btn-danger remove_button' value='Remove'/>"+
+							"</p>"
 
            	scope.popover_options={
+            	content: template,
             	html:true,
-            	content: template
+            	fullscreen:false
             }
 
+            setAnswerLocation()
+			scope.setAnswerColor()
 		}
 	};
 }).directive('drag', function($compile, $rootScope){
@@ -181,6 +193,7 @@ angular.module('scalearAngularApp')
 				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26))
 				scope.area_width= scope.width - 50
 				scope.area_height= scope.height - 20
+				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
 			}
 
 			scope.calculatePosition=function(){
@@ -201,7 +214,6 @@ angular.module('scalearAngularApp')
 				setAnswerLocation()
 			})	
 
-			setAnswerLocation()
 			scope.dragClass = "component dropped answer_drag" 
 			
 			if(!(scope.data.explanation instanceof Array)){
@@ -219,25 +231,38 @@ angular.module('scalearAngularApp')
 				scope.data.pos=max+1
 				scope.list.push(scope.data.pos)
 			}
+
 			scope.pos= parseInt(scope.data.pos)
 
-			var template = '<ul><p>Correct Because:<br><textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" /><br/><div ng-repeat="num in list|filter:\'!\'+pos" >{{num}} Incorrect Because:<br><textarea rows=3 class="must_save" type="text" ng-model="data.explanation[num]" /><br></div><input type="button" ng-click="remove()" class="btn btn-danger remove_button" value="Remove"/></p></ul>'
+			var template = '<ul>'+
+							'<p>Correct Because:'+
+								'<br>'+
+								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
+								'<br>'+
+								'<div ng-repeat=\'num in list|filter:"!"+pos\' >'+
+									'{{num}} Incorrect Because:<br>'+
+									'<textarea rows=3 class="must_save" type="text" ng-model="data.explanation[num]" />'+
+									'<br>'+
+								'</div>'+
+								'<input type="button" ng-click="remove()" class="btn btn-danger remove_button" value="Remove"/>'+
+							'</p>'+
+						'</ul>'
 
             scope.popover_options={
             	content: template,
-            	html: true
+            	html: true,
+            	fullscreen:false
             }
 
-            element.resizable({containment: ".videoborder",  alsoResize: element.find('.area'), minHeight:40, minWidth:40,
-		  		stop: function( event, ui ) {
-		  			console.log("haallaaa resizing")
-		  			console.log(ui)
-		  			scope.calculateSize()
-		  			//scope.data.width = 
-	        		// element.find('.area').width($(this).width()-50)
-	        		// $(this).find('.area').height($(this).height()-25)
-        		}
+            element.resizable({
+            	containment: ".videoborder",  
+            	alsoResize: element.find('.area'), 
+            	minHeight:40, 
+            	minWidth:40,
+		  		stop: scope.calculateSize
         	});
+
+        	setAnswerLocation()
 		}
 	};
 }).directive('answerform', function(Lecture, $stateParams, CourseEditor){
@@ -453,33 +478,32 @@ angular.module('scalearAngularApp')
 			            $compile(this.$tip)(scope);
 			            scope.$digest();
 			            this.$tip.data('popover', this);
-			            console.log(pop)
-			            var win = angular.element($window)
-						var elem_top= element.offset().top
-						var elem_bottom= win.height() - elem_top;
-						
-						if(pop.top<170) //too close to top
-						{
-							var arrow = pop.top + (pop.height/2)
-					 		$(".arrow").css("top",arrow+'px');
-							pop.top = 135
+			            var arrow = angular.element(".arrow")
+			            arrow.css("top",'50%');
+			            if(options.fullscreen){
+				            var win = angular.element($window)
+							var elem_top= element.offset().top
+							var elem_bottom= win.height() - elem_top;
+							var arrow_pos
+							if(elem_top<170) //too close to top
+							{
+								arrow_pos = pop.top + (pop.height/2)
+						 		arrow.css("top",arrow_pos+'px');
+								pop.top = (angular.element('.popover').height() / 2)  - (pop.height/2)
+							}
+							else if(elem_bottom < 160) //too close to bottom
+							{					
+								arrow_pos =elem_bottom - (pop.height/2) - 20
+						 		arrow.css("top",'initial');
+						 		arrow.css("bottom",arrow_pos+'px');
+								pop.top = win.height() - (angular.element('.popover').height() / 2) - (pop.height/2) - 10
+							}
 						}
-						else if(elem_bottom < 160) //too close to bottom
-						{
-							var arrow =elem_bottom - 20
-					 		$(".arrow").css("top",'initial');
-					 		$(".arrow").css("bottom",arrow+'px');
-							pop.top = win.height() - 150
-
-						}
-						else
-							$(".arrow").css("top",'50%');
 
 			            return pop;
 		          	};
 
 		          	$(document).on("click", function (e) {
-	            		console.log("trying to hide")
 					    var target = $(e.target)
 					    var inPopover = target.closest('.popover').length > 0
 					    var isElem = target.is(element)

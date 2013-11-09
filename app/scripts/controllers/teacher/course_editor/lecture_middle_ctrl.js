@@ -275,101 +275,97 @@ angular.module('scalearAngularApp')
 		console.log("exiting")		
 	}	
  	
+	$scope.resizeSmall = function()
+	{	
+		var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+		$scope.fullscreen = false
 
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-$scope.resizeSmall = function()
-{	
-	var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-	$scope.fullscreen = false
-
-	angular.element(".sidebar").children().appendTo("#all_tables");
-	angular.element("body").css("overflow","auto");
-	angular.element("body").css("position","");
+		angular.element(".sidebar").children().appendTo(".quiz_list");
+		angular.element("body").css("overflow","auto");
+		angular.element("body").css("position","");
 
 
-	$scope.video_style={
-		"position":"static",
-		"width":'500px',
-		"height":(500*1.0/factor + 26) +'px',
-		"z-index": 0
-	};
+		$scope.video_style={
+			"position":"static",
+			"width":'500px',
+			"height":(500*1.0/factor + 26) +'px',
+			"z-index": 0
+		};
 
-	var layer={		
-		"top":"",
-		"left":"",
-		"position":"absolute",
-		"width":"500px",
-		"height":(500*1.0/factor + 26)+ 'px',
-		"margin-left": "0px",
-		"margin-top": "0px",
-		"z-index":2
+		var layer={		
+			"top":"",
+			"left":"",
+			"position":"absolute",
+			"width":"500px",
+			"height":(500*1.0/factor + 26)+ 'px',
+			"margin-left": "0px",
+			"margin-top": "0px",
+			"z-index":2
+		}
+
+		angular.extend($scope.quiz_layer, layer)
+		
+		$timeout(function(){$scope.$emit("updatePosition")})		
 	}
 
-	angular.extend($scope.quiz_layer, layer)
-	if($scope.selected_quiz)
-	 	$timeout(function(){$scope.$emit("updatePosition")})		
-}
+	$scope.resizeBig = function()
+	{	
+		console.log("resizeing")
+		var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+		var win = angular.element($window)
 
-$scope.resizeBig = function()
-{	
-	console.log("resizeing")
-	var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-	var win = angular.element($window)
+		$scope.fullscreen = true
 
-	$scope.fullscreen = true
+		angular.element(".quiz_list").children().appendTo(".sidebar");
+		angular.element("body").css("overflow","hidden");
+		angular.element("body").css("position","fixed")
 
-	angular.element("#all_tables").children().appendTo(".sidebar");
-	angular.element("body").css("overflow","hidden");
-	angular.element("body").css("position","fixed")
+		win.scrollTop("0px")
 
-	win.scrollTop("0px")
-
-	$scope.video_style={
-		"top":0, 
-		"left":0, 
-		"position":"fixed",
-		"width":win.width()-400,
-		"height":win.height(),
-		"z-index": 1030
-	};
-
-	var video_width = (win.height()-26)*factor
-	var video_heigt = (win.width()-400)*1.0/factor +26
-	var layer={}
-	if(video_width>win.width()-400){ // if width will get cut out.
-		console.log("width cutt offff")
-		var margin_top = (win.height() - video_heigt)/2.0;
-		layer={
+		$scope.video_style={
+			"top":0, 
+			"left":0, 
 			"position":"fixed",
-			"top":0,
-			"left":0,
 			"width":win.width()-400,
-			"height":(win.width()-400)*1.0/factor +26,
-			"margin-top": margin_top+"px",
-			"margin-left":"0px",
-			"z-index": 1031
-		}		
-	}
-	else{		
-		var margin_left= ((win.width()-400) - video_width)/2.0;
-		layer={
-			"position":"fixed",
-			"top":0,
-			"left":0,
-			"width":video_width,
 			"height":win.height(),
-			"margin-left": margin_left+"px",
-			"margin-top":"0px",
-			"z-index": 1031
-		}		
-	 }
+			"z-index": 1030
+		};
 
-	 angular.extend($scope.quiz_layer, layer)
+		var video_width = (win.height()-26)*factor
+		var video_heigt = (win.width()-400)*1.0/factor +26
+		var layer={}
+		if(video_width>win.width()-400){ // if width will get cut out.
+			console.log("width cutt offff")
+			var margin_top = (win.height() - video_heigt)/2.0;
+			layer={
+				"position":"fixed",
+				"top":0,
+				"left":0,
+				"width":win.width()-400,
+				"height":(win.width()-400)*1.0/factor +26,
+				"margin-top": margin_top+"px",
+				"margin-left":"0px",
+				"z-index": 1031
+			}		
+		}
+		else{		
+			var margin_left= ((win.width()-400) - video_width)/2.0;
+			layer={
+				"position":"fixed",
+				"top":0,
+				"left":0,
+				"width":video_width,
+				"height":win.height(),
+				"margin-left": margin_left+"px",
+				"margin-top":"0px",
+				"z-index": 1031
+			}		
+		 }
 
-	 if($scope.selected_quiz)
+		 angular.extend($scope.quiz_layer, layer)
+
 	 	$timeout(function(){$scope.$emit("updatePosition")})
-}
+	}
 
 
 }]);

@@ -163,7 +163,7 @@ angular.module('scalearAngularApp')
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
+		 template: "<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.videoborder'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 				"<div class='input-prepend'>"+
 		 					"<span class='add-on'>{{data.pos}}</span>"+
 		 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true'/>"+
@@ -419,7 +419,7 @@ angular.module('scalearAngularApp')
 		});
     }
   };
-}).directive('popOver',function ($parse, $compile, $q) {
+}).directive('popOver',function ($parse, $compile, $q, $window) {
     return{
   		restrict: 'A',
   		link: function(scope, element, attr, ctrl) {
@@ -449,25 +449,42 @@ angular.module('scalearAngularApp')
 		          	}
 
 		          	popover.getPosition = function(){
-			            var r = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
+			            var pop = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
 			            $compile(this.$tip)(scope);
 			            scope.$digest();
 			            this.$tip.data('popover', this);
-			            return r;
+			            console.log(pop)
+			            var win = angular.element($window)
+						var elem_top= element.offset().top
+						var elem_bottom= win.height() - elem_top;
+						
+						if(pop.top<170) //too close to top
+						{
+							var arrow = pop.top + (pop.height/2)
+					 		$(".arrow").css("top",arrow+'px');
+							pop.top = 135
+						}
+						else if(elem_bottom < 160) //too close to bottom
+						{
+							var arrow =elem_bottom - 20
+					 		$(".arrow").css("top",'initial');
+					 		$(".arrow").css("bottom",arrow+'px');
+							pop.top = win.height() - 150
+
+						}
+						else
+							$(".arrow").css("top",'50%');
+
+			            return pop;
 		          	};
 
 		          	$(document).on("click", function (e) {
 	            		console.log("trying to hide")
-					    var $target = $(e.target)
-					    var inPopover = $(e.target).closest('.popover').length > 0
-					    var isElem = $(e.target).is(element)
-					    if (!inPopover && !isElem) 
-					    {
-					    	console.log(inPopover)
-					    	console.log(isElem)
+					    var target = $(e.target)
+					    var inPopover = target.closest('.popover').length > 0
+					    var isElem = target.is(element)
+					    if (!inPopover && !isElem)
 					    	element.popover('hide');
-					    }
-					    	//
 					});	         
 		        }
 	        });

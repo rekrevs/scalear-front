@@ -285,6 +285,8 @@ $scope.resizeSmall = function()
 
 	angular.element(".sidebar").children().appendTo("#all_tables");
 	angular.element("body").css("overflow","auto");
+	angular.element("body").css("position","");
+
 
 	$scope.video_style={
 		"position":"static",
@@ -319,6 +321,7 @@ $scope.resizeBig = function()
 
 	angular.element("#all_tables").children().appendTo(".sidebar");
 	angular.element("body").css("overflow","hidden");
+	angular.element("body").css("position","fixed")
 
 	win.scrollTop("0px")
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .directive('detailsText', function ($timeout) {
+  .directive('detailsText', ['$timeout',function ($timeout) {
     return {
       template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "empty" }} <i ng-class="overclass"></i></a>',
       restrict: 'E',
@@ -19,8 +19,8 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  })
-  .directive('detailsCheck', function ($timeout) {
+  }])
+  .directive('detailsCheck', ['$timeout',function ($timeout) {
     return {
       template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-checkbox="checked" e-title="{{title}}" class="editable-checkbox" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ checked && yes || no }}<i ng-class="overclass"></i></a>',
       restrict: 'E',
@@ -41,8 +41,8 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  })
-  .directive('detailsDate', function ($timeout) {
+  }])
+  .directive('detailsDate', ['$timeout',function ($timeout) {
     return {
       template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ (date | date:"MM/dd/yyyy") || \'empty\' }}<i ng-class="overclass"></i></a>',
       restrict: 'E',
@@ -60,8 +60,8 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  })
-  .directive('detailsArea', function ($timeout) {
+  }])
+  .directive('detailsArea', ['$timeout',function ($timeout) {
     return {
       template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="15" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "Empty" }}<i ng-class="overclass"></i></a> ',
       restrict: 'E',
@@ -79,8 +79,8 @@ angular.module('scalearAngularApp')
         }
       }
     };
-  })
-  .directive('detailsNumber', function ($timeout) {
+  }])
+  .directive('detailsNumber', ['$timeout',function ($timeout) {
     return {
       template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-number="value" e-min="min" onbeforesave="validate()(column,$data)" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value }}<i ng-class="overclass"></i></a> ',
       restrict: 'E',
@@ -100,8 +100,8 @@ angular.module('scalearAngularApp')
       }
     };
 
-  })
-  .directive('detailsSelect', function ($timeout, $filter) {
+  }])
+  .directive('detailsSelect', ['$timeout',function ($timeout, $filter) {
     return {
       template: '<a href="#" editable-select="value" buttons="no" e-ng-options="s.value as s.text for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ showStatus() }}<i ng-class="overclass"></i></a> ',
       restrict: 'E',
@@ -125,4 +125,4 @@ angular.module('scalearAngularApp')
       }
     };
 
-  });
+  }]);

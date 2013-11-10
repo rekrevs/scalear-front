@@ -27,7 +27,7 @@
       editableOptions.theme = 'bs2';
   })  
 
-  .config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$httpProvider',function ($stateProvider, $urlRouterProvider, $httpProvider) {
 
 	
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
@@ -114,7 +114,7 @@
         templateUrl: 'views/student/calendar/calendar.html',
         controller: 'StudentCalendarCtrl'
       })
-    })
+  }])
 
 
 

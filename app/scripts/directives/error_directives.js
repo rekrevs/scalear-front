@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('appMessages', function(ErrorHandler) {
+	.directive('appMessages', ['ErrorHandler',function(ErrorHandler) {
 			
             var directiveDefinitionObject = {
             	replace:true,
@@ -12,4 +12,4 @@ angular.module('scalearAngularApp')
                 }
             };
             return directiveDefinitionObject;
- });
+ }]);

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('Course', function ($resource, $http, $stateParams, scalear_api, headers) {    
+.factory('Course', ['$resource','$http','$stateParams','scalear_api','headers',function ($resource, $http, $stateParams, scalear_api, headers) {    
 
   $http.defaults.useXDomain = true;
   return $resource(scalear_api.host+'/en/courses/:course_id/:action', {course_id:$stateParams.course_id},
@@ -15,4 +15,4 @@ angular.module('scalearAngularApp')
       'getGroupItems' : {method: 'GET', params: {action: 'get_group_items'}, headers:headers},
     });
 
-})
+}])

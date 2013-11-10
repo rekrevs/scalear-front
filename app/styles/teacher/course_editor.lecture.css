@@ -120,10 +120,9 @@
 .quiz_title{
   width: 50%;
 }
-.active{
+/*.active{
   background-color: rgb(252,248,227);
-}
-
+}*/
 .sidebar{
   width:400px;
   position:fixed;

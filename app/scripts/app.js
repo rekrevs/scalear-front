@@ -98,7 +98,7 @@
           }
         },
         url: '/events',
-        templateUrl: 'views/teacher/calendar.html',
+        templateUrl: 'views/teacher/calendar/calendar.html',
         controller: 'TeacherCalendarCtrl'
       })
       .state('student_calendar', {
@@ -108,7 +108,7 @@
           }
         },
         url: '/events',
-        templateUrl: 'views/student/calendar.html',
+        templateUrl: 'views/student/calendar/calendar.html',
         controller: 'StudentCalendarCtrl'
       })
   })

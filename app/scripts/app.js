@@ -23,8 +23,13 @@
   .value('$anchorScroll', angular.noop)
   .run(function(editableOptions) {
       editableOptions.theme = 'bs2';
-}).config(function ($stateProvider, $urlRouterProvider, $httpProvider) {
-	$httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');
+  })  
+
+  .config(['$stateProvider','$urlRouterProvider','$httpProvider',function ($stateProvider, $urlRouterProvider, $httpProvider) {
+
+	
+    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
+
     $httpProvider.defaults.withCredentials = true;
 	$httpProvider.interceptors.push('ServerInterceptor');
     $urlRouterProvider.otherwise('/');
@@ -107,7 +112,7 @@
         templateUrl: 'views/student/calendar/calendar.html',
         controller: 'StudentCalendarCtrl'
       })
-    })
+  }])
 
 
 

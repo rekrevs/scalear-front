@@ -56,7 +56,7 @@ angular.module('scalearAngularApp')
 		 replace:true,
 		 template: '<div ng-click="action()" class="btn" >{{title}}</div>'
 	};
-}).directive('editableText', function($timeout){
+}).directive('editableText', ['$timeout', function($timeout){
 	return {
 		 scope: {
 		 	value:"=",
@@ -77,7 +77,7 @@ angular.module('scalearAngularApp')
 			}
 		}
 	};
-})
+}])
 .directive('overlay',function(){
 	return{
 		transclude: true,

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('Documents', function ($resource, $http, $stateParams, scalear_api, headers){
+.factory('Documents', ['$resource','$http','$stateParams','scalear_api','headers',function ($resource, $http, $stateParams, scalear_api, headers){
   
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/en/documents/:document_id', {},
@@ -12,4 +12,4 @@ angular.module('scalearAngularApp')
         'show':{method: 'GET', headers:headers}
       });
 
-})
+}])

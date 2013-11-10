@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('Quiz', function($resource, $http, $stateParams, scalear_api, headers) {
+.factory('Quiz', ['$resource','$http','$stateParams','scalear_api','headers',function($resource, $http, $stateParams, scalear_api, headers) {
 
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/en/courses/:course_id/quizzes/:quiz_id/:action', {course_id:$stateParams.course_id},
@@ -17,8 +17,8 @@ angular.module('scalearAngularApp')
         
       });
 
-})
-.factory('Answer', function($resource, $http, $stateParams, scalear_api, headers) {
+}])
+.factory('Answer', ['$resource','$http','$stateParams','scalear_api','headers',function($resource, $http, $stateParams, scalear_api, headers) {
 
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/en/answers/:answer_id/:action', {},
@@ -31,8 +31,8 @@ angular.module('scalearAngularApp')
         
       });
 
-})
-.factory('Question', function($resource, $http, $stateParams, scalear_api, headers) {
+}])
+.factory('Question', ['$resource','$http','$stateParams','scalear_api','headers',function($resource, $http, $stateParams, scalear_api, headers) {
 
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/en/questions/:question_id/:action', {},
@@ -45,5 +45,5 @@ angular.module('scalearAngularApp')
         
       });
 
-});
+}]);
 

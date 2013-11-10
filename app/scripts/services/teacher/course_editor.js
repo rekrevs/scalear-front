@@ -73,13 +73,7 @@ angular.module('scalearAngularApp')
 			}
 		}
 		return y;
-	},
-	adjustDragScroll: function(event, ui){
-		console.log(ui)
-		console.log("Sdfsdfa------------------------------////")
-		//ui.position.top -= angular.element($window).scrollTop();
 	}
-
   
   }
   return x;

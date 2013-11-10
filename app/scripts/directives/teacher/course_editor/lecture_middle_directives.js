@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive("videoContainer",function($rootScope){
+	.directive("videoContainer",['$rootScope',function($rootScope){
 		return{
 			transclude: true,
 			replace:true,
@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
 			    });
 		  	}
 		};
-}).directive('quiz',function(){
+}]).directive('quiz',function(){
 		return {
 			transclude: true,
 			replace:true,
@@ -66,7 +66,7 @@ angular.module('scalearAngularApp')
 						'</ul>'+
 				  	'</div>'
 	};
-}).directive('answervideo', function($compile){
+}).directive('answervideo', ['$compile',function($compile){
 	return {
 		 scope: {
 		 	quiz:"=",
@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
 		 				"<drag ng-switch-when='drag' />"+
 	 				"</div>",
 	};
-}).directive('answer', function($compile, $rootScope){
+}]).directive('answer', ['$compile', '$rootscope', function($compile, $rootScope){
 	return {
 		 replace:true,
 		 restrict: 'E',
@@ -171,7 +171,7 @@ angular.module('scalearAngularApp')
 			scope.setAnswerColor()
 		}
 	};
-}).directive('drag', function($compile, $rootScope){
+}]).directive('drag', ['$compile', '$rootScope', function($compile, $rootScope){
 	return {
 		 replace:true,
 		 restrict: 'E',
@@ -265,7 +265,7 @@ angular.module('scalearAngularApp')
         	setAnswerLocation()
 		}
 	};
-}).directive('answerform', function(Lecture, $stateParams, CourseEditor){
+}]).directive('answerform', ['Lecture','$stateParams','CourseEditor',function(Lecture, $stateParams, CourseEditor){
 	return {
 		scope: {
 			quiz:"=",
@@ -322,7 +322,7 @@ angular.module('scalearAngularApp')
 			
 		}
 	};
-}).directive('htmlanswer',function(){
+}]).directive('htmlanswer',function(){
 	return {
 	 	restrict: 'E',
 	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+					
@@ -386,7 +386,7 @@ angular.module('scalearAngularApp')
 		
 	}
 	
-}).directive('htmlOcq',function($timeout){
+}).directive('htmlOcq',['$timeout',function($timeout){
 	return {
 		restrict:'E',
 		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
@@ -411,7 +411,7 @@ angular.module('scalearAngularApp')
 		}
 	}
 	
-}).directive('htmlDrag',function(){
+}]).directive('htmlDrag',function(){
 	return {
 		restrict:'E',
 		replace:true,
@@ -444,7 +444,7 @@ angular.module('scalearAngularApp')
 		});
     }
   };
-}).directive('popOver',function ($parse, $compile, $q, $window) {
+}).directive('popOver',['$parse','$compile','$q','$window',function ($parse, $compile, $q, $window) {
     return{
   		restrict: 'A',
   		link: function(scope, element, attr, ctrl) {
@@ -514,4 +514,4 @@ angular.module('scalearAngularApp')
 	        });
       	}
     };
-});
+}]);

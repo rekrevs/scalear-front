@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('Module', function ($resource, $http, $stateParams, scalear_api, headers){
+.factory('Module', ['$resource','$http','$stateParams','scalear_api','headers',function ($resource, $http, $stateParams, scalear_api, headers){
   
 	$http.defaults.useXDomain = true;
 	return $resource(scalear_api.host+'/en/courses/:course_id/groups/:module_id/:action', {course_id:$stateParams.course_id},
@@ -16,4 +16,4 @@ angular.module('scalearAngularApp')
 	    "validateModule": {method: 'PUT', params: {action: 'validate_group_angular'},headers: headers}
 	  });
 
-})
+}])

@@ -5,7 +5,7 @@ describe('Scalear 2.0', function() {
 
 //		beforeEach(function(){
 //			ptor = protractor.getInstance();
-//			ptor.get('/#/teacher/calendar');
+//			ptor.get('/#/student/calendar');
 //		});
 
         var current_date = new Date();
@@ -36,11 +36,11 @@ describe('Scalear 2.0', function() {
             return driver.findElement(protractor.By.className(name));
         }
 
-        //TEACHER'S TEST CASES
+        //STUDENT'S TEST CASES
 
         it('should login', function(){
             driver.get("http://0.0.0.0:3000/en/users/sign_in");
-            findByName("user[email]").sendKeys("admin@scalear.com");
+            findByName("user[email]").sendKeys("bahia.sharkawy@gmail.com");
             findByName("user[password]").sendKeys("password");
             findByName("commit").click();
             expect(findById('flash_notice').getText()).toEqual('Signed in successfully.');
@@ -48,8 +48,8 @@ describe('Scalear 2.0', function() {
 
 	    it ('should display the Calendar', function() {
             ptor = protractor.getInstance();
-            ptor.get('/#/teacher/calendar');
-            ptor.findElement(protractor.By.id('teacherCalendar')).
+            ptor.get('/#/student/calendar');
+            ptor.findElement(protractor.By.id('studentCalendar')).
                 then(function(promise){
                     
                 });
@@ -57,7 +57,7 @@ describe('Scalear 2.0', function() {
 
         it ('should display current month name', function() {
             ptor = protractor.getInstance();
-            ptor.get('/#/teacher/calendar');
+            ptor.get('/#/student/calendar');
             ptor.findElement(protractor.By.tagName('h2')).
                 then(function(promise){
                     expect(promise.getText()).toEqual(month[current_date.getMonth()]+" "+current_date.getFullYear())
@@ -66,7 +66,7 @@ describe('Scalear 2.0', function() {
 
         it ('should be able to go to prev. month', function() {
             ptor = protractor.getInstance();
-            ptor.get('/#/teacher/calendar');
+            ptor.get('/#/student/calendar');
             ptor.findElement(protractor.By.className('fc-button-prev')).click().
                 then(function(promise){
                     ptor.findElement(protractor.By.tagName('h2')).
@@ -77,7 +77,7 @@ describe('Scalear 2.0', function() {
         }, 10000);
         it ('should be able to go to next month', function() {
             ptor = protractor.getInstance();
-            ptor.get('/#/teacher/calendar');
+            ptor.get('/#/student/calendar');
             ptor.findElement(protractor.By.className('fc-button-next')).click().
                 then(function(promise){
                     ptor.findElement(protractor.By.tagName('h2')).
@@ -89,7 +89,7 @@ describe('Scalear 2.0', function() {
 
         it ('should be able to go directly to today', function() {
             ptor = protractor.getInstance();
-            ptor.get('/#/teacher/calendar');
+            ptor.get('/#/student/calendar');
             ptor.findElement(protractor.By.className('fc-button-prev')).click();
             ptor.findElement(protractor.By.className('fc-button-prev')).click();
             ptor.findElement(protractor.By.className('fc-button-today')).click().
@@ -103,7 +103,7 @@ describe('Scalear 2.0', function() {
 
         it ('should display all the events for the current month', function() {
             ptor = protractor.getInstance();
-            ptor.get('/#/teacher/calendar');
+            ptor.get('/#/student/calendar');
             ptor.findElements(protractor.By.className('fc-event-title')).
                 then(function(promise){
                     expect(promise.length).toEqual(4)
@@ -111,7 +111,7 @@ describe('Scalear 2.0', function() {
         }, 20000);
         it ('should display all the events for the current month', function() {
             ptor = protractor.getInstance();
-            ptor.get('/#/teacher/calendar');
+            ptor.get('/#/student/calendar');
             ptor.findElement(protractor.By.className('fc-button-prev')).click();
             ptor.findElement(protractor.By.className('fc-button-prev')).click();
             ptor.findElement(protractor.By.className('fc-button-prev')).click();
@@ -126,7 +126,7 @@ describe('Scalear 2.0', function() {
         }, 20000);
         it ('should display event names', function() {
             ptor = protractor.getInstance();
-            ptor.get('/#/teacher/calendar');
+            ptor.get('/#/student/calendar');
             ptor.findElements(protractor.By.className('fc-event-title')).
                 then(function(promise){
                     expect(promise[0].getText()).toEqual('New Module due');
@@ -135,7 +135,7 @@ describe('Scalear 2.0', function() {
         }, 20000);
         // it ('should display clickable elements', function() {
         //     ptor = protractor.getInstance();
-        //     ptor.get('/#/teacher/calendar');
+        //     ptor.get('/#/student/calendar');
         //     ptor.findElements(protractor.By.className('fc-event-title')).
         //         then(function(promise){
         //             promise[0].click().

@@ -101,6 +101,16 @@
         templateUrl: 'views/teacher/calendar.html',
         controller: 'TeacherCalendarCtrl'
       })
+      .state('student_calendar', {
+        resolve:{
+          events:function($http,headers,scalear_api){
+            return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})
+          }
+        },
+        url: '/events',
+        templateUrl: 'views/teacher/calendar.html',
+        controller: 'TeacherCalendarCtrl'
+      })
   })
 
 

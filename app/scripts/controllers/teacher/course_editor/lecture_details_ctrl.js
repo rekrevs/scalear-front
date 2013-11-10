@@ -42,6 +42,7 @@ angular.module('scalearAngularApp')
 		delete modified_lecture["created_at"];
 		delete modified_lecture["updated_at"];
 		delete modified_lecture["className"];
+		delete modified_lecture["detected_aspect_ratio"];
 		
 		Lecture.update(
 			{lecture_id:$scope.lecture.id},
@@ -97,7 +98,7 @@ angular.module('scalearAngularApp')
 			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio === undefined)
 			        	$scope.lecture.aspect_ratio="smallscreen";
 			        else
-			        	$scope.lecture.aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;
+			        	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;
 
 			        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
 			});

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizDetailsCtrl',['$stateParams','$rootScope','$scope','Quiz','quiz','$q', function ($stateParams, $rootScope,$scope, Quiz,quiz,$q) {
+  .controller('quizDetailsCtrl',['$stateParams','$rootScope','$scope','$q','Quiz','quiz', function ($stateParams, $rootScope, $scope, $q, Quiz,quiz) {
     
     console.log("state params detilas quiz is ");
     console.log($stateParams);

@@ -16,7 +16,8 @@
   'ngDragDrop', 
   'pasvaz.bindonce', 
   'infinite-scroll',
-  'xeditable',  
+  'xeditable',
+  'ui.calendar'
 ])
 
   .constant('scalear_api', {host:"http://localhost:3000"})
@@ -31,7 +32,7 @@
 	
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
     $httpProvider.defaults.withCredentials = true;
-	$httpProvider.interceptors.push('ServerInterceptor');
+	  $httpProvider.interceptors.push('ServerInterceptor');
     
     $urlRouterProvider.otherwise('/');
     $stateProvider
@@ -61,7 +62,8 @@
           "details" :{templateUrl: 'views/teacher/course_editor/module.details.html', controller: "moduleDetailsCtrl"},
           "middle"  :{templateUrl: 'views/teacher/course_editor/module.middle.html',  controller: "moduleMiddleCtrl"}
         }
-      }).state('course.course_editor.lecture', { 
+      })
+      .state('course.course_editor.lecture', { 
         resolve:{ 
           lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
@@ -89,10 +91,30 @@
 
           "details" :{templateUrl: 'views/teacher/course_editor/quiz.details.html', controller: "quizDetailsCtrl"},
           "middle"  :{templateUrl: 'views/teacher/course_editor/quiz.middle.html',  controller: "quizMiddleCtrl"}
-        }        
+        }
       })
-  })
-
+      .state('course.calendar', {
+        resolve:{
+          events:function($http, $stateParams, headers,scalear_api){
+            console.log("resolveing")
+            return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})
+          }
+        },
+        url: '/events',
+        templateUrl: 'views/teacher/calendar/calendar.html',
+        controller: 'TeacherCalendarCtrl'
+      })
+      .state('student_calendar', {
+        resolve:{
+          events:function($http, $stateParams, headers,scalear_api){
+            return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})
+          }
+        },
+        url: '/student/events',
+        templateUrl: 'views/student/calendar/calendar.html',
+        controller: 'StudentCalendarCtrl'
+      })
+    })
 
 
 

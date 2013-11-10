@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('CourseEditor', function () {    
+.factory('CourseEditor', ['$window',function ($window) {    
 
   
   var x={	
@@ -73,10 +73,16 @@ angular.module('scalearAngularApp')
 			}
 		}
 		return y;
+	},
+	adjustDragScroll: function(event, ui){
+		console.log(ui)
+		console.log("Sdfsdfa------------------------------////")
+		//ui.position.top -= angular.element($window).scrollTop();
 	}
+
   
   }
   return x;
 
 
-})
+}])

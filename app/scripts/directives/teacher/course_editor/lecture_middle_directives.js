@@ -59,7 +59,7 @@ angular.module('scalearAngularApp')
 							'Insert Quiz ({{title}}) '+
 							'<span class="caret"></span>'+
 						'</a>'+
-						'<ul class="dropdown-menu">'+
+						'<ul class="dropdown-menu" style="left:-35%;font-size:12px">'+
 				              '<li ng-repeat="item in list">'+
 				              		'<a href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{item.text}}</a>'+
 				              '</li>'+ 
@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
 		 				"<drag ng-switch-when='drag' />"+
 	 				"</div>",
 	};
-}]).directive('answer', ['$compile', '$rootscope', function($compile, $rootScope){
+}]).directive('answer', ['$compile', '$rootScope', function($compile, $rootScope){
 	return {
 		 replace:true,
 		 restrict: 'E',
@@ -215,13 +215,6 @@ angular.module('scalearAngularApp')
 			})	
 
 			scope.dragClass = "component dropped answer_drag" 
-			
-			if(!(scope.data.explanation instanceof Array)){
-				console.log("not an array")
-				scope.data.explanation = new Array()
-				for(var i in scope.list)
-					scope.data.explanation[i]=""
-			}
 
 			if(scope.data.pos == null){	
 				console.log("pos undefined")
@@ -233,6 +226,22 @@ angular.module('scalearAngularApp')
 			}
 
 			scope.pos= parseInt(scope.data.pos)
+
+			if(!(scope.data.explanation instanceof Array)){
+				console.log("not an array")
+				scope.data.explanation = new Array()
+				for(var i in scope.list)
+					scope.data.explanation[i]=""
+			}
+
+			scope.quiz.answers.forEach(function(ans){
+				if(!ans.explanation[scope.pos])
+				{
+					ans.explanation[scope.pos]=""
+					console.log("creating a new eleme in array" + scope.pos)
+				}
+			})
+
 
 			var template = '<ul>'+
 							'<p>Correct Because:'+
@@ -286,15 +295,20 @@ angular.module('scalearAngularApp')
 						// ADD QUESTION TYPE IF ITS A QUIZ QUESTION.. SELECT LIST.
 						"<br />"+
 						"<label ng-if='show_question()' class='q_label'>Question Type:</label>"+
-						"<select ng-if='show_question()' ng-model='quiz.question_type' required  class='choices'><option value='MCQ'>MCQ</option><option value='OCQ' >OCQ</option><option value='DRAG' ng-if='!isSurvey()' >DRAG</option><option ng-if='isSurvey()' value='Free Text Question'>Free Text Question</option></select>"+
+						"<select ng-if='show_question()' ng-model='quiz.question_type' required  class='choices'>"+
+							"<option value='MCQ'>MCQ</option>"+
+							"<option value='OCQ' >OCQ</option>"+
+							"<option value='DRAG' ng-if='!isSurvey()' >DRAG</option>"+
+							"<option ng-if='isSurvey()' value='Free Text Question'>Free Text Question</option>"+
+						"</select>"+
 						"<a ng-if='show_question()' href='' title='Delete' style='float:right;' class='delete_option' ng-click='removeQuestion(index)'><img src='images/trash3.png' /></a>"+
 						"<br/>"+
 						"<div ng-hide='hideAnswer()' class='answer_div'>"+
-								"<htmlanswer />"+
-								"<a class='add_multiple_answer' ng-click='addAnswer(\"\",quiz)' href=''>Add Answer</a>"+
-								"<br/>"+
-							"</div>"+
-					"</div></ng-form>",
+							"<htmlanswer />"+
+							"<a class='add_multiple_answer' ng-click='addAnswer(\"\")' href=''>Add Answer</a>"+
+							"<br/>"+
+						"</div>"+
+					"</ng-form>",
 		link: function(scope, iElm, iAttrs, controller) {
 			console.log("QUIZZ is ");
 			console.log(scope.quiz);
@@ -325,7 +339,7 @@ angular.module('scalearAngularApp')
 }]).directive('htmlanswer',function(){
 	return {
 	 	restrict: 'E',
-	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+					
+	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'style='overflow:auto' >"+					
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
 					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
@@ -378,26 +392,33 @@ angular.module('scalearAngularApp')
 }).directive('htmlMcq',function(){	
 	return{
 		restrict:'E',
-		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
-				"<input ng-if='!isSurvey()' ng-change='updateValues()' atleastone type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
-				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone'>Choose atleast one</span>"+
-				"<br ng-if='show()'/><input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /><a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'><img src='images/trash3.png' /></a><br/></ng-form>"
+		template:"<ng-form name='aform'>"+
+					"<input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+					"<input ng-if='!isSurvey()' ng-change='updateValues()' atleastone type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
+					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
+					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone'>Choose atleast one</span>"+
+					"<br ng-if='show()'/>"+
+					"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' />"+
+					"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'><img src='images/trash3.png' /></a>"+
+					"<br/>"+
+				"</ng-form>"
 		
 	}
 	
 }).directive('htmlOcq',['$timeout',function($timeout){
 	return {
 		restrict:'E',
-		template:"<ng-form name='aform'><input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
-				"<input ng-if='!isSurvey()' atleastone type='radio' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
-				"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-				"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone'>Check one answer</span>"+
-				"<br ng-if='show()'/>"+
-				"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-				"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'>"+
-					"<img src='images/trash3.png' />"+
-				"</a><br></ng-form>",
+		template:"<ng-form name='aform'>"+
+					"<input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+					"<input ng-if='!isSurvey()' atleastone type='radio' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
+					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
+					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone'>Check one answer</span>"+
+					"<br ng-if='show()'/>"+
+					"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
+					"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'>"+
+						"<img src='images/trash3.png' />"+
+					"</a><br>"+
+				"</ng-form>",
 		link: function(scope)
 		{
 			if(scope.answer.correct)
@@ -417,10 +438,10 @@ angular.module('scalearAngularApp')
 		replace:true,
 		template:"<li class='ui-state-default'>"+
 					"<ng-form name='aform'>"+
-					"<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"+
-					"<input type='text' required name='answer' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
-					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-					"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='removeAnswer($index, quiz)' ><img src='images/trash3.png' /></a>"+
+						"<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"+
+						"<input type='text' required name='answer' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
+						"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='removeAnswer($index, quiz)' ><img src='images/trash3.png' /></a>"+
 					"</ng-form>"+
 				"</li>"				 
 	}

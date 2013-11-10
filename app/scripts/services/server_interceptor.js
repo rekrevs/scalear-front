@@ -52,7 +52,7 @@ angular.module('scalearAngularApp')
       		ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
       	}
       	
-     	var $http = $injector.get('$http'); //test connection every 10 seconds.
+     	  var $http = $injector.get('$http'); //test connection every 10 seconds.
          $timeout(function(){
                  return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/home/test'})
          },10000);

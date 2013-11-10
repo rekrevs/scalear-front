@@ -126,17 +126,13 @@
 
 .sidebar{
   width:400px;
-  position:absolute;
+  position:fixed;
   overflow-x:auto;
   right:0px;
   background-color:white;
   height:100%;
   top: 0px;
-}
-
-.ontop2_big{
-  border:0px solid;
-  width:10px;
+  z-index: 1030
 }
 .ng-invalid ~ span { color:red; display:inline;font-size:12px;left:300px; }
 input.ng-invalid{ border:1px solid red; }

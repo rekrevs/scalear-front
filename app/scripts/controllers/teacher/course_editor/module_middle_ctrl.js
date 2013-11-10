@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
     	$scope.addDocument=function(){
     		console.log($scope.module.id)
     		$scope.document_loading=true
-    		Module.new_document({module_id:$scope.module.id},
+    		Module.newDocument({module_id:$scope.module.id},
     			{},
     			function(doc){
     				console.log(doc)

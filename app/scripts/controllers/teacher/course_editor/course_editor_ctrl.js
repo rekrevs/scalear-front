@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
  	$scope.addModule=function(){
     	console.log("adding mod")
     	$scope.module_loading=true
-    	Module.new_module({},
+    	Module.newModule({},
 	    	function(module){
 	    		console.log(module)
 	    		module.items=[]

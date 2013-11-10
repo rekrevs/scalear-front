@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/main.css">
     <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <!-- endbuild -->
   </head>
   <body style="overflow:auto" ng-app="scalearAngularApp">
@@ -64,7 +65,7 @@
             <ul class="nav nav-pills">
                 <li class=""><a href="/en/courses/13/progress_teacher">Progress</a></li>
                 <li class=""><a href="/en/courses/13/inclass">In-class</a></li>
-                <li class=""><a href="/en/courses/13/events">Calendar</a></li>
+                <li class=""><a href="/#/courses/13/events">Calendar</a></li>
                 <li class=""><a href="/en/courses/13/announcements">Announcements</a></li>
                 <li class="active"><a href="/#/courses/13/course_editor">Content</a></li>
                 
@@ -123,18 +124,23 @@
        ga('send', 'pageview');
     </script>
 
-    <!--<script src="http://popcornjs.org/code/dist/popcorn-complete.js"></script>-->
+    <script src="http://popcornjs.org/code/dist/popcorn-complete.js"></script>
 
     <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
+    
 
     <!-- bower:js -->
+    <script src="bower_components/fullcalendar/fullcalendar.js"></script>
+    <script src="bower_components/fullcalendar/gcal.js"></script>
+    
+    <script src="bower_components/angular/angular.js"></script>
     <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
     <script src="bower_components/angular-ui-sortable/src/sortable.js"></script>
     <script src="bower_components/angular-dragdrop/src/angular-dragdrop.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
     <script src="bower_components/ng-infinite-scroller/build/ng-infinite-scroll.js"></script>
     <script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+    <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
     <!-- endbower -->
 
     <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
@@ -173,7 +179,6 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
-
     <script src="scripts/filters/filters.js"></script>
 
     <script src="scripts/directives/teacher/course_editor/course_editor_directives.js"></script>        
@@ -199,7 +204,9 @@
     <script src="scripts/controllers/teacher/course_editor/lecture_middle_ctrl.js"></script>        
     <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script> 
-    <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
 
+    <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
+    <!-- endbuild -->
 </body>
 </html>

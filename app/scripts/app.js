@@ -108,8 +108,8 @@
           }
         },
         url: '/events',
-        templateUrl: 'views/teacher/calendar.html',
-        controller: 'TeacherCalendarCtrl'
+        templateUrl: 'views/student/calendar.html',
+        controller: 'StudentCalendarCtrl'
       })
   })
 

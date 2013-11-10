@@ -18,6 +18,7 @@
   'infinite-scroll',
   'xeditable',  
 ])
+
   .constant('scalear_api', {host:"http://localhost:3000"})
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)

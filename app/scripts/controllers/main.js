@@ -1,16 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('MainCtrl', ['$scope', function ($scope) {
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
-    
-    $scope.user = {
-    name: 'awesome user'
-  }; 
-  
+  .controller('MainCtrl', ['$scope', '$stateParams' ,'Course', function ($scope, $stateParams ,Course) {
+   
   }]);
 

@@ -43,7 +43,7 @@ a {
 /* --- Accordion --- */
 .js .accordion {visibility:hidden}
 
-.accordion {margin:0; padding:0}
+.accordion {margin:0; padding:0; overflow: auto}
 
 .accordion li {list-style-type:none}
 
@@ -87,6 +87,10 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 .trigger2{display:inline-block; width:180px;}
 
 .trigger2:hover{cursor:pointer;color:#005580}
+
+.sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
+.sortable li { width: 350px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 25px; }
+.sortable li span { position: absolute; margin-left: -1.3em; }
 
 .modules{width:270px;}
 

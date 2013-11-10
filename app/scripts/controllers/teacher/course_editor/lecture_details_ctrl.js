@@ -42,6 +42,7 @@ angular.module('scalearAngularApp')
 		delete modified_lecture["created_at"];
 		delete modified_lecture["updated_at"];
 		delete modified_lecture["className"];
+		delete modified_lecture["detected_aspect_ratio"];
 		
 		Lecture.update(
 			{lecture_id:$scope.lecture.id},

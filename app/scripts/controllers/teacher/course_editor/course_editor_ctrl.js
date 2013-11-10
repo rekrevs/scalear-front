@@ -161,6 +161,7 @@ angular.module('scalearAngularApp')
     });
 
  	$scope.moduleSortableOptions={
+ 		//cursorAt: { top: 0, left: 0 } ,
  		axis: 'y',
 		dropOnEmpty: false,
 		handle: '.handle',
@@ -168,6 +169,7 @@ angular.module('scalearAngularApp')
 		items: '.module',
 		opacity: 0.4,
 		scroll: true,
+		//out: CourseEditor.adjustDragScroll,
 		update: function(e, ui) {
 			Module.saveSort({},
 				{group: $scope.modules},
@@ -189,6 +191,7 @@ angular.module('scalearAngularApp')
 		items: '.item',
 		opacity: 0.4,
 		scroll: true,
+		//start: CourseEditor.adjustDragScroll,
 		update: function(e, ui) {
 			var group_id=ui.item.scope().item.group_id
 			var group_position=ui.item.scope().$parent.$parent.module.position -1

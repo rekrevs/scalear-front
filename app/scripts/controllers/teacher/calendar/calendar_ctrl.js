@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('TeacherCalendarCtrl', ['$scope', 'Event','events', function ($scope, Event, events) {
-    
+  .controller('TeacherCalendarCtrl', ['$scope','events', function ($scope, events) {
+    console.log("in calendar ctrl")
 	var date = new Date();
 	var d = date.getDate();
 	var m = date.getMonth();

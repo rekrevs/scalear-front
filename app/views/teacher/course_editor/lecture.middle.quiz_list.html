@@ -6,7 +6,7 @@
 		<td>Type</td>
 		<td></td>
 	</tr>
-	<tr ng-repeat="quiz in quiz_list|orderBy:'time'" ng-class="{active: quiz.id == $parent.selected_quiz.id}">
+	<tr ng-repeat="quiz in quiz_list|orderBy:'time'" ng-class="{selected: quiz.id == $parent.selected_quiz.id}">
 		<td style="width:50%">
 			<editable_text value="quiz.question" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);">
 		</td>

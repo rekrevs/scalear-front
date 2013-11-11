@@ -32,6 +32,7 @@
 
     $httpProvider.defaults.withCredentials = true;
 	$httpProvider.interceptors.push('ServerInterceptor');
+    
     $urlRouterProvider.otherwise('/');
     
     $stateProvider
@@ -112,6 +113,11 @@
         templateUrl: 'views/student/calendar/calendar.html',
         controller: 'StudentCalendarCtrl'
       })
+      .state('course.announcements', {
+      url:'/announcements',
+      templateUrl: 'views/teacher/announcements/announcements.html',
+      controller: 'AnnouncementsCtrl'
+    })
   }])
 
 

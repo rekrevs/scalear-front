@@ -1,0 +1,21 @@
+<loading size="small" show="quiz_loading"/>
+<table class="table">
+	<tr>
+		<td>Question</td>
+		<td>Time</td>
+		<td>Type</td>
+		<td></td>
+	</tr>
+	<tr ng-repeat="quiz in quiz_list|orderBy:'time'" ng-class="{selected: quiz.id == $parent.selected_quiz.id}">
+		<td style="width:50%">
+			<editable_text value="quiz.question" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);">
+		</td>
+		<td ng-init="quiz.formatedTime = (quiz.time|format)" style="width:25%">			
+			<editable_text value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);">
+		</td>
+		<td>{{quiz.question_type}}</td>
+		<td>
+			<delete_button size="big" action="deleteQuiz($index)" />
+		</td>
+	</tr>
+</table>

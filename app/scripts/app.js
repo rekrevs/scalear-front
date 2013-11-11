@@ -18,7 +18,7 @@
   'infinite-scroll',
   'xeditable',
   'ui.calendar'
-]).constant('scalear_api', {host:'http://localhost:3000'})
+]).constant('scalear_api', {host:'http://angular-learning.herokuapp.com'}) //http://localhost:3000
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
   .run(function(editableOptions) {

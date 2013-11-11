@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
 			isOpen2: "="
 		},
 		template: "<h5 ng-click='invertOpen()'>"+
-					"<img src='images/move2.png' class='handle' title='drag to reorder' />"+
+					"<img src='/images/move2.png' class='handle' title='drag to reorder' />"+
 					"<a class='trigger' ng-class='{open:isOpen2[id]==true}' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
 					"<delete_button size='small' action='remove()'/>"+
 				  "</h5>",
@@ -42,7 +42,7 @@ angular.module('scalearAngularApp')
 		 	remove:'&'
 		 },
 		 restrict: 'E', 
-		 template: '<img src="images/move2.png" class="handle" title="drag to reorder" />'+
+		 template: '<img src="/images/move2.png" class="handle" title="drag to reorder" />'+
 	               '<a class="trigger2" ui-sref="course.course_editor.{{className}}({ {{className}}_id: id })" >{{name}}</a>'+
 	               '<delete_button size="small" action="remove()"/>'
 	};
@@ -103,7 +103,7 @@ angular.module('scalearAngularApp')
 		},		
 	 	restrict: 'E',
 	 	replace:true,
-	 	template: '<div ng-show="show"><img ng-src="images/loading_{{size}}.gif" ng-class=\'{loading_image: size=="big"}\' /></br><b> Please wait...</b></div>'
+	 	template: '<div ng-show="show"><img ng-src="/images/loading_{{size}}.gif" ng-class=\'{loading_image: size=="big"}\' /></br><b> Please wait...</b></div>'
 	};
 }).directive('deleteButton',function(){
 	return {
@@ -113,7 +113,7 @@ angular.module('scalearAngularApp')
 		},
 		restrict:'E',
 		template: 	'<a style="float:right;width:20px;cursor:pointer;" title="delete" ng-click="action()">'+
-						'<img alt="Trash" ng-src="images/trash_{{size}}.png">'+
+						'<img alt="Trash" ng-src="/images/trash_{{size}}.png">'+
 					'</a>'
 	}
 });

@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
 
 	var updateOnlineQuiz=function(quiz){
 		Online_quizzes.update(
-			{param: quiz.id},
+			{online_quizzes_id: quiz.id},
 			{online_quiz: {time:Math.round(quiz.time), question:quiz.question}},
 			function(data){ //success
 				console.log(data)
@@ -64,7 +64,7 @@ angular.module('scalearAngularApp')
 	$scope.deleteQuiz=function(index){
 		if(confirm("Are you sure you want to delete quiz"))
 			Online_quizzes.destroy(
-				{param: $scope.quiz_list[index].id},
+				{online_quizzes_id: $scope.quiz_list[index].id},
 				function(data){ //success
 					console.log(data)
 					$scope.quiz_list.splice(index, 1)

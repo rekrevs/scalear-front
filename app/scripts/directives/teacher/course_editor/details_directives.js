@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
     };
 
   }])
-  .directive('detailsSelect', ['$timeout',function ($timeout, $filter) {
+  .directive('detailsSelect', ['$timeout','$filter',function ($timeout, $filter) {
     return {
 
       template: '<a href="#" editable-select="value" buttons="no" e-ng-options="s.value as s.text for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ showStatus() }}<i ng-class="overclass"></i></a> ',

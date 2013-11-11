@@ -6,7 +6,7 @@
 		<accordion  close-others="true" id="acc1" class="accordion" ui-sortable="moduleSortableOptions" ng-model='modules' >
 			<accordion-group ng-repeat="module in modules" is-open="module.id==open_id" class='module'>
 				<accordion-heading>
-		        	<module name="module.name" id="module.id" remove="removeModule($index)" is-open2="open" />
+		        	<module name="module.name" id="module.id" remove="removeModule($index)" open="open" />
 	        	</accordion-heading>
         		<div class="outer">
 		        	<div class="inner" id="modules">

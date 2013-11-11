@@ -3,16 +3,7 @@
 angular.module('scalearAngularApp')
     .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', 'lecture', function ($stateParams, $scope, $http, $q, $state, Lecture, lecture) {
 
-	console.log("made it in details!!");
-    $scope.lecture=lecture.data
-
-	$scope.screen_options = [
-		{value: "widescreen", text: 'widescreen'},
-		{value: "smallscreen", text: 'smallscreen'}
-	]
-
-	getYoutubeDetails();
-
+   	//**************************FUNCTIONS****************************************///
  	$scope.validateLecture = function(column,data) {
 	    var d = $q.defer();
 	    var lecture={}
@@ -59,12 +50,9 @@ angular.module('scalearAngularApp')
 
 	$scope.updateLectureUrl= function(){
 		urlFormat()
-		$scope.updateLectureVideo()
-	}
-
-	$scope.updateLectureVideo= function(){
-		$scope.updateLecture()
 		$scope.$emit('refreshVideo')
+		$scope.lecture.aspect_ratio = ""
+		getYoutubeDetails();
 	}
 
 	var urlFormat =function()
@@ -74,7 +62,6 @@ angular.module('scalearAngularApp')
 		if(video_id != null) {
 		   $scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
 		}
-		getYoutubeDetails();
 	}
 
 	function getYoutubeDetails()
@@ -96,12 +83,29 @@ angular.module('scalearAngularApp')
 			        $scope.video.author = data.entry.author[0].name.$t;
 			        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
 			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio === undefined)
-			        	$scope.lecture.aspect_ratio="smallscreen";
+			        	$scope.lecture.detected_aspect_ratio="smallscreen";
 			        else
 			        	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;
 
+			        	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
+
 			        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
+	        		$scope.updateLecture()
 			});
 		}
+		
 	}
+
+	//********************************************************************//
+
+	console.log("made it in details!!");
+    $scope.lecture=lecture.data
+
+	$scope.screen_options = [
+		{value: "widescreen",  text: 'widescreen'},
+		{value: "smallscreen", text: 'smallscreen'}
+	]
+
+	getYoutubeDetails();
+
 }]);

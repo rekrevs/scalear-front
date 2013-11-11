@@ -15,6 +15,7 @@
 	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ></item>
 		            		</li>
 		            	</ul>
+		            	<center><loading size="small" show="item_loading" /></center>
 			            <center class="item-buttons">
 			            	<button_link title="Add Lecture" class="btn-mini adding" action="addLecture($parent.$index)" />
 			            	<button_link title="Add Quiz"    class="btn-mini adding" action="addQuiz($parent.$index, 'quiz')"/>

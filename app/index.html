@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <!-- endbuild -->
   </head>
-  <body style="overflow:auto" ng-app="scalearAngularApp">
+  <body style="overflow:auto" ng-app="scalearAngularApp" ng-controller="indexController">
   	<div ng-show="server_error" class="errorpage"></div>
   	<div id='server_error' app-messages ng-show="server_error"></div>
     <!--[if lt IE 7]>
@@ -66,9 +66,9 @@
             <ul class="nav nav-pills">
                 <li class=""><a href="/#/courses/1/progress_teacher">Progress</a></li>
                 <li class=""><a href="/#/courses/1/inclass">In-class</a></li>
-                <li class=""><a ui-sref="course.calendar({ course_id: '1' })">Calendar</a></li>
+                <li ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: '1' })">Calendar</a></li>
                 <li class=""><a href="/#/courses/1/announcements">Announcements</a></li>
-                <li class="active"><a ui-sref="course.course_editor({ course_id: '1' })">Content</a></li>
+                <li ng-class="{ active: current_state.includes('course.course_editor')}"><a ui-sref="course.course_editor({ course_id: '1' })">Content</a></li>
                  <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Information<b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/#/courses/1">Course Information</a></li>
@@ -196,6 +196,7 @@
     <script src="scripts/services/error_handler.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/index.js"></script>
     <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>        
     <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script> 
@@ -204,6 +205,7 @@
     <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
+    
 
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script>

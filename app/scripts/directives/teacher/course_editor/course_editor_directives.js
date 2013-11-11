@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
 		 },
 		 restrict: 'E', 
 		 template: '<img src="images/move2.png" class="handle" title="drag to reorder" />'+
-	               '<a class="trigger2" ui-sref="course.course_editor.{{className}}({ {{className}}_id: id })" >{{name}}</a>'+
+	               '<a class="trigger2" ui-sref=\'course.course_editor.{{(className=="lecture") && "lecture.quizList" || className}}({ {{className}}_id: id })\' >{{name}}</a>'+
 	               '<delete_button size="small" action="remove()"/>'
 	};
 }).directive('buttonLink', function(){

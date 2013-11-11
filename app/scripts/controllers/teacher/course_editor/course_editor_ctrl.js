@@ -6,6 +6,9 @@ angular.module('scalearAngularApp')
 
  	/***********************Functions*******************************/
  	var init = function(){
+ 		$scope.open_id="-1";
+	    $scope.open={};
+	    $scope.oneAtATime = true;
  		Course.getCourseEditor(function(data){
 	 		$scope.course=data.course
 	 		$scope.modules=data.groups
@@ -146,11 +149,10 @@ angular.module('scalearAngularApp')
     /*************************************************************************************/
 
 
-    $scope.open_id="-1";
-    $scope.open={};
-    $scope.oneAtATime = true;
+    
 
 	$rootScope.$on('accordianUpdate', function(event, message) {
+		console.log("///////qqqqqqqqq///////////")
 		$scope.open_id=message;
 		$scope.open[message]= true;
 	});

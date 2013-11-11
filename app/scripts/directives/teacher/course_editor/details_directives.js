@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .directive('detailsText', ['$timeout',function ($timeout) {
     return {
-      template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "empty" }} <i ng-class="overclass"></i></a>',
+      template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "empty" }} <i ng-class="overclass"></i></a>',
       restrict: 'E',
       scope:{
       	value: "=",
@@ -11,7 +11,16 @@ angular.module('scalearAngularApp')
         validate: "&",
         column: "@"
       },
-      link:function(scope){
+      link:function(scope, element){
+      	scope.selectField = function()
+      	{
+      		if(scope.column=="url"){
+      		  $timeout(function(){
+      		  	element.find('.editable-input').select();
+      		  });
+      		}
+      	};
+      	
         scope.saveData=function(){
           $timeout(function(){
             scope.save()

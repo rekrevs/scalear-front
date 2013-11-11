@@ -305,7 +305,7 @@ angular.module('scalearAngularApp')
 						"<br/>"+
 						"<div ng-hide='hideAnswer()' class='answer_div'>"+
 							"<htmlanswer />"+
-							"<a class='add_multiple_answer' ng-click='addAnswer(\"\")' href=''>Add Answer</a>"+
+							"<a class='add_multiple_answer' ng-click='addAnswer(\"\",quiz)' href=''>Add Answer</a>"+
 							"<br/>"+
 						"</div>"+
 					"</ng-form>",

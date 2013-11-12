@@ -118,7 +118,7 @@
                     return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id, headers:headers})
                 }
             },
-            url: '/course_information',
+            url: '',
         templateUrl: 'views/teacher/course/course_information.html',
         controller: 'TeacherCourseCourseInformationCtrl'
       })

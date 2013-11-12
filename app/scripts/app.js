@@ -113,11 +113,11 @@
         controller: 'StudentCalendarCtrl'
       })
       .state('course.course_information', {
-//            resolve:{
-//                course:function($http, $stateParams, headers, scalear_api){
-//                    return $http({method: 'GET', url:scalear_api+'/en/courses/'+$stateParams.course_id+'show', headers:headers})
-//                }
-//            },
+            resolve:{
+                course:function($http, $stateParams, headers, scalear_api){
+                    return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id, headers:headers})
+                }
+            },
             url: '/course_information',
         templateUrl: 'views/teacher/course/course_information.html',
         controller: 'TeacherCourseCourseInformationCtrl'

@@ -3,11 +3,11 @@
         margin-left: 15px;
     }
 </style>
-<div>
+<div ng-app="scalearAngularApp">
     <h3>Course Title</h3>
     <b>Course Enrollment Key:</b>
     <p>
-        <a class="ng-scope ng-binding editable editable-click" href="#" onshow="selectField()" ng-mouseover="overclass = 'icon-pencil'" ng-mouseleave="overclass= ''" editable-text="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">skjdhfishdfiuhi<i class="" ng-class="overclass"></i></a>
+        {{data}}
     </p>
 
     <b>Start Date:</b>

@@ -26,19 +26,24 @@
   })  
 
   .config(['$stateProvider','$urlRouterProvider','$httpProvider',function ($stateProvider, $urlRouterProvider, $httpProvider) {
-
 	
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
-    $urlRouterProvider.otherwise('/');
-    
+
+    $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('index', {
         url: '/',
-        templateUrl: 'views/main.html',
-        controller:'MainCtrl'
+        views:{
+          'navigation':{templateUrl: 'views/main.html', controller:'MainCtrl'}
+        }
+      })
+      .state('admin', {
+        url:'/admin',
+        templateUrl: 'views/admin.html',
+        controller: 'AdminCtrl'
       })
       .state('course', {
         url: '/courses/:course_id',

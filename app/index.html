@@ -58,56 +58,29 @@
             </div>
         </nav>
     </header>
-    
+    <div ui-view="navigation"></div>
     <div id="main" role="main">
         <div class="container" style="position:relative;width:1200px">
-
-        <!--<%= yield :extra %>-->
-            <ul class="nav nav-pills">
-                <li class=""><a href="/#/courses/1/progress_teacher">Progress</a></li>
-                <li class=""><a href="/#/courses/1/inclass">In-class</a></li>
-                <li ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: '1' })">Calendar</a></li>
-                <li class=""><a href="/#/courses/1/announcements">Announcements</a></li>
-                <li ng-class="{ active: current_state.includes('course.course_editor')}"><a ui-sref="course.course_editor({ course_id: '1' })">Content</a></li>
-                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Information<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="/#/courses/1">Course Information</a></li>
-                        <li><a href="/#/courses/1/enrolled_students">Enrolled Students</a></li>
-                        <li><a href="/#/courses/1/teachers">Teachers</a></li>
-                    </ul>
-                </li>
-                
-                <script>
-                // $(document).ready(function(){
-                //     $('.dropdown-toggle').dropdown();
-                // })
-                </script>
-               
-                <li style="float:right"><b>1DT085 - Computer Architecture and Digital Technology</b></li>
-            </ul>
-        
-        <div class="content" style="width:auto">
-           <div class="row">
-            <div class="span12" style="">
-                <div ui-view=""></div>
-              <!--<%= render 'layouts/messages' %>-->
-              <!--<%= yield %>-->
+            <div class="content" style="width:auto">
+                <div class="row">
+                    <div class="span12" style="">
+                        <div ui-view=""></div>
+                    </div>
+                </div>
+                <footer>
+                    <br /><br /><br />
+                    <br /><br /><br />
+                    <div class="row"><div class="span12">
+                        <center> 
+                            &copy;2013 ScalableLearning | About | Privacy 
+                            <!--<% if current_user %>| <%= render "layouts/feedback"%>-->
+                            <!--<% end %>-->
+                        </center>
+                    </div></div>
+                </footer>
             </div>
-          </div>
-          <footer>
-                <br /><br /><br />
-                <br /><br /><br />
-                <div class="row"><div class="span12">
-                    <center> 
-                        &copy;2013 ScalableLearning | About | Privacy 
-                        <!--<% if current_user %>| <%= render "layouts/feedback"%>-->
-                        <!--<% end %>-->
-                    </center>
-                </div></div>
-          </footer>
-        </div>
-        <div><br/></div>
-      </div> 
+            <div><br/></div>
+        </div> 
     </div> 
 
     
@@ -209,6 +182,7 @@
 
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script>
+    <script src="scripts/controllers/admin.js"></script>
     <!-- endbuild -->
 </body>
 </html>

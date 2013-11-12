@@ -112,6 +112,18 @@
         templateUrl: 'views/student/calendar/calendar.html',
         controller: 'StudentCalendarCtrl'
       })
+      .state('course.course_information', {
+            resolve:{
+                course:function($http, $stateParams, headers, scalear_api){
+                    //change teh course_id to be passed automatically
+                    console.log($stateParams)
+                    return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/student_show', headers:headers})
+                }
+            },
+        url: '/course_information',
+        templateUrl: 'views/student/course/course_information.html',
+        controller: 'StudentCourseCourseInformationCtrl'
+      })
   }])
 
 

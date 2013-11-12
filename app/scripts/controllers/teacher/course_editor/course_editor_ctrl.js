@@ -3,7 +3,6 @@
 angular.module('scalearAngularApp')
 .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location) {
 
-	console.log($stateParams)
  	/***********************Functions*******************************/
  	var init = function(){
  		$scope.open_id="-1";

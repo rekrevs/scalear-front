@@ -32,22 +32,26 @@
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
 
+    // .state('/teacher_navigation', {
+    //   templateUrl: 'views/teacher_navigation.html',
+    //   controller: 'TeacherNavigationCtrl'
+    // })
     $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('index', {
         url: '/',
-        views:{
-          'navigation':{templateUrl: 'views/main.html', controller:'MainCtrl'}
-        }
       })
       .state('admin', {
         url:'/admin',
-        templateUrl: 'views/admin.html',
-        controller: 'AdminCtrl'
+        templateUrl: 'views/admin/admin.html',
+        controller: 'adminCtrl'
       })
       .state('course', {
         url: '/courses/:course_id',
-        template: '<ui-view/>',
+        views:{
+          'navigation':{templateUrl: 'views/teacher_navigation.html', controller: 'teacherNavigationCtrl'},
+          '':{template:'<ui-view/>'}
+        },
         abstract:true
       })
       .state('course.course_editor', {

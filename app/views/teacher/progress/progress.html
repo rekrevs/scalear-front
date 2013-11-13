@@ -1,0 +1,17 @@
+<div class="row">        
+	<div class="span3">
+	    <ul class="nav nav-list">
+			<li class="nav-header">Total Progress</li>    
+			<li>
+			    <a href="/en/courses/1295/progress_teacher?p=p&amp;type=progress" class="lecture" id="progress_chart">Progress Chart</a>
+			</li>           
+	        <li class="nav-header">Modules</li>
+			<li bindonce ng-repeat="group in groups" style="cursor:pointer">
+			    <a ui-sref="course.progress.module({ module_id: group.id })" class="group" bo-text="group.name" ></a>
+			</li>
+	    </ul>                   
+	</div>
+	<div id='details' class="span11" >
+	    <ui-view/>
+	</div>
+</div>

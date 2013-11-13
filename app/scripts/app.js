@@ -13,11 +13,11 @@
   'ui.bootstrap.datepicker',
   'ui.bootstrap.alert',
   'ui.sortable',
+  'ui.calendar',
   'ngDragDrop',
   'pasvaz.bindonce',
   'infinite-scroll',
   'xeditable',
-  'ui.calendar'
 ]).constant('scalear_api', {host:'http://localhost:3000'}) //http://localhost:3000
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
@@ -95,6 +95,16 @@
           'details' :{templateUrl: 'views/teacher/course_editor/quiz.details.html', controller: 'quizDetailsCtrl'},
           'middle'  :{templateUrl: 'views/teacher/course_editor/quiz.middle.html',  controller: 'quizMiddleCtrl'}
         }
+      })
+      .state('course.progress', {
+        url:'/progress',
+        templateUrl: 'views/teacher/progress/progress.html',
+        controller: 'progressCtrl'
+      })
+      .state('course.progress.module', {
+        url: "/module/:module_id",
+        templateUrl: 'views/teacher/progress/progress_module.html',
+        controller: 'progressModuleCtrl'
       })
       .state('course.calendar', {
         resolve:{

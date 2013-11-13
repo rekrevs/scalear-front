@@ -152,8 +152,3 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
   z-index: 99;
   text-align: center;
 }
-
-.loading_image {
-  width:80px;
-  z-index: 100;
-}

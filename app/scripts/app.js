@@ -26,23 +26,28 @@
   })  
 
   .config(['$stateProvider','$urlRouterProvider','$httpProvider',function ($stateProvider, $urlRouterProvider, $httpProvider) {
-
 	
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
-    $urlRouterProvider.otherwise('/');
     
+    $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('index', {
         url: '/',
-        templateUrl: 'views/main.html',
-        controller:'MainCtrl'
+      })
+      .state('admin', {
+        url:'/admin',
+        templateUrl: 'views/admin/admin.html',
+        controller: 'adminCtrl'
       })
       .state('course', {
         url: '/courses/:course_id',
-        template: '<ui-view/>',
+        views:{
+          'navigation':{templateUrl: 'views/teacher_navigation.html', controller: 'teacherNavigationCtrl'},
+          '':{template:'<ui-view/>'}
+        },
         abstract:true
       })
       .state('course.course_editor', {
@@ -94,7 +99,6 @@
       .state('course.calendar', {
         resolve:{
           events:function($http, $stateParams, headers,scalear_api){
-            console.log("resolving")
             return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})
           }
         },

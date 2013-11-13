@@ -154,3 +154,8 @@ body {
 	display:inline !important;
 }
 
+.loading_image {
+  width:80px;
+  z-index: 100;
+}
+

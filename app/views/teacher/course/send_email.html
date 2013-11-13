@@ -1,5 +1,27 @@
-<div class="well">
-    <form method="post">
-        <textarea ui-tinymce ng-model="tinymceModel"></textarea>
+
+<!--<div class="well">-->
+    <form method="post" style="text-align: left;">
+        <table style="width: 80%;">
+            <tr>
+                <td style="width: 70px;">
+                    <b>To: </b>
+                </td>
+                <td>
+                    <input id="to" type="text" name="emails" title="To" style="width: 80%;" readonly="readonly" value="{{email}}"/>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Subject: </b>
+                </td>
+                <td>
+                    <input id="subject" type="text" name="subject" style="width: 80%;" ng-model="subject"/>
+                </td>
+            </tr>
+        </table>
+        <textarea ui-tinymce ng-model="message" name="body"></textarea>
+        <br />
+        <input class="btn" type="button" ng-click="sendEmail()" style="float: right;" value="Send" />
+
     </form>
-</div>
+<!--</div>-->

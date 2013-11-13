@@ -128,7 +128,12 @@
         controller: 'TeacherCourseEnrolledStudentsCtrl'
       })
       .state('course.send_email', {
-        url: '/send_email',
+        resolve:{
+            emails:function($http, $stateParams, headers, scalear_api){
+                return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/send_email?student='+$stateParams.student_id})
+            }
+        },
+        url: '/send_email/:student_id',
         templateUrl: 'views/teacher/course/send_email.html',
         controller: 'TeacherCourseSendEmailCtrl'
       })

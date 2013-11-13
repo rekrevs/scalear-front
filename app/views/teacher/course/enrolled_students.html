@@ -9,25 +9,33 @@
 </div>
 <br />
 <center>
-    <!--<div id="invited_students">-->
-        <table class="table table-striped">
-            <tr>
-                <!-- <th>Enrolled</th> -->
-                <th style="text-align: center;">Student Name</th>
-                <th style="text-align: center;">Student Email</th>
-                <th style="text-align: center;"></th>
-            </tr>
-            <tr ng-repeat="student in data | filter:searchText" >
-                <td style="text-align: center;">
-                    {{student.name}}
-                </td>
-                <td style="text-align: center;">
-                    <a href="#/courses/{{course.id}}/send_email">{{student.email}}</a>
-                </td>
-                <td style="text-align: center;">
-                    <a href="">Delete from course</a>
-                </td>
-            </tr>
-        </table>
-    <!--</div>-->
+    <div id="invited_students">
+        <form method="POST" action="#/courses/{{course.id}}/send_email">
+            <table class="table table-striped">
+                <tr>
+                    <!-- <th>Enrolled</th> -->
+                    <th style="text-align: center;">Student Name</th>
+                    <th style="text-align: center;">Student Email</th>
+                    <th style="text-align: center;">Delete?</th>
+                    <th style="text-align: center;">Email?</th>
+                </tr>
+                <tr ng-repeat="student in data | filter:searchText" >
+                    <td style="text-align: center;">
+                        {{student.name}}
+                    </td>
+                    <td style="text-align: center;">
+                        <a ui-sref="course.send_email({student_id:student.id})">{{student.email}}</a>
+                        <!--<a href="#/courses/{{course.id}}/send_email/{{student.id}}">{{student.email}}</a>-->
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="#" data-confirm="Are you would like to delete {{student.name}} and all of his data?">Remove from course</a>
+                    </td>
+                    <td style="text-align: center;">
+                        <input type="checkbox" name="emails[]" value="{{student.id}}"/>
+                    </td>
+                </tr>
+            </table>
+            <input class="btn" type="submit" value="Email" style="float: right; margin-right: 3%;"/>
+        </form>
+    </div>
 </center>

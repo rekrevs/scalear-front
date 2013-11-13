@@ -162,3 +162,6 @@ body {
   z-index: 100;
 }
 
+.ng-invalid ~ span { color:red; display:inline;font-size:12px;left:300px; }
+input.ng-invalid{ border:1px solid red; }
+select.ng-invalid{ border:1px solid red; }

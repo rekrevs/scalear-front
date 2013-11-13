@@ -43,6 +43,16 @@
         templateUrl: 'views/admin/admin.html',
         controller: 'adminCtrl'
       })
+      .state('course_list', {
+        url:'/courses',
+        templateUrl: 'views/teacher/course_list/course_list.html',
+        controller: 'courseListCtrl'
+      })
+      .state('new_course', {
+        url:'/courses/new',
+        templateUrl: 'views/teacher/course_list/new_course.html',
+        controller: 'newCourseCtrl'
+      })
       .state('course', {
         url: '/courses/:course_id',
         views:{

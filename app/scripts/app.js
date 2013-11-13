@@ -31,11 +31,7 @@
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
-
-    // .state('/teacher_navigation', {
-    //   templateUrl: 'views/teacher_navigation.html',
-    //   controller: 'TeacherNavigationCtrl'
-    // })
+    
     $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('index', {
@@ -103,7 +99,6 @@
       .state('course.calendar', {
         resolve:{
           events:function($http, $stateParams, headers,scalear_api){
-            console.log("resolving")
             return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})
           }
         },

@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
       'show':{method: 'GET', headers:headers},
       'getCourse': {method: 'GET', params: {action: 'get_course_angular'}, headers:headers},
       'getCourseEditor': {method: 'GET', params: {action: 'course_editor_angular'}, headers:headers},
-      'getGroupItems' : {method: 'GET', params: {action: 'get_group_items'}, headers:headers},
+      'getGroupItems' : {method: 'GET', params: {action: 'get_group_items'}, headers:headers}
     });
 
 }])

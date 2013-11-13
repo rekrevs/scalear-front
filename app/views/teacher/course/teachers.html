@@ -1,0 +1,44 @@
+<b>Teachers</b>
+    <div id="the_table">
+
+            <table id="teachers" class="table table-striped">
+                <tr>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+                <tr ng-repeat="teacher in teachers">
+                    <td>{{teacher.email}}</td>
+                    <td  style = "width:500px">
+                        <details-select value="teacher.role" options="roles" save="" column="role" style="width: 120px;" ></details-select>
+
+                    </td>
+                    <td>
+                        {{teacher.status}}
+                    </td>
+                    <td>
+
+                            <img src="../../../images/trash3.png" ng-click="hello()" style="cursor: pointer;"/>
+
+                    </td>
+                </tr>
+            </table>
+        <input type="button" class="btn" id="add_teacher" value="Add Teacher"/>
+
+    </div>
+
+        <script>
+            num=0;
+            $('#add_teacher').click(function(event){
+
+                $("#teachers").append("<tr>" +"<td>" + "<input type='email' required placeholder='Email' id='email' name='email'/></td><td><select name='role'><option value='3'>Professor</option><option value='4'>TA</option></select></td><td></td><td><img src='../../../images/trash3.png' onclick='remove_row($(this))' style='cursor: pointer;' ng-click='hello2()' /></td></tr>")
+                num++;
+            })
+
+            remove_row = function(elem){
+                elem.parent().parent().remove();
+                num--;
+                
+            }
+        </script>

@@ -37,6 +37,7 @@
 
 
     <header class="navbar navbar-fixed-top">
+
     <nav class="navbar-inner cc">
         <div class="container">
             <a href="/#" class="brand"><img alt="Logo" src="images/logo.png" width="30px"></a>
@@ -50,6 +51,7 @@
                 <li><a href="">Edit account</a></li>
                 <li><a href=""><img alt="Uk" height="20px" src="images/uk.png" width="30px"></a></li>
                 <li><a href=""><img alt="Sweden" height="20px" src="images/sweden.png" width="30px"></a></li>
+
             </ul>
 
             <ul class="nav pull-left">
@@ -147,6 +149,8 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 	<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
+	<script src="bower_components/tinymce/tinymce.min.js"></script>
+	<script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -165,6 +169,7 @@
     <script src="scripts/services/teacher/online_quiz.js"></script>
     <script src="scripts/services/teacher/quiz.js"></script>
     <script src="scripts/services/teacher/course_editor.js"></script>
+    <script src="scripts/services/teacher/announcement.js"></script>
     <script src="scripts/services/server_interceptor.js"></script>
     <script src="scripts/services/error_handler.js"></script>
 
@@ -178,12 +183,17 @@
     <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     
 
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script>
+<<<<<<< HEAD
     <script src="scripts/controllers/admin/admin.js"></script>
     <script src="scripts/controllers/teacher_navigation.js"></script>
+=======
+    
+>>>>>>> feature/announcements
     <!-- endbuild -->
 </body>
 </html>

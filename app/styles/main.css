@@ -146,11 +146,19 @@ body {
 	height:100%;	
 }
 
+.errormessage{
+	color:red;
+}
 .message{
 	text-align:center;	
 }
 
 .errorMessage, .messagesList{
 	display:inline !important;
+}
+
+.loading_image {
+  width:80px;
+  z-index: 100;
 }
 

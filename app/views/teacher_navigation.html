@@ -1,0 +1,15 @@
+<ul class="nav nav-pills">
+    <li class=""><a href="/#/courses/1/progress_teacher">Progress</a></li>
+    <li class=""><a href="/#/courses/1/inclass">In-class</a></li>
+    <li ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: '1' })">Calendar</a></li>
+    <li ng-class="{ active: current_state.includes('course.announcements')}"><a ui-sref="course.announcements({ course_id: '1' })">Announcements</a></li>
+    <li ng-class="{ active: current_state.includes('course.course_editor')}"><a ui-sref="course.course_editor({ course_id: '1' })">Content</a></li>
+     <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Information<b class="caret"></b></a>
+        <ul class="dropdown-menu">
+            <li><a href="/#/courses/1">Course Information</a></li>
+            <li><a href="/#/courses/1/enrolled_students">Enrolled Students</a></li>
+            <li><a href="/#/courses/1/teachers">Teachers</a></li>
+        </ul>
+    </li>
+    <li style="float:right"><b>1DT085 - Computer Architecture and Digital Technology</b></li>
+</ul>

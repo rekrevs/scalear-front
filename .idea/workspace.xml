@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="052a56d3-721f-4ca5-809b-9be894398609" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/app.js" afterPath="$PROJECT_DIR$/app/scripts/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/services/teacher/course.js" afterPath="$PROJECT_DIR$/app/scripts/services/teacher/course.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/teacher/course/teachers.html" afterPath="$PROJECT_DIR$/app/views/teacher/course/teachers.html" />
     </list>
     <ignored path="scalear-front.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -48,12 +46,12 @@
       <file leaf-file-name="teachers.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/teacher/course/teachers.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="41" column="16" selection-start="1629" selection-end="1629" vertical-scroll-proportion="1.1061151" vertical-offset="0" max-vertical-offset="750">
+            <state line="27" column="83" selection-start="999" selection-end="999" vertical-scroll-proportion="0.43165466" vertical-offset="165" max-vertical-offset="795">
               <folding>
                 <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#details-select#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#img#0;n#td#3;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <marker date="1384351552000" expanded="true" signature="1408:1424" placeholder="..." />
+                <marker date="1384352368000" expanded="true" signature="1448:1464" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -523,12 +521,12 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/teacher/course/teachers.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="41" column="16" selection-start="1629" selection-end="1629" vertical-scroll-proportion="1.1061151" vertical-offset="0" max-vertical-offset="750">
+        <state line="27" column="83" selection-start="999" selection-end="999" vertical-scroll-proportion="0.43165466" vertical-offset="165" max-vertical-offset="795">
           <folding>
             <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#details-select#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#img#0;n#td#3;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1384351552000" expanded="true" signature="1408:1424" placeholder="..." />
+            <marker date="1384352368000" expanded="true" signature="1448:1464" placeholder="..." />
           </folding>
         </state>
       </provider>

@@ -17,8 +17,9 @@
   'pasvaz.bindonce',
   'infinite-scroll',
   'xeditable',
-  'ui.calendar'
-]).constant('scalear_api', {host:'http://angular-learning.herokuapp.com'}) //http://localhost:3000
+  'ui.calendar',
+  'ui.tinymce'
+]).constant('scalear_api', {host:'http://localhost:3000'}) //http://angular-learning.herokuapp.com
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
   .run(function(editableOptions) {

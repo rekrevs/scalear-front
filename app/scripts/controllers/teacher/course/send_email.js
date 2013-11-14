@@ -11,6 +11,10 @@ angular.module('scalearAngularApp')
             console.log(message);
         }
 
+        $scope.sendEmail = function(address, title, body){
+//            var params = $.param({email: address, subject: title, message: body});
+            Course.send_email_through({email:address, subject:title, message:body}, console.log('worked!'), console.log('failed'))
+        }
 
 //        $scope.sendEmail = function(){
 ////            Course.send_email_through(

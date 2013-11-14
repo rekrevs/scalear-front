@@ -6,5 +6,5 @@ angular.module('scalearAngularApp')
         console.log(students.data.students);
         $scope.data = students.data.students;
         $scope.course = students.data.course;
-//        console.log($scope.data)
+//        console.log($scope.data);
   }]);

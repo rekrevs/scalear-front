@@ -1,0 +1,14 @@
+.chart{
+   padding-top:10px;
+   padding-bottom:10px;
+}
+
+.widescreen{
+  width: 500px;
+  height: 306px;
+}
+
+.smallscreen{
+  width: 500px;
+  height: 406px;
+}

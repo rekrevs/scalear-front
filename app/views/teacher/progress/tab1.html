@@ -1,0 +1,15 @@
+<div infinite-scroll='getRemainingCharts()' infinite-scroll-disabled='chart_scroll_disable' infinite-scroll-immediate-check='false' >
+
+	<center style="overflow:hidden">
+		<video_container class="widescreen">
+			<loading size='small' show="!url" style="top:50%;position:relative" />
+			<youtube ng-if="url" url="url" class="widescreen" />
+		</video_container>
+	</center>
+
+	<div ng-repeat="id in sub_question_ids" class="chart">
+	    <div ng-click="seek(id)"><a>Question {{$index}}</a><br> {{getLecture(id)}} </div>
+	    <div google-chart series="getData(id)" vtitle="getName(id)" ></div>
+	</div>
+	<center><loading size="small" show="loading_charts" style="top:50%;position:relative"></center>
+</div>

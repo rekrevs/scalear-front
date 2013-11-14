@@ -1,37 +1,57 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive("videoContainer",['$rootScope',function($rootScope){
+	.directive("videoContainer",function(){
 		return{
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder" ng-class="lecture.aspect_ratio" style="border:4px solid" ng-transclude></div>',
-		  	link: function($scope, element){
-			  	$rootScope.$on("refreshVideo", function(event, args) {
-			  		element.find('iframe').remove();
-			  		$scope.loadVideo();
-			  		console.log("event emitted: updating video player");
-			    });
-		  	}
+			template: '<div class="videoborder" style="border:4px solid" ng-transclude></div>'
 		};
-}]).directive('quiz',function(){
+}).directive('quiz',function(){
 		return {
 			transclude: true,
 			replace:true,
 			restrict: 'E', 
 			template: '<div class="ontop" id="ontop" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
-}).directive('youtube',function(){
+}).directive('youtube',['$rootScope',function($rootScope){
 		return {
 			restrict: 'E',
 			replace:true, 
-			template: '<div id="youtube" ng-class="lecture.aspect_ratio"></div>',
-			link: function($scope, element){
-			  	$scope.loadVideo();
+			scope:{
+				url:'=',
+			},
+			template: '<div id="youtube" ></div>',
+			link: function(scope, element){
+				var loadVideo = function(){
+					//scope.hide_overlay=false;
+					if(scope.player)
+						Popcorn.destroy(scope.player)
+					scope.player = Popcorn.youtube( "#youtube", scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
+					scope.player.controls( false ); 
+					//$scope.player.on("loadeddata", function(){$scope.hide_overlay=true; $scope.$apply();});
+				}
+				$rootScope.$on("refreshVideo", function(event, args) {
+			  		element.find('iframe').remove();
+			  		loadVideo();
+			  		console.log("event emitted: updating video player");
+			    });
+			    $rootScope.$on("seekPlayer", function(event, args){
+			    	if(scope.url != args[0]){
+			    		scope.url = args[0] 
+			    		scope.$emit("refreshVideo")
+			    	}
+			    	scope.player.on("loadeddata", function(){			    	
+				    	scope.player.pause();
+						scope.player.currentTime(args[1]);
+					});
+			    });
+
+			  	loadVideo();
 		    }
 		};
-}).directive('editPanel',function(){
+}]).directive('editPanel',function(){
 	return {		
 		 restrict: 'E',
 		 template: '<div id="editing">'+

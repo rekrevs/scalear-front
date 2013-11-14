@@ -34,14 +34,14 @@ angular.module('scalearAngularApp')
 	$scope.closeAlerts= function(){
  		$scope.hide_alerts=true;
  	}
-	$scope.loadVideo = function(){
-		$scope.hide_overlay=false;
-		if($scope.player)
-			Popcorn.destroy($scope.player)
-		$scope.player = Popcorn.youtube( "#youtube", $scope.lecture.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
-		$scope.player.controls( false ); 
-		$scope.player.on("loadeddata", function(){$scope.hide_overlay=true; $scope.$apply();});
-	}
+	// $scope.loadVideo = function(){
+	// 	$scope.hide_overlay=false;
+	// 	if($scope.player)
+	// 		Popcorn.destroy($scope.player)
+	// 	$scope.player = Popcorn.youtube( "#youtube", $scope.lecture.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
+	// 	$scope.player.controls( false ); 
+	// 	$scope.player.on("loadeddata", function(){$scope.hide_overlay=true; $scope.$apply();});
+	// }
 	
 	$scope.insertQuiz=function(quiz_type, question_type){
 		$scope.quiz_loading = true;

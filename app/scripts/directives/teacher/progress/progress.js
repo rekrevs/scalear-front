@@ -15,6 +15,12 @@ angular.module('scalearAngularApp')
 	    templateUrl:'views/teacher/progress/progress_matrix.html' 
     };
 })
+.directive("tab1",function(){
+    return{
+	    restrict: "E",
+	    templateUrl:'views/teacher/progress/tab1.html' 
+    };
+})
 .directive("tab3",function(){
     return{
 	    restrict: "E",

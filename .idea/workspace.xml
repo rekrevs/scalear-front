@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="052a56d3-721f-4ca5-809b-9be894398609" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" afterPath="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" />
-    </list>
+    <list default="true" id="052a56d3-721f-4ca5-809b-9be894398609" name="Default" comment="" />
     <ignored path="scalear-front.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />

@@ -11,7 +11,7 @@
 <center>
     <div id="invited_students">
         <form name="email_form">
-            <table class="table table-striped">
+            <table class="table table-striped" id="students_table">
                 <tr>
                     <!-- <th>Enrolled</th> -->
                     <th style="text-align: center;">Student Name</th>
@@ -28,7 +28,7 @@
                         <!--<a href="#/courses/{{course.id}}/send_email/{{student.id}}">{{student.email}}</a>-->
                     </td>
                     <td style="text-align: center;">
-                        <input class="btn" type="button" ng-click="removeStudent(student.id)" value="Remove"/>
+                        <input class="btn" type="button" ng-click="removeStudent(student.id, $index)" value="Remove"/>
                         <!--<a ui-sref="course.remove_student({student_id:student.id})" data-confirm="Are you would like to delete {{student.name}} and all of his data?">Remove from course</a>-->
                     </td>
                     <td style="text-align: center;" >

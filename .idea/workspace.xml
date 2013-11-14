@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="052a56d3-721f-4ca5-809b-9be894398609" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" afterPath="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="scalear-front.iws" />
@@ -30,9 +31,7 @@
         <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="150" column="6" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.0" vertical-offset="1680" max-vertical-offset="2490">
-              <folding>
-                <marker date="1384428451000" expanded="true" signature="5739:6154" placeholder="{&quot;url&quot;: '/send_emails'...}" />
-              </folding>
+              <folding />
             </state>
           </provider>
         </entry>
@@ -40,10 +39,8 @@
       <file leaf-file-name="course.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/services/teacher/course.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="96" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-              <folding>
-                <marker date="1384428112000" expanded="true" signature="70:1229" placeholder="[...]" />
-              </folding>
+            <state line="12" column="96" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="390">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -51,25 +48,25 @@
       <file leaf-file-name="send_email.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="12" selection-start="676" selection-end="676" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="645">
+            <state line="16" column="12" selection-start="676" selection-end="676" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="645">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="enrolled_students.js" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="enrolled_students.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="56" selection-start="714" selection-end="714" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
+            <state line="18" column="16" selection-start="779" selection-end="779" vertical-scroll-proportion="0.4847397" vertical-offset="0" max-vertical-offset="645">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="enrolled_students.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="enrolled_students.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="22" selection-start="1699" selection-end="1699" vertical-scroll-proportion="0.54971856" vertical-offset="217" max-vertical-offset="780">
+            <state line="30" column="99" selection-start="1409" selection-end="1409" vertical-scroll-proportion="-18.75" vertical-offset="0" max-vertical-offset="780">
               <folding>
                 <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
               </folding>
@@ -80,7 +77,7 @@
       <file leaf-file-name="lecture_middle_directives.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/directives/teacher/course_editor/lecture_middle_directives.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="454" column="33" selection-start="16043" selection-end="16049" vertical-scroll-proportion="0.0" vertical-offset="6570" max-vertical-offset="8145">
+            <state line="454" column="33" selection-start="16043" selection-end="16049" vertical-scroll-proportion="0.0" vertical-offset="6810" max-vertical-offset="8145">
               <folding>
                 <marker date="1384240989000" expanded="false" signature="260:276" placeholder="..." />
                 <marker date="1384240989000" expanded="false" signature="1336:1351" placeholder="..." />
@@ -114,14 +111,8 @@
       <file leaf-file-name="send_email.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/teacher/course/send_email.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="23" selection-start="50" selection-end="50" vertical-scroll-proportion="-1.25" vertical-offset="0" max-vertical-offset="555">
-              <folding>
-                <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#1;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#form#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#input#0;n#td#1;n#tr#1;n#table#0;n#form#0;n#!!top" expanded="true" />
-              </folding>
+            <state line="2" column="23" selection-start="50" selection-end="50" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="555">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -156,8 +147,8 @@
         <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" />
         <option value="$PROJECT_DIR$/app/scripts/services/teacher/course.js" />
         <option value="$PROJECT_DIR$/app/scripts/app.js" />
-        <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" />
         <option value="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
+        <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" />
       </list>
     </option>
   </component>
@@ -193,6 +184,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -571,25 +563,16 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="options.lastSelected" value="editor.preferences.completion" />
-    <property name="options.searchVisible" value="true" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
-      <option name="VMOptions" />
-      <option name="arguments" />
-      <option name="filePath" />
-      <option name="scope" value="ALL" />
-      <option name="testName" />
-      <method />
-    </configuration>
     <configuration default="true" type="DartCommandLineRunConfigurationType" factoryName="Dart Command Line Application">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -598,6 +581,14 @@
       <option name="saveOutputToFile" value="false" />
       <option name="showConsoleOnStdErr" value="false" />
       <option name="showConsoleOnStdOut" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
+      <option name="VMOptions" />
+      <option name="arguments" />
+      <option name="filePath" />
+      <option name="scope" value="ALL" />
+      <option name="testName" />
       <method />
     </configuration>
     <configuration default="true" type="JavaScriptTestRunnerKarma" factoryName="Karma" singleton="true" config-file="">
@@ -647,7 +638,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24962853" sideWeight="0.6714976" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23254086" sideWeight="0.6714976" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
@@ -706,14 +697,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/teacher/course/send_email.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="23" selection-start="50" selection-end="50" vertical-scroll-proportion="-1.25" vertical-offset="0" max-vertical-offset="555">
-          <folding>
-            <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#1;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#td#1;n#tr#1;n#table#0;n#form#0;n#!!top" expanded="true" />
-          </folding>
+        <state line="2" column="23" selection-start="50" selection-end="50" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="555">
+          <folding />
         </state>
       </provider>
     </entry>
@@ -749,33 +734,25 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/teacher/announcements/announcements.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="557">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="557" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/teacher/course_editor/quiz.middle.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="557">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="557" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/services/teacher/course.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="12" column="96" selection-start="825" selection-end="825" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="390">
-          <folding>
-            <marker date="1384428112000" expanded="true" signature="70:1229" placeholder="[...]" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="150" column="6" selection-start="6162" selection-end="6162" vertical-scroll-proportion="0.0" vertical-offset="1845" max-vertical-offset="2490">
-          <folding>
-            <marker date="1384428451000" expanded="true" signature="5739:6154" placeholder="{&quot;url&quot;: '/send_emails'...}" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -786,19 +763,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="56" selection-start="714" selection-end="714" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="600">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="22" selection-start="1699" selection-end="1699" vertical-scroll-proportion="0.54971856" vertical-offset="217" max-vertical-offset="780">
+        <state line="30" column="99" selection-start="1409" selection-end="1409" vertical-scroll-proportion="-18.75" vertical-offset="0" max-vertical-offset="780">
           <folding>
             <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="18" column="16" selection-start="779" selection-end="779" vertical-scroll-proportion="0.4847397" vertical-offset="0" max-vertical-offset="645">
+          <folding />
         </state>
       </provider>
     </entry>

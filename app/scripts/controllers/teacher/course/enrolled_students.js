@@ -9,12 +9,15 @@ angular.module('scalearAngularApp')
 
         $scope.emails=[];
 
-        $scope.removeStudent = function(student){
+        $scope.removeStudent = function(student, index){
             console.log(student)
             var answer = confirm('Are you sure that you want to remove this student?');
             if(answer){
-                console.log('pressed yes')
+                //console.log('pressed yes')
                 Course.remove_student({student: student})
+                //console.log(index);
+                
+                $scope.data.splice(index, 1);
             }
         }
 

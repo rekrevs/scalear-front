@@ -36,6 +36,7 @@ angular.module('scalearAngularApp')
         $scope.sendEmail = function(address, title, body){
 //            var params = $.param({email: address, subject: title, message: body});
             Course.send_email_through({email:address, subject:title, message:body});
+            $state.go('course.enrolled_students')
         }
 
 

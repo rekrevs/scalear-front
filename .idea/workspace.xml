@@ -2,12 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="052a56d3-721f-4ca5-809b-9be894398609" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/app.js" afterPath="$PROJECT_DIR$/app/scripts/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" afterPath="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="scalear-front.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -51,10 +47,10 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="enrolled_students.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="enrolled_students.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="203" selection-start="1946" selection-end="1946" vertical-scroll-proportion="-11.291667" vertical-offset="239" max-vertical-offset="795">
+            <state line="36" column="20" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.6223022" vertical-offset="194" max-vertical-offset="750">
               <folding>
                 <element signature="n#style#0;n#th#1;n#tr#0;n#table#0;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
@@ -77,7 +73,7 @@
       <file leaf-file-name="send_email.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="40" column="0" selection-start="1552" selection-end="1552" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="750">
+            <state line="38" column="49" selection-start="1590" selection-end="1590" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="765">
               <folding />
             </state>
           </provider>
@@ -86,16 +82,16 @@
       <file leaf-file-name="send_emails.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_emails.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="0" selection-start="1020" selection-end="1020" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+            <state line="23" column="49" selection-start="971" selection-end="1008" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="send_emails.html" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="send_emails.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/teacher/course/send_emails.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="72" selection-start="897" selection-end="897" vertical-scroll-proportion="0.64748204" vertical-offset="0" max-vertical-offset="556">
+            <state line="24" column="72" selection-start="897" selection-end="897" vertical-scroll-proportion="-15.0" vertical-offset="0" max-vertical-offset="540">
               <folding>
                 <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
                 <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
@@ -138,11 +134,11 @@
         <option value="$PROJECT_DIR$/app/scripts/services/teacher/course.js" />
         <option value="$PROJECT_DIR$/app/scripts/app.js" />
         <option value="$PROJECT_DIR$/app/views/teacher/course/send_email.html" />
-        <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_emails.js" />
-        <option value="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" />
         <option value="$PROJECT_DIR$/app/views/teacher/course/send_emails.html" />
+        <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" />
+        <option value="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
       </list>
     </option>
   </component>
@@ -749,10 +745,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js">
+    <entry file="file://$PROJECT_DIR$/app/views/teacher/course/send_emails.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="40" column="0" selection-start="1552" selection-end="1552" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="750">
-          <folding />
+        <state line="24" column="72" selection-start="897" selection-end="897" vertical-scroll-proportion="-15.0" vertical-offset="0" max-vertical-offset="540">
+          <folding>
+            <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#textarea#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#form#0;n#!!top" expanded="true" />
+            <element signature="n#style#0;n#input#0;n#td#1;n#tr#1;n#table#0;n#form#0;n#!!top" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -763,36 +767,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_emails.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="49" selection-start="971" selection-end="1008" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="49" selection-start="1590" selection-end="1590" vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="765">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="203" selection-start="1946" selection-end="1946" vertical-scroll-proportion="-11.291667" vertical-offset="239" max-vertical-offset="795">
+        <state line="36" column="20" selection-start="1985" selection-end="1985" vertical-scroll-proportion="0.6223022" vertical-offset="194" max-vertical-offset="750">
           <folding>
             <element signature="n#style#0;n#th#1;n#tr#0;n#table#0;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#1;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
             <element signature="n#style#0;n#input#2;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_emails.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="0" selection-start="1020" selection-end="1020" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="510">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/teacher/course/send_emails.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="72" selection-start="897" selection-end="897" vertical-scroll-proportion="0.64748204" vertical-offset="0" max-vertical-offset="556">
-          <folding>
-            <element signature="n#style#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#0;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#textarea#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#td#1;n#tr#0;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#form#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#input#0;n#td#1;n#tr#1;n#table#0;n#form#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>

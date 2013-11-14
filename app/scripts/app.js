@@ -137,6 +137,17 @@
         templateUrl: 'views/teacher/course/send_email.html',
         controller: 'TeacherCourseSendEmailCtrl'
       })
+      .state('course.send_emails', {
+//        resolve:{
+//            emails:function($http, $stateParams, headers, scalear_api){
+//                //edit the url
+//                return $http({method: 'GET', url:scalear_api.host+'en/courses/'+$stateParams.course_id+''});
+//            }
+//        },
+        url: '/send_emails',
+        templateUrl: 'views/teacher/course/send_email.html',
+        controller: 'TeacherCourseSendEmailCtrl'
+      })
       .state('course.announcements', {
       url:'/announcements',
       templateUrl: 'views/teacher/announcements/announcements.html',

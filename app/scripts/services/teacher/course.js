@@ -9,6 +9,8 @@ angular.module('scalearAngularApp')
       'index': { method: 'GET', isArray: true , headers:headers},
       'update': { method: 'PUT' , headers:headers},
       'send_email_through':{method: 'POST', params: {action: 'send_email_through'}, headers:headers},
+      'send_batch_email_through':{method: 'POST', params: {action: 'send_batch_email_through'}, headers:headers},
+      'remove_student' : { method: 'POST', params: {action: 'remove_student'}, headers:headers},
       'destroy': { method: 'DELETE' , headers:headers},
       'show':{method: 'GET', headers:headers},
       'getCourse': {method: 'GET', params: {action: 'get_course_angular'}, headers:headers},

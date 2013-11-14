@@ -10,7 +10,7 @@
 <br />
 <center>
     <div id="invited_students">
-        <form method="POST" action="#/courses/{{course.id}}/send_email">
+        <form name="email_form">
             <table class="table table-striped">
                 <tr>
                     <!-- <th>Enrolled</th> -->
@@ -19,7 +19,7 @@
                     <th style="text-align: center;">Delete?</th>
                     <th style="text-align: center;">Email?</th>
                 </tr>
-                <tr ng-repeat="student in data | filter:searchText" >
+                <tr ng-repeat="student in data | filter:searchText">
                     <td style="text-align: center;">
                         {{student.name}}
                     </td>
@@ -28,14 +28,21 @@
                         <!--<a href="#/courses/{{course.id}}/send_email/{{student.id}}">{{student.email}}</a>-->
                     </td>
                     <td style="text-align: center;">
-                        <a href="#" data-confirm="Are you would like to delete {{student.name}} and all of his data?">Remove from course</a>
+                        <input class="btn" type="button" ng-click="removeStudent(student.id)" value="Remove"/>
+                        <!--<a ui-sref="course.remove_student({student_id:student.id})" data-confirm="Are you would like to delete {{student.name}} and all of his data?">Remove from course</a>-->
                     </td>
-                    <td style="text-align: center;">
-                        <input type="checkbox" name="emails[]" value="{{student.id}}"/>
+                    <td style="text-align: center;" >
+                        {{$parent.my_emails}}
+                        <input id="checks" type="checkbox" ng-model="$parent.emails[$index]" value="{{student.id}}" ng-value="student.id"/>
                     </td>
                 </tr>
             </table>
-            <input class="btn" type="submit" value="Email" style="float: right; margin-right: 3%;"/>
+            {{emails}}
+
+            <input class="btn" value="Email" style="float: right; margin-right: 3%;" ng-disabled="!(emails|filter:true).length" type="button" ng-click="go('/courses/1/send_emails')" />
+
         </form>
+
+
     </div>
 </center>

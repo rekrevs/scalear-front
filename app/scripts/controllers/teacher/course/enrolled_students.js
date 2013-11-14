@@ -1,13 +1,16 @@
 'use strict';
 
-angular.module('scalearAngularApp')
-  .controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', 'Course', 'students', function ($scope, $http, $location, Course, students) {
+var app = angular.module('scalearAngularApp')
+  app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService', function ($scope, $http, $location, $state, Course, students, batchEmailService) {
         console.log(students.data.course);
         console.log(students.data.students);
         $scope.data = students.data.students;
         $scope.course = students.data.course;
 
         $scope.emails=[];
+        batchEmailService.setEmails($scope.emails)
+
+
 
         $scope.removeStudent = function(student, index){
             console.log(student)
@@ -16,22 +19,50 @@ angular.module('scalearAngularApp')
                 //console.log('pressed yes')
                 Course.remove_student({student: student})
                 //console.log(index);
-                
+
                 $scope.data.splice(index, 1);
             }
         }
 
-        $scope.go = function ( path ) {
-            console.log($location.path())
+        $scope.emailForm = function(){
+            $state.go('course.send_emails');
+        }
 
-        };
-//        console.log($scope.data);
-  }])
-    .service('studentsService', function(){
-        var students = $scope.emails
-        return {
-            getStudents: function () {
-                return students;
+        $scope.selectAll = function(){
+
+            $scope.checked = true;
+            var checkboxes = angular.element('.checks');
+            for(var i=0; i<checkboxes.length; i++){
+                $scope.emails[i] = checkboxes[i].value;
+                console.log(checkboxes[i].value);
             }
-        };
-    })
+//            console.log(checkboxes);
+//            console.log($scope.checked);
+        }
+
+        $scope.deSelectAll = function(){
+            $scope.checked = false;
+            for(var i=0; i< $scope.emails.length; i++){
+                $scope.emails[i] = ',';
+            }
+            console.log($scope.checked);
+        }
+
+//      $scope.checked = true;
+  }]);
+
+app.factory('batchEmailService', function(){
+
+    var emails={
+        value:[],
+
+        getEmails: function(){
+        return emails.value
+        },
+
+        setEmails: function(value){
+           emails.value = value
+        }
+    }
+    return emails
+});

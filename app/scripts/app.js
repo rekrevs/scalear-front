@@ -32,7 +32,6 @@
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
-    
     $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('index', {
@@ -139,14 +138,14 @@
       })
       .state('course.send_emails', {
 //        resolve:{
-//            emails:function($http, $stateParams, headers, scalear_api){
-//                //edit the url
-//                return $http({method: 'GET', url:scalear_api.host+'en/courses/'+$stateParams.course_id+''});
-//            }
-//        },
+//                emails:function($http, $stateParams, headers, scalear_api){
+//                    //edit the url
+//        //                return $http({method: 'GET', url:scalear_api.host+'en/courses/'+$stateParams.course_id+'/send_batch_email'});
+//                }
+//            },
         url: '/send_emails',
-        templateUrl: 'views/teacher/course/send_email.html',
-        controller: 'TeacherCourseSendEmailCtrl'
+        templateUrl: 'views/teacher/course/send_emails.html',
+        controller: 'TeacherCourseSendEmailsCtrl'
       })
       .state('course.announcements', {
       url:'/announcements',

@@ -4,10 +4,14 @@ angular.module('scalearAngularApp')
 	.directive('appMessages', ['ErrorHandler',function(ErrorHandler) {
 			
             var directiveDefinitionObject = {
+            	scope:{
+            		status:"="
+            	},
             	replace:true,
-            	template: "<div class='errormove'><img  src='images/error.png'/></div>",
+            	template: "<div ng-class='status==\"error\" ? \"errormove\" :\"successmove\" '><img  ng-src='{{status==\"error\" && \"images/error.png\" || \"images/check5.png\"}}'/></div>",
                 link: function(scope, element, attrs) {
                 	console.log(element);
+                	console.log(scope);
                 	ErrorHandler.elementsList.push($(element)); 
                 }
             };

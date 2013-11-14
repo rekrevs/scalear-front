@@ -12,6 +12,7 @@
   'ui.bootstrap.transition',
   'ui.bootstrap.datepicker',
   'ui.bootstrap.alert',
+  'ui.bootstrap.modal',
   'ui.sortable',
   'ngDragDrop',
   'pasvaz.bindonce',
@@ -22,7 +23,8 @@
 ]).constant('scalear_api', {host:'http://localhost:3000'}) //http://angular-learning.herokuapp.com
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(function(editableOptions) {
+  .run(function($rootScope, editableOptions) {
+  	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
   })  
 
@@ -121,6 +123,11 @@
       url:'/announcements',
       templateUrl: 'views/teacher/announcements/announcements.html',
       controller: 'AnnouncementsCtrl'
+    })
+    .state('student_courses', {
+      url:'/student_courses',
+      templateUrl: 'views/student/course_list/course_list.html',
+      controller: 'StudentCourseListCtrl'
     })
   }])
 

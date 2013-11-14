@@ -2,11 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="052a56d3-721f-4ca5-809b-9be894398609" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/app.js" afterPath="$PROJECT_DIR$/app/scripts/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/services/teacher/course.js" afterPath="$PROJECT_DIR$/app/scripts/services/teacher/course.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" afterPath="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="scalear-front.iws" />
@@ -73,7 +69,7 @@
       <file leaf-file-name="enrolled_students.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="41" selection-start="1331" selection-end="1331" vertical-scroll-proportion="0.5778612" vertical-offset="142" max-vertical-offset="795">
+            <state line="34" column="22" selection-start="1699" selection-end="1699" vertical-scroll-proportion="0.54971856" vertical-offset="217" max-vertical-offset="780">
               <folding>
                 <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
               </folding>
@@ -160,8 +156,8 @@
         <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" />
         <option value="$PROJECT_DIR$/app/scripts/services/teacher/course.js" />
         <option value="$PROJECT_DIR$/app/scripts/app.js" />
-        <option value="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" />
+        <option value="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
       </list>
     </option>
   </component>
@@ -799,7 +795,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="41" selection-start="1331" selection-end="1331" vertical-scroll-proportion="0.5778612" vertical-offset="142" max-vertical-offset="795">
+        <state line="34" column="22" selection-start="1699" selection-end="1699" vertical-scroll-proportion="0.54971856" vertical-offset="217" max-vertical-offset="780">
           <folding>
             <element signature="n#style#0;n#input#0;n#form#0;n#div#0;n#center#0;n#!!top" expanded="true" />
           </folding>

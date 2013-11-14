@@ -32,7 +32,6 @@
                         <!--<a ui-sref="course.remove_student({student_id:student.id})" data-confirm="Are you would like to delete {{student.name}} and all of his data?">Remove from course</a>-->
                     </td>
                     <td style="text-align: center;" >
-                        {{$parent.my_emails}}
                         <input id="checks" type="checkbox" ng-model="$parent.emails[$index]" value="{{student.id}}" ng-value="student.id"/>
                     </td>
                 </tr>

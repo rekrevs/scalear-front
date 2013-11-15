@@ -1,5 +1,5 @@
 <center><b>{{module.name}}</b></center><br />
-<div style='min-width: 300px; height: 200px;' id="chart_overall"></div>
+<div style='min-width: 300px; height: 200px;' ng-if="module_data" google-chart series="getModuleChartData()"></div>
 <br /><br /><br />
 
 <tabset>
@@ -13,6 +13,8 @@
     <tab heading="Quizzes Progress" select="quizzesProgressTab();">
    		<tab4 />
     </tab>
-    <tab heading="Surveys" select="disableInfinitScrolling()" >tab 4</tab>
-    <tab heading="Quizzes" select="disableInfinitScrolling()">tab 5</tab>
+    <tab heading="Surveys" select="disableInfinitScrolling()" >tab 5</tab>
+    <tab heading="Quizzes" select="quizzesTab()">
+        <tab6 />
+    </tab>
 </tabset>

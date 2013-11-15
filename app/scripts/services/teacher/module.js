@@ -16,7 +16,9 @@ angular.module('scalearAngularApp')
 	    'validateModule': {method: 'PUT', params: {action: 'validate_group_angular'},headers: headers},
      	'getLectureProgress': {method: 'GET', params: {action: 'get_progress_angular'}, headers:headers},
       	'getQuizzesProgress': {method: 'GET', params: {action: 'get_progress_angular'}, headers:headers},
-      	'getModuleProgress':{method:'GET', params:{action: 'module_progress_angular'}, headers:headers},
+      	'getLectureCharts':{method:'GET', params:{action: 'get_lecture_charts_angular'}, headers:headers},
+      	'getQuizzesCharts':{method:'GET', params:{action: 'get_quiz_charts_angular'}, headers:headers},
+      	'getModuleCharts':{method:'GET', params:{action: 'get_module_charts_angular'}, headers:headers},
 	  });
 
 }])

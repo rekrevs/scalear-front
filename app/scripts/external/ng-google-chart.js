@@ -69,13 +69,12 @@
                 restrict: 'A',
                 scope: {
                     //chart: '=chart',
-                    onReady: '&',
+                    ready: '&',
                     select: '&',
                     series: '&',
                     vtitle: '&'
                 },
                 link: function ($scope, $elm, $attr) {
-
                     //console.log(apiProxy.apiReady);
                     var chart1 = {};
                     chart1.type = "ColumnChart";
@@ -83,7 +82,7 @@
                     chart1.cssStyle = "height:600px; width:100%;";
             
                     chart1.options = {
-                        "colors": ['green','gray'],
+                        "colors": ['gray','green'],
                         "title": "",
                         "isStacked": "true",
                         "fill": 20,
@@ -198,7 +197,7 @@
                                 	$scope.chartWrapper = new google.visualization.ChartWrapper(chartWrapperArgs);
                                     google.visualization.events.addListener($scope.chartWrapper, 'ready', function () {
                                         $scope.chart.displayed = true;
-                                        $scope.onReady();
+                                        $scope.ready();
                                     });
                                     google.visualization.events.addListener($scope.chartWrapper, 'error', function (err) {
                                         console.log("Chart not displayed due to error: " + err.message);

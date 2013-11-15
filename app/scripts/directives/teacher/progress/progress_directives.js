@@ -18,18 +18,28 @@ angular.module('scalearAngularApp')
 .directive("tab1",function(){
     return{
 	    restrict: "E",
-	    templateUrl:'views/teacher/progress/tab1.html' 
+	    controller: "lectureQuizzesCtrl",
+	    templateUrl:'views/teacher/progress/lecture_quizzes_tab.html' 
     };
 })
 .directive("tab3",function(){
     return{
 	    restrict: "E",
-	    templateUrl:'views/teacher/progress/tab3.html' 
+	    controller: "lectureProgressCtrl",
+	    templateUrl:'views/teacher/progress/lecture_progress_tab.html' 
     };
 })
 .directive("tab4",function(){
     return{
 	    restrict: "E",
-	    templateUrl:'views/teacher/progress/tab4.html' 
+	    controller: "quizzesProgressCtrl",
+	    templateUrl:'views/teacher/progress/quizzes_progress_tab.html' 
+    };
+})
+.directive("tab6",function(){
+    return{
+	    restrict: "E",
+	    controller: "quizzesCtrl",
+	    templateUrl:'views/teacher/progress/quizzes_tab.html' 
     };
 })

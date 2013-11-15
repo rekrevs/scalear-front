@@ -4,237 +4,46 @@ angular.module('scalearAngularApp')
   .controller('progressModuleCtrl', ['$timeout', '$scope', '$stateParams','Course', 'Module', function ($timeout, $scope, $stateParams, Course, Module) {
 
     $scope.disableInfinitScrolling = function(){
-        console.log("disable")
+        console.debug("disable")
         $scope.lecture_scroll_disable = true
         $scope.quiz_scroll_disable = true
         $scope.chart_scroll_disable= true
     }
-    var enableLectureScrolling = function(){
-        $scope.lecture_scroll_disable = false
-        $scope.quiz_scroll_disable = true
-        $scope.chart_scroll_disable= true
 
-    }
-    var enableQuizzesScrolling = function(){
-    	$scope.lecture_scroll_disable = true
-        $scope.quiz_scroll_disable = false
-        $scope.chart_scroll_disable= true
-    }
-    var enableChartsScrolling = function(){
-        $scope.lecture_scroll_disable = true
-        $scope.quiz_scroll_disable = true
-        $scope.chart_scroll_disable= false
-    }
-
-    $scope.lectureQuizzesTab = function(){
-        $scope.disableInfinitScrolling()
-        if($scope.chart_offset == null)
-            getModuleProgress(0,10)            
-    }
-
-    $scope.lectureProgressTab = function(){
-        enableLectureScrolling()
-        if($scope.lecture_offset == null)
-            getLectureProgress(0,20)            
-    }
-
-    $scope.quizzesProgressTab = function(){
-        enableQuizzesScrolling()
-        if($scope.quizzes_offset == null)
-            getQuizzesProgress(0,20)            
-    }
-
-    var getModuleProgress= function(offset, limit){
-        $scope.chart_limit = limit
-        $scope.chart_offset = offset
-        Module.getModuleProgress(
+    var getModuleCharts = function(){
+        Module.getModuleCharts(
             {
-                course_id:$stateParams.course_id,
                 module_id:$stateParams.module_id
             },
             function(data){
-                $scope.module=data.module
-                $scope.module_data=data.module_data 
-                $scope.url = getURL($scope.module_data.question_ids[0]) 
-                $scope.total = $scope.module_data.question_ids.length
-                $scope.sub_question_ids = $scope.module_data.question_ids.slice($scope.chart_offset, $scope.chart_limit)
-                enableChartsScrolling()
-            }
-        );
-    }
-
-    $scope.getRemainingCharts=function(){
-        $scope.chart_offset+=$scope.chart_limit
-        if($scope.chart_offset<=parseInt($scope.total))
-        {
-            $scope.loading_charts = true
-            $scope.disableInfinitScrolling()
-            $scope.sub_question_ids = $scope.sub_question_ids.concat($scope.module_data.question_ids.slice($scope.chart_offset, $scope.chart_offset+$scope.chart_limit))
-            $timeout(function(){
-                $scope.loading_charts = false
-                enableChartsScrolling()
-            })
-        }
-        else
-            $scope.disableInfinitScrolling()
-    }
-
-
-    var getLectureProgress = function(offset, limit){
-        $scope.lecture_limit =  limit
-        $scope.lecture_offset = offset
-        $scope.loading_lectures=true 
-        $scope.disableInfinitScrolling()
-        Module.getLectureProgress({module_id: $scope.module.id, offset:$scope.lecture_offset, limit: $scope.lecture_limit},
-            function(data){
-                var obj={}
-
-                obj.lecture_names = data.lecture_names
-                obj.total_lec_quiz = data.total_lec_quiz
-                obj.total = data.total
-
-                obj.lecture_students = $scope.lecture_students || []
-                obj.solved_count  = $scope.solved_count  || {}
-                obj.lecture_status= $scope.lecture_status|| {}
-                obj.late_lectures = $scope.late_lectures || {}
-
-                obj.lecture_students = obj.lecture_students.concat(data.students);
-                angular.extend(obj.solved_count,  data.solved_count)
-                angular.extend(obj.lecture_status,data.lecture_status)
-                angular.extend(obj.late_lectures, data.late_lectures)
-
-                console.log(obj)
-
-                angular.extend($scope, obj)
-
-                $timeout(function(){
-                	enableLectureScrolling()
-                    $scope.loading_lectures=false
-                    $('.student').tooltip({"placement": "left", container: 'body'})
-                    $('.state').tooltip({"placement": "left", container: 'body'}) 
-                })
-                    
-            },
-            function(){
-                alert('Could not load data, please check your internet connection')
-            }
-        );
-    }    
-
-    $scope.getRemainingLectureProgress = function(){
-        if($scope.lecture_offset+$scope.lecture_limit<=parseInt($scope.total))
-            getLectureProgress($scope.lecture_offset+$scope.lecture_limit,$scope.lecture_limit) 
-        else
-        	$scope.disableInfinitScrolling()
-    }
-
-    var getQuizzesProgress = function(offset, limit){
-        $scope.quizzes_limit =  limit
-        $scope.quizzes_offset = offset
-        $scope.loading_quizzes=true 
-        $scope.disableInfinitScrolling()
-
-        Module.getQuizzesProgress({module_id: $scope.module.id, offset:$scope.quizzes_offset, limit: $scope.quizzes_limit},
-            function(data){
                 console.log(data)
-                var obj={}
-
-                obj.quizzes_names = data.quizzes_names
-                obj.total = data.total
-
-                obj.quizzes_students = $scope.quizzes_students || []
-                obj.quizzes_status= $scope.quizzes_status|| {}
-                obj.late_quizzes = $scope.late_quizzes || {}
-
-                obj.quizzes_students = obj.quizzes_students.concat(data.students);
-                angular.extend(obj.quizzes_status,data.quizzes_status)
-                angular.extend(obj.late_quizzes, data.late_quizzes)
-
-                angular.extend($scope, obj)
-
-                $timeout(function(){
-                	enableQuizzesScrolling()
-                    $scope.loading_quizzes=false
-                    $('.student').tooltip({"placement": "left", container: 'body'})
-                },0)
-                    
+                $scope.module = data.module
+                $scope.module_data = data.module_data
             },
             function(){
-                alert('Could not load data, please check your internet connection')
-            }
-        );
-    }    
-
-    $scope.getRemainingQuizzesProgress = function(){
-        if($scope.quizzes_offset+$scope.quizzes_limit<=parseInt($scope.total))
-            getQuizzesProgress($scope.quizzes_offset+$scope.quizzes_limit,$scope.quizzes_limit)
-        else
-        	$scope.disableInfinitScrolling()
+                alert("Failed to load module, please check your internet connection")
+            })
     }
-
-////////////////////////////////////////////////////////////////////////////////////
-	
-    $scope.seek= function(id){
-        $scope.$emit('seekPlayer',[getURL(id),getTime(id)])
-	}
-
-	$scope.getName= function(id){
-		return $scope.module_data.questions[id][0];
-	};
-
-    var getTime= function(id){
-        return $scope.module_data.questions[id][1]
-    };
-
-	$scope.getLecture= function(id){
-		return $scope.module_data.lectures[id][0]
-	};
-
-    var getURL= function(id){        
-        return $scope.module_data.lectures[id][1]
-    };
-
-	// $scope.saveAsImg = function(){
-	// 	console.log("in controller");
-	// }
-
-    $scope.getData = function(id)
-    {
-        var studentProgress = $scope.module_data.data[id];
-        //console.log(studentProgress);
+    $scope.getModuleChartData=function(){
+        console.log("module chart")
+        var studentProgress = $scope.module_data;
+        console.log(studentProgress);
         
         var data = new google.visualization.DataTable();
-	    data.addColumn('string', 'Choices');
-	    data.addColumn('number', 'Correct');
-	    data.addColumn('number', 'Incorrect');
-    
-	    var size=0
-	    for(var e in studentProgress){
-            size++;
-	    }
+        data.addColumn('string', 'Choices');
+        data.addColumn('number', 'Students');
 
-        data.addRows(size);
+        data.addRows(studentProgress.length);
         var i=0;
+        var c=['Not Started Watching', "Watched <= 50%", "Completed On Time", "Completed Late"]
         for (var key in studentProgress) {
-            if(studentProgress[key][1]=="gray"){
-				var c="(Incorrect)";
-				var colors=[2,1]
-			}
-			else{
-				var c="(Correct)";
-				var colors=[1,2]
-			}
-                
-            data.setValue(i, 0, studentProgress[key][2]+" "+c); //x axis  // first value
-            data.setValue(i, colors[0], studentProgress[key][0]); // yaxis //correct
-            data.setValue(i, colors[1], 0); // yaxis //incorrect
-        	i+=1;
+            data.setValue(i, 0, c[key]); //x axis  // first value
+            data.setValue(i, 1, studentProgress[key]); // yaxis //correct
+            i+=1;
         }
-        //console.log(data);
         return data;
-           
-    };
-
+    }
+    getModuleCharts()
 }]);
 
 

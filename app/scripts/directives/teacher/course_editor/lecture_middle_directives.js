@@ -21,6 +21,7 @@ angular.module('scalearAngularApp')
 			replace:true, 
 			scope:{
 				url:'=',
+				ready:'&'
 			},
 			template: '<div id="youtube" ></div>',
 			link: function(scope, element){
@@ -30,7 +31,11 @@ angular.module('scalearAngularApp')
 						Popcorn.destroy(scope.player)
 					scope.player = Popcorn.youtube( "#youtube", scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
 					scope.player.controls( false ); 
-					//$scope.player.on("loadeddata", function(){$scope.hide_overlay=true; $scope.$apply();});
+					scope.player.on("loadeddata", 
+						function(){
+							scope.ready();
+							scope.$apply();
+						});
 				}
 				$rootScope.$on("refreshVideo", function(event, args) {
 			  		element.find('iframe').remove();

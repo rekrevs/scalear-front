@@ -1,0 +1,13 @@
+<select ng-model="selected_quiz" ng-options="q[0] for q in all_quizzes" ng-change="changeQuiz()"></select>
+<div>
+	<center>
+		<b>{{selected_quiz[0]}}</b>
+		<br /><br />
+		<loading size="big" show="loading_quizzes_chart" />
+	</center>
+	<div ng-repeat="(id,value) in chart_data" class="chart">
+		    <div >Question {{$index+1}}:</div>
+		    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
+		    <div google-chart ready="loading=false" series="getQuizChartData(id)" vtitle="getQuestionTitle(id)" ></div>
+	</div>
+</div>

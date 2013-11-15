@@ -23,8 +23,6 @@ angular.module('scalearAngularApp')
 				$scope.resizeBig(); 
 				$scope.$apply()
 			}
-
-				
 		})	
 
     $state.go('course.course_editor.lecture.quizList');

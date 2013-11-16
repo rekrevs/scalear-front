@@ -42,7 +42,18 @@ angular.module('scalearAngularApp')
             console.log($scope.teachers);
         }
         $scope.remove_row = function(index){
-            $scope.teachers.splice(index, 1);
-            console.log($scope.teachers);
+
+
+
+            var answer = confirm('Are you sure that you want to remove \''+$scope.teachers[index].email+'\' from this course?');
+            if(answer){
+                //console.log('pressed yes')
+//                Course.remove_student({student: student})
+                //console.log(index);
+                $scope.teachers.splice(index, 1);
+                console.log($scope.teachers);
+
+
+            }
         }
   }]);

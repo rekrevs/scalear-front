@@ -36,31 +36,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="teachers.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="teachers.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/teachers.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="45" column="41" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.79310346" vertical-offset="215" max-vertical-offset="810">
-              <folding>
-                <marker date="1384599794000" expanded="true" signature="339:350" placeholder="..." />
-                <marker date="1384599794000" expanded="true" signature="672:683" placeholder="..." />
-                <marker date="1384599794000" expanded="true" signature="1833:1849" placeholder="..." />
-              </folding>
+            <state line="55" column="0" selection-start="2517" selection-end="2517" vertical-scroll-proportion="0.0" vertical-offset="395" max-vertical-offset="975">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="teachers.html" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="teachers.html" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/teacher/course/teachers.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="30" column="97" selection-start="1197" selection-end="1197" vertical-scroll-proportion="-6.2916665" vertical-offset="299" max-vertical-offset="855">
-              <folding>
-                <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#details-select#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <element signature="n#style#0;n#img#0;n#td#3;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-                <marker date="1384599619000" expanded="true" signature="1566:1578" placeholder="..." />
-                <marker date="1384599619000" expanded="true" signature="1987:2003" placeholder="..." />
-              </folding>
+            <state line="13" column="37" selection-start="442" selection-end="454" vertical-scroll-proportion="0.2967626" vertical-offset="30" max-vertical-offset="855">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -68,7 +57,16 @@
       <file leaf-file-name="course.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/services/teacher/course.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="0" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="360">
+            <state line="12" column="0" selection-start="616" selection-end="616" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="360">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="details_directives.js" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/scripts/directives/teacher/course_editor/details_directives.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="73" column="12" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2160">
               <folding />
             </state>
           </provider>
@@ -106,8 +104,8 @@
         <option value="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
         <option value="$PROJECT_DIR$/app/scripts/app.js" />
         <option value="$PROJECT_DIR$/app/scripts/services/teacher/course.js" />
-        <option value="$PROJECT_DIR$/app/views/teacher/course/teachers.html" />
         <option value="$PROJECT_DIR$/app/scripts/controllers/teacher/course/teachers.js" />
+        <option value="$PROJECT_DIR$/app/views/teacher/course/teachers.html" />
       </list>
     </option>
   </component>
@@ -192,7 +190,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="scripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -210,7 +208,33 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="directives" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalear-front" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalear-front" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="directives" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
@@ -219,94 +243,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="course_editor" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalear-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalear-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="views" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teacher" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalear-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalear-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalear-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalear-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalear-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scalear-front" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="app" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="scripts" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controllers" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="teacher" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -417,14 +353,7 @@
     <entry file="file://$PROJECT_DIR$/app/views/teacher/course/teachers.html">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="83" selection-start="999" selection-end="999" vertical-scroll-proportion="0.0" vertical-offset="165" max-vertical-offset="795">
-          <folding>
-            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#details-select#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#3;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1384599619000" expanded="true" signature="1566:1578" placeholder="..." />
-            <marker date="1384599619000" expanded="true" signature="1987:2003" placeholder="..." />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -443,11 +372,6 @@
     <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course_editor/module_details_ctrl.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.46551725" vertical-offset="270" max-vertical-offset="1080" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/directives/teacher/course_editor/details_directives.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="73" column="12" selection-start="2363" selection-end="2363" vertical-scroll-proportion="1.972973" vertical-offset="0" max-vertical-offset="2160" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/services/teacher/lecture.js">
@@ -503,28 +427,24 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/views/teacher/course/teachers.html">
+    <entry file="file://$PROJECT_DIR$/app/scripts/directives/teacher/course_editor/details_directives.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="30" column="97" selection-start="1197" selection-end="1197" vertical-scroll-proportion="-6.2916665" vertical-offset="299" max-vertical-offset="855">
-          <folding>
-            <element signature="n#style#0;n#td#0;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#details-select#0;n#td#1;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#img#0;n#td#3;n#tr#1;n#table#0;n#div#0;n#!!top" expanded="true" />
-            <marker date="1384599619000" expanded="true" signature="1566:1578" placeholder="..." />
-            <marker date="1384599619000" expanded="true" signature="1987:2003" placeholder="..." />
-          </folding>
+        <state line="73" column="12" selection-start="2363" selection-end="2363" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2160">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/teachers.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="45" column="41" selection-start="2208" selection-end="2208" vertical-scroll-proportion="0.79310346" vertical-offset="215" max-vertical-offset="810">
-          <folding>
-            <marker date="1384599794000" expanded="true" signature="339:350" placeholder="..." />
-            <marker date="1384599794000" expanded="true" signature="672:683" placeholder="..." />
-            <marker date="1384599794000" expanded="true" signature="1833:1849" placeholder="..." />
-          </folding>
+        <state line="55" column="0" selection-start="2517" selection-end="2517" vertical-scroll-proportion="0.0" vertical-offset="395" max-vertical-offset="975">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/teacher/course/teachers.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="37" selection-start="442" selection-end="454" vertical-scroll-proportion="0.2967626" vertical-offset="30" max-vertical-offset="855">
+          <folding />
         </state>
       </provider>
     </entry>

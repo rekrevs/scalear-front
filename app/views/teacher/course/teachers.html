@@ -11,7 +11,7 @@
                 <tr ng-repeat="teacher in teachers">
                     <!--{{row}}-->
                     <td style="width: 300px;">
-                        <details-text value="teacher.email" save="updateTeacher($index)" column="email" validate="email"></details-text>
+                        {{teacher.email}}
                     </td>
                     <td  style = "width:500px">
                         <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
@@ -26,9 +26,38 @@
 
                     </td>
                 </tr>
+                <tr ng-repeat="new_teacher in new_teachers">
+                    <!--{{row}}-->
+                    <td style="width: 300px;">
+                        <input type="email" placeholder="Email" ng-model="new_teachers[$index].email" value="new_teacher.email"/>
+                        <!--<details-text value="new_teacher.email" save="updateTeacher($index)" column="email" validate="email"></details-text>-->
+                    </td>
+                    <td  style = "width:500px">
+                        <select ng-model="new_teachers[$index].role">
+                            <option value="3">
+                                Professor
+                            </option>
+                            <option value="4">
+                                TA
+                            </option>
+                        </select>
+                        <!--<details-select value="new_teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>-->
+
+                    </td>
+                    <td>
+                        {{new_teacher.status}}
+                    </td>
+                    <td>
+
+                        <img src="../../../images/trash3.png" ng-click="removeNewRow($index)" style="cursor: pointer;"/>
+
+                    </td>
+                </tr>
             </table>
         <center>
             <input type="button" class="btn" id="add_teacher" ng-click="addRow(teachers.length-1)" value="Add Teacher"/>
+            <input type="button" class="btn btn-primary" ng-click="saveTeachers()" value="Save All"/>
+            {{error}}
         </center>
 
 

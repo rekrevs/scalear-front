@@ -9,7 +9,10 @@
                     <th></th>
                 </tr>
                 <tr ng-repeat="teacher in teachers">
-                    <td>{{teacher.email}}</td>
+                    <!--{{row}}-->
+                    <td style="width: 300px;">
+                        <details-text value="teacher.email" save="updateEmail()" column="email"></details-text>
+                    </td>
                     <td  style = "width:500px">
                         <details-select value="teacher.role" options="roles" save="" column="role" style="width: 120px;" ></details-select>
 
@@ -19,13 +22,13 @@
                     </td>
                     <td>
 
-                            <img src="../../../images/trash3.png" ng-click="hello()" style="cursor: pointer;"/>
+                            <img src="../../../images/trash3.png" ng-click="remove_row($index)" style="cursor: pointer;"/>
 
                     </td>
                 </tr>
             </table>
         <center>
-            <input type="button" class="btn" id="add_teacher" value="Add Teacher"/>
+            <input type="button" class="btn" id="add_teacher" ng-click="add_row(teachers.length-1)" value="Add Teacher"/>
         </center>
 
 
@@ -33,15 +36,16 @@
 
         <script>
             num=0;
-            $('#add_teacher').click(function(event){
-
-                $("#teachers").append("<tr>" +"<td>" + "<input type='email' required placeholder='Email' id='email' name='email'/></td><td><select name='role'><option value='3'>Professor</option><option value='4'>TA</option></select></td><td></td><td><img src='../../../images/trash3.png' onclick='remove_row($(this))' style='cursor: pointer;' ng-click='hello2()' /></td></tr>")
-                num++;
-            })
-
-            remove_row = function(elem){
-                elem.parent().parent().remove();
-                num--;
-
-            }
+//            $('#add_teacher').click(function(event){
+//
+//                $("#teachers").append('<tr><td><input type="email" required placeholder="Email" id="email" name="email"/></td><td><details-select value="{{teacher.role}}" options="[{value:3, text:"Professor"}, {value:4, text:"TA"}]" save="" column="role" style="width: 120px;" ></details-select></td></tr>');
+//                $("#teachers").append("<tr>" +"<td>" + "<input type='email' required placeholder='Email' id='email' name='email'/></td><td><select name='role'><option value='3'>Professor</option><option value='4'>TA</option></select></td><td></td><td><img src='../../../images/trash3.png' onclick='remove_row($(this))' style='cursor: pointer;' ng-click='hello2()' /></td></tr>")
+//                num++;
+//            })
+//
+//            remove_row = function(elem){
+//                elem.parent().parent().remove();
+//                num--;
+//
+//            }
         </script>

@@ -29,31 +29,20 @@ angular.module('scalearAngularApp')
 
         $scope.roles = [{value:3, text:'Professor'}, {value:4, text:'TA'}];
 
-        $scope.hello = function(){
-            console.log('delete clicked');
-        }
-
-        $scope.add_row = function(index){
-//            var students = angular.copy($scope.teachers)
-//            var teachers_table = angular.element(document.querySelector('#teachers'))
-//            teachers_table.append("<tr>" +"<td>" + "<input type='email' required placeholder='Email' id='email' name='email'/></td><td><select name='role'><option value='3'>Professor</option><option value='4'>TA</option></select></td><td></td><td><img src='../../../images/trash3.png' style='cursor: pointer;' ng-click='remove_row(this)' /></td></tr>")
-//            console.log($scope.teachers)
+        $scope.addRow = function(index){
             $scope.teachers.splice(1, 0, {email: '', role : 'role', status:'pending'})
             console.log($scope.teachers);
         }
-        $scope.remove_row = function(index){
-
-
-
+        $scope.removeRow = function(index){
             var answer = confirm('Are you sure that you want to remove \''+$scope.teachers[index].email+'\' from this course?');
             if(answer){
-                //console.log('pressed yes')
-//                Course.remove_student({student: student})
-                //console.log(index);
+                Course.delete_teacher({email:$scope.teachers[index].email});
                 $scope.teachers.splice(index, 1);
                 console.log($scope.teachers);
-
-
             }
+        }
+        $scope.updateTeacher = function(index){
+            Course.save_teacher({email:$scope.teachers[index].email, role_id:$scope.teachers[index].role});
+
         }
   }]);

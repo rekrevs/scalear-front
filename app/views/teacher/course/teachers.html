@@ -11,10 +11,10 @@
                 <tr ng-repeat="teacher in teachers">
                     <!--{{row}}-->
                     <td style="width: 300px;">
-                        <details-text value="teacher.email" save="updateEmail()" column="email" validate="email"></details-text>
+                        <details-text value="teacher.email" save="updateTeacher($index)" column="email" validate="email"></details-text>
                     </td>
                     <td  style = "width:500px">
-                        <details-select value="teacher.role" options="roles" save="" column="role" style="width: 120px;" ></details-select>
+                        <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
 
                     </td>
                     <td>
@@ -22,13 +22,13 @@
                     </td>
                     <td>
 
-                            <img src="../../../images/trash3.png" ng-click="remove_row($index)" style="cursor: pointer;"/>
+                            <img src="../../../images/trash3.png" ng-click="removeRow($index)" style="cursor: pointer;"/>
 
                     </td>
                 </tr>
             </table>
         <center>
-            <input type="button" class="btn" id="add_teacher" ng-click="add_row(teachers.length-1)" value="Add Teacher"/>
+            <input type="button" class="btn" id="add_teacher" ng-click="addRow(teachers.length-1)" value="Add Teacher"/>
         </center>
 
 

@@ -10,12 +10,13 @@ angular.module('scalearAngularApp')
       'update': { method: 'PUT' , headers:headers},
       'destroy': { method: 'DELETE' , headers:headers},
       'show':{method: 'GET', headers:headers},
-      'save_teachers':{ method: 'POST', params: {action: 'save_teachers'}, headers:headers},
-      'update_teacher':{ method: 'POST', params: {action: 'update_teacher'}, headers:headers},
-      'delete_teacher':{ method: 'DELETE', params: {action: 'delete_teacher'}, headers:headers},
+      'saveTeachers':{ method: 'POST', params: {action: 'save_teachers'}, headers:headers},
+      'updateTeacher':{ method: 'POST', params: {action: 'update_teacher'}, headers:headers},
+      'deleteTeacher':{ method: 'DELETE', params: {action: 'delete_teacher'}, headers:headers},
       'getCourse': {method: 'GET', params: {action: 'get_course_angular'}, headers:headers},
       'getCourseEditor': {method: 'GET', params: {action: 'course_editor_angular'}, headers:headers},
       'getGroupItems' : {method: 'GET', params: {action: 'get_group_items'}, headers:headers},
+      'getTeachers' : {method: 'GET', params: {action: 'teachers'}, headers:headers}
     });
 
 }])

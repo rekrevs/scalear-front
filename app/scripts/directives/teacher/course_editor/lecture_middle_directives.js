@@ -21,41 +21,45 @@ angular.module('scalearAngularApp')
 			replace:true, 
 			scope:{
 				url:'=',
-				ready:'&'
+				ready:'&',
+				id:'@'
 			},
-			template: '<div id="youtube" ></div>',
 			link: function(scope, element){
+				console.log("YOUTUBE " + scope.id)
+				var player
 				var loadVideo = function(){
-					if(scope.player)
-						Popcorn.destroy(scope.player)
-					scope.player = Popcorn.youtube( "#youtube", scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
-					scope.player.controls( false ); 
-					scope.player.on("loadeddata", 
+					if(player)
+						Popcorn.destroy(player)
+					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
+					player.controls( false ); 
+					player.on("loadeddata", 
 						function(){
+							console.debug("should be loading video")
+
 							scope.ready();
 							scope.$apply();
 						});
 				}
 				var pause = function(){
-					scope.player.pause();
+					player.pause();
 				}
 
 				var seek = function(time){
 					pause()
-					scope.player.currentTime(time);
+					player.currentTime(time);
 				}
 
 				$rootScope.$on("refreshVideo", function(event, args) {
 			  		element.find('iframe').remove();
 			  		loadVideo();
-			  		console.log("event emitted: updating video player");
+			  		console.log("event emitted: updating player");
 			    });
 
 			    $rootScope.$on("seekPlayer", function(event, args){
 			    	if(scope.url != args[0]){
 			    		scope.url = args[0] 
 			    		scope.$emit("refreshVideo")
-			    		scope.player.on("loadeddata", function(){			    	
+			    		player.on("loadeddata", function(){			    	
 					    	seek(args[1])
 						});
 			    	}

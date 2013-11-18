@@ -1,18 +1,18 @@
-<div ng-if="sub_question_ids" infinite-scroll='getRemainingLectureCharts()' infinite-scroll-disabled='chart_scroll_disable' infinite-scroll-immediate-check='false' >
+<div ng-if="sub_question_ids" infinite-scroll='getRemainingLectureCharts()' infinite-scroll-disabled='chart_scroll_disable' infinite-scroll-immediate-check='false' infinite-scroll-distance='-100'>
 	<center style="overflow:hidden" >
-		<video_container class="widescreen">
+		<video_container class="largescreen">
 			<loading size='small' show="!url" style="top:50%;position:relative" />
-			<youtube ng-if="url" url="url" class="widescreen" ready="pause()" />
+			<youtube ng-if="url" id="lec_quiz_video" url="url" class="largescreen" ready="pause()" />
 		</video_container>
 	</center>
 
-	<div ng-repeat="id in sub_question_ids" class="chart" style='min-width: 300px; height: 300px;'>
+	<div ng-repeat="id in sub_question_ids" class="chart" style='min-width: 300px; height: 250px;'>
 	    <div ng-click="seek(id)"><a>Question {{$index+1}}</a><br> {{getLectureTitle(id)}} </div>
 	    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
 	    <div google-chart series="getLectureChartData(id)" vtitle="getQuizTitle(id)" ready="loading=false;enableChartsScrolling()"></div>
 	</div>	
 </div>
 <center>
-	<loading size="big" show="loading_lectures_chart" />	
+	<loading size="small" show="loading_lectures_chart" />	
 	<div ng-if="!sub_question_ids && !loading_lectures_chart" >No Lecture Quizzes</div>
 </center>

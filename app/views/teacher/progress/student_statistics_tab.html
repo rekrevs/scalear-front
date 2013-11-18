@@ -1,0 +1,14 @@
+<center style="overflow:hidden" >
+		<video_container class="largescreen">
+			<loading size='small' show="!statistics" style="top:50%;position:relative" />
+			<youtube ng-if="lecture_url" id="statistics_video" url="lecture_url" class="largescreen" ready="pause()"/>
+		</video_container>		
+</center> 
+<br><br>
+<div ng-if="statistics" ng-repeat="type in types" style="overflow:auto;border-bottom: 3px gray solid">
+	<div google-chart series="getConfusedChartData(type)" vtitle="getChartType($index)" width="getChartWidth()" height="getChartHeight()" ready="loading=false" select="test()"></div>
+</div>
+<center>
+	<br><br>
+	<loading size="small" show="loading_statistics_chart" />
+</center>

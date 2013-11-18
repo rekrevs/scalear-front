@@ -3,7 +3,7 @@
 	<center>
 		<b>{{selected_quiz[0]}}</b>
 		<br /><br />
-		<loading size="big" show="loading_quizzes_chart" />
+		<loading size="small" show="loading_quizzes_chart" />
 		<div ng-if="!all_quizzes && !loading_quizzes_chart">No Quizzes</div>
 	</center>
 	<div ng-repeat="(id,value) in quiz_chart_data" class="chart">

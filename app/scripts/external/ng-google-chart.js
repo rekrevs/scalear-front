@@ -72,7 +72,9 @@
                     ready: '&',
                     select: '&',
                     series: '&',
-                    vtitle: '&'
+                    vtitle: '&',
+                    width: '&',
+                    height: '&',
                 },
                 link: function ($scope, $elm, $attr) {
                     //console.log(apiProxy.apiReady);
@@ -86,8 +88,10 @@
                         "title": "",
                         "isStacked": "true",
                         "fill": 20,
-                        "height": 250,
+                        "height": "250",
+                        "width": "",
                         "displayExactValues": true,
+                        "fontSize" : 14,
                         "vAxis": {
                             "title": "Number of Students",
                         },
@@ -98,6 +102,8 @@
                         $scope.chart=angular.copy(chart1);
                         $scope.chart.data=$scope.series();
                         $scope.chart.options.title=$scope.vtitle();
+                        $scope.chart.options.width=$scope.width();
+                        $scope.chart.options.height=$scope.height();
                     }
                     
                     loadChart = apiProxy(loadChart, this);
@@ -203,7 +209,8 @@
                                         console.log("Chart not displayed due to error: " + err.message);
                                     });
                                     google.visualization.events.addListener($scope.chartWrapper, 'select', function () {
-										var selectedItem = $scope.chartWrapper.getChart().getSelection()[0];
+										var selectedItem = $scope.chartWrapper.getChart().getSelection();
+                                        console.log(selectedItem)
 										if (selectedItem) {
 										  $scope.$apply(function () {
 											$scope.select({selectedItem: selectedItem});

@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
         $scope.enableChartsScrolling()
         if($scope.chart_offset == null){
         	$scope.loading_video = true
-            getLectureCharts(0,10)
+            getLectureCharts(0,5)
         }
     }
   	var getLectureCharts= function(offset, limit){
@@ -54,10 +54,6 @@ angular.module('scalearAngularApp')
         $scope.lecture_scroll_disable = true
         $scope.quiz_scroll_disable = true
         $scope.chart_scroll_disable= false
-    }
-
-    $scope.pause=function(){
-       $scope.$emit('pausePlayer')
     }
 
     $scope.seek= function(id){

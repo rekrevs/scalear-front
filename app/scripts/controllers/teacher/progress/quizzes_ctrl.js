@@ -5,28 +5,26 @@ angular.module('scalearAngularApp')
    
    $scope.quizzesTab = function(){
    		$scope.disableInfinitScrolling()
-        //enableQuizzesProgressScrolling()
-        //if($scope.quizzes_offset == null)
-        getQuizzesCharts()            
+        getQuizCharts()            
     }    
 
-    var getQuizzesCharts = function(){
+    var getQuizCharts = function(){
     	var quiz_id
     	if($scope.selected_quiz)
     		quiz_id=$scope.selected_quiz[1]
     	$scope.loading_quizzes_chart = true
-        Module.getQuizzesCharts(
+        Module.getQuizCharts(
             {
                 quiz_id:quiz_id,
                 module_id: $stateParams.module_id
             },
             function(data){
                 console.log(data)
-                $scope.chart_data = data.chart_data
-                $scope.chart_questions = data.chart_questions
+                $scope.quiz_chart_data = data.chart_data
+                $scope.quiz_chart_questions = data.chart_questions
                 if(!$scope.selected_quiz){
                 	$scope.all_quizzes = data.all_quizzes
-                	$scope.selected_quiz = $scope.all_quizzes[0]
+                	$scope.selected_quiz = $scope.all_quizzes? $scope.all_quizzes[0] : ""
                 }
                 $scope.loading_quizzes_chart = false
             },
@@ -35,13 +33,12 @@ angular.module('scalearAngularApp')
             }
         )
     }
-    $scope.getQuestionTitle = function(id){
-    	return $scope.chart_questions[id][0]	
+    $scope.getQuizQuestionTitle = function(index){
+    	return $scope.quiz_chart_questions[index]	
     }
 
-    $scope.getQuizChartData = function(id)
-    {
-        var studentProgress = $scope.chart_data[id];
+    $scope.getQuizChartData = function(id){
+        var studentProgress = $scope.quiz_chart_data[id];
         
         var data = new google.visualization.DataTable();
 	    data.addColumn('string', 'Choices');
@@ -74,9 +71,10 @@ angular.module('scalearAngularApp')
 
     $scope.changeQuiz = function(){
     	console.log("quiz change")
-    	$scope.chart_data={}
-    	$scope.chart_questions={}
-    	getQuizzesCharts()
+        console.log($scope.selected_quiz)
+    	$scope.quiz_chart_data={}
+    	$scope.quiz_chart_questions={}
+    	getQuizCharts()
     }
 
   }]);

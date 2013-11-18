@@ -15,6 +15,7 @@ angular.module('scalearAngularApp')
         $scope.chart_limit = limit
         $scope.chart_offset = offset
         $scope.disableInfinitScrolling()
+        $scope.loading_lectures_chart = true
         Module.getLectureCharts(
             {
                 course_id:$stateParams.course_id,
@@ -22,9 +23,13 @@ angular.module('scalearAngularApp')
             },
             function(data){
                 $scope.lecture_data=data.charts_data 
-                $scope.url = getURL($scope.lecture_data.question_ids[0]) 
-                $scope.total = $scope.lecture_data.question_ids.length
-                $scope.sub_question_ids = $scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_limit)
+                console.log($scope.lecture_data.question_ids)
+                if($scope.lecture_data.question_ids.length){
+                    $scope.url = getURL($scope.lecture_data.question_ids[0]) 
+                    $scope.total = $scope.lecture_data.question_ids.length
+                    $scope.sub_question_ids = $scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_limit)
+                }
+                $scope.loading_lectures_chart = false
             }
         );
     }
@@ -38,7 +43,6 @@ angular.module('scalearAngularApp')
             $scope.sub_question_ids = $scope.sub_question_ids.concat($scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_offset+$scope.chart_limit))
             $timeout(function(){
                 $scope.loading_lecture_charts = false
-                //$scope.enableChartsScrolling()
             })
         }
         else
@@ -50,6 +54,10 @@ angular.module('scalearAngularApp')
         $scope.lecture_scroll_disable = true
         $scope.quiz_scroll_disable = true
         $scope.chart_scroll_disable= false
+    }
+
+    $scope.pause=function(){
+       $scope.$emit('pausePlayer')
     }
 
     $scope.seek= function(id){
@@ -76,10 +84,7 @@ angular.module('scalearAngularApp')
 	// 	console.log("in controller");
 	// }
 
-    $scope.getLectureChartData = function(id)
-    {
-    	console.log("LecturequizzeCtrl")
-    	console.log($scope.lecture_data.charts)
+    $scope.getLectureChartData = function(id){
         var studentProgress = $scope.lecture_data.charts[id];
         console.log(studentProgress);
         
@@ -107,10 +112,8 @@ angular.module('scalearAngularApp')
                 
             data.setValue(i, 0, studentProgress[key][2]+" "+c); //x axis  // first value
             data.setValue(i, color, studentProgress[key][0]); // yaxis //correct
-            //data.setValue(i, colors[1], 0); // yaxis //incorrect
         	i+=1;
         }
-        //console.log(data);
         return data;
     };
 

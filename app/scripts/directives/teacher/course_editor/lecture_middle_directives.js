@@ -26,7 +26,6 @@ angular.module('scalearAngularApp')
 			template: '<div id="youtube" ></div>',
 			link: function(scope, element){
 				var loadVideo = function(){
-					//scope.hide_overlay=false;
 					if(scope.player)
 						Popcorn.destroy(scope.player)
 					scope.player = Popcorn.youtube( "#youtube", scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
@@ -37,21 +36,36 @@ angular.module('scalearAngularApp')
 							scope.$apply();
 						});
 				}
+				var pause = function(){
+					scope.player.pause();
+				}
+
+				var seek = function(time){
+					pause()
+					scope.player.currentTime(time);
+				}
+
 				$rootScope.$on("refreshVideo", function(event, args) {
 			  		element.find('iframe').remove();
 			  		loadVideo();
 			  		console.log("event emitted: updating video player");
 			    });
+
 			    $rootScope.$on("seekPlayer", function(event, args){
 			    	if(scope.url != args[0]){
 			    		scope.url = args[0] 
 			    		scope.$emit("refreshVideo")
+			    		scope.player.on("loadeddata", function(){			    	
+					    	seek(args[1])
+						});
 			    	}
-			    	scope.player.on("loadeddata", function(){			    	
-				    	scope.player.pause();
-						scope.player.currentTime(args[1]);
-					});
+			    	else
+		    			seek(args[1])
 			    });
+
+			    $rootScope.$on("pausePlayer",function(){
+			    	pause()
+			    })
 
 			  	loadVideo();
 		    }

@@ -22,6 +22,13 @@ angular.module('scalearAngularApp')
 	    templateUrl:'views/teacher/progress/lecture_quizzes_tab.html' 
     };
 })
+.directive("tab2",function(){
+    return{
+	    restrict: "E",
+	    controller: "studentStatisticsCtrl",
+	    templateUrl:'views/teacher/progress/student_statistics_tab.html' 
+    };
+})
 .directive("tab3",function(){
     return{
 	    restrict: "E",
@@ -34,6 +41,13 @@ angular.module('scalearAngularApp')
 	    restrict: "E",
 	    controller: "quizzesProgressCtrl",
 	    templateUrl:'views/teacher/progress/quizzes_progress_tab.html' 
+    };
+})
+.directive("tab5",function(){
+    return{
+	    restrict: "E",
+	    controller: "surveysCtrl",
+	    templateUrl:'views/teacher/progress/surveys_tab.html' 
     };
 })
 .directive("tab6",function(){

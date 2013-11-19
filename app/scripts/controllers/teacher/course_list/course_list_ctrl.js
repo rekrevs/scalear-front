@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('adminCtrl', function ($scope, Course) {
+  .controller('courseListCtrl',['$scope','Course', function ($scope, Course) {
+
   	console.log("in admin")
   		Course.index({},
 			function(data){
@@ -15,9 +16,11 @@ angular.module('scalearAngularApp')
   		$scope.column='name'
 
   		$scope.deleteCourse=function(course){
-  			if(confirm("Are you sure you want to delete course?")){
+  			// can't pass index.. cause its not reliable with filter. so instead take course, and get its position in scope.courses
+  			if(confirm("Are you sure you want to delete "+course.name+"?")){
 	  			Course.destroy({course_id: course.id},
 	  				function(response){
+	  					$scope.courses.splice($scope.courses.indexOf(course), 1)
 	  					console.log(response)
 	  				},
 	  				function(){
@@ -34,4 +37,5 @@ angular.module('scalearAngularApp')
   			$scope.column = column_name
   			$scope.is_reverse = !$scope.is_reverse
   		}
-  });
+  		
+  }]);

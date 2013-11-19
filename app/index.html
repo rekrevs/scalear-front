@@ -3,7 +3,7 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
+  <head>    
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Scalable Learning</title>
@@ -107,8 +107,9 @@
     <!-- bower:js -->
     <script src="bower_components/fullcalendar/fullcalendar.js"></script>
     <script src="bower_components/fullcalendar/gcal.js"></script>
-    
     <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/tinymce/tinymce.min.js"></script>
+    <script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
     <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
     <script src="bower_components/angular-ui-sortable/src/sortable.js"></script>
     <script src="bower_components/angular-dragdrop/src/angular-dragdrop.js"></script>
@@ -188,11 +189,14 @@
 
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course/enrolled_students.js"></script>
+    <script src="scripts/controllers/teacher/course/send_email.js"></script>
     <script src="scripts/controllers/admin/admin.js"></script>
     <script src="scripts/controllers/teacher_navigation.js"></script>
     <script src="scripts/controllers/student/course/course_information.js"></script>
     <script src="scripts/controllers/teacher/course/course_information.js"></script>
     <script src="scripts/controllers/teacher/course/teachers.js"></script>
+    <script src="scripts/controllers/teacher/course/send_emails.js"></script>
     <!-- endbuild -->
 </body>
 </html>

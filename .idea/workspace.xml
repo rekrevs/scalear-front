@@ -1,7 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="26daa607-9005-4c7d-9fd3-e70909768f95" name="Default" comment="" />
+    <list default="true" id="26daa607-9005-4c7d-9fd3-e70909768f95" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/teacher/course/enrolled_students.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/enrolled_students.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/spec/controllers/teacher/course/enrolled_students.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/teacher/course/send_email.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_email.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/spec/controllers/teacher/course/send_email.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/teacher/course/send_emails.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/send_emails.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/spec/controllers/teacher/course/send_emails.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/app.js" afterPath="$PROJECT_DIR$/app/scripts/app.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/bower.json" afterPath="$PROJECT_DIR$/bower.json" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/services/teacher/course.js" afterPath="$PROJECT_DIR$/app/scripts/services/teacher/course.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+    </list>
     <ignored path="scalear-front.iws" />
     <ignored path=".idea/workspace.xml" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -23,11 +38,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="app.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="156" column="48" selection-start="6455" selection-end="6455" vertical-scroll-proportion="0.7180451" vertical-offset="1958" max-vertical-offset="2535">
-              <folding />
+            <state line="33" column="57" selection-start="1100" selection-end="1100" vertical-scroll-proportion="0.0" vertical-offset="2438" max-vertical-offset="2970">
+              <folding>
+                <marker date="1384847597000" expanded="true" signature="737:7916" placeholder="[...]" />
+                <marker date="1384847597000" expanded="true" signature="853:7915" placeholder="{...}" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -44,10 +62,19 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="193" column="84" selection-start="10231" selection-end="10231" vertical-scroll-proportion="-18.666666" vertical-offset="2447" max-vertical-offset="3060">
+            <state line="194" column="69" selection-start="10368" selection-end="10368" vertical-scroll-proportion="-12.416667" vertical-offset="2612" max-vertical-offset="3120">
               <folding>
                 <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="course.js" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/app/scripts/services/teacher/course.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="22" column="0" selection-start="1586" selection-end="1586" vertical-scroll-proportion="0.62030077" vertical-offset="0" max-vertical-offset="532">
+              <folding />
             </state>
           </provider>
         </entry>
@@ -65,15 +92,6 @@
         <entry file="file://$PROJECT_DIR$/test/e2e/spec/course_editor_spec.js">
           <provider selected="true" editor-type-id="text-editor">
             <state line="25" column="34" selection-start="873" selection-end="874" vertical-scroll-proportion="-7.24" vertical-offset="194" max-vertical-offset="10050">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="elementexplorer.js" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node_modules/protractor/bin/elementexplorer.js">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="120" column="33" selection-start="2888" selection-end="2888" vertical-scroll-proportion="0.0" vertical-offset="1410" max-vertical-offset="2385">
               <folding />
             </state>
           </provider>
@@ -142,6 +160,7 @@
         <option value="$PROJECT_DIR$/node_modules/protractor/referenceConf.js" />
         <option value="$PROJECT_DIR$/app/scripts/app.js" />
         <option value="$PROJECT_DIR$/app/index.html" />
+        <option value="$PROJECT_DIR$/app/scripts/services/teacher/course.js" />
       </list>
     </option>
   </component>
@@ -371,6 +390,54 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalear-front" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalear-front" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="teacher" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalear-front" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalear-front" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="controllers" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -527,13 +594,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/node_modules/protractor/bin/elementexplorer.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="120" column="36" selection-start="2891" selection-end="2891" vertical-scroll-proportion="0.0" vertical-offset="1470" max-vertical-offset="2385">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/test/e2e/spec/left_spec.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="83" column="9" selection-start="763" selection-end="2818" vertical-scroll-proportion="0.0" vertical-offset="767" max-vertical-offset="1395">
@@ -623,18 +683,28 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="57" selection-start="1100" selection-end="1100" vertical-scroll-proportion="0.0" vertical-offset="2438" max-vertical-offset="2970">
+          <folding>
+            <marker date="1384847597000" expanded="true" signature="737:7916" placeholder="[...]" />
+            <marker date="1384847597000" expanded="true" signature="853:7915" placeholder="{...}" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="193" column="84" selection-start="10231" selection-end="10231" vertical-scroll-proportion="-18.666666" vertical-offset="2447" max-vertical-offset="3060">
+        <state line="194" column="69" selection-start="10368" selection-end="10368" vertical-scroll-proportion="-12.416667" vertical-offset="2612" max-vertical-offset="3120">
           <folding>
             <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
+    <entry file="file://$PROJECT_DIR$/app/scripts/services/teacher/course.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="156" column="48" selection-start="6455" selection-end="6455" vertical-scroll-proportion="0.7180451" vertical-offset="1958" max-vertical-offset="2535">
+        <state line="22" column="0" selection-start="1586" selection-end="1586" vertical-scroll-proportion="0.62030077" vertical-offset="0" max-vertical-offset="532">
           <folding />
         </state>
       </provider>

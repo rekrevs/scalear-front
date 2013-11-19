@@ -27,13 +27,11 @@
   })  
 
   .config(['$stateProvider','$urlRouterProvider','$httpProvider',function ($stateProvider, $urlRouterProvider, $httpProvider) {
-	
+	 console.log("app.js")
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
-    
-
     $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('index', {
@@ -117,6 +115,37 @@
         url: '/student/events',
         templateUrl: 'views/student/calendar/calendar.html',
         controller: 'StudentCalendarCtrl'
+      })
+      .state('course.enrolled_students', {
+        resolve:{
+            students:function($http, $stateParams, headers, scalear_api){
+                return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/enrolled_students', headers:headers})
+            }
+        },
+        url: '/enrolled_students',
+        templateUrl: 'views/teacher/course/enrolled_students.html',
+        controller: 'TeacherCourseEnrolledStudentsCtrl'
+      })
+      .state('course.send_email', {
+        resolve:{
+            emails:function($http, $stateParams, headers, scalear_api){
+                return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/send_email?student='+$stateParams.student_id})
+            }
+        },
+        url: '/send_email/:student_id',
+        templateUrl: 'views/teacher/course/send_email.html',
+        controller: 'TeacherCourseSendEmailCtrl'
+      })
+      .state('course.send_emails', {
+//        resolve:{
+//                emails:function($http, $stateParams, headers, scalear_api){
+//                    //edit the url
+//        //                return $http({method: 'GET', url:scalear_api.host+'en/courses/'+$stateParams.course_id+'/send_batch_email'});
+//                }
+//            },
+        url: '/send_emails',
+        templateUrl: 'views/teacher/course/send_emails.html',
+        controller: 'TeacherCourseSendEmailsCtrl'
       })
       .state('course.announcements', {
       url:'/announcements',

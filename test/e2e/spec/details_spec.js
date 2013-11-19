@@ -109,7 +109,7 @@ describe("Teacher Lecture details page",function(){
         });
         expect(description[description.length-1].getText()).toBe('Empty');
 
-      });     
+      });
     });
 
 
@@ -134,7 +134,7 @@ describe("Teacher Lecture details page",function(){
          })
          expect(elem.getText()).toBe("ISA introduction");
        });
-      
+
        ptor.findElement(protractor.By.className('editable-click')).then(function(name){
          expect(name.getText()).toBe('ISA introduction');
          name.click();
@@ -144,7 +144,7 @@ describe("Teacher Lecture details page",function(){
                  buttons[2].click();
              });
          });
-        
+
          expect(name.getText()).toBe('ISA introduction');
          name.click();
          ptor.findElement(protractor.By.className('editable-input')).then(function(nameTextBox){
@@ -168,7 +168,7 @@ describe("Teacher Lecture details page",function(){
              });
          });
          expect(name.getText()).toBe('ISA introduction');
-        
+
        });
     });
 
@@ -331,7 +331,7 @@ describe("Teacher Lecture details page",function(){
 
     it('should display lecture slides and allows editing it',function(){
        ptor.findElements(protractor.By.className('editable-click')).then(function(slides){
-          
+
          expect(slides[slides.length-2].getText()).toBe("http://www.it.uu.se/edu/course/homepage/darkdig/vt13/2-ISA%201.pdf");
          slides[slides.length-2].click();
          ptor.findElement(protractor.By.className('editable-input')).then(function(slidesTextBox){
@@ -398,41 +398,60 @@ describe("Teacher Lecture details page",function(){
 
 //DONE__________________________________________________________________________________________________________________________
 
-    
+//    it('should display module appearance date and allow changing it', function(){
+//        ptor.findElements(protractor.By.className('editable-click')).then(function(appearance_date){
+//            expect(appearance_date[1].getText()).toBe('02/10/2013');
+//            appearance_date[1].click();
+//            ptor.findElement(protractor.By.className('editable-input')).then(function(date_field){
+//                date_field.clear();
+//                date_field.sendKeys('02/15/2013');
+//                ptor.findElement(protractor.By.className('btn-primary')).then(function(confirmButton){
+//                    confirmButton.click();
+//                });
+//            });
+//            ptor.sleep(2000);
+//            browser().reload();
+//            ptor.sleep(2000);
+//            expect(appearance_date[1].getText()).toBe('02/15/2013');
+//
+//
+//
+//        });
+//    });
 
-    // it('should display lecture appearance date and allow changing it', function(){
-    //   ptor.findElement(protractor.By.className('editable-checkbox')).then(function(status){
-    //     expect(status.getText()).toBe("Using Module's Appearance Date");
-    //     status.click();
-    //     ptor.findElement(protractor.By.className('editable-input')).then(function(checkbox){
-    //       checkbox.click();
-    //       ptor.findElements(protractor.By.tagName('button')).then(function(confirmButton){
-    //         confirmButton[1].click();
-    //       });
-    //     });
-    //     expect(status.getText()).toBe("Not Using Module's Appearance Date");
-    //     ptor.findElements(protractor.By.className('editable-click')).then(function(datePicker){
-    //         datePicker[4].click();
-    //         ptor.findElement/////////////////////////////////////////////////////////////////////////////////
-    //     });
-    //     status.click();
-    //     ptor.findElement(protractor.By.className('editable-input')).then(function(checkbox){
-    //       checkbox.click();
-    //       ptor.findElement(protractor.By.tagName('button')).then(function(confirmButton){
-    //         confirmButton.click();
-    //       });
-    //     });
-    //     expect(status.getText()).toBe("Using Module's Appearance Date");
-    //     status.click();
-    //     ptor.findElement(protractor.By.className('editable-input')).then(function(checkbox){
-    //       checkbox.click();
-    //       ptor.findElements(protractor.By.tagName('button')).then(function(cancelButton){
-    //         cancelButton[1].click();
-    //       });
-    //     });
-    //     expect(status.getText()).toBe("Using Module's Appearance Date");
-    //   });
-    // });
+//    it('should display lecture appearance date and allow changing it', function(){
+//       ptor.findElement(protractor.By.className('editable-checkbox')).then(function(status){
+//         expect(status.getText()).toBe("Using Module's Appearance Date");
+//         status.click();
+//         ptor.findElement(protractor.By.className('editable-input')).then(function(checkbox){
+//           checkbox.click();
+//           ptor.findElements(protractor.By.tagName('button')).then(function(confirmButton){
+//             confirmButton[1].click();
+//           });
+//         });
+//         expect(status.getText()).toBe("Not Using Module's Appearance Date");
+//         ptor.findElements(protractor.By.className('editable-click')).then(function(datePicker){
+//             datePicker[4].click();
+//             ptor.findElement/////////////////////////////////////////////////////////////////////////////////
+//         });
+//         status.click();
+//         ptor.findElement(protractor.By.className('editable-input')).then(function(checkbox){
+//           checkbox.click();
+//           ptor.findElement(protractor.By.tagName('button')).then(function(confirmButton){
+//             confirmButton.click();
+//           });
+//         });
+//         expect(status.getText()).toBe("Using Module's Appearance Date");
+//         status.click();
+//         ptor.findElement(protractor.By.className('editable-input')).then(function(checkbox){
+//           checkbox.click();
+//           ptor.findElements(protractor.By.tagName('button')).then(function(cancelButton){
+//             cancelButton[1].click();
+//           });
+//         });
+//         expect(status.getText()).toBe("Using Module's Appearance Date");
+//       });
+//    });
 
     // it('should display lecture due date and allow changing it', function(){
     //   ptor.findElements(protractor.By.className('editable-checkbox')).then(function(status){

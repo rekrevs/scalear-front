@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
   }])
   .directive('detailsArea', ['$timeout',function ($timeout) {
     return {
-      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="15" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "Empty" }}<i ng-class="overclass"></i></a> ',
+      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "Empty" }}<i ng-class="overclass"></i></a> ',
       restrict: 'E',
       scope:{
       	value: "=",
@@ -89,6 +89,25 @@ angular.module('scalearAngularApp')
       }
     };
   }])
+    .directive('bigArea', ['$timeout',function ($timeout) {
+        return {
+            template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="150" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "Empty" }}<i ng-class="overclass"></i></a> ',
+            restrict: 'E',
+            scope:{
+                value: "=",
+                save: "&",
+                validate: "&",
+                column: "@"
+            },
+            link:function(scope){
+                scope.saveData=function(){
+                    $timeout(function(){
+                        scope.save()
+                    })
+                }
+            }
+        };
+    }])
   .directive('detailsNumber', ['$timeout',function ($timeout) {
     return {
       template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-number="value" e-min="min" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value }}<i ng-class="overclass"></i></a> ',

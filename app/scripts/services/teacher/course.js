@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
   $http.defaults.useXDomain = true;
   return $resource(scalear_api.host+'/en/courses/:course_id/:action', {course_id:$stateParams.course_id},
     { 'create': { method: 'POST', headers:headers},
-      'index': { method: 'GET', isArray: true , headers:headers},
+      'index': { method: 'GET', isArray: true , headers:headers, params:{course_id:null}},
       'update': { method: 'PUT' , headers:headers},
       'send_email_through':{method: 'POST', params: {action: 'send_email_through'}, headers:headers},
       'send_batch_email_through':{method: 'POST', params: {action: 'send_batch_email_through'}, headers:headers},

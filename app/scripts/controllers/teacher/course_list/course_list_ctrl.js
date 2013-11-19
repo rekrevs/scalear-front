@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course', function ($scope, Course) {
+  .controller('courseListCtrl',['$scope','Course','$stateParams', function ($scope, Course,$stateParams) {
 
   	console.log("in admin")
   		Course.index({},

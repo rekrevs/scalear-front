@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <!-- endbuild -->
   </head>
-  <body style="overflow:auto" ng-app="scalearAngularApp">
+  <body style="overflow:auto" ng-app="scalearAngularApp" ng-controller="indexController">
   	<div ng-show="server_error" class="errorpage"></div>
   	<div id='server_error' app-messages ng-show="server_error"></div>
     <!--[if lt IE 7]>
@@ -46,16 +46,17 @@
             <img alt="Beta_tag_small" class="brand" src="images/beta_tag_small.png" style="width:40px;padding-left:0px;padding-top:15px;">
 
             <ul class="nav pull-right">
-                <li><a>You are signed in as Administrator</a></li>
-                <li><a href="/en/users/sign_out" data-method="delete" rel="nofollow" style="float: right;">Logout</a></li>
-                <li><a href="">Edit account</a></li>
+                <li ng-show="current_user"><a >You are signed in as <span ng-bind="current_user.name"></span></a></li>
+                <li ng-show="!current_user"><a ui-sref="login" style="float: right;">Login</a></li>
+                <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()">Logout</a></li>
+                <!-- <li><a href="">Edit account</a></li> -->
                 <li><a href=""><img alt="Uk" height="20px" src="images/uk.png" width="30px"></a></li>
                 <li><a href=""><img alt="Sweden" height="20px" src="images/sweden.png" width="30px"></a></li>
 
             </ul>
 
             <ul class="nav pull-left">
-                <li><a href="/en/courses" style="float: left;">Courses</a></li>
+                <li ng-show="current_user"><a href="/en/courses" style="float: left;">Courses</a></li>
             </ul>
         </div>
     </nav>
@@ -172,6 +173,7 @@
     <script src="scripts/services/teacher/announcement.js"></script>
     <script src="scripts/services/server_interceptor.js"></script>
     <script src="scripts/services/error_handler.js"></script>
+    <script src="scripts/services/user.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>
@@ -191,6 +193,7 @@
     <script src="scripts/controllers/admin/admin.js"></script>
     <script src="scripts/controllers/teacher_navigation.js"></script>
 
+    <script src="scripts/controllers/login.js"></script>
     <!-- endbuild -->
 </body>
 </html>

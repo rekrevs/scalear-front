@@ -22,7 +22,8 @@
   </head>
   <body style="overflow:auto" ng-app="scalearAngularApp">
   	<div ng-show="server_error" class="errorpage"></div>
-  	<div id='server_error' app-messages ng-show="server_error" style="z-index: 20000;"></div>
+  	<div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
+
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -126,9 +127,9 @@
     <script src="bower_components/angular-ui-bootstrap/src/position/position.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/datepicker/datepicker.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/alert/alert.js"></script>
-
+    <script src="bower_components/angular-ui-bootstrap/src/modal/modal.js"></script>
     
-    <!-- build:js scripts/plugins.js -->
+    
     <script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-alert.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
@@ -188,21 +189,19 @@
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>
-
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course/enrolled_students.js"></script>
     <script src="scripts/controllers/teacher/course/send_email.js"></script>
+    <script src="scripts/controllers/student/course_list/course_list_ctrl.js"></script>
+    <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>
     <script src="scripts/controllers/admin/admin.js"></script>
     <script src="scripts/controllers/teacher_navigation.js"></script>
     <script src="scripts/controllers/student/course/course_information.js"></script>
     <script src="scripts/controllers/teacher/course/course_information.js"></script>
     <script src="scripts/controllers/teacher/course/teachers.js"></script>
     <script src="scripts/controllers/teacher/course/send_emails.js"></script>
-
-
-    
-    
+    <script src="scripts/services/user.js"></script>
     <!-- endbuild -->
 </body>
 </html>

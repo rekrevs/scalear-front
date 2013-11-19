@@ -26,10 +26,12 @@ angular.module('scalearAngularApp')
       var re= new RegExp("^"+scalear_api.host)
       if($rootScope.server_error==true && response.config.url.search(re)!=-1) // if response coming from server, and connection was bad
       {
+      	$rootScope.show_alert="success";
       	ErrorHandler.showMessage("Connected", 'errorMessage', 2000);
       	$timeout(function(){
-      		$rootScope.server_error=false;	
-      	},2000);
+      		$rootScope.server_error=false;
+      		$rootScope.show_alert="";	
+      	},4000);
       }
      
       return response || $q.when(response);
@@ -45,6 +47,7 @@ angular.module('scalearAngularApp')
       	if($rootScope.server_error!=true)
       	{
       	$rootScope.server_error=true;
+      	$rootScope.show_alert="error";
       	
       	if(rejection.data=="")      	
       		ErrorHandler.showMessage('Error ' + rejection.status + ': ' + "Cannot connect to server", 'errorMessage', 8000);

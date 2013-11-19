@@ -20,7 +20,8 @@ angular.module('scalearAngularApp')
       'getCourse': {method: 'GET', params: {action: 'get_course_angular'}, headers:headers},
       'getCourseEditor': {method: 'GET', params: {action: 'course_editor_angular'}, headers:headers},
       'getGroupItems' : {method: 'GET', params: {action: 'get_group_items'}, headers:headers},
-      'getTeachers' : {method: 'GET', params: {action: 'teachers'}, headers:headers}
+      'getTeachers' : {method: 'GET', params: {action: 'teachers'}, headers:headers},
+      'enroll' : {method: 'POST', params: {action: 'enroll_to_course'}, headers:headers}
     });
 
 }])

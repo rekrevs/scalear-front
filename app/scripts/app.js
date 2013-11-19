@@ -34,11 +34,19 @@
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
+
     $urlRouterProvider.otherwise('/');    
     $stateProvider
-      .state('index', {
+      .state('home', {
         url: '/',
+        templateUrl: 'views/main.html',
+        controller: 'MainCtrl'
       })
+      .state('login', {
+      	url:'/login',
+      templateUrl: 'views/login.html',
+      controller: 'LoginCtrl'
+   	 })
       .state('admin', {
         url:'/admin',
         templateUrl: 'views/admin/admin.html',

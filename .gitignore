@@ -6,7 +6,11 @@ app/bower_components
 selenium/
 ./selenium/
 <<<<<<< HEAD
+<<<<<<< HEAD
 Gruntfile.js
 =======
 .idea/
 >>>>>>> feature/student_course_information
+=======
+.idea
+>>>>>>> feature/teacher_course_teachers

@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="26daa607-9005-4c7d-9fd3-e70909768f95" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/.name" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/teacher/course/course_information.html" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/course_information.js" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/spec/controllers/teacher/course/course_information.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/views/teacher/course/teachers.html" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/scripts/controllers/teacher/course/teachers.js" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/test/spec/controllers/teacher/course/teachers.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.gitignore" afterPath="$PROJECT_DIR$/.gitignore" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/app.js" afterPath="$PROJECT_DIR$/app/scripts/app.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/directives/teacher/course_editor/details_directives.js" afterPath="$PROJECT_DIR$/app/scripts/directives/teacher/course_editor/details_directives.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/scripts/services/teacher/course.js" afterPath="$PROJECT_DIR$/app/scripts/services/teacher/course.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/index.html" afterPath="$PROJECT_DIR$/app/index.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -35,7 +35,7 @@
       <file leaf-file-name="app.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="142" column="18" selection-start="5881" selection-end="5881" vertical-scroll-proportion="0.7462406" vertical-offset="1733" max-vertical-offset="2355">
+            <state line="156" column="48" selection-start="6455" selection-end="6455" vertical-scroll-proportion="0.7180451" vertical-offset="1958" max-vertical-offset="2535">
               <folding />
             </state>
           </provider>
@@ -53,7 +53,7 @@
       <file leaf-file-name="index.html" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="189" column="81" selection-start="9928" selection-end="9928" vertical-scroll-proportion="-11.791667" vertical-offset="2552" max-vertical-offset="3060">
+            <state line="193" column="84" selection-start="10231" selection-end="10231" vertical-scroll-proportion="-18.666666" vertical-offset="2447" max-vertical-offset="3060">
               <folding>
                 <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
               </folding>
@@ -149,8 +149,8 @@
         <option value="$PROJECT_DIR$/node_modules/protractor/bin/elementexplorer.js" />
         <option value="$PROJECT_DIR$/test/e2e/spec/left_spec.js" />
         <option value="$PROJECT_DIR$/node_modules/protractor/referenceConf.js" />
-        <option value="$PROJECT_DIR$/app/index.html" />
         <option value="$PROJECT_DIR$/app/scripts/app.js" />
+        <option value="$PROJECT_DIR$/app/index.html" />
       </list>
     </option>
   </component>
@@ -625,15 +625,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/index.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="189" column="81" selection-start="9928" selection-end="9928" vertical-scroll-proportion="-11.791667" vertical-offset="2552" max-vertical-offset="3060">
-          <folding>
-            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/controllers/teacher/course/course_information.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2670">
@@ -641,9 +632,18 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/app/index.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="193" column="84" selection-start="10231" selection-end="10231" vertical-scroll-proportion="-18.666666" vertical-offset="2447" max-vertical-offset="3060">
+          <folding>
+            <element signature="n#style#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="18" selection-start="5881" selection-end="5881" vertical-scroll-proportion="0.7462406" vertical-offset="1733" max-vertical-offset="2355">
+        <state line="156" column="48" selection-start="6455" selection-end="6455" vertical-scroll-proportion="0.7180451" vertical-offset="1958" max-vertical-offset="2535">
           <folding />
         </state>
       </provider>

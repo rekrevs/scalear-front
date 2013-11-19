@@ -33,6 +33,7 @@
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
     
+
     $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('index', {
@@ -143,6 +144,17 @@
             url: '',
             templateUrl: 'views/teacher/course/course_information.html',
             controller: 'TeacherCourseCourseInformationCtrl'
+      })
+      .state('course.teachers', {
+         resolve:{
+             teachers:function($http, $stateParams, headers, scalear_api){
+                 return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/teachers', headers:headers})
+             }
+
+         },
+         url: '/teachers',
+         templateUrl: 'views/teacher/course/teachers.html',
+         controller: 'TeacherCourseTeachersCtrl'
       })
   }])
 

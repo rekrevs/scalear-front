@@ -19,7 +19,7 @@ describe("Teacher Lecture details page",function(){
   describe("first item",function(){
 
     it('should login', function(){
-            driver.get("http://192.168.1.3:3000/en/users/sign_in");
+            driver.get("http://10.0.0.16:3000/en/users/sign_in");
             findByName("user[email]").sendKeys("admin@scalear.com");
             findByName("user[password]").sendKeys("password");
             findByName("commit").click();

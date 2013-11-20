@@ -19,7 +19,7 @@
   'xeditable',
   'ui.calendar',
   'ui.tinymce'
-]).constant('scalear_api', {host:'http://localhost:3000'}) //http://angular-learning.herokuapp.com //change for testing3
+]).constant('scalear_api', {host:'http://10.0.0.16:3000'}) //http://angular-learning.herokuapp.com //change for testing3
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
   .run(function(editableOptions) {

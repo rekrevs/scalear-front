@@ -12,7 +12,7 @@ describe("Course Editor",function(){
     };
 
     it('should login', function(){
-        driver.get("http://localhost:3000/en/users/sign_in");
+        driver.get("http://10.0.0.16:3000/en/users/sign_in");
         findByName("user[email]").sendKeys("admin@scalear.com");
         findByName("user[password]").sendKeys("password");
         findByName("commit").click();
@@ -71,38 +71,213 @@ describe("Course Editor",function(){
             })
         });
 
-
-
-        //need to find a way to click on the delete button
-
-    });
-
-    describe('Middle Section', function(){
         it('should open a quiz', function(){
             ptor.findElements(protractor.By.className('trigger2')).then(function(quizes){
                 quizes[quizes.length-2].click();
             });
         });
-        it('should display quiz details and allow editing it', function(){
+
+        //need to find a way to click on the delete button
+
+    });
+
+//
+//
+//    describe('Right Section', function(){
+//
+//        it('should display quiz details and allow editing it', function(){
+//            ptor.findElement(protractor.By.tagName('h3')).then(function(title){
+//                expect(title.getText()).toBe('Details');
+//            });
+//            ptor.findElements(protractor.By.className('editable-click')).then(function(details){
+//
+//                expect(details[0].getText()).toBe('New Quiz');
+//                details[0].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.clear();
+//                    field.sendKeys("My Quiz")
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[0].getText()).toBe('My Quiz');
+//
+//
+//
+//                expect(details[1].getText()).toBe('This Quiz is Not Required');
+//                details[1].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.click();
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[1].getText()).toBe('This Quiz is Required');
+//
+//
+//
+//                expect(details[2].getText()).toBe('0');
+//                details[2].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.clear();
+//                    field.sendKeys("10")
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[2].getText()).toBe('10');
+//
+//
+//
+//                expect(details[3].getText()).toBe('Using Module\'s Appearance Date');
+//                details[3].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.click();
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[3].getText()).toBe('Not Using Module\'s Appearance Date');
+//
+//
+//
+//                expect(details[5].getText()).toBe('Using Module\'s Due Date');
+//                details[5].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.click();
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[5].getText()).toBe('Not Using Module\'s Due Date');
+//
+//
+//
+//                expect(details[7].getText()).toBe('Please choose the correct answer(s)');
+//                details[7].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.clear();
+//                    field.sendKeys("new instructions")
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[7].getText()).toBe('new instructions');
+//            });
+//        });
+//    });
+//
+//    describe('Middle Section', function(){
+//        it('should allow adding quesions to quiz', function(){
+//            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                buttons[buttons.length-2].click();
+//                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+//                    fields[fields.length-3].sendKeys('first mcq question');
+//                    fields[fields.length-2].sendKeys('first answer');
+//                    fields[fields.length-1].click();
+//                });
+//                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('second answer');
+//                });
+//                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('third answer');
+//                });
+//
+//
+//                buttons[buttons.length-2].click();
+//
+//                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+//                    fields[fields.length-3].sendKeys('first OCQ question');
+//                    ptor.findElement(protractor.By.tagName('select')).then(function(question_type){
+//                        question_type.click();
+//                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
+//                            options[options.length-2].click();
+//                        });
+//                    });
+//
+//                });
+//                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+//                    fields[fields.length-2].sendKeys('first answer');
+//                    fields[fields.length-1].click();
+//                });
+//                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+//                    add_multiple[add_multiple.length-1].click();
+//                });
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('second answer');
+//                });
+//                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+//                    add_multiple[add_multiple.length-1].click();
+//                });                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('third answer');
+//                });
+//
+//                buttons[buttons.length-2].click();
+//
+//                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+//                    fields[fields.length-3].sendKeys('first DRAG question');
+//                    ptor.findElements(protractor.By.tagName('select')).then(function(question_type){
+//                        question_type[question_type.length-1].click();
+//                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
+//                            options[options.length-1].click();
+//                        });
+//                    });
+//
+//                });
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('first answer');
+//                });
+//                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+//                    add_multiple[add_multiple.length-1].click();
+//                });
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('second answer');
+//                });
+//                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+//                    add_multiple[add_multiple.length-1].click();
+//                });
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('third answer');
+//                });
+//                buttons[buttons.length-1].click();
+//            });
+//        });
+//    });
+
+
+
+    describe("Modules Section (Left)", function(){
+        it('should open a survey', function(){
+            ptor.findElements(protractor.By.className('trigger2')).then(function(quizes){
+                quizes[quizes.length-1].click();
+            });
+        });
+    });
+
+
+    describe('Right Section', function(){
+
+        it('should display survey details and allow editing it', function(){
             ptor.findElement(protractor.By.tagName('h3')).then(function(title){
                 expect(title.getText()).toBe('Details');
             });
             ptor.findElements(protractor.By.className('editable-click')).then(function(details){
 
-                expect(details[0].getText()).toBe('New Quiz');
+                expect(details[0].getText()).toBe('New Survey');
                 details[0].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
-                    field.sendKeys("My Quiz")
+                    field.sendKeys("My Survey")
                 });
                 ptor.findElements(protractor.By.className('btn')).then(function(buttons){
                     buttons[buttons.length-2].click();
                 });
-                expect(details[0].getText()).toBe('My Quiz');
+                expect(details[0].getText()).toBe('My Survey');
 
 
-
-                expect(details[1].getText()).toBe('This Quiz is Not Required');
+                expect(details[1].getText()).toBe('Using Module\'s Appearance Date');
                 details[1].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.click();
@@ -110,24 +285,11 @@ describe("Course Editor",function(){
                 ptor.findElements(protractor.By.className('btn')).then(function(buttons){
                     buttons[buttons.length-2].click();
                 });
-                expect(details[1].getText()).toBe('This Quiz is Required');
+                expect(details[1].getText()).toBe('Not Using Module\'s Appearance Date');
 
 
 
-                expect(details[2].getText()).toBe('0');
-                details[2].click();
-                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-                    field.clear();
-                    field.sendKeys("10")
-                });
-                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                    buttons[buttons.length-2].click();
-                });
-                expect(details[2].getText()).toBe('10');
-
-
-
-                expect(details[3].getText()).toBe('Using Module\'s Appearance Date');
+                expect(details[3].getText()).toBe('Using Module\'s Due Date');
                 details[3].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.click();
@@ -135,24 +297,12 @@ describe("Course Editor",function(){
                 ptor.findElements(protractor.By.className('btn')).then(function(buttons){
                     buttons[buttons.length-2].click();
                 });
-                expect(details[3].getText()).toBe('Not Using Module\'s Appearance Date');
+                expect(details[3].getText()).toBe('Not Using Module\'s Due Date');
 
 
 
-                expect(details[5].getText()).toBe('Using Module\'s Due Date');
+                expect(details[5].getText()).toBe('Please fill in the survey.');
                 details[5].click();
-                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-                    field.click();
-                });
-                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                    buttons[buttons.length-2].click();
-                });
-                expect(details[5].getText()).toBe('Not Using Module\'s Due Date');
-
-
-
-                expect(details[7].getText()).toBe('Please choose the correct answer(s)');
-                details[7].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
                     field.sendKeys("new instructions")
@@ -160,18 +310,78 @@ describe("Course Editor",function(){
                 ptor.findElements(protractor.By.className('btn')).then(function(buttons){
                     buttons[buttons.length-2].click();
                 });
-                expect(details[7].getText()).toBe('new instructions');
-
-
-
-
-
+                expect(details[5].getText()).toBe('new instructions');
             });
         });
-
     });
 
+    describe('Middle Section', function(){
+        it('should allow adding quesions to quiz', function(){
+            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+                buttons[buttons.length-2].click();
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                    fields[fields.length-3].sendKeys('first mcq question');
+                    fields[fields.length-2].sendKeys('first answer');
+                    fields[fields.length-1].click();
+                });
+                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                    fields[fields.length-1].sendKeys('second answer');
+                });
+                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                    fields[fields.length-1].sendKeys('third answer');
+                });
 
+
+                buttons[buttons.length-2].click();
+
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                    fields[fields.length-3].sendKeys('first OCQ question');
+                    ptor.findElement(protractor.By.tagName('select')).then(function(question_type){
+                        question_type.click();
+                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
+                            options[options.length-2].click();
+                        });
+                    });
+
+                });
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                    fields[fields.length-2].sendKeys('first answer');
+                    fields[fields.length-1].click();
+                });
+                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+                    add_multiple[add_multiple.length-1].click();
+                });
+                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                    fields[fields.length-1].sendKeys('second answer');
+                });
+                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+                    add_multiple[add_multiple.length-1].click();
+                });                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                    fields[fields.length-1].sendKeys('third answer');
+                });
+
+                buttons[buttons.length-2].click();
+
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                    fields[fields.length-3].sendKeys('first TEXT question');
+                    ptor.findElements(protractor.By.tagName('select')).then(function(question_type){
+                        question_type[question_type.length-1].click();
+                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
+                            options[options.length-1].click();
+                        });
+                    });
+
+                });
+
+                //save questions
+                buttons[buttons.length-1].click();
+            });
+        });
+    });
+
+//-------------- lecture module ------------------------//
 
 //    describe("Details Section (Right)",function(){
 //

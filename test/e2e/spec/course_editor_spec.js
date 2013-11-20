@@ -21,67 +21,110 @@ describe("Course Editor",function(){
 
 
     describe("Modules Section (Left)", function(){
-        it('should create a module', function(){
-            ptor = protractor.getInstance();
-            ptor.get('/#/courses/13/course_editor');
+//        it('should allow sorting the modules by drag and drop', function(){
+//            ptor.actions().dragAndDrop()
+//        });
 
+        it('should allow creating a module', function(){
+            ptor = protractor.getInstance();
+            ptor.get('/#/courses/3/course_editor');
+            var test;
             ptor.findElements(protractor.By.className('trigger')).then(function(modules){
-                expect(modules.length).toBe(13);
+                test = modules.length;
                 ptor.findElement(protractor.By.className('adding_module')).then(function(add_module){
                     add_module.click();
                     ptor.sleep(2000);
+                    console.log(test);
+
                 });
-            });
-            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
-                expect(modules.length).toBe(14);
+                ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+                    expect(modules.length).toBe(test+1);
+                });
+
             });
 
-        });
-        it('should open the module', function(){
-            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
-                modules[modules.length-1].click();
-            });
-        });
-        ptor.sleep(2000);
-        it('should add a new lecture', function(){
-            ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
-                buttons[buttons.length-3].click();
-            });
-//            ptor.sleep(2000);
-            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
-                expect(lectures[lectures.length-1].getText()).toBe('New Lecture')
-            });
-        });
-        it('should add a new quiz', function(){
-            ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
-                buttons[buttons.length-2].click();
-            });
-//            ptor.sleep(2000);
-            ptor.findElements(protractor.By.className('trigger2')).then(function(quiz){
-                expect(quiz[quiz.length-1].getText()).toBe('New Quiz');
-            })
-        });
-        it('should add a new survey', function(){
-            ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
-                buttons[buttons.length-1].click();
-            });
-//            ptor.sleep(2000);
-            ptor.findElements(protractor.By.className('trigger2')).then(function(survey){
-                expect(survey[survey.length-1].getText()).toBe('New Survey');
-            })
-        });
 
-        it('should open a quiz', function(){
-            ptor.findElements(protractor.By.className('trigger2')).then(function(quizes){
-                quizes[quizes.length-2].click();
-            });
         });
+//        it('should open the module', function(){
+//            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+//                modules[modules.length-1].click();
+//            });
+//        });
+//        ptor.sleep(2000);
+//        it('should add a new lecture', function(){
+//            ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
+//                buttons[buttons.length-3].click();
+//            });
+////            ptor.sleep(2000);
+//            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+//                expect(lectures[lectures.length-1].getText()).toBe('New Lecture')
+//            });
+//        });
+//        it('should add a new quiz', function(){
+//            ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
+//                buttons[buttons.length-2].click();
+//            });
+////            ptor.sleep(2000);
+//            ptor.findElements(protractor.By.className('trigger2')).then(function(quiz){
+//                expect(quiz[quiz.length-1].getText()).toBe('New Quiz');
+//            })
+//        });
+//        it('should add a new survey', function(){
+//            ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
+//                buttons[buttons.length-1].click();
+//            });
+////            ptor.sleep(2000);
+//            ptor.findElements(protractor.By.className('trigger2')).then(function(survey){
+//                expect(survey[survey.length-1].getText()).toBe('New Survey');
+//            })
+//        });
+//
+//        it('should open a quiz', function(){
+//            ptor.findElements(protractor.By.className('trigger2')).then(function(quizes){
+//                quizes[quizes.length-2].click();
+//                ptor.sleep(10000);
+//            });
+//        });
 
         //need to find a way to click on the delete button
 
-    });
-
+//    });
 //
+//    describe("Modules Section (Left)", function(){
+//        it('should allow sorting the modules by drag and drop', function(){
+//            ptor.findElements(protractor.By.className('handle')).then(function(handles){
+//                ptor.actions().dragAndDrop(handles[handles.length-1], handles[0]).perform();
+//                ptor.sleep(3000);
+//                ptor.actions().dragAndDrop(handles[0], handles[handles.length-1]).perform();
+//
+//            });
+//        });
+//        it("should open the module", function(){
+//            ptor.findElement(protractor.By.className('trigger')).then(function(module){
+//                module.click();
+//            });
+//        });
+//        it('should allow sorting lectures/quizes/surveys by drag and drop', function(){
+//            ptor.findElements(protractor.By.className('handle')).then(function(handles){
+//                ptor.actions().dragAndDrop(handles[handles.length-2], handles[1]).perform();
+//
+//            });
+//        });
+
+
+
+
+        //works
+        it("should allow deleting modules", function(){
+            ptor.findElements(protractor.By.name('module_delete_button')).then(function(modules_delete){
+                expect(modules_delete.length).toBe(4);
+                modules_delete[1].click();
+                ptor.sleep(20000);
+            });
+        });
+    })
+
+
 //
 //    describe('Right Section', function(){
 //
@@ -168,7 +211,7 @@ describe("Course Editor",function(){
 //    });
 //
 //    describe('Middle Section', function(){
-//        it('should allow adding quesions to quiz', function(){
+//        it('should allow adding questions to quiz', function(){
 //            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
 //                buttons[buttons.length-2].click();
 //                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
@@ -246,140 +289,138 @@ describe("Course Editor",function(){
 //        });
 //    });
 
-
-
-    describe("Modules Section (Left)", function(){
-        it('should open a survey', function(){
-            ptor.findElements(protractor.By.className('trigger2')).then(function(quizes){
-                quizes[quizes.length-1].click();
-            });
-        });
-    });
-
-
-    describe('Right Section', function(){
-
-        it('should display survey details and allow editing it', function(){
-            ptor.findElement(protractor.By.tagName('h3')).then(function(title){
-                expect(title.getText()).toBe('Details');
-            });
-            ptor.findElements(protractor.By.className('editable-click')).then(function(details){
-
-                expect(details[0].getText()).toBe('New Survey');
-                details[0].click();
-                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-                    field.clear();
-                    field.sendKeys("My Survey")
-                });
-                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                    buttons[buttons.length-2].click();
-                });
-                expect(details[0].getText()).toBe('My Survey');
-
-
-                expect(details[1].getText()).toBe('Using Module\'s Appearance Date');
-                details[1].click();
-                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-                    field.click();
-                });
-                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                    buttons[buttons.length-2].click();
-                });
-                expect(details[1].getText()).toBe('Not Using Module\'s Appearance Date');
-
-
-
-                expect(details[3].getText()).toBe('Using Module\'s Due Date');
-                details[3].click();
-                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-                    field.click();
-                });
-                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                    buttons[buttons.length-2].click();
-                });
-                expect(details[3].getText()).toBe('Not Using Module\'s Due Date');
-
-
-
-                expect(details[5].getText()).toBe('Please fill in the survey.');
-                details[5].click();
-                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-                    field.clear();
-                    field.sendKeys("new instructions")
-                });
-                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                    buttons[buttons.length-2].click();
-                });
-                expect(details[5].getText()).toBe('new instructions');
-            });
-        });
-    });
-
-    describe('Middle Section', function(){
-        it('should allow adding quesions to quiz', function(){
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-2].click();
-                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
-                    fields[fields.length-3].sendKeys('first mcq question');
-                    fields[fields.length-2].sendKeys('first answer');
-                    fields[fields.length-1].click();
-                });
-                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-                ptor.findElements(protractor.By.name('answer')).then(function(fields){
-                    fields[fields.length-1].sendKeys('second answer');
-                });
-                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-                ptor.findElements(protractor.By.name('answer')).then(function(fields){
-                    fields[fields.length-1].sendKeys('third answer');
-                });
-
-
-                buttons[buttons.length-2].click();
-
-                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
-                    fields[fields.length-3].sendKeys('first OCQ question');
-                    ptor.findElement(protractor.By.tagName('select')).then(function(question_type){
-                        question_type.click();
-                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
-                            options[options.length-2].click();
-                        });
-                    });
-
-                });
-                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
-                    fields[fields.length-2].sendKeys('first answer');
-                    fields[fields.length-1].click();
-                });
-                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
-                    add_multiple[add_multiple.length-1].click();
-                });
-                ptor.findElements(protractor.By.name('answer')).then(function(fields){
-                    fields[fields.length-1].sendKeys('second answer');
-                });
-                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
-                    add_multiple[add_multiple.length-1].click();
-                });                ptor.findElements(protractor.By.name('answer')).then(function(fields){
-                    fields[fields.length-1].sendKeys('third answer');
-                });
-
-                buttons[buttons.length-2].click();
-
-                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
-                    fields[fields.length-3].sendKeys('first TEXT question');
-                    ptor.findElements(protractor.By.tagName('select')).then(function(question_type){
-                        question_type[question_type.length-1].click();
-                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
-                            options[options.length-1].click();
-                        });
-                    });
-
-                });
-
-                //save questions
-                buttons[buttons.length-1].click();
-            });
-        });
-    });
+//
+//    describe("Modules Section (Left)", function(){
+//        it('should open a survey', function(){
+//            ptor.findElements(protractor.By.className('trigger2')).then(function(quizes){
+//                quizes[quizes.length-1].click();
+//            });
+//        });
+//    });
+//
+//    describe('Right Section', function(){
+//
+//        it('should display survey details and allow editing it', function(){
+//            ptor.findElement(protractor.By.tagName('h3')).then(function(title){
+//                expect(title.getText()).toBe('Details');
+//            });
+//            ptor.findElements(protractor.By.className('editable-click')).then(function(details){
+//
+//                expect(details[0].getText()).toBe('New Survey');
+//                details[0].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.clear();
+//                    field.sendKeys("My Survey")
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[0].getText()).toBe('My Survey');
+//
+//
+//                expect(details[1].getText()).toBe('Using Module\'s Appearance Date');
+//                details[1].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.click();
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[1].getText()).toBe('Not Using Module\'s Appearance Date');
+//
+//
+//
+//                expect(details[3].getText()).toBe('Using Module\'s Due Date');
+//                details[3].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.click();
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[3].getText()).toBe('Not Using Module\'s Due Date');
+//
+//
+//
+//                expect(details[5].getText()).toBe('Please fill in the survey.');
+//                details[5].click();
+//                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+//                    field.clear();
+//                    field.sendKeys("new instructions")
+//                });
+//                ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                    buttons[buttons.length-2].click();
+//                });
+//                expect(details[5].getText()).toBe('new instructions');
+//            });
+//        });
+//    });
+//
+//    describe('Middle Section', function(){
+//        it('should allow adding quesions to survey', function(){
+//            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+//                buttons[buttons.length-2].click();
+//                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+//                    fields[fields.length-2].sendKeys('first mcq question');
+//                });
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('first answer');
+//                });
+//                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('second answer');
+//                });
+//                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('third answer');
+//                });
+//
+//
+//                buttons[buttons.length-2].click();
+//
+//                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+//                    fields[fields.length-2].sendKeys('first OCQ question');
+//                    ptor.findElement(protractor.By.tagName('select')).then(function(question_type){
+//                        question_type.click();
+//                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
+//                            options[options.length-2].click();
+//                        });
+//                    });
+//
+//                });
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('first answer');
+//                });
+//                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+//                    add_multiple[add_multiple.length-1].click();
+//                });
+//                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('second answer');
+//                });
+//                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+//                    add_multiple[add_multiple.length-1].click();
+//                });                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+//                    fields[fields.length-1].sendKeys('third answer');
+//                });
+//
+//                buttons[buttons.length-2].click();
+//
+//                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+//                    fields[fields.length-2].sendKeys('first TEXT question');
+//                    ptor.findElements(protractor.By.tagName('select')).then(function(question_type){
+//                        question_type[question_type.length-1].click();
+//                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
+//                            options[options.length-1].click();
+//                        });
+//                    });
+//
+//                });
+//
+//                //save questions
+//                buttons[buttons.length-1].click();
+//            });
+//        });
+//    });
 
 //-------------- lecture module ------------------------//
 

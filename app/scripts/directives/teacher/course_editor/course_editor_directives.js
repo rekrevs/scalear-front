@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
 		template: "<h5 ng-click='invertOpen()'>"+
 					"<img src='images/move2.png' class='handle' title='drag to reorder' />"+
 					"<a class='trigger' ng-class='{open:open[id]}' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
-					"<delete_button size='small' action='remove()'/>"+
+					"<delete_button size='small' action='remove()' name='module_delete_button'/>"+
 				  "</h5>",
 	  link: function(scope){
 			scope.invertOpen = function()
@@ -106,6 +106,7 @@ angular.module('scalearAngularApp')
 			size:"@",
 			action:"&"
 		},
+        replace: true,
 		restrict:'E',
 		template: 	'<a style="float:right;width:20px;cursor:pointer;" title="delete" ng-click="action()">'+
 						'<img alt="Trash" ng-src="images/trash_{{size}}.png">'+

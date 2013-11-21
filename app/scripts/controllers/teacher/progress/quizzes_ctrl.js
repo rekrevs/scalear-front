@@ -6,7 +6,8 @@ angular.module('scalearAngularApp')
    $scope.quizzesTab = function(){
         $scope.tabState(6)
    		$scope.disableInfinitScrolling()
-        getQuizCharts()            
+        if(!$scope.selected_quiz)
+            getQuizCharts()            
     }    
 
     var getQuizCharts = function(){
@@ -16,8 +17,9 @@ angular.module('scalearAngularApp')
     	$scope.loading_quizzes_chart = true
         Module.getQuizCharts(
             {
-                quiz_id:quiz_id,
-                module_id: $stateParams.module_id
+                course_id: $stateParams.course_id,
+                module_id: $stateParams.module_id,
+                quiz_id:quiz_id
             },
             function(data){
                 console.log(data)

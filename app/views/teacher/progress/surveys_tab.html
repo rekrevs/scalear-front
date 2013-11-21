@@ -1,21 +1,20 @@
-<select ng-show="all_surveys" ng-model="selected_survey" ng-options="q[0] for q in all_surveys" ng-change="changeSurvey()"></select>
-<div>
+<div ng-show="all_surveys">
+	<select ng-model="selected_survey" ng-options="q[0] for q in all_surveys" ng-change="changeSurvey()"></select>
 	<center>
-		<br /><br />
 		<loading size="small" show="loading_surveys_chart" />
-		<div ng-if="!all_surveys && !loading_surveys_chart">No Surveys</div>
-		<b>{{selected_survey[0]}}</b>		
+		<b>{{selected_survey[0]}}</b>	
 	</center>
+	<button_link ng-show="button_msg" action="makeVisibleBtn()" title="{{button_msg}}" style="margin:10px 0px" />
 	<div ng-repeat="(id,value) in survey_chart_data" class="chart" ng-init="chart=createSurveyChart(value, $index)">
 	    <div >Question {{$index+1}}:</div>
-	    <button_link action="makeVisibleBtn()" title="{{button_msg}}" style="margin:10px 0px" />
+	    
 	    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
 	    <div google-chart on-ready="loading=false" chart="chart" ></div>
 	    <button_link title="Export Chart" action="saveAsImg($event)" >
 	</div>
 </div>
-<center ng-if="survey_free">
-	<h3>Free Text Questions</h3>
+<center>
+	<h3 ng-show="survey_free">Free Text Questions</h3>
 	<div ng-show="notify" class="alert">{{notify}}</div>
 </center>
 <table style="background-color:white" class="table" ng-repeat="question in survey_free">
@@ -41,7 +40,7 @@
 		<td>{{related_answers[answer.user_id]}}</td>
 		<td style="border-left: 1px gray solid;">
 			<a ng-click="showFeedback(question.answers,$index)">{{answer.answer}}</a>
-			<div ng-if="answer.response">
+			<div ng-show="answer.response">
 				<p style="font-style: italic;display:inline;">{{answer.response}}</p>
 				<button_link title="Delete" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							
 			</div>
@@ -52,3 +51,7 @@
 		</td>
 	</tr>
 </table>
+<center>
+	<br /><br />
+	<div ng-if="!all_surveys && !loading_surveys_chart">No Surveys</div>
+</center>

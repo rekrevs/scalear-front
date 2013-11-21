@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
         $scope.disableInfinitScrolling()
         Module.getLectureProgress(
             {
+                course_id: $stateParams.course_id,
                 module_id: $stateParams.module_id, 
                 offset:$scope.lecture_offset, 
                 limit: $scope.lecture_limit

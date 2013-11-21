@@ -53,7 +53,7 @@ angular.module('scalearAngularApp')
   }])
   .directive('detailsDate', ['$timeout',function ($timeout) {
     return {
-      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ (date | date:"MM/dd/yyyy") || \'empty\' }}<i ng-class="overclass"></i></a>',
+      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (date | date:"dd/MM/yyyy") || "empty" }}<i ng-class="overclass"></i></a>',
       restrict: 'E',
       scope:{
       	date: "=",
@@ -62,9 +62,9 @@ angular.module('scalearAngularApp')
         column: "@"
       },
       link:function(scope){
-        scope.saveData=function(){
+        scope.saveData=function(data){
           $timeout(function(){
-            scope.save()
+            scope.save({data:data, type:scope.column})
           })
         }
       }

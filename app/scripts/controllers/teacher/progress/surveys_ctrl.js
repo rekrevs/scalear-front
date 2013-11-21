@@ -6,10 +6,8 @@ angular.module('scalearAngularApp')
   	$scope.surveysTab = function(){
         $scope.tabState(5)
   		$scope.disableInfinitScrolling()
-  		getSurveyCharts()
-  		$scope.survey_visible = false
-  		$scope.button_msg = "Make Visible"
-  		$scope.feedback=[]
+        if(!$scope.selected_survey)
+  		    getSurveyCharts()
   	}
 
   	var getSurveyCharts = function(){
@@ -19,8 +17,9 @@ angular.module('scalearAngularApp')
     	$scope.loading_surveys_chart = true
   		Module.getSurveyCharts(
   			{
-  				survey_id: survey_id,
-  				module_id: $stateParams.module_id
+                course_id: $stateParams.course_id,
+  				module_id: $stateParams.module_id,
+                survey_id: survey_id
   			},
   			function(data){
   				console.log(data)
@@ -32,6 +31,7 @@ angular.module('scalearAngularApp')
             		$scope.all_surveys = data.all_surveys                
                 	$scope.selected_survey = $scope.all_surveys? $scope.all_surveys[0] : ""
                 }
+                $scope.button_msg = $scope.selected_survey[2]? "Hide" : "Make Visible"
                 $scope.loading_surveys_chart = false
   			}, 
   			function(){
@@ -94,14 +94,11 @@ angular.module('scalearAngularApp')
 
     $scope.makeVisibleBtn=function(visible){
     	var survey_id = $scope.selected_survey[1]
-    	console.log(survey_id)
-    	$scope.survey_visible = !$scope.survey_visible 
+    	$scope.selected_survey[2] = !$scope.selected_survey[2]
     	Quiz.makeVisible({quiz_id:survey_id},
-    		{
-    			visible:$scope.survey_visible
-    		},
-    		function(){
-    			$scope.button_msg = $scope.survey_visible? "Hide" : "Make Visible"
+    		{visible:$scope.selected_survey[2]},
+    		function(data){
+    			$scope.button_msg = $scope.selected_survey[2]? "Hide" : "Make Visible"
     		}
     	)
     }

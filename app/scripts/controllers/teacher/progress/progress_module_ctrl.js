@@ -47,7 +47,8 @@ angular.module('scalearAngularApp')
     var getModuleCharts = function(){
         $scope.loading_module_chart=true
         Module.getModuleCharts(
-            {
+            {             
+                course_id: $stateParams.course_id,
                 module_id:$stateParams.module_id
             },
             function(data){

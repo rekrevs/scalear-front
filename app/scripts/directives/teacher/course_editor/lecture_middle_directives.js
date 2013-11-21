@@ -37,7 +37,6 @@ angular.module('scalearAngularApp')
 					player.on("loadeddata", 
 						function(){
 							console.debug("Video data loaded")
-
 							scope.ready();
 							scope.$apply();
 						});
@@ -72,6 +71,10 @@ angular.module('scalearAngularApp')
 					element.find('iframe').remove();
 			  		loadVideo();
 				}
+
+				$rootScope.$on('refreshVideo',function(){
+					scope.controls.refreshVideo()
+				})
 		
 			  	loadVideo();
 		    }
@@ -145,9 +148,11 @@ angular.module('scalearAngularApp')
 				var h = scope.data.height* (ontop.height() - 26);
 				var add_left= (w-13)/2.0
 				var add_top = (h-13)/2.0
-				scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
-				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26)) + add_top;
+				scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left+6;				
+				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26)) + add_top+6;
 				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
+				console.log(scope.xcoor)
+				console.log(scope.ycoor)
 			}	
 
 			scope.setAnswerColor=function(){
@@ -163,7 +168,9 @@ angular.module('scalearAngularApp')
 				var ontop=angular.element('.ontop');		
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() - 26);
-				scope.calculateSize()				
+				scope.calculateSize()
+				console.log(element.position().left)				
+				console.log(element.position().top)				
 			}
 
 			scope.calculateSize=function(){
@@ -430,7 +437,7 @@ angular.module('scalearAngularApp')
 			
 			scope.$watch('quiz.answers', function(){
 				scope.updateValues();	
-			})
+			},true)
 			
 		}
 	};

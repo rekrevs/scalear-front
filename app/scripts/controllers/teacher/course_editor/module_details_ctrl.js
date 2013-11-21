@@ -6,6 +6,7 @@ angular.module('scalearAngularApp')
 
 
 	  $scope.validateModule = function(column,data) {
+      console.log(data)
 	    var d = $q.defer();
 	    var group={}
 	    group[column]=data;
@@ -26,7 +27,7 @@ angular.module('scalearAngularApp')
 	    return d.promise;
     };
     
-      $scope.updateModule=function(){
+      $scope.updateModule=function(data,type){
         console.log("module update")
         var modified_module=angular.copy($scope.module);
         delete modified_module["id"];
@@ -36,6 +37,8 @@ angular.module('scalearAngularApp')
         delete modified_module["total_time"];
         delete modified_module["total_questions"];
         delete modified_module["total_quiz_questions"];
+        if(data)
+          modified_module[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()          
         Module.update(
           {module_id: $scope.module.id},
           {group: modified_module},
@@ -49,19 +52,3 @@ angular.module('scalearAngularApp')
         );
       }
     }]);
-
-
-
-/*$(function (){
-  $('.date_picker').datepicker();
-  //$('textarea').css({"max-width": $('textarea').parent().css("width"),"max-height": $('textarea').parent().css("height")});  
-  $('form.edit_group').submit(function(){
-    if(validateCharLimit(this, 'input', 100) && validateCharLimit(this, 'textarea', 2000))
-			{
-				$(this).children("#details_group_btn").attr("disabled","disabled");
-				return true;
-			}else{
-			return false;
-			}
-  });
-});*/

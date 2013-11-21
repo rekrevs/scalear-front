@@ -1,14 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressMainCtrl', ['$scope','$timeout','Course','Module',function ($scope, $timeout, Course, Module) {
+  .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module',function ($scope, $timeout, $stateParams, Course, Module) {
 
   	  	$scope.moduleProgressTab=function(){
   	  		enableModuleScrolling()
-	        if($scope.module_offset == null){
+	        if($scope.module_offset == null)
 	           	getModuleProgress(0,20)
-	        }
-  	  		
   	  	}
 
   	  	var getModuleProgress = function(offset, limit){
@@ -19,6 +17,7 @@ angular.module('scalearAngularApp')
 
         Course.getModuleProgress(
             {
+                course_id:$stateParams.course_id,
                 offset:$scope.module_offset, 
                 limit: $scope.module_limit
             },
@@ -68,16 +67,33 @@ angular.module('scalearAngularApp')
     	$scope.module_scroll_disable = true
     }
 
+    $scope.updateStatus= function(student_id, module_id, module_status){
+        if(module_status)
+            module_status = (module_status == "Finished on Time")? 1 : 2
+        else
+            module_status = 0
+
+        Module.changeModuleStatus(
+            {module_id:module_id},
+            {
+                user_id: student_id,
+                status: module_status
+            }
+        )
+    }
+
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     $scope.totalChartTab = function(){
     	disableModuleScrolling()
-    	$scope.loading_total_charts = true
-    	getTotalChart()
+        if(!$scope.total_chart){
+           $scope.loading_total_charts = true
+           getTotalChart()
+        }
     }
 
     var getTotalChart=function(){
     	Course.getTotalChart(
-    		{},
+    		{course_id: $stateParams.course_id},
     		function(data){
     			$scope.total_chart = createTotalChart(data.student_progress)	
     			$scope.loading_total_charts = false
@@ -108,8 +124,8 @@ angular.module('scalearAngularApp')
 			{"c":
 				[
 					{"v":data[ind][0]},
-					{"v":data[ind][1]},
-					{"v":data[ind][2]},
+					{"v":data[ind][1], "f":data[ind][1].toFixed(0)+'%'},
+					{"v":data[ind][2], "f":data[ind][2].toFixed(0)+'%'},
 				]
 			}
 			formated_data.rows.push(row)
@@ -135,25 +151,6 @@ angular.module('scalearAngularApp')
         };
 	  	chart.data = $scope.formatTotalChartData(chart_data)
 	  	return chart
-    }
-
-    $scope.updateStatus= function(student_id, module_id, module_status){
-        console.log(student_id)
-        console.log(module_id)
-        console.log(module_status)
-        if(module_status)
-            module_status = (module_status == "Finished on Time")? 1 : 2
-        else
-            module_status = 0
-        console.log(module_status)
-
-        Module.changeModuleStatus(
-            {module_id:module_id},
-            {
-                user_id: student_id,
-                status: module_status
-            }
-        )
     }
     
 

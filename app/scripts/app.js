@@ -84,14 +84,13 @@
     					s=0;
     				}
     				
-    				console.log("s isssssssssssss " + s);
     				if(s==0){
     					$rootScope.show_alert="error";
       					ErrorHandler.showMessage('Error ' + ': ' + "You are not Authorized", 'errorMessage', 8000);
       					$timeout(function(){
-      					$rootScope.show_alert="";	
+      					 $rootScope.show_alert="";	
       					},4000);
-      					}
+    					}
     			// success
     			}
   			)
@@ -101,7 +100,6 @@
   })  
 
   .config(['$stateProvider','$urlRouterProvider','$httpProvider',function ($stateProvider, $urlRouterProvider, $httpProvider) {
-	 console.log("app.js")
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
 
     $httpProvider.defaults.withCredentials = true;
@@ -119,11 +117,6 @@
       templateUrl: 'views/login.html',
       controller: 'LoginCtrl'
    	 })
-      .state('admin', {
-        url:'/admin',
-        templateUrl: 'views/admin/admin.html',
-        controller: 'adminCtrl'
-      })
       .state('course_list', {
         url:'/courses',
         templateUrl: 'views/teacher/course_list/course_list.html',

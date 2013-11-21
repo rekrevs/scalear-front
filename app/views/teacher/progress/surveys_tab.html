@@ -14,8 +14,8 @@
 	    <button_link title="Export Chart" action="saveAsImg($event)" >
 	</div>
 </div>
-<center ng-if="survey_free">
-	<h3>Free Text Questions</h3>
+<center>
+	<h3 ng-show="survey_free">Free Text Questions</h3>
 	<div ng-show="notify" class="alert">{{notify}}</div>
 </center>
 <table style="background-color:white" class="table" ng-repeat="question in survey_free">
@@ -41,7 +41,7 @@
 		<td>{{related_answers[answer.user_id]}}</td>
 		<td style="border-left: 1px gray solid;">
 			<a ng-click="showFeedback(question.answers,$index)">{{answer.answer}}</a>
-			<div ng-if="answer.response">
+			<div ng-show="answer.response">
 				<p style="font-style: italic;display:inline;">{{answer.response}}</p>
 				<button_link title="Delete" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							
 			</div>

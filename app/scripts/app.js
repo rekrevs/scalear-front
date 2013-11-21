@@ -23,9 +23,79 @@
 ]).constant('scalear_api', {host:'http://localhost:3000'}) //http://angular-learning.herokuapp.com //change for testing3
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(function($rootScope, editableOptions) {
+  .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout) {
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
+      
+      	var statesThatDontRequireAuth =['login', 'home']
+		var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information']
+		var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers']
+
+  		// check if route does not require authentication
+  		var routeClean = function(state) {
+  			 for(var element in statesThatDontRequireAuth)
+  			{
+  				var input =statesThatDontRequireAuth[element];
+  				if(state.substring(0, input.length) === input)
+  				return true
+  			}
+  			return false;
+  		}
+
+  		var stateStudent = function(state) {
+  			for(var element in statesThatForStudents)
+  			{
+  				var input =statesThatForStudents[element];
+  				if(state.substring(0, input.length) === input)
+  				return true
+  			}
+  			return false;
+  		}
+  		
+  		var stateTeacher = function(state) {
+  			for(var element in statesThatForTeachers)
+  			{
+  				var input =statesThatForTeachers[element];
+  				if(state.substring(0, input.length) === input)
+  					return true
+  			}
+  			return false;
+  		}
+
+  		$rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
+    	
+    		UserSession.getRole().then(function(result){
+    			var s=1;
+    			if(!routeClean(to.name) && result==0) // user not logged in trying to access a page that needs authentication.
+    				{
+    					$state.go("login");
+    					s=0;
+    				}
+    			else if( (stateTeacher(to.name) && result==2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
+    				{
+    					$state.go("student_courses");
+    					s=0;
+    				}
+    			else if( (stateStudent(to.name) && result==1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
+    				{
+    					$state.go("course_list");
+    					s=0;
+    				}
+    				
+    				console.log("s isssssssssssss " + s);
+    				if(s==0){
+    					$rootScope.show_alert="error";
+      					ErrorHandler.showMessage('Error ' + ': ' + "You are not Authorized", 'errorMessage', 8000);
+      					$timeout(function(){
+      					$rootScope.show_alert="";	
+      					},4000);
+      					}
+    			// success
+    			}
+  			)
+    		
+  	});
+      
   })  
 
   .config(['$stateProvider','$urlRouterProvider','$httpProvider',function ($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -65,8 +135,13 @@
       .state('course', {
         url: '/courses/:course_id',
         views:{
-          'navigation':{templateUrl: 'views/teacher_navigation.html', controller: 'teacherNavigationCtrl'},
+          'navigation':{templateUrl: 'views/navigation.html', controller: 'navigationCtrl'},
           '':{template:'<ui-view/>'}
+        },
+        resolve:{
+          course_information:function($http, $stateParams, $rootScope, scalear_api, headers){
+            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id});
+          }
         },
         abstract:true
       })
@@ -126,7 +201,7 @@
         templateUrl: 'views/teacher/calendar/calendar.html',
         controller: 'TeacherCalendarCtrl'
       })
-      .state('student_calendar', {
+      .state('course.student_calendar', {
         resolve:{
           events:function($http, $stateParams, headers,scalear_api){
             return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})

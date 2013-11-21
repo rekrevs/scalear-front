@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
 				$scope.courses = data
 			},
 			function(){
-				alert("Could not get courses, please check your internet connection")
+				//alert("Could not get courses, please check your internet connection")
 			})
 
   		$scope.column='name'
@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
 	  					console.log(response)
 	  				},
 	  				function(){
-	  					alert("Could not delete course, please check your internet connection")
+	  					//alert("Could not delete course, please check your internet connection")
 	  				})
 	  		}
   		}

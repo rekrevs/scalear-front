@@ -23,4 +23,4 @@ angular.module('scalearAngularApp')
 		"validateLecture": {method: 'PUT', params: {action: 'validate_lecture_angular'},headers: headers},
 	});
 
-}])
+}]) 

@@ -18,32 +18,3 @@ angular.module('scalearAngularApp')
       });
 
 }])
-.factory('Answer', ['$resource','$http','$stateParams','scalear_api','headers',function($resource, $http, $stateParams, scalear_api, headers) {
-
-    $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host+'/en/answers/:answer_id/:action', {},
-      { 'create': { method: 'POST', headers: headers },
-        'index': { method: 'GET', isArray: true, headers: headers},
-        'update': { method: 'PUT', headers: headers},
-        'destroy': { method: 'DELETE', headers: headers },
-        'show':{method: 'GET', headers: headers},
-        "getQuestions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
-        
-      });
-
-}])
-.factory('Question', ['$resource','$http','$stateParams','scalear_api','headers',function($resource, $http, $stateParams, scalear_api, headers) {
-
-    $http.defaults.useXDomain = true;
-    return $resource(scalear_api.host+'/en/questions/:question_id/:action', {},
-      { 'create': { method: 'POST', headers: headers },
-        'index': { method: 'GET', isArray: true, headers: headers},
-        'update': { method: 'PUT', headers: headers},
-        'destroy': { method: 'DELETE', headers: headers },
-        'show':{method: 'GET', headers: headers},
-        "getQuestions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
-        
-      });
-
-}]);
-

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl',['$stateParams','$rootScope','$scope','Quiz','quiz', 'CourseEditor', 'Answer','Question', function ($stateParams, $rootScope,$scope, Quiz,quiz, CourseEditor, Answer, Question) {
+  .controller('quizMiddleCtrl',['$stateParams','$rootScope','$scope','Quiz','quiz', 'CourseEditor', function ($stateParams, $rootScope,$scope, Quiz,quiz, CourseEditor) {
  
  	$scope.quiz= quiz.data;
  	$scope.alert={type:"error", msg:"You've got some errors."}

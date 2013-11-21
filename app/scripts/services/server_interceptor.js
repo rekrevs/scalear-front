@@ -45,11 +45,21 @@ angular.module('scalearAngularApp')
       if(rejection.status==403) 
       {
       	 var $state = $injector.get('$state'); //test connection every 10 seconds.
-      	$state.go("course_list") //check
-      	if(rejection.data=="")      	
-      		ErrorHandler.showMessage('Error ' + rejection.status + ': ' + "Cannot connect to server", 'errorMessage', 8000);
+      	if($rootScope.current_user.roles[0].id==2)// student
+      		$state.go("student_courses") //check
+      	else if($rootScope.current_user.roles[0].id==1 || $rootScope.current_user.roles[0].id==5)// teacher
+      		$state.go("course_list") //check
       	else
-      		ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
+      		$state.go("login") //check
+      	
+      	
+      	$rootScope.show_alert="error";
+      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
+      	$timeout(function(){
+      		$rootScope.show_alert="";	
+      	},4000);
+      	
+      	
       	
       }
       
@@ -57,10 +67,13 @@ angular.module('scalearAngularApp')
       {
       	 var $state = $injector.get('$state'); //test connection every 10 seconds.
       	$state.go("login")
-      	if(rejection.data=="")      	
-      		ErrorHandler.showMessage('Error ' + rejection.status + ': ' + "Cannot connect to server", 'errorMessage', 8000);
-      	else
-      		ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
+      	
+      	$rootScope.show_alert="error";
+      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
+      	$timeout(function(){
+      		$rootScope.show_alert="";	
+      	},4000);
+      	
       	
       }
       if(rejection.status==0) //host not reachable

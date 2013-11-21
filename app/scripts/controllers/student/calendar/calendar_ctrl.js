@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('StudentCalendarCtrl', ['$scope', 'Event','events', function ($scope, Event, events) {
+  .controller('StudentCalendarCtrl', ['$scope','events', function ($scope, events) {
     
 	var date = new Date();
 	var d = date.getDate();
@@ -22,6 +22,7 @@ angular.module('scalearAngularApp')
 	  };
 	console.log(events)
 	$scope.events = events.data;
+	$scope.announcements= JSON.parse(events.data.announcements);
 
 	$scope.eventSources = [$scope.events];
 

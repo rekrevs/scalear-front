@@ -57,7 +57,7 @@
             </ul>
 
             <ul class="nav pull-left">
-                <li ng-show="current_user"><a ui-sref="course_list" style="float: left;">Courses</a></li>
+                <li ng-show="current_user"><a ng-click="coursePage()" style="float: left;cursor: pointer">Courses</a></li>
             </ul>
         </div>
     </nav>
@@ -165,6 +165,7 @@
     <script src="scripts/directives/teacher/course_editor/details_directives.js"></script>
     <script src="scripts/directives/teacher/course_list/course_list_directives.js"></script>
     <script src="scripts/directives/error_directives.js"></script>
+    <script src="scripts/directives/navigation_directives.js"></script>
 
     <script src="scripts/services/teacher/course.js"></script>
     <script src="scripts/services/teacher/document.js"></script>
@@ -177,6 +178,7 @@
     <script src="scripts/services/server_interceptor.js"></script>
     <script src="scripts/services/error_handler.js"></script>
     <script src="scripts/services/user.js"></script>
+    <script src="scripts/services/user_session.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>
@@ -198,7 +200,7 @@
     <script src="scripts/controllers/student/course_list/course_list_ctrl.js"></script>
     <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>
     <script src="scripts/controllers/admin/admin.js"></script>
-    <script src="scripts/controllers/teacher_navigation.js"></script>
+    <script src="scripts/controllers/navigation.js"></script>
     <script src="scripts/controllers/student/course/course_information.js"></script>
     <script src="scripts/controllers/teacher/course/course_information.js"></script>
     <script src="scripts/controllers/teacher/course/teachers.js"></script>

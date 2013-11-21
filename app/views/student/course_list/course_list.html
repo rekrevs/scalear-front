@@ -9,8 +9,8 @@
 		</thead>
 		<tbody>
 			<tr ng-repeat="course in courses|orderBy:column:is_reverse">
-				<td><a>{{course.short_name}}</a></td>
-				<td><a>{{course.name}}</a></td>
+				<td><a ui-sref="course.student_calendar({ course_id: course.id })">{{course.short_name}}</a></td>
+				<td><a ui-sref="course.student_calendar({ course_id: course.id })">{{course.name}}</a></td>
 				
 			</tr>
 		</tbody>

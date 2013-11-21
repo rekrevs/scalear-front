@@ -8,8 +8,6 @@ angular.module('scalearAngularApp')
   		$scope.disableInfinitScrolling()
         if(!$scope.selected_survey)
   		    getSurveyCharts()
-  		$scope.survey_visible = false
-  		$scope.button_msg = "Make Visible"
   	}
 
   	var getSurveyCharts = function(){
@@ -33,6 +31,7 @@ angular.module('scalearAngularApp')
             		$scope.all_surveys = data.all_surveys                
                 	$scope.selected_survey = $scope.all_surveys? $scope.all_surveys[0] : ""
                 }
+                $scope.button_msg = $scope.selected_survey[2]? "Hide" : "Make Visible"
                 $scope.loading_surveys_chart = false
   			}, 
   			function(){
@@ -95,13 +94,11 @@ angular.module('scalearAngularApp')
 
     $scope.makeVisibleBtn=function(visible){
     	var survey_id = $scope.selected_survey[1]
-    	$scope.survey_visible = !$scope.survey_visible 
+    	$scope.selected_survey[2] = !$scope.selected_survey[2]
     	Quiz.makeVisible({quiz_id:survey_id},
-    		{
-    			visible:$scope.survey_visible
-    		},
-    		function(){
-    			$scope.button_msg = $scope.survey_visible? "Hide" : "Make Visible"
+    		{visible:$scope.selected_survey[2]},
+    		function(data){
+    			$scope.button_msg = $scope.selected_survey[2]? "Hide" : "Make Visible"
     		}
     	)
     }

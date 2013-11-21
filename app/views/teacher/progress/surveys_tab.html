@@ -6,11 +6,12 @@
 		<div ng-if="!all_surveys && !loading_surveys_chart">No Surveys</div>
 		<b>{{selected_survey[0]}}</b>		
 	</center>
-	<div ng-repeat="(id,value) in survey_chart_data" class="chart">
-		    <div >Question {{$index+1}}:</div>
-		    <button_link action="makeVisibleBtn()" title="{{button_msg}}" style="margin:10px 0px" />
-		    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
-		    <div google-chart ready="loading=false" series="getSurveyChartData(id)" vtitle="getSurveyQuestionTitle($index)" ></div>
+	<div ng-repeat="(id,value) in survey_chart_data" class="chart" ng-init="chart=createSurveyChart(value, $index)">
+	    <div >Question {{$index+1}}:</div>
+	    <button_link action="makeVisibleBtn()" title="{{button_msg}}" style="margin:10px 0px" />
+	    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
+	    <div google-chart on-ready="loading=false" chart="chart" ></div>
+	    <button_link title="Export Chart" action="saveAsImg($event)" >
 	</div>
 </div>
 <center ng-if="survey_free">

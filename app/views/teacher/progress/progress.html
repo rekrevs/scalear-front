@@ -4,11 +4,11 @@
 	<div class="span3">
 	    <ul class="nav nav-list">
 			<li class="nav-header">Total Progress</li>    
-			<li>
-			    <a href="/en/courses/1295/progress_teacher?p=p&amp;type=progress" class="lecture" id="progress_chart">Progress Chart</a>
+			<li ng-class="{active: getLocation() == 0}">
+			    <a ui-sref="course.progress.main()" class="lecture" id="progress_chart">Progress Chart</a>
 			</li>           
 	        <li class="nav-header">Modules</li>
-			<li bindonce ng-repeat="group in groups" style="cursor:pointer" ng-class="{active: group.id == $parent.selected_group.id}" ng-click="$parent.selected_group=group">
+			<li bindonce ng-repeat="group in groups" style="cursor:pointer" ng-class="{active: group.id == getLocation()}">
 			    <a ui-sref="course.progress.module({ module_id: group.id })" class="group" bo-text="group.name" ></a>
 			</li>
 	    </ul>                   

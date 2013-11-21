@@ -1,7 +1,7 @@
 <center><b>{{module.name}}</b></center><br />
 <div style='min-width: 300px; height: 200px;'>
     <center><loading size="big" show="loading_module_chart" style="top:50px;position:relative"></center>
-    <div ng-if="module_data" google-chart series="getModuleChartData()"></div>
+    <div ng-if="module_chart" google-chart chart="module_chart"></div>
 </div>
 <br /><br /><br />
 

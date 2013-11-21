@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
   .controller('quizzesCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
    
    $scope.quizzesTab = function(){
+        $scope.tabState(6)
    		$scope.disableInfinitScrolling()
         getQuizCharts()            
     }    
@@ -33,41 +34,63 @@ angular.module('scalearAngularApp')
             }
         )
     }
-    $scope.getQuizQuestionTitle = function(index){
+    var getQuizQuestionTitle = function(index){
     	return $scope.quiz_chart_questions[index]	
     }
 
-    $scope.getQuizChartData = function(id){
-        var studentProgress = $scope.quiz_chart_data[id];
-        
-        var data = new google.visualization.DataTable();
-	    data.addColumn('string', 'Choices');
-	    data.addColumn('number', 'Correct');
-	    data.addColumn('number', 'Incorrect');
-    
-	    var size=0
-	    for(var e in studentProgress){
-            size++;
-	    }
-
-        data.addRows(size);
-        var i=0;
-        for (var key in studentProgress) {
-            if(!studentProgress[key][1]){
-				var c="(Incorrect)";
-				var color=1
-			}
-			else{
-				var c="(Correct)";
-				var color=2
-			}
-                
-            data.setValue(i, 0, studentProgress[key][2]+" "+c); //x axis  // first value
-            data.setValue(i, color, studentProgress[key][0]); // yaxis //correct
-        	i+=1;
+    $scope.formatQuizChartData = function(data){
+        var formated_data ={}
+        formated_data.cols=
+            [
+                {"label": "Students","type": "string"},
+                {"label": "Correct","type": "number"},
+                {"label": "Incorrect","type": "number"},
+            ]
+        formated_data.rows= []
+        var text, correct, incorrect
+        for(var ind in data)
+        {
+            if(!data[ind][1]){
+                text=data[ind][2]+" "+"(Incorrect)";
+                correct=0
+                incorrect=data[ind][0]
+            }
+            else{
+                text=data[ind][2]+" "+"(Correct)";
+                correct=data[ind][0]
+                incorrect=0
+            }
+            var row=
+            {"c":
+                [
+                    {"v":text},
+                    {"v":correct},
+                    {"v":incorrect},
+                ]
+            }
+            formated_data.rows.push(row)
         }
-        return data;
-    };
+        return formated_data
+    }
+
+    $scope.createQuizChart = function(chart_data, ind){
+        var chart = {};
+        chart.type = "ColumnChart"
+        chart.options = {
+            "colors": ['green','gray'],
+            "title": getQuizQuestionTitle(ind),
+            "isStacked": "true",
+            "fill": 20,
+            "height": 200,
+            "displayExactValues": true,
+            "fontSize" : 12,
+            "vAxis": {
+                "title": "Number of Students",
+            },
+        };
+        chart.data = $scope.formatQuizChartData(chart_data)
+        return chart
+    }
 
     $scope.changeQuiz = function(){
     	console.log("quiz change")
@@ -76,5 +99,7 @@ angular.module('scalearAngularApp')
     	$scope.quiz_chart_questions={}
     	getQuizCharts()
     }
+
+
 
   }]);

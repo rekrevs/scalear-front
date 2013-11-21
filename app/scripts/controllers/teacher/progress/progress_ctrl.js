@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressCtrl', ['$scope', '$stateParams','Course',function ($scope, $stateParams, Course) {
-
+  .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course',function ($scope, $stateParams, $location, Course) {
+  		
    		Course.getCourse({course_id:$stateParams.course_id},
 			function(data){
 				$scope.groups = data.groups
@@ -11,7 +11,11 @@ angular.module('scalearAngularApp')
 			function(){
 
 			})
-			console.log("Progress ")
-
+			
+		$scope.getLocation= function(){
+			var str = $location.path();
+		 	var res = str.match(/.*\/modules\/(\d+)/);
+		 	return res?res[1]:0
+		}
 			
   }]);

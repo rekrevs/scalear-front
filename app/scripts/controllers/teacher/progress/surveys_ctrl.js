@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
   .controller('surveysCtrl', ['$scope','$stateParams','$timeout','Module', 'Quiz', function ($scope, $stateParams, $timeout, Module, Quiz) {
   	
   	$scope.surveysTab = function(){
+        $scope.tabState(5)
   		$scope.disableInfinitScrolling()
   		getSurveyCharts()
   		$scope.survey_visible = false
@@ -39,31 +40,50 @@ angular.module('scalearAngularApp')
 		)
   	}
 
-	$scope.getSurveyQuestionTitle = function(index){
+	var getSurveyQuestionTitle = function(index){
     	return $scope.survey_chart_questions[index]	
     }
 
-    $scope.getSurveyChartData = function(id){
-        var studentProgress = $scope.survey_chart_data[id];
-        
-        var data = new google.visualization.DataTable();
-	    data.addColumn('string', 'Choices');
-	    data.addColumn('number', 'Answered');
-    
-	    var size=0
-	    for(var e in studentProgress){
-            size++;
-	    }
-
-        data.addRows(size);
-        var i=0;
-        for (var key in studentProgress) {
-            data.setValue(i, 0, studentProgress[key][1]); //x axis  // first value
-            data.setValue(i, 1, studentProgress[key][0]); // yaxis //correct
-        	i+=1;
+    var formatSurveyChartData = function(data){
+        var formated_data ={}
+        formated_data.cols=
+            [
+                {"label": "Students","type": "string"},
+                {"label": "Answered","type": "number"},
+            ]
+        formated_data.rows= []
+        for(var ind in data)
+        {
+            var row=
+            {"c":
+                [
+                    {"v": data[ind][1]},
+                    {"v": data[ind][0]},
+                ]
+            }
+            formated_data.rows.push(row)
         }
-        return data;
-    };
+        return formated_data
+    }
+
+    $scope.createSurveyChart = function(chart_data, ind){
+        var chart = {};
+        chart.type = "ColumnChart"
+        chart.options = {
+            "colors": ['green','gray'],
+            "title": getSurveyQuestionTitle(ind),
+            "isStacked": "true",
+            "fill": 20,
+            "height": 200,
+            "displayExactValues": true,
+            "fontSize" : 12,
+            "vAxis": {
+                "title": "Number of Students",
+            },
+        };
+        chart.data = formatSurveyChartData(chart_data)
+        return chart
+    }
 
  	$scope.changeSurvey = function(){
     	console.log("survey change")

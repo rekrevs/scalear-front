@@ -22,10 +22,12 @@ angular.module('scalearAngularApp')
 			scope:{
 				url:'=',
 				ready:'&',
-				id:'@'
+				id:'@',
+				controls:'='
 			},
 			link: function(scope, element){
-				console.log("YOUTUBE " + scope.id)
+
+				console.debug("YOUTUBE " + scope.id)
 				var player
 				var loadVideo = function(){
 					if(player)
@@ -34,43 +36,43 @@ angular.module('scalearAngularApp')
 					player.controls( false ); 
 					player.on("loadeddata", 
 						function(){
-							console.debug("should be loading video")
+							console.debug("Video data loaded")
 
 							scope.ready();
 							scope.$apply();
 						});
 				}
-				var pause = function(){
+
+				scope.controls.play=function(){
+					player.play();
+				}
+				scope.controls.pause = function(){
 					player.pause();
 				}
 
-				var seek = function(time){
-					pause()
-					player.currentTime(time);
+				scope.controls.getTime=function(){
+					return player.currentTime()
 				}
 
-				$rootScope.$on("refreshVideo", function(event, args) {
-			  		element.find('iframe').remove();
-			  		loadVideo();
-			  		console.log("event emitted: updating player");
-			    });
-
-			    $rootScope.$on("seekPlayer", function(event, args){
-			    	if(scope.url != args[0]){
-			    		scope.url = args[0] 
-			    		scope.$emit("refreshVideo")
+				scope.controls.seek = function(time, url){
+					if(scope.url != url){
+			    		scope.url = url 
+			    		scope.controls.refreshVideo()
 			    		player.on("loadeddata", function(){			    	
-					    	seek(args[1])
+					    	scope.controls.pause()
+							player.currentTime(time);
 						});
 			    	}
 			    	else
-		    			seek(args[1])
-			    });
-
-			    $rootScope.$on("pausePlayer",function(){
-			    	pause()
-			    })
-
+		    			scope.controls.pause()
+						player.currentTime(time);
+					
+				}
+				scope.controls.refreshVideo = function(){
+					element.find('iframe').remove();
+			  		loadVideo();
+				}
+		
 			  	loadVideo();
 		    }
 		};
@@ -516,65 +518,67 @@ angular.module('scalearAngularApp')
 	        var getter = $parse(attr.popOver)
 
 	        $q.when(getter(scope) != null).then(function(){
-
+	        	
 	        	var options = getter(scope)
+	        	if(options){
 
-	        	element.popover(options);
-	          	var popover = element.data('popover');
-		        
-		        if(options.content){
+		        	element.popover(options);
+		          	var popover = element.data('popover');
+			        
+			        if(options.content){
 
-	      			if(attr.unique){
-		            	element.on('show', function(){
-		              		$('.popover.in').each(function(){
-		                		var $this = $(this)
-		                		var popover = $this.data('popover');
-		                		if (popover && !popover.$element.is(element)) {
-		                  			$this.popover('hide');		                  			
-		                		}
-	              			});
-		              	});
-              			
-		          	}
+		      			if(attr.unique){
+			            	element.on('show', function(){
+			              		$('.popover.in').each(function(){
+			                		var $this = $(this)
+			                		var popover = $this.data('popover');
+			                		if (popover && !popover.$element.is(element)) {
+			                  			$this.popover('hide');		                  			
+			                		}
+		              			});
+			              	});
+	              			
+			          	}
 
-		          	popover.getPosition = function(){
-			            var pop = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
-			            $compile(this.$tip)(scope);
-			            scope.$digest();
-			            this.$tip.data('popover', this);
-			            var arrow = angular.element(".arrow")
-			            arrow.css("top",'50%');
-			            if(options.fullscreen){
-				            var win = angular.element($window)
-							var elem_top= element.offset().top
-							var elem_bottom= win.height() - elem_top;
-							var arrow_pos
-							if(elem_top<170) //too close to top
-							{
-								arrow_pos = pop.top + (pop.height/2)
-						 		arrow.css("top",arrow_pos+'px');
-								pop.top = (angular.element('.popover').height() / 2)  - (pop.height/2)
+			          	popover.getPosition = function(){
+				            var pop = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
+				            $compile(this.$tip)(scope);
+				            scope.$digest();
+				            this.$tip.data('popover', this);
+				            var arrow = angular.element(".arrow")
+				            arrow.css("top",'50%');
+				            if(options.fullscreen){
+					            var win = angular.element($window)
+								var elem_top= element.offset().top
+								var elem_bottom= win.height() - elem_top;
+								var arrow_pos
+								if(elem_top<170) //too close to top
+								{
+									arrow_pos = pop.top + (pop.height/2)
+							 		arrow.css("top",arrow_pos+'px');
+									pop.top = (angular.element('.popover').height() / 2)  - (pop.height/2)
+								}
+								else if(elem_bottom < 160) //too close to bottom
+								{					
+									arrow_pos =elem_bottom - (pop.height/2) - 20
+							 		arrow.css("top",'initial');
+							 		arrow.css("bottom",arrow_pos+'px');
+									pop.top = win.height() - (angular.element('.popover').height() / 2) - (pop.height/2) - 10
+								}
 							}
-							else if(elem_bottom < 160) //too close to bottom
-							{					
-								arrow_pos =elem_bottom - (pop.height/2) - 20
-						 		arrow.css("top",'initial');
-						 		arrow.css("bottom",arrow_pos+'px');
-								pop.top = win.height() - (angular.element('.popover').height() / 2) - (pop.height/2) - 10
-							}
-						}
 
-			            return pop;
-		          	};
+				            return pop;
+			          	};
 
-		          	$(document).on("click", function (e) {
-					    var target = $(e.target)
-					    var inPopover = target.closest('.popover').length > 0
-					    var isElem = target.is(element)
-					    if (!inPopover && !isElem)
-					    	element.popover('hide');
-					});	         
-		        }
+			          	$(document).on("click", function (e) {
+						    var target = $(e.target)
+						    var inPopover = target.closest('.popover').length > 0
+						    var isElem = target.is(element)
+						    if (!inPopover && !isElem)
+						    	element.popover('hide');
+						});	         
+			        }
+			    }
 	        });
       	}
     };

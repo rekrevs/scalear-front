@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
   .controller('quizzesProgressCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
     
     $scope.quizzesProgressTab = function(){
+        $scope.tabState(4)
         enableQuizzesProgressScrolling()
         if($scope.quizzes_offset == null)
             getQuizzesProgress(0,20)            
@@ -58,9 +59,12 @@ angular.module('scalearAngularApp')
     }
 
     var enableQuizzesProgressScrolling = function(){
-    	$scope.lecture_scroll_disable = true
-        $scope.quiz_scroll_disable = false
-        $scope.chart_scroll_disable= true
+        if($scope.tabState() == 4){
+            $scope.lecture_scroll_disable = true
+            $scope.quiz_scroll_disable = false
+            $scope.chart_scroll_disable= true
+        }
+    	
     }
 
   }]);

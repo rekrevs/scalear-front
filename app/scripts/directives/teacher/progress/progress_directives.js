@@ -10,9 +10,28 @@ angular.module('scalearAngularApp')
 	        status:"=",
 	        lateCount:"=",
 	        solvedCount:"=",
-	        totalLecQuiz:"="
+	        totalLecQuiz:"=",
+	        action:"&",
+	        popover:'='
 	    },
-	    templateUrl:'views/teacher/progress/progress_matrix.html' 
+	    templateUrl:'views/teacher/progress/progress_matrix.html', 
+	    link:function(scope){
+	    	if(scope.popover){
+	    		var template="<div style='font-size:14px'>"+
+    							"<input type='radio' name='stat' ng-model='student.status[id]' ng-change='action({student_id:student.id, module_id:id, module_status:student.status[id]})' style='margin:4px'>Original"+
+    							"<input type='radio' name='stat' ng-model='student.status[id]' ng-change='action({student_id:student.id, module_id:id, module_status:student.status[id]})' style='margin:4px' value='Finished on Time'>On Time"+
+    							"<input type='radio' name='stat' ng-model='student.status[id]' ng-change='action({student_id:student.id, module_id:id, module_status:student.status[id]})' style='margin:4px' value='Not Finished'>Not Done"+
+    						"</div>"
+		    	scope.popover_options={
+		        	content: template,
+		        	title: "Change Status",
+		        	html:true
+		        }
+		    }
+		    scope.module_ids=[]
+		    for(var id in scope.status[scope.students[0].id])
+		    	scope.module_ids.push(id)
+	    }
     };
 })
 .directive("tab1",function(){

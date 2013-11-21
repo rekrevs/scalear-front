@@ -1,14 +1,20 @@
+<div style="border:1px solid lightgray;float:right;padding: 5px;display:flex;margin-bottom:10px">
+    <div ng-repeat="stat in ['Finished On Time', 'Finished Not on Time', 'Not Finished']">
+        <img ng-src='images/{{stat.split(" ").join("_")}}.png' style="width:12px">
+        <span style="margin-right:10px;font-size:12px;display:inline">{{stat}}</span>
+    </div>
+</div>
 <div>
     <table class='table' style="font-size: 10px;">
         <tr>
-            <td></td>
-            <td ng-repeat="name in columnNames track by $index" bindonce bo-text="name"></td>
+            <td ></td>
+            <td ng-repeat="name in columnNames"><p bindonce bo-text="name" style="width:100%;padding-right:15px"></p></td>
         </tr>
         <tr bindonce ng-repeat="student in students" >
             <td class="student" bo-title='student.email' bo-text="student.name"></td>            
-            <td class="state" bindonce ng-repeat='(id, stat) in status[student.id]' data-title="{{solvedCount[student.id][id]}} / {{totalLecQuiz[id]}} quizzes solved">
-                <img bo-alt="stat" bo-src-i='images/{{stat.split(" ").join("_")}}.png' style="width:15px;">
-                <div bo-show="lateCount[student.id][id]" bo-text="'('+lateCount[student.id][id]+' days)'" ></div>
+            <td class="state" bindonce ng-repeat='id in module_ids' data-title="{{solvedCount[student.id][id]}} / {{totalLecQuiz[id]}} quizzes solved">{{status[student.id][id]}}
+                <img bo-alt="status[student.id][id]" ng-src='images/{{student.status[id].split(" ").join("_")||status[student.id][id].split(" ").join("_")}}.png' style="width:15px;" pop-over='popover_options' unique='true'>
+                <div ng-if="lateCount[student.id][id] && !student.status[id]" bo-text="'('+lateCount[student.id][id]+' days)'" ></div>
             </td>
         </tr>
     </table>            

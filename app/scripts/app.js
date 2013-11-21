@@ -102,8 +102,13 @@
         templateUrl: 'views/teacher/progress/progress.html',
         controller: 'progressCtrl'
       })
+      .state('course.progress.main', {
+        url: "/main",
+        templateUrl: 'views/teacher/progress/progress_main.html',
+        controller: 'progressMainCtrl'
+      })
       .state('course.progress.module', {
-        url: "/module/:module_id",
+        url: "/modules/:module_id",
         templateUrl: 'views/teacher/progress/progress_module.html',
         controller: 'progressModuleCtrl'
       })

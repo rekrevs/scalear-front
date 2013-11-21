@@ -75,7 +75,16 @@
       <file leaf-file-name="course_editor_spec.js" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/test/e2e/spec/course_editor_spec.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="118" column="48" selection-start="4703" selection-end="4703" vertical-scroll-proportion="0.38931298" vertical-offset="1566" max-vertical-offset="13815">
+            <state line="887" column="33" selection-start="46720" selection-end="46720" vertical-scroll-proportion="0.43269232" vertical-offset="13080" max-vertical-offset="19905">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calendar.html" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/views/teacher/calendar/calendar.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="2" column="26" selection-start="55" selection-end="55" vertical-scroll-proportion="-1.25" vertical-offset="0" max-vertical-offset="645">
               <folding />
             </state>
           </provider>
@@ -84,10 +93,10 @@
       <file leaf-file-name="course_editor_directives.js" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/scripts/directives/teacher/course_editor/course_editor_directives.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="93" selection-start="503" selection-end="503" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1800">
+            <state line="110" column="105" selection-start="3060" selection-end="3060" vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="1800">
               <folding>
-                <marker date="1384958817000" expanded="false" signature="1878:1893" placeholder="..." />
-                <marker date="1384958817000" expanded="true" signature="2986:3024" placeholder="..." />
+                <marker date="1385040615000" expanded="false" signature="1878:1893" placeholder="..." />
+                <marker date="1385040615000" expanded="true" signature="2986:3024" placeholder="..." />
               </folding>
             </state>
           </provider>
@@ -111,7 +120,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/app/views/teacher/calendar/calendar.html" />
         <option value="$PROJECT_DIR$/app/views/student/calendar/calendar.html" />
         <option value="$PROJECT_DIR$/node_modules/protractor/bin/elementexplorer.js" />
         <option value="$PROJECT_DIR$/test/e2e/spec/left_spec.js" />
@@ -126,6 +134,7 @@
         <option value="$PROJECT_DIR$/node_modules/protractor/referenceConf.js" />
         <option value="$PROJECT_DIR$/app/views/teacher/course_editor/course_editor.html" />
         <option value="$PROJECT_DIR$/app/scripts/directives/teacher/course_editor/course_editor_directives.js" />
+        <option value="$PROJECT_DIR$/app/views/teacher/calendar/calendar.html" />
         <option value="$PROJECT_DIR$/test/e2e/spec/course_editor_spec.js" />
       </list>
     </option>
@@ -329,6 +338,32 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
+              <option name="myItemId" value="views" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="teacher" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="calendar" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalear-front" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scalear-front" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
               <option name="myItemId" value="scripts" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
@@ -391,13 +426,36 @@
   </component>
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="recentsLimit" value="5" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/test/e2e/spec" />
     </key>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="JsTestDriver.Left Section.should open a quiz">
+    <configuration default="false" name="Middle Section.should delete an answer from each question" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver" temporary="true">
+      <setting name="configLocationType" value="TEST_METHOD" />
+      <setting name="configType" value="FILE_PATH" />
+      <setting name="settingsFile" value="" />
+      <setting name="jsFile" value="$PROJECT_DIR$/test/e2e/spec/course_editor_spec.js" />
+      <setting name="testCase" value="Middle Section" />
+      <setting name="testMethod" value="should delete an answer from each question" />
+      <setting name="serverType" value="INTERNAL" />
+      <setting name="preferredDebugBrowser" value="CHROME" />
+      <method />
+    </configuration>
+    <configuration default="false" name="Left Section.should open a quiz" type="JSTestDriver:ConfigurationType" factoryName="JsTestDriver" temporary="true">
+      <setting name="configLocationType" value="TEST_METHOD" />
+      <setting name="configType" value="FILE_PATH" />
+      <setting name="settingsFile" value="" />
+      <setting name="jsFile" value="$PROJECT_DIR$/test/e2e/spec/course_editor_spec.js" />
+      <setting name="testCase" value="Left Section" />
+      <setting name="testMethod" value="should open a quiz" />
+      <setting name="serverType" value="INTERNAL" />
+      <setting name="preferredDebugBrowser" value="CHROME" />
+      <method />
+    </configuration>
     <configuration default="true" type="DartUnitRunConfigurationType" factoryName="DartUnit">
       <option name="VMOptions" />
       <option name="arguments" />
@@ -434,7 +492,16 @@
       <browser start="false" url="" with-js-debugger="false" />
       <method />
     </configuration>
-    <list size="0" />
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="JsTestDriver.Middle Section.should delete an answer from each question" />
+      <item index="1" class="java.lang.String" itemvalue="JsTestDriver.Left Section.should open a quiz" />
+    </list>
+    <recent_temporary>
+      <list size="2">
+        <item index="0" class="java.lang.String" itemvalue="JsTestDriver.Left Section.should open a quiz" />
+        <item index="1" class="java.lang.String" itemvalue="JsTestDriver.Middle Section.should delete an answer from each question" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="ShelveChangesManager" show_recycled="false" />
   <component name="TaskManager">
@@ -480,13 +547,6 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/test/e2e/package.json">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="545">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/services/teacher/course.js">
       <provider selected="true" editor-type-id="text-editor">
         <state line="22" column="0" selection-start="1586" selection-end="1586" vertical-scroll-proportion="0.62030077" vertical-offset="0" max-vertical-offset="532">
@@ -580,17 +640,24 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/scripts/directives/teacher/course_editor/course_editor_directives.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="93" selection-start="503" selection-end="503" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1800">
+        <state line="110" column="105" selection-start="3060" selection-end="3060" vertical-scroll-proportion="0.0" vertical-offset="1245" max-vertical-offset="1800">
           <folding>
-            <marker date="1384958817000" expanded="false" signature="1878:1893" placeholder="..." />
-            <marker date="1384958817000" expanded="true" signature="2986:3024" placeholder="..." />
+            <marker date="1385040615000" expanded="false" signature="1878:1893" placeholder="..." />
+            <marker date="1385040615000" expanded="true" signature="2986:3024" placeholder="..." />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/views/teacher/calendar/calendar.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="26" selection-start="55" selection-end="55" vertical-scroll-proportion="-1.25" vertical-offset="0" max-vertical-offset="645">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/test/e2e/spec/course_editor_spec.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="118" column="48" selection-start="4703" selection-end="4703" vertical-scroll-proportion="0.38931298" vertical-offset="1566" max-vertical-offset="13815">
+        <state line="887" column="33" selection-start="46720" selection-end="46720" vertical-scroll-proportion="0.43269232" vertical-offset="13080" max-vertical-offset="19905">
           <folding />
         </state>
       </provider>

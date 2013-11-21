@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
   		$scope.disableInfinitScrolling()
   		getSurveyCharts()
   		$scope.survey_visible = false
-  		$scope.button_msg = "Make Visisble"
+  		$scope.button_msg = "Make Visible"
   		$scope.feedback=[]
   	}
 

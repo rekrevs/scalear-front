@@ -31,7 +31,7 @@
       
       	var statesThatDontRequireAuth =['login', 'home']
 		var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information']
-		var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers']
+		var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
 
   		// check if route does not require authentication
   		var routeClean = function(state) {

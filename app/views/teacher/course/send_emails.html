@@ -1,0 +1,30 @@
+<!--<div class="well">-->
+<form method="post" style="text-align: left;">
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 70px;">
+                <b>To: </b>
+            </td>
+            <td>
+                <textarea id="to" name="emails" title="To" style="width: 80%; resize: none;" readonly="readonly" rows="2" >{{final_emails}}</textarea>
+                <input class="btn" type="button" ng-click="sendBatchEmail(subject, message)" style="float: right; width: 10%" value="Send" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>Subject: </b>
+            </td>
+            <td style="width: 100%">
+                <input id="subject" type="text" name="subject" style="width: 80%;" ng-model="subject"/>
+
+            </td>
+
+        </tr>
+    </table>
+    <br />
+    <textarea ui-tinymce ng-model="message" name="body" style="height: 200px;"></textarea>
+    <br />
+
+
+</form>
+<!--</div>-->

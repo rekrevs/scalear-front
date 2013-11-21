@@ -3,13 +3,12 @@
 angular.module('scalearAngularApp')
 .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location) {
 
-
  	/***********************Functions*******************************/
  	var init = function(){
  		$scope.open_id="-1";
 	    $scope.open={};
 	    $scope.oneAtATime = true;
- 		Course.getCourseEditor(function(data){
+ 		Course.getCourseEditor({course_id:$stateParams.course_id},function(data){
 	 		$scope.course=data.course
 	 		$scope.modules=data.groups
 		  	$scope.modules.forEach(function(module,index){

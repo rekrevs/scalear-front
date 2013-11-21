@@ -1,0 +1,19 @@
+<center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
+<div ng-show="courses">
+	<h4>All Courses</h4>
+	</br>
+	<table class="table table-striped">
+		<thead style="cursor:pointer" >
+			<th><a ng-click="order('short_name')" >Course Code</a></th>
+			<th><a ng-click="order('name')">Course Name</a></th>
+		</thead>
+		<tbody>
+			<tr ng-repeat="course in courses|orderBy:column:is_reverse">
+				<td><a ui-sref="course.student_calendar({ course_id: course.id })">{{course.short_name}}</a></td>
+				<td><a ui-sref="course.student_calendar({ course_id: course.id })">{{course.name}}</a></td>
+				
+			</tr>
+		</tbody>
+	</table>
+	<a ng-click="open()">Join Course</a>	
+</div>

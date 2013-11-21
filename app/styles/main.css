@@ -130,7 +130,31 @@ body {
 	z-index: 500;
 }
 
+.successmove{
+	top: 45px;
+	position: fixed;
+	left: 39%;
+	width: 22%;
+	padding: 8px;
+	background-color: rgb(250, 242, 154);
+	color: #468847;
+  	background-color: #dff0d8;
+  	/*border-color: #d6e9c6;*/
+	font-family: Helvetica;
+	font-style: lighter;
+	font-size: 15px;
+	border-radius: 5px;
+	/*border: solid 2px rgb(229,185,108);*/
+	box-shadow: 1px 1px 2px #d6e9c6;
+	z-index: 500;
+}
+
 .errormove img{
+	margin-right: 6px;
+	width:22px;
+}
+
+.successmove img{
 	margin-right: 6px;
 	width:22px;
 }
@@ -146,6 +170,9 @@ body {
 	height:100%;	
 }
 
+.errormessage{
+	color:red;
+}
 .message{
 	text-align:center;	
 }
@@ -153,4 +180,13 @@ body {
 .errorMessage, .messagesList{
 	display:inline !important;
 }
+
+.loading_image {
+  width:80px;
+  z-index: 100;
+}
+
+.ng-invalid ~ span { color:red; display:inline;font-size:12px;left:300px; }
+input.ng-invalid{ border:1px solid red; }
+select.ng-invalid{ border:1px solid red; }
 

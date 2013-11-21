@@ -1,0 +1,31 @@
+<style>
+    p{
+        margin-left: 15px;
+    }
+</style>
+<div id="course_information">
+    <h3>
+        {{data.course.short_name}} | {{data.course.name}}
+    </h3>
+    <b>Start Date:</b>
+    <p>
+        {{data.course.start_date | date:'fullDate'}}
+    </p>
+    <b>Duration:</b>
+    <p>
+        {{data.course.duration}} Weeks
+    </p>
+    <b>Discussion Forum:</b>
+    <p>
+        <a href="{{data.course.discussion_link}}">{{data.course.discussion_link}}</a>
+    </p>
+    <b>Description:</b>
+    <p>
+        {{data.course.description}}
+    </p>
+    <b>Prerequisites:</b>
+    <p>
+        {{data.course.prerequisites}}
+    </p>
+</div>
+

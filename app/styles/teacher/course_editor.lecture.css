@@ -134,5 +134,4 @@
   top: 0px;
   z-index: 1030
 }
-.ng-invalid ~ span { color:red; display:inline;font-size:12px;left:300px; }
-input.ng-invalid{ border:1px solid red; }
+

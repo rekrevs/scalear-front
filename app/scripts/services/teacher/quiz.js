@@ -14,7 +14,10 @@ angular.module('scalearAngularApp')
         "getQuestions": {method: 'GET', params: {action: 'get_questions_angular'},headers: headers},
         "updateQuestions": {method: 'PUT', params: {action: 'update_questions_angular'},headers: headers},
         "validateQuiz": {method: 'PUT', params: {action: 'validate_quiz_angular'},headers: headers},
-        
+        "makeVisible":{method:'POST', params:{action:'make_visible'}, headers:headers},
+        "hideResponses":{method:'POST',params:{action:'hide_responses'},headers:headers},
+        "sendFeedback":{method:'POST', params:{action:'create_or_update_survey_responses'},headers:headers},
+        "deleteFeedback":{method:'POST',params:{action:'delete_response'},headers:headers}
       });
 
 }])

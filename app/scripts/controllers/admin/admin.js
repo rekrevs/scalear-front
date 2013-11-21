@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('adminCtrl', function ($scope, Course) {
+  .controller('adminCtrl', ['$scope','Course',function ($scope, Course) {
   	console.log("in admin")
   		Course.index({},
 			function(data){
@@ -34,4 +34,4 @@ angular.module('scalearAngularApp')
   			$scope.column = column_name
   			$scope.is_reverse = !$scope.is_reverse
   		}
-  });
+  }]);

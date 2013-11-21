@@ -14,13 +14,15 @@
   'ui.bootstrap.alert',
   'ui.bootstrap.modal',
   'ui.sortable',
+  'ui.calendar',
   'ngDragDrop',
   'pasvaz.bindonce',
   'infinite-scroll',
   'xeditable',
   'ui.calendar',
-  'ui.tinymce'
-]).constant('scalear_api', {host:'http://localhost:3000'}) //http://angular-learning.herokuapp.com //change for testing3
+  'ui.tinymce',
+  'googlechart'
+]).constant('scalear_api', {host:'http://localhost:3000'}) //http://localhost:3000
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
   .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout) {
@@ -191,6 +193,21 @@
           'middle'  :{templateUrl: 'views/teacher/course_editor/quiz.middle.html',  controller: 'quizMiddleCtrl'}
         }
       })
+      .state('course.progress', {
+        url:'/progress',
+        templateUrl: 'views/teacher/progress/progress.html',
+        controller: 'progressCtrl'
+      })
+      .state('course.progress.main', {
+        url: "/main",
+        templateUrl: 'views/teacher/progress/progress_main.html',
+        controller: 'progressMainCtrl'
+      })
+      .state('course.progress.module', {
+        url: "/modules/:module_id",
+        templateUrl: 'views/teacher/progress/progress_module.html',
+        controller: 'progressModuleCtrl'
+      })
       .state('course.calendar', {
         resolve:{
           events:function($http, $stateParams, headers,scalear_api){
@@ -232,12 +249,6 @@
         controller: 'TeacherCourseSendEmailCtrl'
       })
       .state('course.send_emails', {
-//        resolve:{
-//                emails:function($http, $stateParams, headers, scalear_api){
-//                    //edit the url
-//        //                return $http({method: 'GET', url:scalear_api.host+'en/courses/'+$stateParams.course_id+'/send_batch_email'});
-//                }
-//            },
         url: '/send_emails',
         templateUrl: 'views/teacher/course/send_emails.html',
         controller: 'TeacherCourseSendEmailsCtrl'
@@ -246,12 +257,10 @@
       url:'/announcements',
       templateUrl: 'views/teacher/announcements/announcements.html',
       controller: 'AnnouncementsCtrl'
-    })
+      })
       .state('course.course_information', {
             resolve:{
                 course:function($http, $stateParams, headers, scalear_api){
-                    //change teh course_id to be passed automatically
-                    console.log($stateParams)
                     return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/student_show', headers:headers})
                 }
             },
@@ -274,17 +283,16 @@
              teachers:function($http, $stateParams, headers, scalear_api){
                  return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/teachers', headers:headers})
              }
-
          },
          url: '/teachers',
          templateUrl: 'views/teacher/course/teachers.html',
          controller: 'TeacherCourseTeachersCtrl'
       })
-    .state('student_courses', {
-      url:'/student_courses',
-      templateUrl: 'views/student/course_list/course_list.html',
-      controller: 'StudentCourseListCtrl'
-    })
+      .state('student_courses', {
+        url:'/student_courses',
+        templateUrl: 'views/student/course_list/course_list.html',
+        controller: 'StudentCourseListCtrl'
+      })
   }])
 
 

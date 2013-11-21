@@ -1,0 +1,19 @@
+<center>
+		<video_container class="largescreen">
+			<loading size='small' show="!statistics" style="top:50%;position:relative" />
+			<youtube ng-if="lecture_url" id="statistics_video" url="lecture_url" controls="statistics_player_controls" class="largescreen" ready="statistics_player_controls.pause()"/>
+		</video_container>		
+</center> 
+<br><br>
+<div ng-if="statistics" style="overflow:auto" >
+	<div style="margin-left:80px;" ng-style="{width:statistics.width}"> 
+		<div ng-repeat="name in statistics.lecture_names" ng-style="{width:name[0], backgroundColor:($index%2)?'':'rgb(242,242,242)'}" style="display:inline-block;text-align:center;margin-right:-4px;">{{name[1]}}</div>
+	</div>
+	<div  ng-repeat="type in types" ng-init="chart=createStatisticsChart(type)">
+		<div google-chart chart="chart" select="skipToTime(selectedItem, type)"></div>
+	</div>
+</div>
+<center>
+	<br><br>
+	<loading size="small" show="loading_statistics_chart" />
+</center>

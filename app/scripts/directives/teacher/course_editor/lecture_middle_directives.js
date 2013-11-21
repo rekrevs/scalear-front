@@ -1,37 +1,82 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive("videoContainer",['$rootScope',function($rootScope){
+	.directive("videoContainer",function(){
 		return{
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder" ng-class="lecture.aspect_ratio" style="border:4px solid" ng-transclude></div>',
-		  	link: function($scope, element){
-			  	$rootScope.$on("refreshVideo", function(event, args) {
-			  		element.find('iframe').remove();
-			  		$scope.loadVideo();
-			  		console.log("event emitted: updating video player");
-			    });
-		  	}
+			template: '<div class="videoborder" style="border:4px solid" ng-transclude></div>'
 		};
-}]).directive('quiz',function(){
+}).directive('quiz',function(){
 		return {
 			transclude: true,
 			replace:true,
 			restrict: 'E', 
 			template: '<div class="ontop" id="ontop" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
-}).directive('youtube',function(){
+}).directive('youtube',['$rootScope',function($rootScope){
 		return {
 			restrict: 'E',
 			replace:true, 
-			template: '<div id="youtube" ng-class="lecture.aspect_ratio"></div>',
-			link: function($scope, element){
-			  	$scope.loadVideo();
+			scope:{
+				url:'=',
+				ready:'&',
+				id:'@',
+				controls:'='
+			},
+			link: function(scope, element){
+
+				console.debug("YOUTUBE " + scope.id)
+				var player
+				var loadVideo = function(){
+					if(player)
+						Popcorn.destroy(player)
+					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
+					player.controls( false ); 
+					player.on("loadeddata", 
+						function(){
+							console.debug("Video data loaded")
+
+							scope.ready();
+							scope.$apply();
+						});
+				}
+
+				scope.controls.play=function(){
+					player.play();
+				}
+				scope.controls.pause = function(){
+					player.pause();
+				}
+
+				scope.controls.getTime=function(){
+					return player.currentTime()
+				}
+
+				scope.controls.seek = function(time, url){
+					if(scope.url != url){
+			    		scope.url = url 
+			    		scope.controls.refreshVideo()
+			    		player.on("loadeddata", function(){			    	
+					    	scope.controls.pause()
+							player.currentTime(time);
+						});
+			    	}
+			    	else
+		    			scope.controls.pause()
+						player.currentTime(time);
+					
+				}
+				scope.controls.refreshVideo = function(){
+					element.find('iframe').remove();
+			  		loadVideo();
+				}
+		
+			  	loadVideo();
 		    }
 		};
-}).directive('editPanel',function(){
+}]).directive('editPanel',function(){
 	return {		
 		 restrict: 'E',
 		 template: '<div id="editing">'+
@@ -473,65 +518,67 @@ angular.module('scalearAngularApp')
 	        var getter = $parse(attr.popOver)
 
 	        $q.when(getter(scope) != null).then(function(){
-
+	        	
 	        	var options = getter(scope)
+	        	if(options){
 
-	        	element.popover(options);
-	          	var popover = element.data('popover');
-		        
-		        if(options.content){
+		        	element.popover(options);
+		          	var popover = element.data('popover');
+			        
+			        if(options.content){
 
-	      			if(attr.unique){
-		            	element.on('show', function(){
-		              		$('.popover.in').each(function(){
-		                		var $this = $(this)
-		                		var popover = $this.data('popover');
-		                		if (popover && !popover.$element.is(element)) {
-		                  			$this.popover('hide');		                  			
-		                		}
-	              			});
-		              	});
-              			
-		          	}
+		      			if(attr.unique){
+			            	element.on('show', function(){
+			              		$('.popover.in').each(function(){
+			                		var $this = $(this)
+			                		var popover = $this.data('popover');
+			                		if (popover && !popover.$element.is(element)) {
+			                  			$this.popover('hide');		                  			
+			                		}
+		              			});
+			              	});
+	              			
+			          	}
 
-		          	popover.getPosition = function(){
-			            var pop = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
-			            $compile(this.$tip)(scope);
-			            scope.$digest();
-			            this.$tip.data('popover', this);
-			            var arrow = angular.element(".arrow")
-			            arrow.css("top",'50%');
-			            if(options.fullscreen){
-				            var win = angular.element($window)
-							var elem_top= element.offset().top
-							var elem_bottom= win.height() - elem_top;
-							var arrow_pos
-							if(elem_top<170) //too close to top
-							{
-								arrow_pos = pop.top + (pop.height/2)
-						 		arrow.css("top",arrow_pos+'px');
-								pop.top = (angular.element('.popover').height() / 2)  - (pop.height/2)
+			          	popover.getPosition = function(){
+				            var pop = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
+				            $compile(this.$tip)(scope);
+				            scope.$digest();
+				            this.$tip.data('popover', this);
+				            var arrow = angular.element(".arrow")
+				            arrow.css("top",'50%');
+				            if(options.fullscreen){
+					            var win = angular.element($window)
+								var elem_top= element.offset().top
+								var elem_bottom= win.height() - elem_top;
+								var arrow_pos
+								if(elem_top<170) //too close to top
+								{
+									arrow_pos = pop.top + (pop.height/2)
+							 		arrow.css("top",arrow_pos+'px');
+									pop.top = (angular.element('.popover').height() / 2)  - (pop.height/2)
+								}
+								else if(elem_bottom < 160) //too close to bottom
+								{					
+									arrow_pos =elem_bottom - (pop.height/2) - 20
+							 		arrow.css("top",'initial');
+							 		arrow.css("bottom",arrow_pos+'px');
+									pop.top = win.height() - (angular.element('.popover').height() / 2) - (pop.height/2) - 10
+								}
 							}
-							else if(elem_bottom < 160) //too close to bottom
-							{					
-								arrow_pos =elem_bottom - (pop.height/2) - 20
-						 		arrow.css("top",'initial');
-						 		arrow.css("bottom",arrow_pos+'px');
-								pop.top = win.height() - (angular.element('.popover').height() / 2) - (pop.height/2) - 10
-							}
-						}
 
-			            return pop;
-		          	};
+				            return pop;
+			          	};
 
-		          	$(document).on("click", function (e) {
-					    var target = $(e.target)
-					    var inPopover = target.closest('.popover').length > 0
-					    var isElem = target.is(element)
-					    if (!inPopover && !isElem)
-					    	element.popover('hide');
-					});	         
-		        }
+			          	$(document).on("click", function (e) {
+						    var target = $(e.target)
+						    var inPopover = target.closest('.popover').length > 0
+						    var isElem = target.is(element)
+						    if (!inPopover && !isElem)
+						    	element.popover('hide');
+						});	         
+			        }
+			    }
 	        });
       	}
     };

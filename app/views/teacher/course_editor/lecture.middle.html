@@ -4,21 +4,18 @@
 	<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
 </overlay>
 <center><h3>{{lecture.name}}</h3></center>
-<div id="notify"></div>
 <center ><a class ="btn big fullscreenLink" ng-click="resizeBig()">Edit In Fullscreen</a></center>
 <center>
 	<form name="answer_form" novalidate style="margin:0">
-	<video_container ng-style="video_style">
+	<video_container ng-style="video_style" ng-class="lecture.aspect_ratio">
 		<div ng-show="editing_mode">
 			<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
 				<answervideo ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
 				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 			</quiz>
 		</div>
-		<youtube ng-style="video_style"/>
-		<div class="sidebar" ng-show="fullscreen" >
-			
-		</div>
+		<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url" controls="lecture_player_controls" ready="hideOverlay()" ng-class="lecture.aspect_ratio"/>
+		<div class="sidebar" ng-show="fullscreen" ></div>
 	</video_container>
 	</form>
 	</br>
@@ -36,4 +33,3 @@
 		<div ui-view="quizList"></div>
 	</div>
 </center>
-

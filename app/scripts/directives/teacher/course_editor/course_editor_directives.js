@@ -49,7 +49,7 @@ angular.module('scalearAngularApp')
 		 },
 		 restrict: 'E', 
 		 replace:true,
-		 template: '<div ng-click="action()" class="btn" >{{title}}</div>'
+		 template: '<div ng-click="action({$event:$event})" class="btn" >{{title}}</div>'
 	};
 }).directive('editableText', ['$timeout', function($timeout){
 	return {

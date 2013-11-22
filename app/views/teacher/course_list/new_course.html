@@ -1,0 +1,68 @@
+<h4>New Course</h4>
+<form novalidate class="form-horizontal" name="form">
+  <div class="control-group">
+    <label class="control-label" for="inputShortName">Short Name:</label>
+    <div class="controls">
+      <input name="short" type="text" ng-model="course.short_name" placeholder="CS-201" required/><br>
+      <span ng-show="form.short.$error.required && submitted">Course Short Name is Required</span>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputName">Name:</label>
+    <div class="controls">
+      <input name="name" type="text" ng-model="course.name" required/><br>
+      <span ng-show="form.name.$error.required && submitted">Course Name is Required</span>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputStartAt">Start Date:</label>
+    <div class="controls">
+      <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.start_date" is-open="opened"  ng-required="true" required/><br>
+      <span ng-show="form.date.$error.required && submitted">Course Start Date is Required</span>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputDuration">Duration:</label>
+    <div class="controls">
+      <input name="duration" type="number" ng-model="course.duration" required/><br>
+      <span ng-show="form.duration.$error.required && submitted">Course Duration is Required</span>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputDiscussionLink">Discussion Link:</label>
+    <div class="controls">
+      <input type="text" ng-model="course.discussion_link" />
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputCourseDescription">Course Description:</label>
+    <div class="controls">
+      <textarea rows="3" ng-model="course.description"></textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputCoursePrerequisites">Course Prerequisites:</label>
+    <div class="controls">
+      <textarea rows="3" ng-model="course.prerequisites"></textarea>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputTimeZone">Time Zone:</label>
+    <div class="controls">
+      <select name="timezone" ng-model="course.time_zone" ng-options="element for element in timezones" required></select><br>
+      <span ng-show="form.timezone.$error.required && submitted">Course Time Zone is Required</span>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputImport">Import Date From:[Optional]</label>
+    <div class="controls">
+      <select ng-model="import_from" ng-options="element.id as element.name for element in importing"></select>
+    </div>
+  </div>
+  
+   <div class="form-actions">
+    <input type="button" value="Create Course" class="btn" ng-click="createCourse()"/>
+  </div>
+</form>
+
+

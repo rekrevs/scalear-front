@@ -1,15 +1,15 @@
 <ul class="nav nav-pills">
-    <li class=""><a href="/#/courses/1/progress_teacher">Progress</a></li>
+    <li ng-class="{ active: current_state.includes('course.progress')}"><a ui-sref="course.progress.main({ course_id: current_course_id })">Progress</a></li>
     <li class=""><a href="/#/courses/1/inclass">In-class</a></li>
-    <li ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: '1' })">Calendar</a></li>
-    <li ng-class="{ active: current_state.includes('course.announcements')}"><a ui-sref="course.announcements({ course_id: '1' })">Announcements</a></li>
-    <li ng-class="{ active: current_state.includes('course.course_editor')}"><a ui-sref="course.course_editor({ course_id: '1' })">Content</a></li>
+    <li ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: current_course_id })">Calendar</a></li>
+    <li ng-class="{ active: current_state.includes('course.announcements')}"><a ui-sref="course.announcements({ course_id: current_course_id })">Announcements</a></li>
+    <li ng-class="{ active: current_state.includes('course.course_editor')}"><a ui-sref="course.course_editor({ course_id: current_course_id })">Content</a></li>
      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href="">Information<b class="caret"></b></a>
         <ul class="dropdown-menu">
-            <li><a href="/#/courses/1">Course Information</a></li>
-            <li><a href="/#/courses/1/enrolled_students">Enrolled Students</a></li>
-            <li><a href="/#/courses/1/teachers">Teachers</a></li>
+            <li><a ui-sref="course.edit_course_information({ course_id: current_course_id })">Course Information</a></li>
+            <li><a ui-sref="course.enrolled_students({ course_id: current_course_id })">Enrolled Students</a></li> 
+            <li><a ui-sref="course.teachers({ course_id: current_course_id })">Teachers</a></li> 
         </ul>
     </li>
-    <li style="float:right"><b>1DT085 - Computer Architecture and Digital Technology</b></li>
+    <li style="float:right"><b>{{course_information.short_name}} - {{course_information.name}}</b></li>
 </ul>

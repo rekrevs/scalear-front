@@ -1,0 +1,13 @@
+<tabset>
+    <tab heading="Module Progress" select="moduleProgressTab()">
+    	<h3>Module Progress Chart</h3>
+		<div infinite-scroll='getRemainingModuleProgress()' infinite-scroll-disabled='module_scroll_disable' infinite-scroll-immediate-check='false' style="overflow:auto" ng-if="module_status">
+			<progress_matrix column_names='module_names' students='module_students' status="module_status" late_count="late_modules" action="updateStatus(student_id, module_id, module_status)" popover="true"/>
+		</div>
+		<center><loading size="small" show="loading_modules" /></center>
+    </tab>
+    <tab heading="Module Chart" select="totalChartTab()">
+        <center ><loading size="big" show="loading_total_charts" /></center>
+        <div ng-if="total_chart" google-chart chart="total_chart" on-ready="loading_total_charts=false" style="overflow:hidden"></div>
+    </tab>
+</tabset>

@@ -1,5 +1,40 @@
 var util = require('util');
 
+var current_date = new Date();
+
+function getNextDay(date){
+    var result = date;
+    result.setTime(date.getTime() + 86400000);
+    return result;
+}
+
+function getNextWeek(date){
+    var result = date;
+    result.setTime(date.getTime() + 604800000);
+    return result;
+}
+
+function formatDate(date, which){
+    var dd = date.getDate();
+    var mm = date.getMonth()+1;
+    var yyyy = date.getFullYear();
+    if(which == 0){
+        return mm+'/'+dd.toString()+'/'+yyyy;
+    }
+    else if(which == 1){
+        return dd+'/'+mm+'/'+yyyy;
+    }
+}
+
+var today_keys = formatDate(new Date(), 0);
+var tomorrow_keys = formatDate(getNextDay(new Date()), 0);
+var next_day_week_keys = formatDate(getNextWeek(getNextDay(new Date())), 0);
+
+var today = formatDate(new Date(), 1);
+var tomorrow = formatDate(getNextDay(new Date()), 1);
+var next_day_week = formatDate(getNextWeek(getNextDay(new Date())), 1);
+var next_week = formatDate(getNextWeek(new Date()), 1);
+
 describe("Course Editor",function(){
     var ptor = protractor.getInstance();
     var driver = ptor.driver;
@@ -12,7 +47,7 @@ describe("Course Editor",function(){
     };
 
     it('should login', function(){
-        driver.get("http://10.0.0.16:3000/en/users/sign_in");
+        driver.get("http://192.168.1.8:3000/en/users/sign_in");
         findByName("user[email]").sendKeys("admin@scalear.com");
         findByName("user[password]").sendKeys("password");
         findByName("commit").click();
@@ -74,6 +109,55 @@ describe("Course Editor",function(){
                 expect(name[0].getText()).toBe('2');
             });
         });
+        it('should display module\'s appearance date and allow editing it', function(){
+            //----------------------//
+            //edit appearance date//
+            ptor.findElements(protractor.By.className('editable-click')).then(function(details){
+                expect(details[1].getText()).toBe(today);
+                details[1].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys(tomorrow_keys);
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                    buttons[buttons.length-2].click();
+                });
+                expect(details[1].getText()).toBe(tomorrow);
+                details[1].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys(today_keys);
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                    buttons[buttons.length-1].click();
+                });
+                expect(details[1].getText()).toBe(tomorrow);
+            });
+        });
+
+        it('should display module\'s due date and allow editing it', function(){
+            ptor.findElements(protractor.By.className('editable-click')).then(function(details){
+                expect(details[2].getText()).toBe(next_week);
+                details[2].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys(next_day_week_keys);
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                    buttons[buttons.length-2].click();
+                });
+                expect(details[2].getText()).toBe(next_day_week);
+                details[2].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys(tomorrow_keys);
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                    buttons[buttons.length-1].click();
+                });
+                expect(details[2].getText()).toBe(next_day_week);
+            });
+        });
 
         it('should display module description and allow editing it',function(){
             ptor.findElements(protractor.By.className('editable-click')).then(function(description){
@@ -106,6 +190,19 @@ describe("Course Editor",function(){
                     });
                 });
                 expect(description[description.length-1].getText()).toBe('Empty');
+            });
+        });
+        //refresh and see if the data remains the same//
+        it('should refresh the page', function(){
+            ptor.navigate().refresh();
+            ptor.sleep(2000);
+        });
+        it('should make sure the details are correct after refreshing page', function(){
+            ptor.findElements(protractor.By.className('editable-click')).then(function(details){
+                expect(details[0].getText()).toBe('2')
+                expect(details[1].getText()).toBe(tomorrow)
+                expect(details[2].getText()).toBe(next_day_week)
+                expect(details[3].getText()).toBe('Empty')
             });
         });
     });
@@ -212,26 +309,27 @@ describe("Course Editor",function(){
                     buttons[buttons.length-1].click();
                 });
                 expect(details[3].getText()).toBe('Not Using Module\'s Appearance Date');
+                //------------------------------//
                 //edit appearance date//
-                expect(details[4].getText()).toBe('11/21/2013');
+                expect(details[4].getText()).toBe(today);
                 details[4].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
-                    field.sendKeys('11/22/2013');
+                    field.sendKeys(tomorrow_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
                     buttons[buttons.length-2].click();
                 });
-                expect(details[4].getText()).toBe('11/22/2013');
+                expect(details[4].getText()).toBe(tomorrow);
                 details[4].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
-                    field.sendKeys('11/21/2013');
+                    field.sendKeys(today_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
                     buttons[buttons.length-1].click();
                 });
-                expect(details[4].getText()).toBe('11/22/2013');
+                expect(details[4].getText()).toBe(tomorrow);
                 //use module's due date//
                 expect(details[5].getText()).toBe('Using Module\'s Due Date');
                 details[5].click();
@@ -250,26 +348,27 @@ describe("Course Editor",function(){
                     buttons[buttons.length-1].click();
                 });
                 expect(details[5].getText()).toBe('Not Using Module\'s Due Date');
+                //------------------------------//
                 //edit due date//
-                expect(details[6].getText()).toBe('11/28/2013');
+                expect(details[6].getText()).toBe(next_week);
                 details[6].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
-                    field.sendKeys('11/29/2013');
+                    field.sendKeys(next_day_week_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
                     buttons[buttons.length-2].click();
                 });
-                expect(details[6].getText()).toBe('11/29/2013');
+                expect(details[6].getText()).toBe(next_day_week);
                 details[6].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
-                    field.sendKeys('11/28/2013');
+                    field.sendKeys(tomorrow_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
                     buttons[buttons.length-1].click();
                 });
-                expect(details[6].getText()).toBe('11/29/2013');
+                expect(details[6].getText()).toBe(next_day_week);
                 //edit instructions//
                 expect(details[7].getText()).toBe('Please choose the correct answer(s)');
                 details[7].click();
@@ -303,9 +402,9 @@ describe("Course Editor",function(){
                 expect(details[1].getText()).toBe('This Quiz is Required')
                 expect(details[2].getText()).toBe('10')
                 expect(details[3].getText()).toBe('Not Using Module\'s Appearance Date')
-                expect(details[4].getText()).toBe('11/22/2013')
+                expect(details[4].getText()).toBe(tomorrow)
                 expect(details[5].getText()).toBe('Not Using Module\'s Due Date')
-                expect(details[6].getText()).toBe('11/29/2013')
+                expect(details[6].getText()).toBe(next_day_week)
                 expect(details[7].getText()).toBe('new instructions')
             });
         });
@@ -444,8 +543,8 @@ describe("Course Editor",function(){
                 buttons[buttons.length-1].click();
                 ptor.sleep(1000);
             });
-            var error = ptor.findElements(protractor.By.className('alert-error'));
-            expect(error.length).toBe(1);
+            var error = ptor.findElement(protractor.By.className('alert-error'));
+            expect(error.getText()).toContain('You\'ve got some errors.');
         });
         it('should select one correct answer for each question', function(){
             ptor.executeScript('window.scrollBy(0, -200)', '');
@@ -596,26 +695,27 @@ describe("Course Editor",function(){
                     buttons[buttons.length-1].click();
                 });
                 expect(details[1].getText()).toBe('Not Using Module\'s Appearance Date');
+                //----------------------//
                 //edit appearance date//
-                expect(details[2].getText()).toBe('11/21/2013');
+                expect(details[2].getText()).toBe(today);
                 details[2].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
-                    field.sendKeys('11/22/2013');
+                    field.sendKeys(tomorrow_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
                     buttons[buttons.length-2].click();
                 });
-                expect(details[2].getText()).toBe('11/22/2013');
+                expect(details[2].getText()).toBe(tomorrow);
                 details[2].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
-                    field.sendKeys('11/21/2013');
+                    field.sendKeys(today_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
                     buttons[buttons.length-1].click();
                 });
-                expect(details[2].getText()).toBe('11/22/2013');
+                expect(details[2].getText()).toBe(tomorrow);
                 //use module's due date//
                 expect(details[3].getText()).toBe('Using Module\'s Due Date');
                 details[3].click();
@@ -634,26 +734,27 @@ describe("Course Editor",function(){
                     buttons[buttons.length-1].click();
                 });
                 expect(details[3].getText()).toBe('Not Using Module\'s Due Date');
+                //----------------------//
                 //edit due date//
-                expect(details[4].getText()).toBe('11/28/2013');
+                expect(details[4].getText()).toBe(next_week);
                 details[4].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
-                    field.sendKeys('11/29/2013');
+                    field.sendKeys(next_day_week_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
                     buttons[buttons.length-2].click();
                 });
-                expect(details[4].getText()).toBe('11/29/2013');
+                expect(details[4].getText()).toBe(next_day_week);
                 details[4].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
-                    field.sendKeys('11/28/2013');
+                    field.sendKeys(tomorrow_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
                     buttons[buttons.length-1].click();
                 });
-                expect(details[4].getText()).toBe('11/29/2013');
+                expect(details[4].getText()).toBe(next_day_week);
                 //edit instructions//
                 expect(details[5].getText()).toBe('Please fill in the survey.');
                 details[5].click();
@@ -685,9 +786,9 @@ describe("Course Editor",function(){
             ptor.findElements(protractor.By.className('editable-click')).then(function(details){
                 expect(details[0].getText()).toBe('My Survey')
                 expect(details[1].getText()).toBe('Not Using Module\'s Appearance Date')
-                expect(details[2].getText()).toBe('11/22/2013')
+                expect(details[2].getText()).toBe(tomorrow)
                 expect(details[3].getText()).toBe('Not Using Module\'s Due Date')
-                expect(details[4].getText()).toBe('11/29/2013')
+                expect(details[4].getText()).toBe(next_day_week)
                 expect(details[5].getText()).toBe('new instructions')
             });
         });

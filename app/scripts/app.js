@@ -281,6 +281,21 @@
          templateUrl: 'views/teacher/course/teachers.html',
          controller: 'TeacherCourseTeachersCtrl'
       })
+      .state('course.inclass', {
+        url: '/inclass',
+        templateUrl: 'views/teacher/in_class/inclass.html',
+        controller: 'inclassCtrl'
+      })
+      .state('course.inclass.module', {
+        url: "/modules/:module_id",
+        templateUrl: 'views/teacher/in_class/inclass_module.html',
+        controller: 'inclassModuleCtrl'
+      })
+      .state('course.inclass.display_quizzes', {
+        url:'/display_quizzes',
+        templateUrl: 'views/teacher/in_class/display_quizzes.html',
+        controller: 'displayQuizzesCtrl'
+    })
       .state('student_courses', {
         url:'/student_courses',
         templateUrl: 'views/student/course_list/course_list.html',

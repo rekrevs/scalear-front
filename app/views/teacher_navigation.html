@@ -1,6 +1,6 @@
 <ul class="nav nav-pills">
     <li ng-class="{ active: current_state.includes('course.progress')}"><a ui-sref="course.progress.main({ course_id: current_course_id })">Progress</a></li>
-    <li class=""><a href="/#/courses/1/inclass">In-class</a></li>
+    <li ng-class="{ active: current_state.includes('course.inclass')}"><a ui-sref="course.inclass({ course_id: current_course_id })" >In-class</a></li>
     <li ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: current_course_id })">Calendar</a></li>
     <li ng-class="{ active: current_state.includes('course.announcements')}"><a ui-sref="course.announcements({ course_id: current_course_id })">Announcements</a></li>
     <li ng-class="{ active: current_state.includes('course.course_editor')}"><a ui-sref="course.course_editor({ course_id: current_course_id })">Content</a></li>

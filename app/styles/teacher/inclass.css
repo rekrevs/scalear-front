@@ -1,0 +1,35 @@
+.btn-xlarge {
+    padding: 28px 28px;
+    font-size: 22px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+}
+
+.play_button{
+	position:absolute;
+	width:50px;
+	height:50px;
+	background: url("../../images/playN.png") no-repeat center center;
+}
+.pause_button{
+	position:absolute;
+	width:50px;
+	height:50px;
+	background: url("../../images/pauseN.png") no-repeat center center;
+}
+.unmute_button{
+	position:absolute;
+	top:40px;
+	width:50px;
+	height:50px;
+	background: url("../../images/muteF.png") no-repeat center center;
+}
+.mute_button{
+	position:absolute;
+	top:40px;
+	width:50px;
+	height:50px;
+	background: url("../../images/unmuteF.png") no-repeat center center;
+}

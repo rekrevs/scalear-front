@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
             "&redirect_uri=" + "http://localhost:9000/#/";
             // store redirect_uri in session  on server??
 
-    window.location=scalear_api.host+"/en/users/sign_angular_in?angular_redirect=http://localhost:9000/#/"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
+    window.location=scalear_api.host+"/en/users/sign_angular_in?angular_redirect=http://angular-edu.herokuapp.com/#/"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
 
     //console.log($location.path()) ;
    }

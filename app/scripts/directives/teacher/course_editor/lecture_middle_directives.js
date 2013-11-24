@@ -391,7 +391,7 @@ angular.module('scalearAngularApp')
 }]).directive('htmlanswer',function(){
 	return {
 	 	restrict: 'E',
-	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'style='overflow:auto' >"+					
+	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'style='/*overflow:auto*/' >"+
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
 					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+

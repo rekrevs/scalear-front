@@ -13,7 +13,7 @@
 .ontop{
   position:absolute;
   width:500px;
-  height:306px;
+  height:auto;
   z-index:5;
 }
 
@@ -67,8 +67,9 @@
 }
 
 .answer_div{
-	width: 400px;
-	margin-left:100px;
+	width: auto;
+    height: 100%;
+	margin-left:10px;
 	margin-bottom:20px;	
 	position: relative;
   padding: 39px 19px 14px;

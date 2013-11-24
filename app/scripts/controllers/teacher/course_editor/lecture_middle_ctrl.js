@@ -79,7 +79,8 @@ angular.module('scalearAngularApp')
 			console.log("HTML quiz")
 			$scope.double_click_msg=""
 			$scope.quiz_layer.backgroundColor= "white"
-			$scope.quiz_layer.overflow= 'auto'
+			$scope.quiz_layer.overflowX= 'hidden'
+            $scope.quiz_layer.overflowY= 'auto'
 			getHTMLData()
 		}
 	}

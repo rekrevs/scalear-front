@@ -146,10 +146,10 @@ angular.module('scalearAngularApp')
 				var ontop=angular.element('.ontop');		
 				var w = scope.data.width * ontop.width();
 				var h = scope.data.height* (ontop.height() - 26);
-				var add_left= (w-13)/2.0
-				var add_top = (h-13)/2.0
-				scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left+6;				
-				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26)) + add_top+6;
+				//var add_left= (w-13)/2.0
+				//var add_top = (h-13)/2.0
+				scope.xcoor = (scope.data.xcoor * ontop.width())//+ add_left;				
+				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26))// + add_top/2 -1;
 				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
 				console.log(scope.xcoor)
 				console.log(scope.ycoor)

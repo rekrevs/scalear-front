@@ -163,7 +163,7 @@ angular.module('scalearAngularApp')
 	    	console.log("adding on top ontop")
 
 	    	var left= event.pageX - element.offset().left - 6//event.offsetX - 6
-		  	var top = event.pageY - element.offset().top - 6 //event.offsetY - 6
+		  	var top = event.pageY - element.offset().top - 12 //event.offsetY - 6
 
 	    	console.log(event)
 	    	console.log(element)

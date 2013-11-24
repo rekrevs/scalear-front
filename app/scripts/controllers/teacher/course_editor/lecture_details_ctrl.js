@@ -26,16 +26,15 @@ angular.module('scalearAngularApp')
     };
 
 	$scope.updateLecture= function(data,type){
-		console.log($scope.lecture)
+		if(data)
+          $scope.lecture[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()   		
 		var modified_lecture=angular.copy($scope.lecture);
-
 		delete modified_lecture["id"];
 		delete modified_lecture["created_at"];
 		delete modified_lecture["updated_at"];
 		delete modified_lecture["className"];
 		delete modified_lecture["detected_aspect_ratio"];
-		if(data)
-          modified_lecture[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()   		
+		
 		Lecture.update(
 			{lecture_id:$scope.lecture.id},
 			{lecture:modified_lecture},
@@ -56,8 +55,7 @@ angular.module('scalearAngularApp')
 		getYoutubeDetails();
 	}
 
-	var urlFormat =function()
-	{
+	var urlFormat =function(){
 		var url=$scope.lecture.url
 		var video_id = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
 		if(video_id != null) {
@@ -65,8 +63,7 @@ angular.module('scalearAngularApp')
 		}
 	}
 
-	function getYoutubeDetails()
-	{
+	var getYoutubeDetails= function(){
 		var id=$scope.lecture.url.split("v=")[1]
 		$scope.video={}
 		if(id!=null && typeof id != 'undefined')
@@ -94,6 +91,8 @@ angular.module('scalearAngularApp')
 	        		$scope.updateLecture()
 			});
 		}
+		else
+			$scope.lecture.aspect_ratio = "widescreen"
 		
 	}
 

@@ -22,16 +22,16 @@
   'ui.calendar',
   'ui.tinymce',
   'googlechart'
-]).constant('scalear_api', {host:'http://angular-learning.herokuapp.com'}) //http://localhost:3000
+]).constant('scalear_api', {host:'http://localhost:3000'}) //http://localhost:3000
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
   .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout) {
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
       
-      	var statesThatDontRequireAuth =['login', 'home']
-		var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information']
-		var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
+    	var statesThatDontRequireAuth =['login', 'home']
+		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information']
+		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
 
   		// check if route does not require authentication
   		var routeClean = function(state) {

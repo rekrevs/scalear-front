@@ -3,6 +3,7 @@ dist
 .tmp
 .sass-cache
 app/bower_components
+.project
 selenium/
 ./selenium/
 <<<<<<< HEAD

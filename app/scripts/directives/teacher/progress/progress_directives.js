@@ -29,8 +29,9 @@ angular.module('scalearAngularApp')
 		        }
 		    }
 		    scope.module_ids=[]
-		    for(var id in scope.status[scope.students[0].id])
-		    	scope.module_ids.push(id)
+		    if(scope.students[0])
+			    for(var id in scope.status[scope.students[0].id])
+			    	scope.module_ids.push(id)
 	    }
     };
 })

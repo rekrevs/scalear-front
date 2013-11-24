@@ -28,7 +28,8 @@ angular.module('scalearAngularApp')
     };
     
       $scope.updateModule=function(data,type){
-        console.log("module update")
+        if(data)
+          $scope.module[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear() 
         var modified_module=angular.copy($scope.module);
         delete modified_module["id"];
         delete modified_module["documents"];
@@ -37,8 +38,7 @@ angular.module('scalearAngularApp')
         delete modified_module["total_time"];
         delete modified_module["total_questions"];
         delete modified_module["total_quiz_questions"];
-        if(data)
-          modified_module[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()          
+                 
         Module.update(
           {module_id: $scope.module.id},
           {group: modified_module},

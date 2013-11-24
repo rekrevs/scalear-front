@@ -9,13 +9,13 @@ angular.module('scalearAngularApp')
     
     $scope.$emit('accordianUpdate',$scope.quiz.group_id);
 
-    $scope.updateQuiz = function(data,type) {   		
+    $scope.updateQuiz = function(data,type) {   
+        if(data)
+          $scope.quiz[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()     		
      		var modified_quiz=angular.copy($scope.quiz);
      		delete modified_quiz["created_at"];
      		delete modified_quiz["updated_at"];
-     		delete modified_quiz["id"];  
-        if(data)
-          modified_quiz[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()   		
+     		delete modified_quiz["id"];  	
       	Quiz.update({quiz_id:$scope.quiz.id},{quiz:modified_quiz},function(data){
   				$scope.quiz= data.quiz;
           $scope.$emit('detailsUpdate');

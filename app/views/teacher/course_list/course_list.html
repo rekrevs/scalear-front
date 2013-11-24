@@ -46,6 +46,7 @@
 			</tr>
 		</tbody>
 	</table>	
-	<a ui-sref="new_course">New Course</a><br />
-	<a ng-show="filtered_teacher" ng-click="filtered_teacher=''">Back</a>
+	<a ng-show="filtered_teacher" ng-click="filtered_teacher=''">Back</a><br>
 </div>
+
+<a ng-hide="!courses" ui-sref="new_course">New Course</a><br />

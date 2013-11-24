@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('AnnouncementsCtrl',['$scope', 'Announcement', function ($scope, Announcement) {
+  .controller('AnnouncementsCtrl',['$scope', 'Announcement','$stateParams', function ($scope, Announcement, $stateParams) {
   	console.log("over here");
   	
   	var init = function()
   	{
-  		Announcement.index(
+  		Announcement.index({course_id: $stateParams.course_id},
   			function(data){
   				$scope.announcements=data;
   			}
@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
   	$scope.deleteAnnouncement=function(index){
   		if(confirm("Are you sure you want to delete this announcement?")){
   		if($scope.announcements[index].id){
-	  		Announcement.destroy({announcement_id: $scope.announcements[index].id},function(data){
+	  		Announcement.destroy({course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},function(data){
 	  			//init();
 	  			$scope.announcements.splice(index, 1)
 	  		})
@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
   	$scope.hideAnnouncement = function(index){ //get old data.
   		$scope.announcements[index].show=false
   		if($scope.announcements[index].id){
-  		Announcement.show({announcement_id:$scope.announcements[index].id },
+  		Announcement.show({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id },
   			function(data){
   				console.log(data);
   				$scope.announcements[index]=data;
@@ -60,14 +60,14 @@ angular.module('scalearAngularApp')
   		
   		if(!$scope.announcements[index].id) // create new one
   		{
-  		Announcement.create({},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
+  		Announcement.create({course_id: $stateParams.course_id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
   			//init();
   			$scope.announcements[index]=data;
   		},function(response){
   			$scope.announcements[index].errors=response["data"]
   		})
   		}else{
-  		Announcement.update({announcement_id:$scope.announcements[index].id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
+  		Announcement.update({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
   			$scope.announcements[index]=data;
   		},function(response){
   			$scope.announcements[index].errors=response["data"]

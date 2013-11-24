@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('TeacherCourseSendEmailCtrl', ['$scope', '$http', 'emails', 'Course', 'batchEmailService', function ($scope, $http, emails, Course, batchEmailService) {
+  .controller('TeacherCourseSendEmailCtrl', ['$scope', '$http', 'emails', 'Course', 'batchEmailService', '$stateParams','$state', function ($scope, $http, emails, Course, batchEmailService, $stateParams, $state) {
 
+console.log("in send emails");
+console.log($stateParams);
 //            $scope.batch_emails = batchEmailService.getEmails();
 //            while($scope.batch_emails.indexOf(',') != -1){
 //                for(var i=0; i <$scope.batch_emails.length; i++){
@@ -35,7 +37,7 @@ angular.module('scalearAngularApp')
 
         $scope.sendEmail = function(address, title, body){
 //            var params = $.param({email: address, subject: title, message: body});
-            Course.send_email_through({email:address, subject:title, message:body});
+            Course.send_email_through({course_id:$stateParams.course_id, email:address, subject:title, message:body});
             $state.go('course.enrolled_students')
         }
 

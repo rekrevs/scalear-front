@@ -1,7 +1,11 @@
 'use strict';
 
 var app = angular.module('scalearAngularApp')
-  app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService', function ($scope, $http, $location, $state, Course, students, batchEmailService) {
+  app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService','$stateParams', function ($scope, $http, $location, $state, Course, students, batchEmailService, $stateParams) {
+        
+        console.log("in enrolled students");
+		console.log($stateParams);
+
         console.log(students.data.course);
         console.log(students.data.students);
         $scope.data = students.data.students;
@@ -17,7 +21,7 @@ var app = angular.module('scalearAngularApp')
             var answer = confirm('Are you sure that you want to remove this student?');
             if(answer){
                 //console.log('pressed yes')
-                Course.remove_student({student: student})
+                Course.remove_student({course_id:$stateParams.course_id ,student: student})
                 //console.log(index);
 
                 $scope.data.splice(index, 1);
@@ -51,18 +55,4 @@ var app = angular.module('scalearAngularApp')
 //      $scope.checked = true;
   }]);
 
-app.factory('batchEmailService', function(){
 
-    var emails={
-        value:[],
-
-        getEmails: function(){
-        return emails.value
-        },
-
-        setEmails: function(value){
-           emails.value = value
-        }
-    }
-    return emails
-});

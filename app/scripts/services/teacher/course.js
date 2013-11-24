@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
   $http.defaults.useXDomain = true;
   return $resource(scalear_api.host+'/en/courses/:course_id/:action', {course_id:$stateParams.course_id},
-    { 'create': { method: 'POST', headers:headers},
+    { 'create': { method: 'POST', headers:headers, params:{course_id:null}},
       'index': { method: 'GET', isArray: true , headers:headers, params:{course_id:null}},
       'update': { method: 'PUT' , headers:headers},
       'send_email_through':{method: 'POST', params: {action: 'send_email_through'}, headers:headers},
@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
       'getCourseEditor': {method: 'GET', params: {action: 'course_editor_angular'}, headers:headers},
       'getGroupItems' : {method: 'GET', params: {action: 'get_group_items'}, headers:headers},
       'getTeachers' : {method: 'GET', params: {action: 'teachers'}, headers:headers},
-      'enroll' : {method: 'POST', params: {action: 'enroll_to_course'}, headers:headers},
+      'enroll' : {method: 'POST', params: {action: 'enroll_to_course', course_id:null}, headers:headers},
       'getModuleProgress': {method: 'GET', params: {action: 'module_progress_angular'}, headers:headers},
       'getTotalChart':{method:'GET', params:{action:'get_total_chart_angular'},headers:headers}
     });

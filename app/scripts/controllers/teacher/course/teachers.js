@@ -1,7 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('TeacherCourseTeachersCtrl', ['$scope', '$http', '$state', 'Course', 'teachers', function ($scope, $http, $state, Course, teachers) {
+  .controller('TeacherCourseTeachersCtrl', ['$scope', '$http', '$state', 'Course', 'teachers','$stateParams',  function ($scope, $http, $state, Course, teachers, $stateParams) {
+        
+        console.log("in enrolled students");
+		console.log($stateParams);
+		
         $scope.teachers = teachers.data.data;
         $scope.new_teachers = []
         console.log(teachers.data);
@@ -39,7 +43,7 @@ angular.module('scalearAngularApp')
         $scope.removeRow = function(index){
             var answer = confirm('Are you sure that you want to remove \''+$scope.teachers[index].email+'\' from this course?');
             if(answer){
-                Course.deleteTeacher({email:$scope.teachers[index].email}).$promise.then(
+                Course.deleteTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email}).$promise.then(
                     function(value) {$scope.teachers.splice(index, 1);},
                     //handle the server error
                     function(value) {}
@@ -49,13 +53,13 @@ angular.module('scalearAngularApp')
             }
         }
         $scope.updateTeacher = function(index){
-            Course.updateTeacher({email:$scope.teachers[index].email, role_id:$scope.teachers[index].role});
+            Course.updateTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email, role_id:$scope.teachers[index].role});
         }
         $scope.removeNewRow = function(index){
             $scope.new_teachers.splice(index, 1);
         }
         $scope.saveTeachers = function(){
-            Course.saveTeachers({new_teachers:$scope.new_teachers}).$promise.then(
+            Course.saveTeachers({course_id:$stateParams.course_id, new_teachers:$scope.new_teachers}).$promise.then(
                 function(value) {
                     $scope.error = Course.getTeachers({}).$promise.then(
                         function(value){

@@ -2,6 +2,10 @@
 
 angular.module('scalearAngularApp')
   .controller('TeacherCourseCourseInformationCtrl', ['$scope', '$stateParams','$http', 'Course','course', function ($scope, $stateParams,$http, Course, course) {
+        
+        console.log("in course information");
+		console.log($stateParams);
+
         course.start_date = new Date(course.data.start_date);
 
         $scope.data = course.data;
@@ -16,7 +20,7 @@ angular.module('scalearAngularApp')
             delete modified_course["unique_identifier"];
             console.log($scope.data.course)
             Course.update(
-                {},
+                { course_id:$stateParams.course_id}, //course_id:$scope.data.course.id
                 {course:modified_course}
                 )
 

@@ -40,9 +40,9 @@ angular.module('scalearAngularApp')
     // optional method
    'responseError': function(rejection) {
       // do something on error
+      console.log(rejection);
       
-      
-      if(rejection.status==403) 
+      if(rejection.status==403 && rejection.config.url.search(re)!=-1) 
       {
       	 var $state = $injector.get('$state'); //test connection every 10 seconds.
       	if($rootScope.current_user.roles[0].id==2)// student
@@ -63,7 +63,7 @@ angular.module('scalearAngularApp')
       	
       }
       
-      if(rejection.status==401)
+      if(rejection.status==401 && rejection.config.url.search(re)!=-1)
       {
       	 var $state = $injector.get('$state'); //test connection every 10 seconds.
       	$state.go("login")
@@ -76,7 +76,8 @@ angular.module('scalearAngularApp')
       	
       	
       }
-      if(rejection.status==0) //host not reachable
+      var re= new RegExp("^"+scalear_api.host)
+      if(rejection.status==0 && rejection.config.url.search(re)!=-1) //host not reachable
       {
       	
       	if($rootScope.server_error!=true)

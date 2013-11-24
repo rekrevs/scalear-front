@@ -9,13 +9,13 @@
 					<details-text value="quiz.name" save="updateQuiz()" validate="validateQuiz" column="name"></details-text>
   				</td>
 			</tr>
-			<tr ng-show="quiz.quiz_type=='quiz'">
+			<tr ng-if="quiz.quiz_type=='quiz'">
 				<td>Required:</td>
 				<td>
 					<details-check checked="quiz.required" save="updateQuiz()" yes="This Quiz is Required" no="This Quiz is Not Required" title="Required?" validate="validateQuiz" column="required"></details-check> <br />
   				</td>
 			</tr>
-			<tr ng-show="quiz.quiz_type=='quiz'">
+			<tr ng-if="quiz.quiz_type=='quiz'">
 				<td>Retries:</td>
 				<td>
 					<details-number min="0" value="quiz.retries" save="updateQuiz()" validate="validateQuiz" column="retries" ></details-number><br />

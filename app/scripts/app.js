@@ -22,7 +22,7 @@
   'ui.calendar',
   'ui.tinymce',
   'googlechart'
-]).constant('scalear_api', {host:'http://angular-learning.herokuapp.com'}) //http://localhost:3000
+]).constant('scalear_api', {host:'http://localhost:3000'}) //http://localhost:3000 //http://angular-learning.herokuapp.com
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
   .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout) {
@@ -82,6 +82,14 @@
     				{
     					$state.go("course_list");
     					s=0;
+    				}
+    			else if( to.name=="home" && result==1 ) // teacher going to home, redirected to courses page
+    				{
+    					$state.go("course_list");
+    				}
+    			else if( to.name=="home" && result==2 ) // student going to home, redirected to student courses page
+    				{
+    					$state.go("student_courses");
     				}
     				
     				if(s==0){

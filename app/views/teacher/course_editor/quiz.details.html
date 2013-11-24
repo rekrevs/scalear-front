@@ -9,13 +9,13 @@
 					<details-text value="quiz.name" save="updateQuiz()" validate="validateQuiz" column="name"></details-text>
   				</td>
 			</tr>
-			<tr ng-show="quiz.quiz_type=='quiz'">
+			<tr ng-if="quiz.quiz_type=='quiz'">
 				<td>Required:</td>
 				<td>
 					<details-check checked="quiz.required" save="updateQuiz()" yes="This Quiz is Required" no="This Quiz is Not Required" title="Required?" validate="validateQuiz" column="required"></details-check> <br />
   				</td>
 			</tr>
-			<tr ng-show="quiz.quiz_type=='quiz'">
+			<tr ng-if="quiz.quiz_type=='quiz'">
 				<td>Retries:</td>
 				<td>
 					<details-number min="0" value="quiz.retries" save="updateQuiz()" validate="validateQuiz" column="retries" ></details-number><br />
@@ -27,7 +27,7 @@
 					<details-check checked="quiz.appearance_time_module" save="updateQuiz()" yes="Using Module's Appearance Date" no="Not Using Module's Appearance Date" title="Use Module's?" validate="validateQuiz" column="appearance_time_module" ></details-check> <br />
   					<p ng-hide="quiz.appearance_time_module">
   						Set Date:<br>
-  						<details-date date="quiz.appearance_time" save="updateQuiz()" validate="validateQuiz" column="appearance_time"></details-date>
+  						<details-date date="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-date>
   					</p>
 				</td>
 			</tr>
@@ -37,7 +37,7 @@
 					<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="Using Module's Due Date" no="Not Using Module's Due Date" title="Use Module's?" validate="validateQuiz" column="due_date_module"></details-check> <br />
   					<p ng-hide="quiz.due_date_module">
   						Set Date:<br>
-  						<details-date date="quiz.due_date" save="updateQuiz()" validate="validateQuiz" column="due_date"></details-date>
+  						<details-date date="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-date>
   					</p>
 				</td>
 			</tr>

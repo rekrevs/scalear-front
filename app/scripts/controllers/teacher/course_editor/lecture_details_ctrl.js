@@ -25,7 +25,7 @@ angular.module('scalearAngularApp')
 	    return d.promise;
     };
 
-	$scope.updateLecture= function(){
+	$scope.updateLecture= function(data,type){
 		console.log($scope.lecture)
 		var modified_lecture=angular.copy($scope.lecture);
 
@@ -34,7 +34,8 @@ angular.module('scalearAngularApp')
 		delete modified_lecture["updated_at"];
 		delete modified_lecture["className"];
 		delete modified_lecture["detected_aspect_ratio"];
-		
+		if(data)
+          modified_lecture[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()   		
 		Lecture.update(
 			{lecture_id:$scope.lecture.id},
 			{lecture:modified_lecture},

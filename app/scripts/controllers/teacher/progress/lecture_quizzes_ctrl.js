@@ -4,9 +4,11 @@ angular.module('scalearAngularApp')
   .controller('lectureQuizzesCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
     
   	$scope.lectureQuizzesTab = function(){
+        console.log("lecture quizze tab")
         $scope.tabState(1)
         $scope.enableChartsScrolling()
         if($scope.chart_offset == null){
+            console.log("chart offset "+ $scope.chart_offset)
         	$scope.loading_video = true
             getLectureCharts(0,5)
         }
@@ -137,5 +139,6 @@ angular.module('scalearAngularApp')
         chart.data = $scope.formatLectureChartData(chart_data[id])
         return chart
     }
+    $scope.lectureQuizzesTab()
 
   }]);

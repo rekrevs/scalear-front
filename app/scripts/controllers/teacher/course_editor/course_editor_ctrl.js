@@ -42,8 +42,8 @@ angular.module('scalearAngularApp')
 		);
     }
 
-    $scope.removeModule=function(index){
-    	console.log("remove mod") 
+    $scope.removeModule=function(event, index){
+    	console.log("remove mod")
     	event.preventDefault();
   		event.stopPropagation();  
   		var m_id= $scope.modules[index].id;

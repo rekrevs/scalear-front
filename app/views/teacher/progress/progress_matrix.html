@@ -1,10 +1,10 @@
-<div style="border:1px solid lightgray;float:right;padding: 5px;display:flex;margin-bottom:10px">
+<div style="border:1px solid lightgray;float:right;padding: 5px;display:-webkit-inline-box;display:flex;margin-bottom:10px">
     <div ng-repeat="stat in ['Finished on Time', 'Finished Not on time', 'Not Finished']">
         <img ng-src='images/{{stat.split(" ").join("_")}}.png' style="width:12px">
         <span style="margin-right:10px;font-size:12px;display:inline">{{stat}}</span>
     </div>
 </div>
-<div>
+<div style="margin-top:40px">
     <table class='table' style="font-size: 10px;">
         <tr>
             <td ></td>

@@ -23,7 +23,8 @@ angular.module('scalearAngularApp')
       'getTeachers' : {method: 'GET', params: {action: 'teachers'}, headers:headers},
       'enroll' : {method: 'POST', params: {action: 'enroll_to_course', course_id:null}, headers:headers},
       'getModuleProgress': {method: 'GET', params: {action: 'module_progress_angular'}, headers:headers},
-      'getTotalChart':{method:'GET', params:{action:'get_total_chart_angular'},headers:headers}
+      'getTotalChart':{method:'GET', params:{action:'get_total_chart_angular'},headers:headers},
+      'getCourseware':{method:'GET', params:{action:'courseware_angular'},headers:headers}
     });
 
 }])

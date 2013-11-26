@@ -1,35 +1,29 @@
 <div id="cover"></div>  
-<div id="big_div" style="width:100%;height:100%; background-color:white">
-	<div class="mute_button"></div>
-	<div class="play_button"></div>
-	<div style="display: block; height: 60%; width: 100%;" id="top">
-		<div id="left" style="height: 100%; min-width: 50px; display: inline-block;vertical-align: top;">
-			<button_link title="-5" action="" />
-			<button_link title="<<" action="" />
-		</div>
-		<div id='fo2'>
-			<loading size="small" show=false >
-			<!--<%= image_tag "loading2.gif", :id => "loading-image"%>-->
-		</div>
-		<!-- <div id="resizable" style="border:4px solid black;margin-top: 0px; height: 100%; background-color: gray; width: 428.444px; display: inline-block;"></div> -->
-		<video_container class="largescreen">
-			<!-- <loading size='small' show="!url" style="top:50%;position:relative" /> -->
-			<youtube ng-if="url" id="inclass_vid" url="url" controls="lecture_player_controls" class="largescreen" ready="lecture_player_controls.pause()" />
-		</video_container>
-		<div id="right" style="height: 100%; min-width: 50px; display: inline-block;vertical-align: top;">
-			<button_link title="+5" action="" />
-			<button_link title=">>" action="" />
-		</div>
-	</div>
-	<div id="below" style="display:block;width:100%;height:40%;background-color:white;">
-		<div id="the_question2" style="position:absolute;padding-left:10px;display:inline;font-size:28px;margin-top:0px;line-height:30px;height:40%;width:40%;">
-			<div id="the_question" style="position:absolute;height:90%;margin-top: 15px;"></div>
-			<a ui-sref="course.inclass()" style="display:inline;font-size:16px;position:absolute;bottom:0;left:0">Exit</a>
-			<div id="pos" style="display:inline;position:absolute;bottom:0;margin-left:35px;">
-				<b style="padding-left:15px;" id="q_num"></b>
-				<b style="padding-left:5px;"  id="lec_num"></b>
-			</div>
-		</div>
-		<div id="the_chart" style="margin-top:8px;width:60%;height:100%;background-color:white;float:right;display:inline;"></div>
-	</div>
+<div id="big_div">
+    <div ng-click="muteBtn()" ng-class="mute_class"></div>
+    <div ng-click="playBtn()" ng-class="play_pause_class"></div>
+    <div id="top"                               style="display:block;width:100%;height:60%">
+        <div id="left"                          style="display:inline-block;min-width:50px;vertical-align:top;height:100%;width:400px;">
+            <button_link title="-5" action=""   style="margin-top: 95px;margin-left: 169px;width: 16px" />
+            <button_link title="<<" action=""   style="margin-top: 10px;margin-left: 169px;width: 16px" ng-disabled="current_quiz == 1" />
+        </div>
+        <video_container class="inclass_sceen">
+            <youtube ng-if="lecture" id="inclass_vid" url="lecture" controls="lecture_player_controls" class="inclass_sceen" ready="lecture_player_controls.pause()" />
+        </video_container>
+        <div id="right"                         style="display:inline-block;min-width:50px;vertical-align:top;height:100%;width:400px">
+            <button_link title="+5" action=""   style="margin-top: 95px;margin-left: 169px;width: 16px"/>
+            <button_link title=">>" action=""   style="margin-top: 10px;margin-left: 169px;width: 16px"/>
+        </div>
+    </div>
+    <div id="below"                             style="display:block;width:100%;height:40%">
+        <div id="the_question2"                 style="position:absolute;padding-left:10px;display:inline;font-size:28px;margin-top:0px;line-height:30px;height:40%;width:40%">
+            <div id="the_question"              style="position:absolute;height:90%;margin-top: 15px;">{{question}}</div>
+            <a ng-click="exit()"                style="display:inline;font-size:16px;position:absolute;bottom:0;left:0" >Exit</a>
+            <div id="pos"                       style="display:inline;position:absolute;bottom:0;margin-left:35px;">
+                <b id="q_num"                   style="padding-left:15px;font-size:14px">Q:{{current_quiz+'/'+total_num_quizzes}}</b>
+                <b id="lec_num"                 style="padding-left:15px;font-size:14px">L:{{current_lecture+'/'+total_num_lectures}}</b>
+            </div>
+        </div>
+        <div id="the_chart"                     style="margin-top:8px;width:60%;height:100%;background-color:white;float:right;display:inline;"></div>
+    </div>
 </div>

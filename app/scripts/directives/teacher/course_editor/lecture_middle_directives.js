@@ -29,6 +29,8 @@ angular.module('scalearAngularApp')
 
 				console.debug("YOUTUBE " + scope.id)
 				var player
+				if(!scope.controls)
+					scope.controls={}
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)

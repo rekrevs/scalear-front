@@ -340,7 +340,7 @@ angular.module('scalearAngularApp')
 			subtype:"="
 		},
 		restrict: 'E',
-		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
+		template: "<ng-form name='qform' style='overflow: auto;'><div style='text-align:left;margin:10px;'>"+
 						"<label class='q_label'>Question:</label>"+
 						"<input required name='qlabel' type='text' ng-model='quiz[column]' />"+
 						"<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'>Required!</span>"+
@@ -490,7 +490,7 @@ angular.module('scalearAngularApp')
 		replace:true,
 		template:"<li class='ui-state-default'>"+
 					"<ng-form name='aform'>"+
-						"<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"+
+						"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item'></span>"+
 						"<input type='text' required name='answer' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
 						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
 						"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='removeAnswer($index, quiz)' ><img src='images/trash3.png' /></a>"+

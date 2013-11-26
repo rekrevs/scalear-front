@@ -1,7 +1,6 @@
 <div ng-show="all_surveys">
 	<select ng-model="selected_survey" ng-options="q[0] for q in all_surveys" ng-change="changeSurvey()"></select>
 	<center>
-		<loading size="small" show="loading_surveys_chart" />
 		<b>{{selected_survey[0]}}</b>	
 	</center>
 	<button_link ng-show="button_msg" action="makeVisibleBtn()" title="{{button_msg}}" style="margin:10px 0px" />
@@ -53,5 +52,6 @@
 </table>
 <center>
 	<br /><br />
+	<loading size="small" show="loading_surveys_chart" />
 	<div ng-if="!all_surveys && !loading_surveys_chart">No Surveys</div>
 </center>

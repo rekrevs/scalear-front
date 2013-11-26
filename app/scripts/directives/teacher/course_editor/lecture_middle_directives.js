@@ -53,6 +53,10 @@ angular.module('scalearAngularApp')
 					return player.currentTime()
 				}
 
+				scope.controls.getDuration=function(){
+					return player.duration()
+				}
+
 				scope.controls.seek = function(time, url){
 					if(scope.url != url){
 			    		scope.url = url 

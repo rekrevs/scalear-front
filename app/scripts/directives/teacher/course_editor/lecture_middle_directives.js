@@ -450,7 +450,7 @@ angular.module('scalearAngularApp')
 					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
 					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone'>Choose atleast one</span>"+
 					"<br ng-if='show()'/>"+
-					"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' />"+
+					"<input ng-if='show()' type='text' class='explain' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' />"+
 					"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'><img src='images/trash3.png' /></a>"+
 					"<br/>"+
 				"</ng-form>"

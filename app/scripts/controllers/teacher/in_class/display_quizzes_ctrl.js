@@ -1,111 +1,185 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuizzesCtrl', ['$scope','$modalInstance','Module',function ($scope, $modalInstance, Module) {
+  .controller('displayQuizzesCtrl', ['$scope','$modalInstance','$timeout', 'Module',function ($scope, $modalInstance, $timeout, Module) {
 
-  	Module.displayQuizzes(
-  		{module_id: 34},
-  		function(data){
-  			console.log(data)
-  			$scope.lecture_list = data.lecture_list
-  			$scope.display_data = data.display_data
-  			$scope.total_num_lectures = data.num_lectures
-  			$scope.total_num_quizzes  = data.num_quizzes
-  			setupAll()
-  		},
-  		function(){}
-	)
-	$scope.play_pause_class = "play_button"
-	$scope.mute_class = "mute_button"
+  	var init = function(){
+  		Module.displayQuizzes(
+	  		{module_id: 34},
+	  		function(data){
+	  			console.log(data)
+	  			$scope.lecture_list = data.lecture_list
+	  			$scope.display_data = data.display_data
+	  			$scope.total_num_lectures = data.num_lectures
+	  			$scope.total_num_quizzes  = data.num_quizzes
+	  			$scope.chart_data = data.chart_data
+	  			$scope.nextQuiz()
+
+	  		},
+	  		function(){}
+		)
+		$scope.play_pause_class = "play_button"
+		$scope.mute_class = "mute_button"
+		$scope.lecture_player_controls={}
+		$scope.current_lecture = 0
+		$scope.current_quiz = 0
+  	}
 
 
-  	$scope.exit = function () {
+  	$scope.exitBtn = function () {
 		angular.element("body").css("overflow","auto");
 		$modalInstance.close();
 	};
 
 	$scope.playBtn = function()
 	{
-		if($scope.play_pause_class == "play_button")
+		if($scope.play_pause_class == "play_button"){
 			$scope.play_pause_class = "pause_button"
-		else
+			$scope.lecture_player_controls.play()
+		}
+		else{
 			$scope.play_pause_class = "play_button"
+			$scope.lecture_player_controls.pause()
+		}
 	}
 
 	$scope.muteBtn= function()
 	{
-		if($scope.mute_class == "unmute_button")
+		if($scope.mute_class == "unmute_button"){
 			$scope.mute_class = "mute_button"
-		else
+			$scope.lecture_player_controls.unmute()
+		}
+		else{
 			$scope.mute_class = "unmute_button"
+			$scope.lecture_player_controls.mute()
+		}
 	}
 
-	function setupAll()
-	{
-		for(var elem in $scope.lecture_list){
-			var url=$scope.lecture_list[elem]
-			if($scope.display_data[url].length!=0){
-				$scope.lecture= url
-				$scope.quiz_time= $scope.display_data[url][0][0]
-				$scope.current_lecture= parseInt(elem)+1;
-				$scope.current_quiz= parseInt($scope.display_data[url][0][1]);
-				$scope.question = $scope.display_data[url][0][2]
-				break; 
+	$scope.seek=function(){
+		$scope.lecture_player_controls.seek($scope.quiz_time, $scope.myurl)
+	}
+
+	$scope.skip=function(time){
+		if(time){
+			var seek_to_time = $scope.lecture_player_controls.getTime()+time
+			var duration = $scope.lecture_player_controls.getDuration()
+			if(seek_to_time < 0)
+				seek_to_time = 0
+			else if(seek_to_time >duration)
+				seek_to_time = duration
+			$scope.lecture_player_controls.seek(seek_to_time,$scope.myurl)
+			$scope.play_pause_class = "play_button"
+		}
+	}
+
+	var setData=function(url){
+		$scope.myurl= url
+		$scope.quiz_time= $scope.display_data[url][$scope.current_quiz_lecture][0]
+		$scope.question = $scope.display_data[url][$scope.current_quiz_lecture][2]
+		$scope.quiz_id  = $scope.display_data[url][$scope.current_quiz_lecture][3] 
+	}
+	
+	$scope.nextQuiz = function(){
+		if($scope.current_quiz != $scope.total_num_quizzes){
+			var url=$scope.lecture_list[$scope.current_lecture-1]||$scope.lecture_list[0]
+			if($scope.current_quiz_lecture < $scope.display_data[url].length ){
+				setData(url)
+				$scope.seek()
 			}
+			else{
+				$scope.current_quiz_lecture= 0
+				for (var elem=$scope.current_lecture; elem<$scope.lecture_list.length; elem++){
+					var url=$scope.lecture_list[elem]
+					if($scope.display_data[url].length){
+						setData(url)
+						$scope.current_lecture = elem+1;
+						break; 
+					}
+				}
+			}
+			$scope.current_quiz+=1
+			$scope.current_quiz_lecture+= 1
+			$scope.quiz_chart = createChart($scope.quiz_id)
 		}
-		// if($scope.lecture){
-			// var v=$scope.lecture.split("v=")[1].split("&")[0]
-			// player = new YT.Player('resizable', {
-			// 	videoId: v,
-			// 	playerVars: {"showinfo":0,"modestbranding":0,'autoplay': 1, 'rel':0, 'controls': 0, 'start':$scope.quiz_time},//showinfo:0
-			// 	events: {
-			// 	'onReady': onPlayerReady,
-			// 	'onStateChange': onPlayerStateChange
-			// }
-		// });
-
-		// h=$("#resizable").height();
-		// setup_screens();
-		// setup_buttons(h)
-		// setup_button_width();
-		// setup_video2();
-		// setup_actions();
-		// if(current_quiz == 1)
-		// 	$("#previous").attr("disabled", "disabled");
-		// if(current_quiz == num_of_quizzes)
-		// 	$("#next").attr("disabled", "disabled");
-		// }
-		// else{
-		// 	setup_alert();
-		// }
+	}
+	$scope.prevQuiz = function(){
+		if($scope.current_quiz != 1){
+			$scope.current_quiz-=1
+			$scope.current_quiz_lecture-= 2
+			if($scope.current_quiz_lecture >= 0){
+				var url=$scope.lecture_list[$scope.current_lecture-1]
+				setData(url)
+				$scope.seek()
+			}
+			else{
+				for (var elem=$scope.current_lecture-2; elem>=0; elem--){
+					var url=$scope.lecture_list[elem]
+					if($scope.display_data[url].length){
+						$scope.current_quiz_lecture = $scope.display_data[url].length -1
+						setData(url)
+						$scope.current_lecture = elem+1;
+						break; 
+					}
+				}
+			}
+			$scope.current_quiz_lecture+= 1
+		}
 	}
 
-	setup_screens = function()
-	{
-		h=$("#resizable").height();
-		width = h*16.0/9.0;
-		wbig=$("#big_div").width();
-		if(width!=$("#resizable").width())
-		{
-			$("#resizable").width(width)
-			remaining= wbig-width;
-			$("#left").width(remaining/2.0 - 30)
-			$("#right").width(remaining/2.0 - 30)
-		}
-		
-		if($("#resizable").width() + 130 > $("#top").width()) // does not maintain 16:9 aspect ratio anymore.
-		{
-			$("#resizable").width(wbig-130)
-			$("#left").width(50)
-			$("#right").width(50)
-		}
-		
-		player.setSize($("#resizable").width(), $("#resizable").height());
-		$("#fo2").width($("#resizable").width());
-		$("#fo2").height($("#resizable").height());
-		$("#fo2").css("left",$("#resizable").position().left);
-		$("#fo2").css("top",$("#resizable").position().top);
-	}
+	$scope.formatChartData = function(data){
+        var formated_data ={}
+        formated_data.cols=
+            [
+                {"label": "Students","type": "string"},
+                {"label": "Correct", "type": "number"},
+                {"label": "Incorrect","type": "number"},
+            ]
+        formated_data.rows= []
+        for(var ind in data)
+        {
+            var text, correct, incorrect
+            if(data[ind][1]=="gray"){
+                text=data[ind][2]+" "+"(Incorrect)";
+                correct=0
+                incorrect = data[ind][0]
+            }
+            else{
+                text=data[ind][2]+" "+"(Correct)";
+                correct=data[ind][0]
+                incorrect=0
+            }
+            var row=
+            {"c":
+                [
+                    {"v":text},
+                    {"v":correct},
+                    {"v":incorrect},
+                ]
+            }
+            formated_data.rows.push(row)
+        }
+        return formated_data
+    }
 
+    $scope.createChart = function(id){
+        var chart_data = $scope.chart_data[id]
+        var chart = {};
+        chart.type = "ColumnChart"
+        chart.options = {
+            "colors": ['green','gray'],
+            //"title": getQuizTitle(id),
+            "isStacked": "true",
+            "fill": 20,
+            "height": 200,
+            "displayExactValues": true,
+            "fontSize" : 12,
+            "vAxis": {
+                "title": "Number of Students",
+            },
+        };
+        chart.data = $scope.formatChartData(chart_data[id])
+        return chart
+    }
 
+	init()
 }]);

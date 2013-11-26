@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1&controls=0" ,{ width: 500, controls: 0});
 					player.controls( false ); 
 					player.on("loadeddata", 
 						function(){
@@ -47,12 +47,25 @@ angular.module('scalearAngularApp')
 				scope.controls.play=function(){
 					player.play();
 				}
+
 				scope.controls.pause = function(){
 					player.pause();
 				}
 
+				scope.controls.mute = function(){
+					player.mute();
+				}
+
+				scope.controls.unmute = function(){
+					player.unmute();
+				}
+
 				scope.controls.getTime=function(){
 					return player.currentTime()
+				}
+
+				scope.controls.getDuration=function(){
+					return player.duration()
 				}
 
 				scope.controls.seek = function(time, url){
@@ -67,8 +80,8 @@ angular.module('scalearAngularApp')
 			    	else
 		    			scope.controls.pause()
 						player.currentTime(time);
-					
 				}
+
 				scope.controls.refreshVideo = function(){
 					element.find('iframe').remove();
 			  		loadVideo();
@@ -77,8 +90,11 @@ angular.module('scalearAngularApp')
 				$rootScope.$on('refreshVideo',function(){
 					scope.controls.refreshVideo()
 				})
-		
-			  	loadVideo();
+				scope.$watch('url',function(){
+					if(scope.url)
+						scope.controls.refreshVideo()
+				})
+			  	
 		    }
 		};
 }]).directive('editPanel',function(){

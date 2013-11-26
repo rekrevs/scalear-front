@@ -462,11 +462,11 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
-					"<input ng-if='!isSurvey()' atleastone type='radio' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
+					"<input ng-if='!isSurvey()' id='radio_correct' atleastone type='radio' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
 					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
 					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone'>Check one answer</span>"+
 					"<br ng-if='show()'/>"+
-					"<input ng-if='show()' type='text' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
+					"<input ng-if='show()' type='text' class='explain' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
 					"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'>"+
 						"<img src='images/trash3.png' />"+
 					"</a><br>"+

@@ -22,7 +22,7 @@
   'ui.calendar',
   'ui.tinymce',
   'googlechart'
-]).constant('scalear_api', {host:'localhost:3000'}) //http://localhost:3000 //
+]).constant('scalear_api', {host:'http://10.0.0.16:3000'}) //http://localhost:3000 //
 
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)

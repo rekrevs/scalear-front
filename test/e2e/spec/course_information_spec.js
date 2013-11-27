@@ -319,4 +319,53 @@ describe("Course Editor",function(){
             });
         });
     });
+    describe('Teacher Course Enrolled Students', function(){
+
+    });
+    describe('Teacher Course Teachers', function(){
+        it('should go to teachers', function(){
+            ptor.findElement(protractor.By.className('dropdown-toggle')).click();
+            ptor.findElement(protractor.By.id('teachers')).click();
+        });
+        it('should display the course teacher only', function(){
+            ptor.findElements(protractot.By.id('teacher')).then(function(teachers){
+                expect(teachers.length).toBe(1);
+            });
+        });
+        it('should display teacher\'s email', function(){
+            ptor.findElement(protractor.By.id('email')).then(function(email){
+                expect(email.getText()).toBe('admin@scalear.com');
+            })
+        });
+        it('should display teacher\'s role', function(){
+            ptor.findElement(protractor.By.id('role')).then(function(role){
+                expect(role.getText()).toBe('Professor');
+            });
+        });
+        it('should display teacher\'s status', function(){
+            ptor.findElement(protractor.By.id('status')).then(function(status){
+                expect(status.getText()).toBe('Owner');
+            });
+        });
+
+        it('should add new rows for teachers', function(){
+            ptor.findElement(protractor.By.id('add_teacher')).then(function(add_teacher){
+                add_teacher.click();
+                ptor.findElements(protractor.By.id('new_teacher')).then(function(new_teachers){
+                    expect(new_teachers.length).toBe(1);
+                });
+                add_teacher.click();
+                ptor.findElements(protractor.By.id('new_teacher')).then(function(new_teachers){
+                    expect(new_teachers.length).toBe(2);
+                });
+                ptor.findElement(protractor.By.id('delete_new_teacher')).click();
+                ptor.findElements(protractor.By.id('new_teacher')).then(function(new_teachers){
+                    expect(new_teachers.length).toBe(1);
+                });
+            });
+        });
+        it('should input new teacher\'s email', function(){
+            ptor.findElement(protractor.By.id('new_teacher')).sendKeys('')
+        });
+    });
 });

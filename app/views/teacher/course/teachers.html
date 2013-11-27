@@ -8,32 +8,32 @@
                     <th>Status</th>
                     <th></th>
                 </tr>
-                <tr ng-repeat="teacher in teachers">
+                <tr ng-repeat="teacher in teachers" id="teacher">
                     <!--{{row}}-->
-                    <td style="width: 300px;">
+                    <td style="width: 300px;" id="email">
                         {{teacher.email}}
                     </td>
-                    <td  style = "width:500px">
+                    <td  style = "width:500px" id="role">
                         <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
 
                     </td>
-                    <td>
+                    <td id="status">
                         {{teacher.status}}
                     </td>
                     <td>
 
-                            <img src="../../../images/trash3.png" ng-click="removeRow($index)" style="cursor: pointer;"/>
+                            <img ng-if="!teacher.owner" id="delete_teacher" src="../../../images/trash3.png" ng-click="removeRow($index)" style="cursor: pointer;"/>
 
                     </td>
                 </tr>
-                <tr ng-repeat="new_teacher in new_teachers">
+                <tr ng-repeat="new_teacher in new_teachers" id="new_teacher">
                     <!--{{row}}-->
                     <td style="width: 300px;">
-                        <input type="email" placeholder="Email" ng-model="new_teachers[$index].email" value="new_teacher.email"/>
+                        <input type="email" id="new_email" placeholder="Email" ng-model="new_teachers[$index].email" value="new_teacher.email" ng-change="$parent.check(new_teacher.email, $index)"/>
                         <!--<details-text value="new_teacher.email" save="updateTeacher($index)" column="email" validate="email"></details-text>-->
                     </td>
                     <td  style = "width:500px">
-                        <select ng-model="new_teachers[$index].role">
+                        <select id="new_role" ng-model="new_teachers[$index].role">
                             <option value="3">
                                 Professor
                             </option>
@@ -44,19 +44,19 @@
                         <!--<details-select value="new_teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>-->
 
                     </td>
-                    <td>
+                    <td id="new_status">
                         {{new_teacher.status}}
                     </td>
                     <td>
 
-                        <img src="../../../images/trash3.png" ng-click="removeNewRow($index)" style="cursor: pointer;"/>
+                        <img src="../../../images/trash3.png" id="delete_new_teacher" ng-click="removeNewRow($index)" style="cursor: pointer;"/>
 
                     </td>
                 </tr>
             </table>
         <center>
             <input type="button" class="btn" id="add_teacher" ng-click="addRow(teachers.length-1)" value="Add Teacher"/>
-            <input type="button" class="btn btn-primary" ng-click="saveTeachers()" value="Save All" ng-show="new_teachers.length" style="margin-left: 5px;"/>
+            <input type="button" class="btn btn-primary" ng-click="saveTeachers()" value="Save All" ng-show="new_teachers.length" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0" style="margin-left: 5px;"/>
         </center>
 
 

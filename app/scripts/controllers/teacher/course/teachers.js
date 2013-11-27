@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
         $scope.roles = [{value:3, text:'Professor'}, {value:4, text:'TA'}];
 
         $scope.addRow = function(index){
-            $scope.new_teachers.splice(index+1, 0, {email:'', role: '', status: 'pending'});
+            $scope.new_teachers.splice(index+1, 0, {email: null, role: null, status: 'pending'});
 //            $scope.teachers.splice(index+1, 0, {email: '', role : 'role', status:'pending'})
             console.log($scope.new_teachers);
         }
@@ -75,4 +75,10 @@ angular.module('scalearAngularApp')
             )
 
         }
+        $scope.check = function(value, index){
+            if(value == ''){
+                $scope.new_teachers[index].email = null;
+            }
+        }
+
   }]);

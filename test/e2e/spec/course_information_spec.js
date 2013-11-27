@@ -229,7 +229,7 @@ describe("Course Editor",function(){
                     field.sendKeys(' ');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
-                expect(fields[0].getText()).toBe('empty');
+                expect(fields[0].getText()).toBe('Empty');
 
                 fields[0].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
@@ -256,7 +256,7 @@ describe("Course Editor",function(){
                     field.sendKeys(' ');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
-                expect(fields[1].getText()).toBe('empty');
+                expect(fields[1].getText()).toBe('Empty');
 
                 fields[1].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){

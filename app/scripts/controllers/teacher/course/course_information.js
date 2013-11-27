@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
             delete modified_course["created_at"];
             delete modified_course["updated_at"];
             delete modified_course["unique_identifier"];
-            console.log($scope.data.course)
+            console.log(modified_course);
             Course.update(
                 { course_id:$stateParams.course_id}, //course_id:$scope.data.course.id
                 {course:modified_course}

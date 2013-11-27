@@ -1,132 +1,33 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuizzesCtrl', ['$scope','$modalInstance','$timeout', 'Module',function ($scope, $modalInstance, $timeout, Module) {
+  .controller('displayQuizzesCtrl', ['$scope','Module',function ($scope,Module) {
 
   	var init = function(){
   		Module.displayQuizzes(
 	  		{module_id: 34},
 	  		function(data){
 	  			console.log(data)
-	  			$scope.lecture_list = data.lecture_list
-	  			$scope.display_data = data.display_data
-	  			$scope.total_num_lectures = data.num_lectures
-	  			$scope.total_num_quizzes  = data.num_quizzes
-	  			$scope.chart_data = data.chart_data
+	  			$scope.$parent.lecture_list = data.lecture_list
+	  			$scope.$parent.display_data = data.display_data
+	  			$scope.$parent.total_num_lectures = data.num_lectures
+	  			$scope.$parent.total_num_quizzes  = data.num_quizzes
+	  			$scope.$parent.chart_data = data.chart_data
 	  			$scope.nextQuiz()
-
 	  		},
 	  		function(){}
 		)
-		$scope.play_pause_class = "play_button"
-		$scope.mute_class = "mute_button"
-		$scope.lecture_player_controls={}
-		$scope.current_lecture = 0
-		$scope.current_quiz = 0
+		
   	}
 
-
-  	$scope.exitBtn = function () {
-		angular.element("body").css("overflow","auto");
-		$modalInstance.close();
-	};
-
-	$scope.playBtn = function()
-	{
-		if($scope.play_pause_class == "play_button"){
-			$scope.play_pause_class = "pause_button"
-			$scope.lecture_player_controls.play()
-		}
-		else{
-			$scope.play_pause_class = "play_button"
-			$scope.lecture_player_controls.pause()
-		}
+	$scope.$parent.setData=function(url){
+		$scope.$parent.lecture_url= url
+		$scope.$parent.quiz_time= $scope.display_data[url][$scope.current_quiz_lecture][0]
+		$scope.$parent.question_title = $scope.display_data[url][$scope.current_quiz_lecture][2]
+		$scope.$parent.quiz_id  = $scope.display_data[url][$scope.current_quiz_lecture][3] 
 	}
 
-	$scope.muteBtn= function()
-	{
-		if($scope.mute_class == "unmute_button"){
-			$scope.mute_class = "mute_button"
-			$scope.lecture_player_controls.unmute()
-		}
-		else{
-			$scope.mute_class = "unmute_button"
-			$scope.lecture_player_controls.mute()
-		}
-	}
-
-	$scope.seek=function(){
-		$scope.lecture_player_controls.seek($scope.quiz_time, $scope.myurl)
-	}
-
-	$scope.skip=function(time){
-		if(time){
-			var seek_to_time = $scope.lecture_player_controls.getTime()+time
-			var duration = $scope.lecture_player_controls.getDuration()
-			if(seek_to_time < 0)
-				seek_to_time = 0
-			else if(seek_to_time >duration)
-				seek_to_time = duration
-			$scope.lecture_player_controls.seek(seek_to_time,$scope.myurl)
-			$scope.play_pause_class = "play_button"
-		}
-	}
-
-	var setData=function(url){
-		$scope.myurl= url
-		$scope.quiz_time= $scope.display_data[url][$scope.current_quiz_lecture][0]
-		$scope.question = $scope.display_data[url][$scope.current_quiz_lecture][2]
-		$scope.quiz_id  = $scope.display_data[url][$scope.current_quiz_lecture][3] 
-	}
-	
-	$scope.nextQuiz = function(){
-		if($scope.current_quiz != $scope.total_num_quizzes){
-			var url=$scope.lecture_list[$scope.current_lecture-1]||$scope.lecture_list[0]
-			if($scope.current_quiz_lecture < $scope.display_data[url].length ){
-				setData(url)
-				$scope.seek()
-			}
-			else{
-				$scope.current_quiz_lecture= 0
-				for (var elem=$scope.current_lecture; elem<$scope.lecture_list.length; elem++){
-					var url=$scope.lecture_list[elem]
-					if($scope.display_data[url].length){
-						setData(url)
-						$scope.current_lecture = elem+1;
-						break; 
-					}
-				}
-			}
-			$scope.current_quiz+=1
-			$scope.current_quiz_lecture+= 1
-			$scope.quiz_chart = createChart($scope.quiz_id)
-		}
-	}
-	$scope.prevQuiz = function(){
-		if($scope.current_quiz != 1){
-			$scope.current_quiz-=1
-			$scope.current_quiz_lecture-= 2
-			if($scope.current_quiz_lecture >= 0){
-				var url=$scope.lecture_list[$scope.current_lecture-1]
-				setData(url)
-				$scope.seek()
-			}
-			else{
-				for (var elem=$scope.current_lecture-2; elem>=0; elem--){
-					var url=$scope.lecture_list[elem]
-					if($scope.display_data[url].length){
-						$scope.current_quiz_lecture = $scope.display_data[url].length -1
-						setData(url)
-						$scope.current_lecture = elem+1;
-						break; 
-					}
-				}
-			}
-			$scope.current_quiz_lecture+= 1
-		}
-	}
-
-	$scope.formatChartData = function(data){
+	var formatChartData = function(data){
         var formated_data ={}
         formated_data.cols=
             [
@@ -161,13 +62,12 @@ angular.module('scalearAngularApp')
         return formated_data
     }
 
-    $scope.createChart = function(id){
+    $scope.$parent.createChart = function(id){
         var chart_data = $scope.chart_data[id]
         var chart = {};
         chart.type = "ColumnChart"
         chart.options = {
             "colors": ['green','gray'],
-            //"title": getQuizTitle(id),
             "isStacked": "true",
             "fill": 20,
             "height": 200,
@@ -177,7 +77,7 @@ angular.module('scalearAngularApp')
                 "title": "Number of Students",
             },
         };
-        chart.data = $scope.formatChartData(chart_data[id])
+        chart.data = formatChartData(chart_data)
         return chart
     }
 

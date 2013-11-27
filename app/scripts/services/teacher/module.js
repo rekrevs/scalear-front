@@ -23,6 +23,8 @@ angular.module('scalearAngularApp')
       	'getStudentStatistics':{method:'GET', params:{action:'get_student_statistics_angular'},headers:headers},
       	'changeModuleStatus':{method:'POST', params:{action:'change_status_angular'},headers:headers},
       	'displayQuizzes':{method:'GET', params:{action:'display_quizzes_angular'},headers:headers},
+      	'displayQuestions':{method:'GET',params:{action:'display_questions_angular'},headers:headers},
+      	'displaySurveys':{method:'GET',params:{action:'display_surveys_angular'},headers:headers}
 
 	  });
 

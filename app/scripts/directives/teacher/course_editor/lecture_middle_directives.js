@@ -68,18 +68,9 @@ angular.module('scalearAngularApp')
 					return player.duration()
 				}
 
-				scope.controls.seek = function(time, url){
-					if(scope.url != url){
-			    		scope.url = url 
-			    		scope.controls.refreshVideo()
-			    		player.on("loadeddata", function(){			    	
-					    	scope.controls.pause()
-							player.currentTime(time);
-						});
-			    	}
-			    	else
-		    			scope.controls.pause()
-						player.currentTime(time);
+				scope.controls.seek = function(time){
+					player.currentTime(time);
+	    			scope.controls.pause()
 				}
 
 				scope.controls.refreshVideo = function(){

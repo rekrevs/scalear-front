@@ -1,0 +1,26 @@
+<div>
+    <div                                                	style="display:block;width:100%;height:80%">
+        <div                                            	style="display:inline-block;min-width:50px;vertical-align:top;height:100%;width:400px;">
+            <button_link title="<<" action="prevSurvey()" 	style="margin-top: 10px;margin-left: 169px;width: 16px" ng-disabled="current_quiz <= 1" />
+        </div>
+     	<div                                               	style="display:block;width:100%;height:100%">
+	        <div                                            style="position:absolute;padding-left:10px;display:inline;font-size:28px;margin-top:0px;line-height:30px;width:100%;height:100%">
+	           	<div ng-show="chart_data"                   style="margin-top:8px;width:60%;height:100%;background-color:white;float:right;display:inline;">
+		            <div google-chart chart="chart"></div>
+	         	</div>
+	            <div                                        style="position:absolute;height:90%;margin-top:15px;width:40%">{{survey_title}}</div>
+		            <div ng-repeat="question in questions"  style="position:absolute;height:90%;margin-top:15px;font-size:20px;;padding-left:15px" ng-click="seek(question[1])">{{question[0]}}</div>
+	         	</div>
+		    </div>
+        <div                                            	style="display:inline-block;min-width:50px;vertical-align:top;height:100%;width:400px">
+            <button_link title=">>" action="nextSurvey()" 	style="margin-top: 10px;margin-left: 169px;width: 16px" ng-disabled="current_quiz== total_num_quizzes"/>
+        </div>
+    </div>
+    <div style="height:20%">
+    	<a ng-click="exitBtn()"                     		style="display:inline;font-size:16px;position:absolute;bottom:0;left:0" >Exit</a>
+        <div                                        		style="display:inline;position:absolute;bottom:0;margin-left:35px;">
+            <b                                      		style="padding-left:15px;font-size:14px">Q:{{current_question+'/'+total_num_questions}}</b>
+            <b                                      		style="padding-left:15px;font-size:14px">L:{{current_survey+'/'+total_num_surveys}}</b>
+        </div>        
+    </div>
+</div>

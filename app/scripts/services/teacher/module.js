@@ -24,7 +24,10 @@ angular.module('scalearAngularApp')
       	'changeModuleStatus':{method:'POST', params:{action:'change_status_angular'},headers:headers},
       	'displayQuizzes':{method:'GET', params:{action:'display_quizzes_angular'},headers:headers},
       	'displayQuestions':{method:'GET',params:{action:'display_questions_angular'},headers:headers},
-      	'displaySurveys':{method:'GET',params:{action:'display_surveys_angular'},headers:headers}
+      	'displaySurveys':{method:'GET',params:{action:'display_surveys_angular'},headers:headers},
+      	'hideQuiz':{method:'POST',params:{action:'hide_invideo_quiz'},headers:headers},
+      	'hideQuestion':{method:'POST',params:{action:'hide_student_question'},headers:headers},
+      	'getStudentQuestions':{method:'GET', params:{action:'get_student_questions'},headers:headers}
 
 	  });
 

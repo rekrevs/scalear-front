@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window',function ($scope, $modal, $timeout,$window) {
 
-  	$scope.open = function (type) {
+  	$scope.display = function (type) {
       $scope.lecture_player_controls={}
       $scope.play_pause_class = "play_button"
       $scope.mute_class = "mute_button"
@@ -25,15 +25,30 @@ angular.module('scalearAngularApp')
   		angular.element("body").css("overflow","hidden");
   		var win = angular.element($window)
   		win.scrollTop("0px")
-      
+      var filename="inclass_display"
+      if(type =="Surveys")
+        filename += "_surveys"
+
   		$scope.modalInstance = $modal.open({
-  			templateUrl: 'views/teacher/in_class/inclass_display.html',
+  			templateUrl: 'views/teacher/in_class/'+filename+'.html',
   			windowClass: 'whiteboard',
   			controller: 'display'+type+'Ctrl',
         scope: $scope
   		});
   	};
 
+    $scope.review=function(type){
+        angular.element("body").css("overflow","hidden");
+        var win = angular.element($window)
+        win.scrollTop("0px")
+
+        $scope.modalInstance = $modal.open({
+          templateUrl: 'views/teacher/in_class/inclass_review_'+type.toLowerCase()+'.html',
+          windowClass: 'whiteboard review',
+          controller: 'review'+type+'Ctrl',
+          scope: $scope
+        });
+    }
 
     $scope.exitBtn = function () {
       angular.element("body").css("overflow","auto");

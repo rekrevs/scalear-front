@@ -1,0 +1,23 @@
+<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer">Exit</a></div>
+<center>
+	<loading size=big show="loading_lectures_chart" />
+	<div ng-show="questions" style="padding:10px 10px" >
+		<table class="table" style="width:90%"> 
+			<tr>
+				<th>Hide</th>
+				<th>Question</th>
+				<th>Time</th>
+			</tr>
+			<tr ng-repeat="question in questions|orderBy:'time'">
+				<td ><input type="checkbox" ng-model="question.hide" ng-change="updateHide(question)" /></td>
+				<td>
+					{{question.question}}
+				</td>
+				<td>
+					{{question.time|format}}
+				</td>
+			</tr>
+		<table>
+	</div>
+</center>
+<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer">Exit</a></div>

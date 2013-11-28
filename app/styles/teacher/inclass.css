@@ -41,3 +41,8 @@
 	margin-left: 0;
 	left: 0;
 }
+
+.review{
+	max-height: 100%;
+	overflow: auto;
+}

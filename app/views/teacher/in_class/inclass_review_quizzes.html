@@ -1,15 +1,16 @@
 <div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer">Exit</a></div>
 <center>
 	<loading size=big show="loading_lectures_chart" />
-	<div ng-show="lecture_data.question_ids" style="padding:50px 10px" >
-		<table class="table" style="width:90%"> 
+	<div ng-show="lecture_data.question_ids" style="padding:10px 40px" >
+		<h4><b>Review lecture quizzes on {{selected_module.name}}</b></h4>
+		<table class="table table-striped"> 
 			<tr>
 				<th colspan="2">Hide</th>
 			</tr>
 			<tr ng-repeat="id in lecture_data.question_ids">
 				<td style="padding-top:90px" ><input type="checkbox" ng-model="lecture_data.checked[id]" ng-change="updateHide(id, lecture_data.checked[id])" /></td>
 				<td>
-					<div class="chart" style='min-width:300px; height:260px;' ng-init="chart=createLectureChart(id)"> 
+					<div class="chart" style='min-width:300px; height:205px;' ng-init="chart=createLectureChart(id)"> 
 					    <div google-chart chart="chart" ></div>
 					</div>
 				</td>

@@ -18,4 +18,5 @@ angular.module('scalearAngularApp')
 	 	var res = str.match(/.*\/modules\/(\d+)/);
 	 	return res?res[1]:0
 	}
+
   }]);

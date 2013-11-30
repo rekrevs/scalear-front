@@ -2,11 +2,12 @@
 
 angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window',function ($scope, $modal, $timeout,$window) {
-
+    $scope.lecture_player_events={}    
   	$scope.display = function (type) {
       $scope.lecture_player_controls={}
       $scope.play_pause_class = "play_button"
       $scope.mute_class = "mute_button"
+      $scope.loading_video=true
       $scope.lecture_url=""
       $scope.question_title=""
       $scope.quiz_id=""
@@ -22,32 +23,34 @@ angular.module('scalearAngularApp')
       if($scope.chart_data)
         delete $scope.chart_data
 
-  		angular.element("body").css("overflow","hidden");
-  		var win = angular.element($window)
-  		win.scrollTop("0px")
-      var filename="inclass_display"
-      if(type =="Surveys")
-        filename += "_surveys"
+      openModal('display', type)
 
-  		$scope.modalInstance = $modal.open({
-  			templateUrl: 'views/teacher/in_class/'+filename+'.html',
-  			windowClass: 'whiteboard',
-  			controller: 'display'+type+'Ctrl',
-        scope: $scope
-  		});
+
   	};
 
-    $scope.review=function(type){
-        angular.element("body").css("overflow","hidden");
-        var win = angular.element($window)
-        win.scrollTop("0px")
+    var openModal=function(view, type){ 
+      angular.element("body").css("overflow","hidden");
+      var win = angular.element($window)
+      win.scrollTop("0px")
+      var filename='inclass_'+view
+      if(view == "review")
+         filename+= "_"+type.toLowerCase()       
+      
+      $scope.modalInstance = $modal.open({
+        templateUrl: 'views/teacher/in_class/'+filename+'.html',
+        windowClass: 'whiteboard '+view,
+        controller: view+type+'Ctrl',
+        scope: $scope
+      });
+    }
 
-        $scope.modalInstance = $modal.open({
-          templateUrl: 'views/teacher/in_class/inclass_review_'+type.toLowerCase()+'.html',
-          windowClass: 'whiteboard review',
-          controller: 'review'+type+'Ctrl',
-          scope: $scope
-        });
+    $scope.review=function(type){
+      openModal('review', type)
+    }
+
+    $scope.survey=function(state){
+      $scope.in_review= state
+      openModal('review','Surveys')
     }
 
     $scope.exitBtn = function () {
@@ -57,11 +60,9 @@ angular.module('scalearAngularApp')
 
     $scope.playBtn = function(){
       if($scope.play_pause_class == "play_button"){
-        $scope.play_pause_class = "pause_button"
         $scope.lecture_player_controls.play()
       }
       else{
-        $scope.play_pause_class = "play_button"
         $scope.lecture_player_controls.pause()
       }
     }
@@ -79,6 +80,7 @@ angular.module('scalearAngularApp')
 
     $scope.seek=function(time){
         $scope.lecture_player_controls.seek(time)
+        $scope.lecture_player_controls.pause()
     }
 
     $scope.skip=function(skip_time){
@@ -93,6 +95,21 @@ angular.module('scalearAngularApp')
         $scope.play_pause_class = "play_button"
       }
     }
+
+    $scope.lecture_player_events.onPlay=function(){
+       $scope.play_pause_class = "pause_button"
+    }
+
+    $scope.lecture_player_events.onPause=function(){
+       $scope.play_pause_class = "play_button"
+    }
+
+    $scope.onPlayerReady=function(){
+      console.log("ready")
+      $scope.seek($scope.quiz_time);
+      $scope.lecture_player_controls.hideControls();
+      $scope.loading_video=false
+  }
 
     $scope.nextQuiz = function(){
       if($scope.current_quiz != $scope.total_num_quizzes){

@@ -2,30 +2,30 @@
     <div ng-click="muteBtn()" ng-class="mute_class"></div>
     <div ng-click="playBtn()" ng-class="play_pause_class"></div>
     <div                                                style="display:block;width:100%;height:60%">
-        <div                                            style="display:inline-block;min-width:50px;vertical-align:top;height:100%;width:400px;">
-            <button_link title="-5" action="skip(-5)"   style="margin-top: 95px;margin-left: 169px;width: 16px" />
-            <button_link title="<<" action="prevQuiz()" style="margin-top: 10px;margin-left: 169px;width: 16px" ng-disabled="current_quiz == 1" />
+        <div                                            style="display:inline-block;min-width:50px;vertical-align:top;height:100%;width:50px;margin-left:25%;margin-top:100px;margin-right:30px">
+            <button_link title="-5" action="skip(-5)" style="width:16px"/>
+            <button_link title="<<" action="prevQuiz()" style="margin-top:10px;" ng-disabled="current_quiz == 1" />
         </div>
-        <video_container class="inclass_sceen" >
-            <youtube ng-show="lecture_url" id="inclass_vid" url="lecture_url" controls="lecture_player_controls" class="inclass_sceen" ready="seek(quiz_time)" />
+        <center class="inclass_sceen" ng-show="loading_video"><loading size="small" show="true" style="position:relative;top:50%"></center>
+        <video_container class="inclass_sceen" ng-show="lecture_url && !loading_video">
+            <youtube  class="inclass_sceen" id="inclass_vid" url="lecture_url" controls="lecture_player_controls" events="lecture_player_events" ready="onPlayerReady()" />
         </video_container>
-        <div                                            style="display:inline-block;min-width:50px;vertical-align:top;height:100%;width:400px">
-            <button_link title="+5" action="skip(5)"    style="margin-top: 95px;margin-left: 169px;width: 16px"/>
-            <button_link title=">>" action="nextQuiz()" style="margin-top: 10px;margin-left: 169px;width: 16px" ng-disabled="current_quiz== total_num_quizzes"/>
+        <div                                            style="display:inline-block;min-width:50px;vertical-align:top;height:100%;width:50px;margin-top:100px;margin-left:40px;margin-right:25%;float:right">
+            <button_link title="+5" action="skip(5)"/>
+            <button_link title=">>" action="nextQuiz()" style="margin-top:10px;" ng-disabled="current_quiz== total_num_quizzes"/>
         </div>
     </div>
-    <div                                                style="display:block;width:100%;height:40%;max-height:40%">
-        <div                                            style="position:absolute;padding-left:10px;display:inline;font-size:28px;margin-top:0px;line-height:30px;height:40%;width:100%;max-height:40%;overflow:auto">
-            <div                                        style="position:absolute;height:90%;margin-top:15px;width:40%">{{question_title}}</div>
-            <div ng-repeat="question in questions"      style="margin-top:15px;font-size:20px;padding-left:15px;padding-right:15px" ng-click="seek(question[1])">{{question[0]}}</div>
-            <div ng-if="chart_data"                   style="margin-top:8px;width:60%;height:100%;background-color:white;float:right;display:inline;">
-                <div google-chart chart="chart"></div>
-            </div>
+    <div                                            style="position:absolute;padding-left:10px;display:inline;font-size:28px;margin-top:0px;line-height:30px;height:40%;width:100%;max-height:45%;overflow:auto">
+        <div                                        style="position:absolute;height:90%;margin-top:15px;width:40%;z-index:-1">{{question_title}}</div>
+        <div ng-repeat="question in questions"      style="margin-top:15px;font-size:20px;padding-left:15px;padding-right:15px;cursor:pointer" ng-click="seek(question[1])">{{question[0]}}</div>
+        <div ng-if="chart_data"                   style="margin-top:8px;width:60%;height:90%;background-color:white;float:right;display:inline;">
+            <center ng-init="loading_chart=true" style="font-size:14px;position:relative;top:50%;left:15%;"><loading size="small" show="loading_chart" ></center>
+            <div google-chart chart="chart" on-ready="loading_chart=false"></div>
         </div>
-        <a ng-click="exitBtn()"                     style="display:inline;font-size:16px;position:absolute;bottom:0;left:0;cursor:pointer;padding:10px" >Exit</a>
-        <div                                        style="padding:10px 25px;font-size:14px;display:inline;position:absolute;bottom:0;margin-left:35px;">
-            <b>Q:{{current_quiz+'/'+total_num_quizzes}}</b>
-            <b                                      style="padding-left:15px;">L:{{current_lecture+'/'+total_num_lectures}}</b>
-        </div>        
     </div>
+    <a ng-click="exitBtn()"                     style="display:inline;font-size:16px;position:absolute;bottom:0;left:0;cursor:pointer;padding:10px" >Exit</a>
+    <div                                        style="padding:10px 25px;font-size:14px;display:inline;position:absolute;bottom:0;margin-left:35px;">
+        <b>Q:{{current_quiz+'/'+total_num_quizzes}}</b>
+        <b                                      style="padding-left:15px;">L:{{current_lecture+'/'+total_num_lectures}}</b>
+    </div>        
 </div>

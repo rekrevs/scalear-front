@@ -2,8 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('displayQuestionsCtrl', ['$scope','Module',function ($scope,Module){
-
-  	
+ 	
   	var init = function(){
   		Module.displayQuestions(
 	  		{module_id: 34},

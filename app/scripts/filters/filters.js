@@ -26,4 +26,28 @@ angular.module('scalearAngularApp')
         return hr + ':' + min + ':' + sec;
       }
     }
-  });
+  })
+  .filter("inclass",function(){
+    return function(input, display){
+      if(!display) return input
+      var result = {};
+
+      angular.forEach(input, function(elem,key){
+        if(elem.show)
+          result[key] = elem  
+      });
+      return result;
+    }
+  })
+  .filter("survey",function(){
+    return function(input, display){
+      if(!display) return input
+      var result = [];
+
+      angular.forEach(input, function(elem,key){
+        if(!elem.hide)
+          result.push(elem) 
+      });
+      return result;
+    }
+  })

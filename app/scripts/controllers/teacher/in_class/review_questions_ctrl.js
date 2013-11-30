@@ -11,10 +11,11 @@ angular.module('scalearAngularApp')
   			function(data){
   				console.log(data)
   				$scope.questions= data.questions
+          $scope.lecture_names=data.lecture_names
   			},
   			function(){
-  			}
-		)
+  	 		}
+		  )
   	}
 
   	$scope.updateHide=function(question){
@@ -29,10 +30,15 @@ angular.module('scalearAngularApp')
   			},
   			function(){},
   			function(){}
-		)
+		  )
   	}
 
+    $scope.getLectureTitle=function(id){
+      return $scope.lecture_names[id]
+    }
+
   	init()
+    console.log($scope.selected_module)
 
 
   }]);

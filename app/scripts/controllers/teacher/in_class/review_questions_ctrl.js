@@ -5,8 +5,8 @@ angular.module('scalearAngularApp')
   	var init=function(){
   		Module.getStudentQuestions(
   			{
-			 	course_id:$stateParams.course_id,
-                module_id:$stateParams.module_id
+			 	   course_id:$stateParams.course_id,
+           module_id:$stateParams.module_id
   			},
   			function(data){
   				console.log(data)

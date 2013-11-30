@@ -3,7 +3,8 @@
 angular.module('scalearAngularApp')
   .controller('inclassCtrl', ['$scope', '$stateParams', '$location', 'Course',function ($scope, $stateParams, $location, Course) {
     
-    Course.getCourse({course_id:$stateParams.course_id},
+    Course.getCourse(
+    	{course_id:$stateParams.course_id},
 		function(data){
 			$scope.modules = data.groups
 			console.log($stateParams)

@@ -5,7 +5,10 @@ angular.module('scalearAngularApp')
 
   	var init = function(){
   		Module.displayQuizzes(
-	  		{module_id: 34},
+	  		{
+                course_id:$stateParams.course_id,
+                module_id:$stateParams.module_id
+            },
 	  		function(data){
 	  			console.log(data)
 	  			$scope.$parent.lecture_list = data.lecture_list

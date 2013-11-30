@@ -151,9 +151,31 @@
         abstract:true
       })
        .state('course.lectures', {
-      url: '/lectures',
+      url: '/courseware',
       templateUrl: 'views/student/lectures/lectures.html',
       controller: 'studentLecturesCtrl'
+      })
+      .state('course.lectures.lecture', {
+        // resolve:{
+          // lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
+            // return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
+          // }
+        // },
+        url: '/lectures/:lecture_id',
+        views:{
+          'middle'  :{templateUrl: 'views/student/lectures/lecture.middle.html',  controller: 'studentLectureMiddleCtrl'}
+        }        
+      })
+      .state('course.lectures.quiz', {
+         resolve:{
+          quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
+            return $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
+          }
+         },
+        url: '/quizzes/:quiz_id',
+        views:{
+          'middle'  :{templateUrl: 'views/student/lectures/quiz.middle.html',  controller: 'studentQuizMiddleCtrl'}
+        }        
       })
       .state('course.course_editor', {
         url: '/course_editor',

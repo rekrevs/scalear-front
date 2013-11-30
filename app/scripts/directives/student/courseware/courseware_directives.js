@@ -28,7 +28,7 @@ angular.module('scalearAngularApp')
 			}
 		}
 	}
- }).directive('coursewareItem',['CourseEditor',function(CourseEditor){
+ }).directive('coursewareItem',['CourseEditor','$state', function(CourseEditor, $state){
 	return {
 		 scope: {
 		 	name:'=',
@@ -36,10 +36,11 @@ angular.module('scalearAngularApp')
 		 	className:'=',
 		 	slides:"=",
 		 	url:"=",
-		 	quizType:"="
+		 	quizType:"=", 
+		 	done: "="
 		 },
 		 restrict: 'E', 
-		 template: '<table><tr><td>Done?</td><td><a ng-click="showItem()" class="trigger2">{{type}}: {{name}}</a></td>'+
+		 template: '<table><tr><td><img ng-src="{{done && \'images/check7.png\' || \'images/empty7.png\'}}"</td><td><a ng-click="showItem()" class="trigger2">{{type}}: {{name}}</a></td>'+
 		 			'<td><a style="font-size:10px" target="_blank" ng-if="slides && slides!=\'none\'" href="{{slides}}">Slides</a></td></tr></table>',
 		 link: function(scope){
 		 	scope.type= scope.className=="Quiz"? CourseEditor.capitalize(scope.quizType): scope.className;
@@ -47,6 +48,14 @@ angular.module('scalearAngularApp')
 		 	{
 		 		if(scope.className=="Document")
 		 			window.open(scope.url,'_blank');
+		 		else
+		 		{	
+		 			var next_state="course.lectures."+scope.className.toLowerCase();
+		 			var s= scope.className.toLowerCase()+"_id"
+		 			var to={}
+		 			to[s] = scope.id
+		 			$state.go(next_state, to);
+		 		}
 		 	}
 		 }
 	};

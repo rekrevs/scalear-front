@@ -2,7 +2,7 @@
 	<center style="overflow:hidden" >
 		<video_container class="largescreen">
 			<loading size='small' show="!url" style="top:50%;position:relative" />
-			<youtube ng-if="url" id="lec_quiz_video" url="url" controls="lecture_player_controls" class="largescreen" ready="lecture_player_controls.pause()" />
+			<youtube ng-if="url" id="lec_quiz_video" url="url" player="lecture_player" class="largescreen" />
 		</video_container>
 	</center>
 

@@ -5,8 +5,9 @@ angular.module('scalearAngularApp')
 //    console.log($scope);
 //    $scope.lecture=lecture.data
     $scope.quiz_layer={}
-    $scope.lecture_player_controls={}
-    $scope.lecture_player_events={}
+    $scope.lecture_player={}
+    $scope.lecture_player.events={}
+    
     
     //$scope.lecture_player_events
     

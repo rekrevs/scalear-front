@@ -23,8 +23,7 @@ angular.module('scalearAngularApp')
 				url:'=',
 				ready:'&',
 				id:'@',
-				controls:'=',
-				events:'='
+				player:'='
 			},
 			link: function(scope, element){
 
@@ -32,54 +31,59 @@ angular.module('scalearAngularApp')
 				console.log(scope.controls);
 				
 				var player
-				if(!scope.controls)
-					scope.controls={}
-				if(!scope.events)
-					scope.events={}
-					
+
+				var player_controls={}
+				var player_events = {}
+
+
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
 					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
 					setupEvents()
-					
+
 				}
 
-				scope.controls.play=function(){
+				player_controls.play=function(){
 					player.play();
 				}
 
-				scope.controls.pause = function(){
+				player_controls.pause = function(){
 					player.pause();
 				}
 
-				scope.controls.mute = function(){
+				player_controls.mute = function(){
 					player.mute();
 				}
 
-				scope.controls.unmute = function(){
+				player_controls.unmute = function(){
 					player.unmute();
 				}
-
-				scope.controls.getTime=function(){
+				
+				player_controls.paused = function(){
+					return player.paused();
+				}
+				
+				player_controls.getTime=function(){
 					return player.currentTime()
 				}
 
-				scope.controls.getDuration=function(){
+				player_controls.getDuration=function(){
 					return player.duration()
 				}
 
-				scope.controls.seek = function(time){
+				player_controls.seek = function(time){
 					player.currentTime(time);
 	    			player.pause()
 				}
 
-				scope.controls.refreshVideo = function(){
+				player_controls.refreshVideo = function(){
+					console.log("refreshVideo!!!!!!!!!!!!!!!!!!!")
 					element.find('iframe').remove();
 			  		loadVideo();
 				}
 
-				scope.controls.hideControls=function(){
+				player_controls.hideControls=function(){
 					player.controls( false ); 
 				}
 
@@ -87,35 +91,47 @@ angular.module('scalearAngularApp')
 					player.on("loadeddata", 
 						function(){
 							console.debug("Video data loaded")
-							scope.ready();
-							scope.$apply();
+							if(player_events.onReady){
+								player_events.onReady();
+								scope.$apply();
+							}
 					});
 
 					player.on('play',
 						function(){
-							if(scope.events.onPlay){
-								scope.events.onPlay();
+							if(player_events.onPlay){
+								player_events.onPlay();
 								scope.$apply();
 							}
 					});
 
 					player.on('pause',
 						function(){
-							if(scope.events.onPause){
-								scope.events.onPause();
+							if(player_events.onPause){
+								player_events.onPause();
 								scope.$apply();
 							}
 					});
 				}
 
 				$rootScope.$on('refreshVideo',function(){
-					scope.controls.refreshVideo()
+					player_controls.refreshVideo()
 				})
-				scope.$watch('url',function(){
+
+
+				scope.$watch('url', function(){
 					if(scope.url)
-						scope.controls.refreshVideo()
+						player_controls.refreshVideo();
 				})
-			  	
+				scope.$watch('player', function(){
+					if(scope.player){
+						scope.player.controls=player_controls
+					}
+					if(scope.player && scope.player.events)
+						player_events = scope.player.events
+				})
+			  	//loadVideo();
+
 		    }
 		};
 }]).directive('editPanel',function(){
@@ -430,7 +446,7 @@ angular.module('scalearAngularApp')
 }]).directive('htmlanswer',function(){
 	return {
 	 	restrict: 'E',
-	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'style='/*overflow:auto*/' >"+
+	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' style='/*overflow:auto*/' >"+
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
 					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+

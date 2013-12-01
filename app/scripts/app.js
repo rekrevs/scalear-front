@@ -15,7 +15,6 @@
   'ui.bootstrap.modal',
   'ui.sortable',
   'ui.calendar',
-  'ui.keypress',
   'ngDragDrop',
   'pasvaz.bindonce',
   'infinite-scroll',
@@ -23,6 +22,7 @@
   'ui.tinymce',
   'googlechart'
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
+
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
   .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout) {

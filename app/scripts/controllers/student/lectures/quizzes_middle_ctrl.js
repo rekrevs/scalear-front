@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams','quiz','Quiz', function ($scope, Course, $stateParams,quiz,Quiz) {
-//    console.log($scope);
+  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller', 'quiz','Quiz', function ($scope, Course, $stateParams,$controller, quiz,Quiz) {
+    $controller('surveysCtrl', {$scope: $scope});
+
     console.log(quiz);
     $scope.quiz=quiz.data;
     $scope.studentAnswers={};
@@ -20,7 +21,8 @@ angular.module('scalearAngularApp')
 					 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]==null) // if drag was not solved, put student answer from shuffled answers.
 						 $scope.studentAnswers[question.id]=question.answers[0].content
 			});
-					
+            if($scope.quiz.quiz_type=='survey')
+                $scope.getSurveyCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)					
 	    });
 	}
  	

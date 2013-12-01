@@ -2,9 +2,9 @@
 
 angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window',function ($scope, $modal, $timeout,$window) {
-    $scope.lecture_player_events={}    
+    $scope.lecture_player={}
+    $scope.lecture_player.events={}    
   	$scope.display = function (type) {
-      $scope.lecture_player_controls={}
       $scope.play_pause_class = "play_button"
       $scope.mute_class = "mute_button"
       $scope.loading_video=true
@@ -24,7 +24,6 @@ angular.module('scalearAngularApp')
         delete $scope.chart_data
 
       openModal('display', type)
-
 
   	};
 
@@ -60,33 +59,34 @@ angular.module('scalearAngularApp')
 
     $scope.playBtn = function(){
       if($scope.play_pause_class == "play_button"){
-        $scope.lecture_player_controls.play()
+        $scope.lecture_player.controls.play()
       }
       else{
-        $scope.lecture_player_controls.pause()
+        $scope.lecture_player.controls.pause()
       }
     }
 
     $scope.muteBtn= function(){
       if($scope.mute_class == "unmute_button"){
         $scope.mute_class = "mute_button"
-        $scope.lecture_player_controls.unmute()
+        $scope.lecture_player.controls.unmute()
       }
       else{
         $scope.mute_class = "unmute_button"
-        $scope.lecture_player_controls.mute()
+        $scope.lecture_player.controls.mute()
       }
     }
 
     $scope.seek=function(time){
-        $scope.lecture_player_controls.seek(time)
-        $scope.lecture_player_controls.pause()
+      console.log( $scope.lecture_player.controls)
+        $scope.lecture_player.controls.seek(time)
+        $scope.lecture_player.controls.pause()
     }
 
     $scope.skip=function(skip_time){
       if(skip_time){
-        var seek_to_time = $scope.lecture_player_controls.getTime()+skip_time
-        var duration = $scope.lecture_player_controls.getDuration()
+        var seek_to_time = $scope.lecture_player.controls.getTime()+skip_time
+        var duration = $scope.lecture_player.controls.getDuration()
         if(seek_to_time < 0)
           seek_to_time = 0
         else if(seek_to_time >duration)
@@ -96,18 +96,18 @@ angular.module('scalearAngularApp')
       }
     }
 
-    $scope.lecture_player_events.onPlay=function(){
+    $scope.lecture_player.events.onPlay=function(){
        $scope.play_pause_class = "pause_button"
     }
 
-    $scope.lecture_player_events.onPause=function(){
+    $scope.lecture_player.events.onPause=function(){
        $scope.play_pause_class = "play_button"
     }
 
-    $scope.onPlayerReady=function(){
+    $scope.lecture_player.events.onReady=function(){
       console.log("ready")
       $scope.seek($scope.quiz_time);
-      $scope.lecture_player_controls.hideControls();
+      $scope.lecture_player.controls.hideControls();
       $scope.loading_video=false
   }
 

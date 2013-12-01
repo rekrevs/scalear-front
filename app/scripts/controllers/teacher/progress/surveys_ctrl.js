@@ -10,16 +10,19 @@ angular.module('scalearAngularApp')
   		    $scope.getSurveyCharts()
   	}
 
-  	$scope.getSurveyCharts = function(){
-  		var survey_id
-    	if($scope.selected_survey)
-    		survey_id=$scope.selected_survey[1]
+  	$scope.getSurveyCharts = function(view, module_id, survey_id){
+  		//var id
+    	//if($scope.selected_survey)
+    		//id=$scope.selected_survey[1]
+      //if(survey_id)
+      var id = survey_id || $scope.selected_survey[1] || ""
     	$scope.loading_surveys_chart = true
   		Module.getSurveyCharts(
   			{
           course_id: $stateParams.course_id,
-  				module_id: $stateParams.module_id,
-          survey_id: survey_id
+  				module_id: $stateParams.module_id || module_id,
+          survey_id: id,
+          display_only:view
   			},
   			function(data){
   				console.log(data)

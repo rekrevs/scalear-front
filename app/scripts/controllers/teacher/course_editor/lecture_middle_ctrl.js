@@ -5,7 +5,8 @@ angular.module('scalearAngularApp')
 
     $scope.lecture=lecture.data
     $scope.quiz_layer={}
-    $scope.lecture_player_controls={}
+    $scope.lecture_player={}
+    $scope.lecture_player.events={}
     $scope.alert={
     	type:"error", 
     	msg:"You've got some errors."
@@ -34,7 +35,7 @@ angular.module('scalearAngularApp')
  		$scope.hide_alerts=true;
  	}
 
- 	$scope.hideOverlay= function(){
+ 	$scope.lecture_player.events.onReady= function(){
  		$scope.hide_overlay = true
  	}
 
@@ -42,7 +43,7 @@ angular.module('scalearAngularApp')
 		$scope.quiz_loading = true;
 		Lecture.newQuiz({
 			lecture_id: $scope.lecture.id,
-			time: Math.floor($scope.lecture_player_controls.getTime()), 
+			time: Math.floor($scope.lecture_player.controls.getTime()), 
 			quiz_type: quiz_type, 
 			ques_type: question_type
 		},
@@ -65,14 +66,15 @@ angular.module('scalearAngularApp')
 		console.log(quiz)
 		$scope.editing_mode = true;
 		$scope.selected_quiz = quiz
-		$scope.lecture_player_controls.seek(quiz.time,$scope.lecture.url)
+		$scope.lecture_player.controls.seek(quiz.time,$scope.lecture.url)
 		// $scope.player.currentTime(quiz.time);
-		// $scope.lecture_player_controls.pause();
+		// $scope.lecture_player.controls.pause();
 
 		if(quiz.quiz_type =="invideo"){
 			$scope.double_click_msg = "<br>Double click on the video to add a new answer";
 			$scope.quiz_layer.backgroundColor="transparent"
-			$scope.quiz_layer.overflow= ''
+			$scope.quiz_layer.overflowX= ''
+			$scope.quiz_layer.overflowY= ''
 			getQuizData();
 		}
 		else{ // html quiz

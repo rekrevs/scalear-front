@@ -7,6 +7,9 @@ angular.module('scalearAngularApp')
     // no scope hence same as the controller scope.
     templateUrl:"../views/student/lectures/controls.html",
     link: function(scope, element, attrs) {
+    	
+    	console.log("scop in directive is ");
+    	console.log(scope);
     	element.css("width", "200px");
 		element.css("height", "26px");
 		element.css("position", "relative");
@@ -47,7 +50,7 @@ angular.module('scalearAngularApp')
       		scope.safeApply(function(){
       			scope.show_message=true;
       		});
-      		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player_controls.getTime()}, function(data){
+      		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
     			$timeout(function(){
              		scope.show_message=false;
          		}, 2000);	
@@ -56,12 +59,12 @@ angular.module('scalearAngularApp')
       	};
       	scope.back= function(time)
       	{
-      		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player_controls.getTime()}, function(data){
+      		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
     		});
       	};
       	scope.pause= function(time)
       	{
-      		Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player_controls.getTime()}, function(data){
+      		Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
     		});
       	};
       	scope.question= function()
@@ -71,18 +74,18 @@ angular.module('scalearAngularApp')
 	      		scope.show_question=!scope.show_question;
 	      	});
 	      		if(scope.show_question==true)
-	      			scope.lecture_player_controls.pause();	
+	      			scope.lecture_player.controls.pause();	
 	      		else
-	      			scope.lecture_player_controls.play();	
+	      			scope.lecture_player.controls.play();	
 	      	
       	};
       	scope.submit_question = function()
       	{
       		console.log("will submit "+scope.question_asked);
-    		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player_controls.getTime(), ques: scope.question_asked}, function(data){
+    		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
     			scope.question_asked="";
     			scope.show_question=false;
-    			scope.lecture_player_controls.play();	
+    			scope.lecture_player.controls.play();	
     		});
       		
       	};
@@ -94,15 +97,20 @@ angular.module('scalearAngularApp')
 				shortcut.add("q", scope.question, {"disable_in_input" : true});
 			
 				shortcut.add("Space",function(){
-					scope.pop.paused()? scope.pop.play(): scope.pop.pause();
+					scope.lecture_player.controls.paused()? scope.lecture_player.controls.play(): scope.lecture_player.controls.pause();
 				},{"disable_in_input" : true});
 			
 				shortcut.add("b",function(){
-					var t=scope.pop.currentTime();
-					scope.seekTo(t-10);
+					var t=scope.lecture_player.controls.getTime();
+					scope.lecture_player.controls.seek(t-10);
 					scope.back(t);
 				},{"disable_in_input" : true});
 		};
+		scope.setShortcuts();
+		//scope.lecture_player.events.onReady = function(){
+			//console.log(scope);
+			
+		//};
       	
     }
   };
@@ -432,4 +440,116 @@ angular.module('scalearAngularApp')
       	
 	}
 };
+}).directive('studentAnswerForm', ['Lecture','$stateParams','CourseEditor',function(Lecture, $stateParams, CourseEditor){
+	return {
+		scope: {
+			quiz:"=",
+			index: "=",
+			submitted: "=",
+		},
+		restrict: 'E',
+		template: "<ng-form name='qform'>"+
+							{{quiz.question}}
+							"<student-html-answer />"+
+					"</ng-form>",
+		link: function(scope, iElm, iAttrs, controller) {
+			
+		}
+	};
+}]).directive('studentHtmlAnswer',function(){
+	return {
+	 	restrict: 'E',
+	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' style='/*overflow:auto*/' >"+
+					"<div ng-switch-when='MCQ' ><student-html-mcq  ng-repeat='answer in quiz.answers' /></div>"+
+					"<div ng-switch-when='OCQ' ><student-html-ocq  ng-repeat='answer in quiz.answers' /></div>"+	
+					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
+						"<student-html-drag ng-repeat='answer in quiz.answers' />"+
+					"</ul>"+
+				"</div>",
+		link:function(scope){
+			scope.removeAnswer=scope.remove()
+			
+			
+			scope.updateValues= function()
+			{
+				console.log("in value update")
+				console.log(scope.quiz);
+				console.log(scope.quiz.answers);
+				scope.values=0
+				for(var element in scope.quiz.answers)
+				{
+					console.log(scope.quiz.answers[element].correct)
+					if(scope.quiz.answers[element].correct==true)
+					{
+						console.log("in true");
+						scope.values+=1
+					}
+				}
+				console.log(scope.values)
+			}
+			
+			
+			scope.radioChange=function(corr_ans){
+				scope.quiz.answers.forEach(function(ans){
+					ans.correct=false
+				})
+				corr_ans.correct=true
+				
+				scope.updateValues();
+			}
+			
+			scope.show = function()
+			{
+				 return !("content" in scope.quiz)
+			}
+			
+			scope.$watch('quiz.answers', function(){
+				scope.updateValues();	
+			},true)
+			
+		}
+	};
+}).directive('studentHtmlMcq',function(){	
+	return{
+		restrict:'E',
+		template:"<ng-form name='aform'>"+
+					"<input atleastone ng-model='studentAnswers[question.id][answer.id]' ng-checked='studentAnswers[question.id][answer.id]'  name='ocq_{{question.id}}' type='checkbox' ng-change='updateValues({{question.id}})'/>"+
+					"{{answer.answer}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'>Must choose atleast one answer!</span>"+
+				"</ng-form>"
+		
+	}
+	
+}).directive('studentHtmlOcq',['$timeout',function($timeout){
+	return {
+		restrict:'E',
+		template:"<ng-form name='aform'>"+
+					"<input atleastone ng-model='studentAnswers[question.id]' value='{{answer.id}}'  name='ocq_{{question.id}}' type='radio' ng-change='updateValues({{question.id}})'/>"+
+					"{{answer.answer}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'>Must choose atleast one answer!</span>"+
+							 	
+				"</ng-form>",
+		link: function(scope)
+		{
+			if(scope.answer.correct)
+			{
+				scope.radioChange(scope.answer);
+			}
+			scope.getName= function()
+			{
+				return "ocq"+scope.index+scope.$index
+			}
+		}
+	}
+	
+}]).directive('studentHtmlDrag',function(){
+	return {
+		restrict:'E',
+		replace:true,
+		template:"<li class='ui-state-default'>"+
+					"<ng-form name='aform'>"+
+							"<span class='ui-icon ui-icon-arrowthick-2-n-s'></span>"+
+							"{{answer}}"+
+					"</ng-form>"+
+				"</li>"				 
+	}
+	
 });

@@ -10,7 +10,7 @@
 	<div ng-show="all_surveys && !loading_surveys_chart" style="padding:10px 40px" >
 		<table class="table table-striped"> 
 			<tr>
-				<th colspan="2" ng-show="in_review" >Hide</th>
+				<th colspan="2" ng-show="in_review" >Show</th>
 			</tr>
 			<tr ng-repeat="(id,data) in survey_chart_data|inclass:!in_review" >
 				<td style="padding-top:90px" >

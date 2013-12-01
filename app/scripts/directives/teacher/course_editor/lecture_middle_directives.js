@@ -39,7 +39,6 @@ angular.module('scalearAngularApp')
 						Popcorn.destroy(player)
 					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1&controls=0" ,{ width: 500, controls: 0});
 					setupEvents()
-					
 				}
 
 				scope.controls.play=function(){
@@ -108,11 +107,21 @@ angular.module('scalearAngularApp')
 				$rootScope.$on('refreshVideo',function(){
 					scope.controls.refreshVideo()
 				})
+<<<<<<< HEAD
 				scope.$watch('url',function(){
 					if(scope.url)
 						scope.controls.refreshVideo()
 				})
 			  	
+=======
+				
+				scope.$watch('url', function(){
+					if(scope.url)
+						scope.controls.refreshVideo();
+				})
+		
+			  	loadVideo();
+>>>>>>> 12d29508bdca66f4413a9c0546d2fe178745c05c
 		    }
 		};
 }]).directive('editPanel',function(){

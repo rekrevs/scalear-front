@@ -15,11 +15,11 @@
   'ui.bootstrap.modal',
   'ui.sortable',
   'ui.calendar',
+  'ui.keypress',
   'ngDragDrop',
   'pasvaz.bindonce',
   'infinite-scroll',
   'xeditable',
-  'ui.calendar',
   'ui.tinymce',
   'googlechart'
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com

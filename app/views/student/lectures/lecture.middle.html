@@ -11,7 +11,7 @@
 			<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 		</quiz>
 	</div>
-	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url" controls="lecture_player_controls" ready="hideOverlay()" ng-class="lecture.aspect_ratio"/>
+	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url" controls="lecture_player_controls" events="lecture_player_controls" ready="hideOverlay()" ng-class="lecture.aspect_ratio"/>
 	<controls></controls>
 	<check ng-show='quiz_now'></check>
 	<notification ng-show='show_notification'></notification>
@@ -19,9 +19,9 @@
 <br><br>
 <h4>Questions:</h4>
 <table class="table table-striped">
-	<tr ng-repeat="quiz in lecture.online_quizzes" ng-controller="OnlineQuizCtrl">
+	<tr ng-repeat="quiz in lecture.online_quizzes">
 		<td><img ng-show="quiz.is_quiz_solved" src="images/check7.png" /></td>
-		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="skip(quiz)">{{quiz.question}}</p></td>
-		<td><p ng-show="quiz.is_quiz_solved" ng-class="{'solved': quiz.is_quiz_solved}" ng-click="skip(quiz)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
+		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="lecture_player_controls.seek(quiz.time - 3)">{{quiz.question}}</p></td>
+		<td><p ng-show="quiz.is_quiz_solved" ng-class="{'solved': quiz.is_quiz_solved}" ng-click="lecture_player_controls.seek(quiz.time - 3)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
 	</tr>
 </table>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive("controls", function($timeout, Lecture) {
+.directive("controls",['$timeout','Lecture','$stateParams', function($timeout, Lecture, $stateParams) {
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"E",
     // no scope hence same as the controller scope.
@@ -47,7 +47,7 @@ angular.module('scalearAngularApp')
       		scope.safeApply(function(){
       			scope.show_message=true;
       		});
-      		Lecture.get(scope.path+"/confused",{time:scope.pop.currentTime()}, function(data){
+      		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player_controls.getTime()}, function(data){
     			$timeout(function(){
              		scope.show_message=false;
          		}, 2000);	
@@ -56,11 +56,13 @@ angular.module('scalearAngularApp')
       	};
       	scope.back= function(time)
       	{
-      		Lecture.get(scope.path+"/back",{time:time}, function(){});
+      		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player_controls.getTime()}, function(data){
+    		});
       	};
       	scope.pause= function(time)
       	{
-      		Lecture.get(scope.path+"/pause",{time:time}, function(){});
+      		Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player_controls.getTime()}, function(data){
+    		});
       	};
       	scope.question= function()
       	{
@@ -69,19 +71,19 @@ angular.module('scalearAngularApp')
 	      		scope.show_question=!scope.show_question;
 	      	});
 	      		if(scope.show_question==true)
-	      			scope.pop.pause();
+	      			scope.lecture_player_controls.pause();	
 	      		else
-	      			scope.pop.play();
+	      			scope.lecture_player_controls.play();	
 	      	
       	};
       	scope.submit_question = function()
       	{
       		console.log("will submit "+scope.question_asked);
-      		// Lecture.get(scope.path+"/confused_question",{time:scope.pop.currentTime(), ques: scope.question_asked}, function(data){
-    				// scope.question_asked="";
-    				// scope.show_question=false;
-    				// scope.pop.play();
-    		// });
+    		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player_controls.getTime(), ques: scope.question_asked}, function(data){
+    			scope.question_asked="";
+    			scope.show_question=false;
+    			scope.lecture_player_controls.play();	
+    		});
       		
       	};
       	scope.setShortcuts = function()
@@ -104,7 +106,7 @@ angular.module('scalearAngularApp')
       	
     }
   };
-})
+}])
 .directive("resizeontop", function() {
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"A",
@@ -383,7 +385,7 @@ angular.module('scalearAngularApp')
 		};
     }
   };
-})    			
+})    		
 .directive("studentQuiz", function($timeout, Lecture) {
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"E",

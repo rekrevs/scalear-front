@@ -29,15 +29,18 @@ angular.module('scalearAngularApp')
 			link: function(scope, element){
 
 				console.debug("YOUTUBE " + scope.id)
+				console.log(scope.controls);
+				
 				var player
 				if(!scope.controls)
 					scope.controls={}
 				if(!scope.events)
 					scope.events={}
+					
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1&controls=0" ,{ width: 500, controls: 0});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
 					setupEvents()
 					
 				}

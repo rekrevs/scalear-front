@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture', function ($scope, Course, $stateParams,Lecture) {
+  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture','$document', function ($scope, Course, $stateParams,Lecture, $document) {
 //    console.log($scope);
 //    $scope.lecture=lecture.data
     $scope.quiz_layer={}
     $scope.lecture_player_controls={}
+    $scope.lecture_player_events={}
     
+    //$scope.lecture_player_events
     
     $scope.hideOverlay= function(){
  		$scope.hide_overlay = true
@@ -22,5 +24,18 @@ angular.module('scalearAngularApp')
  				
     }
     init();
+    
+    $scope.safeApply = function(fn) {
+  			var phase = this.$root.$$phase;
+  			if(phase == '$apply' || phase == '$digest') {
+    			if(fn && (typeof(fn) === 'function')) {
+      				fn();
+    			}
+  			} else {
+    			this.$apply(fn);
+  			}
+		};
+	
+	
     
   }]);

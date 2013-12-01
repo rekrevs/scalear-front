@@ -8,11 +8,11 @@ angular.module('scalearAngularApp')
     templateUrl:"../views/student/lectures/controls.html",
     link: function(scope, element, attrs) {
     	element.css("width", "200px");
-		element.css("height", "26px");
-		element.css("position", "relative");
-		element.css("left", "393px");
-		element.css("top", "-30px");
-		element.css("display", "inline-block");
+  		element.css("height", "26px");
+  		element.css("position", "relative");
+  		element.css("left", "393px");
+  		element.css("top", "-30px");
+  		element.css("display", "inline-block");
 		
     	angular.forEach(['playerWidth', 'playerHeight'], function (key) {
 	      	scope.$watch(key, function(){
@@ -85,22 +85,22 @@ angular.module('scalearAngularApp')
       		
       	};
       	scope.setShortcuts = function()
-		{
-				// adding shortcuts
-				shortcut.add("c", scope.confused, {"disable_in_input" : true});
-			
-				shortcut.add("q", scope.question, {"disable_in_input" : true});
-			
-				shortcut.add("Space",function(){
-					scope.pop.paused()? scope.pop.play(): scope.pop.pause();
-				},{"disable_in_input" : true});
-			
-				shortcut.add("b",function(){
-					var t=scope.pop.currentTime();
-					scope.seekTo(t-10);
-					scope.back(t);
-				},{"disable_in_input" : true});
-		};
+    		{
+    				// adding shortcuts
+    				shortcut.add("c", scope.confused, {"disable_in_input" : true});
+    			
+    				shortcut.add("q", scope.question, {"disable_in_input" : true});
+    			
+    				shortcut.add("Space",function(){
+    					scope.pop.paused()? scope.pop.play(): scope.pop.pause();
+    				},{"disable_in_input" : true});
+    			
+    				shortcut.add("b",function(){
+    					var t=scope.pop.currentTime();
+    					scope.seekTo(t-10);
+    					scope.back(t);
+    				},{"disable_in_input" : true});
+    		};
       	
     }
   };
@@ -430,4 +430,14 @@ angular.module('scalearAngularApp')
       	
 	}
 };
-});
+})
+.directive("studentAnswerVideo",function(){
+  return {
+    restrict:"E",
+    template: "<div ng-switch on='quiz.question_type'>"+
+                "<student-answer ng-switch-when='MCQ' />"+
+                "<student-answer ng-switch-when='OCQ' />"+
+                "<student-drag ng-switch-when='drag' />"+
+              "</div>",
+  }
+})

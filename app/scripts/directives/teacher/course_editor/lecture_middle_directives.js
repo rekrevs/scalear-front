@@ -78,6 +78,10 @@ angular.module('scalearAngularApp')
 					player.controls( false ); 
 				}
 
+				player_controls.cue=function(time, callback){
+					player.cue(time, callback)
+				}
+
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
@@ -120,7 +124,7 @@ angular.module('scalearAngularApp')
 					if(scope.player && scope.player.events)
 						player_events = scope.player.events
 				})
-			  	//loadVideo();
+
 		    }
 		};
 }]).directive('editPanel',function(){

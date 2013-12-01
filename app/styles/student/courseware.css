@@ -165,3 +165,13 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	color:#DD1144;
 	float:right;
 }
+
+.widescreen{
+  width: 800px;
+  height: 450px;
+}
+
+.smallscreen{
+  width: 600px;
+  height: 450px;
+}

@@ -11,7 +11,7 @@
 			<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 		</quiz>
 	</div>
-	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url" controls="lecture_player_controls" ready="hideOverlay()" ng-class="lecture.aspect_ratio"/>
+	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio"/>
 	<controls></controls>
 	<check ng-show='quiz_now'></check>
 	<notification ng-show='show_notification'></notification>

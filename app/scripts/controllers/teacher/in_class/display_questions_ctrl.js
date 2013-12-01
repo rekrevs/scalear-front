@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuestionsCtrl', ['$scope','Module',function ($scope,Module){
+  .controller('displayQuestionsCtrl', ['$scope','$stateParams','Module',function ($scope, $stateParams, Module){
  	
   	var init = function(){
   		Module.displayQuestions(

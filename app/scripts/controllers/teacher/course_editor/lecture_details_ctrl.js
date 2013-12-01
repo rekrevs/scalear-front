@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
 	    var lecture={}
 	    lecture[column]=data;
 	    Lecture.validateLecture(
-	    	{lecture_id:$scope.lecture.id},
+	    	{course_id: $scope.lecture.course_id, lecture_id:$scope.lecture.id},
 	    	lecture,
 	    	function(data){
 				d.resolve()
@@ -36,7 +36,8 @@ angular.module('scalearAngularApp')
 		delete modified_lecture["detected_aspect_ratio"];
 		
 		Lecture.update(
-			{lecture_id:$scope.lecture.id},
+			{course_id:$scope.lecture.course_id,
+			lecture_id:$scope.lecture.id},
 			{lecture:modified_lecture},
 			function(data){	
 				$scope.$emit('detailsUpdate')			

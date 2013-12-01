@@ -1,0 +1,182 @@
+/* --- Page Structure  --- */
+
+#acc1{margin:0px; padding: 0px;}
+
+/*p {margin: 0 10px 1em}*/
+.strong{font-weight:700}
+.clear {clear:both}
+img{border:0 none}
+
+/* --- Headings --- */
+h1 {font-family:georgia,'times new roman',times,serif; font-size:2.5em; font-weight:normal; color:#f60}
+
+h5, h6{margin-top:1px; margin-bottom:0px;}
+
+h1, h2, h3, h4 {margin-bottom:1em}
+
+h2, h3, h4 a, h5 a, h6 a {padding:3px 10px}
+
+h3,h4 {font-size:16px;}
+
+h5, h6 a {font-size:12px;}
+
+h2 {background-color:#f0f0f0}
+
+ul, ol {margin:0;}
+
+/* --- Links --- */
+a {
+  color: #0088cc;
+  text-decoration: none;
+}
+
+#acc1 .last-child a{border-width: 0px 0px;}
+
+.h, .last-child{border:1px solid #e0e0e0; color:#05b}
+
+.item-buttons{border:0px solid #e0e0e0; color:#05b;list-style-type: none;}
+
+#acc1 a:hover, #acc1 a:focus, #acc1 a:active {border-color:#bcd; text-decoration:none; outline:0 none}
+
+.last-child{list-style-type: none;}
+
+/* --- Accordion --- */
+.js .accordion {visibility:hidden}
+
+.accordion {margin:0; padding:0; overflow: auto}
+
+.accordion li {list-style-type:none}
+
+.accordion li.last-child {margin-left:0px;}
+
+ul.accordion ul {margin:0; padding:0 0 0 0px;}
+
+.accordion .outer {border:1px solid #dadada; border-width:0 1px 1px; background: #fff}
+
+.accordion .inner {margin-bottom:0; padding:.5em 20px 1em; position:relative; overflow:hidden}
+
+.accordion .inner .inner {padding-bottom:0}
+
+.accordion .h {padding-top:.3em} /* vertical padding instead of vertical margin (ie8) */
+
+.accordion p {margin:.5em 1px 1em}
+
+.accordion-heading .accordion-toggle{padding:0;}
+
+.accordion-inner{padding:0;}
+
+/*  
+  Add styles for all links in the 'accordion':
+.accordion a {...}
+*/    
+
+a.trigger {display:inline-block !important; padding-left:20px; background-image: url('../../images/plus.gif'); background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
+
+a.trigger.open {border-color:#dadada; background-image: url('../../images/minus.gif');background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
+
+.last-child a.trigger{padding-left:1px; background-image:none; font-weight:normal}
+
+.h, .last-child {background-color:#f0f0f0}
+
+a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:#bcd}
+
+.trigger{width:130px;}
+
+.trigger2{font-size:12px;font-weight:normal;color:#0088cc}
+
+.trigger2{display:inline-block; width:130px;}
+
+.trigger2:hover{cursor:pointer;color:#005580}
+
+.sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
+.sortable li { width: 350px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 25px; }
+.sortable li span { position: absolute; margin-left: -1.3em; }
+
+.modules{width:270px;}
+
+.span3 {
+  background-color: whitesmoke;
+  min-height:700px;
+}
+#middle{
+	/*background-color: whitesmoke;*/
+	min-height:700px;	
+	/*position:absolute;
+	overflow:auto;
+	margin-left:30%;*/
+	/*width:570px;*/
+}
+
+#tree{
+	/*position:absolute;
+	overflow:auto;*/
+	/*width:auto*/
+	width:270px;
+	
+}
+
+#details{
+	/*position:absolute;
+	overflow:auto;
+	margin-left:75%;
+	margin-right:5%;*/
+	width:280px;
+}
+
+.datepicker2{
+	
+}
+.left-space{
+	margin-left:2em;
+	display:inline;
+}
+
+.red{
+	color:red;
+	font-style: italic;
+}
+.handle:hover{
+	cursor: crosshair;
+	vertical-align: top;
+}
+.handle{
+	vertical-align: top;
+}
+
+.overlay {
+  height: 90%;
+  position: absolute;
+  display: block;
+  opacity: 0.7;
+  background-color: #fff;
+  z-index: 99;
+  text-align: center;
+}
+
+.highlight{
+	background-color:#FBEED5;
+}
+.green{
+	color:#008000;
+	float:right;
+}
+
+.red{
+	color:#DD1144;
+	float:right;
+}
+
+.widescreen{
+  width: 743px;
+  height: 450px;
+}
+
+.smallscreen{
+  width: 557px;
+  height: 450px;
+}
+.solved{
+	display: inline;
+    cursor: pointer;
+    color:#0088CC;
+}

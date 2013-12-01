@@ -21,6 +21,7 @@ angular.module('scalearAngularApp')
 		'removeAnswer':{method:'POST', params:{action:'remove_answer_angular'}, headers:headers},
 		'saveSort':{method:'POST', params:{action:'sort'}, headers:headers},
 		"validateLecture": {method: 'PUT', params: {action: 'validate_lecture_angular'},headers: headers},
+		"getLectureStudent":{method:'GET', params:{action:'get_lecture_data_angular'}, headers:headers}
 	});
 
 }]) 

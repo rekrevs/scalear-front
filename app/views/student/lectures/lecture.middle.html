@@ -1,0 +1,16 @@
+<link rel="stylesheet" href="styles/student/courseware.css" type="text/css" media="screen" />
+
+<overlay ng-hide="hide_overlay">
+	<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
+</overlay>
+
+<video_container ng-style="video_style" ng-class="lecture.aspect_ratio">
+	<div ng-show="editing_mode">
+		<quiz ng-style="quiz_layer">
+			<answervideo ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
+			<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
+		</quiz>
+	</div>
+	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url" controls="lecture_player_controls" ready="hideOverlay()" ng-class="lecture.aspect_ratio"/>
+</video_container>
+	

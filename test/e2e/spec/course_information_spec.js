@@ -471,10 +471,6 @@ describe("Course Information Pages",function(){
     });
     describe('Student', function(){
         login(ptor, driver, 'em_menshawi@hotmail.com', 'password', 'Mahmoud Menshawi', findByName);
-        it('should wait', function(){
-//            ptor.sleep(10000);
-            console.log(enroll_key);
-        })
         it('should enroll in the course that was created', function(){
             ptor.findElement(protractor.By.id('join_course')).then(function(join_course){
                 join_course.click();
@@ -554,6 +550,99 @@ describe("Course Information Pages",function(){
             });
         });
     });
+    describe('Student', function(){
+        logout(ptor, driver);
+    });
+    describe('Student', function(){
+        login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'Bahia', findByName);
+        it('should enroll in the course that was created', function(){
+            ptor.findElement(protractor.By.id('join_course')).then(function(join_course){
+                join_course.click();
+            });
+        });
+        it('should try to proceed without enrollment key', function(){
+            ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
+                proceed.click();
+            });
+            ptor.findElement(protractor.By.className('help-inline')).then(function(validation){
+                expect(validation.getText()).toBe('Required!');
+            });
+        });
+        it('should try to proceed with a wrong enrollment key', function(){
+            ptor.findElement(protractor.By.tagName('input')).then(function(key_field){
+                key_field.sendKeys('anykey');
+            });
+            ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
+                proceed.click();
+            });
+            ptor.findElement(protractor.By.className('errormessage')).then(function(validation){
+                expect(validation.getText()).toBe('Course Does Not Exist');
+            });
+        });
+        it('should enter the enrollment key and proceed', function(){
+            ptor.findElement(protractor.By.tagName('input')).then(function(key_field){
+                key_field.clear();
+                key_field.sendKeys(enroll_key);
+            });
+            ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
+                proceed.click();
+            });
+        });
+        it('should click on the course name', function(){
+            ptor.findElements(protractor.By.tagName('a')).then(function(links){
+                links[links.length-2].click();
+            });
+        });
+        it('should go to course information page', function(){
+            ptor.findElements(protractor.By.tagName('a')).then(function(links){
+                links[12].click();
+            });
+        });
+    });
+    describe('Course Information page', function(){
+        it('should show course short name and course title', function(){
+            ptor.findElement(protractor.By.tagName('h3')).then(function(title){
+                expect(title.getText()).toBe('TEST-101 | Testing Course');
+            });
+        });
+        it('should display correct start date', function(){
+            ptor.findElements(protractor.By.tagName('p')).then(function(data){
+                data[0].getText().then(function(text){
+                    var start_date = new Date(text);
+                    expect(formatDate(start_date, 1)).toBe(tomorrow);
+                });
+            });
+        });
+        it('should display correct course duration', function(){
+            ptor.findElements(protractor.By.tagName('p')).then(function(data){
+                expect(data[1].getText()).toBe('10 Weeks');
+            });
+        });
+        it('should display correct discussion forum link', function(){
+            ptor.findElements(protractor.By.tagName('p')).then(function(data){
+                expect(data[2].getText()).toBe('http://www.google.com');
+            });
+        });
+        it('should display correct course description', function(){
+            ptor.findElements(protractor.By.tagName('p')).then(function(data){
+                expect(data[3].getText()).toBe('any description');
+            });
+        });
+        it('should display correct course prerequisites', function(){
+            ptor.findElements(protractor.By.tagName('p')).then(function(data){
+                expect(data[4].getText()).toBe('any prerequisites');
+            });
+        });
+    });
+    describe('Student', function(){
+        logout(ptor, driver);
+    });
+    describe('Teacher', function(){
+        login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
+    });
+
+
+
 });
 
 

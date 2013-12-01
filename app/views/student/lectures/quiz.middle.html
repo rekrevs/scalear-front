@@ -1,80 +1,32 @@
 <div ng-repeat="alert_message in alert_messages" ng-show="alert_messages" class="alert">
 	 {{alert_message}}
 </div>
-
-
 <h4>{{quiz.name}}</h4>
-
-<p>
-  {{quiz.instructions}}
-</p>
-
+<p>{{quiz.instructions}}</p>
 <div ng-if="quiz.quiz_type=='quiz'">
-<p ng-if="status==null || status==''">
-	Attempt Number:0/{{quiz.retries+1}}
-</p>
-<p ng-if="status!=null && status.attempts==quiz.retries+1">
-	You've used up all {{quiz.retries+1}} attempts.
-</p>
-<p ng-if="status!=null && status.attempts<quiz.retries+1">
-	Attempt Number:{{status.attempts}}/{{quiz.retries+1}}
-</p>
+	<p ng-if="status==null || status==''">
+		Attempt Number:0/{{quiz.retries+1}}
+	</p>
+	<p ng-if="status!=null && status.attempts==quiz.retries+1">
+		You've used up all {{quiz.retries+1}} attempts.
+	</p>
+	<p ng-if="status!=null && status.attempts<quiz.retries+1">
+		Attempt Number:{{status.attempts}}/{{quiz.retries+1}}
+	</p>
 </div>
-
 <center>
-<form name="form">
-<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct"></student-quiz>
-<input ng-disabled="status.status=='Submitted'" type="button" class="btn btn-primary" value="Save" ng-click="saveQuiz('save')" />
-<input ng-disabled="status.status=='Submitted' && status.attempts==quiz.retries+1" ng-if="quiz.quiz_type=='quiz'" type="button" class="btn btn-primary" value="Submit" ng-click="saveQuiz('submit')" />
-</form>
-</center>
-<!-- <% if quiz.quiz_type=="quiz"%>
-<p>
-<% if !@status.nil? %>
-	<% if @status.attempts== quiz.retries+1 %>
-		 <%= t('quizzes.used_up_all') %> <%= quiz.retries+1 %> <%= t('quizzes.attempts') %>.
-	<% else %>
-	  <%= t('quizzes.attempt_number') %>: <%= @status.attempts %>/<%= quiz.retries+1 %>
-	<% end %>
-<% else %>
-		<%= t('quizzes.attempt_number') %>: 0/<%= quiz.retries+1 %>
-<% end %>
-</p>
-<% end %>
-
-<p>
-	
-	<br />
-	<table width="100%" %>
-		
-	
-	<%= render quiz.questions %>
-	
-	</table>
-	
-</p>
-
-<% if quiz.quiz_type == 'quiz' %>
-<% if @disable %>
-
-<center>
-	<div>
-		<%= submit_tag  t('lectures.save') ,:disabled => "disabled" , :class => 'btn' %>
-		<%= submit_tag  t('submit') ,:disabled => "disabled",  :class => 'btn btn-primary'%>
+	<form name="form">
+		<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct"></student-quiz>
+		<input ng-disabled="status.status=='Submitted'" type="button" class="btn btn-primary" value="Save" ng-click="saveQuiz('save')" />
+		<input ng-disabled="status.status=='Submitted' && status.attempts==quiz.retries+1" ng-if="quiz.quiz_type=='quiz'" type="button" class="btn btn-primary" value="Submit" ng-click="saveQuiz('submit')" />
+	</form>
+	<div ng-show="survey_chart_data" style="padding:10px 40px" >
+		<div ng-repeat="(id,data) in survey_chart_data" class="chart" style='min-width:300px; height:205px;' ng-init="chart=createSurveyChart(data.answers, $index)"> 
+		   	<center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
+			<div google-chart on-ready="loading=false" chart="chart" ></div>
+		</div>
+	</div>
+	<div ng-repeat="(id,question) in survey_free" style="margin-top:60px">
+		<free-text-table ng-if="question.answers" question="question" related-answers="related_answers" display-only="true"/>
 	</div>
 </center>
-<% elsif @disable_save %>
-<center>
-	<div>
-		<%= submit_tag t('lectures.save') ,:disabled => "disabled" , :class => 'btn' %>
-		<%= submit_tag t('submit'),  :class => 'btn btn-primary', :onclick => "validate_form()" %>
-	</div>
-</center>
-<% else %>
-<center><div><%= submit_tag t('lectures.save') , :class => 'btn' %><%= submit_tag t('submit') ,  :class => 'btn btn-primary' ,:onclick => "validate_form()"%></div></center>
-<% end %>
-<%else%>
-<center><div><%= submit_tag t('lectures.save') , :class => 'btn btn-primary' %></div></center>
-<% end %>
-<br>
-<% end -%>   -->

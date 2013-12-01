@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', function ($scope, Course, $stateParams, $rootScope) {
-//    console.log($scope);
+
     var init = function()
     {
     	$scope.open_id="-1";

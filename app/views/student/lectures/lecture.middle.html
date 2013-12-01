@@ -22,6 +22,6 @@
 	<tr ng-repeat="quiz in lecture.online_quizzes" ng-controller="OnlineQuizCtrl">
 		<td><img ng-show="quiz.is_quiz_solved" src="images/check7.png" /></td>
 		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="skip(quiz)">{{quiz.question}}</p></td>
-		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="skip(quiz)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
+		<td><p ng-show="quiz.is_quiz_solved" ng-class="{'solved': quiz.is_quiz_solved}" ng-click="skip(quiz)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
 	</tr>
 </table>

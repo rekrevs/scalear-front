@@ -178,5 +178,5 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 .solved{
 	display: inline;
     cursor: pointer;
-    color: blue;
+    color:#0088CC;
 }

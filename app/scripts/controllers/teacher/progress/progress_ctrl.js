@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
   		
    		Course.getCourse({course_id:$stateParams.course_id},
 			function(data){
-				$scope.groups = data.groups
+				$scope.modules = data.groups
 				console.log(data)
 			}, 
 			function(){

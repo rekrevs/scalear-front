@@ -83,26 +83,6 @@ body {
   color:gray;
 }
 
-#play-me{
-      position:absolute;
-      width:50px;
-      height:50px;
-      background: url("playN.png") no-repeat center center;
-    }
-#play-me.pause{
-      background: url("pauseN.png") no-repeat center center;
-    }
-#mute-me{
-      position:absolute;
-      top:40px;
-      width:50px;
-      height:50px;
-      background: url("muteF.png") no-repeat center center;
-}
-#mute-me.mute{
-      background: url("unmuteF.png") no-repeat center center;
-}
-
 .container{
   width:1170px !important;
 }
@@ -189,4 +169,23 @@ body {
 .ng-invalid ~ span { color:red; display:inline;font-size:12px;left:300px; }
 input.ng-invalid{ border:1px solid red; }
 select.ng-invalid{ border:1px solid red; }
+
+.widescreen{
+  width: 500px;
+  height: 306px;
+}
+
+.smallscreen{
+  width: 500px;
+  height: 406px;
+}
+.largescreen{
+  width: 800px;
+  height: 450px;
+}
+.inclass_sceen{
+  display: inline-block;
+  width:444px;
+  height: 250px
+}
 

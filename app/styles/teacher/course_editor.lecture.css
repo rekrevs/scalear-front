@@ -110,16 +110,6 @@
 .sortable li { width: 350px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 25px; }
 .sortable li span { position: absolute; margin-left: -1.3em; }
 
-.widescreen{
-  width: 500px;
-  height: 306px;
-}
-
-.smallscreen{
-  width: 500px;
-  height: 406px;
-}
-
 .quiz_title{
   width: 50%;
 }

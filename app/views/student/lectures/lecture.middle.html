@@ -1,5 +1,5 @@
 <link rel="stylesheet" href="styles/student/courseware.css" type="text/css" media="screen" />
-
+<center><h3>{{lecture.name}}</h3></center>
 <overlay ng-hide="hide_overlay">
 	<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
 </overlay>
@@ -12,5 +12,16 @@
 		</quiz>
 	</div>
 	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url" controls="lecture_player_controls" ready="hideOverlay()" ng-class="lecture.aspect_ratio"/>
+	<controls></controls>
+	<check ng-show='quiz_now'></check>
+	<notification ng-show='show_notification'></notification>
 </video_container>
-	
+<br><br>
+<h4>Questions:</h4>
+<table class="table table-striped">
+	<tr ng-repeat="quiz in lecture.online_quizzes" ng-controller="OnlineQuizCtrl">
+		<td><img ng-show="quiz.is_quiz_solved" src="images/check7.png" /></td>
+		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="skip(quiz)">{{quiz.question}}</p></td>
+		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="skip(quiz)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
+	</tr>
+</table>

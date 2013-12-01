@@ -156,11 +156,11 @@
       controller: 'studentLecturesCtrl'
       })
       .state('course.lectures.lecture', {
-         resolve:{
-           lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
-             return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
-           }
-         },
+         // resolve:{
+           // lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
+             // return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
+           // }
+         // },
         url: '/lectures/:lecture_id',
         views:{
           'middle'  :{templateUrl: 'views/student/lectures/lecture.middle.html',  controller: 'studentLectureMiddleCtrl'}

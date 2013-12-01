@@ -167,11 +167,16 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 }
 
 .widescreen{
-  width: 800px;
+  width: 743px;
   height: 450px;
 }
 
 .smallscreen{
-  width: 600px;
+  width: 557px;
   height: 450px;
+}
+.solved{
+	display: inline;
+    cursor: pointer;
+    color: blue;
 }

@@ -32,7 +32,7 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1&autohide=0" ,{ width: 500, controls: 0});
 					player.controls( false ); 
 					player.on("loadeddata", 
 						function(){
@@ -74,6 +74,11 @@ angular.module('scalearAngularApp')
 
 				$rootScope.$on('refreshVideo',function(){
 					scope.controls.refreshVideo()
+				})
+				
+				scope.$watch('url', function(){
+					if(scope.url)
+						scope.controls.refreshVideo();
 				})
 		
 			  	loadVideo();

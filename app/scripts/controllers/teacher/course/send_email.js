@@ -37,8 +37,23 @@ console.log($stateParams);
 
         $scope.sendEmail = function(address, title, body){
 //            var params = $.param({email: address, subject: title, message: body});
-            Course.send_email_through({course_id:$stateParams.course_id, email:address, subject:title, message:body});
-            $state.go('course.enrolled_students')
+            Course.send_email_through(
+                {
+                    course_id:$stateParams.course_id
+                },
+                {
+                    email:address,
+                    subject:title,
+                    message:body
+                },
+                function(){
+                    $state.go('course.enrolled_students')
+                },
+                function(){
+                    console.log("BAD")
+                }
+            );
+
         }
 
 

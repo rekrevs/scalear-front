@@ -476,14 +476,14 @@ describe("Course Information Pages",function(){
                 join_course.click();
             });
         });
-        it('should try to proceed without enrollment key', function(){
-            ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
-                proceed.click();
-            });
-            ptor.findElement(protractor.By.className('help-inline')).then(function(validation){
-                expect(validation.getText()).toBe('Required!');
-            });
-        });
+//        it('should try to proceed without enrollment key', function(){
+//            ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
+//                proceed.click();
+//            });
+////            ptor.findElement(protractor.By.className('help-inline')).then(function(validation){
+////                expect(validation.getText()).toBe('Required!');
+////            });
+//        });
         it('should try to proceed with a wrong enrollment key', function(){
             ptor.findElement(protractor.By.tagName('input')).then(function(key_field){
                 key_field.sendKeys('anykey');
@@ -560,14 +560,14 @@ describe("Course Information Pages",function(){
                 join_course.click();
             });
         });
-        it('should try to proceed without enrollment key', function(){
-            ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
-                proceed.click();
-            });
-            ptor.findElement(protractor.By.className('help-inline')).then(function(validation){
-                expect(validation.getText()).toBe('Required!');
-            });
-        });
+//        it('should try to proceed without enrollment key', function(){
+//            ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
+//                proceed.click();
+//            });
+////            ptor.findElement(protractor.By.className('help-inline')).then(function(validation){
+////                expect(validation.getText()).toBe('Required!');
+////            });
+//        });
         it('should try to proceed with a wrong enrollment key', function(){
             ptor.findElement(protractor.By.tagName('input')).then(function(key_field){
                 key_field.sendKeys('anykey');
@@ -639,6 +639,149 @@ describe("Course Information Pages",function(){
     });
     describe('Teacher', function(){
         login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
+        it('should go to course', function(){
+            ptor.findElements(protractor.By.tagName('a')).then(function(links){
+                links[links.length-6].click();
+            });
+        });
+        it('should go to enrolled students page', function(){
+            ptor.findElement(protractor.By.className('dropdown-toggle')).click();
+            ptor.findElement(protractor.By.id('enrolled')).click();
+        });
+    });
+    describe('Enrolled Students Page', function(){
+        it('should display all enrolled students in the course', function(){
+            ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
+                expect(rows.length).toBe(3);
+            });
+            ptor.findElements(protractor.By.tagName('td')).then(function(data){
+                expect(data[0].getText()).toBe('Bahia');
+                expect(data[1].getText()).toBe('bahia.sharkawy@gmail.com');
+                expect(data[4].getText()).toBe('Mahmoud Menshawi');
+                expect(data[5].getText()).toBe('em_menshawi@hotmail.com');
+            });
+        });
+        it('should filter the students according to the search text', function(){
+            ptor.findElement(protractor.By.id('search')).then(function(search_field){
+                search_field.sendKeys('anything');
+                ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
+                    expect(rows.length).toBe(1);
+                });
+                search_field.clear();
+                search_field.sendKeys('mahmoud');
+                ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
+                    expect(rows.length).toBe(2);
+                });
+                ptor.findElements(protractor.By.tagName('td')).then(function(data){
+                    expect(data[0].getText()).toBe('Mahmoud Menshawi');
+                    expect(data[1].getText()).toBe('em_menshawi@hotmail.com');
+                });
+                search_field.clear();
+                search_field.sendKeys('bahia');
+                ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
+                    expect(rows.length).toBe(2);
+                });
+                ptor.findElements(protractor.By.tagName('td')).then(function(data){
+                    expect(data[0].getText()).toBe('Bahia');
+                    expect(data[1].getText()).toBe('bahia.sharkawy@gmail.com');
+                });
+            });
+        });
+        it('should allow emailing one student', function(){
+            ptor.findElement(protractor.By.id('email_address')).then(function(email){
+                email.click();
+            });
+            ptor.findElement(protractor.By.id('to')).then(function(email_field){
+                expect(email_field.getAttribute('value')).toBe('bahia.sharkawy@gmail.com');
+            });
+        });
+
+        it('should enter email subject', function(){
+            ptor.findElement(protractor.By.id('subject')).then(function(subject_field){
+                subject_field.sendKeys('any subject');
+            });
+        });
+        it('should enter email body', function(){
+            ptor.findElement(protractor.By.id('tinymce_body_ifr')).then(function(tinymce_ifr){
+                ptor.switchTo().frame(tinymce_ifr);
+                driver.findElement(protractor.By.tagName("body")).sendKeys('anything');
+                driver.switchTo().defaultContent();
+//                ptor.findElement(protractor.By.tagName('body')).then(function(body_field){
+//                    body_field.sendKeys(('anything'));
+//                });
+            });
+
+        });
+        it('should send the email', function(){
+            driver.findElement(protractor.By.id('send_email')).click();
+        });
+
+        it('should allow emailing several students', function(){
+            ptor.findElements(protractor.By.className('checks')).then(function(checkboxes){
+                expect(checkboxes.length).toBe(2);
+                checkboxes[0].click();
+                checkboxes[1].click();
+            });
+            ptor.findElement(protractor.By.id('email_button')).then(function(email_button){
+                email_button.click();
+            });
+            ptor.findElement(protractor.By.id('to')).then(function(email_field){
+                expect(email_field.getAttribute('value')).toBe('bahia.sharkawy@gmail.com; em_menshawi@hotmail.com; ');
+            });
+        });
+        it('should enter email subject', function(){
+            ptor.findElement(protractor.By.id('subject')).then(function(subject_field){
+                subject_field.sendKeys('any subject');
+            });
+        });
+        it('should enter email body', function(){
+            ptor.findElement(protractor.By.id('tinymce_body_ifr')).then(function(tinymce_ifr){
+                ptor.switchTo().frame(tinymce_ifr);
+                driver.findElement(protractor.By.tagName("body")).sendKeys('anything');
+                driver.switchTo().defaultContent();
+            });
+        });
+        it('should send the email', function(){
+            driver.findElement(protractor.By.id('send_emails')).click();
+        });
+
+        it('should allow removing students from course', function(){
+            ptor.findElements(protractor.By.id('remove_button')).then(function(remove){
+                remove[0].click();
+                var alert_dialog = ptor.switchTo().alert();
+                alert_dialog.accept();
+                remove[1].click();
+                alert_dialog = ptor.switchTo().alert();
+                alert_dialog.accept();
+                ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
+                    expect(rows.length).toBe(1);
+                });
+            });
+        });
+
+        it('should refresh the page', function(){
+            ptor.navigate().refresh();
+        });
+        it('should display no students enrolled under the course', function(){
+            ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
+                expect(rows.length).toBe(1);
+            });
+        });
+
+    });
+
+    describe('Teacher', function(){
+        it('should navigate to courses list page', function(){
+            ptor.get('/#/courses');
+        });
+        it('should delete the created course', function(){
+            ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
+                delete_buttons[delete_buttons.length-1].click();
+                var alert_dialog = ptor.switchTo().alert();
+                alert_dialog.accept();
+                ptor.sleep(1000);
+            });
+        });
     });
 
 

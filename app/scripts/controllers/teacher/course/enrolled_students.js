@@ -21,10 +21,29 @@ var app = angular.module('scalearAngularApp')
             var answer = confirm('Are you sure that you want to remove this student?');
             if(answer){
                 //console.log('pressed yes')
-                Course.remove_student({course_id:$stateParams.course_id ,student: student})
+                Course.remove_student(
+                    {
+                        course_id:$stateParams.course_id ,
+                        student: student
+                    },
+                    {},
+                    function(){
+                        $scope.data.splice(index, 1);
+                     },
+                    function(){
+                        console.log(value);
+                    })
+//                    .$promise.then(
+//                    function(value){
+//
+//                    },
+//                    function(value){
+//
+//                    }
+                //)
                 //console.log(index);
 
-                $scope.data.splice(index, 1);
+
             }
         }
 

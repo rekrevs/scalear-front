@@ -7,7 +7,7 @@
             </td>
             <td>
                 <textarea id="to" name="emails" title="To" style="width: 80%; resize: none;" readonly="readonly" rows="2" >{{final_emails}}</textarea>
-                <input class="btn" type="button" ng-click="sendBatchEmail(subject, message)" style="float: right; width: 10%" value="Send" />
+                <input class="btn" id="send_emails" type="button" ng-click="sendBatchEmail(subject, message)" style="float: right; width: 10%" value="Send" ng-disabled="!final_emails || !subject || !message" />
             </td>
         </tr>
         <tr>
@@ -22,7 +22,7 @@
         </tr>
     </table>
     <br />
-    <textarea ui-tinymce ng-model="message" name="body" style="height: 200px;"></textarea>
+    <textarea ui-tinymce ng-model="message" id="tinymce_body" name="body" style="height: 200px;"></textarea>
     <br />
 
 

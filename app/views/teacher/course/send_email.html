@@ -8,7 +8,7 @@
                 </td>
                 <td>
                     <input id="to" type="text" name="emails" title="To" style="width: 80%;" readonly="readonly" value="{{email}}"/>
-                    <input class="btn" type="button" ng-click="sendEmail(email, subject, message)" style="float: right; width: 10%" value="Send" />
+                    <input class="btn" id="send_email" type="button" ng-click="sendEmail(email, subject, message)" style="float: right; width: 10%" value="Send" ng-disabled="!email || !subject || !message" />
                 </td>
             </tr>
             <tr>
@@ -23,7 +23,7 @@
             </tr>
         </table>
         <br />
-        <textarea ui-tinymce ng-model="message" name="body"></textarea>
+        <textarea ui-tinymce ng-model="message" id="tinymce_body" name="body">oisjdfoij</textarea>
         <br />
 
 

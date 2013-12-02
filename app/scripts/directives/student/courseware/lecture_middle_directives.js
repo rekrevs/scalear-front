@@ -345,42 +345,70 @@ angular.module('scalearAngularApp')
     }
   };
 })
-.directive("check", function($timeout, Lecture) {
+.directive("check", function($timeout, $stateParams, Lecture) {
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"E",
     // use replace?
-	template:'<input type="button" class="btn btn-primary" value="Check Answer" ng-click="check_answer()" />',
-	
+    template:'<input type="button" class="btn btn-primary" value="Check Answer" ng-click="check_answer()" />',	
     link: function(scope, element, attrs) {
     	
     	element.css("position", "relative");
-		element.css("top", "440px");
-		//element.css("left", "200px");
-		element.children().css("height", "25px");
+      element.css("top", "-40px");
+  		element.css("padding", "8px");
+      element.children().css("height", "25px");
+  		element.children().css("padding-top", "2px");
 		
     	
-    	angular.forEach(['playerWidth', 'playerHeight'], function (key) {
-	      	scope.$watch(key, function(){
-	      		console.log("playerHeight is "+scope.playerHeight);
-		    	element.css("top", scope.playerHeight-36+"px");
-		    	
-			});
-		});
+    	angular.forEach(['playerWidth', 'playerHeight'], function (key){
+        scope.$watch(key, function(){
+          console.log("playerHeight is "+scope.playerHeight);
+          element.css("top", scope.playerHeight-36+"px");		    	
+		    });
+		  });
 		
-		scope.check_answer = function()
-		{
-			
-			console.log("check answer "+scope.solution);
-			// Lecture.get(scope.path+"/save_online",{quiz:scope.current_quiz.id, answer:scope.solution}, function(data){
-    			// scope.update_answers+=1;
-    			// scope.explanation= data["detailed_exp"];
-    			// scope.verdict=data["correct"]?"Correct":"Incorrect";
-    			// scope.show_notification=true;
-    			// $timeout(function(){
-             		// scope.show_notification=false;
-         		// }, 2000);
-    		// });
-		};
+		  scope.check_answer = function(){			
+  			console.log("check answer "+scope.solution);
+        if(scope.selected_quiz.quiz_type == "invideo"){
+          sendAnswers()
+        }
+
+  			// Lecture.get(scope.path+"/save_online",{quiz:scope.current_quiz.id, answer:scope.solution}, function(data){
+      			// scope.update_answers+=1;
+      			// scope.explanation= data["detailed_exp"];
+      			// scope.verdict=data["correct"]?"Correct":"Incorrect";
+      			// scope.show_notification=true;
+      			// $timeout(function(){
+               		// scope.show_notification=false;
+           		// }, 2000);
+      		// });
+  		}
+      var sendAnswers=function(){
+        var selected_answers=[]
+        scope.selected_quiz.online_answers.forEach(function(answer){
+          if(answer.selected)
+            selected_answers.push(answer.id)
+        })
+        if(scope.selected_quiz.question_type == "OCQ" && selected_answers.length==1)
+          selected_answers = selected_answers[0]
+
+        console.log(selected_answers)
+        Lecture.saveOnline(
+          {
+            course_id:$stateParams.course_id,
+            lecture_id:$stateParams.lecture_id,
+           
+          },
+          {
+            quiz: scope.selected_quiz.id,
+            answer:selected_answers
+          },
+          function(data){
+            console.log(data)
+          },
+          function(){}
+        )
+      }
+
     }
   };
 })    			
@@ -434,10 +462,73 @@ angular.module('scalearAngularApp')
 .directive("studentAnswerVideo",function(){
   return {
     restrict:"E",
+    scope:{
+      quiz:"=",
+      data:"=",
+    },
     template: "<div ng-switch on='quiz.question_type'>"+
-                "<student-answer ng-switch-when='MCQ' />"+
-                "<student-answer ng-switch-when='OCQ' />"+
-                "<student-drag ng-switch-when='drag' />"+
+                "<div ng-switch-when='MCQ'><student-answer /></div>"+
+                "<div ng-switch-when='OCQ'><student-answer /></div>"+
+                "<div ng-switch-when='drag'><student-drag /></div>"+
               "</div>",
+    link:function(scope, element, attrs, controller){
+      console.log("answer video")
+      console.log(scope.quiz.question_type)
+    }
   }
 })
+.directive('studentAnswer', ['$compile', '$rootScope', function($compile, $rootScope){
+  return {
+     replace:true,
+     restrict: 'E',
+     template: "<input type='checkbox' name='student_answer' ng-model='data.selected' ng-change='radioChange(data)' ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' />",
+
+    link: function(scope, element, attrs, controller) {
+      console.log("student answer link")
+
+      //===FUNCTIONS===//
+      var setType=function(){
+          var type= scope.quiz.question_type =="MCQ"? "checkbox" :"radio"
+          element.attr('type',type)
+      }
+
+      var setAnswerLocation=function(){
+        console.log("setting answer location")
+        var ontop=angular.element('.ontop');    
+        var w = scope.data.width * ontop.width();
+        var h = scope.data.height* (ontop.height());
+        var add_left= (w-13)/2.0
+        var add_top = (h-13)/2.0
+        scope.xcoor = (scope.data.xcoor * ontop.width()) - add_left;       
+        scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
+        scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
+        console.log(scope.xcoor)
+        console.log(scope.ycoor)
+      } 
+
+      scope.radioChange=function(corr_ans){
+        if(scope.quiz.question_type == "OCQ"){
+          console.log("radioChange")
+          scope.quiz.online_answers.forEach(function(ans){
+            ans.selected=false
+          })
+          corr_ans.selected=true
+        }
+      }
+
+      $rootScope.$on("updatePosition",function(){
+        console.log("event emiited updated position")
+        setAnswerLocation()
+      })         
+     
+      scope.popover_options={
+        content: "",
+        html:true,
+        fullscreen:false
+      }
+
+      setType()
+      setAnswerLocation()
+    }
+  };
+}])

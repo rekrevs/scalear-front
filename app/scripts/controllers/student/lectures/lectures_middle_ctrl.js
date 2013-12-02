@@ -23,8 +23,9 @@ angular.module('scalearAngularApp')
  						$scope.selected_quiz=quiz
  						$scope.display_mode=true
  						$scope.lecture_player.controls.pause()
- 						if(quiz.quiz_type == 'invideo')
-	 						console.log('invideo')
+ 						if(quiz.quiz_type == 'invideo'){
+	 						//showInvideoQuiz()
+ 						}
 	 					else
 	 						console.log("html")
 
@@ -36,5 +37,9 @@ angular.module('scalearAngularApp')
  		});	
     }
     init();
+
+    // var showInvideoQuiz=function(){
+
+    // }
     
   }]);

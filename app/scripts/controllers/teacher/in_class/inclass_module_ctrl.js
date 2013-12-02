@@ -24,6 +24,13 @@ angular.module('scalearAngularApp')
         delete $scope.chart_data
 
       openModal('display', type)
+      setup_screens()
+
+      angular.element($window).bind('resize',
+        function(){
+          setup_screens()
+          $scope.$apply()
+      })  
 
   	};
 
@@ -109,7 +116,7 @@ angular.module('scalearAngularApp')
       $scope.seek($scope.quiz_time);
       $scope.lecture_player.controls.hideControls();
       $scope.loading_video=false
-  }
+    }
 
     $scope.nextQuiz = function(){
       if($scope.current_quiz != $scope.total_num_quizzes){
@@ -162,6 +169,43 @@ angular.module('scalearAngularApp')
         if($scope.chart_data)
           $scope.chart = $scope.createChart($scope.quiz_id)
       }
+    }
+
+    var setup_screens = function(){
+      console.log("resize")
+      var win = angular.element($window)
+      console.log(win.height())
+      var video_height = (win.height()*60)/100
+      var video_width= video_height*(16/9)
+      if(video_width > win.width())
+        video_width = win.width() 
+      var width = win.width()
+      $scope.video_style={
+        height:'100%',
+        marginTop: '0px',
+        width: video_width+'px',
+        display: 'inline-block'
+      }
+      // var height = angular.element()
+      // h=$("#resizable").height();
+      // width = h*16.0/9.0;
+      // wbig=$("#big_div").width();
+      // if(width!=$("#resizable").width())
+      // {
+      //   $("#resizable").width(width)
+      //   remaining= wbig-width;
+      //   $("#left").width(remaining/2.0 - 30)
+      //   $("#right").width(remaining/2.0 - 30)
+      // }
+      
+      // if($("#resizable").width() + 260 > $("#top").width()) // does not maintain 16:9 aspect ratio anymore.
+      // {
+      //   $("#resizable").width(wbig-260)
+      //   $("#left").width(100)
+      //   $("#right").width(100)
+      // }
+      
+      // player.setSize($("#resizable").width(), $("#resizable").height());
     }
 
   }]);

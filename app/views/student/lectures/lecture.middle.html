@@ -1,15 +1,15 @@
 <link rel="stylesheet" href="styles/student/courseware.css" type="text/css" media="screen" />
-<center><h3>{{lecture.name}}</h3></center>
+<center><h3>{{lecture.name}}</h3></center>{{selected_quiz.online_answers}}
 <video_container ng-style="video_style" ng-class="lecture.aspect_ratio">
 	<div ng-show="display_mode">
 		<quiz ng-style="quiz_layer">
-			<!-- <student-answer-video ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/> -->
+			<student-answer-video ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" />
 			<!-- <answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/> -->
 		</quiz>
 	</div>
 	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio"/>
 	<controls></controls>
-	<check ng-show='quiz_now'></check>
+	<check ng-show='display_mode'></check>
 	<notification ng-show='show_notification'></notification>
 </video_container>
 <br><br>

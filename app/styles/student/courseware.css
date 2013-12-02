@@ -181,9 +181,13 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
     color: blue;
 }
 
-.ontop{
+.ontop.widescreen{
   position:absolute;
-  width:500px;
-  height:306px;
+  height:424px;
+  z-index:5;
+}
+.ontop.smallscreen{
+  position:absolute;
+  height:424px;
   z-index:5;
 }

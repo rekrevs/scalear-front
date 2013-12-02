@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
   	}
 
 	$scope.$parent.setData=function(url){
-		$scope.$parent.lecture_url= url
+		$scope.$parent.lecture_url= url+'&controls=0'
 		$scope.$parent.quiz_time= $scope.display_data[url][$scope.current_quiz_lecture][0]
 		$scope.$parent.question_title = $scope.display_data[url][$scope.current_quiz_lecture][2]
 		$scope.$parent.quiz_id  = $scope.display_data[url][$scope.current_quiz_lecture][3] 

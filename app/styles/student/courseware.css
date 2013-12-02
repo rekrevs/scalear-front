@@ -179,4 +179,77 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	display: inline;
     cursor: pointer;
     color:#0088CC;
+
+}
+
+.ontop{
+  position:absolute;
+  /*width:743px;
+  height:306px;*/
+  z-index:5;
+}
+
+.ontop.widescreen{
+  	height: 424px;
+}
+
+.ontop.smallscreen{
+  	height: 424px;
+}
+
+.q_label{
+	width:100px;
+	display:inline-block;
+}  
+
+.answer_div{
+	width: auto;
+    height: 100%;
+	margin-left:10px;
+	margin-bottom:20px;	
+	position: relative;
+  padding: 39px 19px 14px;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.answer_img{
+  width: 13px;
+  height:13px;
+  z-index: 5; 
+}
+
+.answer_drag{
+  width: 300px;
+  height:40px;
+  position: absolute;
+}
+
+.answer_div:before{
+	content: "Choices";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  -webkit-border-radius: 4px 0 4px 0;
+     -moz-border-radius: 4px 0 4px 0;
+          border-radius: 4px 0 4px 0;
+}
+
+input[type="checkbox"], input[type="radio"] {
+	margin-right:10px;
+}
+
+.green_notification{
+	color: green;
+}
+.red_notification{
+	color:red;
 }

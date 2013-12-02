@@ -73,6 +73,8 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek = function(time){
+					if(time<0)
+						time=0;
 					player.currentTime(time);
 	    			player.pause()
 				}
@@ -85,6 +87,10 @@ angular.module('scalearAngularApp')
 
 				player_controls.hideControls=function(){
 					player.controls( false ); 
+				}
+
+				player_controls.cue=function(time, callback){
+					player.cue(time, callback)
 				}
 
 				var setupEvents=function(){
@@ -130,7 +136,6 @@ angular.module('scalearAngularApp')
 					if(scope.player && scope.player.events)
 						player_events = scope.player.events
 				})
-			  	//loadVideo();
 
 		    }
 		};
@@ -577,13 +582,18 @@ angular.module('scalearAngularApp')
   		restrict: 'A',
   		link: function(scope, element, attr, ctrl) {
       
+      
 	        var getter = $parse(attr.popOver)
 
-	        $q.when(getter(scope) != null).then(function(){
-	        	
+			
+	        //$q.when(1==0).then(function(){
+	        scope.$watch(attr.popOver, function(newval){
+	        
+	        	console.log("inside options popover");
+	        	console.log(newval);
 	        	var options = getter(scope)
 	        	if(options){
-
+					console.log("in options");
 		        	element.popover(options);
 		          	var popover = element.data('popover');
 			        
@@ -641,7 +651,8 @@ angular.module('scalearAngularApp')
 						});	         
 			        }
 			    }
-	        });
+			    })
+	       // });
       	}
     };
 }]);

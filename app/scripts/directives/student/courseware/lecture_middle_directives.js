@@ -11,11 +11,11 @@ angular.module('scalearAngularApp')
     	console.log("scop in directive is ");
     	console.log(scope);
     	element.css("width", "200px");
-		element.css("height", "26px");
-		element.css("position", "relative");
-		element.css("left", "393px");
-		element.css("top", "-30px");
-		element.css("display", "inline-block");
+  		element.css("height", "26px");
+  		element.css("position", "relative");
+  		element.css("left", "393px");
+  		element.css("top", "-30px");
+  		element.css("display", "inline-block");
 		
     	angular.forEach(['playerWidth', 'playerHeight'], function (key) {
 	      	scope.$watch(key, function(){
@@ -107,11 +107,7 @@ angular.module('scalearAngularApp')
 				},{"disable_in_input" : true});
 		};
 		scope.setShortcuts();
-		//scope.lecture_player.events.onReady = function(){
-			//console.log(scope);
-			
-		//};
-      	
+		
     }
   };
 }])
@@ -335,12 +331,14 @@ angular.module('scalearAngularApp')
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"E",
     // use replace?
-	template:'<div class="well"><center><b ng-class="{\'green\':verdict==\'Correct\', \'red\':verdict==\'Incorrect\'}">{{verdict}}</b><br/>Hover for details...</center></div>',
+	template:'<div class="well"><center><b ng-class="{\'green_notification\':verdict==\'Correct\', \'red_notification\':verdict==\'Incorrect\'}">{{verdict}}</b><br/>Hover for details...</center></div>',
 	
     link: function(scope, element, attrs) {
     	element.css("position", "relative");
-		element.css("top", "350px");
-		element.css("left","180px")
+		element.css("top", "-150px");
+		element.css("left","180px");
+		element.css("z-index","100");
+		element.css("display","block")
 		//element.css("left", "200px");
 		element.children().css("height", "40px");
 		element.children().css("width", "150px");
@@ -355,16 +353,15 @@ angular.module('scalearAngularApp')
     }
   };
 })
-.directive("check", function($timeout, Lecture) {
+.directive("check",['$timeout', 'Lecture', '$stateParams', function($timeout, Lecture, $stateParams) {
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"E",
     // use replace?
 	template:'<input type="button" class="btn btn-primary" value="Check Answer" ng-click="check_answer()" />',
 	
     link: function(scope, element, attrs) {
-    	
     	element.css("position", "relative");
-		element.css("top", "440px");
+		element.css("top", "-38px");
 		//element.css("left", "200px");
 		element.children().css("height", "25px");
 		
@@ -381,77 +378,45 @@ angular.module('scalearAngularApp')
 		{
 			
 			console.log("check answer "+scope.solution);
-			// Lecture.get(scope.path+"/save_online",{quiz:scope.current_quiz.id, answer:scope.solution}, function(data){
+			if(scope.selected_quiz.quiz_type=="invideo"){
+			 Lecture.saveOnline({course_id: $stateParams.course_id, lecture_id:$stateParams.lecture_id},{quiz:scope.selected_quiz.id, answer:scope.solution}, function(data){
+    			// scope.update_answers+=1;
+    			 
+    		 });
+    		}else{
+    			Lecture.saveHtml({course_id: $stateParams.course_id, lecture_id:$stateParams.lecture_id},{quiz:scope.selected_quiz.id, answer:scope.studentAnswers[scope.selected_quiz.id]}, function(data){
     			// scope.update_answers+=1;
     			// scope.explanation= data["detailed_exp"];
     			// scope.verdict=data["correct"]?"Correct":"Incorrect";
-    			// scope.show_notification=true;
-    			// $timeout(function(){
-             		// scope.show_notification=false;
-         		// }, 2000);
-    		// });
-		};
+    			 for(var el in data["detailed_exp"])
+    			 	scope.explanation[el]= data["detailed_exp"][el];
+    			 scope.verdict=data["correct"]?"Correct":"Incorrect";
+    			 scope.show_notification=true;
+    			 
+    			 $timeout(function(){
+             		 scope.show_notification=false;
+         		 }, 2000);
+         		 
+    		 });
+			};
     }
-  };
-})    		
-.directive("studentQuiz", function($timeout, Lecture) {
-  return {// doesnt work with ng-class - only if used from the very beginning..
-    restrict:"E",
-    // use replace?
-	template:'<div ng-include="getTemplateUrl()"></div>',
-	
-    link: function(scope, element, attrs) {
-    	
-    	scope.solution={};
-    	scope.explanation={};
-    	
-    	scope.getTemplateUrl = function()
-    	{
-    		if(scope.answers!=null)
-    		{
-    			console.log("in get_template")
-    			scope.choices= scope.answers["answers"];
-    			
-    		}
-    		//console.log("in template url")
-    		//console.log(scope.quiz_type);
-    		if(scope.quiz_type == 'invideo')
-    		{
-    			if(scope.question_type=='OCQ')
-    				return '../views/invideo_ocq.html';
-    			else if(scope.question_type=='MCQ')
-    				return '../views/invideo_mcq.html';
-    			else
-    			{
-    				return '../views/invideo_drag.html';
-    			}
-    		}
-    		else{
-    		
-    			if(scope.question_type=='OCQ')
-    				return '../views/html_ocq.html';
-    			else if(scope.question_type=='MCQ')
-    				return '../views/html_mcq.html';
-    			else
-    				return '../views/html_drag.html';
-    			}
-    	};
-    	
-      	
-	}
-};
-}).directive('studentAnswerForm', ['Lecture','$stateParams','CourseEditor',function(Lecture, $stateParams, CourseEditor){
+   }
+  }
+}]).directive('studentAnswerForm', ['Lecture','$stateParams','CourseEditor',function(Lecture, $stateParams, CourseEditor){
 	return {
 		scope: {
 			quiz:"=",
-			index: "=",
+			studentAnswers:"=",
 			submitted: "=",
+			explanation:"=",
 		},
 		restrict: 'E',
-		template: "<ng-form name='qform'>"+
-							{{quiz.question}}
-							"<student-html-answer />"+
-					"</ng-form>",
+		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
+							"<label class='q_label'>{{quiz.question}}:</label>"+
+							"<div class='answer_div'>"+
+								"<student-html-answer />"+
+							"</div>"+
+					"</div></ng-form>",
 		link: function(scope, iElm, iAttrs, controller) {
 			
 		}
@@ -460,16 +425,14 @@ angular.module('scalearAngularApp')
 	return {
 	 	restrict: 'E',
 	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' style='/*overflow:auto*/' >"+
-					"<div ng-switch-when='MCQ' ><student-html-mcq  ng-repeat='answer in quiz.answers' /></div>"+
-					"<div ng-switch-when='OCQ' ><student-html-ocq  ng-repeat='answer in quiz.answers' /></div>"+	
-					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
-						"<student-html-drag ng-repeat='answer in quiz.answers' />"+
+					"<div ng-switch-when='MCQ' ><student-html-mcq  ng-repeat='answer in quiz.online_answers' /></div>"+
+					"<div ng-switch-when='OCQ' ><student-html-ocq  ng-repeat='answer in quiz.online_answers' /></div>"+	
+					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='studentAnswers[quiz.id]'>"+
+						"<student-html-drag ng-repeat='answer in studentAnswers[quiz.id]' />"+
 					"</ul>"+
 				"</div>",
 		link:function(scope){
-			scope.removeAnswer=scope.remove()
-			
-			
+		
 			scope.updateValues= function()
 			{
 				console.log("in value update")
@@ -512,10 +475,24 @@ angular.module('scalearAngularApp')
 }).directive('studentHtmlMcq',function(){	
 	return{
 		restrict:'E',
-		template:"<ng-form name='aform'>"+
-					"<input atleastone ng-model='studentAnswers[question.id][answer.id]' ng-checked='studentAnswers[question.id][answer.id]'  name='ocq_{{question.id}}' type='checkbox' ng-change='updateValues({{question.id}})'/>"+
+		template:"{{explanation[answer.id]}}<ng-form name='aform'>"+
+					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
 					"{{answer.answer}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'>Must choose atleast one answer!</span>"+
-				"</ng-form>"
+				"</ng-form>",
+		link:function(scope){
+			
+			scope.$watch('explanation[answer.id]', function(newval){
+				if(scope.explanation && scope.explanation[scope.answer.id])
+				{
+					console.log("exp changed!!!")
+					scope.mypop={
+						content:"<div>{{explanation[answer.id]}}</div>",
+						html:true,
+						trigger:'hover'
+					}
+				}	
+			})
+	}
 		
 	}
 	
@@ -523,12 +500,24 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
-					"<input atleastone ng-model='studentAnswers[question.id]' value='{{answer.id}}'  name='ocq_{{question.id}}' type='radio' ng-change='updateValues({{question.id}})'/>"+
+					"<input atleastone ng-model='studentAnswers[quiz.id]' value='{{answer.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
 					"{{answer.answer}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'>Must choose atleast one answer!</span>"+
 							 	
 				"</ng-form>",
 		link: function(scope)
 		{
+			
+			scope.$watch('explanation[answer.id]', function(newval){
+				if(scope.explanation && scope.explanation[scope.answer.id])
+				{
+					console.log("exp changed!!!")
+					scope.mypop={
+						content:"<div>{{explanation[answer.id]}}</div>",
+						html:true,
+						trigger:'hover'
+					}
+				}	
+			})
 			if(scope.answer.correct)
 			{
 				scope.radioChange(scope.answer);
@@ -552,4 +541,15 @@ angular.module('scalearAngularApp')
 				"</li>"				 
 	}
 	
-});
+})
+.directive("studentAnswerVideo",function(){
+  return {
+    restrict:"E",
+    template: "<div ng-switch on='quiz.question_type'>"+
+                "<student-answer ng-switch-when='MCQ' />"+
+                "<student-answer ng-switch-when='OCQ' />"+
+                "<student-drag ng-switch-when='drag' />"+
+              "</div>",
+  }
+})
+

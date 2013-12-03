@@ -260,3 +260,6 @@ input[type="checkbox"], input[type="radio"] {
 	overflow-y:auto;
 }
 
+.youtube{
+	position: absolute;
+}

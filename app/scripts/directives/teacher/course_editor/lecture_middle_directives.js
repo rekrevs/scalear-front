@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder" style="border:4px solid" ng-transclude></div>'
+			template: '<div class="videoborder" ng-transclude></div>' //style="border:4px solid" 
 		};
 }).directive('quiz',function(){
 		return {
@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
 					setupEvents()
 
 				}
-
+			
 				player_controls.play=function(){
 					player.play();
 				}

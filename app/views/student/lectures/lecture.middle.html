@@ -4,19 +4,14 @@
 </div>
 <div ng-hide="!lecture">
 <center><h3>{{lecture.name}}</h3></center>
-
-{{studentAnswers}}
-{{popover_options}}
 <form name="answer_form" novalidate style="margin:0">
 <video_container ng-style="video_style" ng-class="lecture.aspect_ratio">
 	<div ng-show="display_mode">
 		<quiz ng-style="quiz_layer">
 			 <student-answer-form  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/> 
-			<!-- <student-answer-video ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/> -->
-			<!-- <answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/> -->
 		</quiz>
 	</div>
-	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio"/>
+	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" class="youtube"/>
 	<controls></controls>
 	<check ng-show='display_mode'></check>
 	<notification ng-show='show_notification'></notification>

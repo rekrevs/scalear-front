@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture','$document','$timeout', function ($scope, Course, $stateParams,Lecture, $document, $timeout) {
+  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture','$window','$timeout', function ($scope, Course, $stateParams,Lecture, $window, $timeout) {
 //    console.log($scope);
 //    $scope.lecture=lecture.data
     $scope.quiz_layer={}
@@ -10,6 +10,10 @@ angular.module('scalearAngularApp')
     $scope.display_mode=false
     $scope.studentAnswers={}
     $scope.explanation={}
+    $scope.wHeight=0;
+    $scope.wWidth=0;
+    $scope.pHeight=0;
+    $scope.pWidth=0;
 
     
     //$scope.lecture_player_events
@@ -23,6 +27,10 @@ angular.module('scalearAngularApp')
  			$scope.alert_messages=data.alert_messages;
  			$scope.lecture=JSON.parse(data.lecture)
  			console.log($scope.lecture.online_quizzes)
+ 			$scope.safeApply(function(){
+ 				$scope.pHeight=450;
+    			$scope.pWidth= $scope.lecture.aspect_ratio=='widescreen'? 743:557;
+ 			})
  			$scope.lecture_player.events.onReady=function(){
  				$scope.lecture.online_quizzes.forEach(function(quiz){
  					$scope.lecture_player.controls.cue(quiz.time, function(){
@@ -94,6 +102,116 @@ angular.module('scalearAngularApp')
   			}
 		};
 	
+	angular.element($window).bind('resize',
+		function(){
+			if($scope.fullscreen){
+				$scope.resizeBig(); 
+				$scope.$apply()
+			}
+	})
+		
+	$scope.resizeBig = function()
+	{	
+		//$scope.safeApply();     
+		
+		console.log("height is "+$scope.wHeight);	
+		console.log("resizeing")
+		var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+		var win = angular.element($window)
+
+		$scope.fullscreen = true
+
+		//angular.element(".quiz_list").children().appendTo(".sidebar");
+		angular.element("body").css("overflow","hidden");
+		angular.element("body").css("position","fixed")
+
+		win.scrollTop("0px")
+
+		$scope.video_style={
+			"top":0, 
+			"left":0, 
+			"position":"fixed",
+			"width":win.width(),
+			"height":win.height(),
+			"z-index": 1030
+		};
+
+		var video_height = win.height()-26
+		var video_width = video_height*factor
+		//var video_height = (win.width())*1.0/factor +26
+		var layer={}
+		if(video_width>win.width()){ // if width will get cut out.
+			video_width= win.width();
+			video_height=(win.width())*(1.0/factor);
+			var margin_top = ((win.height()-26) - video_height)/2.0;
+			var margin_left=0;
+		}
+		else{		
+			var margin_left= ((win.width()) - video_width)/2.0;
+			var margin_top=0;
+		 }
+		 layer={
+				"position":"fixed",
+				"top":0,
+				"left":0,
+				"width":video_width,
+				"height":video_height,
+				"margin-top": margin_top+"px",
+				"margin-left":margin_left+"px",
+				"z-index": 1031
+			}		
+
+		 angular.extend($scope.quiz_layer, layer)
+		
+		$scope.safeApply(function(){
+      		$scope.wHeight= angular.element($window).height();
+    		$scope.wWidth= angular.element($window).width();
+    		$scope.pWidth=$scope.wWidth;
+    		$scope.pHeight=$scope.wHeight;
+      	});
+      	
+	 	$timeout(function(){$scope.$emit("updatePosition")})
 	
+	}
+	
+	
+	$scope.resizeSmall = function()
+	{	
+		
+		$scope.safeApply(function(){
+ 			$scope.pHeight=450;
+    		$scope.pWidth= $scope.lecture.aspect_ratio=='widescreen'? 743:557;
+ 		})
+ 		
+		var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+		$scope.fullscreen = false
+
+		angular.element("body").css("overflow","auto");
+		angular.element("body").css("position","");
+
+
+		$scope.video_style={
+			"position":"",
+			"width":'',
+			"height":'',
+			"z-index": 0
+		};
+
+		var layer={		
+			"top":"",
+			"left":"",
+			"position":"absolute",
+			"width":"",
+			"height":"",
+			"margin-left": "0px",
+			"margin-top": "0px",
+			"z-index":2
+		}
+
+		angular.extend($scope.quiz_layer, layer)
+		
+		
+		$timeout(function(){$scope.$emit("updatePosition")})		
+	}
     
   }]);

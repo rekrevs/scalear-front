@@ -24,13 +24,11 @@ angular.module('scalearAngularApp')
         delete $scope.chart_data
 
       openModal('display', type)
-      initialize_view()
-      //setup_buttons()
+      setup_screens()
 
       angular.element($window).bind('resize',
         function(){
           setup_screens()
-          //setup_buttons()
           $scope.$apply()
       })  
 
@@ -200,31 +198,27 @@ angular.module('scalearAngularApp')
       var win = angular.element($window)
       var win_width= win.width()
       var video_width= getVideoWidth()
-      if(video_width +260 > win_width){
-        video_width = win_width - 260 
+      if(video_width+260 > win_width){
+        console.log("dingo")
+        video_width = win_width -260
       }
       setVideoWidth(video_width)
       var remaining = win_width - video_width
-     // if(remaining <= (win_width/2)){
-       // console.log(remaining +" < "+ win_width/4)
-        setButtonsPosition(remaining)
-
-     // }
-     // else{
-      //  setButtonsPosition()
-       // console.log("elese")
-     // }
+      setButtonsPosition(remaining)
     }
 
-    var setButtonsPosition = function(remaining)
-    {
+    var setButtonsPosition = function(remaining){
       console.log(remaining)
+      if(remaining>300)
+        remaining = remaining/3 +30
+      else
+        remaining = remaining/4 
       $scope.left_style={
         display:'inline-block',
         minWidth:'50px',
         height:'60%',
         width:'50px',
-        marginLeft:remaining/4 +15,
+        marginLeft:remaining,
         marginRight:'30px',
         verticalAlign:'text-bottom'
       }
@@ -237,7 +231,6 @@ angular.module('scalearAngularApp')
         marginLeft:'30px',
         verticalAlign:'text-bottom',
       }
-      
     }
 
   }]);

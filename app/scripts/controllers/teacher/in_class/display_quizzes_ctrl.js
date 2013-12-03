@@ -73,7 +73,7 @@ angular.module('scalearAngularApp')
             "colors": ['green','gray'],
             "isStacked": "true",
             "fill": 20,
-            "height": 200,
+            "height": 250,
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {

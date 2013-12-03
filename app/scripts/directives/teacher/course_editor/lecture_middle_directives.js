@@ -28,15 +28,20 @@ angular.module('scalearAngularApp')
 			link: function(scope, element){
 
 				console.debug("YOUTUBE " + scope.id)
+				console.log(scope.controls);
+				
 				var player
+
 				var player_controls={}
 				var player_events = {}
+
 
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
 					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
 					setupEvents()
+
 				}
 
 				player_controls.play=function(){
@@ -54,7 +59,11 @@ angular.module('scalearAngularApp')
 				player_controls.unmute = function(){
 					player.unmute();
 				}
-
+				
+				player_controls.paused = function(){
+					return player.paused();
+				}
+				
 				player_controls.getTime=function(){
 					return player.currentTime()
 				}
@@ -64,6 +73,8 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek = function(time){
+					if(time<0)
+						time=0;
 					player.currentTime(time);
 	    			player.pause()
 				}
@@ -569,14 +580,15 @@ angular.module('scalearAngularApp')
     return{
   		restrict: 'A',
   		link: function(scope, element, attr, ctrl) {
-      
-	        var getter = $parse(attr.popOver)
 
-	        $q.when(getter(scope) != null).then(function(){
-	        	
+	        var getter = $parse(attr.popOver)
+	        scope.$watch(attr.popOver, function(newval){
+	        
+	        	console.log("inside options popover");
+	        	console.log(newval);
 	        	var options = getter(scope)
 	        	if(options){
-
+					console.log("in options");
 		        	element.popover(options);
 		          	var popover = element.data('popover');
 			        
@@ -634,7 +646,8 @@ angular.module('scalearAngularApp')
 						});	         
 			        }
 			    }
-	        });
+			    })
+	       // });
       	}
     };
 }]);

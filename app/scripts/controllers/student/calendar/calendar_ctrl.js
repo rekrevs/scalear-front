@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
  		else if($scope.events.events[element].lectureId!=null)
         	$scope.events.events[element].url= $state.href("course.lectures.lecture",{course_id: $scope.events.events[element].courseId, lecture_id:$scope.events.events[element].lectureId})
 		else{
-			if($scope.events.events[element].firstItemType==null)
+			if($scope.events.events[element].firstItem==null)
 				$scope.events.events[element].url= $state.href("course.lectures",{course_id: $scope.events.events[element].courseId})
 			else{
 				if($scope.events.events[element].firstItemType=="Lecture")

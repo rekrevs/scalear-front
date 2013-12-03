@@ -20,6 +20,7 @@ angular.module('scalearAngularApp')
         "deleteFeedback":{method:'POST',params:{action:'delete_response'},headers:headers},
         "showInclass":{method:'POST',params:{action:'show_survey_question'},headers:headers},
         "saveStudentQuiz":{method:'POST',params:{action:'save_student_quiz_angular'},headers:headers}
+
       });
 
 }])

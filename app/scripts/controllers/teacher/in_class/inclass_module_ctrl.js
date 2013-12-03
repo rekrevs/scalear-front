@@ -24,11 +24,13 @@ angular.module('scalearAngularApp')
         delete $scope.chart_data
 
       openModal('display', type)
-      setup_screens()
+      initialize_view()
+      //setup_buttons()
 
       angular.element($window).bind('resize',
         function(){
           setup_screens()
+          //setup_buttons()
           $scope.$apply()
       })  
 
@@ -171,41 +173,71 @@ angular.module('scalearAngularApp')
       }
     }
 
-    var setup_screens = function(){
-      console.log("resize")
+    var initialize_view=function(){
+      // var width = getVideoWidth()
+      // setVideoWidth(width)
+      // setButtonsPosition()
+      setup_screens()
+    }
+
+    var getVideoWidth=function(){
       var win = angular.element($window)
-      console.log(win.height())
       var video_height = (win.height()*60)/100
       var video_width= video_height*(16/9)
-      if(video_width > win.width())
-        video_width = win.width() 
-      var width = win.width()
+      return video_width
+    }
+
+    var setVideoWidth=function(video_width){
       $scope.video_style={
         height:'100%',
         marginTop: '0px',
         width: video_width+'px',
         display: 'inline-block'
       }
-      // var height = angular.element()
-      // h=$("#resizable").height();
-      // width = h*16.0/9.0;
-      // wbig=$("#big_div").width();
-      // if(width!=$("#resizable").width())
-      // {
-      //   $("#resizable").width(width)
-      //   remaining= wbig-width;
-      //   $("#left").width(remaining/2.0 - 30)
-      //   $("#right").width(remaining/2.0 - 30)
-      // }
+    }
+
+    var setup_screens = function(){
+      var win = angular.element($window)
+      var win_width= win.width()
+      var video_width= getVideoWidth()
+      if(video_width +260 > win_width){
+        video_width = win_width - 260 
+      }
+      setVideoWidth(video_width)
+      var remaining = win_width - video_width
+     // if(remaining <= (win_width/2)){
+       // console.log(remaining +" < "+ win_width/4)
+        setButtonsPosition(remaining)
+
+     // }
+     // else{
+      //  setButtonsPosition()
+       // console.log("elese")
+     // }
+    }
+
+    var setButtonsPosition = function(remaining)
+    {
+      console.log(remaining)
+      $scope.left_style={
+        display:'inline-block',
+        minWidth:'50px',
+        height:'60%',
+        width:'50px',
+        marginLeft:remaining/4 +15,
+        marginRight:'30px',
+        verticalAlign:'text-bottom'
+      }
+
+      $scope.right_style={
+        display:'inline-block',
+        minWidth:'50px',
+        height:'60%',
+        width:'50px',
+        marginLeft:'30px',
+        verticalAlign:'text-bottom',
+      }
       
-      // if($("#resizable").width() + 260 > $("#top").width()) // does not maintain 16:9 aspect ratio anymore.
-      // {
-      //   $("#resizable").width(wbig-260)
-      //   $("#left").width(100)
-      //   $("#right").width(100)
-      // }
-      
-      // player.setSize($("#resizable").width(), $("#resizable").height());
     }
 
   }]);

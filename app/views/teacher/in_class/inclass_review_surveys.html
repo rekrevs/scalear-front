@@ -17,7 +17,7 @@
 					<input ng-show="in_review" type="checkbox" ng-model="data.show" ng-change="showInclass(id, data.show)" />
 				</td>
 				<td>
-					<div class="chart" style='min-width:300px; height:205px;' ng-init="chart=createSurveyChart(data.answers, $index)"> 
+					<div class="chart" style='width:90%;height:100%' ng-init="chart=createSurveyChart(data.answers, $index)"> 
 					   	<center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
 						<div google-chart on-ready="loading=false" chart="chart" ></div>
 					</div>

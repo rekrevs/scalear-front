@@ -11,11 +11,11 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.getSurveyCharts = function(view, module_id, survey_id){
-  		//var id
-    	//if($scope.selected_survey)
-    		//id=$scope.selected_survey[1]
+  		var selected_id
+    	if($scope.selected_survey)
+    		selected_id=$scope.selected_survey? $scope.selected_survey[1] : ""
       //if(survey_id)
-      var id = survey_id || $scope.selected_survey[1] || ""
+      var id = survey_id || selected_id
     	$scope.loading_surveys_chart = true
   		Module.getSurveyCharts(
   			{

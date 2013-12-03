@@ -178,7 +178,8 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 .solved{
 	display: inline;
     cursor: pointer;
-    color: blue;
+    color:#0088CC;
+
 }
 
 .ontop.widescreen{
@@ -190,4 +191,121 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
   position:absolute;
   height:424px;
   z-index:5;
+}
+
+.q_label{
+	width:100px;
+	display:inline-block;
+}  
+
+.answer_div{
+	width: auto;
+    height: 100%;
+	margin-left:10px;
+	margin-bottom:20px;	
+	position: relative;
+  padding: 39px 19px 14px;
+  border: 1px solid #ddd;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+}
+
+.answer_img{
+  width: 13px;
+  height:13px;
+  z-index: 5; 
+}
+
+.answer_drag{
+  width: 300px;
+  height:40px;
+  position: absolute;
+}
+
+.answer_div:before{
+	content: "Choices";
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  padding: 3px 7px;
+  font-size: 12px;
+  font-weight: bold;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  color: #9da0a4;
+  -webkit-border-radius: 4px 0 4px 0;
+     -moz-border-radius: 4px 0 4px 0;
+          border-radius: 4px 0 4px 0;
+}
+
+input[type="checkbox"], input[type="radio"] {
+	margin-right:10px;
+}
+
+.green_notification{
+	color: green;
+}
+.red_notification{
+	color:red;
+}
+
+.drop-div{
+  border-style: dashed;
+  border: 2px dashed #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 10px;
+  background: #fff;
+  overflow: :auto;
+}
+
+.dragged{
+  float: left;
+  /*width: 58px;
+  height: 78px;*/
+ z-index:5000;
+  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 10px;
+  background: #fff;
+  position:absolute;
+  top:10px;
+  left:10px;
+  margin-top:0px
+}
+
+.dropped{
+  float: left;
+  z-index:5000;
+  background-color:lightblue;
+  position:static !important;
+  padding:0px;
+  padding-top:0px;
+  padding-bottom:0px;
+  border:0px;
+  vertical-align:middle;
+  text-align:center;
+  margin-left:0px;
+  overflow: auto;
+   -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.ui-state-active{
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+}
+.dragged.ui-draggable-dragging {
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
 }

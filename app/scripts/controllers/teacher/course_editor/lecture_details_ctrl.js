@@ -51,7 +51,7 @@ angular.module('scalearAngularApp')
 
 	$scope.updateLectureUrl= function(){
 		urlFormat()
-		$scope.$emit('refreshVideo')
+		//$scope.$emit('refreshVideo')
 		$scope.lecture.aspect_ratio = ""
 		getYoutubeDetails();
 	}

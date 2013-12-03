@@ -253,3 +253,10 @@ input[type="checkbox"], input[type="radio"] {
 .red_notification{
 	color:red;
 }
+
+.popover-content{
+	max-height:300px;
+	width:300px;
+	overflow-y:auto;
+}
+

@@ -331,7 +331,7 @@ angular.module('scalearAngularApp')
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"E",
     // use replace?
-	template:'<div class="well"><center><b ng-class="{\'green_notification\':verdict==\'Correct\', \'red_notification\':verdict==\'Incorrect\'}">{{verdict}}</b><br/>Hover for details...</center></div>',
+	template:'<div class="well"><div ng-show="show_notification==true"><center><b ng-class="{\'green_notification\':verdict==\'Correct\', \'red_notification\':verdict==\'Incorrect\'}">{{verdict}}</b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'">Hover for details...</center></div><div ng-show="show_notification!=true">{{show_notification}}</div></div>',
 	
     link: function(scope, element, attrs) {
     	element.css("position", "relative");
@@ -384,20 +384,37 @@ angular.module('scalearAngularApp')
     			 
     		 });
     		}else{
-    			Lecture.saveHtml({course_id: $stateParams.course_id, lecture_id:$stateParams.lecture_id},{quiz:scope.selected_quiz.id, answer:scope.studentAnswers[scope.selected_quiz.id]}, function(data){
-    			// scope.update_answers+=1;
-    			// scope.explanation= data["detailed_exp"];
-    			// scope.verdict=data["correct"]?"Correct":"Incorrect";
-    			 for(var el in data["detailed_exp"])
-    			 	scope.explanation[el]= data["detailed_exp"][el];
-    			 scope.verdict=data["correct"]?"Correct":"Incorrect";
-    			 scope.show_notification=true;
-    			 
-    			 $timeout(function(){
-             		 scope.show_notification=false;
-         		 }, 2000);
-         		 
-    		 });
+    			console.log(scope.answer_form);
+    			
+    			if(scope.answer_form.$error.atleastone==false)
+    			{
+    				console.log("valid form")
+    				scope.submitted=false;
+	    			Lecture.saveHtml({course_id: $stateParams.course_id, lecture_id:$stateParams.lecture_id},{quiz:scope.selected_quiz.id, answer:scope.studentAnswers[scope.selected_quiz.id]}, function(data){
+	    			// scope.update_answers+=1;
+	    			// scope.explanation= data["detailed_exp"];
+	    			// scope.verdict=data["correct"]?"Correct":"Incorrect";
+	    			 for(var el in data["detailed_exp"])
+	    			 	scope.explanation[el]= data["detailed_exp"][el];
+	    			 scope.verdict=data["correct"]?"Correct":"Incorrect";
+	    			 scope.show_notification=true;
+	    			 if(data["msg"]!="Empty") // he chose sthg
+	    			 {
+	    			 	scope.selected_quiz.is_quiz_solved=true;
+	    			 	scope.$emit('accordianReload');
+						scope.$emit('accordianUpdate',{g_id:scope.lecture.group_id, type:"lecture", id:scope.lecture.id});
+	    			 }
+	    			 // here if choice wasn't empty.. want to set is_quiz_solved for that quiz to true.
+	    			 
+	    			 $timeout(function(){
+	             		 scope.show_notification=false;
+	         		 }, 2000);
+	         	 
+    		 	});
+    		 }else{
+    		 	console.log("invalid form")
+    		 	scope.submitted=true;
+    		 }
 			};
     }
    }
@@ -411,7 +428,7 @@ angular.module('scalearAngularApp')
 			explanation:"=",
 		},
 		restrict: 'E',
-		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
+		template: "{{submitted}}<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
 							"<label class='q_label'>{{quiz.question}}:</label>"+
 							"<div class='answer_div'>"+
 								"<student-html-answer />"+
@@ -436,48 +453,43 @@ angular.module('scalearAngularApp')
 			scope.updateValues= function()
 			{
 				console.log("in value update")
-				console.log(scope.quiz);
-				console.log(scope.quiz.answers);
+				console.log(scope.studentAnswers);
+				console.log(scope.quiz.question_type);
+				console.log(scope.studentAnswers[scope.quiz.id]);
 				scope.values=0
-				for(var element in scope.quiz.answers)
+				if(scope.quiz.quiz_type=="html" && scope.quiz.question_type=="OCQ")
 				{
-					console.log(scope.quiz.answers[element].correct)
-					if(scope.quiz.answers[element].correct==true)
+					if(typeof(scope.studentAnswers[scope.quiz.id])=="string")
+						scope.values+=1
+				}
+				else{
+					
+				
+				for(var element in scope.studentAnswers[scope.quiz.id])
+				{
+					console.log(scope.studentAnswers[scope.quiz.id][element]);
+					if(scope.studentAnswers[scope.quiz.id][element]==true)
 					{
 						console.log("in true");
 						scope.values+=1
 					}
 				}
-				console.log(scope.values)
-			}
-			
-			
-			scope.radioChange=function(corr_ans){
-				scope.quiz.answers.forEach(function(ans){
-					ans.correct=false
-				})
-				corr_ans.correct=true
 				
-				scope.updateValues();
+				}
+			console.log(scope.values)
 			}
-			
-			scope.show = function()
-			{
-				 return !("content" in scope.quiz)
-			}
-			
-			scope.$watch('quiz.answers', function(){
+			scope.$watch('quiz.question', function(){
 				scope.updateValues();	
-			},true)
+			})
 			
 		}
 	};
 }).directive('studentHtmlMcq',function(){	
 	return{
 		restrict:'E',
-		template:"{{explanation[answer.id]}}<ng-form name='aform'>"+
+		template:"<ng-form name='aform'>"+
 					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"{{answer.answer}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'>Must choose atleast one answer!</span>"+
+					"{{answer.answer}}<br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone'>Must choose atleast one answer!</span><br/>"+
 				"</ng-form>",
 		link:function(scope){
 			
@@ -486,7 +498,8 @@ angular.module('scalearAngularApp')
 				{
 					console.log("exp changed!!!")
 					scope.mypop={
-						content:"<div>{{explanation[answer.id]}}</div>",
+						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?"Correct":"Incorrect"}}</b>',
+						content:'<div>{{explanation[answer.id][1]}}</div>',
 						html:true,
 						trigger:'hover'
 					}
@@ -501,7 +514,7 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<input atleastone ng-model='studentAnswers[quiz.id]' value='{{answer.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"{{answer.answer}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'>Must choose atleast one answer!</span>"+
+					"{{answer.answer}}<br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone'>Must choose atleast one answer!</span><br/>"+
 							 	
 				"</ng-form>",
 		link: function(scope)
@@ -512,7 +525,8 @@ angular.module('scalearAngularApp')
 				{
 					console.log("exp changed!!!")
 					scope.mypop={
-						content:"<div>{{explanation[answer.id]}}</div>",
+						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?"Correct":"Incorrect"}}</b>',
+						content:'<div>{{explanation[answer.id][1]}}</div>',
 						html:true,
 						trigger:'hover'
 					}

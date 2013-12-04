@@ -24,6 +24,15 @@ angular.module('scalearAngularApp')
         delete $scope.chart_data
 
       openModal('display', type)
+      initialize_view()
+      //setup_buttons()
+
+      angular.element($window).bind('resize',
+        function(){
+          setup_screens()
+          //setup_buttons()
+          $scope.$apply()
+      })  
 
   	};
 
@@ -109,7 +118,7 @@ angular.module('scalearAngularApp')
       $scope.seek($scope.quiz_time);
       $scope.lecture_player.controls.hideControls();
       $scope.loading_video=false
-  }
+    }
 
     $scope.nextQuiz = function(){
       if($scope.current_quiz != $scope.total_num_quizzes){
@@ -162,6 +171,73 @@ angular.module('scalearAngularApp')
         if($scope.chart_data)
           $scope.chart = $scope.createChart($scope.quiz_id)
       }
+    }
+
+    var initialize_view=function(){
+      // var width = getVideoWidth()
+      // setVideoWidth(width)
+      // setButtonsPosition()
+      setup_screens()
+    }
+
+    var getVideoWidth=function(){
+      var win = angular.element($window)
+      var video_height = (win.height()*60)/100
+      var video_width= video_height*(16/9)
+      return video_width
+    }
+
+    var setVideoWidth=function(video_width){
+      $scope.video_style={
+        height:'100%',
+        marginTop: '0px',
+        width: video_width+'px',
+        display: 'inline-block'
+      }
+    }
+
+    var setup_screens = function(){
+      var win = angular.element($window)
+      var win_width= win.width()
+      var video_width= getVideoWidth()
+      if(video_width +260 > win_width){
+        video_width = win_width - 260 
+      }
+      setVideoWidth(video_width)
+      var remaining = win_width - video_width
+     // if(remaining <= (win_width/2)){
+       // console.log(remaining +" < "+ win_width/4)
+        setButtonsPosition(remaining)
+
+     // }
+     // else{
+      //  setButtonsPosition()
+       // console.log("elese")
+     // }
+    }
+
+    var setButtonsPosition = function(remaining)
+    {
+      console.log(remaining)
+      $scope.left_style={
+        display:'inline-block',
+        minWidth:'50px',
+        height:'60%',
+        width:'50px',
+        marginLeft:remaining/4 +15,
+        marginRight:'30px',
+        verticalAlign:'text-bottom'
+      }
+
+      $scope.right_style={
+        display:'inline-block',
+        minWidth:'50px',
+        height:'60%',
+        width:'50px',
+        marginLeft:'30px',
+        verticalAlign:'text-bottom',
+      }
+      
     }
 
   }]);

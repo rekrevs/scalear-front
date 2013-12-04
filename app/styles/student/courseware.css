@@ -167,13 +167,13 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 }
 
 .widescreen{
-  width: 743px;
-  height: 450px;
+  width: 800px;
+  height: 480px;
 }
 
 .smallscreen{
-  width: 557px;
-  height: 450px;
+  width: 600px;
+  height: 480px;
 }
 .solved{
 	display: inline;
@@ -182,19 +182,15 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 
 }
 
-.ontop{
+.ontop.widescreen{
   position:absolute;
-  /*width:743px;
-  height:306px;*/
+  height:450px;
   z-index:5;
 }
-
-.ontop.widescreen{
-  	height: 424px;
-}
-
 .ontop.smallscreen{
-  	height: 424px;
+  position:absolute;
+  height:450px;
+  z-index:5;
 }
 
 .q_label{
@@ -244,7 +240,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 }
 
 input[type="checkbox"], input[type="radio"] {
-	margin-right:10px;
+	margin:0px;
 }
 
 .green_notification{
@@ -254,6 +250,7 @@ input[type="checkbox"], input[type="radio"] {
 	color:red;
 }
 
+
 .popover-content{
 	max-height:300px;
 	width:300px;
@@ -262,4 +259,65 @@ input[type="checkbox"], input[type="radio"] {
 
 .youtube{
 	position: absolute;
+}
+
+.drop-div{
+  border-style: dashed;
+  border: 2px dashed #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 10px;
+  background: #fff;
+  overflow: :auto;
+}
+
+.dragged{
+  float: left;
+  /*width: 58px;
+  height: 78px;*/
+ z-index:5000;
+  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 10px;
+  background: #fff;
+  position:absolute;
+  top:10px;
+  left:10px;
+  margin-top:0px
+}
+
+.dropped{
+  float: left;
+  z-index:5000;
+  background-color:lightblue;
+  position:static !important;
+  padding:0px;
+  padding-top:0px;
+  padding-bottom:0px;
+  border:0px;
+  vertical-align:middle;
+  text-align:center;
+  margin-left:0px;
+  overflow: auto;
+   -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+}
+
+.ui-state-active{
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+}
+.dragged.ui-draggable-dragging {
+  -moz-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
+
 }

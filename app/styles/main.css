@@ -172,12 +172,12 @@ select.ng-invalid{ border:1px solid red; }
 
 .widescreen{
   width: 500px;
-  height: 306px;
+  height: 312px;
 }
 
 .smallscreen{
   width: 500px;
-  height: 406px;
+  height: 405px;
 }
 .largescreen{
   width: 800px;
@@ -189,3 +189,14 @@ select.ng-invalid{ border:1px solid red; }
   height: 250px
 }
 
+.ontop.widescreen{
+	height: 282px;
+}
+
+.ontop.smallscreen{
+	height: 375px;
+}
+
+.popover{
+	line-height:20px;
+}

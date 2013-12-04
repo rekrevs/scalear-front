@@ -14,6 +14,7 @@ angular.module('scalearAngularApp')
     $scope.wWidth=0;
     $scope.pHeight=0;
     $scope.pWidth=0;
+    $scope.show_notification=false;
 
     
     //$scope.lecture_player_events
@@ -28,8 +29,8 @@ angular.module('scalearAngularApp')
  			$scope.lecture=JSON.parse(data.lecture)
  			console.log($scope.lecture.online_quizzes)
  			$scope.safeApply(function(){
- 				$scope.pHeight=450;
-    			$scope.pWidth= $scope.lecture.aspect_ratio=='widescreen'? 743:557;
+ 				$scope.pHeight=480;
+    			$scope.pWidth= $scope.lecture.aspect_ratio=='widescreen'? 800:600;
  			})
  			$scope.lecture_player.events.onReady=function(){
  				$scope.lecture.online_quizzes.forEach(function(quiz){
@@ -38,8 +39,13 @@ angular.module('scalearAngularApp')
  						$scope.selected_quiz=quiz
  						$scope.display_mode=true
  						$scope.lecture_player.controls.pause()
- 						if(quiz.quiz_type == 'invideo')
-	 						console.log('invideo')
+ 						if(quiz.quiz_type == 'invideo'){
+	 						//showInvideoQuiz()
+	 						$scope.quiz_layer.backgroundColor= ""
+	 						$scope.quiz_layer.overflowX= ''
+            				$scope.quiz_layer.overflowY= ''
+            				
+ 						}
 	 					else
 	 					{
 	 						console.log("html")
@@ -66,10 +72,8 @@ angular.module('scalearAngularApp')
     
     
     }
-    
-    
+
     init();
-   
    
    $scope.lecture_player.events.onPlay=function(){
    		// here check if selected_quiz solved now.. or ever will play, otherwhise will stop again.
@@ -78,9 +82,14 @@ angular.module('scalearAngularApp')
    			console.log($scope.selected_quiz)
    			if($scope.selected_quiz.is_quiz_solved==false)
    			{
+   				console.log("in notification")
    				$scope.lecture_player.controls.pause();
-   				$scope.show_notification="You must answer the question";
+   				
+   					$scope.show_notification="You must answer the question";	
+   				
+   				console.log($scope.show_notification);
    				$timeout(function(){
+   					console.log("in timeout");
 	             		 $scope.show_notification=false;
 	         	}, 2000);
    				// show message telling him to answer. notification directive.. pass text to it..
@@ -136,14 +145,14 @@ angular.module('scalearAngularApp')
 			"z-index": 1030
 		};
 
-		var video_height = win.height()-26
+		var video_height = win.height()-30
 		var video_width = video_height*factor
 		//var video_height = (win.width())*1.0/factor +26
 		var layer={}
 		if(video_width>win.width()){ // if width will get cut out.
 			video_width= win.width();
 			video_height=(win.width())*(1.0/factor);
-			var margin_top = ((win.height()-26) - video_height)/2.0;
+			var margin_top = ((win.height()-30) - video_height)/2.0;
 			var margin_left=0;
 		}
 		else{		
@@ -179,8 +188,8 @@ angular.module('scalearAngularApp')
 	{	
 		
 		$scope.safeApply(function(){
- 			$scope.pHeight=450;
-    		$scope.pWidth= $scope.lecture.aspect_ratio=='widescreen'? 743:557;
+ 			$scope.pHeight=480;
+    		$scope.pWidth= $scope.lecture.aspect_ratio=='widescreen'? 800:600;
  		})
  		
 		var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;

@@ -39,7 +39,9 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1&autohide=0" ,{ width: 500, controls: 0});
+					console.log("loading!!!")
+					console.log(scope.url);
 					setupEvents()
 
 				}
@@ -124,7 +126,6 @@ angular.module('scalearAngularApp')
 					player_controls.refreshVideo()
 				})
 
-
 				scope.$watch('url', function(){
 					if(scope.url)
 						player_controls.refreshVideo();
@@ -194,7 +195,7 @@ angular.module('scalearAngularApp')
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.videoborder'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
+		 template: "<div ng-style='{left: xcoor, top: ycoor, position: \"absolute\", lineHeight:\"0px\"}' data-drag='true' data-jqyoui-options=\"{containment:'.videoborder'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 				"<img ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' />"+
 	 				"</div>",
 
@@ -205,14 +206,14 @@ angular.module('scalearAngularApp')
 				console.log("setting answer location")
 				var ontop=angular.element('.ontop');		
 				var w = scope.data.width * ontop.width();
-				var h = scope.data.height* (ontop.height() - 26);
-				//var add_left= (w-13)/2.0
-				//var add_top = (h-13)/2.0
-				scope.xcoor = (scope.data.xcoor * ontop.width())//+ add_left;				
-				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26))// + add_top/2 -1;
+				var h = scope.data.height* (ontop.height());
+				var add_left= (w-13)/2.0
+				var add_top = (h-13)/2.0
+				scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
+				scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
 				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-				console.log(scope.xcoor)
-				console.log(scope.ycoor)
+				console.log(scope.xcoor+add_left)
+				console.log(scope.ycoor+add_top)
 			}	
 
 			scope.setAnswerColor=function(){
@@ -227,7 +228,7 @@ angular.module('scalearAngularApp')
 			scope.calculatePosition=function(){
 				var ontop=angular.element('.ontop');		
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
-				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() - 26);
+				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height());
 				scope.calculateSize()
 				console.log(element.position().left)				
 				console.log(element.position().top)				
@@ -236,7 +237,7 @@ angular.module('scalearAngularApp')
 			scope.calculateSize=function(){
 				var ontop=angular.element('.ontop');	
 				scope.data.width= element.width()/ontop.width();
-				scope.data.height= element.height()/(ontop.height()-26);
+				scope.data.height= element.height()/(ontop.height());
 			}
 
 			scope.radioChange=function(corr_ans){
@@ -300,9 +301,9 @@ angular.module('scalearAngularApp')
 			var setAnswerLocation=function(){
 				var ontop=angular.element('.ontop');
 				scope.width  = scope.data.width * ontop.width();
-				scope.height = scope.data.height* (ontop.height() - 26);
+				scope.height = scope.data.height* (ontop.height());
 				scope.xcoor = (scope.data.xcoor * ontop.width())
-				scope.ycoor = (scope.data.ycoor * (ontop.height() - 26))
+				scope.ycoor = (scope.data.ycoor * (ontop.height()))
 				scope.area_width= scope.width - 50
 				scope.area_height= scope.height - 20
 				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
@@ -311,13 +312,13 @@ angular.module('scalearAngularApp')
 			scope.calculatePosition=function(){
 				var ontop=angular.element('.ontop');
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
-				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() - 26);
+				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() );
 				scope.calculateSize()
 			}
 			scope.calculateSize=function(){
 				var ontop=angular.element('.ontop');
 				scope.data.width= element.width()/ontop.width();
-				scope.data.height= element.height()/(ontop.height()-26);
+				scope.data.height= element.height()/(ontop.height());
 			}			
 			//===============//	
 			
@@ -581,12 +582,8 @@ angular.module('scalearAngularApp')
     return{
   		restrict: 'A',
   		link: function(scope, element, attr, ctrl) {
-      
-      
-	        var getter = $parse(attr.popOver)
 
-			
-	        //$q.when(1==0).then(function(){
+	        var getter = $parse(attr.popOver)
 	        scope.$watch(attr.popOver, function(newval){
 	        
 	        	console.log("inside options popover");

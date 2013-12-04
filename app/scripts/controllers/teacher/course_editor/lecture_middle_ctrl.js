@@ -166,16 +166,16 @@ angular.module('scalearAngularApp')
 	    	console.log("adding on top ontop")
 
 	    	var left= event.pageX - element.offset().left - 6//event.offsetX - 6
-		  	var top = event.pageY - element.offset().top - 12 //event.offsetY - 6
+		  	var top = event.pageY - element.offset().top - 6 //event.offsetY - 6
 
 	    	console.log(event)
 	    	console.log(element)
 	    	console.log(left+" "+top)
 
-		  	var the_top = top / (element.height() -26);
+		  	var the_top = top / element.height();
 	      	var the_left= left / element.width()
 	     	var the_width = answer_width/element.width();
-	      	var the_height= answer_height/(element.height()-26);
+	      	var the_height= answer_height/(element.height());
 	      	$scope.addAnswer("", the_height, the_width, the_left, the_top)
       }    	
 	}
@@ -285,9 +285,9 @@ angular.module('scalearAngularApp')
 
 
 		$scope.video_style={
-			"position":"static",
+			"position":"",
 			"width":'500px',
-			"height":(500*1.0/factor + 26) +'px',
+			"height":(500*1.0/factor +30) +'px',
 			"z-index": 0
 		};
 
@@ -296,7 +296,7 @@ angular.module('scalearAngularApp')
 			"left":"",
 			"position":"absolute",
 			"width":"500px",
-			"height":(500*1.0/factor + 26)+ 'px',
+			"height":(500*1.0/factor)+ 'px',
 			"margin-left": "0px",
 			"margin-top": "0px",
 			"z-index":2
@@ -330,18 +330,22 @@ angular.module('scalearAngularApp')
 			"z-index": 1030
 		};
 
-		var video_width = (win.height()-26)*factor
-		var video_heigt = (win.width()-400)*1.0/factor +26
+		var video_height = win.height() -30;
+		var video_width = video_height*factor
+		
+		//var video_width = (win.height()-26)*factor
+		//var video_heigt = (win.width()-400)*1.0/factor +26
 		var layer={}
 		if(video_width>win.width()-400){ // if width will get cut out.
 			console.log("width cutt offff")
-			var margin_top = (win.height() - video_heigt)/2.0;
+			video_height= (win.width()-400)*1.0/factor;
+			var margin_top = (win.height() - (video_height+30))/2.0;
 			layer={
 				"position":"fixed",
 				"top":0,
 				"left":0,
 				"width":win.width()-400,
-				"height":(win.width()-400)*1.0/factor +26,
+				"height":video_height,
 				"margin-top": margin_top+"px",
 				"margin-left":"0px",
 				"z-index": 1031
@@ -354,7 +358,7 @@ angular.module('scalearAngularApp')
 				"top":0,
 				"left":0,
 				"width":video_width,
-				"height":win.height(),
+				"height":video_height,
 				"margin-left": margin_left+"px",
 				"margin-top":"0px",
 				"z-index": 1031

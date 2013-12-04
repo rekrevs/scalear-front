@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'Online_quizzes' ,function ($scope, $http, $stateParams, $state, $filter, Online_quizzes) {
+    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'OnlineQuiz' ,function ($scope, $http, $stateParams, $state, $filter, OnlineQuiz) {
 
 	console.log("loading quiz list")
 	$scope.editing_mode = false
 
-	Online_quizzes.getQuizList(
+	OnlineQuiz.getQuizList(
 		{lecture_id:$scope.lecture.id},
 		function(data){
 			$scope.$parent.quiz_list = data.quizList
@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
 	);	
 
 	var updateOnlineQuiz=function(quiz){
-		Online_quizzes.update(
+		OnlineQuiz.update(
 			{online_quizzes_id: quiz.id},
 			{online_quiz: {time:Math.round(quiz.time), question:quiz.question}},
 			function(data){ //success
@@ -41,7 +41,7 @@ angular.module('scalearAngularApp')
 		    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
 	       		return "Incorrect Time Format"
 		    }
-		    else if( ($scope.lecture_player_controls.getDuration()-1) < total_duration || total_duration <= 0 ){
+		    else if( ($scope.lecture_player.controls.getDuration()-1) < total_duration || total_duration <= 0 ){
 	       		return "Time Outside Video Range"
 		    }
 		}
@@ -60,8 +60,8 @@ angular.module('scalearAngularApp')
 
 	$scope.deleteQuiz=function(quiz){
 		if(confirm("Are you sure you want to delete quiz"))
-			Online_quizzes.destroy(
-				{online_quizzes_id: quiz.id},
+			OnlineQuiz.destroy(
+				{online_quizzes_id: quiz.id},{},
 				function(data){ //success
 					console.log(data)
 					$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)

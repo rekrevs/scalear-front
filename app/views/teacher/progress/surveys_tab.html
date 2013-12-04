@@ -11,8 +11,8 @@
 	    <div google-chart on-ready="loading=false" chart="chart" ></div>
 	    <button_link title="Export Chart" action="saveAsImg($event)" >
 	</div>
+	<free-text-table question="question" survey-id="selected_survey[1]" related-answers="related_answers" ng-repeat="question in survey_free" />
 </div>
-<free-text-table question="question" survey-id="selected_survey[1]" related-answers="related_answers" ng-repeat="question in survey_free" />
 <center>
 	<br /><br />
 	<loading size="small" show="loading_surveys_chart" />

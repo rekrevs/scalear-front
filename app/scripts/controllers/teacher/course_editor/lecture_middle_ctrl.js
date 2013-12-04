@@ -227,8 +227,10 @@ angular.module('scalearAngularApp')
 	var updateAnswers=function(ans, title){
 		console.log("savingAll")
 		Lecture.updateAnswers(
-			{lecture_id:$scope.lecture.id,
-			online_quiz_id: $scope.selected_quiz.id},
+			{
+				lecture_id:$scope.lecture.id,
+				online_quiz_id: $scope.selected_quiz.id
+			},
 			{answer: ans, quiz_title:title },
 			function(data){ //success
 				console.log(data)

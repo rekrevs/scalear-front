@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
   		Module.hideQuestion(
   			{
   				course_id:$stateParams.course_id,
-                module_id:$stateParams.module_id
+          module_id:$stateParams.module_id
   			},
   			{
   				question:question.id,

@@ -19,10 +19,12 @@
         </span>
     </div>
     <div                                            style="display:block;width:100%;height:40%;background-color:white;">
-        <div                                        style="position:absolute;padding-left:10px;display:inline;font-size:28px;margin-top:0px;line-height:30px;height:40%;width:100%;">
+        <div                                        style="position:absolute;padding-left:10px;display:inline;font-size:28px;margin-top:0px;line-height:30px;height:40%;width:100%">
             <div                                    style="position:absolute;width:40%;height:90%;margin-top: 15px;">{{question_title}}</div>
-            <div ng-repeat="question in questions"      style="overflow:auto;display:inline;font-size:20px;margin-top:10px;line-height:30px;height:70%;width:98%;position:absolute" ng-click="seek(question[1])">{{question[0]}}</div>
-            <div ng-if="chart_data"                   style="margin-top:8px;width:60%;height:100%;background-color:white;float:right;display:inline;">
+            <div ng-show="questions" style="overflow:auto;height:100%;">
+                <div ng-repeat="question in questions"      style="overflow:auto;display:inline;font-size:20px;margin-top:10px;line-height:30px;height:70%;width:98%" ng-click="seek(question[1])">{{question[0]}}<br></div>
+            </div>
+            <div ng-if="chart_data"                   style="overflow:auto;width:60%;height:90%;background-color:white;float:right;display:inline;">
                 <center ng-init="loading_chart=true" style="font-size:14px;position:relative;top:40%;left:15%;"><loading size="small" show="loading_chart" ></center>
                 <div google-chart chart="chart" on-ready="loading_chart=false"></div>
             </div>

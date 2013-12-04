@@ -24,8 +24,22 @@ angular.module('scalearAngularApp')
         $scope.sendBatchEmail = function(title, body){
 
             console.log($scope.batch_emails);
-            Course.send_batch_email_through({course_id:$stateParams.course_id, emails:$scope.batch_emails, subject:title, message:body});
-            $state.go('course.enrolled_students')
+            Course.send_batch_email_through(
+                {
+                    course_id:$stateParams.course_id
+                },
+                {
+                    emails:$scope.batch_emails,
+                    subject:title,
+                    message:body
+                },
+            function(){
+                $state.go('course.enrolled_students')
+            },
+            function(){
+                console.log('BAD');
+            });
+
         }
 
 

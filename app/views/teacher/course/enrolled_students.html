@@ -23,11 +23,11 @@
                         {{student.name}}
                     </td>
                     <td style="text-align: center;">
-                        <a ui-sref="course.send_email({student_id:student.id})">{{student.email}}</a>
+                        <a id="email_address" ui-sref="course.send_email({student_id:student.id})">{{student.email}}</a>
                         <!--<a href="#/courses/{{course.id}}/send_email/{{student.id}}">{{student.email}}</a>-->
                     </td>
                     <td style="text-align: center;">
-                        <input class="btn" type="button" ng-click="removeStudent(student.id, $index)" value="Remove"/>
+                        <input id="remove_button" class="btn" type="button" ng-click="removeStudent(student.id, $index)" value="Remove"/>
                         <!--<a ui-sref="course.remove_student({student_id:student.id})" data-confirm="Are you would like to delete {{student.name}} and all of his data?">Remove from course</a>-->
                     </td>
                     <td style="text-align: center;" ng-init="$parent.emails[$index] = ','">
@@ -35,9 +35,9 @@
                     </td>
                 </tr>
             </table>
-            <input class="btn" value="Email" style="float: right; margin-right: 3%;" ng-disabled="(emails|filter:',').length == emails.length" type="button" ng-click="emailForm()" />
-            <input class="btn btn-primary" value="Select All" type="button" style="float: right; margin-right: 10px;" ng-click="selectAll()"/>
-            <input class="btn btn-danger" value="Deselect All" type="button" style="float: right; margin-right: 10px;" ng-click="deSelectAll()"/>
+            <input class="btn" id="email_button" value="Email" style="float: right; margin-right: 3%;" ng-disabled="(emails|filter:',').length == emails.length" type="button" ng-click="emailForm()" />
+            <input class="btn btn-primary" value="Select All" type="button" style="float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(data | filter:searchText).length==0"/>
+            <input class="btn btn-danger" value="Deselect All" type="button" style="float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(data | filter:searchText).length==0"/>
         </form>
 
 

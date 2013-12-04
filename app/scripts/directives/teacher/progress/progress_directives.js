@@ -35,6 +35,19 @@ angular.module('scalearAngularApp')
 	    }
     };
 })
+.directive("freeTextTable", function(){
+	return {
+		restrict:'E',
+		scope:{
+			question:'=',
+			survey_id:'=surveyId',
+			related_answers:'=relatedAnswers',
+			display_only:'=displayOnly'
+		},
+	    templateUrl:'views/teacher/progress/free_text_table.html', 
+	    controller:'freeTextTableCtrl'
+	}
+})
 .directive("tab1",function(){
     return{
 	    restrict: "E",

@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
  	}
 
  	var init = function(){
- 		Quiz.getQuestions({quiz_id: $stateParams.quiz_id},function(data){
+ 		Quiz.getQuestions({course_id:$stateParams.course_id, quiz_id: $stateParams.quiz_id},function(data){
 	 		$scope.questions=data.questions
 		  	$scope.questions.forEach(function(question,index){
 		  		if(question.question_type.toUpperCase() == 'DRAG'){
@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
  	var updateQuestions=function(ans){
 		console.log("savingAll");
 		Quiz.updateQuestions(
-			{quiz_id:$scope.quiz.id},
+			{course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},
 			{questions: ans},
 			function(data){ //success
 				console.log(data)

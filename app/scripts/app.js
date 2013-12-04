@@ -19,10 +19,9 @@
   'pasvaz.bindonce',
   'infinite-scroll',
   'xeditable',
-  'ui.calendar',
   'ui.tinymce',
   'googlechart'
-]).constant('scalear_api', {host:'http://angular-learning.herokuapp.com'}) //http://localhost:3000 //
+]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
 
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
@@ -31,7 +30,7 @@
       editableOptions.theme = 'bs2';
       
     	var statesThatDontRequireAuth =['login', 'home']
-		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information']
+		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information', 'course.lectures']
 		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
 
   		// check if route does not require authentication
@@ -114,6 +113,7 @@
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
 
+   
     $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('home', {
@@ -148,6 +148,33 @@
           }
         },
         abstract:true
+      })
+       .state('course.lectures', {
+      url: '/courseware',
+      templateUrl: 'views/student/lectures/lectures.html',
+      controller: 'studentLecturesCtrl'
+      })
+      .state('course.lectures.lecture', {
+         // resolve:{
+           // lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
+             // return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
+           // }
+         // },
+        url: '/lectures/:lecture_id',
+        views:{
+          'middle'  :{templateUrl: 'views/student/lectures/lecture.middle.html',  controller: 'studentLectureMiddleCtrl'}
+        }        
+      })
+      .state('course.lectures.quiz', {
+         resolve:{
+          quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
+            return $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
+          }
+         },
+        url: '/quizzes/:quiz_id',
+        views:{
+          'middle'  :{templateUrl: 'views/student/lectures/quiz.middle.html',  controller: 'studentQuizMiddleCtrl'}
+        }        
       })
       .state('course.course_editor', {
         url: '/course_editor',
@@ -290,6 +317,21 @@
          templateUrl: 'views/teacher/course/teachers.html',
          controller: 'TeacherCourseTeachersCtrl'
       })
+      .state('course.inclass', {
+        url: '/inclass',
+        templateUrl: 'views/teacher/in_class/inclass.html',
+        controller: 'inclassCtrl'
+      })
+      .state('course.inclass.module', {
+        url: "/modules/:module_id",
+        templateUrl: 'views/teacher/in_class/inclass_module.html',
+        controller: 'inclassModuleCtrl'
+      })
+      .state('course.inclass.display_quizzes', {
+        url:'/display_quizzes',
+        templateUrl: 'views/teacher/in_class/display_quizzes.html',
+        controller: 'displayQuizzesCtrl'
+    })
       .state('student_courses', {
         url:'/student_courses',
         templateUrl: 'views/student/course_list/course_list.html',

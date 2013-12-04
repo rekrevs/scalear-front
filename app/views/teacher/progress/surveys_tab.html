@@ -1,57 +1,20 @@
 <div ng-show="all_surveys">
 	<select ng-model="selected_survey" ng-options="q[0] for q in all_surveys" ng-change="changeSurvey()"></select>
 	<center>
-		<loading size="small" show="loading_surveys_chart" />
 		<b>{{selected_survey[0]}}</b>	
 	</center>
 	<button_link ng-show="button_msg" action="makeVisibleBtn()" title="{{button_msg}}" style="margin:10px 0px" />
-	<div ng-repeat="(id,value) in survey_chart_data" class="chart" ng-init="chart=createSurveyChart(value, $index)">
+	<div ng-repeat="(id,data) in survey_chart_data" class="chart" ng-init="chart=createSurveyChart(data.answers, $index)">
 	    <div >Question {{$index+1}}:</div>
 	    
 	    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
 	    <div google-chart on-ready="loading=false" chart="chart" ></div>
 	    <button_link title="Export Chart" action="saveAsImg($event)" >
 	</div>
+	<free-text-table question="question" survey-id="selected_survey[1]" related-answers="related_answers" ng-repeat="question in survey_free" />
 </div>
 <center>
-	<h3 ng-show="survey_free">Free Text Questions</h3>
-	<div ng-show="notify" class="alert">{{notify}}</div>
-</center>
-<table style="background-color:white" class="table" ng-repeat="question in survey_free">
-	<tr>
-		<td colspan="4">
-			<b>Question: {{question.title}}</b>
-			<button_link title="Save Selected" class="btn-mini" action="saveCheckedHide(question.answers)" style="float:right"/>
-		</td>
-	</tr>
-	<tr>
-		<td style="border-right: 1px gray solid;"><b>Hide</b></td>
-		<td ng-show="question.answers.showGroups" style="border-right: 1px gray solid;"><b>Groups</b></td>
-		<td></td>
-		<td style="border-left: 1px gray solid;"></td>
-	</tr>
-	<tr ng-repeat="answer in question.answers">
-		<td style="border-right: 1px gray solid;">
-			<input type="checkbox" ng-model="answer.hide" />
-		</td>
-		<td ng-show="question.answers.showGroups" style="border-right: 1px gray solid;">
-			<input type="checkbox" ng-model="answer.group_selected" />
-		</td>
-		<td>{{related_answers[answer.user_id]}}</td>
-		<td style="border-left: 1px gray solid;">
-			<a ng-click="showFeedback(question.answers,$index)">{{answer.answer}}</a>
-			<div ng-show="answer.response">
-				<p style="font-style: italic;display:inline;">{{answer.response}}</p>
-				<button_link title="Delete" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							
-			</div>
-			<div ng-show="answer.show_feedback">
-				<textarea ng-model="answer.response" />
-				<button_link title="Send" class="btn-mini" action="sendFeedback(question.answers,$index)" />
-			</div>
-		</td>
-	</tr>
-</table>
-<center>
 	<br /><br />
+	<loading size="small" show="loading_surveys_chart" />
 	<div ng-if="!all_surveys && !loading_surveys_chart">No Surveys</div>
 </center>

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="styles/teacher/course_editor.lecture.css" type="text/css" media="screen" />
 
-<overlay ng-hide="true">
+<overlay ng-hide="hide_overlay">
 	<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
 </overlay>
 <center><h3>{{lecture.name}}</h3></center>
@@ -14,7 +14,7 @@
 				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 			</quiz>
 		</div>
-		<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url" controls="lecture_player_controls" ready="hideOverlay()" ng-class="lecture.aspect_ratio"/>
+		<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio"/>
 		<div class="sidebar" ng-show="fullscreen" ></div>
 	</video_container>
 	</form>

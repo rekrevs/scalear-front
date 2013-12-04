@@ -13,7 +13,7 @@
 .ontop{
   position:absolute;
   width:500px;
-  height:306px;
+  height:281px;
   z-index:5;
 }
 
@@ -67,8 +67,9 @@
 }
 
 .answer_div{
-	width: 400px;
-	margin-left:100px;
+	width: auto;
+    height: 100%;
+	margin-left:10px;
 	margin-bottom:20px;	
 	position: relative;
   padding: 39px 19px 14px;
@@ -108,16 +109,6 @@
 .sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
 .sortable li { width: 350px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 25px; }
 .sortable li span { position: absolute; margin-left: -1.3em; }
-
-.widescreen{
-  width: 500px;
-  height: 306px;
-}
-
-.smallscreen{
-  width: 500px;
-  height: 406px;
-}
 
 .quiz_title{
   width: 50%;

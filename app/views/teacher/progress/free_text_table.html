@@ -1,0 +1,37 @@
+<center>
+	<h3 ng-show="question">Free Text Questions</h3>
+	<div ng-show="notify" class="alert">{{notify}}</div>
+</center >
+<table style="background-color:white" class="table" >
+	<tr>
+		<td colspan="4">
+			<b>Question: {{question.title}}</b>
+		</td>
+	</tr>
+	<tr>
+		<td ng-hide="display_only" style="border-right: 1px gray solid;"><b>Hide</b></td>
+		<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;"><b>Groups</b></td>
+		<td></td>
+		<td style="border-left: 1px gray solid;"></td>
+	</tr>
+	<tr ng-repeat="answer in question.answers|survey:display_only">
+		<td style="border-right: 1px gray solid;">
+			<input type="checkbox" ng-hide="display_only" ng-model="answer.hide" ng-change="saveCheckedHide(question.answers)" />
+		</td>
+		<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;">
+			<input type="checkbox" ng-model="answer.group_selected" />
+		</td>
+		<td>{{related_answers[answer.user_id]}}</td>
+		<td style="border-left: 1px gray solid;">
+			<a ng-click="showFeedback(question.answers,$index)">{{answer.answer}}</a>
+			<div ng-show="answer.response && !display_only">
+				<p style="font-style: italic;display:inline;">{{answer.response}}</p>
+				<button_link title="Delete" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							
+			</div>
+			<div ng-show="answer.show_feedback && !display_only">
+				<textarea ng-model="answer.response" />
+				<button_link title="Send" class="btn-mini" action="sendFeedback(question.answers,$index)" />
+			</div>
+		</td>
+	</tr>
+</table>

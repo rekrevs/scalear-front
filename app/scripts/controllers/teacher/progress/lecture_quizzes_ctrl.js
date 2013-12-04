@@ -3,12 +3,13 @@
 angular.module('scalearAngularApp')
   .controller('lectureQuizzesCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
     
+    $scope.lecture_player={}
+    $scope.lecture_player.events={}
+    
   	$scope.lectureQuizzesTab = function(){
-        console.log("lecture quizze tab")
         $scope.tabState(1)
         $scope.enableChartsScrolling()
         if($scope.chart_offset == null){
-            console.log("chart offset "+ $scope.chart_offset)
         	$scope.loading_video = true
             getLectureCharts(0,5)
         }
@@ -32,7 +33,6 @@ angular.module('scalearAngularApp')
                     $scope.enableChartsScrolling()
                 }
                 $scope.loading_lectures_chart = false
-                $scope.lecture_player_controls={}
             }
         );
     }
@@ -64,9 +64,12 @@ angular.module('scalearAngularApp')
  		
     }
 
+    $scope.lecture_player.events.onReady=function(){
+        $scope.lecture_player.controls.pause()
+    }
+
     $scope.seek= function(id){
-        console.log($scope.lecture_player_controls)
-        $scope.lecture_player_controls.seek(getTime(id), getURL(id))
+        $scope.lecture_player.controls.seek(getTime(id), getURL(id))
 	}
 
 	var getQuizTitle= function(id){

@@ -1,0 +1,36 @@
+<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer">Exit</a></div>
+<center>
+	<loading size="big" show="loading_surveys_chart" />
+	<div ng-show="!loading_surveys_chart">
+		<h4><b><span ng-show="in_review">Review</span> Student Surveys on {{selected_module.name}}</b></h4>
+		<button_link title="<<" action="prevSurvey()" style="margin-right:10px" ng-disabled="current_survey<= 0" />
+		<b>{{selected_survey[0]}}</b>
+	 	<button_link title=">>" action="nextSurvey()" style="margin-left:10px" ng-disabled="current_survey == all_surveys.length -1"/>
+	</div>
+	<div ng-show="all_surveys && !loading_surveys_chart" style="padding:10px 40px" >
+		<table class="table table-striped"> 
+			<tr>
+				<th colspan="2" ng-show="in_review" >Show</th>
+			</tr>
+			<tr ng-repeat="(id,data) in survey_chart_data|inclass:!in_review" >
+				<td style="padding-top:90px" >
+					<input ng-show="in_review" type="checkbox" ng-model="data.show" ng-change="showInclass(id, data.show)" />
+				</td>
+				<td>
+					<div class="chart" style='width:90%;height:100%' ng-init="chart=createSurveyChart(data.answers, $index)"> 
+					   	<center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
+						<div google-chart on-ready="loading=false" chart="chart" ></div>
+					</div>
+				</td>
+			</tr>
+		<table>
+	</div>
+	<div ng-repeat="(id,question) in survey_free|inclass:!in_review" style="margin-top:60px">
+		<div ng-show="in_review" style="position:absolute">
+			<input type="checkbox" ng-model="question.show" ng-change="showInclass(id, question.show)" style="margin-bottom:8px; margin-right:10px"/>
+			<span style="line-height:50px">Show in class?</span>
+		</div>
+		<free-text-table question="question" survey-id="selected_survey[1]" related-answers="related_answers" display-only="!in_review"/>
+	</div>
+</center>
+<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()" style="cursor:pointer">Exit</a></div>

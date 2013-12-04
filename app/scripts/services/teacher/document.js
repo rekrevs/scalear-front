@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('Documents', ['$resource','$http','$stateParams','scalear_api','headers',function ($resource, $http, $stateParams, scalear_api, headers){
+.factory('Document', ['$resource','$http','$stateParams','scalear_api','headers',function ($resource, $http, $stateParams, scalear_api, headers){
   
     $http.defaults.useXDomain = true;
     return $resource(scalear_api.host+'/en/documents/:document_id', {},

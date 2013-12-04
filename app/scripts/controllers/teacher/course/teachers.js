@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
         $scope.roles = [{value:3, text:'Professor'}, {value:4, text:'TA'}];
 
         $scope.addRow = function(index){
-            $scope.new_teachers.splice(index+1, 0, {email:'', role: '', status: 'pending'});
+            $scope.new_teachers.splice(index+1, 0, {email: null, role: null, status: 'pending'});
 //            $scope.teachers.splice(index+1, 0, {email: '', role : 'role', status:'pending'})
             console.log($scope.new_teachers);
         }
@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
         $scope.removeRow = function(index){
             var answer = confirm('Are you sure that you want to remove \''+$scope.teachers[index].email+'\' from this course?');
             if(answer){
-                Course.deleteTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email}).$promise.then(
+                Course.deleteTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email}, {},
                     function(value) {$scope.teachers.splice(index, 1);},
                     //handle the server error
                     function(value) {}
@@ -53,15 +53,15 @@ angular.module('scalearAngularApp')
             }
         }
         $scope.updateTeacher = function(index){
-            Course.updateTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email, role_id:$scope.teachers[index].role});
+            Course.updateTeacher({course_id:$stateParams.course_id},{email:$scope.teachers[index].email, role_id:$scope.teachers[index].role});
         }
         $scope.removeNewRow = function(index){
             $scope.new_teachers.splice(index, 1);
         }
         $scope.saveTeachers = function(){
-            Course.saveTeachers({course_id:$stateParams.course_id, new_teachers:$scope.new_teachers}).$promise.then(
+            Course.saveTeachers({course_id:$stateParams.course_id},{new_teachers:$scope.new_teachers},
                 function(value) {
-                    $scope.error = Course.getTeachers({}).$promise.then(
+                    $scope.error = Course.getTeachers({},
                         function(value){
                             $scope.teachers = value.data;
                             $scope.new_teachers = [];
@@ -75,4 +75,10 @@ angular.module('scalearAngularApp')
             )
 
         }
+        $scope.check = function(value, index){
+            if(value == ''){
+                $scope.new_teachers[index].email = null;
+            }
+        }
+
   }]);

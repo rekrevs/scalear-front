@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Documents', 'module' ,function ($scope, $state, Module, Documents, module) {
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document', 'module','$stateParams' ,function ($scope, $state, Module, Documents, module, $stateParams) {
         $scope.module=module.data
 
     	$scope.addDocument=function(){
     		console.log($scope.module.id)
     		$scope.document_loading=true
-    		Module.newDocument({module_id:$scope.module.id},
+    		Module.newDocument({course_id:$stateParams.course_id, module_id:$scope.module.id},
     			{},
     			function(doc){
     				console.log(doc)
@@ -22,8 +22,8 @@ angular.module('scalearAngularApp')
 
     	$scope.removeDocument=function (index) {
     		if(confirm("Are you sure you want to delete module?")){
-	    		Documents.destroy(
-					{document_id: $scope.module.documents[index].id},
+	    		Document.destroy(
+					{document_id: $scope.module.documents[index].id},{},
 					function(){
 						$scope.module.documents.splice(index, 1)
 					}, 
@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
 
     	$scope.updateDocument=function(index){
     		console.log($scope.module.documents[index])
-    		Documents.update(
+    		Document.update(
     			{document_id: $scope.module.documents[index].id},
     			{"document":{
     				url: $scope.module.documents[index].url,

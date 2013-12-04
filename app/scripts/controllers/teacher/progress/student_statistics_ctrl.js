@@ -3,6 +3,9 @@
 angular.module('scalearAngularApp')
   .controller('studentStatisticsCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module){
   		
+		$scope.statistics_player={}
+		$scope.statistics_player.events={}
+		
   		$scope.studentStatisticsTab = function(){
   			$scope.tabState(2)
 	   		$scope.disableInfinitScrolling()
@@ -22,7 +25,6 @@ angular.module('scalearAngularApp')
 	    			$scope.statistics = data
     			 	$scope.lecture_url =$scope.statistics.lecture_url
 	    			$scope.loading_statistics_chart=false
-	    			$scope.statistics_player_controls={}
 	    		},
 	    		function(){
 
@@ -122,11 +124,13 @@ angular.module('scalearAngularApp')
 	     }
 
 	     var generateTooltipHtml = function(time, count, questions){
+	     	var new_time=[]
+	     	new_time[0] = time[0]
 	     	if(time[1]<10)
-	     		time[1]="0"+time[1]
+	     		new_time[1]="0"+time[1]
 	     	if(time[2]<10)
-	     		time[2]="0"+time[2]
-	     	var formatted_time = time[0]+":"+time[1]+":"+time[2]
+	     		new_time[2]="0"+time[2]
+	     	 var formatted_time = new_time[0]+":"+new_time[1]+":"+new_time[2]
 	     	var html = "<div style='padding:8px 0 0 5px'><b>"+formatted_time+"</b><br>#students:  <b>"+count+"</b></div><hr style='padding:0;margin:4px 0'>"
 	     	for(var i in questions)
 	     	{
@@ -150,7 +154,11 @@ angular.module('scalearAngularApp')
         		}
         		before=parseInt(time)
         	}
-        	$scope.statistics_player_controls.seek(to_seek, lec)
+        	$scope.statistics_player.controls.seek(to_seek, lec)
+	    }
+
+	    $scope.statistics_player.events.onReady=function(){
+	    	$scope.statistics_player.controls.pause()
 	    }
 
   }]);

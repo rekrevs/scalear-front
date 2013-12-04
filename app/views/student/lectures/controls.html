@@ -1,0 +1,20 @@
+<link rel="stylesheet" href="../styles/student/controls.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+
+<div class='fullscreenDiv' ng-class="{'full':!full_screen, 'small':full_screen}" ng-click='full()'></div>
+<div class='alert alert-success fading' ng-show='show_message'>Thanks!</div>
+<div class='hidden_div' ng-show='show_question'>
+	<input class='question' maxlength="100" required="true" ng-model='question_asked'/>
+	<input ng-click="submit_question()" class='btn btn-primary submit_question' type='button' value='Ask'/>
+</div>
+<div class="hidden_shortcuts well" ng-show='show_shortcuts'>
+	Keyboard Controls:<br>
+	<ul>
+		<li><b>b:</b> Back 10 seconds</li>
+		<li><b>space:</b> Play/Pause </li>
+		<li><b>q:</b> Ask a question</li>
+		<li><b>c:</b> Confused</li>
+	</ul>
+</div>
+<div class="confusedDiv" ng-click= 'confused()'></div>
+<div class="questionDiv" ng-click= 'question()'></div>
+<div class="shortcutDiv" ng-click= 'show_shortcuts=!show_shortcuts'></div>

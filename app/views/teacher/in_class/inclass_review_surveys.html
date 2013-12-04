@@ -10,14 +10,14 @@
 	<div ng-show="all_surveys && !loading_surveys_chart" style="padding:10px 40px" >
 		<table class="table table-striped"> 
 			<tr>
-				<th colspan="2" ng-show="in_review" >Hide</th>
+				<th colspan="2" ng-show="in_review" >Show</th>
 			</tr>
 			<tr ng-repeat="(id,data) in survey_chart_data|inclass:!in_review" >
 				<td style="padding-top:90px" >
 					<input ng-show="in_review" type="checkbox" ng-model="data.show" ng-change="showInclass(id, data.show)" />
 				</td>
 				<td>
-					<div class="chart" style='min-width:300px; height:205px;' ng-init="chart=createSurveyChart(data.answers, $index)"> 
+					<div class="chart" style='width:90%;height:100%' ng-init="chart=createSurveyChart(data.answers, $index)"> 
 					   	<center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
 						<div google-chart on-ready="loading=false" chart="chart" ></div>
 					</div>

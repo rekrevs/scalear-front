@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuestionsCtrl', ['$scope','Module',function ($scope,Module){
+  .controller('displayQuestionsCtrl', ['$scope','$stateParams','Module',function ($scope, $stateParams, Module){
  	
   	var init = function(){
   		Module.displayQuestions(
@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
   	}
 
 	$scope.$parent.setData=function(url){
-		$scope.$parent.lecture_url= url
+		$scope.$parent.lecture_url= url+'&controls=0'
 		$scope.$parent.quiz_time= $scope.display_data[url][$scope.current_quiz_lecture][0][1]
 		$scope.$parent.questions = $scope.display_data[url][$scope.current_quiz_lecture]
 	}

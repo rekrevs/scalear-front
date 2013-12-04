@@ -151,7 +151,6 @@ angular.module('scalearAngularApp')
     
 
 	$rootScope.$on('accordianUpdate', function(event, message) {
-		console.log("///////qqqqqqqqq///////////")
 		$scope.open_id=message;
 		$scope.open[message]= true;
 	});

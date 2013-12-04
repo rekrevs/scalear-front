@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuizzesCtrl', ['$scope','Module',function ($scope,Module) {
+  .controller('displayQuizzesCtrl', ['$scope','$stateParams','Module',function ($scope,$stateParams, Module) {
 
   	var init = function(){
   		Module.displayQuizzes(
@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
   	}
 
 	$scope.$parent.setData=function(url){
-		$scope.$parent.lecture_url= url
+		$scope.$parent.lecture_url= url+'&controls=0'
 		$scope.$parent.quiz_time= $scope.display_data[url][$scope.current_quiz_lecture][0]
 		$scope.$parent.question_title = $scope.display_data[url][$scope.current_quiz_lecture][2]
 		$scope.$parent.quiz_id  = $scope.display_data[url][$scope.current_quiz_lecture][3] 
@@ -73,7 +73,7 @@ angular.module('scalearAngularApp')
             "colors": ['green','gray'],
             "isStacked": "true",
             "fill": 20,
-            "height": 200,
+            "height": 250,
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {

@@ -121,6 +121,9 @@
     <script src="bower_components/canvg-1.3.zip/canvg.js"></script>
     <script src="bower_components/canvg-1.3.zip/rgbcolor.js"></script>
     <script src="bower_components/canvg-1.3.zip/StackBlur.js"></script>
+    
+    
+    <script src="scripts/externals/shortcut.js"></script>
     <!-- endbower -->
 
     <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
@@ -169,6 +172,9 @@
     <script src="scripts/directives/navigation_directives.js"></script>
     <script src="scripts/directives/teacher/progress/progress_directives.js"></script>
     <script src="scripts/directives/error_directives.js"></script> 
+    <script src="scripts/directives/student/courseware/courseware_directives.js"></script>
+    <script src="scripts/directives/student/courseware/quiz_middle_directives.js"></script>
+    <script src="scripts/directives/student/courseware/lecture_middle_directives.js"></script>
 
     <script src="scripts/services/teacher/course.js"></script>
     <script src="scripts/services/teacher/document.js"></script>
@@ -183,7 +189,6 @@
     <script src="scripts/services/user.js"></script>
     <script src="scripts/services/user_session.js"></script>
     <script src="scripts/services/batch_email_service.js"></script>
-    <script src="scripts/services/user.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>
@@ -217,11 +222,11 @@
     <script src="scripts/controllers/teacher/course/course_information.js"></script>
     <script src="scripts/controllers/teacher/course/teachers.js"></script>
     <script src="scripts/controllers/teacher/course/send_emails.js"></script>
+
     <script src="scripts/controllers/teacher/in_class/inclass_ctrl.js"></script>
     <script src="scripts/controllers/teacher/in_class/inclass_module_ctrl.js"></script>
     <script src="scripts/controllers/teacher/in_class/display_quizzes_ctrl.js"></script>
     <script src="scripts/controllers/teacher/in_class/display_questions_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/in_class/display_surveys_ctrl.js"></script>
     <script src="scripts/controllers/teacher/in_class/review_quizzes_ctrl.js"></script>
     <script src="scripts/controllers/teacher/in_class/review_questions_ctrl.js"></script>
     <script src="scripts/controllers/teacher/in_class/review_surveys_ctrl.js"></script>
@@ -230,7 +235,13 @@
     <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>
     <script src="scripts/controllers/student/course/course_information.js"></script>
     <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script>
-    
+ 
+
+    <script src="scripts/controllers/student/lectures/lectures_ctrl.js"></script>
+    <script src="scripts/controllers/student/lectures/lectures_middle_ctrl.js"></script>
+    <script src="scripts/controllers/student/lectures/quizzes_middle_ctrl.js"></script>
+    <!-- <script src="scripts/controllers/student/lectures/lecture_quiz_list_ctrl.js"></script> -->
+
     <!-- endbuild -->
 </body>
 </html>

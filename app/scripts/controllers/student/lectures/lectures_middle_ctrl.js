@@ -96,7 +96,10 @@ angular.module('scalearAngularApp')
    				// also when just solved it want to set is_quiz_solved.. gheir ely bageebo from there..
    			}
    			else
+   			{
+   				$scope.selected_quiz='';
    				$scope.display_mode=false;
+   			}
    		}
    		
    }

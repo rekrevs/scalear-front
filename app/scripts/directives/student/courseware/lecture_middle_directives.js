@@ -210,6 +210,7 @@ angular.module('scalearAngularApp')
             if(answer.selected)
               selected_answers.push(answer.id)
           })
+
           if(selected_answers.length == 0)
           {
           	// notify
@@ -219,6 +220,7 @@ angular.module('scalearAngularApp')
 	         	}, 2000);
           	return		
           }
+
           if(scope.selected_quiz.question_type == "OCQ" && selected_answers.length==1)
             selected_answers = selected_answers[0]
            
@@ -229,7 +231,9 @@ angular.module('scalearAngularApp')
           selected_answers = scope.studentAnswers[scope.selected_quiz.id]
           var count = 0
           for (var el in selected_answers)
-            count++
+            if(selected_answers[el])
+              count++
+            
           if(count<scope.selected_quiz.online_answers.length)
           {
           	scope.$parent.show_notification="You must place all items";
@@ -498,11 +502,12 @@ angular.module('scalearAngularApp')
     }
   };
 }])
+
 .directive('studentDrag',['$window', '$rootScope', function($window, $rootScope){
   return {
     restrict:'E',
-    template:'<div ng-style="{left: xcoor, top: ycoor, width:width, height:height, position: \'absolute\',  marginTop:\'0px\'}" data-drop="true" data-jqyoui-options jqyoui-droppable=\'{onDrop:"formatDropped"}\' class="drop-div" pop-over="explanation_pop"></div>'+
-             '<b class="dragged" id="{{data.id}}" data-drag="true" data-jqyoui-options=\'{containment:".videoborder"}\' jqyoui-draggable=\'{animate:true, onStart:"formatDrag", onDrag:"drag"}\'>{{data.answer}}</b>',
+    template:'<div ng-style="{left: xcoor, top: ycoor, width:width, height:height, position: \'absolute\',  marginTop:\'0px\'}" data-drop="true" jqyoui-droppable=\'{onDrop:"setDropped", onOver:"formatDropped", onOut:"clearDropped"}\' class="drop-div" ></div>'+
+             '<b class="dragged" data-drag="true" data-jqyoui-options=\'{containment:".widescreen"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</b>',
     link:function(scope,elem){
       console.log("student drag")
       console.log(scope.data)
@@ -513,73 +518,116 @@ angular.module('scalearAngularApp')
         scope.xcoor = (scope.data.xcoor * ontop.width())
         scope.ycoor = (scope.data.ycoor * (ontop.height()))
         //scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
+        console.log(scope.width)
       }
       
-        $rootScope.$on("updatePosition",function(){
+      var setup=function(){
+      	console.log("setup function")
+      	var drag_elem = angular.element('#'+scope.data.id)
+  		destroyPopover(drag_elem)
+      	scope.explanation_pop=null
+      	scope.explanation[scope.data.id] = null
+      }
+      
+      
+	$rootScope.$on("updatePosition",function(){
         console.log("event emiited updated position")
         setAnswerLocation()
-      }) 
+        var drop_elem = angular.element(elem[0]).find('div')
+     	var drag_elem = angular.element('#'+scope.data.id)
+     	console.log(drop_elem.css('width'))
+        resizeAnswer(drag_elem)
+  	}) 
       
       scope.formatDrag=function(event, ui){
-        var drop_elem = angular.element(elem[0]).find('div')
         var drag_elem = angular.element(ui.helper[0])
-        var win = angular.element($window)
-        drop_elem.parent().append(drag_elem)
-        // if(drag_elem.hasClass('dropped')){
-        //   drag_elem.addClass('fix_location')    
-        //   ui.position.top -= win.scrollTop();
-        // }
-        drag_elem.removeClass('dropped')
-        drag_elem.addClass('dragged')
-        drag_elem.width('')
-        drag_elem.height('')
+        reverseSize(drag_elem)
       }
 
-      scope.drag=function(event, ui){
-        // var drag_elem = angular.element(ui.helper[0])
-        // var win = angular.element($window)
-        // if(drag_elem.hasClass('fix_location')){
-        //   ui.position.top -= win.scrollTop();
-        // }
+      scope.adjustDrag=function(event, ui){
+        var drag_elem = angular.element(ui.helper[0])
+        var ontop = angular.element('.ontop');
+        var left= event.pageX - ontop.offset().left
+        var top = event.pageY - ontop.offset().top
+        ui.position.left = left - (drag_elem.width())
+        ui.position.top = top - (drag_elem.height())
       }
 
       scope.formatDropped=function(event, ui){
-        var drop_elem = angular.element(elem[0]).find('div')
-        if(!drop_elem.find('b').length){
-          ui.draggable.width(drop_elem.css('width'));
-          ui.draggable.height(drop_elem.css('height'));
-          ui.draggable.removeClass('dragged')
-          ui.draggable.addClass('dropped')
-          drop_elem.append(ui.draggable);
-          scope.studentAnswers[scope.quiz.id][scope.data.id]=ui.draggable.text()
-          scope.$apply()
-        }
-        else
-        {
-          var child=drop_elem.find('b')
-          drop_elem.parent().append(child)
-          child.width('')
-          child.height('')
-          child.removeClass('dropped')
-          child.addClass('dragged')
-          scope.studentAnswers[scope.quiz.id][child.attr('id')] = ''
-          scope.formatDropped(event,ui)
-        }
+         if(!scope.studentAnswers[scope.quiz.id][scope.data.id])
+            ui.draggable.css('background-color', 'lightblue')
+          else
+             ui.draggable.css('background-color', 'orange')
       }
 
+      scope.setDropped=function(event, ui){
+        var drop_elem = angular.element(elem[0]).find('div')
+        if(!scope.studentAnswers[scope.quiz.id][scope.data.id]){
+          ui.draggable.css('background-color', 'lightblue')          
+          ui.draggable.addClass('dropped')
+          resizeAnswer(ui.draggable, drop_elem)
+          scope.studentAnswers[scope.quiz.id][scope.data.id]=ui.draggable.text()
+          ui.draggable.attr('id', scope.data.id)
+          scope.$apply()
+        }
+        else{   
+          var drag_elem = angular.element('#'+scope.data.id)
+          reverseSize(drag_elem)
+          clear(drag_elem)
+          scope.setDropped(event, ui)
+        }
+      }
+	
+       scope.clearDropped=function(event, ui){
+       	destroyPopover(ui.draggable)
+        clear(ui.draggable)
+      }
+
+      var clear=function(draggable){
+        if(draggable.attr('id')==scope.data.id){
+          scope.studentAnswers[scope.quiz.id][scope.data.id]=''
+          scope.$apply()          
+        }
+        draggable.css('background-color', '')
+        draggable.attr('id', '')
+      }
+
+      var reverseSize=function(draggable){
+        draggable.removeClass('dropped')       
+        draggable.width('')
+        draggable.height('')
+      }
+      
+      var destroyPopover=function(draggable){
+      	 if(scope.explanation_pop)
+          	draggable.popover("destroy")
+      }
+      
+      var resizeAnswer= function(draggable, droppable){
+      	console.log('in resize answer')
+      	// console.log(droppable.css('width'))
+      	// console.log(droppable.css('height'))
+      	draggable.width(scope.width);
+      	draggable.height(scope.height);
+  	 	draggable.css('left', scope.xcoor+12)
+      	draggable.css('top', scope.ycoor+2)
+      }
+     
       scope.$watch('explanation[data.id]', function(newval){
-        if(scope.explanation && scope.explanation[scope.data.id])
-        {
+        if(scope.explanation && scope.explanation[scope.data.id]){
           scope.verdict = scope.explanation[scope.data.id][0]? "Correct": "Incorrect"
+          scope.selected_id= angular.element(elem[0]).find('b').attr('id')
           scope.explanation_pop={
-            title:"<b ng-class='{green_notification: explanation[data.id][0], red_notification: !explanation[data.id][0]}'>{{verdict}}</b>",
-            content:"<div>{{explanation[data.id][1]}}</div>",
+            title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{verdict}}</b>",
+            content:"<div>{{explanation[selected_id][1]}}</div>",
             html:true,
             trigger:'hover'
           }
+          var bg_color = scope.explanation[scope.data.id][0]? "darkseagreen": "orangered"
+          angular.element('#'+scope.data.id).css('background-color', bg_color)
         } 
       })
-
+	  setup()
       setAnswerLocation()
       
      

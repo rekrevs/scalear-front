@@ -61,13 +61,13 @@ angular.module('scalearAngularApp')
 		updateOnlineQuiz(quiz)
 	}
 
-	$scope.deleteQuiz=function(index){
+	$scope.deleteQuiz=function(quiz){
 		if(confirm("Are you sure you want to delete quiz"))
 			Online_quizzes.destroy(
-				{online_quizzes_id: $scope.quiz_list[index].id},
+				{online_quizzes_id: quiz.id},
 				function(data){ //success
 					console.log(data)
-					$scope.quiz_list.splice(index, 1)
+					$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
 					$scope.$parent.editing_mode = false;
 					$scope.$parent.selected_quiz={}
 				},

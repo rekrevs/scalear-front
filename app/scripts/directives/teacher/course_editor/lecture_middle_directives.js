@@ -135,7 +135,7 @@ angular.module('scalearAngularApp')
 		 replace:true,
 		 restrict: 'E',
 		 template: "<div ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' data-drag='true' data-jqyoui-options=\"{containment:'.videoborder'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
-		 				"<img ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' />"+
+		 				"<img id='{{data.id}}' ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' />"+
 	 				"</div>",
 
 		link: function(scope, element, attrs, controller) {

@@ -707,6 +707,11 @@ describe("Course Editor",function(){
 //        DRAGTest(1, ptor);
         describe('Over Video', function(){
             MCQVideo(ptor);
+            doRefresh(ptor);
+//            it('should wait', function(){
+//                ptor.sleep(20000);
+//            })
+            OCQVideo(ptor);
         });
     });
 
@@ -2418,6 +2423,325 @@ function MCQVideo(ptor){
         });
     });
     doDelete(ptor);
+    exitFullscreen(ptor);
+    doRefresh(ptor);
+    it('should make sure that the quiz was deleted', function(){
+        ptor.findElements(protractor.By.repeater('quiz in quiz_list')).then(function(rows){
+            expect(rows.length).toBe(0);
+        });
+    });
+}
+
+
+function OCQVideo(ptor){
+    it('wait for some time', function(){
+        console.log('entered OCQ VIDEO');
+//        ptor.findElement(protractor.By.className('html5-scrubber-button')).then(function(scrubber){
+//            ptor.actions().dragAndDrop(scrubber, {x: 50, y:0}).perform();
+//        });
+        ptor.sleep(10000);
+    });
+
+    it('should insert OCQ over video quiz', function(){
+        ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
+            buttons[0].click();
+        });
+        ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
+            options[1].click();
+        });
+    });
+    it('should display the transparent layer on top of the video - OCQ Video', function(){
+        ptor.findElement(protractor.By.className('ontop')).then(function(container){
+            container.isDisplayed().then(function(disp){
+                expect(disp).toBe(true);
+            });
+            expect(container.getAttribute('style')).toBe('background-color: transparent;');
+        });
+    });
+    it('should show the OCQ quiz name', function(){
+        ptor.findElement(protractor.By.tagName('editable_text')).then(function(quiz_name){
+            expect(quiz_name.getText()).toBe('New Quiz');
+        });
+    });
+    it('should allow changing OCQ quiz name', function(){
+        ptor.findElement(protractor.By.id('editing')).then(function(editing){
+            expect(editing.getText()).toContain('New Quiz');
+        });
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            expect(editables[0].getText()).toBe('New Quiz');
+            //edit quiz name
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('My Quiz');
+                ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                    buttons[1].click();
+                });
+            });
+            expect(editables[0].getText()).toBe('My Quiz');
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('New Quiz');
+                ptor.findElement(protractor.By.className('icon-remove')).then(function(remove_button){
+                    remove_button.click();
+                });
+            });
+            expect(editables[0].getText()).toBe('My Quiz');
+        });
+    });
+    it('should allow changing quiz time - OCQ Video', function(){
+        //change quiz time
+    });
+
+    addMCQAnswers(ptor);
+
+    doExit(ptor);
+
+    openOCQ(ptor);
+
+    it('should make sure that the answers details were not saved', function(){
+        ptor.findElements(protractor.By.className('dropped')).then(function(answers){
+            var p=0;
+            for(var i=0; i<answers.length; i++){
+                answers[i].getLocation().then(function(location){
+                    expect(location.x).not.toBe(locationx[p]);
+                    expect(location.y).not.toBe(locationy[p]);
+                    p++;
+                });
+            }
+        });
+
+    });
+
+    openMCQ(ptor);
+
+    manipulateAnswers(ptor, true, 1);
+    doSave(ptor);
+    doExit(ptor);
+    openOCQ(ptor);
+    it('should make sure that the answers details were saved', function(){
+        ptor.findElements(protractor.By.className('answer_img')).then(function(answers){
+            var p=0;
+            var j = answers.length-1;
+            for(var i= 0; i< answers.length; i++){
+                answers[i].getLocation().then(function(location){
+                    expect(location.x).toBe(locationx[j]);
+                    expect(location.y).toBe(locationy[j]);
+                    j--;
+                });
+                answers[i].click();
+                ptor.findElement(protractor.By.className('popover-content')).then(function(popover){
+                    popover.isDisplayed().then(function(disp){
+                        expect(disp).toBe(true);
+                    });
+                });
+                if(i==answers.length-1){
+                    expect(answers[i].getAttribute('ng-src')).toContain('green');
+                    ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                        expect(fields[0].getAttribute('value')).toBe('first answer');
+                        expect(fields[1].getAttribute('value')).toBe('first explanation');
+                    });
+                }
+                if(i==answers.length-2){
+                    ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                        expect(fields[0].getAttribute('value')).toBe('second answer');
+                        expect(fields[1].getAttribute('value')).toBe('second explanation');
+                    });
+                }
+                if(i==answers.length-3){
+                    ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                        expect(fields[0].getAttribute('value')).toBe('third answer');
+                        expect(fields[1].getAttribute('value')).toBe('third explanation');
+                    });
+                }
+
+            }
+        });
+
+    });
+    doRefresh(ptor);
+    openOCQ(ptor);
+    manipulateAnswers(ptor, false, 2);
+    doSave(ptor);
+    doExit(ptor);
+    doRefresh(ptor);
+    openOCQ(ptor);
+    it('should make sure that the answers details were saved after editing them', function(){
+        ptor.findElements(protractor.By.className('answer_img')).then(function(answers){
+            var p=0;
+            var j = answers.length-1;
+            for(var i= 0; i< answers.length; i++){
+                answers[i].getLocation().then(function(location){
+                    expect(location.x).toBe(locationx[j]);
+                    expect(location.y).toBe(locationy[j]);
+                    j--;
+                });
+                answers[i].click();
+                ptor.findElement(protractor.By.className('popover-content')).then(function(popover){
+                    popover.isDisplayed().then(function(disp){
+                        expect(disp).toBe(true);
+                    });
+                });
+                if(i==answers.length-1){
+                    expect(answers[i].getAttribute('ng-src')).toContain('green');
+                    ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                        expect(fields[0].getAttribute('value')).toBe('1 answer');
+                        expect(fields[1].getAttribute('value')).toBe('1 explanation');
+                    });
+                }
+                if(i==answers.length-2){
+                    ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                        expect(fields[0].getAttribute('value')).toBe('2 answer');
+                        expect(fields[1].getAttribute('value')).toBe('2 explanation');
+                    });
+                }
+                if(i==answers.length-3){
+                    ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                        expect(fields[0].getAttribute('value')).toBe('3 answer');
+                        expect(fields[1].getAttribute('value')).toBe('3 explanation');
+                    });
+                }
+
+            }
+        });
+
+    });
+    doChangeAspectRatio(ptor, 1);
+    verifyPositions(ptor);
+    doChangeAspectRatio(ptor, 0);
+    doDeleteAnswer(ptor, 0);
+    it('should make sure that the answer was deleted', function(){
+        ptor.findElements(protractor.By.className('answer_img')).then(function(answers){
+            expect(answers.length).toBe(2);
+        });
+    });
+
+    //--------------------//
+    //edit the created quiz in fullscreen mode
+
+    goFullscreen(ptor);
+    it('should show the OCQ quiz name', function(){
+        ptor.findElement(protractor.By.tagName('editable_text')).then(function(quiz_name){
+            expect(quiz_name.getText()).toBe('My Quiz');
+        });
+    });
+    it('should allow changing OCQ quiz name', function(){
+        ptor.findElement(protractor.By.id('editing')).then(function(editing){
+            expect(editing.getText()).toContain('My Quiz');
+        });
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            expect(editables[0].getText()).toBe('My Quiz');
+            //edit quiz name
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('The Quiz');
+                ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                    buttons[1].click();
+                });
+            });
+            expect(editables[0].getText()).toBe('The Quiz');
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('New Quiz');
+                ptor.findElement(protractor.By.className('icon-remove')).then(function(remove_button){
+                    remove_button.click();
+                });
+            });
+            expect(editables[0].getText()).toBe('The Quiz');
+        });
+    });
+    it('should allow changing quiz time - OCQ Video', function(){
+        //change quiz time
+    });
+
+    moveAnswers(ptor, 50, 0, 0);
+    it('should edit answers\' content', function(){
+        ptor.findElements(protractor.By.className('answer_img')).then(function(answers){
+            answers.forEach(function(ans, i){
+                var bb = [2, 1];
+                ans.click()
+                ptor.findElement(protractor.By.className('popover-content')).then(function(popover){
+                    popover.isDisplayed().then(function(disp){
+                        expect(disp).toBe(true);
+                    });
+                });
+                ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                    fields[0].clear();
+                    fields[0].sendKeys(convertText(bb[i]) +' answer');
+                    fields[1].clear();
+                    fields[1].sendKeys(convertText(bb[i]) +' explanation');
+                });
+            });
+        })
+    });
+    doExit(ptor);
+    openOCQ(ptor);
+    it('should make sure that the changes were not saved', function(){
+        ptor.findElements(protractor.By.className('answer_img')).then(function(answers){
+            var aa = [1,0];
+            answers.forEach(function(ans, i){
+                answers[aa[i]].click();
+                ptor.findElement(protractor.By.className('popover-content')).then(function(popover){
+                    popover.isDisplayed().then(function(disp){
+                        expect(disp).toBe(true);
+                    });
+                });
+                ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                    expect(fields[0].getAttribute('value')).toBe(i+1+' answer');
+                    expect(fields[1].getAttribute('value')).toBe(i+1+' explanation');
+                });
+            })
+        });
+    });
+
+    moveAnswers(ptor, 50, 0, 0);
+    it('should edit answers\' content', function(){
+        ptor.findElements(protractor.By.className('answer_img')).then(function(answers){
+            answers.forEach(function(ans, i){
+                var bb = [2, 1];
+                ans.click()
+                ptor.findElement(protractor.By.className('popover-content')).then(function(popover){
+                    popover.isDisplayed().then(function(disp){
+                        expect(disp).toBe(true);
+                    });
+                });
+                ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                    fields[0].clear();
+                    fields[0].sendKeys(convertText(bb[i]) +' answer');
+                    fields[1].clear();
+                    fields[1].sendKeys(convertText(bb[i]) +' explanation');
+                });
+            });
+        })
+    });
+    doSave(ptor);
+    doExit(ptor);
+    doRefresh(ptor);
+    goFullscreen(ptor);
+    openOCQ(ptor);
+    it('should make sure that the changes were saved', function(){
+        ptor.findElements(protractor.By.className('answer_img')).then(function(answers){
+            var aa = [1,0];
+            answers.forEach(function(ans, i){
+                answers[aa[i]].click();
+                ptor.findElement(protractor.By.className('popover-content')).then(function(popover){
+                    popover.isDisplayed().then(function(disp){
+                        expect(disp).toBe(true);
+                    });
+                });
+                ptor.findElements(protractor.By.className('must_save')).then(function(fields){
+                    expect(fields[0].getAttribute('value')).toBe(convertText(i+1)+' answer');
+                    expect(fields[1].getAttribute('value')).toBe(convertText(i+1)+' explanation');
+                });
+            })
+        });
+    });
+    doDelete(ptor);
+    exitFullscreen(ptor);
+    doRefresh(ptor);
     it('should make sure that the quiz was deleted', function(){
         ptor.findElements(protractor.By.repeater('quiz in quiz_list')).then(function(rows){
             expect(rows.length).toBe(0);
@@ -2523,10 +2847,6 @@ function addMCQAnswers(ptor){
                         expect(disp).toBe(true);
                     });
                 });
-                ptor.findElement(protractor.By.className('must_save_check')).then(function(correct){
-                    correct.click();
-                });
-                expect(answers[answers.length-1].getAttribute('ng-src')).toContain('green');
                 ptor.findElements(protractor.By.className('must_save')).then(function(fields){
                     fields[0].sendKeys('2 answer');
                     fields[1].sendKeys('2 explanation');
@@ -2557,6 +2877,14 @@ function addMCQAnswers(ptor){
 }
 
 function openMCQ(ptor){
+    it('should reopen the quiz', function(){
+        ptor.findElement(protractor.By.tagName('editable_text')).then(function(quiz_name){
+            quiz_name.click();
+        });
+    });
+}
+
+function openOCQ(ptor){
     it('should reopen the quiz', function(){
         ptor.findElement(protractor.By.tagName('editable_text')).then(function(quiz_name){
             quiz_name.click();

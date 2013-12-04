@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Documents', 'module','$q', function ($scope, $state, Module, Documents, module, $q) {
+    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Documents', 'module','$q','$stateParams', function ($scope, $state, Module, Documents, module, $q, $stateParams) {
       $scope.module=module.data
 
 
@@ -11,7 +11,8 @@ angular.module('scalearAngularApp')
 	    var group={}
 	    group[column]=data;
 	    Module.validateModule(
-	    	{module_id:$scope.module.id},
+	    	{course_id:$stateParams.course_id,
+	    	module_id:$scope.module.id},
 	    	group,
 	    	function(data){
 				d.resolve()
@@ -40,7 +41,8 @@ angular.module('scalearAngularApp')
         delete modified_module["total_quiz_questions"];
                  
         Module.update(
-          {module_id: $scope.module.id},
+          {course_id:$stateParams.course_id,
+          	module_id: $scope.module.id},
           {group: modified_module},
           function(response){
             console.log(response)

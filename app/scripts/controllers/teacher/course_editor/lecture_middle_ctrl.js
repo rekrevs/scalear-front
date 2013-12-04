@@ -42,6 +42,7 @@ angular.module('scalearAngularApp')
 	$scope.insertQuiz=function(quiz_type, question_type){
 		$scope.quiz_loading = true;
 		Lecture.newQuiz({
+			course_id: $stateParams.course_id,
 			lecture_id: $scope.lecture.id,
 			time: Math.floor($scope.lecture_player.controls.getTime()), 
 			quiz_type: quiz_type, 
@@ -89,7 +90,7 @@ angular.module('scalearAngularApp')
 
  	var getQuizData =function(){
 		Lecture.getQuizData(
-			{"lecture_id":$scope.lecture.id ,"quiz": $scope.selected_quiz.id},
+			{"course_id":$stateParams.course_id, "lecture_id":$scope.lecture.id ,"quiz": $scope.selected_quiz.id},
 			function(data){ //success
 				console.log(data)
 				$scope.selected_quiz.answers= data.answers
@@ -106,7 +107,7 @@ angular.module('scalearAngularApp')
 
 	var getHTMLData=function(){
 		Lecture.getHtmlData(
-			{"lecture_id":$scope.lecture.id ,"quiz":  $scope.selected_quiz.id},
+			{"course_id":$stateParams.course_id, "lecture_id":$scope.lecture.id ,"quiz":  $scope.selected_quiz.id},
 			function(data){ //success	
 				if($scope.selected_quiz.question_type == 'drag'){
 					console.log(data)
@@ -186,7 +187,8 @@ angular.module('scalearAngularApp')
   		$scope.selected_quiz.answers.push($scope.new_answer)
 
 		Lecture.addAnswer(
-			{lecture_id:$scope.lecture.id},
+			{course_id:$stateParams.course_id,
+			lecture_id:$scope.lecture.id},
 			{answer:$scope.new_answer, "flag":true},
 			function(data){
 				console.log(data)
@@ -208,7 +210,8 @@ angular.module('scalearAngularApp')
 		$scope.selected_quiz.answers.splice(index, 1);
 		console.log(backup)
 		Lecture.removeAnswer(
-			{lecture_id: $scope.lecture.id},
+			{course_id:$stateParams.course_id,
+			lecture_id: $scope.lecture.id},
 			{answer_id:backup.id},
 			function(data){
 				console.log(data)
@@ -227,7 +230,8 @@ angular.module('scalearAngularApp')
 	var updateAnswers=function(ans, title){
 		console.log("savingAll")
 		Lecture.updateAnswers(
-			{lecture_id:$scope.lecture.id,
+			{course_id:$stateParams.course_id,
+			lecture_id:$scope.lecture.id,
 			online_quiz_id: $scope.selected_quiz.id},
 			{answer: ans, quiz_title:title },
 			function(data){ //success

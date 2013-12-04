@@ -23,60 +23,96 @@ angular.module('scalearAngularApp')
 				url:'=',
 				ready:'&',
 				id:'@',
-				controls:'='
+				controls:'=',
+				events:'='
 			},
 			link: function(scope, element){
 
 				console.debug("YOUTUBE " + scope.id)
 				var player
+				if(!scope.controls)
+					scope.controls={}
+				if(!scope.events)
+					scope.events={}
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1" ,{ width: 500, controls: 0});
-					player.controls( false ); 
-					player.on("loadeddata", 
-						function(){
-							console.debug("Video data loaded")
-							scope.ready();
-							scope.$apply();
-						});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1&controls=0" ,{ width: 500, controls: 0});
+					setupEvents()
+					
 				}
 
 				scope.controls.play=function(){
 					player.play();
 				}
+
 				scope.controls.pause = function(){
 					player.pause();
+				}
+
+				scope.controls.mute = function(){
+					player.mute();
+				}
+
+				scope.controls.unmute = function(){
+					player.unmute();
 				}
 
 				scope.controls.getTime=function(){
 					return player.currentTime()
 				}
 
-				scope.controls.seek = function(time, url){
-					if(scope.url != url){
-			    		scope.url = url 
-			    		scope.controls.refreshVideo()
-			    		player.on("loadeddata", function(){			    	
-					    	scope.controls.pause()
-							player.currentTime(time);
-						});
-			    	}
-			    	else
-		    			scope.controls.pause()
-						player.currentTime(time);
-					
+				scope.controls.getDuration=function(){
+					return player.duration()
 				}
+
+				scope.controls.seek = function(time){
+					player.currentTime(time);
+	    			player.pause()
+				}
+
 				scope.controls.refreshVideo = function(){
 					element.find('iframe').remove();
 			  		loadVideo();
 				}
 
+				scope.controls.hideControls=function(){
+					player.controls( false ); 
+				}
+
+				var setupEvents=function(){
+					player.on("loadeddata", 
+						function(){
+							console.debug("Video data loaded")
+							scope.ready();
+							scope.$apply();
+					});
+
+					player.on('play',
+						function(){
+							if(scope.events.onPlay){
+								scope.events.onPlay();
+								scope.$apply();
+							}
+					});
+
+					player.on('pause',
+						function(){
+							if(scope.events.onPause){
+								scope.events.onPause();
+								scope.$apply();
+							}
+					});
+				}
+
 				$rootScope.$on('refreshVideo',function(){
 					scope.controls.refreshVideo()
 				})
-		
-			  	loadVideo();
+				scope.$watch('url',function(){
+					if(scope.url)
+						scope.controls.refreshVideo()
+				})
+			  	
 		    }
 		};
 }]).directive('editPanel',function(){

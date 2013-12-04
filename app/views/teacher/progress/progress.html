@@ -8,8 +8,8 @@
 			    <a ui-sref="course.progress.main()" class="lecture" id="progress_chart">Progress Chart</a>
 			</li>           
 	        <li class="nav-header">Modules</li>
-			<li bindonce ng-repeat="group in groups" style="cursor:pointer" ng-class="{active: group.id == getLocation()}">
-			    <a ui-sref="course.progress.module({ module_id: group.id })" class="group" bo-text="group.name" ></a>
+			<li bindonce ng-repeat="module in modules" style="cursor:pointer" ng-class="{active: module.id == getLocation()}">
+			    <a ui-sref="course.progress.module({ module_id: module.id })" class="module" bo-text="module.name" ></a>
 			</li>
 	    </ul>                   
 	</div>

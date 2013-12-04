@@ -393,7 +393,9 @@ angular.module('scalearAngularApp')
           selected_answers = scope.studentAnswers[scope.selected_quiz.id]
           var count = 0
           for (var el in selected_answers)
-            count++
+            if(selected_answers[el])
+              count++
+            
           if(count<scope.selected_quiz.online_answers.length)
             return
         }
@@ -732,6 +734,9 @@ angular.module('scalearAngularApp')
       }
 
        scope.clearDropped=function(event, ui){
+        if(scope.explanation_pop){
+          ui.draggable.popover("destroy")
+        }
         clear(ui.draggable)
       }
 
@@ -753,13 +758,14 @@ angular.module('scalearAngularApp')
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id]){
           scope.verdict = scope.explanation[scope.data.id][0]? "Correct": "Incorrect"
+          scope.selected_id= angular.element(elem[0]).find('b').attr('id')
           scope.explanation_pop={
-            title:"<b ng-class='{green_notification: explanation[data.id][0], red_notification: !explanation[data.id][0]}'>{{verdict}}</b>",
-            content:"<div>{{explanation[data.id][1]}}</div>",
+            title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{verdict}}</b>",
+            content:"<div>{{explanation[selected_id][1]}}</div>",
             html:true,
             trigger:'hover'
           }
-          var bg_color = scope.explanation[scope.data.id][0]? "lightgreen": "orangered"
+          var bg_color = scope.explanation[scope.data.id][0]? "darkseagreen": "orangered"
           angular.element('#'+scope.data.id).css('background-color', bg_color)
         } 
       })

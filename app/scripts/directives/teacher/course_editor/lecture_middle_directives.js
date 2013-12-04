@@ -584,7 +584,10 @@ angular.module('scalearAngularApp')
 	        var getter = $parse(attr.popOver)
 	        scope.$watch(attr.popOver, function(newval){
 	        	var options = getter(scope)
+	        	console.log("in popover watch")
 	        	if(options){
+	        		console.log("there are options")
+		        	element.popover('destroy');
 		        	element.popover(options);
 		          	var popover = element.data('popover');
 			        

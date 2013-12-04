@@ -50,8 +50,10 @@ angular.module('scalearAngularApp')
   		var m_id= $scope.modules[index].id;
     	if(confirm("Are you sure you want to delete module?")){
 	    	Module.destroy(
-	    		{course_id: $stateParams.course_id,
-	    			module_id: m_id},
+	    		{
+	    			course_id: $stateParams.course_id,
+	    			module_id: m_id
+	    		},{},
 	    		function(response){
 	    			console.log(response)
 	    			if(response.error.lecture_quiz_exist)
@@ -94,6 +96,7 @@ angular.module('scalearAngularApp')
     	if(confirm("Are you sure you want to delete lecture?")){
 	    	Lecture.destroy(
 	    		{course_id: $stateParams.course_id, lecture_id: $scope.modules[module_index].items[item_index].id},
+	    		{},
 	    		function(response){
 	    			 console.log(response)
 	    			 $scope.modules[module_index].items.splice(item_index, 1)
@@ -115,6 +118,8 @@ angular.module('scalearAngularApp')
     	console.log($scope.modules)
     	$scope.item_loading=true
     	Quiz.newQuiz({course_id: $stateParams.course_id, group: $scope.modules[module_index].id, type:type},
+    	{},
+
 	    	function(quiz){
 	    		console.log(quiz)
 	    		quiz.class_name='quiz'
@@ -134,6 +139,7 @@ angular.module('scalearAngularApp')
 	    	Quiz.destroy(
 	    		{course_id: $stateParams.course_id,
 	    		 quiz_id: q_id},
+	    		{},
 	    		function(response){
 	    			 $scope.modules[module_index].items.splice(item_index, 1)
 	    			 var str = $location.path();

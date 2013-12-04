@@ -72,8 +72,8 @@ angular.module('scalearAngularApp')
         chart.options = {
             "colors": ['green','gray'],
             "isStacked": "true",
+            "height":210,
             "fill": 20,
-            "height": 250,
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {

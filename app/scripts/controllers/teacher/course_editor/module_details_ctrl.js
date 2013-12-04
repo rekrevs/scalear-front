@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Documents', 'module','$q','$stateParams', function ($scope, $state, Module, Documents, module, $q, $stateParams) {
+    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Document', 'module','$q','$stateParams', function ($scope, $state, Module, Documents, module, $q, $stateParams) {
       $scope.module=module.data
 
 

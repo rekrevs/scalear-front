@@ -85,7 +85,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek=function(time){
-      console.log( $scope.lecture_player.controls)
         $scope.lecture_player.controls.seek(time)
         $scope.lecture_player.controls.pause()
     }
@@ -112,7 +111,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onReady=function(){
-      console.log("ready")
+      console.log("player ready")
       $scope.seek($scope.quiz_time);
       $scope.lecture_player.controls.hideControls();
       $scope.loading_video=false
@@ -199,7 +198,6 @@ angular.module('scalearAngularApp')
       var win_width= win.width()
       var video_width= getVideoWidth()
       if(video_width+260 > win_width){
-        console.log("dingo")
         video_width = win_width -260
       }
       setVideoWidth(video_width)
@@ -208,11 +206,10 @@ angular.module('scalearAngularApp')
     }
 
     var setButtonsPosition = function(remaining){
-      console.log(remaining)
-      if(remaining>300)
+      if(remaining>400)
         remaining = remaining/3 +30
       else
-        remaining = remaining/4 
+        remaining = remaining/5 
       $scope.left_style={
         display:'inline-block',
         minWidth:'50px',

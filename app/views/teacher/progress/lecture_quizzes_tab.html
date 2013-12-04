@@ -1,4 +1,4 @@
-<div ng-show="sub_question_ids" infinite-scroll='getRemainingLectureCharts()' infinite-scroll-disabled='chart_scroll_disable' infinite-scroll-immediate-check='false' >
+<div ng-if="lecture_data.question_ids" infinite-scroll='getRemainingLectureCharts()' infinite-scroll-disabled='chart_scroll_disable' infinite-scroll-immediate-check='false' >
 	<center style="overflow:hidden" >
 		<video_container class="largescreen">
 			<loading size='small' show="!url" style="top:50%;position:relative" />
@@ -15,5 +15,5 @@
 <center>
 	<br><br>
 	<loading size="small" show="loading_lectures_chart" />
-	<div ng-if="!sub_question_ids.length && !loading_lectures_chart" >No Lecture Quizzes</div>
+	<div ng-if="!lecture_data.question_ids.length && !loading_lectures_chart" >No Lecture Quizzes</div>
 </center>

@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
     	$scope.removeDocument=function (index) {
     		if(confirm("Are you sure you want to delete module?")){
 	    		Document.destroy(
-					{document_id: $scope.module.documents[index].id},{}
+					{document_id: $scope.module.documents[index].id},{},
 					function(){
 						$scope.module.documents.splice(index, 1)
 					}, 

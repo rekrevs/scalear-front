@@ -381,6 +381,7 @@ var translation_sv=function(){
               my_courses: "Mina kurser",
               new_course: "Ny Kurs",
               add_course: "Lägg till Kurs",
+              join_course: "Ansluta Kurs",
               enrolled: "Inskrivna",
               display_lecture_results: "Visa Föreläsningsresultat",
               display_quizzes: "Visa Quiz-frågor",
@@ -501,5 +502,21 @@ var translation_sv=function(){
               ask: "Fråga",
               check_answer: "Kontrollera Svaret",
           },
+     
     }
 }  
+
+var full_calendar_sv = function(){
+	return{
+		monthNames: ["Januari", "Februari", "Mars", "April", "Maj", "Juni", "Juli", "Augusti", "September","Oktober","November","December"],
+    	monthNamesShort: ["Jan", "Feb", "Mar", "Apr", "Maj", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov","Dec"],
+		dayNames: ["Söndag", "Måndag", "Tisdag", "Onsdag", "Torsdag", "Fredag" ,"Lördag"],
+		dayNamesShort: ["Sön", "Mån","Tis","Ons","Tor","Fre","Lör"],
+		buttonText: {
+			today: 'Idag',
+			month: 'Månad',
+			week: 'Veckor',
+			day: 'Dag'
+		},
+	}
+}

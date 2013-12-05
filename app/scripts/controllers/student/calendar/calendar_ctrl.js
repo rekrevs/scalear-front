@@ -3,10 +3,24 @@
 angular.module('scalearAngularApp')
   .controller('StudentCalendarCtrl', ['$scope','events','$state', function ($scope, events,$state) {
     
-	var date = new Date();
-	var d = date.getDate();
-	var m = date.getMonth();
-	var y = date.getFullYear();
+    var change = function()
+    {
+    	console.log("in change");
+    	console.log($scope.myCalendar);
+    	//$scope.myCalendar2= angular.copy($scope.myCalendar);
+    	angular.element($scope.myCalendar.children()).remove();
+    	if($scope.current_lang=="en")
+    		$scope.myCalendar.fullCalendar(full_calendar_en());
+    	else
+    		$scope.myCalendar.fullCalendar(full_calendar_sv());
+    	
+    }
+	// var date = new Date();
+	// var d = date.getDate();
+	// var m = date.getMonth();
+	// var y = date.getFullYear();
+	$scope.$watch("current_lang", change);
+	
 	$scope.uiConfig = {
 	  calendar:{
 	        editable: false,
@@ -17,7 +31,7 @@ angular.module('scalearAngularApp')
 	          left: 'title'
 	        },
 	        eventDrop: $scope.alertOnDrop,
-	        eventResize: $scope.alertOnResize
+	        eventResize: $scope.alertOnResize,
 	    }
 	  };
 	console.log(events)

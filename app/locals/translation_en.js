@@ -381,6 +381,7 @@ var translation_en=function(){
         my_courses: "My Courses",
         new_course: "New Course",
         add_course: "Add Course",
+        join_course: "Join Course",
         enrolled: "Enrolled",
         display_lecture_results: "Display Lecture Results",
         display_quizzes: "Display Quizzes",
@@ -500,6 +501,22 @@ var translation_en=function(){
         enter_question: "Enter Question",
         ask: "Ask",
         check_answer: "Check Answer",
-     }
+     },
+    
  }
+}
+
+var full_calendar_en = function(){
+	return{
+		monthNames: ['January','February','March','April','May','June','July','August','September','October','November','December'],
+    	monthNamesShort: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+		dayNames: ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'],
+		dayNamesShort: ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'],
+		buttonText: {
+			today: 'today',
+			month: 'month',
+			week: 'week',
+			day: 'day'
+		},
+	}
 }

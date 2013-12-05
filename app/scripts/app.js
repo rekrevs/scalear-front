@@ -137,6 +137,11 @@
       templateUrl: 'views/login.html',
       controller: 'LoginCtrl'
    	 })
+   	 .state('privacy',{
+   	 	url:'/privacy',
+   	 	templateUrl:'views/privacy.html',
+   	 	controller: 'PrivacyCtrl'
+   	 })
       .state('course_list', {
         url:'/courses',
         templateUrl: 'views/teacher/course_list/course_list.html',

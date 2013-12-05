@@ -1,11 +1,11 @@
 <center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
 <div ng-show="courses">
-	<h4>All Courses</h4>
+	<h4 translate="courses.all_courses"></h4>
 	</br>
 	<table class="table table-striped">
 		<thead style="cursor:pointer" >
-			<th><a ng-click="order('short_name')" >Course Code</a></th>
-			<th><a ng-click="order('name')">Course Name</a></th>
+			<th><a ng-click="order('short_name')" translate="courses.course_code"></a></th>
+			<th><a ng-click="order('name')" translate="courses.course_name">Course Name</a></th>
 		</thead>
 		<tbody>
 			<tr ng-repeat="course in courses|orderBy:column:is_reverse">
@@ -17,4 +17,4 @@
 	</table>
 </div>
 
-<a ng-hide="!courses" id="join_course" ng-click="open()">Join Course</a>
+<a ng-hide="!courses" id="join_course" ng-click="open()" translate="courses.join_course"></a>

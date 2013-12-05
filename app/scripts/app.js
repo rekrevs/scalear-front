@@ -20,7 +20,8 @@
   'infinite-scroll',
   'xeditable',
   'ui.tinymce',
-  'googlechart'
+  'googlechart',
+  'pascalprecht.translate'
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
 
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})

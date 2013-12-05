@@ -50,8 +50,12 @@
                     <li ng-show="!current_user"><a ui-sref="login" style="float: right;" ng-bind="'Login'"></a></li>
                     <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()" ng-bind="'Logout'"></a></li>
                     <!-- <li><a href="">Edit account</a></li> -->
-                    <li><a href=""><img alt="Uk" height="20px" src="images/uk.png" width="30px"></a></li>
-                    <li><a href=""><img alt="Sweden" height="20px" src="images/sweden.png" width="30px"></a></li>
+                    <li ng-show="current_lang=='en'" ng-cloak>
+    					<a ><img ng-click="changeLanguage('sv')" src="images/sweden.png" style="width:25px;height:15px;" /></a>
+				    </li>
+    				<li ng-show="current_lang=='sv'" ng-cloak>
+    					<a><img ng-click="changeLanguage('en')" src="images/uk.png" style="width:25px;height:15px;" /></a>
+					</li>
                 </ul>
 
                 <ul class="nav pull-left">
@@ -159,6 +163,7 @@
 	<script src="bower_components/angular-xeditable/dist/js/xeditable.js"></script>
 	<script src="bower_components/tinymce/tinymce.min.js"></script>
 	<script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+	<script src="bower_components/angular-translate/angular-translate.js"></script>
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->

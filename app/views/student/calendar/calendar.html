@@ -1,11 +1,12 @@
 <link rel="stylesheet" href="styles/student/announcements.css"/>
 <br />
+
 <center>
 	<center>
-    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" style="min-width: 600px; min-height: 500px;"></div>
+    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="min-width: 600px; min-height: 500px;"></div>
          <br />
          <!-- here should be the deadline warning message -->
-         <div class="alert"><center style="font-size:14px;font-weight: bold">All deadlines are at midnight on the day specified</center></div>
+         <div class="alert"><center style="font-size:14px;font-weight: bold" translate="events.deadline_msg"></center></div>
     </center>        
 	<br>
 	<div style="text-align: left; margin-left: 40px;">
@@ -13,23 +14,23 @@
 			<tr>
 				<td style="width: 20px; height: 20px; background-color: green;"></td>
 				<td></td>
-				<td> Done</td>
+				<td translate="events.done"></td>
 			</tr>
 			<tr>
 				<td style="width: 20px; height: 20px; background-color: orange;"></td>
 				<td></td>
-				<td> Not done</td>
+				<td translate="events.not_done"></td>
 			</tr>
 			<tr>
 				<td style="width: 20px; height: 20px; background-color: red;"></td>
 				<td></td>
-				<td> Not done or due in less than 2 days</td>
+				<td translate="events.not_done_due"></td>
 			</tr>
 		</table>
 		<br />
 	</div>
 	<center>
-		<h4>Announcements</h4>
+		<h4 translate="head.announcements"></h4>
 		<table class="table-announce">
 	        <tr ng-repeat="a in announcements">
 	           <td class = "component">

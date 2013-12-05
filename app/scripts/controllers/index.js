@@ -1,7 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('indexController', ['$scope', '$stateParams', '$state', 'User','$rootScope','UserSession','$location' ,function ($scope, $stateParams, $state, User, $rootScope , UserSession, $location) {
+  .controller('indexController', ['$scope', '$stateParams', '$state', 'User','$rootScope','UserSession','$location','$translate' ,function ($scope, $stateParams, $state, User, $rootScope , UserSession, $location, $translate) {
+   	
+   	$rootScope.current_lang="en";
+
+	$scope.changeLanguage = function (key) {
+		console.log("in change language "+key);
+    	$translate.uses(key);
+    	$rootScope.current_lang=key;
+  	};
    	// $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     	// $scope.current_state= $state;
    	// })

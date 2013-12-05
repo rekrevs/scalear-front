@@ -27,7 +27,7 @@ var translation_sv=function(){
               login: "Inloggning",
               edit_account: "Redigera konto",
               courses: "Kurser",
-              notifications: "Anmälningar"    
+              notifications: "Anmälningar",
               admin: "Admin",
           },
       head:{
@@ -82,7 +82,7 @@ var translation_sv=function(){
               didnt_receive_unlock: "Fick inte instruktioner för upplåsning ännu?",
           },
       account_edit:{
-              edit_account: "Redigera konto"  
+              edit_account: "Redigera konto",
               leave_blank: "Lämna det tomt om du inte vill ändra det",
               need_password: "Vi behöver ditt nuvarande lösenord för att bekräfta dina ändringar",
               update: "Uppdatera",
@@ -149,7 +149,7 @@ var translation_sv=function(){
               correct: "Korrigera",
               incorrect: "Felaktig",
               keyboard_controls: "Tangentbordskontroller",
-              back_10s: "Tillbaka 10 sekunder" 
+              back_10s: "Tillbaka 10 sekunder",
               play_pause: "paus/spela",
               ask_question: "Ställ en fråga",
               confused: "Förvirrad",
@@ -201,7 +201,7 @@ var translation_sv=function(){
               answers: "Svar",
               questions: "Frågor",
           },
-      quizzes{:
+      quizzes:{
               survey_results: "Enkätresultat",
               number_of_students: "Antal studenter",
               used_up_all: "Använt upp alla",
@@ -483,7 +483,7 @@ var translation_sv=function(){
               failed: "Misslyckades",
               answered: "Besvarade",
               not_answered: "Obesvarade",
-              no_explanation: "Ingen Förklaring Finns" 
+              no_explanation: "Ingen Förklaring Finns",
               no_quizzes: "Inga quiz-Frågor",
               in_correct_place: "på rätt plats",
               another_quiz_consider_shifting: "Det finns en annan quiz-fråga inom fem sekunder från det denna - överväg att flytta den.",

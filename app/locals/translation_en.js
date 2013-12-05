@@ -149,7 +149,7 @@ var translation_en=function(){
         correct: "Correct",
         incorrect: "Incorrect",
         keyboard_controls: "Keyboard Controls",
-        back_10s: "Back 10 Seconds" 
+        back_10s: "Back 10 Seconds",
         play_pause: "pause/play",
         ask_question: "Ask Question",
         confused: "Confused",
@@ -483,7 +483,7 @@ var translation_en=function(){
         failed: "Failed",
         answered: "Answered",
         not_answered: "Not Answered",
-        no_explanation: "No Explanation Provided" 
+        no_explanation: "No Explanation Provided",
         no_quizzes: "No Quizzes",
         in_correct_place: "in correct place",
         another_quiz_consider_shifting: "There's another quiz within 5 seconds from this one - consider shifting it.",
@@ -495,17 +495,6 @@ var translation_en=function(){
         enter_question: "Enter Question",
         ask: "Ask",
         check_answer: "Check Answer",
-     },
-     time:{
-        am:{
-            formats:{
-              default: ! '%a, %e %b %Y %H:%M:%S %z'
-              long: ! '%e %B %Y %H:%M'
-              short: ! '%e %b %H:%M'
-              custom: '%d %b (%a)'
-            },
-        },
-        pm: {},
-      },
-    }
+     }
+ }
 }

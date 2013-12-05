@@ -78,7 +78,7 @@
                     <br /><br /><br />
                     <div class="row"><div class="span12">
                         <center> 
-                            &copy;2013 ScalableLearning | About | Privacy 
+                            &copy;2013 ScalableLearning | {{"footer.about" | translate}} | Privacy 
                             <!--<% if current_user %>| <%= render "layouts/feedback"%>-->
                             <!--<% end %>-->
                         </center>
@@ -106,15 +106,11 @@
     <script src="http://popcornjs.org/code/dist/popcorn-complete.js"></script>
 
     <script src="bower_components/jquery/jquery.js"></script>
-    
+    <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
 
     <!-- bower:js -->
-    <script src="bower_components/fullcalendar/fullcalendar.js"></script>
-    <script src="bower_components/fullcalendar/gcal.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/tinymce/tinymce.min.js"></script>
-    <script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
-    <script src="bower_components/jquery-ui/ui/jquery-ui.js"></script>
+    
+    <script src="bower_components/angular/angular.js"></script>   
     <script src="bower_components/angular-ui-sortable/src/sortable.js"></script>
     <script src="bower_components/angular-dragdrop/src/angular-dragdrop.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
@@ -122,7 +118,11 @@
     <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
     <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
     <script src="bower_components/ng-infinite-scroller/build/ng-infinite-scroll.js"></script>
-    <script src="bower_components/canvg-1.3.zip/canvg.js"></script>
+    <script src="bower_components/fullcalendar/fullcalendar.js"></script>
+    <script src="bower_components/fullcalendar/gcal.js"></script>
+    <script src="bower_components/canvg-1.3.zip/canvg.js"></script> 
+    <script src="bower_components/tinymce/tinymce.min.js"></script>
+    <script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
     <script src="bower_components/canvg-1.3.zip/rgbcolor.js"></script>
     <script src="bower_components/canvg-1.3.zip/StackBlur.js"></script>
     
@@ -167,6 +167,9 @@
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="locals/translation_en.js"></script>
+    <script src="locals/translation_sv.js"></script>
+
     <script src="scripts/app.js"></script>
     <script src="scripts/filters/filters.js"></script>
 
@@ -239,13 +242,11 @@
     <script src="scripts/controllers/student/course_list/course_list_ctrl.js"></script>
     <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>
     <script src="scripts/controllers/student/course/course_information.js"></script>
-    <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script>
- 
+    <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script> 
 
     <script src="scripts/controllers/student/lectures/lectures_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/lectures_middle_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/quizzes_middle_ctrl.js"></script>
-    <!-- <script src="scripts/controllers/student/lectures/lecture_quiz_list_ctrl.js"></script> -->
 
     <!-- endbuild -->
 </body>

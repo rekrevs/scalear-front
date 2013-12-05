@@ -108,7 +108,17 @@
       
   })  
 
-  .config(['$stateProvider','$urlRouterProvider','$httpProvider',function ($stateProvider, $urlRouterProvider, $httpProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$httpProvider','$translateProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider) {
+
+    //**********Translations*********
+    console.log("in app")
+    console.log(translation_en())
+    $translateProvider
+      .translations('en', translation_en())
+      .translations('sv', translation_sv());
+    $translateProvider.preferredLanguage('en');
+    //**********END*********
+
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
 
     $httpProvider.defaults.withCredentials = true;

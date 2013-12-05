@@ -17,6 +17,8 @@ var translation_en=function(){
       at: "at",
       save: "Save",
       character_exceed_limit: "Character number exceeded limits",
+      empty:"Empty",
+      close: "Close",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -55,9 +57,12 @@ var translation_en=function(){
         close: "Close",
       },
       announcement_form:{
+        date_created: "Date Created",
+        create_announcement: "Create New Announcement",
         post_announcement: "Post Announcement",
         confirm_delete: "Are you sure you want to delete this announcement?",
         sending_email: "Sending Emails",
+        action: "Action",
       },
       answer:{
         show: "Show",

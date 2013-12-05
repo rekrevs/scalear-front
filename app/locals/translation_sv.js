@@ -15,7 +15,9 @@ var translation_sv=function(){
       sign_in_with: "Logga in med ",
       submit: "Framlägga",
       at: "vid",
-      save: "Spara",
+      save: "Spara",      
+      empty:"Tomma",
+      close: "Stänga",
       character_exceed_limit: "Den inmatade texten var för lång.",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
@@ -55,9 +57,12 @@ var translation_sv=function(){
               close: "Stänga",
           },
       announcement_form:{
+              date_created: "Datum skapad",
+              create_announcement: "Skapa nytt meddelande",
               post_announcement: "Skicka Meddelande",
               confirm_delete: "Är du säker på att du vill radera detta meddelande?",
               sending_email: "Skickar e-post",
+              action: "Åtgärd",
           },
       answer:{
               show: "Visa",

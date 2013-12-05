@@ -7,6 +7,10 @@ angular.module('scalearAngularApp')
 		console.log($stateParams);
         
         $scope.batch_emails = batchEmailService.getEmails();
+        console.log($scope.batch_emails.length);
+        if($scope.batch_emails.length == 0){
+            $state.go('course.enrolled_students');
+        }
         while($scope.batch_emails.indexOf(',') != -1){
             for(var i=0; i <$scope.batch_emails.length; i++){
                 if($scope.batch_emails[i] == ','){

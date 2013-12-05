@@ -6,7 +6,7 @@
                 <b>To: </b>
             </td>
             <td>
-                <textarea id="to" name="emails" title="To" style="width: 80%; resize: none;" readonly="readonly" rows="2" >{{final_emails}}</textarea>
+                <textarea id="to" name="emails" title="To" style="width: 80%; resize: none;" readonly="readonly" style="overflow-y: auto;" >{{final_emails}}</textarea>
                 <input class="btn" id="send_emails" type="button" ng-click="sendBatchEmail(subject, message)" style="float: right; width: 10%" value="Send" ng-disabled="!final_emails || !subject || !message" />
             </td>
         </tr>

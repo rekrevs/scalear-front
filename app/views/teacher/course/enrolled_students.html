@@ -33,7 +33,6 @@
                     </td>
                 </tr>
             </table>
-            {{(selected | filter: '@').length}}
             <input class="btn" ng-show="!searchText" id="email_button" value="Email" style="float: right; margin-right: 3%;" ng-disabled="(selected | filter: '@').length == 0" type="button" ng-click="emailForm()" />
             <input class="btn btn-primary" value="Select All" type="button" style="float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(data | filter:searchText).length==0 || (emails | filter: ',').length == 0"/>
             <input class="btn btn-danger" value="Deselect All" type="button" style="float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(data | filter:searchText).length==0 || (selected | filter: '@').length == 0""/>

@@ -30,8 +30,8 @@ var tomorrow = formatDate(getNextDay(new Date()), 1);
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-//        driver.get("http://10.0.0.16:9000/#/login");
-        driver.get("http://angular-edu.herokuapp.com/#/login");
+        driver.get("http://10.0.0.16:9000/#/login");
+//        driver.get("http://angular-edu.herokuapp.com/#/login");
         ptor.findElement(protractor.By.className('btn')).then(function(login_button){
             login_button.click();
         });
@@ -49,8 +49,8 @@ function logout(ptor, driver){
         ptor.findElements(protractor.By.tagName('a')).then(function(logout){
             logout[5].click();
         });
-//        driver.get("http://10.0.0.16:4000/");
-        driver.get("http://scalear-auth.herokuapp.com");
+        driver.get("http://10.0.0.16:4000/");
+//        driver.get("http://scalear-auth.herokuapp.com");
         driver.findElements(protractor.By.tagName('a')).then(function(logout){
             logout[4].click();
         });
@@ -69,8 +69,8 @@ describe("Course Information Pages",function(){
         return driver.findElement(protractor.By.id(id))
     };
 
-//    login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
-    login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
+    login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
+//    login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
 
     describe('Courses Page', function(){
         it('should create a new course', function(){
@@ -557,7 +557,7 @@ describe("Course Information Pages",function(){
         logout(ptor, driver);
     });
     describe('Student', function(){
-        login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'bahia sharkawy', findByName);
+        login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'Bahia', findByName);
         it('should enroll in the course that was created', function(){
             ptor.findElement(protractor.By.id('join_course')).then(function(join_course){
                 join_course.click();
@@ -641,7 +641,7 @@ describe("Course Information Pages",function(){
         logout(ptor, driver);
     });
     describe('Teacher', function(){
-        login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
+        login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
 //        login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
         it('should go to course', function(){
             ptor.findElements(protractor.By.tagName('a')).then(function(links){
@@ -661,7 +661,7 @@ describe("Course Information Pages",function(){
             });
             ptor.findElements(protractor.By.tagName('td')).then(function(data){
 //                expect(data[0].getText()).toBe('Bahia');
-                expect(data[0].getText()).toBe('bahia sharkawy');
+                expect(data[0].getText()).toBe('Bahia');
                 expect(data[1].getText()).toBe('bahia.sharkawy@gmail.com');
                 expect(data[4].getText()).toBe('Mahmoud Menshawi');
                 expect(data[5].getText()).toBe('em_menshawi@hotmail.com');
@@ -689,7 +689,7 @@ describe("Course Information Pages",function(){
                 });
                 ptor.findElements(protractor.By.tagName('td')).then(function(data){
 //                    expect(data[0].getText()).toBe('Bahia');
-                    expect(data[0].getText()).toBe('bahia sharkawy');
+                    expect(data[0].getText()).toBe('Bahia');
                     expect(data[1].getText()).toBe('bahia.sharkawy@gmail.com');
                 });
             });

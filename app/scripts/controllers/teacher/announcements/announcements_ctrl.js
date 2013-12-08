@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('AnnouncementsCtrl',['$scope', 'Announcement','$stateParams', function ($scope, Announcement, $stateParams) {
   	console.log("over here");
-  	
+  	$scope.disable_new = false;
   	var init = function()
   	{
   		Announcement.index({course_id: $stateParams.course_id},
@@ -26,7 +26,8 @@ angular.module('scalearAngularApp')
   	}
   	
   	$scope.createAnnouncement= function(){
-  		for(var element in $scope.announcements)
+        $scope.disable_new = true;
+        for(var element in $scope.announcements)
   		{
   			if($scope.announcements[element].show==true)
   				$scope.hideAnnouncement(element);
@@ -35,7 +36,8 @@ angular.module('scalearAngularApp')
   		$scope.announcements.push($scope.newAnnouncement);
   	}
   	$scope.hideAnnouncement = function(index){ //get old data.
-  		$scope.announcements[index].show=false
+        $scope.disable_new = false;
+        $scope.announcements[index].show=false
   		if($scope.announcements[index].id){
   		Announcement.show({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id },
   			function(data){
@@ -44,16 +46,18 @@ angular.module('scalearAngularApp')
   			}
   		);
   		}else{
-  			$scope.announcements[index]={announcement:"", created_at: new Date(), show:false};
+//  			$scope.announcements[index]={announcement:"", created_at: new Date(), show:false};
+            $scope.announcements.splice(index, 1);
   		}
   	}
   	$scope.showAnnouncement = function(index){
-  		for(var element in $scope.announcements)
+        for(var element in $scope.announcements)
   		{
   			if($scope.announcements[element].show==true)
   				$scope.hideAnnouncement(element);
   		}
-  		$scope.announcements[index].show=true;
+        $scope.disable_new = true;
+        $scope.announcements[index].show=true;
   		$scope.announcements[index].overclass='';
   	};
   	$scope.saveAnnouncement = function(index){
@@ -63,13 +67,16 @@ angular.module('scalearAngularApp')
   		Announcement.create({course_id: $stateParams.course_id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
   			//init();
   			$scope.announcements[index]=data;
+            $scope.disable_new = false;
   		},function(response){
   			$scope.announcements[index].errors=response["data"]
   		})
   		}else{
   		Announcement.update({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
   			$scope.announcements[index]=data;
-  		},function(response){
+            $scope.disable_new = false;
+
+        },function(response){
   			$scope.announcements[index].errors=response["data"]
   		})
   		}

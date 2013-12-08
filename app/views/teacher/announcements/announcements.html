@@ -21,6 +21,6 @@
   <textarea ui-tinymce="tinymceOptions" ng-model="new_announcement.announcement"></textarea>
 </form> -->
 
-<input type="button" value="Create New Announcement" class="btn btn-primary" ng-click="createAnnouncement()"/>
+<input type="button" value="Create New Announcement" class="btn btn-primary" ng-disabled="disable_new" ng-click="createAnnouncement()"/>
 <!-- <input type="button" value="Save" class="btn btn-primary" ng-click="saveAnnouncement()"/> -->
 </center>

@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
   	$scope.deleteAnnouncement=function(index){
   		if(confirm("Are you sure you want to delete this announcement?")){
   		if($scope.announcements[index].id){
-	  		Announcement.destroy({course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},function(data){
+	  		Announcement.destroy({course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},{},function(data){
 	  			//init();
 	  			$scope.announcements.splice(index, 1)
 	  		})

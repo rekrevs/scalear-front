@@ -29,7 +29,8 @@ angular.module('scalearAngularApp')
  	$scope.addModule=function(){
     	console.log("adding mod")
     	$scope.module_loading=true
-    	Module.newModule({},
+    	console.log("course id is "+$stateParams.course_id);
+    	Module.newModule({course_id: $stateParams.course_id},{},
 	    	function(module){
 	    		console.log(module)
 	    		module.items=[]
@@ -49,7 +50,10 @@ angular.module('scalearAngularApp')
   		var m_id= $scope.modules[index].id;
     	if(confirm("Are you sure you want to delete module?")){
 	    	Module.destroy(
-	    		{module_id: m_id},
+	    		{
+	    			course_id: $stateParams.course_id,
+	    			module_id: m_id
+	    		},{},
 	    		function(response){
 	    			console.log(response)
 	    			if(response.error.lecture_quiz_exist)
@@ -73,7 +77,7 @@ angular.module('scalearAngularApp')
     	console.log("adding lec "+ module_index)
     	console.log($scope.modules)
     	$scope.item_loading=true
-    	Lecture.newLecture({group: $scope.modules[module_index].id},
+    	Lecture.newLecture({course_id: $stateParams.course_id, group: $scope.modules[module_index].id},
 	    	function(lecture){
 	    		console.log(lecture)
 	    		lecture.class_name='lecture'
@@ -91,7 +95,8 @@ angular.module('scalearAngularApp')
     	var l_id=$scope.modules[module_index].items[item_index].id
     	if(confirm("Are you sure you want to delete lecture?")){
 	    	Lecture.destroy(
-	    		{lecture_id: $scope.modules[module_index].items[item_index].id},
+	    		{course_id: $stateParams.course_id, lecture_id: $scope.modules[module_index].items[item_index].id},
+	    		{},
 	    		function(response){
 	    			 console.log(response)
 	    			 $scope.modules[module_index].items.splice(item_index, 1)
@@ -112,7 +117,9 @@ angular.module('scalearAngularApp')
     	console.log("adding quiz "+ module_index)
     	console.log($scope.modules)
     	$scope.item_loading=true
-    	Quiz.newQuiz({group: $scope.modules[module_index].id, type:type},
+    	Quiz.newQuiz({course_id: $stateParams.course_id, group: $scope.modules[module_index].id, type:type},
+    	{},
+
 	    	function(quiz){
 	    		console.log(quiz)
 	    		quiz.class_name='quiz'
@@ -130,7 +137,9 @@ angular.module('scalearAngularApp')
     	var q_id=$scope.modules[module_index].items[item_index].id;
     	if(confirm("Are you sure you want to delete Quiz?")){
 	    	Quiz.destroy(
-	    		{quiz_id: q_id},
+	    		{course_id: $stateParams.course_id,
+	    		 quiz_id: q_id},
+	    		{},
 	    		function(response){
 	    			 $scope.modules[module_index].items.splice(item_index, 1)
 	    			 var str = $location.path();
@@ -172,7 +181,8 @@ angular.module('scalearAngularApp')
 		//out: CourseEditor.adjustDragScroll,
 		update: function(e, ui) {
 			Module.saveSort({},
-				{group: $scope.modules},
+				{course_id:$stateParams.course_id,
+					group: $scope.modules},
 				function(response){
 					console.log(response)
 				}, 
@@ -196,7 +206,8 @@ angular.module('scalearAngularApp')
 			var group_id=ui.item.scope().item.group_id
 			var group_position=ui.item.scope().$parent.$parent.module.position -1
 			Lecture.saveSort(
-				{group: ui.item.scope().item.group_id},
+				{course_id:$stateParams.course_id, 
+				 group: ui.item.scope().item.group_id},
 				{items: $scope.modules[group_position].items},
 				function(response){
 					console.log(response)

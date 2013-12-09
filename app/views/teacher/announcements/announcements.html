@@ -11,7 +11,7 @@
   			<div ng-if="announcement.show==true"><textarea ui-tinymce="tinymceOptions" ng-model="announcement.announcement"></textarea></div>
   			<error-message column="announcement" data="announcement.errors"/>
 		</td>
-		<td width="200px">{{announcement.created_at | date:'medium'}}</td>
+		<td width="200px">{{announcement.created_at | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</td>
 		<td width="150px">
 			<input ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" />
 			<input ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" />

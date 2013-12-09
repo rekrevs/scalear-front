@@ -21,7 +21,8 @@
   'xeditable',
   'ui.tinymce',
   'googlechart',
-  'pascalprecht.translate'
+  'pascalprecht.translate',
+  'angularMoment'
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
 
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
@@ -29,7 +30,8 @@
   .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout) {
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
-      
+      //$rootScope.current_lang='en';
+      console.log("lang is "+ $rootScope.current_lang);
     	var statesThatDontRequireAuth =['login', 'home']
 		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information', 'course.lectures']
 		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
@@ -117,6 +119,7 @@
       .translations('en', translation_en())
       .translations('sv', translation_sv());
     $translateProvider.preferredLanguage('en');
+    $translateProvider.useCookieStorage();
     //**********END*********
 
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
@@ -160,7 +163,7 @@
         },
         resolve:{
           course_information:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id});
+            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id});
           }
         },
         abstract:true
@@ -184,7 +187,7 @@
       .state('course.lectures.quiz', {
          resolve:{
           quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
+            return $http({method: 'GET', url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
           }
          },
         url: '/quizzes/:quiz_id',
@@ -200,7 +203,7 @@
       .state('course.course_editor.module',{
         resolve:{
           module:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/groups/'+$stateParams.module_id+'/get_group_angular'});
+            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/groups/'+$stateParams.module_id+'/get_group_angular'});
           }
         },
         url:'/modules/:module_id',
@@ -212,7 +215,7 @@
       .state('course.course_editor.lecture', {
         resolve:{
           lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
+            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
           }
         },
         url: '/lectures/:lecture_id',
@@ -229,7 +232,7 @@
       .state('course.course_editor.quiz', {
         resolve:{ 
           quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
+            return $http({method: 'GET', url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
           }
         },
         url: '/quizzes/:quiz_id',
@@ -255,8 +258,8 @@
       })
       .state('course.calendar', {
         resolve:{
-          events:function($http, $stateParams, headers,scalear_api){
-            return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})
+          events:function($http, $stateParams, headers,scalear_api, $rootScope){
+            return $http({method:'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/events', headers:headers})
           }
         },
         url: '/events',
@@ -265,8 +268,8 @@
       })
       .state('course.student_calendar', {
         resolve:{
-          events:function($http, $stateParams, headers,scalear_api){
-            return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})
+          events:function($http, $stateParams, headers,scalear_api, $rootScope){
+            return $http({method:'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/events', headers:headers})
           }
         },
         url: '/student/events',
@@ -275,8 +278,8 @@
       })
       .state('course.enrolled_students', {
         resolve:{
-            students:function($http, $stateParams, headers, scalear_api){
-                return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/enrolled_students', headers:headers})
+            students:function($http, $stateParams, headers, scalear_api, $rootScope){
+                return $http({method:'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/enrolled_students', headers:headers})
             }
         },
         url: '/enrolled_students',
@@ -285,8 +288,8 @@
       })
       .state('course.send_email', {
         resolve:{
-            emails:function($http, $stateParams, headers, scalear_api){
-                return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/send_email?student='+$stateParams.student_id})
+            emails:function($http, $stateParams, headers, scalear_api, $rootScope){
+                return $http({method: 'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/send_email?student='+$stateParams.student_id})
             }
         },
         url: '/send_email/:student_id',
@@ -305,8 +308,8 @@
       })
       .state('course.course_information', {
             resolve:{
-                course:function($http, $stateParams, headers, scalear_api){
-                    return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/student_show', headers:headers})
+                course:function($http, $stateParams, headers, scalear_api, $rootScope){
+                    return $http({method: 'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/student_show', headers:headers})
                 }
             },
         url: '/course_information',
@@ -315,8 +318,8 @@
       })
       .state('course.edit_course_information', {
             resolve:{
-                course:function($http, $stateParams, headers, scalear_api){
-                    return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id, headers:headers})
+                course:function($http, $stateParams, headers, scalear_api, $rootScope){
+                    return $http({method: 'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id, headers:headers})
                 }
             },
             url: '',
@@ -325,8 +328,8 @@
       })
       .state('course.teachers', {
          resolve:{
-             teachers:function($http, $stateParams, headers, scalear_api){
-                 return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/teachers', headers:headers})
+             teachers:function($http, $stateParams, headers, scalear_api, $rootScope){
+                 return $http({method: 'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/teachers', headers:headers})
              }
          },
          url: '/teachers',

@@ -720,7 +720,7 @@ describe("Course Editor",function(){
     describe('Over Video', function(){
         it('should go to lecture', function(){
             ptor.get('/#/courses/3/course_editor/lectures/1461');
-            ptor.sleep(10000);
+            ptor.sleep(20000);
         });
         MCQVideo(ptor);
         doRefresh(ptor);
@@ -2892,7 +2892,7 @@ function addMCQAnswers(ptor){
 
 function openMCQ(ptor){
     it('should reopen the quiz', function(){
-        ptor.findElement(protractor.By.className('editable')).then(function(quiz_name){
+        ptor.findElement(protractor.By.tagName('editable_text')).then(function(quiz_name){
             quiz_name.click();
         });
     });

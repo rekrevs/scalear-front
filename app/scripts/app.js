@@ -21,7 +21,7 @@
   'xeditable',
   'ui.tinymce',
   'googlechart'
-]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
+]).constant('scalear_api', {host:'http://10.0.0.16:3000'}) // //http://angular-learning.herokuapp.com
 
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)

@@ -1,16 +1,20 @@
 <center>
 <table class="table table-striped" style="width:90%">
-	<tr><th>Announcement</th><th>Date Created</th><th>Actions</th></tr>
+	<tr>
+		<th translate>head.announcements</th>
+		<th translate>announcement_form.date_created</th>
+		<th translate>announcement_form.action</th>
+	</tr>
 	<tr ng-repeat="announcement in announcements">
-		<td ><div style="display:inline-block;width:90%" ng-click="showAnnouncement($index)" ng-mouseover="announcement.overclass = 'icon-pencil'" ng-mouseleave="announcement.overclass= ''" ng-if="!announcement.show"><span ng-bind-html='announcement.announcement'></span><p ng-if="announcement.announcement.trim()==''">Empty</p></div>
+		<td ><div style="display:inline-block;width:90%" ng-click="showAnnouncement($index)" ng-mouseover="announcement.overclass = 'icon-pencil'" ng-mouseleave="announcement.overclass= ''" ng-if="!announcement.show"><span ng-bind-html='announcement.announcement'></span><p ng-if="announcement.announcement.trim()==''" translate>empty</p></div>
 			<i ng-if="!announcement.show" ng-class="announcement.overclass"></i>
   			<div ng-if="announcement.show==true"><textarea ui-tinymce="tinymceOptions" ng-model="announcement.announcement"></textarea></div>
   			<error-message column="announcement" data="announcement.errors"/>
 		</td>
-		<td width="200px">{{announcement.created_at | date:'medium'}}</td>
+		<td width="200px">{{announcement.created_at | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</td>
 		<td width="150px">
-			<input ng-if="announcement.show" value="Close" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" />
-			<input ng-if="announcement.show" value="Save" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" />
+			<input ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" />
+			<input ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" />
 			<delete_button size="big"  action="deleteAnnouncement($index)"/>
 		</td>
 	</tr>
@@ -21,6 +25,6 @@
   <textarea ui-tinymce="tinymceOptions" ng-model="new_announcement.announcement"></textarea>
 </form> -->
 
-<input type="button" value="Create New Announcement" class="btn btn-primary" ng-click="createAnnouncement()"/>
+<input type="button" value="{{'announcement_form.create_announcement'|translate}}" class="btn btn-primary" ng-click="createAnnouncement()"/>
 <!-- <input type="button" value="Save" class="btn btn-primary" ng-click="saveAnnouncement()"/> -->
 </center>

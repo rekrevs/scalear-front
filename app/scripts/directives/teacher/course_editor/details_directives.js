@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .directive('detailsText', ['$timeout',function ($timeout) {
     return {
-      template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "empty" }} <i ng-class="overclass"></i></a>',
+      template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
       restrict: 'E',
       scope:{
       	value: "=",
@@ -53,7 +53,7 @@ angular.module('scalearAngularApp')
   }])
   .directive('detailsDate', ['$timeout',function ($timeout) {
     return {
-      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (date | date:"dd/MM/yyyy") || "empty" }}<i ng-class="overclass"></i></a>',
+      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (date | date:"dd/MM/yyyy") || ("empty"|translate) }}<i ng-class="overclass"></i></a>',
       restrict: 'E',
       scope:{
       	date: "=",
@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
   }])
   .directive('detailsArea', ['$timeout',function ($timeout) {
     return {
-      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "Empty" }}<i ng-class="overclass"></i></a> ',
+      template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate)  }}<i ng-class="overclass"></i></a> ',
       restrict: 'E',
       scope:{
       	value: "=",
@@ -91,7 +91,7 @@ angular.module('scalearAngularApp')
   }])
     .directive('bigArea', ['$timeout',function ($timeout) {
         return {
-            template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="150" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || "Empty" }}<i ng-class="overclass"></i></a> ',
+            template: '<a ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="150" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate)  }}<i ng-class="overclass"></i></a> ',
             restrict: 'E',
             scope:{
                 value: "=",
@@ -132,7 +132,7 @@ angular.module('scalearAngularApp')
   .directive('detailsSelect', ['$timeout','$filter',function ($timeout, $filter) {
     return {
 
-      template: '<a href="#" editable-select="value" buttons="no" e-ng-options="s.value as s.text for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ showStatus() }}<i ng-class="overclass"></i></a> ',
+      template: '<a href="#" editable-select="value" buttons="no" e-ng-options="s.value as (s.text|translate) for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ showStatus() }}<i ng-class="overclass"></i></a> ',
       restrict: 'E',
       scope:{
         value: "=",
@@ -144,7 +144,7 @@ angular.module('scalearAngularApp')
       link:function(scope){
         scope.showStatus = function() {
           var selected = $filter('filter')(scope.options, {value: scope.value});
-          return selected.length ? selected[0].text : 'Not set';
+          return selected.length ? $filter('translate')(selected[0].text) : 'Not set';
         };
         scope.saveData=function(){
           $timeout(function(){

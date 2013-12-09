@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate) {
 
  	/***********************Functions*******************************/
  	var init = function(){
@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
     	event.preventDefault();
   		event.stopPropagation();  
   		var m_id= $scope.modules[index].id;
-    	if(confirm("Are you sure you want to delete module?")){
+    	if(confirm($translate('groups.you_sure_delete_module'))){
 	    	Module.destroy(
 	    		{
 	    			course_id: $stateParams.course_id,
@@ -93,9 +93,12 @@ angular.module('scalearAngularApp')
     $scope.removeLecture=function(module_index, item_index){
     	console.log("remove lec " + module_index + " " + item_index) 
     	var l_id=$scope.modules[module_index].items[item_index].id
-    	if(confirm("Are you sure you want to delete lecture?")){
+    	if(confirm($translate('groups.you_sure_delete_module'))){
 	    	Lecture.destroy(
-	    		{course_id: $stateParams.course_id, lecture_id: $scope.modules[module_index].items[item_index].id},
+	    		{
+	    			course_id: $stateParams.course_id, 
+	    			lecture_id: $scope.modules[module_index].items[item_index].id
+	    		},
 	    		{},
 	    		function(response){
 	    			 console.log(response)
@@ -117,9 +120,12 @@ angular.module('scalearAngularApp')
     	console.log("adding quiz "+ module_index)
     	console.log($scope.modules)
     	$scope.item_loading=true
-    	Quiz.newQuiz({course_id: $stateParams.course_id, group: $scope.modules[module_index].id, type:type},
-    	{},
-
+    	Quiz.newQuiz(
+	    	{
+	    		course_id: $stateParams.course_id, 
+	    		group: $scope.modules[module_index].id, type:type
+	    	},
+	    	{},
 	    	function(quiz){
 	    		console.log(quiz)
 	    		quiz.class_name='quiz'
@@ -135,7 +141,7 @@ angular.module('scalearAngularApp')
     $scope.removeQuiz=function(module_index, item_index){
     	console.log("remove quiz " + module_index + " " + item_index) 
     	var q_id=$scope.modules[module_index].items[item_index].id;
-    	if(confirm("Are you sure you want to delete Quiz?")){
+    	if(confirm($translate('online_quiz.you_sure_delete_quiz'))){
 	    	Quiz.destroy(
 	    		{course_id: $stateParams.course_id,
 	    		 quiz_id: q_id},

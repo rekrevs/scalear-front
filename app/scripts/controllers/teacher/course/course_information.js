@@ -4,13 +4,12 @@ angular.module('scalearAngularApp')
   .controller('TeacherCourseCourseInformationCtrl', ['$scope', '$stateParams','$http', 'Course','course', function ($scope, $stateParams,$http, Course, course) {
         
         console.log("in course information");
-		console.log($stateParams);
+        console.log($stateParams);
 
         course.start_date = new Date(course.data.start_date);
 
         $scope.data = course.data;
         console.log(course.data);
-
 
         $scope.updateCourse = function(){
             var modified_course=angular.copy($scope.data.course);
@@ -22,10 +21,8 @@ angular.module('scalearAngularApp')
             Course.update(
                 { course_id:$stateParams.course_id}, //course_id:$scope.data.course.id
                 {course:modified_course}
-                )
-
+            )
         }
-
 
         $scope.timezones = [
             {value:"Abu Dhabi", text:"Abu Dhabi"},

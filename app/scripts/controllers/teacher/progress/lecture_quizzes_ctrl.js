@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureQuizzesCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
+  .controller('lectureQuizzesCtrl', ['$scope','$stateParams','$timeout','Module', '$translate', function ($scope, $stateParams, $timeout, Module, $translate) {
     
     $scope.lecture_player={}
     $scope.lecture_player.events={}
@@ -31,6 +31,7 @@ angular.module('scalearAngularApp')
                     $scope.total = $scope.lecture_data.question_ids.length
                     $scope.sub_question_ids = $scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_limit)
                     $scope.enableChartsScrolling()
+                    $scope.$watch("current_lang", redrawChart);
                 }
                 $scope.loading_lectures_chart = false
             }
@@ -92,21 +93,21 @@ angular.module('scalearAngularApp')
         var formated_data ={}
         formated_data.cols=
             [
-                {"label": "Students","type": "string"},
-                {"label": "Correct","type": "number"},
-                {"label": "Incorrect","type": "number"},
+                {"label": $translate('courses.students'),"type": "string"},
+                {"label": $translate('lectures.correct'),"type": "number"},
+                {"label": $translate('lectures.incorrect'),"type": "number"},
             ]
         formated_data.rows= []
         for(var ind in data)
         {
             var text, correct, incorrect
             if(data[ind][1]=="gray"){
-                text=data[ind][2]+" "+"(Incorrect)";
+                text=data[ind][2]+" "+"("+$translate('lectures.incorrect')+")";
                 correct=0
                 incorrect = data[ind][0]
             }
             else{
-                text=data[ind][2]+" "+"(Correct)";
+                text=data[ind][2]+" "+"("+$translate('lectures.correct')+")";
                 correct=data[ind][0]
                 incorrect=0
             }
@@ -136,12 +137,24 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": "Number of Students",
+                "title": $translate("quizzes.number_of_students"),
             },
         };
         chart.data = $scope.formatLectureChartData(chart_data[id])
         return chart
     }
+
+    var redrawChart = function(new_val, old_val){ 
+        if(new_val != old_val){
+            var temp = angular.copy($scope.sub_question_ids)
+            $scope.sub_question_ids = {}
+            $timeout(function(){
+                $scope.sub_question_ids = temp
+            })
+        }
+    }
+
     $scope.lectureQuizzesTab()
+
 
   }]);

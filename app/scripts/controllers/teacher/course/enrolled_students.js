@@ -1,26 +1,24 @@
 'use strict';
 
 var app = angular.module('scalearAngularApp')
-  app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService','$stateParams', function ($scope, $http, $location, $state, Course, students, batchEmailService, $stateParams) {
+  app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService','$stateParams', '$translate', function ($scope, $http, $location, $state, Course, students, batchEmailService, $stateParams, $translate) {
         
         console.log("in enrolled students");
 		console.log($stateParams);
 
         console.log(students.data.course);
         console.log(students.data.students);
+        
         $scope.data = students.data.students;
         $scope.course = students.data.course;
 
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
 
-
-
         $scope.removeStudent = function(student, index){
             console.log(student)
-            var answer = confirm('Are you sure that you want to remove this student?');
+            var answer = confirm($translate('courses.you_sure_delete_student'));
             if(answer){
-                //console.log('pressed yes')
                 Course.remove_student(
                     {
                         course_id:$stateParams.course_id ,
@@ -32,18 +30,8 @@ var app = angular.module('scalearAngularApp')
                      },
                     function(){
                         console.log(value);
-                    })
-//                    .$promise.then(
-//                    function(value){
-//
-//                    },
-//                    function(value){
-//
-//                    }
-                //)
-                //console.log(index);
-
-
+                    }
+                )
             }
         }
 
@@ -52,15 +40,12 @@ var app = angular.module('scalearAngularApp')
         }
 
         $scope.selectAll = function(){
-
             $scope.checked = true;
             var checkboxes = angular.element('.checks');
             for(var i=0; i<checkboxes.length; i++){
                 $scope.emails[i] = checkboxes[i].value;
                 console.log(checkboxes[i].value);
             }
-//            console.log(checkboxes);
-//            console.log($scope.checked);
         }
 
         $scope.deSelectAll = function(){
@@ -70,8 +55,6 @@ var app = angular.module('scalearAngularApp')
             }
             console.log($scope.checked);
         }
-
-//      $scope.checked = true;
   }]);
 
 

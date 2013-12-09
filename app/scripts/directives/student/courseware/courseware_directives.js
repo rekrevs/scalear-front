@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
 		},
 		template: "<h5 ng-click='invertOpen()'>"+
 					"<table><tr><td><a class='trigger' ng-class='{open:open[id]}'>{{name}}</a></td>"+
-					"<td><p style=\"display:inline;font-size:10px;\">{{time}} - {{questions}} Q.</p></td></td></table>"+
+					"<td><p style=\"display:inline;font-size:10px;\">{{time}} - {{questions}} {{'q' | translate}}</p></td></td></table>"+
 				  "</h5>",
 	  link: function(scope){
 			scope.invertOpen = function()
@@ -40,8 +40,8 @@ angular.module('scalearAngularApp')
 		 	done: "="
 		 },
 		 restrict: 'E', 
-		 template: '<table><tr><td><img ng-src="{{done && \'images/check7.png\' || \'images/empty7.png\'}}"</td><td><a ng-click="showItem()" class="trigger2">{{type}}: {{name}}</a></td>'+
-		 			'<td><a style="font-size:10px" target="_blank" ng-if="slides && slides!=\'none\'" href="{{slides}}">Slides</a></td></tr></table>',
+		 template: '<table><tr><td><img ng-src="{{done && \'images/check7.png\' || \'images/empty7.png\'}}"</td><td><a ng-click="showItem()" class="trigger2"><span translate>{{"groups."+type.toLowerCase()}}</span>: {{name}}</a></td>'+
+		 			'<td><a style="font-size:10px" target="_blank" ng-if="slides && slides!=\'none\'" href="{{slides}}" translate="lectures.slides"></a></td></tr></table>',
 		 link: function(scope){
 		 	scope.type= scope.className=="Quiz"? CourseEditor.capitalize(scope.quizType): scope.className;
 		 	scope.showItem= function()

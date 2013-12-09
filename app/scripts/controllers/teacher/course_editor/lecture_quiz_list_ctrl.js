@@ -50,6 +50,11 @@ angular.module('scalearAngularApp')
 	    }
 	}
 
+	$scope.validateName=function(value){
+		if(!value)
+			return "Can't be blank"
+	}
+
 	$scope.saveEdit=function(quiz){
 
 		var a = quiz.formatedTime.split(':'); // split it at the colons			

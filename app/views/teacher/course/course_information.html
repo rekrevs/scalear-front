@@ -12,13 +12,13 @@
 
     <b ><span translate>courses.start_date</span>:</b>
     <p>
-        <details-date date="data.course.start_date" save="updateCourse()" column="start_date"></details-date>
+        <details-date date="data.course.start_date" save="updateCourse(data, type)" column="start_date"></details-date>
 
     </p>
 
     <b ><span translate>courses.duration</span>:</b>
     <p>
-        <details-text value="data.course.duration" save="updateCourse()" column="duration"></details-text> Weeks
+        <details-text value="data.course.duration" validate="validateDuration" save="updateCourse()" column="duration"></details-text> Weeks
     </p >
 
     <b ><span translate>courses.discussion_forum_link</span>:</b>

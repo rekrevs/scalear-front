@@ -11,7 +11,11 @@ angular.module('scalearAngularApp')
         $scope.data = course.data;
         console.log(course.data);
 
-        $scope.updateCourse = function(){
+        $scope.updateCourse = function(data,type){
+            console.log(data)
+            console.log(type)
+            if(data)
+                  $scope.data.course[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()
             var modified_course=angular.copy($scope.data.course);
             delete modified_course["id"];
             delete modified_course["created_at"];
@@ -19,9 +23,15 @@ angular.module('scalearAngularApp')
             delete modified_course["unique_identifier"];
             console.log(modified_course);
             Course.update(
-                { course_id:$stateParams.course_id}, //course_id:$scope.data.course.id
+                { course_id:$stateParams.course_id},
                 {course:modified_course}
             )
+        }
+
+        $scope.validateDuration=function(type,value){
+            console.log("Fsdafdsafsga")
+            if (value<1 || value >=1000)
+                  return "Duration is invalid"
         }
 
         $scope.timezones = [

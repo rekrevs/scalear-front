@@ -40,6 +40,16 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.insertQuiz=function(quiz_type, question_type){
+		var insert_time= $scope.lecture_player.controls.getTime()
+		var duration = $scope.lecture_player.controls.getDuration()
+
+		if(insert_time < 1 )
+			insert_time = 1
+		else if (insert_time >= duration)
+			insert_time = duration - 1
+
+		$scope.lecture_player.controls.seek(insert_time)
+
 		$scope.quiz_loading = true;
 		Lecture.newQuiz({
 			course_id: $stateParams.course_id,
@@ -246,8 +256,8 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.saveBtn = function(){
-		
-		if($scope.answer_form.$valid || $scope.selected_quiz.quiz_type != 'html')
+		console.log($scope.selected_quiz.answers)
+		if(($scope.answer_form.$valid || $scope.selected_quiz.quiz_type != 'html') && $scope.selected_quiz.answers.length)
  		{
 	 		$scope.submitted=false;
 	 		$scope.hide_alerts=true;
@@ -285,7 +295,7 @@ angular.module('scalearAngularApp')
 		var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 		$scope.fullscreen = false
 
-		angular.element(".sidebar").children().appendTo(".quiz_list");
+		angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
 		angular.element("body").css("overflow","auto");
 		angular.element("body").css("position","");
 
@@ -293,7 +303,7 @@ angular.module('scalearAngularApp')
 		$scope.video_style={
 			"position":"",
 			"width":'500px',
-			"height":(500*1.0/factor +30) +'px',
+			"height":"",//(500*1.0/factor +30) +'px',
 			"z-index": 0
 		};
 
@@ -302,7 +312,7 @@ angular.module('scalearAngularApp')
 			"left":"",
 			"position":"absolute",
 			"width":"500px",
-			"height":(500*1.0/factor)+ 'px',
+			"height":"",//(500*1.0/factor)+ 'px',
 			"margin-left": "0px",
 			"margin-top": "0px",
 			"z-index":2
@@ -321,7 +331,7 @@ angular.module('scalearAngularApp')
 
 		$scope.fullscreen = true
 
-		angular.element(".quiz_list").children().appendTo(".sidebar");
+		angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
 		angular.element("body").css("overflow","hidden");
 		angular.element("body").css("position","fixed")
 

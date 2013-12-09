@@ -47,8 +47,8 @@
 
                 <ul class="nav pull-right">
                     <li ng-show="current_user"><a ><span ng-bind="current_user.name"></span></a></li>
-                    <li ng-show="!current_user"><a ui-sref="login" style="float: right;" ng-bind="'Login'"></a></li>
-                    <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()" ng-bind="'Logout'"></a></li>
+                    <li ng-show="!current_user"><a ui-sref="login" style="float: right;" translate="navigation.login"></a></li>
+                    <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()" translate="navigation.logout"></a></li>
                     <!-- <li><a href="">Edit account</a></li> -->
                     <li ng-show="current_lang=='en'" ng-cloak>
     					<a ><img ng-click="changeLanguage('sv')" src="images/sweden.png" style="width:25px;height:15px;" /></a>
@@ -59,7 +59,7 @@
                 </ul>
 
                 <ul class="nav pull-left">
-                    <li ng-show="current_user"><a ng-click="coursePage()" style="float: left;cursor: pointer" ng-bind="'Courses'"></a></li>
+                    <li ng-show="current_user"><a ng-click="coursePage()" style="float: left;cursor: pointer" translate="navigation.courses"></a></li>
                 </ul>
             </div>
         </nav>
@@ -78,10 +78,14 @@
                     <br /><br /><br />
                     <div class="row"><div class="span12">
                         <center> 
-                            &copy;2013 ScalableLearning | {{"footer.about" | translate}} | <a ui-sref="privacy">Privacy</a> 
-
-                            <!--<% if current_user %>| <%= render "layouts/feedback"%>-->
-                            <!--<% end %>-->
+                            &copy;2013 ScalableLearning | <span translate="footer.about"></span> | <a ui-sref="privacy" translate="footer.privacy"></a>  
+								| <a ng-show="current_user" style="cursor: pointer;" ng-click="technical.show_technical=!technical.show_technical" translate="feedback.report_technical"></a>
+								<div ng-show="technical.show_technical">
+									<textarea rows="3" cols="10" style="width:400px;" ng-model="technical.data"></textarea><br />
+									<a style="cursor: pointer;"  ng-click="technical.send_technical()" translate="feedback.send"></a>
+									<loading size="small" show="technical.sending_technical"/>  
+								</div>
+                            
                         </center>
                     </div></div>
                 </footer>
@@ -165,6 +169,12 @@
 	<script src="bower_components/tinymce/tinymce.min.js"></script>
 	<script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
 	<script src="bower_components/angular-translate/angular-translate.js"></script>
+	<script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js"></script>
+	<script src="bower_components/moment/moment.js"></script>
+	<script src="bower_components/moment/lang/sv.js"></script>
+	<!-- <script src="bower_components/moment/lang/en-gb"></script> -->
+	<script src="bower_components/angular-moment/angular-moment.js"></script>
+	
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
@@ -197,6 +207,7 @@
     <script src="scripts/services/user.js"></script>
     <script src="scripts/services/user_session.js"></script>
     <script src="scripts/services/batch_email_service.js"></script>
+    <script src="scripts/services/home.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>

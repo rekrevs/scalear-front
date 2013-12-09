@@ -3,20 +3,15 @@
 angular.module('scalearAngularApp')
   .controller('StudentCalendarCtrl', ['$scope','events','$state', function ($scope, events,$state) {
     
-    var change = function()
+    var change_lang = function()
     {
-    	console.log("in change");
-    	console.log($scope.myCalendar);
-    	//$scope.myCalendar2= angular.copy($scope.myCalendar);
     	angular.element($scope.myCalendar.children()).remove();
-    	if($scope.current_lang=="en")
-    		$scope.myCalendar.fullCalendar(full_calendar_en());
-    	else
-    		$scope.myCalendar.fullCalendar(full_calendar_sv());
+    	var obj=($scope.current_lang=="en")?full_calendar_en():full_calendar_sv();
+    	obj.eventSources=$scope.eventSources;
+    	$scope.myCalendar.fullCalendar(obj);
     	
     }
-
-	$scope.$watch("current_lang", change);
+	$scope.$watch("current_lang", change_lang);
 	
 	$scope.uiConfig = {
 	  calendar:{

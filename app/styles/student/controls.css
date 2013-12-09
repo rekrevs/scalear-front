@@ -107,3 +107,6 @@
     background:url('/images/fullscreen3_exit.png') no-repeat center center;
 }
 
+li{
+	list-style-type: none;
+}

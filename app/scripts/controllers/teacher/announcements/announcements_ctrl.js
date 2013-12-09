@@ -83,7 +83,7 @@ angular.module('scalearAngularApp')
   	};
   	
     $scope.tinymceOptions = {
-       mode : "textareas",
+        mode : "textareas",
         //theme : "advanced",
         plugins : "autolink,textcolor, lists,pagebreak,layer,table,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,template",
 

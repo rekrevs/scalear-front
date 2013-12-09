@@ -137,7 +137,7 @@ angular.module('scalearAngularApp')
     	var chart = {};
         chart.type = "BarChart"
         chart.options = {
-            "colors": ['blue','brown'],
+            "colors": ['#0c81c8','darkred'],
             "title": "Student Progress",
             "isStacked": "false",
             "fill": 20,

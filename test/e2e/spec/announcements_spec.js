@@ -74,13 +74,193 @@ describe('Announcements Page', function(){
 
     describe('Teacher', function(){
         it('should go to course\'s announcements page', function(){
+            var ptor = protractor.getInstance();
             ptor.get('/#/courses/1/announcements');
         });
+    });
+    it('should display current course announcements ordered by date', function(){
+        ptor.findElements(protractor.By.repeater('announcement in announcements')).then(function(announcements){
+            expect(announcements.length).toBe(5);
+        });
+    });
+    doDeleteAnnouncements(ptor);
+    expectNoAnnouncements(ptor);
+    doRefresh(ptor);
+    expectNoAnnouncements(ptor);
+    addAnnouncement(ptor, driver, 'announcement 1');
+    doClose(ptor);
+    expectNoAnnouncements(ptor);
 
+    addAnnouncement(ptor, driver, 'announcement 1');
+    doSave(ptor);
+
+    addAnnouncement(ptor, driver, 'announcement 2');
+    doSave(ptor);
+
+    addAnnouncement(ptor, driver, 'announcement 3');
+    doSave(ptor);
+
+    addAnnouncement(ptor, driver, 'announcement 4');
+    doSave(ptor);
+
+    addAnnouncement(ptor, driver, 'announcement 5');
+    doSave(ptor);
+
+    it('should display the added announcements', function(){
+        ptor.findElements(protractor.By.repeater('announcement in announcements')).then(function(announcements){
+            expect(announcements.length).toBe(5);
+        });
+        ptor.findElements(protractor.By.binding('announcement.announcement')).then(function(announcements){
+            announcements.forEach(function(announcement, i){
+                expect(announcement.getText()).toBe('announcement '+(i+1));
+            });
+        });
+    });
+
+    doRefresh(ptor);
+
+    it('should display the added announcements after refresh', function(){
+        ptor.findElements(protractor.By.repeater('announcement in announcements')).then(function(announcements){
+            expect(announcements.length).toBe(5);
+        });
+        ptor.findElements(protractor.By.binding('announcement.announcement')).then(function(announcements){
+            announcements.forEach(function(announcement, i){
+                expect(announcement.getText()).toBe('announcement '+(i+1));
+            });
+        });
+    });
+
+    logout(ptor, driver);
+    login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'Bahia', findByName);
+    describe('Student', function(){
+        it('should go to cource\'s events page', function(){
+            var ptor = protractor.getInstance();
+            ptor.get('/#/courses/1/student/events');
+        });
+    });
+    it('should display the announcements added by teacher', function(){
+        ptor.findElements(protractor.By.repeater('a in announcements')).then(function(announcements){
+            expect(announcements.length).toBe(5);
+        });
+        ptor.findElements(protractor.By.binding('a.announcement')).then(function(announcements){
+            announcements.reverse();
+            announcements.forEach(function(announcement, i){
+                expect(announcement.getText()).toBe('announcement '+(i+1));
+            });
+        });
+    });
+    logout(ptor, driver);
+//
+    login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
+//
+    describe('Teacher', function(){
+        it('should go to course\'s announcements page', function(){
+            var ptor = protractor.getInstance();
+            ptor.get('/#/courses/1/announcements');
+        });
+    });
+
+//    editAnnouncements(ptor, driver, 'announcement');
+    it('should allow editing the announcements', function(){
+        ptor.findElements(protractor.By.binding('announcement.announcement')).then(function(announcements){
+            announcements.forEach(function(announcement, i){
+//                console.log(i);
+                announcement.click();
+                ptor.findElement(protractor.By.id('tinymce_body_ifr')).then(function(tinymce_ifr){
+                    driver.switchTo().frame(tinymce_ifr);
+                    driver.findElement(protractor.By.tagName("body")).then(function(field){
+                        field.clear();
+                        field.sendKeys((i+1)+' announcement');
+                    });
+                    driver.switchTo().defaultContent();
+                });
+
+                if(i == 0){
+                    ptor.findElement(protractor.By.id('close_button')).then(function(close){
+                        close.click();
+                    });
+                }
+                else{
+                    ptor.findElement(protractor.By.id('save_button')).then(function(save){
+                        save.click();
+                    });
+                }
+            });
+        });
+    });
+
+
+//
+    it('should display modified announcements', function(){
+        ptor.findElements(protractor.By.repeater('announcement in announcements')).then(function(announcements){
+            expect(announcements.length).toBe(5);
+        });
+        ptor.findElements(protractor.By.binding('announcement.announcement')).then(function(announcements){
+            announcements.forEach(function(announcement, i){
+                if(i == 0){
+                    expect(announcement.getText()).toBe('announcement '+(i+1));
+                }
+                else{
+                    expect(announcement.getText()).toContain((i+1)+' announcement');
+                }
+            });
+        });
+    });
+
+    addAnnouncement(ptor, driver, '');
+    doSave(ptor)
+    it('should refuse to save because the announcement is empty', function(){
+        ptor.findElement(protractor.By.className('errormessage')).then(function(message){
+            expect(message.getText()).toContain('can\'t be blank');
+        });
+    });
+    doClose(ptor);
+//
+    doRefresh(ptor);
+//
+    it('should display modified announcements after refresh', function(){
+        ptor.findElements(protractor.By.repeater('announcement in announcements')).then(function(announcements){
+            expect(announcements.length).toBe(5);
+        });
+        ptor.findElements(protractor.By.binding('announcement.announcement')).then(function(announcements){
+            announcements.forEach(function(announcement, i){
+                if(i == 0){
+                    expect(announcement.getText()).toBe('announcement '+(i+1));
+                }
+                else{
+                    expect(announcement.getText()).toContain((i+1)+' announcement');
+                }
+            });
+        });
+    });
+//
+    logout(ptor, driver);
+    login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'Bahia', findByName);
+    describe('Student', function(){
+        it('should go to cource\'s events page', function(){
+            var ptor = protractor.getInstance();
+            ptor.get('/#/courses/1/student/events');
+        });
+    });
+    it('should display the announcements added by teacher', function(){
+        ptor.findElements(protractor.By.repeater('a in announcements')).then(function(announcements){
+            expect(announcements.length).toBe(5);
+        });
+        ptor.findElements(protractor.By.binding('a.announcement')).then(function(announcements){
+            announcements.reverse();
+            announcements.forEach(function(announcement, i){
+                if(i == 0){
+                    expect(announcement.getText()).toBe('announcement '+(i+1));
+                }
+                else{
+                    expect(announcement.getText()).toContain((i+1)+' announcement');
+                }
+            });
+        });
     });
 });
 
-function doDeleteAnnouncements(ptor, driver){
+function doDeleteAnnouncements(ptor){
     it('should delete all announcements', function(){
         ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
             delete_buttons.forEach(function(button, i){
@@ -90,4 +270,72 @@ function doDeleteAnnouncements(ptor, driver){
             });
         });
     });
+}
+
+function doRefresh(ptor){
+    it('should refresh the page', function(){
+        ptor.navigate().refresh();
+    });
+}
+
+function addAnnouncement(ptor, driver, body){
+    it('should add a new announcement', function(){
+        ptor.findElement(protractor.By.id('new_announcement')).then(function(add_button){
+            add_button.click();
+        });
+        ptor.findElement(protractor.By.id('tinymce_body_ifr')).then(function(tinymce_ifr){
+            ptor.switchTo().frame(tinymce_ifr);
+            driver.findElement(protractor.By.tagName("body")).sendKeys(body);
+            driver.switchTo().defaultContent();
+        });
+    });
+}
+
+function editAnnouncements(ptor, driver, body){
+    it('should allow editing the announcements', function(){
+        ptor.findElements(protractor.By.binding('announcement.announcement')).then(function(announcements){
+            announcements.forEach(function(announcement, i){
+                announcement.click().then(function(){
+                    ptor.findElement(protractor.By.id('tinymce_body_ifr')).then(function(tinymce_ifr){
+                        ptor.switchTo().frame(tinymce_ifr);
+                        driver.findElement(protractor.By.tagName("body")).then(function(field){
+                            field.clear();
+                            field.sendKeys((i+1)+' '+body);
+                        });
+                        driver.switchTo().defaultContent();
+                    });
+                });
+                if(i == 0){
+                    doClose(ptor);
+                }
+                else{
+                    doSave(ptor);
+                }
+            });
+        });
+    });
+}
+
+function expectNoAnnouncements(ptor){
+    it('should display no announcements at all', function(){
+        ptor.findElements(protractor.By.repeater('announcement in announcements')).then(function(announcements){
+            expect(announcements.length).toBe(0);
+        });
+    });
+}
+
+function doSave(ptor){
+    it('should save the announcement', function(){
+        ptor.findElement(protractor.By.id('save_button')).then(function(save){
+            save.click();
+        });
+    })
+}
+
+function doClose(ptor){
+    it('should close the announcement', function(){
+        ptor.findElement(protractor.By.id('close_button')).then(function(close){
+            close.click();
+        });
+    })
 }

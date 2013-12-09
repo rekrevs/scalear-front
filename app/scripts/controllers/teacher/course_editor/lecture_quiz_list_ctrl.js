@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'OnlineQuiz' ,function ($scope, $http, $stateParams, $state, $filter, OnlineQuiz) {
+    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'OnlineQuiz', '$translate',function ($scope, $http, $stateParams, $state, $filter, OnlineQuiz, $translate) {
 
 	console.log("loading quiz list")
 	$scope.editing_mode = false
@@ -39,14 +39,14 @@ angular.module('scalearAngularApp')
 		    // check if hours or minutes are incorrect
 		    var total_duration=(hours*60*60)+(minutes*60)+(seconds);
 		    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
-	       		return "Incorrect Time Format"
+	       		return $translate('online_quiz.incorrect_format_time')
 		    }
 		    else if( ($scope.lecture_player.controls.getDuration()-1) < total_duration || total_duration <= 0 ){
-	       		return "Time Outside Video Range"
+	       		return $translate('online_quiz.time_outside_range')
 		    }
 		}
 	    else{
-	   		return "Incorrect Time Format"
+	   		return $translate('online_quiz.incorrect_format_time')
 	    }
 	}
 
@@ -59,7 +59,7 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
-		if(confirm("Are you sure you want to delete quiz"))
+		if(confirm($translate('online_quiz.you_sure_delete_quiz')))
 			OnlineQuiz.destroy(
 				{online_quizzes_id: quiz.id},{},
 				function(data){ //success

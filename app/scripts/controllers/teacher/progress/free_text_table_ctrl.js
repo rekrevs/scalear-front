@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
     		{quiz_id: survey_id},
     		{hide: hide},
     		function(){
-    			$scope.notify = "Saved"
+    			$scope.notify = "saved"
     			$timeout(function(){
     				$scope.notify = ""
     			},2000)
@@ -55,7 +55,7 @@ angular.module('scalearAngularApp')
     			ind++
     		}
     	})
-    	$scope.notify = "Sending Emails"
+    	$scope.notify = "announcement_form.sending_email"
 		Quiz.sendFeedback(
 			{quiz_id: survey_id},
 			{

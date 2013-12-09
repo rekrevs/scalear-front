@@ -3,31 +3,39 @@
 angular.module('scalearAngularApp')
   .controller('TeacherCalendarCtrl', ['$scope','events','$state', function ($scope, events, $state) {
     console.log("in calendar ctrl")
-	var date = new Date();
-	var d = date.getDate();
-	var m = date.getMonth();
-	var y = date.getFullYear();
-	$scope.uiConfig = {
-	  calendar:{
-	        editable: false,
-	        header:{
-	          right: 'today prev,next'
-	        },
-	        eventDrop: $scope.alertOnDrop,
-	        eventResize: $scope.alertOnResize
-	    }
-	  };
 
+    var change = function(){
+    	angular.element($scope.myCalendar.children()).remove();
+    	var options =($scope.current_lang=="en")? full_calendar_en(): full_calendar_sv()
+    	options.eventSources = $scope.eventSources
+		$scope.myCalendar.fullCalendar(options);
+    }
 
-   console.log(events)
+	var init =function(){
+		$scope.uiConfig = {
+			calendar:{
+				editable: false,
+				header:{
+					right: 'today prev,next'
+				},
+				eventDrop: $scope.alertOnDrop,
+				eventResize: $scope.alertOnResize
+			}
+		};
 
-   $scope.events = events.data;
-   for (var element in $scope.events.events){
-   		$scope.events.events[element].url=$state.href("course.progress.module", {course_id: $scope.events.events[element].courseId, module_id: $scope.events.events[element].groupId})
-   }
+		console.log(events)
 
-   $scope.eventSources = [$scope.events];
+		$scope.events = events.data;
+		for (var element in $scope.events.events){
+			$scope.events.events[element].url=$state.href("course.progress.module", {course_id: $scope.events.events[element].courseId, module_id: $scope.events.events[element].groupId})
+		}
 
+		$scope.eventSources = [$scope.events];
+	}
+
+    $scope.$watch("current_lang", change);
+    
+	init()
 	  
 
 

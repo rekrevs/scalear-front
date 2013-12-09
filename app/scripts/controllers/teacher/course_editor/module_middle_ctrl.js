@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document', 'module','$stateParams' ,function ($scope, $state, Module, Documents, module, $stateParams) {
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document', 'module','$stateParams', '$translate' ,function ($scope, $state, Module, Document, module, $stateParams, $translate) {
         $scope.module=module.data
 
     	$scope.addDocument=function(){
@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
     	}
 
     	$scope.removeDocument=function (index) {
-    		if(confirm("Are you sure you want to delete module?")){
+    		if(confirm($translate('groups.you_sure_delete_document'))){
 	    		Document.destroy(
 					{document_id: $scope.module.documents[index].id},{},
 					function(){

@@ -1,48 +1,48 @@
 <link rel="stylesheet" href="styles/teacher/course_editor.details.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 <center>
-	<h3>Details</h3>
+	<h3 translate>lectures.details</h3>
 	
 		<table class="table table-striped table-bordered" style="width:95%;font-size:12px;text-align: center">
 			<tr>
-				<td style="width:30%">Quiz Title:</td>
+				<td style="width:30%"><span translate>courses.quiz_title</span>:</td>
 				<td>
 					<details-text value="quiz.name" save="updateQuiz()" validate="validateQuiz" column="name"></details-text>
   				</td>
 			</tr>
 			<tr ng-if="quiz.quiz_type=='quiz'">
-				<td>Required:</td>
+				<td><span translate>courses.required</span>:</td>
 				<td>
-					<details-check checked="quiz.required" save="updateQuiz()" yes="This Quiz is Required" no="This Quiz is Not Required" title="Required?" validate="validateQuiz" column="required"></details-check> <br />
+					<details-check checked="quiz.required" save="updateQuiz()" yes="{{'lectures.quiz_required'|translate}}" no="{{'lectures.quiz_not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="required"></details-check> <br />
   				</td>
 			</tr>
 			<tr ng-if="quiz.quiz_type=='quiz'">
-				<td>Retries:</td>
+				<td><span translate>courses.retries</span>:</td>
 				<td>
 					<details-number min="0" value="quiz.retries" save="updateQuiz()" validate="validateQuiz" column="retries" ></details-number><br />
   				</td>
 			</tr>
 			<tr>
-				<td>Appearance Date</td>
+				<td style="word-break: break-word;"><span translate>groups.appearance_date</span></td>
 				<td>
-					<details-check checked="quiz.appearance_time_module" save="updateQuiz()" yes="Using Module's Appearance Date" no="Not Using Module's Appearance Date" title="Use Module's?" validate="validateQuiz" column="appearance_time_module" ></details-check> <br />
+					<details-check checked="quiz.appearance_time_module" save="updateQuiz()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="appearance_time_module" ></details-check> <br />
   					<p ng-hide="quiz.appearance_time_module">
-  						Set Date:<br>
+  						<span translate>lectures.set_date</span>:<br>
   						<details-date date="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-date>
   					</p>
 				</td>
 			</tr>
 			<tr>
-				<td>Due Date</td>
+				<td><span translate>groups.due_date</span></td>
 				<td>
-					<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="Using Module's Due Date" no="Not Using Module's Due Date" title="Use Module's?" validate="validateQuiz" column="due_date_module"></details-check> <br />
+					<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br />
   					<p ng-hide="quiz.due_date_module">
-  						Set Date:<br>
+  						<span translate>lectures.set_date</span>:<br>
   						<details-date date="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-date>
   					</p>
 				</td>
 			</tr>
 			<tr>
-				<td>Instructions:</td>
+				<td><span translate>lectures.instructions</span>:</td>
 				<td>
 					<details-area value="quiz.instructions" save="updateQuiz()" validate="validateQuiz" column="instructions"></details-area>
 				</td>

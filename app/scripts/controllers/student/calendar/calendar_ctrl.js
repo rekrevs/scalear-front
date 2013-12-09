@@ -15,10 +15,7 @@ angular.module('scalearAngularApp')
     		$scope.myCalendar.fullCalendar(full_calendar_sv());
     	
     }
-	// var date = new Date();
-	// var d = date.getDate();
-	// var m = date.getMonth();
-	// var y = date.getFullYear();
+
 	$scope.$watch("current_lang", change);
 	
 	$scope.uiConfig = {
@@ -26,8 +23,6 @@ angular.module('scalearAngularApp')
 	        editable: false,
 	        header:{
 	          right: 'today prev,next',
-	          // center: 'title',
-	          // left: 'month, agendaWeek'
 	          left: 'title'
 	        },
 	        eventDrop: $scope.alertOnDrop,

@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
   			},
   			function(data){
   				console.log(data)
-  				$scope.questions= data.questions
+  				$scope.review_questions= data.questions
           $scope.lecture_names=data.lecture_names
   			},
   			function(){
@@ -38,7 +38,5 @@ angular.module('scalearAngularApp')
     }
 
   	init()
-    console.log($scope.selected_module)
-
 
   }]);

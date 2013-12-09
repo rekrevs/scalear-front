@@ -1,43 +1,43 @@
 <style>
     p{
-        margin-left: 15px;
+        margin-left</span>: 15px;
     }
 </style>
-<div ng-app="scalearAngularApp">
+<div>
     <h3>{{data.course.short_name}} | {{data.course.name}}</h3>
-    <b>Course Enrollment Key:</b>
+    <b ><span translate>courses.course_enrollment_key</span>:</b>
     <p>
         {{data.course.unique_identifier}}
     </p>
 
-    <b>Start Date:</b>
+    <b ><span translate>courses.start_date</span>:</b>
     <p>
         <details-date date="data.course.start_date" save="updateCourse()" column="start_date"></details-date>
 
     </p>
 
-    <b>Duration:</b>
+    <b ><span translate>courses.duration</span>:</b>
     <p>
         <details-text value="data.course.duration" save="updateCourse()" column="duration"></details-text> Weeks
-    </p>
+    </p >
 
-    <b>Discussion Forum Link:</b>
+    <b ><span translate>courses.discussion_forum_link</span>:</b>
     <p>
         <details-text value="data.course.discussion_link" save="updateCourse()" column="discussion_link"></details-text> |
-        <a href="{{data.course.discussion_link}}">Visit Link</a>
+        <a href="{{data.course.discussion_link}}" ><span translate>courses.visit_link</a>
     </p>
 
-    <b>Description:</b>
+    <b ><span translate>courses.description</span>:</b>
     <p>
         <big-area value="data.course.description" save="updateCourse()" column="description"></big-area>
     </p>
 
-    <b>Prerequisites:</b>
+    <b ><span translate>courses.prerequisites</span>:</b>
     <p>
         <big-area value="data.course.prerequisites" save="updateCourse()" column="prerequisites"></big-area>
     </p>
 
-    <b>Time Zone:</b>
+    <b ><span translate>courses.time_zone</span>:</b>
     <p>
         <details-select value="data.course.time_zone" options="timezones" save="updateCourse()" column="duration"></details-select>
     </p>

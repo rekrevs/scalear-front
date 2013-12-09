@@ -4,12 +4,12 @@
 		<b>{{selected_quiz[0]}}</b>
 		<br /><br />
 		<loading size="small" show="loading_quizzes_chart" />
-		<div ng-if="!all_quizzes && !loading_quizzes_chart">No Quizzes</div>
+		<div ng-if="!all_quizzes && !loading_quizzes_chart" translate>courses.no_quizzes</div>
 	</center>
 	<div ng-repeat="(id,value) in quiz_chart_data" class="chart" ng-init="chart=createQuizChart(value, $index)">
-	    <div >Question {{$index+1}}:</div>
+	    <div ><span translate>answer.question</span> {{$index+1}}:</div>
 	    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
 	    <div google-chart on-ready="loading=false" chart="chart"></div>
-	    <button_link title="Export Chart" action="saveAsImg($event)" >
+	    <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
 	</div>
 </div>

@@ -47,7 +47,7 @@ angular.module('scalearAngularApp')
             		enableLectureProgressScrolling()
                     $scope.loading_lectures=false
                     $('.student').tooltip({"placement": "left", container: 'body'})
-                    $('.state').tooltip({"placement": "left", container: 'body'}) 
+                    $('.state').tooltip({"placement": "top", container: 'body'}) 
                 })
                     
             },

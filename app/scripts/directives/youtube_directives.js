@@ -62,13 +62,19 @@ angular.module('scalearAngularApp')
 
 				player_controls.seek = function(time){
 					if(time<0)
-						time=0;
+						time = 0
+					if(time > player_controls.getDuration())
+						time = player_controls.getDuration()
 					player.currentTime(time);
-	    			player.pause()
+				}
+
+				player_controls.seek_and_pause=function(time){
+					player_controls.seek(time)
+					player.pause()
 				}
 
 				player_controls.refreshVideo = function(){
-					console.log("refreshVideo!!!!!!!!!!!!!!!!!!!")
+					console.log("refreshVideo!")
 					element.find('iframe').remove();
 			  		loadVideo();
 				}

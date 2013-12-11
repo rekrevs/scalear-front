@@ -153,7 +153,7 @@ angular.module('scalearAngularApp')
         		}
         		before=parseInt(time)
         	}
-        	$scope.statistics_player.controls.seek(to_seek, lec)
+        	$scope.statistics_player.controls.seek_and_pause(to_seek, lec)
 	    }
 
 	    $scope.statistics_player.events.onReady=function(){

@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
 		else if (insert_time >= duration)
 			insert_time = duration - 1
 
-		$scope.lecture_player.controls.seek(insert_time)
+		$scope.lecture_player.controls.seek_and_pause(insert_time)
 
 		$scope.quiz_loading = true;
 		Lecture.newQuiz({
@@ -75,11 +75,11 @@ angular.module('scalearAngularApp')
 
 		console.log("SHOWONLINEQUIX")
 		console.log(quiz)
+		$scope.hide_alerts = true;
+		$scope.submitted= false
 		$scope.editing_mode = true;
 		$scope.selected_quiz = quiz
-		$scope.lecture_player.controls.seek(quiz.time,$scope.lecture.url)
-		// $scope.player.currentTime(quiz.time);
-		// $scope.lecture_player.controls.pause();
+		$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
 		if(quiz.quiz_type =="invideo"){
 			$scope.double_click_msg = "online_quiz.double_click_new_answer";
@@ -286,6 +286,8 @@ angular.module('scalearAngularApp')
 
 	$scope.exitBtn = function(){
 		$scope.editing_mode = false;
+		$scope.hide_alerts = true;
+		$scope.submitted= false
 		$scope.selected_quiz={}
 		console.log("exiting")		
 	}	
@@ -320,7 +322,8 @@ angular.module('scalearAngularApp')
 
 		angular.extend($scope.quiz_layer, layer)
 		
-		$timeout(function(){$scope.$emit("updatePosition")})		
+		$timeout(function(){$scope.$emit("updatePosition")})
+		$scope.unregister_back_event()		
 	}
 
 	$scope.resizeBig = function()
@@ -384,6 +387,11 @@ angular.module('scalearAngularApp')
 		 angular.extend($scope.quiz_layer, layer)
 
 	 	$timeout(function(){$scope.$emit("updatePosition")})
+
+	 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
+	        event.preventDefault()
+	        $scope.resizeSmall() 
+		});
 	}
 
 

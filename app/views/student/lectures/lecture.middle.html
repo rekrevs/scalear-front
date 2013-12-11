@@ -23,8 +23,8 @@
 <table class="table table-striped">
 	<tr ng-repeat="quiz in lecture.online_quizzes">
 		<td style='width:20px;'><img ng-show="quiz.is_quiz_solved" src="images/check7.png" /></td>
-		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="lecture_player.controls.seek(quiz.time - 3)">{{quiz.question}}</p></td>
-		<td><p ng-show="quiz.is_quiz_solved" ng-class="{'solved': quiz.is_quiz_solved}" ng-click="lecture_player.controls.seek(quiz.time - 3)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
+		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="seek(quiz.time)">{{quiz.question}}</p></td>
+		<td><p ng-show="quiz.is_quiz_solved" ng-class="{'solved': quiz.is_quiz_solved}" ng-click="seek(quiz.time)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
 	</tr>
 </table>
 </div>

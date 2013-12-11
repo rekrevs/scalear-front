@@ -15,13 +15,6 @@ angular.module('scalearAngularApp')
     $scope.pHeight=0;
     $scope.pWidth=0;
     $scope.show_notification=false;
-
-    
-    //$scope.lecture_player_events
-    
-    $scope.hideOverlay= function(){
- 		$scope.hide_overlay = true
- 	}
  	
  	var init= function(){
  		Lecture.getLectureStudent({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id}, function(data){
@@ -68,13 +61,22 @@ angular.module('scalearAngularApp')
  			//$scope.$emit('accordianUpdate',{g_id:$scope.lecture.group_id, type:"lecture", id:$scope.lecture.id});
  		
  		});	
-    
-    
-    
+
+    	angular.element($window).bind('resize',
+			function(){
+				if($scope.fullscreen){
+					$scope.resizeBig(); 
+					$scope.$apply()
+			}
+		})
     }
 
-    init();
-   
+    $scope.seek=function(time){
+    	$scope.selected_quiz='';
+		$scope.display_mode=false;
+    	$scope.lecture_player.controls.seek(time)
+    }
+
    $scope.lecture_player.events.onPlay=function(){
    		// here check if selected_quiz solved now.. or ever will play, otherwhise will stop again.
    		if($scope.display_mode==true)
@@ -105,28 +107,18 @@ angular.module('scalearAngularApp')
    		
    }
     $scope.safeApply = function(fn) {
-  			var phase = this.$root.$$phase;
-  			if(phase == '$apply' || phase == '$digest') {
-    			if(fn && (typeof(fn) === 'function')) {
-      				fn();
-    			}
-  			} else {
-    			this.$apply(fn);
-  			}
-		};
-	
-	angular.element($window).bind('resize',
-		function(){
-			if($scope.fullscreen){
-				$scope.resizeBig(); 
-				$scope.$apply()
+		var phase = this.$root.$$phase;
+		if(phase == '$apply' || phase == '$digest') {
+			if(fn && (typeof(fn) === 'function')) {
+				fn();
 			}
-	})
+		} 
+		else{
+			this.$apply(fn);
+		}
+	};
 		
-	$scope.resizeBig = function()
-	{	
-		//$scope.safeApply();     
-		
+	$scope.resizeBig = function(){	
 		console.log("height is "+$scope.wHeight);	
 		console.log("resizeing")
 		var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
@@ -183,14 +175,12 @@ angular.module('scalearAngularApp')
     		$scope.pHeight=$scope.wHeight;
       	});
       	
-	 	$timeout(function(){$scope.$emit("updatePosition")})
-	
+	 	$timeout(function(){$scope.$emit("updatePosition")})	
 	}
 	
 	
 	$scope.resizeSmall = function()
 	{	
-		
 		$scope.safeApply(function(){
  			$scope.pHeight=480;
     		$scope.pWidth= $scope.lecture.aspect_ratio=='widescreen'? 800:600;
@@ -226,5 +216,7 @@ angular.module('scalearAngularApp')
 		
 		$timeout(function(){$scope.$emit("updatePosition")})		
 	}
+
+    init();
     
   }]);

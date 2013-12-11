@@ -509,7 +509,7 @@ angular.module('scalearAngularApp')
   return {
     restrict:'E',
     template:'<div ng-style="{left: xcoor, top: ycoor, width:width, height:height, position: \'absolute\',  marginTop:\'0px\'}" data-drop="true" jqyoui-droppable=\'{onDrop:"setDropped", onOver:"formatDropped", onOut:"clearDropped"}\' class="drop-div" ></div>'+
-             '<b class="dragged" data-drag="true" data-jqyoui-options=\'{containment:".widescreen"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</b>',
+             '<b class="dragged" data-drag="true" data-jqyoui-options=\'{containment:".ontop"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</b>',
     link:function(scope,elem){
       console.log("student drag")
       console.log(scope.data)
@@ -533,11 +533,10 @@ angular.module('scalearAngularApp')
       
       
 	$rootScope.$on("updatePosition",function(){
-        console.log("event emiited updated position")
+        console.log("event emitted updated position")
         setAnswerLocation()
         var drop_elem = angular.element(elem[0]).find('div')
      	var drag_elem = angular.element('#'+scope.data.id)
-     	console.log(drop_elem.css('width'))
         resizeAnswer(drag_elem)
   	}) 
       
@@ -551,8 +550,20 @@ angular.module('scalearAngularApp')
         var ontop = angular.element('.ontop');
         var left= event.pageX - ontop.offset().left
         var top = event.pageY - ontop.offset().top
-        ui.position.left = left - (drag_elem.width())
-        ui.position.top = top - (drag_elem.height())
+        
+        if((event.pageX - drag_elem.width())< ontop.offset().left)
+        	ui.position.left = 0
+        else if(left> ontop.width())
+        	 ui.position.left = ontop.width() -  drag_elem.width()
+    	else
+    		ui.position.left = left - drag_elem.width()
+
+        if((event.pageY - drag_elem.height())< ontop.offset().top)
+        	ui.position.top  = 0
+        else if(top > ontop.height())
+        	ui.position.top  = ontop.height() - drag_elem.height()
+    	else
+        	ui.position.top  = top - drag_elem.height()
       }
 
       scope.formatDropped=function(event, ui){

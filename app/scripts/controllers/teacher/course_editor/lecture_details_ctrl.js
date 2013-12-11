@@ -8,6 +8,10 @@ angular.module('scalearAngularApp')
 	    var d = $q.defer();
 	    var lecture={}
 	    lecture[column]=data;
+	    if(column == 'url' && getVideoId(data) == null){
+	    	console.log(data)
+	    	d.resolve('Invalide Input');
+    	}
 	    Lecture.validateLecture(
 	    	{course_id: $scope.lecture.course_id, lecture_id:$scope.lecture.id},
 	    	lecture,
@@ -53,17 +57,20 @@ angular.module('scalearAngularApp')
 
 	$scope.updateLectureUrl= function(){
 		urlFormat()
-		//$scope.$emit('refreshVideo')
 		$scope.lecture.aspect_ratio = ""
 		getYoutubeDetails();
 	}
 
 	var urlFormat =function(){
 		var url=$scope.lecture.url
-		var video_id = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+		var video_id = getVideoId(url)
 		if(video_id != null) {
 		   $scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
 		}
+	}
+
+	var getVideoId= function(url){
+		return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
 	}
 
 	var getYoutubeDetails= function(){

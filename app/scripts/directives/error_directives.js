@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
             		 status:"="
             	 },
             	 replace:true,
-            	 template: "<div ng-class='status==\"error\" ? \"errormove\" :\"successmove\" '><img  ng-src='{{status==\"error\" && \"images/error.png\" || \"images/check5.png\"}}'/></div>",
+            	 template: "<div ng-class='status==\"error\" ? \"errormove\" :\"successmove\" '><img  ng-src='{{status==\"error\" && \"images/error.png\" || \"images/success.png\"}}'/></div>",
                  link: function(scope, element, attrs) {
                 	// console.log(element);
                 	// console.log(scope);

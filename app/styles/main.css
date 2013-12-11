@@ -95,38 +95,43 @@ body {
 
 
 .errormove{
-	top: 45px;
-	position: fixed;
-	left: 39%;
-	width: 22%;
-	padding: 8px;
+    top:0px;
+    /*position: fixed;*/
+    position: relative;
+    display: inline-block;
+
+    text-align: center;
+    margin: 0px auto;
+    max-width: 90%;
+	padding: 3px 5px 3px 5px;
 	background-color: rgb(250, 242, 154);
 	font-family: Helvetica;
-	font-style: lighter;
-	font-size: 15px;
-	border-radius: 5px;
+	font-weight: bolder;
+    font-size: 95%;
+	border-radius: 0px 0px 3px 3px;
 	/*border: solid 2px rgb(229,185,108);*/
 	box-shadow: 1px 1px 2px rgb(229, 185, 108);
-	z-index: 500;
+	z-index: 1200;
 }
 
 .successmove{
-	top: 45px;
-	position: fixed;
-	left: 39%;
-	width: 22%;
-	padding: 8px;
-	background-color: rgb(250, 242, 154);
-	color: #468847;
-  	background-color: #dff0d8;
-  	/*border-color: #d6e9c6;*/
-	font-family: Helvetica;
-	font-style: lighter;
-	font-size: 15px;
-	border-radius: 5px;
-	/*border: solid 2px rgb(229,185,108);*/
-	box-shadow: 1px 1px 2px #d6e9c6;
-	z-index: 500;
+    top:0px;
+    /*position: fixed;*/
+    position: relative;
+    display: inline-block;
+
+    text-align: center;
+    margin: 0px auto;
+    max-width: 90%;
+    padding: 3px 5px 3px 5px;
+    background-color: #dff0d8;
+    font-family: Helvetica;
+    font-weight: bolder;
+    font-size: 95%;
+    border-radius: 0px 0px 3px 3px;
+    /*border: solid 2px rgb(229,185,108);*/
+    box-shadow: 1px 1px 2px #68a04d;
+    z-index: 1200;
 }
 
 .errormove img{
@@ -140,14 +145,15 @@ body {
 }
 
 .errorpage{
-	opacity:0.5;
+    position: fixed;
 	display:block;
-	position:fixed;
 	top:0px;
-	z-index:1100;
-	background-color: gray;
+	z-index:11000;
+	background-color: rgba(100,100,100,0.45);
 	width:100%;
-	height:100%;	
+	height:100%;
+    text-align: center;
+    /*margin: 0 auto;*/
 }
 
 .errormessage{

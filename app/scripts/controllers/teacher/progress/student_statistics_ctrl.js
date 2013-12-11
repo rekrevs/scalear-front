@@ -74,7 +74,7 @@ angular.module('scalearAngularApp')
 	    	var max = new Date($scope.statistics.max*1000)
 	        chart.type = "ColumnChart"
 	        chart.options = {
-	            "colors": ['blue', 'brown'],
+	            "colors": ['#0c81c8', 'darkred'],
 	            "isStacked": "true",
 	            "fill": 20,
 	            "height": 150,

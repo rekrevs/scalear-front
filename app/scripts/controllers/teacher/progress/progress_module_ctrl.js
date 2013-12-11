@@ -89,7 +89,7 @@ angular.module('scalearAngularApp')
         var chart = {};
         chart.type = "ColumnChart"
         chart.options = {
-            "colors": ['darkcyan'],
+            "colors": ['#0c81c8'],
             "title": "Module Progress",
             "isStacked": "true",
             "fill": 20,
@@ -97,8 +97,8 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": "Number of Students",
-            },
+                "title": "Number of Students"
+            }
         };
         chart.data = formatMouleChartData(chart_data)
         return chart

@@ -6,13 +6,8 @@
                 <b><span translate>courses.to</span>:</b>
             </td>
             <td>
-<<<<<<< HEAD
-                <textarea id="to" name="emails" title="To" style="width: 80%; resize: none;" readonly="readonly" style="overflow-y: auto;" >{{final_emails}}</textarea>
-                <input class="btn" id="send_emails" type="button" ng-click="sendBatchEmail(subject, message)" style="float: right; width: 10%" value="Send" ng-disabled="!final_emails || !subject || !message" />
-=======
                 <textarea id="to" name="emails" title="{{'courses.to'|translate}}" style="width: 80%; resize: none;" readonly="readonly" rows="2" >{{final_emails}}</textarea>
                 <input class="btn" id="send_emails" type="button" ng-click="sendBatchEmail(subject, message)" style="float: right; width: 10%" value="{{'courses.send'|translate}}" ng-disabled="!final_emails || !subject || !message" />
->>>>>>> 3f3f855861feb22537ac9842cd610c5da6078f55
             </td>
         </tr>
         <tr>

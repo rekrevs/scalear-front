@@ -26,27 +26,16 @@
                         <a id="email_address" ui-sref="course.send_email({student_id:student.id})">{{student.email}}</a>
                     </td>
                     <td style="text-align: center;">
-<<<<<<< HEAD
-                        <input id="remove_button" class="btn" type="button" ng-click="removeStudent(student.id, $index)" value="Remove"/>
-=======
                         <input id="remove_button" class="btn" type="button" ng-click="removeStudent(student.id, $index)" value="{{'lectures.remove'|translate}}"/>
-                        <!--<a ui-sref="course.remove_student({student_id:student.id})" data-confirm="Are you would like to delete {{student.name}} and all of his data?">Remove from course</a>-->
->>>>>>> 3f3f855861feb22537ac9842cd610c5da6078f55
                     </td>
                     <td style="text-align: center;" ng-init="$parent.emails[$index] = ','">
                         <input id="{{student.id}}" class="checks" ng-checked="$parent.selected[{{student.id}}] == student.email" type="checkbox" ng-click="select(student.id, student.email)" value="{{student.email}}"/>
                     </td>
                 </tr>
             </table>
-<<<<<<< HEAD
-            <input class="btn" ng-show="!searchText" id="email_button" value="Email" style="float: right; margin-right: 3%;" ng-disabled="(selected | filter: '@').length == 0" type="button" ng-click="emailForm()" />
-            <input class="btn btn-primary" value="Select All" type="button" style="float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(data | filter:searchText).length==0 || (emails | filter: ',').length == 0"/>
-            <input class="btn btn-danger" value="Deselect All" type="button" style="float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(data | filter:searchText).length==0 || (selected | filter: '@').length == 0""/>
-=======
-            <input class="btn" id="email_button" value="{{'email'|translate}}" style="float: right; margin-right: 3%;" ng-disabled="(emails|filter:',').length == emails.length" type="button" ng-click="emailForm()" />
-            <input class="btn btn-primary" value="{{'courses.select_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(data | filter:searchText).length==0"/>
-            <input class="btn btn-danger" value="{{'courses.deselect_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(data | filter:searchText).length==0"/>
->>>>>>> 3f3f855861feb22537ac9842cd610c5da6078f55
+            <input class="btn" ng-show="!searchText" id="email_button" value="{{'email'|translate}}" style="float: right; margin-right: 3%;" ng-disabled="(selected | filter: '@').length == 0" type="button" ng-click="emailForm()" />
+            <input class="btn btn-primary" value="{{'courses.select_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(data | filter:searchText).length==0 || (emails | filter: ',').length == 0"/>
+            <input class="btn btn-danger" value="{{'courses.deselect_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(data | filter:searchText).length==0 || (selected | filter: '@').length == 0"/>
         </form>
 
 

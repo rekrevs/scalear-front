@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
             [
                 {"label": $translate('courses.students'),"type": "string"},
                 {"label": $translate('lectures.correct'), "type": "number"},
-                {"label": $translate('lectures.incorrect'),"type": "number"},
+                {"label": $translate('lectures.incorrect'),"type": "number"}
             ]
         formated_data.rows= []
         for(var ind in data)
@@ -56,7 +56,7 @@ angular.module('scalearAngularApp')
                 [
                     {"v":text},
                     {"v":correct},
-                    {"v":incorrect},
+                    {"v":incorrect}
                 ]
             }
             formated_data.rows.push(row)
@@ -76,8 +76,8 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": $translate("quizzes.number_of_students"),
-            },
+                "title": $translate("quizzes.number_of_students")
+            }
         };
         chart.data = formatChartData(chart_data)
         return chart

@@ -15,13 +15,8 @@
 		</td>
 		<td width="200px">{{announcement.created_at | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</td>
 		<td width="150px">
-<<<<<<< HEAD
-			<input id="close_button" ng-if="announcement.show" value="Close" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" />
-			<input id="save_button" ng-if="announcement.show" value="Save" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" />
-=======
 			<input ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" />
 			<input ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" />
->>>>>>> 3f3f855861feb22537ac9842cd610c5da6078f55
 			<delete_button size="big"  action="deleteAnnouncement($index)"/>
 		</td>
 	</tr>
@@ -32,10 +27,6 @@
   <textarea ui-tinymce="tinymceOptions" ng-model="new_announcement.announcement"></textarea>
 </form> -->
 
-<<<<<<< HEAD
-<input id="new_announcement" type="button" value="Create New Announcement" class="btn btn-primary" ng-disabled="disable_new" ng-click="createAnnouncement()"/>
-=======
-<input type="button" value="{{'announcement_form.create_announcement'|translate}}" class="btn btn-primary" ng-click="createAnnouncement()"/>
->>>>>>> 3f3f855861feb22537ac9842cd610c5da6078f55
+<input id="new_announcement" type="button" value="{{'announcement_form.create_announcement'|translate}}" class="btn btn-primary" ng-click="createAnnouncement()"/>
 <!-- <input type="button" value="Save" class="btn btn-primary" ng-click="saveAnnouncement()"/> -->
 </center>

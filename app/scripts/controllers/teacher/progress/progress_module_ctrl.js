@@ -70,7 +70,7 @@ angular.module('scalearAngularApp')
         formated_data.cols=
             [
                 {"label": $translate('courses.students'),"type": "string"},
-                {"label": $translate('courses.students'),"type": "number"},
+                {"label": $translate('courses.students'),"type": "number"}
             ]
         formated_data.rows= []
         var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
@@ -80,7 +80,7 @@ angular.module('scalearAngularApp')
             {"c":
                 [
                     {"v":x_titles[ind]},
-                    {"v":data[ind]},
+                    {"v":data[ind]}
                 ]
             }
             formated_data.rows.push(row)
@@ -92,26 +92,16 @@ angular.module('scalearAngularApp')
         var chart = {};
         chart.type = "ColumnChart"
         chart.options = {
-<<<<<<< HEAD
             "colors": ['#0c81c8'],
-            "title": "Module Progress",
-=======
-            "colors": ['darkcyan'],
             "title": $translate('courses.module_progress_charts'),
->>>>>>> 3f3f855861feb22537ac9842cd610c5da6078f55
             "isStacked": "true",
             "fill": 20,
             "height": 200,
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-<<<<<<< HEAD
-                "title": "Number of Students"
+                "title": $translate("quizzes.number_of_students")
             }
-=======
-                "title": $translate("quizzes.number_of_students"),
-            },
->>>>>>> 3f3f855861feb22537ac9842cd610c5da6078f55
         };
         chart.data = formatMouleChartData(chart_data)
         return chart

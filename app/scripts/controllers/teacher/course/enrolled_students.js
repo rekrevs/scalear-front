@@ -80,12 +80,14 @@ var app = angular.module('scalearAngularApp')
             for(var i=0; i<checkboxes.length; i++){
                 $scope.selected[checkboxes[i].id] = ',';
             }
-            console.log($scope.selected);
+            console.log($scope.selected+' => selected');
             var i=0;
             $scope.selected.forEach(function(email){
                 $scope.emails[i] = email;
                 i++;
             });
+            console.log($scope.emails+' => emails');
+
         }
   }]);
 

@@ -116,7 +116,7 @@ angular.module('scalearAngularApp')
 			[
 				{"label": $translate('courses.students'),"type": "string"},
 				{"label": $translate('courses.quiz'),"type": "number"},
-				{"label": $translate('groups.lecture'),"type": "number"},
+				{"label": $translate('groups.lecture'),"type": "number"}
 			]
 		formated_data.rows= []
 		for(var ind in data)
@@ -126,7 +126,7 @@ angular.module('scalearAngularApp')
 				[
 					{"v":data[ind][0]},
 					{"v":data[ind][1], "f":data[ind][1].toFixed(0)+'%'},
-					{"v":data[ind][2], "f":data[ind][2].toFixed(0)+'%'},
+					{"v":data[ind][2], "f":data[ind][2].toFixed(0)+'%'}
 				]
 			}
 			formated_data.rows.push(row)
@@ -138,13 +138,8 @@ angular.module('scalearAngularApp')
     	var chart = {};
         chart.type = "BarChart"
         chart.options = {
-<<<<<<< HEAD
             "colors": ['#0c81c8','darkred'],
             "title": "Student Progress",
-=======
-            "colors": ['blue','brown'],
-            "title": $translate("groups.student_progress"),
->>>>>>> 3f3f855861feb22537ac9842cd610c5da6078f55
             "isStacked": "false",
             "fill": 20,
             "height": $scope.getTotalChartHeight(chart_data),
@@ -152,8 +147,8 @@ angular.module('scalearAngularApp')
             "fontSize" : 12,
             'chartArea': {'width':'70%','height': '98%'},
             "vAxis": {
-                "title": $translate("courses.statistics"),
-            },
+                "title": $translate("courses.statistics")
+            }
         };
 	  	chart.data = $scope.formatTotalChartData(chart_data)
 	  	return chart

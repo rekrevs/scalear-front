@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', '$timeout', '$window', 'Lecture', 'lecture','CourseEditor' ,function ($state, $stateParams, $scope, $http, $timeout, $window, Lecture, lecture, CourseEditor) {
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', '$timeout', '$window', 'Lecture', 'lecture','CourseEditor', '$translate' ,function ($state, $stateParams, $scope, $http, $timeout, $window, Lecture, lecture, CourseEditor, $translate) {
 
     $scope.lecture=lecture.data
     $scope.quiz_layer={}
@@ -9,12 +9,12 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events={}
     $scope.alert={
     	type:"error", 
-    	msg:"You've got some errors."
+    	msg: "lectures.got_some_errors"
     }
 	$scope.quiz_types_list=[
-		{type:'MCQ', text:"MCQ - Multiple Correct Answers"},
-		{type:'OCQ', text:"OCQ - One Correct Answer"}, 
-		{type:'drag',text:"Drag Into Order"}
+		{type:'MCQ', text:"insert_mcq"},
+		{type:'OCQ', text:"insert_ocq"}, 
+		{type:'drag',text:"insert_drag"}
 	]	
 	
 	$scope.$emit('accordianUpdate',$scope.lecture.group_id);
@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
 		// $scope.lecture_player.controls.pause();
 
 		if(quiz.quiz_type =="invideo"){
-			$scope.double_click_msg = "<br>Double click on the video to add a new answer";
+			$scope.double_click_msg = "online_quiz.double_click_new_answer";
 			$scope.quiz_layer.backgroundColor="transparent"
 			$scope.quiz_layer.overflowX= ''
 			$scope.quiz_layer.overflowY= ''
@@ -146,8 +146,8 @@ angular.module('scalearAngularApp')
 
 	$scope.removeHtmlAnswer = function(index){
 		if($scope.selected_quiz.answers.length <=1)
-			alert("Cannot delete, there must be alteast one answer")
-		else if(confirm("Are you sure?"))
+			alert($translate("online_quiz.cannot_delete_alteast_one_answer"))
+		else if(confirm($translate('lectures.you_sure')))
 			$scope.selected_quiz.answers.splice(index, 1);			
 	}
 

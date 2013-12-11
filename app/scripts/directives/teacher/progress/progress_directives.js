@@ -18,13 +18,13 @@ angular.module('scalearAngularApp')
 	    link:function(scope){
 	    	if(scope.popover){
 	    		var template="<div style='font-size:14px'>"+
-    							"<input type='radio' name='stat' ng-model='student.status[id]' ng-change='action({student_id:student.id, module_id:id, module_status:student.status[id]})' style='margin:4px'>Original"+
-    							"<input type='radio' name='stat' ng-model='student.status[id]' ng-change='action({student_id:student.id, module_id:id, module_status:student.status[id]})' style='margin:4px' value='Finished on Time'>On Time"+
-    							"<input type='radio' name='stat' ng-model='student.status[id]' ng-change='action({student_id:student.id, module_id:id, module_status:student.status[id]})' style='margin:4px' value='Not Finished'>Not Done"+
+    							"<input type='radio' name='stat' ng-model='student.status[id]' ng-change='action({student_id:student.id, module_id:id, module_status:student.status[id]})' style='margin:4px'><span translate>courses.original</span>"+
+    							"<input type='radio' name='stat' ng-model='student.status[id]' ng-change='action({student_id:student.id, module_id:id, module_status:student.status[id]})' style='margin:4px' value='Finished on Time' translate><span translate>courses.on_time</span>"+
+    							"<input type='radio' name='stat' ng-model='student.status[id]' ng-change='action({student_id:student.id, module_id:id, module_status:student.status[id]})' style='margin:4px' value='Not Finished' translate><span translate>courses.not_done</span>"+
     						"</div>"
 		    	scope.popover_options={
 		        	content: template,
-		        	title: "Change Status",
+		        	title: "<span translate>courses.change_status</span>",
 		        	html:true
 		        }
 		    }

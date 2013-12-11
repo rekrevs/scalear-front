@@ -1,24 +1,23 @@
 'use strict';
 
 var app = angular.module('scalearAngularApp')
-  app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService','$stateParams', function ($scope, $http, $location, $state, Course, students, batchEmailService, $stateParams) {
+  app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService','$stateParams', '$translate', function ($scope, $http, $location, $state, Course, students, batchEmailService, $stateParams, $translate) {
         
         console.log("in enrolled students");
 		console.log($stateParams);
 
         console.log(students.data.course);
         console.log(students.data.students);
+        
         $scope.data = students.data.students;
         $scope.course = students.data.course;
 
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
 
-
-
         $scope.removeStudent = function(student, index){
             console.log(student)
-            var answer = confirm('Are you sure that you want to remove this student?');
+            var answer = confirm($translate('courses.you_sure_delete_student'));
             if(answer){
                 Course.remove_student(
                     {

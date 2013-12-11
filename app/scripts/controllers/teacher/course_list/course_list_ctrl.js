@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course','$stateParams', function ($scope, Course,$stateParams) {
+  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate', function ($scope, Course,$stateParams, $translate) {
 
   	console.log("in admin")
   		Course.index({},
@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
 
   		$scope.deleteCourse=function(course){
   			// can't pass index.. cause its not reliable with filter. so instead take course, and get its position in scope.courses
-  			if(confirm("Are you sure you want to delete "+course.name+"?")){
+  			if(confirm($translate("courses.you_sure_delete_course"))){
 	  			Course.destroy({course_id: course.id},{},
 	  				function(response){
 	  					$scope.courses.splice($scope.courses.indexOf(course), 1)

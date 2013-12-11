@@ -170,13 +170,6 @@ angular.module('scalearAngularApp')
       }
     }
 
-    var initialize_view=function(){
-      // var width = getVideoWidth()
-      // setVideoWidth(width)
-      // setButtonsPosition()
-      setup_screens()
-    }
-
     var getVideoWidth=function(){
       var win = angular.element($window)
       var video_height = (win.height()*60)/100
@@ -206,10 +199,8 @@ angular.module('scalearAngularApp')
     }
 
     var setButtonsPosition = function(remaining){
-      if(remaining>400)
-        remaining = remaining/3 +30
-      else
-        remaining = remaining/5 
+      
+      remaining = remaining>400? remaining/3 +30 : remaining/5 
       $scope.left_style={
         display:'inline-block',
         minWidth:'50px',

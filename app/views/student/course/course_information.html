@@ -7,23 +7,23 @@
     <h3>
         {{data.course.short_name}} | {{data.course.name}}
     </h3>
-    <b>Start Date:</b>
+    <b translate="courses.start_date"></b>
     <p>
-        {{data.course.start_date | date:'fullDate'}}
+        {{data.course.start_date | amDateFormat:'dddd, MMMM Do YYYY'}}
     </p>
-    <b>Duration:</b>
+    <b translate="courses.duration"></b>
     <p>
-        {{data.course.duration}} Weeks
+        {{data.course.duration}} <span translate="courses.weeks"></span>
     </p>
-    <b>Discussion Forum:</b>
+    <b translate="head.discussion_forum"></b>
     <p>
         <a href="{{data.course.discussion_link}}">{{data.course.discussion_link}}</a>
     </p>
-    <b>Description:</b>
+    <b translate="groups.description"></b>
     <p>
         {{data.course.description}}
     </p>
-    <b>Prerequisites:</b>
+    <b translate="courses.prerequisites"></b>
     <p>
         {{data.course.prerequisites}}
     </p>

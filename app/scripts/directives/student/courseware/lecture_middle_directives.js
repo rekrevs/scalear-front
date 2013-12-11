@@ -121,13 +121,16 @@ angular.module('scalearAngularApp')
     }
   };
 }])
-.directive("notification", function($timeout, Lecture) {
+.directive("notification", function($timeout, Lecture, $translate) {
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"E",
     // use replace?
-	template:'<div class="well"><div ng-show="show_notification==true"><center><b ng-class="{\'green_notification\':verdict==\'Correct\', \'red_notification\':verdict==\'Incorrect\'}">{{verdict}}</b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'">Hover for details...</center></div><div ng-show="show_notification!=true">{{show_notification}}</div></div>',
+	template:'<div class="well"><div ng-show="show_notification==true"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!=true">{{show_notification}}</div></div>',
 	
     link: function(scope, element, attrs) {
+    	scope.correct_notify=$translate("lectures.correct")
+    	scope.incorrect_notify=$translate("lectures.incorrect")
+    	
     	element.css("position", "relative");
 		element.css("top", "350px");
 		element.css("left","180px")
@@ -151,11 +154,11 @@ angular.module('scalearAngularApp')
   };
 })
 
-.directive("check",['$timeout', 'Lecture', '$stateParams', function($timeout, Lecture, $stateParams) {
+.directive("check",['$timeout', 'Lecture', '$stateParams','$translate', function($timeout, Lecture, $stateParams, $translate) {
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"E",
     // use replace?
-	template:'<input type="button" class="btn btn-primary" value="Check Answer" ng-click="check_answer()" />',
+	template:'<input type="button" class="btn btn-primary" value="{{\'youtube.check_answer\'|translate}}" ng-click="check_answer()" />',
 	link: function(scope, element, attrs) {
     	element.css("position", "relative");
 		element.css("top", "440px");
@@ -214,7 +217,7 @@ angular.module('scalearAngularApp')
           if(selected_answers.length == 0)
           {
           	// notify
-          	scope.$parent.show_notification="You must choose atleast one answer";
+          	scope.$parent.show_notification=$translate("groups.choose_correct_answer")//"You must choose atleast one answer";
    				$timeout(function(){
 	             		 scope.$parent.show_notification=false;
 	         	}, 2000);
@@ -236,7 +239,7 @@ angular.module('scalearAngularApp')
             
           if(count<scope.selected_quiz.online_answers.length)
           {
-          	scope.$parent.show_notification="You must place all items";
+          	scope.$parent.show_notification=$translate("groups.must_place_items");
    				$timeout(function(){
 	             		 scope.$parent.show_notification=false;
 	         	}, 2000);
@@ -266,7 +269,7 @@ angular.module('scalearAngularApp')
         for(var el in data["detailed_exp"])
           scope.explanation[el]= data["detailed_exp"][el];
 
-        scope.verdict=data["correct"]?"Correct":"Incorrect";
+        scope.verdict=data["correct"]? $translate("lectures.correct"): $translate("lectures.incorrect")
         scope.$parent.show_notification=true;
 
 		if(data["msg"]!="Empty") // he chose sthg
@@ -349,12 +352,12 @@ angular.module('scalearAngularApp')
 			
 		}
 	};
-}).directive('studentHtmlMcq',function(){	
+}).directive('studentHtmlMcq',['$translate',function($translate){	
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<input atleastone ng-model='studentAnswers[quiz.id][answer.id]' name='mcq_{{quiz.id}}' type='checkbox' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone'>Must choose atleast one answer!</span><br/>"+
+					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.please_choose_one_answer'></span><br/>"+
 				"</ng-form>",
 		link:function(scope){
 			
@@ -363,7 +366,7 @@ angular.module('scalearAngularApp')
 				{
 					console.log("exp changed!!!")
 					scope.mypop={
-						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?"Correct":"Incorrect"}}</b>',
+						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
 						content:'<div>{{explanation[answer.id][1]}}</div>',
 						html:true,
 						trigger:'hover'
@@ -374,12 +377,12 @@ angular.module('scalearAngularApp')
 		
 	}
 	
-}).directive('studentHtmlOcq',['$timeout',function($timeout){
+}]).directive('studentHtmlOcq',['$translate','$timeout',function($translate, $timeout){
 	return {
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<input atleastone ng-model='studentAnswers[quiz.id]' value='{{answer.id}}'  name='ocq_{{quiz.id}}' type='radio' ng-change='updateValues({{quiz.id}})' pop-over='mypop' unique='true'/>"+
-					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone'>Must choose atleast one answer!</span><br/>"+
+					"<p style='display:inline;margin-left:10px'>{{answer.answer}}</p><br/><span class='errormessage' ng-show='submitted && aform.$error.atleastone' translate='lectures.please_choose_one_answer'></span><br/>"+
 							 	
 				"</ng-form>",
 		link: function(scope)
@@ -390,7 +393,7 @@ angular.module('scalearAngularApp')
 				{
 					console.log("exp changed!!!")
 					scope.mypop={
-						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?"Correct":"Incorrect"}}</b>',
+						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
 						content:'<div>{{explanation[answer.id][1]}}</div>',
 						html:true,
 						trigger:'hover'
@@ -440,7 +443,7 @@ angular.module('scalearAngularApp')
       }
   }
 })
-.directive('studentAnswer', ['$compile', '$rootScope', function($compile, $rootScope){
+.directive('studentAnswer', ['$compile', '$rootScope', '$translate', function($compile, $rootScope, $translate){
   return {
      replace:true,
      restrict: 'E',
@@ -487,9 +490,8 @@ angular.module('scalearAngularApp')
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id])
         {
-          scope.verdict = scope.explanation[scope.data.id][0]? "Correct": "Incorrect"
           scope.explanation_pop={
-            title:"<b ng-class='{green_notification: explanation[data.id][0], red_notification: !explanation[data.id][0]}'>{{verdict}}</b>",
+            title:"<b ng-class='{green_notification: explanation[data.id][0], red_notification: !explanation[data.id][0]}'>{{explanation[data.id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
             content:"<div>{{explanation[data.id][1]}}</div>",
             html:true,
             trigger:'hover'
@@ -503,7 +505,7 @@ angular.module('scalearAngularApp')
   };
 }])
 
-.directive('studentDrag',['$window', '$rootScope', function($window, $rootScope){
+.directive('studentDrag',['$window', '$rootScope','$translate', function($window, $rootScope, $translate){
   return {
     restrict:'E',
     template:'<div ng-style="{left: xcoor, top: ycoor, width:width, height:height, position: \'absolute\',  marginTop:\'0px\'}" data-drop="true" jqyoui-droppable=\'{onDrop:"setDropped", onOver:"formatDropped", onOut:"clearDropped"}\' class="drop-div" ></div>'+
@@ -615,10 +617,9 @@ angular.module('scalearAngularApp')
      
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id]){
-          scope.verdict = scope.explanation[scope.data.id][0]? "Correct": "Incorrect"
           scope.selected_id= angular.element(elem[0]).find('b').attr('id')
           scope.explanation_pop={
-            title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{verdict}}</b>",
+            title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[data.id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
             content:"<div>{{explanation[selected_id][1]}}</div>",
             html:true,
             trigger:'hover'

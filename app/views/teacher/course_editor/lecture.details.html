@@ -1,83 +1,83 @@
 <link rel="stylesheet" href="styles/teacher/course_editor.details.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 <center>
-	<h3>Details</h3>
+	<h3 translate>lectures.details</h3>
 	<!-- <%= render 'shared/error_messages' , object: f.object, success: @success %> -->
 	<table class="table table-striped table-bordered" style="width:90%;font-size:12px;text-align:center;overflow-wrap:break-word;word-wrap: break-word;">
 		<tr>
-			<td>Lecture Title:</td>
+			<td><span translate>lectures.lecture_title</span>:</td>
 			<td> 
     			<details-text value="lecture.name" save="updateLecture()" validate="validateLecture" column="name"></details-text>
 			</td>
 		</tr>
 		<tr>
-			<td>Lecture URL:</td>
-			<td style="max-width: 180px;overflow-wrap:break-word;word-wrap: break-word;">
+			<td><span translate>lectures.url</span>:</td>
+			<td style="max-width: 180px;overflow-wrap:break-word;word-wrap: break-word;word-break: break-word;">
     			<details-text value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"></details-text> 
 			</td>
 		</tr>
 
 		<tr>
-			<td>Thumbnail:</td>
+			<td><span translate>lectures.thumbnail</span>:</td>
 			<td id="lecture_thumbnail" ng-bind-html="video.thumbnail" ></td>
 		</tr>
 		<tr>
-			<td>Title:</td>
+			<td><span translate>lectures.title</span>:</td>
 			<td>
 				<label style ="width:140px;font-size:10px;cursor:text;">{{video.title}}</label>
 			</td>
 		</tr>
 		<tr>
-			<td>Author:</td>
+			<td><span translate>lectures.author</span>:</td>
 			<td>
 				<label style= "width:140px;font-size:10px;cursor:text;" >{{video.author}}</label>
 			</td>
 		</tr>
 		<tr>
-			<td>Duration:</td>
+			<td><span translate>lectures.duration</span>:</td>
 			<td>
-				<label style="width:140px;font-size:10px;cursor:text;">{{lecture.duration}} Seconds</label>
+				<label style="width:140px;font-size:10px;cursor:text;">{{lecture.duration}}<span translate>Seconds</span></label>
 			</td>
 		</tr>
 		<tr>
-			<td>Detected Aspect Ratio:</td>
+			<td><span translate>lectures.detected_aspect_ratio</span>:</td>
 			<td>
 				<label style="width:140px;font-size:10px;cursor:text;">{{lecture.detected_aspect_ratio}}</label>
 			</td>
 		</tr>
 		<tr>
-			<td>Aspect Ratio:</td>
+			<td><span translate>lectures.aspect_ratio</span>:</td>
 			<td>
 				<details-select value="lecture.aspect_ratio" options="screen_options" save="updateLecture()" validate="validateLecture" column="aspect_ratio" style="width: 120px;" ></details-select>
 			</td>
 		</tr>
 		<tr>
-			<td>Use Module's Appearance Date?</td>
+			<td><span translate>lectures.appearance_date</span></td>
 			<td> 
-				<details-check checked="lecture.appearance_time_module" save="updateLecture()" yes="Using Module's Appearance Date" no="Not Using Module's Appearance Date" title="Use Module's?" validate="validateLecture" column="appearance_time_module"></details-check> <br />
+				<details-check checked="lecture.appearance_time_module" save="updateLecture()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="appearance_time_module"></details-check> <br />
 					<p ng-hide="lecture.appearance_time_module">
-						Set Date:<br>
+						<span translate>lectures.set_date</span>:<br>
 						<details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
 					</p>
 			</td>
 		</tr>
 		<tr>
-			<td>Use Module's Due Date?</td>
+			<td><span translate>lectures.due_date</span></td>
 			<td>
-				<details-check checked="lecture.due_date_module" save="updateLecture()" yes="Using Module's Due Date" no="Not Using Module's Due Date" title="Use Module's?" validate="validateLecture" column="due_date_module"></details-check> <br />
+				<details-check checked="lecture.due_date_module" save="updateLecture()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="due_date_module"></details-check> <br />
 				<p ng-hide="lecture.due_date_module">
-					Set Date:<br>
+					<span translate>lectures.set_date</span>:<br>
 					<details-date date="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-date>
 				</p> 
 			</td>
 		</tr>
 		<tr>
-			<td>Slides:</td>
+			<td><span translate>lectures.slides</span>:</td>
 			<td style="overflow-wrap:break-word;word-wrap: break-word;max-width:10px">
     			<details-text value="lecture.slides" save="updateLecture()" validate="validateLecture" column="slides" ></details-text>
 			</td>
 		</tr>
 		<tr>
-			<td>Description:</td>
+			<td><span translate>lectures.description</span>:</td>
 			<td>
 				<details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
 			</td>

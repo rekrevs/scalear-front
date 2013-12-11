@@ -146,11 +146,11 @@ angular.module('scalearAngularApp')
 		 template: '<div id="editing">'+
 						'<div class="alert" >'+
 							'<div>'+
-								'Editing quiz {{selected_quiz.question}} at {{selected_quiz.time|format}}'+
-								'<b ng-bind-html="double_click_msg"></b>'+
+								'<span translate>online_quiz.editing_quiz</span> {{selected_quiz.question}} <span translate>at</span> {{selected_quiz.time|format}}'+
+								'<b><br>{{double_click_msg|translate}}</b>'+
 							'</div>'+
-							'<a class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="saveBtn()">Save</a>'+
-							'<a class="btn" id="done" style="margin-top:5px;" ng-click="exitBtn()">Exit</a>'+
+							'<a class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="saveBtn()" translate>save</a>'+
+							'<a class="btn" id="done" style="margin-top:5px;" ng-click="exitBtn()" translate>groups.exit</a>'+
 						'</div>'+
 					'</div>',
 	};
@@ -165,12 +165,12 @@ angular.module('scalearAngularApp')
 		 restrict: 'E',
 		 template: 	'<div class="btn-group">'+
 						'<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="">'+
-							'Insert Quiz ({{title}}) '+
+							'{{title}}'+
 							'<span class="caret"></span>'+
 						'</a>'+
 						'<ul class="dropdown-menu" style="left:-35%;font-size:12px">'+
 				              '<li ng-repeat="item in list">'+
-				              		'<a href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{item.text}}</a>'+
+				              		'<a href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{"lectures."+item.text|translate}}</a>'+
 				              '</li>'+ 
 						'</ul>'+
 				  	'</div>'
@@ -191,7 +191,7 @@ angular.module('scalearAngularApp')
 		 				"<drag ng-switch-when='drag' />"+
 	 				"</div>",
 	};
-}]).directive('answer', ['$compile', '$rootScope', function($compile, $rootScope){
+}]).directive('answer', ['$rootScope', function($rootScope){
 	return {
 		 replace:true,
 		 restrict: 'E',
@@ -199,7 +199,7 @@ angular.module('scalearAngularApp')
 		 				"<img ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' />"+
 	 				"</div>",
 
-		link: function(scope, element, attrs, controller) {
+		link: function(scope, element, attrs) {
 
 			//===FUNCTIONS===//
 			var setAnswerLocation=function(){
@@ -264,14 +264,14 @@ angular.module('scalearAngularApp')
 			scope.answerClass = "component dropped answer_img"						
 
 			var template = "<p>"+
-								"Correct:"+
+								"<span translate>lectures.correct</span>:"+
 								"<input class='must_save_check' ng-change='radioChange(data);setAnswerColor()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' />"+
-								"<br>Answer:"+ 
+								"<br><span translate>groups.answer</span>:"+ 
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/>"+
-								"<br>Explanation:"+
+								"<br><span translate>lectures.explanation</span>:"+
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} />"+
 								"<br>"+
-								"<input type='button' ng-click='remove()' class='btn btn-danger remove_button' value='Remove'/>"+
+								"<input type='button' ng-click='remove()' class='btn btn-danger remove_button' value={{'lectures.remove'|translate}} />"+
 							"</p>"
 
            	scope.popover_options={
@@ -284,7 +284,7 @@ angular.module('scalearAngularApp')
 			scope.setAnswerColor()
 		}
 	};
-}]).directive('drag', ['$compile', '$rootScope', function($compile, $rootScope){
+}]).directive('drag', ['$rootScope', function($rootScope){
 	return {
 		 replace:true,
 		 restrict: 'E',
@@ -295,7 +295,7 @@ angular.module('scalearAngularApp')
 	 					"</div>"+
  					"</div>",
 
-		link: function(scope, element, attrs, controller) {
+		link: function(scope, element, attrs) {
 			 
 			//===FUNCTIONS===//
 			var setAnswerLocation=function(){
@@ -357,16 +357,16 @@ angular.module('scalearAngularApp')
 
 
 			var template = '<ul>'+
-							'<p>Correct Because:'+
+							'<p><span translate>groups.correct_because</span>:'+
 								'<br>'+
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
 								'<br>'+
 								'<div ng-repeat=\'num in list|filter:"!"+pos\' >'+
-									'{{num}} Incorrect Because:<br>'+
+									'{{num}} <span translate>groups.incorrect_because</span>:<br>'+
 									'<textarea rows=3 class="must_save" type="text" ng-model="data.explanation[num]" />'+
 									'<br>'+
 								'</div>'+
-								'<input type="button" ng-click="remove()" class="btn btn-danger remove_button" value="Remove"/>'+
+								'<input type="button" ng-click="remove()" class="btn btn-danger remove_button" value={{"lectures.remove"|translate}} />'+
 							'</p>'+
 						'</ul>'
 
@@ -387,7 +387,7 @@ angular.module('scalearAngularApp')
         	setAnswerLocation()
 		}
 	};
-}]).directive('answerform', ['Lecture','$stateParams','CourseEditor',function(Lecture, $stateParams, CourseEditor){
+}]).directive('answerform',function(){
 	return {
 		scope: {
 			quiz:"=",
@@ -402,30 +402,29 @@ angular.module('scalearAngularApp')
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform' style='overflow: auto;'><div style='text-align:left;margin:10px;'>"+
-						"<label class='q_label'>Question:</label>"+
+						"<label class='q_label'><span translate>answer.question</span>:</label>"+
 						"<input required name='qlabel' type='text' ng-model='quiz[column]' />"+
-						"<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'>Required!</span>"+
+						"<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'><span translate>courses.required</span>!</span>"+
 						// ADD QUESTION TYPE IF ITS A QUIZ QUESTION.. SELECT LIST.
 						"<br />"+
-						"<label ng-if='show_question()' class='q_label'>Question Type:</label>"+
+						"<label ng-if='show_question()' class='q_label'><span translate>groups.question_type</span>:</label>"+
 						"<select ng-if='show_question()' ng-model='quiz.question_type' required  class='choices'>"+
 							"<option value='MCQ'>MCQ</option>"+
 							"<option value='OCQ' >OCQ</option>"+
-							"<option value='DRAG' ng-if='!isSurvey()' >DRAG</option>"+
-							"<option ng-if='isSurvey()' value='Free Text Question'>Free Text Question</option>"+
+							"<option value='DRAG' ng-if='!isSurvey()' translate>groups.drag</option>"+
+							"<option ng-if='isSurvey()' value='Free Text Question' translate>groups.free_text_question</option>"+
 						"</select>"+
-						"<a ng-if='show_question()' href='' title='Delete' style='float:right;' class='delete_option' ng-click='removeQuestion(index)'><img src='images/trash3.png' /></a>"+
+						"<delete_button ng-if='show_question()' size='small' action='removeQuestion(index)' />"+
 						"<br/>"+
 						"<div ng-hide='hideAnswer()' class='answer_div'>"+
 							"<htmlanswer />"+
-							"<a class='add_multiple_answer' ng-click='addAnswer(\"\",quiz)' href=''>Add Answer</a>"+
+							"<a class='add_multiple_answer' ng-click='addAnswer(\"\",quiz)' href='' translate>groups.add_answer</a>"+
 							"<br/>"+
 						"</div>"+
 					"</ng-form>",
-		link: function(scope, iElm, iAttrs, controller) {
+		link: function(scope, iElm, iAttrs) {
 			console.log("QUIZZ is ");
 			console.log(scope.quiz);
-			//scope.quiz.type=scope.quiz.question_type;
 			scope.addAnswer=scope.add()
 			scope.removeQuestion=scope.removeq()
 			
@@ -449,10 +448,10 @@ angular.module('scalearAngularApp')
 			
 		}
 	};
-}]).directive('htmlanswer',function(){
+}).directive('htmlanswer',function(){
 	return {
 	 	restrict: 'E',
-	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' style='/*overflow:auto*/' >"+
+	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
 					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
@@ -506,31 +505,29 @@ angular.module('scalearAngularApp')
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
-					"<input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+					"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
 					"<input ng-if='!isSurvey()' ng-change='updateValues()' atleastone type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
-					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone'>Choose atleast one</span>"+
+					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'><span translate>courses.required</span>!</span>"+
+					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
 					"<br ng-if='show()'/>"+
-					"<input ng-if='show()' type='text' class='explain' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' />"+
-					"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'><img src='images/trash3.png' /></a>"+
+					"<input ng-if='show()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' />"+
+					"<delete_button size='small' action='removeAnswer($index, quiz)' />"+
 					"<br/>"+
 				"</ng-form>"
-		
 	}
 	
-}).directive('htmlOcq',['$timeout',function($timeout){
+}).directive('htmlOcq',function(){
 	return {
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
-					"<input required name='answer' type='text' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
+					"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
 					"<input ng-if='!isSurvey()' id='radio_correct' atleastone type='radio' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
-					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone'>Check one answer</span>"+
+					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'><span translate>courses.required</span>!</span>"+
+					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_on</span>"+
 					"<br ng-if='show()'/>"+
-					"<input ng-if='show()' type='text' class='explain' placeholder='Explanation' title='Enter Explanation' ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-					"<a href='' title='Delete' style='float:right;' class='real_delete_ans' ng-click='removeAnswer($index, quiz)'>"+
-						"<img src='images/trash3.png' />"+
-					"</a><br>"+
+					"<input ng-if='show()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
+					"<delete_button size='small' action='removeAnswer($index, quiz)' />"+
+					"<br>"+
 				"</ng-form>",
 		link: function(scope)
 		{
@@ -545,39 +542,39 @@ angular.module('scalearAngularApp')
 		}
 	}
 	
-}]).directive('htmlDrag',function(){
+}).directive('htmlDrag',function(){
 	return {
 		restrict:'E',
 		replace:true,
 		template:"<li class='ui-state-default'>"+
 					"<ng-form name='aform'>"+
 						"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item'></span>"+
-						"<input type='text' required name='answer' placeholder='Answer' title='Enter Answer' ng-model='answer[columna]' />"+
-						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'>Required!</span>"+
-						"<a href='' title='Delete' style='float:right;' class='delete_drag' ng-click='removeAnswer($index, quiz)' ><img src='images/trash3.png' /></a>"+
+						"<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
+						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required'><span translate>courses.required</span>!</span>"+
+						"<delete_button size='small' action='removeAnswer($index, quiz)' />"+
 					"</ng-form>"+
 				"</li>"				 
 	}
 	
 }).directive('atleastone', function() {
-  return {
-  	require: 'ngModel',
-    link: function(scope, elm, attrs, ctrl) {
-    
-      scope.validate = function(value) {
-   				 if (scope.values<1) {
-   				 	console.log("errorrr");
-        			ctrl.$setValidity('atleastone', false);
-    			} else {
-        			ctrl.$setValidity('atleastone', true);
-    			}
-		}
+	return {
+		require: 'ngModel',
+		link: function(scope, elm, attrs, ctrl) {
 		
-		scope.$watch('values',function(){
-			scope.validate();
-		});
-    }
-  };
+			scope.validate = function(value) {
+				if (scope.values<1) {
+					console.log("errorrr");
+					ctrl.$setValidity('atleastone', false);
+				} else {
+					ctrl.$setValidity('atleastone', true);
+				}
+			}
+
+			scope.$watch('values',function(){
+				scope.validate();
+			});
+		}
+	};
 }).directive('popOver',['$parse','$compile','$q','$window',function ($parse, $compile, $q, $window) {
     return{
   		restrict: 'A',
@@ -586,9 +583,7 @@ angular.module('scalearAngularApp')
 	        var getter = $parse(attr.popOver)
 	        scope.$watch(attr.popOver, function(newval){
 	        	var options = getter(scope)
-	        	console.log("in popover watch")
 	        	if(options){
-	        		console.log("there are options")
 		        	element.popover('destroy');
 		        	element.popover(options);
 		          	var popover = element.data('popover');
@@ -647,8 +642,7 @@ angular.module('scalearAngularApp')
 						});	         
 			        }
 			    }
-			    })
-	       // });
+		    })
       	}
     };
 }]);

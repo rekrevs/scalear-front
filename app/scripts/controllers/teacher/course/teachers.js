@@ -2,7 +2,6 @@
 
 angular.module('scalearAngularApp')
     .controller('TeacherCourseTeachersCtrl', ['$scope', '$http', '$state', 'Course', 'teachers','$stateParams', '$translate', function ($scope, $http, $state, Course, teachers, $stateParams, $translate) {
-
         console.log("in enrolled students");
         console.log($stateParams);
 

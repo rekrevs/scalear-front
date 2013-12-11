@@ -1,16 +1,16 @@
-<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer">Exit</a></div>
+<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer" translate>groups.exit</a></div>
 <center>
-	<h4><b>Review Student Questions on {{selected_module.name}}</b></h4>
+	<h4><b><span translate>groups.review_student_question</span>{{selected_module.name}}</b></h4>
 	<loading size=big show="loading_lectures_chart" />
 	<div ng-show="questions" style="padding:10px 40px" >
 		<table class="table table-striped"> 
 			<tr>
-				<th>Hide</th>
-				<th>Question</th>
-				<th style="width:10%">Lecture Title</th>
-				<th>Time</th>
+				<th translate>groups.hide</th>
+				<th translate>answer.question</th>
+				<th style="width:10%" translate>lectures.lecture_title</th>
+				<th translate>online_quiz.time</th>
 			</tr>
-			<tr ng-repeat="question in questions">
+			<tr ng-repeat="question in review_questions">
 				<td ><input type="checkbox" ng-model="question.hide" ng-change="updateHide(question)" /></td>
 				<td>
 					{{question.question}}
@@ -25,4 +25,4 @@
 		<table>
 	</div>
 </center>
-<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer">Exit</a></div>
+<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer" translate>groups.exit</a></div>

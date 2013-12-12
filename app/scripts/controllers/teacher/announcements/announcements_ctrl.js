@@ -19,10 +19,13 @@ angular.module('scalearAngularApp')
 	  		Announcement.destroy({course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},{},function(data){
 	  			//init();
 	  			$scope.announcements.splice(index, 1)
-	  		})
+                $scope.disable_new = false;
+            })
 	  	}else
 	  		$scope.announcements.splice(index, 1);
-  		}
+            $scope.disable_new = false;
+
+        }
   	}
   	
   	$scope.createAnnouncement= function(){

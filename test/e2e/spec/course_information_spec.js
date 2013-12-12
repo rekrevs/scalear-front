@@ -30,7 +30,7 @@ var tomorrow = formatDate(getNextDay(new Date()), 1);
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-        driver.get("http://10.0.0.16:9000/#/login");
+        driver.get("http://localhost:9000/#/login");
 //        driver.get("http://angular-edu.herokuapp.com/#/login");
         ptor.findElement(protractor.By.className('btn')).then(function(login_button){
             login_button.click();
@@ -44,14 +44,34 @@ function login(ptor, driver, email, password, name, findByName){
     });
 }
 
+//function logout(ptor, driver){
+//    it('should logout', function(){
+//        ptor.findElements(protractor.By.tagName('a')).then(function(logout){
+//            logout[5].click();
+//        });
+//        driver.get("http://localhost:4000/");
+////        driver.get("http://scalear-auth.herokuapp.com");
+//        driver.findElements(protractor.By.tagName('a')).then(function(logout){
+//            logout[4].click();
+//        });
+//    });
+//}
 function logout(ptor, driver){
     it('should logout', function(){
         ptor.findElements(protractor.By.tagName('a')).then(function(logout){
             logout[5].click();
+            logout[5].getText().then(function(value){
+                console.log(value+'here');
+            })
         });
-        driver.get("http://10.0.0.16:4000/");
+//        ptor.sleep(20000);
+        driver.get("http://localhost:4000/");
 //        driver.get("http://scalear-auth.herokuapp.com");
+
         driver.findElements(protractor.By.tagName('a')).then(function(logout){
+            logout[4].getText().then(function(value){
+                console.log(value+'there');
+            })
             logout[4].click();
         });
     });
@@ -471,6 +491,9 @@ describe("Course Information Pages",function(){
     });
     describe('Teacher', function(){
         logout(ptor, driver);
+        it('shoudl wait', function(){
+//            driver.sleep(20000)
+        })
     });
     describe('Student', function(){
         login(ptor, driver, 'em_menshawi@hotmail.com', 'password', 'Mahmoud Menshawi', findByName);
@@ -508,9 +531,10 @@ describe("Course Information Pages",function(){
             });
         });
         it('should click on the course name', function(){
-            ptor.findElements(protractor.By.tagName('a')).then(function(links){
-                links[links.length-2].click();
+            ptor.findElements(protractor.By.binding('course.name')).then(function(links){
+                links[links.length-1].click();
             });
+//            ptor.sleep(20000);
         });
         it('should go to course information page', function(){
             ptor.findElements(protractor.By.tagName('a')).then(function(links){
@@ -592,8 +616,8 @@ describe("Course Information Pages",function(){
             });
         });
         it('should click on the course name', function(){
-            ptor.findElements(protractor.By.tagName('a')).then(function(links){
-                links[links.length-2].click();
+            ptor.findElements(protractor.By.binding('course.name')).then(function(links){
+                links[links.length-1].click();
             });
         });
         it('should go to course information page', function(){

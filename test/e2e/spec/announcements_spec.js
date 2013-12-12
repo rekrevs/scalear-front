@@ -32,7 +32,7 @@ var tomorrow = formatDate(getNextDay(new Date()), 1);
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-        driver.get("http://10.0.0.16:9000/#/login");
+        driver.get("http://localhost:9000/#/login");
 //        driver.get("http://angular-edu.herokuapp.com/#/login");
         ptor.findElement(protractor.By.className('btn')).then(function(login_button){
             login_button.click();
@@ -50,10 +50,18 @@ function logout(ptor, driver){
     it('should logout', function(){
         ptor.findElements(protractor.By.tagName('a')).then(function(logout){
             logout[5].click();
+            logout[5].getText().then(function(value){
+                console.log(value+'here');
+            })
         });
-        driver.get("http://10.0.0.16:4000/");
+        ptor.sleep(2000);
+        driver.get("http://localhost:4000/");
 //        driver.get("http://scalear-auth.herokuapp.com");
+
         driver.findElements(protractor.By.tagName('a')).then(function(logout){
+            logout[4].getText().then(function(value){
+                console.log(value+'there');
+            })
             logout[4].click();
         });
     });
@@ -75,7 +83,7 @@ describe('Announcements Page', function(){
     describe('Teacher', function(){
         it('should go to course\'s announcements page', function(){
             var ptor = protractor.getInstance();
-            ptor.get('/#/courses/1/announcements');
+            ptor.get('/#/courses/134/announcements');
         });
     });
     it('should display current course announcements ordered by date', function(){
@@ -135,7 +143,7 @@ describe('Announcements Page', function(){
     describe('Student', function(){
         it('should go to cource\'s events page', function(){
             var ptor = protractor.getInstance();
-            ptor.get('/#/courses/1/student/events');
+            ptor.get('/#/courses/134/student/events');
         });
     });
     it('should display the announcements added by teacher', function(){
@@ -156,7 +164,7 @@ describe('Announcements Page', function(){
     describe('Teacher', function(){
         it('should go to course\'s announcements page', function(){
             var ptor = protractor.getInstance();
-            ptor.get('/#/courses/1/announcements');
+            ptor.get('/#/courses/134/announcements');
         });
     });
 
@@ -239,7 +247,7 @@ describe('Announcements Page', function(){
     describe('Student', function(){
         it('should go to cource\'s events page', function(){
             var ptor = protractor.getInstance();
-            ptor.get('/#/courses/1/student/events');
+            ptor.get('/#/courses/134/student/events');
         });
     });
     it('should display the announcements added by teacher', function(){

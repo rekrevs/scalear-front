@@ -1,8 +1,11 @@
-var current_date = new Date();
+var util = require('util');
 var enroll_key = '';
 var names = new Array ();
 var fetched_data = new Array();
-var enroll_key = '';
+
+var frontend = 'http://localhost:9000/';
+var backend = 'http://localhost:3000/';
+var auth = 'http://localhost:4000/';
 
 function getNextDay(date){
     var result = date;
@@ -23,16 +26,12 @@ function formatDate(date, which){
         return dd+'/'+mm+'/'+yyyy;
     }
 }
-
-
-var today_keys = formatDate(new Date(), 0);
 var today = formatDate(new Date(), 1);
-var tomorrow_keys = formatDate(getNextDay(new Date()), 0);
 var tomorrow = formatDate(getNextDay(new Date()), 1);
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-        driver.get("http://10.0.0.16:9000/#/login");
+        driver.get(frontend+"#/login");
 //        driver.get("http://angular-edu.herokuapp.com/#/login");
         ptor.findElement(protractor.By.className('btn')).then(function(login_button){
             login_button.click();
@@ -41,20 +40,19 @@ function login(ptor, driver, email, password, name, findByName){
         findByName("user[password]").sendKeys(password);
         findByName("commit").click();
         ptor.findElements(protractor.By.tagName('a')).then(function(tags){
-            expect(tags[3].getText()).toContain(name);
+            tags[3].getText().then(function(value){
+                expect(value.toLowerCase()).toContain(name.toLowerCase());
+            })
         });
     });
 }
 
-function logout(ptor, driver){
-    it('should logout', function(){
-        ptor.findElements(protractor.By.tagName('a')).then(function(logout){
-            logout[5].click();
-        });
-        driver.get("http://10.0.0.16:4000/");
-//        driver.get("http://scalear-auth.herokuapp.com");
-        driver.findElements(protractor.By.tagName('a')).then(function(logout){
-            logout[4].click();
+function logout(driver){
+    it('should logout from scalear Auth', function(){
+        driver.get(auth).then(function(){
+            driver.findElements(protractor.By.tagName('a')).then(function(logout){
+                logout[4].click();
+            });
         });
     });
 }
@@ -344,7 +342,7 @@ describe('Course Pages', function(){
 //                });
 //            });
 //        });
-        logout(ptor, driver);
+        logout(driver);
         login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'Bahia', findByName);
         it('should display the list of courses sorted by Course Name by default', function(){
             names = new Array();
@@ -419,6 +417,7 @@ describe('Course Pages', function(){
                     });
             });
         });
+        //---------------------------------------------------------------------------//
 
 //        describe('Student', function(){
 //            it('should enroll in the course that was created', function(){

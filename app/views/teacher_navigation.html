@@ -1,9 +1,9 @@
 <ul class="nav nav-pills">
-    <li ng-class="{ active: current_state.includes('course.progress')}"><a ui-sref="course.progress.main({ course_id: current_course_id })"translate>head.progress</a></li>
-    <li ng-class="{ active: current_state.includes('course.inclass')}"><a ui-sref="course.inclass({ course_id: current_course_id })" translate>head.in_class</a></li>
-    <li ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: current_course_id })"translate>head.calendar</a></li>
-    <li ng-class="{ active: current_state.includes('course.announcements')}"><a ui-sref="course.announcements({ course_id: current_course_id })"translate>head.announcements</a></li>
-    <li ng-class="{ active: current_state.includes('course.course_editor')}"><a ui-sref="course.course_editor({ course_id: current_course_id })"translate>head.content</a></li>
+    <li id="progress_link" ng-class="{ active: current_state.includes('course.progress')}"><a ui-sref="course.progress.main({ course_id: current_course_id })"translate>head.progress</a></li>
+    <li id="inclass_link" ng-class="{ active: current_state.includes('course.inclass')}"><a ui-sref="course.inclass({ course_id: current_course_id })" translate>head.in_class</a></li>
+    <li id="calendar_link" ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: current_course_id })"translate>head.calendar</a></li>
+    <li id="announcements_link" ng-class="{ active: current_state.includes('course.announcements')}"><a ui-sref="course.announcements({ course_id: current_course_id })"translate>head.announcements</a></li>
+    <li id="course_editor_link" ng-class="{ active: current_state.includes('course.course_editor')}"><a ui-sref="course.course_editor({ course_id: current_course_id })"translate>head.content</a></li>
      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown" href=""translate>head.information<b class="caret"></b></a>
         <ul class="dropdown-menu">
             <li><a id="info" ui-sref="course.edit_course_information({ course_id: current_course_id })"translate>head.course_information</a></li>

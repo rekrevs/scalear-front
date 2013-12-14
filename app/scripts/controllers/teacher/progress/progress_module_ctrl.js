@@ -63,6 +63,7 @@ angular.module('scalearAngularApp')
                 console.log(stat)
                 alert(stat)
             })
+
     }
 
     var formatMouleChartData = function(data){
@@ -113,12 +114,16 @@ angular.module('scalearAngularApp')
             $timeout(function(){
                 $scope.module_chart = createModuleChart($scope.chart_data)
             })
-        }          
-        
+        }  
     }
     
 
     getModuleCharts()
+    $scope.$watch('lectureQuizzesTab', function(){
+        if( $scope.lectureQuizzesTab)
+            $scope.lectureQuizzesTab()
+    })
+
 
 
 }]); 

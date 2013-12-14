@@ -85,18 +85,7 @@
                 <footer>
                     <br /><br /><br />
                     <br /><br /><br />
-                    <div class="row"><div class="span12">
-                        <center> 
-                            &copy;2013 ScalableLearning | <span translate="footer.about"></span> | <a ui-sref="privacy" translate="footer.privacy"></a>  
-								| <a ng-show="current_user" style="cursor: pointer;" ng-click="technical.show_technical=!technical.show_technical" translate="feedback.report_technical"></a>
-								<div ng-show="technical.show_technical">
-									<textarea rows="3" cols="10" style="width:400px;" ng-model="technical.data"></textarea><br />
-									<a style="cursor: pointer;"  ng-click="technical.send_technical()" translate="feedback.send"></a>
-									<loading size="small" show="technical.sending_technical"/>  
-								</div>
-                            
-                        </center>
-                    </div></div>
+                    <scalear_footer />
                 </footer>
             </div>
             <div><br/></div>
@@ -193,12 +182,14 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/filters/filters.js"></script>
 
+    <script src="scripts/directives/error_directives.js"></script> 
+    <script src="scripts/directives/youtube_directives.js"></script>
+    <script src="scripts/directives/navigation_directives.js"></script>
+    <script src="scripts/directives/footer_directives.js"></script> 
     <script src="scripts/directives/teacher/course_editor/course_editor_directives.js"></script>        
     <script src="scripts/directives/teacher/course_editor/lecture_middle_directives.js"></script>
     <script src="scripts/directives/teacher/course_editor/details_directives.js"></script>
-    <script src="scripts/directives/navigation_directives.js"></script>
     <script src="scripts/directives/teacher/progress/progress_directives.js"></script>
-    <script src="scripts/directives/error_directives.js"></script> 
     <script src="scripts/directives/student/courseware/courseware_directives.js"></script>
     <script src="scripts/directives/student/courseware/quiz_middle_directives.js"></script>
     <script src="scripts/directives/student/courseware/lecture_middle_directives.js"></script>

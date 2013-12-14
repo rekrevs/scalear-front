@@ -5,15 +5,15 @@
 <div ng-hide="!lecture">
 <center><h3>{{lecture.name}}</h3></center>
 <form name="answer_form" novalidate style="margin:0">
-<video_container ng-style="video_style" ng-class="lecture.aspect_ratio">
+<video_container ng-style="video_layer" ng-class="lecture.aspect_ratio">
 	<div ng-show="display_mode">
 		<quiz ng-style="quiz_layer">
 			 <div ng-if="selected_quiz.quiz_type == 'html'" ><student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/></div> 
 			 <div ng-if="selected_quiz.quiz_type == 'invideo'"><student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/></div>
 		</quiz>
 	</div>
-	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" class="youtube"/>
-	<controls></controls>
+	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" class="youtube"/>
+	<controls ng-if="lecture" resizable-video video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' />
 	<check ng-show='display_mode'></check>
 	<notification ng-if='show_notification!=false'></notification>
 </video_container>
@@ -23,8 +23,8 @@
 <table class="table table-striped">
 	<tr ng-repeat="quiz in lecture.online_quizzes">
 		<td style='width:20px;'><img ng-show="quiz.is_quiz_solved" src="images/check7.png" /></td>
-		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="lecture_player.controls.seek(quiz.time - 3)">{{quiz.question}}</p></td>
-		<td><p ng-show="quiz.is_quiz_solved" ng-class="{'solved': quiz.is_quiz_solved}" ng-click="lecture_player.controls.seek(quiz.time - 3)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
+		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="seek(quiz.time)">{{quiz.question}}</p></td>
+		<td><p ng-show="quiz.is_quiz_solved" ng-class="{'solved': quiz.is_quiz_solved}" ng-click="seek(quiz.time)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
 	</tr>
 </table>
 </div>

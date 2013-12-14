@@ -28,10 +28,10 @@ angular.module('scalearAngularApp')
 		        	html:true
 		        }
 		    }
-		    scope.module_ids=[]
-		    if(scope.students[0])
-			    for(var id in scope.status[scope.students[0].id])
-			    	scope.module_ids.push(id)
+		    // scope.module_ids=[]
+		    // if(scope.students[0])
+			   //  for(var id in scope.status[scope.students[0].id])
+			   //  	scope.module_ids.push(id)
 	    }
     };
 })

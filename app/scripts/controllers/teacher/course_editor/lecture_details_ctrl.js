@@ -1,13 +1,17 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', 'lecture', function ($stateParams, $scope, $http, $q, $state, Lecture, lecture) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', '$translate', function ($stateParams, $scope, $http, $q, $state, Lecture, $translate) {
 
    	//**************************FUNCTIONS****************************************///
  	$scope.validateLecture = function(column,data) {
 	    var d = $q.defer();
 	    var lecture={}
 	    lecture[column]=data;
+	    if(column == 'url' && getVideoId(data) == null){
+	    	console.log(data)
+	    	d.resolve($translate('courses.invalid_input'));
+    	}
 	    Lecture.validateLecture(
 	    	{course_id: $scope.lecture.course_id, lecture_id:$scope.lecture.id},
 	    	lecture,
@@ -26,14 +30,19 @@ angular.module('scalearAngularApp')
     };
 
 	$scope.updateLecture= function(data,type){
-		if(data)
-          $scope.lecture[type] = data.getDate()+"/"+(data.getMonth()+1)+"/"+data.getFullYear()   		
+      	if(data && data instanceof Date){ 
+              data.setMinutes(data.getMinutes() + 120);
+              $scope.lecture[type] = data
+        } 		
 		var modified_lecture=angular.copy($scope.lecture);
 		delete modified_lecture["id"];
 		delete modified_lecture["created_at"];
 		delete modified_lecture["updated_at"];
+		delete modified_lecture["class_name"];
 		delete modified_lecture["className"];
 		delete modified_lecture["detected_aspect_ratio"];
+
+		console.log(modified_lecture)
 		
 		Lecture.update(
 			{
@@ -41,9 +50,8 @@ angular.module('scalearAngularApp')
 				lecture_id:$scope.lecture.id
 			},
 			{lecture:modified_lecture},
-			function(data){	
-				$scope.$emit('detailsUpdate')			
-				$scope.$emit('accordianUpdate',$scope.lecture.group_id);				
+			function(data){
+				console.log(data)			
 			},
 			function(){
 				alert("Failed to update lecture, please check your internet connection")
@@ -53,17 +61,20 @@ angular.module('scalearAngularApp')
 
 	$scope.updateLectureUrl= function(){
 		urlFormat()
-		//$scope.$emit('refreshVideo')
 		$scope.lecture.aspect_ratio = ""
 		getYoutubeDetails();
 	}
 
 	var urlFormat =function(){
 		var url=$scope.lecture.url
-		var video_id = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+		var video_id = getVideoId(url)
 		if(video_id != null) {
 		   $scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
 		}
+	}
+
+	var getVideoId= function(url){
+		return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
 	}
 
 	var getYoutubeDetails= function(){
@@ -72,16 +83,13 @@ angular.module('scalearAngularApp')
 		if(id!=null && typeof id != 'undefined')
 		{
 			id= id.split("&")[0]
-			console.log(id);
-			var title="";
-			var duration;
-			var author;
 			var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
 			$http.jsonp(url)
 				.success(function (data) {
 		        	console.log(data.entry)
 			        $scope.video.title = data.entry.title.$t;
 			        $scope.video.author = data.entry.author[0].name.$t;
+			        var updateFlag = $scope.lecture.duration
 			        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
 			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio === undefined)
 			        	$scope.lecture.detected_aspect_ratio="smallscreen";
@@ -91,7 +99,10 @@ angular.module('scalearAngularApp')
 			        	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
 
 			        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
-	        		$scope.updateLecture()
+	        		if(!updateFlag){
+	        			$scope.updateLecture()
+	        			console.log("update flag is true******")	
+	        		}
 			});
 		}
 		else
@@ -102,13 +113,18 @@ angular.module('scalearAngularApp')
 	//********************************************************************//
 
 	console.log("made it in details!!");
-    $scope.lecture=lecture.data
-
 	$scope.screen_options = [
 		{value: "widescreen",  text: 'widescreen'},
 		{value: "smallscreen", text: 'smallscreen'}
 	]
+    $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
+      if($scope.items_obj && $scope.items_obj[$stateParams.lecture_id]){
+        $scope.lecture=$scope.items_obj[$stateParams.lecture_id]
+        if($scope.lecture.url)
+      		getYoutubeDetails();
+      }
+    })
 
-	getYoutubeDetails();
+	
 
 }]);

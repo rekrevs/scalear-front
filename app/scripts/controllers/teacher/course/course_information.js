@@ -1,17 +1,19 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('TeacherCourseCourseInformationCtrl', ['$scope', '$stateParams','$http', 'Course','course', function ($scope, $stateParams,$http, Course, course) {
+  .controller('TeacherCourseCourseInformationCtrl', ['$scope', '$stateParams','$http', 'Course','course', '$translate', function ($scope, $stateParams,$http, Course, course, $translate) {
         
         console.log("in course information");
-        console.log($stateParams);
-
         course.start_date = new Date(course.data.start_date);
 
         $scope.data = course.data;
         console.log(course.data);
 
-        $scope.updateCourse = function(){
+        $scope.updateCourse = function(data,type){
+            if(data && data instanceof Date){ 
+                  data.setMinutes(data.getMinutes() + 120);
+                  $scope.data.course[type] = data
+            }
             var modified_course=angular.copy($scope.data.course);
             delete modified_course["id"];
             delete modified_course["created_at"];
@@ -19,9 +21,14 @@ angular.module('scalearAngularApp')
             delete modified_course["unique_identifier"];
             console.log(modified_course);
             Course.update(
-                { course_id:$stateParams.course_id}, //course_id:$scope.data.course.id
+                {course_id:$stateParams.course_id},
                 {course:modified_course}
             )
+        }
+
+        $scope.validateDuration=function(type,value){
+            if (value<1 || value >=1000)
+                  return $translate('courses.duration_invalid')
         }
 
         $scope.timezones = [

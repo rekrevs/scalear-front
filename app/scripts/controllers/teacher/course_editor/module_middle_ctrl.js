@@ -1,8 +1,28 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document', 'module','$stateParams', '$translate' ,function ($scope, $state, Module, Document, module, $stateParams, $translate) {
-        $scope.module=module.data
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate' ,function ($scope, $state, Module, Document, $stateParams, $translate) {
+        
+        $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
+            if($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
+                $scope.module=$scope.module_obj[$stateParams.module_id]
+                init()
+            }
+        })
+
+        var init = function(){
+            Module.getModules(
+                {
+                    course_id:$stateParams.course_id,
+                    module_id:$stateParams.module_id
+                },
+                function(data){
+                    angular.extend($scope.module, data)
+                },
+                function(){
+                }
+            )
+        }
 
     	$scope.addDocument=function(){
     		console.log($scope.module.id)

@@ -1,9 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl',['$stateParams','$rootScope','$scope','Quiz','quiz', 'CourseEditor', '$translate', function ($stateParams, $rootScope,$scope, Quiz,quiz, CourseEditor, $translate) {
+  .controller('quizMiddleCtrl',['$stateParams','$rootScope','$scope','Quiz', 'CourseEditor', '$translate', function ($stateParams, $rootScope,$scope, Quiz, CourseEditor, $translate) {
  
- 	$scope.quiz= quiz.data;
+ 	$scope.$watch('items_obj['+$stateParams.quiz_id+']', function(){
+      if($scope.items_obj && $scope.items_obj[$stateParams.quiz_id]){
+        $scope.quiz=$scope.items_obj[$stateParams.quiz_id]
+        $scope.$emit('accordianUpdate',$scope.quiz.group_id);
+      }
+    })
  	$scope.alert={type:"error", msg:"lectures.got_some_errors"}
  
  	$scope.closeAlerts= function(){

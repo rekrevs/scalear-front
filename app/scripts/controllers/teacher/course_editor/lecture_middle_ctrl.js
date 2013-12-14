@@ -1,9 +1,18 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', '$timeout', '$window', 'Lecture', 'lecture','CourseEditor', '$translate' ,function ($state, $stateParams, $scope, $http, $timeout, $window, Lecture, lecture, CourseEditor, $translate) {
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', '$timeout', '$window', 'Lecture', 'CourseEditor', '$translate' ,function ($state, $stateParams, $scope, $http, $timeout, $window, Lecture, CourseEditor, $translate) {
 
-    $scope.lecture=lecture.data
+    // $scope.lecture=lecture.data
+    $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
+      if($scope.items_obj && $scope.items_obj[$stateParams.lecture_id]){
+        $scope.lecture=$scope.items_obj[$stateParams.lecture_id]
+        $scope.$emit('accordianUpdate',$scope.lecture.group_id);
+      }
+    })
+
+    $scope.resize={}
+    $scope.video_layer={}
     $scope.quiz_layer={}
     $scope.lecture_player={}
     $scope.lecture_player.events={}
@@ -15,18 +24,8 @@ angular.module('scalearAngularApp')
 		{type:'MCQ', text:"insert_mcq"},
 		{type:'OCQ', text:"insert_ocq"}, 
 		{type:'drag',text:"insert_drag"}
-	]	
+	]
 	
-	$scope.$emit('accordianUpdate',$scope.lecture.group_id);
-
-	angular.element($window).bind('resize',
-		function(){
-			if($scope.fullscreen){
-				$scope.resizeBig(); 
-				$scope.$apply()
-			}
-		})	
-
     $state.go('course.course_editor.lecture.quizList');
 
 //////////////////////////////////////FUNCTIONS/////////////////////////////////////////////
@@ -290,110 +289,7 @@ angular.module('scalearAngularApp')
 		$scope.submitted= false
 		$scope.selected_quiz={}
 		console.log("exiting")		
-	}	
- 	
-	$scope.resizeSmall = function()
-	{	
-		var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-		$scope.fullscreen = false
-
-		angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
-		angular.element("body").css("overflow","auto");
-		angular.element("body").css("position","");
-
-
-		$scope.video_style={
-			"position":"",
-			"width":'500px',
-			"height":"",//(500*1.0/factor +30) +'px',
-			"z-index": 0
-		};
-
-		var layer={		
-			"top":"",
-			"left":"",
-			"position":"absolute",
-			"width":"500px",
-			"height":"",//(500*1.0/factor)+ 'px',
-			"margin-left": "0px",
-			"margin-top": "0px",
-			"z-index":2
-		}
-
-		angular.extend($scope.quiz_layer, layer)
-		
-		$timeout(function(){$scope.$emit("updatePosition")})
-		$scope.unregister_back_event()		
 	}
-
-	$scope.resizeBig = function()
-	{	
-		console.log("resizeing")
-		var factor= $scope.lecture.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-		var win = angular.element($window)
-
-		$scope.fullscreen = true
-
-		angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
-		angular.element("body").css("overflow","hidden");
-		angular.element("body").css("position","fixed")
-
-		win.scrollTop("0px")
-
-		$scope.video_style={
-			"top":0, 
-			"left":0, 
-			"position":"fixed",
-			"width":win.width()-400,
-			"height":win.height(),
-			"z-index": 1030
-		};
-
-		var video_height = win.height() -30;
-		var video_width = video_height*factor
-		
-		//var video_width = (win.height()-26)*factor
-		//var video_heigt = (win.width()-400)*1.0/factor +26
-		var layer={}
-		if(video_width>win.width()-400){ // if width will get cut out.
-			console.log("width cutt offff")
-			video_height= (win.width()-400)*1.0/factor;
-			var margin_top = (win.height() - (video_height+30))/2.0;
-			layer={
-				"position":"fixed",
-				"top":0,
-				"left":0,
-				"width":win.width()-400,
-				"height":video_height,
-				"margin-top": margin_top+"px",
-				"margin-left":"0px",
-				"z-index": 1031
-			}		
-		}
-		else{		
-			var margin_left= ((win.width()-400) - video_width)/2.0;
-			layer={
-				"position":"fixed",
-				"top":0,
-				"left":0,
-				"width":video_width,
-				"height":video_height,
-				"margin-left": margin_left+"px",
-				"margin-top":"0px",
-				"z-index": 1031
-			}		
-		 }
-
-		 angular.extend($scope.quiz_layer, layer)
-
-	 	$timeout(function(){$scope.$emit("updatePosition")})
-
-	 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
-	        event.preventDefault()
-	        $scope.resizeSmall() 
-		});
-	}
-
 
 }]);
 

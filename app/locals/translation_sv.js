@@ -468,6 +468,8 @@ var translation_sv=function(){
               lecture_progress: "Föreläsning Framsteg",
               quizzes_progress: "Frågesporter Framsteg",
               quiz_title: "Quiz-titel",
+              invalid_input: "Ogiltiga Indata",
+              duration_invalid: "Tidsutsträckning är ogiltig",
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

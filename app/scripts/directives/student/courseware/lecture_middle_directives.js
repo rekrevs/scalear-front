@@ -1,71 +1,52 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive("controls",['$timeout','Lecture','$stateParams', function($timeout, Lecture, $stateParams) {
-  return {// doesnt work with ng-class - only if used from the very beginning..
+.directive("controls",['$timeout','Lecture','$stateParams', '$window', function($timeout, Lecture, $stateParams, $window) {
+  return {
     restrict:"E",
-    // no scope hence same as the controller scope.
     templateUrl:"../views/student/lectures/controls.html",
     link: function(scope, element, attrs) {
-    	
-    	console.log("scop in directive is ");
-    	console.log(scope);
+
     	element.css("width", "200px");
   		element.css("height", "26px");
   		element.css("position", "relative");
   		element.css("display", "inline-block");
   		element.css("z-index",10000);
-		
-    	angular.forEach(['pWidth', 'pHeight'], function (key) {
-	      	scope.$watch(key, function(){
-	      		console.log("inside the each fn..")
-	      			console.log("playerHeight is "+scope.pHeight);
-	      			console.log("playerWidth is "+scope.pWidth);
-		    		element.css("top", scope.pHeight-26+"px");
-		    		element.css("left", scope.pWidth-350+"px");
-		    		if(scope.full_screen)
-		    		{
-		    			console.log("in fullscreen");
-		    			element.css("z-index",10000);
-		    		}
-		    		else	
-		    			element.css("z-index",1000);
-			});
-		});
+
+		scope.$on('updatePosition',function(){
+			setButtonsLocation()
+		})
     	
       	scope.show_message=false;
       	scope.show_question=false;
       	scope.show_shortcuts=false;
-      	scope.full_screen=false;
       	
+      	var setButtonsLocation=function(){
+      		if(scope.fullscreen){
+  	    		scope.pWidth=angular.element($window).width();
+  	    		scope.pHeight=angular.element($window).height();
+      		}
+      		else{
+  	    		scope.pHeight=480;
+  	    		scope.pWidth= scope.lecture.aspect_ratio=='widescreen'? 800:600;
+      		}
+
+      		element.css("top", scope.pHeight-26+"px");
+      		element.css("left", scope.pWidth-350+"px");
+      	}
       	
-      	scope.full = function()
-      	{
-      		scope.safeApply(function(){
-      			scope.full_screen= !scope.full_screen;	
-      		});
-      		
-      		
-      		if(scope.full_screen)
-      			//$("body").css("overflow","hidden").css("position","fixed");
-      			scope.resizeBig();
-      		else
-      			scope.resizeSmall();
-      			//$("body").css("overflow","").css("position","");
-      		
+      	scope.full = function(){   			
+      		scope.fullscreen? scope.resize.small() : scope.resize.big();
       	};
       	scope.confused= function()
       	{
       		console.log("in confusde");
-      		scope.safeApply(function(){
-      			scope.show_message=true;
-      		});
+  			scope.show_message=true;
       		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
     			$timeout(function(){
              		scope.show_message=false;
          		}, 2000);	
     		});
-      		
       	};
       	scope.back= function(time)
       	{
@@ -80,14 +61,11 @@ angular.module('scalearAngularApp')
       	scope.question= function()
       	{
       		console.log("in question");
-      		scope.safeApply(function(){
-	      		scope.show_question=!scope.show_question;
-	      	});
-	      		if(scope.show_question==true)
-	      			scope.lecture_player.controls.pause();	
-	      		else
-	      			scope.lecture_player.controls.play();	
-	      	
+      		scope.show_question=!scope.show_question;
+      		if(scope.show_question==true)
+      			scope.lecture_player.controls.pause();	
+      		else
+      			scope.lecture_player.controls.play();
       	};
       	scope.submit_question = function()
       	{
@@ -101,30 +79,30 @@ angular.module('scalearAngularApp')
       	};
       	scope.setShortcuts = function()
 		{
-				// adding shortcuts
-				shortcut.add("c", scope.confused, {"disable_in_input" : true});
-			
-				shortcut.add("q", scope.question, {"disable_in_input" : true});
-			
-				shortcut.add("Space",function(){
-					scope.lecture_player.controls.paused()? scope.lecture_player.controls.play(): scope.lecture_player.controls.pause();
-				},{"disable_in_input" : true});
-			
-				shortcut.add("b",function(){
-					var t=scope.lecture_player.controls.getTime();
-					scope.lecture_player.controls.seek(t-10);
-					scope.back(t);
-				},{"disable_in_input" : true});
-		};
-		scope.setShortcuts();
+			// adding shortcuts
+			shortcut.add("c", scope.confused, {"disable_in_input" : true});
 		
+			shortcut.add("q", scope.question, {"disable_in_input" : true});
+		
+			shortcut.add("Space",function(){
+				scope.lecture_player.controls.paused()? scope.lecture_player.controls.play(): scope.lecture_player.controls.pause();
+			},{"disable_in_input" : true});
+		
+			shortcut.add("b",function(){
+				var t=scope.lecture_player.controls.getTime();
+				scope.lecture_player.controls.seek(t-10);
+				scope.back(t);
+			},{"disable_in_input" : true});
+		};
+
+		setButtonsLocation()
+		scope.setShortcuts();
     }
   };
 }])
-.directive("notification", function($timeout, Lecture, $translate) {
-  return {// doesnt work with ng-class - only if used from the very beginning..
+.directive("notification", ['$translate', '$window', function($translate, $window) {
+  return {
     restrict:"E",
-    // use replace?
 	template:'<div class="well"><div ng-show="show_notification==true"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!=true">{{show_notification}}</div></div>',
 	
     link: function(scope, element, attrs) {
@@ -132,57 +110,55 @@ angular.module('scalearAngularApp')
     	scope.incorrect_notify=$translate("lectures.incorrect")
     	
     	element.css("position", "relative");
-		element.css("top", "350px");
-		element.css("left","180px")
-		//element.css("left", "200px");
-		element.children().css("height", "40px");
-		element.children().css("width", "150px");
-		element.css("z-index","10000");
-		element.css("display","block");
-		
-		angular.forEach(['pWidth', 'pHeight'], function (key) {
-	      	scope.$watch(key, function(){
-	      			element.css("top", scope.pHeight-150+"px");
-	      			console.log("playerHeight is "+scope.playerHeight);
-	      			if(!scope.full_screen)
-		    			element.css("z-index",1000);
-		    		else	
-		    			element.css("z-index",10000);
-			});
-		});
+  		//element.css("top", "350px");
+  		element.css("left","180px")
+  		element.children().css("height", "40px");
+  		element.children().css("width", "150px");
+  		element.css("z-index","10000");
+  		element.css("display","block");
+
+      var setNotficationPosition=function(){
+        console.log(scope.fullscreen)
+        if(scope.fullscreen)
+          scope.pHeight=angular.element($window).height()- 150;
+        else
+          scope.pHeight=335;
+        element.css("top", scope.pHeight+"px");
+      }
+
+      setNotficationPosition()
     }
   };
-})
+}])
 
-.directive("check",['$timeout', 'Lecture', '$stateParams','$translate', function($timeout, Lecture, $stateParams, $translate) {
-  return {// doesnt work with ng-class - only if used from the very beginning..
+.directive("check",['$timeout', 'Lecture', '$stateParams','$translate', '$window', function($timeout, Lecture, $stateParams, $translate, $window) {
+  return {
     restrict:"E",
-    // use replace?
 	template:'<input type="button" class="btn btn-primary" value="{{\'youtube.check_answer\'|translate}}" ng-click="check_answer()" />',
 	link: function(scope, element, attrs) {
-    	element.css("position", "relative");
-		element.css("top", "440px");
-		//element.css("left", "200px");
+    
+    element.css("position", "relative");
 		element.css("z-index",10000);
 		element.children().css("height", "25px");
-		
+
+		scope.$on('updatePosition',function(){
+			console.log('updatePosition')
+			setButtonsLocation()
+		})
+
+    var setButtonsLocation=function(){
+      console.log(scope.fullscreen)
+      if(scope.fullscreen)
+        scope.pHeight=angular.element($window).height()- 36;
+      else
+        scope.pHeight=443;
+      element.css("top", scope.pHeight+"px");
+    }		
     	
-    	angular.forEach(['pWidth', 'pHeight'], function (key) {
-	      	scope.$watch(key, function(){
-	      		console.log("playerHeight is "+scope.pHeight);
-		    	element.css("top", scope.pHeight-36+"px");
-		    	
-		    	if(!scope.full_screen)
-		    			element.css("z-index",1000);
-		    	else	
-		    			element.css("z-index",10000);
-		    	
-			});
-		});
-	
+  	setButtonsLocation()
+
 		scope.check_answer = function()
-		{
-			
+		{			
 			console.log("check answer "+scope.solution);
 			if(scope.selected_quiz.quiz_type=="invideo"){
 			 	sendAnswers()
@@ -513,32 +489,31 @@ angular.module('scalearAngularApp')
     link:function(scope,elem){
       console.log("student drag")
       console.log(scope.data)
+
       var setAnswerLocation=function(){
+        console.log("setAnswerLocation")
         var ontop=angular.element('.ontop');
         scope.width  = scope.data.width * ontop.width();
         scope.height = scope.data.height* (ontop.height());
         scope.xcoor = (scope.data.xcoor * ontop.width())
         scope.ycoor = (scope.data.ycoor * (ontop.height()))
-        //scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-        console.log(scope.width)
       }
       
       var setup=function(){
       	console.log("setup function")
       	var drag_elem = angular.element('#'+scope.data.id)
-  		destroyPopover(drag_elem)
+  		  destroyPopover(drag_elem)
       	scope.explanation_pop=null
       	scope.explanation[scope.data.id] = null
       }
       
-      
-	$rootScope.$on("updatePosition",function(){
+      $rootScope.$on("updatePosition",function(){
         console.log("event emitted updated position")
         setAnswerLocation()
         var drop_elem = angular.element(elem[0]).find('div')
-     	var drag_elem = angular.element('#'+scope.data.id)
+       	var drag_elem = angular.element('#'+scope.data.id)
         resizeAnswer(drag_elem)
-  	}) 
+    	}) 
       
       scope.formatDrag=function(event, ui){
         var drag_elem = angular.element(ui.helper[0])
@@ -555,15 +530,15 @@ angular.module('scalearAngularApp')
         	ui.position.left = 0
         else if(left> ontop.width())
         	 ui.position.left = ontop.width() -  drag_elem.width()
-    	else
-    		ui.position.left = left - drag_elem.width()
+      	else
+      		ui.position.left = left - drag_elem.width()
 
-        if((event.pageY - drag_elem.height())< ontop.offset().top)
-        	ui.position.top  = 0
-        else if(top > ontop.height())
-        	ui.position.top  = ontop.height() - drag_elem.height()
-    	else
-        	ui.position.top  = top - drag_elem.height()
+          if((event.pageY - drag_elem.height())< ontop.offset().top)
+          	ui.position.top  = 0
+          else if(top > ontop.height())
+          	ui.position.top  = ontop.height() - drag_elem.height()
+      	else
+          	ui.position.top  = top - drag_elem.height()
       }
 
       scope.formatDropped=function(event, ui){
@@ -617,13 +592,11 @@ angular.module('scalearAngularApp')
       }
       
       var resizeAnswer= function(draggable, droppable){
-      	console.log('in resize answer')
-      	// console.log(droppable.css('width'))
-      	// console.log(droppable.css('height'))
-      	draggable.width(scope.width);
-      	draggable.height(scope.height);
-  	 	draggable.css('left', scope.xcoor+12)
-      	draggable.css('top', scope.ycoor+2)
+        console.log('in resize answer')
+        draggable.width(scope.width);
+        draggable.height(scope.height);
+        draggable.css('left', scope.xcoor+12)
+        draggable.css('top', scope.ycoor+2)
       }
      
       scope.$watch('explanation[data.id]', function(newval){
@@ -639,10 +612,9 @@ angular.module('scalearAngularApp')
           angular.element('#'+scope.data.id).css('background-color', bg_color)
         } 
       })
-	  setup()
+
+  	  setup()
       setAnswerLocation()
-      
-     
     }
   }
 }])

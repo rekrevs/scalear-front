@@ -6,15 +6,22 @@ angular.module('scalearAngularApp')
 	console.log("loading quiz list")
 	$scope.editing_mode = false
 
-	OnlineQuiz.getQuizList(
-		{lecture_id:$scope.lecture.id},
-		function(data){
-			$scope.$parent.quiz_list = data.quizList
-		},
-		function(){
-			alert("Failed to Load Quiz List")
-		}
-	);	
+	$scope.$watch('lecture',function(){
+		if($scope.lecture)
+			init()
+	})
+
+	var init= function(){
+		OnlineQuiz.getQuizList(
+			{lecture_id:$scope.lecture.id},
+			function(data){
+				$scope.$parent.quiz_list = data.quizList
+			},
+			function(){
+				alert("Failed to Load Quiz List")
+			}
+		);	
+	}
 
 	var updateOnlineQuiz=function(quiz){
 		OnlineQuiz.update(

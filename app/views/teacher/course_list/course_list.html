@@ -1,6 +1,12 @@
 <center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
 <div ng-show="courses">
-	<h4 translate>courses.all_courses<span ng-if="filtered_teacher"><span translate>taught_by</span> {{filtered_teacher}}</span></h4>
+	<h4 >
+		<span translate>courses.all_courses</span>
+		<span ng-show="filtered_teacher">
+			<span translate>courses.taught_by</span> 
+			{{filtered_teacher}}
+		</span>
+	</h4>
 	</br>
 	<table class="table table-striped">
 		<thead style="cursor:pointer" >
@@ -27,13 +33,13 @@
 				<td>
 					<div ng-repeat="enrolled in course.teacher_enrollments">
 						<!-- filters only in current courses, so no problem if not an admin-->
-						<a ng-click="filterTeacher(enrolled.user.name)" >{{enrolled.user.name}} ({{enrolled.role.name}})</a>	
+						<a  style="cursor:pointer" ng-click="filterTeacher(enrolled.user.name)" >{{enrolled.user.name}} ({{enrolled.role.name}})</a>	
 						</br>
 				    </div>
 				</td>
 				<td>
 					<div ng-repeat="enrolled in course.teacher_enrollments">
-						<a href="mailto:{{enrolled.user.email}}">{{enrolled.user.email}}</a>
+						<a href="mailto:{{enrolled.user.email}}" style="cursor:pointer">{{enrolled.user.email}}</a>
 						</br>
 					</div>
 				</td> 
@@ -46,7 +52,7 @@
 			</tr>
 		</tbody>
 	</table>	
-	<a ng-show="filtered_teacher" ng-click="filtered_teacher=''" translate>back</a><br>
+	<a ng-show="filtered_teacher" ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
 </div>
 
 <a ng-hide="!courses" ui-sref="new_course" translate>courses.new_course</a><br />

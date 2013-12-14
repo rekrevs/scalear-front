@@ -468,6 +468,8 @@ var translation_en=function(){
         lecture_progress: "Lecture Progress",
         quizzes_progress: "Quizzes Progress",
         quiz_title: "Quiz Title",
+        invalid_input: "Invalid Input",
+        duration_invalid: "Duration is invalid",
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

@@ -33,6 +33,10 @@ angular.module('scalearAngularApp')
   			$scope.filtered_teacher= teacher_name;
   		}
 
+      $scope.removeFilter=function(){
+        $scope.filtered_teacher = ''
+      }
+
   		$scope.order=function(column_name){
   			$scope.column = column_name
   			$scope.is_reverse = !$scope.is_reverse

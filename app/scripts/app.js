@@ -257,29 +257,14 @@
         controller: 'StudentCalendarCtrl'
       })
       .state('course.enrolled_students', {
-        resolve:{
-            students:function($http, $stateParams, headers, scalear_api, $rootScope){
-                return $http({method:'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/enrolled_students', headers:headers})
-            }
-        },
         url: '/enrolled_students',
         templateUrl: 'views/teacher/course/enrolled_students.html',
-        controller: 'TeacherCourseEnrolledStudentsCtrl'
-      })
-      .state('course.send_email', {
-        resolve:{
-            emails:function($http, $stateParams, headers, scalear_api, $rootScope){
-                return $http({method: 'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/send_email?student='+$stateParams.student_id})
-            }
-        },
-        url: '/send_email/:student_id',
-        templateUrl: 'views/teacher/course/send_email.html',
-        controller: 'TeacherCourseSendEmailCtrl'
+        controller: 'enrolledStudentsCtrl'
       })
       .state('course.send_emails', {
         url: '/send_emails',
         templateUrl: 'views/teacher/course/send_emails.html',
-        controller: 'TeacherCourseSendEmailsCtrl'
+        controller: 'sendEmailsCtrl'
       })
       .state('course.announcements', {
       url:'/announcements',

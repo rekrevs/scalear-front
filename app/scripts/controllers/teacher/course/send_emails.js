@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('TeacherCourseSendEmailsCtrl', ['$scope', '$http', '$state', 'Course', 'batchEmailService', '$stateParams', function ($scope, $http, $state, Course, batchEmailService, $stateParams) {
+  .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams', function ($scope, $state, Course, batchEmailService, $stateParams) {
         
         console.log("in enrolled students");
 		console.log($stateParams);
         
         $scope.batch_emails = batchEmailService.getEmails();
         console.log($scope.batch_emails.length);
+        
         if($scope.batch_emails.length == 0){
             $state.go('course.enrolled_students');
         }
@@ -41,7 +42,6 @@ angular.module('scalearAngularApp')
                 $state.go('course.enrolled_students')
             },
             function(){
-                console.log('BAD');
             });
 
         }

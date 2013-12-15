@@ -1,19 +1,22 @@
 'use strict';
 
 var app = angular.module('scalearAngularApp')
-  app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService','$stateParams', '$translate', function ($scope, $http, $location, $state, Course, students, batchEmailService, $stateParams, $translate) {
+  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate', function ($scope, $state, Course, batchEmailService, $stateParams, $translate) {
         
         console.log("in enrolled students");
-		console.log($stateParams);
-
-        console.log(students.data.course);
-        console.log(students.data.students);
-        
-        $scope.data = students.data.students;
-        $scope.course = students.data.course;
+		    console.log($stateParams);
 
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
+        $scope.loading_students = true
+        Course.getEnrolledStudents(
+          {course_id: $stateParams.course_id},
+          function(students){
+            $scope.students = students
+            $scope.loading_students = false
+          },
+          function(){}
+        )
 
         $scope.removeStudent = function(student, index){
             console.log(student)
@@ -26,7 +29,7 @@ var app = angular.module('scalearAngularApp')
                     },
                     {},
                     function(){
-                        $scope.data.splice(index, 1);
+                        $scope.students.splice(index, 1);
                      },
                     function(){
                         console.log(value);
@@ -34,6 +37,13 @@ var app = angular.module('scalearAngularApp')
                 )
             }
         }
+
+        $scope.emailSingle=function(id, email){
+          $scope.deSelectAll()
+          $scope.select(id, email)
+          $scope.emailForm()
+        }
+
         $scope.emailForm = function(){
             var i=0;
             $scope.selected.forEach(function(email){

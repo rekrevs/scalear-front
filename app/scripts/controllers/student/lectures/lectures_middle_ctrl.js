@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture','$window','$timeout', function ($scope, Course, $stateParams,Lecture, $window, $timeout) {
+  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture','$window','$timeout','$translate', function ($scope, Course, $stateParams,Lecture, $window, $timeout, $translate) {
 //    console.log($scope);
 //    $scope.lecture=lecture.data
     $scope.quiz_layer={}
@@ -85,7 +85,8 @@ angular.module('scalearAngularApp')
    				console.log("in notification")
    				$scope.lecture_player.controls.pause();
    				
-   					$scope.show_notification="You must answer the question";	
+   					
+   					$scope.show_notification=$translate('groups.answer_question');	
    				
    				console.log($scope.show_notification);
    				$timeout(function(){

@@ -1,6 +1,6 @@
 <link rel="stylesheet" href="styles/student/courseware.css" type="text/css" media="screen" />
-<div ng-repeat="alert_message in alert_messages" ng-show="alert_messages" class="alert">
-	 {{alert_message}}
+<div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="alert">
+	 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
 </div>
 <div ng-hide="!lecture">
 <center><h3>{{lecture.name}}</h3></center>
@@ -15,11 +15,11 @@
 	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" class="youtube"/>
 	<controls></controls>
 	<check ng-show='display_mode'></check>
-	<notification ng-style="notify_position" ng-show='show_notification!=false'></notification>
+	<notification ng-style="notify_position" ng-if='show_notification!=false'></notification>
 </video_container>
 </form>
 <br><br>
-<h4>Questions:</h4>
+<h4 translate="questions.questions"></h4>
 <table class="table table-striped">
 	<tr ng-repeat="quiz in lecture.online_quizzes">
 		<td style='width:20px;'><img ng-show="quiz.is_quiz_solved" src="images/check7.png" /></td>

@@ -1,12 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('Course', ['$resource','$http','$stateParams','scalear_api','headers',function ($resource, $http, $stateParams, scalear_api, headers) {    
+.factory('Course', ['$resource','$http','$stateParams','scalear_api','headers','$rootScope',function ($resource, $http, $stateParams, scalear_api, headers, $rootScope) {    
 
   $http.defaults.useXDomain = true;
-  return $resource(scalear_api.host+'/en/courses/:course_id/:action', {course_id:$stateParams.course_id},
-    { 	
-     'create': { method: 'POST', headers:headers, params:{course_id:null}},
+  return $resource(scalear_api.host+'/'+$rootScope.current_lang+'/courses/:course_id/:action', {course_id:$stateParams.course_id},
+    { 'create': { method: 'POST', headers:headers, params:{course_id:null}},
       'index': { method: 'GET', isArray: true , headers:headers, params:{course_id:null}},
       'update': { method: 'PUT' , headers:headers},
       'validateCourse':{method: 'PUT', params: {action: 'validate_course_angular'}, headers:headers},

@@ -1,21 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('TeacherCourseTeachersCtrl', ['$scope', '$http', '$state', 'Course', 'teachers','$stateParams',  function ($scope, $http, $state, Course, teachers, $stateParams) {
-        
+    .controller('TeacherCourseTeachersCtrl', ['$scope', '$http', '$state', 'Course', 'teachers','$stateParams', '$translate', function ($scope, $http, $state, Course, teachers, $stateParams, $translate) {
         console.log("in enrolled students");
-		console.log($stateParams);
-		
+        console.log($stateParams);
+
         $scope.teachers = teachers.data.data;
         $scope.new_teachers = []
         console.log(teachers.data);
-
-//        $scope.rows[0] = "<td>"+$scope.teachers[0].email+"</td><td  style = \'width:500px\'><details-select value=\'" + $scope.teachers[0].role + "\' options=\'roles\' save=\'\' style=\'width: 120px;\'></details-select></td>";
-//        for(var i=0; i<$scope.teachers.length; i++){
-//            var teacher = $scope.teachers[i];
-//            $scope.rows.splice(i, 0, "<td>"+teacher.email+"</td><td  style = \'width:500px\'><details-select value=\'" + teacher.role + "\' options=\'roles\' save=\'\' style=\'width: 120px;\'></details-select></td>")
-//        }
-
 
         $scope.getRole = function(value){
             if(value == 1){
@@ -32,16 +24,15 @@ angular.module('scalearAngularApp')
             }
         }
 
-        $scope.roles = [{value:3, text:'Professor'}, {value:4, text:'TA'}];
+        $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
 
         $scope.addRow = function(index){
-            $scope.new_teachers.splice(index+1, 0, {email: null, role: null, status: 'pending'});
-//            $scope.teachers.splice(index+1, 0, {email: '', role : 'role', status:'pending'})
+            $scope.new_teachers.splice(index+1, 0, {email: null, role: null, status: "Pending"});
             console.log($scope.new_teachers);
         }
 
         $scope.removeRow = function(index){
-            var answer = confirm('Are you sure that you want to remove \''+$scope.teachers[index].email+'\' from this course?');
+            var answer = confirm($translate('courses.you_sure_remove_teacher'));
             if(answer){
                 Course.deleteTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email}, {},
                     function(value) {$scope.teachers.splice(index, 1);},
@@ -92,4 +83,4 @@ angular.module('scalearAngularApp')
             }
         }
 
-  }]);
+    }]);

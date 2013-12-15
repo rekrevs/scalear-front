@@ -10,7 +10,9 @@ angular.module('scalearAngularApp')
 				//$scope.course=data.course;
 				$scope.importing=data.importing;
 				$scope.timezones=data.timezones;
-				$scope.import_from=""
+				$scope.import_from=""				
+				$scope.course.start_date = new Date()
+
 			},function(response){
 				
 			}
@@ -39,8 +41,4 @@ angular.module('scalearAngularApp')
 			$scope.submitted=true
 		}
 		}
-		  // $scope.dateOptions = {
-		    // 'year-format': "'yy'",
-		    // 'starting-day': 1
-		  // };
  }]);

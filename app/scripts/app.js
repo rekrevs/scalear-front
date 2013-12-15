@@ -174,11 +174,6 @@
       controller: 'studentLecturesCtrl'
       })
       .state('course.lectures.lecture', {
-         // resolve:{
-           // lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
-             // return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
-           // }
-         // },
         url: '/lectures/:lecture_id',
         views:{
           'middle'  :{templateUrl: 'views/student/lectures/lecture.middle.html',  controller: 'studentLectureMiddleCtrl'}
@@ -201,11 +196,6 @@
         controller: 'courseEditorCtrl'
       })
       .state('course.course_editor.module',{
-        resolve:{
-          module:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/groups/'+$stateParams.module_id+'/get_group_angular'});
-          }
-        },
         url:'/modules/:module_id',
         views:{
           'details' :{templateUrl: 'views/teacher/course_editor/module.details.html', controller: 'moduleDetailsCtrl'},
@@ -213,11 +203,6 @@
         }
       })
       .state('course.course_editor.lecture', {
-        resolve:{
-          lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
-          }
-        },
         url: '/lectures/:lecture_id',
         views:{
           'details' :{templateUrl: 'views/teacher/course_editor/lecture.details.html', controller: 'lectureDetailsCtrl'},
@@ -230,11 +215,6 @@
         }        
       })
       .state('course.course_editor.quiz', {
-        resolve:{ 
-          quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
-          }
-        },
         url: '/quizzes/:quiz_id',
         views:{
           'details' :{templateUrl: 'views/teacher/course_editor/quiz.details.html', controller: 'quizDetailsCtrl'},
@@ -277,29 +257,14 @@
         controller: 'StudentCalendarCtrl'
       })
       .state('course.enrolled_students', {
-        resolve:{
-            students:function($http, $stateParams, headers, scalear_api, $rootScope){
-                return $http({method:'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/enrolled_students', headers:headers})
-            }
-        },
         url: '/enrolled_students',
         templateUrl: 'views/teacher/course/enrolled_students.html',
-        controller: 'TeacherCourseEnrolledStudentsCtrl'
-      })
-      .state('course.send_email', {
-        resolve:{
-            emails:function($http, $stateParams, headers, scalear_api, $rootScope){
-                return $http({method: 'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/send_email?student='+$stateParams.student_id})
-            }
-        },
-        url: '/send_email/:student_id',
-        templateUrl: 'views/teacher/course/send_email.html',
-        controller: 'TeacherCourseSendEmailCtrl'
+        controller: 'enrolledStudentsCtrl'
       })
       .state('course.send_emails', {
         url: '/send_emails',
         templateUrl: 'views/teacher/course/send_emails.html',
-        controller: 'TeacherCourseSendEmailsCtrl'
+        controller: 'sendEmailsCtrl'
       })
       .state('course.announcements', {
       url:'/announcements',

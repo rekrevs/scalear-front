@@ -1,8 +1,29 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document', 'module','$stateParams','$q' ,function ($scope, $state, Module, Document, module, $stateParams, $q) {
-        $scope.module=module.data
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate','$q' ,function ($scope, $state, Module, Document, $stateParams, $translate, $q) {
+        
+        $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
+            if($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
+                $scope.module=$scope.module_obj[$stateParams.module_id]
+                init()
+            }
+        })
+
+        var init = function(){
+            Module.getModules(
+                {
+                    course_id:$stateParams.course_id,
+                    module_id:$stateParams.module_id
+                },
+                function(data){
+                    angular.extend($scope.module, data)
+                },
+                function(){
+                }
+            )
+        }
+        
 
     	$scope.addDocument=function(){
     		console.log($scope.module.id)
@@ -20,8 +41,9 @@ angular.module('scalearAngularApp')
 			);
     	}
 
+
     	$scope.removeDocument=function (elem) {
-    		if(confirm("Are you sure you want to delete document?")){
+    		if(confirm($translate('groups.you_sure_delete_document'))){
 	    		Document.destroy(
 					{document_id: elem.id},{},
 					function(){

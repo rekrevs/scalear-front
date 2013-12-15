@@ -20,13 +20,20 @@
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <!-- endbuild -->
   </head>
-  <body style="overflow:auto" ng-app="scalearAngularApp" ng-controller="indexController">
-  	<div ng-show="server_error" class="errorpage">
 
+  <body style="overflow:auto;" ng-app="scalearAngularApp" ng-controller="indexController">
+  	<div ng-show="show_alert!=''" ng-class="(server_error) ? 'errorpageserver' : 'errorpage'">
+        <div style="text-align: center; display:block;">
+            <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
+        </div>
   	</div>
-  	<div style="text-align: center; word-wrap: break-word">
-        <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
-	</div>
+    <!--<div>-->
+        <!--<center>-->
+
+        <!--</center>-->
+    <!--</div>-->
+
+
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -79,18 +86,7 @@
                 <footer>
                     <br /><br /><br />
                     <br /><br /><br />
-                    <div class="row"><div class="span12">
-                        <center> 
-                            &copy;2013 ScalableLearning | <span translate="footer.about"></span> | <a ui-sref="privacy" translate="footer.privacy"></a>  
-								| <a ng-show="current_user" style="cursor: pointer;" ng-click="technical.show_technical=!technical.show_technical" translate="feedback.report_technical"></a>
-								<div ng-show="technical.show_technical">
-									<textarea rows="3" cols="10" style="width:400px;" ng-model="technical.data"></textarea><br />
-									<a style="cursor: pointer;"  ng-click="technical.send_technical()" translate="feedback.send"></a>
-									<loading size="small" show="technical.sending_technical"/>  
-								</div>
-                            
-                        </center>
-                    </div></div>
+                    <scalear_footer />
                 </footer>
             </div>
             <div><br/></div>
@@ -187,13 +183,14 @@
     <script src="scripts/app.js"></script>
     <script src="scripts/filters/filters.js"></script>
 
+    <script src="scripts/directives/error_directives.js"></script> 
+    <script src="scripts/directives/youtube_directives.js"></script>
+    <script src="scripts/directives/navigation_directives.js"></script>
+    <script src="scripts/directives/footer_directives.js"></script> 
     <script src="scripts/directives/teacher/course_editor/course_editor_directives.js"></script>        
     <script src="scripts/directives/teacher/course_editor/lecture_middle_directives.js"></script>
     <script src="scripts/directives/teacher/course_editor/details_directives.js"></script>
-    <script src="scripts/directives/teacher/course_list/course_list_directives.js"></script>
-    <script src="scripts/directives/navigation_directives.js"></script>
     <script src="scripts/directives/teacher/progress/progress_directives.js"></script>
-    <script src="scripts/directives/error_directives.js"></script> 
     <script src="scripts/directives/student/courseware/courseware_directives.js"></script>
     <script src="scripts/directives/student/courseware/quiz_middle_directives.js"></script>
     <script src="scripts/directives/student/courseware/lecture_middle_directives.js"></script>
@@ -242,7 +239,6 @@
     <script src="scripts/controllers/teacher/progress/quizzes_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/free_text_table_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course/enrolled_students.js"></script>
-    <script src="scripts/controllers/teacher/course/send_email.js"></script>
     <script src="scripts/controllers/teacher/course/course_information.js"></script>
     <script src="scripts/controllers/teacher/course/teachers.js"></script>
     <script src="scripts/controllers/teacher/course/send_emails.js"></script>

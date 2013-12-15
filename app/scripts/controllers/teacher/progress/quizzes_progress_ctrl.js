@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
         Module.getQuizzesProgress(
             { 
                 course_id: $stateParams.course_id,
-                module_id: $scope.module.id, 
+                module_id: $stateParams.module_id, 
                 offset:$scope.quizzes_offset, 
                 limit: $scope.quizzes_limit
             },

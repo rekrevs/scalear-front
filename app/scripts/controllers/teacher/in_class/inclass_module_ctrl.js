@@ -2,8 +2,8 @@
 
 angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window',function ($scope, $modal, $timeout,$window) {
-    $scope.lecture_player={}
-    $scope.lecture_player.events={}    
+    $scope.inclass_player={}
+    $scope.inclass_player.events={}    
   	$scope.display = function (type) {
       $scope.play_pause_class = "play_button"
       $scope.mute_class = "mute_button"
@@ -48,6 +48,11 @@ angular.module('scalearAngularApp')
         controller: view+type+'Ctrl',
         scope: $scope
       });
+
+      $scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
+          event.preventDefault()
+          $scope.exitBtn() 
+      });
     }
 
     $scope.review=function(type){
@@ -62,37 +67,38 @@ angular.module('scalearAngularApp')
     $scope.exitBtn = function () {
       angular.element("body").css("overflow","auto");
       $scope.modalInstance.dismiss();
+      $scope.unregister_back_event();
     };
 
     $scope.playBtn = function(){
       if($scope.play_pause_class == "play_button"){
-        $scope.lecture_player.controls.play()
+        $scope.inclass_player.controls.play()
       }
       else{
-        $scope.lecture_player.controls.pause()
+        $scope.inclass_player.controls.pause()
       }
     }
 
     $scope.muteBtn= function(){
       if($scope.mute_class == "unmute_button"){
         $scope.mute_class = "mute_button"
-        $scope.lecture_player.controls.unmute()
+        $scope.inclass_player.controls.unmute()
       }
       else{
         $scope.mute_class = "unmute_button"
-        $scope.lecture_player.controls.mute()
+        $scope.inclass_player.controls.mute()
       }
     }
 
     $scope.seek=function(time){
-        $scope.lecture_player.controls.seek(time)
-        $scope.lecture_player.controls.pause()
+      console.debug("seeking")
+      $scope.inclass_player.controls.seek_and_pause(time)
     }
 
     $scope.skip=function(skip_time){
       if(skip_time){
-        var seek_to_time = $scope.lecture_player.controls.getTime()+skip_time
-        var duration = $scope.lecture_player.controls.getDuration()
+        var seek_to_time = $scope.inclass_player.controls.getTime()+skip_time
+        var duration = $scope.inclass_player.controls.getDuration()
         if(seek_to_time < 0)
           seek_to_time = 0
         else if(seek_to_time >duration)
@@ -102,18 +108,17 @@ angular.module('scalearAngularApp')
       }
     }
 
-    $scope.lecture_player.events.onPlay=function(){
+    $scope.inclass_player.events.onPlay=function(){
        $scope.play_pause_class = "pause_button"
     }
 
-    $scope.lecture_player.events.onPause=function(){
+    $scope.inclass_player.events.onPause=function(){
        $scope.play_pause_class = "play_button"
     }
 
-    $scope.lecture_player.events.onReady=function(){
+    $scope.inclass_player.events.onReady=function(){
       console.log("player ready")
       $scope.seek($scope.quiz_time);
-      $scope.lecture_player.controls.hideControls();
       $scope.loading_video=false
     }
 
@@ -170,13 +175,6 @@ angular.module('scalearAngularApp')
       }
     }
 
-    var initialize_view=function(){
-      // var width = getVideoWidth()
-      // setVideoWidth(width)
-      // setButtonsPosition()
-      setup_screens()
-    }
-
     var getVideoWidth=function(){
       var win = angular.element($window)
       var video_height = (win.height()*60)/100
@@ -206,10 +204,8 @@ angular.module('scalearAngularApp')
     }
 
     var setButtonsPosition = function(remaining){
-      if(remaining>400)
-        remaining = remaining/3 +30
-      else
-        remaining = remaining/5 
+      
+      remaining = remaining>400? remaining/3 +30 : remaining/5 
       $scope.left_style={
         display:'inline-block',
         minWidth:'50px',

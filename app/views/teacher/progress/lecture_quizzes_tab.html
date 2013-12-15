@@ -6,14 +6,14 @@
 		</video_container>
 	</center>
 
-	<div ng-repeat="id in sub_question_ids" class="chart" style='min-width: 300px; height: 260px;' ng-init="chart=createLectureChart(id)"> 
-	    <div ng-click="seek(id)" style="cursor:pointer"><a>Question {{$index+1}}</a><br> {{getLectureTitle(id)}} </div>
+	<div ng-repeat="id in sub_question_ids" class="chart" style='min-width: 300px; height: 260px;' ng-init="chart=createLectureChart(lecture_data.charts,id)"> 
+	    <div ng-click="seek(id)" style="cursor:pointer"><a><span translate>answer.question</span> {{$index+1}}</a><br> {{getLectureTitle(id)}} </div>
 	    <div google-chart chart="chart" ></div>
-	    <button_link title="Export Chart" action="saveAsImg($event)" >
+	    <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
 	</div>	
 </div>
 <center>
 	<br><br>
 	<loading size="small" show="loading_lectures_chart" />
-	<div ng-if="!lecture_data.question_ids.length && !loading_lectures_chart" >No Lecture Quizzes</div>
+	<div ng-if="!lecture_data.question_ids.length && !loading_lectures_chart" translate>courses.no_lecture_quizzes</div>
 </center>

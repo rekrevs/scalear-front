@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('surveysCtrl', ['$scope','$stateParams','$timeout','Module', 'Quiz', function ($scope, $stateParams, $timeout, Module, Quiz) {
+  .controller('surveysCtrl', ['$scope','$stateParams','$timeout','Module', 'Quiz', '$translate', function ($scope, $stateParams, $timeout, Module, Quiz, $translate) {
   	
     $scope.surveysTab = function(){
         $scope.tabState(5)
@@ -14,7 +14,6 @@ angular.module('scalearAngularApp')
   		var selected_id
     	if($scope.selected_survey)
     		selected_id=$scope.selected_survey? $scope.selected_survey[1] : ""
-      //if(survey_id)
       var id = survey_id || selected_id
     	$scope.loading_surveys_chart = true
   		Module.getSurveyCharts(
@@ -34,8 +33,9 @@ angular.module('scalearAngularApp')
       		$scope.all_surveys = data.all_surveys                
           	$scope.selected_survey = $scope.all_surveys? $scope.all_surveys[0] : ""
           }
-          $scope.button_msg = $scope.selected_survey[2]? "Hide" : "Make Visible"
+          $scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"
           $scope.loading_surveys_chart = false
+          $scope.$watch("current_lang", redrawChart);
   			}, 
   			function(){
   				//alert("Failed to load survyes, please check your internet connection")
@@ -51,8 +51,8 @@ angular.module('scalearAngularApp')
       var formated_data ={}
       formated_data.cols=
           [
-              {"label": "Students","type": "string"},
-              {"label": "Answered","type": "number"},
+              {"label": $translate('courses.students'),"type": "string"},
+              {"label": $translate('controller_msg.answered'),"type": "number"},
           ]
       formated_data.rows= []
       for(var ind in data)
@@ -81,7 +81,7 @@ angular.module('scalearAngularApp')
           "displayExactValues": true,
           "fontSize" : 12,
           "vAxis": {
-              "title": "Number of Students",
+              "title": $translate("quizzes.number_of_students"),
           },
       };
       chart.data = $scope.formatSurveyChartData(chart_data)
@@ -101,9 +101,19 @@ angular.module('scalearAngularApp')
     	Quiz.makeVisible({quiz_id:survey_id},
     		{visible:$scope.selected_survey[2]},
     		function(data){
-    			$scope.button_msg = $scope.selected_survey[2]? "Hide" : "Make Visible"
+    			$scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"
     		}
     	)
+    }
+
+    var redrawChart = function(new_val, old_val){ 
+      if(new_val != old_val){
+          var temp = angular.copy( $scope.survey_chart_data)
+          $scope.survey_chart_data = {}
+          $timeout(function(){
+               $scope.survey_chart_data = temp
+          })
+      }
     }
 
 

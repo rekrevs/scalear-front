@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuizzesCtrl', ['$scope','$stateParams','Module',function ($scope,$stateParams, Module) {
-
+  .controller('displayQuizzesCtrl', ['$scope','$stateParams','Module', '$translate', '$controller', function ($scope,$stateParams, Module, $translate, $controller) {
+    $controller('lectureQuizzesCtrl', {$scope: $scope});
   	var init = function(){
   		Module.displayQuizzes(
 	  		{
@@ -20,7 +20,6 @@ angular.module('scalearAngularApp')
 	  		},
 	  		function(){}
 		)
-		
   	}
 
 	$scope.$parent.setData=function(url){
@@ -30,58 +29,8 @@ angular.module('scalearAngularApp')
 		$scope.$parent.quiz_id  = $scope.display_data[url][$scope.current_quiz_lecture][3] 
 	}
 
-	var formatChartData = function(data){
-        var formated_data ={}
-        formated_data.cols=
-            [
-                {"label": "Students","type": "string"},
-                {"label": "Correct", "type": "number"},
-                {"label": "Incorrect","type": "number"},
-            ]
-        formated_data.rows= []
-        for(var ind in data)
-        {
-            var text, correct, incorrect
-            if(data[ind][1]=="gray"){
-                text=data[ind][2]+" "+"(Incorrect)";
-                correct=0
-                incorrect = data[ind][0]
-            }
-            else{
-                text=data[ind][2]+" "+"(Correct)";
-                correct=data[ind][0]
-                incorrect=0
-            }
-            var row=
-            {"c":
-                [
-                    {"v":text},
-                    {"v":correct},
-                    {"v":incorrect},
-                ]
-            }
-            formated_data.rows.push(row)
-        }
-        return formated_data
-    }
-
     $scope.$parent.createChart = function(id){
-        var chart_data = $scope.chart_data[id]
-        var chart = {};
-        chart.type = "ColumnChart"
-        chart.options = {
-            "colors": ['green','gray'],
-            "isStacked": "true",
-            "height":210,
-            "fill": 20,
-            "displayExactValues": true,
-            "fontSize" : 12,
-            "vAxis": {
-                "title": "Number of Students",
-            },
-        };
-        chart.data = formatChartData(chart_data)
-        return chart
+        return $scope.createLectureChart($scope.chart_data, id)
     }
 
 	init()

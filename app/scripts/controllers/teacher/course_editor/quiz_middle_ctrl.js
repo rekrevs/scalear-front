@@ -1,10 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl',['$stateParams','$rootScope','$scope','Quiz','quiz', 'CourseEditor', function ($stateParams, $rootScope,$scope, Quiz,quiz, CourseEditor) {
+  .controller('quizMiddleCtrl',['$stateParams','$rootScope','$scope','Quiz', 'CourseEditor', '$translate', function ($stateParams, $rootScope,$scope, Quiz, CourseEditor, $translate) {
  
- 	$scope.quiz= quiz.data;
- 	$scope.alert={type:"error", msg:"You've got some errors."}
+ 	$scope.$watch('items_obj['+$stateParams.quiz_id+']', function(){
+      if($scope.items_obj && $scope.items_obj[$stateParams.quiz_id]){
+        $scope.quiz=$scope.items_obj[$stateParams.quiz_id]
+        $scope.$emit('accordianUpdate',$scope.quiz.group_id);
+      }
+    })
+ 	$scope.alert={type:"error", msg:"lectures.got_some_errors"}
  
  	$scope.closeAlerts= function(){
  		$scope.hide_alerts=true;
@@ -105,7 +110,7 @@ angular.module('scalearAngularApp')
  	$scope.removeHtmlAnswer = function(index, question){
 		if(question.answers.length>1)
 		{
-			if(confirm("Are you sure?"))
+			if(confirm($translate('lectures.you_sure')))
 				question.answers.splice(index, 1);
 		}else{
 			console.log("Can't delete the last answer..")
@@ -113,7 +118,7 @@ angular.module('scalearAngularApp')
 	}
 	
 	$scope.removeQuestion = function(index){
- 		 if(confirm("Are you sure?"))
+ 		 if(confirm($translate('lectures.you_sure')))
 		  	$scope.questions.splice(index, 1);
 	}
  

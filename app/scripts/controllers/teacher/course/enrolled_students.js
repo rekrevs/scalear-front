@@ -1,19 +1,30 @@
 'use strict';
 
 var app = angular.module('scalearAngularApp')
-  app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService','$stateParams', function ($scope, $http, $location, $state, Course, students, batchEmailService, $stateParams) {
+  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate', function ($scope, $state, Course, batchEmailService, $stateParams, $translate) {
         
-        $scope.data = students.data.students;
-        $scope.course = students.data.course;
+
+        console.log("in enrolled students");
+		    console.log($stateParams);
+
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
+        $scope.loading_students = true
+        Course.getEnrolledStudents(
+          {course_id: $stateParams.course_id},
+          function(students){
+            $scope.students = students
+            $scope.loading_students = false
+          },
+          function(){}
+        )
+
 
         $scope.removeStudent = function(student){
             console.log(student)
-            var answer = confirm('Are you sure that you want to remove this student, '+student.name+'?');
+            var answer = confirm($translate('courses.you_sure_delete_student'));
             if(answer){
-                //console.log('pressed yes')
-                student.removing=true;
+            	student.removing=true;
                 Course.remove_student(
                     {
                         course_id:$stateParams.course_id ,
@@ -21,38 +32,78 @@ var app = angular.module('scalearAngularApp')
                     },
                     {},
                     function(){
-                       // $scope.data.splice(index, 1);
                         $scope.data.splice($scope.data.indexOf(student), 1)
                      },
                     function(){
                     	student.removing=false;
                         console.log(value);
                     })
+
             }
+        }
+
+        $scope.emailSingle=function(id, email){
+          $scope.deSelectAll()
+          $scope.select(id, email)
+          $scope.emailForm()
         }
 
         $scope.emailForm = function(){
+            var i=0;
+            $scope.selected.forEach(function(email){
+                $scope.emails[i] = email;
+                i++;
+            });
             $state.go('course.send_emails');
         }
-
+        $scope.selected = new Array();
+        $scope.select = function(id, email){
+          if($scope.selected[id] == email){
+              console.log('should deselect');
+              $scope.selected[id] = ',';
+              var i=0;
+              $scope.selected.forEach(function(e){
+                  $scope.emails[i] = e;
+                  i++;
+              });
+          }
+          else{
+              console.log('should select');
+              $scope.selected[id] = email;
+              var i=0;
+              $scope.selected.forEach(function(email){
+                  $scope.emails[i] = email;
+                  i++;
+              });
+          }
+        }
         $scope.selectAll = function(){
-
-            $scope.checked = true;
             var checkboxes = angular.element('.checks');
             for(var i=0; i<checkboxes.length; i++){
-                $scope.emails[i] = checkboxes[i].value;
-                console.log(checkboxes[i].value);
+                $scope.selected[checkboxes[i].id] = checkboxes[i].value;
             }
-        }
+            console.log($scope.selected);
+            var i=0;
+            $scope.selected.forEach(function(email){
+                $scope.emails[i] = email;
+                i++;
+            });
 
+        }
         $scope.deSelectAll = function(){
-            $scope.checked = false;
-            for(var i=0; i< $scope.emails.length; i++){
-                $scope.emails[i] = ',';
+            var checkboxes = angular.element('.checks');
+            for(var i=0; i<checkboxes.length; i++){
+                $scope.selected[checkboxes[i].id] = ',';
             }
-            console.log($scope.checked);
-        }
+            console.log($scope.selected+' => selected');
+            var i=0;
+            $scope.selected.forEach(function(email){
+                $scope.emails[i] = email;
+                i++;
+            });
+            console.log($scope.emails+' => emails');
 
+        }
   }]);
 
 

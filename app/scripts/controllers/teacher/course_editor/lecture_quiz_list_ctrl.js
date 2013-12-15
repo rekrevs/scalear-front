@@ -1,20 +1,27 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'OnlineQuiz','$q' ,function ($scope, $http, $stateParams, $state, $filter, OnlineQuiz, $q) {
+    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'OnlineQuiz', '$translate','$q',function ($scope, $http, $stateParams, $state, $filter, OnlineQuiz, $translate,$q) {
 
 	console.log("loading quiz list")
 	$scope.editing_mode = false
 
-	OnlineQuiz.getQuizList(
-		{lecture_id:$scope.lecture.id},
-		function(data){
-			$scope.$parent.quiz_list = data.quizList
-		},
-		function(){
-			alert("Failed to Load Quiz List")
-		}
-	);	
+	$scope.$watch('lecture',function(){
+		if($scope.lecture)
+			init()
+	})
+
+	var init= function(){
+		OnlineQuiz.getQuizList(
+			{lecture_id:$scope.lecture.id},
+			function(data){
+				$scope.$parent.quiz_list = data.quizList
+			},
+			function(){
+				alert("Failed to Load Quiz List")
+			}
+		);	
+	}
 
 	var updateOnlineQuiz=function(quiz){
 		OnlineQuiz.update(
@@ -39,14 +46,14 @@ angular.module('scalearAngularApp')
 		    // check if hours or minutes are incorrect
 		    var total_duration=(hours*60*60)+(minutes*60)+(seconds);
 		    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
-	       		return "Incorrect Time Format"
+	       		return $translate('online_quiz.incorrect_format_time')
 		    }
 		    else if( ($scope.lecture_player.controls.getDuration()-1) < total_duration || total_duration <= 0 ){
-	       		return "Time Outside Video Range"
+	       		return $translate('online_quiz.time_outside_range')
 		    }
 		}
 	    else{
-	   		return "Incorrect Time Format"
+	   		return $translate('online_quiz.incorrect_format_time')
 	    }
 	}
 	
@@ -72,6 +79,11 @@ angular.module('scalearAngularApp')
 		    return d.promise;
 		}
 
+	$scope.validateName=function(value){
+		if(!value)
+			return "Can't be blank"
+	}
+
 	$scope.saveEdit=function(quiz){
 
 		var a = quiz.formatedTime.split(':'); // split it at the colons			
@@ -81,7 +93,7 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
-		if(confirm("Are you sure you want to delete quiz"))
+		if(confirm($translate('online_quiz.you_sure_delete_quiz')))
 			OnlineQuiz.destroy(
 				{online_quizzes_id: quiz.id},{},
 				function(data){ //success

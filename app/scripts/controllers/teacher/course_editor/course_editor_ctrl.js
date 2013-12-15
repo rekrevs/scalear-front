@@ -1,24 +1,30 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate) {
 
  	/***********************Functions*******************************/
  	var init = function(){
  		$scope.open_id="-1";
 	    $scope.open={};
 	    $scope.oneAtATime = true;
- 		Course.getCourseEditor({course_id:$stateParams.course_id},function(data){
-	 		$scope.course=data.course
-	 		$scope.modules=data.groups
-		  	$scope.modules.forEach(function(module,index){
-		  		module.items = data.items[index]
-		  		module.items.forEach(function(item,ind){
-		  			item.class_name= data.className[index][ind]
-		  		});  		
-		  	});
-	 		console.log($scope.modules);
-	    });
+ 		Course.getCourseEditor(
+ 			{course_id:$stateParams.course_id},
+ 			function(data){
+		 		$scope.course=data.course
+		 		$scope.modules=data.groups
+		 		$scope.module_obj ={}
+		 		$scope.items_obj ={}
+		 		$scope.modules.forEach(function(module){
+		 			$scope.module_obj[module.id] = module
+		 			module.items.forEach(function(item){
+		 				$scope.items_obj[item.id] = item
+		 			})
+		 		})
+		    },
+		    function(){
+		    }
+	    );
  	}
  	
  	$scope.capitalize = function(s)
@@ -35,6 +41,7 @@ angular.module('scalearAngularApp')
 	    		console.log(module)
 	    		module.group.items=[]
 	    		$scope.modules.push(module.group)
+	    		$scope.module_obj[module.group.id] = module.group
     			$scope.module_loading=false
 	    	}, 
 	    	function(){
@@ -48,7 +55,8 @@ angular.module('scalearAngularApp')
     	event.preventDefault();
   		event.stopPropagation();  
   		var m_id= $scope.modules[index].id;
-    	if(confirm("Are you sure you want to delete module "+$scope.modules[index].name+"?")){
+    	if(confirm($translate('groups.you_sure_delete_module')+' '+$scope.modules[index].name+"?")){
+
 	    	Module.destroy(
 	    		{
 	    			course_id: $stateParams.course_id,
@@ -56,8 +64,8 @@ angular.module('scalearAngularApp')
 	    		},{},
 	    		function(response){
 	    			console.log(response)
-	    			
-	    				$scope.modules.splice(index, 1)
+	    				var module = $scope.modules.splice(index, 1)
+	    				delete $scope.module_obj[module.id]
 	    			 	var str = $location.path();
 					 	var res = str.match(/.*\/modules\/(\d+)/);
 					 	if(res && res[1]==m_id)
@@ -80,6 +88,7 @@ angular.module('scalearAngularApp')
 	    		console.log(data)
 	    		data.lecture.class_name='lecture'
 	    	    $scope.modules[module_index].items.push(data.lecture)
+	    	    $scope.items_obj[data.lecture.id] = data.lecture
     			$scope.item_loading=false
 	    	}, 
 	    	function(){
@@ -91,14 +100,18 @@ angular.module('scalearAngularApp')
     $scope.removeLecture=function(module_index, item_index){
     	console.log("remove lec " + module_index + " " + item_index) 
     	var l_id=$scope.modules[module_index].items[item_index].id
-    	if(confirm("Are you sure you want to delete lecture "+$scope.modules[module_index].items[item_index].name+"?")){
+    	if(confirm($translate('groups.you_sure_delete_module')+" "+$scope.modules[module_index].items[item_index].name+"?")){
 	    	Lecture.destroy(
-	    		{course_id: $stateParams.course_id, lecture_id: $scope.modules[module_index].items[item_index].id},
+	    		{
+	    			course_id: $stateParams.course_id, 
+	    			lecture_id: $scope.modules[module_index].items[item_index].id
+	    		},
 	    		{},
 	    		function(response){
 	    			 console.log(response)
-	    			 $scope.modules[module_index].items.splice(item_index, 1)
-	    			  
+	    			 var item = $scope.modules[module_index].items.splice(item_index, 1)
+	    			 delete $scope.items_obj[item.id]
+
 	    			 var str = $location.path();
 					 var res = str.match(/.*\/lectures\/(\d+)/);
 					 if(res && res[1]==l_id)
@@ -122,6 +135,7 @@ angular.module('scalearAngularApp')
 	    		console.log(data)
 	    		data.quiz.class_name='quiz'
 	    	    $scope.modules[module_index].items.push(data.quiz)
+	    	    $scope.items_obj[data.quiz.id] = data.quiz
     			$scope.item_loading=false
 	    	}, 
 	    	function(){
@@ -133,13 +147,14 @@ angular.module('scalearAngularApp')
     $scope.removeQuiz=function(module_index, item_index){
     	console.log("remove quiz " + module_index + " " + item_index) 
     	var q_id=$scope.modules[module_index].items[item_index].id;
-    	if(confirm("Are you sure you want to delete "+$scope.modules[module_index].items[item_index].quiz_type+" "+$scope.modules[module_index].items[item_index].name+"?")){
+    	if(confirm($translate('online_quiz.you_sure_delete_quiz')+" "+$scope.modules[module_index].items[item_index].quiz_type+" "+$scope.modules[module_index].items[item_index].name+"?")){
 	    	Quiz.destroy(
 	    		{course_id: $stateParams.course_id,
 	    		 quiz_id: q_id},
 	    		{},
 	    		function(response){
-	    			 $scope.modules[module_index].items.splice(item_index, 1)
+	    			 var quiz = $scope.modules[module_index].items.splice(item_index, 1)
+	    			 delete $scope.items_obj[quiz.id]
 	    			 var str = $location.path();
 					 var res = str.match(/.*\/quizzes\/(\d+)/);
 					 if(res && res[1]==q_id)
@@ -153,22 +168,13 @@ angular.module('scalearAngularApp')
     }
 
     /*************************************************************************************/
-
-
     
-
 	$rootScope.$on('accordianUpdate', function(event, message) {
 		$scope.open_id=message;
 		$scope.open[message]= true;
 	});
 
-	$rootScope.$on("detailsUpdate", function(event, args) {
-  		init();
-  		console.log("event emitted: title in left bar");
-    });
-
  	$scope.moduleSortableOptions={
- 		//cursorAt: { top: 0, left: 0 } ,
  		axis: 'y',
 		dropOnEmpty: false,
 		handle: '.handle',
@@ -176,7 +182,6 @@ angular.module('scalearAngularApp')
 		items: '.module',
 		opacity: 0.4,
 		scroll: true,
-		//out: CourseEditor.adjustDragScroll,
 		update: function(e, ui) {
 			Module.saveSort({},
 				{course_id:$stateParams.course_id,
@@ -199,7 +204,6 @@ angular.module('scalearAngularApp')
 		items: '.item',
 		opacity: 0.4,
 		scroll: true,
-		//start: CourseEditor.adjustDragScroll,
 		update: function(e, ui) {
 			var group_id=ui.item.scope().item.group_id
 			var group_position=ui.item.scope().$parent.$parent.module.position -1

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizzesCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
+  .controller('quizzesCtrl', ['$scope','$stateParams','$timeout','Module', '$translate', function ($scope, $stateParams, $timeout, Module, $translate) {
    
    $scope.quizzesTab = function(){
         $scope.tabState(6)
@@ -30,6 +30,7 @@ angular.module('scalearAngularApp')
                 	$scope.selected_quiz = $scope.all_quizzes? $scope.all_quizzes[0] : ""
                 }
                 $scope.loading_quizzes_chart = false
+                $scope.$watch("current_lang", redrawChart);
             },
             function(){
             	//alert("Failed to load quizzes, please check your internet connection")
@@ -44,21 +45,21 @@ angular.module('scalearAngularApp')
         var formated_data ={}
         formated_data.cols=
             [
-                {"label": "Students","type": "string"},
-                {"label": "Correct","type": "number"},
-                {"label": "Incorrect","type": "number"},
+                {"label": $translate('courses.students'),"type": "string"},
+                {"label": $translate('lectures.correct'),"type": "number"},
+                {"label": $translate('lectures.incorrect'),"type": "number"},
             ]
         formated_data.rows= []
         var text, correct, incorrect
         for(var ind in data)
         {
             if(!data[ind][1]){
-                text=data[ind][2]+" "+"(Incorrect)";
+                text=data[ind][2]+" "+"("+$translate('lectures.incorrect')+")";
                 correct=0
                 incorrect=data[ind][0]
             }
             else{
-                text=data[ind][2]+" "+"(Correct)";
+                text=data[ind][2]+" "+"("+$translate('lectures.correct')+")";
                 correct=data[ind][0]
                 incorrect=0
             }
@@ -87,7 +88,7 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": "Number of Students",
+                "title": $translate("quizzes.number_of_students"),
             },
         };
         chart.data = $scope.formatQuizChartData(chart_data)
@@ -100,6 +101,16 @@ angular.module('scalearAngularApp')
     	$scope.quiz_chart_data={}
     	$scope.quiz_chart_questions={}
     	getQuizCharts()
+    }
+
+    var redrawChart = function(new_val, old_val){ 
+        if(new_val != old_val){
+            var temp = angular.copy( $scope.quiz_chart_data)
+            $scope.quiz_chart_data = {}
+            $timeout(function(){
+                 $scope.quiz_chart_data = temp
+            })
+        }
     }
 
 

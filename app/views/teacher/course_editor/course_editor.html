@@ -17,16 +17,16 @@
 		            	</ul>
 		            	<center><loading size="small" show="item_loading" /></center>
 			            <center class="item-buttons">
-			            	<button_link title="Add Lecture" class="btn-mini adding" action="addLecture($parent.$index)" />
-			            	<button_link title="Add Quiz"    class="btn-mini adding" action="addQuiz($parent.$index, 'quiz')"/>
-			            	<button_link title="Add Survey"  class="btn-mini adding" action="addQuiz($parent.$index, 'survey')"/>
+			            	<button_link title="{{'courses.add_lecture'|translate}}" class="btn-mini adding" action="addLecture($parent.$index)" />
+			            	<button_link title="{{'lectures.add_quiz'|translate}}"    class="btn-mini adding" action="addQuiz($parent.$index, 'quiz')"/>
+			            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn-mini adding" action="addQuiz($parent.$index, 'survey')"/>
 		                </center>
 		        	</div>
 		    	</div>
 	      	</accordion-group>	
 		</accordion>
 		<center><loading size="small" show="module_loading" /></center>
-		<button_link title="Add Module" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
+		<button_link title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
 		<hr />
 	</div>
 	<div class="span6" id="middle"  ui-view="middle"></div>

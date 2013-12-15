@@ -59,7 +59,7 @@
 }
 
 .hidden_shortcuts{
-    position:relative;
+    position:absolute;
 	top: -160px;
 	z-index:3;
 }

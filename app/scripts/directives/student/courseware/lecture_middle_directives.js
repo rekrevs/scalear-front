@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
              		if(data.msg=="ask")
              		{
 	             		scope.$parent.show_notification="If you're really confused, please use the question button to ask a question so the teacher can help you.";
-	             		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px"}
+	             		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px", "top":(scope.pHeight - 180) + "px" }
 	             		$timeout(function(){
 	             			scope.$parent.notify_position={"left":"180px"};
 	             			scope.$parent.show_notification=false;
@@ -114,6 +114,10 @@ angular.module('scalearAngularApp')
    			if(scope.display_mode!=true) //not a quiz
    				scope.pause();
    		}
+   		
+   		scope.$watch('lecture.aspect_ratio', function(){
+   			setButtonsLocation()
+   		})
 		
     }
   };
@@ -128,7 +132,7 @@ angular.module('scalearAngularApp')
     	scope.incorrect_notify=$translate("lectures.incorrect")
     	
     	element.css("position", "relative");
-		element.css("top", "430px");
+		element.css("top", "330px");
 		element.css("left","180px");
 		element.css("padding","5px");
 		element.css("font-size", "12px");
@@ -136,25 +140,30 @@ angular.module('scalearAngularApp')
 		element.css("z-index","10000");
 		element.css("display","block");
 		
-		// remove this?
-		angular.forEach(['pWidth', 'pHeight'], function (key) {
-	      	scope.$watch(key, function(){
-	      			element.css("top", scope.pHeight-180+"px");
-	      			console.log("playerHeight is "+scope.playerHeight);
-	      			if(!scope.fullscreen)
-		    			element.css("z-index",1000);
-		    		else	
-		    			element.css("z-index",10000);
-			});
-		});
+		// // remove this?
+		// angular.forEach(['pWidth', 'pHeight'], function (key) {
+	      	// scope.$watch(key, function(){
+	      			// element.css("top", scope.pHeight-180+"px");
+	      			// console.log("playerHeight is "+scope.playerHeight);
+	      			// if(!scope.fullscreen)
+		    			// element.css("z-index",1000);
+		    		// else	
+		    			// element.css("z-index",10000);
+			// });
+		// });
 
       var setNotficationPosition=function(){
         console.log(scope.fullscreen)
         if(scope.fullscreen)
-          scope.pHeight=angular.element($window).height()- 180;
-        else
-          scope.pHeight=435;
-        element.css("top", scope.pHeight+"px");
+        {
+         scope.pHeight=angular.element($window).height()- 140;
+          element.css("z-index",10000);
+        }else{
+        scope.pHeight= 480-140;
+        element.css("z-index",1000);
+        }
+      
+      element.css("top", scope.pHeight+"px");
       }
 
       setNotficationPosition()

@@ -13,7 +13,7 @@
 		</quiz>
 	</div>
 	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" class="youtube"/>
-	<controls ng-if="lecture" resizable-video video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' />
+	<controls ng-show="lecture" resizable-video video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' />
 	<check ng-show='display_mode'></check>
 	<notification ng-style="notify_position" ng-if='show_notification!=false'></notification>
 </video_container>

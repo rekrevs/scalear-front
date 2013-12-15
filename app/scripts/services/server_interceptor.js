@@ -33,6 +33,15 @@ angular.module('scalearAngularApp')
       		$rootScope.show_alert="";	
       	},4000);
       }
+      
+      if(response.data.notice && response.config.url.search(re)!=-1)
+      {
+      	$rootScope.show_alert="success";
+      	ErrorHandler.showMessage(response.data.notice, 'errorMessage', 2000);
+      	$timeout(function(){
+      		$rootScope.show_alert="";	
+      	},4000);
+      }
      
       return response || $q.when(response);
     },
@@ -41,6 +50,33 @@ angular.module('scalearAngularApp')
    'responseError': function(rejection) {
       // do something on error
       console.log(rejection);
+      if(rejection.status==400 && rejection.config.url.search(re)!=-1) 
+      {
+      	$rootScope.show_alert="error";
+      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
+      	$timeout(function(){
+      		$rootScope.show_alert="";	
+      	},4000);
+      }
+      
+      if(rejection.status==404 && rejection.config.url.search(re)!=-1) 
+      {
+      	console.log("rootscope is ");
+      	console.log($rootScope);
+      	 var $state = $injector.get('$state'); //test connection every 10 seconds.
+      	if($rootScope.current_user.roles[0].id==2)// student
+      		$state.go("student_courses") //check
+      	else if($rootScope.current_user.roles[0].id==1 || $rootScope.current_user.roles[0].id==5)// teacher
+      		$state.go("course_list") //check
+      	else
+      		$state.go("login") //check
+      		
+      	$rootScope.show_alert="error";
+      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
+      	$timeout(function(){
+      		$rootScope.show_alert="";	
+      	},4000);
+      }
       
       if(rejection.status==403 && rejection.config.url.search(re)!=-1) 
       {

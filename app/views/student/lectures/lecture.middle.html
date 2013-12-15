@@ -15,7 +15,7 @@
 	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" class="youtube"/>
 	<controls></controls>
 	<check ng-show='display_mode'></check>
-	<notification ng-show='show_notification!=false'></notification>
+	<notification ng-style="notify_position" ng-show='show_notification!=false'></notification>
 </video_container>
 </form>
 <br><br>

@@ -13,10 +13,10 @@ angular.module('scalearAngularApp')
   	$scope.form.processing=true;
   	Course.enroll({},{unique_identifier : $scope.enrollment.key},function(data){
   		$scope.form.processing=false;
-  		if(data.status=="fail")
-  			$scope.form.server_error=data.message
-  		else
-  			$modalInstance.close($scope.enrollment.key);	
+  		$modalInstance.close($scope.enrollment.key);	
+  	}, function(response){
+  		$scope.form.processing=false;
+  		$scope.form.server_error=response.data.errors.join();
   	})
   		
   	}else

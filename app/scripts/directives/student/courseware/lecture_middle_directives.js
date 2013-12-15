@@ -63,16 +63,26 @@ angular.module('scalearAngularApp')
       		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
     			$timeout(function(){
              		scope.show_message=false;
+             		console.log(data)
+             		if(data.msg=="ask")
+             		{
+	             		scope.show_notification="If you're really confused, please use the question button to ask a question so the teacher can help you.";
+	             		scope.notify_position={"left":(scope.pWidth - 300) + "px"}
+	             		$timeout(function(){
+	             			scope.notify_position={"left":"180px"};
+	             			scope.show_notification=false;
+	             		}, 3000)
+	             	}
          		}, 2000);	
     		});
       		
       	};
-      	scope.back= function(time)
+      	scope.back= function()
       	{
       		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
     		});
       	};
-      	scope.pause= function(time)
+      	scope.pause= function()
       	{
       		Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
     		});
@@ -113,10 +123,16 @@ angular.module('scalearAngularApp')
 				shortcut.add("b",function(){
 					var t=scope.lecture_player.controls.getTime();
 					scope.lecture_player.controls.seek(t-10);
-					scope.back(t);
+					scope.back();
 				},{"disable_in_input" : true});
 		};
 		scope.setShortcuts();
+		
+		scope.lecture_player.events.onPause= function(){
+   			console.log("in here");
+   			if(scope.display_mode!=true) //not a quiz
+   				scope.pause();
+   		}
 		
     }
   };
@@ -125,21 +141,23 @@ angular.module('scalearAngularApp')
   return {// doesnt work with ng-class - only if used from the very beginning..
     restrict:"E",
     // use replace?
-	template:'<div class="well"><div ng-show="show_notification==true"><center><b ng-class="{\'green_notification\':verdict==\'Correct\', \'red_notification\':verdict==\'Incorrect\'}">{{verdict}}</b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'">Hover for details...</center></div><div ng-show="show_notification!=true">{{show_notification}}</div></div>',
+	template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification==true"><center><b ng-class="{\'green_notification\':verdict==\'Correct\', \'red_notification\':verdict==\'Incorrect\'}">{{verdict}}</b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'">Hover for details...</center></div><div ng-show="show_notification!=true">{{show_notification}}</div></div>',
 	
     link: function(scope, element, attrs) {
     	element.css("position", "relative");
-		element.css("top", "350px");
-		element.css("left","180px")
+		element.css("top", "330px");
+		element.css("left","180px");
+		element.css("padding","5px");
+		element.css("font-size", "12px");
 		//element.css("left", "200px");
-		element.children().css("height", "40px");
+		//element.children().css("height", "40px");
 		element.children().css("width", "150px");
 		element.css("z-index","10000");
 		element.css("display","block");
 		
 		angular.forEach(['pWidth', 'pHeight'], function (key) {
 	      	scope.$watch(key, function(){
-	      			element.css("top", scope.pHeight-150+"px");
+	      			element.css("top", scope.pHeight-180+"px");
 	      			console.log("playerHeight is "+scope.playerHeight);
 	      			if(!scope.full_screen)
 		    			element.css("z-index",1000);

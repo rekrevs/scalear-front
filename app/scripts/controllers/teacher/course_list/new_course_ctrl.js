@@ -28,10 +28,11 @@ angular.module('scalearAngularApp')
 				}
 				else{
 					$(window).scrollTop(0);
-					$state.go("course.course_editor",{"course_id":data.id})
+					$state.go("course.course_editor",{"course_id":data.course.id})
 				}
 			},function(response){
 				//server error must handle.
+				$scope.server_errors=response.data.errors
 			}
 		);
 		}else{

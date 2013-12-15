@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
           $scope.loading_surveys_chart = false
   			}, 
   			function(){
-  				alert("Failed to load survyes, please check your internet connection")
+  				//alert("Failed to load survyes, please check your internet connection")
   			}
 		)
   	}

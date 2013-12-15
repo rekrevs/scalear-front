@@ -33,12 +33,12 @@ angular.module('scalearAngularApp')
     	Module.newModule({course_id: $stateParams.course_id},{},
 	    	function(module){
 	    		console.log(module)
-	    		module.items=[]
-	    		$scope.modules.push(module)
+	    		module.group.items=[]
+	    		$scope.modules.push(module.group)
     			$scope.module_loading=false
 	    	}, 
 	    	function(){
-	    		alert("Failed to create module, please check network connection")
+	    		//alert("Failed to create module, please check network connection")
 	    	}
 		);
     }
@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
     	event.preventDefault();
   		event.stopPropagation();  
   		var m_id= $scope.modules[index].id;
-    	if(confirm("Are you sure you want to delete module?")){
+    	if(confirm("Are you sure you want to delete module "+$scope.modules[index].name+"?")){
 	    	Module.destroy(
 	    		{
 	    			course_id: $stateParams.course_id,
@@ -56,18 +56,16 @@ angular.module('scalearAngularApp')
 	    		},{},
 	    		function(response){
 	    			console.log(response)
-	    			if(response.error.lecture_quiz_exist)
-	    				console.log("Sorry, You must delete all items in the module before deleting the module itself.")
-	    			else{
+	    			
 	    				$scope.modules.splice(index, 1)
 	    			 	var str = $location.path();
 					 	var res = str.match(/.*\/modules\/(\d+)/);
 					 	if(res && res[1]==m_id)
 	    			 		$state.go('course.course_editor')
-	    			}
+	    			
 	    		},
 	    		function(){
-	    			alert("Failed to delete module, please check network connection")
+	    			//alert("Failed to delete module, please check network connection")
 	    		}
 			);
 		}
@@ -78,14 +76,14 @@ angular.module('scalearAngularApp')
     	console.log($scope.modules)
     	$scope.item_loading=true
     	Lecture.newLecture({course_id: $stateParams.course_id, group: $scope.modules[module_index].id},
-	    	function(lecture){
-	    		console.log(lecture)
-	    		lecture.class_name='lecture'
-	    	    $scope.modules[module_index].items.push(lecture)
+	    	function(data){
+	    		console.log(data)
+	    		data.lecture.class_name='lecture'
+	    	    $scope.modules[module_index].items.push(data.lecture)
     			$scope.item_loading=false
 	    	}, 
 	    	function(){
-	    		alert("Failed to create lecture, please check network connection")
+	    		//alert("Failed to create lecture, please check network connection")
 	    	}
 		);
     }
@@ -93,7 +91,7 @@ angular.module('scalearAngularApp')
     $scope.removeLecture=function(module_index, item_index){
     	console.log("remove lec " + module_index + " " + item_index) 
     	var l_id=$scope.modules[module_index].items[item_index].id
-    	if(confirm("Are you sure you want to delete lecture?")){
+    	if(confirm("Are you sure you want to delete lecture "+$scope.modules[module_index].items[item_index].name+"?")){
 	    	Lecture.destroy(
 	    		{course_id: $stateParams.course_id, lecture_id: $scope.modules[module_index].items[item_index].id},
 	    		{},
@@ -107,7 +105,7 @@ angular.module('scalearAngularApp')
 	    			 	$state.go('course.course_editor')
 	    		},
 	    		function(){
-	    			alert("Failed to delete lecture, please check network connection")
+	    			//alert("Failed to delete lecture, please check network connection")
 	    		}
 			);
 		}
@@ -120,14 +118,14 @@ angular.module('scalearAngularApp')
     	Quiz.newQuiz({course_id: $stateParams.course_id, group: $scope.modules[module_index].id, type:type},
     	{},
 
-	    	function(quiz){
-	    		console.log(quiz)
-	    		quiz.class_name='quiz'
-	    	    $scope.modules[module_index].items.push(quiz)
+	    	function(data){
+	    		console.log(data)
+	    		data.quiz.class_name='quiz'
+	    	    $scope.modules[module_index].items.push(data.quiz)
     			$scope.item_loading=false
 	    	}, 
 	    	function(){
-	    		alert("Failed to create quiz, please check network connection")
+	    		//alert("Failed to create quiz, please check network connection")
 	    	}
 		);
     }
@@ -135,7 +133,7 @@ angular.module('scalearAngularApp')
     $scope.removeQuiz=function(module_index, item_index){
     	console.log("remove quiz " + module_index + " " + item_index) 
     	var q_id=$scope.modules[module_index].items[item_index].id;
-    	if(confirm("Are you sure you want to delete Quiz?")){
+    	if(confirm("Are you sure you want to delete "+$scope.modules[module_index].items[item_index].quiz_type+" "+$scope.modules[module_index].items[item_index].name+"?")){
 	    	Quiz.destroy(
 	    		{course_id: $stateParams.course_id,
 	    		 quiz_id: q_id},
@@ -148,7 +146,7 @@ angular.module('scalearAngularApp')
 	    			 	$state.go('course.course_editor')
 	    		},
 	    		function(){
-	    			alert("Failed to delete Quiz, please check network connection")
+	    			//alert("Failed to delete Quiz, please check network connection")
 	    		}
 			);
 		}

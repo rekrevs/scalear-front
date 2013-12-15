@@ -21,13 +21,13 @@
 			</tr>
 			<tr ng-repeat="doc in module.documents">
 				<td>
-					<editable_text value="doc.name" save="updateDocument($index)" >
+					<editable_text value="doc.name" save="updateDocument(doc)" validation="validateName" elem="doc">
 				</td>
 				<td style="max-width:120px;overflow-wrap:break-word;word-wrap: break-word;">
-					<editable_text value="doc.url" save="updateDocument($index)">
+					<editable_text value="doc.url" save="updateDocument(doc)" validation="validateURL" elem="doc">
 				</td>
 				<td>
-					<delete_button size="big" action="removeDocument($index)" />
+					<delete_button size="big" action="removeDocument(doc)" />
 				</td>
 			</tr>
 		</table>

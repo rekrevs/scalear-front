@@ -32,7 +32,7 @@ angular.module('scalearAngularApp')
                 $scope.loading_quizzes_chart = false
             },
             function(){
-            	alert("Failed to load quizzes, please check your internet connection")
+            	//alert("Failed to load quizzes, please check your internet connection")
             }
         )
     }

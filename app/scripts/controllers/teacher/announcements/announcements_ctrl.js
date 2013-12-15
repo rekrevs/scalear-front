@@ -62,15 +62,15 @@ angular.module('scalearAngularApp')
   		{
   		Announcement.create({course_id: $stateParams.course_id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
   			//init();
-  			$scope.announcements[index]=data;
+  			$scope.announcements[index]=data.announcement;
   		},function(response){
-  			$scope.announcements[index].errors=response["data"]
+  			$scope.announcements[index].errors=response["data"].errors
   		})
   		}else{
   		Announcement.update({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
-  			$scope.announcements[index]=data;
+  			$scope.announcements[index]=data.announcement;
   		},function(response){
-  			$scope.announcements[index].errors=response["data"]
+  			$scope.announcements[index].errors=response["data"].errors
   		})
   		}
   	};

@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
                     
             },
             function(){
-                alert('Could not load data, please check your internet connection')
+                //alert('Could not load data, please check your internet connection')
             }
         );
     } 
@@ -100,7 +100,7 @@ angular.module('scalearAngularApp')
 
     		},
     		function(){
-    			alert("Failed to load student progress, please check your internet connection")
+    			//alert("Failed to load student progress, please check your internet connection")
     		}
 		)
     }

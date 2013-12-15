@@ -12,34 +12,33 @@
 
     <b>Start Date:</b>
     <p>
-        <details-date date="data.course.start_date" save="updateCourse()" column="start_date"></details-date>
-
+        <details-date date="data.course.start_date" save="updateCourse()" validate="validateCourse" column="start_date"></details-date>
     </p>
 
     <b>Duration:</b>
     <p>
-        <details-text value="data.course.duration" save="updateCourse()" column="duration"></details-text> Weeks
+        <details-text value="data.course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> Weeks
     </p>
 
     <b>Discussion Forum Link:</b>
     <p>
-        <details-text value="data.course.discussion_link" save="updateCourse()" column="discussion_link"></details-text> |
+        <details-text value="data.course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-text> |
         <a href="{{data.course.discussion_link}}">Visit Link</a>
     </p>
 
     <b>Description:</b>
     <p>
-        <big-area value="data.course.description" save="updateCourse()" column="description"></big-area>
+        <big-area value="data.course.description" save="updateCourse()" validate="validateCourse" column="description"></big-area>
     </p>
 
     <b>Prerequisites:</b>
     <p>
-        <big-area value="data.course.prerequisites" save="updateCourse()" column="prerequisites"></big-area>
+        <big-area value="data.course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
     </p>
 
     <b>Time Zone:</b>
     <p>
-        <details-select value="data.course.time_zone" options="timezones" save="updateCourse()" column="duration"></details-select>
+        <details-time-zone value="data.course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
     </p>
 
 </div>

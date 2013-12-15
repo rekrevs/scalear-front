@@ -1,6 +1,6 @@
 <center>
 	<h3 ng-show="question">Free Text Questions</h3>
-	<div ng-show="notify" class="alert">{{notify}}</div>
+	<!-- <div ng-show="notify" class="alert">{{notify}}</div> -->
 </center >
 <table style="background-color:white" class="table" >
 	<tr>
@@ -16,7 +16,7 @@
 	</tr>
 	<tr ng-repeat="answer in question.answers|survey:display_only">
 		<td style="border-right: 1px gray solid;">
-			<input type="checkbox" ng-hide="display_only" ng-model="answer.hide" ng-change="saveCheckedHide(question.answers)" />
+			<input type="checkbox" ng-hide="display_only" ng-model="answer.hide" ng-change="saveCheckedHide(answer)" />
 		</td>
 		<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;">
 			<input type="checkbox" ng-model="answer.group_selected" />

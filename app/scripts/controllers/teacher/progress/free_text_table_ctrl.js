@@ -20,25 +20,26 @@ angular.module('scalearAngularApp')
 
     }
 
-    $scope.saveCheckedHide = function(answers){
+    $scope.saveCheckedHide = function(answer){
     	var survey_id = $scope.survey_id
-    	var hide = []
-    	var ind = 0
-    	answers.forEach(function(answer){
-    		if(answer.hide){
-    			hide[ind] = answer.id
-    			ind++
-    		}
-    	})
-    	console.log(hide)
+    	var hide=answer.id
+    	// var hide = []
+    	// var ind = 0
+    	// answers.forEach(function(answer){
+    		// if(answer.hide){
+    			// hide[ind] = answer.id
+    			// ind++
+    		// }
+    	// })
+    	// console.log(hide)
     	Quiz.hideResponses(
     		{quiz_id: survey_id},
-    		{hide: hide},
+    		{hide: answer},
     		function(){
-    			$scope.notify = "Saved"
-    			$timeout(function(){
-    				$scope.notify = ""
-    			},2000)
+    			// $scope.notify = "Saved"
+    			// $timeout(function(){
+    				// $scope.notify = ""
+    			// },2000)
     		}
 		)
     }
@@ -55,7 +56,7 @@ angular.module('scalearAngularApp')
     			ind++
     		}
     	})
-    	$scope.notify = "Sending Emails"
+    	//$scope.notify = "Sending Emails"
 		Quiz.sendFeedback(
 			{quiz_id: survey_id},
 			{
@@ -63,7 +64,7 @@ angular.module('scalearAngularApp')
 				response:response
 			},
 			function(){
-				$scope.notify = ""
+				//$scope.notify = ""
 				hideFeedback(answers, index)
 			},
 			function(){}

@@ -1,4 +1,3 @@
-
 <div class="row">
     <div class="span12">
         <p style="display:inline; float: right;">
@@ -27,7 +26,8 @@
                         <!--<a href="#/courses/{{course.id}}/send_email/{{student.id}}">{{student.email}}</a>-->
                     </td>
                     <td style="text-align: center;">
-                        <input id="remove_button" class="btn" type="button" ng-click="removeStudent(student.id, $index)" value="Remove"/>
+                        <input id="remove_button" class="btn" type="button" ng-click="removeStudent(student)" value="Remove" ng-disabled="student.removing"/>
+                        <loading size="small" show="student.removing"/>
                         <!--<a ui-sref="course.remove_student({student_id:student.id})" data-confirm="Are you would like to delete {{student.name}} and all of his data?">Remove from course</a>-->
                     </td>
                     <td style="text-align: center;" ng-init="$parent.emails[$index] = ','">

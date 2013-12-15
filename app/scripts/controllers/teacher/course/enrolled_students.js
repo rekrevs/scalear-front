@@ -3,47 +3,31 @@
 var app = angular.module('scalearAngularApp')
   app.controller('TeacherCourseEnrolledStudentsCtrl', ['$scope', '$http','$location', '$state', 'Course', 'students', 'batchEmailService','$stateParams', function ($scope, $http, $location, $state, Course, students, batchEmailService, $stateParams) {
         
-        console.log("in enrolled students");
-		console.log($stateParams);
-
-        console.log(students.data.course);
-        console.log(students.data.students);
         $scope.data = students.data.students;
         $scope.course = students.data.course;
-
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
 
-
-
-        $scope.removeStudent = function(student, index){
+        $scope.removeStudent = function(student){
             console.log(student)
-            var answer = confirm('Are you sure that you want to remove this student?');
+            var answer = confirm('Are you sure that you want to remove this student, '+student.name+'?');
             if(answer){
                 //console.log('pressed yes')
+                student.removing=true;
                 Course.remove_student(
                     {
                         course_id:$stateParams.course_id ,
-                        student: student
+                        student: student.id
                     },
                     {},
                     function(){
-                        $scope.data.splice(index, 1);
+                       // $scope.data.splice(index, 1);
+                        $scope.data.splice($scope.data.indexOf(student), 1)
                      },
                     function(){
+                    	student.removing=false;
                         console.log(value);
                     })
-//                    .$promise.then(
-//                    function(value){
-//
-//                    },
-//                    function(value){
-//
-//                    }
-                //)
-                //console.log(index);
-
-
             }
         }
 
@@ -59,8 +43,6 @@ var app = angular.module('scalearAngularApp')
                 $scope.emails[i] = checkboxes[i].value;
                 console.log(checkboxes[i].value);
             }
-//            console.log(checkboxes);
-//            console.log($scope.checked);
         }
 
         $scope.deSelectAll = function(){
@@ -71,7 +53,6 @@ var app = angular.module('scalearAngularApp')
             console.log($scope.checked);
         }
 
-//      $scope.checked = true;
   }]);
 
 

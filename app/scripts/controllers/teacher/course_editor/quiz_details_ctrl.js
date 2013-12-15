@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
      		delete modified_quiz["id"];  	
       	Quiz.update({course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},{quiz:modified_quiz},function(data){
   				$scope.quiz= data.quiz;
-          $scope.$emit('detailsUpdate');
+          		$scope.$emit('detailsUpdate');
   				$scope.$emit('accordianUpdate',$scope.quiz.group_id);
   				return true;
   		  }
@@ -34,8 +34,8 @@ angular.module('scalearAngularApp')
       },function(data){
         console.log(data.status);
         console.log(data);
-        if(data.status==422)
-          d.resolve(data.data[column].join());
+        if(data.status==422 && data.data.errors[column])
+          d.resolve(data.data.errors[column].join());
         else
           d.reject('Server Error');
         }

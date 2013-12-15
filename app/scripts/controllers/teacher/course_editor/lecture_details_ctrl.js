@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
 				console.log(data.status);
 				console.log(data);
 			if(data.status==422)
-			 	d.resolve(data.data[column].join());
+			 	d.resolve(data.data.errors[column].join());
 			else
 				d.reject('Server Error');
 			}
@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
 				$scope.$emit('accordianUpdate',$scope.lecture.group_id);				
 			},
 			function(){
-				alert("Failed to update lecture, please check your internet connection")
+				//alert("Failed to update lecture, please check your internet connection")
 			}
 		);	
 	}

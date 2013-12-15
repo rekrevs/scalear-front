@@ -58,20 +58,31 @@ angular.module('scalearAngularApp')
         $scope.removeNewRow = function(index){
             $scope.new_teachers.splice(index, 1);
         }
+        $scope.getTeachers= function(){
+        	Course.getTeachers({},
+                  function(value){
+                       $scope.teachers = value.data;
+                       $scope.new_teachers = [];
+                   },
+                        //handle error
+                   function(value){}
+             )
+        }
         $scope.saveTeachers = function(){
             Course.saveTeachers({course_id:$stateParams.course_id},{new_teachers:$scope.new_teachers},
                 function(value) {
-                    $scope.error = Course.getTeachers({},
-                        function(value){
-                            $scope.teachers = value.data;
-                            $scope.new_teachers = [];
-                        },
-                        //handle error
-                        function(value){}
-                    )
+                    $scope.error = $scope.getTeachers();
                 },
                 //handle error
-                function(value) {}
+                function(value) {
+                	$scope.errors=value.data.errors
+                	for(var element in $scope.new_teachers)
+                	{
+                		$scope.new_teachers[element].error=$scope.errors[$scope.new_teachers[element].email]
+                	}
+                	console.log($scope.errors);
+                	//$scope.error = $scope.getTeachers();
+                }
             )
 
         }

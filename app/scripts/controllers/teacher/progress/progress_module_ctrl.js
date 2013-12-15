@@ -58,7 +58,7 @@ angular.module('scalearAngularApp')
                 $scope.loading_module_chart=false
             },
             function(){
-                alert("Failed to load module, please check your internet connection")
+                //alert("Failed to load module, please check your internet connection")
             })
     }
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'OnlineQuiz' ,function ($scope, $http, $stateParams, $state, $filter, OnlineQuiz) {
+    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'OnlineQuiz','$q' ,function ($scope, $http, $stateParams, $state, $filter, OnlineQuiz, $q) {
 
 	console.log("loading quiz list")
 	$scope.editing_mode = false
@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
 				console.log(data)
 			},
 			function(){ //error
-				alert("Could not update quiz, please check your internet connection")
+				//alert("Could not update quiz, please check your internet connection")
 			}
 		);
 	}
@@ -49,6 +49,28 @@ angular.module('scalearAngularApp')
 	   		return "Incorrect Time Format"
 	    }
 	}
+	
+		$scope.validateName= function(data, elem){
+			var d = $q.defer();
+		    var doc={}
+		    doc["question"]=data;
+		    console.log($scope.$parent.quiz_list);
+		    OnlineQuiz.validateName(
+		    	{online_quizzes_id: elem.id},
+		    	doc,
+		    	function(data){
+					d.resolve()
+				},function(data){
+					console.log(data.status);
+					console.log(data);
+				if(data.status==422)
+				 	d.resolve(data.data.errors['question'].join());
+				else
+					d.reject('Server Error');
+				}
+		    )
+		    return d.promise;
+		}
 
 	$scope.saveEdit=function(quiz){
 
@@ -69,7 +91,7 @@ angular.module('scalearAngularApp')
 					$scope.$parent.selected_quiz={}
 				},
 				function(){ //error
-					alert("Failed to delete quiz, please check network connection")
+					//alert("Failed to delete quiz, please check network connection")
 				}
 			);
 	}

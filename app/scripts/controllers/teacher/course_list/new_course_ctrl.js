@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl',['$scope','Course','$state','$window', function ($scope, Course,$state, $window) {
+  .controller('newCourseCtrl',['$scope','Course','$state','$window', '$log', function ($scope, Course,$state, $window, $log) {
 		$window.scrollTo(0, 0);
 		
 		$scope.course={}
@@ -10,7 +10,9 @@ angular.module('scalearAngularApp')
 				//$scope.course=data.course;
 				$scope.importing=data.importing;
 				$scope.timezones=data.timezones;
-				$scope.import_from=""
+				$scope.import_from=""				
+				$scope.course.start_date = new Date()
+
 			},function(response){
 				
 			}
@@ -23,23 +25,20 @@ angular.module('scalearAngularApp')
 			function(data){
 				$scope.submitted=false;
 				if(data.importing==true){
-					$(window).scrollTop(0);
+					//$(window).scrollTop(0);
 					$state.go("course_list")
 				}
 				else{
-					$(window).scrollTop(0);
-					$state.go("course.course_editor",{"course_id":data.id})
+					//$(window).scrollTop(0);
+					$state.go("course.course_editor",{"course_id":data.course.id})
 				}
 			},function(response){
 				//server error must handle.
+				$scope.server_errors=response.data.errors
 			}
 		);
 		}else{
 			$scope.submitted=true
 		}
 		}
-		  // $scope.dateOptions = {
-		    // 'year-format': "'yy'",
-		    // 'starting-day': 1
-		  // };
  }]);

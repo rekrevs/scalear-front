@@ -1,18 +1,24 @@
 <center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
 <div ng-show="courses">
-	<h4>All Courses <span ng-if="filtered_teacher">Taught by {{filtered_teacher}}</span></h4>
+	<h4 >
+		<span translate>courses.all_courses</span>
+		<span ng-show="filtered_teacher">
+			<span translate>courses.taught_by</span> 
+			{{filtered_teacher}}
+		</span>
+	</h4>
 	</br>
 	<table class="table table-striped">
 		<thead style="cursor:pointer" >
-			<th><a ng-click="order('short_name')" >Course Code</a></th>
-			<th><a ng-click="order('name')">Course Name</a></th>
-			<th>Teachers</th>
-			<th>Teachers Email</th>
-			<th><a ng-click="order('enrolled_students')">#Students</a></th>
-			<th><a ng-click="order('lectures')">#Lectures</a></th>
-			<th><a ng-click="order('quiz')">#Quizzes</a></th>
-			<th><a ng-click="order('survey')">#Surveys</a></th>
-			<th>Delete</th>
+			<th><a ng-click="order('short_name')" translate>courses.course_code</a></th>
+			<th><a ng-click="order('name')" translate>courses.course_name</a></th>
+			<th translate>courses.teachers</th>
+			<th translate>courses.teacher_email</th>
+			<th><a ng-click="order('enrolled_students')" >#<span translate>courses.students</span></a></th>
+			<th><a ng-click="order('lectures')" >#<span translate>groups.lectures</span></a></th>
+			<th><a ng-click="order('quiz')" >#<span translate>groups.quizzes</span></a></th>
+			<th><a ng-click="order('survey')" >#<span translate>courses.surveys</span></a></th>
+			<th translate>delete</th>
 		</thead>
 		<tbody>
 			<tr ng-repeat="course in courses|filter:filtered_teacher|orderBy:column:is_reverse">
@@ -27,13 +33,13 @@
 				<td>
 					<div ng-repeat="enrolled in course.teacher_enrollments">
 						<!-- filters only in current courses, so no problem if not an admin-->
-						<a ng-click="filterTeacher(enrolled.user.name)" >{{enrolled.user.name}} ({{enrolled.role.name}})</a>	
+						<a  style="cursor:pointer" ng-click="filterTeacher(enrolled.user.name)" >{{enrolled.user.name}} ({{enrolled.role.name}})</a>	
 						</br>
 				    </div>
 				</td>
 				<td>
 					<div ng-repeat="enrolled in course.teacher_enrollments">
-						<a href="mailto:{{enrolled.user.email}}">{{enrolled.user.email}}</a>
+						<a href="mailto:{{enrolled.user.email}}" style="cursor:pointer">{{enrolled.user.email}}</a>
 						</br>
 					</div>
 				</td> 
@@ -41,12 +47,12 @@
 				<td><b>{{course.lectures.length}}</b></td>
 				<td><b ng-init="course.quiz = (course.quizzes|filter:{quiz_type:'quiz'})">{{course.quiz.length }}</b></td>
 				<td><b ng-init="course.survey = (course.quizzes|filter:{quiz_type:'survey'})">{{course.survey.length }}</b></td>
-				<td ng-if="course.importing">Importing Data</td>
+				<td ng-if="course.importing" translate>controller_msg.importing_data</td>
 				<td ng-if="!course.importing"><delete_button size="big" action="deleteCourse(course)" /></td>
 			</tr>
 		</tbody>
 	</table>	
-	<a ng-show="filtered_teacher" ng-click="filtered_teacher=''">Back</a><br>
+	<a ng-show="filtered_teacher" ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
 </div>
 
-<a ng-hide="!courses" ui-sref="new_course">New Course</a><br />
+<a ng-hide="!courses" ui-sref="new_course" translate>courses.new_course</a><br />

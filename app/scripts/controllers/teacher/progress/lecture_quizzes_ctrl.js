@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureQuizzesCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
+  .controller('lectureQuizzesCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log', function ($scope, $stateParams, $timeout, Module, $translate, $log) {
     
     $scope.lecture_player={}
     $scope.lecture_player.events={}
@@ -11,10 +11,10 @@ angular.module('scalearAngularApp')
         $scope.enableChartsScrolling()
         if($scope.chart_offset == null){
         	$scope.loading_video = true
-            getLectureCharts(0,5)
+            $scope.getLectureCharts(0,5)
         }
     }
-  	var getLectureCharts= function(offset, limit){
+  	$scope.getLectureCharts= function(offset, limit){
         $scope.chart_limit = limit
         $scope.chart_offset = offset
         $scope.disableInfinitScrolling()
@@ -31,6 +31,7 @@ angular.module('scalearAngularApp')
                     $scope.total = $scope.lecture_data.question_ids.length
                     $scope.sub_question_ids = $scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_limit)
                     $scope.enableChartsScrolling()
+                    $scope.$watch("current_lang", redrawChart);
                 }
                 $scope.loading_lectures_chart = false
             }
@@ -38,7 +39,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.getRemainingLectureCharts=function(){
-        console.debug("get remaining")
+        $log.debug("get remaining")
         $scope.chart_offset+=$scope.chart_limit
         if($scope.chart_offset<=parseInt($scope.total))
         {
@@ -48,7 +49,7 @@ angular.module('scalearAngularApp')
                 $scope.sub_question_ids = $scope.sub_question_ids.concat($scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_offset+$scope.chart_limit))
                 $scope.loading_lectures_chart = false
                 $scope.enableChartsScrolling()
-            },1000)
+            },500)
         }
         else
             $scope.disableInfinitScrolling()
@@ -56,7 +57,7 @@ angular.module('scalearAngularApp')
 
  	$scope.enableChartsScrolling = function(){
         if($scope.tabState() == 1){
-            console.debug("enabling chart scrolling")
+            $log.debug("enabling chart scrolling")
             $scope.lecture_scroll_disable = true
             $scope.quiz_scroll_disable = true
             $scope.chart_scroll_disable= false
@@ -69,11 +70,13 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek= function(id){
-        $scope.lecture_player.controls.seek(getTime(id), getURL(id))
+        $scope.lecture_player.controls.seek_and_pause(getTime(id))
 	}
 
 	var getQuizTitle= function(id){
-		return $scope.lecture_data.questions[id][0];
+        if( $scope.lecture_data)
+		  return $scope.lecture_data.questions[id][0];
+        return ""
 	};
 
     var getTime= function(id){
@@ -92,21 +95,21 @@ angular.module('scalearAngularApp')
         var formated_data ={}
         formated_data.cols=
             [
-                {"label": "Students","type": "string"},
-                {"label": "Correct","type": "number"},
-                {"label": "Incorrect","type": "number"},
+                {"label": $translate('courses.students'),"type": "string"},
+                {"label": $translate('lectures.correct'),"type": "number"},
+                {"label": $translate('lectures.incorrect'),"type": "number"},
             ]
         formated_data.rows= []
         for(var ind in data)
         {
             var text, correct, incorrect
             if(data[ind][1]=="gray"){
-                text=data[ind][2]+" "+"(Incorrect)";
+                text=data[ind][2]+" "+"("+$translate('lectures.incorrect')+")";
                 correct=0
                 incorrect = data[ind][0]
             }
             else{
-                text=data[ind][2]+" "+"(Correct)";
+                text=data[ind][2]+" "+"("+$translate('lectures.correct')+")";
                 correct=data[ind][0]
                 incorrect=0
             }
@@ -123,8 +126,8 @@ angular.module('scalearAngularApp')
         return formated_data
     }
 
-    $scope.createLectureChart = function(id){
-        var chart_data = $scope.lecture_data.charts
+    $scope.createLectureChart = function(data, id){
+        var chart_data = data
         var chart = {};
         chart.type = "ColumnChart"
         chart.options = {
@@ -136,12 +139,24 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": "Number of Students",
+                "title": $translate("quizzes.number_of_students"),
             },
         };
         chart.data = $scope.formatLectureChartData(chart_data[id])
         return chart
     }
-    $scope.lectureQuizzesTab()
+
+    var redrawChart = function(new_val, old_val){ 
+        if(new_val != old_val){
+            var temp = angular.copy($scope.sub_question_ids)
+            $scope.sub_question_ids = {}
+            $timeout(function(){
+                $scope.sub_question_ids = temp
+            })
+        }
+    }
+
+    //$scope.lectureQuizzesTab()
+
 
   }]);

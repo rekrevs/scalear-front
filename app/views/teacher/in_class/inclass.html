@@ -2,7 +2,7 @@
 <div class="row">        
 	<div class="span3">
 	    <ul class="nav nav-list">        
-	        <li class="nav-header">Modules</li>
+	        <li class="nav-header" translate>courses.modules</li>
 			<li bindonce ng-repeat="module in modules" style="cursor:pointer" ng-class="{active: module.id == getLocation()}" ng-init="$parent.selected_module=(modules|filter:{id:getLocation()})[0]">
 			    <a ui-sref="course.inclass.module({ module_id: module.id })" class="module" bo-text="module.name" ng-click="$parent.selected_module=module"></a>
 			</li>

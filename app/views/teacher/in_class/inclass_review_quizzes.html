@@ -1,11 +1,11 @@
-<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer">Exit</a></div>
+<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer" translate>groups.exit</a></div>
 <center>
 	<loading size=big show="loading_lectures_chart" />
 	<div ng-show="lecture_data.question_ids" style="padding:10px 40px" >
-		<h4><b>Review lecture quizzes on {{selected_module.name}}</b></h4>
+		<h4><b><span translate>courses.review_lecture_quizzes</span> {{selected_module.name}}</b></h4>
 		<table class="table table-striped"> 
 			<tr>
-				<th colspan="2">Hide</th>
+				<th colspan="2" translate>groups.hide</th>
 			</tr>
 			<tr ng-repeat="id in lecture_data.question_ids">
 				<td style="padding-top:90px" ><input type="checkbox" ng-model="lecture_data.checked[id]" ng-change="updateHide(id, lecture_data.checked[id])" /></td>
@@ -15,7 +15,7 @@
 					</div>
 				</td>
 			</tr>
-		<table>
+		</table>
 	</div>
 </center>
-<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer">Exit</a></div>
+<div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer" translate>groups.exit</a></div>

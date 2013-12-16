@@ -78,11 +78,13 @@ describe("Course Editor",function(){
         findByName("commit").click();
         ptor.findElements(protractor.By.tagName('a')).then(function(tags){
             expect(tags[3].getText()).toContain('Administrator');
+//            expect(tags[3].getText()).toContain('admin');
 
         });
 //        driver.get("http://10.0.0.16/#/login")
     });
 
+    //starting here//
 
 //    describe("Modules Section (Left)", function(){
 //        it('should allow creating a module', function(){
@@ -245,15 +247,15 @@ describe("Course Editor",function(){
 //            });
 //        });
 //    });
-    describe("Left Section", function(){
-
-
-        it('should open the module', function(){
-            ptor.get('/#/courses/3/course_editor');
-            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
-                modules[modules.length-1].click();
-            });
-        });
+//    describe("Left Section", function(){
+//
+//
+//        it('should open the module', function(){
+//            ptor.get('/#/courses/3/course_editor');
+//            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+//                modules[modules.length-1].click();
+//            });
+//        });
 //        it('should add a new lecture', function(){
 //            ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
 //                buttons[buttons.length-3].click();
@@ -262,13 +264,13 @@ describe("Course Editor",function(){
 //                expect(quiz[quiz.length-1].getText()).toBe('New Lecture');
 //            })
 //        });
-        it('should open a lecture', function(){
-            ptor.findElements(protractor.By.className('trigger2')).then(function(quizes){
+//        it('should open a lecture', function(){
+//            ptor.findElements(protractor.By.className('trigger2')).then(function(quizes){
 //                quizes[quizes.length-1].click();
-                quizes[0].click();
-            });
-        });
-    });
+////                quizes[0].click();
+//            });
+//        });
+//    });
 //
 //    describe('Right Section', function(){
 //
@@ -664,9 +666,9 @@ describe("Course Editor",function(){
 //            });
 //        });
 //    });
-
-    describe("Lecture Middle Section", function(){
-        //makes sure everything is displayed correctly
+//
+//    describe("Lecture Middle Section", function(){
+//        //makes sure everything is displayed correctly
 //        it('should display Lecture Name', function(){
 //            ptor.findElement(protractor.By.tagName('h3')).then(function(name){
 //                expect(name.getText()).toBe('My Lecture');
@@ -685,36 +687,46 @@ describe("Course Editor",function(){
 //                expect(elem.getAttribute('src')).toContain("PlavjNH_RRU");
 //            });
 //        });
-        it('should display the \'insert quiz (over video & text)\' buttons', function(){
-            ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
-                expect(buttons.length).toBe(2);
-            });
-        });
-        //insert quiz (text) MCQ in normal mode
-
-//        MCQTest(0, ptor);
+//        it('should display the \'insert quiz (over video & text)\' buttons', function(){
+//            ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
+//                expect(buttons.length).toBe(2);
+//            });
+//        });
+//        //insert quiz (text) MCQ in normal mode
+//
+////        MCQTest(0, ptor);
 //        //insert quiz (text) MCQ in fullscreen mode
-//        MCQTest(1, ptor);
+////        MCQTest(1, ptor);
 //        //---------//
 //        //insert quiz (text) OCQ in normal mode
-//        OCQTest(0, ptor);
-//        //insert quiz (text) OCQ in normal mode
-//        OCQTest(1, ptor);
+////        OCQTest(0, ptor);
+////        //insert quiz (text) OCQ in normal mode
+////        OCQTest(1, ptor);
 //        //---------//
 //        //insert quiz (text) OCQ in normal mode
-//        DRAGTest(0, ptor);
-//        //insert quiz (text) OCQ in normal mode
-//        DRAGTest(1, ptor);
-        describe('Over Video', function(){
-            MCQVideo(ptor);
-            doRefresh(ptor);
-//            it('should wait', function(){
-//                ptor.sleep(20000);
-//            })
-            OCQVideo(ptor);
-        });
-    });
+////        DRAGTest(0, ptor);
+////        //insert quiz (text) OCQ in normal mode
+////        DRAGTest(1, ptor);
+////        describe('Over Video', function(){
+////            MCQVideo(ptor);
+////            doRefresh(ptor);
+//////            it('should wait', function(){
+//////                ptor.sleep(20000);
+//////            })
+////            OCQVideo(ptor);
+////        });
+//    });
 
+    describe('Over Video', function(){
+        it('should go to lecture', function(){
+            ptor.get('/#/courses/3/course_editor/lectures/1461');
+            ptor.sleep(20000);
+        });
+        MCQVideo(ptor);
+        doRefresh(ptor);
+        OCQVideo(ptor);
+    });
+    //ending here//
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 //    describe("Left Section", function(){
@@ -830,7 +842,8 @@ describe("Course Editor",function(){
 //                    buttons[buttons.length-2].click();
 //                });
 //                details[4].getText().then(function(text){
-//                    expect(text).toBe(noZero(after_tomorrow));
+//                    //
+//                    expect(text).toBe(after_tomorrow);
 //                });
 //                details[4].click();
 //                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
@@ -841,7 +854,8 @@ describe("Course Editor",function(){
 //                    buttons[buttons.length-1].click();
 //                });
 //                details[4].getText().then(function(text){
-//                    expect(text).toBe(noZero(after_tomorrow));
+//                    //
+//                    expect(text).toBe(after_tomorrow);
 //                });
 //                //use module's due date//
 //                expect(details[5].getText()).toBe('Using Module\'s Due Date');
@@ -1225,7 +1239,7 @@ describe("Course Editor",function(){
 //                    buttons[buttons.length-2].click();
 //                });
 //                details[2].getText().then(function(text){
-//                    expect(text).toBe(noZero(after_tomorrow));
+//                    expect(text).toBe(after_tomorrow);
 //                });
 //                details[2].click();
 //                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
@@ -1236,7 +1250,7 @@ describe("Course Editor",function(){
 //                    buttons[buttons.length-1].click();
 //                });
 //                details[2].getText().then(function(text){
-//                    expect(text).toBe(noZero(after_tomorrow));
+//                    expect(text).toBe(after_tomorrow);
 //                });
 //                //use module's due date//
 //                expect(details[3].getText()).toBe('Using Module\'s Due Date');
@@ -1527,594 +1541,594 @@ describe("Course Editor",function(){
 
 //-----------------------//
 //functions
-//
-//function MCQTest(mode, ptor){
-//    var modeName = 'normal';
-//    if(mode == 1){
-//        modeName = 'fullscreen';
-//        it('should go to fullscreen mode', function(){
-//            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
-//                fullscreen_button.click();
-//            });
+
+function MCQTest(mode, ptor){
+    var modeName = 'normal';
+    if(mode == 1){
+        modeName = 'fullscreen';
+        it('should go to fullscreen mode', function(){
+            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
+                fullscreen_button.click();
+            });
+        });
+
+    }
+    it('should insert an MCQ quiz in '+modeName+' mode', function(){
+        console.log('starting MCQ '+modeName);
+        ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
+            buttons[1].click();
+        });
+        ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
+            options[3].click();
+        });
+        ptor.findElement(protractor.By.className('ontop')).then(function(container){
+            container.isDisplayed().then(function(disp){
+                expect(disp).toBe(true);
+            });
+        });
+        ptor.findElement(protractor.By.id('editing')).then(function(editing){
+            expect(editing.getText()).toContain('New Quiz');
+        });
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            expect(editables[0].getText()).toBe('New Quiz');
+            //edit quiz name
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('My Quiz');
+                ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                    buttons[1].click();
+                });
+            });
+            expect(editables[0].getText()).toBe('My Quiz');
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('New Quiz');
+                ptor.findElement(protractor.By.className('icon-remove')).then(function(remove_button){
+                    remove_button.click();
+                });
+            });
+            expect(editables[0].getText()).toBe('My Quiz');
+//                edit quiz time
+//                HAS A BUG RIGHT NOW
+//                make sure quiz type is MCQ
+            ptor.findElements(protractor.By.tagName('td')).then(function(data){
+                expect(data[6].getText()).toBe('MCQ');
+            });
+        });
+    });
+    //enter the answers
+    it('should add answers and explanations to MCQ quiz', function(){
+        ptor.findElements(protractor.By.name('answer')).then(function(fields){
+            fields[fields.length-1].sendKeys('first answer');
+        });
+        ptor.findElements(protractor.By.className('explain')).then(function(fields){
+            fields[fields.length-1].sendKeys('first Explanation');
+        });
+        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+        ptor.findElements(protractor.By.name('answer')).then(function(fields){
+            fields[fields.length-1].sendKeys('second answer');
+        });
+        ptor.findElements(protractor.By.className('explain')).then(function(fields){
+            fields[fields.length-1].sendKeys('second Explanation');
+        });
+        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+        ptor.findElements(protractor.By.name('answer')).then(function(fields){
+            fields[fields.length-1].sendKeys('third answer');
+        });
+        ptor.findElements(protractor.By.className('explain')).then(function(fields){
+            fields[fields.length-1].sendKeys('third Explanation');
+        });
+    });
+    //try to save
+    //expect it to fail
+    it('should try to save when no answer is marked correct and it should fail', function(){
+        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
+            save_button.click();
+        });
+        var error = ptor.findElement(protractor.By.className('alert-error'));
+        expect(error.getText()).toContain('You\'ve got some errors.');
+    });
+    //check correct answer
+    //save
+    it('should mark an answer as correct', function(){
+        ptor.findElement(protractor.By.name('mcq')).then(function(correct_check){
+            correct_check.click();
+        });
+        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
+            save_button.click();
+        });
+        var error = ptor.findElement(protractor.By.className('alert-error'));
+        expect(error.getText()).toBe('');
+    });
+    it('should refresh the page', function(){
+        ptor.navigate().refresh();
+    });
+    if(mode == 1){
+        it('should go to fullscreen mode', function(){
+            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
+                fullscreen_button.click();
+            });
+        });
+    }
+    it('should open the quiz after refresh', function(){
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            editables[0].click();
+        });
+    });
+    it('should make sure the mcq quiz data is the same after refresh', function(){
+        //check quiz data
+        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
+            expect(question_label.getAttribute('value')).toBe('My Quiz');
+        });
+        ptor.findElements(protractor.By.name('answer')).then(function(answers){
+            expect(answers[0].getAttribute('value')).toBe('first answer');
+            expect(answers[1].getAttribute('value')).toBe('second answer');
+            expect(answers[2].getAttribute('value')).toBe('third answer');
+//                expect(answers[0].getText()).toBe('first answer');
+//                expect(answers[1].getText()).toBe('second answer');
+//                expect(answers[2].getText()).toBe('third answer');
+        });
+        ptor.findElement(protractor.By.name('mcq')).then(function(correct){
+            expect(correct.getAttribute('checked')).toBe('true');
+        });
+        ptor.findElements(protractor.By.className('explain')).then(function(explanations){
+            expect(explanations[0].getAttribute('value')).toBe('first Explanation');
+            expect(explanations[1].getAttribute('value')).toBe('second Explanation');
+            expect(explanations[2].getAttribute('value')).toBe('third Explanation');
+        });
+    });
+    //answer deletion
+    it('should delete an answer from mcq quiz', function(){
+        ptor.findElement(protractor.By.className('real_delete_ans')).then(function(delete_button){
+            delete_button.click();
+            var alert_dialog = ptor.switchTo().alert();
+            alert_dialog.accept();
+        });
+    });
+    it('should select a correct answer after deletion (mcq)', function(){
+        ptor.findElement(protractor.By.name('mcq')).then(function(correct_check){
+            correct_check.click();
+        });
+    });
+    it('should save mcq quiz after deleting an answer', function(){
+        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
+            save_button.click();
+        });
+        var error = ptor.findElement(protractor.By.className('alert-error'));
+        expect(error.getText()).toBe('');
+    });
+    it('should refresh the page', function(){
+        ptor.navigate().refresh();
+    });
+    if(mode == 1){
+        it('should go to fullscreen mode', function(){
+            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
+                fullscreen_button.click();
+            });
+        });
+    }
+    it('should open the quiz after refresh', function(){
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            editables[0].click();
+        });
+    });
+    it('should make sure the mcq quiz data is the same after deletion then refresh', function(){
+        //check quiz data
+        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
+            expect(question_label.getAttribute('value')).toBe('My Quiz');
+        });
+        ptor.findElements(protractor.By.name('answer')).then(function(answers){
+            expect(answers[0].getAttribute('value')).toBe('second answer');
+            expect(answers[1].getAttribute('value')).toBe('third answer');
+        });
+        ptor.findElement(protractor.By.name('mcq')).then(function(correct){
+            expect(correct.getAttribute('checked')).toBe('true');
+        });
+        ptor.findElements(protractor.By.className('explain')).then(function(explanations){
+            expect(explanations[0].getAttribute('value')).toBe('second Explanation');
+            expect(explanations[1].getAttribute('value')).toBe('third Explanation');
+        });
+    });
+    it('should delete mcq quiz (text)', function(){
+        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-1].click();
+            var alert_dialog = ptor.switchTo().alert();
+            alert_dialog.accept();
+        });
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            expect(editables.length).toBe(0);
+        });
+    });
+    if(mode == 1){
+        it('should exit fullscreen mode', function(){
+            console.log('exiting fullscreen mode');
+            ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
+                links[1].click();
+            });
+        });
+    }
+}
+
+function OCQTest(mode, ptor){
+    var modeName = 'normal';
+    if(mode == 1){
+        modeName = 'fullscreen';
+        it('should go to fullscreen mode', function(){
+            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
+                fullscreen_button.click();
+            });
+        });
+    }
+    it('should insert an OCQ quiz in '+modeName+' mode', function(){
+        console.log('starting OCQ '+modeName);
+        ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
+            buttons[1].click();
+        });
+        ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
+            options[4].click();
+        });
+        ptor.findElement(protractor.By.className('ontop')).then(function(container){
+            container.isDisplayed().then(function(disp){
+                expect(disp).toBe(true);
+            });
+        });
+        ptor.findElement(protractor.By.id('editing')).then(function(editing){
+            expect(editing.getText()).toContain('New Quiz');
+        });
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            expect(editables[0].getText()).toBe('New Quiz');
+            //edit quiz name
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('My Quiz');
+                ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                    buttons[1].click();
+                });
+            });
+            expect(editables[0].getText()).toBe('My Quiz');
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('New Quiz');
+                ptor.findElement(protractor.By.className('icon-remove')).then(function(remove_button){
+                    remove_button.click();
+                });
+            });
+            expect(editables[0].getText()).toBe('My Quiz');
+//                edit quiz time
+//                HAS A BUG RIGHT NOW
+//                make sure quiz type is MCQ
+            ptor.findElements(protractor.By.tagName('td')).then(function(data){
+                expect(data[6].getText()).toBe('OCQ');
+            });
+        });
+    });
+    //enter the answers
+    it('should add answers and explanations to OCQ quiz', function(){
+        ptor.findElements(protractor.By.name('answer')).then(function(fields){
+            fields[fields.length-1].sendKeys('first answer');
+        });
+        ptor.findElements(protractor.By.className('explain')).then(function(fields){
+            fields[fields.length-1].sendKeys('first Explanation');
+        });
+        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+        ptor.findElements(protractor.By.name('answer')).then(function(fields){
+            fields[fields.length-1].sendKeys('second answer');
+        });
+        ptor.findElements(protractor.By.className('explain')).then(function(fields){
+            fields[fields.length-1].sendKeys('second Explanation');
+        });
+        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+        ptor.findElements(protractor.By.name('answer')).then(function(fields){
+            fields[fields.length-1].sendKeys('third answer');
+        });
+        ptor.findElements(protractor.By.className('explain')).then(function(fields){
+            fields[fields.length-1].sendKeys('third Explanation');
+        });
+    });
+    //try to save
+    //expect it to fail
+    it('should try to save when no answer is marked correct and it should fail', function(){
+        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
+            save_button.click();
+        });
+        var error = ptor.findElement(protractor.By.className('alert-error'));
+        expect(error.getText()).toContain('You\'ve got some errors.');
+    });
+    //check correct answer
+    //save
+    it('should mark an answer as correct', function(){
+        ptor.findElement(protractor.By.id('radio_correct')).then(function(correct_radio){
+            correct_radio.click();
+        });
+        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
+            save_button.click();
+        });
+        var error = ptor.findElement(protractor.By.className('alert-error'));
+        expect(error.getText()).toBe('');
+    });
+    it('should refresh the page', function(){
+        ptor.navigate().refresh();
+    });
+    if(mode == 1){
+        it('should go to fullscreen mode', function(){
+            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
+                fullscreen_button.click();
+            });
+        });
+    }
+    it('should open the OCQ quiz after refresh', function(){
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            editables[0].click();
+        });
+    });
+    it('should make sure the OCQ quiz data is the same after refresh', function(){
+        //check quiz data
+        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
+            expect(question_label.getAttribute('value')).toBe('My Quiz');
+        });
+        ptor.findElements(protractor.By.name('answer')).then(function(answers){
+            expect(answers[0].getAttribute('value')).toBe('first answer');
+            expect(answers[1].getAttribute('value')).toBe('second answer');
+            expect(answers[2].getAttribute('value')).toBe('third answer');
+        });
+//        ptor.findElement(protractor.By.id('radio_correct')).then(function(correct){
+//            expect(correct.getAttribute('checked')).toBe('true');
 //        });
-//
-//    }
-//    it('should insert an MCQ quiz in '+modeName+' mode', function(){
-//        console.log('starting MCQ '+modeName);
-//        ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
-//            buttons[1].click();
-//        });
-//        ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-//            options[3].click();
-//        });
-//        ptor.findElement(protractor.By.className('ontop')).then(function(container){
-//            container.isDisplayed().then(function(disp){
-//                expect(disp).toBe(true);
-//            });
-//        });
-//        ptor.findElement(protractor.By.id('editing')).then(function(editing){
-//            expect(editing.getText()).toContain('New Quiz');
-//        });
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            expect(editables[0].getText()).toBe('New Quiz');
-//            //edit quiz name
-//            ptor.actions().doubleClick(editables[0]).perform();
-//            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-//                field.clear();
-//                field.sendKeys('My Quiz');
-//                ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-//                    buttons[1].click();
-//                });
-//            });
-//            expect(editables[0].getText()).toBe('My Quiz');
-//            ptor.actions().doubleClick(editables[0]).perform();
-//            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-//                field.clear();
-//                field.sendKeys('New Quiz');
-//                ptor.findElement(protractor.By.className('icon-remove')).then(function(remove_button){
-//                    remove_button.click();
-//                });
-//            });
-//            expect(editables[0].getText()).toBe('My Quiz');
-////                edit quiz time
-////                HAS A BUG RIGHT NOW
-////                make sure quiz type is MCQ
-//            ptor.findElements(protractor.By.tagName('td')).then(function(data){
-//                expect(data[6].getText()).toBe('MCQ');
-//            });
-//        });
-//    });
-//    //enter the answers
-//    it('should add answers and explanations to MCQ quiz', function(){
-//        ptor.findElements(protractor.By.name('answer')).then(function(fields){
-//            fields[fields.length-1].sendKeys('first answer');
-//        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(fields){
-//            fields[fields.length-1].sendKeys('first Explanation');
-//        });
-//        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-//        ptor.findElements(protractor.By.name('answer')).then(function(fields){
-//            fields[fields.length-1].sendKeys('second answer');
-//        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(fields){
-//            fields[fields.length-1].sendKeys('second Explanation');
-//        });
-//        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-//        ptor.findElements(protractor.By.name('answer')).then(function(fields){
-//            fields[fields.length-1].sendKeys('third answer');
-//        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(fields){
-//            fields[fields.length-1].sendKeys('third Explanation');
-//        });
-//    });
-//    //try to save
-//    //expect it to fail
-//    it('should try to save when no answer is marked correct and it should fail', function(){
-//        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-//            save_button.click();
-//        });
-//        var error = ptor.findElement(protractor.By.className('alert-error'));
-//        expect(error.getText()).toContain('You\'ve got some errors.');
-//    });
-//    //check correct answer
-//    //save
-//    it('should mark an answer as correct', function(){
-//        ptor.findElement(protractor.By.name('mcq')).then(function(correct_check){
-//            correct_check.click();
-//        });
-//        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-//            save_button.click();
-//        });
-//        var error = ptor.findElement(protractor.By.className('alert-error'));
-//        expect(error.getText()).toBe('');
-//    });
-//    it('should refresh the page', function(){
-//        ptor.navigate().refresh();
-//    });
-//    if(mode == 1){
-//        it('should go to fullscreen mode', function(){
-//            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
-//                fullscreen_button.click();
-//            });
-//        });
-//    }
-//    it('should open the quiz after refresh', function(){
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            editables[0].click();
-//        });
-//    });
-//    it('should make sure the mcq quiz data is the same after refresh', function(){
-//        //check quiz data
-//        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
-//            expect(question_label.getAttribute('value')).toBe('My Quiz');
-//        });
-//        ptor.findElements(protractor.By.name('answer')).then(function(answers){
-//            expect(answers[0].getAttribute('value')).toBe('first answer');
-//            expect(answers[1].getAttribute('value')).toBe('second answer');
-//            expect(answers[2].getAttribute('value')).toBe('third answer');
-////                expect(answers[0].getText()).toBe('first answer');
-////                expect(answers[1].getText()).toBe('second answer');
-////                expect(answers[2].getText()).toBe('third answer');
-//        });
+        ptor.findElements(protractor.By.className('explain')).then(function(explanations){
+            expect(explanations[0].getAttribute('value')).toBe('first Explanation');
+            expect(explanations[1].getAttribute('value')).toBe('second Explanation');
+            expect(explanations[2].getAttribute('value')).toBe('third Explanation');
+        });
+    });
+    //answer deletion
+    it('should delete an answer from OCQ quiz', function(){
+        ptor.findElement(protractor.By.className('real_delete_ans')).then(function(delete_button){
+            delete_button.click();
+            var alert_dialog = ptor.switchTo().alert();
+            alert_dialog.accept();
+        });
+    });
+    it('should select a correct answer after deletion (OCQ)', function(){
+        ptor.findElement(protractor.By.id('radio_correct')).then(function(correct_check){
+            correct_check.click();
+        });
+    });
+    it('should save OCQ quiz after deleting an answer', function(){
+        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
+            save_button.click();
+        });
+        var error = ptor.findElement(protractor.By.className('alert-error'));
+        expect(error.getText()).toBe('');
+    });
+    it('should refresh the page', function(){
+        ptor.navigate().refresh();
+    });
+    if(mode == 1){
+        it('should go to fullscreen mode', function(){
+            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
+                fullscreen_button.click();
+            });
+        });
+    }
+    it('should open the OCQ quiz after refresh', function(){
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            editables[0].click();
+        });
+    });
+    it('should make sure the OCQ quiz data is the same after deletion', function(){
+        //check quiz data
+        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
+            expect(question_label.getAttribute('value')).toBe('My Quiz');
+        });
+        ptor.findElements(protractor.By.name('answer')).then(function(answers){
+            expect(answers[0].getAttribute('value')).toBe('second answer');
+            expect(answers[1].getAttribute('value')).toBe('third answer');
+        });
 //        ptor.findElement(protractor.By.name('mcq')).then(function(correct){
 //            expect(correct.getAttribute('checked')).toBe('true');
 //        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(explanations){
-//            expect(explanations[0].getAttribute('value')).toBe('first Explanation');
-//            expect(explanations[1].getAttribute('value')).toBe('second Explanation');
-//            expect(explanations[2].getAttribute('value')).toBe('third Explanation');
-//        });
-//    });
-//    //answer deletion
-//    it('should delete an answer from mcq quiz', function(){
-//        ptor.findElement(protractor.By.className('real_delete_ans')).then(function(delete_button){
-//            delete_button.click();
-//            var alert_dialog = ptor.switchTo().alert();
-//            alert_dialog.accept();
-//        });
-//    });
-//    it('should select a correct answer after deletion (mcq)', function(){
-//        ptor.findElement(protractor.By.name('mcq')).then(function(correct_check){
-//            correct_check.click();
-//        });
-//    });
-//    it('should save mcq quiz after deleting an answer', function(){
-//        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-//            save_button.click();
-//        });
-//        var error = ptor.findElement(protractor.By.className('alert-error'));
-//        expect(error.getText()).toBe('');
-//    });
-//    it('should refresh the page', function(){
-//        ptor.navigate().refresh();
-//    });
-//    if(mode == 1){
-//        it('should go to fullscreen mode', function(){
-//            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
-//                fullscreen_button.click();
-//            });
-//        });
-//    }
-//    it('should open the quiz after refresh', function(){
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            editables[0].click();
-//        });
-//    });
-//    it('should make sure the mcq quiz data is the same after deletion then refresh', function(){
-//        //check quiz data
-//        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
-//            expect(question_label.getAttribute('value')).toBe('My Quiz');
-//        });
-//        ptor.findElements(protractor.By.name('answer')).then(function(answers){
-//            expect(answers[0].getAttribute('value')).toBe('second answer');
-//            expect(answers[1].getAttribute('value')).toBe('third answer');
-//        });
-//        ptor.findElement(protractor.By.name('mcq')).then(function(correct){
-//            expect(correct.getAttribute('checked')).toBe('true');
-//        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(explanations){
-//            expect(explanations[0].getAttribute('value')).toBe('second Explanation');
-//            expect(explanations[1].getAttribute('value')).toBe('third Explanation');
-//        });
-//    });
-//    it('should delete mcq quiz (text)', function(){
-//        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-//            delete_buttons[delete_buttons.length-1].click();
-//            var alert_dialog = ptor.switchTo().alert();
-//            alert_dialog.accept();
-//        });
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            expect(editables.length).toBe(0);
-//        });
-//    });
-//    if(mode == 1){
-//        it('should exit fullscreen mode', function(){
-//            console.log('exiting fullscreen mode');
-//            ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
-//                links[1].click();
-//            });
-//        });
-//    }
-//}
-//
-//function OCQTest(mode, ptor){
-//    var modeName = 'normal';
-//    if(mode == 1){
-//        modeName = 'fullscreen';
-//        it('should go to fullscreen mode', function(){
-//            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
-//                fullscreen_button.click();
-//            });
-//        });
-//    }
-//    it('should insert an OCQ quiz in '+modeName+' mode', function(){
-//        console.log('starting OCQ '+modeName);
-//        ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
-//            buttons[1].click();
-//        });
-//        ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-//            options[4].click();
-//        });
-//        ptor.findElement(protractor.By.className('ontop')).then(function(container){
-//            container.isDisplayed().then(function(disp){
-//                expect(disp).toBe(true);
-//            });
-//        });
-//        ptor.findElement(protractor.By.id('editing')).then(function(editing){
-//            expect(editing.getText()).toContain('New Quiz');
-//        });
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            expect(editables[0].getText()).toBe('New Quiz');
-//            //edit quiz name
-//            ptor.actions().doubleClick(editables[0]).perform();
-//            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-//                field.clear();
-//                field.sendKeys('My Quiz');
-//                ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-//                    buttons[1].click();
-//                });
-//            });
-//            expect(editables[0].getText()).toBe('My Quiz');
-//            ptor.actions().doubleClick(editables[0]).perform();
-//            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-//                field.clear();
-//                field.sendKeys('New Quiz');
-//                ptor.findElement(protractor.By.className('icon-remove')).then(function(remove_button){
-//                    remove_button.click();
-//                });
-//            });
-//            expect(editables[0].getText()).toBe('My Quiz');
-////                edit quiz time
-////                HAS A BUG RIGHT NOW
-////                make sure quiz type is MCQ
-//            ptor.findElements(protractor.By.tagName('td')).then(function(data){
-//                expect(data[6].getText()).toBe('OCQ');
-//            });
-//        });
-//    });
-//    //enter the answers
-//    it('should add answers and explanations to OCQ quiz', function(){
-//        ptor.findElements(protractor.By.name('answer')).then(function(fields){
-//            fields[fields.length-1].sendKeys('first answer');
-//        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(fields){
-//            fields[fields.length-1].sendKeys('first Explanation');
-//        });
-//        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-//        ptor.findElements(protractor.By.name('answer')).then(function(fields){
-//            fields[fields.length-1].sendKeys('second answer');
-//        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(fields){
-//            fields[fields.length-1].sendKeys('second Explanation');
-//        });
-//        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-//        ptor.findElements(protractor.By.name('answer')).then(function(fields){
-//            fields[fields.length-1].sendKeys('third answer');
-//        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(fields){
-//            fields[fields.length-1].sendKeys('third Explanation');
-//        });
-//    });
-//    //try to save
-//    //expect it to fail
-//    it('should try to save when no answer is marked correct and it should fail', function(){
-//        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-//            save_button.click();
-//        });
-//        var error = ptor.findElement(protractor.By.className('alert-error'));
-//        expect(error.getText()).toContain('You\'ve got some errors.');
-//    });
-//    //check correct answer
-//    //save
-//    it('should mark an answer as correct', function(){
-//        ptor.findElement(protractor.By.id('radio_correct')).then(function(correct_radio){
-//            correct_radio.click();
-//        });
-//        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-//            save_button.click();
-//        });
-//        var error = ptor.findElement(protractor.By.className('alert-error'));
-//        expect(error.getText()).toBe('');
-//    });
-//    it('should refresh the page', function(){
-//        ptor.navigate().refresh();
-//    });
-//    if(mode == 1){
-//        it('should go to fullscreen mode', function(){
-//            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
-//                fullscreen_button.click();
-//            });
-//        });
-//    }
-//    it('should open the OCQ quiz after refresh', function(){
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            editables[0].click();
-//        });
-//    });
-//    it('should make sure the OCQ quiz data is the same after refresh', function(){
-//        //check quiz data
-//        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
-//            expect(question_label.getAttribute('value')).toBe('My Quiz');
-//        });
-//        ptor.findElements(protractor.By.name('answer')).then(function(answers){
-//            expect(answers[0].getAttribute('value')).toBe('first answer');
-//            expect(answers[1].getAttribute('value')).toBe('second answer');
-//            expect(answers[2].getAttribute('value')).toBe('third answer');
-//        });
-////        ptor.findElement(protractor.By.id('radio_correct')).then(function(correct){
-////            expect(correct.getAttribute('checked')).toBe('true');
-////        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(explanations){
-//            expect(explanations[0].getAttribute('value')).toBe('first Explanation');
-//            expect(explanations[1].getAttribute('value')).toBe('second Explanation');
-//            expect(explanations[2].getAttribute('value')).toBe('third Explanation');
-//        });
-//    });
-//    //answer deletion
-//    it('should delete an answer from OCQ quiz', function(){
-//        ptor.findElement(protractor.By.className('real_delete_ans')).then(function(delete_button){
-//            delete_button.click();
-//            var alert_dialog = ptor.switchTo().alert();
-//            alert_dialog.accept();
-//        });
-//    });
-//    it('should select a correct answer after deletion (OCQ)', function(){
-//        ptor.findElement(protractor.By.id('radio_correct')).then(function(correct_check){
-//            correct_check.click();
-//        });
-//    });
-//    it('should save OCQ quiz after deleting an answer', function(){
-//        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-//            save_button.click();
-//        });
-//        var error = ptor.findElement(protractor.By.className('alert-error'));
-//        expect(error.getText()).toBe('');
-//    });
-//    it('should refresh the page', function(){
-//        ptor.navigate().refresh();
-//    });
-//    if(mode == 1){
-//        it('should go to fullscreen mode', function(){
-//            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
-//                fullscreen_button.click();
-//            });
-//        });
-//    }
-//    it('should open the OCQ quiz after refresh', function(){
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            editables[0].click();
-//        });
-//    });
-//    it('should make sure the OCQ quiz data is the same after deletion', function(){
-//        //check quiz data
-//        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
-//            expect(question_label.getAttribute('value')).toBe('My Quiz');
-//        });
-//        ptor.findElements(protractor.By.name('answer')).then(function(answers){
-//            expect(answers[0].getAttribute('value')).toBe('second answer');
-//            expect(answers[1].getAttribute('value')).toBe('third answer');
-//        });
-////        ptor.findElement(protractor.By.name('mcq')).then(function(correct){
-////            expect(correct.getAttribute('checked')).toBe('true');
-////        });
-//        ptor.findElements(protractor.By.className('explain')).then(function(explanations){
-//            expect(explanations[0].getAttribute('value')).toBe('second Explanation');
-//            expect(explanations[1].getAttribute('value')).toBe('third Explanation');
-//        });
-//    });
-//    it('should delete OCQ quiz (text)', function(){
-//        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-//            delete_buttons[delete_buttons.length-1].click();
-//            var alert_dialog = ptor.switchTo().alert();
-//            alert_dialog.accept();
-//        });
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            expect(editables.length).toBe(0);
-//        });
-//    });
-//    if(mode == 1){
-//        it('should exit fullscreen mode', function(){
-//            console.log('exiting fullscreen mode');
-//            ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
-//                links[links.length-1].click();
-//            });
-//        });
-//    }
-//}
-//
-//function DRAGTest(mode, ptor){
-//    var modeName = 'normal';
-//    if(mode == 1){
-//        modeName = 'fullscreen';
-//        it('should go to fullscreen mode', function(){
-//            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
-//                fullscreen_button.click();
-//            });
-//        });
-//    }
-//    it('should insert an DRAG quiz in '+modeName+' mode', function(){
-//        console.log('starting DRAG '+modeName);
-//        ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
-//            buttons[1].click();
-//        });
-//        ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-//            options[5].click();
-//        });
-//        ptor.findElement(protractor.By.className('ontop')).then(function(container){
-//            container.isDisplayed().then(function(disp){
-//                expect(disp).toBe(true);
-//            });
-//        });
-//        ptor.findElement(protractor.By.id('editing')).then(function(editing){
-//            expect(editing.getText()).toContain('New Quiz');
-//        });
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            expect(editables[0].getText()).toBe('New Quiz');
-//            //edit quiz name
-//            ptor.actions().doubleClick(editables[0]).perform();
-//            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-//                field.clear();
-//                field.sendKeys('My Quiz');
-//                ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-//                    buttons[1].click();
-//                });
-//            });
-//            expect(editables[0].getText()).toBe('My Quiz');
-//            ptor.actions().doubleClick(editables[0]).perform();
-//            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
-//                field.clear();
-//                field.sendKeys('New Quiz');
-//                ptor.findElement(protractor.By.className('icon-remove')).then(function(remove_button){
-//                    remove_button.click();
-//                });
-//            });
-//            expect(editables[0].getText()).toBe('My Quiz');
-////                edit quiz time
-////                HAS A BUG RIGHT NOW
-////                make sure quiz type is MCQ
-//            ptor.findElements(protractor.By.tagName('td')).then(function(data){
-//                expect(data[6].getText()).toBe('drag');
-//            });
-//        });
-//    });
-//    //enter the answers
-//    it('should add answers to DRAG quiz', function(){
-//        ptor.findElements(protractor.By.name('answer')).then(function(fields){
-//            fields[fields.length-1].sendKeys('first answer');
-//        });
-//        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-//        ptor.findElements(protractor.By.name('answer')).then(function(fields){
-//            fields[fields.length-1].sendKeys('second answer');
-//        });
-//        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-//        ptor.findElements(protractor.By.name('answer')).then(function(fields){
-//            fields[fields.length-1].sendKeys('third answer');
-//        });
-//    });
-//    it('should sort the answers', function(){
-//        ptor.findElements(protractor.By.className('drag-item')).then(function(drag_items){
-//            ptor.actions().dragAndDrop(drag_items[1], drag_items[0]).perform();
-//        });
-//        ptor.findElements(protractor.By.name('answer')).then(function(answers){
-//            expect(answers[0].getAttribute('value')).toBe('second answer');
-//            expect(answers[1].getAttribute('value')).toBe('first answer');
-//            expect(answers[2].getAttribute('value')).toBe('third answer');
-//        });
-//    });
-//    //try to save
-//    //expected to succeed
-//    it('should save the DRAG quiz', function(){
-//        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-//            save_button.click();
-//        });
-//        var error = ptor.findElement(protractor.By.className('alert-error'));
-//        expect(error.getText()).toBe('');
-//    });
-//    it('should refresh the page', function(){
-//        ptor.navigate().refresh();
-//    });
-//    if(mode == 1){
-//        it('should go to fullscreen mode', function(){
-//            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
-//                fullscreen_button.click();
-//            });
-//        });
-//    }
-//    it('should open the DRAG quiz after refresh', function(){
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            editables[0].click();
-//        });
-//    });
-//    it('should make sure the DRAG quiz data is the same after refresh', function(){
-//        //check quiz data
-//        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
-//            expect(question_label.getAttribute('value')).toBe('My Quiz');
-//        });
-//        ptor.findElements(protractor.By.name('answer')).then(function(answers){
-//            expect(answers[0].getAttribute('value')).toBe('second answer');
-//            expect(answers[1].getAttribute('value')).toBe('first answer');
-//            expect(answers[2].getAttribute('value')).toBe('third answer');
-//        });
-//    });
-//    //answer deletion
-//    it('should delete an answer from DRAG quiz', function(){
-//        ptor.findElement(protractor.By.className('delete_drag')).then(function(delete_button){
-//            delete_button.click();
-//            var alert_dialog = ptor.switchTo().alert();
-//            alert_dialog.accept();
-//        });
-//    });
-//    it('should save DRAG quiz after deleting an answer', function(){
-//        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-//            save_button.click();
-//        });
-//        var error = ptor.findElement(protractor.By.className('alert-error'));
-//        expect(error.getText()).toBe('');
-//    });
-//    it('should refresh the page', function(){
-//        ptor.navigate().refresh();
-//    });
-//    if(mode == 1){
-//        it('should go to fullscreen mode', function(){
-//            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
-//                fullscreen_button.click();
-//            });
-//        });
-//    }
-//    it('should open the DRAG quiz after refresh', function(){
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            editables[0].click();
-//        });
-//    });
-//    it('should make sure the DRAG quiz data is the same after deletion', function(){
-//        //check quiz data
-//        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
-//            expect(question_label.getAttribute('value')).toBe('My Quiz');
-//        });
-//        ptor.findElements(protractor.By.name('answer')).then(function(answers){
-//            expect(answers[0].getAttribute('value')).toBe('first answer');
-//            expect(answers[1].getAttribute('value')).toBe('third answer');
-//        });
-//    });
-//    it('should delete DRAG quiz (text)', function(){
-//        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-//            delete_buttons[delete_buttons.length-1].click();
-//            var alert_dialog = ptor.switchTo().alert();
-//            alert_dialog.accept();
-//        });
-//        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
-//            expect(editables.length).toBe(0);
-//        });
-//    });
-//    if(mode == 1){
-//        it('should exit fullscreen mode', function(){
-//            console.log('exiting fullscreen mode');
-//            ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
-//                links[links.length-1].click();
-//            });
-//        });
-//    }
-//}
+        ptor.findElements(protractor.By.className('explain')).then(function(explanations){
+            expect(explanations[0].getAttribute('value')).toBe('second Explanation');
+            expect(explanations[1].getAttribute('value')).toBe('third Explanation');
+        });
+    });
+    it('should delete OCQ quiz (text)', function(){
+        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-1].click();
+            var alert_dialog = ptor.switchTo().alert();
+            alert_dialog.accept();
+        });
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            expect(editables.length).toBe(0);
+        });
+    });
+    if(mode == 1){
+        it('should exit fullscreen mode', function(){
+            console.log('exiting fullscreen mode');
+            ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
+                links[links.length-1].click();
+            });
+        });
+    }
+}
+
+function DRAGTest(mode, ptor){
+    var modeName = 'normal';
+    if(mode == 1){
+        modeName = 'fullscreen';
+        it('should go to fullscreen mode', function(){
+            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
+                fullscreen_button.click();
+            });
+        });
+    }
+    it('should insert an DRAG quiz in '+modeName+' mode', function(){
+        console.log('starting DRAG '+modeName);
+        ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
+            buttons[1].click();
+        });
+        ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
+            options[5].click();
+        });
+        ptor.findElement(protractor.By.className('ontop')).then(function(container){
+            container.isDisplayed().then(function(disp){
+                expect(disp).toBe(true);
+            });
+        });
+        ptor.findElement(protractor.By.id('editing')).then(function(editing){
+            expect(editing.getText()).toContain('New Quiz');
+        });
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            expect(editables[0].getText()).toBe('New Quiz');
+            //edit quiz name
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('My Quiz');
+                ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                    buttons[1].click();
+                });
+            });
+            expect(editables[0].getText()).toBe('My Quiz');
+            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('New Quiz');
+                ptor.findElement(protractor.By.className('icon-remove')).then(function(remove_button){
+                    remove_button.click();
+                });
+            });
+            expect(editables[0].getText()).toBe('My Quiz');
+//                edit quiz time
+//                HAS A BUG RIGHT NOW
+//                make sure quiz type is MCQ
+            ptor.findElements(protractor.By.tagName('td')).then(function(data){
+                expect(data[6].getText()).toBe('drag');
+            });
+        });
+    });
+    //enter the answers
+    it('should add answers to DRAG quiz', function(){
+        ptor.findElements(protractor.By.name('answer')).then(function(fields){
+            fields[fields.length-1].sendKeys('first answer');
+        });
+        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+        ptor.findElements(protractor.By.name('answer')).then(function(fields){
+            fields[fields.length-1].sendKeys('second answer');
+        });
+        ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+        ptor.findElements(protractor.By.name('answer')).then(function(fields){
+            fields[fields.length-1].sendKeys('third answer');
+        });
+    });
+    it('should sort the answers', function(){
+        ptor.findElements(protractor.By.className('drag-item')).then(function(drag_items){
+            ptor.actions().dragAndDrop(drag_items[1], drag_items[0]).perform();
+        });
+        ptor.findElements(protractor.By.name('answer')).then(function(answers){
+            expect(answers[0].getAttribute('value')).toBe('second answer');
+            expect(answers[1].getAttribute('value')).toBe('first answer');
+            expect(answers[2].getAttribute('value')).toBe('third answer');
+        });
+    });
+    //try to save
+    //expected to succeed
+    it('should save the DRAG quiz', function(){
+        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
+            save_button.click();
+        });
+        var error = ptor.findElement(protractor.By.className('alert-error'));
+        expect(error.getText()).toBe('');
+    });
+    it('should refresh the page', function(){
+        ptor.navigate().refresh();
+    });
+    if(mode == 1){
+        it('should go to fullscreen mode', function(){
+            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
+                fullscreen_button.click();
+            });
+        });
+    }
+    it('should open the DRAG quiz after refresh', function(){
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            editables[0].click();
+        });
+    });
+    it('should make sure the DRAG quiz data is the same after refresh', function(){
+        //check quiz data
+        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
+            expect(question_label.getAttribute('value')).toBe('My Quiz');
+        });
+        ptor.findElements(protractor.By.name('answer')).then(function(answers){
+            expect(answers[0].getAttribute('value')).toBe('second answer');
+            expect(answers[1].getAttribute('value')).toBe('first answer');
+            expect(answers[2].getAttribute('value')).toBe('third answer');
+        });
+    });
+    //answer deletion
+    it('should delete an answer from DRAG quiz', function(){
+        ptor.findElement(protractor.By.className('delete_drag')).then(function(delete_button){
+            delete_button.click();
+            var alert_dialog = ptor.switchTo().alert();
+            alert_dialog.accept();
+        });
+    });
+    it('should save DRAG quiz after deleting an answer', function(){
+        ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
+            save_button.click();
+        });
+        var error = ptor.findElement(protractor.By.className('alert-error'));
+        expect(error.getText()).toBe('');
+    });
+    it('should refresh the page', function(){
+        ptor.navigate().refresh();
+    });
+    if(mode == 1){
+        it('should go to fullscreen mode', function(){
+            ptor.findElement(protractor.By.className('fullscreenLink')).then(function(fullscreen_button){
+                fullscreen_button.click();
+            });
+        });
+    }
+    it('should open the DRAG quiz after refresh', function(){
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            editables[0].click();
+        });
+    });
+    it('should make sure the DRAG quiz data is the same after deletion', function(){
+        //check quiz data
+        ptor.findElement(protractor.By.name('qlabel')).then(function(question_label){
+            expect(question_label.getAttribute('value')).toBe('My Quiz');
+        });
+        ptor.findElements(protractor.By.name('answer')).then(function(answers){
+            expect(answers[0].getAttribute('value')).toBe('first answer');
+            expect(answers[1].getAttribute('value')).toBe('third answer');
+        });
+    });
+    it('should delete DRAG quiz (text)', function(){
+        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-1].click();
+            var alert_dialog = ptor.switchTo().alert();
+            alert_dialog.accept();
+        });
+        ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
+            expect(editables.length).toBe(0);
+        });
+    });
+    if(mode == 1){
+        it('should exit fullscreen mode', function(){
+            console.log('exiting fullscreen mode');
+            ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
+                links[links.length-1].click();
+            });
+        });
+    }
+}
 
 
 function MCQVideo(ptor){

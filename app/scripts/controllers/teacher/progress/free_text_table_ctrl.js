@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('freeTextTableCtrl', ['$scope', '$timeout', 'Quiz', function ($scope, $timeout, Quiz) {
+  .controller('freeTextTableCtrl', ['$scope', '$timeout', 'Quiz', '$log', function ($scope, $timeout, Quiz, $log) {
         $scope.showFeedback = function(answers, index){
     	answers.showGroups = true
 		for(var i in answers){
@@ -10,36 +10,20 @@ angular.module('scalearAngularApp')
 		}
     	answers[index].show_feedback = true
 		answers[index].group_selected = true
-
     }
 
     var hideFeedback= function(answers, index){
     	answers.showGroups = false
     	answers[index].show_feedback = false
 		answers[index].group_selected = false
-
     }
 
-    $scope.saveCheckedHide = function(answers){
+    $scope.saveCheckedHide = function(answer){
     	var survey_id = $scope.survey_id
-    	var hide = []
-    	var ind = 0
-    	answers.forEach(function(answer){
-    		if(answer.hide){
-    			hide[ind] = answer.id
-    			ind++
-    		}
-    	})
-    	console.log(hide)
+    	var hide=answer.id
     	Quiz.hideResponses(
     		{quiz_id: survey_id},
-    		{hide: hide},
-    		function(){
-    			$scope.notify = "Saved"
-    			$timeout(function(){
-    				$scope.notify = ""
-    			},2000)
-    		}
+    		{hide: answer}
 		)
     }
 
@@ -55,7 +39,6 @@ angular.module('scalearAngularApp')
     			ind++
     		}
     	})
-    	$scope.notify = "Sending Emails"
 		Quiz.sendFeedback(
 			{quiz_id: survey_id},
 			{
@@ -63,7 +46,6 @@ angular.module('scalearAngularApp')
 				response:response
 			},
 			function(){
-				$scope.notify = ""
 				hideFeedback(answers, index)
 			},
 			function(){}
@@ -73,7 +55,7 @@ angular.module('scalearAngularApp')
     $scope.deleteFeedback=function(answers,index){
     	var survey_id = $scope.survey_id
     	var id = answers[index].id
-    	console.log(answers[index])
+    	$log.debug(answers[index])
     	Quiz.deleteFeedback(
     		{quiz_id: survey_id},
     		{answer:id},

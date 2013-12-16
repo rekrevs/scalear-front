@@ -59,7 +59,7 @@
 }
 
 .hidden_shortcuts{
-    position:relative;
+    position:absolute;
 	top: -160px;
 	z-index:3;
 }
@@ -107,3 +107,6 @@
     background:url('/images/fullscreen3_exit.png') no-repeat center center;
 }
 
+li{
+	list-style-type: none;
+}

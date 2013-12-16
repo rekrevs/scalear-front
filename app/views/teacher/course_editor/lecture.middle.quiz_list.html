@@ -1,17 +1,17 @@
 <loading size="small" show="quiz_loading"/>
 <table class="table">
 	<tr>
-		<td>Question</td>
-		<td>Time</td>
-		<td>Type</td>
+		<td translate>answer.question</td>
+		<td translate>online_quiz.time</td>
+		<td translate>groups.type</td>
 		<td></td>
 	</tr>
 	<tr ng-repeat="quiz in quiz_list|orderBy:'time'" ng-class="{selected: quiz.id == $parent.selected_quiz.id}">
 		<td style="width:50%">
-			<editable_text value="quiz.question" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);">
+			<editable_text value="quiz.question" validation="validateName" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz">
 		</td>
 		<td ng-init="quiz.formatedTime = (quiz.time|format)" style="width:25%">			
-			<editable_text value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);">
+			<editable_text value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz">
 		</td>
 		<td>{{quiz.question_type}}</td>
 		<td>

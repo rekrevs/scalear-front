@@ -1,16 +1,18 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('reviewQuestionsCtrl', ['$scope','$stateParams','Module',function ($scope, $stateParams, Module) {
+  .controller('reviewQuestionsCtrl', ['$scope','$stateParams','Module','$log','$window',function ($scope, $stateParams, Module, $log, $window) {
+
+    $window.scrollTo(0, 0);
   	var init=function(){
   		Module.getStudentQuestions(
   			{
-			 	   course_id:$stateParams.course_id,
+		   course_id:$stateParams.course_id,
            module_id:$stateParams.module_id
   			},
   			function(data){
-  				console.log(data)
-  				$scope.questions= data.questions
+  				$log.debug(data)
+  				$scope.review_questions= data.questions
           $scope.lecture_names=data.lecture_names
   			},
   			function(){
@@ -38,7 +40,5 @@ angular.module('scalearAngularApp')
     }
 
   	init()
-    console.log($scope.selected_module)
-
 
   }]);

@@ -1,31 +1,36 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'OnlineQuiz' ,function ($scope, $http, $stateParams, $state, $filter, OnlineQuiz) {
+    .controller('lectureQuizListCtrl',['$scope', 'OnlineQuiz', '$translate','$q','$log', function ($scope, OnlineQuiz, $translate, $q, $log) {
 
-	console.log("loading quiz list")
+	$log.debug("loading quiz list")
 	$scope.editing_mode = false
 
-	OnlineQuiz.getQuizList(
-		{lecture_id:$scope.lecture.id},
-		function(data){
-			$scope.$parent.quiz_list = data.quizList
-		},
-		function(){
-			alert("Failed to Load Quiz List")
-		}
-	);	
+	$scope.$watch('lecture',function(){
+		if($scope.lecture)
+			init()
+	})
+
+	var init= function(){
+		OnlineQuiz.getQuizList(
+			{lecture_id:$scope.lecture.id},
+			function(data){
+				$scope.$parent.quiz_list = data.quizList
+			},
+			function(){
+				alert("Failed to Load Quiz List")
+			}
+		);	
+	}
 
 	var updateOnlineQuiz=function(quiz){
 		OnlineQuiz.update(
 			{online_quizzes_id: quiz.id},
 			{online_quiz: {time:Math.round(quiz.time), question:quiz.question}},
-			function(data){ //success
-				console.log(data)
+			function(data){
+				$log.debug(data)
 			},
-			function(){ //error
-				alert("Could not update quiz, please check your internet connection")
-			}
+			function(){}
 		);
 	}
  	$scope.validateTime=function(time) {
@@ -39,19 +44,40 @@ angular.module('scalearAngularApp')
 		    // check if hours or minutes are incorrect
 		    var total_duration=(hours*60*60)+(minutes*60)+(seconds);
 		    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
-	       		return "Incorrect Time Format"
+	       		return $translate('online_quiz.incorrect_format_time')
 		    }
 		    else if( ($scope.lecture_player.controls.getDuration()-1) < total_duration || total_duration <= 0 ){
-	       		return "Time Outside Video Range"
+	       		return $translate('online_quiz.time_outside_range')
 		    }
 		}
 	    else{
-	   		return "Incorrect Time Format"
+	   		return $translate('online_quiz.incorrect_format_time')
 	    }
+	}
+	
+	$scope.validateName= function(data, elem){
+		var d = $q.defer();
+	    var doc={}
+	    doc["question"]=data;
+	    $log.debug($scope.$parent.quiz_list);
+	    OnlineQuiz.validateName(
+	    	{online_quizzes_id: elem.id},
+	    	doc,
+	    	function(data){
+				d.resolve()
+			},function(data){
+				$log.debug(data.status);
+				$log.debug(data);
+			if(data.status==422)
+			 	d.resolve(data.data.errors['question'].join());
+			else
+				d.reject('Server Error');
+			}
+	    )
+	    return d.promise;
 	}
 
 	$scope.saveEdit=function(quiz){
-
 		var a = quiz.formatedTime.split(':'); // split it at the colons			
 		var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); // minutes are worth 60 seconds. Hours are worth 60 minutes.
 		quiz.time = seconds
@@ -59,18 +85,16 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
-		if(confirm("Are you sure you want to delete quiz"))
+		if(confirm($translate('online_quiz.you_sure_delete_quiz')))
 			OnlineQuiz.destroy(
 				{online_quizzes_id: quiz.id},{},
-				function(data){ //success
-					console.log(data)
+				function(data){
+					$log.debug(data)
 					$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
 					$scope.$parent.editing_mode = false;
 					$scope.$parent.selected_quiz={}
 				},
-				function(){ //error
-					alert("Failed to delete quiz, please check network connection")
-				}
+				function(){}
 			);
 	}
 

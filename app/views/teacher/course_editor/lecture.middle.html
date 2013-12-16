@@ -4,30 +4,30 @@
 	<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
 </overlay>
 <center><h3>{{lecture.name}}</h3></center>
-<center ><a class ="btn big fullscreenLink" ng-click="resizeBig()">Edit In Fullscreen</a></center>
+<center resizable-video video-layer='video_layer' quiz-layer='quiz_layer' active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' ><a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>
 <center>
 	<form name="answer_form" novalidate style="margin:0">
-	<video_container ng-style="video_style" ng-class="lecture.aspect_ratio">
+	<video_container ng-style="video_layer" ng-class="lecture.aspect_ratio">
 		<div ng-show="editing_mode">
 			<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
 				<answervideo ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
 				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 			</quiz>
 		</div>
-		<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_style" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio"/>
-		<div class="sidebar" ng-show="fullscreen" ></div>
+		<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio"/>
+		
 	</video_container>
 	</form>
 	</br>
 	<div class="quiz_list" >
-		<center ng-show="fullscreen"><a class='btn small fullscreenLink' ng-click="resizeSmall()" >Exit Fullscreen</a></center>
+		<center ng-show="fullscreen"><a class='btn small fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center>
 		<edit_panel ng-show="editing_mode" />
 		<div ng-show="submitted && !hide_alerts">
-			<alert type="alert.type" close="closeAlerts()">{{alert.msg}}</alert>
+			<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</div>
 		<div id="foo" class="btn-toolbar">
-			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="invideo" title="Over Video" />
-			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="html" title="Text" />
+			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="invideo" title="{{'lectures.insert_invideo_quiz'|translate}}" />
+			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="html" title="{{'lectures.insert_html_quiz'|translate}}" />
 		</div>
 		<br />
 		<div ui-view="quizList"></div>

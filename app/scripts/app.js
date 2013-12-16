@@ -20,15 +20,18 @@
   'infinite-scroll',
   'xeditable',
   'ui.tinymce',
-  'googlechart'
+  'googlechart',
+  'pascalprecht.translate',
+  'angularMoment'
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
-
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout) {
+  .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log) {
+
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
-      
+
+      $log.debug("lang is "+ $rootScope.current_lang);
     	var statesThatDontRequireAuth =['login', 'home']
 		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information', 'course.lectures']
 		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
@@ -63,7 +66,9 @@
   			}
   			return false;
   		}
-
+		$window.onbeforeunload= function(){
+			$rootScope.unload=true;
+		}
   		$rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
     	
     		UserSession.getRole().then(function(result){
@@ -105,9 +110,20 @@
     		
   	});
       
-  })  
+  }])  
 
-  .config(['$stateProvider','$urlRouterProvider','$httpProvider',function ($stateProvider, $urlRouterProvider, $httpProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$httpProvider','$translateProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider) {
+
+    $logProvider.debugEnabled(false)
+
+    //**********Translations*********
+    $translateProvider
+      .translations('en', translation_en())
+      .translations('sv', translation_sv());
+    $translateProvider.preferredLanguage('en');
+    $translateProvider.useCookieStorage();
+    //**********END*********
+
     $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
 
     $httpProvider.defaults.withCredentials = true;
@@ -126,6 +142,11 @@
       templateUrl: 'views/login.html',
       controller: 'LoginCtrl'
    	 })
+   	 .state('privacy',{
+   	 	url:'/privacy',
+   	 	templateUrl:'views/privacy.html',
+   	 	controller: 'PrivacyCtrl'
+   	 })
       .state('course_list', {
         url:'/courses',
         templateUrl: 'views/teacher/course_list/course_list.html',
@@ -142,11 +163,6 @@
           'navigation':{templateUrl: 'views/navigation.html', controller: 'navigationCtrl'},
           '':{template:'<ui-view/>'}
         },
-        resolve:{
-          course_information:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id});
-          }
-        },
         abstract:true
       })
        .state('course.lectures', {
@@ -155,22 +171,12 @@
       controller: 'studentLecturesCtrl'
       })
       .state('course.lectures.lecture', {
-         // resolve:{
-           // lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
-             // return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
-           // }
-         // },
         url: '/lectures/:lecture_id',
         views:{
           'middle'  :{templateUrl: 'views/student/lectures/lecture.middle.html',  controller: 'studentLectureMiddleCtrl'}
         }        
       })
       .state('course.lectures.quiz', {
-         resolve:{
-          quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
-          }
-         },
         url: '/quizzes/:quiz_id',
         views:{
           'middle'  :{templateUrl: 'views/student/lectures/quiz.middle.html',  controller: 'studentQuizMiddleCtrl'}
@@ -182,11 +188,6 @@
         controller: 'courseEditorCtrl'
       })
       .state('course.course_editor.module',{
-        resolve:{
-          module:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/groups/'+$stateParams.module_id+'/get_group_angular'});
-          }
-        },
         url:'/modules/:module_id',
         views:{
           'details' :{templateUrl: 'views/teacher/course_editor/module.details.html', controller: 'moduleDetailsCtrl'},
@@ -194,11 +195,6 @@
         }
       })
       .state('course.course_editor.lecture', {
-        resolve:{
-          lecture:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/lectures/'+$stateParams.lecture_id})
-          }
-        },
         url: '/lectures/:lecture_id',
         views:{
           'details' :{templateUrl: 'views/teacher/course_editor/lecture.details.html', controller: 'lectureDetailsCtrl'},
@@ -211,11 +207,6 @@
         }        
       })
       .state('course.course_editor.quiz', {
-        resolve:{ 
-          quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', url: scalear_api.host+'/en/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
-          }
-        },
         url: '/quizzes/:quiz_id',
         views:{
           'details' :{templateUrl: 'views/teacher/course_editor/quiz.details.html', controller: 'quizDetailsCtrl'},
@@ -238,84 +229,44 @@
         controller: 'progressModuleCtrl'
       })
       .state('course.calendar', {
-        resolve:{
-          events:function($http, $stateParams, headers,scalear_api){
-            return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})
-          }
-        },
         url: '/events',
         templateUrl: 'views/teacher/calendar/calendar.html',
-        controller: 'TeacherCalendarCtrl'
+        controller: 'teacherCalendarCtrl'
       })
       .state('course.student_calendar', {
-        resolve:{
-          events:function($http, $stateParams, headers,scalear_api){
-            return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/events', headers:headers})
-          }
-        },
         url: '/student/events',
         templateUrl: 'views/student/calendar/calendar.html',
-        controller: 'StudentCalendarCtrl'
+        controller: 'studentCalendarCtrl'
       })
       .state('course.enrolled_students', {
-        resolve:{
-            students:function($http, $stateParams, headers, scalear_api){
-                return $http({method:'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/enrolled_students', headers:headers})
-            }
-        },
         url: '/enrolled_students',
         templateUrl: 'views/teacher/course/enrolled_students.html',
-        controller: 'TeacherCourseEnrolledStudentsCtrl'
-      })
-      .state('course.send_email', {
-        resolve:{
-            emails:function($http, $stateParams, headers, scalear_api){
-                return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/send_email?student='+$stateParams.student_id})
-            }
-        },
-        url: '/send_email/:student_id',
-        templateUrl: 'views/teacher/course/send_email.html',
-        controller: 'TeacherCourseSendEmailCtrl'
+        controller: 'enrolledStudentsCtrl'
       })
       .state('course.send_emails', {
         url: '/send_emails',
         templateUrl: 'views/teacher/course/send_emails.html',
-        controller: 'TeacherCourseSendEmailsCtrl'
+        controller: 'sendEmailsCtrl'
       })
       .state('course.announcements', {
       url:'/announcements',
       templateUrl: 'views/teacher/announcements/announcements.html',
-      controller: 'AnnouncementsCtrl'
+      controller: 'announcementsCtrl'
       })
       .state('course.course_information', {
-            resolve:{
-                course:function($http, $stateParams, headers, scalear_api){
-                    return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/student_show', headers:headers})
-                }
-            },
         url: '/course_information',
         templateUrl: 'views/student/course/course_information.html',
-        controller: 'StudentCourseCourseInformationCtrl'
+        controller: 'studentCourseInformationCtrl'
       })
       .state('course.edit_course_information', {
-            resolve:{
-                course:function($http, $stateParams, headers, scalear_api){
-                    return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id, headers:headers})
-                }
-            },
             url: '',
             templateUrl: 'views/teacher/course/course_information.html',
-            controller: 'TeacherCourseCourseInformationCtrl'
+            controller: 'teacherCourseInformationCtrl'
       })
       .state('course.teachers', {
-         resolve:{
-             teachers:function($http, $stateParams, headers, scalear_api){
-                 return $http({method: 'GET', url:scalear_api.host+'/en/courses/'+$stateParams.course_id+'/teachers', headers:headers})
-             }
-         },
          url: '/teachers',
          templateUrl: 'views/teacher/course/teachers.html',
-         controller: 'TeacherCourseTeachersCtrl'
+         controller: 'courseTeachersCtrl'
       })
       .state('course.inclass', {
         url: '/inclass',
@@ -335,7 +286,7 @@
       .state('student_courses', {
         url:'/student_courses',
         templateUrl: 'views/student/course_list/course_list.html',
-        controller: 'StudentCourseListCtrl'
+        controller: 'studentCourseListCtrl'
       })
   }])
 

@@ -5,27 +5,27 @@
 </style>
 <div id="course_information">
     <h3>
-        {{data.course.short_name}} | {{data.course.name}}
+        {{course.short_name}} | {{course.name}}
     </h3>
-    <b>Start Date:</b>
+    <b translate="courses.start_date"></b>
     <p>
-        {{data.course.start_date | date:'fullDate'}}
+        {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
     </p>
-    <b>Duration:</b>
+    <b translate="courses.duration"></b>
     <p>
-        {{data.course.duration}} Weeks
+        {{course.duration}} <span translate="courses.weeks"></span>
     </p>
-    <b>Discussion Forum:</b>
+    <b translate="head.discussion_forum"></b>
     <p>
-        <a href="{{data.course.discussion_link}}">{{data.course.discussion_link}}</a>
+        <a href="{{course.discussion_link}}">{{course.discussion_link}}</a>
     </p>
-    <b>Description:</b>
+    <b translate="groups.description"></b>
     <p>
-        {{data.course.description}}
+        {{course.description}}
     </p>
-    <b>Prerequisites:</b>
+    <b translate="courses.prerequisites"></b>
     <p>
-        {{data.course.prerequisites}}
+        {{course.prerequisites}}
     </p>
 </div>
 

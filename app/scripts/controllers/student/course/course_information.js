@@ -1,8 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('StudentCourseCourseInformationCtrl', ['$scope','course', function ($scope, course){
-        course.start_date = new Date(course.start_date);
-        $scope.data = course.data;
-        console.log(course.data);
+  .controller('studentCourseInformationCtrl', ['$scope','$stateParams','Course','$window', function ($scope, $stateParams, Course, $window){
+        $window.scrollTo(0, 0);
+        Course.show(
+        	{course_id: $stateParams.course_id},
+        	function(data){
+        		$scope.course = data.course;
+        	},
+        	function(){}
+    	)
   }]);

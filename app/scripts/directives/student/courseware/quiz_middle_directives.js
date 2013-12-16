@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive('studentQuiz', ['Lecture','$stateParams','CourseEditor',function(Lecture, $stateParams, CourseEditor){
+.directive('studentQuiz', ['Lecture','$stateParams','CourseEditor','$log',function(Lecture, $stateParams, CourseEditor, $log){
 	return {
 		scope: {
 			quiz:"=",
@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
 		template: "<table class='table'>"+
 						"<tbody ng-repeat='question in quiz.questions'>"+
 							"<tr>"+
-								"<th width='10px'>{{$index+1}}</th><th colspan='2'>{{question.content}}</th><th ng-if='quiz.quiz_type==\"quiz\"'><p ng-if='correct[question.id]==1' class='green'>Correct</p><p ng-if='correct[question.id]==0' class='red'>Incorrect</p></th>"+
+								"<th width='10px'>{{$index+1}}</th><th colspan='2'>{{question.content}}</th><th ng-if='quiz.quiz_type==\"quiz\"'><p ng-if='correct[question.id]==1' class='green' translate='lectures.correct'></p><p ng-if='correct[question.id]==0' class='red' translate='lectures.incorrect'></p></th>"+
 							 "</tr>"+
 							 "<tr ng-if='question.question_type == \"Free Text Question\"'>"+
 							      "<td><img src='/images/spacer.gif' height='1px' width='1px' /></td>"+
@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
 	link:function(scope){
 		scope.updateValues= function(ques)
 			{
-				console.log("in value update");
+				$log.debug("in value update");
 				scope.values=0;
 				
 				if(scope.studentAnswers[ques]=="" && scope.studentAnswers[ques]==null)// ocq/mcq not solved

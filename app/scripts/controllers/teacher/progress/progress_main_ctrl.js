@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module',function ($scope, $timeout, $stateParams, Course, Module) {
+  .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module', '$translate','$log', function ($scope, $timeout, $stateParams, Course, Module, $translate, $log) {
 
   	  	$scope.moduleProgressTab=function(){
   	  		enableModuleScrolling()
@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
                 limit: $scope.module_limit
             },
             function(data){
-            	console.log(data)
+            	$log.debug(data)
                 var obj={}
 
                 obj.module_names = data.module_names
@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
                 angular.extend(obj.module_status,data.module_status)
                 angular.extend(obj.late_modules, data.late_modules)
 
-                console.log(obj)
+                $log.debug(obj)
 
                 angular.extend($scope, obj)
 
@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
                     
             },
             function(){
-                alert('Could not load data, please check your internet connection')
+                //alert('Could not load data, please check your internet connection')
             }
         );
     } 
@@ -95,12 +95,13 @@ angular.module('scalearAngularApp')
     	Course.getTotalChart(
     		{course_id: $stateParams.course_id},
     		function(data){
-    			$scope.total_chart = createTotalChart(data.student_progress)	
+                $scope.student_progress = data.student_progress
+    			$scope.total_chart = createTotalChart($scope.student_progress)	
     			$scope.loading_total_charts = false
-
+                $scope.$watch("current_lang", redrawChart);
     		},
     		function(){
-    			alert("Failed to load student progress, please check your internet connection")
+    			//alert("Failed to load student progress, please check your internet connection")
     		}
 		)
     }
@@ -113,9 +114,9 @@ angular.module('scalearAngularApp')
 		var formated_data ={}
 		formated_data.cols=
 			[
-				{"label": "Students","type": "string"},
-				{"label": "Quiz","type": "number"},
-				{"label": "Lecture","type": "number"},
+				{"label": $translate('courses.students'),"type": "string"},
+				{"label": $translate('courses.quiz'),"type": "number"},
+				{"label": $translate('groups.lecture'),"type": "number"}
 			]
 		formated_data.rows= []
 		for(var ind in data)
@@ -125,7 +126,7 @@ angular.module('scalearAngularApp')
 				[
 					{"v":data[ind][0]},
 					{"v":data[ind][1], "f":data[ind][1].toFixed(0)+'%'},
-					{"v":data[ind][2], "f":data[ind][2].toFixed(0)+'%'},
+					{"v":data[ind][2], "f":data[ind][2].toFixed(0)+'%'}
 				]
 			}
 			formated_data.rows.push(row)
@@ -137,7 +138,7 @@ angular.module('scalearAngularApp')
     	var chart = {};
         chart.type = "BarChart"
         chart.options = {
-            "colors": ['blue','brown'],
+            "colors": ['#0c81c8','darkred'],
             "title": "Student Progress",
             "isStacked": "false",
             "fill": 20,
@@ -146,12 +147,21 @@ angular.module('scalearAngularApp')
             "fontSize" : 12,
             'chartArea': {'width':'70%','height': '98%'},
             "vAxis": {
-                "title": "Statistics",
-            },
+                "title": $translate("courses.statistics")
+            }
         };
 	  	chart.data = $scope.formatTotalChartData(chart_data)
 	  	return chart
     }
     
+    var redrawChart = function(new_val, old_val){ 
+        if(new_val != old_val){
+            $scope.total_chart = {}
+            $timeout(function(){
+                $scope.total_chart = createTotalChart($scope.student_progress)
+            })
+        }
+    }
+
 
   }]);

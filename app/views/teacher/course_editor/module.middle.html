@@ -2,36 +2,38 @@
 	<h3>{{module.name}}</h3>
 	<table class="table table-striped table-bordered" style="width:90%;font-size:12px;text-align: center">
 		<tr>
-			<td>Total Time</td><td>{{module.total_time}}</td>
+			<td><span translate>groups.total_time</span>:</td><td>{{module.total_time}}</td>
 		</tr>
 		<tr>
-			<td>Total number of Lecture Questions:</td><td>{{module.total_questions}}</td>
+			<td><span translate>groups.total_number_lec_qustions</span>:</td><td>{{module.total_questions}}</td>
 		</tr>
 		<tr>
-			<td>Total number of Quiz Questions:</td><td>{{module.total_quiz_questions}}</td>
+			<td><span translate>groups.total_number_quiz_questions</span>:</td><td>{{module.total_quiz_questions}}</td>
 		</tr>
 	</table>
 	<br /><br />
 	<div style="width:80%">
-		Link to External Documents:
+		<span translate>groups.external_document</span>:
 		<br /><br />
 		<table class="table">
 			<tr>
-				<td style="width:44%;">Name</td><td>URL</td><td></td>
+				<td style="width:44%;" translate>name</td>
+				<td>URL</td>
+				<td></td>
 			</tr>
 			<tr ng-repeat="doc in module.documents">
 				<td>
-					<editable_text value="doc.name" save="updateDocument($index)" >
+					<editable_text value="doc.name" save="updateDocument(doc)" validation="validateName" elem="doc">
 				</td>
 				<td style="max-width:120px;overflow-wrap:break-word;word-wrap: break-word;">
-					<editable_text value="doc.url" save="updateDocument($index)">
+					<editable_text value="doc.url" save="updateDocument(doc)" validation="validateURL" elem="doc">
 				</td>
 				<td>
-					<delete_button size="big" action="removeDocument($index)" />
+					<delete_button size="big" action="removeDocument(doc)" />
 				</td>
 			</tr>
 		</table>
 		<loading size="small" show="document_loading" />
-		<button_link title="Add Document" action="addDocument()" class="btn" />
+		<button_link title="{{'groups.add_document'|translate}}" action="addDocument()" class="btn" />
 	</div>
 </center>

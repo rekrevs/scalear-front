@@ -1,8 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('reviewQuizzesCtrl', ['$scope','$stateParams','Module',function ($scope, $stateParams, Module) {
-  	console.log("review quizzes")
+
+  .controller('reviewQuizzesCtrl', ['$scope','$stateParams','Module', '$translate','$log', '$window', function ($scope, $stateParams, Module, $translate, $log, $window) {
+
+    $window.scrollTo(0, 0);
+    
+    $log.debug("review quizzes")
   	var getLectureCharts= function(offset, limit){
         $scope.chart_limit = limit
         $scope.chart_offset = offset
@@ -13,11 +17,8 @@ angular.module('scalearAngularApp')
                 module_id:$stateParams.module_id
             },
             function(data){
-            	console.log(data)
+            	$log.debug(data)
                 $scope.lecture_data=data.charts_data 
-                // if($scope.lecture_data.question_ids.length){
-                //     $scope.sub_question_ids = $scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_limit)
-                // }
                 $scope.loading_lectures_chart = false
             }
         );
@@ -46,21 +47,21 @@ angular.module('scalearAngularApp')
         var formated_data ={}
         formated_data.cols=
             [
-                {"label": "Students","type": "string"},
-                {"label": "Correct","type": "number"},
-                {"label": "Incorrect","type": "number"},
+                {"label": $translate('courses.students'),"type": "string"},
+                {"label": $translate('lectures.correct'), "type": "number"},
+                {"label": $translate('lectures.incorrect'),"type": "number"},
             ]
         formated_data.rows= []
         for(var ind in data)
         {
             var text, correct, incorrect
             if(data[ind][1]=="gray"){
-                text=data[ind][2]+" "+"(Incorrect)";
+                text=data[ind][2]+" "+"("+$translate('lectures.incorrect')+")";
                 correct=0
                 incorrect = data[ind][0]
             }
             else{
-                text=data[ind][2]+" "+"(Correct)";
+                text=data[ind][2]+" "+"("+$translate('lectures.correct')+")";
                 correct=data[ind][0]
                 incorrect=0
             }
@@ -90,7 +91,7 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": "Number of Students",
+                "title": $translate("quizzes.number_of_students"),
             },
         };
         chart.data = $scope.formatLectureChartData(chart_data[id])

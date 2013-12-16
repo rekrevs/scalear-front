@@ -1,9 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('AnnouncementsCtrl',['$scope', 'Announcement','$stateParams', function ($scope, Announcement, $stateParams) {
-  	console.log("over here");
+  .controller('announcementsCtrl',['$scope', 'Announcement','$stateParams','$translate', '$log','$window',  function ($scope, Announcement, $stateParams, $translate ,$log, $window) {
   	
+    $log.debug("in announcements");
+
+    $window.scrollTo(0, 0);
+    
+  	$scope.disable_new = false;
   	var init = function()
   	{
   		Announcement.index({course_id: $stateParams.course_id},
@@ -14,19 +18,23 @@ angular.module('scalearAngularApp')
   	}
   	
   	$scope.deleteAnnouncement=function(index){
-  		if(confirm("Are you sure you want to delete this announcement?")){
+  		if(confirm($translate('announcement_form.confirm_delete'))){
   		if($scope.announcements[index].id){
 	  		Announcement.destroy({course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},{},function(data){
 	  			//init();
 	  			$scope.announcements.splice(index, 1)
-	  		})
+                $scope.disable_new = false;
+            })
 	  	}else
 	  		$scope.announcements.splice(index, 1);
-  		}
+            $scope.disable_new = false;
+
+        }
   	}
   	
   	$scope.createAnnouncement= function(){
-  		for(var element in $scope.announcements)
+        $scope.disable_new = true;
+        for(var element in $scope.announcements)
   		{
   			if($scope.announcements[element].show==true)
   				$scope.hideAnnouncement(element);
@@ -35,25 +43,29 @@ angular.module('scalearAngularApp')
   		$scope.announcements.push($scope.newAnnouncement);
   	}
   	$scope.hideAnnouncement = function(index){ //get old data.
-  		$scope.announcements[index].show=false
+        $scope.disable_new = false;
+        $scope.announcements[index].show=false
   		if($scope.announcements[index].id){
   		Announcement.show({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id },
   			function(data){
-  				console.log(data);
+          $log.debug("announcements data=");
+  				$log.debug(data);
   				$scope.announcements[index]=data;
   			}
   		);
   		}else{
-  			$scope.announcements[index]={announcement:"", created_at: new Date(), show:false};
+//  			$scope.announcements[index]={announcement:"", created_at: new Date(), show:false};
+            $scope.announcements.splice(index, 1);
   		}
   	}
   	$scope.showAnnouncement = function(index){
-  		for(var element in $scope.announcements)
+        for(var element in $scope.announcements)
   		{
   			if($scope.announcements[element].show==true)
   				$scope.hideAnnouncement(element);
   		}
-  		$scope.announcements[index].show=true;
+        $scope.disable_new = true;
+        $scope.announcements[index].show=true;
   		$scope.announcements[index].overclass='';
   	};
   	$scope.saveAnnouncement = function(index){
@@ -62,21 +74,23 @@ angular.module('scalearAngularApp')
   		{
   		Announcement.create({course_id: $stateParams.course_id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
   			//init();
-  			$scope.announcements[index]=data;
+  			$scope.announcements[index]=data.announcement;
+            $scope.disable_new = false;
   		},function(response){
-  			$scope.announcements[index].errors=response["data"]
+  			$scope.announcements[index].errors=response["data"].errors
   		})
   		}else{
   		Announcement.update({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
-  			$scope.announcements[index]=data;
+  			$scope.announcements[index]=data.announcement;
+  			$scope.disable_new = false;
   		},function(response){
-  			$scope.announcements[index].errors=response["data"]
+  			$scope.announcements[index].errors=response["data"].errors
   		})
   		}
   	};
   	
     $scope.tinymceOptions = {
-       mode : "textareas",
+        mode : "textareas",
         //theme : "advanced",
         plugins : "autolink,textcolor, lists,pagebreak,layer,table,save,insertdatetime,preview,media,searchreplace,print,contextmenu,paste,directionality,fullscreen,noneditable,visualchars,nonbreaking,template",
 

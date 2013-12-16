@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuestionsCtrl', ['$scope','$stateParams','Module',function ($scope, $stateParams, Module){
- 	
+  .controller('displayQuestionsCtrl', ['$scope','$stateParams','Module','$log', '$window', function ($scope, $stateParams, Module, $log, $window){
+
+ 	$window.scrollTo(0, 0);
   	var init = function(){
   		Module.displayQuestions(
 	  		{
@@ -10,7 +11,7 @@ angular.module('scalearAngularApp')
                 module_id:$stateParams.module_id
 	  		},
 	  		function(data){
-	  			console.log(data)
+	  			$log.debug(data)
 	  			$scope.$parent.lecture_list = data.lecture_list
 	  			$scope.$parent.display_data = data.display_data
 	  			$scope.$parent.total_num_lectures = data.num_lectures

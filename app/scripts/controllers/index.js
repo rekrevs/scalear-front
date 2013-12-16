@@ -1,28 +1,21 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('indexController', ['$scope', '$stateParams', '$state', 'User','$rootScope','UserSession','$location' ,function ($scope, $stateParams, $state, User, $rootScope , UserSession, $location) {
-   	// $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
-    	// $scope.current_state= $state;
-   	// })
-   	// var getUser= function()
-   	// {
-   		// User.getCurrentUser(function(data){
-   			// data.user=JSON.parse(data.user);
-   			// if(data.signed_in == true)
-   				// $rootScope.current_user=data.user
-//    				
-   			// console.log($rootScope.current_user);
-   		// })
-   	// }
-//    	
-   	// getUser();
-//    	
-   	
+  .controller('indexController', ['$scope', '$state', 'User','$rootScope','$translate','$window','$modal', '$log' ,function ($scope, $state, User, $rootScope, $translate, $window, $modal, $log) {
+
+	$scope.changeLanguage = function (key) {
+		$log.debug("in change language "+key);
+    	$translate.uses(key);
+    	$rootScope.current_lang=key;
+    	$window.moment.lang(key);
+  	};
+  	
+  	$scope.changeLanguage($translate.uses());
+
    	$scope.logout = function()
    	{
    		User.logout(function(){
-   			console.log("logged out");
+   			$log.debug("logged out");
    			$rootScope.current_user=null
    			$state.go("home");
    		}, function(){
@@ -38,8 +31,26 @@ angular.module('scalearAngularApp')
    			$state.go("student_courses");
    	}
    	
-   	
-   	
+   	$scope.open = function () {
+
+    	var modalInstance = $modal.open({
+      		templateUrl: 'views/invitation.html',
+      		controller: "InvitationModalCtrl",
+      		// resolve: {
+        		// items: function () {
+          		// return $scope.items;
+        	// }
+      		//}
+    	});
+
+    	modalInstance.result.then(function (course_id) {
+    		if(course_id)
+      			$state.go("course.course_editor",{course_id: course_id })
+    	}, function () {
+      		$log.info('Modal dismissed at: ' + new Date());
+    	});
+  	};
+
    	
 }]);
 

@@ -6,11 +6,11 @@
 	
 	<center>
 		<div ng-show="submitted && !hide_alerts">
-			<alert type="alert.type" close="closeAlerts()">{{alert.msg}}</alert>
+			<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</div>
 		
-		<button value="Add Question" class="btn" ng-click="addQuestion()">Add Question</button>
-		<button value="Save" class="btn btn-primary" ng-click="saveAll()">Save</button>
+		<button value="Add Question" class="btn" ng-click="addQuestion()" translate>groups.add_question</button>
+		<button value="Save" class="btn btn-primary" ng-click="saveAll()" translate>save</button>
 	</center>
 	
 </form>

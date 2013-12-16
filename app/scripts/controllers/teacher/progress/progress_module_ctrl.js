@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressModuleCtrl', ['$timeout', '$scope', '$stateParams','Course', 'Module', function ($timeout, $scope, $stateParams, Course, Module) {
+  .controller('progressModuleCtrl', ['$timeout', '$scope', '$stateParams','Course', 'Module', '$translate','$log', function ($timeout, $scope, $stateParams, Course, Module, $translate, $log) {
 
     $scope.disableInfinitScrolling = function(){
-        console.debug("infinit scrolling disable")
+        $log.debug("infinit scrolling disable")
         $scope.lecture_scroll_disable = true
         $scope.quiz_scroll_disable = true
         $scope.chart_scroll_disable= true
@@ -52,32 +52,36 @@ angular.module('scalearAngularApp')
                 module_id:$stateParams.module_id
             },
             function(data){
-                console.log(data)
+                $log.debug(data)
                 $scope.module = data.module
-                $scope.module_chart = createModuleChart(data.module_data)
+                $scope.chart_data = data.module_data
+                $scope.module_chart = createModuleChart($scope.chart_data)
                 $scope.loading_module_chart=false
+                $scope.$watch("current_lang", redrawChart);
             },
             function(){
-                alert("Failed to load module, please check your internet connection")
+                //alert("Failed to load module, please check your internet connection")
+
             })
+
     }
 
     var formatMouleChartData = function(data){
         var formated_data ={}
         formated_data.cols=
             [
-                {"label": "Students","type": "string"},
-                {"label": "Students","type": "number"},
+                {"label": $translate('courses.students'),"type": "string"},
+                {"label": $translate('courses.students'),"type": "number"}
             ]
         formated_data.rows= []
-        var x_titles=['Not Started Watching', "Watched <= 50%", "Completed On Time", "Completed Late"]
+        var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
         for(var ind in data)
         {
             var row=
             {"c":
                 [
                     {"v":x_titles[ind]},
-                    {"v":data[ind]},
+                    {"v":data[ind]}
                 ]
             }
             formated_data.rows.push(row)
@@ -89,23 +93,37 @@ angular.module('scalearAngularApp')
         var chart = {};
         chart.type = "ColumnChart"
         chart.options = {
-            "colors": ['darkcyan'],
-            "title": "Module Progress",
+            "colors": ['#0c81c8'],
+            "title": $translate('courses.module_progress_charts'),
             "isStacked": "true",
             "fill": 20,
             "height": 200,
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": "Number of Students",
-            },
+                "title": $translate("quizzes.number_of_students")
+            }
         };
         chart.data = formatMouleChartData(chart_data)
         return chart
     }
 
+    var redrawChart = function(new_val, old_val){ 
+        if(new_val != old_val){
+            $scope.module_chart = null
+            $timeout(function(){
+                $scope.module_chart = createModuleChart($scope.chart_data)
+            })
+        }  
+    }
+    
 
     getModuleCharts()
+    $scope.$watch('lectureQuizzesTab', function(){
+        if( $scope.lectureQuizzesTab)
+            $scope.lectureQuizzesTab()
+    })
+
 
 
 }]); 

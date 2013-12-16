@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureProgressCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
+  .controller('lectureProgressCtrl', ['$scope','$stateParams','$timeout','Module','$log', function ($scope, $stateParams, $timeout, Module, $log) {
   	
   	 $scope.lectureProgressTab = function(){
         $scope.tabState(3)
@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
                 angular.extend(obj.lecture_status,data.lecture_status)
                 angular.extend(obj.late_lectures, data.late_lectures)
 
-                console.log(obj)
+                $log.debug(obj)
 
                 angular.extend($scope, obj)
 
@@ -47,7 +47,7 @@ angular.module('scalearAngularApp')
             		enableLectureProgressScrolling()
                     $scope.loading_lectures=false
                     $('.student').tooltip({"placement": "left", container: 'body'})
-                    $('.state').tooltip({"placement": "left", container: 'body'}) 
+                    $('.state').tooltip({"placement": "top", container: 'body'}) 
                 })
                     
             },

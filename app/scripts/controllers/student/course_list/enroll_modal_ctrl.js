@@ -1,22 +1,23 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('StudentEnrollModalCtrl',['$scope','$modalInstance','Course', function ($scope, $modalInstance, Course) {
-	
+  .controller('StudentEnrollModalCtrl',['$scope','$modalInstance','Course','$log','$window', function ($scope, $modalInstance, Course, $log, $window) {
+
+	$window.scrollTo(0, 0);
 	$scope.enrollment={}
 	$scope.form={}  	
 	
   $scope.ok = function () {
-  	console.log($scope);
+  	$log.debug($scope);
   	if($scope.form.key.$valid)
   	{
   	$scope.form.processing=true;
   	Course.enroll({},{unique_identifier : $scope.enrollment.key},function(data){
   		$scope.form.processing=false;
-  		if(data.status=="fail")
-  			$scope.form.server_error=data.message
-  		else
-  			$modalInstance.close($scope.enrollment.key);	
+  		$modalInstance.close($scope.enrollment.key);	
+  	}, function(response){
+  		$scope.form.processing=false;
+  		$scope.form.server_error=response.data.errors.join();
   	})
   		
   	}else

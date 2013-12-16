@@ -3,43 +3,44 @@
         margin-left: 15px;
     }
 </style>
-<div ng-app="scalearAngularApp">
+<div>
     <h3>{{data.course.short_name}} | {{data.course.name}}</h3>
-    <b>Course Enrollment Key:</b>
+    <b ><span translate>courses.course_enrollment_key</span>:</b>
     <p>
         {{data.course.unique_identifier}}
     </p>
 
-    <b>Start Date:</b>
+    <b ><span translate>courses.start_date</span>:</b>
     <p>
-        <details-date date="data.course.start_date" save="updateCourse()" column="start_date"></details-date>
-
+        <details-date date="data.course.start_date" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
     </p>
 
-    <b>Duration:</b>
+    <b ><span translate>courses.duration</span>:</b>
     <p>
-        <details-text value="data.course.duration" save="updateCourse()" column="duration"></details-text> Weeks
+        <details-text value="data.course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> <span translate>courses.weeks</span>
+    </p>
+        <!-- <details-text value="data.course.duration" validate="validateDuration" save="updateCourse()" column="duration"></details-text> Weeks
+    </p > -->
+
+    <b ><span translate>courses.discussion_forum_link</span>:</b>
+    <p>
+        <details-text value="data.course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-text> |
+        <a href="{{data.course.discussion_link}}" ><span translate>courses.visit_link</span></a>
     </p>
 
-    <b>Discussion Forum Link:</b>
+    <b ><span translate>courses.course_description</span>:</b>
     <p>
-        <details-text value="data.course.discussion_link" save="updateCourse()" column="discussion_link"></details-text> |
-        <a href="{{data.course.discussion_link}}">Visit Link</a>
+        <big-area value="data.course.description" save="updateCourse()" validate="validateCourse" column="description"></big-area>
     </p>
 
-    <b>Description:</b>
+    <b ><span translate>courses.prerequisites</span>:</b>
     <p>
-        <big-area value="data.course.description" save="updateCourse()" column="description"></big-area>
+        <big-area value="data.course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
     </p>
 
-    <b>Prerequisites:</b>
+    <b ><span translate>courses.time_zone</span>:</b>
     <p>
-        <big-area value="data.course.prerequisites" save="updateCourse()" column="prerequisites"></big-area>
-    </p>
-
-    <b>Time Zone:</b>
-    <p>
-        <details-select value="data.course.time_zone" options="timezones" save="updateCourse()" column="duration"></details-select>
+        <details-time-zone value="data.course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
     </p>
 
 </div>

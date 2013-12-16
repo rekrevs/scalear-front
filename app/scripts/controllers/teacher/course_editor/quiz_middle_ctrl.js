@@ -1,10 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl',['$stateParams','$rootScope','$scope','Quiz','quiz', 'CourseEditor', function ($stateParams, $rootScope,$scope, Quiz,quiz, CourseEditor) {
+  .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log) {
  
- 	$scope.quiz= quiz.data;
- 	$scope.alert={type:"error", msg:"You've got some errors."}
+ 	$scope.$watch('items_obj['+$stateParams.quiz_id+']', function(){
+      if($scope.items_obj && $scope.items_obj[$stateParams.quiz_id]){
+        $scope.quiz=$scope.items_obj[$stateParams.quiz_id]
+        $scope.$emit('accordianUpdate',$scope.quiz.group_id);
+      }
+    })
+ 	$scope.alert={type:"error", msg:"lectures.got_some_errors"}
  
  	$scope.closeAlerts= function(){
  		$scope.hide_alerts=true;
@@ -12,6 +17,8 @@ angular.module('scalearAngularApp')
 
  	var init = function(){
  		Quiz.getQuestions({course_id:$stateParams.course_id, quiz_id: $stateParams.quiz_id},function(data){
+ 			$log.debug("init data is");
+ 			$log.debug(data);
 	 		$scope.questions=data.questions
 		  	$scope.questions.forEach(function(question,index){
 		  		if(question.question_type.toUpperCase() == 'DRAG'){
@@ -31,17 +38,25 @@ angular.module('scalearAngularApp')
 				}	
 		  	});
 	    });
+
+	    shortcut.add("Enter",function(){
+			var elem_name=angular.element(document.activeElement).attr('name')
+			if(elem_name =='qlabel')
+				$scope.addQuestion()
+				$scope.$apply()
+		},{"disable_in_input" : false});
  	}
  	
  	init();
  	
  	var updateQuestions=function(ans){
-		console.log("savingAll");
+		$log.debug("savingAll");
 		Quiz.updateQuestions(
 			{course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},
 			{questions: ans},
 			function(data){ //success
-				console.log(data)
+				$log.debug(data)
+				init();
 			},
 			function(){
 	 		    alert("Could not save changes, please check network connection.");
@@ -95,9 +110,9 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.addHtmlAnswer=function(ans, question){
-		console.log("in add answer");
-		console.log("question is ");
-		console.log(question);
+		$log.debug("in add answer");
+		$log.debug("question is ");
+		$log.debug(question);
 		$scope.new_answer=CourseEditor.newAnswer(ans,"","","","","quiz", question.id)
 		question.answers.push($scope.new_answer)
 	}
@@ -105,15 +120,15 @@ angular.module('scalearAngularApp')
  	$scope.removeHtmlAnswer = function(index, question){
 		if(question.answers.length>1)
 		{
-			if(confirm("Are you sure?"))
+			if(confirm($translate('lectures.you_sure')))
 				question.answers.splice(index, 1);
 		}else{
-			console.log("Can't delete the last answer..")
+			$log.debug("Can't delete the last answer..")
 		}
 	}
 	
 	$scope.removeQuestion = function(index){
- 		 if(confirm("Are you sure?"))
+ 		 if(confirm($translate('lectures.you_sure')))
 		  	$scope.questions.splice(index, 1);
 	}
  

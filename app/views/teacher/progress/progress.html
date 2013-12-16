@@ -3,11 +3,11 @@
 <div class="row">        
 	<div class="span3">
 	    <ul class="nav nav-list">
-			<li class="nav-header">Total Progress</li>    
+			<li class="nav-header" translate>courses.total_progress</li>    
 			<li ng-class="{active: getLocation() == 0}">
-			    <a ui-sref="course.progress.main()" class="lecture" id="progress_chart">Progress Chart</a>
+			    <a ui-sref="course.progress.main()" class="lecture" id="progress_chart" translate>courses.progress_chart</a>
 			</li>           
-	        <li class="nav-header">Modules</li>
+	        <li class="nav-header" translate>courses.modules</li>
 			<li bindonce ng-repeat="module in modules" style="cursor:pointer" ng-class="{active: module.id == getLocation()}">
 			    <a ui-sref="course.progress.module({ module_id: module.id })" class="module" bo-text="module.name" ></a>
 			</li>

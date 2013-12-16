@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizzesProgressCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
+  .controller('quizzesProgressCtrl', ['$scope','$stateParams','$timeout','Module','$log', function ($scope, $stateParams, $timeout, Module, $log) {
     
     $scope.quizzesProgressTab = function(){
         $scope.tabState(4)
@@ -18,12 +18,12 @@ angular.module('scalearAngularApp')
         Module.getQuizzesProgress(
             { 
                 course_id: $stateParams.course_id,
-                module_id: $scope.module.id, 
+                module_id: $stateParams.module_id, 
                 offset:$scope.quizzes_offset, 
                 limit: $scope.quizzes_limit
             },
             function(data){
-                console.log(data)
+                $log.debug(data)
                 var obj={}
 
                 obj.quizzes_names = data.quizzes_names
@@ -47,7 +47,7 @@ angular.module('scalearAngularApp')
                     
             },
             function(){
-                alert('Could not load data, please check your internet connection')
+                //alert('Could not load data, please check your internet connection')
             }
         );
     }    

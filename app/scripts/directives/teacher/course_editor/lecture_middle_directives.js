@@ -331,7 +331,8 @@ angular.module('scalearAngularApp')
 					return
 				})
 				scope.$apply()
-				element.find('input')[all_inputs.length].focus()
+				if(element.find('input')[all_inputs.length])
+					element.find('input')[all_inputs.length].focus()
 			},{"disable_in_input" : false});			
 			
 		}

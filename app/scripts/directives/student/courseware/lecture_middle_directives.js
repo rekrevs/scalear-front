@@ -25,10 +25,12 @@ angular.module('scalearAngularApp')
     		if(scope.fullscreen){
 	    		scope.pWidth=angular.element($window).width();
 	    		scope.pHeight=angular.element($window).height();
+          element.css("z-index",10000);
     		}
     		else{
 	    		scope.pHeight=480;
 	    		scope.pWidth= scope.lecture.aspect_ratio=='widescreen'? 800:600;
+           element.css("z-index",1000);
     		}
 
     		element.css("top", scope.pHeight-26+"px");
@@ -104,6 +106,13 @@ angular.module('scalearAngularApp')
   					scope.lecture_player.controls.seek(t-10);
   					scope.back();
   				},{"disable_in_input" : true});
+
+          shortcut.add("Enter",function(){
+            var elem_name=angular.element(document.activeElement).attr('name')
+            if(elem_name =='ask')
+              scope.submit_question()
+              scope.$apply()
+          },{"disable_in_input" : false});
   		};
 
   		setButtonsLocation()
@@ -176,10 +185,15 @@ angular.module('scalearAngularApp')
 
     var setButtonsLocation=function(){
       $log.debug(scope.fullscreen)
-      if(scope.fullscreen)
+      if(scope.fullscreen){
         scope.pHeight=angular.element($window).height()- 36;
-      else
+        element.css("z-index",10000);
+      }
+      else{
         scope.pHeight=443;
+        element.css("z-index",1000);
+      }
+        
       element.css("top", scope.pHeight+"px");
     }		
     	
@@ -311,7 +325,7 @@ angular.module('scalearAngularApp')
 			
 		}
 	};
-}]).directive('studentHtmlAnswer',function(){
+}]).directive('studentHtmlAnswer',['$log',function($log){
 	return {
 	 	restrict: 'E',
 	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' style='/*overflow:auto*/' >"+
@@ -357,7 +371,7 @@ angular.module('scalearAngularApp')
 			
 		}
 	};
-}).directive('studentHtmlMcq',['$translate','$log',function($translate, $log){	
+}]).directive('studentHtmlMcq',['$translate','$log',function($translate, $log){	
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform'>"+

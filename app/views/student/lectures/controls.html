@@ -3,7 +3,7 @@
 <div class='fullscreenDiv' ng-class="{'full':!fullscreen, 'small':fullscreen}" ng-click='full()'></div>
 <div class='alert alert-success fading' ng-show='show_message' translate="lectures.thanks"></div>
 <div class='hidden_div' ng-show='show_question'>
-	<input class='question' maxlength="100" required="true" ng-model='question_asked' placeholder="{{'youtube.enter_question'|translate}}"/>
+	<input class='question' maxlength="140" name='ask' required="true" ng-model='question_asked' placeholder="{{'youtube.enter_question'|translate}}"/>
 	<input ng-click="submit_question()" class='btn btn-primary submit_question' type='button' value="{{'youtube.ask' | translate}}"/>
 </div>
 <div class="hidden_shortcuts well" ng-show='show_shortcuts'>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('ServerInterceptor', ['$rootScope','$q','$timeout','ErrorHandler','$injector','scalear_api','headers', function($rootScope,$q, $timeout, ErrorHandler, $injector, scalear_api, headers) { //server and also front end requests (requesting partials and so on..)
+.factory('ServerInterceptor', ['$rootScope','$q','$timeout','ErrorHandler','$injector','scalear_api','headers','$log', function($rootScope,$q, $timeout, ErrorHandler, $injector, scalear_api, headers, $log) { //server and also front end requests (requesting partials and so on..)
   return {
     // optional method
     'request': function(config) {
@@ -49,7 +49,7 @@ angular.module('scalearAngularApp')
     // optional method
    'responseError': function(rejection) {
       // do something on error
-      console.log(rejection);
+      $log.debug(rejection);
       if(rejection.status==400 && rejection.config.url.search(re)!=-1) 
       {
       	$rootScope.show_alert="error";
@@ -61,8 +61,8 @@ angular.module('scalearAngularApp')
       
       if(rejection.status==404 && rejection.config.url.search(re)!=-1) 
       {
-      	console.log("rootscope is ");
-      	console.log($rootScope);
+      	$log.debug("rootscope is ");
+      	$log.debug($rootScope);
       	 var $state = $injector.get('$state'); //test connection every 10 seconds.
       	if($rootScope.current_user.roles[0].id==2)// student
       		$state.go("student_courses") //check

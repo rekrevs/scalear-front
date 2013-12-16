@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
       'saveTeachers':{ method: 'POST', params: {action: 'save_teachers'}, headers:headers},
       'updateTeacher':{ method: 'POST', params: {action: 'update_teacher'}, headers:headers},
       'deleteTeacher':{ method: 'DELETE', params: {action: 'delete_teacher'}, headers:headers},
+      'getCalendarEvents':{ method: 'GET', params: {action: 'events'}, headers:headers},
       'newCourse':{method:'GET', headers:headers, params:{action: 'new', course_id:null}},
       'getCourse': {method: 'GET', params: {action: 'get_course_angular'}, headers:headers},
       'getCourseEditor': {method: 'GET', params: {action: 'course_editor_angular'}, headers:headers},

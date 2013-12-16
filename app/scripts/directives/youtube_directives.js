@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('youtube',['$rootScope',function($rootScope){
+	.directive('youtube',['$rootScope','$log',function($rootScope,$log){
 		return {
 			restrict: 'E',
 			replace:true, 
@@ -13,8 +13,8 @@ angular.module('scalearAngularApp')
 			},
 			link: function(scope, element){
 
-				console.debug("YOUTUBE " + scope.id)
-				console.log(scope.controls);
+				$log.debug("YOUTUBE " + scope.id)
+				$log.debug(scope.controls);
 				
 				var player
 
@@ -26,8 +26,8 @@ angular.module('scalearAngularApp')
 					if(player)
 						Popcorn.destroy(player)
 					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1&autohide=0" ,{ width: 500, controls: 0});
-					console.log("loading!!!")
-					console.log(scope.url);
+					$log.debug("loading!!!")
+					$log.debug(scope.url);
 					setupEvents()
 
 				}
@@ -74,7 +74,7 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.refreshVideo = function(){
-					console.log("refreshVideo!")
+					$log.debug("refreshVideo!")
 					element.find('iframe').remove();
 			  		loadVideo();
 				}
@@ -90,7 +90,7 @@ angular.module('scalearAngularApp')
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
-							console.debug("Video data loaded")
+							$log.debug("Video data loaded")
 							if(player_events.onReady){
 								player_events.onReady();
 								scope.$apply();
@@ -219,7 +219,7 @@ angular.module('scalearAngularApp')
 				//var video_heigt = (win.width()-400)*1.0/factor +26
 				var layer={}
 				if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
-					console.log("width cutt offff")
+					$log.debug("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
 					var margin_top = (win.height() - (video_height+30))/2.0;
 					layer={

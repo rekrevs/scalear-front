@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log) {
 
  	/***********************Functions*******************************/
  	var init = function(){
@@ -33,12 +33,12 @@ angular.module('scalearAngularApp')
  	}
 
  	$scope.addModule=function(){
-    	console.log("adding mod")
+    	$log.debug("adding mod")
     	$scope.module_loading=true
-    	console.log("course id is "+$stateParams.course_id);
+    	$log.debug("course id is "+$stateParams.course_id);
     	Module.newModule({course_id: $stateParams.course_id},{},
 	    	function(module){
-	    		console.log(module)
+	    		$log.debug(module)
 	    		module.group.items=[]
 	    		$scope.modules.push(module.group)
 	    		$scope.module_obj[module.group.id] = module.group
@@ -51,7 +51,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.removeModule=function(event, index){
-    	console.log("remove mod")
+    	$log.debug("remove mod")
     	event.preventDefault();
   		event.stopPropagation();  
   		var m_id= $scope.modules[index].id;
@@ -63,7 +63,7 @@ angular.module('scalearAngularApp')
 	    			module_id: m_id
 	    		},{},
 	    		function(response){
-	    			console.log(response)
+	    			$log.debug(response)
 	    				var module = $scope.modules.splice(index, 1)
 	    				delete $scope.module_obj[module.id]
 	    			 	var str = $location.path();
@@ -80,12 +80,12 @@ angular.module('scalearAngularApp')
     }
 
     $scope.addLecture=function(module_index){
-    	console.log("adding lec "+ module_index)
-    	console.log($scope.modules)
+    	$log.debug("adding lec "+ module_index)
+    	$log.debug($scope.modules)
     	$scope.item_loading=true
     	Lecture.newLecture({course_id: $stateParams.course_id, group: $scope.modules[module_index].id},
 	    	function(data){
-	    		console.log(data)
+	    		$log.debug(data)
 	    		data.lecture.class_name='lecture'
 	    	    $scope.modules[module_index].items.push(data.lecture)
 	    	    $scope.items_obj[data.lecture.id] = data.lecture
@@ -98,7 +98,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.removeLecture=function(module_index, item_index){
-    	console.log("remove lec " + module_index + " " + item_index) 
+    	$log.debug("remove lec " + module_index + " " + item_index) 
     	var l_id=$scope.modules[module_index].items[item_index].id
     	if(confirm($translate('groups.you_sure_delete_module')+" "+$scope.modules[module_index].items[item_index].name+"?")){
 	    	Lecture.destroy(
@@ -108,7 +108,7 @@ angular.module('scalearAngularApp')
 	    		},
 	    		{},
 	    		function(response){
-	    			 console.log(response)
+	    			 $log.debug(response)
 	    			 var item = $scope.modules[module_index].items.splice(item_index, 1)
 	    			 delete $scope.items_obj[item.id]
 
@@ -125,14 +125,14 @@ angular.module('scalearAngularApp')
     }
     
     $scope.addQuiz=function(module_index, type){
-    	console.log("adding quiz "+ module_index)
-    	console.log($scope.modules)
+    	$log.debug("adding quiz "+ module_index)
+    	$log.debug($scope.modules)
     	$scope.item_loading=true
     	Quiz.newQuiz({course_id: $stateParams.course_id, group: $scope.modules[module_index].id, type:type},
     	{},
 
 	    	function(data){
-	    		console.log(data)
+	    		$log.debug(data)
 	    		data.quiz.class_name='quiz'
 	    	    $scope.modules[module_index].items.push(data.quiz)
 	    	    $scope.items_obj[data.quiz.id] = data.quiz
@@ -145,7 +145,7 @@ angular.module('scalearAngularApp')
     }
     
     $scope.removeQuiz=function(module_index, item_index){
-    	console.log("remove quiz " + module_index + " " + item_index) 
+    	$log.debug("remove quiz " + module_index + " " + item_index) 
     	var q_id=$scope.modules[module_index].items[item_index].id;
     	if(confirm($translate('online_quiz.you_sure_delete_quiz')+" "+$scope.modules[module_index].items[item_index].quiz_type+" "+$scope.modules[module_index].items[item_index].name+"?")){
 	    	Quiz.destroy(
@@ -187,10 +187,10 @@ angular.module('scalearAngularApp')
 				{course_id:$stateParams.course_id,
 					group: $scope.modules},
 				function(response){
-					console.log(response)
+					$log.debug(response)
 				}, 
 				function(){
-					console.log('Error')
+					$log.debug('Error')
 				}
 			);
 		},
@@ -212,10 +212,10 @@ angular.module('scalearAngularApp')
 				 group: ui.item.scope().item.group_id},
 				{items: $scope.modules[group_position].items},
 				function(response){
-					console.log(response)
+					$log.debug(response)
 				},
 				function(){
-					console.log('error')
+					$log.debug('error')
 				}
 			);
 		},

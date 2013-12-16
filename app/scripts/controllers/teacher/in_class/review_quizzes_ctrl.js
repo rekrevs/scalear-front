@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('reviewQuizzesCtrl', ['$scope','$stateParams','Module', '$translate', function ($scope, $stateParams, Module, $translate) {
-  	console.log("review quizzes")
+  .controller('reviewQuizzesCtrl', ['$scope','$stateParams','Module', '$translate','$log', function ($scope, $stateParams, Module, $translate, $log) {
+  	$log.debug("review quizzes")
   	var getLectureCharts= function(offset, limit){
         $scope.chart_limit = limit
         $scope.chart_offset = offset
@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
                 module_id:$stateParams.module_id
             },
             function(data){
-            	console.log(data)
+            	$log.debug(data)
                 $scope.lecture_data=data.charts_data 
                 $scope.loading_lectures_chart = false
             }

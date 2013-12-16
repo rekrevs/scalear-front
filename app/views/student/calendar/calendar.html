@@ -3,7 +3,7 @@
 
 <center>
 	<center>
-    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="min-width: 600px; min-height: 500px;"></div>
+    	<div ng-if="eventSources" id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="min-width: 600px; min-height: 500px;"></div>
          <br />
          <!-- here should be the deadline warning message -->
          <div class="alert"><center style="font-size:14px;font-weight: bold" translate="events.deadline_msg"></center></div>

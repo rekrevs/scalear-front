@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('AnnouncementsCtrl',['$scope', 'Announcement','$stateParams', function ($scope, Announcement, $stateParams) {
-  	console.log("over here");
+  .controller('announcementsCtrl',['$scope', 'Announcement','$stateParams','$translate', '$log', function ($scope, Announcement, $stateParams, $translate ,$log) {
+  	$log.debug("in announcements");
   	$scope.disable_new = false;
   	var init = function()
   	{
@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
   	}
   	
   	$scope.deleteAnnouncement=function(index){
-  		if(confirm("Are you sure you want to delete this announcement?")){
+  		if(confirm($translate('announcement_form.confirm_delete'))){
   		if($scope.announcements[index].id){
 	  		Announcement.destroy({course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},{},function(data){
 	  			//init();
@@ -44,7 +44,8 @@ angular.module('scalearAngularApp')
   		if($scope.announcements[index].id){
   		Announcement.show({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id },
   			function(data){
-  				console.log(data);
+          $log.debug("announcements data=");
+  				$log.debug(data);
   				$scope.announcements[index]=data;
   			}
   		);

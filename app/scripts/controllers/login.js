@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$scope','scalear_api','$location', function ($scope, scalear_api, $location) {
+  .controller('LoginCtrl',['$scope','scalear_api','$location','$log', function ($scope, scalear_api, $location, $log) {
    $scope.login = function(){
-   	console.log("in login");
+   	$log.debug("in login");
    	var authUrl = "http://localhost:3000/oauth/authorize" +
             "?response_type=token" +
             "&redirect_uri=" + "http://localhost:9000/#/";
@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
 
     window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect=http://localhost:9000/#/"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
 
-    //console.log($location.path()) ;
+    //$log.debug($location.path()) ;
    }
    
   }]);

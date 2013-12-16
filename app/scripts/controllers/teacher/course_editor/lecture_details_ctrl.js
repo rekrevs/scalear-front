@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', '$translate', function ($stateParams, $scope, $http, $q, $state, Lecture, $translate) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', '$translate','$log', function ($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log) {
 
    	//**************************FUNCTIONS****************************************///
  	$scope.validateLecture = function(column,data) {
@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
 	    var lecture={}
 	    lecture[column]=data;
 	    if(column == 'url' && getVideoId(data) == null){
-	    	console.log(data)
+	    	$log.debug(data)
 	    	d.resolve($translate('courses.invalid_input'));
     	}
 	    Lecture.validateLecture(
@@ -18,8 +18,8 @@ angular.module('scalearAngularApp')
 	    	function(data){
 				d.resolve()
 			},function(data){
-				console.log(data.status);
-				console.log(data);
+				$log.debug(data.status);
+				$log.debug(data);
 			if(data.status==422)
 			 	d.resolve(data.data.errors[column].join());
 			else
@@ -42,7 +42,7 @@ angular.module('scalearAngularApp')
 		delete modified_lecture["className"];
 		delete modified_lecture["detected_aspect_ratio"];
 
-		console.log(modified_lecture)
+		$log.debug(modified_lecture)
 		
 		Lecture.update(
 			{
@@ -51,7 +51,7 @@ angular.module('scalearAngularApp')
 			},
 			{lecture:modified_lecture},
 			function(data){
-				console.log(data)			
+				$log.debug(data)			
 			},
 			function(){
 				//alert("Failed to update lecture, please check your internet connection")
@@ -86,7 +86,7 @@ angular.module('scalearAngularApp')
 			var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
 			$http.jsonp(url)
 				.success(function (data) {
-		        	console.log(data.entry)
+		        	$log.debug(data.entry)
 			        $scope.video.title = data.entry.title.$t;
 			        $scope.video.author = data.entry.author[0].name.$t;
 			        var updateFlag = $scope.lecture.duration
@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
 			        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
 	        		if(!updateFlag){
 	        			$scope.updateLecture()
-	        			console.log("update flag is true******")	
+	        			$log.debug("update flag is true******")	
 	        		}
 			});
 		}
@@ -112,7 +112,7 @@ angular.module('scalearAngularApp')
 
 	//********************************************************************//
 
-	console.log("made it in details!!");
+	$log.debug("made it in details!!");
 	$scope.screen_options = [
 		{value: "widescreen",  text: 'widescreen'},
 		{value: "smallscreen", text: 'smallscreen'}

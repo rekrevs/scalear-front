@@ -1,14 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('User', ['$resource','$http','$stateParams','scalear_api','headers','$rootScope',function($resource, $http, $stateParams, scalear_api, headers, $rootScope) {
+.factory('User', ['$resource','$http','$stateParams','scalear_api','headers','$rootScope','$log' ,function($resource, $http, $stateParams, scalear_api, headers, $rootScope, $log) {
 
     $http.defaults.useXDomain = true;
-    console.log("root scope is");
-    console.log($rootScope.current_lang);
-    console.log($rootScope);
+    $log.debug("root scope is");
+    $log.debug($rootScope.current_lang);
     var lang=$rootScope.current_lang;
-    console.log(lang);
+    $log.debug(lang);
     return $resource(scalear_api.host+'/en/users/:id/:action', {},
       { 
       	'logout': { method: 'DELETE', headers: headers , params: {action: 'sign_out'}},

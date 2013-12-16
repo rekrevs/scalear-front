@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressModuleCtrl', ['$timeout', '$scope', '$stateParams','Course', 'Module', '$translate', function ($timeout, $scope, $stateParams, Course, Module, $translate) {
+  .controller('progressModuleCtrl', ['$timeout', '$scope', '$stateParams','Course', 'Module', '$translate','$log', function ($timeout, $scope, $stateParams, Course, Module, $translate, $log) {
 
     $scope.disableInfinitScrolling = function(){
-        console.debug("infinit scrolling disable")
+        $log.debug("infinit scrolling disable")
         $scope.lecture_scroll_disable = true
         $scope.quiz_scroll_disable = true
         $scope.chart_scroll_disable= true
@@ -52,7 +52,7 @@ angular.module('scalearAngularApp')
                 module_id:$stateParams.module_id
             },
             function(data){
-                console.log(data)
+                $log.debug(data)
                 $scope.module = data.module
                 $scope.chart_data = data.module_data
                 $scope.module_chart = createModuleChart($scope.chart_data)

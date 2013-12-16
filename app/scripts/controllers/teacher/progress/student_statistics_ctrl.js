@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentStatisticsCtrl', ['$scope','$stateParams','$timeout','Module', '$translate', function ($scope, $stateParams, $timeout, Module, $translate){
+  .controller('studentStatisticsCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log', function ($scope, $stateParams, $timeout, Module, $translate, $log){
   		
 		$scope.statistics_player={}
 		$scope.statistics_player.events={}
@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
 	                module_id:$stateParams.module_id
 	            },
 	    		function(data){
-	    			console.log(data)
+	    			$log.debug(data)
 	    			$scope.statistics = data
     			 	$scope.lecture_url =$scope.statistics.lecture_url
 	    			$scope.loading_statistics_chart=false

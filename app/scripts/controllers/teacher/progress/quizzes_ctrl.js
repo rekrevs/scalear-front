@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizzesCtrl', ['$scope','$stateParams','$timeout','Module', '$translate', function ($scope, $stateParams, $timeout, Module, $translate) {
+  .controller('quizzesCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log', function ($scope, $stateParams, $timeout, Module, $translate, $log) {
    
    $scope.quizzesTab = function(){
         $scope.tabState(6)
@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
                 quiz_id:quiz_id
             },
             function(data){
-                console.log(data)
+                $log.debug(data)
                 $scope.quiz_chart_data = data.chart_data
                 $scope.quiz_chart_questions = data.chart_questions
                 if(!$scope.selected_quiz){
@@ -96,8 +96,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.changeQuiz = function(){
-    	console.log("quiz change")
-        console.log($scope.selected_quiz)
+    	$log.debug("quiz change")
+        $log.debug($scope.selected_quiz)
     	$scope.quiz_chart_data={}
     	$scope.quiz_chart_questions={}
     	getQuizCharts()

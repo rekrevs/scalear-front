@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate','$q' ,function ($scope, $state, Module, Document, $stateParams, $translate, $q) {
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate','$q','$log', function ($scope, $state, Module, Document, $stateParams, $translate, $q, $log) {
         
         $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
             if($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
@@ -26,12 +26,12 @@ angular.module('scalearAngularApp')
         
 
     	$scope.addDocument=function(){
-    		console.log($scope.module.id)
+    		$log.debug($scope.module.id)
     		$scope.document_loading=true
     		Module.newDocument({course_id:$stateParams.course_id, module_id:$scope.module.id},
     			{},
     			function(doc){
-    				console.log(doc)
+    				$log.debug(doc)
     				$scope.module.documents.push(doc.document)
     				$scope.document_loading=false
     			}, 
@@ -65,8 +65,8 @@ angular.module('scalearAngularApp')
 		    	function(data){
 					d.resolve()
 				},function(data){
-					console.log(data.status);
-					console.log(data);
+					$log.debug(data.status);
+					$log.debug(data);
 				if(data.status==422)
 				 	d.resolve(data.data.errors['name'].join());
 				else
@@ -86,8 +86,8 @@ angular.module('scalearAngularApp')
 		    	function(data){
 					d.resolve()
 				},function(data){
-					console.log(data.status);
-					console.log(data);
+					$log.debug(data.status);
+					$log.debug(data);
 				if(data.status==422)
 				 	d.resolve(data.data.errors['url'].join());
 				else
@@ -97,7 +97,7 @@ angular.module('scalearAngularApp')
 		    return d.promise;
 		}
     	$scope.updateDocument=function(elem){
-    		//console.log($scope.module.documents[index])
+    		//$log.debug($scope.module.documents[index])
     		Document.update(
     			{document_id: elem.id},
     			{"document":{

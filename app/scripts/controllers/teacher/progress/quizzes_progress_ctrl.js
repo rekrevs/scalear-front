@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizzesProgressCtrl', ['$scope','$stateParams','$timeout','Module', function ($scope, $stateParams, $timeout, Module) {
+  .controller('quizzesProgressCtrl', ['$scope','$stateParams','$timeout','Module','$log', function ($scope, $stateParams, $timeout, Module, $log) {
     
     $scope.quizzesProgressTab = function(){
         $scope.tabState(4)
@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
                 limit: $scope.quizzes_limit
             },
             function(data){
-                console.log(data)
+                $log.debug(data)
                 var obj={}
 
                 obj.quizzes_names = data.quizzes_names

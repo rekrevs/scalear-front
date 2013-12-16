@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('indexController', ['$scope', '$state', 'User','$rootScope','$translate','$window' ,function ($scope, $state, User, $rootScope, $translate, $window) {
+  .controller('indexController', ['$scope', '$state', 'User','$rootScope','$translate','$window','$log' ,function ($scope, $state, User, $rootScope, $translate, $window, $log) {
 	
 	$scope.changeLanguage = function (key) {
-		console.log("in change language "+key);
+		$log.debug("in change language "+key);
     	$translate.uses(key);
     	$rootScope.current_lang=key;
     	$window.moment.lang(key);
@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
    	$scope.logout = function()
    	{
    		User.logout(function(){
-   			console.log("logged out");
+   			$log.debug("logged out");
    			$rootScope.current_user=null
    			$state.go("home");
    		}, function(){

@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl',['$scope', '$http', '$stateParams', '$state', '$filter', 'OnlineQuiz', '$translate','$q',function ($scope, $http, $stateParams, $state, $filter, OnlineQuiz, $translate,$q) {
+    .controller('lectureQuizListCtrl',['$scope', 'OnlineQuiz', '$translate','$q','$log', function ($scope, OnlineQuiz, $translate, $q, $log) {
 
-	console.log("loading quiz list")
+	$log.debug("loading quiz list")
 	$scope.editing_mode = false
 
 	$scope.$watch('lecture',function(){
@@ -27,12 +27,10 @@ angular.module('scalearAngularApp')
 		OnlineQuiz.update(
 			{online_quizzes_id: quiz.id},
 			{online_quiz: {time:Math.round(quiz.time), question:quiz.question}},
-			function(data){ //success
-				console.log(data)
+			function(data){
+				$log.debug(data)
 			},
-			function(){ //error
-				//alert("Could not update quiz, please check your internet connection")
-			}
+			function(){}
 		);
 	}
  	$scope.validateTime=function(time) {
@@ -57,35 +55,29 @@ angular.module('scalearAngularApp')
 	    }
 	}
 	
-		$scope.validateName= function(data, elem){
-			var d = $q.defer();
-		    var doc={}
-		    doc["question"]=data;
-		    console.log($scope.$parent.quiz_list);
-		    OnlineQuiz.validateName(
-		    	{online_quizzes_id: elem.id},
-		    	doc,
-		    	function(data){
-					d.resolve()
-				},function(data){
-					console.log(data.status);
-					console.log(data);
-				if(data.status==422)
-				 	d.resolve(data.data.errors['question'].join());
-				else
-					d.reject('Server Error');
-				}
-		    )
-		    return d.promise;
-		}
-
-	$scope.validateName=function(value){
-		if(!value)
-			return "Can't be blank"
+	$scope.validateName= function(data, elem){
+		var d = $q.defer();
+	    var doc={}
+	    doc["question"]=data;
+	    $log.debug($scope.$parent.quiz_list);
+	    OnlineQuiz.validateName(
+	    	{online_quizzes_id: elem.id},
+	    	doc,
+	    	function(data){
+				d.resolve()
+			},function(data){
+				$log.debug(data.status);
+				$log.debug(data);
+			if(data.status==422)
+			 	d.resolve(data.data.errors['question'].join());
+			else
+				d.reject('Server Error');
+			}
+	    )
+	    return d.promise;
 	}
 
 	$scope.saveEdit=function(quiz){
-
 		var a = quiz.formatedTime.split(':'); // split it at the colons			
 		var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); // minutes are worth 60 seconds. Hours are worth 60 minutes.
 		quiz.time = seconds
@@ -96,15 +88,13 @@ angular.module('scalearAngularApp')
 		if(confirm($translate('online_quiz.you_sure_delete_quiz')))
 			OnlineQuiz.destroy(
 				{online_quizzes_id: quiz.id},{},
-				function(data){ //success
-					console.log(data)
+				function(data){
+					$log.debug(data)
 					$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
 					$scope.$parent.editing_mode = false;
 					$scope.$parent.selected_quiz={}
 				},
-				function(){ //error
-					//alert("Failed to delete quiz, please check network connection")
-				}
+				function(){}
 			);
 	}
 

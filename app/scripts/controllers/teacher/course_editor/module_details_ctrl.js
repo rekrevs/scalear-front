@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Document', '$q','$stateParams', function ($scope, $state, Module, Documents,$q, $stateParams) {
+    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Document', '$q','$stateParams','$log', function ($scope, $state, Module, Documents,$q, $stateParams, $log) {
     
     $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
       if($scope.module_obj && $scope.module_obj[$stateParams.module_id])
@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
 
     //**************************FUNCTIONS****************************************///
 	  $scope.validateModule = function(column,data) {
-      console.log(data)
+      $log.debug(data)
 	    var d = $q.defer();
 	    var group={}
 	    group[column]=data;
@@ -21,8 +21,8 @@ angular.module('scalearAngularApp')
 	    	function(data){
 				d.resolve()
 			},function(data){
-				console.log(data.status);
-				console.log(data);
+				$log.debug(data.status);
+				$log.debug(data);
 			if(data.status==422)
 			 	d.resolve(data.data.errors[column].join());
 			else
@@ -52,7 +52,7 @@ angular.module('scalearAngularApp')
           	module_id: $scope.module.id},
           {group: modified_module},
           function(response){
-            console.log(response)
+            $log.debug(response)
           },
           function(){
             //alert("Failed to update module, please check your internet connection")

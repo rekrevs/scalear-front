@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('reviewQuestionsCtrl', ['$scope','$stateParams','Module',function ($scope, $stateParams, Module) {
+  .controller('reviewQuestionsCtrl', ['$scope','$stateParams','Module','$log',function ($scope, $stateParams, Module, $log) {
   	var init=function(){
   		Module.getStudentQuestions(
   			{
@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
            module_id:$stateParams.module_id
   			},
   			function(data){
-  				console.log(data)
+  				$log.debug(data)
   				$scope.review_questions= data.questions
           $scope.lecture_names=data.lecture_names
   			},

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl',['$stateParams','$rootScope','$scope','Quiz', 'CourseEditor', '$translate', function ($stateParams, $rootScope,$scope, Quiz, CourseEditor, $translate) {
+  .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log) {
  
  	$scope.$watch('items_obj['+$stateParams.quiz_id+']', function(){
       if($scope.items_obj && $scope.items_obj[$stateParams.quiz_id]){
@@ -36,17 +36,24 @@ angular.module('scalearAngularApp')
 				}	
 		  	});
 	    });
+
+	    shortcut.add("Enter",function(){
+			var elem_name=angular.element(document.activeElement).attr('name')
+			if(elem_name =='qlabel')
+				$scope.addQuestion()
+				$scope.$apply()
+		},{"disable_in_input" : false});
  	}
  	
  	init();
  	
  	var updateQuestions=function(ans){
-		console.log("savingAll");
+		$log.debug("savingAll");
 		Quiz.updateQuestions(
 			{course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},
 			{questions: ans},
 			function(data){ //success
-				console.log(data)
+				$log.debug(data)
 			},
 			function(){
 	 		    alert("Could not save changes, please check network connection.");
@@ -100,9 +107,9 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.addHtmlAnswer=function(ans, question){
-		console.log("in add answer");
-		console.log("question is ");
-		console.log(question);
+		$log.debug("in add answer");
+		$log.debug("question is ");
+		$log.debug(question);
 		$scope.new_answer=CourseEditor.newAnswer(ans,"","","","","quiz", question.id)
 		question.answers.push($scope.new_answer)
 	}
@@ -113,7 +120,7 @@ angular.module('scalearAngularApp')
 			if(confirm($translate('lectures.you_sure')))
 				question.answers.splice(index, 1);
 		}else{
-			console.log("Can't delete the last answer..")
+			$log.debug("Can't delete the last answer..")
 		}
 	}
 	

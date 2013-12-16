@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive('studentQuiz', ['Lecture','$stateParams','CourseEditor',function(Lecture, $stateParams, CourseEditor){
+.directive('studentQuiz', ['Lecture','$stateParams','CourseEditor','$log',function(Lecture, $stateParams, CourseEditor, $log){
 	return {
 		scope: {
 			quiz:"=",
@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
 	link:function(scope){
 		scope.updateValues= function(ques)
 			{
-				console.log("in value update");
+				$log.debug("in value update");
 				scope.values=0;
 				
 				if(scope.studentAnswers[ques]=="" && scope.studentAnswers[ques]==null)// ocq/mcq not solved

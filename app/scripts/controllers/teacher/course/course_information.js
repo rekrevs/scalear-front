@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('TeacherCourseCourseInformationCtrl', ['$scope', '$stateParams','$http', 'Course','$q', '$translate',function ($scope, $stateParams,$http, Course, $q, $translate) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log', function ($scope, $stateParams, Course, $q, $translate, $log) {
         
        
         Course.show({course_id:$stateParams.course_id},function(response){
@@ -20,7 +20,7 @@ angular.module('scalearAngularApp')
             delete modified_course["created_at"];
             delete modified_course["updated_at"];
             delete modified_course["unique_identifier"];
-            console.log(modified_course);
+            $log.debug(modified_course);
             Course.update(
                 {course_id:$stateParams.course_id},
                 {course:modified_course}
@@ -37,9 +37,9 @@ angular.module('scalearAngularApp')
 		      Course.validateCourse({course_id:$stateParams.course_id},course,function(data){
 		        d.resolve()
 		      },function(data){
-		        console.log(data.status);
-		        console.log(data);
-		        console.log(data.data["errors"][column])
+		        $log.debug(data.status);
+		        $log.debug(data);
+		        $log.debug(data.data["errors"][column])
 		        if(data.status==422)
 		          d.resolve(data.data["errors"][column].join());
 		        else

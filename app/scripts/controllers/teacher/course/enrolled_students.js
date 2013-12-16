@@ -1,11 +1,9 @@
 'use strict';
 
 var app = angular.module('scalearAngularApp')
-  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate', function ($scope, $state, Course, batchEmailService, $stateParams, $translate) {
-        
-
-        console.log("in enrolled students");
-		    console.log($stateParams);
+  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log) {
+ 
+        $log.debug("in enrolled students");
 
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
@@ -21,7 +19,7 @@ var app = angular.module('scalearAngularApp')
 
 
         $scope.removeStudent = function(student){
-            console.log(student)
+            $log.debug(student)
             var answer = confirm($translate('courses.you_sure_delete_student'));
             if(answer){
             	student.removing=true;
@@ -36,7 +34,7 @@ var app = angular.module('scalearAngularApp')
                      },
                     function(){
                     	student.removing=false;
-                        console.log(value);
+                        $log.debug(value);
                     })
 
             }
@@ -59,7 +57,7 @@ var app = angular.module('scalearAngularApp')
         $scope.selected = new Array();
         $scope.select = function(id, email){
           if($scope.selected[id] == email){
-              console.log('should deselect');
+              $log.debug('should deselect');
               $scope.selected[id] = ',';
               var i=0;
               $scope.selected.forEach(function(e){
@@ -68,7 +66,7 @@ var app = angular.module('scalearAngularApp')
               });
           }
           else{
-              console.log('should select');
+              $log.debug('should select');
               $scope.selected[id] = email;
               var i=0;
               $scope.selected.forEach(function(email){
@@ -82,7 +80,7 @@ var app = angular.module('scalearAngularApp')
             for(var i=0; i<checkboxes.length; i++){
                 $scope.selected[checkboxes[i].id] = checkboxes[i].value;
             }
-            console.log($scope.selected);
+            $log.debug($scope.selected);
             var i=0;
             $scope.selected.forEach(function(email){
                 $scope.emails[i] = email;
@@ -95,13 +93,13 @@ var app = angular.module('scalearAngularApp')
             for(var i=0; i<checkboxes.length; i++){
                 $scope.selected[checkboxes[i].id] = ',';
             }
-            console.log($scope.selected+' => selected');
+            $log.debug($scope.selected+' => selected');
             var i=0;
             $scope.selected.forEach(function(email){
                 $scope.emails[i] = email;
                 i++;
             });
-            console.log($scope.emails+' => emails');
+            $log.debug($scope.emails+' => emails');
 
         }
   }]);

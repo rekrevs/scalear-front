@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
                 '</div>'
 	};
 })
-.directive('reportTechnical', ['Home', '$location',function(Home, $location) {
+.directive('reportTechnical', ['Home', '$location','$log',function(Home, $location, $log) {
 	return{
 		restrict: 'E',
 		template:'| <a style="cursor:pointer;" ng-click="toggleTechnicalDisplay()" translate="feedback.report_technical"></a>'+
@@ -26,11 +26,10 @@ angular.module('scalearAngularApp')
 		link: function(scope, element){
 			scope.show_technical = false
 			scope.toggleTechnicalDisplay=function(){
-				console.log("hello")
 				scope.show_technical= !scope.show_technical
 			}
 			scope.send_technical = function(){
-		  		console.log("in sending");
+		  		$log.debug("in sending");
 		  		scope.sending_technical=true;
 		  		Home.technicalProblem(
 		  			{

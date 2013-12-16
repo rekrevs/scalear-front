@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window',function ($scope, $modal, $timeout,$window) {
+  .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window','$log', function ($scope, $modal, $timeout,$window, $log) {
     $scope.inclass_player={}
     $scope.inclass_player.events={}    
   	$scope.display = function (type) {
@@ -91,7 +91,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek=function(time){
-      console.debug("seeking")
+      $log.debug("seeking")
       $scope.inclass_player.controls.seek_and_pause(time)
     }
 
@@ -117,7 +117,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.inclass_player.events.onReady=function(){
-      console.log("player ready")
+      $log.debug("player ready")
       $scope.seek($scope.quiz_time);
       $scope.loading_video=false
     }

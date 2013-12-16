@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuizzesCtrl', ['$scope','$stateParams','Module', '$translate', '$controller', function ($scope,$stateParams, Module, $translate, $controller) {
+  .controller('displayQuizzesCtrl', ['$scope','$stateParams','Module', '$translate', '$controller', '$log', function ($scope,$stateParams, Module, $translate, $controller, $log) {
     $controller('lectureQuizzesCtrl', {$scope: $scope});
   	var init = function(){
   		Module.displayQuizzes(
@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
                 module_id:$stateParams.module_id
             },
 	  		function(data){
-	  			console.log(data)
+	  			$log.debug(data)
 	  			$scope.$parent.lecture_list = data.lecture_list
 	  			$scope.$parent.display_data = data.display_data
 	  			$scope.$parent.total_num_lectures = data.num_lectures

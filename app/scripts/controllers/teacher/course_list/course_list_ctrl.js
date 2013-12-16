@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate', function ($scope, Course,$stateParams, $translate) {
+  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log', function ($scope, Course,$stateParams, $translate, $log) {
 
-  	console.log("in admin")
+  	$log.debug("in course list")
   		Course.index({},
 			function(data){
-				console.log(data)
+				$log.debug(data)
 				$scope.courses = data
 			},
 			function(){
@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
 	  			Course.destroy({course_id: course.id},{},
 	  				function(response){
 	  					$scope.courses.splice($scope.courses.indexOf(course), 1)
-	  					console.log(response)
+	  					$log.debug(response)
 	  				},
 	  				function(){
 	  					//alert("Could not delete course, please check your internet connection")

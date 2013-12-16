@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('surveysCtrl', ['$scope','$stateParams','$timeout','Module', 'Quiz', '$translate', function ($scope, $stateParams, $timeout, Module, Quiz, $translate) {
+  .controller('surveysCtrl', ['$scope','$stateParams','$timeout','Module', 'Quiz', '$translate','$log', function ($scope, $stateParams, $timeout, Module, Quiz, $translate, $log) {
   	
     $scope.surveysTab = function(){
         $scope.tabState(5)
@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
           display_only:view
   			},
   			function(data){
-  				console.log(data)
+  				$log.debug(data)
           $scope.survey_chart_data = data.chart_data
           $scope.survey_chart_questions = data.chart_questions
           $scope.survey_free= data.survey_free
@@ -89,7 +89,7 @@ angular.module('scalearAngularApp')
     }
 
  	  $scope.changeSurvey = function(){
-    	console.log("survey change")
+    	$log.debug("survey change")
     	$scope.survey_chart_data={}
     	$scope.survey_chart_questions={}
     	$scope.getSurveyCharts()

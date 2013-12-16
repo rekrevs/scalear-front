@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module', '$translate', function ($scope, $timeout, $stateParams, Course, Module, $translate) {
+  .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module', '$translate','$log', function ($scope, $timeout, $stateParams, Course, Module, $translate, $log) {
 
   	  	$scope.moduleProgressTab=function(){
   	  		enableModuleScrolling()
@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
                 limit: $scope.module_limit
             },
             function(data){
-            	console.log(data)
+            	$log.debug(data)
                 var obj={}
 
                 obj.module_names = data.module_names
@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
                 angular.extend(obj.module_status,data.module_status)
                 angular.extend(obj.late_modules, data.late_modules)
 
-                console.log(obj)
+                $log.debug(obj)
 
                 angular.extend($scope, obj)
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', '$http', '$timeout', '$window', 'Lecture', 'CourseEditor', '$translate' ,function ($state, $stateParams, $scope, $http, $timeout, $window, Lecture, CourseEditor, $translate) {
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log) {
 
     // $scope.lecture=lecture.data
     $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
@@ -58,7 +58,7 @@ angular.module('scalearAngularApp')
 			ques_type: question_type
 		},
 		function(data){ //success
-			console.log(data);
+			$log.debug(data);
 			$scope.showOnlineQuiz(data.quiz)
 			$scope.quiz_list.push(data.quiz)
 			$scope.quiz_loading = false;
@@ -72,8 +72,8 @@ angular.module('scalearAngularApp')
 
 	$scope.showOnlineQuiz= function(quiz){
 
-		console.log("SHOWONLINEQUIX")
-		console.log(quiz)
+		$log.debug("SHOWONLINEQUIX")
+		$log.debug(quiz)
 		$scope.hide_alerts = true;
 		$scope.submitted= false
 		$scope.editing_mode = true;
@@ -88,7 +88,7 @@ angular.module('scalearAngularApp')
 			getQuizData();
 		}
 		else{ // html quiz
-			console.log("HTML quiz")
+			$log.debug("HTML quiz")
 			$scope.double_click_msg=""
 			$scope.quiz_layer.backgroundColor= "white"
 			$scope.quiz_layer.overflowX= 'hidden'
@@ -101,11 +101,11 @@ angular.module('scalearAngularApp')
 		Lecture.getQuizData(
 			{"course_id":$stateParams.course_id, "lecture_id":$scope.lecture.id ,"quiz": $scope.selected_quiz.id},
 			function(data){ //success
-				console.log(data)
+				$log.debug(data)
 				$scope.selected_quiz.answers= data.answers
 				if($scope.selected_quiz.question_type=="drag"){
 					$scope.allPos=mergeDragPos(data.answers)
-					console.log($scope.allPos)
+					$log.debug($scope.allPos)
 				}
 			},
 			function(){ //error
@@ -119,7 +119,7 @@ angular.module('scalearAngularApp')
 			{"course_id":$stateParams.course_id, "lecture_id":$scope.lecture.id ,"quiz":  $scope.selected_quiz.id},
 			function(data){ //success	
 				if($scope.selected_quiz.question_type == 'drag'){
-					console.log(data)
+					$log.debug(data)
 					$scope.selected_quiz.answers = []
 					if(!data.answers.length)
 						$scope.addHtmlAnswer()
@@ -142,7 +142,7 @@ angular.module('scalearAngularApp')
 		var all_pos=[]
 		answers.forEach(function(elem){
 			all_pos.push(parseInt(elem.pos))
-			console.log(all_pos)
+			$log.debug(all_pos)
 		});
 		return all_pos
 	}
@@ -171,16 +171,16 @@ angular.module('scalearAngularApp')
  			answer_height= 13
  		}
 	    var element = angular.element(event.target);
-	    //console.log(element.attr('id').contains("ontop"))
+	    //$log.debug(element.attr('id').contains("ontop"))
 	    if(element.attr('id') =="ontop"){
-	    	console.log("adding on top ontop")
+	    	$log.debug("adding on top ontop")
 
 	    	var left= event.pageX - element.offset().left - 6//event.offsetX - 6
 		  	var top = event.pageY - element.offset().top - 6 //event.offsetY - 6
 
-	    	console.log(event)
-	    	console.log(element)
-	    	console.log(left+" "+top)
+	    	$log.debug(event)
+	    	$log.debug(element)
+	    	$log.debug(left+" "+top)
 
 		  	var the_top = top / element.height();
 	      	var the_left= left / element.width()
@@ -191,7 +191,7 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.addAnswer= function(ans,h,w,l,t){
-		console.log("adding answer")
+		$log.debug("adding answer")
   		$scope.new_answer=CourseEditor.newAnswer(ans,h,w,l,t,"lecture", $scope.selected_quiz.id)
   		$scope.selected_quiz.answers.push($scope.new_answer)
 
@@ -200,13 +200,13 @@ angular.module('scalearAngularApp')
 			lecture_id:$scope.lecture.id},
 			{answer:$scope.new_answer, "flag":true},
 			function(data){
-				console.log(data)
+				$log.debug(data)
 				$scope.new_answer.id= data.current.id
 				if($scope.selected_quiz.question_type=="drag"){
 					$scope.new_answer.pos = data.current.pos
 					$scope.allPos=mergeDragPos($scope.selected_quiz.answers)
 				}
-				console.log($scope.new_answer)
+				$log.debug($scope.new_answer)
 			},
 			function(){
 				alert("Could not add answer, please check network connection.");
@@ -214,19 +214,19 @@ angular.module('scalearAngularApp')
 	}
 	
 	$scope.removeAnswer = function(index){
-		console.log("removing answer")
+		$log.debug("removing answer")
 		var backup = angular.copy($scope.selected_quiz.answers[index])
 		$scope.selected_quiz.answers.splice(index, 1);
-		console.log(backup)
+		$log.debug(backup)
 		Lecture.removeAnswer(
 			{course_id:$stateParams.course_id,
 			lecture_id: $scope.lecture.id},
 			{answer_id:backup.id},
 			function(data){
-				console.log(data)
+				$log.debug(data)
 				if($scope.selected_quiz.question_type=="drag"){
 					$scope.allPos=mergeDragPos($scope.selected_quiz.answers)
-					console.log($scope.allPos)
+					$log.debug($scope.allPos)
 				}
 			},
 			function(){
@@ -237,7 +237,7 @@ angular.module('scalearAngularApp')
 	}
 
 	var updateAnswers=function(ans, title){
-		console.log("savingAll")
+		$log.debug("savingAll")
 		Lecture.updateAnswers(
 			{
 			course_id:$stateParams.course_id,
@@ -246,7 +246,7 @@ angular.module('scalearAngularApp')
 			},
 			{answer: ans, quiz_title:title },
 			function(data){ //success
-				console.log(data)
+				$log.debug(data)
 			},
 			function(){
 	 		    alert("Could not save changes, please check network connection.");
@@ -255,12 +255,12 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.saveBtn = function(){
-		console.log($scope.selected_quiz.answers)
+		$log.debug($scope.selected_quiz.answers)
 		if(($scope.answer_form.$valid || $scope.selected_quiz.quiz_type != 'html') && $scope.selected_quiz.answers.length)
  		{
 	 		$scope.submitted=false;
 	 		$scope.hide_alerts=true;
-			console.log("saving")
+			$log.debug("saving")
 			var data
 			if($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' && $scope.selected_quiz.quiz_type == 'html'){
 				var obj = CourseEditor.mergeDragAnswers($scope.selected_quiz.answers, "lecture", $scope.selected_quiz.id)
@@ -288,7 +288,7 @@ angular.module('scalearAngularApp')
 		$scope.hide_alerts = true;
 		$scope.submitted= false
 		$scope.selected_quiz={}
-		console.log("exiting")		
+		$log.debug("exiting")		
 	}
 
 }]);

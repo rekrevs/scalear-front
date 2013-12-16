@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course',function ($scope, $stateParams, $location, Course) {
+  .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course','$log', function ($scope, $stateParams, $location, Course, $log) {
   		
    		Course.getCourse({course_id:$stateParams.course_id},
 			function(data){
 				$scope.modules = data.groups
-				console.log(data)
+				$log.debug(data)
 			}, 
 			function(){
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('reviewSurveysCtrl', ['$scope', '$controller', 'Quiz', function ($scope, $controller, Quiz) {
+  .controller('reviewSurveysCtrl', ['$scope', '$controller', 'Quiz','$log', function ($scope, $controller, Quiz, $log) {
  	$controller('surveysCtrl', {$scope: $scope});
 
  	var init=function(){

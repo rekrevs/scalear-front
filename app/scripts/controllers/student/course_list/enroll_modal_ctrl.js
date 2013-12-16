@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('StudentEnrollModalCtrl',['$scope','$modalInstance','Course', function ($scope, $modalInstance, Course) {
+  .controller('StudentEnrollModalCtrl',['$scope','$modalInstance','Course','$log', function ($scope, $modalInstance, Course, $log) {
 	
 	$scope.enrollment={}
 	$scope.form={}  	
 	
   $scope.ok = function () {
-  	console.log($scope);
+  	$log.debug($scope);
   	if($scope.form.key.$valid)
   	{
   	$scope.form.processing=true;

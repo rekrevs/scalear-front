@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', function ($scope, Course, $stateParams, $rootScope) {
+  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$log', function ($scope, Course, $stateParams, $rootScope, $log) {
 
     var init = function()
     {
@@ -13,19 +13,19 @@ angular.module('scalearAngularApp')
 	    	{course_id: $stateParams.course_id}, function(data){
 	    	 $scope.course= JSON.parse(data.course);
 	    	 $scope.today = data.today;	
-	    	 console.log($scope.course);
+	    	 $log.debug($scope.course);
 	    	});
 	}
 	
 	init();
 	
     $rootScope.$on("accordianReload", function(event, args) {
-  		console.log("reloading accordian now..");
+  		$log.debug("reloading accordian now..");
   		init();
   	});
     
     $scope.$on('accordianUpdate', function(event, message) {
-		console.log("updating accordian now")
+		$log.debug("updating accordian now")
 		$scope.open_id=message["g_id"];
 		$scope.open[message.g_id]= true;
 		$scope.highlight_item=message.type;

@@ -1,13 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams', function ($scope, $state, Course, batchEmailService, $stateParams) {
+  .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams','$log', function ($scope, $state, Course, batchEmailService, $stateParams,$log) {
         
-        console.log("in enrolled students");
-		console.log($stateParams);
-        
+        $log.debug("in sending emails");
         $scope.batch_emails = batchEmailService.getEmails();
-        console.log($scope.batch_emails.length);
+        $log.debug($scope.batch_emails.length);
         
         if($scope.batch_emails.length == 0){
             $state.go('course.enrolled_students');
@@ -24,11 +22,11 @@ angular.module('scalearAngularApp')
         for(var i=0; i< $scope.batch_emails.length; i++){
             $scope.final_emails += $scope.batch_emails[i]+'; ';
         }
-        console.log($scope.final_emails)
+        $log.debug($scope.final_emails)
 
         $scope.sendBatchEmail = function(title, body){
 
-            console.log($scope.batch_emails);
+            $log.debug($scope.batch_emails);
             Course.send_batch_email_through(
                 {
                     course_id:$stateParams.course_id

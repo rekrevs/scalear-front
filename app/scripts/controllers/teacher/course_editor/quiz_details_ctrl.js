@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizDetailsCtrl',['$stateParams','$rootScope','$scope','$q','Quiz', function ($stateParams, $rootScope, $scope, $q, Quiz) {
+  .controller('quizDetailsCtrl',['$stateParams','$scope','$q','Quiz','$log', function ($stateParams, $scope, $q, Quiz, $log) {
     
     $scope.$watch('items_obj['+$stateParams.quiz_id+']', function(){
       if($scope.items_obj && $scope.items_obj[$stateParams.quiz_id]){
@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
           },
           {quiz:modified_quiz},
           function(data){
-    				console.log(data)
+    				$log.debug(data)
     		  }
       );	
   	};
@@ -38,8 +38,8 @@ angular.module('scalearAngularApp')
       Quiz.validateQuiz({course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},quiz,function(data){
         d.resolve()
       },function(data){
-        console.log(data.status);
-        console.log(data);
+        $log.debug(data.status);
+        $log.debug(data);
         if(data.status==422 && data.data.errors[column])
           d.resolve(data.data.errors[column].join());
         else

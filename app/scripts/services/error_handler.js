@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('ErrorHandler', function () {    
+.factory('ErrorHandler', ['$log',function ($log) {    
 
   
   var x={
@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
   	 elementsList: $(),
 
      showMessage: function(content, cl, time) {
-     		console.log(x.elementsList);
+     		$log.debug(x.elementsList);
      		// x.elementsList=$("<div>dd</div>");
      		angular.element('.message').remove();
             $('<div/>')
@@ -27,4 +27,4 @@ angular.module('scalearAngularApp')
   return x;
 
 
-});
+}]);

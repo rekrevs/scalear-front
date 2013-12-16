@@ -1,34 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('TeacherCourseTeachersCtrl', ['$scope', '$http', '$state', 'Course', 'teachers','$stateParams', '$translate', function ($scope, $http, $state, Course, teachers, $stateParams, $translate) {
-        console.log("in enrolled students");
-        console.log($stateParams);
-
-        $scope.teachers = teachers.data.data;
-        $scope.new_teachers = []
-        console.log(teachers.data);
-
-        $scope.getRole = function(value){
-            if(value == 1){
-                return "Admin"
-            }
-            else if(value == 2){
-                return "User"
-            }
-            else if(value == 3){
-                return "Professor"
-            }
-            else if(value == 4){
-                return "TA"
-            }
-        }
-
+    .controller('courseTeachersCtrl', ['$scope', 'Course', '$stateParams', '$translate','$log', function ($scope, Course, $stateParams, $translate, $log) {
+    
         $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
 
         $scope.addRow = function(index){
             $scope.new_teachers.splice(index+1, 0, {email: null, role: null, status: "Pending"});
-            console.log($scope.new_teachers);
+            $log.debug($scope.new_teachers);
         }
 
         $scope.removeRow = function(index){
@@ -40,7 +19,7 @@ angular.module('scalearAngularApp')
                     function(value) {}
                 )
 
-                console.log($scope.teachers);
+                $log.debug($scope.teachers);
             }
         }
         $scope.updateTeacher = function(index){
@@ -51,13 +30,12 @@ angular.module('scalearAngularApp')
         }
         $scope.getTeachers= function(){
         	Course.getTeachers({},
-                  function(value){
-                       $scope.teachers = value.data;
-                       $scope.new_teachers = [];
-                   },
-                        //handle error
-                   function(value){}
-             )
+              function(value){
+                   $scope.teachers = value.data;
+                   $scope.new_teachers = [];
+               },
+               function(value){}
+            )
         }
         $scope.saveTeachers = function(){
             Course.saveTeachers({course_id:$stateParams.course_id},{new_teachers:$scope.new_teachers},
@@ -71,7 +49,7 @@ angular.module('scalearAngularApp')
                 	{
                 		$scope.new_teachers[element].error=$scope.errors[$scope.new_teachers[element].email]
                 	}
-                	console.log($scope.errors);
+                	$log.debug($scope.errors);
                 	//$scope.error = $scope.getTeachers();
                 }
             )
@@ -82,5 +60,7 @@ angular.module('scalearAngularApp')
                 $scope.new_teachers[index].email = null;
             }
         }
+
+        $scope.getTeachers()
 
     }]);

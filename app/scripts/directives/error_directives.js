@@ -10,13 +10,11 @@ angular.module('scalearAngularApp')
             	 replace:true,
             	 template: "<div ng-class='status==\"error\" ? \"errormove\" :\"successmove\" '><img  ng-src='{{status==\"error\" && \"images/error.png\" || \"images/success.png\"}}'/></div>",
                  link: function(scope, element, attrs) {
-                	// console.log(element);
-                	// console.log(scope);
                 	 ErrorHandler.elementsList.push($(element)); 
                  }
             };
             return directiveDefinitionObject;
- }]).directive('errorMessage', [function() {
+ }]).directive('errorMessage', ['$log',function($log) {
 			
             return {
             	restrict:"E",
@@ -27,7 +25,7 @@ angular.module('scalearAngularApp')
             	replace:true,
             	template: "<div ng-if='error' class='errormessage'>{{error}}</div>",
                 link: function(scope, element, attrs) {
-                	console.log("in error directive")
+                	$log.debug("in error directive")
                 	scope.$watch(function(){
                 		if(scope.data)
                 		{var arr=scope.data[scope.column]

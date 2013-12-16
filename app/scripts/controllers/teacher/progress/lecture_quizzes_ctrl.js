@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('lectureQuizzesCtrl', ['$scope','$stateParams','$timeout','Module', '$translate', function ($scope, $stateParams, $timeout, Module, $translate) {
+  .controller('lectureQuizzesCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log', function ($scope, $stateParams, $timeout, Module, $translate, $log) {
     
     $scope.lecture_player={}
     $scope.lecture_player.events={}
@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.getRemainingLectureCharts=function(){
-        console.debug("get remaining")
+        $log.debug("get remaining")
         $scope.chart_offset+=$scope.chart_limit
         if($scope.chart_offset<=parseInt($scope.total))
         {
@@ -49,7 +49,7 @@ angular.module('scalearAngularApp')
                 $scope.sub_question_ids = $scope.sub_question_ids.concat($scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_offset+$scope.chart_limit))
                 $scope.loading_lectures_chart = false
                 $scope.enableChartsScrolling()
-            },1000)
+            },500)
         }
         else
             $scope.disableInfinitScrolling()
@@ -57,7 +57,7 @@ angular.module('scalearAngularApp')
 
  	$scope.enableChartsScrolling = function(){
         if($scope.tabState() == 1){
-            console.debug("enabling chart scrolling")
+            $log.debug("enabling chart scrolling")
             $scope.lecture_scroll_disable = true
             $scope.quiz_scroll_disable = true
             $scope.chart_scroll_disable= false

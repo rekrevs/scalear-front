@@ -1,36 +1,40 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('TeacherCalendarCtrl', ['$scope','events','$state', function ($scope, events, $state) {
-    console.log("in calendar ctrl")
+  .controller('teacherCalendarCtrl', ['$scope','$state', '$stateParams','Course', '$log', function ($scope, $state, $stateParams, Course, $log) {
+    $log.debug("in calendar ctrl")
 
     var change = function(){
-    	angular.element($scope.myCalendar.children()).remove();
-    	var options =($scope.current_lang=="en")? full_calendar_en(): full_calendar_sv()
-    	options.eventSources = $scope.eventSources
-		$scope.myCalendar.fullCalendar(options);
+    	if($scope.myCalendar){
+    		angular.element($scope.myCalendar.children()).remove();
+	    	var options =($scope.current_lang=="en")? full_calendar_en(): full_calendar_sv()
+	    	options.eventSources = $scope.eventSources
+			$scope.myCalendar.fullCalendar(options);
+    	}    	
     }
 
 	var init =function(){
-		$scope.uiConfig = {
-			calendar:{
-				editable: false,
-				header:{
-					right: 'today prev,next'
-				},
-				eventDrop: $scope.alertOnDrop,
-				eventResize: $scope.alertOnResize
-			}
-		};
-
-		console.log(events)
-
-		$scope.events = events.data;
-		for (var element in $scope.events.events){
-			$scope.events.events[element].url=$state.href("course.progress.module", {course_id: $scope.events.events[element].courseId, module_id: $scope.events.events[element].groupId})
-		}
-
-		$scope.eventSources = [$scope.events];
+		Course.getCalendarEvents(
+			{course_id: $stateParams.course_id},
+			function(data){
+				$scope.calendar = data;
+				$scope.uiConfig = {
+					calendar:{
+						editable: false,
+						header:{
+							right: 'today prev,next'
+						},
+						eventDrop: $scope.alertOnDrop,
+						eventResize: $scope.alertOnResize
+					}
+				};
+				for (var element in $scope.calendar.events){
+					$scope.calendar.events[element].url=$state.href("course.progress.module", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId})
+				}
+				$scope.eventSources = [$scope.calendar]
+			},
+			function(){}
+		)
 	}
 
     $scope.$watch("current_lang", change);

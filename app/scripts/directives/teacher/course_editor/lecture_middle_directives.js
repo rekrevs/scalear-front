@@ -66,7 +66,7 @@ angular.module('scalearAngularApp')
 		 				"<drag ng-switch-when='drag' />"+
 	 				"</div>",
 	};
-}]).directive('answer', ['$rootScope', function($rootScope){
+}]).directive('answer', ['$rootScope','$log', function($rootScope,$log){
 	return {
 		 replace:true,
 		 restrict: 'E',
@@ -78,7 +78,7 @@ angular.module('scalearAngularApp')
 
 			//===FUNCTIONS===//
 			var setAnswerLocation=function(){
-				console.log("setting answer location")
+				$log.debug("setting answer location")
 				var ontop=angular.element('.ontop');		
 				var w = scope.data.width * ontop.width();
 				var h = scope.data.height* (ontop.height());
@@ -87,13 +87,13 @@ angular.module('scalearAngularApp')
 				scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
 				scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
 				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-				console.log(scope.xcoor+add_left)
-				console.log(scope.ycoor+add_top)
+				$log.debug(scope.xcoor+add_left)
+				$log.debug(scope.ycoor+add_top)
 			}	
 
 			scope.setAnswerColor=function(){
-				console.log("image change")
-				console.log(scope.data.correct)
+				$log.debug("image change")
+				$log.debug(scope.data.correct)
 				if(scope.quiz.question_type == "OCQ")
 					scope.imgName = scope.data.correct? 'button_green.png' : 'button8.png';
 				else
@@ -105,8 +105,8 @@ angular.module('scalearAngularApp')
 				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
 				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height());
 				scope.calculateSize()
-				console.log(element.position().left)				
-				console.log(element.position().top)				
+				$log.debug(element.position().left)				
+				$log.debug(element.position().top)				
 			}
 
 			scope.calculateSize=function(){
@@ -117,7 +117,7 @@ angular.module('scalearAngularApp')
 
 			scope.radioChange=function(corr_ans){
 				if(scope.quiz.question_type == "OCQ"){
-					console.log("radioChange")
+					$log.debug("radioChange")
 					scope.quiz.answers.forEach(function(ans){
 						ans.correct=false
 					})
@@ -132,7 +132,7 @@ angular.module('scalearAngularApp')
 				scope.setAnswerColor()
 			})
 			$rootScope.$on("updatePosition",function(){
-				console.log("event emiited updated position")
+				$log.debug("event emiited updated position")
 				setAnswerLocation()
 			})	
 
@@ -159,7 +159,7 @@ angular.module('scalearAngularApp')
 			scope.setAnswerColor()
 		}
 	};
-}]).directive('drag', ['$rootScope', function($rootScope){
+}]).directive('drag', ['$rootScope','$log', function($rootScope, $log){
 	return {
 		 replace:true,
 		 restrict: 'E',
@@ -198,17 +198,17 @@ angular.module('scalearAngularApp')
 			//===============//	
 			
 			$rootScope.$on("updatePosition",function(){
-				console.log("event emiited updated position")
+				$log.debug("event emiited updated position")
 				setAnswerLocation()
 			})	
 
 			scope.dragClass = "component dropped answer_drag" 
 
 			if(scope.data.pos == null){	
-				console.log("pos undefined")
+				$log.debug("pos undefined")
 				var max = Math.max.apply(Math,scope.list)
 				max = max ==-Infinity? -1 : max
-				console.log("max= "+max)
+				$log.debug("max= "+max)
 				scope.data.pos=max+1
 				scope.list.push(scope.data.pos)
 			}
@@ -216,7 +216,7 @@ angular.module('scalearAngularApp')
 			scope.pos= parseInt(scope.data.pos)
 
 			if(!(scope.data.explanation instanceof Array)){
-				console.log("not an array")
+				$log.debug("not an array")
 				scope.data.explanation = new Array()
 				for(var i in scope.list)
 					scope.data.explanation[i]=""
@@ -226,7 +226,7 @@ angular.module('scalearAngularApp')
 				if(!ans.explanation[scope.pos])
 				{
 					ans.explanation[scope.pos]=""
-					console.log("creating a new eleme in array" + scope.pos)
+					$log.debug("creating a new eleme in array" + scope.pos)
 				}
 			})
 
@@ -262,7 +262,7 @@ angular.module('scalearAngularApp')
         	setAnswerLocation()
 		}
 	};
-}]).directive('answerform',function(){
+}]).directive('answerform',['$log',function($log){
 	return {
 		scope: {
 			quiz:"=",
@@ -297,11 +297,12 @@ angular.module('scalearAngularApp')
 							"<br/>"+
 						"</div>"+
 					"</ng-form>",
-		link: function(scope, iElm, iAttrs) {
-			console.log("QUIZZ is ");
-			console.log(scope.quiz);
+		link: function(scope, element, iAttrs) {
+			$log.debug("QUIZZ is ");
+			$log.debug(scope.quiz);
 			scope.addAnswer=scope.add()
 			scope.removeQuestion=scope.removeq()
+			element.find('input')[0].focus()
 			
 			scope.isSurvey = function()
 			{
@@ -319,11 +320,23 @@ angular.module('scalearAngularApp')
 			{
 				return "content" in scope.quiz
 			}
-			
+
+			shortcut.add("Enter",function(){
+				var all_inputs= element.find('input')
+				$log.debug(all_inputs.length)
+				all_inputs.each(function(ind,elem){
+					$log.debug(elem)
+					if(document.activeElement == elem)
+						scope.addAnswer("",scope.quiz)
+					return
+				})
+				scope.$apply()
+				element.find('input')[all_inputs.length].focus()
+			},{"disable_in_input" : false});			
 			
 		}
 	};
-}).directive('htmlanswer',function(){
+}]).directive('htmlanswer',['$log',function($log){
 	return {
 	 	restrict: 'E',
 	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+
@@ -339,20 +352,20 @@ angular.module('scalearAngularApp')
 			
 			scope.updateValues= function()
 			{
-				console.log("in value update")
-				console.log(scope.quiz);
-				console.log(scope.quiz.answers);
+				$log.debug("in value update")
+				$log.debug(scope.quiz);
+				$log.debug(scope.quiz.answers);
 				scope.values=0
 				for(var element in scope.quiz.answers)
 				{
-					console.log(scope.quiz.answers[element].correct)
+					$log.debug(scope.quiz.answers[element].correct)
 					if(scope.quiz.answers[element].correct==true)
 					{
-						console.log("in true");
+						$log.debug("in true");
 						scope.values+=1
 					}
 				}
-				console.log(scope.values)
+				$log.debug(scope.values)
 			}
 			
 			
@@ -376,7 +389,7 @@ angular.module('scalearAngularApp')
 			
 		}
 	};
-}).directive('htmlMcq',function(){	
+}]).directive('htmlMcq',function(){	
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
@@ -431,14 +444,14 @@ angular.module('scalearAngularApp')
 				"</li>"				 
 	}
 	
-}).directive('atleastone', function() {
+}).directive('atleastone', ['$log', function($log) {
 	return {
 		require: 'ngModel',
 		link: function(scope, elm, attrs, ctrl) {
 		
 			scope.validate = function(value) {
 				if (scope.values<1) {
-					console.log("errorrr");
+					$log.debug("errorrr");
 					ctrl.$setValidity('atleastone', false);
 				} else {
 					ctrl.$setValidity('atleastone', true);
@@ -450,7 +463,7 @@ angular.module('scalearAngularApp')
 			});
 		}
 	};
-}).directive('popOver',['$parse','$compile','$q','$window',function ($parse, $compile, $q, $window) {
+}]).directive('popOver',['$parse','$compile','$q','$window','$log',function ($parse, $compile, $q, $window, $log) {
     return{
   		restrict: 'A',
   		link: function(scope, element, attr, ctrl) {

@@ -24,14 +24,14 @@
   'pascalprecht.translate',
   'angularMoment'
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
-
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout) {
+  
+  .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$log', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $log) {
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
-      //$rootScope.current_lang='en';
-      console.log("lang is "+ $rootScope.current_lang);
+
+      $log.debug("lang is "+ $rootScope.current_lang);
     	var statesThatDontRequireAuth =['login', 'home']
 		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information', 'course.lectures']
 		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
@@ -108,13 +108,13 @@
     		
   	});
       
-  })  
+  }])  
 
-  .config(['$stateProvider','$urlRouterProvider','$httpProvider','$translateProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider) {
+  .config(['$stateProvider','$urlRouterProvider','$httpProvider','$translateProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider) {
+
+    $logProvider.debugEnabled(false)
 
     //**********Translations*********
-    console.log("in app")
-    console.log(translation_en())
     $translateProvider
       .translations('en', translation_en())
       .translations('sv', translation_sv());
@@ -161,11 +161,6 @@
           'navigation':{templateUrl: 'views/navigation.html', controller: 'navigationCtrl'},
           '':{template:'<ui-view/>'}
         },
-        resolve:{
-          course_information:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', headers:headers, url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id});
-          }
-        },
         abstract:true
       })
        .state('course.lectures', {
@@ -180,11 +175,6 @@
         }        
       })
       .state('course.lectures.quiz', {
-         resolve:{
-          quiz:function($http, $stateParams, $rootScope, scalear_api, headers){
-            return $http({method: 'GET', url: scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/quizzes/'+$stateParams.quiz_id, headers: headers})
-          }
-         },
         url: '/quizzes/:quiz_id',
         views:{
           'middle'  :{templateUrl: 'views/student/lectures/quiz.middle.html',  controller: 'studentQuizMiddleCtrl'}
@@ -237,24 +227,14 @@
         controller: 'progressModuleCtrl'
       })
       .state('course.calendar', {
-        resolve:{
-          events:function($http, $stateParams, headers,scalear_api, $rootScope){
-            return $http({method:'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/events', headers:headers})
-          }
-        },
         url: '/events',
         templateUrl: 'views/teacher/calendar/calendar.html',
-        controller: 'TeacherCalendarCtrl'
+        controller: 'teacherCalendarCtrl'
       })
       .state('course.student_calendar', {
-        resolve:{
-          events:function($http, $stateParams, headers,scalear_api, $rootScope){
-            return $http({method:'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/events', headers:headers})
-          }
-        },
         url: '/student/events',
         templateUrl: 'views/student/calendar/calendar.html',
-        controller: 'StudentCalendarCtrl'
+        controller: 'studentCalendarCtrl'
       })
       .state('course.enrolled_students', {
         url: '/enrolled_students',
@@ -269,32 +249,22 @@
       .state('course.announcements', {
       url:'/announcements',
       templateUrl: 'views/teacher/announcements/announcements.html',
-      controller: 'AnnouncementsCtrl'
+      controller: 'announcementsCtrl'
       })
       .state('course.course_information', {
-            resolve:{
-                course:function($http, $stateParams, headers, scalear_api, $rootScope){
-                    return $http({method: 'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id, headers:headers})
-                }
-            },
         url: '/course_information',
         templateUrl: 'views/student/course/course_information.html',
-        controller: 'StudentCourseCourseInformationCtrl'
+        controller: 'studentCourseInformationCtrl'
       })
       .state('course.edit_course_information', {
             url: '',
             templateUrl: 'views/teacher/course/course_information.html',
-            controller: 'TeacherCourseCourseInformationCtrl'
+            controller: 'teacherCourseInformationCtrl'
       })
       .state('course.teachers', {
-         resolve:{
-             teachers:function($http, $stateParams, headers, scalear_api, $rootScope){
-                 return $http({method: 'GET', url:scalear_api.host+'/'+$rootScope.current_lang+'/courses/'+$stateParams.course_id+'/teachers', headers:headers})
-             }
-         },
          url: '/teachers',
          templateUrl: 'views/teacher/course/teachers.html',
-         controller: 'TeacherCourseTeachersCtrl'
+         controller: 'courseTeachersCtrl'
       })
       .state('course.inclass', {
         url: '/inclass',
@@ -314,7 +284,7 @@
       .state('student_courses', {
         url:'/student_courses',
         templateUrl: 'views/student/course_list/course_list.html',
-        controller: 'StudentCourseListCtrl'
+        controller: 'studentCourseListCtrl'
       })
   }])
 

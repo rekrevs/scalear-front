@@ -1,21 +1,20 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller', 'quiz','Quiz', function ($scope, Course, $stateParams,$controller, quiz,Quiz) {
+  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log', function ($scope, Course, $stateParams,$controller,Quiz, $log) {
     $controller('surveysCtrl', {$scope: $scope});
-
-    console.log(quiz);
-    $scope.quiz=quiz.data;
-    $scope.studentAnswers={};
-    $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
     
  	var init = function(){
+        $scope.studentAnswers={};
+
  		Quiz.getQuestions({quiz_id: $stateParams.quiz_id},function(data){
+            $scope.quiz= data.quiz
 	 		$scope.quiz.questions=data.questions
 	 		$scope.studentAnswers=data.quiz_grades;
 	 		$scope.status=data.status;
 	 		$scope.correct=data.correct;
 	 		$scope.alert_messages= data.alert_messages
+            $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
 		  	$scope.quiz.questions.forEach(function(question,index){
 					question.answers = data.answers[index]
 					 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]==null) // if drag was not solved, put student answer from shuffled answers.

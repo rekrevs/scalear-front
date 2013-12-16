@@ -25,11 +25,11 @@ angular.module('scalearAngularApp')
 			function(data){
 				$scope.submitted=false;
 				if(data.importing==true){
-					$(window).scrollTop(0);
+					//$(window).scrollTop(0);
 					$state.go("course_list")
 				}
 				else{
-					$(window).scrollTop(0);
+					//$(window).scrollTop(0);
 					$state.go("course.course_editor",{"course_id":data.course.id})
 				}
 			},function(response){

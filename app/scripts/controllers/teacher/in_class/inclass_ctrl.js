@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassCtrl', ['$scope', '$stateParams', '$location', 'Course',function ($scope, $stateParams, $location, Course) {
+  .controller('inclassCtrl', ['$scope', '$stateParams', '$location', 'Course','$window', function ($scope, $stateParams, $location, Course, $window) {
+    $window.scrollTo(0, 0);
     
     Course.getCourse(
     	{course_id:$stateParams.course_id},

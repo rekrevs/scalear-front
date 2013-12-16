@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate) {
-
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$window', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $window) {
+	
+	$window.scrollTo(0, 0);
  	/***********************Functions*******************************/
  	var init = function(){
  		$scope.open_id="-1";

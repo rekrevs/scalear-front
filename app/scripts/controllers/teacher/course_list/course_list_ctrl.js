@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate', function ($scope, Course,$stateParams, $translate) {
-
+  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$window', function ($scope, Course,$stateParams, $translate, $window) {
+	$window.scrollTo(0, 0);
+	
   	console.log("in admin")
   		Course.index({},
 			function(data){

@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('reviewQuizzesCtrl', ['$scope','$stateParams','Module', '$translate', function ($scope, $stateParams, Module, $translate) {
+  .controller('reviewQuizzesCtrl', ['$scope','$stateParams','Module', '$translate','$window', function ($scope, $stateParams, Module, $translate, $window) {
+  	$window.scrollTo(0, 0);
+  	
   	console.log("review quizzes")
   	var getLectureCharts= function(offset, limit){
         $scope.chart_limit = limit

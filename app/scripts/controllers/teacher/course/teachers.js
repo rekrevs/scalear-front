@@ -1,7 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('TeacherCourseTeachersCtrl', ['$scope', '$http', '$state', 'Course', 'teachers','$stateParams', '$translate', function ($scope, $http, $state, Course, teachers, $stateParams, $translate) {
+    .controller('TeacherCourseTeachersCtrl', ['$scope', '$http', '$state', 'Course', 'teachers','$stateParams', '$translate','$window', function ($scope, $http, $state, Course, teachers, $stateParams, $translate, $window) {
+        
+        $window.scrollTo(0, 0);
+        
         console.log("in enrolled students");
         console.log($stateParams);
 
@@ -50,7 +53,7 @@ angular.module('scalearAngularApp')
             $scope.new_teachers.splice(index, 1);
         }
         $scope.getTeachers= function(){
-        	Course.getTeachers({},
+        	Course.getTeachers({course_id:$stateParams.course_id},
                   function(value){
                        $scope.teachers = value.data;
                        $scope.new_teachers = [];

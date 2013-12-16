@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuestionsCtrl', ['$scope','$stateParams','Module',function ($scope, $stateParams, Module){
+  .controller('displayQuestionsCtrl', ['$scope','$stateParams','Module','$window',function ($scope, $stateParams, Module, $window){
+ 	$window.scrollTo(0, 0);
  	
   	var init = function(){
   		Module.displayQuestions(

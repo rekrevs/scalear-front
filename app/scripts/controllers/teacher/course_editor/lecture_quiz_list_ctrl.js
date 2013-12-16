@@ -71,7 +71,7 @@ angular.module('scalearAngularApp')
 					console.log(data.status);
 					console.log(data);
 				if(data.status==422)
-				 	d.resolve(data.data.errors['question'].join());
+				 	d.resolve(data.data.errors.join());
 				else
 					d.reject('Server Error');
 				}
@@ -79,10 +79,10 @@ angular.module('scalearAngularApp')
 		    return d.promise;
 		}
 
-	$scope.validateName=function(value){
-		if(!value)
-			return "Can't be blank"
-	}
+	// $scope.validateName=function(value){
+		// if(!value)
+			// return "Can't be blank"
+	// }
 
 	$scope.saveEdit=function(quiz){
 

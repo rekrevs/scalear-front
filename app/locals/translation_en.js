@@ -35,6 +35,7 @@ var translation_en=function(){
         edit_account: "Edit account",
         courses: "Courses",
         notifications: "Notifications",
+        notification: "Notification",
         admin: "Admin",
       },
       head:{
@@ -108,7 +109,7 @@ var translation_en=function(){
         not_done_due: "Not done or due in less than 2 days",
       },
       notification:{
-        invited: "You have been invited to the course %{course}, by %{user}, as a %{role},",
+        invited: "You have been invited to the course {{course}}, by {{user}}, as a {{role}},",
         accept: "Accept",
         reject: "Reject",
       },

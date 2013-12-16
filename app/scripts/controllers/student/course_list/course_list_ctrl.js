@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('StudentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler) {
+  .controller('StudentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler','$window', function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler, $window) {
+  	
+  	$window.scrollTo(0, 0);
   	
   	console.log("in student course list")
   		var init= function(){
@@ -39,11 +41,11 @@ angular.module('scalearAngularApp')
     		//console.log(enrollment_key);
       		//$scope.selected = enrollment_key;
       		
-      		$rootScope.show_alert="success";	
-      		ErrorHandler.showMessage("Successfully Joined Course", 'errorMessage', 2000);
-      		$timeout(function(){
-      			$rootScope.show_alert="";	
-      		},5000);
+      		// $rootScope.show_alert="success";	
+      		// ErrorHandler.showMessage("Successfully Joined Course", 'errorMessage', 2000);
+      		// $timeout(function(){
+      			// $rootScope.show_alert="";	
+      		// },5000);
       		
       		init();
     	}, function () {

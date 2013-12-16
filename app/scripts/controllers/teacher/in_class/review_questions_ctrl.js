@@ -1,11 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('reviewQuestionsCtrl', ['$scope','$stateParams','Module',function ($scope, $stateParams, Module) {
+  .controller('reviewQuestionsCtrl', ['$scope','$stateParams','Module','$window',function ($scope, $stateParams, Module, $window) {
+  	
+  	$window.scrollTo(0, 0);
+  	
   	var init=function(){
   		Module.getStudentQuestions(
   			{
-			 	   course_id:$stateParams.course_id,
+		   course_id:$stateParams.course_id,
            module_id:$stateParams.module_id
   			},
   			function(data){

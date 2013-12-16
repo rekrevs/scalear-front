@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('AnnouncementsCtrl',['$scope', 'Announcement','$stateParams', function ($scope, Announcement, $stateParams) {
+  .controller('AnnouncementsCtrl',['$scope', 'Announcement','$stateParams','$window', function ($scope, Announcement, $stateParams, $window) {
   	console.log("over here");
+  	$window.scrollTo(0, 0);
   	$scope.disable_new = false;
   	var init = function()
   	{

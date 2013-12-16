@@ -16,7 +16,7 @@
                         <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
                     </td>
                     <td id="status">
-                        {{"controller_msg."+teacher.status.toLowerCase()|translate}}
+                        <span ng-show="teacher.status">{{"controller_msg."+teacher.status.toLowerCase()|translate}}</span>
                     </td>
                     <td>
                         <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeRow($index)" style="cursor: pointer;">

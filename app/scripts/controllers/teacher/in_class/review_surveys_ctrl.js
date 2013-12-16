@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('reviewSurveysCtrl', ['$scope', '$controller', 'Quiz', function ($scope, $controller, Quiz) {
+  .controller('reviewSurveysCtrl', ['$scope', '$controller', 'Quiz','$window', function ($scope, $controller, Quiz, $window) {
  	$controller('surveysCtrl', {$scope: $scope});
 
+	$window.scrollTo(0, 0);
+	
  	var init=function(){
  		$scope.getSurveyCharts()
  		$scope.current_survey=0

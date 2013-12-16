@@ -113,7 +113,7 @@ angular.module('scalearAngularApp')
       	
       }
       var re= new RegExp("^"+scalear_api.host)
-      if(rejection.status==0 && rejection.config.url.search(re)!=-1) //host not reachable
+      if(rejection.status==0 && rejection.config.url.search(re)!=-1 && $rootScope.unload!=true) //host not reachable
       {
       	
       	if($rootScope.server_error!=true)

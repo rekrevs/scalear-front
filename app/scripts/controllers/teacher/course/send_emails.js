@@ -1,7 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams', function ($scope, $state, Course, batchEmailService, $stateParams) {
+  .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams','$window', function ($scope, $state, Course, batchEmailService, $stateParams, $window) {
+        
+        $window.scrollTo(0, 0);
         
         console.log("in enrolled students");
 		console.log($stateParams);

@@ -27,7 +27,7 @@
 
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout) {
+  .run(function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window) {
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
       //$rootScope.current_lang='en';
@@ -66,7 +66,9 @@
   			}
   			return false;
   		}
-
+		$window.onbeforeunload= function(){
+			$rootScope.unload=true;
+		}
   		$rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
     	
     		UserSession.getRole().then(function(result){

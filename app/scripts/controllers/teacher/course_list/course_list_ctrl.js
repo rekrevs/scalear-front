@@ -1,9 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log', function ($scope, Course,$stateParams, $translate, $log) {
+  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window', function ($scope, Course,$stateParams, $translate, $log, $window) {
 
   	$log.debug("in course list")
+    $window.scrollTo(0, 0);
+    
   		Course.index({},
 			function(data){
 				$log.debug(data)

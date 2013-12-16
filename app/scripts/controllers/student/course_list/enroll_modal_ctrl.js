@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('StudentEnrollModalCtrl',['$scope','$modalInstance','Course','$log', function ($scope, $modalInstance, Course, $log) {
-	
+  .controller('StudentEnrollModalCtrl',['$scope','$modalInstance','Course','$log','$window', function ($scope, $modalInstance, Course, $log, $window) {
+
+	$window.scrollTo(0, 0);
 	$scope.enrollment={}
 	$scope.form={}  	
 	

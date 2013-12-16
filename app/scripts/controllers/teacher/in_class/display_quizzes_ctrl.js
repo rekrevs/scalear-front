@@ -1,8 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuizzesCtrl', ['$scope','$stateParams','Module', '$translate', '$controller', '$log', function ($scope,$stateParams, Module, $translate, $controller, $log) {
+  .controller('displayQuizzesCtrl', ['$scope','$stateParams','Module', '$translate', '$controller', '$log', '$window', function ($scope,$stateParams, Module, $translate, $controller, $log, $window) {
     $controller('lectureQuizzesCtrl', {$scope: $scope});
+    
+    $window.scrollTo(0, 0);
+    
   	var init = function(){
   		Module.displayQuizzes(
 	  		{

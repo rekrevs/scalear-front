@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('courseTeachersCtrl', ['$scope', 'Course', '$stateParams', '$translate','$log', function ($scope, Course, $stateParams, $translate, $log) {
-    
+    .controller('courseTeachersCtrl', ['$scope', 'Course', '$stateParams', '$translate','$log','$window', function ($scope, Course, $stateParams, $translate, $log, $window) {
+        
+        $window.scrollTo(0, 0);
         $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
 
         $scope.addRow = function(index){
@@ -29,7 +30,7 @@ angular.module('scalearAngularApp')
             $scope.new_teachers.splice(index, 1);
         }
         $scope.getTeachers= function(){
-        	Course.getTeachers({},
+        	Course.getTeachers({course_id:$stateParams.course_id},
               function(value){
                    $scope.teachers = value.data;
                    $scope.new_teachers = [];

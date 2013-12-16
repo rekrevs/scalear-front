@@ -2,6 +2,8 @@
 
 angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window','$log', function ($scope, $modal, $timeout,$window, $log) {
+
+    $window.scrollTo(0, 0);
     $scope.inclass_player={}
     $scope.inclass_player.events={}    
   	$scope.display = function (type) {

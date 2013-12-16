@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', function ($scope,$state, $stateParams, Course) {
-    
+  .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', '$window', function ($scope,$state, $stateParams, Course, $window) {
+     $window.scrollTo(0, 0);
     var change_lang = function(){
     	if($scope.myCalendar){
 	    	angular.element($scope.myCalendar.children()).remove();
 	    	var obj=($scope.current_lang=="en")?full_calendar_en():full_calendar_sv();
 	    	obj.eventSources=$scope.eventSources;
 	    	$scope.myCalendar.fullCalendar(obj);   
-    	} 	
+    	}
     }
 
 	var init=function(){

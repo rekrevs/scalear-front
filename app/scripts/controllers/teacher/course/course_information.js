@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log', function ($scope, $stateParams, Course, $q, $translate, $log) {
-        
-       
+  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window', function ($scope, $stateParams, Course, $q, $translate, $log, $window) {
+
+        $window.scrollTo(0, 0);
         Course.show({course_id:$stateParams.course_id},function(response){
         	$scope.data=response
         	$scope.timezones=response.timezones;
@@ -39,9 +39,8 @@ angular.module('scalearAngularApp')
 		      },function(data){
 		        $log.debug(data.status);
 		        $log.debug(data);
-		        $log.debug(data.data["errors"][column])
 		        if(data.status==422)
-		          d.resolve(data.data["errors"][column].join());
+		          d.resolve(data.data["errors"].join());
 		        else
 		          d.reject('Server Error');
 		        }

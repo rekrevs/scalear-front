@@ -34,6 +34,7 @@ var translation_sv=function(){
               edit_account: "Redigera konto",
               courses: "Kurser",
               notifications: "Anmälningar",
+              notification: "Anmälan",
               admin: "Admin",
           },
       head:{
@@ -109,7 +110,7 @@ var translation_sv=function(){
               not_done_due: "Inte gjort eller skall vara färdigt inom 2 dagar",
           },
       notification:{
-              invited: "Du har blivit inbjuden till kursen %{course} av %{user} som %{role}",
+              invited: "Du har blivit inbjuden till kursen {{course}} av {{user}} som {{role}}",
               accept: "Acceptera",
               reject: "Avböj",
           },

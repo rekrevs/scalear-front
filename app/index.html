@@ -70,6 +70,7 @@
 
                 <ul class="nav pull-left">
                     <li ng-show="current_user"><a ng-click="coursePage()" style="float: left;cursor: pointer" translate="navigation.courses"></a></li>
+                	<li><a ng-click="open()" ng-show='current_user && current_user.roles[0].id!=2 && current_user.invitations' translate="navigation.notifications" style="float:left;color:red;cursor: pointer;"></a></li>
                 </ul>
             </div>
         </nav>
@@ -215,6 +216,7 @@
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/navigation.js"></script>
     <script src="scripts/controllers/privacy.js"></script>
+    <script src="scripts/controllers/invitation_modal_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>

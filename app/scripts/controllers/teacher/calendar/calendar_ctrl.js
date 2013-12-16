@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCalendarCtrl', ['$scope','$state', '$stateParams','Course', '$log', function ($scope, $state, $stateParams, Course, $log) {
+  .controller('teacherCalendarCtrl', ['$scope','$state', '$stateParams','Course', '$log','$window', function ($scope, $state, $stateParams, Course, $log, $window) {
     $log.debug("in calendar ctrl")
 
+	$window.scrollTo(0, 0);
     var change = function(){
     	if($scope.myCalendar){
     		angular.element($scope.myCalendar.children()).remove();

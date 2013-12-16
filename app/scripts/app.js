@@ -26,8 +26,8 @@
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  
-  .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$log', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $log) {
+  .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log) {
+
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
 
@@ -66,7 +66,9 @@
   			}
   			return false;
   		}
-
+		$window.onbeforeunload= function(){
+			$rootScope.unload=true;
+		}
   		$rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
     	
     		UserSession.getRole().then(function(result){

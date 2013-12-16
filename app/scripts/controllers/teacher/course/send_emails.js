@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams','$log', function ($scope, $state, Course, batchEmailService, $stateParams,$log) {
-        
+  .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams','$log','$window', function ($scope, $state, Course, batchEmailService, $stateParams,$log, $window) {
+
+        $window.scrollTo(0, 0);
         $log.debug("in sending emails");
         $scope.batch_emails = batchEmailService.getEmails();
         $log.debug($scope.batch_emails.length);

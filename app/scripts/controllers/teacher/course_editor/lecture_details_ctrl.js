@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
 				$log.debug(data.status);
 				$log.debug(data);
 			if(data.status==422)
-			 	d.resolve(data.data.errors[column].join());
+			 	d.resolve(data.data.errors.join());
 			else
 				d.reject('Server Error');
 			}

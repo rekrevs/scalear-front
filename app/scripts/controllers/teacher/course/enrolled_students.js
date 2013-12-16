@@ -1,10 +1,12 @@
 'use strict';
 
 var app = angular.module('scalearAngularApp')
-  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log) {
+
+  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window) {
  
         $log.debug("in enrolled students");
 
+        $window.scrollTo(0, 0);
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
         $scope.loading_students = true

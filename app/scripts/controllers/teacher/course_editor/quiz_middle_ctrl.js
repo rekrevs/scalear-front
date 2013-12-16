@@ -17,6 +17,8 @@ angular.module('scalearAngularApp')
 
  	var init = function(){
  		Quiz.getQuestions({course_id:$stateParams.course_id, quiz_id: $stateParams.quiz_id},function(data){
+ 			$log.debug("init data is");
+ 			$log.debug(data);
 	 		$scope.questions=data.questions
 		  	$scope.questions.forEach(function(question,index){
 		  		if(question.question_type.toUpperCase() == 'DRAG'){
@@ -54,6 +56,7 @@ angular.module('scalearAngularApp')
 			{questions: ans},
 			function(data){ //success
 				$log.debug(data)
+				init();
 			},
 			function(){
 	 		    alert("Could not save changes, please check network connection.");

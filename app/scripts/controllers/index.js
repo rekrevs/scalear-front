@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('indexController', ['$scope', '$state', 'User','$rootScope','$translate','$window','$log' ,function ($scope, $state, User, $rootScope, $translate, $window, $log) {
-	
+  .controller('indexController', ['$scope', '$state', 'User','$rootScope','$translate','$window','$modal', '$log' ,function ($scope, $state, User, $rootScope, $translate, $window, $modal, $log) {
+
 	$scope.changeLanguage = function (key) {
 		$log.debug("in change language "+key);
     	$translate.uses(key);
@@ -30,6 +30,27 @@ angular.module('scalearAngularApp')
    		else
    			$state.go("student_courses");
    	}
+   	
+   	$scope.open = function () {
+
+    	var modalInstance = $modal.open({
+      		templateUrl: 'views/invitation.html',
+      		controller: "InvitationModalCtrl",
+      		// resolve: {
+        		// items: function () {
+          		// return $scope.items;
+        	// }
+      		//}
+    	});
+
+    	modalInstance.result.then(function (course_id) {
+    		if(course_id)
+      			$state.go("course.course_editor",{course_id: course_id })
+    	}, function () {
+      		$log.info('Modal dismissed at: ' + new Date());
+    	});
+  	};
+
    	
 }]);
 

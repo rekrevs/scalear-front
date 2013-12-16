@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler) {
-  	
+  .controller('studentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', '$window',function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler, $window) {
+
+  	$window.scrollTo(0, 0);
 		var init= function(){
 			Course.index({},
   			function(data){

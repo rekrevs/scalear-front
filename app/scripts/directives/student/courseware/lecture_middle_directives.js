@@ -173,11 +173,12 @@ angular.module('scalearAngularApp')
   };
 }])
 
-.directive("check",['$timeout', 'Lecture', '$stateParams','$translate', '$window', '$log', function($timeout, Lecture, $stateParams, $translate, $window, $log) {
+.directive("check",['$timeout', 'Lecture', '$stateParams','$translate', '$window', '$log','CourseEditor', function($timeout, Lecture, $stateParams, $translate, $window, $log, CourseEditor) {
   return {
     restrict:"E",
 	template:'<input type="button" class="btn btn-primary" value="{{\'youtube.check_answer\'|translate}}" ng-click="check_answer()" />',
 	link: function(scope, element, attrs) {
+   
     
     element.css("position", "relative");
 		element.css("z-index",10000);
@@ -289,7 +290,7 @@ angular.module('scalearAngularApp')
 
   		
 
-      var displayResult=function(data){
+      var displayResult=function(data, done){
         for(var el in data["detailed_exp"])
           scope.explanation[el]= data["detailed_exp"][el];
 
@@ -298,9 +299,15 @@ angular.module('scalearAngularApp')
 
 		if(data["msg"]!="Empty") // he chose sthg
 	    {
+	    	// here need to update scope.$parent.$parent
+	    	var group_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups, data.done[1])
+	 		var lecture_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+	    	if(lecture_index!=-1 && group_index!=-1)
+	    		scope.$parent.$parent.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
 	    	scope.selected_quiz.is_quiz_solved=true;
-	    	scope.$emit('accordianReload');
-			scope.$emit('accordianUpdate',{g_id:scope.lecture.group_id, type:"lecture", id:scope.lecture.id});
+	    	
+	    	//scope.$emit('accordianReload');
+			//scope.$emit('accordianUpdate',{g_id:scope.lecture.group_id, type:"lecture", id:scope.lecture.id});
 	    }
         $timeout(function(){
           scope.$parent.show_notification=false;

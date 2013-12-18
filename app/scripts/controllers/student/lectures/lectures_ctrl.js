@@ -5,6 +5,7 @@ angular.module('scalearAngularApp')
 
 	$window.scrollTo(0, 0);
 
+	
     var init = function()
     {
     	$scope.open_id="-1";

@@ -52,7 +52,7 @@ angular.module('scalearAngularApp')
            		if(data.msg=="ask")
            		{
              		scope.$parent.show_notification="If you're really confused, please use the question button to ask a question so the teacher can help you.";
-             		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px", "top":(scope.pHeight - 160) + "px" }
+             		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px"}
              		$timeout(function(){
              			scope.$parent.notify_position={"left":"180px"};
              			scope.$parent.show_notification=false;
@@ -134,29 +134,34 @@ angular.module('scalearAngularApp')
 .directive("notification", ['$translate', '$window', '$log', function($translate, $window, $log) {
   return {
     restrict:"E",
-    template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification==true"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!=true">{{show_notification}}</div></div>',
+    template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification==true" style="vertical-align:middle"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div></div>',
 
     link: function(scope, element, attrs) {
       scope.correct_notify=$translate("lectures.correct")
       scope.incorrect_notify=$translate("lectures.incorrect")
 
       element.css("position", "relative");
-      element.css("top", "340px");
+      element.css("top", "300px");
       element.css("left","180px");
       element.css("padding","5px");
       element.css("font-size", "12px");
       element.children().css("width", "150px");
       element.css("z-index","10000");
       element.css("display","block");
+      element.children().css("height","85px");
+      element.children().css("display","table-cell");
+      element.children().css("vertical-align","middle");
+      element.children().css("overflow","auto");
+      element.css("overflow","auto");
 
       var setNotficationPosition=function(){
         $log.debug(scope.fullscreen)
         if(scope.fullscreen){
-          scope.pHeight=angular.element($window).height()- 140;
+          scope.pHeight=angular.element($window).height()- 180;
           element.css("z-index",10000);
         }
         else{
-          scope.pHeight= 340;
+          scope.pHeight= 300;
           element.css("z-index",1000);
         }
           element.css("top", scope.pHeight+"px");

@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
 
 
     	$scope.removeDocument=function (elem) {
-    		if(confirm($translate('groups.you_sure_delete_document'))){
+    		if(confirm($translate('groups.you_sure_delete_document', {doc: elem.name}))){
 	    		Document.destroy(
 					{document_id: elem.id},{},
 					function(){

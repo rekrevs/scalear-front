@@ -84,6 +84,7 @@ angular.module('scalearAngularApp')
    			if($scope.selected_quiz.is_quiz_solved==false){
    				$log.debug("in notification")
    				$scope.lecture_player.controls.pause();
+   				$scope.lecture_player.controls.seek($scope.selected_quiz.time)
 				$scope.show_notification=$translate('groups.answer_question');	
    				$timeout(function(){
          		 	$scope.show_notification=false;

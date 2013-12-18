@@ -19,7 +19,7 @@ angular.module('scalearAngularApp')
 
   		$scope.deleteCourse=function(course){
   			// can't pass index.. cause its not reliable with filter. so instead take course, and get its position in scope.courses
-  			if(confirm($translate("courses.you_sure_delete_course"))){
+  			if(confirm($translate("courses.you_sure_delete_course", {course:course.name}))){
 	  			Course.destroy({course_id: course.id},{},
 	  				function(response){
 	  					$scope.courses.splice($scope.courses.indexOf(course), 1)

@@ -132,7 +132,7 @@ angular.module('scalearAngularApp')
 
 		    }
 		};
-}]).directive('resizableVideo', ['$window', '$timeout',function($window, $timeout){
+}]).directive('resizableVideo', ['$window', '$timeout','$log',function($window, $timeout, $log){
 	return{
 		restrict:'A',
 		scope:{
@@ -209,7 +209,7 @@ angular.module('scalearAngularApp')
 					"position":"fixed",
 					"width":win.width()-$scope.max_width,
 					"height":win.height(),
-					"z-index": 1030
+					"z-index": 1031
 				};
 
 				var video_height = win.height() -30;
@@ -230,7 +230,7 @@ angular.module('scalearAngularApp')
 						"height":video_height,
 						"margin-top": margin_top+"px",
 						"margin-left":"0px",
-						"z-index": 1031
+						"z-index": 1032
 					}		
 				}
 				else{		
@@ -243,7 +243,7 @@ angular.module('scalearAngularApp')
 						"height":video_height,
 						"margin-left": margin_left+"px",
 						"margin-top":"0px",
-						"z-index": 1031
+						"z-index": 1032
 					}		
 				 }
 				angular.extend($scope.video_layer, video)

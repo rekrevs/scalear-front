@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log) {
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout) {
 
     // $scope.lecture=lecture.data
     $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
 		}, 
 		function(){ //error
 			$scope.quiz_loading = false;
-		    alert("Could not insert new quiz, please check network connection.");
+		    //alert("Could not insert new quiz, please check network connection.");
 		})
 
 	}
@@ -109,7 +109,7 @@ angular.module('scalearAngularApp')
 				}
 			},
 			function(){ //error
-			    alert("Could not get data, please check network connection."); 
+			 //   alert("Could not get data, please check network connection."); 
 			}
 		);
 	}
@@ -133,7 +133,7 @@ angular.module('scalearAngularApp')
 				}			
 			},
 			function(){ //error
-				alert("Could not get data, please check network connection.");
+				//alert("Could not get data, please check network connection.");
 			}
 		);
 	}
@@ -155,8 +155,14 @@ angular.module('scalearAngularApp')
 
 	$scope.removeHtmlAnswer = function(index){
 		if($scope.selected_quiz.answers.length <=1)
-			alert($translate("online_quiz.cannot_delete_alteast_one_answer"))
-		else if(confirm($translate('lectures.you_sure')))
+			{
+				$rootScope.show_alert="error";
+		      	ErrorHandler.showMessage('Error ' + ': ' + $translate("online_quiz.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
+		      	$timeout(function(){
+		      		$rootScope.show_alert="";	
+		      	},4000);
+			}
+		else //if(confirm($translate('questions.you_sure_delete_answer', {answer: $scope.selected_quiz.answers[index].answer})))
 			$scope.selected_quiz.answers.splice(index, 1);			
 	}
 
@@ -209,7 +215,7 @@ angular.module('scalearAngularApp')
 				$log.debug($scope.new_answer)
 			},
 			function(){
-				alert("Could not add answer, please check network connection.");
+				//alert("Could not add answer, please check network connection.");
 			});
 	}
 	
@@ -231,7 +237,7 @@ angular.module('scalearAngularApp')
 			},
 			function(){
 				$scope.selected_quiz.answers.push(backup)
-				 alert("Could not remove element, please check network connection.");
+				// alert("Could not remove element, please check network connection.");
 			}
 		);
 	}
@@ -249,7 +255,7 @@ angular.module('scalearAngularApp')
 				$log.debug(data)
 			},
 			function(){
-	 		    alert("Could not save changes, please check network connection.");
+	 		    //alert("Could not save changes, please check network connection.");
 			}
 		);
 	}

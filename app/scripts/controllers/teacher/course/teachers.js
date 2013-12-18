@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
         }
 
         $scope.removeRow = function(index){
-            var answer = confirm($translate('courses.you_sure_remove_teacher'));
+            var answer = confirm($translate('courses.you_sure_remove_teacher', {teacher: $scope.teachers[index].email}));
             if(answer){
                 Course.deleteTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email}, {},
                     function(value) {$scope.teachers.splice(index, 1);},

@@ -143,7 +143,7 @@ angular.module('scalearAngularApp')
 
 		    }
 		};
-}]).directive('resizableVideo', ['$window', '$timeout', '$log', function($window, $timeout, $log){
+}]).directive('resizableVideo', ['$window', '$timeout','$log',function($window, $timeout, $log){
 	return{
 		restrict:'A',
 		scope:{
@@ -220,7 +220,7 @@ angular.module('scalearAngularApp')
 					"position":"fixed",
 					"width":win.width()-$scope.max_width,
 					"height":win.height(),
-					"z-index": 1030
+					"z-index": 1031
 				};
 
 				var video_height = win.height() -30;

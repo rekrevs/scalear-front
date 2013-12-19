@@ -22,7 +22,7 @@ var app = angular.module('scalearAngularApp')
 
         $scope.removeStudent = function(student){
             $log.debug(student)
-            var answer = confirm($translate('courses.you_sure_delete_student'));
+            var answer = confirm($translate('courses.you_sure_delete_student', {student: student.name}));
             if(answer){
             	student.removing=true;
                 Course.remove_student(

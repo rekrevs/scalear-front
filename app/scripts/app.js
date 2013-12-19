@@ -13,6 +13,7 @@
   'ui.bootstrap.datepicker',
   'ui.bootstrap.alert',
   'ui.bootstrap.modal',
+  'ui.bootstrap.tooltip',
   'ui.sortable',
   'ui.calendar',
   'ngDragDrop',
@@ -114,7 +115,7 @@
 
   .config(['$stateProvider','$urlRouterProvider','$httpProvider','$translateProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider) {
 
-    $logProvider.debugEnabled(false)
+    $logProvider.debugEnabled(true)
 
     //**********Translations*********
     $translateProvider

@@ -40,8 +40,8 @@ angular.module('scalearAngularApp')
       },function(data){
         $log.debug(data.status);
         $log.debug(data);
-        if(data.status==422 && data.data.errors[column])
-          d.resolve(data.data.errors[column].join());
+        if(data.status==422 && data.data.errors)
+          d.resolve(data.data.errors.join());
         else
           d.reject('Server Error');
         }

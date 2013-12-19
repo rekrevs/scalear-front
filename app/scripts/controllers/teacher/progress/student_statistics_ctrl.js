@@ -39,7 +39,12 @@ angular.module('scalearAngularApp')
 	    }
 
 	    var getChartWidth=function(){
-	    	return $scope.statistics.width+120
+	    	return $scope.statistics.width+85
+	    	// var width = 0
+	    	// $scope.statistics.lecture_names.forEach(function(name){
+	    	// 	width+= name[0]
+	    	// })
+	    	// return width
 	    }
 
         $scope.formatStatisticsChartData = function(data){
@@ -79,12 +84,13 @@ angular.module('scalearAngularApp')
 	            "width": getChartWidth(),
 	            "displayExactValues": true,
 	            "fontSize" : 12,
-	            "chartArea":{"width":"95%"},
+	           // "chartArea":{"width":"95%"},
 	            "hAxis": { 
 					"maxValue":[max.getUTCHours(),max.getMinutes(),max.getSeconds(),0],
 					"minValue":[min.getUTCHours(),min.getMinutes(),min.getSeconds(),0]
 	            },
-	            "legend": 'none',    
+	            "legend": 'none', 
+	            chartArea:{left: 85, width:getChartWidth()},   
 	            "vAxis": {
 	                "title": "#"+$translate('courses.'+type),
 	            },

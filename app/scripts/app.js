@@ -115,7 +115,7 @@
 
   .config(['$stateProvider','$urlRouterProvider','$httpProvider','$translateProvider', '$logProvider', function ($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider) {
 
-    $logProvider.debugEnabled(true)
+    $logProvider.debugEnabled(false)
 
     //**********Translations*********
     $translateProvider

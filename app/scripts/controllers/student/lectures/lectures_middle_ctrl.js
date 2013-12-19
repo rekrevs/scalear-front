@@ -31,6 +31,11 @@ angular.module('scalearAngularApp')
  			function(data){
 	 			$scope.alert_messages=data.alert_messages;
 	 			$scope.lecture=JSON.parse(data.lecture)
+	 			for(var element in $scope.lecture.online_quizzes) // if no answers remove it
+	 			{
+	 				if($scope.lecture.online_quizzes[element].online_answers.length==0)
+	 					$scope.lecture.online_quizzes.splice(element, 1);
+	 			}
 	 			$scope.next_lecture = data.next_lecture
 	 			var watcher=$scope.$watch('course', function(newval){
 	 				if($scope.$parent.course)

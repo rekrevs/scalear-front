@@ -19,8 +19,8 @@
 <center>
 	<form name="form">
 		<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct"></student-quiz>
-		<input ng-disabled="status.status=='Submitted'" type="button" class="btn btn-primary" value="{{ 'save' |translate}}" ng-click="saveQuiz('save')" />
-		<input ng-disabled="status.status=='Submitted' && status.attempts==quiz.retries+1" ng-if="quiz.quiz_type=='quiz'" type="button" class="btn btn-primary" value="{{ 'submit' |translate}}" ng-click="saveQuiz('submit')" />
+		<input ng-disabled="status.status=='Submitted' || quiz.questions.length==0" type="button" class="btn btn-primary" value="{{ 'save' |translate}}" ng-click="saveQuiz('save')" />
+		<input ng-disabled="(status.status=='Submitted' && status.attempts==quiz.retries+1) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="btn btn-primary" value="{{ 'submit' |translate}}" ng-click="saveQuiz('submit')" />
 	</form>
 	<div ng-show="survey_chart_data" style="padding:10px 40px" >
 		<div ng-repeat="(id,data) in survey_chart_data" class="chart" style='min-width:300px; height:205px;' ng-init="chart=createSurveyChart(data.answers, $index)"> 

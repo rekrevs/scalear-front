@@ -1,4 +1,4 @@
-<div ng-if="statistics.lecture_names.length">
+<div ng-if="statistics.lecture_names.length && lecture_url">
 	<center >
 			<video_container class="largescreen">
 				<loading size='small' show="!statistics" style="top:50%;position:relative" />
@@ -18,5 +18,5 @@
 <center>
 	<br><br>
 	<loading size="small" show="loading_statistics_chart" />
-	<div ng-show="!statistics.lecture_names.length && !loading_statistics_chart" translate>courses.no_lectures</div>
+	<div ng-show="(!statistics.lecture_names.length || !lecture_url) && !loading_statistics_chart" translate>courses.no_lectures</div>
 </center>

@@ -9,6 +9,7 @@ angular.module('scalearAngularApp')
  		$scope.open_id="-1";
 	    $scope.open={};
 	    $scope.oneAtATime = true;
+	    $scope.init_loading=true
  		Course.getCourseEditor(
  			{course_id:$stateParams.course_id},
  			function(data){
@@ -22,6 +23,7 @@ angular.module('scalearAngularApp')
 		 				$scope.items_obj[item.id] = item
 		 			})
 		 		})
+		 		$scope.init_loading=false
 		    },
 		    function(){
 		    }

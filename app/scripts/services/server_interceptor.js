@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('ServerInterceptor', ['$rootScope','$q','$timeout','ErrorHandler','$injector','scalear_api','headers','$log', function($rootScope,$q, $timeout, ErrorHandler, $injector, scalear_api, headers, $log) { //server and also front end requests (requesting partials and so on..)
+.factory('ServerInterceptor', ['$rootScope','$q','$timeout','ErrorHandler','$injector','scalear_api','headers','$log','$translate', function($rootScope,$q, $timeout, ErrorHandler, $injector, scalear_api, headers, $log ,$translate) { //server and also front end requests (requesting partials and so on..)
   return {
     // optional method
     'request': function(config) {

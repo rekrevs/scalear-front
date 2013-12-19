@@ -107,7 +107,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.getTotalChartHeight = function(rows){
-    	return rows.length * 30
+    	return rows.length * 30+50
     }
 
     $scope.formatTotalChartData = function(data){
@@ -145,7 +145,12 @@ angular.module('scalearAngularApp')
             "height": $scope.getTotalChartHeight(chart_data),
             "displayExactValues": true,
             "fontSize" : 12,
-            'chartArea': {'width':'70%','height': '98%'},
+
+            "hAxis": { 
+                    "maxValue":100,
+                    "minValue":0
+            },
+            chartArea:{top: 10},
             "vAxis": {
                 "title": $translate("courses.statistics")
             }

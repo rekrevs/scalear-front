@@ -22,8 +22,9 @@ angular.module('scalearAngularApp')
 	            },
 	    		function(data){
 	    			$log.debug(data)
+	    			console.log(data)
 	    			$scope.statistics = data
-    			 	$scope.lecture_url =$scope.statistics.lecture_url
+    			 	$scope.lecture_url =($scope.statistics.lecture_url == "none") ? "" : $scope.statistics.lecture_url
 	    			$scope.loading_statistics_chart=false
 	    			$scope.$watch("current_lang", redrawChart);
 	    		},
@@ -39,10 +40,6 @@ angular.module('scalearAngularApp')
 
 	    var getChartWidth=function(){
 	    	return $scope.statistics.width+120
-	    }
-	    $scope.geChartHeight=function(){
-	    	var height = 150
-	    	return height
 	    }
 
         $scope.formatStatisticsChartData = function(data){
@@ -138,6 +135,10 @@ angular.module('scalearAngularApp')
 	     	return html
 	     }
 
+      	$scope.statistics_player.events.onReady=function(){
+	    	$scope.statistics_player.controls.pause()
+	    }
+
 	    $scope.skipToTime=function(selectedItem, type){
         	var d = new Date($scope.statistics[type][selectedItem.row][0]*1000)
         	var seek=d.getUTCHours()*60*60+d.getMinutes()*60+d.getSeconds()
@@ -153,12 +154,16 @@ angular.module('scalearAngularApp')
         		}
         		before=parseInt(time)
         	}
-        	$scope.statistics_player.controls.seek_and_pause(to_seek, lec)
-	    }
+        	if(lec !=$scope.lecture_url){
+	            $scope.lecture_url = lec
+	            $scope.statistics_player.events.onReady=function(){
+	                $scope.statistics_player.controls.seek_and_pause(to_seek)
+	            }
+	        }
+	        else
+             	$scope.statistics_player.controls.seek_and_pause(to_seek)
+		}
 
-	    $scope.statistics_player.events.onReady=function(){
-	    	$scope.statistics_player.controls.pause()
-	    }
 
 	    var redrawChart = function(new_val, old_val){ 
 	        if(new_val != old_val){

@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', '$window', function ($scope,$state, $stateParams, Course, $window) {
      $window.scrollTo(0, 0);
     var change_lang = function(){
-    	if($scope.myCalendar){
+    	if($scope.eventSources){
 	    	angular.element($scope.myCalendar.children()).remove();
 	    	var obj=($scope.current_lang=="en")?full_calendar_en():full_calendar_sv();
 	    	obj.eventSources=$scope.eventSources;
@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
     }
 
 	var init=function(){
+	    $scope.eventSources = [];
 		Course.getCalendarEvents(
 			{course_id: $stateParams.course_id},
 			function(data){
@@ -27,8 +28,7 @@ angular.module('scalearAngularApp')
 				        eventResize: $scope.alertOnResize,
 				    }
 			  	};
-
-				$scope.calendar = data;
+				$scope.calendar = data.events;
 				$scope.announcements= JSON.parse(data.announcements);
 				
 			   	 for (var element in $scope.calendar.events){
@@ -46,8 +46,9 @@ angular.module('scalearAngularApp')
 								$scope.calendar.events[element].url= $state.href("course.lectures.quiz",{course_id: $scope.calendar.events[element].courseId, quiz_id:$scope.calendar.events[element].firstItem.id})
 						}
 					}  
-				} 
-				$scope.eventSources = [$scope.calendar];
+				}
+				$scope.eventSources.push($scope.calendar); 
+				
 			},
 			function(){}
 		)

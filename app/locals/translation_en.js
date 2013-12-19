@@ -228,6 +228,7 @@ var translation_en=function(){
         used_up_all: "Used up all",
         attempts: "attempts",
         attempt_number: "Attempt number",
+        percentage_of_students: "% of Students"
       },
       user_mailer:{
         new_announcement: "New Announcement",

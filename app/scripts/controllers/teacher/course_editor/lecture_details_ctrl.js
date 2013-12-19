@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', '$translate','$log', function ($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', '$translate','$log','$filter', function ($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter) {
 
    	//**************************FUNCTIONS****************************************///
  	$scope.validateLecture = function(column,data) {
@@ -12,6 +12,8 @@ angular.module('scalearAngularApp')
 	    	$log.debug(data)
 	    	d.resolve($translate('courses.invalid_input'));
     	}
+    	if(column =="slides")
+    		data = $filter('formatURL')(data)
 	    Lecture.validateLecture(
 	    	{course_id: $scope.lecture.course_id, lecture_id:$scope.lecture.id},
 	    	lecture,

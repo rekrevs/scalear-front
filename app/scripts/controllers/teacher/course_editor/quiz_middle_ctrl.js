@@ -39,12 +39,14 @@ angular.module('scalearAngularApp')
 		  	});
 	    });
 
-	    shortcut.add("Enter",function(){
-			var elem_name=angular.element(document.activeElement).attr('name')
-			if(elem_name =='qlabel')
-				$scope.addQuestion()
-				$scope.$apply()
-		},{"disable_in_input" : false});
+	    shortcut.add("Enter",
+	    	function(){
+				var elem_name=angular.element(document.activeElement).attr('name')
+				if(elem_name =='qlabel')
+					$scope.addQuestion()
+					$scope.$apply()
+			},
+			{"disable_in_input" : false, 'propagate':true});
  	}
  	
  	init();

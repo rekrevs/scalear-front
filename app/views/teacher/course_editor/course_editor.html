@@ -3,6 +3,7 @@
 
 <div class="row" style="width:1200px;">
 	<div class="span3" id="tree">
+		<center><loading size="small" show="init_loading" /></center>
 		<accordion  close-others="true" id="acc1" class="accordion" ui-sortable="moduleSortableOptions" ng-model='modules' >
 			<accordion-group ng-repeat="module in modules" is-open="module.id==open_id" class='module'>
 				<accordion-heading>
@@ -26,7 +27,7 @@
 	      	</accordion-group>	
 		</accordion>
 		<center><loading size="small" show="module_loading" /></center>
-		<button_link title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
+		<button_link ng-show="!module_loading" title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
 		<hr />
 	</div>
 	<div class="span6" id="middle"  ui-view="middle"></div>

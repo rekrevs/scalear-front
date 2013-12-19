@@ -5,8 +5,8 @@ angular.module('scalearAngularApp')
     $log.debug("in calendar ctrl")
 
 	$window.scrollTo(0, 0);
-    var change = function(){
-    	if($scope.myCalendar){
+    var change_lang = function(){
+    	if($scope.eventSources){
     		angular.element($scope.myCalendar.children()).remove();
 	    	var options =($scope.current_lang=="en")? full_calendar_en(): full_calendar_sv()
 	    	options.eventSources = $scope.eventSources
@@ -15,6 +15,7 @@ angular.module('scalearAngularApp')
     }
 
 	var init =function(){
+		$scope.eventSources = [];
 		Course.getCalendarEvents(
 			{course_id: $stateParams.course_id},
 			function(data){
@@ -32,13 +33,13 @@ angular.module('scalearAngularApp')
 				for (var element in $scope.calendar.events){
 					$scope.calendar.events[element].url=$state.href("course.progress.module", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId})
 				}
-				$scope.eventSources = [$scope.calendar]
+				$scope.eventSources.push($scope.calendar)
 			},
 			function(){}
 		)
 	}
 
-    $scope.$watch("current_lang", change);
+    $scope.$watch("current_lang", change_lang);
     
 	init()
 	  

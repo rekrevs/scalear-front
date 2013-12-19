@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
   		element.css("height", "26px");
   		element.css("position", "relative");
   		element.css("display", "inline-block");
-  		element.css("z-index",10000);
+  		//element.css("z-index",10000);
 
   		scope.$on('updatePosition',function(){
   			setButtonsLocation()
@@ -25,7 +25,7 @@ angular.module('scalearAngularApp')
     		if(scope.fullscreen){
 	    		scope.pWidth=angular.element($window).width();
 	    		scope.pHeight=angular.element($window).height();
-          element.css("z-index",10000);
+          element.css("z-index",1500);
     		}
     		else{
 	    		scope.pHeight=480;
@@ -71,8 +71,7 @@ angular.module('scalearAngularApp')
     		Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
   		});
     	};
-    	scope.question= function()
-    	{
+    	scope.question= function(){
     		$log.debug("in question");
     		scope.show_question=!scope.show_question;
     		if(scope.show_question==true)
@@ -80,6 +79,22 @@ angular.module('scalearAngularApp')
     		else
     			scope.lecture_player.controls.play();
     	};
+
+      scope.showShortcuts=function(){
+        scope.show_shortcuts=!scope.show_shortcuts;
+        if(scope.show_shortcuts)
+          $(document).on("click", function (e) {
+            console.log("click doc")
+            if(e.target.className != 'shortcutDiv'){
+              scope.show_shortcuts = false
+              scope.$apply()
+              $(document).off("click")
+            }         
+          });
+          else
+            $(document).off("click")        
+      }
+
     	scope.submit_question = function()
     	{
     		$log.debug("will submit "+scope.question_asked);
@@ -103,7 +118,10 @@ angular.module('scalearAngularApp')
   			
   				shortcut.add("b",function(){
   					var t=scope.lecture_player.controls.getTime();
-  					scope.lecture_player.controls.seek(t-10);
+            scope.lecture_player.controls.play();
+            scope.seek(t-10)
+  				  
+       //      scope.display_mode = false
   					scope.back();
   				},{"disable_in_input" : true});
 
@@ -472,9 +490,10 @@ angular.module('scalearAngularApp')
       $log.debug("student answer link")
 
       //===FUNCTIONS===//
-      var setType=function(){
-          var type= scope.quiz.question_type =="MCQ"? "checkbox" :"radio"
-          element.attr('type',type)
+      var setup=function(){
+        scope.explanation_pop ={}
+        var type= scope.quiz.question_type =="MCQ"? "checkbox" :"radio"
+        element.attr('type',type)
       }
 
       var setAnswerLocation=function(){
@@ -486,8 +505,8 @@ angular.module('scalearAngularApp')
         var add_top = (h-13)/2.0
         scope.xcoor = parseFloat(scope.data.xcoor * ontop.width()) + add_left;       
         scope.ycoor = parseFloat(scope.data.ycoor * (ontop.height())) + add_top;
-        
-         $log.debug(scope.xcoor)
+        scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
+        $log.debug(scope.xcoor)
         $log.debug(scope.ycoor)
       } 
 
@@ -509,17 +528,20 @@ angular.module('scalearAngularApp')
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id])
         {
+          var ontop=angular.element('.ontop');  
           scope.explanation_pop={
             title:"<b ng-class='{green_notification: explanation[data.id][0], red_notification: !explanation[data.id][0]}'>{{explanation[data.id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
             content:"<div>{{explanation[data.id][1]}}</div>",
             html:true,
-            trigger:'hover'
+            trigger:'hover',
+            rightcut: (ontop.css('position') == 'fixed')
           }
         } 
       })
 
-      setType()
+      setup()
       setAnswerLocation()
+      
     }
   };
 }])
@@ -532,7 +554,6 @@ angular.module('scalearAngularApp')
     link:function(scope,elem){
       $log.debug("student drag")
       $log.debug(scope.data)
-
       var setAnswerLocation=function(){
         $log.debug("setAnswerLocation")
         var ontop=angular.element('.ontop');
@@ -540,20 +561,20 @@ angular.module('scalearAngularApp')
         scope.height = scope.data.height* (ontop.height());
         scope.xcoor = (scope.data.xcoor * ontop.width())
         scope.ycoor = (scope.data.ycoor * (ontop.height()))
+        scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
       }
       
       var setup=function(){
       	$log.debug("setup function")
       	var drag_elem = angular.element('#'+scope.data.id)
   		  destroyPopover(drag_elem)
-      	scope.explanation_pop=null
+      	scope.explanation_pop={}
       	scope.explanation[scope.data.id] = null
       }
       
       $rootScope.$on("updatePosition",function(){
         $log.debug("event emitted updated position")
         setAnswerLocation()
-        var drop_elem = angular.element(elem[0]).find('div')
        	var drag_elem = angular.element('#'+scope.data.id)
         resizeAnswer(drag_elem)
     	}) 
@@ -634,7 +655,7 @@ angular.module('scalearAngularApp')
           	draggable.popover("destroy")
       }
       
-      var resizeAnswer= function(draggable, droppable){
+      var resizeAnswer= function(draggable){
         $log.debug('in resize answer')
         draggable.width(scope.width);
         draggable.height(scope.height);
@@ -645,11 +666,13 @@ angular.module('scalearAngularApp')
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id]){
           scope.selected_id= angular.element(elem[0]).find('b').attr('id')
+          var ontop=angular.element('.ontop');
           scope.explanation_pop={
             title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[data.id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
             content:"<div>{{explanation[selected_id][1]}}</div>",
             html:true,
-            trigger:'hover'
+            trigger:'hover',
+            rightcut: (ontop.css('position') == 'fixed')
           }
           var bg_color = scope.explanation[scope.data.id][0]? "darkseagreen": "orangered"
           angular.element('#'+scope.data.id).css('background-color', bg_color)

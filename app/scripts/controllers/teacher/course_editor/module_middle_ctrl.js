@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate','$q','$log', function ($scope, $state, Module, Document, $stateParams, $translate, $q, $log) {
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate','$q','$log', '$filter', function ($scope, $state, Module, Document, $stateParams, $translate, $q, $log, $filter) {
         
         $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
             if($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
@@ -22,8 +22,7 @@ angular.module('scalearAngularApp')
                 function(){
                 }
             )
-        }
-        
+        }        
 
     	$scope.addDocument=function(){
     		$log.debug($scope.module.id)
@@ -32,6 +31,7 @@ angular.module('scalearAngularApp')
     			{},
     			function(doc){
     				$log.debug(doc)
+                    doc.document.url = "http://"
     				$scope.module.documents.push(doc.document)
     				$scope.document_loading=false
     			}, 
@@ -98,6 +98,7 @@ angular.module('scalearAngularApp')
 		}
     	$scope.updateDocument=function(elem){
     		//$log.debug($scope.module.documents[index])
+            elem.url = $filter("formatURL")(elem.url)
     		Document.update(
     			{document_id: elem.id},
     			{"document":{

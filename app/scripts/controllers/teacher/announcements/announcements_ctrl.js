@@ -72,20 +72,30 @@ angular.module('scalearAngularApp')
   		
   		if(!$scope.announcements[index].id) // create new one
   		{
-  		Announcement.create({course_id: $stateParams.course_id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
-  			//init();
-  			$scope.announcements[index]=data.announcement;
+  		  Announcement.create(
+          {course_id: $stateParams.course_id},
+          {announcement:{announcement:$scope.announcements[index].announcement}},
+          function(data){
+            $scope.announcements[index]=data.announcement;
             $scope.disable_new = false;
-  		},function(response){
-  			$scope.announcements[index].errors=response["data"].errors
-  		})
-  		}else{
-  		Announcement.update({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id},{announcement:{announcement:$scope.announcements[index].announcement}},function(data){
-  			$scope.announcements[index]=data.announcement;
-  			$scope.disable_new = false;
-  		},function(response){
-  			$scope.announcements[index].errors=response["data"].errors
-  		})
+  		    },
+          function(response){
+      			$scope.announcements[index].errors=response["data"].errors
+      		}
+        )
+  		}
+      else{
+    		Announcement.update(
+          {course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id},
+          {announcement:{announcement:$scope.announcements[index].announcement}},
+          function(data){
+      			$scope.announcements[index]=data.announcement;
+      			$scope.disable_new = false;
+      		},
+          function(response){
+      			$scope.announcements[index].errors=response["data"].errors
+      		}
+        )
   		}
   	};
   	

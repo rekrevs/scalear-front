@@ -251,12 +251,6 @@ input[type="checkbox"], input[type="radio"] {
 }
 
 
-.popover-content{
-	max-height:300px;
-	width:300px;
-	overflow-y:auto;
-}
-
 .youtube{
 	position: absolute;
 }

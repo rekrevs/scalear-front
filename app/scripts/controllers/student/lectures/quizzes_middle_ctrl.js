@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log', function ($scope, Course, $stateParams,$controller,Quiz, $log) {
+  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor) {
     $controller('surveysCtrl', {$scope: $scope});
     
  	var init = function(){
@@ -36,8 +36,14 @@ angular.module('scalearAngularApp')
     			$scope.alert_messages= data.alert_messages;
     			if(data.correct!=null)
     				$scope.correct=data.correct; 
-    			$scope.$emit('accordianReload');
-				$scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
+    				// here need to update scope.parent
+    				var group_index= CourseEditor.get_index_by_id($scope.$parent.course.groups, data.done[1])
+	 				var quiz_index= CourseEditor.get_index_by_id($scope.$parent.course.groups[group_index].quizzes, data.done[0])
+	 				if(quiz_index!=-1 && group_index!=-1)
+	 					$scope.$parent.course.groups[group_index].quizzes[quiz_index].is_done= data.done[2]
+    			
+    			//$scope.$emit('accordianReload');
+				//$scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
     		});
     	}
     	else{ // client validation error.

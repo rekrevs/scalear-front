@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
 				$scope.$parent.quiz_list = data.quizList
 			},
 			function(){
-				alert("Failed to Load Quiz List")
+				//alert("Failed to Load Quiz List")
 			}
 		);	
 	}
@@ -69,7 +69,7 @@ angular.module('scalearAngularApp')
 				$log.debug(data.status);
 				$log.debug(data);
 			if(data.status==422)
-			 	d.resolve(data.data.errors['question'].join());
+			 	d.resolve(data.data.errors.join());
 			else
 				d.reject('Server Error');
 			}
@@ -85,7 +85,7 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
-		if(confirm($translate('online_quiz.you_sure_delete_quiz')))
+		if(confirm($translate('online_quiz.you_sure_delete_quiz', {quiz: quiz.question})))
 			OnlineQuiz.destroy(
 				{online_quizzes_id: quiz.id},{},
 				function(data){

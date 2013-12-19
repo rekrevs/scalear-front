@@ -333,7 +333,7 @@ angular.module('scalearAngularApp')
 				scope.$apply()
 				if(element.find('input')[all_inputs.length])
 					element.find('input')[all_inputs.length].focus()
-			},{"disable_in_input" : false});			
+			},{"disable_in_input" : false, 'propagate':true});			
 			
 		}
 	};

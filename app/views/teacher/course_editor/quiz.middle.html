@@ -3,14 +3,13 @@
 	<div ng-repeat="question in questions">
 			<answerform submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index"/>
 	</div>
-	
-	<center>
+</form>
+<center>
 		<div ng-show="submitted && !hide_alerts">
 			<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</div>
 		
 		<button value="Add Question" class="btn" ng-click="addQuestion()" translate>groups.add_question</button>
 		<button value="Save" class="btn btn-primary" ng-click="saveAll()" translate>save</button>
-	</center>
+</center>
 	
-</form>

@@ -22,7 +22,6 @@ angular.module('scalearAngularApp')
 	            },
 	    		function(data){
 	    			$log.debug(data)
-	    			console.log(data)
 	    			$scope.statistics = data
     			 	$scope.lecture_url =($scope.statistics.lecture_url == "none") ? "" : $scope.statistics.lecture_url
 	    			$scope.loading_statistics_chart=false

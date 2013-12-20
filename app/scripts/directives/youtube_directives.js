@@ -29,7 +29,7 @@ angular.module('scalearAngularApp')
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
-
+					parent.focus()
 				}
 			
 				player_controls.play=function(){
@@ -66,6 +66,7 @@ angular.module('scalearAngularApp')
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
 					player.currentTime(time);
+					parent.focus()
 				}
 
 				player_controls.seek_and_pause=function(time){
@@ -87,10 +88,17 @@ angular.module('scalearAngularApp')
 					player.cue(time, callback)
 				}
 
+				player_controls.replay=function(){					
+					player_controls.pause()
+					player_controls.seek(0)
+					player_controls.play()
+				}
+
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
-							$log.debug("Video data loaded")
+							player_controls.replay()
+							$log.debug("Video data loaded")							
 							if(player_events.onReady){
 								player_events.onReady();
 								scope.$apply();
@@ -99,7 +107,9 @@ angular.module('scalearAngularApp')
 
 					player.on('play',
 						function(){
-							if(player_events.onPlay){
+							parent.focus()
+							console.log("playin")
+							if(player_events.onPlay){								
 								player_events.onPlay();
 								scope.$apply();
 							}
@@ -107,7 +117,8 @@ angular.module('scalearAngularApp')
 
 					player.on('pause',
 						function(){
-							if(player_events.onPause){
+							parent.focus()
+							if(player_events.onPause){								
 								player_events.onPause();
 								scope.$apply();
 							}
@@ -132,7 +143,7 @@ angular.module('scalearAngularApp')
 
 		    }
 		};
-}]).directive('resizableVideo', ['$window', '$timeout',function($window, $timeout){
+}]).directive('resizableVideo', ['$window', '$timeout','$log',function($window, $timeout, $log){
 	return{
 		restrict:'A',
 		scope:{
@@ -209,7 +220,7 @@ angular.module('scalearAngularApp')
 					"position":"fixed",
 					"width":win.width()-$scope.max_width,
 					"height":win.height(),
-					"z-index": 1030
+					"z-index": 1031
 				};
 
 				var video_height = win.height() -30;
@@ -230,7 +241,7 @@ angular.module('scalearAngularApp')
 						"height":video_height,
 						"margin-top": margin_top+"px",
 						"margin-left":"0px",
-						"z-index": 1031
+						"z-index": 1531
 					}		
 				}
 				else{		
@@ -243,7 +254,7 @@ angular.module('scalearAngularApp')
 						"height":video_height,
 						"margin-left": margin_left+"px",
 						"margin-top":"0px",
-						"z-index": 1031
+						"z-index": 1531
 					}		
 				 }
 				angular.extend($scope.video_layer, video)

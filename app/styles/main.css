@@ -209,6 +209,7 @@ body {
 .ng-invalid ~ span { color:red; display:inline;font-size:12px;left:300px; }
 input.ng-invalid{ border:1px solid red; }
 select.ng-invalid{ border:1px solid red; }
+textarea.ng-invalid{ border:1px solid red; }
 
 .widescreen{
   width: 500px;
@@ -237,8 +238,18 @@ select.ng-invalid{ border:1px solid red; }
 	height: 375px;
 }
 
+
 .popover{
-	line-height:20px;
+	z-index:2000;
+  line-height:20px;
+  width: 330px;
+  max-width:330px;
 }
 
+.popover-content{
+	width: 300px;
+	word-wrap:break-word;
+	max-height:300px;
+	overflow-y:auto;
+}
 

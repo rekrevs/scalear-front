@@ -51,3 +51,11 @@ angular.module('scalearAngularApp')
       return result;
     }
   })
+  .filter("formatURL", function(){
+    return function(url){
+      if (!url.match(/^[a-zA-Z]+:\/\//)){
+          url = 'http://' + url;
+      }
+      return url
+    }
+  })

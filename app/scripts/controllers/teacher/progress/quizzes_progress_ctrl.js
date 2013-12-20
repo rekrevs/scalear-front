@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
             getQuizzesProgress(0,20)            
     }
     var getQuizzesProgress = function(offset, limit){
-        $scope.quizzes_limit =  limit
+        $scope.quizzes_limit  = limit
         $scope.quizzes_offset = offset
         $scope.loading_quizzes=true 
         $scope.disableInfinitScrolling()
@@ -43,6 +43,7 @@ angular.module('scalearAngularApp')
                 	enableQuizzesProgressScrolling()
                     $scope.loading_quizzes=false
                     $('.student').tooltip({"placement": "left", container: 'body'})
+                    $('.state').tooltip('disable') 
                 },0)
                     
             },

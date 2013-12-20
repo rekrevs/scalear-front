@@ -5,6 +5,15 @@ angular.module('scalearAngularApp')
 
   
   var x={	
+  	get_index_by_id:function(groups, group_id) // returns index of an object in an array by searching for its id
+ 	{
+ 		for(var element in groups)
+ 		{
+ 			if(groups[element]["id"]==group_id)
+ 				return element
+ 		}
+ 		return -1
+ 	},
   	capitalize: function(s)
 	{
     return s[0].toUpperCase() + s.slice(1);

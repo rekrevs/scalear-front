@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('UserSession',['$rootScope','User','$q','$log', function ($rootScope, User, $q, $log) {    
+.factory('UserSession',['$rootScope','User','$q','$log','$translate', function ($rootScope, User, $q, $log ,$translate) {    
 
   
   var x={

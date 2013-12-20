@@ -27,7 +27,6 @@ angular.module('scalearAngularApp')
                 ,function(response){
                 	$scope.data=response;
                 });
-
         }
 
 		$scope.validateCourse = function(column,data) {

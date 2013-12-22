@@ -28,7 +28,7 @@ angular.module('scalearAngularApp')
 				        eventResize: $scope.alertOnResize,
 				    }
 			  	};
-				$scope.calendar = data.events;
+				$scope.calendar = data;
 				$scope.announcements= JSON.parse(data.announcements);
 				
 			   	 for (var element in $scope.calendar.events){

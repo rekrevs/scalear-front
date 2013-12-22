@@ -67,7 +67,7 @@ describe("Course Editor",function(){
 
     it('should login', function(){
 //        driver.get("http://angular-edu.herokuapp.com/#/login");
-        driver.get("http://10.0.0.16:9000/#/login");
+        driver.get("http://localhost:9000/#/login");
         ptor.findElement(protractor.By.className('btn')).then(function(login_button){
             login_button.click();
         });
@@ -81,7 +81,7 @@ describe("Course Editor",function(){
 //            expect(tags[3].getText()).toContain('admin');
 
         });
-//        driver.get("http://10.0.0.16/#/login")
+//        driver.get("http://localhost/#/login")
     });
 
     //starting here//

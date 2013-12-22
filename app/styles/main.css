@@ -168,8 +168,8 @@ body {
 .errorpage{
     position: fixed;
 	display:block;
-	top:0px;
-	z-index:11000;
+	top:44px;
+	z-index:1000;
 	/*background-color: rgba(100,100,100,0.45);
 	width:100%;
 	height:100%;*/

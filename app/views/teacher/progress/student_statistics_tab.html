@@ -7,8 +7,8 @@
 			<br><br>		
 	</center> 
 	<div style="overflow:auto" >
-		<div style="margin-left:85px;" ng-style="{width:statistics.width}"> 
-			<div ng-repeat="name in statistics.lecture_names" ng-style="{width:name[0], backgroundColor:($index%2)?'':'rgb(242,242,242)'}" style="display:inline-block;text-align:center">{{name[1]}}</div>
+		<div style="margin-left:85px;" ng-style="{width:statistics.width}">
+			<div class="lecture_name" ng-repeat="name in statistics.lecture_names" ng-style="{width:name[0], backgroundColor:($index%2)?'':'rgb(242,242,242)'}" style="display:inline-block;text-align:center">{{name[1]}}</div>
 		</div>
 		<div ng-repeat="type in types" ng-init="chart=createStatisticsChart(type)">
 			<div google-chart chart="chart" select="skipToTime(selectedItem, type)"></div>

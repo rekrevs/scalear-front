@@ -1,5 +1,8 @@
 var current_date = new Date();
-var no_students, no_modules, percentage, dummy;
+var no_students, no_modules, percentage, dummy, enroll_key='e8d9a062f5', course_id='248', module_id='775';
+var frontend = 'http://localhost:9000/';
+var backend = 'http://localhost:3000/';
+var auth = 'http://localhost:4000/';
 
 function getNextDay(date){
     var result = date;
@@ -29,7 +32,7 @@ var tomorrow = formatDate(getNextDay(new Date()), 1);
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-        driver.get("http://localhost:9000/#/login");
+        driver.get(frontend+"#/login");
 //        driver.get("http://angular-edu.herokuapp.com/#/login");
         ptor.findElement(protractor.By.className('btn')).then(function(login_button){
             login_button.click();
@@ -38,20 +41,19 @@ function login(ptor, driver, email, password, name, findByName){
         findByName("user[password]").sendKeys(password);
         findByName("commit").click();
         ptor.findElements(protractor.By.tagName('a')).then(function(tags){
-            expect(tags[3].getText()).toContain(name);
+            tags[3].getText().then(function(value){
+                expect(value.toLowerCase()).toContain(name.toLowerCase());
+            })
         });
     });
 }
 
-function logout(ptor, driver){
-    it('should logout', function(){
-        ptor.findElements(protractor.By.tagName('a')).then(function(logout){
-            logout[5].click();
-        });
-        driver.get("http://localhost:4000/");
-//        driver.get("http://scalear-auth.herokuapp.com");
-        driver.findElements(protractor.By.tagName('a')).then(function(logout){
-            logout[4].click();
+function logout(driver){
+    it('should logout from scalear Auth', function(){
+        driver.get(auth).then(function(){
+            driver.findElements(protractor.By.tagName('a')).then(function(logout){
+                logout[4].click();
+            });
         });
     });
 }
@@ -63,9 +65,9 @@ describe('Progress Chart', function(){
     var findByName = function(name){
         return driver.findElement(protractor.By.name(name));
     };
-//    var findById = function(id){
-//        return driver.findElement(protractor.By.id(id))
-//    };
+    var findById = function(id){
+        return driver.findElement(protractor.By.id(id))
+    };
     describe('Teacher', function(){
         login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
 //        it('should go to the main progress page for a course', function(){
@@ -76,7 +78,7 @@ describe('Progress Chart', function(){
             ptor.get('/#/courses/new');
             ptor.findElements(protractor.By.tagName('input')).then(function(fields){
                 fields[0].sendKeys('TEST-101');
-                fields[1].sendKeys('Testing Course');
+                fields[1].sendKeys('Z Testing Course');
 //                fields[2].sendKeys(today_keys);
                 fields[3].sendKeys('5');
                 fields[4].sendKeys('http://google.com/');
@@ -93,6 +95,24 @@ describe('Progress Chart', function(){
                 fields[fields.length-1].click();
             });
         });
+        it('should go to course information page', function(){
+            ptor.findElement(protractor.By.className('dropdown-toggle')).click();
+            ptor.findElement(protractor.By.id('info')).click();
+        });
+        it('should save the course id', function(){
+            ptor.getCurrentUrl().then(function(text){
+                var test = text.split('/')
+                course_id = test[test.length-1];
+//                console.log('course id is : '+course_id);
+            })
+        })
+        it('should save enrollment key', function(){
+            ptor.findElements(protractor.By.tagName('p')).then(function(data){
+                data[0].getText().then(function(text){
+                    enroll_key = text;
+                });
+            });
+        });
         it('should go to course editor', function(){
             ptor.findElement(protractor.By.id('course_editor_link')).then(function(link){
                 link.click();
@@ -104,6 +124,13 @@ describe('Progress Chart', function(){
             });
             ptor.findElement(protractor.By.className('trigger')).click();
         });
+        it('should save module id', function(){
+            ptor.getCurrentUrl().then(function(text){
+                var test2 = text.split('/');
+                module_id = test2[test2.length-1];
+//                console.log('module id is '+module_id);
+            })
+        })
         it('should edit module name', function(){
             ptor.findElement(protractor.By.tagName('details-text')).then(function(field){
                 field.click();
@@ -168,904 +195,1567 @@ describe('Progress Chart', function(){
             });
 //            feedback(ptor, 'Quiz was successfully updated. -');
         });
+        addMCQAnswers(ptor);
+        doSave(ptor);
+        doExit(ptor);
+        it('should add a new lecture and open it', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-3].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[lectures.length-1].click();
+            })
+        });
+        it('shouold edit lecture name', function(){
+            ptor.findElements(protractor.By.tagName('details-text')).then(function(details){
+                details[0].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys('New Lecture2');
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(confirm){
+                    confirm[1].click();
+                });
+            });
+        });
+        it('should edit lecture video', function(){
+            ptor.findElements(protractor.By.tagName('details-text')).then(function(url){
+                url[1].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys('http://www.youtube.com/watch?v=PlavjNH_RRU');
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(confirm){
+                    confirm[1].click();
+                })
+//                feedback(ptor, 'Lecture was successfully updated.');
+            });
+        });
+        it('should wait', function(){
+            ptor.sleep(10000);
+        });
+        it('should add an MCQ quiz', function(){
+            ptor.findElements(protractor.By.className('dropdown-toggle')).then(function(lists){
+                lists[2].click();
+                ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
+                    options[options.length-2].click();
+                });
+            });
+        });
+        it('should edit quiz name and time', function(){
+            ptor.findElement(protractor.By.tagName('editable_text')).then(function(name){
+                ptor.actions().doubleClick(name).perform();
+            });
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('New Quiz2');
+            });
+            ptor.findElement(protractor.By.className('icon-ok')).click();
+//            feedback(ptor, 'Quiz was successfully updated. -');
+            ptor.findElements(protractor.By.tagName('editable_text')).then(function(time){
+                ptor.actions().doubleClick(time[1]).perform();
+            });
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('00:00:12');
+            });
+            ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm){
+                confirm.click();
+            });
+//            feedback(ptor, 'Quiz was successfully updated. -');
+        });
+        it('should insert answers', function(){
+            ptor.findElement(protractor.By.className('add_multiple_answer')).then(function(addButton){
+                addButton.click();
+            });
+            ptor.findElements(protractor.By.tagName('input')).then(function(answers){
+//                answers[1].clear();
+                answers[1].sendKeys('First Answer');
+//                answers[2].clear();
+                answers[3].sendKeys('First Explanation');
+//                answers[3].clear();
+                answers[4].sendKeys('Second Answer');
+//                answers[4].clear();
+                answers[6].sendKeys('Second Explanation');
+            });
+            ptor.findElement(protractor.By.id('radio_correct')).then(function(radio){
+                radio.click();
+            });
+        });
+        doSave(ptor);
+        doExit(ptor);
+        it('should add a new quiz and open it', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-2].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[lectures.length-1].click();
+            });
+        });
+        it('should make the quiz required', function(){
+            ptor.findElements(protractor.By.tagName('details-check')).then(function(details){
+                details[0].click();
+            });
+            ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                inputs[inputs.length-1].click();
+            });
+            ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                buttons[buttons.length-2].click();
+            });
+        });
+        it('should add question and answers', function(){
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                buttons[1].click();
+            });
+            ptor.findElement(protractor.By.className('add_multiple_answer')).then(function(addButton){
+                addButton.click();
+                addButton.click();
+            });
+            ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                fields[0].sendKeys('First Question');
+                fields[1].sendKeys('First Answer');
+                fields[2].click();
+                fields[3].sendKeys('Second Answer');
+                fields[5].sendKeys('Third Answer');
+            });
+        });
+        it('should save the quiz', function(){
+            ptor.findElements(protractor.By.tagName('button')).then(function(save){
+                save[2].click();
+            });
+        });
+        it('should add a new quiz and open it', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-2].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[lectures.length-1].click();
+            });
+        });
+        it('should edit the quiz name', function(){
+//            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElement(protractor.By.tagName('details-text')).then(function(field){
+                field.click();
+            });
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                field.clear();
+                field.sendKeys('New Quiz2');
+            });
+            ptor.findElements(protractor.By.tagName('button')).then(function(confirm){
+                confirm[3].click();
+            });
+        })
+        it('should add question and answers', function(){
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                buttons[1].click();
+            });
+            ptor.findElement(protractor.By.className('add_multiple_answer')).then(function(addButton){
+                addButton.click();
+            });
+            ptor.findElement(protractor.By.tagName('select')).then(function(dropdown){
+                dropdown.click();
+                ptor.findElements(protractor.By.tagName('option')).then(function(options){
+                    options[1].click();
+                });
+            })
+            ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                fields[0].sendKeys('First Question');
+                fields[1].sendKeys('Should be correct');
+                fields[2].click();
+                fields[3].sendKeys('should be false');
+            });
+        });
+        it('should save the quiz', function(){
+            ptor.findElements(protractor.By.tagName('button')).then(function(save){
+                save[2].click();
+            });
+        });
+
+        it('should add a new survey and open it', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-1].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[lectures.length-1].click();
+            });
+        });
+        it('should add question and answers', function(){
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                buttons[1].click();
+            });
+            ptor.findElement(protractor.By.className('add_multiple_answer')).then(function(addButton){
+                addButton.click();
+            });
+            ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                fields[0].sendKeys('First Question');
+                fields[1].sendKeys('first answer');
+                fields[2].sendKeys('second answer');
+            });
+        });
+        it('should add question and answers', function(){
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                buttons[1].click();
+            });
+            ptor.findElements(protractor.By.tagName('select')).then(function(dropdowns){
+                dropdowns[dropdowns.length-1].click();
+                ptor.findElements(protractor.By.tagName('option')).then(function(options){
+                    options[options.length-2].click();
+                });
+            })
+            ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(addButtons){
+                addButtons[addButtons.length-1].click();
+            });
+            ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                fields[3].sendKeys('Second Question');
+                fields[4].sendKeys('first answer');
+                fields[5].sendKeys('second answer');
+            });
+        });
+        it('should add question and answers', function(){
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                buttons[1].click();
+            });
+            ptor.findElements(protractor.By.tagName('select')).then(function(dropdowns){
+                dropdowns[dropdowns.length-1].click();
+                ptor.findElements(protractor.By.tagName('option')).then(function(options){
+                    options[options.length-1].click();
+                });
+            })
+            ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                fields[6].sendKeys('Third Question');
+
+            });
+            ptor.sleep(10000);
+        });
+        it('should save the quiz', function(){
+            ptor.findElements(protractor.By.tagName('button')).then(function(save){
+                save[2].click();
+            });
+            ptor.sleep(5000);
+        });
+
+        //add second module
+        it('should add a new module and open it', function(){
+            ptor.findElement(protractor.By.className('adding_module')).then(function(button){
+                button.click();
+            });
+            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+                modules[modules.length-1].click();
+            });
+        });
+        it('should edit module name', function(){
+            ptor.findElement(protractor.By.tagName('details-text')).then(function(field){
+                field.click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys('Second Module');
+                });
+                ptor.findElement(protractor.By.className('btn-primary')).click();
+//                feedback(ptor, 'Module Successfully Updated');
+            });
+        });
+        it('should add a new lecture and open it', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-3].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[lectures.length-1].click();
+            });
+        });
+        it('should edit lecture\'s name', function(){
+            ptor.findElement(protractor.By.tagName('details-text')).then(function(field){
+                field.click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(input){
+                    input.clear();
+                    input.sendKeys('Second Lecture');
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(confirm){
+                    confirm[1].click();
+                });
+            });
+        });
+        it('should edit lecture video', function(){
+            ptor.findElements(protractor.By.tagName('details-text')).then(function(url){
+                url[1].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys('http://www.youtube.com/watch?v=XtyzOo7nJrQ');
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(confirm){
+                    confirm[1].click();
+                })
+//                feedback(ptor, 'Lecture was successfully updated.');
+            });
+        });
+        it('should wait', function(){
+            ptor.sleep(3000);
+        });
+        it('should add a new quiz and open it', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-2].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[lectures.length-1].click();
+            });
+        });
+        it('should make the quiz required', function(){
+            ptor.findElements(protractor.By.tagName('details-check')).then(function(details){
+                details[0].click();
+            });
+            ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                inputs[inputs.length-1].click();
+            });
+            ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                buttons[buttons.length-2].click();
+            });
+        });
+        it('should add question and answers', function(){
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                buttons[1].click();
+            });
+            ptor.findElement(protractor.By.className('add_multiple_answer')).then(function(addButton){
+                addButton.click();
+            });
+            ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                fields[0].sendKeys('Second Quiz');
+                fields[1].sendKeys('First Answer');
+                fields[3].sendKeys('Second Answer');
+                fields[4].click();
+            });
+        });
+        it('should save the quiz', function(){
+            ptor.findElements(protractor.By.tagName('button')).then(function(save){
+                save[2].click();
+            });
+        });
+        it('should add a new survey', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-1].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+        });
+
+        //add third module
+        it('should add a new module and open it', function(){
+            ptor.findElement(protractor.By.className('adding_module')).then(function(button){
+                button.click();
+            });
+            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+                modules[modules.length-1].click();
+            });
+        });
+        it('should edit module name', function(){
+            ptor.findElement(protractor.By.tagName('details-text')).then(function(field){
+                field.click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys('Third Module');
+                });
+                ptor.findElement(protractor.By.className('btn-primary')).click();
+//                feedback(ptor, 'Module Successfully Updated');
+            });
+        });
+        it('should add a new lecture and open it', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-3].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[lectures.length-1].click();
+            });
+        });
+        it('should edit lecture\'s name', function(){
+            ptor.findElement(protractor.By.tagName('details-text')).then(function(field){
+                field.click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(input){
+                    input.clear();
+                    input.sendKeys('Third Lecture');
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(confirm){
+                    confirm[1].click();
+                });
+            });
+        });
+        it('should edit lecture video', function(){
+            ptor.findElements(protractor.By.tagName('details-text')).then(function(url){
+                url[1].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys('http://www.youtube.com/watch?v=XtyzOo7nJrQ');
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(confirm){
+                    confirm[1].click();
+                })
+//                feedback(ptor, 'Lecture was successfully updated.');
+            });
+        });
+        it('should wait', function(){
+            ptor.sleep(3000);
+        });
+        it('should add a new quiz and open it', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-2].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+        });
+        it('should add a new survey', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                adding[adding.length-1].click();
+            });
+//            feedback(ptor, 'Lecture was successfully created.');
+//            console.log(enroll_key);
+        });
+        logout(driver);
+    });
+    describe('Student', function(){
+        login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'bahia', findByName);
+        it('should enroll in the course that was created', function(){
+            ptor.findElement(protractor.By.id('join_course')).then(function(join_course){
+                join_course.click();
+            });
+        });
+        it('should enter the enrollment key and proceed', function(){
+            ptor.findElement(protractor.By.tagName('input')).then(function(key_field){
+                key_field.clear();
+                key_field.sendKeys(enroll_key);
+            });
+            ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
+                proceed.click();
+            });
+        });
+        it('should go the course', function(){
+            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
+                courses[courses.length-1].click();
+            });
+        });
+        it('should go to the lectures page', function(){
+            ptor.findElement(protractor.By.id('lectures_link')).click();
+        });
+        it('should open first module', function(){
+            ptor.findElement(protractor.By.className('trigger')).click();
+        });
+        it('should open new lecture 2', function(){
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[1].click();
+                ptor.sleep(5000);
+            });
+        });
+        it('should click on New QUIZ 2', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="middle"]/div/table/tbody/tr/td[2]/p')).click();
+            ptor.sleep(2000);
+        });
+        it('should select first answer', function(){
+            ptor.findElement(protractor.By.tagName('input')).click();
+        });
+        it('should click on check answer', function(){
+            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                buttons[1].click();
+            });
+        });
+        it('should open new quiz 2', function(){
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[3].click();
+                ptor.sleep(5000);
+            });
+        });
+        it('should select the second answer - should be false', function(){
+            ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                inputs[1].click();
+                inputs[3].click();
+            });
+        });
+        it('should open new survey', function(){
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[4].click();
+                ptor.sleep(5000);
+            });
+        });
+        it('should select the survey answers', function(){
+            ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                inputs[0].click();
+                inputs[3].click();
+                ptor.findElement(protractor.By.tagName('textarea')).then(function(field){
+                    field.sendKeys('third answer');
+                });
+                inputs[4].click();
+            });
+        });
+        it('should open the second module', function(){
+            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+                modules[1].click();
+            });
+        });
+        it('should click on the second lecture and then click on te new quiz', function(){
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[5].click();
+                ptor.sleep(5000);
+                lectures[6].click();
+                ptor.sleep(5000);
+            });
+        });
+        it('should solve the quiz', function(){
+            ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                inputs[1].click();
+                inputs[3].click();
+            });
+        });
+
+        logout(driver);
+        login(ptor, driver, 'em_menshawi@hotmail.com', 'password', 'mahmoud menshawi', findByName);
+        it('should enroll in the course that was created', function(){
+            ptor.findElement(protractor.By.id('join_course')).then(function(join_course){
+                join_course.click();
+            });
+        });
+        it('should enter the enrollment key and proceed', function(){
+            ptor.findElement(protractor.By.tagName('input')).then(function(key_field){
+                key_field.clear();
+                key_field.sendKeys(enroll_key);
+            });
+            ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
+                proceed.click();
+            });
+        });
+        it('should go to the course', function(){
+            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
+                courses[courses.length-1].click();
+            });
+        });
+        it('should go to the lectures page', function(){
+            ptor.findElement(protractor.By.id('lectures_link')).click();
+        });
+        it('should open first module', function(){
+            ptor.findElement(protractor.By.className('trigger')).click();
+        });
+        it('should open new lecture', function(){
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[0].click();
+                ptor.sleep(5000);
+            });
+        });
+        it('should click on First Quiz', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="middle"]/div/table/tbody/tr/td[2]/p')).click();
+            ptor.sleep(2000);
+        });
+        it('should select first answer', function(){
+            ptor.findElement(protractor.By.name('student_answer')).click();
+        });
+        it('should click on check answer', function(){
+            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                buttons[1].click();
+            });
+        });
+
+        it('should open new lecture 2', function(){
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[1].click();
+                ptor.sleep(9000);
+            });
+        });
+        it('should click on question', function(){
+//            driver.switchTo().frame(0);
+            driver.findElement(protractor.By.className("questionDiv")).then(function(button){
+                button.click();
+                driver.findElement(protractor.By.className('question')).then(function(field){
+                    field.sendKeys('why isn\'t it working?')
+                });
+                driver.findElement(protractor.By.className('submit_question')).then(function(submit_button){
+                    submit_button.click();
+//                    ptor.sleep(1000);
+                });
+            });
+//            driver.switchTo().defaultContent();
+        })
+        it('should click on New QUIZ 2', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="middle"]/div/table/tbody/tr/td[2]/p')).click();
+            ptor.sleep(5000);
+        });
+        it('should select second answer', function(){
+            ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                inputs[1].click();
+            });
+        });
+        it('should click on check answer', function(){
+            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                buttons[1].click();
+            });
+        });
+        it('should go to New Quiz', function(){
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[2].click();
+                ptor.sleep(5000);
+            });
+        });
+        it('should select first answer', function(){
+            ptor.findElement(protractor.By.tagName('input')).click();
+        });
+        it('should submit the answer', function(){
+            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                buttons[1].click();
+            });
+        });
+        it('should open second module', function(){
+            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+                modules[1].click();
+            });
+        });
+        it('should open second lecture then open second quiz', function(){
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[5].click();
+                ptor.sleep(7000);
+                lectures[6].click();
+            });
+        });
+        it('should select the first answer and submit the quiz', function(){
+            ptor.findElements(protractor.By.tagName('input')).then(function(answers){
+                answers[0].click();
+            });
+            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                buttons[1].click();
+            });
+        });
+        it('should open the third module', function(){
+            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+                modules[2].click();
+            });
+        });
+        it('should open the third lecture and then open New Quiz', function(){
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[8].click();
+                ptor.sleep(5000);
+                lectures[9].click();
+            });
+        });
+        logout(driver);
+    });
+    describe('Teacher', function(){
+        login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
+        it('should go to the main progress page', function(){
+            ptor.get('/#/courses/'+course_id+'/progress/main');
+        });
+    })
 
 
+    describe('Module Progress', function(){
+        it('should display two tabs', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[1]/a')).then(function(first_tab){
+                expect(first_tab.getText()).toBe('Module Progress');
+            });
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[2]/a')).then(function(second_tab){
+                expect(second_tab.getText()).toBe('Module Chart');
+            });
+        });
+        it('should display the chart title', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/div/div[1]/h3')).then(function(title){
+                expect(title.getText()).toBe('Module Progress Charts');
+            });
+        });
+        it('should display correct student names and emails', function(){
+            ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
+                expect(names[0].getText()).toBe('Bahia');
+                ptor.actions().mouseMove(names[0]).perform();
+                ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                    expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
+                });
+                expect(names[1].getText()).toBe('Mahmoud Menshawi');
+                ptor.actions().mouseMove(names[1]).perform().then(function(){
+                    ptor.sleep(500);
+                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                        expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
+                    });
+                });
 
+
+            });
+        });
+        it('should display modules\' names in their correct order', function(){
+            ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
+                expect(modules.length).toBe(3);
+                no_modules = modules.length;
+                expect(modules[0].getText()).toBe('First Module');
+                expect(modules[1].getText()).toBe('Second Module');
+                expect(modules[2].getText()).toBe('Third Module');
+            });
+        });
+        it('should display which modules were finished by each user correctly', function(){
+            ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
+                expect(students.length).toBe(2);
+                no_students = students.length;
+                ptor.findElements(protractor.By.className('marker')).then(function(markers){
+                    for(var s=0; s<no_students; s++){
+                        for(var m=0; m<no_modules; m++){
+                            p = (no_modules*s)+m;
+                            if(p==0){
+                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                            }
+                            else if(p==1){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                            else if(p==2){
+                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                            }
+                            else if(p==3){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                            else if(p==4){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                            else if(p==5){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                        }
+                    }
+                });
+            });
+
+        });
+        it('should be able to change the status of each module for each student', function(){
+            ptor.findElements(protractor.By.className('marker')).then(function(markers){
+                markers[0].click().then(function(){
+
+                    ptor.findElements(protractor.By.tagName('input')).then(function(options){
+                        options[1].click().then(function(){
+                            ptor.findElements(protractor.By.className('marker')).then(function(image){
+                                expect(image[0].getAttribute('src')).toContain('Finished_on_Time.png');
+                            });
+                        }).then(function(){
+                                ptor.navigate().refresh();
+                            });
+                    })
+                });
+            });
+            ptor.findElements(protractor.By.className('marker')).then(function(markers){
+                markers[0].click().then(function(){
+                    ptor.sleep(500);
+                    ptor.findElements(protractor.By.tagName('input')).then(function(options){
+                        options[0].click().then(function(){
+                            ptor.findElements(protractor.By.className('marker')).then(function(image){
+                                expect(image[0].getAttribute('src')).toContain('Not_Finished.png');
+                            });
+                        });
+                    })
+                });
+            });
+        });
     });
 
-//    describe('Module Progress', function(){
-//        it('should display two tabs', function(){
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[1]/a')).then(function(first_tab){
-//                expect(first_tab.getText()).toBe('Module Progress');
-//            });
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[2]/a')).then(function(second_tab){
-//                expect(second_tab.getText()).toBe('Module Chart');
-//            });
-//        });
-//        it('should display the chart title', function(){
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/div/div[1]/h3')).then(function(title){
-//                expect(title.getText()).toBe('Module Progress Charts');
-//            });
-//        });
-//        it('should display correct student names and emails', function(){
-//            ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
-//                expect(names[0].getText()).toBe('Bahia');
-//                ptor.actions().mouseMove(names[0]).perform();
-//                ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                    expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
-//                });
-//                expect(names[1].getText()).toBe('Mahmoud Menshawi');
-//                ptor.actions().mouseMove(names[1]).perform().then(function(){
-//                    ptor.sleep(500);
-//                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                        expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
-//                    });
-//                });
-//
-//
-//            });
-//        });
-//        it('should display modules\' names in their correct order', function(){
-//            ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
-//                expect(modules.length).toBe(3);
-//                no_modules = modules.length;
-//                expect(modules[0].getText()).toBe('First Module');
-//                expect(modules[1].getText()).toBe('Second Module');
-//                expect(modules[2].getText()).toBe('Third Module');
-//            });
-//        });
-//        it('should display which modules were finished by each user correctly', function(){
-//            ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
-//                expect(students.length).toBe(2);
-//                no_students = students.length;
-//                ptor.findElements(protractor.By.className('marker')).then(function(markers){
-//                    for(var s=0; s<no_students; s++){
-//                        for(var m=0; m<no_modules; m++){
-//                            p = (no_modules*s)+m;
-//                            if(p==0){
-//                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                            }
-//                            else if(p==1){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                            else if(p==2){
-//                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                            }
-//                            else if(p==3){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                            else if(p==4){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                            else if(p==5){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                        }
-//                    }
-//                });
-//            });
-//
-//        });
-//        it('should be able to change the status of each module for each student', function(){
-//            ptor.findElements(protractor.By.className('marker')).then(function(markers){
-//                markers[0].click().then(function(){
-//
-//                    ptor.findElements(protractor.By.tagName('input')).then(function(options){
-//                        options[1].click().then(function(){
-//                            ptor.findElements(protractor.By.className('marker')).then(function(image){
-//                                expect(image[0].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            });
-//                        }).then(function(){
-//                                ptor.navigate().refresh();
-//                            });
-//                    })
-//                });
-//            });
-//            ptor.findElements(protractor.By.className('marker')).then(function(markers){
-//                markers[0].click().then(function(){
-//                    ptor.sleep(500);
-//                    ptor.findElements(protractor.By.tagName('input')).then(function(options){
-//                        options[0].click().then(function(){
-//                            ptor.findElements(protractor.By.className('marker')).then(function(image){
-//                                expect(image[0].getAttribute('src')).toContain('Not_Finished.png');
-//                            });
-//                        });
-//                    })
-//                });
-//            });
-//        });
-//    });
-//
-//    describe('Teacher', function(){
-//        it('should go to course editor', function(){
-//            ptor.get('/#/courses/134/course_editor');
-//        });
-//        it('should change the order of the modules and go back to the progress page', function(){
-//            ptor.findElements(protractor.By.className('handle')).then(function(handles){
-//                browser.actions().dragAndDrop(handles[6], handles[0]).perform();
-//            });
-//        });
-//        it('should go back to progress pages', function(){
-//            ptor.get('/#/courses/134/progress/main');
-//        })
-//    });
-//
-//    describe('Module Progress', function(){
-//        it('should display correct student names and emails after sorting modules', function(){
-//            ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
-//                expect(names[0].getText()).toBe('Bahia');
-//                ptor.actions().mouseMove(names[0]).perform();
-//                ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                    expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
-//                });
-//                expect(names[1].getText()).toBe('Mahmoud Menshawi');
-//                ptor.actions().mouseMove(names[1]).perform().then(function(){
-//                    ptor.sleep(500);
-//                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                        expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
-//                    });
-//                });
-//
-//
-//            });
-//        });
-//        it('should display modules\' names in their correct order after sorting modules', function(){
-//            ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
-//                expect(modules.length).toBe(3);
-//                no_modules = modules.length;
-//                expect(modules[0].getText()).toBe('Second Module');
-//                expect(modules[1].getText()).toBe('First Module');
-//                expect(modules[2].getText()).toBe('Third Module');
-//            });
-//        });
-//        it('should display which modules were finished by each user correctly after sorting modules', function(){
-//            ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
-//                expect(students.length).toBe(2);
-//                no_students = students.length;
-//                ptor.findElements(protractor.By.className('marker')).then(function(markers){
-//                    for(var s=0; s<no_students; s++){
-//                        for(var m=0; m<no_modules; m++){
-//                            p = (no_modules*s)+m;
-//                            if(p==0){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                            else if(p==1){
-//                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                            }
-//                            else if(p==2){
-//                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                            }
-//                            else if(p==3){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                            else if(p==4){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                            else if(p==5){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                        }
-//                    }
-//                });
-//            });
-//
-//        });
-//    });
-//    describe('Teacher', function(){
-//        it('should go to course editor', function(){
-//            ptor.get('/#/courses/134/course_editor');
-//        });
-//        it('should change the order of the modules and go back to the progress page', function(){
-//            ptor.findElements(protractor.By.className('handle')).then(function(handles){
-//                browser.actions().dragAndDrop(handles[4], handles[0]).perform();
-////                ptor.sleep(10000);
-//            });
-//        });
-//        it('should go back to progress pages', function(){
-//            ptor.get('/#/courses/134/progress/main');
-//        });
-//        it('should navigate to the Module Chart tab', function(){
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[2]/a')).then(function(second_tab){
-//                second_tab.click();
-//            });
-//        });
-//    });
-//    describe('Module Chart', function(){
-//        it('should display correct titles on the chart', function(){
-//            ptor.sleep(1000);
-//            ptor.findElements(protractor.By.tagName('text')).then(function(titles){
-//                expect(titles[0].getText()).toBe('Quiz');
-//                expect(titles[1].getText()).toBe('Lecture');
-//                expect(titles[2].getText()).toBe('Bahia');
-//                expect(titles[3].getText()).toBe('Mahmoud Mensha...');
-//                expect(titles[4].getText()).toBe('Statistics');
-//            });
-//        });
-//        it('should display correct progress bar for each student', function(){
-//            ptor.findElements(protractor.By.tagName('rect')).then(function(bars){
-//                percentage = [];
-//                bars[13].getAttribute('width').then(function(value){
-//                    expect(value).toBe('300');
-//                    percentage[0] = (value/600)*100;
-//                    expect(percentage[0]).toBe(50);
-//                });
-//                bars[14].getAttribute('width').then(function(value){
-//                    expect(value).toBe('600');
-//                    percentage[1] = (value/600)*100;
-//                    expect(percentage[1]).toBe(100);
-//                });
-//                bars[15].getAttribute('width').then(function(value){
-//                    expect(value).toBe('300');
-//                    percentage[2] = (value/600)*100;
-//                    expect(percentage[2]).toBe(50);
-//                });
-//                bars[16].getAttribute('width').then(function(value){
-//                    expect(value).toBe('600');
-//                    percentage[3] = (value/600)*100;
-//                    expect(percentage[3]).toBe(100);
-//                });
-//            });
-//        });
-//        it('should show the popover with student name and percentage when hovering on each bar', function(){
-//            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-//                rects[13].click()
-//                    .then(function(){
-//                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                            expect(texts[texts.length-3].getText()).toBe('Bahia');
-//                            expect(texts[texts.length-2].getText()).toBe('Quiz:');
-//                            expect(texts[texts.length-1].getText()).toBe('50%');
-//                        });
-//                    });
-//
-//                rects[14].click()
-//                    .then(function(){
-//                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                            expect(texts[texts.length-3].getText()).toBe('Mahmoud Menshawi');
-//                            expect(texts[texts.length-2].getText()).toBe('Quiz:');
-//                            expect(texts[texts.length-1].getText()).toBe('100%');
-//                        });
-//                    });
-//
-//                rects[15].click()
-//                    .then(function(){
-//                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                            expect(texts[texts.length-3].getText()).toBe('Bahia');
-//                            expect(texts[texts.length-2].getText()).toBe('Lecture:');
-//                            expect(texts[texts.length-1].getText()).toBe('50%');
-//                        });
-//                    });
-//
-//                rects[16].click()
-//                    .then(function(){
-//                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                            expect(texts[texts.length-3].getText()).toBe('Mahmoud Menshawi');
-//                            expect(texts[texts.length-2].getText()).toBe('Lecture:');
-//                            expect(texts[texts.length-1].getText()).toBe('100%');
-//                        });
-//                    });
-//            });
-//        });
-//    });
-//    describe('Modules Progress', function(){
-//        it('should go to a module', function(){
-//            ptor.get('/#/courses/134/progress/modules/608');
-//            ptor.sleep(2000);
-//        });
-//        it('should display correct titles on the top chart', function(){
-//            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                expect(texts[0].getText()).toBe('Module Progress Charts');
-//                expect(texts[1].getText()).toBe('Students');
+    describe('Teacher', function(){
+        it('should go to course editor', function(){
+            ptor.get('/#/courses/'+course_id+'/course_editor');
+        });
+        it('should change the order of the modules and go back to the progress page', function(){
+            ptor.findElements(protractor.By.className('handle')).then(function(handles){
+                browser.actions().dragAndDrop(handles[6], handles[0]).perform();
+            });
+        });
+        it('should go back to progress pages', function(){
+            ptor.get('/#/courses/'+course_id+'/progress/main');
+        })
+    });
+
+    describe('Module Progress', function(){
+        it('should display correct student names and emails after sorting modules', function(){
+            ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
+                expect(names[0].getText()).toBe('Bahia');
+                ptor.actions().mouseMove(names[0]).perform();
+                ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                    expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
+                });
+                expect(names[1].getText()).toBe('Mahmoud Menshawi');
+                ptor.actions().mouseMove(names[1]).perform().then(function(){
+                    ptor.sleep(500);
+                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                        expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
+                    });
+                });
+
+
+            });
+        });
+        it('should display modules\' names in their correct order after sorting modules', function(){
+            ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
+                expect(modules.length).toBe(3);
+                no_modules = modules.length;
+                expect(modules[0].getText()).toBe('Second Module');
+                expect(modules[1].getText()).toBe('First Module');
+                expect(modules[2].getText()).toBe('Third Module');
+            });
+        });
+        it('should display which modules were finished by each user correctly after sorting modules', function(){
+            ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
+                expect(students.length).toBe(2);
+                no_students = students.length;
+                ptor.findElements(protractor.By.className('marker')).then(function(markers){
+                    for(var s=0; s<no_students; s++){
+                        for(var m=0; m<no_modules; m++){
+                            p = (no_modules*s)+m;
+                            if(p==0){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                            else if(p==1){
+                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                            }
+                            else if(p==2){
+                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                            }
+                            else if(p==3){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                            else if(p==4){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                            else if(p==5){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                        }
+                    }
+                });
+            });
+
+        });
+    });
+    describe('Teacher', function(){
+        it('should go to course editor', function(){
+            ptor.get('/#/courses/'+course_id+'/course_editor');
+        });
+        it('should change the order of the modules and go back to the progress page', function(){
+            ptor.findElements(protractor.By.className('handle')).then(function(handles){
+                browser.actions().dragAndDrop(handles[4], handles[0]).perform();
+//                ptor.sleep(10000);
+            });
+        });
+        it('should go back to progress pages', function(){
+            ptor.get('/#/courses/'+course_id+'/progress/main');
+        });
+        it('should navigate to the Module Chart tab', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[2]/a')).then(function(second_tab){
+                second_tab.click();
+            });
+        });
+    });
+    describe('Module Chart', function(){
+        it('should display correct titles on the chart', function(){
+            ptor.sleep(1000);
+            ptor.findElements(protractor.By.tagName('text')).then(function(titles){
+                expect(titles[0].getText()).toContain('Qu');
+                expect(titles[1].getText()).toContain('Lec');
+                expect(titles[7].getText()).toContain('Bah');
+                expect(titles[8].getText()).toContain('Mah');
+                expect(titles[9].getText()).toBe('Statistics');
+            });
+        });
+        it('should display correct progress bar for each student', function(){
+            ptor.findElements(protractor.By.tagName('rect')).then(function(bars){
+                percentage = [];
+                bars[14].getAttribute('width').then(function(value){
+                    expect(value).toBe('351');
+                    percentage[0] = (value/703)*100;
+                    expect(percentage[0]).toBeGreaterThan(48);
+                    expect(percentage[0]).toBeLessThan(50);
+                });
+                bars[15].getAttribute('width').then(function(value){
+                    expect(value).toBe('703');
+//                    console.log(value);
+                    percentage[1] = (value/703)*100;
+                    expect(percentage[1]).toBe(100);
+                });
+                bars[16].getAttribute('width').then(function(value){
+                    expect(value).toBe('351');
+                    percentage[2] = (value/703)*100;
+                    expect(percentage[2]).toBeGreaterThan(48);
+                    expect(percentage[2]).toBeLessThan(50);
+                });
+                bars[17].getAttribute('width').then(function(value){
+                    expect(value).toBe('703');
+//                    console.log(value);
+                    percentage[3] = (value/703)*100;
+                    expect(percentage[3]).toBe(100);
+                });
+            });
+        });
+        it('should show the popover with student name and percentage when hovering on each bar 1', function(){
+            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                rects[14].click()
+                    .then(function(){
+                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                            expect(texts[texts.length-3].getText()).toBe('Bahia');
+                            expect(texts[texts.length-2].getText()).toBe('Quiz:');
+                            expect(texts[texts.length-1].getText()).toBe('50%');
+                        });
+                    });
+                ptor.navigate().refresh();
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[2]/a')).then(function(second_tab){
+                    second_tab.click();
+                    ptor.sleep(3000);
+                });
+            });
+        });
+        it('should show the popover with student name and percentage when hovering on each bar 2', function(){
+            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                rects[15].click()
+                    .then(function(){
+                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                            expect(texts[texts.length-3].getText()).toBe('Mahmoud Menshawi');
+                            expect(texts[texts.length-2].getText()).toBe('Quiz:');
+                            expect(texts[texts.length-1].getText()).toBe('100%');
+                        });
+                    });
+                ptor.navigate().refresh();
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[2]/a')).then(function(second_tab){
+                    second_tab.click();
+                    ptor.sleep(3000);
+                });
+            });
+        });
+        it('should show the popover with student name and percentage when hovering on each bar 3', function(){
+            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                rects[16].click()
+                    .then(function(){
+                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                            expect(texts[texts.length-3].getText()).toBe('Bahia');
+                            expect(texts[texts.length-2].getText()).toBe('Lecture:');
+                            expect(texts[texts.length-1].getText()).toBe('50%');
+                        });
+                    });
+                ptor.navigate().refresh();
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[2]/a')).then(function(second_tab){
+                    second_tab.click();
+                    ptor.sleep(3000);
+                });
+            });
+        });
+        it('should show the popover with student name and percentage when hovering on each bar 4', function(){
+            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                rects[17].click()
+                    .then(function(){
+                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                            expect(texts[texts.length-3].getText()).toBe('Mahmoud Menshawi');
+                            expect(texts[texts.length-2].getText()).toBe('Lecture:');
+                            expect(texts[texts.length-1].getText()).toBe('100%');
+                        });
+                    });
+                ptor.navigate().refresh();
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div/ul/li[2]/a')).then(function(second_tab){
+                    second_tab.click();
+                    ptor.sleep(3000);
+                });
+            });
+        });
+    });
+    describe('Modules Progress', function(){
+        it('should go to a module', function(){
+            ptor.get('/#/courses/'+course_id+'/progress/modules/'+module_id);
+            ptor.sleep(2000);
+        });
+        it('should display correct titles on the top chart', function(){
+            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                expect(texts[0].getText()).toBe('Module Progress Charts');
+                expect(texts[1].getText()).toBe('Students');
+                expect(texts[texts.length-1].getText()).toBe('Number of Students');
+                expect(texts[5].getText()).toBe('Completed Late');
+                expect(texts[4].getText()).toBe('Completed on Time');
+                expect(texts[3].getText()).toBe('Watched <= 50%');
+                expect(texts[2].getText()).toBe('Not Started Watching');
 //                expect(texts[texts.length-1].getText()).toBe('Number of Students');
-//                expect(texts[5].getText()).toBe('Completed Late');
-//                expect(texts[4].getText()).toBe('Completed on Time');
-//                expect(texts[3].getText()).toBe('Watched <= 50%');
-//                expect(texts[2].getText()).toBe('Not Started Watching');
-////                expect(texts[texts.length-1].getText()).toBe('Number of Students');
-//            });
-//        });
-//        it('should display the bars on the top chart and display their data when hovering on them', function(){
-//            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-//                rects[12].click()
-//                    .then(function(){
-//                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                            expect(texts[12].getText()).toBe('Watched <= 50%');
-//                            expect(texts[13].getText()).toBe('Students:');
-//                            expect(texts[14].getText()).toBe('1');
-//                        });
-//                    });
-//                rects[13].click()
-//                    .then(function(){
-//                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                            expect(texts[12].getText()).toBe('Completed on Time');
-//                            expect(texts[13].getText()).toBe('Students:');
-//                            expect(texts[14].getText()).toBe('1');
-//                        });
-//                    });
-//            });
-//        });
-//        it('should click on each question in the lecture quizzes tab and make sure that the video seeks to that question', function(){
-//            ptor.findElements(protractor.By.className('seeker')).then(function(seekers){
-//                ptor.sleep(5000);
-//                expect(seekers[0].getText()).toBe('Question 1\nNew Lecture');
-//                expect(seekers[1].getText()).toBe('Question 2\nNew Lecture2');
-//                seekers[0].click()
-//                    .then(function(){
-//                        ptor.sleep(2500);
-//                        driver.switchTo().frame(0);
-//                        driver.findElement(protractor.By.className("ytp-time-current")).then(function(time){
-//                            expect(time.getText()).toBe('1:07');
-//                        });
-//                        driver.switchTo().defaultContent();
-//                        ptor.findElement(protractor.By.tagName('iframe')).then(function(player){
-//                            expect(player.getAttribute('src')).toContain('XtyzOo7nJrQ');
-//                        });
-//                    });
-//                seekers[1].click()
-//                    .then(function(){
-//                        ptor.sleep(2500);
-//                        driver.switchTo().frame(0);
-//                        driver.findElement(protractor.By.className("ytp-time-current")).then(function(time){
-//                            expect(time.getText()).toBe('0:12');
-//                        });
-//                        driver.switchTo().defaultContent();
-//                        ptor.findElement(protractor.By.tagName('iframe')).then(function(player){
-//                            expect(player.getAttribute('src')).toContain('PlavjNH_RRU');
-//                        })
-//                    });
-//
-//            });
-//        });
-//        it('should display the correct titles on the first quiz chart in lecture quizzes', function(){
-//            ptor.findElements(protractor.By.tagName('text')).then(function(titles){
-//                expect(titles[15].getText()).toBe('First Quiz');
-//                expect(titles[16].getText()).toBe('Incorrect');
-//                expect(titles[17].getText()).toBe('Correct');
-//                expect(titles[18].getText()).toBe('OK (Correct)');
-//                expect(titles[19].getText()).toBe('Cancel (Incorrect)');
-//                expect(titles[20].getText()).toBe('Other (Incorrect)');
-//                expect(titles[26].getText()).toBe('Number of Students');
-//            });
-//        });
-//        it('should display the bars on the first quiz chart in lecture quizzes and display their data when hovering on them', function(){
-//            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-//                rects[33].click()
-//                    .then(function(){
-//                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                            expect(texts[27].getText()).toBe('OK (Correct)');
-//                            expect(texts[28].getText()).toBe('Correct:');
-//                            expect(texts[29].getText()).toBe('1');
-//                        });
-//                    });
-//            });
-//        });
-//        it('should display correct titles on the chart for the second quiz in lecture quizzes', function(){
-//            ptor.findElements(protractor.By.tagName('text')).then(function(titles){
-//                expect(titles[30].getText()).toBe('New Quiz2');
-//                expect(titles[31].getText()).toBe('Incorrect');
-//                expect(titles[32].getText()).toBe('Correct');
-//                expect(titles[33].getText()).toBe('First Answer (Correct)');
-//                expect(titles[34].getText()).toBe('Second Answer (Incorrect)');
-//                expect(titles[40].getText()).toBe('Number of Students');
-//            })
-//        });
-//        it('should display the bar information when hovering on it for the second quiz in lecture quizzes', function(){
-//            ptor.executeScript('window.scrollBy(0, 1000)', '');
-//            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-//                rects[57].click()
-//                    .then(function(){
-//                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                            expect(texts[41].getText()).toBe('First Answer (Correct)');
-//                            expect(texts[42].getText()).toBe('Correct:');
-//                            expect(texts[43].getText()).toBe('1');
-//                        });
-//                    });
-//                rects[60].click()
-//                    .then(function(){
-//                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                            expect(texts[41].getText()).toBe('Second Answer (Incorrect)');
-//                            expect(texts[42].getText()).toBe('Incorrect:');
-//                            expect(texts[43].getText()).toBe('1');
-//                        });
-//                    });
-//            });
-//        });
-//        doRefresh(ptor);
-//        it('should go to lecture statistics tab', function(){
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[2]/a')).then(function(tab){
-//                tab.click();
-//            });
-//        });
-//
-//        it('should display the charts extended for all lectures in module', function(){
-//            ptor.findElements(protractor.By.className('lecture_name')).then(function(lectures){
-//                expect(lectures.length).toBe(2);
-//                expect(lectures[0].getText()).toBe('New Lecture');
-//                expect(lectures[1].getText()).toBe('New Lecture2');
-//            });
-//        });
-//
-//        it('should seek the video when an element on the chart is clicked', function(){
-//            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-////                ptor.navigate().refresh();
-////                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[2]/a')).then(function(tab){
-////                    tab.click();
-////                    ptor.sleep(7000);
-////                });
-//
-//                rects[115].click()
-//                    .then(function(){
-//                        ptor.findElement(protractor.By.className('google-visualization-tooltip')).then(function(tooltip){
-//                            tooltip.getText().then(function(value){
-//                                var test = value;
-//                                dummy = test;
-//                                expect(test).toContain('why isn\'t it working?');
-//                                expect(test).toContain(dummy.split('\n#')[0]);
-//                            });
-//                            ptor.sleep(5000);
-//                        });
-//                        ptor.findElement(protractor.By.tagName('iframe')).then(function(player){
-//                            expect(player.getAttribute('src')).toContain('PlavjNH_RRU');
-//                        })
-//                        driver.switchTo().frame(1);
-//                        driver.findElement(protractor.By.className("ytp-time-current")).then(function(time){
-//                            expect(time.getText()).toBe(dummy.split('\n#')[0].replace('0:0', ''));
-//                        });
-//                        driver.switchTo().defaultContent();
-//                    });
-//            });
-//            ptor.executeScript('window.scrollBy(0, -2000)', '');
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/center/b')).click();
-//            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-//                rects[114].click()
-//                    .then(function(){
-//                        ptor.findElement(protractor.By.className('google-visualization-tooltip')).then(function(tooltip){
-//                            tooltip.getText().then(function(value){
-//                                var test = value;
-//                                dummy = test;
-//                                expect(test).toContain('What is this?');
-//                                expect(test).toContain(dummy.split('\n#')[0]);
-//                            });
-//                            ptor.sleep(5000);
-//                        });
-//                        ptor.findElement(protractor.By.tagName('iframe')).then(function(player){
-//                            expect(player.getAttribute('src')).toContain('XtyzOo7nJrQ');
-//                        })
-////                        driver.switchTo().frame(1);
-////                        driver.findElement(protractor.By.className("ytp-time-current")).then(function(time){
-////                            expect(time.getText()).toBe(dummy.split('\n#')[0].replace('0:0', ''));
-////                        });
-////                        driver.switchTo().defaultContent();
-//                    });
-//            });
-//        });
+            });
+        });
+        it('should display the bars on the top chart and display their data when hovering on them', function(){
+            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                rects[12].click()
+                    .then(function(){
+                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                            expect(texts[12].getText()).toBe('Watched <= 50%');
+                            expect(texts[13].getText()).toBe('Students:');
+                            expect(texts[14].getText()).toBe('1');
+                        });
+                    });
+                rects[13].click()
+                    .then(function(){
+                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                            expect(texts[12].getText()).toBe('Completed on Time');
+                            expect(texts[13].getText()).toBe('Students:');
+                            expect(texts[14].getText()).toBe('1');
+                        });
+                    });
+            });
+        });
+        it('should click on each question in the lecture quizzes tab and make sure that the video seeks to that question', function(){
+            ptor.findElements(protractor.By.className('seeker')).then(function(seekers){
+                ptor.sleep(5000);
+                expect(seekers[0].getText()).toBe('Question 1\nNew Lecture');
+                expect(seekers[1].getText()).toBe('Question 2\nNew Lecture2');
+                seekers[0].click()
+                    .then(function(){
+                        ptor.sleep(4000);
+                        driver.switchTo().frame(0);
+                        driver.findElement(protractor.By.className("ytp-time-current")).then(function(time){
+                            expect(time.getText()).toBe('1:07');
+                        });
+                        driver.switchTo().defaultContent();
+                        ptor.findElement(protractor.By.tagName('iframe')).then(function(player){
+                            expect(player.getAttribute('src')).toContain('XtyzOo7nJrQ');
+                        });
+                    });
+                seekers[1].click()
+                    .then(function(){
+                        ptor.sleep(4000);
+                        driver.switchTo().frame(0);
+                        driver.findElement(protractor.By.className("ytp-time-current")).then(function(time){
+                            expect(time.getText()).toBe('0:12');
+                        });
+                        driver.switchTo().defaultContent();
+                        ptor.findElement(protractor.By.tagName('iframe')).then(function(player){
+                            expect(player.getAttribute('src')).toContain('PlavjNH_RRU');
+                        })
+                    });
+
+            });
+        });
+        it('should display the correct titles on the first quiz chart in lecture quizzes', function(){
+            ptor.findElements(protractor.By.tagName('text')).then(function(titles){
+                expect(titles[15].getText()).toBe('First Quiz');
+                expect(titles[16].getText()).toBe('Incorrect');
+                expect(titles[17].getText()).toBe('Correct');
+                expect(titles[18].getText()).toBe('OK (Correct)');
+                expect(titles[19].getText()).toBe('Cancel (Incorrect)');
+                expect(titles[20].getText()).toBe('Other (Incorrect)');
+                expect(titles[26].getText()).toBe('Number of Students');
+            });
+        });
+        it('should display the bars on the first quiz chart in lecture quizzes and display their data when hovering on them', function(){
+            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                rects[33].click()
+                    .then(function(){
+                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                            expect(texts[27].getText()).toBe('OK (Correct)');
+                            expect(texts[28].getText()).toBe('Correct:');
+                            expect(texts[29].getText()).toBe('1');
+                        });
+                    });
+            });
+        });
+        it('should display correct titles on the chart for the second quiz in lecture quizzes', function(){
+            ptor.findElements(protractor.By.tagName('text')).then(function(titles){
+                expect(titles[30].getText()).toBe('New Quiz2');
+                expect(titles[31].getText()).toBe('Incorrect');
+                expect(titles[32].getText()).toBe('Correct');
+                expect(titles[33].getText()).toBe('First Answer (Correct)');
+                expect(titles[34].getText()).toBe('Second Answer (Incorrect)');
+                expect(titles[40].getText()).toBe('Number of Students');
+            })
+        });
+        it('should display the bar information when hovering on it for the second quiz in lecture quizzes', function(){
+            ptor.executeScript('window.scrollBy(0, 1000)', '');
+            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                rects[57].click()
+                    .then(function(){
+                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                            expect(texts[41].getText()).toBe('First Answer (Correct)');
+                            expect(texts[42].getText()).toBe('Correct:');
+                            expect(texts[43].getText()).toBe('1');
+                        });
+                    });
+                rects[60].click()
+                    .then(function(){
+                        ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                            expect(texts[41].getText()).toBe('Second Answer (Incorrect)');
+                            expect(texts[42].getText()).toBe('Incorrect:');
+                            expect(texts[43].getText()).toBe('1');
+                        });
+                    });
+            });
+        });
+        doRefresh(ptor);
+        it('should go to lecture statistics tab', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[2]/a')).then(function(tab){
+                tab.click();
+            });
+        });
+
+        it('should display the charts extended for all lectures in module', function(){
+            ptor.findElements(protractor.By.className('lecture_name')).then(function(lectures){
+                expect(lectures.length).toBe(2);
+                expect(lectures[0].getText()).toBe('New Lecture');
+                expect(lectures[1].getText()).toBe('New Lecture2');
+            });
+        });
+
+        it('should seek the video when an element on the chart is clicked', function(){
+            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+//                ptor.navigate().refresh();
+//                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[2]/a')).then(function(tab){
+//                    tab.click();
+//                    ptor.sleep(7000);
+//                });
+
+                rects[rects.length-3].click()
+                    .then(function(){
+                        ptor.executeScript('window.scrollBy(0, -2000)', '');
+                        ptor.sleep(20000);
+                        ptor.findElement(protractor.By.className('google-visualization-tooltip')).then(function(tooltip){
+                            tooltip.getText().then(function(value){
+                                var test = value;
+                                dummy = test;
+                                expect(test).toContain('why isn\'t it working?');
+                                expect(test).toContain(dummy.split('\n#')[0]);
+                            });
+                            ptor.sleep(5000);
+                        });
+                        ptor.findElements(protractor.By.tagName('iframe')).then(function(player){
+                            expect(player[1].getAttribute('src')).toContain('PlavjNH_RRU');
+                        });
+                        driver.switchTo().frame(1);
+                        driver.findElement(protractor.By.className("ytp-time-current")).then(function(time){
+                            expect(time.getText()).toBe('0:00');
+                        });
+                        driver.switchTo().defaultContent();
+                    });
+            });
+            ptor.executeScript('window.scrollBy(0, -2000)', '');
+        });
         //---------------------------------------------------------------------//
-//        it('should go to a module and then go to the lecture progress tab', function(){
-//            ptor.get('/#/courses/134/progress/modules/608').then(function(){
-//                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[3]/a')).then(function(tab){
-//                    tab.click();
-//                });
-//            });
-//        });
-//        describe('Lecture Progress', function(){
-//            it('should display the chart title', function(){
-//                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[3]/tab3/h3')).then(function(title){
-//                    expect(title.getText()).toBe('Lecture Progress Chart');
-//                });
-//            });
-//            it('should display correct student names and emails', function(){
-//                ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
-//                    expect(names[0].getText()).toBe('Bahia');
-//                    ptor.actions().mouseMove(names[0]).perform();
-//                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                        expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
-//                    });
-//                    expect(names[1].getText()).toBe('Mahmoud Menshawi');
-//                    ptor.actions().mouseMove(names[1]).perform().then(function(){
-//                        ptor.sleep(500);
-//                        ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                            expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
-//                        });
-//                    });
-//                });
-//            });
-//            it('should display lectures\' names in their correct order', function(){
-//                ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
-//                    expect(modules.length).toBe(2);
-//                    no_modules = modules.length;
-//                    expect(modules[0].getText()).toBe('New Lecture');
-//                    expect(modules[1].getText()).toBe('New Lecture2');
-//                });
-//            });
-//            it('should display which modules were finished by each user correctly', function(){
-//                ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
-//                    expect(students.length).toBe(2);
-//                    no_students = students.length;
-//                    ptor.findElements(protractor.By.className('marker')).then(function(markers){
-//                        for(var s=0; s<no_students; s++){
-//                            for(var m=0; m<no_modules; m++){
-//                                p = (no_modules*s)+m;
-//                                if(p==0){
-//                                    expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                                }
-//                                else if(p==1){
-//                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                                }
-//                                else if(p==2){
-//                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                                }
-//                                else if(p==3){
-//                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                                }
-//                            }
-//                        }
-//                    });
-//                });
-//
-//            });
-//        });
-//        it('should go to course editor', function(){
-//            ptor.get('/#/courses/134/course_editor');
-//        });
-//        it('should open the first module', function(){
-//            ptor.findElement(protractor.By.className('trigger')).then(function(module){
-//                module.click();
-//            });
-//        });
-//        it('should change the order of the lectures inside the module and go back to the progress page', function(){
-//            ptor.findElements(protractor.By.className('handle')).then(function(handles){
-//                browser.actions().dragAndDrop(handles[2], handles[1]).perform();
-//            });
-//        });
-//        it('should go back to progress pages', function(){
-//            ptor.get('/#/courses/134/progress/modules/608').then(function(){
-//                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[3]/a')).then(function(tab){
-//                    tab.click();
-//                });
-//            });
-//        });
-//        it('should display the chart title', function(){
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[3]/tab3/h3')).then(function(title){
-//                expect(title.getText()).toBe('Lecture Progress Chart');
-//            });
-//        });
-//        it('should display correct student names and emails after sorting the lectures', function(){
-//            ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
-//                expect(names[0].getText()).toBe('Bahia');
-//                ptor.actions().mouseMove(names[0]).perform();
-//                ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                    expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
-//                });
-//                expect(names[1].getText()).toBe('Mahmoud Menshawi');
-//                ptor.actions().mouseMove(names[1]).perform().then(function(){
-//                    ptor.sleep(500);
-//                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                        expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
-//                    });
-//                });
-//            });
-//        });
-//        it('should display lectures\' names in their correct order after sorting the lectures', function(){
-//            ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
-//                expect(modules.length).toBe(2);
-//                no_modules = modules.length;
-//                expect(modules[0].getText()).toBe('New Lecture2');
-//                expect(modules[1].getText()).toBe('New Lecture');
-//            });
-//        });
-//        it('should display which modules were finished by each user correctly after sorting the lectures', function(){
-//            ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
-//                expect(students.length).toBe(2);
-//                no_students = students.length;
-//                ptor.findElements(protractor.By.className('marker')).then(function(markers){
-//                    for(var s=0; s<no_students; s++){
-//                        for(var m=0; m<no_modules; m++){
-//                            p = (no_modules*s)+m;
-//                            if(p==0){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                            else if(p==1){
-//                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                            }
-//                            else if(p==2){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                            else if(p==3){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                        }
-//                    }
-//                });
-//            });
-//        });
-//        it('should go to course editor', function(){
-//            ptor.get('/#/courses/134/course_editor');
-//        });
-//        it('should open the first module', function(){
-//            ptor.findElement(protractor.By.className('trigger')).then(function(module){
-//                module.click();
-//            });
-//        });
-//        it('should change the order of the lectures inside the module and go back to the progress page', function(){
-//            ptor.findElements(protractor.By.className('handle')).then(function(handles){
-//                browser.actions().dragAndDrop(handles[2], handles[1]).perform();
-//            });
-//        });
-//        it('should go back to progress pages', function(){
-//            ptor.get('/#/courses/134/progress/modules/608').then(function(){
-//                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[4]/a')).then(function(tab){
-//                    tab.click();
-//                });
-//            });
-//        });
-//
-//
-//        //test the quizzes Progress tab
-//        describe('Quizzes Progress', function(){
-//
-//            it('should display the chart title', function(){
-//                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[4]/tab4/h3')).then(function(title){
-//                    expect(title.getText()).toBe('Quiz Progress Chart');
-//                });
-//            });
-//            it('should display correct student names and emails', function(){
-//                ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
-//                    expect(names[0].getText()).toBe('Bahia');
-//                    ptor.actions().mouseMove(names[0]).perform();
-//                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                        expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
-//                    });
-//                    expect(names[1].getText()).toBe('Mahmoud Menshawi');
-//                    ptor.actions().mouseMove(names[1]).perform().then(function(){
-//                        ptor.sleep(500);
-//                        ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                            expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
-//                        });
-//                    });
-//                });
-//            });
-//            it('should display quizzes\' names in their correct order', function(){
-//                ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
-//                    expect(modules.length).toBe(2);
-//                    no_modules = modules.length;
-//                    expect(modules[0].getText()).toBe('New Quiz');
-//                    expect(modules[1].getText()).toBe('New Quiz2');
-//                });
-//            });
-//            it('should display which quizzes were finished by each user correctly', function(){
-//                ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
-//                    expect(students.length).toBe(2);
-//                    no_students = students.length;
-//                    ptor.findElements(protractor.By.className('marker')).then(function(markers){
-//                        for(var s=0; s<no_students; s++){
-//                            for(var m=0; m<no_modules; m++){
-//                                p = (no_modules*s)+m;
-//                                if(p==0){
-//                                    expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                                }
-//                                else if(p==1){
-//                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                                }
-//                                else if(p==2){
-//                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                                }
-//                                else if(p==3){
-//                                    expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                                }
-//                            }
-//                        }
-//                    });
-//                });
-//
-//            });
-//        });
-//        it('should go to course editor', function(){
-//            ptor.get('/#/courses/134/course_editor');
-//        });
-//        it('should open the first module', function(){
-//            ptor.findElement(protractor.By.className('trigger')).then(function(module){
-//                module.click();
-//            });
-//        });
-//        it('should change the order of the quizzes inside the module and go back to the progress page', function(){
-//            ptor.findElements(protractor.By.className('handle')).then(function(handles){
-//                browser.actions().dragAndDrop(handles[4], handles[3]).perform();
-//            });
-//        });
-//        it('should go back to progress pages', function(){
-//            ptor.get('/#/courses/134/progress/modules/608').then(function(){
-//                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[4]/a')).then(function(tab){
-//                    tab.click();
-//                });
-//            });
-//        });
-//        it('should display the chart title', function(){
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[4]/tab4/h3')).then(function(title){
-//                expect(title.getText()).toBe('Quiz Progress Chart');
-//            });
-//        });
-//        it('should display correct student names and emails after sorting the quizzes', function(){
-//            ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
-//                expect(names[0].getText()).toBe('Bahia');
-//                ptor.actions().mouseMove(names[0]).perform();
-//                ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                    expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
-//                });
-//                expect(names[1].getText()).toBe('Mahmoud Menshawi');
-//                ptor.actions().mouseMove(names[1]).perform().then(function(){
-//                    ptor.sleep(500);
-//                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
-//                        expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
-//                    });
-//                });
-//            });
-//        });
-//        it('should display quizzes\' names in their correct order after sorting them', function(){
-//            ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
-//                expect(modules.length).toBe(2);
-//                no_modules = modules.length;
-//                expect(modules[0].getText()).toBe('New Quiz2');
-//                expect(modules[1].getText()).toBe('New Quiz');
-//            });
-//        });
-//        it('should display which quizzes were finished by each user correctly after sorting them', function(){
-//            ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
-//                expect(students.length).toBe(2);
-//                no_students = students.length;
-//                ptor.findElements(protractor.By.className('marker')).then(function(markers){
-//                    for(var s=0; s<no_students; s++){
-//                        for(var m=0; m<no_modules; m++){
-//                            p = (no_modules*s)+m;
-//                            if(p==0){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                            else if(p==1){
-//                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                            }
-//                            else if(p==2){
-//                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
-//                            }
-//                            else if(p==3){
-//                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
-//                            }
-//                        }
-//                    }
-//                });
-//            });
-//        });
-//        it('should go to course editor', function(){
-//            ptor.get('/#/courses/134/course_editor');
-//        });
-//        it('should open the first module', function(){
-//            ptor.findElement(protractor.By.className('trigger')).then(function(module){
-//                module.click();
-//            });
-//        });
-//        it('should change the order of the quizzes inside the module', function(){
-//            ptor.findElements(protractor.By.className('handle')).then(function(handles){
-//                browser.actions().dragAndDrop(handles[4], handles[3]).perform();
-//            });
-//        });
-//        it('should go back to progress pages', function(){
-//            ptor.get('/#/courses/134/progress/modules/608');
-//        })
-//        it('should go to the Surveys tab', function(){
-//            ptor.executeScript('window.scrollBy(0, -2000)', '');
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[5]/a')).then(function(tab){
-//                tab.click();
-//            });
-//        });
-//        it('should display the survey charts with thier data', function(){
-//            ptor.sleep(1500);
-//                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[5]/tab5/div/center/b')).then(function(survey_name){
-//                    expect(survey_name.getText()).toBe('New Survey');
-//                });
-//                ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                    expect(texts[texts.length-20].getText()).toBe('First Question');
-//                    expect(texts[texts.length-19].getText()).toBe('Answered');
-//                    expect(texts[texts.length-18].getText()).toBe('first answer');
-//                    expect(texts[texts.length-17].getText()).toBe('second answer');
-//                    expect(texts[texts.length-11].getText()).toBe('Number of Students');
-//                    expect(texts[texts.length-10].getText()).toBe('Second Question');
-//                    expect(texts[texts.length-9].getText()).toBe('Answered');
-//                    expect(texts[texts.length-8].getText()).toBe('first answer');
-//                    expect(texts[texts.length-7].getText()).toBe('second answer');
-//                    expect(texts[texts.length-1].getText()).toBe('Number of Students');
-//                });
-//                ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-//                    ptor.executeScript('window.scrollBy(0, 500)', '');
-//                    rects[rects.length-17].click()
-//                        .then(function(){
-////                            ptor.sleep(20000);
-//                            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+        it('should go to a module and then go to the lecture progress tab', function(){
+            ptor.get('/#/courses/'+course_id+'/progress/modules/'+module_id).then(function(){
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[3]/a')).then(function(tab){
+                    tab.click();
+                });
+            });
+        });
+        describe('Lecture Progress', function(){
+            it('should display the chart title', function(){
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[3]/tab3/h3')).then(function(title){
+                    expect(title.getText()).toBe('Lecture Progress Chart');
+                });
+            });
+            it('should display correct student names and emails', function(){
+                ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
+                    expect(names[0].getText()).toBe('Bahia');
+                    ptor.actions().mouseMove(names[0]).perform();
+                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                        expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
+                    });
+                    expect(names[1].getText()).toBe('Mahmoud Menshawi');
+                    ptor.actions().mouseMove(names[1]).perform().then(function(){
+                        ptor.sleep(500);
+                        ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                            expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
+                        });
+                    });
+                });
+            });
+            it('should display lectures\' names in their correct order', function(){
+                ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
+                    expect(modules.length).toBe(2);
+                    no_modules = modules.length;
+                    expect(modules[0].getText()).toBe('New Lecture');
+                    expect(modules[1].getText()).toBe('New Lecture2');
+                });
+            });
+            it('should display which modules were finished by each user correctly', function(){
+                ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
+                    expect(students.length).toBe(2);
+                    no_students = students.length;
+                    ptor.findElements(protractor.By.className('marker')).then(function(markers){
+                        for(var s=0; s<no_students; s++){
+                            for(var m=0; m<no_modules; m++){
+                                p = (no_modules*s)+m;
+                                if(p==0){
+                                    expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                                }
+                                else if(p==1){
+                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                                }
+                                else if(p==2){
+                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                                }
+                                else if(p==3){
+                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                                }
+                            }
+                        }
+                    });
+                });
+
+            });
+        });
+        it('should go to course editor', function(){
+            ptor.get('/#/courses/'+course_id+'/course_editor');
+        });
+        it('should open the first module', function(){
+            ptor.findElement(protractor.By.className('trigger')).then(function(module){
+                module.click();
+            });
+        });
+        it('should change the order of the lectures inside the module and go back to the progress page', function(){
+            ptor.findElements(protractor.By.className('handle')).then(function(handles){
+                browser.actions().dragAndDrop(handles[2], handles[1]).perform();
+            });
+        });
+        it('should go back to progress pages', function(){
+            ptor.get('/#/courses/'+course_id+'/progress/modules/'+module_id).then(function(){
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[3]/a')).then(function(tab){
+                    tab.click();
+                });
+            });
+        });
+        it('should display the chart title', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[3]/tab3/h3')).then(function(title){
+                expect(title.getText()).toBe('Lecture Progress Chart');
+            });
+        });
+        it('should display correct student names and emails after sorting the lectures', function(){
+            ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
+                expect(names[0].getText()).toBe('Bahia');
+                ptor.actions().mouseMove(names[0]).perform();
+                ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                    expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
+                });
+                expect(names[1].getText()).toBe('Mahmoud Menshawi');
+                ptor.actions().mouseMove(names[1]).perform().then(function(){
+                    ptor.sleep(500);
+                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                        expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
+                    });
+                });
+            });
+        });
+        it('should display lectures\' names in their correct order after sorting the lectures', function(){
+            ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
+                expect(modules.length).toBe(2);
+                no_modules = modules.length;
+                expect(modules[0].getText()).toBe('New Lecture2');
+                expect(modules[1].getText()).toBe('New Lecture');
+            });
+        });
+        it('should display which modules were finished by each user correctly after sorting the lectures', function(){
+            ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
+                expect(students.length).toBe(2);
+                no_students = students.length;
+                ptor.findElements(protractor.By.className('marker')).then(function(markers){
+                    for(var s=0; s<no_students; s++){
+                        for(var m=0; m<no_modules; m++){
+                            p = (no_modules*s)+m;
+                            if(p==0){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                            else if(p==1){
+                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                            }
+                            else if(p==2){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                            else if(p==3){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                        }
+                    }
+                });
+            });
+        });
+        it('should go to course editor', function(){
+            ptor.get('/#/courses/'+course_id+'/course_editor');
+        });
+        it('should open the first module', function(){
+            ptor.findElement(protractor.By.className('trigger')).then(function(module){
+                module.click();
+            });
+        });
+        it('should change the order of the lectures inside the module and go back to the progress page', function(){
+            ptor.findElements(protractor.By.className('handle')).then(function(handles){
+                browser.actions().dragAndDrop(handles[2], handles[1]).perform();
+            });
+        });
+        it('should go back to progress pages', function(){
+            ptor.get('/#/courses/'+course_id+'/progress/modules/'+module_id).then(function(){
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[4]/a')).then(function(tab){
+                    tab.click();
+                });
+            });
+        });
+
+
+        //test the quizzes Progress tab
+        describe('Quizzes Progress', function(){
+
+            it('should display the chart title', function(){
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[4]/tab4/h3')).then(function(title){
+                    expect(title.getText()).toBe('Quiz Progress Chart');
+                });
+            });
+            it('should display correct student names and emails', function(){
+                ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
+                    expect(names[0].getText()).toBe('Bahia');
+                    ptor.actions().mouseMove(names[0]).perform();
+                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                        expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
+                    });
+                    expect(names[1].getText()).toBe('Mahmoud Menshawi');
+                    ptor.actions().mouseMove(names[1]).perform().then(function(){
+                        ptor.sleep(500);
+                        ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                            expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
+                        });
+                    });
+                });
+            });
+            it('should display quizzes\' names in their correct order', function(){
+                ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
+                    expect(modules.length).toBe(2);
+                    no_modules = modules.length;
+                    expect(modules[0].getText()).toBe('New Quiz');
+                    expect(modules[1].getText()).toBe('New Quiz2');
+                });
+            });
+            it('should display which quizzes were finished by each user correctly', function(){
+                ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
+                    expect(students.length).toBe(2);
+                    no_students = students.length;
+                    ptor.findElements(protractor.By.className('marker')).then(function(markers){
+                        for(var s=0; s<no_students; s++){
+                            for(var m=0; m<no_modules; m++){
+                                p = (no_modules*s)+m;
+                                if(p==0){
+                                    expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                                }
+                                else if(p==1){
+                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                                }
+                                else if(p==2){
+                                    expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                                }
+                                else if(p==3){
+                                    expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                                }
+                            }
+                        }
+                    });
+                });
+
+            });
+        });
+        it('should go to course editor', function(){
+            ptor.get('/#/courses/'+course_id+'/course_editor');
+        });
+        it('should open the first module', function(){
+            ptor.findElement(protractor.By.className('trigger')).then(function(module){
+                module.click();
+            });
+        });
+        it('should change the order of the quizzes inside the module and go back to the progress page', function(){
+            ptor.findElements(protractor.By.className('handle')).then(function(handles){
+                browser.actions().dragAndDrop(handles[4], handles[3]).perform();
+            });
+        });
+        it('should go back to progress pages', function(){
+            ptor.get('/#/courses/'+course_id+'/progress/modules/'+module_id).then(function(){
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[4]/a')).then(function(tab){
+                    tab.click();
+                });
+            });
+        });
+        it('should display the chart title', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[4]/tab4/h3')).then(function(title){
+                expect(title.getText()).toBe('Quiz Progress Chart');
+            });
+        });
+        it('should display correct student names and emails after sorting the quizzes', function(){
+            ptor.findElements(protractor.By.repeater('student in students')).then(function(names){
+                expect(names[0].getText()).toBe('Bahia');
+                ptor.actions().mouseMove(names[0]).perform();
+                ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                    expect(tooltip.getText()).toBe('bahia.sharkawy@gmail.com');
+                });
+                expect(names[1].getText()).toBe('Mahmoud Menshawi');
+                ptor.actions().mouseMove(names[1]).perform().then(function(){
+                    ptor.sleep(500);
+                    ptor.findElement(protractor.By.className('tooltip')).then(function(tooltip){
+                        expect(tooltip.getText()).toBe('em_menshawi@hotmail.com');
+                    });
+                });
+            });
+        });
+        it('should display quizzes\' names in their correct order after sorting them', function(){
+            ptor.findElements(protractor.By.repeater('name in columnNames')).then(function(modules){
+                expect(modules.length).toBe(2);
+                no_modules = modules.length;
+                expect(modules[0].getText()).toBe('New Quiz2');
+                expect(modules[1].getText()).toBe('New Quiz');
+            });
+        });
+        it('should display which quizzes were finished by each user correctly after sorting them', function(){
+            ptor.findElements(protractor.By.repeater('student in students')).then(function(students){
+                expect(students.length).toBe(2);
+                no_students = students.length;
+                ptor.findElements(protractor.By.className('marker')).then(function(markers){
+                    for(var s=0; s<no_students; s++){
+                        for(var m=0; m<no_modules; m++){
+                            p = (no_modules*s)+m;
+                            if(p==0){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                            else if(p==1){
+                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                            }
+                            else if(p==2){
+                                expect(markers[p].getAttribute('src')).toContain('Not_Finished.png');
+                            }
+                            else if(p==3){
+                                expect(markers[p].getAttribute('src')).toContain('Finished_on_Time.png');
+                            }
+                        }
+                    }
+                });
+            });
+        });
+        it('should go to course editor', function(){
+            ptor.get('/#/courses/'+course_id+'/course_editor');
+        });
+        it('should open the first module', function(){
+            ptor.findElement(protractor.By.className('trigger')).then(function(module){
+                module.click();
+            });
+        });
+        it('should change the order of the quizzes inside the module', function(){
+            ptor.findElements(protractor.By.className('handle')).then(function(handles){
+                browser.actions().dragAndDrop(handles[4], handles[3]).perform();
+            });
+        });
+        it('should go back to progress pages', function(){
+            ptor.get('/#/courses/'+course_id+'/progress/modules/'+module_id);
+        })
+        it('should go to the Surveys tab', function(){
+            ptor.executeScript('window.scrollBy(0, -2000)', '');
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[5]/a')).then(function(tab){
+                tab.click();
+            });
+        });
+        it('should display the survey charts with thier data', function(){
+            ptor.sleep(1500);
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[5]/tab5/div/center/b')).then(function(survey_name){
+                    expect(survey_name.getText()).toBe('New Survey');
+                });
+                ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                    expect(texts[texts.length-20].getText()).toBe('First Question');
+                    expect(texts[texts.length-19].getText()).toBe('Answered');
+                    expect(texts[texts.length-18].getText()).toBe('first answer');
+                    expect(texts[texts.length-17].getText()).toBe('second answer');
+                    expect(texts[texts.length-11].getText()).toBe('Number of Students');
+                    expect(texts[texts.length-10].getText()).toBe('Second Question');
+                    expect(texts[texts.length-9].getText()).toBe('Answered');
+                    expect(texts[texts.length-8].getText()).toBe('first answer');
+                    expect(texts[texts.length-7].getText()).toBe('second answer');
+                    expect(texts[texts.length-1].getText()).toBe('Number of Students');
+                });
+                ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                    ptor.executeScript('window.scrollBy(0, 500)', '');
+                    rects[rects.length-17].click()
+                        .then(function(){
+//                            ptor.sleep(20000);
+                            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
 //                                texts.forEach(function(text, i){
 //                                    text.getText().then(function(value){
 //                                        console.log(value);
 //                                    })
 //                                })
-//                                expect(texts[texts.length-13].getText()).toBe('first answer');
-//                                expect(texts[texts.length-12].getText()).toBe('Answered:');
-//                                expect(texts[texts.length-11].getText()).toBe('1');
-//                            });
+                                expect(texts[texts.length-13].getText()).toBe('first answer');
+                                expect(texts[texts.length-12].getText()).toBe('Answered:');
+                                expect(texts[texts.length-11].getText()).toBe('1');
+                            });
+                        });
+                    rects[rects.length-2].click()
+                        .then(function(){
+                            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                                expect(texts[texts.length-3].getText()).toBe('second answer');
+                                expect(texts[texts.length-2].getText()).toBe('Answered:');
+                                expect(texts[texts.length-1].getText()).toBe('1');
+                            });
+                        });
+                });
+        });
+        doRefresh(ptor);
+        it('should go to the Quizzes tab', function(){
+            ptor.executeScript('window.scrollBy(0, -2000)', '');
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[6]/a')).then(function(tab){
+                tab.click();
+                ptor.sleep(2000);
+            });
+        });
+        it('should display the two quizzes charts with thier data', function(){
+            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[6]/tab6/select')).then(function(dropdown){
+                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[6]/tab6/div/center/b')).then(function(quiz_name){
+                    expect(quiz_name.getText()).toBe('New Quiz');
+                });
+                ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+//                    texts.forEach(function(text, i){
+//                        text.getText().then(function(value){
+//                            console.log(value+' + '+i);
 //                        });
-//                    rects[rects.length-2].click()
-//                        .then(function(){
-//                            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                                expect(texts[texts.length-3].getText()).toBe('second answer');
-//                                expect(texts[texts.length-2].getText()).toBe('Answered:');
-//                                expect(texts[texts.length-1].getText()).toBe('1');
-//                            });
-//                        });
-//                });
-//        });
-//        doRefresh(ptor);
-//        it('should go to the Quizzes tab', function(){
-//            ptor.executeScript('window.scrollBy(0, -2000)', '');
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/ul/li[6]/a')).then(function(tab){
-//                tab.click();
-//                ptor.sleep(2000);
-//            });
-//        });
-//        it('should display the two quizzes charts with thier data', function(){
-//            ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[6]/tab6/select')).then(function(dropdown){
-//                ptor.findElement(protractor.By.xpath('//*[@id="details"]/ui-view/div[2]/div/div[6]/tab6/div/center/b')).then(function(quiz_name){
-//                    expect(quiz_name.getText()).toBe('New Quiz');
-//                });
-//                ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-////                    texts.forEach(function(text, i){
-////                        text.getText().then(function(value){
-////                            console.log(value+' + '+i);
-////                        });
-////                    });
-//                    expect(texts[texts.length-12].getText()).toBe('First Question');
-//                    expect(texts[texts.length-11].getText()).toBe('Incorrect');
-//                    expect(texts[texts.length-10].getText()).toBe('Correct');
-//                    expect(texts[texts.length-9].getText()).toBe('First Answer (Correct)');
-//                    expect(texts[texts.length-8].getText()).toBe('Second Answer (Incorrect)');
-//                    expect(texts[texts.length-7].getText()).toBe('Third Answer (Incorrect)');
-//                    expect(texts[texts.length-1].getText()).toBe('Number of Students');
-//                });
-//                ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-//                    rects[rects.length-7].click()
-//                        .then(function(){
-//                            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                                expect(texts[texts.length-3].getText()).toBe('First Answer (Correct)');
-//                                expect(texts[texts.length-2].getText()).toBe('Correct:');
-//                                expect(texts[texts.length-1].getText()).toBe('1');
-//                            });
-//                        });
-//                });
-//                dropdown.click().then(function(){
-//                    ptor.findElements(protractor.By.tagName('option')).then(function(options){
-//                        options[2].click();
 //                    });
-//                    ptor.sleep(2000);
-//                });
-//                ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-////                    texts.forEach(function(text, i){
-////                        text.getText().then(function(value){
-////                            console.log(value+' + '+i);
-////                        });
-////                    });
-//                    expect(texts[texts.length-11].getText()).toBe('First Question');
-//                    expect(texts[texts.length-10].getText()).toBe('Incorrect');
-//                    expect(texts[texts.length-9].getText()).toBe('Correct');
-//                    expect(texts[texts.length-8].getText()).toBe('Should be correct (Correct)');
-//                    expect(texts[texts.length-7].getText()).toBe('should be false (Incorrect)');
-//                    expect(texts[texts.length-1].getText()).toBe('Number of Students');
-//                });
-//                ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-//                    rects[rects.length-2].click()
-//                        .then(function(){
-//                            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
-//                                expect(texts[texts.length-3].getText()).toBe('should be false (Incorrect)');
-//                                expect(texts[texts.length-2].getText()).toBe('Incorrect:');
-//                                expect(texts[texts.length-1].getText()).toBe('1');
-//                            });
+                    expect(texts[texts.length-12].getText()).toBe('First Question');
+                    expect(texts[texts.length-11].getText()).toBe('Incorrect');
+                    expect(texts[texts.length-10].getText()).toBe('Correct');
+                    expect(texts[texts.length-9].getText()).toBe('First Answer (Correct)');
+                    expect(texts[texts.length-8].getText()).toBe('Second Answer (Incorrect)');
+                    expect(texts[texts.length-7].getText()).toBe('Third Answer (Incorrect)');
+                    expect(texts[texts.length-1].getText()).toBe('Number of Students');
+                });
+                ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                    rects[rects.length-7].click()
+                        .then(function(){
+                            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                                expect(texts[texts.length-3].getText()).toBe('First Answer (Correct)');
+                                expect(texts[texts.length-2].getText()).toBe('Correct:');
+                                expect(texts[texts.length-1].getText()).toBe('1');
+                            });
+                        });
+                });
+                dropdown.click().then(function(){
+                    ptor.findElements(protractor.By.tagName('option')).then(function(options){
+                        options[2].click();
+                    });
+                    ptor.sleep(2000);
+                });
+                ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+//                    texts.forEach(function(text, i){
+//                        text.getText().then(function(value){
+//                            console.log(value+' + '+i);
 //                        });
-//                });
-//            });
-//        });
-//    });
+//                    });
+                    expect(texts[texts.length-11].getText()).toBe('First Question');
+                    expect(texts[texts.length-10].getText()).toBe('Incorrect');
+                    expect(texts[texts.length-9].getText()).toBe('Correct');
+                    expect(texts[texts.length-8].getText()).toBe('Should be correct (Correct)');
+                    expect(texts[texts.length-7].getText()).toBe('should be false (Incorrect)');
+                    expect(texts[texts.length-1].getText()).toBe('Number of Students');
+                });
+                ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
+                    rects[rects.length-2].click()
+                        .then(function(){
+                            ptor.findElements(protractor.By.tagName('text')).then(function(texts){
+                                expect(texts[texts.length-3].getText()).toBe('should be false (Incorrect)');
+                                expect(texts[texts.length-2].getText()).toBe('Incorrect:');
+                                expect(texts[texts.length-1].getText()).toBe('1');
+                            });
+                        });
+                });
+            });
+        });
+    });
 
 
 

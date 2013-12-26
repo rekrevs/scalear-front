@@ -78,7 +78,7 @@ angular.module('scalearAngularApp')
 			if($scope.questions[elem].question_type.toUpperCase() == 'DRAG'){
 				var obj = CourseEditor.mergeDragAnswers($scope.questions[elem].answers, "quiz", $scope.questions[elem].id)
 				$scope.questions[elem].answers.forEach(function(ans){
-					if(ans.id && obj.id==null){
+					if(ans.id && obj.id===null){
 						obj.id = ans.id
 						return 
 					}

@@ -10,11 +10,13 @@ angular.module('scalearAngularApp')
 			remove:"&",
 			open: "="
 		},
-		template: "<h5 ng-click='invertOpen()'>"+
-					"<img src='images/move2.png' class='handle' title={{'courses.drag_to_reorder'|translate}} />"+
-					"<a class='trigger' ng-class='{open:open[id]}' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
-					"<delete_button size='small' action='remove({event:event})' name='module_delete_button'/>"+
-				  "</h5>",
+				// template: "<h5 ng-click='invertOpen()'>"+
+				// 	"<img src='images/move2.png' class='handle' title={{'courses.drag_to_reorder'|translate}} />"+
+				// 	"<a class='trigger' ng-class='{open:open[id]}' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
+				// 	"<delete_button size='small' action='remove({event:event})' name='module_delete_button'/>"+
+				//   "</h5>",
+
+		templateUrl:'/views/teacher/course_editor/module.html' ,
 	  link: function(scope){
 			scope.invertOpen = function()
 			{
@@ -37,9 +39,7 @@ angular.module('scalearAngularApp')
 		 	remove:'&'
 		 },
 		 restrict: 'E', 
-		 template: '<img src="images/move2.png" class="handle" title={{"courses.drag_to_reorder"|translate}} />'+
-	               '<a class="trigger2" ui-sref=\'course.course_editor.{{(className=="lecture") && "lecture.quizList" || className}}({ {{className}}_id: id })\' >{{name}}</a>'+
-	               '<delete_button size="small" action="remove()"/>'
+		 templateUrl:'/views/teacher/course_editor/item.html',
 	};
 }).directive('buttonLink', function(){
 	return {
@@ -99,7 +99,7 @@ angular.module('scalearAngularApp')
 		},		
 	 	restrict: 'E',
 	 	replace:true,
-	 	template: '<div ng-show="show"><img ng-src="images/loading_{{size}}.gif" ng-class=\'{loading_image: size=="big"}\' /></br><b><span translate>groups.please_wait</span>...</b></div>'
+	 	templateUrl:'/views/teacher/course_editor/loading.html',
 	};
 }).directive('deleteButton',function(){
 	return {
@@ -109,8 +109,6 @@ angular.module('scalearAngularApp')
 		},
         replace: true,
 		restrict:'E',
-		template: 	'<a style="float:right;width:20px;cursor:pointer;" title={{"delete"|translate}} class="delete_image" ng-click="action({event:$event})">'+
-						'<img alt="Trash" ng-src="images/trash_{{size}}.png">'+
-					'</a>'
+		templateUrl: '/views/teacher/course_editor/delete_button.html',
 	}
 });

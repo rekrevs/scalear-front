@@ -32,12 +32,12 @@ angular.module('scalearAngularApp')
 				$scope.announcements= JSON.parse(data.announcements);
 				
 			   	 for (var element in $scope.calendar.events){
-			   		if($scope.calendar.events[element].quizId!=null)
+			   		if($scope.calendar.events[element].quizId!==null)
 			   			$scope.calendar.events[element].url= $state.href("course.lectures.quiz",{course_id: $scope.calendar.events[element].courseId, quiz_id:$scope.calendar.events[element].quizId})
-			 		else if($scope.calendar.events[element].lectureId!=null)
+			 		else if($scope.calendar.events[element].lectureId!==null)
 			        	$scope.calendar.events[element].url= $state.href("course.lectures.lecture",{course_id: $scope.calendar.events[element].courseId, lecture_id:$scope.calendar.events[element].lectureId})
 					else{
-						if($scope.calendar.events[element].firstItem==null)
+						if($scope.calendar.events[element].firstItem===null)
 							$scope.calendar.events[element].url= $state.href("course.lectures",{course_id: $scope.calendar.events[element].courseId})
 						else{
 							if($scope.calendar.events[element].firstItemType=="Lecture")

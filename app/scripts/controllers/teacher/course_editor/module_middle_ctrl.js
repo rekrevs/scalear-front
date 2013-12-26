@@ -58,7 +58,7 @@ angular.module('scalearAngularApp')
 		$scope.validateName= function(data, elem){
 			var d = $q.defer();
 		    var doc={}
-		    doc["name"]=data;
+		    doc.name=data;
 		    Document.validateName(
 		    	{document_id: elem.id},
 		    	doc,
@@ -79,7 +79,7 @@ angular.module('scalearAngularApp')
 		$scope.validateURL= function(data, elem){
 			var d = $q.defer();
 		    var doc={}
-		    doc["url"]=data;
+		    doc.url=data;
 		    Document.validateURL(
 		    	{document_id: elem.id},
 		    	doc,

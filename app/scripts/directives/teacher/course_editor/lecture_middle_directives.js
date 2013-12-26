@@ -70,9 +70,7 @@ angular.module('scalearAngularApp')
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-style='{left: xcoor, top: ycoor, position: \"absolute\", lineHeight:\"0px\"}' data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
-		 				"<img ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' ng-click='updateValues()' />"+
-	 				"</div>",
+		 templateUrl:'/views/teacher/course_editor/answer.html',
 
 		link: function(scope, element, attrs) {
 
@@ -95,9 +93,9 @@ angular.module('scalearAngularApp')
 				$log.debug("image change")
 				$log.debug(scope.data.correct)
 				if(scope.quiz.question_type == "OCQ")
-					scope.imgName = scope.data.correct? 'button_green.png' : 'button8.png';
+					scope.imgName = scope.data.correct? scope.ocq_correct : scope.ocq_incorrect;
 				else
-					scope.imgName = scope.data.correct? 'checkbox_green.gif' : 'checkbox.gif';
+					scope.imgName = scope.data.correct? scope.mcq_correct : scope.mcq_incorrect;
 			}
 
 			scope.calculatePosition=function(){
@@ -135,7 +133,7 @@ angular.module('scalearAngularApp')
 				for(var element in scope.quiz.answers)
 				{
 					$log.debug(scope.quiz.answers[element].correct)
-					if(scope.quiz.answers[element].correct==true)
+					if(scope.quiz.answers[element].correct===true)
 					{
 						$log.debug("in true");
 						scope.values+=1
@@ -227,7 +225,7 @@ angular.module('scalearAngularApp')
 
 			scope.dragClass = "component dropped answer_drag" 
 
-			if(scope.data.pos == null){	
+			if(scope.data.pos === null){	
 				$log.debug("pos undefined")
 				var max = Math.max.apply(Math,scope.list)
 				max = max ==-Infinity? -1 : max
@@ -240,7 +238,7 @@ angular.module('scalearAngularApp')
 
 			if(!(scope.data.explanation instanceof Array)){
 				$log.debug("not an array")
-				scope.data.explanation = new Array()
+				scope.data.explanation = []
 				for(var i in scope.list)
 					scope.data.explanation[i]=""
 			}
@@ -383,7 +381,7 @@ angular.module('scalearAngularApp')
 				for(var element in scope.quiz.answers)
 				{
 					$log.debug(scope.quiz.answers[element].correct)
-					if(scope.quiz.answers[element].correct==true)
+					if(scope.quiz.answers[element].correct===true)
 					{
 						$log.debug("in true");
 						scope.values+=1

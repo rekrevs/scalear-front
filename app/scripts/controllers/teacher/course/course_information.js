@@ -16,15 +16,15 @@ angular.module('scalearAngularApp')
                   $scope.data.course[type] = data
             }
             var modified_course=angular.copy($scope.data.course);
-            delete modified_course["id"];
-            delete modified_course["created_at"];
-            delete modified_course["updated_at"];
-            delete modified_course["unique_identifier"];
+            delete modified_course.id;
+            delete modified_course.created_at;
+            delete modified_course.updated_at;
+            delete modified_course.unique_identifier;
             $log.debug(modified_course);
             Course.update(
                 {course_id:$stateParams.course_id},
-                {course:modified_course}
-                ,function(response){
+                {course:modified_course},
+                function(response){
                 	$scope.data=response;
                 });
         }
@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
 		        $log.debug(data.status);
 		        $log.debug(data);
 		        if(data.status==422)
-		          d.resolve(data.data["errors"].join());
+		          d.resolve(data.data.errors.join());
 		        else
 		          d.reject('Server Error');
 		        }

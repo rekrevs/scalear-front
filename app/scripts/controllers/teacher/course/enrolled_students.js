@@ -56,7 +56,7 @@ var app = angular.module('scalearAngularApp')
             });
             $state.go('course.send_emails');
         }
-        $scope.selected = new Array();
+        $scope.selected = []
         $scope.select = function(id, email){
           if($scope.selected[id] == email){
               $log.debug('should deselect');

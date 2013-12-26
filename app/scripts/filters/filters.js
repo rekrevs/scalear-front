@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
       if (sec < 10)  { sec  = "0" + sec; }
       if (hr)            { hr   = "00"; }
 
-      if (format != null) {
+      if (format !== null) {
         var formatted_time = format.replace('hh', hr);
         formatted_time = formatted_time.replace('h', hr*1+""); // check for single hour formatting
         formatted_time = formatted_time.replace('mm', min);

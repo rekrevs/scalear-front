@@ -57,7 +57,7 @@ angular.module('scalearAngularApp')
 
         }
         $scope.check = function(value, index){
-            if(value == ''){
+            if(value ===''){
                 $scope.new_teachers[index].email = null;
             }
         }

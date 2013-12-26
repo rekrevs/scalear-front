@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
         $scope.disable_new = true;
         for(var element in $scope.announcements)
   		{
-  			if($scope.announcements[element].show==true)
+  			if($scope.announcements[element].show===true)
   				$scope.hideAnnouncement(element);
   		}
   		$scope.newAnnouncement= {announcement:"", created_at: new Date(), show:true};
@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
   	$scope.showAnnouncement = function(index){
         for(var element in $scope.announcements)
   		{
-  			if($scope.announcements[element].show==true)
+  			if($scope.announcements[element].show===true)
   				$scope.hideAnnouncement(element);
   		}
         $scope.disable_new = true;
@@ -80,7 +80,7 @@ angular.module('scalearAngularApp')
             $scope.disable_new = false;
   		    },
           function(response){
-      			$scope.announcements[index].errors=response["data"].errors
+      			$scope.announcements[index].errors=response.data.errors
       		}
         )
   		}
@@ -93,7 +93,7 @@ angular.module('scalearAngularApp')
       			$scope.disable_new = false;
       		},
           function(response){
-      			$scope.announcements[index].errors=response["data"].errors
+      			$scope.announcements[index].errors=response.data.errors
       		}
         )
   		}

@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
   		User.getCurrentUser(function(data){
    			data.user=JSON.parse(data.user);
    			$log.debug(data);
-   			if(data.signed_in == true)
+   			if(data.signed_in === true)
    			{
    				$rootScope.current_user=data.user
    				$rootScope.current_user.invitations=data.invitations

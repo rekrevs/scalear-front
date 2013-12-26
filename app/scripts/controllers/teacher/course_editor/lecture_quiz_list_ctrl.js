@@ -58,7 +58,7 @@ angular.module('scalearAngularApp')
 	$scope.validateName= function(data, elem){
 		var d = $q.defer();
 	    var doc={}
-	    doc["question"]=data;
+	    doc.question=data;
 	    $log.debug($scope.$parent.quiz_list);
 	    OnlineQuiz.validateName(
 	    	{online_quizzes_id: elem.id},

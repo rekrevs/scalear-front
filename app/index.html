@@ -10,14 +10,14 @@
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
-
-    <!-- build:css(.tmp) styles/main.css -->
     <link rel="shortcut icon" type="image/x-icon" href="/logo.ico">
+
+    <!-- build:css(.tmp/styles) styles/main.css -->
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/main.css">
-    
-    <link href="bower_components/angular-xeditable/dist/css/xeditable.css" rel="stylesheet">
+    <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css" />
     <!-- endbuild -->
   </head>
 
@@ -98,7 +98,7 @@
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
+   <!--  <script>
        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
@@ -108,17 +108,18 @@
        ga('send', 'pageview');
     </script>
 
-    <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
-
+    
+    <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>-->
+    <!-- build:js({.tmp,app}) scripts/externals.js -->
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-
-    <!-- bower:js -->
+    
     <script src="bower_components/angular/angular.min.js"></script>   
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
+
     <script src="bower_components/angular-translate/angular-translate.min.js"></script>
     <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="bower_components/moment/min/moment.min.js"></script>
@@ -131,6 +132,7 @@
     <script src="bower_components/fullcalendar/fullcalendar.min.js"></script>
     <script src="bower_components/tinymce/tinymce.min.js"></script>
     <script src="bower_components/angular-ui-tinymce/src/tinymce.js"></script>
+
     
     <script src="bower_components/canvg-1.3.zip/canvg.js"></script>
     <script src="bower_components/canvg-1.3.zip/rgbcolor.js"></script>
@@ -139,10 +141,6 @@
     <script src="bower_components/angular-ui-sortable/src/sortable.js"></script>
     <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
-    
-    
-    <script src="scripts/externals/shortcut.js"></script>
-    <!-- endbower -->
 
     <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/accordion/accordion.js"></script>
@@ -158,28 +156,11 @@
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
-    
-    <!--<script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-alert.js"></script>   
-    <script src="bower_components/bootstrap-sass/js/bootstrap-modal.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-transition.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-button.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-typeahead.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-carousel.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-scrollspy.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-collapse.js"></script>
-    <script src="bower_components/bootstrap-sass/js/bootstrap-tab.js"></script>-->
-    <!-- endbuild -->
-
-    <!-- build:js scripts/modules.js -->
-    
-	
-	
-	
-	
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/externals/shortcut.js"></script>
+
     <script src="locals/translation_en.js"></script>
     <script src="locals/translation_sv.js"></script>
 

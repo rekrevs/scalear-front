@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
             $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
 		  	$scope.quiz.questions.forEach(function(question,index){
 					question.answers = data.answers[index]
-					 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]==null) // if drag was not solved, put student answer from shuffled answers.
+					 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]===null) // if drag was not solved, put student answer from shuffled answers.
 						 $scope.studentAnswers[question.id]=question.answers[0].content
 			});
             if($scope.quiz.quiz_type=='survey')
@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
     		Quiz.saveStudentQuiz({quiz_id: $stateParams.quiz_id},{student_quiz: $scope.studentAnswers, commit: action}, function(data){
     			$scope.status=data.status;
     			$scope.alert_messages= data.alert_messages;
-    			if(data.correct!=null)
+    			if(data.correct!==null)
     				$scope.correct=data.correct; 
     				// here need to update scope.parent
     				var group_index= CourseEditor.get_index_by_id($scope.$parent.course.groups, data.done[1])

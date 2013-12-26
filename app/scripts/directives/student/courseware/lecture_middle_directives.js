@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
 .directive("controls",['$timeout','Lecture','$stateParams', '$window', '$log', function($timeout, Lecture, $stateParams, $window, $log) {
   return {
     restrict:"E",
-    templateUrl:"../views/student/lectures/controls.html",
+    templateUrl:"/views/student/lectures/controls.html",
     link: function(scope, element, attrs) {
 
     	element.css("width", "200px");
@@ -74,7 +74,7 @@ angular.module('scalearAngularApp')
     	scope.question= function(){
     		$log.debug("in question");
     		scope.show_question=!scope.show_question;
-    		if(scope.show_question==true)
+    		if(scope.show_question===true)
     			scope.lecture_player.controls.pause();	
     		else
     			scope.lecture_player.controls.play();
@@ -138,7 +138,7 @@ angular.module('scalearAngularApp')
   		
   		scope.lecture_player.events.onPause= function(){
    			$log.debug("in here");
-   			if(scope.display_mode!=true) //not a quiz
+   			if(scope.display_mode!==true) //not a quiz
    				scope.pause();
    		}
      		
@@ -152,7 +152,7 @@ angular.module('scalearAngularApp')
 .directive("notification", ['$translate', '$window', '$log', function($translate, $window, $log) {
   return {
     restrict:"E",
-    template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification==true" style="vertical-align:middle"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div></div>',
+    template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification===true" style="vertical-align:middle"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!==true" style="vertical-align:middle">{{show_notification}}</div></div>',
 
     link: function(scope, element, attrs) {
       scope.correct_notify=$translate("lectures.correct")
@@ -231,7 +231,7 @@ angular.module('scalearAngularApp')
     		}else{
     			$log.debug(scope.answer_form);
     			
-    			if(scope.answer_form.$error.atleastone==false)
+    			if(scope.answer_form.$error.atleastone===false)
     			{
     				$log.debug("valid form")
     				scope.submitted=false;
@@ -256,7 +256,7 @@ angular.module('scalearAngularApp')
               selected_answers.push(answer.id)
           })
 
-          if(selected_answers.length == 0)
+          if(selected_answers.length === 0)
           {
           	$log.debug(scope.$parent);
           	// notify
@@ -309,13 +309,13 @@ angular.module('scalearAngularApp')
   		
 
       var displayResult=function(data, done){
-        for(var el in data["detailed_exp"])
-          scope.explanation[el]= data["detailed_exp"][el];
+        for(var el in data.detailed_exp)
+          scope.explanation[el]= data.detailed_exp[el];
 
-        scope.verdict=data["correct"]? $translate("lectures.correct"): $translate("lectures.incorrect")
+        scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
         scope.$parent.show_notification=true;
 
-		if(data["msg"]!="Empty") // he chose sthg
+		if(data.msg!="Empty") // he chose sthg
 	    {
 	    	// here need to update scope.$parent.$parent
 	    	var group_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups, data.done[1])
@@ -385,7 +385,7 @@ angular.module('scalearAngularApp')
 				for(var element in scope.studentAnswers[scope.quiz.id])
 				{
 					$log.debug(scope.studentAnswers[scope.quiz.id][element]);
-					if(scope.studentAnswers[scope.quiz.id][element]==true)
+					if(scope.studentAnswers[scope.quiz.id][element]===true)
 					{
 						$log.debug("in true");
 						scope.values+=1
@@ -415,7 +415,7 @@ angular.module('scalearAngularApp')
 				{
 					$log.debug("exp changed!!!")
 					scope.mypop={
-						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
+						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]===true, \'red_notification\':explanation[answer.id][0]===false}">{{explanation[answer.id][0]===true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
 						content:'<div>{{explanation[answer.id][1]}}</div>',
 						html:true,
 						trigger:'hover'
@@ -442,7 +442,7 @@ angular.module('scalearAngularApp')
 				{
 					$log.debug("exp changed!!!")
 					scope.mypop={
-						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
+						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]===true, \'red_notification\':explanation[answer.id][0]===false}">{{explanation[answer.id][0]===true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
 						content:'<div>{{explanation[answer.id][1]}}</div>',
 						html:true,
 						trigger:'hover'

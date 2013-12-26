@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
     'response': function(response) {
       // do something on success
       var re= new RegExp("^"+scalear_api.host)
-      if($rootScope.server_error==true && response.config.url.search(re)!=-1) // if response coming from server, and connection was bad
+      if($rootScope.server_error===true && response.config.url.search(re)!=-1) // if response coming from server, and connection was bad
       {
       	$rootScope.show_alert="success";
       	ErrorHandler.showMessage("Connected", 'errorMessage', 2000);
@@ -53,7 +53,7 @@ angular.module('scalearAngularApp')
       if(rejection.status==400 && rejection.config.url.search(re)!=-1) 
       {
       	$rootScope.show_alert="error";
-      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
+      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data.errors, 'errorMessage', 8000);
       	$timeout(function(){
       		$rootScope.show_alert="";	
       	},4000);
@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
       		$state.go("login") //check
       		
       	$rootScope.show_alert="error";
-      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
+      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data.errors, 'errorMessage', 8000);
       	$timeout(function(){
       		$rootScope.show_alert="";	
       	},4000);
@@ -113,15 +113,15 @@ angular.module('scalearAngularApp')
       	
       }
       var re= new RegExp("^"+scalear_api.host)
-      if(rejection.status==0 && rejection.config.url.search(re)!=-1 && $rootScope.unload!=true) //host not reachable
+      if(rejection.status===0 && rejection.config.url.search(re)!=-1 && $rootScope.unload!==true) //host not reachable
       {
       	
-      	if($rootScope.server_error!=true)
+      	if($rootScope.server_error!==true)
       	{
       	$rootScope.server_error=true;
       	$rootScope.show_alert="error";
       	
-      	if(rejection.data=="")      	
+      	if(rejection.data==="")      	
       		ErrorHandler.showMessage('Error ' + rejection.status + ': ' + "Cannot connect to server", 'errorMessage', 8000);
       	else
       		ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);

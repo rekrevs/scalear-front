@@ -23,6 +23,8 @@ var translation_sv=function(){
       close: "Stänga",
       delete: "Radera",
       character_exceed_limit: "Den inmatade texten var för lång.",
+      ie_disclaimer: "Internet Explorer är inte helt förenlig med de interaktiva videofunktioner som används om Scalable lärande. Vi rekommenderar att du använder",
+      chrome: "Google Chrome webbläsare",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",

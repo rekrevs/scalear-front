@@ -25,7 +25,7 @@ angular.module('scalearAngularApp')
       		controller: "StudentEnrollModalCtrl",
     	})
 
-    	modalInstance.result.then(function (enrollment_key) {
+    	modalInstance.result.then(function () {
     		$rootScope.show_alert="success";	
     		ErrorHandler.showMessage("Successfully Joined Course", 'errorMessage', 2000);
     		$timeout(function(){

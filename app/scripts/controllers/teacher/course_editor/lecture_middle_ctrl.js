@@ -263,7 +263,7 @@ angular.module('scalearAngularApp')
 			online_quiz_id: $scope.selected_quiz.id
 			},
 			{answer: ans, quiz_title:title },
-			function(data){ //success
+			function(){ //success
 				if($scope.selected_quiz.quiz_type =="invideo")
 					getQuizData();
 				else

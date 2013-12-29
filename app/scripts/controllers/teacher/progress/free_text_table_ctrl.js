@@ -20,7 +20,6 @@ angular.module('scalearAngularApp')
 
     $scope.saveCheckedHide = function(answer){
     	var survey_id = $scope.survey_id
-    	var hide=answer.id
     	Quiz.hideResponses(
     		{quiz_id: survey_id},
     		{hide: answer}

@@ -20,15 +20,16 @@ angular.module('scalearAngularApp')
   	$scope.deleteAnnouncement=function(index){
   		if(confirm($translate('announcement_form.confirm_delete'))){
   		if($scope.announcements[index].id){
-	  		Announcement.destroy({course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},{},function(data){
-	  			//init();
-	  			$scope.announcements.splice(index, 1)
-                $scope.disable_new = false;
-            })
+	  		Announcement.destroy(
+          {course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},
+          {},
+          function(){
+  			      $scope.announcements.splice(index, 1)
+              $scope.disable_new = false;
+          })
 	  	}else
 	  		$scope.announcements.splice(index, 1);
             $scope.disable_new = false;
-
         }
   	}
   	

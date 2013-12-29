@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
 	var init= function(){
 		OnlineQuiz.getQuizList(
 			{lecture_id:$scope.lecture.id},
-			function(data){
+			function(){
 				$scope.$parent.quiz_list = data.quizList
 			},
 			function(){
@@ -63,7 +63,7 @@ angular.module('scalearAngularApp')
 	    OnlineQuiz.validateName(
 	    	{online_quizzes_id: elem.id},
 	    	doc,
-	    	function(data){
+	    	function(){
 				d.resolve()
 			},function(data){
 				$log.debug(data.status);

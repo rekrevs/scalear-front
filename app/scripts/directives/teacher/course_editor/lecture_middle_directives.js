@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
 						'</ul>'+
 				  	'</div>'
 	};
-}).directive('answervideo', ['$compile',function($compile){
+}).directive('answervideo', [function(){
 	return {
 		 scope: {
 		 	quiz:"=",
@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
 		 restrict: 'E',
 		 templateUrl:'/views/teacher/course_editor/answer.html',
 
-		link: function(scope, element, attrs) {
+		link: function(scope, element) {
 
 			//===FUNCTIONS===//
 			var setAnswerLocation=function(){
@@ -191,7 +191,7 @@ angular.module('scalearAngularApp')
 	 					"</div>"+
  					"</div>",
 
-		link: function(scope, element, attrs) {
+		link: function(scope, element) {
 			 
 			//===FUNCTIONS===//
 			var setAnswerLocation=function(){
@@ -318,7 +318,7 @@ angular.module('scalearAngularApp')
 							"<br/>"+
 						"</div>"+
 					"</ng-form>",
-		link: function(scope, element, iAttrs) {
+		link: function(scope, element) {
 			$log.debug("QUIZZ is ");
 			$log.debug(scope.quiz);
 			scope.addAnswer=scope.add()
@@ -469,9 +469,9 @@ angular.module('scalearAngularApp')
 }).directive('atleastone', ['$log', function($log) {
 	return {
 		require: 'ngModel',
-		link: function(scope, elm, attrs, ctrl) {
+		link: function(scope, elm, ctrl) {
 		
-			scope.validate = function(value) {
+			scope.validate = function() {
 				if (scope.values<1) {
 					$log.debug("errorrr");
 					ctrl.$setValidity('atleastone', false);

@@ -13,9 +13,7 @@ angular.module('scalearAngularApp')
 				$scope.import_from=""				
 				$scope.course.start_date = new Date()
 
-			},function(response){
-				
-			}
+			},function(){}
 		);
 		
 		$scope.createCourse = function(){

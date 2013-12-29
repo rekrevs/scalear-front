@@ -15,9 +15,9 @@ angular.module('scalearAngularApp')
             var answer = confirm($translate('courses.you_sure_remove_teacher', {teacher: $scope.teachers[index].email}));
             if(answer){
                 Course.deleteTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email}, {},
-                    function(value) {$scope.teachers.splice(index, 1);},
+                    function() {$scope.teachers.splice(index, 1);},
                     //handle the server error
-                    function(value) {}
+                    function() {}
                 )
 
                 $log.debug($scope.teachers);
@@ -35,12 +35,12 @@ angular.module('scalearAngularApp')
                    $scope.teachers = value.data;
                    $scope.new_teachers = [];
                },
-               function(value){}
+               function(){}
             )
         }
         $scope.saveTeachers = function(){
             Course.saveTeachers({course_id:$stateParams.course_id},{new_teachers:$scope.new_teachers},
-                function(value) {
+                function() {
                     $scope.error = $scope.getTeachers();
                 },
                 //handle error

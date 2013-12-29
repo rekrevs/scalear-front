@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('teacherNavigation', ['ErrorHandler',function(ErrorHandler) {
+	.directive('teacherNavigation', [function() {
            return{
 			replace:true,
 			restrict: "E",
@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
  }]);
  
 angular.module('scalearAngularApp')
-	.directive('studentNavigation', ['ErrorHandler',function(ErrorHandler) {
+	.directive('studentNavigation', [function() {
            return{
 			replace:true,
 			restrict: "E",

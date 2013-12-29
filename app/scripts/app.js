@@ -70,7 +70,7 @@
 		$window.onbeforeunload= function(){
 			$rootScope.unload=true;
 		}
-  		$rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
+  		$rootScope.$on('$stateChangeStart', function (ev, to) {
     	
     		UserSession.getRole().then(function(result){
     			var s=1;

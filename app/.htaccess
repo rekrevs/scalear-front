@@ -423,8 +423,12 @@ AddDefaultCharset utf-8
 # be removed: http://developer.yahoo.com/performance/rules.html#etags.
 
 # `FileETag None` is not enough for every server.
-<IfModule mod_headers.c>
-    Header unset ETag
+<IfModule mod_headers.c>    
+    <FilesMatch "\.(ico|pdf|flv|jpg|jpeg|png|gif|js|css)$">
+        Header set Cache-Control "max-age=2592000, public, must-revalidate"
+        Header unset ETag
+        Header unset Last-Modified
+    </FilesMatch>
 </IfModule>
 
 FileETag None
@@ -541,3 +545,5 @@ FileETag None
 # <IfModule mod_headers.c>
 #    Header set Connection Keep-Alive
 # </IfModule>
+
+

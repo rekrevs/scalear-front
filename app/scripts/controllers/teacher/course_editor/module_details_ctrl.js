@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
 	    	{course_id:$stateParams.course_id,
 	    	module_id:$scope.module.id},
 	    	group,
-	    	function(data){
+	    	function(){
 				d.resolve()
 			},function(data){
 				$log.debug(data.status);
@@ -33,9 +33,15 @@ angular.module('scalearAngularApp')
     };
     
       $scope.updateModule=function(data,type){
+        console.log('hello world')
+        console.log(data)
+        console.log(type)
         if(data && data instanceof Date){ 
+              console.log('goodbye')
               data.setMinutes(data.getMinutes() + 120);
               $scope.module[type] = data
+
+              console.log($scope.module[type])
         }
         var modified_module=angular.copy($scope.module);
         delete modified_module.id;

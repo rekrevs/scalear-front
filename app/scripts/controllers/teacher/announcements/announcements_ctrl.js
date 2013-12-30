@@ -13,34 +13,40 @@ angular.module('scalearAngularApp')
   		Announcement.index({course_id: $stateParams.course_id},
   			function(data){
   				$scope.announcements=data;
+          $scope.show_button = true
   			}
   		)
   	}
   	
   	$scope.deleteAnnouncement=function(index){
-  		if(confirm($translate('announcement_form.confirm_delete'))){
+  		//if(confirm($translate('announcement_form.confirm_delete'))){
   		if($scope.announcements[index].id){
-	  		Announcement.destroy({course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},{},function(data){
-	  			//init();
-	  			$scope.announcements.splice(index, 1)
-                $scope.disable_new = false;
-            })
+	  		Announcement.destroy(
+          {course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},
+          {},
+          function(){
+  			      $scope.announcements.splice(index, 1)
+              $scope.disable_new = false;
+          })
 	  	}else
 	  		$scope.announcements.splice(index, 1);
             $scope.disable_new = false;
-
-        }
+      //  }
   	}
   	
   	$scope.createAnnouncement= function(){
         $scope.disable_new = true;
         for(var element in $scope.announcements)
   		{
-  			if($scope.announcements[element].show==true)
+  			if($scope.announcements[element].show===true)
   				$scope.hideAnnouncement(element);
   		}
   		$scope.newAnnouncement= {announcement:"", created_at: new Date(), show:true};
-  		$scope.announcements.push($scope.newAnnouncement);
+      if(!($scope.announcements instanceof Array)){
+          $scope.announcements = []
+      }
+          
+		  $scope.announcements.push($scope.newAnnouncement);
   	}
   	$scope.hideAnnouncement = function(index){ //get old data.
         $scope.disable_new = false;
@@ -61,7 +67,7 @@ angular.module('scalearAngularApp')
   	$scope.showAnnouncement = function(index){
         for(var element in $scope.announcements)
   		{
-  			if($scope.announcements[element].show==true)
+  			if($scope.announcements[element].show===true)
   				$scope.hideAnnouncement(element);
   		}
         $scope.disable_new = true;
@@ -80,7 +86,7 @@ angular.module('scalearAngularApp')
             $scope.disable_new = false;
   		    },
           function(response){
-      			$scope.announcements[index].errors=response["data"].errors
+      			$scope.announcements[index].errors=response.data.errors
       		}
         )
   		}
@@ -93,7 +99,7 @@ angular.module('scalearAngularApp')
       			$scope.disable_new = false;
       		},
           function(response){
-      			$scope.announcements[index].errors=response["data"].errors
+      			$scope.announcements[index].errors=response.data.errors
       		}
         )
   		}

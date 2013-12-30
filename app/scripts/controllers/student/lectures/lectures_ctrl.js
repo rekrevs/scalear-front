@@ -22,14 +22,14 @@ angular.module('scalearAngularApp')
 	
 	init();
 	
-    $rootScope.$on("accordianReload", function(event, args) {
+    $rootScope.$on("accordianReload", function() {
   		$log.debug("reloading accordian now..");
   		init();
   	});
     
     $scope.$on('accordianUpdate', function(event, message) {
 		$log.debug("updating accordian now")
-		$scope.open_id=message["g_id"];
+		$scope.open_id=message.g_id;
 		$scope.open[message.g_id]= true;
 		$scope.highlight_item=message.type;
 		$scope.highlight_id=message.id;

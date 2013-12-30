@@ -48,7 +48,7 @@
                         {{'controller_msg.'+new_teacher.status.toLowerCase()|translate}}
                     </td>
                     <td>
-                        <delete-button ng-if="!teacher.owner" id="delete_new_teacher" size="small" action="removeNewRow($index)" style="cursor: pointer;">
+                        <delete-button ng-if="!teacher.owner" id="delete_new_teacher" size="small" action="removeNewRow($index)" style="cursor: pointer;" hide-confirm="true">
                     </td>
                 </tr>
             </table>

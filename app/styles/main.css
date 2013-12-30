@@ -253,3 +253,8 @@ textarea.ng-invalid{ border:1px solid red; }
 	overflow-y:auto;
 }
 
+.navigation{
+  width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+}

@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
 	    var d = $q.defer();
 	    var lecture={}
 	    lecture[column]=data;
-	    if(column == 'url' && getVideoId(data) == null){
+	    if(column == 'url' && getVideoId(data) === null){
 	    	$log.debug(data)
 	    	d.resolve($translate('courses.invalid_input'));
     	}
@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
 	    Lecture.validateLecture(
 	    	{course_id: $scope.lecture.course_id, lecture_id:$scope.lecture.id},
 	    	lecture,
-	    	function(data){
+	    	function(){
 				d.resolve()
 			},function(data){
 				$log.debug(data.status);
@@ -37,12 +37,12 @@ angular.module('scalearAngularApp')
               $scope.lecture[type] = data
         } 		
 		var modified_lecture=angular.copy($scope.lecture);
-		delete modified_lecture["id"];
-		delete modified_lecture["created_at"];
-		delete modified_lecture["updated_at"];
-		delete modified_lecture["class_name"];
-		delete modified_lecture["className"];
-		delete modified_lecture["detected_aspect_ratio"];
+		delete modified_lecture.id;
+		delete modified_lecture.created_at;
+		delete modified_lecture.updated_at;
+		delete modified_lecture.class_name;
+		delete modified_lecture.className;
+		delete modified_lecture.detected_aspect_ratio;
 
 		$log.debug(modified_lecture)
 		
@@ -70,7 +70,7 @@ angular.module('scalearAngularApp')
 	var urlFormat =function(){
 		var url=$scope.lecture.url
 		var video_id = getVideoId(url)
-		if(video_id != null) {
+		if(video_id) {
 		   $scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
 		}
 	}
@@ -82,8 +82,7 @@ angular.module('scalearAngularApp')
 	var getYoutubeDetails= function(){
 		var id=$scope.lecture.url.split("v=")[1]
 		$scope.video={}
-		if(id!=null && typeof id != 'undefined')
-		{
+		if(id){
 			id= id.split("&")[0]
 			var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
 			$http.jsonp(url)
@@ -93,7 +92,7 @@ angular.module('scalearAngularApp')
 			        $scope.video.author = data.entry.author[0].name.$t;
 			        var updateFlag = $scope.lecture.duration
 			        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
-			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio === undefined)
+			        if(data.entry.media$group.yt$aspectRatio === null || data.entry.media$group.yt$aspectRatio === undefined)
 			        	$scope.lecture.detected_aspect_ratio="smallscreen";
 			        else
 			        	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;

@@ -95,12 +95,12 @@ angular.module('scalearAngularApp')
     	$scope.getSurveyCharts()
     }
 
-    $scope.makeVisibleBtn=function(visible){
+    $scope.makeVisibleBtn=function(){
     	var survey_id = $scope.selected_survey[1]
     	$scope.selected_survey[2] = !$scope.selected_survey[2]
     	Quiz.makeVisible({quiz_id:survey_id},
     		{visible:$scope.selected_survey[2]},
-    		function(data){
+    		function(){
     			$scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"
     		}
     	)

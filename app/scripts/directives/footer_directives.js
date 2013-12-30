@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
 					'<a style="cursor:pointer;" ng-click="send_technical()" translate="feedback.send"></a>'+
 					'<loading size="small" show="sending_technical"/>'+ 
 				 '</div>',
-		link: function(scope, element){
+		link: function(scope){
 			scope.show_technical = false
 			scope.toggleTechnicalDisplay=function(){
 				scope.show_technical= !scope.show_technical
@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
 		  				problem:scope.technical_data, 
 		  				lang: scope.current_lang
 		  			},
-		  			function(data){
+		  			function(){
 			  			scope.technical_data="";
 			  			scope.sending_technical=false;
 			  			scope.show_technical=false;

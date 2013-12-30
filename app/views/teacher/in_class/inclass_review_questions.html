@@ -1,8 +1,8 @@
 <div style="padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer" translate>groups.exit</a></div>
 <center>
-	<h4><b><span translate>groups.review_student_question</span>{{selected_module.name}}</b></h4>
-	<loading size=big show="loading_lectures_chart" />
-	<div ng-show="questions" style="padding:10px 40px" >
+	<h4><b><span translate>groups.review_student_question</span> {{selected_module.name}}</b></h4>
+	<loading size="big" show="loading_questions" />
+	<div ng-show="review_questions" style="padding:10px 40px" >
 		<table class="table table-striped"> 
 			<tr>
 				<th translate>groups.hide</th>

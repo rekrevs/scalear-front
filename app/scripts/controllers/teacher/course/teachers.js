@@ -12,16 +12,16 @@ angular.module('scalearAngularApp')
         }
 
         $scope.removeRow = function(index){
-            var answer = confirm($translate('courses.you_sure_remove_teacher', {teacher: $scope.teachers[index].email}));
-            if(answer){
+            //var answer = confirm($translate('courses.you_sure_remove_teacher', {teacher: $scope.teachers[index].email}));
+            //if(answer){
                 Course.deleteTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email}, {},
-                    function(value) {$scope.teachers.splice(index, 1);},
+                    function() {$scope.teachers.splice(index, 1);},
                     //handle the server error
-                    function(value) {}
+                    function() {}
                 )
 
                 $log.debug($scope.teachers);
-            }
+           // }
         }
         $scope.updateTeacher = function(index){
             Course.updateTeacher({course_id:$stateParams.course_id},{email:$scope.teachers[index].email, role_id:$scope.teachers[index].role});
@@ -35,12 +35,12 @@ angular.module('scalearAngularApp')
                    $scope.teachers = value.data;
                    $scope.new_teachers = [];
                },
-               function(value){}
+               function(){}
             )
         }
         $scope.saveTeachers = function(){
             Course.saveTeachers({course_id:$stateParams.course_id},{new_teachers:$scope.new_teachers},
-                function(value) {
+                function() {
                     $scope.error = $scope.getTeachers();
                 },
                 //handle error
@@ -57,7 +57,7 @@ angular.module('scalearAngularApp')
 
         }
         $scope.check = function(value, index){
-            if(value == ''){
+            if(value ===''){
                 $scope.new_teachers[index].email = null;
             }
         }

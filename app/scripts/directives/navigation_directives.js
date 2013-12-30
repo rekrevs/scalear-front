@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('teacherNavigation', ['ErrorHandler',function(ErrorHandler) {
+	.directive('teacherNavigation', [function() {
            return{
 			replace:true,
 			restrict: "E",
-			templateUrl: 'views/teacher_navigation.html',
+			templateUrl: '/views/teacher_navigation.html',
 			link: function(scope){
 				scope.course_information_state=function(){
 					return scope.current_state.includes('course.edit_course_information') ||
@@ -18,10 +18,10 @@ angular.module('scalearAngularApp')
  }]);
  
 angular.module('scalearAngularApp')
-	.directive('studentNavigation', ['ErrorHandler',function(ErrorHandler) {
+	.directive('studentNavigation', [function() {
            return{
 			replace:true,
 			restrict: "E",
-			templateUrl: 'views/student_navigation.html',
+			templateUrl: '/views/student_navigation.html',
 		};
  }]);

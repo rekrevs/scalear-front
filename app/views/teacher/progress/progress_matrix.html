@@ -1,7 +1,11 @@
-<div style="border:1px solid lightgray;float:right;padding: 5px;display:-webkit-inline-box;display:flex;margin-bottom:10px">
-    <div ng-repeat="stat in ['Finished on Time', 'Finished Not on time', 'Not Finished']">
-        <img ng-src='images/{{stat.split(" ").join("_")}}.png' style="width:12px">
-        <span style="margin-right:10px;font-size:12px;display:inline">{{'courses.'+stat.split(" ").join("_").toLowerCase()|translate}}</span>
+<div style="border:1px solid lightgray;float:right;padding: 5px;display:-webkit-inline-box;display:flex;margin-bottom:10px" ng-init="status_img={
+    finished_on_time:'images/Finished_on_Time.png',
+    finished_not_on_time:'images/Finished_Not_on_time.png',
+    not_finished:'images/Not_Finished.png'
+}">
+    <div ng-repeat="(stat, img) in status_img">
+        <img ng-src="{{img}}" style="width:12px">
+        <span style="margin-right:10px;font-size:12px;display:inline">{{'courses.'+stat|translate}}</span>
     </div>
 </div>
 <div style="margin-top:40px">
@@ -13,7 +17,10 @@
         <tr bindonce ng-repeat="student in students" >
             <td class="student" bo-title='student.email' bo-text="student.name"></td>            
             <td class="state" bindonce ng-repeat='module in status[student.id] track by $index' data-title="{{solvedCount[student.id][module.id]}} / {{totalLecQuiz[module.id]}} quizzes solved">
-               <center> <img class="marker" ng-src='images/{{student.status[module.id].split(" ").join("_")||module.type.split(" ").join("_")}}.png' style="width:15px;" pop-over='popover_options' unique='true'>
+               <center>
+                <img class="marker"             
+                ng-src="{{status_img[student.status[module.id].split(' ').join('_').toLowerCase()||module.type.split(' ').join('_').toLowerCase()]}}" 
+                style="width:15px;" pop-over='popover_options' unique='true'>
                 <div ng-if="lateCount[student.id][module.id] && !student.status[module.id]" >{{'('+lateCount[student.id][module.id]+' '+('controller_msg.days'|translate)+')'}}</div></center>
             </td>
         </tr>

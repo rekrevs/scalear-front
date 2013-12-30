@@ -15,10 +15,10 @@ angular.module('scalearAngularApp')
           $scope.quiz[type] = data
         }    		
      		var modified_quiz=angular.copy($scope.quiz);
-        delete modified_quiz["class_name"];   
-     		delete modified_quiz["created_at"];
-     		delete modified_quiz["updated_at"];
-        delete modified_quiz["id"];   
+        delete modified_quiz.class_name;   
+     		delete modified_quiz.created_at;
+     		delete modified_quiz.updated_at;
+        delete modified_quiz.id;   
       	Quiz.update(
           {
             course_id:$stateParams.course_id, 
@@ -35,7 +35,10 @@ angular.module('scalearAngularApp')
       var d = $q.defer();
       var quiz={}
       quiz[column]=data;
-      Quiz.validateQuiz({course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},quiz,function(data){
+      Quiz.validateQuiz(
+        {course_id:$stateParams.course_id, quiz_id:$scope.quiz.id},
+        quiz,
+        function(){
         d.resolve()
       },function(data){
         $log.debug(data.status);

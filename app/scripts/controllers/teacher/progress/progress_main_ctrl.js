@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
   	  	$scope.moduleProgressTab=function(){
   	  		enableModuleScrolling()
-	        if($scope.module_offset == null)
+	        if($scope.module_offset === null)
 	           	getModuleProgress(0,20)
   	  	}
 

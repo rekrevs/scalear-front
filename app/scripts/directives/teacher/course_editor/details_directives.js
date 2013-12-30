@@ -62,9 +62,9 @@ angular.module('scalearAngularApp')
         column: "@"
       },
       link:function(scope){
-        scope.saveData=function(){
+        scope.saveData=function(data){
           $timeout(function(){
-            scope.save()
+            scope.save({data:data, type:scope.column})
           })
         }
       }
@@ -176,7 +176,7 @@ angular.module('scalearAngularApp')
           })
         }
         
-        scope.$watch('value', function(newval){
+        scope.$watch('value', function(){
         	if(scope.options)
         		scope.status=scope.showStatus();
         });

@@ -1,7 +1,6 @@
 <div ng-if="lecture_data.question_ids" infinite-scroll='getRemainingLectureCharts()' infinite-scroll-disabled='chart_scroll_disable' infinite-scroll-immediate-check='false' >
 	<center style="overflow:hidden" >
 		<video_container class="largescreen">
-			<loading size='small' show="!url" style="top:50%;position:relative" />
 			<youtube ng-if="url" id="lec_quiz_video" url="url" player="lecture_player" class="largescreen" />
 		</video_container>
 	</center>

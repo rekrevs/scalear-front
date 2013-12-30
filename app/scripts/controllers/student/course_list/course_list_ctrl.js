@@ -21,11 +21,11 @@ angular.module('scalearAngularApp')
 
   	$scope.open = function () {
     	var modalInstance = $modal.open({
-      		templateUrl: 'views/student/course_list/enroll_modal.html',
+      		templateUrl: '/views/student/course_list/enroll_modal.html',
       		controller: "StudentEnrollModalCtrl",
     	})
 
-    	modalInstance.result.then(function (enrollment_key) {
+    	modalInstance.result.then(function () {
     		$rootScope.show_alert="success";	
     		ErrorHandler.showMessage("Successfully Joined Course", 'errorMessage', 2000);
     		$timeout(function(){

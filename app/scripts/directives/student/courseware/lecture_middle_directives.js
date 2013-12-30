@@ -4,8 +4,8 @@ angular.module('scalearAngularApp')
 .directive("controls",['$timeout','Lecture','$stateParams', '$window', '$log', function($timeout, Lecture, $stateParams, $window, $log) {
   return {
     restrict:"E",
-    templateUrl:"../views/student/lectures/controls.html",
-    link: function(scope, element, attrs) {
+    templateUrl:"/views/student/lectures/controls.html",
+    link: function(scope, element) {
 
     	element.css("width", "200px");
   		element.css("height", "26px");
@@ -45,36 +45,45 @@ angular.module('scalearAngularApp')
     		$log.debug(scope.$parent);
     		$log.debug("in confusde");
         scope.show_message=true;
-    		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
-  			$timeout(function(){
-           		scope.show_message=false;
-           		$log.debug(data)
-           		if(data.msg=="ask")
-           		{
-             		scope.$parent.show_notification="If you're really confused, please use the question button to ask a question so the teacher can help you.";
-             		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px"}
-             		$timeout(function(){
-             			scope.$parent.notify_position={"left":"180px"};
-             			scope.$parent.show_notification=false;
-             		}, 6000)
-             	}
-       		}, 2000);	
+    		Lecture.confused(
+          {course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},
+          {time:scope.lecture_player.controls.getTime()}, 
+          function(data){
+      			$timeout(function(){
+               		scope.show_message=false;
+               		$log.debug(data)
+               		if(data.msg=="ask")
+               		{
+                 		scope.$parent.show_notification="If you're really confused, please use the question button to ask a question so the teacher can help you.";
+                 		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px"}
+                 		$timeout(function(){
+                 			scope.$parent.notify_position={"left":"180px"};
+                 			scope.$parent.show_notification=false;
+                 		}, 6000)
+                 	}
+           		}, 2000);	
   		  });
     	};
     	scope.back= function()
     	{
-    		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
-  		});
+    		Lecture.back(
+          {course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},
+          {time:scope.lecture_player.controls.getTime()}, 
+          function(){}
+        );
     	};
     	scope.pause= function()
     	{
-    		Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
-  		});
+    		Lecture.pause(
+          {course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},
+          {time:scope.lecture_player.controls.getTime()}, 
+          function(){}
+        );
     	};
     	scope.question= function(){
     		$log.debug("in question");
     		scope.show_question=!scope.show_question;
-    		if(scope.show_question==true)
+    		if(scope.show_question===true)
     			scope.lecture_player.controls.pause();	
     		else
     			scope.lecture_player.controls.play();
@@ -84,7 +93,6 @@ angular.module('scalearAngularApp')
         scope.show_shortcuts=!scope.show_shortcuts;
         if(scope.show_shortcuts)
           $(document).on("click", function (e) {
-            console.log("click doc")
             if(e.target.className != 'shortcutDiv'){
               scope.show_shortcuts = false
               scope.$apply()
@@ -98,12 +106,15 @@ angular.module('scalearAngularApp')
     	scope.submit_question = function()
     	{
     		$log.debug("will submit "+scope.question_asked);
-  		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
-  			scope.question_asked="";
-  			scope.show_question=false;
-  			scope.lecture_player.controls.play();	
-  		});
-    		
+    		Lecture.confusedQuestion(
+          {course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},
+          {time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, 
+          function(){
+      			scope.question_asked="";
+      			scope.show_question=false;
+      			scope.lecture_player.controls.play();	
+      		}
+        );    		
     	};
     	scope.setShortcuts = function()
   		{
@@ -138,7 +149,7 @@ angular.module('scalearAngularApp')
   		
   		scope.lecture_player.events.onPause= function(){
    			$log.debug("in here");
-   			if(scope.display_mode!=true) //not a quiz
+   			if(scope.display_mode!==true) //not a quiz
    				scope.pause();
    		}
      		
@@ -152,9 +163,9 @@ angular.module('scalearAngularApp')
 .directive("notification", ['$translate', '$window', '$log', function($translate, $window, $log) {
   return {
     restrict:"E",
-    template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification==true" style="vertical-align:middle"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div></div>',
+    template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification===true" style="vertical-align:middle"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!==true" style="vertical-align:middle">{{show_notification}}</div></div>',
 
-    link: function(scope, element, attrs) {
+    link: function(scope, element) {
       scope.correct_notify=$translate("lectures.correct")
       scope.incorrect_notify=$translate("lectures.incorrect")
 
@@ -195,7 +206,7 @@ angular.module('scalearAngularApp')
   return {
     restrict:"E",
 	template:'<input type="button" class="btn btn-primary" value="{{\'youtube.check_answer\'|translate}}" ng-click="check_answer()" />',
-	link: function(scope, element, attrs) {
+	link: function(scope, element) {
    
     
     element.css("position", "relative");
@@ -231,15 +242,16 @@ angular.module('scalearAngularApp')
     		}else{
     			$log.debug(scope.answer_form);
     			
-    			if(scope.answer_form.$error.atleastone==false)
+    			if(scope.answer_form.$error.atleastone===false)
     			{
     				$log.debug("valid form")
     				scope.submitted=false;
-	    			Lecture.saveHtml({course_id: $stateParams.course_id, lecture_id:$stateParams.lecture_id},{quiz:scope.selected_quiz.id, answer:scope.studentAnswers[scope.selected_quiz.id]}, function(data){
-	    			 
-	    			 displayResult(data);
-	    			
-    		 	});
+	    			Lecture.saveHtml(
+              {course_id: $stateParams.course_id, lecture_id:$stateParams.lecture_id},
+              {quiz:scope.selected_quiz.id, answer:scope.studentAnswers[scope.selected_quiz.id]}, 
+              function(data){	    			 
+    	    			 displayResult(data);	    			
+        		 	});
     		 }else{
     		 	$log.debug("invalid form")
     		 	scope.submitted=true;
@@ -256,7 +268,7 @@ angular.module('scalearAngularApp')
               selected_answers.push(answer.id)
           })
 
-          if(selected_answers.length == 0)
+          if(selected_answers.length === 0)
           {
           	$log.debug(scope.$parent);
           	// notify
@@ -308,14 +320,14 @@ angular.module('scalearAngularApp')
 
   		
 
-      var displayResult=function(data, done){
-        for(var el in data["detailed_exp"])
-          scope.explanation[el]= data["detailed_exp"][el];
+      var displayResult=function(data){
+        for(var el in data.detailed_exp)
+          scope.explanation[el]= data.detailed_exp[el];
 
-        scope.verdict=data["correct"]? $translate("lectures.correct"): $translate("lectures.incorrect")
+        scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
         scope.$parent.show_notification=true;
 
-		if(data["msg"]!="Empty") // he chose sthg
+		if(data.msg!="Empty") // he chose sthg
 	    {
 	    	// here need to update scope.$parent.$parent
 	    	var group_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups, data.done[1])
@@ -336,7 +348,7 @@ angular.module('scalearAngularApp')
     }
   }
 }])
-.directive('studentAnswerForm', ['Lecture','$stateParams','CourseEditor','$log',function(Lecture, $stateParams, CourseEditor, $log){
+.directive('studentAnswerForm', ['$log',function($log){
 	return {
 		scope: {
 			quiz:"=",
@@ -350,10 +362,7 @@ angular.module('scalearAngularApp')
 							"<div class='answer_div'>"+
 								"<student-html-answer />"+
 							"</div>"+
-					"</div></ng-form>",
-		link: function(scope, iElm, iAttrs, controller) {
-			
-		}
+					"</div></ng-form>"
 	};
 }]).directive('studentHtmlAnswer',['$log',function($log){
 	return {
@@ -385,7 +394,7 @@ angular.module('scalearAngularApp')
 				for(var element in scope.studentAnswers[scope.quiz.id])
 				{
 					$log.debug(scope.studentAnswers[scope.quiz.id][element]);
-					if(scope.studentAnswers[scope.quiz.id][element]==true)
+					if(scope.studentAnswers[scope.quiz.id][element]===true)
 					{
 						$log.debug("in true");
 						scope.values+=1
@@ -410,12 +419,12 @@ angular.module('scalearAngularApp')
 				"</ng-form>",
 		link:function(scope){
 			
-			scope.$watch('explanation[answer.id]', function(newval){
+			scope.$watch('explanation[answer.id]', function(){
 				if(scope.explanation && scope.explanation[scope.answer.id])
 				{
 					$log.debug("exp changed!!!")
 					scope.mypop={
-						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
+						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]===true, \'red_notification\':explanation[answer.id][0]===false}">{{explanation[answer.id][0]===true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
 						content:'<div>{{explanation[answer.id][1]}}</div>',
 						html:true,
 						trigger:'hover'
@@ -437,12 +446,12 @@ angular.module('scalearAngularApp')
 		link: function(scope)
 		{
 			
-			scope.$watch('explanation[answer.id]', function(newval){
+			scope.$watch('explanation[answer.id]', function(){
 				if(scope.explanation && scope.explanation[scope.answer.id])
 				{
 					$log.debug("exp changed!!!")
 					scope.mypop={
-						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
+						title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]===true, \'red_notification\':explanation[answer.id][0]===false}">{{explanation[answer.id][0]===true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
 						content:'<div>{{explanation[answer.id][1]}}</div>',
 						html:true,
 						trigger:'hover'
@@ -486,10 +495,7 @@ angular.module('scalearAngularApp')
                 "<div ng-switch-when='MCQ'><student-answer /></div>"+
                 "<div ng-switch-when='OCQ'><student-answer /></div>"+
                 "<div ng-switch-when='drag'><student-drag /></div>"+
-              "</div>",
-      link: function(scope){
-      	$log.debug("in student answer video!!!");
-      }
+              "</div>"
   }
 }])
 .directive('studentAnswer', ['$rootScope', '$translate','$log', function($rootScope, $translate, $log){
@@ -498,7 +504,7 @@ angular.module('scalearAngularApp')
      restrict: 'E',
      template: "<input type='checkbox' name='student_answer' ng-model='data.selected' ng-change='radioChange(data)' ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' pop-over='explanation_pop'/>",
 
-    link: function(scope, element, attrs, controller) {
+    link: function(scope, element) {
       $log.debug("student answer link")
 
       //===FUNCTIONS===//
@@ -537,7 +543,7 @@ angular.module('scalearAngularApp')
         setAnswerLocation()
       })         
      
-      scope.$watch('explanation[data.id]', function(newval){
+      scope.$watch('explanation[data.id]', function(){
         if(scope.explanation && scope.explanation[scope.data.id])
         {
           var ontop=angular.element('.ontop');  
@@ -675,7 +681,7 @@ angular.module('scalearAngularApp')
         draggable.css('top', scope.ycoor+2)
       }
      
-      scope.$watch('explanation[data.id]', function(newval){
+      scope.$watch('explanation[data.id]', function(){
         if(scope.explanation && scope.explanation[scope.data.id]){
           scope.selected_id= angular.element(elem[0]).find('b').attr('id')
           var ontop=angular.element('.ontop');

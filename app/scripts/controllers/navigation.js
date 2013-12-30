@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
   		function(){}
 	)
   	// $scope.course_information=course_information.data.course;
-  	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
+  	$scope.$on('$stateChangeSuccess', function(){ 
     	$scope.current_state= $state;
    	})
   	

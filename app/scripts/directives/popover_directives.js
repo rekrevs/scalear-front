@@ -4,10 +4,10 @@ angular.module('scalearAngularApp')
 .directive('popOver',['$parse','$compile','$q','$window','$log',function ($parse, $compile, $q, $window, $log) {
     return{
   		restrict: 'A',
-  		link: function(scope, element, attr, ctrl) {
+  		link: function(scope, element, attr) {
 
 	        var getter = $parse(attr.popOver)
-	        scope.$watch(attr.popOver, function(newval){
+	        scope.$watch(attr.popOver, function(){
 	        	var options = getter(scope)
 	        	if(options){
 		        	element.popover('destroy');

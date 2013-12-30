@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
 	    	{course_id:$stateParams.course_id,
 	    	module_id:$scope.module.id},
 	    	group,
-	    	function(data){
+	    	function(){
 				d.resolve()
 			},function(data){
 				$log.debug(data.status);
@@ -38,14 +38,14 @@ angular.module('scalearAngularApp')
               $scope.module[type] = data
         }
         var modified_module=angular.copy($scope.module);
-        delete modified_module["id"];
-        delete modified_module["items"];
-        delete modified_module["documents"];
-        delete modified_module["created_at"];
-        delete modified_module["updated_at"];
-        delete modified_module["total_time"];
-        delete modified_module["total_questions"];
-        delete modified_module["total_quiz_questions"];
+        delete modified_module.id;
+        delete modified_module.items;
+        delete modified_module.documents;
+        delete modified_module.created_at;
+        delete modified_module.updated_at;
+        delete modified_module.total_time;
+        delete modified_module.total_questions;
+        delete modified_module.total_quiz_questions;
 
         Module.update(
           {course_id:$stateParams.course_id,
@@ -54,9 +54,7 @@ angular.module('scalearAngularApp')
           function(response){
             $log.debug(response)
           },
-          function(){
-            //alert("Failed to update module, please check your internet connection")
-          }
+          function(){ }
         );
       }
     }]);

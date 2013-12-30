@@ -22,8 +22,8 @@ var app = angular.module('scalearAngularApp')
 
         $scope.removeStudent = function(student){
             $log.debug(student)
-            var answer = confirm($translate('courses.you_sure_delete_student', {student: student.name}));
-            if(answer){
+//            var answer = confirm($translate('courses.you_sure_delete_student', {student: student.name}));
+            //if(answer){
             	student.removing=true;
                 Course.remove_student(
                     {
@@ -32,14 +32,14 @@ var app = angular.module('scalearAngularApp')
                     },
                     {},
                     function(){
-                        $scope.data.splice($scope.data.indexOf(student), 1)
+                        $scope.students.splice($scope.students.indexOf(student), 1)
                      },
                     function(){
                     	student.removing=false;
                         $log.debug(value);
                     })
 
-            }
+           // }
         }
 
         $scope.emailSingle=function(id, email){
@@ -56,7 +56,7 @@ var app = angular.module('scalearAngularApp')
             });
             $state.go('course.send_emails');
         }
-        $scope.selected = new Array();
+        $scope.selected = []
         $scope.select = function(id, email){
           if($scope.selected[id] == email){
               $log.debug('should deselect');

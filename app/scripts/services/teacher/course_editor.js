@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('CourseEditor', ['$window',function ($window) {    
+.factory('CourseEditor', [function () {    
 
   
   var x={	
@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
  	{
  		for(var element in groups)
  		{
- 			if(groups[element]["id"]==group_id)
+ 			if(groups[element].id==group_id)
  				return element
  		}
  		return -1
@@ -29,7 +29,7 @@ angular.module('scalearAngularApp')
 			{
 				var new_ans=x.newAnswer(answers[answer],"","","","",type, question_id);
 				
-				if(answer==0)
+				if(answer===0)
 					new_ans.id=id;
 				
 				all_answers.push(new_ans);
@@ -44,8 +44,6 @@ angular.module('scalearAngularApp')
 				all_answers.push(elem.content)
 			else
 				all_answers.push(elem.answer)
-			
-			console.log(all_answers)
 		});
 		return x.newAnswer(all_answers,"","","","",type, question_id);
 	},
@@ -54,16 +52,15 @@ angular.module('scalearAngularApp')
 		var all_pos=[]
 		answers.forEach(function(elem){
 			all_pos.push(parseInt(elem.pos))
-			console.log(all_pos)
 		});
 		return all_pos
 	},
 	
 	newAnswer: function(ans, h, w,l, t, type, question_id){
-		
+		var y={}
 		if(type!="quiz")
 		{
-			var y={
+			y={
 				answer: ans || "",
 				correct:false,
 				explanation:"",
@@ -75,7 +72,7 @@ angular.module('scalearAngularApp')
 			}
 		}
 		else{
-			var y={
+			y={
 				content: ans || "",
 				correct:false,
 				question_id:question_id,

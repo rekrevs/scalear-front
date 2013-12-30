@@ -263,7 +263,7 @@ angular.module('scalearAngularApp')
 			online_quiz_id: $scope.selected_quiz.id
 			},
 			{answer: ans, quiz_title:title },
-			function(data){ //success
+			function(){ //success
 				if($scope.selected_quiz.quiz_type =="invideo")
 					getQuizData();
 				else
@@ -281,20 +281,18 @@ angular.module('scalearAngularApp')
 		var correct=0;
 		for( var element in $scope.selected_quiz.answers)
 		{
-			if(!$scope.selected_quiz.answers[element].answer || $scope.selected_quiz.answers[element].answer.trim()=="")
+			if(!$scope.selected_quiz.answers[element].answer || $scope.selected_quiz.answers[element].answer.trim()==="")
 				return false
 			if($scope.selected_quiz.question_type.toUpperCase()=="DRAG")
 			correct=1
 			else	
 			correct= $scope.selected_quiz.answers[element].correct || correct;
 		}
-		return correct==0?false:true;
+		return correct===0?false:true;
 	};
 	
 	$scope.saveBtn = function(){
 		$log.debug($scope.selected_quiz.answers)
-		console.log("form valid??");
-		console.log(is_form_valid());
 		if((($scope.answer_form.$valid && $scope.selected_quiz.quiz_type == 'html') || ($scope.selected_quiz.quiz_type != 'html' && is_form_valid())) && $scope.selected_quiz.answers.length)
  		{
 	 		$scope.submitted=false;
@@ -304,7 +302,7 @@ angular.module('scalearAngularApp')
 			if($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' && $scope.selected_quiz.quiz_type == 'html'){
 				var obj = CourseEditor.mergeDragAnswers($scope.selected_quiz.answers, "lecture", $scope.selected_quiz.id)
 				$scope.selected_quiz.answers.forEach(function(ans){
-					if(ans.id && obj.id==null){
+					if(ans.id && obj.id===null){
 						obj.id = ans.id
 						return 
 					}

@@ -1,5 +1,6 @@
 var translation_sv=function(){
     return {
+      invalid_email: "ogiltig e-post",
       login_with: "Inloggning med",
       q: "F.",
       sending: "Skickar",

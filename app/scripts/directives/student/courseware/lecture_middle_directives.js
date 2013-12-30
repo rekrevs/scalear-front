@@ -271,7 +271,7 @@ angular.module('scalearAngularApp')
             selected_answers = selected_answers[0]
            
         }
-        else
+        else //DRAG
         {
           selected_answers={}
           selected_answers = scope.studentAnswers[scope.selected_quiz.id]

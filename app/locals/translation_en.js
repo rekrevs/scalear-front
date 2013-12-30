@@ -1,5 +1,6 @@
 var translation_en=function(){
     return {
+      invalid_email: "Invalid Email",
       login_with: "Login with",
       q: "Q.",
       sending: "Sending",

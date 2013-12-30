@@ -27,7 +27,7 @@
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log) {
+  .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate) {
 
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
@@ -104,7 +104,7 @@
     				
     				if(s==0){
     					$rootScope.show_alert="error";
-      					ErrorHandler.showMessage('Error ' + ': ' + "You are not Authorized", 'errorMessage', 8000);
+      					ErrorHandler.showMessage('Error ' + ': ' + $translate("controller_msg.you_are_not_authorized"), 'errorMessage', 8000);
       					$timeout(function(){
       					 $rootScope.show_alert="";	
       					},4000);

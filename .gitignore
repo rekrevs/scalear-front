@@ -8,4 +8,3 @@ selenium/
 ./selenium/
 Gruntfile.js
 .idea/
-**/.DS_Store

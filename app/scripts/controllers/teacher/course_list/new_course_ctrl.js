@@ -39,4 +39,9 @@ angular.module('scalearAngularApp')
 			$scope.submitted=true
 		}
 		}
+
+        $scope.$watch('current_lang', function(newval, oldval){
+            if(newval!=oldval)
+                $scope.server_errors={}
+        });
  }]);

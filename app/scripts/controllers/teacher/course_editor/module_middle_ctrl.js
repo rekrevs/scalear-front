@@ -6,8 +6,8 @@ angular.module('scalearAngularApp')
         $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
             if($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
                 $scope.module=$scope.module_obj[$stateParams.module_id]
-                init()
             }
+            init();
         })
 
         var init = function(){

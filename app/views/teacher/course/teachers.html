@@ -27,7 +27,7 @@
 
                     	<form name='email_form' novalidate>
                         <input name='email' type="email" id="new_email" placeholder="{{'email'|translate}}" ng-model="new_teachers[$index].email" value="new_teacher.email" ng-change="$parent.check(new_teacher.email, $index)"/>
-                        <span class='help-inline' ng-show='email_form.email.$dirty && email_form.email.$invalid'>Invalid Email</span>
+                        <span class='help-inline' ng-show='email_form.email.$dirty && email_form.email.$invalid'>{{'invalid_email'|translate}}</span>
                         <br><span class="errormessage" ng-show="new_teachers[$index].error">{{new_teachers[$index].error}}</span>
                         
                         <!--<details-text value="new_teacher.email" save="updateTeacher($index)" column="email" validate="email"></details-text>-->
@@ -54,6 +54,6 @@
             </table>
         <center>
             <input type="button" class="btn" id="add_teacher" ng-click="addRow(teachers.length-1)" value="{{'courses.add_teacher'|translate}}" ng-disabled="new_teachers.length>0"/>
-            <input type="button" class="btn btn-primary" ng-click="saveTeachers()" value="{{'courses.save_all'|translate}}" ng-show="new_teachers.length" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0" style="margin-left: 5px;"/>
+            <input type="button" class="btn btn-primary" ng-click="saveTeachers()" value="{{'save'|translate}}" ng-show="new_teachers.length" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0" style="margin-left: 5px;"/>
         </center>
     </div>

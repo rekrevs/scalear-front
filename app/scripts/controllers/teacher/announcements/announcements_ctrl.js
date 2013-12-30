@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
   			}
   		)
   	}
-  	
+
   	$scope.deleteAnnouncement=function(index){
   		//if(confirm($translate('announcement_form.confirm_delete'))){
   		if($scope.announcements[index].id){
@@ -54,7 +54,7 @@ angular.module('scalearAngularApp')
   		if($scope.announcements[index].id){
   		Announcement.show({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id },
   			function(data){
-          $log.debug("announcements data=");
+                $log.debug("announcements data=");
   				$log.debug(data);
   				$scope.announcements[index]=data;
   			}
@@ -105,7 +105,16 @@ angular.module('scalearAngularApp')
   		}
   	};
   	
-  
+     $scope.$watch('current_lang', function(newval, oldval){
+         console.log($scope.announcements)
+         if(newval!=oldval)
+             for(var elem in $scope.announcements)
+             {
+                 delete $scope.announcements[elem].errors
+             }
+         console.log($scope.announcements)
+
+     });
   	 $scope.tinymceOptions= {
          plugins : "preview, table",//autolink,textcolor, lists,pagebreak,table,save,insertdatetime,preview,searchreplace,print,contextmenu,paste,directionality,noneditable,nonbreaking",
          theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,|,sub,sup,|,charmap,emotions,|,print,|,ltr,rtl",

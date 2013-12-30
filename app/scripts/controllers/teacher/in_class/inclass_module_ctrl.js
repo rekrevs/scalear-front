@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window','$log', function ($scope, $modal, $timeout,$window, $log) {
+  .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window','$log','Module','$stateParams', function ($scope, $modal, $timeout,$window, $log, Module, $stateParams) {
 
     $window.scrollTo(0, 0);
     $scope.inclass_player={}
@@ -35,6 +35,12 @@ angular.module('scalearAngularApp')
       })  
 
   	};
+
+    var init = function(){
+        Module.getModules({module_id:$stateParams.module_id, course_id:$stateParams.course_id});
+    }
+
+    init();
 
     var openModal=function(view, type){ 
       angular.element("body").css("overflow","hidden");

@@ -27,13 +27,13 @@
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log) {
+  .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate) {
 
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
 
       $log.debug("lang is "+ $rootScope.current_lang);
-    	var statesThatDontRequireAuth =['login', 'home', 'privacy']
+    	var statesThatDontRequireAuth =['login', 'home', 'privacy', 'ie']
 		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information', 'course.lectures']
 		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
 
@@ -74,7 +74,12 @@
     	
     		UserSession.getRole().then(function(result){
     			var s=1;
-    			if(!routeClean(to.name) && result===0) // user not logged in trying to access a page that needs authentication.
+
+          if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent))
+          {
+              $state.go("ie");
+          }
+    			if(!routeClean(to.name) && result==0) // user not logged in trying to access a page that needs authentication.
     				{
     					$state.go("login");
     					s=0;
@@ -100,7 +105,7 @@
     				
     				if(s===0){
     					$rootScope.show_alert="error";
-      					ErrorHandler.showMessage('Error ' + ': ' + "You are not Authorized", 'errorMessage', 8000);
+      					ErrorHandler.showMessage('Error ' + ': ' + $translate("controller_msg.you_are_not_authorized"), 'errorMessage', 8000);
       					$timeout(function(){
       					 $rootScope.show_alert="";	
       					},4000);
@@ -137,6 +142,10 @@
         url: '/',
         templateUrl: '/views/main.html',
         controller: 'MainCtrl'
+      })
+      .state('ie', {
+        url: '/ie',
+        templateUrl: 'views/ie.html'
       })
       .state('login', {
       	url:'/login',

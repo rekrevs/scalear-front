@@ -8,12 +8,12 @@ angular.module('scalearAngularApp')
       var min = Math.floor((secs - (hr * 3600))/60);
       var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
 
-      if (hr < 10)   { hr    = "0" + hr; }
+      if (hr < 10)  { hr    = "0" + hr; }
       if (min < 10) { min = "0" + min; }
-      if (sec < 10)  { sec  = "0" + sec; }
-      if (hr)            { hr   = "00"; }
+      if (sec < 10) { sec  = "0" + sec; }
+      if (hr)       { hr   = "00"; }
 
-      if (format !== null) {
+      if (format) {
         var formatted_time = format.replace('hh', hr);
         formatted_time = formatted_time.replace('h', hr*1+""); // check for single hour formatting
         formatted_time = formatted_time.replace('mm', min);

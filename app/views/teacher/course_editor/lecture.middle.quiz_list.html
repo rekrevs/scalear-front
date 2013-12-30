@@ -10,7 +10,7 @@
 		<td style="width:50%">
 			<editable_text value="quiz.question" validation="validateName" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz">
 		</td>
-		<td ng-init="quiz.formatedTime = (quiz.time|format)" style="width:25%">			
+		<td ng-init="quiz.formatedTime = (quiz.time|format)" style="width:25%">
 			<editable_text value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz">
 		</td>
 		<td>{{quiz.question_type}}</td>

@@ -1,5 +1,5 @@
-<div class="module_head" ng-click='invertOpen()'>
+<div ng-click='invertOpen()' style="font-size: 12px;margin-top: 1px;margin: 1px 0;line-height: 20px;padding: 3px 0;">
 	<img src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}" />
 	<a class='trigger' ng-class='{open:open[id]}' ui-sref="course.course_editor.module({ module_id: id })">{{name}}</a>
-	<delete_button size='small' action='remove({event:event})' name='module_delete_button' ></delete_button>
+	<delete_button size='small' action='remove({event:event})' />
 </div>

@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
             	 },
             	 replace:true,
             	 templateUrl: "/views/app_messages.html",
-                 link: function(element) {
+                 link: function(scope, element) {
                 	 ErrorHandler.elementsList.push($(element)); 
                  }
             };

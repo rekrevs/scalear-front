@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive("module",function(){
+	.directive("module",function($translate){
 	return {
 		restrict: "E",
 		scope: {
@@ -10,16 +10,9 @@ angular.module('scalearAngularApp')
 			remove:"&",
 			open: "="
 		},
-				// template: "<h5 ng-click='invertOpen()'>"+
-				// 	"<img src='images/move2.png' class='handle' title={{'courses.drag_to_reorder'|translate}} />"+
-				// 	"<a class='trigger' ng-class='{open:open[id]}' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
-				// 	"<delete_button size='small' action='remove({event:event})' name='module_delete_button'/>"+
-				//   "</h5>",
-
 		templateUrl:'/views/teacher/course_editor/module.html' ,
 	  link: function(scope){
-			scope.invertOpen = function()
-			{
+			scope.invertOpen = function(){
 				if(scope.open[scope.id])
 					scope.open[scope.id] = false
 				else{ 
@@ -30,7 +23,7 @@ angular.module('scalearAngularApp')
 			}
 		}
 	}
- }).directive('item',function(){
+ }).directive('item',function($translate){
 	return {
 		 scope: {
 		 	name:'=',
@@ -40,6 +33,13 @@ angular.module('scalearAngularApp')
 		 },
 		 restrict: 'E', 
 		 templateUrl:'/views/teacher/course_editor/item.html',
+		 link:function(scope){
+		 	scope.getDeleteMessage=function(){
+		 		var translation_value = {}
+		 		translation_value[scope.className] = scope.name
+		 		return $translate('groups.you_sure_delete_'+scope.className, translation_value)
+		 	}
+		 }
 	};
 }).directive('buttonLink', function(){
 	return {
@@ -105,10 +105,16 @@ angular.module('scalearAngularApp')
 	return {
 		scope:{
 			size:"@",
-			action:"&"
+			action:"&",
+			hideConfirm:'='
 		},
         replace: true,
 		restrict:'E',
 		templateUrl: '/views/teacher/course_editor/delete_button.html',
+		link:function(scope){
+			scope.showDeletePopup = function(value) {
+				scope.displayDeletePopup = value
+			};
+		}
 	}
 });

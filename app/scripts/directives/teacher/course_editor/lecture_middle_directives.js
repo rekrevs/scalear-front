@@ -469,7 +469,7 @@ angular.module('scalearAngularApp')
 }).directive('atleastone', ['$log', function($log) {
 	return {
 		require: 'ngModel',
-		link: function(scope, elm, ctrl) {
+		link: function(scope, elm, attr, ctrl) {
 		
 			scope.validate = function() {
 				if (scope.values<1) {

@@ -93,7 +93,6 @@ angular.module('scalearAngularApp')
         scope.show_shortcuts=!scope.show_shortcuts;
         if(scope.show_shortcuts)
           $(document).on("click", function (e) {
-            console.log("click doc")
             if(e.target.className != 'shortcutDiv'){
               scope.show_shortcuts = false
               scope.$apply()

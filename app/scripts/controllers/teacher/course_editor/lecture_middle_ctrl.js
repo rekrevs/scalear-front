@@ -293,8 +293,6 @@ angular.module('scalearAngularApp')
 	
 	$scope.saveBtn = function(){
 		$log.debug($scope.selected_quiz.answers)
-		console.log("form valid??");
-		console.log(is_form_valid());
 		if((($scope.answer_form.$valid && $scope.selected_quiz.quiz_type == 'html') || ($scope.selected_quiz.quiz_type != 'html' && is_form_valid())) && $scope.selected_quiz.answers.length)
  		{
 	 		$scope.submitted=false;

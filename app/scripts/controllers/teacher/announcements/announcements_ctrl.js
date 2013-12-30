@@ -13,12 +13,13 @@ angular.module('scalearAngularApp')
   		Announcement.index({course_id: $stateParams.course_id},
   			function(data){
   				$scope.announcements=data;
+          $scope.show_button = true
   			}
   		)
   	}
   	
   	$scope.deleteAnnouncement=function(index){
-  		if(confirm($translate('announcement_form.confirm_delete'))){
+  		//if(confirm($translate('announcement_form.confirm_delete'))){
   		if($scope.announcements[index].id){
 	  		Announcement.destroy(
           {course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},
@@ -30,7 +31,7 @@ angular.module('scalearAngularApp')
 	  	}else
 	  		$scope.announcements.splice(index, 1);
             $scope.disable_new = false;
-        }
+      //  }
   	}
   	
   	$scope.createAnnouncement= function(){
@@ -41,7 +42,11 @@ angular.module('scalearAngularApp')
   				$scope.hideAnnouncement(element);
   		}
   		$scope.newAnnouncement= {announcement:"", created_at: new Date(), show:true};
-  		$scope.announcements.push($scope.newAnnouncement);
+      if(!($scope.announcements instanceof Array)){
+          $scope.announcements = []
+      }
+          
+		  $scope.announcements.push($scope.newAnnouncement);
   	}
   	$scope.hideAnnouncement = function(index){ //get old data.
         $scope.disable_new = false;

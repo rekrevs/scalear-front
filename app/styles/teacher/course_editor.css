@@ -94,14 +94,6 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 
 .modules{width:270px;}
 
-.module_head{
-	font-size: 12px;
-	margin-top: 1px;
-	margin: 1px 0;
-	line-height: 20px;
-	padding: 3px 0;
-}
-
 .span3 {
   background-color: whitesmoke;
   min-height:700px;

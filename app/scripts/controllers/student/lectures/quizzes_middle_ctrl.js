@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
     		Quiz.saveStudentQuiz({quiz_id: $stateParams.quiz_id},{student_quiz: $scope.studentAnswers, commit: action}, function(data){
     			$scope.status=data.status;
     			$scope.alert_messages= data.alert_messages;
-    			if(data.correct!==null)
+    			if(data.correct)
     				$scope.correct=data.correct; 
     				// here need to update scope.parent
     				var group_index= CourseEditor.get_index_by_id($scope.$parent.course.groups, data.done[1])

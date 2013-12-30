@@ -13,8 +13,8 @@
                 <tr>
                     <th style="text-align: center;" translate>courses.student_name</th>
                     <th style="text-align: center;" translate>courses.student_email</th>
-                    <th style="text-align: center;" translate>delete</th>
                     <th style="text-align: center;" translate>email</th>
+                    <th style="text-align: right;" translate>delete</th>
                 </tr>
                 <tr ng-repeat="student in students | filter:searchText">
                     <td style="text-align: center;">
@@ -23,14 +23,14 @@
                     <td style="text-align: center;">
                         <a id="email_address" ng-click="emailSingle(student.id, student.email)" style="cursor:pointer">{{student.email}}</a>
                     </td>
-                    <td style="text-align: center;">
-                        <input id="remove_button" class="btn" type="button" ng-click="removeStudent(student)" value="{{'lectures.remove'|translate}}" ng-disabled="student.removing"/>
-                        <loading size="small" show="student.removing"/>
-                        <!--<a ui-sref="course.remove_student({student_id:student.id})" data-confirm="Are you would like to delete {{student.name}} and all of his data?">Remove from course</a>-->
-
-                    </td>
                     <td style="text-align: center;" ng-init="$parent.emails[$index] = ','">
                         <input id="{{student.id}}" class="checks" ng-checked="$parent.selected[{{student.id}}] == student.email" type="checkbox" ng-click="select(student.id, student.email)" value="{{student.email}}"/>
+                    </td>
+                    <td style="width:120px">
+                        <!-- <input id="remove_button" class="btn" type="button" ng-click="removeStudent(student)" value="{{'lectures.remove'|translate}}" ng-disabled="student.removing"/>
+                        <loading size="small" show="student.removing"/> -->
+                        <delete_button size="big" action="removeStudent(student)" />
+
                     </td>
                 </tr>
             </table>

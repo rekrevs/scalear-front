@@ -70,7 +70,7 @@ angular.module('scalearAngularApp')
 	var urlFormat =function(){
 		var url=$scope.lecture.url
 		var video_id = getVideoId(url)
-		if(video_id !== null) {
+		if(video_id) {
 		   $scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
 		}
 	}
@@ -82,8 +82,7 @@ angular.module('scalearAngularApp')
 	var getYoutubeDetails= function(){
 		var id=$scope.lecture.url.split("v=")[1]
 		$scope.video={}
-		if(id!==null && typeof id != 'undefined')
-		{
+		if(id){
 			id= id.split("&")[0]
 			var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
 			$http.jsonp(url)

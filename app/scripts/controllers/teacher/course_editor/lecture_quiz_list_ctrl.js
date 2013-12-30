@@ -14,12 +14,10 @@ angular.module('scalearAngularApp')
 	var init= function(){
 		OnlineQuiz.getQuizList(
 			{lecture_id:$scope.lecture.id},
-			function(){
+			function(data){
 				$scope.$parent.quiz_list = data.quizList
 			},
-			function(){
-				//alert("Failed to Load Quiz List")
-			}
+			function(){}
 		);	
 	}
 
@@ -85,7 +83,7 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
-		if(confirm($translate('online_quiz.you_sure_delete_quiz', {quiz: quiz.question})))
+//		if(confirm($translate('online_quiz.you_sure_delete_quiz', {quiz: quiz.question})))
 			OnlineQuiz.destroy(
 				{online_quizzes_id: quiz.id},{},
 				function(data){

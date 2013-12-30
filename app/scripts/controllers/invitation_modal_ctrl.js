@@ -8,7 +8,6 @@ angular.module('scalearAngularApp')
 	$scope.form={}  	
 	
 	Home.getInvitations({},function(response){
-		console.log(response);
 		$scope.invitations=response.invitations
 	})
 	

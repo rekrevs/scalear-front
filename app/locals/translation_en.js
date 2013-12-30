@@ -1,5 +1,6 @@
 var translation_en=function(){
     return {
+      invalid_email: "Invalid Email",
       login_with: "Login with",
       q: "Q.",
       sending: "Sending",
@@ -24,6 +25,8 @@ var translation_en=function(){
       close: "Close",
       back: "Back",
       delete: "Delete",
+      ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
+      chrome: "Google's Chrome Browser",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",

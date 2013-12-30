@@ -23,6 +23,7 @@ angular.module('scalearAngularApp')
 		 				$scope.items_obj[item.id] = item
 		 			})
 		 		})
+                console.log($scope.modules);
 		 		$scope.init_loading=false
 		    },
 		    function(){
@@ -39,7 +40,7 @@ angular.module('scalearAngularApp')
     	$log.debug("adding mod")
     	$scope.module_loading=true
     	$log.debug("course id is "+$stateParams.course_id);
-    	Module.newModule({course_id: $stateParams.course_id},{},
+    	Module.newModule({course_id: $stateParams.course_id, lang:$translate.uses()},{},
 	    	function(module){
 	    		$log.debug(module)
 	    		module.group.items=[]

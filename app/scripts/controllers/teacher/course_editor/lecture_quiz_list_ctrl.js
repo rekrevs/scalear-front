@@ -1,19 +1,20 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl',['$scope', 'OnlineQuiz', '$translate','$q','$log', function ($scope, OnlineQuiz, $translate, $q, $log) {
+    .controller('lectureQuizListCtrl',['$scope', 'OnlineQuiz', '$translate','$q','$log','$stateParams', function ($scope, OnlineQuiz, $translate, $q, $log, $stateParams) {
 
 	$log.debug("loading quiz list")
 	$scope.editing_mode = false
 
-	$scope.$watch('lecture',function(){
-		if($scope.lecture)
-			init()
-	})
+	//$scope.$watch('lecture',function(){
+		//if($scope.lecture)
+
+	//})
+
 
 	var init= function(){
 		OnlineQuiz.getQuizList(
-			{lecture_id:$scope.lecture.id},
+			{lecture_id:$stateParams.lecture_id},
 			function(data){
 				$scope.$parent.quiz_list = data.quizList
 			},
@@ -22,7 +23,7 @@ angular.module('scalearAngularApp')
 			}
 		);	
 	}
-
+    init()
 	var updateOnlineQuiz=function(quiz){
 		OnlineQuiz.update(
 			{online_quizzes_id: quiz.id},

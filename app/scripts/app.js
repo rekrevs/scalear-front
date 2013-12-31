@@ -23,8 +23,9 @@
   'ui.tinymce',
   'googlechart',
   'pascalprecht.translate',
-  'angularMoment'
-]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
+  'angularMoment',
+  'config'
+])//.constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
   .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate) {
@@ -145,7 +146,7 @@
       })
       .state('ie', {
         url: '/ie',
-        templateUrl: 'views/ie.html'
+        templateUrl: '/views/ie.html'
       })
       .state('login', {
       	url:'/login',

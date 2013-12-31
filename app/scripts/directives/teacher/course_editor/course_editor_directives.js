@@ -85,7 +85,7 @@ angular.module('scalearAngularApp')
 	        scope.getWidth = function(){
                 return parent.width()
             };
-	        scope.$watch(scope.getWidth, function (newValue) {
+	        scope.$watch(scope.getWidth, function (newValue, oldValue) {
 	        	 element.css("width", newValue)
 	        });
 		}

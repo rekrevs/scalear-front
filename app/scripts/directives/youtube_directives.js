@@ -166,6 +166,7 @@ angular.module('scalearAngularApp')
 
 			$scope.resize.small = function()
 			{	
+				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 				$scope.fullscreen = false
 
 				angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
@@ -260,7 +261,7 @@ angular.module('scalearAngularApp')
 
 			 	$timeout(function(){$scope.$emit("updatePosition")})
 
-			 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event) {
+			 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
 			        event.preventDefault()
 			        $scope.resize.small() 
 			        $scope.$apply()

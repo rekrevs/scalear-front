@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
 	    	{course_id:$stateParams.course_id,
 	    	module_id:$scope.module.id},
 	    	group,
-	    	function(){
+	    	function(data){
 				d.resolve()
 			},function(data){
 				$log.debug(data.status);

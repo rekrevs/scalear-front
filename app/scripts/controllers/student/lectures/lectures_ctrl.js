@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
 	
 	init();
 	
-    $rootScope.$on("accordianReload", function() {
+    $rootScope.$on("accordianReload", function(event, args) {
   		$log.debug("reloading accordian now..");
   		init();
   	});

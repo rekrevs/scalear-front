@@ -33,21 +33,17 @@ angular.module('scalearAngularApp')
 		      var d = $q.defer();
 		      var course={}
 		      course[column]=data;
-		      Course.validateCourse(
-                {course_id:$stateParams.course_id},
-                course,
-                function(){
-		          d.resolve()
-	            },
-                function(data){
-    		        $log.debug(data.status);
-    		        $log.debug(data);
-    		        if(data.status==422)
-    		          d.resolve(data.data.errors.join());
-    		        else
-    		          d.reject('Server Error');
+		      Course.validateCourse({course_id:$stateParams.course_id},course,function(data){
+		        d.resolve()
+		      },function(data){
+		        $log.debug(data.status);
+		        $log.debug(data);
+		        if(data.status==422)
+		          d.resolve(data.data.errors.join());
+		        else
+		          d.reject('Server Error');
 		        }
-	          )
+		      )
 		      return d.promise;
     	}; 
 

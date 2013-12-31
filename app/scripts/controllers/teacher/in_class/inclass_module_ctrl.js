@@ -57,7 +57,7 @@ angular.module('scalearAngularApp')
         scope: $scope
       });
 
-      $scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event) {
+      $scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
           event.preventDefault()
           $scope.exitBtn() 
       });

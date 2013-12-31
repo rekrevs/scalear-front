@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
 	    Lecture.validateLecture(
 	    	{course_id: $scope.lecture.course_id, lecture_id:$scope.lecture.id},
 	    	lecture,
-	    	function(){
+	    	function(data){
 				d.resolve()
 			},function(data){
 				$log.debug(data.status);

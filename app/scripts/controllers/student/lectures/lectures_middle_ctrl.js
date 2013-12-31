@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
 	 					$scope.lecture.online_quizzes.splice(element, 1);
 	 			}
 	 			$scope.next_lecture = data.next_lecture
-	 			var watcher=$scope.$watch('course', function(){
+	 			var watcher=$scope.$watch('course', function(newval){
 	 				if($scope.$parent.course)
 	 				{
 	 					var group_index= CourseEditor.get_index_by_id($scope.$parent.course.groups, data.done[1])

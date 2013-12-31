@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('CourseEditor', [function () {    
+.factory('CourseEditor', ['$window',function ($window) {    
 
   
   var x={	
@@ -57,10 +57,10 @@ angular.module('scalearAngularApp')
 	},
 	
 	newAnswer: function(ans, h, w,l, t, type, question_id){
-		var y={}
+		
 		if(type!="quiz")
 		{
-			y={
+			var y={
 				answer: ans || "",
 				correct:false,
 				explanation:"",
@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
 			}
 		}
 		else{
-			y={
+			var y={
 				content: ans || "",
 				correct:false,
 				question_id:question_id,

@@ -62,7 +62,7 @@ angular.module('scalearAngularApp')
 		    Document.validateName(
 		    	{document_id: elem.id},
 		    	doc,
-		    	function(){
+		    	function(data){
 					d.resolve()
 				},function(data){
 					$log.debug(data.status);
@@ -83,7 +83,7 @@ angular.module('scalearAngularApp')
 		    Document.validateURL(
 		    	{document_id: elem.id},
 		    	doc,
-		    	function(){
+		    	function(data){
 					d.resolve()
 				},function(data){
 					$log.debug(data.status);
@@ -106,7 +106,7 @@ angular.module('scalearAngularApp')
     				name: elem.name
     				}
     			},
-    			function(){
+    			function(resp){
     				elem.errors=""
     			},
     			function(resp){

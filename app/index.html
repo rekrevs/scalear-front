@@ -22,7 +22,7 @@
   </head>
 
   <body style="overflow:auto;" ng-app="scalearAngularApp" ng-controller="indexController">
-  	<div ng-show="show_alert!=''" ng-class="(server_error) ? 'errorpageserver' : 'errorpage'">
+  	<div id="error_container" ng-show="show_alert!=''" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
         <div style="text-align: center; display:block;">
             <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
         </div>

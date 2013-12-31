@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
 	.directive('appMessages', ['ErrorHandler',function(ErrorHandler) {
-			
+
             var directiveDefinitionObject = {
             	 scope:{
             		 status:"="
@@ -10,12 +10,12 @@ angular.module('scalearAngularApp')
             	 replace:true,
             	 template: "<div ng-class='status==\"error\" ? \"errormove\" :\"successmove\" '><img  ng-src='{{status==\"error\" && \"images/error.png\" || \"images/success.png\"}}'/></div>",
                  link: function(scope, element, attrs) {
-                	 ErrorHandler.elementsList.push($(element)); 
+                	 ErrorHandler.elementsList.push($(element));
                  }
             };
             return directiveDefinitionObject;
  }]).directive('errorMessage', ['$log',function($log) {
-			
+
             return {
             	restrict:"E",
             	scope:{
@@ -29,10 +29,10 @@ angular.module('scalearAngularApp')
                 	scope.$watch(function(){
                 		if(scope.data)
                 		{var arr=scope.data[scope.column]
-                	 	scope.error=arr.join();}	
+                	 	scope.error=arr.join();}
                 	});
-                	 
+
                 }
             };
-            
+
  }]);

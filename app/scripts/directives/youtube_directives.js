@@ -143,7 +143,7 @@ angular.module('scalearAngularApp')
 
 		    }
 		};
-}]).directive('resizableVideo', ['$window', '$timeout','$log',function($window, $timeout, $log){
+}]).directive('resizableVideo', ['$window','$rootScope','$timeout','$log',function($window,$rootScope,$timeout, $log){
 	return{
 		restrict:'A',
 		scope:{
@@ -159,8 +159,9 @@ angular.module('scalearAngularApp')
 			angular.element($window).bind('resize',
 				function(){
 					if($scope.fullscreen){
-						$scope.resize.big(); 
-						$scope.$apply()
+						$scope.resize.big();
+                        $rootScope.changeError = true;
+                        $scope.$apply()
 					}
 				}
 			)

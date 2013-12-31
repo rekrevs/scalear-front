@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window','$log', function ($scope, $modal, $timeout,$window, $log) {
+  .controller('inclassModuleCtrl', ['$scope','$rootScope', '$modal','$timeout','$window','$log', function ($scope, $rootScope, $modal, $timeout,$window, $log) {
 
     $window.scrollTo(0, 0);
     $scope.inclass_player={}
@@ -36,7 +36,8 @@ angular.module('scalearAngularApp')
 
   	};
 
-    var openModal=function(view, type){ 
+    var openModal=function(view, type){
+      $rootScope.changeError = true;
       angular.element("body").css("overflow","hidden");
       var win = angular.element($window)
       win.scrollTop("0px")

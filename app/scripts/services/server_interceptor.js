@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('ServerInterceptor', ['$rootScope','$q','$timeout','ErrorHandler','$injector','scalear_api','headers','$log','$translate', function($rootScope,$q, $timeout, ErrorHandler, $injector, scalear_api, headers, $log ,$translate) { //server and also front end requests (requesting partials and so on..)
+.factory('ServerInterceptor', ['$rootScope','$q','$timeout','$interval','ErrorHandler','$injector','scalear_api','headers','$log','$translate', function($rootScope,$q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log ,$translate) { //server and also front end requests (requesting partials and so on..)
   return {
     // optional method
     'request': function(config) {
@@ -28,19 +28,19 @@ angular.module('scalearAngularApp')
       {
       	$rootScope.show_alert="success";
       	ErrorHandler.showMessage("Connected", 'errorMessage', 2000);
-      	$timeout(function(){
-      		$rootScope.server_error=false;
-      		$rootScope.show_alert="";	
-      	},4000);
+          $interval(function(){
+              $rootScope.server_error = false;
+              $rootScope.show_alert="";
+          }, 4000, 1);
       }
       
       if(response.data.notice && response.config.url.search(re)!=-1)
       {
       	$rootScope.show_alert="success";
-      	ErrorHandler.showMessage(response.data.notice, 'errorMessage', 2000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+      	ErrorHandler.showMessage(response.data.notice, 'errorMessage');
+      	$interval(function(){
+      		$rootScope.show_alert="";
+      	}, 4000, 1);
       }
      
       return response || $q.when(response);
@@ -54,9 +54,9 @@ angular.module('scalearAngularApp')
       {
       	$rootScope.show_alert="error";
       	ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+        $interval(function(){
+            $rootScope.show_alert="";
+        }, 4000, 1);
       }
       
       if(rejection.status==404 && rejection.config.url.search(re)!=-1) 
@@ -73,9 +73,9 @@ angular.module('scalearAngularApp')
       		
       	$rootScope.show_alert="error";
       	ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+        $interval(function(){
+            $rootScope.show_alert="";
+        }, 4000, 1);
       }
       
       if(rejection.status==403 && rejection.config.url.search(re)!=-1) 
@@ -91,9 +91,9 @@ angular.module('scalearAngularApp')
       	
       	$rootScope.show_alert="error";
       	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+          $interval(function(){
+              $rootScope.show_alert="";
+          }, 4000, 1);
       	
       	
       	
@@ -106,9 +106,9 @@ angular.module('scalearAngularApp')
       	
       	$rootScope.show_alert="error";
       	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+          $interval(function(){
+              $rootScope.show_alert="";
+          }, 4000, 1);
       	
       	
       }

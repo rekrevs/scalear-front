@@ -3,6 +3,7 @@
 angular.module('scalearAngularApp')
     .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', '$translate','$log','$filter', function ($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter) {
 
+        var current_url;
    	//**************************FUNCTIONS****************************************///
  	$scope.validateLecture = function(column,data) {
 	    var d = $q.defer();
@@ -92,6 +93,7 @@ angular.module('scalearAngularApp')
 			        $scope.video.title = data.entry.title.$t;
 			        $scope.video.author = data.entry.author[0].name.$t;
 			        var updateFlag = $scope.lecture.duration
+                    console.log(updateFlag);
 			        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
 			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio === undefined)
 			        	$scope.lecture.detected_aspect_ratio="smallscreen";
@@ -101,7 +103,8 @@ angular.module('scalearAngularApp')
 			        	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
 
 			        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
-	        		if(!updateFlag){
+	        		if(id != current_url){
+                        console.log("updating lecture")
 	        			$scope.updateLecture()
 	        			$log.debug("update flag is true******")	
 	        		}
@@ -122,8 +125,11 @@ angular.module('scalearAngularApp')
     $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj[$stateParams.lecture_id]){
         $scope.lecture=$scope.items_obj[$stateParams.lecture_id]
-        if($scope.lecture.url)
-      		getYoutubeDetails();
+        if($scope.lecture.url){
+            current_url = $scope.lecture.url.split("v=")[1];
+            current_url = current_url.split("&")[0]
+            getYoutubeDetails();
+        }
       }
     })
 

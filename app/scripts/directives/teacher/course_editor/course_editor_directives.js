@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive("module",function($translate){
+	.directive("module",function(){
 	return {
 		restrict: "E",
 		scope: {

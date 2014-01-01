@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
             $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
 		  	$scope.quiz.questions.forEach(function(question,index){
 					question.answers = data.answers[index]
-					 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]===null) // if drag was not solved, put student answer from shuffled answers.
+					 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]==null) // if drag was not solved, put student answer from shuffled answers.
 						 $scope.studentAnswers[question.id]=question.answers[0].content
 			});
             if($scope.quiz.quiz_type=='survey')

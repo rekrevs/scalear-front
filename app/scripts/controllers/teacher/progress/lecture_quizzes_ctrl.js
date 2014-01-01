@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
   	$scope.lectureQuizzesTab = function(){
         $scope.tabState(1)
         $scope.enableChartsScrolling()
-        if($scope.chart_offset === null){
+        if($scope.chart_offset == null){
         	$scope.loading_video = true
             $scope.getLectureCharts(0,5)
         }

@@ -29,7 +29,7 @@ angular.module('scalearAngularApp')
 			{
 				var new_ans=x.newAnswer(answers[answer],"","","","",type, question_id);
 				
-				if(answer===0)
+				if(answer==0)
 					new_ans.id=id;
 				
 				all_answers.push(new_ans);

@@ -74,7 +74,7 @@ angular.module('scalearAngularApp')
 
 		link: function(scope, element, attrs) {
 
-			//===FUNCTIONS===//
+			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
 				$log.debug("setting answer location")
 				var ontop=angular.element('.ontop');		
@@ -133,7 +133,7 @@ angular.module('scalearAngularApp')
 				for(var element in scope.quiz.answers)
 				{
 					$log.debug(scope.quiz.answers[element].correct)
-					if(scope.quiz.answers[element].correct===true)
+					if(scope.quiz.answers[element].correct==true)
 					{
 						$log.debug("in true");
 						scope.values+=1
@@ -141,7 +141,7 @@ angular.module('scalearAngularApp')
 				}
 				$log.debug(scope.values)
 			}
-			//===============//
+			//==========//
 	
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
@@ -193,7 +193,7 @@ angular.module('scalearAngularApp')
 
 		link: function(scope, element, attrs) {
 			 
-			//===FUNCTIONS===//
+			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
 				var ontop=angular.element('.ontop');
 				scope.width  = scope.data.width * ontop.width();
@@ -216,7 +216,7 @@ angular.module('scalearAngularApp')
 				scope.data.width= element.width()/ontop.width();
 				scope.data.height= element.height()/(ontop.height());
 			}			
-			//===============//	
+			//==========//	
 			
 			$rootScope.$on("updatePosition",function(){
 				$log.debug("event emiited updated position")
@@ -225,7 +225,7 @@ angular.module('scalearAngularApp')
 
 			scope.dragClass = "component dropped answer_drag" 
 
-			if(scope.data.pos === null){	
+			if(scope.data.pos == null){	
 				$log.debug("pos undefined")
 				var max = Math.max.apply(Math,scope.list)
 				max = max ==-Infinity? -1 : max
@@ -381,7 +381,7 @@ angular.module('scalearAngularApp')
 				for(var element in scope.quiz.answers)
 				{
 					$log.debug(scope.quiz.answers[element].correct)
-					if(scope.quiz.answers[element].correct===true)
+					if(scope.quiz.answers[element].correct==true)
 					{
 						$log.debug("in true");
 						scope.values+=1

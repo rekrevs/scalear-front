@@ -18,13 +18,13 @@ angular.module('scalearAngularApp')
 				$log.debug("in value update");
 				scope.values=0;
 				
-				if(scope.studentAnswers[ques]==="" && scope.studentAnswers[ques]===null)// ocq/mcq not solved
+				if(scope.studentAnswers[ques]=="" && scope.studentAnswers[ques]==null)// ocq/mcq not solved
 					scope.values=0;
 			    else if(typeof(scope.studentAnswers[ques])=="number" || (typeof(scope.studentAnswers[ques])=="string" && scope.studentAnswers[ques].length>0)) //ocq solved
 			    	scope.values=1;
 				else{
 					for(var element in scope.studentAnswers[ques]){
-						if(scope.studentAnswers[ques][element]===true)
+						if(scope.studentAnswers[ques][element]==true)
 							scope.values=1;
 					}
 				}
@@ -33,7 +33,7 @@ angular.module('scalearAngularApp')
 			scope.valid= function(ques)
 			{
 				
-				if(scope.updateValues(ques)===0)
+				if(scope.updateValues(ques)==0)
 					return false
 				else
 					return true

@@ -33,7 +33,7 @@ angular.module('scalearAngularApp')
 	 			$scope.lecture=JSON.parse(data.lecture)
 	 			for(var element in $scope.lecture.online_quizzes) // if no answers remove it
 	 			{
-	 				if($scope.lecture.online_quizzes[element].online_answers.length===0)
+	 				if($scope.lecture.online_quizzes[element].online_answers.length==0)
 	 					$scope.lecture.online_quizzes.splice(element, 1);
 	 			}
 	 			$scope.next_lecture = data.next_lecture
@@ -98,9 +98,9 @@ angular.module('scalearAngularApp')
 
    $scope.lecture_player.events.onPlay=function(){
    		// here check if selected_quiz solved now.. or ever will play, otherwhise will stop again.
-   		if($scope.display_mode===true){
+   		if($scope.display_mode==true){
    			$log.debug($scope.selected_quiz)
-   			if($scope.selected_quiz.is_quiz_solved===false){
+   			if($scope.selected_quiz.is_quiz_solved==false){
    				$log.debug("in notification")
    				$scope.lecture_player.controls.pause();
    				$scope.lecture_player.controls.seek($scope.selected_quiz.time)

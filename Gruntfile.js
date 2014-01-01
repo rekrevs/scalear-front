@@ -291,7 +291,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             'bower_components/**/*',
-            'scripts/externals/shortcut.js',
+            //'scripts/externals/shortcut.js',
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*',
             'template/**/*',
@@ -346,9 +346,9 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.dist %>/scripts',
-          src: '**/*.js',
-          dest: '<%= yeoman.dist %>/scripts'
+          cwd: '.tmp/concat/scripts/',
+          src: 'scripts.js',
+          dest: '.tmp/concat/scripts/'
         }]
       }
     },
@@ -422,9 +422,9 @@ module.exports = function (grunt) {
       //differential: true // Only uploads the files that have changed
     },
     files: [
-      //{dest: 'app/', cwd: 'backup/staging/', action: 'download'},
-      {dest: '/', action: 'delete'},
-      {expand: true, dot:true, cwd: 'dist/', src: ['.htaccess'], dest: './'},
+     // {dest: '/', cwd: 'backup/staging/', action: 'download'},
+       {dest: '/', action: 'delete'},
+      // {expand: true, dot:true, cwd: 'dist/', src: ['.htaccess'], dest: './'},
       //{expand: true, cwd: 'dist/staging/styles/', src: ['**'], dest: 'app/styles/'},
      
     ]
@@ -465,7 +465,8 @@ module.exports = function (grunt) {
       headers: {
         // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
         "Cache-Control": "max-age=630720000, public",
-        "Expires": new Date(Date.now() + 63072000000).toUTCString()
+        "Expires": new Date(Date.now() + 63072000000).toUTCString(),
+        "ETag": ''
       }
     },
      staging: {
@@ -487,7 +488,7 @@ module.exports = function (grunt) {
           rel: 'dist', 
           src: '<%= yeoman.dist %>/**/*.*',
           dest: '/',
-          options: { gzip: false }
+          options: { gzip: true }
        },
         // {
         //   expand:true,

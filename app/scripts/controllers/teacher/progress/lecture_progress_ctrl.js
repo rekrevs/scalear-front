@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
   	 $scope.lectureProgressTab = function(){
         $scope.tabState(3)
         enableLectureProgressScrolling() 
-        if($scope.lecture_offset === null)
+        if($scope.lecture_offset == null)
             $scope.getLectureProgress(0,20)    
     }
 

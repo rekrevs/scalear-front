@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
 	    var d = $q.defer();
 	    var lecture={}
 	    lecture[column]=data;
-	    if(column == 'url' && getVideoId(data) === null){
+	    if(column == 'url' && getVideoId(data) == null){
 	    	$log.debug(data)
 	    	d.resolve($translate('courses.invalid_input'));
     	}
@@ -92,7 +92,7 @@ angular.module('scalearAngularApp')
 			        $scope.video.author = data.entry.author[0].name.$t;
 			        var updateFlag = $scope.lecture.duration
 			        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
-			        if(data.entry.media$group.yt$aspectRatio === null || data.entry.media$group.yt$aspectRatio === undefined)
+			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio == undefined)
 			        	$scope.lecture.detected_aspect_ratio="smallscreen";
 			        else
 			        	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;

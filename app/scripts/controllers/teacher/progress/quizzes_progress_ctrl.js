@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
     $scope.quizzesProgressTab = function(){
         $scope.tabState(4)
         enableQuizzesProgressScrolling()
-        if($scope.quizzes_offset === null)
+        if($scope.quizzes_offset == null)
             getQuizzesProgress(0,20)            
     }
     var getQuizzesProgress = function(offset, limit){

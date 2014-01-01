@@ -1,6 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('MainCtrl', [function () {
+  .controller('MainCtrl', ['$scope','$log', function ($scope, $log ) {
+   
+   
+   
   }]);
 

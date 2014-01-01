@@ -51,13 +51,13 @@ angular.module('scalearAngularApp')
          filename+= "_"+type.toLowerCase()       
       
       $scope.modalInstance = $modal.open({
-        templateUrl: 'views/teacher/in_class/'+filename+'.html',
+        templateUrl: '/views/teacher/in_class/'+filename+'.html',
         windowClass: 'whiteboard '+view,
         controller: view+type+'Ctrl',
         scope: $scope
       });
 
-      $scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event) {
+      $scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
           event.preventDefault()
           $scope.exitBtn() 
       });

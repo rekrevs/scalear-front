@@ -13,7 +13,9 @@ angular.module('scalearAngularApp')
 				$scope.import_from=""				
 				$scope.course.start_date = new Date()
 
-			},function(){}
+			},function(response){
+				
+			}
 		);
 		
 		$scope.createCourse = function(){
@@ -22,7 +24,7 @@ angular.module('scalearAngularApp')
 			Course.create({course:$scope.course, "import":$scope.import_from},
 			function(data){
 				$scope.submitted=false;
-				if(data.importing===true){
+				if(data.importing==true){
 					//$(window).scrollTop(0);
 					$state.go("course_list")
 				}

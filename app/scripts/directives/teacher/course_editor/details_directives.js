@@ -176,7 +176,7 @@ angular.module('scalearAngularApp')
           })
         }
         
-        scope.$watch('value', function(){
+        scope.$watch('value', function(newval){
         	if(scope.options)
         		scope.status=scope.showStatus();
         });

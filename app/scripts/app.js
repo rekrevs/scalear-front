@@ -23,8 +23,9 @@
   'ui.tinymce',
   'googlechart',
   'pascalprecht.translate',
-  'angularMoment'
-]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
+  'angularMoment',
+  'config'
+])//.constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
   .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate) {
@@ -42,7 +43,7 @@
   			 for(var element in statesThatDontRequireAuth)
   			{
   				var input =statesThatDontRequireAuth[element];
-  				if(state.substring(0, input.length) === input)
+  				if(state.substring(0, input.length) == input)
   				return true
   			}
   			return false;
@@ -52,7 +53,7 @@
   			for(var element in statesThatForStudents)
   			{
   				var input =statesThatForStudents[element];
-  				if(state.substring(0, input.length) === input)
+  				if(state.substring(0, input.length) == input)
   				return true
   			}
   			return false;
@@ -62,7 +63,7 @@
   			for(var element in statesThatForTeachers)
   			{
   				var input =statesThatForTeachers[element];
-  				if(state.substring(0, input.length) === input)
+  				if(state.substring(0, input.length) == input)
   					return true
   			}
   			return false;
@@ -70,7 +71,7 @@
 		$window.onbeforeunload= function(){
 			$rootScope.unload=true;
 		}
-  		$rootScope.$on('$stateChangeStart', function (ev, to) {
+  		$rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
     	
     		UserSession.getRole().then(function(result){
     			var s=1;
@@ -84,26 +85,26 @@
     					$state.go("login");
     					s=0;
     				}
-    			else if( (stateTeacher(to.name) && result===2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
+    			else if( (stateTeacher(to.name) && result==2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
     				{
     					$state.go("student_courses");
     					s=0;
     				}
-    			else if( (stateStudent(to.name) && result===1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
+    			else if( (stateStudent(to.name) && result==1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
     				{
     					$state.go("course_list");
     					s=0;
     				}
-    			else if( to.name=="home" && result===1 ) // teacher going to home, redirected to courses page
+    			else if( to.name=="home" && result==1 ) // teacher going to home, redirected to courses page
     				{
     					$state.go("course_list");
     				}
-    			else if( to.name=="home" && result===2 ) // student going to home, redirected to student courses page
+    			else if( to.name=="home" && result==2 ) // student going to home, redirected to student courses page
     				{
     					$state.go("student_courses");
     				}
     				
-    				if(s===0){
+    				if(s==0){
     					$rootScope.show_alert="error";
       					ErrorHandler.showMessage('Error ' + ': ' + $translate("controller_msg.you_are_not_authorized"), 'errorMessage', 8000);
       					$timeout(function(){
@@ -145,7 +146,7 @@
       })
       .state('ie', {
         url: '/ie',
-        templateUrl: 'views/ie.html'
+        templateUrl: '/views/ie.html'
       })
       .state('login', {
       	url:'/login',

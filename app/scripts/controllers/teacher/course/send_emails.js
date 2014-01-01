@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
         $scope.batch_emails = batchEmailService.getEmails();
         $log.debug($scope.batch_emails.length);
         
-        if($scope.batch_emails.length === 0){
+        if($scope.batch_emails.length == 0){
             $state.go('course.enrolled_students');
         }
         while($scope.batch_emails.indexOf(',') != -1){

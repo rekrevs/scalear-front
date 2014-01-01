@@ -156,7 +156,7 @@ angular.module('scalearAngularApp')
 	    		{course_id: $stateParams.course_id,
 	    		 quiz_id: q_id},
 	    		{},
-	    		function(){
+	    		function(response){
 	    			 var quiz = $scope.modules[module_index].items.splice(item_index, 1)
 	    			 delete $scope.items_obj[quiz.id]
 	    			 var str = $location.path();
@@ -186,7 +186,7 @@ angular.module('scalearAngularApp')
 		items: '.module',
 		opacity: 0.4,
 		scroll: true,
-		update: function() {
+		update: function(e, ui) {
 			Module.saveSort({},
 				{course_id:$stateParams.course_id,
 					group: $scope.modules},
@@ -209,6 +209,7 @@ angular.module('scalearAngularApp')
 		opacity: 0.4,
 		scroll: true,
 		update: function(e, ui) {
+			var group_id=ui.item.scope().item.group_id
 			var group_position=ui.item.scope().$parent.$parent.module.position -1
 			Lecture.saveSort(
 				{course_id:$stateParams.course_id, 

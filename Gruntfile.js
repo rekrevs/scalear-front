@@ -291,7 +291,7 @@ module.exports = function (grunt) {
             '*.{ico,png,txt}',
             '.htaccess',
             'bower_components/**/*',
-            'scripts/externals/shortcut.js',
+            //'scripts/externals/shortcut.js',
             'images/{,*/}*.{gif,webp}',
             'styles/fonts/*',
             'template/**/*',
@@ -346,9 +346,9 @@ module.exports = function (grunt) {
       dist: {
         files: [{
           expand: true,
-          cwd: '<%= yeoman.dist %>/scripts',
-          src: '**/*.js',
-          dest: '<%= yeoman.dist %>/scripts'
+          cwd: '.tmp/concat/scripts/',
+          src: 'scripts.js',
+          dest: '.tmp/concat/scripts/'
         }]
       }
     },
@@ -407,6 +407,157 @@ module.exports = function (grunt) {
     },
 
 
+  aws: grunt.file.readJSON('app/grunt-aws.json'),
+  aws_s3: {
+  options: {
+    accessKeyId: '<%= aws.key %>', // Use the variables
+    secretAccessKey: '<%= aws.secret %>', // You can also use env variables
+    //region: 'eu-west-1',
+    uploadConcurrency: 5 ,// 5 simultaneous uploads
+    //downloadConcurrency: 5 // 5 simultaneous downloads
+  },
+  staging: {
+    options: {
+      bucket: '<%= aws.bucket %>',
+      //differential: true // Only uploads the files that have changed
+    },
+    files: [
+     // {dest: '/', cwd: 'backup/staging/', action: 'download'},
+       {dest: '/', action: 'delete'},
+      // {expand: true, dot:true, cwd: 'dist/', src: ['.htaccess'], dest: './'},
+      //{expand: true, cwd: 'dist/staging/styles/', src: ['**'], dest: 'app/styles/'},
+     
+    ]
+  },
+  // production: {
+  //   options: {
+  //     bucket: 'my-wonderful-production-bucket',
+  //     params: {
+  //       ContentEncoding: 'gzip' // applies to all the files!
+  //     }
+  //     mime: {
+  //       'dist/assets/production/LICENCE': 'text/plain'
+  //     }
+  //   },
+  //   files: [
+  //     {expand: true, cwd: 'dist/production/', src: ['**'], dest: 'app/'},
+  //     {expand: true, cwd: 'assets/prod/', src: ['**'], dest: 'assets/', params: {CacheControl: '2000'},
+  //     // CacheControl only applied to the assets folder
+  //     // LICENCE inside that folder will have ContentType equal to 'text/plain'
+  //   ]
+  // },
+  // clean_production: {
+  //   options: {
+  //     bucket: 'my-wonderful-production-bucket'
+  //     debug: true // Doesn't actually delete but shows log
+  //   },
+  //   files: [
+  //     {dest: 'app/', action: 'delete'},
+  //   ]
+  // }
+},
+   s3: {
+    options: {
+      key: '<%= aws.key %>',
+      secret: '<%= aws.secret %>',
+      bucket: '<%= aws.bucket %>',
+      access: 'public-read',
+      headers: {
+        // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
+        "Cache-Control": "max-age=630720000, public",
+        "Expires": new Date(Date.now() + 63072000000).toUTCString(),
+        "ETag": ''
+      }
+    },
+     staging: {
+      // These options override the defaults
+      // options: {
+      //   encodePaths: true,
+      //   maxOperations: 20
+      // },
+      // Files to be uploaded.
+      
+      // del: [
+      //   {
+      //     src: './dist'
+      //   },
+      // ],
+
+      upload: [
+       {
+          rel: 'dist', 
+          src: '<%= yeoman.dist %>/**/*.*',
+          dest: '/',
+          options: { gzip: true }
+       },
+        // {
+        //   expand:true,
+        //   dot: true,
+        //   rel: 'dist', 
+        //   src: '<%= yeoman.dist %>/.htaccess',
+        //   dest: '/',
+        //   options: { gzip: false }
+        // }
+      ],
+
+    
+
+    //   sync: [
+    //     {
+    //       // only upload this document if it does not exist already
+    //       src: 'important_document.txt',
+    //       dest: 'documents/important.txt',
+    //       options: { gzip: true }
+    //     },
+    //     {
+    //       // make sure this document is newer than the one on S3 and replace it
+    //       options: { verify: true },
+    //       src: 'passwords.txt',
+    //       dest: 'documents/ignore.txt'
+    //     },
+    //     {
+    //       src: path.join(variable.to.release, "build/cdn/js/**/*.js"),
+    //       dest: "jsgz",
+    //       // make sure the wildcard paths are fully expanded in the dest
+    //       rel: path.join(variable.to.release, "build/cdn/js"),
+    //       options: { gzip: true }
+    //     }
+    //   ]
+    }
+
+  },
+
+ ngconstant: {
+  options: {
+    space: '  '
+  },
+  // targets
+  dev: [{
+    dest: '<%= yeoman.app %>/scripts/config.js',
+    wrap: '"use strict";\n\n <%= __ngModule %>',
+    name: 'config',
+    constants: {
+      scalear_api:{
+        host: 'http://localhost:3000', 
+        redirection_url: 'http://localhost:9000/#/'
+      },
+      
+    }
+  }],
+  prod: [{
+    dest: '<%= yeoman.app %>/scripts/config.js',
+    wrap: '"use strict";\n\n <%= __ngModule %>',
+    name: 'config',
+    constants: {
+      scalear_api:{
+        host: 'http://angular-learning.herokuapp.com',
+        redirection_url: 'http://angular-edu.s3-website-us-west-2.amazonaws.com/#/'
+      } 
+    }
+  }]
+}
+
+
   });
 
   grunt.registerTask('server', function (target) {
@@ -416,6 +567,7 @@ module.exports = function (grunt) {
 
     grunt.task.run([
       'clean:server',
+      'ngconstant:dev',
       'concurrent:server',
       'autoprefixer',
       'connect:livereload',
@@ -433,6 +585,7 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
+    'ngconstant:prod',
     'useminPrepare',
    'concurrent:dist',
     'autoprefixer',
@@ -449,6 +602,8 @@ module.exports = function (grunt) {
      'compress',
      'clean:bower'
   ]);
+
+  grunt.registerTask('staging',['aws_s3:staging', 's3:staging'])
 
   grunt.registerTask('default', [
     'jshint',

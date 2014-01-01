@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
       if(!display) return input
       var result = [];
 
-      angular.forEach(input, function(elem){
+      angular.forEach(input, function(elem,key){
         if(!elem.hide)
           result.push(elem) 
       });

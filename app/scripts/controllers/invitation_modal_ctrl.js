@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
   	
   	Home.acceptCourse({},{invitation : id},function(data){
   		$modalInstance.close(data.course_id);	
-  	}, function(){
+  	}, function(response){
   		$modalInstance.dismiss('cancel');
   		//$scope.form.processing=false;
   		//$scope.form.server_error=response.data.errors.join();
@@ -24,9 +24,9 @@ angular.module('scalearAngularApp')
   };
 
   $scope.reject = function (id) {
-    Home.rejectCourse({},{invitation : id},function(){
+    Home.rejectCourse({},{invitation : id},function(data){
   		$modalInstance.close();	
-  	}, function(){
+  	}, function(response){
   		$modalInstance.dismiss('cancel');
   		//$scope.form.processing=false;
   		//$scope.form.server_error=response.data.errors.join();

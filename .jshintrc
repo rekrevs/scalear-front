@@ -1,16 +1,16 @@
 {
   "node": true,
-  "browser": true,
-  "esnext": true,
-  "bitwise": true,
+  "browser": false,
+  "esnext": false,
+  "bitwise": false,
   "camelcase": false,
   "curly": false,
   "eqeqeq": false,
-  "immed": true,
+  "immed": false,
   "indent": 2,
   "latedef": false,
-  "newcap": true,
-  "noarg": true,
+  "newcap": false,
+  "noarg": false,
   //"quotmark": "single",
   "regexp": false,
   "undef": false,
@@ -23,9 +23,9 @@
   "-W097":false,
   "-W117":false,
   "-W004":false,
- "smarttabs": false,
+ /* "smarttabs": false,*/
   "white":false,
   "globals": {
-    "angular": true
+    "angular": false
   }
 }

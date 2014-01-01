@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
 						'</ul>'+
 				  	'</div>'
 	};
-}).directive('answervideo', [function(){
+}).directive('answervideo', ['$compile',function($compile){
 	return {
 		 scope: {
 		 	quiz:"=",
@@ -72,9 +72,9 @@ angular.module('scalearAngularApp')
 		 restrict: 'E',
 		 templateUrl:'/views/teacher/course_editor/answer.html',
 
-		link: function(scope, element) {
+		link: function(scope, element, attrs) {
 
-			//===FUNCTIONS===//
+			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
 				$log.debug("setting answer location")
 				var ontop=angular.element('.ontop');		
@@ -133,7 +133,7 @@ angular.module('scalearAngularApp')
 				for(var element in scope.quiz.answers)
 				{
 					$log.debug(scope.quiz.answers[element].correct)
-					if(scope.quiz.answers[element].correct===true)
+					if(scope.quiz.answers[element].correct==true)
 					{
 						$log.debug("in true");
 						scope.values+=1
@@ -141,7 +141,7 @@ angular.module('scalearAngularApp')
 				}
 				$log.debug(scope.values)
 			}
-			//===============//
+			//==========//
 	
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
@@ -191,9 +191,9 @@ angular.module('scalearAngularApp')
 	 					"</div>"+
  					"</div>",
 
-		link: function(scope, element) {
+		link: function(scope, element, attrs) {
 			 
-			//===FUNCTIONS===//
+			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
 				var ontop=angular.element('.ontop');
 				scope.width  = scope.data.width * ontop.width();
@@ -216,7 +216,7 @@ angular.module('scalearAngularApp')
 				scope.data.width= element.width()/ontop.width();
 				scope.data.height= element.height()/(ontop.height());
 			}			
-			//===============//	
+			//==========//	
 			
 			$rootScope.$on("updatePosition",function(){
 				$log.debug("event emiited updated position")
@@ -225,7 +225,7 @@ angular.module('scalearAngularApp')
 
 			scope.dragClass = "component dropped answer_drag" 
 
-			if(scope.data.pos === null){	
+			if(scope.data.pos == null){	
 				$log.debug("pos undefined")
 				var max = Math.max.apply(Math,scope.list)
 				max = max ==-Infinity? -1 : max
@@ -318,7 +318,7 @@ angular.module('scalearAngularApp')
 							"<br/>"+
 						"</div>"+
 					"</ng-form>",
-		link: function(scope, element) {
+		link: function(scope, element, iAttrs) {
 			$log.debug("QUIZZ is ");
 			$log.debug(scope.quiz);
 			scope.addAnswer=scope.add()
@@ -381,7 +381,7 @@ angular.module('scalearAngularApp')
 				for(var element in scope.quiz.answers)
 				{
 					$log.debug(scope.quiz.answers[element].correct)
-					if(scope.quiz.answers[element].correct===true)
+					if(scope.quiz.answers[element].correct==true)
 					{
 						$log.debug("in true");
 						scope.values+=1
@@ -469,9 +469,9 @@ angular.module('scalearAngularApp')
 }).directive('atleastone', ['$log', function($log) {
 	return {
 		require: 'ngModel',
-		link: function(scope, elm, attr, ctrl) {
+		link: function(scope, elm, attrs, ctrl) {
 		
-			scope.validate = function() {
+			scope.validate = function(value) {
 				if (scope.values<1) {
 					$log.debug("errorrr");
 					ctrl.$setValidity('atleastone', false);

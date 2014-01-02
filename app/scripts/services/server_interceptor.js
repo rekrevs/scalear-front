@@ -6,6 +6,13 @@ angular.module('scalearAngularApp')
     // optional method
     'request': function(config) {
       	// successful request
+        // change language to current language
+        console.log($translate.uses());
+        var regex = new RegExp(scalear_api.host + "(\/en\/|\/sv\/)");
+        console.log(regex);
+        config.url = config.url.replace(regex, scalear_api.host+"/"+$translate.uses()+"/");
+        //
+        console.log(config.url);
       	return config || $q.when(config);
     },
  
@@ -122,7 +129,7 @@ angular.module('scalearAngularApp')
       	$rootScope.show_alert="error";
       	
       	if(rejection.data=="")      	
-      		ErrorHandler.showMessage('Error ' + rejection.status + ': ' + "Cannot connect to server", 'errorMessage', 8000);
+      		ErrorHandler.showMessage('Error ' + rejection.status + ': ' + $translate('cant_connect_to_server'), 'errorMessage', 8000);
       	else
       		ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
       	}

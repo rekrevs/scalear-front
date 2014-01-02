@@ -1,5 +1,6 @@
 var translation_sv=function(){
     return {
+      cant_connect_to_server: "Kan inte ansluta till servern",
       invalid_email: "ogiltig e-post",
       login_with: "Inloggning med",
       q: "F.",

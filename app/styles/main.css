@@ -262,6 +262,7 @@ textarea.ng-invalid{ border:1px solid red; }
     font-family: inherit;
     font-size: 100%;
     border: solid darkgray 1px;
+}
 
 .navigation{
   width: 1170px;

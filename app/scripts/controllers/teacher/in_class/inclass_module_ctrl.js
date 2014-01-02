@@ -34,8 +34,19 @@ angular.module('scalearAngularApp')
       })  
 
   	};
+    var init = function(){
+        Module.getInclassActive(
+              {module_id:$stateParams.module_id, course_id:$stateParams.course_id},
+              function(data){
+                    console.log(data);
+                    $scope.buttons = data
+                      },
+              function(){}
+                );
+    }
 
-    var openModal=function(view, type){
+
+var openModal=function(view, type){
       $rootScope.changeError = true;
     angular.element("body").css("overflow","hidden");
       var win = angular.element($window)

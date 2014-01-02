@@ -22,7 +22,7 @@
 		</td>
 		<td>{{related_answers[answer.user_id]}}</td>
 		<td style="border-left: 1px gray solid;">
-			<a ng-click="showFeedback(question.answers,$index)">{{answer.answer}}</a>
+			<a ng-click="showFeedback(question.answers,$index)" style="cursor:pointer">{{answer.answer}}</a>
 			<div ng-show="answer.response && !display_only">
 				<p style="font-style: italic;display:inline;">{{answer.response}}</p>
 				<button_link title="{{'delete'|translate}}" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							

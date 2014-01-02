@@ -3,11 +3,12 @@
 angular.module('scalearAngularApp')
     .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate','$q','$log', '$filter', function ($scope, $state, Module, Document, $stateParams, $translate, $q, $log, $filter) {
         
+
         $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
             if($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
                 $scope.module=$scope.module_obj[$stateParams.module_id]
-                init()
             }
+            init();
         })
 
         var init = function(){
@@ -17,10 +18,14 @@ angular.module('scalearAngularApp')
                     module_id:$stateParams.module_id
                 },
                 function(data){
-                    angular.extend($scope.module, data)
+
+                    $scope.$watch('module',function(){
+                        if($scope.module)
+                            angular.extend($scope.module, data)
+                    })
+                    
                 },
-                function(){
-                }
+                function(){}
             )
         }        
 
@@ -43,7 +48,7 @@ angular.module('scalearAngularApp')
 
 
     	$scope.removeDocument=function (elem) {
-    		if(confirm($translate('groups.you_sure_delete_document', {doc: elem.name}))){
+    		//if(confirm($translate('groups.you_sure_delete_document', {doc: elem.name}))){
 	    		Document.destroy(
 					{document_id: elem.id},{},
 					function(){
@@ -53,12 +58,12 @@ angular.module('scalearAngularApp')
 						alert("Failed to delete document, please check your internet connection")
 					}
 				);
-	    	}
+	    	//}
     	}
 		$scope.validateName= function(data, elem){
 			var d = $q.defer();
 		    var doc={}
-		    doc["name"]=data;
+		    doc.name=data;
 		    Document.validateName(
 		    	{document_id: elem.id},
 		    	doc,
@@ -79,7 +84,7 @@ angular.module('scalearAngularApp')
 		$scope.validateURL= function(data, elem){
 			var d = $q.defer();
 		    var doc={}
-		    doc["url"]=data;
+		    doc.url=data;
 		    Document.validateURL(
 		    	{document_id: elem.id},
 		    	doc,

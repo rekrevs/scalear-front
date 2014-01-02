@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
  	var init = function(){
         $scope.studentAnswers={};
 
- 		Quiz.getQuestions({quiz_id: $stateParams.quiz_id},function(data){
+ 		Quiz.getQuestions({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},function(data){
             $scope.quiz= data.quiz
 	 		$scope.quiz.questions=data.questions
 	 		$scope.studentAnswers=data.quiz_grades;
@@ -31,10 +31,10 @@ angular.module('scalearAngularApp')
     	if($scope.form.$valid || action=="save") //validate only if submit.
     	{
     		$scope.submitted=false;
-    		Quiz.saveStudentQuiz({quiz_id: $stateParams.quiz_id},{student_quiz: $scope.studentAnswers, commit: action}, function(data){
+    		Quiz.saveStudentQuiz({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},{student_quiz: $scope.studentAnswers, commit: action}, function(data){
     			$scope.status=data.status;
     			$scope.alert_messages= data.alert_messages;
-    			if(data.correct!=null)
+    			if(data.correct)
     				$scope.correct=data.correct; 
     				// here need to update scope.parent
     				var group_index= CourseEditor.get_index_by_id($scope.$parent.course.groups, data.done[1])

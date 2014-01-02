@@ -70,13 +70,11 @@ angular.module('scalearAngularApp')
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-style='{left: xcoor, top: ycoor, position: \"absolute\", lineHeight:\"0px\"}' data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
-		 				"<img ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' ng-click='updateValues()' />"+
-	 				"</div>",
+		 templateUrl:'/views/teacher/course_editor/answer.html',
 
 		link: function(scope, element, attrs) {
 
-			//===FUNCTIONS===//
+			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
 				$log.debug("setting answer location")
 				var ontop=angular.element('.ontop');		
@@ -95,9 +93,9 @@ angular.module('scalearAngularApp')
 				$log.debug("image change")
 				$log.debug(scope.data.correct)
 				if(scope.quiz.question_type == "OCQ")
-					scope.imgName = scope.data.correct? 'button_green.png' : 'button8.png';
+					scope.imgName = scope.data.correct? scope.ocq_correct : scope.ocq_incorrect;
 				else
-					scope.imgName = scope.data.correct? 'checkbox_green.gif' : 'checkbox.gif';
+					scope.imgName = scope.data.correct? scope.mcq_correct : scope.mcq_incorrect;
 			}
 
 			scope.calculatePosition=function(){
@@ -143,7 +141,7 @@ angular.module('scalearAngularApp')
 				}
 				$log.debug(scope.values)
 			}
-			//===============//
+			//==========//
 	
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
@@ -195,7 +193,7 @@ angular.module('scalearAngularApp')
 
 		link: function(scope, element, attrs) {
 			 
-			//===FUNCTIONS===//
+			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
 				var ontop=angular.element('.ontop');
 				scope.width  = scope.data.width * ontop.width();
@@ -218,7 +216,7 @@ angular.module('scalearAngularApp')
 				scope.data.width= element.width()/ontop.width();
 				scope.data.height= element.height()/(ontop.height());
 			}			
-			//===============//	
+			//==========//	
 			
 			$rootScope.$on("updatePosition",function(){
 				$log.debug("event emiited updated position")
@@ -240,7 +238,7 @@ angular.module('scalearAngularApp')
 
 			if(!(scope.data.explanation instanceof Array)){
 				$log.debug("not an array")
-				scope.data.explanation = new Array()
+				scope.data.explanation = []
 				for(var i in scope.list)
 					scope.data.explanation[i]=""
 			}

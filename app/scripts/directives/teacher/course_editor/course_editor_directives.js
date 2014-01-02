@@ -10,14 +10,9 @@ angular.module('scalearAngularApp')
 			remove:"&",
 			open: "="
 		},
-		template: "<h5 ng-click='invertOpen()'>"+
-					"<img src='images/move2.png' class='handle' title={{'courses.drag_to_reorder'|translate}} />"+
-					"<a class='trigger' ng-class='{open:open[id]}' ui-sref='course.course_editor.module({ module_id: id })'>{{name}}</a>"+
-					"<delete_button size='small' action='remove({event:event})' name='module_delete_button'/>"+
-				  "</h5>",
+		templateUrl:'/views/teacher/course_editor/module.html' ,
 	  link: function(scope){
-			scope.invertOpen = function()
-			{
+			scope.invertOpen = function(){
 				if(scope.open[scope.id])
 					scope.open[scope.id] = false
 				else{ 
@@ -28,7 +23,7 @@ angular.module('scalearAngularApp')
 			}
 		}
 	}
- }).directive('item',function(){
+ }).directive('item',function($translate){
 	return {
 		 scope: {
 		 	name:'=',
@@ -37,9 +32,14 @@ angular.module('scalearAngularApp')
 		 	remove:'&'
 		 },
 		 restrict: 'E', 
-		 template: '<img src="images/move2.png" class="handle" title={{"courses.drag_to_reorder"|translate}} />'+
-	               '<a class="trigger2" ui-sref=\'course.course_editor.{{(className=="lecture") && "lecture.quizList" || className}}({ {{className}}_id: id })\' >{{name}}</a>'+
-	               '<delete_button size="small" action="remove()"/>'
+		 templateUrl:'/views/teacher/course_editor/item.html',
+		 link:function(scope){
+		 	scope.getDeleteMessage=function(){
+		 		var translation_value = {}
+		 		translation_value[scope.className] = scope.name
+		 		return $translate('groups.you_sure_delete_'+scope.className, translation_value)
+		 	}
+		 }
 	};
 }).directive('buttonLink', function(){
 	return {
@@ -99,18 +99,22 @@ angular.module('scalearAngularApp')
 		},		
 	 	restrict: 'E',
 	 	replace:true,
-	 	template: '<div ng-show="show"><img ng-src="images/loading_{{size}}.gif" ng-class=\'{loading_image: size=="big"}\' /></br><b><span translate>groups.please_wait</span>...</b></div>'
+	 	templateUrl:'/views/teacher/course_editor/loading.html',
 	};
 }).directive('deleteButton',function(){
 	return {
 		scope:{
 			size:"@",
-			action:"&"
+			action:"&",
+			hideConfirm:'='
 		},
         replace: true,
 		restrict:'E',
-		template: 	'<a style="float:right;width:20px;cursor:pointer;" title={{"delete"|translate}} class="delete_image" ng-click="action({event:$event})">'+
-						'<img alt="Trash" ng-src="images/trash_{{size}}.png">'+
-					'</a>'
+		templateUrl: '/views/teacher/course_editor/delete_button.html',
+		link:function(scope){
+			scope.showDeletePopup = function(value) {
+				scope.displayDeletePopup = value
+			};
+		}
 	}
 });

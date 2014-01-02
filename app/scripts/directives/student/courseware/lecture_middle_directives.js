@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
 .directive("controls",['$timeout','Lecture','$stateParams', '$window', '$log', function($timeout, Lecture, $stateParams, $window, $log) {
   return {
     restrict:"E",
-    templateUrl:"../views/student/lectures/controls.html",
+    templateUrl:"/views/student/lectures/controls.html",
     link: function(scope, element, attrs) {
 
     	element.css("width", "200px");
@@ -84,7 +84,6 @@ angular.module('scalearAngularApp')
         scope.show_shortcuts=!scope.show_shortcuts;
         if(scope.show_shortcuts)
           $(document).on("click", function (e) {
-            console.log("click doc")
             if(e.target.className != 'shortcutDiv'){
               scope.show_shortcuts = false
               scope.$apply()
@@ -271,7 +270,7 @@ angular.module('scalearAngularApp')
             selected_answers = selected_answers[0]
            
         }
-        else
+        else //DRAG
         {
           selected_answers={}
           selected_answers = scope.studentAnswers[scope.selected_quiz.id]
@@ -309,13 +308,13 @@ angular.module('scalearAngularApp')
   		
 
       var displayResult=function(data, done){
-        for(var el in data["detailed_exp"])
-          scope.explanation[el]= data["detailed_exp"][el];
+        for(var el in data.detailed_exp)
+          scope.explanation[el]= data.detailed_exp[el];
 
-        scope.verdict=data["correct"]? $translate("lectures.correct"): $translate("lectures.incorrect")
+        scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
         scope.$parent.show_notification=true;
 
-		if(data["msg"]!="Empty") // he chose sthg
+		if(data.msg!="Empty") // he chose sthg
 	    {
 	    	// here need to update scope.$parent.$parent
 	    	var group_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups, data.done[1])
@@ -501,7 +500,7 @@ angular.module('scalearAngularApp')
     link: function(scope, element, attrs, controller) {
       $log.debug("student answer link")
 
-      //===FUNCTIONS===//
+      //==FUNCTIONS==//
       var setup=function(){
         scope.explanation_pop ={}
         var type= scope.quiz.question_type =="MCQ"? "checkbox" :"radio"

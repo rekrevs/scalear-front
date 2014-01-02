@@ -13,23 +13,25 @@ angular.module('scalearAngularApp')
   		Announcement.index({course_id: $stateParams.course_id},
   			function(data){
   				$scope.announcements=data;
+          $scope.show_button = true
   			}
   		)
   	}
-  	
+
   	$scope.deleteAnnouncement=function(index){
-  		if(confirm($translate('announcement_form.confirm_delete'))){
+  		//if(confirm($translate('announcement_form.confirm_delete'))){
   		if($scope.announcements[index].id){
-	  		Announcement.destroy({course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},{},function(data){
-	  			//init();
-	  			$scope.announcements.splice(index, 1)
-                $scope.disable_new = false;
-            })
+	  		Announcement.destroy(
+          {course_id: $stateParams.course_id, announcement_id: $scope.announcements[index].id},
+          {},
+          function(){
+  			      $scope.announcements.splice(index, 1)
+              $scope.disable_new = false;
+          })
 	  	}else
 	  		$scope.announcements.splice(index, 1);
             $scope.disable_new = false;
-
-        }
+      //  }
   	}
   	
   	$scope.createAnnouncement= function(){
@@ -40,7 +42,11 @@ angular.module('scalearAngularApp')
   				$scope.hideAnnouncement(element);
   		}
   		$scope.newAnnouncement= {announcement:"", created_at: new Date(), show:true};
-  		$scope.announcements.push($scope.newAnnouncement);
+      if(!($scope.announcements instanceof Array)){
+          $scope.announcements = []
+      }
+          
+		  $scope.announcements.push($scope.newAnnouncement);
   	}
   	$scope.hideAnnouncement = function(index){ //get old data.
         $scope.disable_new = false;
@@ -48,7 +54,7 @@ angular.module('scalearAngularApp')
   		if($scope.announcements[index].id){
   		Announcement.show({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id },
   			function(data){
-          $log.debug("announcements data=");
+                $log.debug("announcements data=");
   				$log.debug(data);
   				$scope.announcements[index]=data;
   			}
@@ -80,7 +86,7 @@ angular.module('scalearAngularApp')
             $scope.disable_new = false;
   		    },
           function(response){
-      			$scope.announcements[index].errors=response["data"].errors
+      			$scope.announcements[index].errors=response.data.errors
       		}
         )
   		}
@@ -93,17 +99,22 @@ angular.module('scalearAngularApp')
       			$scope.disable_new = false;
       		},
           function(response){
-      			$scope.announcements[index].errors=response["data"].errors
+      			$scope.announcements[index].errors=response.data.errors
       		}
         )
   		}
   	};
   	
-  
-  	 $scope.tinymceOptions= {
-         plugins : "preview, table",//autolink,textcolor, lists,pagebreak,table,save,insertdatetime,preview,searchreplace,print,contextmenu,paste,directionality,noneditable,nonbreaking",
-         theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,|,sub,sup,|,charmap,emotions,|,print,|,ltr,rtl",
-  		}
-   
+     $scope.$watch('current_lang', function(newval, oldval){
+
+         if(newval!=oldval)
+             for(var elem in $scope.announcements)
+             {
+                 delete $scope.announcements[elem].errors
+             }
+
+
+     });
+
     init();
   }]);

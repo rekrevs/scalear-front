@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
 				init();
 			},
 			function(){
-	 		    alert("Could not save changes, please check network connection.");
+	 		   // alert("Could not save changes, please check network connection.");
 			}
 		);
 	}

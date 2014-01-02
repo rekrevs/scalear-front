@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
     	$rootScope.current_lang=key;
     	$window.moment.lang(key);
   	};
-  	
+
   	$scope.changeLanguage($translate.uses());
 
    	$scope.logout = function()
@@ -19,10 +19,10 @@ angular.module('scalearAngularApp')
    			$rootScope.current_user=null
    			$state.go("home");
    		}, function(){
-   			
+
    		})
    	}
-   	
+
    	$scope.coursePage = function()
    	{
    		if($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5) // admin
@@ -30,11 +30,11 @@ angular.module('scalearAngularApp')
    		else
    			$state.go("student_courses");
    	}
-   	
+
    	$scope.open = function () {
 
     	var modalInstance = $modal.open({
-      		templateUrl: 'views/invitation.html',
+      		templateUrl: '/views/invitation.html',
       		controller: "InvitationModalCtrl",
       		// resolve: {
         		// items: function () {

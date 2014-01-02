@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$rootScope', '$modal','$timeout','$window','$log', function ($scope, $rootScope, $modal, $timeout,$window, $log) {
-
+  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams) {
     $window.scrollTo(0, 0);
     $scope.inclass_player={}
     $scope.inclass_player.events={}    
@@ -38,7 +37,7 @@ angular.module('scalearAngularApp')
 
     var openModal=function(view, type){
       $rootScope.changeError = true;
-      angular.element("body").css("overflow","hidden");
+    angular.element("body").css("overflow","hidden");
       var win = angular.element($window)
       win.scrollTop("0px")
       var filename='inclass_'+view
@@ -46,7 +45,7 @@ angular.module('scalearAngularApp')
          filename+= "_"+type.toLowerCase()       
       
       $scope.modalInstance = $modal.open({
-        templateUrl: 'views/teacher/in_class/'+filename+'.html',
+        templateUrl: '/views/teacher/in_class/'+filename+'.html',
         windowClass: 'whiteboard '+view,
         controller: view+type+'Ctrl',
         scope: $scope
@@ -71,6 +70,7 @@ angular.module('scalearAngularApp')
       angular.element("body").css("overflow","auto");
       $scope.modalInstance.dismiss();
       $scope.unregister_back_event();
+      init()
     };
 
     $scope.playBtn = function(){
@@ -225,8 +225,10 @@ angular.module('scalearAngularApp')
         height:'60%',
         width:'50px',
         marginLeft:'30px',
-        verticalAlign:'text-bottom',
+        verticalAlign:'text-bottom'
       }
     }
+
+    init();
 
   }]);

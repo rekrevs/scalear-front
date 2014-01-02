@@ -2050,19 +2050,22 @@ describe('In-Class', function(){
         });
     });
     describe('Main View', function(){
-        it('should go to Display Quizzes', function(){
-            ptor.findElement(protractor.By.className('btn-primary')).click();
+        it('should show the disabled display quizzes button', function(){
+            ptor.findElement(protractor.By.className('btn-primary')).then(function(button){
+                expect(button.getAttribute('disabled')).toBe('true');
+                button.click();
+            });
         });
     });
     describe('Display Quizzes', function(){
-        it('shouldn\'t display any charts', function(){
-            ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
-                expect(rects.length).toBe(0);
+        it('shouldn\'t display a modal', function(){
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.isDisplayed().then(function(disp){
+                    expect(disp).toEqual(false)
+                });
             });
         });
-        it('should exit the modal', function(){
-            ptor.findElement(protractor.By.className('exit_btn')).click();
-        });
+        doRefresh(ptor);
     });
     reviewQuizzesModal(ptor);
     describe('Review Quizzes', function(){
@@ -2211,11 +2214,20 @@ describe('In-Class', function(){
     reviewQuestionsModal(ptor);
     describe('Review Questions', function(){
         it('should exit the modal', function(){
-            ptor.findElement(protractor.By.xpath('/html/body/div[4]/div/a')).click();
+            ptor.findElements(protractor.By.tagName('a')).then(function(buttons){
+                buttons[buttons.length-2].click();
+            });
+        });
+    });
+    describe('Main View', function(){
+        it('should go to Display Questions', function(){
+            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                buttons[1].click();
+            });
         });
     });
     describe('Display Questions', function(){
-        it('should display the display quizzes modal', function(){
+        it('should display the display questions modal', function(){
             ptor.findElement(protractor.By.className('modal')).then(function(modal){
                 modal.isDisplayed().then(function(disp){
                     expect(disp).toEqual(true)
@@ -2253,8 +2265,123 @@ describe('In-Class', function(){
             });
         });
         it('should display the question posted by student', function(){
-            ptor.findElement(protractor.By.repeater('question in questions')).then(function(question){
-                expect(question.getText()).toBe('why isn\'t it working?');
+            ptor.findElements(protractor.By.repeater('question in questions')).then(function(questions){
+                expect(questions[0].getText()).toBe('why isn\'t it working?');
+            });
+        });
+        it('should exit the modal', function(){
+            ptor.findElement(protractor.By.className('exit_btn')).then(function(button){
+                button.click();
+            });
+        });
+    });
+    reviewQuestionsModal(ptor);
+    describe('Review Questions', function(){
+        it('should hide the question', function(){
+            ptor.findElement(protractor.By.tagName('input')).then(function(hide){
+                hide.click().then(function(){
+                    feedback(ptor, 'Question is now hidden', 1);
+                });
+            });
+        });
+        it('should exit the modal', function(){
+            ptor.findElements(protractor.By.tagName('a')).then(function(buttons){
+                buttons[buttons.length-2].click();
+            });
+        });
+    });
+    describe('Main View', function(){
+        it('should show disabled button', function(){
+            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                expect(buttons[1].getAttribute('disabled')).toBe('true');
+                buttons[1].click();
+            });
+        });
+    });
+    describe('Display Questions', function(){
+        it('should not display the \'display questions\' modal', function(){
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.isDisplayed().then(function(disp){
+                    expect(disp).toEqual(false)
+                });
+            });
+        });
+    });
+    describe('Main View', function(){
+        doRefresh(ptor);
+        it('should open the Review Questions', function(){
+            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+                buttons[4].click();
+            });
+        });
+    });
+    describe('Review Questions', function(){
+        it('should unhide the question', function(){
+            ptor.findElement(protractor.By.tagName('input')).then(function(hide){
+                hide.click().then(function(){
+                    feedback(ptor, 'Question is now visible');
+                });
+            });
+        });
+        it('should exit the modal', function(){
+            ptor.findElements(protractor.By.tagName('a')).then(function(buttons){
+                buttons[buttons.length-2].click();
+            });
+        });
+    });
+    describe('Main View', function(){
+        it('should open Display Questions', function(){
+            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                buttons[1].click();
+            });
+        });
+    });
+    describe('Display Questions', function(){
+        it('should display the display questions modal', function(){
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.isDisplayed().then(function(disp){
+                    expect(disp).toEqual(true)
+                });
+            });
+        });
+        it('should display the video container', function(){
+            ptor.sleep(10000);
+            ptor.findElement(protractor.By.tagName('youtube')).then(function(video){
+                video.isDisplayed().then(function(disp){
+                    expect(disp).toEqual(true);
+                });
+            });
+        });
+        it('should display the play button', function(){
+            ptor.findElement(protractor.By.className('play_button')).then(function(play){
+                play.isDisplayed().then(function(disp){
+                    expect(disp).toEqual(true);
+                });
+            });
+        });
+        it('should display the mute button', function(){
+            ptor.findElement(protractor.By.className('mute_button')).then(function(play){
+                play.isDisplayed().then(function(disp){
+                    expect(disp).toEqual(true);
+                });
+            });
+        });
+        it('should display the -5 and +5 buttons and >> , << buttons', function(){
+            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+                expect(buttons[6].getText()).toBe('-5');
+                expect(buttons[7].getText()).toBe('<<');
+                expect(buttons[8].getText()).toBe('+5');
+                expect(buttons[9].getText()).toBe('>>');
+            });
+        });
+        it('should display the question posted by student', function(){
+            ptor.findElements(protractor.By.repeater('question in questions')).then(function(questions){
+                expect(questions[0].getText()).toBe('why isn\'t it working?');
+            });
+        });
+        it('should exit the modal', function(){
+            ptor.findElement(protractor.By.className('exit_btn')).then(function(button){
+                button.click();
             });
         });
     });
@@ -2276,7 +2403,7 @@ function reviewQuestionsModal(ptor){
         });
         it('should display modal title', function(){
             ptor.findElements(protractor.By.tagName('h4')).then(function(titles){
-                expect(titles[titles.length-1].getText()).toBe('Review Student Questions onFirst Module');
+                expect(titles[titles.length-1].getText()).toBe('Review Student Questions on First Module');
             });
         });
         it('should display a table', function(){
@@ -2298,7 +2425,6 @@ function reviewQuestionsModal(ptor){
         });
         it('should display the question data', function(){
             ptor.findElements(protractor.By.tagName('td')).then(function(data){
-                expect(data[0].getAttribute('checked')).toBe('false');
                 expect(data[1].getText()).toBe('why isn\'t it working?');
                 expect(data[2].getText()).toBe('New Lecture2');
                 expect(data[3].getText()).toBe('00:00:08');

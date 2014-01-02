@@ -1904,7 +1904,7 @@ describe('In-Class', function(){
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('%');
+                expect(texts[10].getText()).toBe('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
                 rects[14].getAttribute('height').then(function(height){
@@ -1934,7 +1934,7 @@ describe('In-Class', function(){
                 expect(texts[1].getText()).toContain('Cor');
                 expect(texts[2].getText()).toBe('First Answer (Correct)');
                 expect(texts[3].getText()).toBe('Second Answer (Incorrect)');
-                expect(texts[9].getText()).toBe('%');
+                expect(texts[9].getText()).toBe('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
                 rects[14].getAttribute('height').then(function(height){
@@ -1961,7 +1961,7 @@ describe('In-Class', function(){
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('%');
+                expect(texts[10].getText()).toBe('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
                 rects[14].getAttribute('height').then(function(height){
@@ -2015,7 +2015,7 @@ describe('In-Class', function(){
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('%');
+                expect(texts[10].getText()).toBe('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
                 rects[14].getAttribute('height').then(function(height){
@@ -2131,7 +2131,7 @@ describe('In-Class', function(){
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('%');
+                expect(texts[10].getText()).toBe('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
                 rects[14].getAttribute('height').then(function(height){
@@ -2161,7 +2161,7 @@ describe('In-Class', function(){
                 expect(texts[1].getText()).toContain('Cor');
                 expect(texts[2].getText()).toBe('First Answer (Correct)');
                 expect(texts[3].getText()).toBe('Second Answer (Incorrect)');
-                expect(texts[9].getText()).toBe('%');
+                expect(texts[9].getText()).toBe('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
                 rects[14].getAttribute('height').then(function(height){
@@ -2188,7 +2188,7 @@ describe('In-Class', function(){
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('%');
+                expect(texts[10].getText()).toBe('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects){
                 rects[14].getAttribute('height').then(function(height){

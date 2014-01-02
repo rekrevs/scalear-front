@@ -108,7 +108,6 @@ angular.module('scalearAngularApp')
 					player.on('play',
 						function(){
 							parent.focus()
-							console.log("playin")
 							if(player_events.onPlay){								
 								player_events.onPlay();
 								scope.$apply();

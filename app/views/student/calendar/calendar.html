@@ -1,15 +1,18 @@
+<!-- build:css(.tmp/styles) styles/announcements.css -->
 <link rel="stylesheet" href="styles/student/announcements.css"/>
+<!-- endbuild -->
+
 <br />
-<center ng-show="!eventSources.length" ><loading size="big" show="!eventSources.length" ></center>
+<center ng-show="!eventSources.length" ><loading size="big" show="!eventSources.length" /></center>
 <center ng-show="eventSources.length">
 	<center>
-    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="min-width: 600px; min-height: 500px;"</div>
+    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="min-width: 600px; min-height: 500px;"></div>
          <br />
          <div class="alert">
          	<center style="font-size:14px;font-weight: bold" translate="events.deadline_msg"></center>
          </div>
     </center>        
-	<br>
+	<br />
 	<div style="text-align: left; margin-left: 40px;">
 		<table>
 			<tr>

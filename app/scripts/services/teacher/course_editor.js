@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
  	{
  		for(var element in groups)
  		{
- 			if(groups[element]["id"]==group_id)
+ 			if(groups[element].id==group_id)
  				return element
  		}
  		return -1
@@ -44,8 +44,6 @@ angular.module('scalearAngularApp')
 				all_answers.push(elem.content)
 			else
 				all_answers.push(elem.answer)
-			
-			console.log(all_answers)
 		});
 		return x.newAnswer(all_answers,"","","","",type, question_id);
 	},
@@ -54,7 +52,6 @@ angular.module('scalearAngularApp')
 		var all_pos=[]
 		answers.forEach(function(elem){
 			all_pos.push(parseInt(elem.pos))
-			console.log(all_pos)
 		});
 		return all_pos
 	},

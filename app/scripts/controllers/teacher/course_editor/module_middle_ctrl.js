@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
 
 
     	$scope.removeDocument=function (elem) {
-    		if(confirm($translate('groups.you_sure_delete_document', {doc: elem.name}))){
+    		//if(confirm($translate('groups.you_sure_delete_document', {doc: elem.name}))){
 	    		Document.destroy(
 					{document_id: elem.id},{},
 					function(){
@@ -53,12 +53,12 @@ angular.module('scalearAngularApp')
 						alert("Failed to delete document, please check your internet connection")
 					}
 				);
-	    	}
+	    	//}
     	}
 		$scope.validateName= function(data, elem){
 			var d = $q.defer();
 		    var doc={}
-		    doc["name"]=data;
+		    doc.name=data;
 		    Document.validateName(
 		    	{document_id: elem.id},
 		    	doc,
@@ -79,7 +79,7 @@ angular.module('scalearAngularApp')
 		$scope.validateURL= function(data, elem){
 			var d = $q.defer();
 		    var doc={}
-		    doc["url"]=data;
+		    doc.url=data;
 		    Document.validateURL(
 		    	{document_id: elem.id},
 		    	doc,

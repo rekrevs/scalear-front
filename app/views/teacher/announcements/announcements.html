@@ -1,5 +1,4 @@
-<center ng-show="!announcements" ><loading size="big" show="!announcements" ></center>
-<center ng-show="announcements">
+<center ng-show="announcements.length">
 	<table class="table table-striped" style="width:90%">
 		<tr>
 			<th translate>head.announcements</th>
@@ -18,9 +17,13 @@
 			<td width="150px">
 				<input id="close_button" ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" />
 				<input id="save_button" ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" />
-				<delete_button size="big"  action="deleteAnnouncement($index)"/>
+				<delete_button size="big"  action="deleteAnnouncement($index)" hide-confirm="disable_new"/>
 			</td>
 		</tr>
 	</table>
+</center>
+<br><br>
+<center ng-show="!announcements" ><loading size="big" show="!announcements" ></center>
+<center ng-show="show_button"> 
 	<input id="new_announcement" type="button" value="{{'announcement_form.create_announcement'|translate}}" class="btn btn-primary" ng-disabled="disable_new" ng-click="createAnnouncement()"/>
 </center>

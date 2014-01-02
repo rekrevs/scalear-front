@@ -53,7 +53,7 @@ angular.module('scalearAngularApp')
       if(rejection.status==400 && rejection.config.url.search(re)!=-1) 
       {
       	$rootScope.show_alert="error";
-      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
+      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data.errors, 'errorMessage', 8000);
       	$timeout(function(){
       		$rootScope.show_alert="";	
       	},4000);
@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
       		$state.go("login") //check
       		
       	$rootScope.show_alert="error";
-      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
+      	ErrorHandler.showMessage('Error ' + ': ' + (rejection.data.errors || rejection.data ), 'errorMessage', 8000);
       	$timeout(function(){
       		$rootScope.show_alert="";	
       	},4000);

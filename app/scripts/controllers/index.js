@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
    	$scope.open = function () {
 
     	var modalInstance = $modal.open({
-      		templateUrl: 'views/invitation.html',
+      		templateUrl: '/views/invitation.html',
       		controller: "InvitationModalCtrl",
       		// resolve: {
         		// items: function () {

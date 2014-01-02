@@ -70,9 +70,9 @@ ul.accordion ul {margin:0; padding:0 0 0 0px;}
 .accordion a {...}
 */    
 
-a.trigger {display:inline-block !important; padding-left:20px; background-image: url('../../images/plus.gif'); background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
+a.trigger {display:inline-block !important; padding-left:20px; background-image: url('/images/plus.gif'); background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
 
-a.trigger.open {border-color:#dadada; background-image: url('../../images/minus.gif');background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
+a.trigger.open {border-color:#dadada; background-image: url('/images/minus.gif');background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
 
 .last-child a.trigger{padding-left:1px; background-image:none; font-weight:normal}
 

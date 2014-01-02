@@ -37,10 +37,15 @@ angular.module('scalearAngularApp')
   	};
 
     var init = function(){
-        Module.getModules({module_id:$stateParams.module_id, course_id:$stateParams.course_id});
-    }
-
-    init();
+        Module.getInclassActive(
+          {module_id:$stateParams.module_id, course_id:$stateParams.course_id},
+          function(data){
+            console.log(data);
+            $scope.buttons = data
+          },
+          function(){}
+        );
+    }    
 
     var openModal=function(view, type){ 
       angular.element("body").css("overflow","hidden");
@@ -76,6 +81,7 @@ angular.module('scalearAngularApp')
       angular.element("body").css("overflow","auto");
       $scope.modalInstance.dismiss();
       $scope.unregister_back_event();
+      init()
     };
 
     $scope.playBtn = function(){
@@ -233,5 +239,7 @@ angular.module('scalearAngularApp')
         verticalAlign:'text-bottom',
       }
     }
+
+    init();
 
   }]);

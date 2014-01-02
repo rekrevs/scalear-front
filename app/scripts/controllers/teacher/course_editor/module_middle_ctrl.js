@@ -3,6 +3,7 @@
 angular.module('scalearAngularApp')
     .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate','$q','$log', '$filter', function ($scope, $state, Module, Document, $stateParams, $translate, $q, $log, $filter) {
         
+
         $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
             if($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
                 $scope.module=$scope.module_obj[$stateParams.module_id]
@@ -17,10 +18,14 @@ angular.module('scalearAngularApp')
                     module_id:$stateParams.module_id
                 },
                 function(data){
-                    angular.extend($scope.module, data)
+                    console.log(data)
+                    $scope.$watch('module',function(){
+                        if($scope.module)
+                            angular.extend($scope.module, data)
+                    })
+                    
                 },
-                function(){
-                }
+                function(){}
             )
         }        
 

@@ -146,7 +146,7 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": $translate("quizzes.number_of_students"),
+                "title": $translate(data.vtitle || "quizzes.number_of_students"),
             },
         };
         chart.data = $scope.formatLectureChartData(chart_data[id])

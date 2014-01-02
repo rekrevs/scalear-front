@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
 		 				$scope.items_obj[item.id] = item
 		 			})
 		 		})
-                console.log($scope.modules);
+
 		 		$scope.init_loading=false
 		    },
 		    function(){

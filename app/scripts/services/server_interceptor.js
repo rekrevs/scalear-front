@@ -7,12 +7,10 @@ angular.module('scalearAngularApp')
     'request': function(config) {
       	// successful request
         // change language to current language
-        console.log($translate.uses());
+
         var regex = new RegExp(scalear_api.host + "(\/en\/|\/sv\/)");
-        console.log(regex);
         config.url = config.url.replace(regex, scalear_api.host+"/"+$translate.uses()+"/");
         //
-        console.log(config.url);
       	return config || $q.when(config);
     },
  
@@ -34,7 +32,7 @@ angular.module('scalearAngularApp')
       if($rootScope.server_error==true && response.config.url.search(re)!=-1) // if response coming from server, and connection was bad
       {
       	$rootScope.show_alert="success";
-      	ErrorHandler.showMessage("Connected", 'errorMessage', 2000);
+      	ErrorHandler.showMessage($translate("connected"), 'errorMessage', 2000);
       	$timeout(function(){
       		$rootScope.server_error=false;
       		$rootScope.show_alert="";	

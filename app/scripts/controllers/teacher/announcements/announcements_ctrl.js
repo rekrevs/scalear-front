@@ -106,13 +106,13 @@ angular.module('scalearAngularApp')
   	};
   	
      $scope.$watch('current_lang', function(newval, oldval){
-         console.log($scope.announcements)
+
          if(newval!=oldval)
              for(var elem in $scope.announcements)
              {
                  delete $scope.announcements[elem].errors
              }
-         console.log($scope.announcements)
+
 
      });
 

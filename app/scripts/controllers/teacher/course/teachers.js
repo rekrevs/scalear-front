@@ -65,13 +65,13 @@ angular.module('scalearAngularApp')
         $scope.getTeachers()
 
         $scope.$watch('current_lang', function(newval, oldval){
-            console.log($scope.new_teachers)
+
             if(newval!=oldval)
                 for(var elem in $scope.new_teachers)
                 {
                     delete $scope.new_teachers[elem].error
                 }
-            console.log($scope.new_teachers)
+
 
         });
 

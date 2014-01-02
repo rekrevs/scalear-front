@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
                     module_id:$stateParams.module_id
                 },
                 function(data){
-                    console.log(data)
+
                     $scope.$watch('module',function(){
                         if($scope.module)
                             angular.extend($scope.module, data)

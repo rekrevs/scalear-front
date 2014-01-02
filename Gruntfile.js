@@ -599,7 +599,7 @@ module.exports = function (grunt) {
      'usemin',
      'htmlclean',
      'inline_angular_templates',
-     'compress',
+     //'compress',
      'clean:bower'
   ]);
 

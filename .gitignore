@@ -6,5 +6,4 @@ app/bower_components
 .project
 selenium/
 ./selenium/
-Gruntfile.js
 .idea/

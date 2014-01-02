@@ -10,7 +10,7 @@
 			<td ><div style="display:inline-block;width:90%" ng-click="showAnnouncement($index)" ng-mouseover="announcement.overclass = 'icon-pencil'" ng-mouseleave="announcement.overclass= ''" ng-if="!announcement.show"><span ng-bind-html='announcement.announcement'></span><p ng-if="announcement.announcement.trim()==''" translate>empty</p></div>
 				<i ng-if="!announcement.show" ng-class="announcement.overclass"></i>
 	  			<div ng-if="announcement.show==true">
-	                <textarea id="tinymce_body" ui-tinymce="tinymceOptions" ng-model="announcement.announcement"></textarea>
+                    <div text-angular ng-model="announcement.announcement" ta-toolbar-button-class="btn btn-default btn-mini"></div>
 	            </div>
 	  			<span class="errormessage" ng-show="announcement.errors">{{announcement.errors.announcement.join()}}</span>
 			</td>

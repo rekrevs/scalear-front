@@ -20,10 +20,10 @@
   'pasvaz.bindonce',
   'infinite-scroll',
   'xeditable',
-  'ui.tinymce',
   'googlechart',
   'pascalprecht.translate',
-  'angularMoment'
+  'angularMoment',
+  'textAngular'
 ]).constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
   .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
@@ -31,6 +31,22 @@
 
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
+      $rootScope.textAngularOpts = {
+          toolbar: [
+              ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],
+              ['bold', 'italics', 'underline', 'ul', 'ol', 'redo', 'undo', 'clear'],
+              ['html', 'insertLink', 'unlink', 'insertImage']
+          ],
+          classes: {
+              focussed: "focussed",
+              toolbar: "btn-toolbar",
+              toolbarGroup: "btn-group",
+              toolbarButton: "btn btn-default",
+              toolbarButtonActive: "active",
+              textEditor: 'form-control',
+              htmlEditor: 'form-control'
+          }
+      }
 
       $log.debug("lang is "+ $rootScope.current_lang);
     	var statesThatDontRequireAuth =['login', 'home', 'ie']

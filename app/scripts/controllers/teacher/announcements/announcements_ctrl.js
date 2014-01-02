@@ -109,10 +109,6 @@ angular.module('scalearAngularApp')
          console.log($scope.announcements)
 
      });
-  	 $scope.tinymceOptions= {
-         plugins : "preview, table",//autolink,textcolor, lists,pagebreak,table,save,insertdatetime,preview,searchreplace,print,contextmenu,paste,directionality,noneditable,nonbreaking",
-         theme_advanced_buttons3 : "tablecontrols,|,hr,removeformat,|,sub,sup,|,charmap,emotions,|,print,|,ltr,rtl",
-  		}
-   
+
     init();
   }]);

@@ -253,3 +253,12 @@ textarea.ng-invalid{ border:1px solid red; }
 	overflow-y:auto;
 }
 
+.ta-editor {
+    min-height: 300px;
+    width:100%;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    border: solid darkgray 1px;
+}

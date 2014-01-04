@@ -19,7 +19,7 @@
          <td>{{answer.content}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'>Must choose atleast one answer!</span></td>
          <td ng-if='quiz.quiz_type==\"quiz\"'></td>
       </tr>
-      <tr ng-if='question.question_type.toUpperCase()==\"DRAG\"'>
+      <tr ng-if='question.question_type.toUpperCase()=="DRAG"'>
          <td><img src='images/spacer.gif' height='1px' width='1px' /></td>
          <td colspan='2' style='overflow:auto'>
             {{list}}

@@ -60,10 +60,10 @@ angular.module('scalearAngularApp')
 		 },
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-switch on='quiz.question_type'>"+
+		 template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+
 		 				"<answer ng-switch-when='MCQ' />"+
 		 				"<answer ng-switch-when='OCQ' />"+
-		 				"<drag ng-switch-when='drag' />"+
+		 				"<drag ng-switch-when='DRAG' />"+
 	 				"</div>",
 	};
 }]).directive('answer', ['$rootScope','$log', function($rootScope,$log){

@@ -44,10 +44,10 @@ exports.config = {
   // Spec patterns are relative to the location of this config.
   specs: [
 //    'test/e2e/spec/course_information_spec.js'
-//    'test/e2e/spec/course_editor_spec.js'
+    'test/e2e/spec/course_editor_spec.js'
 //    'test/e2e/spec/course_pages_spec.js'
 //    'test/e2e/spec/announcements_spec.js'
-    'test/e2e/spec/progress_spec.js'
+//    'test/e2e/spec/progress_spec.js'
   ],
 
   // ----- Capabilities to be passed to the webdriver instance ----

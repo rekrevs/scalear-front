@@ -5,7 +5,7 @@
 	 <div class="alert alert-block alert-error notification fade in" ng-show="displayDeletePopup" style="padding: 3px;margin: 5px;min-width: 100px;text-align:center">
 	        <h6 ng-show="message">{{message}}</h6>
 	        <span class="form-controls-alert">
-	            <a class="btn btn-danger btn-mini" ng-click="action({event:$event});showDeletePopup(false)">Delete</a>
+	            <a ng-if="displayDeletePopup" class="btn btn-danger btn-mini" ng-click="action({event:$event});showDeletePopup(false)">Delete</a>
 	            <a class="btn btn-mini" ng-click="showDeletePopup(false)">Cancel</a>
 	        </span>
 	</div>

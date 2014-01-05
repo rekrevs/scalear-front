@@ -359,8 +359,8 @@ describe('Announcements Page', function(){
                     delete_buttons[delete_buttons.length-1].click();
     //                var alert_dialog = ptor.switchTo().alert();
     //                alert_dialog.accept();
-                    ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                        buttons[buttons.length-1].click();
+                    ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+                        button.click();
                         feedback(ptor, 'Course was successfully deleted.', 1);
                     });
                     ptor.sleep(1000);

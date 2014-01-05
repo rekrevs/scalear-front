@@ -2577,26 +2577,30 @@ describe('In-Class', function(){
                 modules[modules.length-1].click().then(function(){
                     ptor.findElements(protractor.By.className('delete')).then(function(deletes){
                         deletes[deletes.length-1].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-2].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-3].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-4].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
@@ -2608,26 +2612,30 @@ describe('In-Class', function(){
                 modules[modules.length-1].click().then(function(){
                     ptor.findElements(protractor.By.className('delete')).then(function(deletes){
                         deletes[deletes.length-1].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-2].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-3].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-4].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
@@ -2640,38 +2648,44 @@ describe('In-Class', function(){
                 modules[modules.length-1].click().then(function(){
                     ptor.findElements(protractor.By.className('delete')).then(function(deletes){
                         deletes[deletes.length-1].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-2].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-3].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-4].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-5].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
                         deletes[deletes.length-6].click().then(function(){
-                            ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                                buttons[buttons.length-1].click();
+                            ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                                button.click();
                             });
                             ptor.sleep(1000);
                         });
@@ -2684,8 +2698,9 @@ describe('In-Class', function(){
             ptor.get('/#/courses').then(function(){
                 ptor.findElements(protractor.By.className('delete')).then(function(buttons){
                     buttons[buttons.length-1].click().then(function(){
-                        ptor.findElements(protractor.By.className('btn-danger')).then(function(buttons){
-                            buttons[buttons.length-1].click();
+                        ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                            button.click();
                             feedback(ptor, 'Course was successfully deleted.', 1);
                         });
                         ptor.sleep(1000);

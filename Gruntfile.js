@@ -550,7 +550,7 @@ module.exports = function (grunt) {
     name: 'config',
     constants: {
       scalear_api:{
-        host: 'http://angular-learning.herokuapp.com',
+        host: 'http://scalear-staging.herokuapp.com',//'http://angular-learning.herokuapp.com',
         redirection_url: 'http://angular-edu.s3-website-us-west-2.amazonaws.com/#/'
       } 
     }

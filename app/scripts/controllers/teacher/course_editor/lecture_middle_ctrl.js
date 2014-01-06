@@ -104,7 +104,7 @@ angular.module('scalearAngularApp')
 			function(data){ //success
 				$log.debug(data)
 				$scope.selected_quiz.answers= data.answers
-				if($scope.selected_quiz.question_type=="drag"){
+				if($scope.selected_quiz.question_type.toLowerCase()=="drag"){
 					$scope.allPos=mergeDragPos(data.answers)
 					$log.debug($scope.allPos)
 				}
@@ -119,7 +119,7 @@ angular.module('scalearAngularApp')
 		Lecture.getHtmlData(
 			{"course_id":$stateParams.course_id, "lecture_id":$scope.lecture.id ,"quiz":  $scope.selected_quiz.id},
 			function(data){ //success	
-				if($scope.selected_quiz.question_type == 'drag'){
+				if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
 					$log.debug(data)
 					$scope.selected_quiz.answers = []
 					if(!data.answers.length)
@@ -169,7 +169,7 @@ angular.module('scalearAngularApp')
 
  	$scope.addDoubleClickBind= function(event){
  		var answer_width, answer_height
- 		if($scope.selected_quiz.question_type == 'drag'){
+ 		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
  			answer_width = 300
  			answer_height= 40
  		}
@@ -201,7 +201,7 @@ angular.module('scalearAngularApp')
 		$log.debug("adding answer")
   		$scope.new_answer=CourseEditor.newAnswer(ans,h,w,l,t,"lecture", $scope.selected_quiz.id)
   		$scope.selected_quiz.answers.push($scope.new_answer)
-  		if($scope.selected_quiz.question_type=="drag"){
+  		if($scope.selected_quiz.question_type.toLowerCase() =="drag"){
 			//$scope.new_answer.pos = data.current.pos
 			var max = Math.max.apply(Math,$scope.allPos)
 			max = max ==-Infinity? -1 : max
@@ -232,7 +232,7 @@ angular.module('scalearAngularApp')
 		var backup = angular.copy($scope.selected_quiz.answers[index])
 		$scope.selected_quiz.answers.splice(index, 1);
 		$log.debug(backup)
-		 if($scope.selected_quiz.question_type=="drag"){
+		 if($scope.selected_quiz.question_type.toLowerCase()=="drag"){
 			$scope.allPos=mergeDragPos($scope.selected_quiz.answers)
 			$log.debug($scope.allPos)
 		}

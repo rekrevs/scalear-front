@@ -481,10 +481,10 @@ angular.module('scalearAngularApp')
       explanation:"=",
       studentAnswers:"="
     },
-    template: "<div ng-switch on='quiz.question_type'>"+
+    template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+
                 "<div ng-switch-when='MCQ'><student-answer /></div>"+
                 "<div ng-switch-when='OCQ'><student-answer /></div>"+
-                "<div ng-switch-when='drag'><student-drag /></div>"+
+                "<div ng-switch-when='DRAG'><student-drag /></div>"+
               "</div>",
       link: function(scope){
       	$log.debug("in student answer video!!!");

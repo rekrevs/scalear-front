@@ -4,9 +4,6 @@ var frontend = 'http://localhost:9000/';
 var backend = 'http://localhost:3000/';
 var auth = 'http://localhost:4000/';
 
-<<<<<<< Updated upstream
-var enroll_key = '';
-=======
 var current_date = new Date(), enroll_key='', course_id='', module_id='', lecture_id='';
 var month = new Array();
     month[0] = "January";
@@ -25,14 +22,11 @@ var month = new Array();
 //var location1x, location1y, location2x, location2y, location3x, location3y;
 var locationx = [];
 var locationy = [];
->>>>>>> Stashed changes
 function getNextDay(date){
     var result = date;
     result.setTime(date.getTime() + 86400000);
     return result;
 }
-<<<<<<< Updated upstream
-=======
 
 function getNextWeek(date){
     var result = date;
@@ -56,19 +50,15 @@ function noZero(date_string){
     return first+second+'/'+middle+'/'+right;
 }
 
->>>>>>> Stashed changes
 function formatDate(date, which){
     var dd = date.getDate();
     if(dd < 10){
         dd = '0'+dd;
     }
     var mm = date.getMonth()+1;
-<<<<<<< Updated upstream
-=======
     if(mm<10){
         mm = '0'+mm;
     }
->>>>>>> Stashed changes
     var yyyy = date.getFullYear();
     if(which == 0){
         return mm+'/'+dd.toString()+'/'+yyyy;
@@ -77,22 +67,9 @@ function formatDate(date, which){
         return dd+'/'+mm+'/'+yyyy;
     }
 }
-<<<<<<< Updated upstream
-
-
-var today_keys = formatDate(new Date(), 0);
-var today = formatDate(new Date(), 1);
-var tomorrow_keys = formatDate(getNextDay(new Date()), 0);
-var tomorrow = formatDate(getNextDay(new Date()), 1);
-
-function login(ptor, driver, email, password, name, findByName){
-    it('should login', function(){
-        driver.get(frontend+"#/login");
-=======
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
         driver.get(frontend+"/#/login");
->>>>>>> Stashed changes
 //        driver.get("http://angular-edu.herokuapp.com/#/login");
         ptor.findElement(protractor.By.className('btn')).then(function(login_button){
             login_button.click();
@@ -118,10 +95,6 @@ function logout(driver){
     });
 }
 
-<<<<<<< Updated upstream
-
-describe("Course Information Pages",function(){
-=======
 var today_keys = formatDate(new Date(), 0);
 var tomorrow_keys = formatDate(getNextDay(new Date()), 0);
 var after_tomorrow_keys = formatDate(getNextDay(getNextDay(new Date())), 0);
@@ -139,7 +112,6 @@ var next_month = formatDate(getNextMonth(new Date()), 1);
 
 
 describe("Calendar",function(){
->>>>>>> Stashed changes
     var ptor = protractor.getInstance();
     var driver = ptor.driver;
 
@@ -150,37 +122,14 @@ describe("Calendar",function(){
         return driver.findElement(protractor.By.id(id))
     };
 
-<<<<<<< Updated upstream
-    login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
-//    login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
-
-    describe('Courses Page', function(){
-=======
     describe('Teacher', function(){
         login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
->>>>>>> Stashed changes
         it('should create a new course', function(){
             ptor = protractor.getInstance();
             ptor.get('/#/courses/new');
             ptor.findElements(protractor.By.tagName('input')).then(function(fields){
-<<<<<<< Updated upstream
-                fields[fields.length-1].click();
-            });
-            ptor.findElements(protractor.By.className('controls')).then(function(rows){
-                expect(rows[0].getText()).toContain('Course Short Name is Required');
-                expect(rows[1].getText()).toContain('Course Name is Required');
-                expect(rows[2].getText()).toContain('Course Start Date is Required');
-                expect(rows[3].getText()).toContain('Course Duration is Required');
-                expect(rows[7].getText()).toContain('Course Time Zone is Required');
-            });
-            ptor.findElements(protractor.By.tagName('input')).then(function(fields){
-                fields[0].sendKeys('TEST-101');
-                fields[1].sendKeys('Testing Course');
-                fields[2].sendKeys(today_keys);
-=======
                 fields[0].sendKeys('TEST-102');
                 fields[1].sendKeys('Z Testing - Content Editor');
->>>>>>> Stashed changes
                 fields[3].sendKeys('5');
                 fields[4].sendKeys('http://google.com/');
                 ptor.findElements(protractor.By.tagName('textarea')).then(function(fields){
@@ -196,13 +145,6 @@ describe("Calendar",function(){
                 fields[fields.length-1].click();
             });
         });
-<<<<<<< Updated upstream
-        
-    });
-    
-    describe('Teacher', function(){
-        logout(driver);
-=======
         it('should go to course information page', function(){
             ptor.findElement(protractor.By.className('dropdown-toggle')).click();
             ptor.findElement(protractor.By.id('info')).click();
@@ -425,7 +367,6 @@ describe("Calendar",function(){
         });
         logout(driver);
 
->>>>>>> Stashed changes
     });
     describe('Student', function(){
         login(ptor, driver, 'anystudent@email.com', 'password', 'anystudent', findByName);
@@ -448,44 +389,6 @@ describe("Calendar",function(){
                 courses[courses.length-1].click();
             });
         });
-<<<<<<< Updated upstream
-        
-    });
-    
-    describe('Student', function(){
-        logout(driver);
-    });
-   
-    describe('Teacher', function(){
-        login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
-        it('should go to course', function(){
-            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
-                courses[courses.length-1].click();
-            });
-        });
-        
-    });
-
-    describe('Teacher', function(){
-        it('should navigate to courses list page', function(){
-            ptor.get('/#/courses');
-        });
-        it('should delete the created course', function(){
-            ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-                delete_buttons[delete_buttons.length-1].click();
-                var alert_dialog = ptor.switchTo().alert();
-                alert_dialog.accept();
-                ptor.sleep(1000);
-            });
-        });
-    });
-
-
-
-});
-
-
-=======
         it('should be in Calendar page', function(){
             ptor.findElement(protractor.By.tagName('h2')).
                 then(function(promise){
@@ -730,5 +633,4 @@ function MCQTest(mode, ptor){
         expect(error.getText()).toBe('');
     });
 }
->>>>>>> Stashed changes
 

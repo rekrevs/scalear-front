@@ -1149,7 +1149,7 @@ describe("Course Editor",function(){
         });
         //delete an answer from each question
         it('should delete an answer from each question', function(){
-            ptor.findElements(protractor.By.className('real_delete_ans')).then(function(delete_buttons){
+            ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
                 delete_buttons[0].click();
                 var alert_dialog = ptor.switchTo().alert();
                 alert_dialog.accept();
@@ -1783,8 +1783,13 @@ function MCQTest(mode, ptor){
     });
     //answer deletion
     it('should delete an answer from mcq quiz', function(){
-        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-            delete_buttons[delete_buttons.length-4].click();
+        ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-4].click().then(function(){
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                    button.click();
+                });
+            });
         });
     });
     it('should select a correct answer after deletion (mcq)', function(){
@@ -1834,10 +1839,13 @@ function MCQTest(mode, ptor){
         });
     });
     it('should delete mcq quiz (text)', function(){
-        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-            delete_buttons[delete_buttons.length-1].click();
-            var alert_dialog = ptor.switchTo().alert();
-            alert_dialog.accept();
+        ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-1].click().then(function(){
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                    button.click();
+                });
+            });
         });
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
             expect(editables.length).toBe(0);
@@ -1992,8 +2000,13 @@ function OCQTest(mode, ptor){
     });
     //answer deletion
     it('should delete an answer from OCQ quiz', function(){
-        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-            delete_buttons[delete_buttons.length-4].click();
+        ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-4].click().then(function(){
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                    button.click();
+                });
+            });
         });
     });
     it('should select a correct answer after deletion (OCQ)', function(){
@@ -2043,10 +2056,14 @@ function OCQTest(mode, ptor){
         });
     });
     it('should delete OCQ quiz (text)', function(){
-        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-            delete_buttons[delete_buttons.length-1].click();
-            var alert_dialog = ptor.switchTo().alert();
-            alert_dialog.accept();
+        ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-1].click().then(function(){
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                    button.click();
+                });
+            });
+
         });
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
             expect(editables.length).toBe(0);
@@ -2181,8 +2198,13 @@ function DRAGTest(mode, ptor){
     });
     //answer deletion
     it('should delete an answer from DRAG quiz', function(){
-        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-            delete_buttons[delete_buttons.length-4].click();
+        ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-4].click().then(function(){
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                    button.click();
+                });
+            });
         });
     });
     it('should save DRAG quiz after deleting an answer', function(){
@@ -2220,10 +2242,13 @@ function DRAGTest(mode, ptor){
         });
     });
     it('should delete DRAG quiz (text)', function(){
-        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-            delete_buttons[delete_buttons.length-1].click();
-            var alert_dialog = ptor.switchTo().alert();
-            alert_dialog.accept();
+        ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-1].click().then(function(){
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                    button.click();
+                });
+            });
         });
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables){
             expect(editables.length).toBe(0);
@@ -4200,10 +4225,13 @@ function doSave(ptor){
 
 function doDelete(ptor){
     it('should delete the quiz', function(){
-        ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
-            delete_buttons[delete_buttons.length-1].click();
-            var alert_dialog = ptor.switchTo().alert();
-            alert_dialog.accept();
+        ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+            delete_buttons[delete_buttons.length-1].click().then(function(){
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+//                                buttons[buttons.length-1].click();
+                    button.click();
+                });
+            });
         });
     });
 

@@ -65,6 +65,7 @@ angular.module('scalearAngularApp')
 	$scope.updateLectureUrl= function(){
 		urlFormat()
 		$scope.lecture.aspect_ratio = ""
+        if($scope.lecture.url)
 		getYoutubeDetails();
 	}
 
@@ -124,7 +125,7 @@ angular.module('scalearAngularApp')
     $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj[$stateParams.lecture_id]){
         $scope.lecture=$scope.items_obj[$stateParams.lecture_id]
-        if($scope.lecture.url){
+        if($scope.lecture.url && $scope.lecture.url!="none"){
             current_url = $scope.lecture.url.split("v=")[1];
             current_url = current_url.split("&")[0]
             getYoutubeDetails();

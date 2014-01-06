@@ -1149,7 +1149,7 @@ describe("Course Editor",function(){
         });
         //delete an answer from each question
         it('should delete an answer from each question', function(){
-            ptor.findElements(protractor.By.className('real_delete_ans')).then(function(delete_buttons){
+            ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
                 delete_buttons[0].click();
                 var alert_dialog = ptor.switchTo().alert();
                 alert_dialog.accept();

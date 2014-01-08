@@ -4,7 +4,7 @@ var frontend = 'http://localhost:9000/';
 var backend = 'http://localhost:3000/';
 var auth = 'http://localhost:4000/';
 
-var current_date = new Date(), enroll_key='', course_id='', module_id='', lecture_id='';
+var current_date = new Date(), enroll_key='', course_id='', module_id='', lecture_id='', quiz_id='';
 var month = new Array();
     month[0] = "January";
     month[1] = "February";
@@ -39,6 +39,18 @@ function getNextMonth(date){
     result.setDate(15)
     return result;
 }
+function getLastMonthDay(date){
+    var result = date;
+    result.setMonth(result.getMonth()-1)
+    result.setDate(14)
+    return result;
+}
+function getLastMonth(date){
+    var result = date;
+    result.setMonth(result.getMonth()-1)
+    result.setDate(15)
+    return result;
+}
 
 function noZero(date_string){
     var left = date_string.split('/')[0];
@@ -67,6 +79,32 @@ function formatDate(date, which){
         return dd+'/'+mm+'/'+yyyy;
     }
 }
+
+function waitForElement(element, ptor){
+    ptor.wait(function(){
+        return ptor.isElementPresent(element).then(function(value){
+            if(value)
+                console.log('iframe loaded')
+            return value
+        });
+    });
+}
+
+function waitForElementNotVisible(element,ptor){
+    ptor.wait(function(){
+        return ptor.findElement(element).then(function(elem){
+            return elem.getAttribute('class').then(function(classes){
+                if(classes.indexOf('ng-hide') >= 0){
+                    console.log("overlay is hidden")
+                    return true
+                }
+                              
+                return false
+            })
+        })
+    })
+}
+
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
         driver.get(frontend+"/#/login");
@@ -101,6 +139,8 @@ var after_tomorrow_keys = formatDate(getNextDay(getNextDay(new Date())), 0);
 var next_day_week_keys = formatDate(getNextWeek(getNextDay(new Date())), 0);
 var next_week_keys = formatDate(getNextWeek(new Date()), 0);
 var next_month_keys = formatDate(getNextMonth(new Date()), 0);
+var last_month_day_keys = formatDate(getLastMonthDay(new Date()), 0);
+var last_month_keys = formatDate(getLastMonth(new Date()), 0);
 
 
 var today = formatDate(new Date(), 1);
@@ -109,6 +149,8 @@ var after_tomorrow = formatDate(getNextDay(getNextDay(new Date())), 1);
 var next_day_week = formatDate(getNextWeek(getNextDay(new Date())), 1);
 var next_week = formatDate(getNextWeek(new Date()), 1);
 var next_month = formatDate(getNextMonth(new Date()), 1);
+var last_month_day = formatDate(getLastMonthDay(new Date()), 1);
+var last_month = formatDate(getLastMonth(new Date()), 1);
 
 
 describe("Calendar",function(){
@@ -236,30 +278,32 @@ describe("Calendar",function(){
                     button[1].click();
                 });
                 
-                ptor.wait(function(){                    
-                   return ptor.isElementPresent(protractor.By.tagName('iframe')).then(function(value){
-                        return value
-                    })
-                })
+
+                waitForElement(protractor.By.tagName('iframe'), ptor)
+
                 ptor.findElement(protractor.By.tagName('iframe')).then(function(elem){
                     elem.isDisplayed().then(function(disp){
                         expect(disp).toEqual(true)
                     });
                     expect(elem.getAttribute('src')).toContain("jgoGBxlVslI");
                 });
+
+                waitForElementNotVisible(protractor.By.className('overlay'), ptor)
+                
             })
         });
         MCQTest(0, ptor);
         it('should refresh the page', function(){
             ptor.navigate().refresh();
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
         });
 
 ////////////////////////////////////////////////////////////////
         it('should add a second module and open it', function(){
-            ptor.findElement(protractor.By.className('trigger2')).click();
             ptor.findElement(protractor.By.className('adding_module')).then(function(button){
                 button.click();
             });
+            ptor.sleep(1000)
             ptor.findElements(protractor.By.className('trigger')).then(function(modules){
                 modules[modules.length-1].click();
             })
@@ -268,7 +312,6 @@ describe("Calendar",function(){
             ptor.getCurrentUrl().then(function(text){
                 var test2 = text.split('/');
                 module_id = test2[test2.length-1];
-//                console.log('module id is '+module_id);
             });
         });
         it('should edit module name', function(){
@@ -281,7 +324,6 @@ describe("Calendar",function(){
                 ptor.findElement(protractor.By.className('btn-primary')).click();
             });
         });
-
 
         it("should edit module's due date", function(){
             ptor.findElements(protractor.By.className('editable-click')).then(function(details){
@@ -298,9 +340,62 @@ describe("Calendar",function(){
                 });
             });
         });
+
+        it('should add a new lectures', function(){
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
+                console.log("adding.length")
+                console.log(adding.length)
+                adding[adding.length-3].click();
+            });
+        });
+        it('should modify details', function(){
+            ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+                lectures[lectures.length-1].click();
+            });
+            ptor.findElement(protractor.By.className('editable-click')).then(function(name){
+                expect(name.getText()).toBe('New Lecture');
+                name.click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(nameTextBox){
+                    nameTextBox.clear();
+                    nameTextBox.sendKeys('My Lecture 2');
+                    ptor.findElements(protractor.By.tagName('button')).then(function(button){
+                        button[1].click();
+                    });
+                });
+                expect(name.getText()).toBe('My Lecture 2');
+            });
+            ptor.findElements(protractor.By.className('editable-click')).then(function(editable_click){
+                expect(editable_click[1].getText()).toBe('none');
+                editable_click[1].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(urlField){
+                    urlField.clear();
+                    urlField.sendKeys('http://www.youtube.com/watch?v=jgoGBxlVslI');
+                   
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(button){
+                    button[1].click();
+                });
+                
+                waitForElement(protractor.By.tagName('iframe'), ptor)
+                
+                ptor.findElement(protractor.By.tagName('iframe')).then(function(elem){
+                    elem.isDisplayed().then(function(disp){
+                        expect(disp).toEqual(true)
+                    });
+                    expect(elem.getAttribute('src')).toContain("jgoGBxlVslI");
+                });
+
+                waitForElementNotVisible(protractor.By.className('overlay'),ptor)
+            })
+        });
+        MCQTest(0, ptor);
+        it('should refresh the page', function(){
+            ptor.navigate().refresh();
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+        });
+        
         it('should add a new quiz', function(){
             console.log('starting add quiz');
-//            ptor.executeScript('window.scrollBy(0, -1000)', '');
             ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
                 buttons[buttons.length-2].click();
             });
@@ -311,6 +406,12 @@ describe("Calendar",function(){
         it('should open a quiz', function(){
             ptor.findElements(protractor.By.className('trigger2')).then(function(quizzes){
                 quizzes[quizzes.length-1].click();
+            });
+        });
+        it('should save quiz id', function(){
+            ptor.getCurrentUrl().then(function(text){
+                var test2 = text.split('/');
+                quiz_id = test2[test2.length-1];
             });
         });
          it('should allow adding questions to quiz', function(){
@@ -358,7 +459,135 @@ describe("Calendar",function(){
                 });
             });
         });
-        ptor.sleep('1000');
+        it('should save the questions', function(){
+            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+                buttons[buttons.length-1].click();
+                ptor.sleep(1000);
+            });
+        });
+
+        it('should refresh the page', function(){
+            ptor.navigate().refresh();
+            ptor.executeScript('window.scrollBy(0, -1000)', '');
+        });
+        ////////////////////////////////////////////////////////////////
+        it('should add a third module and open it', function(){
+            ptor.findElement(protractor.By.className('adding_module')).then(function(button){
+                button.click();
+            });
+
+            ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+                modules[modules.length-1].click();
+            })
+        });
+        it('should save module id', function(){
+            ptor.getCurrentUrl().then(function(text){
+                var test2 = text.split('/');
+                module_id = test2[test2.length-1];
+            });
+        });
+        it('should edit module name', function(){
+            ptor.findElement(protractor.By.tagName('details-text')).then(function(field){
+                field.click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys('3');
+                });
+                ptor.findElement(protractor.By.className('btn-primary')).click();
+            });
+        });
+
+        it("should edit module's apperance date", function(){
+            ptor.findElements(protractor.By.className('editable-click')).then(function(details){
+                details[1].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys(last_month_day_keys);
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                    buttons[buttons.length-2].click();
+                });
+                details[1].getText().then(function(text){
+                    expect(text).toBe(last_month_day);
+                });
+            });
+        });
+
+        it("should edit module's due date", function(){
+            ptor.findElements(protractor.By.className('editable-click')).then(function(details){
+                details[2].click();
+                ptor.findElement(protractor.By.className('editable-input')).then(function(field){
+                    field.clear();
+                    field.sendKeys(last_month_keys);
+                });
+                ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
+                    buttons[buttons.length-2].click();
+                });
+                details[2].getText().then(function(text){
+                    expect(text).toBe(last_month);
+                });
+            });
+        });
+        it('should add a new quiz', function(){
+            console.log('starting add quiz');
+            ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
+                buttons[buttons.length-2].click();
+            });
+            ptor.findElements(protractor.By.className('trigger2')).then(function(quiz){
+                expect(quiz[quiz.length-1].getText()).toBe('New Quiz');
+            })
+        });
+        it('should open a quiz', function(){
+            ptor.findElements(protractor.By.className('trigger2')).then(function(quizzes){
+                quizzes[quizzes.length-1].click();
+                console.log('should open quiz')
+            });
+        });
+         it('should allow adding questions to quiz', function(){
+            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
+                buttons[buttons.length-2].click();
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                    fields[fields.length-3].sendKeys('first MCQ question');
+                    fields[fields.length-2].sendKeys('first answer');
+                    fields[fields.length-1].click();
+                });
+                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                    fields[fields.length-1].sendKeys('second answer');
+                });
+                ptor.findElement(protractor.By.className('add_multiple_answer')).click();
+                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                    fields[fields.length-1].sendKeys('third answer');
+                });
+
+                buttons[buttons.length-2].click();
+
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                    fields[fields.length-3].sendKeys('first OCQ question');
+                    ptor.findElement(protractor.By.tagName('select')).then(function(question_type){
+                        question_type.click();
+                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
+                            options[options.length-2].click();
+                        });
+                    });
+                });
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
+                    fields[fields.length-2].sendKeys('first answer');
+                    fields[fields.length-1].click();
+                });
+                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+                    add_multiple[add_multiple.length-1].click();
+                });
+                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                    fields[fields.length-1].sendKeys('second answer');
+                });
+                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
+                    add_multiple[add_multiple.length-1].click();
+                });                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                    fields[fields.length-1].sendKeys('third answer');
+                });
+            });
+        });
         it('should save the questions', function(){
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
                 buttons[buttons.length-1].click();
@@ -368,8 +597,10 @@ describe("Calendar",function(){
         logout(driver);
 
     });
+//////////////////////////////////////////////////////////////////////////////////////////
     describe('Student', function(){
         login(ptor, driver, 'anystudent@email.com', 'password', 'anystudent', findByName);
+        
         it('should enroll in the course that was created', function(){
             ptor.findElement(protractor.By.id('join_course')).then(function(join_course){
                 join_course.click();
@@ -394,9 +625,8 @@ describe("Calendar",function(){
                 then(function(promise){
                     expect(promise.getText()).toEqual(month[current_date.getMonth()]+" "+current_date.getFullYear())
             });
-
         });
-        it ('should be able to go to prev. month', function() {
+        it ('should be able to go to prev month', function() {
             ptor.findElement(protractor.By.className('fc-button-prev')).click().
                 then(function(promise){
                     ptor.findElement(protractor.By.tagName('h2')).
@@ -405,6 +635,41 @@ describe("Calendar",function(){
                             prev_date.setMonth(current_date.getMonth()-1)
                             expect(promise.getText()).toEqual(month[prev_date.getMonth()]+" "+prev_date.getFullYear())
                         });
+                });
+        });
+
+        it ('should display all the events for the current month', function() {
+            ptor.findElements(protractor.By.className('fc-event')).
+                then(function(events){
+                    expect(events.length).toEqual(1)  
+                    expect(events[0].getAttribute('style')).toContain('red')
+                    events[0].findElement(protractor.By.className('fc-event-title')).then(function(title){
+                        expect(title.getText()).toEqual('3 due')
+                    })
+                });
+        });
+        it ('should answer all questions in quiz', function() {
+            ptor.findElement(protractor.By.className('fc-event')).click()
+            ptor.findElement(protractor.By.tagName('h4')).getText().then(function(text){
+                expect(text).toEqual('New Quiz')
+            })
+            ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                inputs[0].click();
+                inputs[3].click();
+                inputs[inputs.length-1].click();
+                ptor.sleep(1000)
+            });                      
+        });
+
+        it ('should check if module color has changed', function() {
+            ptor.get('/#/courses/'+course_id+'/student/events');
+            ptor.findElement(protractor.By.className('fc-button-prev')).click()
+            ptor.findElements(protractor.By.className('fc-event')).then(function(events){
+                    expect(events.length).toEqual(1)  
+                    expect(events[0].getAttribute('style')).toContain('green')
+                    events[0].findElement(protractor.By.className('fc-event-title')).then(function(title){
+                        expect(title.getText()).toEqual('3 due')
+                    })
                 });
         });
 
@@ -440,7 +705,7 @@ describe("Calendar",function(){
             })
         });
         it ('should check if module color has changed', function() {
-            ptor.findElement(protractor.By.id('calendar_link')).click()
+            ptor.get('/#/courses/'+course_id+'/student/events');
             ptor.findElements(protractor.By.className('fc-event')).then(function(events){
                     expect(events.length).toEqual(1)  
                     expect(events[0].getAttribute('style')).toContain('orange')
@@ -456,7 +721,40 @@ describe("Calendar",function(){
                 });
             ptor.findElement(protractor.By.tagName('h3')).getText().then(function(text){
                 expect(text).toEqual('My Lecture 1')
-            })
+            }) 
+
+            ptor.wait(function(){                    
+               return ptor.isElementPresent(protractor.By.tagName('iframe')).then(function(value){
+                    return value
+                })
+            }) 
+
+            ptor.wait(function(){                    
+               return ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                    if(inputs.length > 3)
+                        return true
+                    return false
+                })
+            }) 
+
+             ptor.findElement(protractor.By.tagName('input')).click();
+             ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                buttons[1].click();
+            });
+                      
+        });
+         it('should refresh the page', function(){
+            ptor.navigate().refresh();
+        });
+        it('should check if module color has changed', function() {
+            ptor.get('/#/courses/'+course_id+'/student/events');
+            ptor.findElements(protractor.By.className('fc-event')).then(function(events){
+                    expect(events.length).toEqual(1)  
+                    expect(events[0].getAttribute('style')).toContain('green')
+                    events[0].findElement(protractor.By.className('fc-event-title')).then(function(title){
+                        expect(title.getText()).toEqual('1 due')
+                    })
+                });
         });
 
         it ('should be able to go to next month', function() {
@@ -482,18 +780,79 @@ describe("Calendar",function(){
         });
         it ('should open the module when clicking an event', function() {
             ptor.findElement(protractor.By.className('fc-event')).click()
-            ptor.sleep('30000')
-
-            ptor.findElement(protractor.By.tagName('h4')).getText().then(function(text){
-                expect(text).toEqual('New Quiz')
+            ptor.findElement(protractor.By.tagName('h3')).getText().then(function(text){
+                expect(text).toEqual('My Lecture 2')
             })
         });
         it ('should check if module color has changed', function() {
-            ptor.findElement(protractor.By.id('calendar_link')).click()
+            ptor.get('/#/courses/'+course_id+'/student/events');
             ptor.findElement(protractor.By.className('fc-button-next')).click()
             ptor.findElements(protractor.By.className('fc-event')).then(function(events){
                     expect(events.length).toEqual(1)  
                     expect(events[0].getAttribute('style')).toContain('orange')
+                    events[0].findElement(protractor.By.className('fc-event-title')).then(function(title){
+                        expect(title.getText()).toEqual('2 due')
+                    })
+                });
+        });
+       
+        it ('should answer all questions in lecture', function() {
+            ptor.findElement(protractor.By.className('fc-event')).click()
+            ptor.findElement(protractor.By.tagName('h3')).getText().then(function(text){
+                expect(text).toEqual('My Lecture 2')
+            }) 
+            ptor.wait(function(){                    
+               return ptor.isElementPresent(protractor.By.tagName('iframe')).then(function(value){
+                    return value
+                })
+            }) 
+
+            ptor.wait(function(){                    
+               return ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                    if(inputs.length > 3)
+                        return true
+                    return false
+                })
+            }) 
+
+             ptor.findElement(protractor.By.tagName('input')).click();
+             ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+                buttons[1].click();
+            });                      
+        });
+
+        it ('should check if module color has not changed', function() {
+            ptor.get('/#/courses/'+course_id+'/student/events');
+            ptor.findElement(protractor.By.className('fc-button-next')).click()
+            ptor.findElements(protractor.By.className('fc-event')).then(function(events){
+                    expect(events.length).toEqual(1)  
+                    expect(events[0].getAttribute('style')).toContain('orange')
+                    events[0].findElement(protractor.By.className('fc-event-title')).then(function(title){
+                        expect(title.getText()).toEqual('2 due')
+                    })
+                });
+        });
+
+        it('should answer quiz questions', function() {
+            ptor.get('/#/courses/'+course_id+'/courseware/quizzes/'+quiz_id);
+            ptor.findElement(protractor.By.tagName('h4')).getText().then(function(text){
+                expect(text).toEqual('New Quiz')
+            })
+            ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+                console.log(inputs.length)
+                inputs[0].click();
+                inputs[3].click();
+                inputs[inputs.length-1].click();
+                ptor.sleep(1000)
+            });                      
+        });
+
+        it ('should check if module color has changed', function() {
+            ptor.get('/#/courses/'+course_id+'/student/events');
+            ptor.findElement(protractor.By.className('fc-button-next')).click()
+            ptor.findElements(protractor.By.className('fc-event')).then(function(events){
+                    expect(events.length).toEqual(1)  
+                    expect(events[0].getAttribute('style')).toContain('green')
                     events[0].findElement(protractor.By.className('fc-event-title')).then(function(title){
                         expect(title.getText()).toEqual('2 due')
                     })
@@ -590,9 +949,6 @@ function MCQTest(mode, ptor){
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
-//                edit quiz time
-//                HAS A BUG RIGHT NOW
-//                make sure quiz type is MCQ
             ptor.findElements(protractor.By.tagName('td')).then(function(data){
                 expect(data[6].getText()).toBe('MCQ');
             });

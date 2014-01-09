@@ -1299,8 +1299,9 @@ describe('Student', function(){
         });
     });
     it('should submit the answers', function(){
-        ptor.findElements(protractor.By.tagName('input')).then(function(buttons){
-            buttons[buttons.length-1].click();
+        ptor.executeScript('window.scrollBy(0, 2000)', '');
+        ptor.findElement(protractor.By.xpath('//*[@id="middle"]/center/form/input[2]')).then(function(button){
+            button.click();
         });
     });
     it('should see that all the attempts have been used', function(){
@@ -1308,9 +1309,25 @@ describe('Student', function(){
             expect(alert.getText()).toContain('You\'ve submitted the Quiz and have no more attempts left');
         });
     });
-//    it('should display which questions were solved correctly and which were not', function(){
-//        ptor.findElement(protractor.By.id('middle')).then(function(middle))
-//    });
+    it('should display which questions were solved correctly and which were not', function(){
+        ptor.findElement(protractor.By.id('middle')).then(function(middle){
+            middle.findElements(protractor.By.tagName('th')).then(function(results){
+                results[2].getText().then(function(value){
+                    if(value == 'Incorrect'){
+                        expect(results[2].getText()).toContain('Incorrect');
+                    }
+                    else if(value == 'Correct'){
+                        expect(results[2].getText()).toContain('Correct');
+                    }
+                    else{
+                        expect(results[2].getText()).toContain('Correct or Incorrect');
+                    }
+                });
+                expect(results[5].getText()).toBe('Correct');
+                expect(results[8].getText()).toBe('Correct');
+            });
+        });
+    });
 //    cancelAccount(ptor, driver);
 });
 

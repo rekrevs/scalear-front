@@ -14,8 +14,6 @@ angular.module('scalearAngularApp')
 	    	$log.debug(data)
 	    	d.resolve($translate('courses.invalid_input'));
     	}
-    	
-    	console.log(data)
 	    Lecture.validateLecture(
 	    	{course_id: $scope.lecture.course_id, lecture_id:$scope.lecture.id},
 	    	lecture,
@@ -99,7 +97,6 @@ angular.module('scalearAngularApp')
 			        $scope.video.title = data.entry.title.$t;
 			        $scope.video.author = data.entry.author[0].name.$t;
 			        var updateFlag = $scope.lecture.duration
-                    console.log(updateFlag);
 			        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
 			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio == undefined)
 			        	$scope.lecture.detected_aspect_ratio="smallscreen";
@@ -110,9 +107,8 @@ angular.module('scalearAngularApp')
 
 			        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
 	        		if(id != current_url){
-                        console.log("updating lecture")
 	        			$scope.updateLecture()
-	        			$log.debug("update flag is true******")	
+	        			$log.debug("update flag is true")	
 	        		}
 			});
 		}

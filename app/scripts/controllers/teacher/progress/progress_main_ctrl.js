@@ -18,10 +18,11 @@ angular.module('scalearAngularApp')
         Course.getModuleProgress(
             {
                 course_id:$stateParams.course_id,
-                offset:$scope.module_offset, 
+                offset:$scope.module_offset,
                 limit: $scope.module_limit
             },
             function(data){
+
             	$log.debug(data)
                 var obj={}
 
@@ -32,7 +33,7 @@ angular.module('scalearAngularApp')
                 obj.module_status= $scope.module_status|| {}
                 obj.late_modules = $scope.late_modules || {}
 
-                obj.module_students = obj.module_students.concat(data.students);
+                obj.module_students = obj.module_students.concat(JSON.parse(data.students));
                 angular.extend(obj.module_status,data.module_status)
                 angular.extend(obj.late_modules, data.late_modules)
 
@@ -45,7 +46,7 @@ angular.module('scalearAngularApp')
                     $scope.loading_modules=false
                     $('.student').tooltip({"placement": "left", container: 'body'})
                 })
-                    
+
             },
             function(){
                 //alert('Could not load data, please check your internet connection')

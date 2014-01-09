@@ -364,6 +364,7 @@ var translation_en=function(){
         complete: "Complete",
         student_question: "Student Questions",
         module_progress_charts: "Module Progress Charts",
+        module_progress_charts_quizzes: "Module Progress Charts - Based on invideo quizzes",
         change_status: "Change Status",
         original: "Original",
         on_time: "On Time",

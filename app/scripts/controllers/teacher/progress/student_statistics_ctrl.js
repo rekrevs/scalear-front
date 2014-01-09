@@ -84,9 +84,14 @@ angular.module('scalearAngularApp')
 	            "displayExactValues": true,
 	            "fontSize" : 12,
 	           // "chartArea":{"width":"95%"},
-	            "hAxis": { 
-					"maxValue":[max.getUTCHours(),max.getMinutes(),max.getSeconds(),0],
-					"minValue":[min.getUTCHours(),min.getMinutes(),min.getSeconds(),0]
+	            "hAxis": {
+                    viewWindow:{
+                        "min":[min.getUTCHours(),min.getMinutes(),min.getSeconds(),0],
+                        "max":[max.getUTCHours(),max.getMinutes(),max.getSeconds(),0]
+                    }
+                    //        "maxValue"
+                    //}:[max.getUTCHours(),max.getMinutes(),max.getSeconds(),0],
+					//"minValue":[min.getUTCHours(),min.getMinutes(),min.getSeconds(),0]
 	            },
 	            "legend": 'none', 
 	            chartArea:{left: 85, width:getChartWidth()},   

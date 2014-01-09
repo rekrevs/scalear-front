@@ -2,7 +2,7 @@
     <tab heading="{{'courses.module_progress'|translate}}" select="moduleProgressTab()" style="cursor:pointer">
     	<h3 translate>courses.module_progress_charts</h3>
 		<div infinite-scroll='getRemainingModuleProgress()' infinite-scroll-disabled='module_scroll_disable' infinite-scroll-immediate-check='false' style="overflow:auto" ng-if="module_status">
-			<progress_matrix column_names='module_names' students='module_students' status="module_status" late_count="late_modules" action="updateStatus(student_id, module_id, module_status)" popover="true"/>
+			<progress_matrix column_names='module_names' students='module_students' status="module_status" action="updateStatus(student_id, module_id, module_status)" popover="true"/>
 		</div>
 		<center><loading size="small" show="loading_modules" /></center>
     </tab>

@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
 						 $scope.studentAnswers[question.id]=question.answers[0].content
 			});
             if($scope.quiz.quiz_type=='survey')
-                $scope.getSurveyCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)					
+                $scope.getSurveyCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)
 	    });
 	}
  	

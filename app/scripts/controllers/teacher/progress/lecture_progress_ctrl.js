@@ -52,7 +52,7 @@ angular.module('scalearAngularApp')
                     
             },
             function(){
-                alert('Could not load data, please check your internet connection')
+                //alert('Could not load data, please check your internet connection')
             }
         );
     }    

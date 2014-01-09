@@ -116,12 +116,13 @@ angular.module('scalearAngularApp')
   				},{"disable_in_input" : true});
   			
   				shortcut.add("b",function(){
-  					var t=scope.lecture_player.controls.getTime();
-            scope.lecture_player.controls.play();
-            scope.seek(t-10)
+                    scope.back();
+                    var t=scope.lecture_player.controls.getTime();
+                    scope.lecture_player.controls.play();
+                    scope.seek(t-10)
   				  
        //      scope.display_mode = false
-  					scope.back();
+
   				},{"disable_in_input" : true});
 
           shortcut.add("Enter",function(){
@@ -229,8 +230,7 @@ angular.module('scalearAngularApp')
 			 	sendAnswers()
     		}else{
     			$log.debug(scope.answer_form);
-    			
-    			if(scope.answer_form.$error.atleastone==false)
+    			if(!scope.answer_form.$error.atleastone || scope.answer_form.$error.atleastone==false)
     			{
     				$log.debug("valid form")
     				scope.submitted=false;
@@ -240,6 +240,7 @@ angular.module('scalearAngularApp')
 	    			
     		 	});
     		 }else{
+
     		 	$log.debug("invalid form")
     		 	scope.submitted=true;
     		 }

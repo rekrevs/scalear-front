@@ -8,7 +8,6 @@ angular.module('scalearAngularApp')
 	        columnNames:"=",
 	        students:"=",
 	        status:"=",
-	        lateCount:"=",
 	        solvedCount:"=",
 	        totalLecQuiz:"=",
 	        action:"&",
@@ -18,9 +17,9 @@ angular.module('scalearAngularApp')
 	    link:function(scope){
 	    	if(scope.popover){
 	    		var template="<div style='font-size:14px'>"+
-    							"<input type='radio' name='stat' ng-model='student.status[module.id]' ng-change='action({student_id:student.id, module_id:module.id, module_status:student.status[module.id]})' style='margin:4px'><span translate>courses.original</span>"+
-    							"<input type='radio' name='stat' ng-model='student.status[module.id]' ng-change='action({student_id:student.id, module_id:module.id, module_status:student.status[module.id]})' style='margin:4px' value='Finished on Time' translate><span translate>courses.on_time</span>"+
-    							"<input type='radio' name='stat' ng-model='student.status[module.id]' ng-change='action({student_id:student.id, module_id:module.id, module_status:student.status[module.id]})' style='margin:4px' value='Not Finished' translate><span translate>courses.not_done</span>"+
+    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:4px'><span translate>courses.original</span>"+
+    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:4px' value='Finished on Time' translate><span translate>courses.on_time</span>"+
+    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:4px' value='Not Finished' translate><span translate>courses.not_done</span>"+
     						"</div>"
 		    	scope.popover_options={
 		        	content: template,
@@ -28,6 +27,16 @@ angular.module('scalearAngularApp')
 		        	html:true
 		        }
 		    }
+            scope.getImg = function(module)
+            {
+                module=parseInt(module);
+                if(module==-1)
+                    return "not_finished"
+                else if(module==0)
+                    return "finished_on_time"
+                else
+                    return "finished_not_on_time"
+            }
 	    }
     };
 })

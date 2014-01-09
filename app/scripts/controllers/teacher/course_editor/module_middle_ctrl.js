@@ -55,7 +55,7 @@ angular.module('scalearAngularApp')
 						$scope.module.documents.splice($scope.module.documents.indexOf(elem), 1)
 					}, 
 					function(){
-						alert("Failed to delete document, please check your internet connection")
+						//alert("Failed to delete document, please check your internet connection")
 					}
 				);
 	    	//}

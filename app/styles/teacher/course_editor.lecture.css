@@ -108,8 +108,8 @@
           border-radius: 4px 0 4px 0;
 }
 .sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
-.sortable li { width: 350px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 25px; }
-.sortable li span { position: absolute; margin-left: -1.3em; }
+.sortable li { width: 350px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 30px; }
+.sortable li span { /*position: absolute;*/ margin-left: -1.3em; }
 
 .quiz_title{
   width: 50%;

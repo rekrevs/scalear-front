@@ -65,6 +65,7 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
+					player_controls.pause()
 					player.currentTime(time);
 					parent.focus()
 				}

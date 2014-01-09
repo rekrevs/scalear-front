@@ -182,7 +182,7 @@ describe("Calendar",function(){
                     fields[1].sendKeys('new prerequisites');
                 });
                 ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
-                   // dropdown[0].click();
+                    dropdown[0].click();
                     ptor.findElements(protractor.By.tagName('option')).then(function(options){
                         options[1].click();
                     });

@@ -90,7 +90,9 @@ exports.config = {
   // This can be changed via the command line as:
   //   --params.login.user 'Joe'
   params: {
-
+      frontend: 'http://localhost:9000/',
+      backend: 'http://localhost:3000/',
+      auth: 'http://localhost:4000/'
   },
 
   // ----- Options to be passed to minijasminenode -----

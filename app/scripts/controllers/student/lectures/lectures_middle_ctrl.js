@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture','$window','$timeout','$translate', '$state', '$log','CourseEditor', function ($scope, Course, $stateParams,Lecture, $window, $timeout, $translate, $state, $log,CourseEditor) {
+  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture','$window','$interval','$translate', '$state', '$log','CourseEditor', function ($scope, Course, $stateParams,Lecture, $window, $interval, $translate, $state, $log,CourseEditor) {
 
   	$scope.video_layer={}
     $scope.quiz_layer={}
@@ -105,9 +105,9 @@ angular.module('scalearAngularApp')
    				$scope.lecture_player.controls.pause();
    				$scope.lecture_player.controls.seek($scope.selected_quiz.time)
 				$scope.show_notification=$translate('groups.answer_question');	
-   				$timeout(function(){
+   				$interval(function(){
          		 	$scope.show_notification=false;
-	         	}, 2000);
+	         	}, 2000, 1);
    				// show message telling him to answer. notification directive.. pass text to it..
    				// also when just solved it want to set is_quiz_solved.. gheir ely bageebo from there..
    			}

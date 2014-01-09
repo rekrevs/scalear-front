@@ -3,21 +3,21 @@
       <tr>
          <th width='10px'>{{$index+1}}</th>
          <th colspan='2'>{{question.content}}</th>
-         <th ng-if='quiz.quiz_type==\"quiz\"'>
+         <th ng-if='quiz.quiz_type=="quiz"'>
             <p ng-if='correct[question.id]==1' class='green' translate='lectures.correct'></p>
             <p ng-if='correct[question.id]==0' class='red' translate='lectures.incorrect'></p>
          </th>
       </tr>
-      <tr ng-if='question.question_type == \"Free Text Question\"'>
+      <tr ng-if='question.question_type == "Free Text Question"'>
          <td><img src='images/spacer.gif' height='1px' width='1px' /></td>
          <td colspan='2'><textarea ng-model='studentAnswers[question.id]' style='width:500px;height:100px;'></textarea></td>
       </tr>
-      <tr ng-if='question.question_type.toUpperCase()==\"OCQ\" || question.question_type.toUpperCase()==\"MCQ\"' ng-repeat='answer in question.answers'>
+      <tr ng-if='question.question_type.toUpperCase()=="OCQ" || question.question_type.toUpperCase()=="MCQ"' ng-repeat='answer in question.answers'>
          <td><img src='images/spacer.gif' height='1px' width='1px' /></td>
-         <td ng-if='question.question_type==\"MCQ\"' width='10px;'><input atleastone ng-model='studentAnswers[question.id][answer.id]' ng-checked='studentAnswers[question.id][answer.id]'  name='ocq_{{question.id}}' type='checkbox' ng-change='updateValues({{question.id}})'/></td>
-         <td ng-if='question.question_type==\"OCQ\"' width='10px;'><input atleastone ng-model='studentAnswers[question.id]' value='{{answer.id}}'  name='ocq_{{question.id}}' type='radio' ng-change='updateValues({{question.id}})'/></td>
+         <td ng-if='question.question_type=="MCQ"' width='10px;'><input atleastone ng-model='studentAnswers[question.id][answer.id]' ng-checked='studentAnswers[question.id][answer.id]'  name='ocq_{{question.id}}' type='checkbox' ng-change='updateValues({{question.id}})'/></td>
+         <td ng-if='question.question_type=="OCQ"' width='10px;'><input atleastone ng-model='studentAnswers[question.id]' value='{{answer.id}}'  name='ocq_{{question.id}}' type='radio' ng-change='updateValues({{question.id}})'/></td>
          <td>{{answer.content}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'>Must choose atleast one answer!</span></td>
-         <td ng-if='quiz.quiz_type==\"quiz\"'></td>
+         <td ng-if='quiz.quiz_type=="quiz"'></td>
       </tr>
       <tr ng-if='question.question_type.toUpperCase()=="DRAG"'>
          <td><img src='images/spacer.gif' height='1px' width='1px' /></td>
@@ -25,12 +25,12 @@
             {{list}}
             <ul class='sortable' ui-sortable ng-model='studentAnswers[question.id]'>
                <li ng-repeat='answer in studentAnswers[question.id]' class='ui-state-default'>
-                  <span class='ui-icon ui-icon-arrowthick-2-n-s'></span>
+                  <span class='ui-icon ui-icon-arrowthick-2-n-s handle'></span>
                   "{{answer}}
                </li>
             </ul>
          </td>
-         <td ng-if='quiz.quiz_type==\"quiz\"'></td>
+         <td ng-if='quiz.quiz_type=="quiz"'></td>
       </tr>
    </tbody>
 </table>

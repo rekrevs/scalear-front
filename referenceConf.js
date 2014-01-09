@@ -47,7 +47,9 @@ exports.config = {
 //    'test/e2e/spec/course_editor_spec.js'
 //    'test/e2e/spec/course_pages_spec.js'
 //    'test/e2e/spec/announcements_spec.js'
-    'test/e2e/spec/progress_spec.js'
+//    'test/e2e/spec/progress_spec.js'
+      //student specs
+    'test/e2e/spec/student_lectures_spec.js'
   ],
 
   // ----- Capabilities to be passed to the webdriver instance ----
@@ -88,7 +90,9 @@ exports.config = {
   // This can be changed via the command line as:
   //   --params.login.user 'Joe'
   params: {
-
+      frontend: 'http://localhost:9000/',
+      backend: 'http://localhost:3000/',
+      auth: 'http://localhost:4000/'
   },
 
   // ----- Options to be passed to minijasminenode -----

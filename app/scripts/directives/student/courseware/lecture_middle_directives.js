@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive("controls",['$timeout','Lecture','$stateParams', '$window', '$log', function($timeout, Lecture, $stateParams, $window, $log) {
+.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log', function($interval, Lecture, $stateParams, $window, $log) {
   return {
     restrict:"E",
     templateUrl:"/views/student/lectures/controls.html",
@@ -46,19 +46,19 @@ angular.module('scalearAngularApp')
     		$log.debug("in confusde");
         scope.show_message=true;
     		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
-  			$timeout(function(){
+  			$interval(function(){
            		scope.show_message=false;
            		$log.debug(data)
            		if(data.msg=="ask")
            		{
              		scope.$parent.show_notification="If you're really confused, please use the question button to ask a question so the teacher can help you.";
              		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px"}
-             		$timeout(function(){
+             		$interval(function(){
              			scope.$parent.notify_position={"left":"180px"};
              			scope.$parent.show_notification=false;
-             		}, 6000)
+             		}, 6000, 1)
              	}
-       		}, 2000);	
+       		}, 2000, 1);
   		  });
     	};
     	scope.back= function()
@@ -190,7 +190,7 @@ angular.module('scalearAngularApp')
   };
 }])
 
-.directive("check",['$timeout', 'Lecture', '$stateParams','$translate', '$window', '$log','CourseEditor', function($timeout, Lecture, $stateParams, $translate, $window, $log, CourseEditor) {
+.directive("check",['$interval', 'Lecture', '$stateParams','$translate', '$window', '$log','CourseEditor', function($interval, Lecture, $stateParams, $translate, $window, $log, CourseEditor) {
   return {
     restrict:"E",
 	template:'<input type="button" class="btn btn-primary" value="{{\'youtube.check_answer\'|translate}}" ng-click="check_answer()" />',
@@ -260,9 +260,9 @@ angular.module('scalearAngularApp')
           	$log.debug(scope.$parent);
           	// notify
           	scope.$parent.show_notification=$translate("groups.choose_correct_answer")//"You must choose atleast one answer";
-   				$timeout(function(){
+   				$interval(function(){
 	             		 scope.$parent.show_notification=false;
-	         	}, 2000);
+	         	}, 2000, 1);
           	return		
           }
 
@@ -282,9 +282,9 @@ angular.module('scalearAngularApp')
           if(count<scope.selected_quiz.online_answers.length)
           {
           	scope.$parent.show_notification=$translate("groups.must_place_items");
-   				$timeout(function(){
+   				$interval(function(){
 	             		 scope.$parent.show_notification=false;
-	         	}, 2000);
+	         	}, 2000, 1);
             return
            }
         }
@@ -326,9 +326,9 @@ angular.module('scalearAngularApp')
 	    	//scope.$emit('accordianReload');
 			//scope.$emit('accordianUpdate',{g_id:scope.lecture.group_id, type:"lecture", id:scope.lecture.id});
 	    }
-        $timeout(function(){
+        $interval(function(){
           scope.$parent.show_notification=false;
-        }, 2000);             
+        }, 2000, 1);
       }
 
 

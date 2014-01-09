@@ -94,7 +94,7 @@ angular.module('scalearAngularApp')
         chart.type = "ColumnChart"
         chart.options = {
             "colors": ['#0c81c8'],
-            "title": $translate('courses.module_progress_charts'),
+            "title": $translate('courses.module_progress_charts_quizzes'),
             "isStacked": "true",
             "fill": 20,
             "height": 200,

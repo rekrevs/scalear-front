@@ -363,6 +363,7 @@ var translation_sv=function(){
               complete: "slutföra",
               student_question: "Studentfrågor",
               module_progress_charts: "Modulframsteg, Diagram",
+              module_progress_charts_quizzes: "Modul framsteg diagram - Baserat på videofrågesporter",
               change_status: "Ändra Status",
               original: "Original",
               on_time: "I Tid",

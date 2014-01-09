@@ -187,9 +187,8 @@ angular.module('scalearAngularApp')
 		opacity: 0.4,
 		scroll: true,
 		update: function(e, ui) {
-			Module.saveSort({},
-				{course_id:$stateParams.course_id,
-					group: $scope.modules},
+			Module.saveSort({course_id:$stateParams.course_id},
+				{group: $scope.modules},
 				function(response){
 					$log.debug(response)
 				}, 

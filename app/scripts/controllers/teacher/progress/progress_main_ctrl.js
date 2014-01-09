@@ -22,9 +22,7 @@ angular.module('scalearAngularApp')
                 limit: $scope.module_limit
             },
             function(data){
-
             	$log.debug(data)
-                console.log(data)
                 var obj={}
 
                 obj.module_names = data.module_names

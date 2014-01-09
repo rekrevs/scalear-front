@@ -24,6 +24,7 @@ angular.module('scalearAngularApp')
             function(data){
 
             	$log.debug(data)
+                console.log(data)
                 var obj={}
 
                 obj.module_names = data.module_names

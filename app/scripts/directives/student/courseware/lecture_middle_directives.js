@@ -680,7 +680,7 @@ angular.module('scalearAngularApp')
           scope.selected_id= angular.element(elem[0]).find('b').attr('id')
           var ontop=angular.element('.ontop');
           scope.explanation_pop={
-            title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[data.id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
+            title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[selected_id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
             content:"<div>{{explanation[selected_id][1]}}</div>",
             html:true,
             trigger:'hover',

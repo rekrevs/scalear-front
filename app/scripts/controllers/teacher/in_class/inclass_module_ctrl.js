@@ -38,13 +38,13 @@ angular.module('scalearAngularApp')
   	};
     var init = function(){
         Module.getInclassActive(
-              {module_id:$stateParams.module_id, course_id:$stateParams.course_id},
-              function(data){
-                    console.log(data);
-                    $scope.buttons = data
-                      },
-              function(){}
-                );
+          {module_id:$stateParams.module_id, course_id:$stateParams.course_id},
+          function(data){
+                console.log(data);
+                $scope.buttons = data
+                  },
+          function(){}
+        );
     }
 
 

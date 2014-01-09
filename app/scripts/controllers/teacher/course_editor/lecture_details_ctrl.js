@@ -8,13 +8,14 @@ angular.module('scalearAngularApp')
  	$scope.validateLecture = function(column,data) {
 	    var d = $q.defer();
 	    var lecture={}
+
 	    lecture[column]=data;
 	    if(column == 'url' && getVideoId(data) == null){
 	    	$log.debug(data)
 	    	d.resolve($translate('courses.invalid_input'));
     	}
-    	if(column =="slides")
-    		data = $filter('formatURL')(data)
+    	
+    	console.log(data)
 	    Lecture.validateLecture(
 	    	{course_id: $scope.lecture.course_id, lecture_id:$scope.lecture.id},
 	    	lecture,
@@ -66,7 +67,12 @@ angular.module('scalearAngularApp')
 		urlFormat()
 		$scope.lecture.aspect_ratio = ""
         if($scope.lecture.url)
-		getYoutubeDetails();
+			getYoutubeDetails();
+	}
+
+	$scope.updateSlidesUrl=function(){
+		$scope.lecture.slides = $filter('formatURL')($scope.lecture.slides)
+		$scope.updateLecture()
 	}
 
 	var urlFormat =function(){

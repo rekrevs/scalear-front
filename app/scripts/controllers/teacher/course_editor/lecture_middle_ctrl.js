@@ -194,7 +194,11 @@ angular.module('scalearAngularApp')
 	     	var the_width = answer_width/element.width();
 	      	var the_height= answer_height/(element.height());
 	      	$scope.addAnswer("", the_height, the_width, the_left, the_top)
-      }    	
+	      	if (window.getSelection)
+		        window.getSelection().removeAllRanges();
+		    else if (document.selection)
+		        document.selection.empty();
+	      	}    	
 	}
 
 	$scope.addAnswer= function(ans,h,w,l,t){

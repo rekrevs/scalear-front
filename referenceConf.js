@@ -11,10 +11,10 @@ exports.config = {
   // 3. sauceUser/sauceKey - to use remote Selenium servers via SauceLabs.
 
   // The location of the selenium standalone server .jar file.
-  seleniumServerJar: './selenium/selenium-server-standalone-2.35.0.jar',
+  seleniumServerJar: null,//'selenium/selenium-server-standalone-2.39.0.jar',
   // The port to start the selenium server on, or null if the server should
   // find its own unused port.
-  seleniumPort: null,
+  //seleniumPort: 4444,
   // Chromedriver location is used to help the selenium standalone server
   // find chromedriver. This will be passed to the selenium jar as
   // the system property webdriver.chrome.driver. If null, selenium will
@@ -32,24 +32,27 @@ exports.config = {
 
   // The address of a running selenium server. If specified, Protractor will
   // connect to an already running instance of selenium. This usually looks like
-  // seleniumAddress: 'http://localhost:4444/wd/hub'
-  seleniumAddress: 'http://localhost:4444/wd/hub',
+   seleniumAddress: 'http://localhost:4444/wd/hub',
+
+
 
   // The timeout for each script run on the browser. This should be longer
   // than the maximum time your application needs to stabilize between tasks.
-  allScriptsTimeout: 50000,
+  allScriptsTimeout: 60000,
 
   // ----- What tests to run -----
   //
   // Spec patterns are relative to the location of this config.
   specs: [
-//    'test/e2e/spec/course_information_spec.js'
-//    'test/e2e/spec/course_editor_spec.js'
-//    'test/e2e/spec/course_pages_spec.js'
-//    'test/e2e/spec/announcements_spec.js'
+    //'test/e2e/spec/course_information_spec.js'
+   //'test/e2e/spec/course_editor_spec.js'
+   // 'test/e2e/spec/course_pages_spec.js'
+    //'test/e2e/spec/announcements_spec.js'
 //    'test/e2e/spec/progress_spec.js'
-      //student specs
-    'test/e2e/spec/student_lectures_spec.js'
+    //'test/e2e/spec/student_lectures_spec.js'
+   // 'test/e2e/spec/calendar_student_spec.js'
+    //'test/e2e/spec/calendar_student_2_spec.js'
+    'test/e2e/spec/calendar_teacher_spec.js'
   ],
 
   // ----- Capabilities to be passed to the webdriver instance ----
@@ -59,7 +62,7 @@ exports.config = {
   // and
   // https://code.google.com/p/selenium/source/browse/javascript/webdriver/capabilities.js
   capabilities: {
-    'browserName': 'chrome'
+    'browserName': 'firefox'
   },
 
   // ----- More information for your tests ----
@@ -108,6 +111,6 @@ exports.config = {
     // If true, include stack traces in failures.
     includeStackTrace: true,
     // Default time to wait in ms before a test fails.
-    defaultTimeoutInterval: 50000
+    defaultTimeoutInterval: 600000
   }
 };

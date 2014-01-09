@@ -458,10 +458,10 @@ angular.module('scalearAngularApp')
 		replace:true,
 		template:"<li class='ui-state-default'>"+
 					"<ng-form name='aform'>"+
-						"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item'></span>"+
+						"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item' style='float:left'></span>"+
 						"<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
-						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-						"<delete_button size='small' action='removeAnswer($index, quiz)' />"+
+						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required && !hide_valid' style='padding-top: 5px;position:absolute;float:right'>{{'courses.required'|translate}}!</span>"+
+						"<delete_button size='small' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' style='float:right'/>"+
 					"</ng-form>"+
 				"</li>"				 
 	}

@@ -3,8 +3,8 @@
  angular.module("config", [])
 
 .constant("scalear_api", {
-  "host": "http://localhost:3000",
-  "redirection_url": "http://localhost:9000/#/"
+  "host": "http://scalear-staging.herokuapp.com",
+  "redirection_url": "http://scalear-staging.s3-website-eu-west-1.amazonaws.com/#/"
 })
 
 ;

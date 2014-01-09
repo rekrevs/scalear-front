@@ -434,7 +434,7 @@ module.exports = function (grunt) {
   },
   staging: {
     options: {
-      bucket: '<%= aws.bucket %>',
+      bucket: '<%= aws.bucket_staging %>',
       //differential: true // Only uploads the files that have changed
     },
     files: [
@@ -444,6 +444,19 @@ module.exports = function (grunt) {
       //{expand: true, cwd: 'dist/staging/styles/', src: ['**'], dest: 'app/styles/'},
      
     ]
+  },
+  prod: {
+      options: {
+          bucket: '<%= aws.bucket_production %>',
+          //differential: true // Only uploads the files that have changed
+      },
+      files: [
+          // {dest: '/', cwd: 'backup/staging/', action: 'download'},
+          {dest: '/', action: 'delete'},
+          // {expand: true, dot:true, cwd: 'dist/', src: ['.htaccess'], dest: './'},
+          //{expand: true, cwd: 'dist/staging/styles/', src: ['**'], dest: 'app/styles/'},
+
+      ]
   },
   // production: {
   //   options: {
@@ -476,7 +489,6 @@ module.exports = function (grunt) {
     options: {
       key: '<%= aws.key %>',
       secret: '<%= aws.secret %>',
-      bucket: '<%= aws.bucket %>',
       access: 'public-read',
       headers: {
         // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
@@ -486,60 +498,31 @@ module.exports = function (grunt) {
       }
     },
      staging: {
-      // These options override the defaults
-      // options: {
-      //   encodePaths: true,
-      //   maxOperations: 20
-      // },
-      // Files to be uploaded.
-      
-      // del: [
-      //   {
-      //     src: './dist'
-      //   },
-      // ],
-
+      options:{
+          bucket: '<%= aws.bucket_staging %>'
+      },
       upload: [
        {
           rel: 'dist', 
           src: '<%= yeoman.dist %>/**/*.*',
           dest: '/',
           options: { gzip: true }
+       }
+      ]
+    },
+   prod: {
+       options:{
+           bucket: '<%= aws.bucket_production %>'
        },
-        // {
-        //   expand:true,
-        //   dot: true,
-        //   rel: 'dist', 
-        //   src: '<%= yeoman.dist %>/.htaccess',
-        //   dest: '/',
-        //   options: { gzip: false }
-        // }
-      ],
-
-    
-
-    //   sync: [
-    //     {
-    //       // only upload this document if it does not exist already
-    //       src: 'important_document.txt',
-    //       dest: 'documents/important.txt',
-    //       options: { gzip: true }
-    //     },
-    //     {
-    //       // make sure this document is newer than the one on S3 and replace it
-    //       options: { verify: true },
-    //       src: 'passwords.txt',
-    //       dest: 'documents/ignore.txt'
-    //     },
-    //     {
-    //       src: path.join(variable.to.release, "build/cdn/js/**/*.js"),
-    //       dest: "jsgz",
-    //       // make sure the wildcard paths are fully expanded in the dest
-    //       rel: path.join(variable.to.release, "build/cdn/js"),
-    //       options: { gzip: true }
-    //     }
-    //   ]
-    }
+       upload: [
+           {
+               rel: 'dist',
+               src: '<%= yeoman.dist %>/**/*.*',
+               dest: '/',
+               options: { gzip: true }
+           },
+       ],
+   }
 
   },
 
@@ -560,17 +543,28 @@ module.exports = function (grunt) {
       
     }
   }],
-  prod: [{
+  staging: [{
     dest: '<%= yeoman.app %>/scripts/config.js',
     wrap: '"use strict";\n\n <%= __ngModule %>',
     name: 'config',
     constants: {
       scalear_api:{
         host: 'http://scalear-staging.herokuapp.com',//'http://angular-learning.herokuapp.com',
-        redirection_url: 'http://angular-edu.s3-website-us-west-2.amazonaws.com/#/'
+        redirection_url: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/#/'
       } 
     }
-  }]
+  }],
+ prod: [{
+     dest: '<%= yeoman.app %>/scripts/config.js',
+     wrap: '"use strict";\n\n <%= __ngModule %>',
+     name: 'config',
+     constants: {
+         scalear_api:{
+             host: 'http://scalear.herokuapp.com',//'http://angular-learning.herokuapp.com',
+             redirection_url: 'http://scalear.s3-website-eu-west-1.amazonaws.com/#/'
+         }
+     }
+ }]
 }
 
 
@@ -601,7 +595,6 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'ngconstant:prod',
     'useminPrepare',
    'concurrent:dist',
     'autoprefixer',
@@ -619,7 +612,8 @@ module.exports = function (grunt) {
      'clean:bower'
   ]);
 
-  grunt.registerTask('staging',['aws_s3:staging', 's3:staging'])
+  grunt.registerTask('staging',['ngconstant:staging','build','aws_s3:staging', 's3:staging'])
+  //grunt.registerTask('production',['ngconstant:prod','build','aws_s3:prod', 's3:prod'])
 
   grunt.registerTask('default', [
     'jshint',

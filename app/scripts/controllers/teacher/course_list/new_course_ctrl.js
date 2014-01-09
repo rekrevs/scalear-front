@@ -21,6 +21,7 @@ angular.module('scalearAngularApp')
 		$scope.createCourse = function(){
 			if($scope.form.$valid)
  			{
+ 				$scope.course.start_date.setMinutes($scope.course.start_date.getMinutes() + 120);
 			Course.create({course:$scope.course, "import":$scope.import_from},
 			function(data){
 				$scope.submitted=false;

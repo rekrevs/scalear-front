@@ -75,7 +75,12 @@ angular.module('scalearAngularApp')
   		$scope.announcements[index].overclass='';
   	};
   	$scope.saveAnnouncement = function(index){
-  		
+      var tmp = document.createElement("DIV")
+      tmp.innerHTML = $scope.announcements[index].announcement
+      var inner_text =  tmp.textContent || tmp.innerText || ""
+      inner_text = inner_text.replace(/\s/g,'')
+      if(!inner_text.length)
+         $scope.announcements[index].announcement = inner_text
   		if(!$scope.announcements[index].id) // create new one
   		{
   		  Announcement.create(

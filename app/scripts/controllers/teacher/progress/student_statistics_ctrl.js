@@ -69,7 +69,6 @@ angular.module('scalearAngularApp')
 
 	    $scope.createStatisticsChart = function(type){
 	    	var chart_data = $scope.statistics[type]
-	    	if(type == "pauses")
 	    	var chart = {};
 	    	var min = new Date($scope.statistics.min*1000)
 	    	var max = new Date($scope.statistics.max*1000)

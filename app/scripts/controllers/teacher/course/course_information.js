@@ -45,7 +45,16 @@ angular.module('scalearAngularApp')
 		        }
 		      )
 		      return d.promise;
-    	}; 
+    	};
+
+        $scope.url_with_protocol = function(url)
+        {
+            if(url)
+                return url.match(/^http/)? url: 'http://'+url;
+            else
+                return url;
+        }
+
 
         // $scope.validateDuration=function(type,value){
             // if (value<1 || value >=1000)

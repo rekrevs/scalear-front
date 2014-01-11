@@ -25,7 +25,7 @@
     <b ><span translate>courses.discussion_forum_link</span>:</b>
     <p>
         <details-text value="data.course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-text> |
-        <a href="{{data.course.discussion_link}}" ><span translate>courses.visit_link</span></a>
+        <a href="{{url_with_protocol(data.course.discussion_link)}}" target="_blank" ><span translate>courses.visit_link</span></a>
     </p>
 
     <b ><span translate>courses.course_description</span>:</b>

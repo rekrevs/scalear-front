@@ -560,8 +560,8 @@ module.exports = function (grunt) {
      name: 'config',
      constants: {
          scalear_api:{
-             host: 'http://scalear.herokuapp.com',//'http://angular-learning.herokuapp.com',
-             redirection_url: 'http://scalear.s3-website-eu-west-1.amazonaws.com/#/'
+             host: 'http://api.scalable-learning.com',//'http://angular-learning.herokuapp.com',
+             redirection_url: 'http://scalable-learning.com/#/'
          }
      }
  }]
@@ -613,7 +613,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('staging',['ngconstant:staging','build','aws_s3:staging', 's3:staging'])
-  //grunt.registerTask('production',['ngconstant:prod','build','aws_s3:prod', 's3:prod'])
+  grunt.registerTask('production',['ngconstant:prod','build','aws_s3:prod', 's3:prod'])
 
   grunt.registerTask('default', [
     'jshint',

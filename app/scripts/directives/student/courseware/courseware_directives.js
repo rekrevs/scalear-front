@@ -44,10 +44,17 @@ angular.module('scalearAngularApp')
 		 templateUrl: '/views/student/lectures/courseware_item.html',
 		 link: function(scope){
 		 	scope.type= scope.className=="Quiz"? CourseEditor.capitalize(scope.quizType): scope.className;
-		 	scope.showItem= function()
+             scope.url_with_protocol = function(url)
+             {
+                 if(url)
+                     return url.match(/^http/)? url: 'http://'+url;
+                 else
+                     return url;
+             }
+            scope.showItem= function()
 		 	{
 		 		if(scope.className=="Document")
-		 			window.open(scope.url,'_blank');
+		 			window.open(scope.url_with_protocol(scope.url),'_blank');
 		 		else
 		 		{	
 		 			var next_state="course.lectures."+scope.className.toLowerCase();
@@ -57,6 +64,8 @@ angular.module('scalearAngularApp')
 		 			$state.go(next_state, to);
 		 		}
 		 	}
+
+
 		 }
 	};
 }]);

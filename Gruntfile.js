@@ -428,7 +428,7 @@ module.exports = function (grunt) {
   options: {
     accessKeyId: '<%= aws.key %>', // Use the variables
     secretAccessKey: '<%= aws.secret %>', // You can also use env variables
-    //region: 'eu-west-1',
+    region: 'eu-west-1',
     uploadConcurrency: 5 ,// 5 simultaneous uploads
     //downloadConcurrency: 5 // 5 simultaneous downloads
   },
@@ -489,6 +489,7 @@ module.exports = function (grunt) {
     options: {
       key: '<%= aws.key %>',
       secret: '<%= aws.secret %>',
+      region: 'eu-west-1',
       access: 'public-read',
       headers: {
         // Two Year cache policy (1000 * 60 * 60 * 24 * 730)
@@ -538,7 +539,8 @@ module.exports = function (grunt) {
     constants: {
       scalear_api:{
         host: 'http://localhost:3000', 
-        redirection_url: 'http://localhost:9000/#/'
+        redirection_url: 'http://localhost:9000/#/',
+        auth: "http://localhost:4000"
       },
       
     }
@@ -550,7 +552,8 @@ module.exports = function (grunt) {
     constants: {
       scalear_api:{
         host: 'http://scalear-staging.herokuapp.com',//'http://angular-learning.herokuapp.com',
-        redirection_url: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/#/'
+        redirection_url: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/#/',
+        auth: "http://scalear-auth-staging.herokuapp.com"
       } 
     }
   }],
@@ -561,7 +564,8 @@ module.exports = function (grunt) {
      constants: {
          scalear_api:{
              host: 'http://api.scalable-learning.com',//'http://angular-learning.herokuapp.com',
-             redirection_url: 'http://scalable-learning.com/#/'
+             redirection_url: 'http://scalable-learning.com/#/',
+             auth: "http://auth.scalable-learning.com"
          }
      }
  }]

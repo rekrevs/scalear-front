@@ -28,7 +28,7 @@
 ])//.constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
 .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(['$rootScope', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', function($rootScope, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate) {
+  .run(['$rootScope','scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', function($rootScope,scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate) {
 
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
@@ -92,7 +92,12 @@
     		UserSession.getRole().then(function(result){
     			var s=1;
 
-          if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent))
+         if(result==0)
+         {
+            window.location=scalear_api.host+"/"+$rootScope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
+
+         }
+          else if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent))
           {
               $state.go("ie");
           }

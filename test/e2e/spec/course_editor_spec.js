@@ -842,7 +842,7 @@ describe("Course Editor",function(){
                 expect(elem.getAttribute('src')).toContain("PlavjNH_RRU");
             });
         });
-        it('should display the \'insert quiz (over video & text)\' buttons', function(){
+        it('should display the \'insert quiz (overhena2 video & text)\' buttons', function(){
             ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
                 expect(buttons.length).toBe(2);
             });
@@ -4497,7 +4497,7 @@ function openMCQ(ptor){
     it('should reopen the quiz', function(){
         ptor.findElement(protractor.By.tagName('editable_text')).then(function(quiz_name){
             quiz_name.click().then(function(){
-                ptor.sleep(3000);
+                ptor.sleep(5000);
             });
         });
     });

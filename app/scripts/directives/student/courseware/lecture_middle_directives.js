@@ -561,7 +561,8 @@ angular.module('scalearAngularApp')
 .directive('studentDrag',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
   return {
     restrict:'E',
-    template:'<b class="dragged handle" data-drag="true" data-jqyoui-options=\'{containment:".ontop"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</b>',
+    template:'<div ng-style="{left: xcoor, top: ycoor, width:width, height:height, position: \'absolute\',  marginTop:\'0px\'}" data-drop="true" jqyoui-droppable=\'{onDrop:"setDropped", onOver:"formatDropped", onOut:"clearDropped"}\' class="drop-div" ></div>'+
+             '<b class="dragged handle" data-drag="true" data-jqyoui-options=\'{containment:".ontop"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</b>',
     link:function(scope,elem){
       $log.debug("student drag")
       $log.debug(scope.data)

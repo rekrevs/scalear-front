@@ -160,18 +160,19 @@ angular.module('scalearAngularApp')
 				function(){
 					if($scope.fullscreen){
 						$scope.resize.big();
-                        $rootScope.changeError = true;
                         $scope.$apply()
 					}
 				}
 			)
 
 			$scope.resize.small = function()
-			{	
+			{
+                $rootScope.changeError = false;
 				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 				$scope.fullscreen = false
 
-				angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
+
+                angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
 				angular.element("body").css("overflow","auto");
 				angular.element("body").css("position","");
 
@@ -204,7 +205,8 @@ angular.module('scalearAngularApp')
 			}
 
 			$scope.resize.big = function()
-			{	
+			{
+                $rootScope.changeError = true;
 				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 				var win = angular.element($window)
 

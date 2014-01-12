@@ -100,7 +100,7 @@ describe("Course Editor",function(){
     };
 
     describe('Teacher', function(){
-        login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
+        login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
         it('should create a new course', function(){
             ptor = protractor.getInstance();
             ptor.get('/#/courses/new');
@@ -114,13 +114,15 @@ describe("Course Editor",function(){
                     fields[0].sendKeys('new description');
                     fields[1].sendKeys('new prerequisites');
                 });
-                ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
-                    dropdown[0].click();
+//                ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
+//                    dropdown[0].click();
                     ptor.findElements(protractor.By.tagName('option')).then(function(options){
                         options[1].click();
                     });
+//                });
+                fields[fields.length-1].click().then(function(){
+                    feedback(ptor, 'created');
                 });
-                fields[fields.length-1].click();
             });
         });
         it('should go to course information page', function(){
@@ -148,7 +150,9 @@ describe("Course Editor",function(){
         });
         it('should add a new module and open it', function(){
             ptor.findElement(protractor.By.className('adding_module')).then(function(button){
-                button.click();
+                button.click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
             ptor.findElement(protractor.By.className('trigger')).click();
         });
@@ -166,16 +170,26 @@ describe("Course Editor",function(){
                     field.clear();
                     field.sendKeys('1');
                 });
-                ptor.findElement(protractor.By.className('btn-primary')).click();
+                ptor.findElement(protractor.By.className('btn-primary')).click().then(function(){
+                    feedback(ptor, 'updated');
+                });
 //                feedback(ptor, 'Module Successfully Updated');
             });
         });
         it('should add 4 new lectures', function(){
             ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
-                adding[adding.length-3].click();
-                adding[adding.length-3].click();
-                adding[adding.length-3].click();
-                adding[adding.length-3].click();
+                adding[adding.length-3].click().then(function(){
+                    feedback(ptor, 'created');
+                });
+                adding[adding.length-3].click().then(function(){
+                    feedback(ptor, 'created');
+                });
+                adding[adding.length-3].click().then(function(){
+                    feedback(ptor, 'created');
+                });
+                adding[adding.length-3].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
         });
     });
@@ -189,7 +203,9 @@ describe("Course Editor",function(){
             ptor.findElements(protractor.By.className('trigger')).then(function(modules){
                 test = modules.length;
                 ptor.findElement(protractor.By.className('adding_module')).then(function(add_module){
-                    add_module.click();
+                    add_module.click().then(function(){
+                        feedback(ptor, 'created');
+                    });
                 });
                 ptor.findElements(protractor.By.className('trigger')).then(function(modules){
                     expect(modules.length).toBe(test+1);
@@ -211,7 +227,9 @@ describe("Course Editor",function(){
                     nameField.sendKeys('module name');
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[0].click();
+                    buttons[0].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(name[0].getText()).toBe('module name');
                 //old test cases
@@ -230,7 +248,9 @@ describe("Course Editor",function(){
                     nameField.sendKeys('2');
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[0].click();
+                    buttons[0].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(name[0].getText()).toBe('2');
             });
@@ -246,7 +266,9 @@ describe("Course Editor",function(){
                     field.sendKeys(tomorrow_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
 
                 details[1].getText().then(function(text){
@@ -276,7 +298,9 @@ describe("Course Editor",function(){
                     field.sendKeys(next_day_week_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[2].getText().then(function(text){
                     expect(text).toBe(next_day_week);
@@ -302,10 +326,12 @@ describe("Course Editor",function(){
                 ptor.findElement(protractor.By.className('editable-input')).then(function(descriptionTextBox){
                     descriptionTextBox.sendKeys("dummy description");
                     ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                        buttons[0].click();
+                        buttons[0].click().then(function(){
+                            feedback(ptor, 'updated');
+                        });
                     });
                 });
-                ptor.sleep(2000);
+//                ptor.sleep(2000);
                 expect(description[description.length-1].getText()).toBe("dummy description");
                 //old test cases
                 description[description.length-1].click();
@@ -313,10 +339,12 @@ describe("Course Editor",function(){
                     descriptionTextBox.clear();
                     descriptionTextBox.sendKeys(' ');
                     ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                        buttons[0].click();
+                        buttons[0].click().then(function(){
+                            feedback(ptor, 'updated');
+                        });
                     });
                 });
-                ptor.sleep(2000);
+//                ptor.sleep(2000);
                 expect(description[description.length-1].getText()).toBe('Empty');
                 description[description.length-1].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(descriptionTextBox){
@@ -353,7 +381,9 @@ describe("Course Editor",function(){
         });
         it('should add a new lecture', function(){
             ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
-                buttons[buttons.length-3].click();
+                buttons[buttons.length-3].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
             ptor.findElements(protractor.By.className('trigger2')).then(function(quiz){
                 expect(quiz[quiz.length-1].getText()).toBe('New Lecture');
@@ -403,7 +433,9 @@ describe("Course Editor",function(){
                     // ptor.sleep(10000);
                     ptor.findElements(protractor.By.tagName('button')).then(function(button){
                         expect(button[1].getAttribute('type')).toBe('submit');
-                        button[1].click();
+                        button[1].click().then(function(){
+                            feedback(ptor, 'updated');
+                        });
 
                     });
                 });
@@ -426,7 +458,7 @@ describe("Course Editor",function(){
                 //find the textfield and edit it
                 ptor.findElement(protractor.By.className('editable-input')).then(function(urlField){
                     urlField.clear();
-                    urlField.sendKeys('http://www.youtube.com/watch?v=jgoGBxlVslI');
+                    urlField.sendKeys('http://www.youtube.com/watch?v=XtyzOo7nJrQ');
                 });
                 //click the confirm button
                 ptor.findElements(protractor.By.tagName('button')).then(function(button){
@@ -439,23 +471,23 @@ describe("Course Editor",function(){
                     elem.isDisplayed().then(function(disp){
                         expect(disp).toEqual(true)
                     });
-                    expect(elem.getAttribute('src')).toContain("jgoGBxlVslI");
+                    expect(elem.getAttribute('src')).toContain("XtyzOo7nJrQ");
                 });
                 ptor.findElement(protractor.By.className('bigimg')).then(function(thumbnail){
-                    expect(thumbnail.getAttribute('src')).toContain('jgoGBxlVslI');
+                    expect(thumbnail.getAttribute('src')).toContain('XtyzOo7nJrQ');
                 });
                 expect(editable_click[2].getText()).toBe('smallscreen');
                 ptor.findElement(protractor.By.binding('{{video.author}}')).then(function(author){
-                    expect(author.getText()).toBe('saasbook');
+                    expect(author.getText()).toContain('Roman Nurik');
                 });
                 ptor.findElement(protractor.By.binding('lecture.duration')).then(function(duration){
-                    expect(duration.getText()).toBe('492Seconds');
+                    expect(duration.getText()).toBe('589Seconds');
                 });
                 ptor.findElement(protractor.By.binding('{{video.title}}')).then(function(elem){
-                    expect(elem.getText()).toBe("CS169 v13 w5l2s9");
+                    expect(elem.getText()).toContain("Android Developers — Visual Design Screencast — Creating custom button assets");
                 });
                 //check if the new url is correct
-                expect(editable_click[1].getText()).toBe('http://www.youtube.com/watch?v=jgoGBxlVslI');
+                expect(editable_click[1].getText()).toBe('http://www.youtube.com/watch?v=XtyzOo7nJrQ');
 
                 //click to edit again
                 editable_click[1].click();
@@ -468,7 +500,7 @@ describe("Course Editor",function(){
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
                     buttons[2].click();
                 });
-                expect(editable_click[1].getText()).toBe('http://www.youtube.com/watch?v=jgoGBxlVslI');
+                expect(editable_click[1].getText()).toBe('http://www.youtube.com/watch?v=XtyzOo7nJrQ');
                 editable_click[1].click();
                 //find the textfield and edit it
                 ptor.findElement(protractor.By.className('editable-input')).then(function(urlField){
@@ -521,32 +553,36 @@ describe("Course Editor",function(){
                 });
                 expect(elem[2].getText()).toBe("widescreen")
                 elem[2].click();
-                ptor.findElement(protractor.By.tagName('select')).then(function(dropDown){
-                    dropDown.click();
-                });
+//                ptor.findElement(protractor.By.tagName('select')).then(function(dropDown){
+//                    dropDown.click();
+//                });
                 ptor.findElements(protractor.By.tagName('option')).then(function(options){
-                    options[1].click();
+                    options[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(elem[2].getText()).toBe("smallscreen");
                 //wait for video to reload
-                ptor.sleep(5000);
+//                ptor.sleep(5000);
                 ptor.findElement(protractor.By.className('videoborder')).then(function(video){
                     expect(video.getAttribute('class')).toContain('smallscreen');
                 });
 
                 elem[2].click();
-                ptor.findElement(protractor.By.tagName('select')).then(function(dropDown){
-                    dropDown.isDisplayed().then(function(disp){
-                        expect(disp).toBe(true);
-                    });
-                    dropDown.click();
-                });
+//                ptor.findElement(protractor.By.tagName('select')).then(function(dropDown){
+//                    dropDown.isDisplayed().then(function(disp){
+//                        expect(disp).toBe(true);
+//                    });
+//                    dropDown.click();
+//                });
                 ptor.findElements(protractor.By.tagName('option')).then(function(options){
-                    options[0].click();
+                    options[0].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(elem[2].getText()).toBe("widescreen");
                 //wait for video to reload
-                ptor.sleep(5000);
+//                ptor.sleep(5000);
                 ptor.findElement(protractor.By.className('videoborder')).then(function(video){
                     expect(video.getAttribute('class')).toContain('widescreen');
                 });
@@ -580,7 +616,9 @@ describe("Course Editor",function(){
                     field.click();
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[3].getText()).toBe('Not Using Module\'s Appearance Date');
                 details[3].click();
@@ -600,7 +638,10 @@ describe("Course Editor",function(){
                     field.sendKeys(after_tomorrow_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                        ptor.sleep(3000);
+                    });
                 });
                 details[4].getText().then(function(text){
                     expect(text).toBe(after_tomorrow);
@@ -628,7 +669,9 @@ describe("Course Editor",function(){
                     field.click();
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[5].getText()).toBe('Not Using Module\'s due Date');
                 details[5].click();
@@ -648,7 +691,9 @@ describe("Course Editor",function(){
                     field.sendKeys(next_week_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[6].getText().then(function(text){
                     expect(text).toBe(next_week);
@@ -694,7 +739,9 @@ describe("Course Editor",function(){
                     slidesTextBox.clear();
                     slidesTextBox.sendKeys("http://www.it.uu.se/edu/course/homepage/darkdig/vt13/2-ISA%201.pdf");
                     ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                        buttons[1].click();
+                        buttons[1].click().then(function(){
+                            feedback(ptor, 'updated');
+                        });
                     });
                 });
                 expect(slides[slides.length-2].getText()).toBe("http://www.it.uu.se/edu/course/homepage/darkdig/vt13/2-ISA%201.pdf");
@@ -708,20 +755,24 @@ describe("Course Editor",function(){
                 ptor.findElement(protractor.By.className('editable-input')).then(function(descriptionTextBox){
                     descriptionTextBox.sendKeys("dummy description");
                     ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                        buttons[1].click();
+                        buttons[1].click().then(function(){
+                            feedback(ptor, 'updated');
+                        });
                     });
                 });
-                ptor.sleep(2000);
+//                ptor.sleep(2000);
                 expect(description[description.length-1].getText()).toBe("dummy description");
                 description[description.length-1].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(descriptionTextBox){
                     descriptionTextBox.clear();
                     descriptionTextBox.sendKeys(' ');
                     ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                        buttons[1].click();
+                        buttons[1].click().then(function(){
+                            feedback(ptor, 'updated');
+                        });
                     });
                 });
-                ptor.sleep(2000);
+//                ptor.sleep(2000);
                 expect(description[description.length-1].getText()).toBe('Empty');
                 description[description.length-1].click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(descriptionTextBox){
@@ -791,7 +842,7 @@ describe("Course Editor",function(){
                 expect(elem.getAttribute('src')).toContain("PlavjNH_RRU");
             });
         });
-        it('should display the \'insert quiz (over video & text)\' buttons', function(){
+        it('should display the \'insert quiz (overhena2 video & text)\' buttons', function(){
             ptor.findElements(protractor.By.tagName('dropdown_list')).then(function(buttons){
                 expect(buttons.length).toBe(2);
             });
@@ -817,10 +868,12 @@ describe("Course Editor",function(){
 //            ptor.get('/#/courses/'+course_id+'/course_editor/modules/'+module_id);
 //        })
         it('should add a new quiz', function(){
-//            console.log('starting add quiz');
+            console.log('starting add quiz');
 //            ptor.executeScript('window.scrollBy(0, -1000)', '');
             ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
-                buttons[buttons.length-2].click();
+                buttons[buttons.length-2].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
             ptor.findElements(protractor.By.className('trigger2')).then(function(quiz){
                 expect(quiz[quiz.length-1].getText()).toBe('New Quiz');
@@ -847,7 +900,9 @@ describe("Course Editor",function(){
                     field.sendKeys("My Quiz");
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[0].getText()).toBe('My Quiz');
                 details[0].click();
@@ -866,7 +921,9 @@ describe("Course Editor",function(){
                     field.click();
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[1].getText()).toBe('This Quiz is Required');
                 details[1].click();
@@ -885,7 +942,9 @@ describe("Course Editor",function(){
                     field.sendKeys("10")
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[2].getText()).toBe('10');
                 details[2].click();
@@ -904,7 +963,9 @@ describe("Course Editor",function(){
                     field.click();
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[3].getText()).toBe('Not Using Module\'s Appearance Date');
                 details[3].click();
@@ -924,7 +985,9 @@ describe("Course Editor",function(){
                     field.sendKeys(after_tomorrow_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[4].getText().then(function(text){
                     //
@@ -949,7 +1012,9 @@ describe("Course Editor",function(){
                     field.click();
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[5].getText()).toBe('Not Using Module\'s due Date');
                 details[5].click();
@@ -969,7 +1034,9 @@ describe("Course Editor",function(){
                     field.sendKeys(next_week_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[6].getText().then(function(text){
                     expect(text).toBe(next_week);
@@ -993,7 +1060,9 @@ describe("Course Editor",function(){
                     field.sendKeys("new instructions")
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[7].getText()).toBe('new instructions');
                 details[7].click();
@@ -1109,8 +1178,10 @@ describe("Course Editor",function(){
         ptor.sleep('1000');
         it('should save the questions', function(){
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-1].click();
-                ptor.sleep(1000);
+                buttons[buttons.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
+//                ptor.sleep(1000);
             });
         });
         //refresh and see if the data remains the same//
@@ -1160,7 +1231,7 @@ describe("Course Editor",function(){
                     });
                 });
             });
-//            console.log('answers should be deleted');
+            console.log('answers should be deleted');
         });
         it('should try to save the questions after deleting answers but it should fail', function(){
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
@@ -1184,8 +1255,10 @@ describe("Course Editor",function(){
         });
         it('should try to save the questions after deleting answers and it should succeed', function(){
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-1].click();
-                ptor.sleep(1000);
+                buttons[buttons.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
+//                ptor.sleep(1000);
             });
             var error = ptor.findElements(protractor.By.className('alert-error'));
             expect(error.length).toBe(undefined);
@@ -1232,8 +1305,10 @@ describe("Course Editor",function(){
                 })
             })
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-1].click();
-                ptor.sleep(1000);
+                buttons[buttons.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
+//                ptor.sleep(1000);
             });
         });
         it('should refresh the page', function(){
@@ -1248,7 +1323,9 @@ describe("Course Editor",function(){
     describe('Left Section', function(){
         it('should add a new survey', function(){
             ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
-                buttons[buttons.length-1].click();
+                buttons[buttons.length-1].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
             ptor.findElements(protractor.By.className('trigger2')).then(function(quiz){
                 expect(quiz[quiz.length-1].getText()).toBe('New Survey');
@@ -1274,7 +1351,9 @@ describe("Course Editor",function(){
                     field.sendKeys("My Survey");
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[0].getText()).toBe('My Survey');
                 details[0].click();
@@ -1293,7 +1372,9 @@ describe("Course Editor",function(){
                     field.click();
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[1].getText()).toBe('Not Using Module\'s Appearance Date');
                 details[1].click();
@@ -1313,7 +1394,9 @@ describe("Course Editor",function(){
                     field.sendKeys(after_tomorrow_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[2].getText().then(function(text){
                     expect(text).toBe(after_tomorrow);
@@ -1336,7 +1419,9 @@ describe("Course Editor",function(){
                     field.click();
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[3].getText()).toBe('Not Using Module\'s due Date');
                 details[3].click();
@@ -1356,7 +1441,9 @@ describe("Course Editor",function(){
                     field.sendKeys(next_week_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[4].getText().then(function(text){
                     expect(text).toBe(next_week);
@@ -1380,7 +1467,9 @@ describe("Course Editor",function(){
                     field.sendKeys("new instructions")
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 expect(details[5].getText()).toBe('new instructions');
                 details[5].click();
@@ -1471,8 +1560,10 @@ describe("Course Editor",function(){
         });
         it('should save the questions', function(){
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-1].click();
-                ptor.sleep(1000);
+                buttons[buttons.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
+//                ptor.sleep(1000);
             });
         });
         //refresh and see if the data remains the same//
@@ -1513,8 +1604,10 @@ describe("Course Editor",function(){
         });
         it('should try to save the questions after deleting answers', function(){
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-1].click();
-                ptor.sleep(1000);
+                buttons[buttons.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
+//                ptor.sleep(1000);
             });
             var error = ptor.findElements(protractor.By.className('alert-error'));
             expect(error.length).toBe(undefined);
@@ -1557,8 +1650,10 @@ describe("Course Editor",function(){
                 });
             });
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-1].click();
-                ptor.sleep(1000);
+                buttons[buttons.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
+//                ptor.sleep(1000);
             });
         });
         it('should refresh the page', function(){
@@ -1573,9 +1668,11 @@ describe("Course Editor",function(){
     describe('Left Section', function(){
         it('should allow sorting quizes, lectures, and surveys', function(){
             ptor.findElements(protractor.By.className('handle')).then(function(handles){
-                ptor.actions().dragAndDrop(handles[handles.length-1], handles[handles.length-2]).perform();
+                ptor.actions().dragAndDrop(handles[handles.length-1], handles[handles.length-2]).perform().then(function(){
+                    feedback(ptor, 'Sorted');
+                });
             });
-            ptor.sleep(1000);
+//            ptor.sleep(1000);
             ptor.findElements(protractor.By.className('trigger2')).then(function(triggers2){
                 expect(triggers2[triggers2.length-2].getText()).toBe('My Survey');
                 expect(triggers2[triggers2.length-1].getText()).toBe('My Quiz');
@@ -1586,7 +1683,9 @@ describe("Course Editor",function(){
                 modules[modules.length-1].click();
             });
             ptor.findElements(protractor.By.className('handle')).then(function(handles){
-                ptor.actions().dragAndDrop(handles[handles.length-4], handles[0]).perform();
+                ptor.actions().dragAndDrop(handles[handles.length-4], handles[0]).perform().then(function(){
+                    feedback(ptor, 'Sorted');
+                });
                 ptor.sleep(1000);
             });
             ptor.findElements(protractor.By.className('trigger')).then(function(triggers){
@@ -1604,7 +1703,9 @@ describe("Course Editor",function(){
 //                        console.log(delete_buttons.length)
                         for(var n=delete_buttons.length-1; n>=0; n--){
                             delete_buttons[n].click().then(function(){
-                                ptor.findElement(protractor.By.className('btn-danger')).click()
+                                ptor.findElement(protractor.By.className('btn-danger')).click().then(function(){
+                                    feedback(ptor, 'deleted');
+                                });
                             });
                         }
                     });
@@ -1616,7 +1717,9 @@ describe("Course Editor",function(){
             ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
                 delete_buttons[delete_buttons.length-1].click();
                 ptor.findElements(protractor.By.className('btn-danger')).then(function(danger_button){
-                    danger_button[danger_button.length-1].click();
+                    danger_button[danger_button.length-1].click().then(function(){
+                        feedback(ptor, 'deleted');
+                    });
                 });
             });
         });
@@ -1643,12 +1746,14 @@ function MCQTest(mode, ptor){
 
     }
     it('should insert an MCQ quiz in '+modeName+' mode', function(){
-//        console.log('starting MCQ '+modeName);
+        console.log('starting MCQ '+modeName);
         ptor.findElements(protractor.By.className('dropdown-toggle')).then(function(lists){
             lists[2].click();
         });
         ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-            options[3].click();
+            options[3].click().then(function(){
+                feedback(ptor, 'created');
+            });
         });
         ptor.findElement(protractor.By.className('ontop')).then(function(container){
             container.isDisplayed().then(function(disp){
@@ -1666,7 +1771,9 @@ function MCQTest(mode, ptor){
                 field.clear();
                 field.sendKeys('My Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
@@ -1735,11 +1842,14 @@ function MCQTest(mode, ptor){
             correct_check.click();
         });
         ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-            save_button.click();
+            save_button.click().then(function(){
+                feedback(ptor, 'saved');
+            });
         });
         var error = ptor.findElement(protractor.By.className('alert-error'));
         expect(error.getText()).toBe('');
     });
+//    waitForFeedback(ptor);
     it('should refresh the page', function(){
         ptor.navigate().refresh();
         ptor.sleep(7000);
@@ -1796,11 +1906,14 @@ function MCQTest(mode, ptor){
     });
     it('should save mcq quiz after deleting an answer', function(){
         ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-            save_button.click();
+            save_button.click().then(function(){
+                feedback(ptor, 'saved');
+            });
         });
         var error = ptor.findElement(protractor.By.className('alert-error'));
         expect(error.getText()).toBe('');
     });
+//    waitForFeedback(ptor);
     it('should refresh the page', function(){
         ptor.navigate().refresh();
         ptor.sleep(7000);
@@ -1840,7 +1953,9 @@ function MCQTest(mode, ptor){
             delete_buttons[delete_buttons.length-1].click().then(function(){
                 ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
 //                                buttons[buttons.length-1].click();
-                    button.click();
+                    button.click().then(function(){
+                        feedback(ptor, 'deleted');
+                    });
                 });
             });
         });
@@ -1850,7 +1965,7 @@ function MCQTest(mode, ptor){
     });
     if(mode == 1){
         it('should exit fullscreen mode', function(){
-//            console.log('exiting fullscreen mode');
+            console.log('exiting fullscreen mode');
             ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
                 links[1].click();
             });
@@ -1871,12 +1986,14 @@ function OCQTest(mode, ptor){
         });
     }
     it('should insert an OCQ quiz in '+modeName+' mode', function(){
-//        console.log('starting OCQ '+modeName);
+        console.log('starting OCQ '+modeName);
         ptor.findElements(protractor.By.className('dropdown-toggle')).then(function(lists){
             lists[2].click();
         });
         ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-            options[4].click();
+            options[4].click().then(function(){
+                feedback(ptor, 'created');
+            });
         });
         ptor.findElement(protractor.By.className('ontop')).then(function(container){
             container.isDisplayed().then(function(disp){
@@ -1894,7 +2011,9 @@ function OCQTest(mode, ptor){
                 field.clear();
                 field.sendKeys('My Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
@@ -1963,11 +2082,14 @@ function OCQTest(mode, ptor){
             correct_radio.click();
         });
         ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-            save_button.click();
+            save_button.click().then(function(){
+                feedback(ptor, 'saved');
+            });
         });
         var error = ptor.findElement(protractor.By.className('alert-error'));
         expect(error.getText()).toBe('');
     });
+//    waitForFeedback(ptor);
     it('should refresh the page', function(){
         ptor.navigate().refresh();
         ptor.sleep(7000);
@@ -1982,7 +2104,9 @@ function OCQTest(mode, ptor){
     it('should open the quiz after refresh', function(){
         ptor.executeScript('window.scrollBy(0, 1000)', '');
         ptor.findElement(protractor.By.tagName('editable_text')).then(function(editable){
-            editable.click();
+            editable.click().then(function(){
+                ptor.sleep(3000);
+            });
         });
     });
     it('should make sure the OCQ quiz data is the same after refresh', function(){
@@ -2022,11 +2146,14 @@ function OCQTest(mode, ptor){
     });
     it('should save OCQ quiz after deleting an answer', function(){
         ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-            save_button.click();
+            save_button.click().then(function(){
+                feedback(ptor, 'saved');
+            });
         });
         var error = ptor.findElement(protractor.By.className('alert-error'));
         expect(error.getText()).toBe('');
     });
+//    waitForFeedback(ptor);
     it('should refresh the page', function(){
         ptor.navigate().refresh();
         ptor.sleep(7000);
@@ -2041,7 +2168,9 @@ function OCQTest(mode, ptor){
     it('should open the quiz after refresh', function(){
         ptor.executeScript('window.scrollBy(0, 1000)', '');
         ptor.findElement(protractor.By.tagName('editable_text')).then(function(editable){
-            editable.click();
+            editable.click().then(function(){
+                ptor.sleep(3000);
+            });
         });
     });
     it('should make sure the OCQ quiz data is the same after deletion', function(){
@@ -2066,7 +2195,9 @@ function OCQTest(mode, ptor){
             delete_buttons[delete_buttons.length-1].click().then(function(){
                 ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
 //                                buttons[buttons.length-1].click();
-                    button.click();
+                    button.click().then(function(){
+                        feedback(ptor, 'deleted');
+                    });
                 });
             });
 
@@ -2077,7 +2208,7 @@ function OCQTest(mode, ptor){
     });
     if(mode == 1){
         it('should exit fullscreen mode', function(){
-//            console.log('exiting fullscreen mode');
+            console.log('exiting fullscreen mode');
             ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
                 links[links.length-1].click();
             });
@@ -2096,13 +2227,15 @@ function DRAGTest(mode, ptor){
             });
         });
     }
-    it('should insert an DRAG quiz in '+modeName+' mode', function(){
-//        console.log('starting DRAG '+modeName);
+    it('should insert a DRAG quiz in '+modeName+' mode', function(){
+        console.log('starting DRAG '+modeName);
         ptor.findElements(protractor.By.className('dropdown-toggle')).then(function(lists){
             lists[2].click();
         });
         ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-            options[5].click();
+            options[5].click().then(function(){
+                feedback(ptor, 'created');
+            });
         });
         ptor.findElement(protractor.By.className('ontop')).then(function(container){
             container.isDisplayed().then(function(disp){
@@ -2120,7 +2253,9 @@ function DRAGTest(mode, ptor){
                 field.clear();
                 field.sendKeys('My Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
@@ -2169,11 +2304,14 @@ function DRAGTest(mode, ptor){
     //expected to succeed
     it('should save the DRAG quiz', function(){
         ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-            save_button.click();
+            save_button.click().then(function(){
+                feedback(ptor, 'saved');
+            });
         });
         var error = ptor.findElement(protractor.By.className('alert-error'));
         expect(error.getText()).toBe('');
     });
+//    waitForFeedback(ptor);
     it('should refresh the page', function(){
         ptor.navigate().refresh();
         ptor.sleep(7000);
@@ -2188,7 +2326,9 @@ function DRAGTest(mode, ptor){
     it('should open the quiz after refresh', function(){
         ptor.executeScript('window.scrollBy(0, 1000)', '');
         ptor.findElement(protractor.By.tagName('editable_text')).then(function(editable){
-            editable.click();
+            editable.click().then(function(){
+                ptor.sleep(3000);
+            });
         });
     });
     it('should make sure the DRAG quiz data is the same after refresh', function(){
@@ -2215,11 +2355,14 @@ function DRAGTest(mode, ptor){
     });
     it('should save DRAG quiz after deleting an answer', function(){
         ptor.findElement(protractor.By.className('btn-primary')).then(function(save_button){
-            save_button.click();
+            save_button.click().then(function(){
+                feedback(ptor, 'saved');
+            });
         });
         var error = ptor.findElement(protractor.By.className('alert-error'));
         expect(error.getText()).toBe('');
     });
+//    waitForFeedback(ptor);
     it('should refresh the page', function(){
         ptor.navigate().refresh();
         ptor.sleep(7000);
@@ -2234,7 +2377,9 @@ function DRAGTest(mode, ptor){
     it('should open the quiz after refresh', function(){
         ptor.executeScript('window.scrollBy(0, 1000)', '');
         ptor.findElement(protractor.By.tagName('editable_text')).then(function(editable){
-            editable.click();
+            editable.click().then(function(){
+                ptor.sleep(3000);
+            });
         });
     });
     it('should make sure the DRAG quiz data is the same after deletion', function(){
@@ -2252,7 +2397,9 @@ function DRAGTest(mode, ptor){
             delete_buttons[delete_buttons.length-1].click().then(function(){
                 ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
 //                                buttons[buttons.length-1].click();
-                    button.click();
+                    button.click().then(function(){
+                        feedback(ptor, 'deleted');
+                    });
                 });
             });
         });
@@ -2262,7 +2409,7 @@ function DRAGTest(mode, ptor){
     });
     if(mode == 1){
         it('should exit fullscreen mode', function(){
-//            console.log('exiting fullscreen mode');
+            console.log('exiting fullscreen mode');
             ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
                 links[links.length-1].click();
             });
@@ -2278,13 +2425,10 @@ function DRAGVideo(ptor){
             buttons[1].click();
         });
         ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-            options[2].click();
+            options[2].click().then(function(){
+                feedback(ptor, 'created');
+            });
         });
-    });
-    it('should display error message', function(){
-        ptor.findElement(protractor.By.id('server_error'), function(error){
-            expect(error.getText()).toBe('Quiz was successfully created. -');
-        })
     });
     it('should display the transparent layer on top of the video - DRAG Video', function(){
         ptor.findElement(protractor.By.className('ontop')).then(function(container){
@@ -2311,7 +2455,9 @@ function DRAGVideo(ptor){
                 field.clear();
                 field.sendKeys('My Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
@@ -2357,7 +2503,9 @@ function DRAGVideo(ptor){
                 field.clear();
                 field.sendKeys('00:01:07');
                 ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm){
-                    confirm.click();
+                    confirm.click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
         });
@@ -2367,10 +2515,22 @@ function DRAGVideo(ptor){
     openMCQ(ptor);
     addDRAGAnswers(ptor);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
     doRefresh(ptor);
     doWait(ptor);
     openMCQ(ptor);
     it('should make sure that the answers locations were saved', function(){
+        ptor.wait(function(){
+            return ptor.findElements(protractor.By.className('dropped')).then(function(inputs){
+                if(inputs.length > 0){
+                    return true;
+                }
+                return false;
+            });
+        });
+        console.log('hena');
         ptor.findElements(protractor.By.className('dropped')).then(function(answers){
             var p=0;
             var j = 0;
@@ -2384,6 +2544,7 @@ function DRAGVideo(ptor){
         });
     });
     it('should make sure that the answers details were saved', function(){
+        console.log('hena2');
         ptor.findElements(protractor.By.className('area')).then(function(fields){
             expect(fields[0].getAttribute('value')).toBe('first answer');
             fields[0].click();
@@ -2426,17 +2587,28 @@ function DRAGVideo(ptor){
     });
     doRefresh(ptor);
     doWait(ptor);
-    scroll(ptor, '1000');
+//    scroll(ptor, '1000');
     openMCQ(ptor);
     editDRAGAnswers(ptor);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
     doExit(ptor);
     doRefresh(ptor);
     doWait(ptor);
-    scroll(ptor, '1000');
+//    scroll(ptor, '1000');
     openMCQ(ptor);
-    scroll(ptor, '-1000');
+//    scroll(ptor, '-1000');
     it('should make sure that the answers locations are the same', function(){
+        ptor.wait(function(){
+            return ptor.findElements(protractor.By.className('dropped')).then(function(inputs){
+                if(inputs.length > 0){
+                    return true;
+                }
+                return false;
+            });
+        })
         ptor.findElements(protractor.By.className('dropped')).then(function(answers){
             var p=0;
             var j = 0;
@@ -2500,10 +2672,21 @@ function DRAGVideo(ptor){
     openMCQ(ptor);
     doDeleteAnswer(ptor, 1);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    });
     doRefresh(ptor);
     doWait(ptor);
     openMCQ(ptor);
     it('should make sure that the correct answer was deleted', function(){
+        ptor.wait(function(){
+            return ptor.findElements(protractor.By.className('dropped')).then(function(inputs){
+                if(inputs.length > 0){
+                    return true;
+                }
+                return false;
+            });
+        })
         ptor.findElements(protractor.By.className('area')).then(function(answers){
             expect(answers.length).toBe(2);
             expect(answers[0].getAttribute('value')).toBe('2 answer');
@@ -2529,7 +2712,7 @@ function DRAGVideo(ptor){
             expect(quiz_name.getText()).toBe('My Quiz');
         });
     });
-    it('should allow changing MCQ quiz name', function(){
+    it('should allow changing DRAG quiz name', function(){
         ptor.findElement(protractor.By.id('editing')).then(function(editing){
             expect(editing.getText()).toContain('My Quiz');
         });
@@ -2541,7 +2724,9 @@ function DRAGVideo(ptor){
                 field.clear();
                 field.sendKeys('The Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('The Quiz');
@@ -2556,7 +2741,7 @@ function DRAGVideo(ptor){
             expect(editables[0].getText()).toBe('The Quiz');
         });
     });
-    it('should allow changing quiz time - MCQ Video', function(){
+    it('should allow changing quiz time - DRAG Video', function(){
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(time){
             ptor.actions().doubleClick(time[1]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field){
@@ -2587,7 +2772,9 @@ function DRAGVideo(ptor){
                 field.clear();
                 field.sendKeys('00:01:10');
                 ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm){
-                    confirm.click();
+                    confirm.click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(time[1].getText()).toBe('00:01:10');
@@ -2621,6 +2808,9 @@ function DRAGVideo(ptor){
         });
     });
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    });
     doRefresh(ptor);
     doWait(ptor);
     goFullscreen(ptor);
@@ -2665,13 +2855,10 @@ function DRAGVideo(ptor){
             buttons[1].click();
         });
         ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-            options[2].click();
+            options[2].click().then(function(){
+                feedback(ptor, 'created');
+            });
         });
-    });
-    it('should display error message', function(){
-        ptor.findElement(protractor.By.id('server_error'), function(error){
-            expect(error.getText()).toBe('Quiz was successfully created. -');
-        })
     });
     it('should display the transparent layer on top of the video - DRAG Video', function(){
         ptor.findElement(protractor.By.className('ontop')).then(function(container){
@@ -2698,7 +2885,9 @@ function DRAGVideo(ptor){
                 field.clear();
                 field.sendKeys('My Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
@@ -2745,7 +2934,9 @@ function DRAGVideo(ptor){
                 field.clear();
                 field.sendKeys('00:01:07');
                 ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm){
-                    confirm.click();
+                    confirm.click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
         });
@@ -2755,6 +2946,9 @@ function DRAGVideo(ptor){
     openMCQ(ptor);
     addDRAGAnswers(ptor);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
     doRefresh(ptor);
     doWait(ptor);
     goFullscreen(ptor);
@@ -2820,6 +3014,9 @@ function DRAGVideo(ptor){
     openMCQ(ptor);
     editDRAGAnswers(ptor);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
     doExit(ptor);
     doRefresh(ptor);
     doWait(ptor);
@@ -2887,6 +3084,9 @@ function DRAGVideo(ptor){
     openMCQ(ptor);
     doDeleteAnswer(ptor, 1);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
     doRefresh(ptor);
     doWait(ptor);
     goFullscreen(ptor);
@@ -2929,7 +3129,9 @@ function DRAGVideo(ptor){
                 field.clear();
                 field.sendKeys('The Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('The Quiz');
@@ -2975,7 +3177,9 @@ function DRAGVideo(ptor){
                 field.clear();
                 field.sendKeys('00:01:10');
                 ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm){
-                    confirm.click();
+                    confirm.click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(time[1].getText()).toBe('00:01:10');
@@ -3009,6 +3213,9 @@ function DRAGVideo(ptor){
         });
     });
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    });
     doRefresh(ptor);
     doWait(ptor);
     openMCQ(ptor);
@@ -3133,7 +3340,7 @@ function addDRAGAnswers(ptor){
                     loc2x = pnode.x+5;
                     loc2y = pnode.y;
                 });
-                ptor.actions().dragAndDrop({x:loc2x, y:loc2y}, {x: 200, y:165}).perform();
+                ptor.actions().dragAndDrop({x:loc2x, y:loc2y}, {x: 200, y:185}).perform();
                 answers[answers.length-1].getLocation().then(function(location){
                     locationx.splice(locationx.length, 0, location.x);
                     locationy.splice(locationy.length, 0, location.y);
@@ -3152,7 +3359,7 @@ function addDRAGAnswers(ptor){
                     loc3x = pnode.x+5;
                     loc3y = pnode.y;
                 });
-                ptor.actions().dragAndDrop({x:loc3x, y:loc3y}, {x: 200, y:215}).perform();
+                ptor.actions().dragAndDrop({x:loc3x, y:loc3y}, {x: 200, y:255}).perform();
                 answers[answers.length-1].getLocation().then(function(location){
                     locationx.splice(locationx.length, 0, location.x);
                     locationy.splice(locationy.length, 0, location.y);
@@ -3212,12 +3419,16 @@ function MCQOCQVideo(ptor, type){
         });
         if(type == 0){
             ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-                options[0].click();
+                options[0].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
         }
         else if(type==1){
             ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-                options[1].click();
+                options[1].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
         }
 
@@ -3247,7 +3458,9 @@ function MCQOCQVideo(ptor, type){
                 field.clear();
                 field.sendKeys('My Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
@@ -3293,7 +3506,9 @@ function MCQOCQVideo(ptor, type){
                 field.clear();
                 field.sendKeys('00:01:07');
                 ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm){
-                    confirm.click();
+                    confirm.click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
         });
@@ -3305,6 +3520,9 @@ function MCQOCQVideo(ptor, type){
     //add and then save
     addMCQAnswers(ptor);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    });
     openMCQ(ptor);
 
     it('should make sure that the answers details were saved', function(){
@@ -3352,6 +3570,10 @@ function MCQOCQVideo(ptor, type){
     openMCQ(ptor);
     manipulateAnswers(ptor, false, 2);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
+//    waitForFeedback(ptor);
     doExit(ptor);
     doRefresh(ptor);
     doWait(ptor);
@@ -3430,6 +3652,10 @@ function MCQOCQVideo(ptor, type){
         });
     });
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
+//    waitForFeedback(ptor);
     doRefresh(ptor);
     doWait(ptor);
     openMCQ(ptor);
@@ -3489,7 +3715,9 @@ function MCQOCQVideo(ptor, type){
                 field.clear();
                 field.sendKeys('The Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('The Quiz');
@@ -3535,7 +3763,9 @@ function MCQOCQVideo(ptor, type){
                 field.clear();
                 field.sendKeys('00:01:10');
                 ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm){
-                    confirm.click();
+                    confirm.click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(time[1].getText()).toBe('00:01:10');
@@ -3603,6 +3833,10 @@ function MCQOCQVideo(ptor, type){
         });
     });
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    });
+//    waitForFeedback(ptor);
     doExit(ptor);
     doRefresh(ptor);
     doWait(ptor);
@@ -3642,12 +3876,16 @@ function MCQOCQVideo(ptor, type){
         });
         if(type == 0){
             ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-                options[0].click();
+                options[0].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
         }
         else if(type==1){
             ptor.findElements(protractor.By.className('insertQuiz')).then(function(options){
-                options[1].click();
+                options[1].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
         }
     });
@@ -3676,7 +3914,9 @@ function MCQOCQVideo(ptor, type){
                 field.clear();
                 field.sendKeys('My Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
@@ -3722,7 +3962,9 @@ function MCQOCQVideo(ptor, type){
                 field.clear();
                 field.sendKeys('00:01:07');
                 ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm){
-                    confirm.click();
+                    confirm.click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
         });
@@ -3734,6 +3976,10 @@ function MCQOCQVideo(ptor, type){
     //add and then save
     addMCQAnswers(ptor);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
+//    waitForFeedback(ptor);
     openMCQ(ptor);
 
     it('should make sure that the answers details were saved', function(){
@@ -3782,6 +4028,10 @@ function MCQOCQVideo(ptor, type){
     openMCQ(ptor);
     manipulateAnswers(ptor, false, 2);
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
+//    waitForFeedback(ptor);
     doExit(ptor);
     doRefresh(ptor);
     doWait(ptor);
@@ -3856,6 +4106,10 @@ function MCQOCQVideo(ptor, type){
         });
     });
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
+//    waitForFeedback(ptor);
     doRefresh(ptor);
     doWait(ptor);
     goFullscreen(ptor);
@@ -3915,7 +4169,9 @@ function MCQOCQVideo(ptor, type){
                 field.clear();
                 field.sendKeys('The Quiz');
                 ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                    buttons[1].click();
+                    buttons[1].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(editables[0].getText()).toBe('The Quiz');
@@ -3961,7 +4217,9 @@ function MCQOCQVideo(ptor, type){
                 field.clear();
                 field.sendKeys('00:01:10');
                 ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm){
-                    confirm.click();
+                    confirm.click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
             });
             expect(time[1].getText()).toBe('00:01:10');
@@ -4029,6 +4287,10 @@ function MCQOCQVideo(ptor, type){
         });
     });
     doSave(ptor);
+    it('should display server\'s feedback', function(){
+        feedback(ptor, 'saved');
+    })
+//    waitForFeedback(ptor);
     doExit(ptor);
     doRefresh(ptor);
     doWait(ptor);
@@ -4116,7 +4378,14 @@ function verifyPositions(ptor, type){
         className = "dropped";
     }
     it('should make sure that the positions of answers are still the same', function(){
-
+        ptor.wait(function(){
+            return ptor.findElements(protractor.By.className(className)).then(function(inputs){
+                if(inputs.length > 0){
+                    return true;
+                }
+                return false;
+            });
+        })
         ptor.findElements(protractor.By.className(className)).then(function(answers){
             var j = 0;
             for(var i= 0; i< answers.length; i++){
@@ -4227,7 +4496,9 @@ function addMCQAnswers(ptor){
 function openMCQ(ptor){
     it('should reopen the quiz', function(){
         ptor.findElement(protractor.By.tagName('editable_text')).then(function(quiz_name){
-            quiz_name.click();
+            quiz_name.click().then(function(){
+                ptor.sleep(5000);
+            });
         });
     });
 }
@@ -4254,7 +4525,9 @@ function doDelete(ptor){
             delete_buttons[delete_buttons.length-1].click().then(function(){
                 ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
 //                                buttons[buttons.length-1].click();
-                    button.click();
+                    button.click().then(function(){
+                        feedback(ptor, 'deleted');
+                    });
                 });
             });
         });
@@ -4265,6 +4538,7 @@ function doDelete(ptor){
 function doRefresh(ptor){
     it('should refresh the page', function(){
         ptor.navigate().refresh();
+
     });
 }
 
@@ -4282,14 +4556,16 @@ function doChangeAspectRatio(ptor, which){
         ptor.findElement(protractor.By.tagName('details-select')).then(function(aspect){
             aspect.click();
         });
-        ptor.findElement(protractor.By.tagName('select')).then(function(dropDown){
-            dropDown.isDisplayed().then(function(disp){
-                expect(disp).toBe(true);
-            });
-            dropDown.click();
-        });
+//        ptor.findElement(protractor.By.tagName('select')).then(function(dropDown){
+//            dropDown.isDisplayed().then(function(disp){
+//                expect(disp).toBe(true);
+//            });
+//            dropDown.click();
+//        });
         ptor.findElements(protractor.By.tagName('option')).then(function(options){
-            options[which].click();
+            options[which].click().then(function(){
+                feedback(ptor, 'updated');
+            });
         });
     });
 }
@@ -4335,7 +4611,7 @@ function goFullscreen(ptor){
 
 function exitFullscreen(ptor){
     it('should exit fullscreen mode', function(){
-//        console.log('exiting fullscreen mode');
+        console.log('exiting fullscreen mode');
         ptor.findElements(protractor.By.className('fullscreenLink')).then(function(links){
             links[1].click();
         });
@@ -4527,8 +4803,48 @@ function manipulateAnswers(ptor, moveAnswers, input){
 
 }
 
+function waitForFeedback(ptor){
+    it('should wait for server feedback', function(){
+        ptor.wait(function(){
+            return ptor.findElement(protractor.By.id('error_container')).then(function(message){
+                return message.getText().then(function(text){
+                    console.log(text);
+                    if(text.length > 2){
+
+                        return true;
+                    }
+                    else{
+                        return false;
+                    }
+
+                });
+            });
+        });
+    });
+}
+
 function scroll(ptor, value){
     it('should scroll by '+value, function(){
         ptor.executeScript('window.scrollBy(0, '+value+')', '');
     })
+}
+
+function feedback(ptor, message){
+    ptor.wait(function(){
+        return ptor.findElement(protractor.By.id('error_container')).then(function(message){
+            return message.getText().then(function(text){
+                console.log(text);
+                if(text.length > 2){
+
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            });
+        });
+    });
+    ptor.findElement(protractor.By.id('error_container')).then(function(error){
+        expect(error.getText()).toContain(message);
+    });
 }

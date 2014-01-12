@@ -1,8 +1,8 @@
 var util = require('util');
 
-var frontend = 'http://localhost:9000/';
-var backend = 'http://localhost:3000/';
-var auth = 'http://localhost:4000/';
+//var frontend = 'http://localhost:9000/';
+//var backend = 'http://localhost:3000/';
+//var auth = 'http://localhost:4000/';
 
 var current_date = new Date(), enroll_key='', course_id='', module_id='', lecture_id='', quiz_id='';
 var month = new Array();
@@ -103,7 +103,7 @@ function waitForElementNotVisible(element,ptor){
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-        driver.get(frontend+"/#/login");
+        driver.get(ptor.params.frontend+"#/login");
 //        driver.get("http://angular-edu.herokuapp.com/#/login");
         ptor.findElement(protractor.By.className('btn')).then(function(login_button){
             login_button.click();
@@ -119,13 +119,33 @@ function login(ptor, driver, email, password, name, findByName){
     });
 }
 
-function logout(driver){
+function logout(ptor, driver){
     it('should logout from scalear Auth', function(){
-        driver.get(auth).then(function(){
+        driver.get(ptor.params.auth).then(function(){
             driver.findElements(protractor.By.tagName('a')).then(function(logout){
                 logout[4].click();
             });
         });
+    });
+}
+
+function feedback(ptor, message){
+    ptor.wait(function(){
+        return ptor.findElement(protractor.By.id('error_container')).then(function(message){
+            return message.getText().then(function(text){
+                console.log(text);
+                if(text.length > 2){
+
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            });
+        });
+    });
+    ptor.findElement(protractor.By.id('error_container')).then(function(error){
+        expect(error.getText()).toContain(message);
     });
 }
 
@@ -161,7 +181,7 @@ describe("Calendar",function(){
     };
 
     describe('Teacher', function(){
-        login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
+        login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
         it('should create a new course', function(){
             ptor = protractor.getInstance();
             ptor.get('/#/courses/new');
@@ -174,13 +194,15 @@ describe("Calendar",function(){
                     fields[0].sendKeys('new description');
                     fields[1].sendKeys('new prerequisites');
                 });
-                ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
-                    dropdown[0].click();
+//                ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
+//                    dropdown[0].click();
                     ptor.findElements(protractor.By.tagName('option')).then(function(options){
                         options[1].click();
                     });
+//                });
+                fields[fields.length-1].click().then(function(){
+                    feedback(ptor, 'created');
                 });
-                fields[fields.length-1].click();
             });
         });
         it('should go to course information page', function(){
@@ -202,13 +224,16 @@ describe("Calendar",function(){
         });
  ///////////////////////////////////////////////       
         it('should go to course editor', function(){
-            ptor.findElement(protractor.By.id('course_editor_link')).then(function(link){
-                link.click();
-            });
+//            ptor.findElement(protractor.By.id('course_editor_link')).then(function(link){
+//                link.click();
+//            });
+            ptor.get('/#/courses/'+course_id+'/course_editor');
         });
         it('should add a new module and open it', function(){
             ptor.findElement(protractor.By.className('adding_module')).then(function(button){
-                button.click();
+                button.click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
             ptor.findElement(protractor.By.className('trigger')).click();
         });
@@ -225,7 +250,9 @@ describe("Calendar",function(){
                     field.clear();
                     field.sendKeys('1');
                 });
-                ptor.findElement(protractor.By.className('btn-primary')).click();
+                ptor.findElement(protractor.By.className('btn-primary')).click().then(function(){
+                    feedback(ptor, 'updated');
+                });
             });
         });
         it("should edit module's due date", function(){
@@ -236,16 +263,20 @@ describe("Calendar",function(){
                     field.sendKeys(next_day_week_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[2].getText().then(function(text){
                     expect(text).toBe(next_day_week);
                 });
             });
         });
-        it('should add a new lectures', function(){
+        it('should add a new lecture', function(){
             ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
-                adding[adding.length-3].click();
+                adding[adding.length-3].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
         });
         it('should modify details', function(){
@@ -257,7 +288,9 @@ describe("Calendar",function(){
                     nameTextBox.clear();
                     nameTextBox.sendKeys('My Lecture 1');
                     ptor.findElements(protractor.By.tagName('button')).then(function(button){
-                        button[1].click();
+                        button[1].click().then(function(){
+                            feedback(ptor, 'updated');
+                        });
                     });
                 });
                 expect(name.getText()).toBe('My Lecture 1');
@@ -297,9 +330,10 @@ describe("Calendar",function(){
 ////////////////////////////////////////////////////////////////
         it('should add a second module and open it', function(){
             ptor.findElement(protractor.By.className('adding_module')).then(function(button){
-                button.click();
+                button.click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
-            ptor.sleep(1000)
             ptor.findElements(protractor.By.className('trigger')).then(function(modules){
                 modules[modules.length-1].click();
             })
@@ -317,7 +351,9 @@ describe("Calendar",function(){
                     field.clear();
                     field.sendKeys('2');
                 });
-                ptor.findElement(protractor.By.className('btn-primary')).click();
+                ptor.findElement(protractor.By.className('btn-primary')).click().then(function(){
+                    feedback(ptor, 'updated');
+                });
             });
         });
 
@@ -329,7 +365,9 @@ describe("Calendar",function(){
                     field.sendKeys(next_month_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[2].getText().then(function(text){
                     expect(text).toBe(next_month);
@@ -337,11 +375,13 @@ describe("Calendar",function(){
             });
         });
 
-        it('should add a new lectures', function(){
+        it('should add a new lecture', function(){
             ptor.findElements(protractor.By.className('btn-mini')).then(function(adding){
                 console.log("adding.length")
                 console.log(adding.length)
-                adding[adding.length-3].click();
+                adding[adding.length-3].click().then(function(){
+                    feedback(ptor, 'created')
+                });
             });
         });
         it('should modify details', function(){
@@ -355,7 +395,9 @@ describe("Calendar",function(){
                     nameTextBox.clear();
                     nameTextBox.sendKeys('My Lecture 2');
                     ptor.findElements(protractor.By.tagName('button')).then(function(button){
-                        button[1].click();
+                        button[1].click().then(function(){
+                            feedback(ptor, 'updated');
+                        });
                     });
                 });
                 expect(name.getText()).toBe('My Lecture 2');
@@ -393,7 +435,9 @@ describe("Calendar",function(){
         it('should add a new quiz', function(){
             console.log('starting add quiz');
             ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
-                buttons[buttons.length-2].click();
+                buttons[buttons.length-2].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
             ptor.findElements(protractor.By.className('trigger2')).then(function(quiz){
                 expect(quiz[quiz.length-1].getText()).toBe('New Quiz');
@@ -457,8 +501,9 @@ describe("Calendar",function(){
         });
         it('should save the questions', function(){
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-1].click();
-                ptor.sleep(1000);
+                buttons[buttons.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
             });
         });
 
@@ -469,7 +514,9 @@ describe("Calendar",function(){
         ////////////////////////////////////////////////////////////////
         it('should add a third module and open it', function(){
             ptor.findElement(protractor.By.className('adding_module')).then(function(button){
-                button.click();
+                button.click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
 
             ptor.findElements(protractor.By.className('trigger')).then(function(modules){
@@ -489,7 +536,9 @@ describe("Calendar",function(){
                     field.clear();
                     field.sendKeys('3');
                 });
-                ptor.findElement(protractor.By.className('btn-primary')).click();
+                ptor.findElement(protractor.By.className('btn-primary')).click().then(function(){
+                    feedback(ptor, 'updated');
+                });
             });
         });
 
@@ -501,7 +550,9 @@ describe("Calendar",function(){
                     field.sendKeys(last_month_day_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[1].getText().then(function(text){
                     expect(text).toBe(last_month_day);
@@ -517,7 +568,9 @@ describe("Calendar",function(){
                     field.sendKeys(last_month_keys);
                 });
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons){
-                    buttons[buttons.length-2].click();
+                    buttons[buttons.length-2].click().then(function(){
+                        feedback(ptor, 'updated');
+                    });
                 });
                 details[2].getText().then(function(text){
                     expect(text).toBe(last_month);
@@ -527,7 +580,9 @@ describe("Calendar",function(){
         it('should add a new quiz', function(){
             console.log('starting add quiz');
             ptor.findElements(protractor.By.className('btn-mini')).then(function(buttons){
-                buttons[buttons.length-2].click();
+                buttons[buttons.length-2].click().then(function(){
+                    feedback(ptor, 'created');
+                });
             });
             ptor.findElements(protractor.By.className('trigger2')).then(function(quiz){
                 expect(quiz[quiz.length-1].getText()).toBe('New Quiz');
@@ -586,11 +641,12 @@ describe("Calendar",function(){
         });
         it('should save the questions', function(){
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-1].click();
-                ptor.sleep(1000);
+                buttons[buttons.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
             });
         });
-        logout(driver);
+        logout(ptor, driver);
 
     });
 //////////////////////////////////////////////////////////////////////////////////////////
@@ -608,15 +664,18 @@ describe("Calendar",function(){
                 key_field.sendKeys(enroll_key);
             });
             ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
-                proceed.click();
+                proceed.click().then(function(){
+                    ptor.sleep(5000);
+                });
             });
         });
-        it('should click on the course name', function(){
-            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
-                courses[courses.length-1].click();
-            });
-        });
+//        it('should click on the course name', function(){
+//            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
+//                courses[courses.length-1].click();
+//            });
+//        });
         it('should be in Calendar page', function(){
+            ptor.get('/#/courses/'+course_id+'/student/events');
             ptor.findElement(protractor.By.tagName('h2')).
                 then(function(promise){
                     expect(promise.getText()).toEqual(month[current_date.getMonth()]+" "+current_date.getFullYear())
@@ -652,9 +711,10 @@ describe("Calendar",function(){
             ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
                 inputs[0].click();
                 inputs[3].click();
-                inputs[inputs.length-1].click();
-                ptor.sleep(1000)
-            });                      
+                inputs[inputs.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
+            });
         });
 
         it ('should check if module color has changed', function() {
@@ -735,7 +795,9 @@ describe("Calendar",function(){
 
              ptor.findElement(protractor.By.tagName('input')).click();
              ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                buttons[1].click();
+                buttons[1].click().then(function(){
+                    ptor.sleep(10000);
+                });
             });
                       
         });
@@ -813,7 +875,9 @@ describe("Calendar",function(){
 
              ptor.findElement(protractor.By.tagName('input')).click();
              ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                buttons[1].click();
+                buttons[1].click().then(function(){
+                    ptor.sleep(10000);
+                })
             });                      
         });
 
@@ -838,9 +902,10 @@ describe("Calendar",function(){
                 console.log(inputs.length)
                 inputs[0].click();
                 inputs[3].click();
-                inputs[inputs.length-1].click();
-                ptor.sleep(1000)
-            });                      
+                inputs[inputs.length-1].click().then(function(){
+                    feedback(ptor, 'saved');
+                });
+            });
         });
 
         it ('should check if module color has changed', function() {
@@ -855,11 +920,11 @@ describe("Calendar",function(){
                 });
         });
 
-        logout(driver);
+        logout(ptor, driver);
      })
 /////////////////////////////////////////////////////////
     describe('Revert Back', function(){
-         login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
+         login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
          it('should open the course',function(){
             ptor.get('/#/courses/'+course_id+'/course_editor');
          })
@@ -871,7 +936,9 @@ describe("Calendar",function(){
                         console.log(delete_buttons.length)
                         for(var n=delete_buttons.length-1; n>=0; n--){
                             delete_buttons[n].click().then(function(){
-                                ptor.findElement(protractor.By.className('btn-danger')).click()
+                                ptor.findElement(protractor.By.className('btn-danger')).click().then(function(){
+                                    feedback(ptor, 'deleted');
+                                })
                             });
                         }
                     });
@@ -883,7 +950,9 @@ describe("Calendar",function(){
             ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
                 delete_buttons[delete_buttons.length-1].click();
                 ptor.findElements(protractor.By.className('btn-danger')).then(function(danger_button){
-                    danger_button[danger_button.length-1].click();
+                    danger_button[danger_button.length-1].click().then(function(){
+                        feedback(ptor, 'deleted');
+                    });
                 })
             });
         });

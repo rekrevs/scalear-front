@@ -83,6 +83,7 @@ var openModal=function(view, type){
     }
 
     $scope.exitBtn = function () {
+      $rootScope.changeError = false;
       angular.element("body").css("overflow","auto");
       $scope.modalInstance.dismiss();
       $scope.unregister_back_event();

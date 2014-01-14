@@ -540,7 +540,6 @@ module.exports = function (grunt) {
       scalear_api:{
         host: 'http://localhost:3000', 
         redirection_url: 'http://localhost:9000/#/',
-        auth: "http://localhost:4000"
       },
       
     }
@@ -553,7 +552,6 @@ module.exports = function (grunt) {
       scalear_api:{
         host: 'http://scalear-staging.herokuapp.com',//'http://angular-learning.herokuapp.com',
         redirection_url: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/#/',
-        auth: "http://scalear-auth-staging.herokuapp.com"
       } 
     }
   }],
@@ -565,7 +563,6 @@ module.exports = function (grunt) {
          scalear_api:{
              host: 'http://api.scalable-learning.com',//'http://angular-learning.herokuapp.com',
              redirection_url: 'http://scalable-learning.com/#/',
-             auth: "http://auth.scalable-learning.com"
          }
      }
  }]

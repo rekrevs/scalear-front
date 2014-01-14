@@ -1,7 +1,7 @@
 <table>
 	<tr>
-		<td>
-			<img ng-src="{{done && 'images/check7.png' || 'images/empty7.png'}}" />
+		<td style="width:15px;">
+			<img class="finished_item" ng-if="done" src="images/check7.png" />
 		</td>
 		<td>
 			<a ng-click="showItem()" class="trigger2">

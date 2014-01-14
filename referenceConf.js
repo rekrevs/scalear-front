@@ -44,15 +44,15 @@ exports.config = {
   //
   // Spec patterns are relative to the location of this config.
   specs: [
-//    'test/e2e/spec/course_information_spec.js'
-//    'test/e2e/spec/announcements_spec.js'
-//    'test/e2e/spec/calendar_teacher_spec.js'
-//    'test/e2e/spec/calendar_student_spec.js'
-//    'test/e2e/spec/calendar_student_2_spec.js'
+//    'test/e2e/spec/course_information_spec.js',
+//    'test/e2e/spec/announcements_spec.js',
+//    'test/e2e/spec/calendar_teacher_spec.js',
+//    'test/e2e/spec/calendar_student_spec.js',
+//    'test/e2e/spec/calendar_student_2_spec.js',
 //    'test/e2e/spec/progress_spec.js'
-    'test/e2e/spec/course_editor_spec.js'
+//    'test/e2e/spec/course_editor_spec.js'
 //    'test/e2e/spec/course_pages_spec.js'
-//    'test/e2e/spec/student_lectures_spec.js'
+    'test/e2e/spec/student_lectures_spec.js'
 //    'test/e2e/spec/links_spec.js'
 
   ],
@@ -71,8 +71,8 @@ exports.config = {
   //
   // A base URL for your application under test. Calls to protractor.get()
   // with relative paths will be prepended with this.
-  baseUrl: 'http://localhost:9000/',
-//  baseUrl: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/',
+//  baseUrl: 'http://localhost:9000/',
+  baseUrl: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/',
 
   // Selector for the element housing the angular app - this defaults to
   // body, but is necessary if ng-app is on a descendant of <body>
@@ -95,11 +95,14 @@ exports.config = {
   // This can be changed via the command line as:
   //   --params.login.user 'Joe'
   params: {
-      frontend: 'http://localhost:9000/',
-      backend: 'http://localhost:3000/',
-      auth: 'http://localhost:4000/'
-//      frontend: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/',
-//      auth: 'http://scalear-auth-staging.herokuapp.com/'
+//      frontend: 'http://localhost:9000/',
+//      backend: 'http://localhost:3000/',
+//      auth: 'http://localhost:4000/'
+      frontend: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/',
+      auth: 'http://scalear-auth-staging.herokuapp.com/',
+      width: 1920,
+      height: 1080
+
   },
 
   // ----- Options to be passed to minijasminenode -----

@@ -1,5 +1,5 @@
 var current_date = new Date();
-var no_students, no_modules, percentage, dummy, enroll_key='', course_id='', module_id='';
+var no_students, no_modules, percentage, dummy, enroll_key='ae83257a73', course_id='976', module_id='1262', count = 0;
 //var frontend = 'http://localhost:9000/';
 //var backend = 'http://localhost:3000/';
 //var auth = 'http://localhost:4000/';
@@ -32,27 +32,27 @@ var tomorrow = formatDate(getNextDay(new Date()), 1);
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-        driver.get(ptor.params.frontend+"#/login");
-//        driver.get("http://angular-edu.herokuapp.com/#/login");
-        ptor.findElement(protractor.By.className('btn')).then(function(login_button){
-            login_button.click();
-        });
+        driver.get(ptor.params.auth+'users/sign_in');
         findByName("user[email]").sendKeys(email);
         findByName("user[password]").sendKeys(password);
         findByName("commit").click();
-        ptor.findElements(protractor.By.tagName('a')).then(function(tags){
-            tags[3].getText().then(function(value){
-                expect(value.toLowerCase()).toContain(name.toLowerCase());
-            })
+        driver.get(ptor.params.frontend).then(function(){
+            ptor.findElements(protractor.By.tagName('a')).then(function(tags){
+                tags[3].getText().then(function(value){
+                    expect(value.toLowerCase()).toContain(name.toLowerCase());
+                });
+            });
         });
     });
 }
 
 function logout(ptor, driver){
-    it('should logout from scalear Auth', function(){
-        driver.get(ptor.params.auth).then(function(){
-            driver.findElements(protractor.By.tagName('a')).then(function(logout){
-                logout[4].click();
+    it('should logout', function(){
+        ptor.findElement(protractor.By.linkText('Logout')).then(function(link){
+            link.click().then(function(){
+                driver.findElement(protractor.By.id('flash_notice')).then(function(notice){
+                    expect(notice.getText()).toContain('Signed out successfully.');
+                });
             });
         });
     });
@@ -77,6 +77,9 @@ describe('Teacher', function(){
         it('should create a new course', function(){
             ptor = protractor.getInstance();
             ptor.get('/#/courses/new');
+//            browser.driver.manage().window().maximize();
+            browser.driver.manage().window().setSize(ptor.params.width, ptor.params.height);
+            browser.driver.manage().window().setPosition(0, 0);
             ptor.findElements(protractor.By.tagName('input')).then(function(fields){
                 fields[0].sendKeys('TEST-101');
                 fields[1].sendKeys('Z Testing Course');
@@ -779,8 +782,18 @@ describe('Student', function(){
     it('should click on the second lecture and then click on the new quiz', function(){
         ptor.executeScript('window.scrollBy(0, -1000)', '');
         ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
-            lectures[5].click();
-            ptor.sleep(10000);
+            lectures[5].click().then(function(){
+                ptor.wait(function(){
+                    return ptor.isElementPresent(protractor.By.tagName('youtube')).then(function(present){
+                        return present;
+                    });
+//                    return ptor.findElement(protractor.By.tagName('youtube')).then(function(youtube){
+//                        return youtube.isDisplayed().then(function(disp){
+//                            return disp;
+//                        });
+//                    });
+                });
+            });
             lectures[6].click();
             ptor.sleep(10000);
         });
@@ -917,8 +930,19 @@ describe('Student', function(){
     it('should open second lecture then open second quiz', function(){
         ptor.executeScript('window.scrollBy(0, -1000)', '');
         ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
-            lectures[5].click();
-            ptor.sleep(7000);
+            lectures[5].click().then(function(){
+//                ptor.sleep(8000);
+                ptor.wait(function(){
+                    return ptor.isElementPresent(protractor.By.tagName('youtube')).then(function(present){
+                        return present;
+                    });
+//                    return ptor.findElement(protractor.By.tagName('youtube')).then(function(youtube){
+//                        return youtube.isDisplayed().then(function(disp){
+//                            return disp;
+//                        });
+//                    });
+                });
+            });
             lectures[6].click();
         });
     });
@@ -939,8 +963,18 @@ describe('Student', function(){
     });
     it('should open the third lecture and then open New Quiz', function(){
         ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
-            lectures[8].click();
-            ptor.sleep(5000);
+            lectures[8].click().then(function(){
+                ptor.wait(function(){
+                    return ptor.isElementPresent(protractor.By.tagName('youtube')).then(function(present){
+                        return present;
+                    });
+//                    return ptor.findElement(protractor.By.tagName('youtube')).then(function(youtube){
+//                        return youtube.isDisplayed().then(function(disp){
+//                            return disp;
+//                        });
+//                    });
+                });
+            });
             lectures[9].click();
             ptor.sleep(5000);
         });
@@ -2892,9 +2926,8 @@ function feedback(ptor, message){
     ptor.wait(function(){
         return ptor.findElement(protractor.By.id('error_container')).then(function(message){
             return message.getText().then(function(text){
-                console.log(text);
                 if(text.length > 2){
-
+                    console.log(text);
                     return true;
                 }
                 else{

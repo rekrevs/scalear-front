@@ -46,35 +46,37 @@ var tomorrow = formatDate(getNextDay(new Date()), 1);
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-        driver.get(ptor.params.frontend+"#/login");
-//        driver.get("http://angular-edu.herokuapp.com/#/login");
-        ptor.findElement(protractor.By.className('btn')).then(function(login_button){
-            login_button.click();
-        });
+        driver.get(ptor.params.auth+'users/sign_in');
         findByName("user[email]").sendKeys(email);
         findByName("user[password]").sendKeys(password);
         findByName("commit").click();
-        ptor.findElements(protractor.By.tagName('a')).then(function(tags){
-            tags[3].getText().then(function(value){
-                expect(value.toLowerCase()).toContain(name.toLowerCase());
-            })
+        driver.get(ptor.params.frontend).then(function(){
+            ptor.findElements(protractor.By.tagName('a')).then(function(tags){
+                tags[3].getText().then(function(value){
+                    expect(value.toLowerCase()).toContain(name.toLowerCase());
+                });
+            });
         });
     });
 }
 
 function logout(ptor, driver){
-    it('should logout from scalear Auth', function(){
-        driver.get(ptor.params.auth).then(function(){
-            driver.findElements(protractor.By.tagName('a')).then(function(logout){
-                logout[4].click();
+    it('should logout', function(){
+        ptor.findElement(protractor.By.linkText('Logout')).then(function(link){
+            link.click().then(function(){
+                driver.findElement(protractor.By.id('flash_notice')).then(function(notice){
+                    expect(notice.getText()).toContain('Signed out successfully.');
+                });
             });
         });
     });
 }
 
 //describe('Teacher', function(){
-//    login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
+//    login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
 //    it('should create a new course', function(){
+//        browser.driver.manage().window().setSize(ptor.params.width, ptor.params.height);
+//        browser.driver.manage().window().setPosition(0, 0);
 //        ptor = protractor.getInstance();
 //        ptor.get('/#/courses/new');
 //        ptor.findElements(protractor.By.tagName('input')).then(function(fields){
@@ -93,12 +95,12 @@ function logout(ptor, driver){
 //                fields[0].sendKeys('new description');
 //                fields[1].sendKeys('new prerequisites');
 //            });
-//            ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
-//                dropdown[0].click();
+////            ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
+////                dropdown[0].click();
 //                ptor.findElements(protractor.By.tagName('option')).then(function(options){
 //                    options[1].click();
 //                });
-//            });
+////            });
 //            fields[fields.length-1].click();
 //        });
 //    });
@@ -1048,377 +1050,393 @@ function logout(ptor, driver){
 //});
 
 //---------------------------//student//---------------------------//
-describe('Student', function(){
-    login(ptor, driver, 'em_menshawi@hotmail.com', 'password', 'mahmoud', findByName);
-//    signUp(ptor, driver, 'anystudent100', 'anystudent100@email.com', 'password', 1);
-    it('should join the created course', function(){
-        ptor.findElement(protractor.By.id('join_course')).then(function(link){
-            link.click().then(function(){
-                ptor.findElement(protractor.By.name('key')).then(function(field){
-                    field.sendKeys(enroll_key).then(function(){
-                        ptor.findElement(protractor.By.className('btn-primary')).then(function(button){
-                            button.click();
-                        });
-                    });
-                });
-            });
-        });
-    });
-    it('should navigate to course lectures', function(){
-        ptor.get('/#/courses/'+course_id+'/courseware');
-    });
-    it('should open the first module and then open the first lecture', function(){
-        ptor.findElements(protractor.By.className('trigger')).then(function(modules){
-            modules[0].click().then(function(){
-                ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
-                    lectures[0].click();
-                });
-            });
-        });
-    });
-//-------------------------------------//---------------------------////---------------------------////---------------------------//
-    it('should wait for the first in lecture quiz to appear', function(){
-        ptor.wait(function(){
-            return ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
-                if(inputs.length == 6){
-                    return true;
-                }
-                return false;
-            });
-        });
-    });
-    it('should solve the MCQ quiz', function(){
-        ptor.findElements(protractor.By.tagName('input')).then(function(choices){
-            choices[0].click();
-            choices[1].click();
-            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                buttons[buttons.length-1].click().then(function(){
-                    ptor.wait(function(){
-                        return ptor.findElements(protractor.By.className('well')).then(function(inputs){
-                            if(inputs.length == 2){
-                                return true;
-                            }
-                            return false;
-                        });
-                    });
-                    ptor.findElements(protractor.By.className('well')).then(function(notifications){
-                        expect(notifications[1].getText()).toContain('Correct');
-                    });
-                });
-            });
-        });
-    });
-    it('should hover on the correct answers to see the explanations', function(){
-        ptor.findElements(protractor.By.tagName('input')).then(function(answers){
-            ptor.actions().mouseMove(answers[0]).perform().then(function(){
-                ptor.findElement(protractor.By.className('popover')).then(function(popover){
-                    expect(popover.getText()).toContain('Correct');
-                    expect(popover.getText()).toContain('first explanation');
-                });
-            });
-            ptor.actions().mouseMove(answers[1]).perform().then(function(){
-                ptor.findElement(protractor.By.className('popover')).then(function(popover){
-                    expect(popover.getText()).toContain('Correct');
-                    expect(popover.getText()).toContain('second explanation');
-                });
-            });
-        });
-    });
-    it('should be able to see a \'check\' sign next to the mcq quiz name', function(){
-        ptor.findElements(protractor.By.repeater('quiz in lecture.online_quizzes')).then(function(rows){
-            rows[0].findElement(protractor.By.tagName('td')).then(function(data){
-                data.findElement(protractor.By.tagName('img')).then(function(img){
-                    expect(img.getAttribute('src')).toContain('check7.png');
-                });
-            });
-        });
-    });
-    it('should play the video and wait for the second in lecture quiz', function(){
-        driver.switchTo().frame(0);
-        driver.findElement(protractor.By.className('ytp-button-play')).then(function(play_button){
-            play_button.click();
-        });
-        driver.switchTo().defaultContent();
-        ptor.wait(function(){
-            return ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
-                if(inputs.length == 6){
-                    return true;
-                }
-                return false;
-            });
-        });
-    });
-    it('should solve the second OCQ quiz', function(){
-        ptor.findElements(protractor.By.tagName('input')).then(function(choices){
-            choices[0].click();
-            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-                buttons[buttons.length-1].click().then(function(){
-                    ptor.wait(function(){
-                        return ptor.findElements(protractor.By.className('well')).then(function(inputs){
-                            if(inputs.length == 2){
-                                return true;
-                            }
-                            return false;
-                        });
-                    });
-                    ptor.findElements(protractor.By.className('well')).then(function(notifications){
-                        expect(notifications[1].getText()).toContain('Correct');
-                    });
-                });
-            });
-        });
-    });
-    it('should hover on the correct answers to see the explanations', function(){
-        ptor.findElements(protractor.By.tagName('input')).then(function(answers){
-            ptor.actions().mouseMove(answers[0]).perform().then(function(){
-                ptor.findElement(protractor.By.className('popover')).then(function(popover){
-                    expect(popover.getText()).toContain('Correct');
-                    expect(popover.getText()).toContain('first explanation');
-                });
-            });
-        });
-    });
-    it('should be able to see a \'check\' sign next to the ocq quiz name', function(){
-        ptor.findElements(protractor.By.repeater('quiz in lecture.online_quizzes')).then(function(rows){
-            rows[0].findElement(protractor.By.tagName('td')).then(function(data){
-                data.findElement(protractor.By.tagName('img')).then(function(img){
-                    expect(img.getAttribute('src')).toContain('check7.png');
-                });
-            });
-        });
-    });
-//    drag
-    it('should play the video and wait for the third in-lecture quiz', function(){
-        driver.switchTo().frame(0);
-        driver.findElement(protractor.By.className('ytp-button-play')).then(function(play_button){
-            play_button.click();
-        });
-        driver.switchTo().defaultContent();
-        ptor.wait(function(){
-            return ptor.findElements(protractor.By.tagName('student-drag')).then(function(drags){
-                if(drags.length == 3){
-                    return true;
-                }
-                return false;
-            });
-        });
-    });
-    it('should solve the DRAG quiz', function(){
-        ptor.findElements(protractor.By.className('drop-div')).then(function(dests){
-            anchorsx = dests;
-            for(var i=0; i < dests.length; i++){
-                var xplus, yplus;
-                dests[i].getAttribute('width').then(function(width){
-                    xplus = (width/2);
-                });
-                dests[i].getAttribute('height').then(function(height){
-                    yplus = (height/2);
-                });
-
-                dests[i].getLocation().then(function(location){
-                    locationx[i] = location.x + xplus;
-                    locationy[i] = location.y + yplus;
-                });
-            };
-            console.log(locationx);
-            console.log(locationy);
-        });
-        ptor.findElements(protractor.By.binding('{{data.answer}}')).then(function(answers){
-//            for(var i=0; i < answers.length; i++){
-//                answers[i].getLocation().then(function(location){
-//                    answers[i].getAttribute('width').then(function(width){
-//                        locationx[i] = location.x + (width/2);
-//                    });
-//                    answers[i].getAttribute('height').then(function(height){
-//                        locationy[i] = location.y + (height/2);
+//describe('Student', function(){
+//    login(ptor, driver, 'anystudent@email.com', 'password', 'anystudent', findByName);
+////    signUp(ptor, driver, 'anystudent100', 'anystudent100@email.com', 'password', 1);
+//    it('should join the created course', function(){
+//        ptor.findElement(protractor.By.id('join_course')).then(function(link){
+//            link.click().then(function(){
+//                ptor.findElement(protractor.By.name('key')).then(function(field){
+//                    field.sendKeys(enroll_key).then(function(){
+//                        ptor.findElement(protractor.By.className('btn-primary')).then(function(button){
+//                            button.click();
+//                        });
 //                    });
 //                });
-//            };
-//            ptor.actions().dragAndDrop(answers[2], {x: locationx[0], y: locationy[0]}).perform();
-//            ptor.actions().dragAndDrop(answers[1], {x: locationx[1], y: locationy[1]}).perform();
-//            ptor.actions().dragAndDrop(answers[0], {x: locationx[2], y: locationy[2]}).perform();
-
-            answers[2].getLocation().then(function(location){
-                ptor.actions().dragAndDrop({x:location.x+20, y:location.y+200}, {x:location.x+20, y:location.y+20});
-            });
-
-//            browser.actions().dragAndDrop(anchorsx[2], answers[2]).perform();
-//            browser.actions().dragAndDrop(anchorsx[1], answers[1]).perform();
-//            browser.actions().dragAndDrop(anchorsx[0], answers[0]).perform();
-            ptor.sleep(20000);
-        });
-//        var locationsx = new Array();
-//        var locationsy = new Array();
-//        ptor.findElements(protractor.By.className('drop-div')).then(function(dests){
-//            dests[0].getLocation().then(function(location){
-//                locationsx[0] = location.x+30;
-//                locationsy[0] = location.y+20;
 //            });
-//            dests[1].getLocation().then(function(location){
-//                locationsx[1] = location.x+30;
-//                locationsy[1] = location.y+20;
-//            });
-//            dests[2].getLocation().then(function(location){
-//                locationsx[2] = location.x+30;
-//                locationsy[2] = location.y+20;
-//            });
-//            console.log(locationsx);
-//            console.log(locationsy);
 //        });
-//        ptor.findElements(protractor.By.className('dragged')).then(function(answers){
-//            answers.reverse();
-//            answers.forEach(function(answer, i){
-//                answer.getText().then(function(text){
-//                    console.log(text);
-//                    answer.getLocation().then(function(location){
-//                        console.log((location.x+20) +' , '+(location.y+20));
-//                        if(text == 'first answer'){
-////                            ptor.findElements(protractor.By.className('drop-div')).then(function(locations){
-////                                ptor.actions().dragAndDrop({x:locationsx[0], y:locationsy[0]}, {x:(location.x+20), y:(location.y+20)}).perform();
-//                                ptor.actions().dragAndDrop({x:(location.x+100), y:(location.y+100)}, {x:location.x+20, y:location.y+20}).perform();
-//                                ptor.sleep(10000);
-////                            })
-//                        }
-//                        else if(text == 'second answer'){
-////                            ptor.findElements(protractor.By.className('drop-div')).then(function(locations){
-////                                ptor.actions().dragAndDrop({x:locationsx[1], y:locationsy[1]}, {x:(location.x+20), y:(location.y+20)}).perform();
-//                                ptor.actions().dragAndDrop({x:(location.x+100), y:(location.y+100)}, {x:location.x+20, y:location.y+20}).perform();
-//                                ptor.sleep(10000);
-////                            });
-//                        }
-//                        else if(text == 'third answer'){
-////                            ptor.findElements(protractor.By.className('drop-div')).then(function(locations){
-////                                ptor.actions().dragAndDrop({x:locationsx[2], y:locationsy[2]}, {x:(location.x+20), y:(location.y+20)}).perform();
-//                                ptor.actions().dragAndDrop({x:(location.x+100), y:(location.y+100)}, {x:location.x+20, y:location.y+20}).perform();
-//                                ptor.sleep(10000);
-////                            });
-//                        }
-//                    })
-//                })
-//            })
-//        })
-    });
-    it('should open the quiz in first module', function(){
-        ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
-            lectures[1].click();
-        });
+//    });
+//    it('should navigate to course lectures', function(){
+//        ptor.get('/#/courses/'+course_id+'/courseware');
+//    });
+//    it('should open the first module and then open the first lecture', function(){
+//        ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+//            modules[0].click().then(function(){
+//                ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+//                    lectures[0].click();
+//                });
+//            });
+//        });
+//    });
+////-------------------------------------//---------------------------////---------------------------////---------------------------//
+//    it('should wait for the first in lecture quiz to appear', function(){
 //        ptor.wait(function(){
-//            return ptor.findElement(protractor.By.tagName('h4')).then(function(head){
-//                head.getText().then(function(text){
-//                    if(text == "New Quiz"){
-//                        return true;
-//                    }
-//                    return false;
+//            return ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+//                if(inputs.length == 6){
+//                    return true;
+//                }
+//                return false;
+//            });
+//        });
+//    });
+//    it('should solve the MCQ quiz', function(){
+//        ptor.findElements(protractor.By.tagName('input')).then(function(choices){
+//            choices[0].click();
+//            choices[1].click();
+//            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+//                buttons[buttons.length-1].click().then(function(){
+//                    ptor.wait(function(){
+//                        return ptor.findElements(protractor.By.className('well')).then(function(inputs){
+//                            if(inputs.length == 2){
+//                                return true;
+//                            }
+//                            return false;
+//                        });
+//                    });
+//                    ptor.findElements(protractor.By.className('well')).then(function(notifications){
+//                        expect(notifications[1].getText()).toContain('Correct');
+//                    });
 //                });
 //            });
 //        });
-    });
-    it('should display the answers available in the normal quiz in the first module', function(){
-        ptor.findElements(protractor.By.tagName('th')).then(function(heads){
-            expect(heads[0].getText()).toBe('1');
-            expect(heads[1].getText()).toBe('DRAG Question');
-            expect(heads[3].getText()).toBe('2');
-            expect(heads[4].getText()).toBe('MCQ Question');
-            expect(heads[6].getText()).toBe('3');
-            expect(heads[7].getText()).toBe('OCQ Question');
-        });
-        ptor.findElement(protractor.By.id('middle')).then(function(middle){
-            middle.findElements(protractor.By.tagName('td')).then(function(answers){
-                expect(answers[5].getText()).toBe('first answer');
-                expect(answers[9].getText()).toBe('second answer');
-                expect(answers[13].getText()).toBe('third answer');
+//    });
+//    it('should hover on the correct answers to see the explanations', function(){
+//        ptor.findElements(protractor.By.tagName('input')).then(function(answers){
+//            ptor.actions().mouseMove(answers[0]).perform().then(function(){
+//                ptor.findElement(protractor.By.className('popover')).then(function(popover){
+//                    expect(popover.getText()).toContain('Correct');
+//                    expect(popover.getText()).toContain('first explanation');
+//                });
+//            });
+//            ptor.actions().mouseMove(answers[1]).perform().then(function(){
+//                ptor.findElement(protractor.By.className('popover')).then(function(popover){
+//                    expect(popover.getText()).toContain('Correct');
+//                    expect(popover.getText()).toContain('second explanation');
+//                });
+//            });
+//        });
+//    });
+//    it('should be able to see a \'check\' sign next to the mcq quiz name', function(){
+//        ptor.findElements(protractor.By.repeater('quiz in lecture.online_quizzes')).then(function(rows){
+//            rows[0].findElement(protractor.By.tagName('td')).then(function(data){
+//                data.findElement(protractor.By.tagName('img')).then(function(img){
+//                    expect(img.getAttribute('src')).toContain('check7.png');
+//                });
+//            });
+//        });
+//    });
+//    it('should play the video and wait for the second in lecture quiz', function(){
+//        driver.switchTo().frame(0);
+//        driver.findElement(protractor.By.className('ytp-button-play')).then(function(play_button){
+//            play_button.click();
+//        });
+//        driver.switchTo().defaultContent();
+//        ptor.wait(function(){
+//            return ptor.findElements(protractor.By.tagName('input')).then(function(inputs){
+//                if(inputs.length == 6){
+//                    return true;
+//                }
+//                return false;
+//            });
+//        });
+//    });
+//    it('should solve the second OCQ quiz', function(){
+//        ptor.findElements(protractor.By.tagName('input')).then(function(choices){
+//            choices[0].click();
+//            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+//                buttons[buttons.length-1].click().then(function(){
+//                    ptor.wait(function(){
+//                        return ptor.findElements(protractor.By.className('well')).then(function(inputs){
+//                            if(inputs.length == 2){
+//                                return true;
+//                            }
+//                            return false;
+//                        });
+//                    });
+//                    ptor.findElements(protractor.By.className('well')).then(function(notifications){
+//                        expect(notifications[1].getText()).toContain('Correct');
+//                    });
+//                });
+//            });
+//        });
+//    });
+//    it('should hover on the correct answers to see the explanations', function(){
+//        ptor.findElements(protractor.By.tagName('input')).then(function(answers){
+//            ptor.actions().mouseMove(answers[0]).perform().then(function(){
+//                ptor.findElement(protractor.By.className('popover')).then(function(popover){
+//                    expect(popover.getText()).toContain('Correct');
+//                    expect(popover.getText()).toContain('first explanation');
+//                });
+//            });
+//        });
+//    });
+//    it('should be able to see a \'check\' sign next to the ocq quiz name', function(){
+//        ptor.findElements(protractor.By.repeater('quiz in lecture.online_quizzes')).then(function(rows){
+//            rows[0].findElement(protractor.By.tagName('td')).then(function(data){
+//                data.findElement(protractor.By.tagName('img')).then(function(img){
+//                    expect(img.getAttribute('src')).toContain('check7.png');
+//                });
+//            });
+//        });
+//    });
+////    drag
+//    it('should play the video and wait for the third in-lecture quiz', function(){
+//        driver.switchTo().frame(0);
+//        driver.findElement(protractor.By.className('ytp-button-play')).then(function(play_button){
+//            play_button.click();
+//        });
+//        driver.switchTo().defaultContent();
+//        ptor.wait(function(){
+//            return ptor.findElements(protractor.By.tagName('student-drag')).then(function(drags){
+//                if(drags.length == 3){
+//                    return true;
+//                }
+//                return false;
+//            });
+//        });
+//    });
+////    it('should solve the DRAG quiz', function(){
+////        ptor.findElements(protractor.By.className('drop-div')).then(function(dests){
+////            anchorsx = dests;
+////            for(var i=0; i < dests.length; i++){
+////                var xplus, yplus;
+////                dests[i].getAttribute('width').then(function(width){
+////                    xplus = (width/2);
+////                });
+////                dests[i].getAttribute('height').then(function(height){
+////                    yplus = (height/2);
+////                });
+////
+////                dests[i].getLocation().then(function(location){
+////                    locationx[i] = location.x + xplus;
+////                    locationy[i] = location.y + yplus;
+////                });
+////            };
+////            console.log(locationx);
+////            console.log(locationy);
+////        });
+////        ptor.findElements(protractor.By.binding('{{data.answer}}')).then(function(answers){
+//////            for(var i=0; i < answers.length; i++){
+//////                answers[i].getLocation().then(function(location){
+//////                    answers[i].getAttribute('width').then(function(width){
+//////                        locationx[i] = location.x + (width/2);
+//////                    });
+//////                    answers[i].getAttribute('height').then(function(height){
+//////                        locationy[i] = location.y + (height/2);
+//////                    });
+//////                });
+//////            };
+//////            ptor.actions().dragAndDrop(answers[2], {x: locationx[0], y: locationy[0]}).perform();
+//////            ptor.actions().dragAndDrop(answers[1], {x: locationx[1], y: locationy[1]}).perform();
+//////            ptor.actions().dragAndDrop(answers[0], {x: locationx[2], y: locationy[2]}).perform();
+////
+////            answers[2].getLocation().then(function(location){
+////                ptor.actions().dragAndDrop({x:location.x+20, y:location.y+200}, {x:location.x+20, y:location.y+20});
+////            });
+////
+//////            browser.actions().dragAndDrop(anchorsx[2], answers[2]).perform();
+//////            browser.actions().dragAndDrop(anchorsx[1], answers[1]).perform();
+//////            browser.actions().dragAndDrop(anchorsx[0], answers[0]).perform();
+////            ptor.sleep(20000);
+////        });
+//////        var locationsx = new Array();
+//////        var locationsy = new Array();
+//////        ptor.findElements(protractor.By.className('drop-div')).then(function(dests){
+//////            dests[0].getLocation().then(function(location){
+//////                locationsx[0] = location.x+30;
+//////                locationsy[0] = location.y+20;
+//////            });
+//////            dests[1].getLocation().then(function(location){
+//////                locationsx[1] = location.x+30;
+//////                locationsy[1] = location.y+20;
+//////            });
+//////            dests[2].getLocation().then(function(location){
+//////                locationsx[2] = location.x+30;
+//////                locationsy[2] = location.y+20;
+//////            });
+//////            console.log(locationsx);
+//////            console.log(locationsy);
+//////        });
+//////        ptor.findElements(protractor.By.className('dragged')).then(function(answers){
+//////            answers.reverse();
+//////            answers.forEach(function(answer, i){
+//////                answer.getText().then(function(text){
+//////                    console.log(text);
+//////                    answer.getLocation().then(function(location){
+//////                        console.log((location.x+20) +' , '+(location.y+20));
+//////                        if(text == 'first answer'){
+////////                            ptor.findElements(protractor.By.className('drop-div')).then(function(locations){
+////////                                ptor.actions().dragAndDrop({x:locationsx[0], y:locationsy[0]}, {x:(location.x+20), y:(location.y+20)}).perform();
+//////                                ptor.actions().dragAndDrop({x:(location.x+100), y:(location.y+100)}, {x:location.x+20, y:location.y+20}).perform();
+//////                                ptor.sleep(10000);
+////////                            })
+//////                        }
+//////                        else if(text == 'second answer'){
+////////                            ptor.findElements(protractor.By.className('drop-div')).then(function(locations){
+////////                                ptor.actions().dragAndDrop({x:locationsx[1], y:locationsy[1]}, {x:(location.x+20), y:(location.y+20)}).perform();
+//////                                ptor.actions().dragAndDrop({x:(location.x+100), y:(location.y+100)}, {x:location.x+20, y:location.y+20}).perform();
+//////                                ptor.sleep(10000);
+////////                            });
+//////                        }
+//////                        else if(text == 'third answer'){
+////////                            ptor.findElements(protractor.By.className('drop-div')).then(function(locations){
+////////                                ptor.actions().dragAndDrop({x:locationsx[2], y:locationsy[2]}, {x:(location.x+20), y:(location.y+20)}).perform();
+//////                                ptor.actions().dragAndDrop({x:(location.x+100), y:(location.y+100)}, {x:location.x+20, y:location.y+20}).perform();
+//////                                ptor.sleep(10000);
+////////                            });
+//////                        }
+//////                    })
+//////                })
+//////            })
+//////        })
+////    });
+//    it('should open the quiz in first module', function(){
+//        ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+//            lectures[1].click();
+//        });
+////        ptor.wait(function(){
+////            return ptor.findElement(protractor.By.tagName('h4')).then(function(head){
+////                head.getText().then(function(text){
+////                    if(text == "New Quiz"){
+////                        return true;
+////                    }
+////                    return false;
+////                });
+////            });
+////        });
+//    });
+//    it('should display the answers available in the normal quiz in the first module', function(){
+//        ptor.findElements(protractor.By.tagName('th')).then(function(heads){
+//            expect(heads[0].getText()).toBe('1');
+//            expect(heads[1].getText()).toBe('DRAG Question');
+//            expect(heads[3].getText()).toBe('2');
+//            expect(heads[4].getText()).toBe('MCQ Question');
+//            expect(heads[6].getText()).toBe('3');
+//            expect(heads[7].getText()).toBe('OCQ Question');
+//        });
+//        ptor.findElement(protractor.By.id('middle')).then(function(middle){
+//            middle.findElements(protractor.By.tagName('td')).then(function(answers){
+//                expect(answers[5].getText()).toBe('first answer');
+//                expect(answers[9].getText()).toBe('second answer');
+//                expect(answers[13].getText()).toBe('third answer');
+//
+//                expect(answers[17].getText()).toBe('first answer');
+//                expect(answers[21].getText()).toBe('second answer');
+//                expect(answers[25].getText()).toBe('third answer');
+//            });
+//        });
+//        ptor.findElements(protractor.By.repeater('answer in studentAnswers[question.id]')).then(function(drags){
+//            console.log(drags.length);
+//        });
+//    });
+//    it('should solve the normal quiz in the first module and save the answers', function(){
+//        ptor.findElements(protractor.By.className('handle')).then(function(drags){
+//
+//            ptor.actions().dragAndDrop(drags[2], drags[0]).perform();
+//            ptor.actions().dragAndDrop(drags[1], drags[0]).perform();
+//        });
+//
+//        var text;
+//        ptor.findElement(protractor.By.id('middle')).then(function(middle){
+//            middle.findElements(protractor.By.tagName('td')).then(function(data){
+//                data[1].getText().then(function(value){
+//                    text = value;
+//                    text.split('"').forEach(function(item, i){
+//                        choices[i] = item;
+//                    });
+//                });
+//            });
+//        });
+//        ptor.findElements(protractor.By.tagName('input')).then(function(checks){
+//            checks[0].click();
+//            checks[1].click();
+//            checks[3].click();
+//        });
+//        ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
+//            buttons[0].click().then(function(){
+////                feedback(ptor, 'Quiz was successfully saved', 1);
+//            });
+//        });
+//        doRefresh(ptor);
+//        ptor.findElements(protractor.By.tagName('input')).then(function(checks){
+//            expect(checks[0].getAttribute('checked')).toBe('true');
+//            expect(checks[1].getAttribute('checked')).toBe('true');
+//            expect(checks[2].getAttribute('checked')).toBe(null);
+//        });
+//        var counter = 0;
+//        ptor.findElement(protractor.By.id('middle')).then(function(middle){
+//            middle.findElements(protractor.By.tagName('td')).then(function(data){
+//                data[1].getText().then(function(value){
+//                    text = value;
+//                    text.split('"').forEach(function(item, i){
+//                        if(choices[i] == item){
+//                            counter++;
+//                        }
+//                    });
+//                    expect(choices.length).toBe(counter);
+//                });
+//            });
+//        });
+//    });
+//    it('should submit the answers', function(){
+//        ptor.executeScript('window.scrollBy(0, 2000)', '');
+//        ptor.findElement(protractor.By.xpath('//*[@id="middle"]/center/form/input[2]')).then(function(button){
+//            button.click().then(function(){
+//                feedback(ptor, 'saved');
+//            });
+//        });
+//    });
+//    it('should see that all the attempts have been used', function(){
+//        ptor.findElement(protractor.By.className('alert')).then(function(alert){
+//            expect(alert.getText()).toContain('You\'ve submitted the Quiz and have no more attempts left');
+//        });
+//    });
+//    it('should display which questions were solved correctly and which were not', function(){
+//        ptor.findElement(protractor.By.id('middle')).then(function(middle){
+//            middle.findElements(protractor.By.tagName('th')).then(function(results){
+//                results[2].getText().then(function(value){
+//                    if(value == 'Incorrect'){
+//                        expect(results[2].getText()).toContain('Incorrect');
+//                    }
+//                    else if(value == 'Correct'){
+//                        expect(results[2].getText()).toContain('Correct');
+//                    }
+//                    else{
+//                        expect(results[2].getText()).toContain('Correct or Incorrect');
+//                    }
+//                });
+//                expect(results[5].getText()).toBe('Correct');
+//                expect(results[8].getText()).toBe('Correct');
+//            });
+//        });
+//    });
+//    it('should open the second module', function(){
+//        ptor.findElements(protractor.By.className('trigger')).then(function(modules){
+//            modules[1].click();
+//        });
+//    });
+//    it('should open the lecture under the second module', function(){
+//        ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
+//            lectures[2].click();
+//        });
+//    })
+////    cancelAccount(ptor, driver);
+//});
 
-                expect(answers[17].getText()).toBe('first answer');
-                expect(answers[21].getText()).toBe('second answer');
-                expect(answers[25].getText()).toBe('third answer');
-            });
-        });
-        ptor.findElements(protractor.By.repeater('answer in studentAnswers[question.id]')).then(function(drags){
-            console.log(drags.length);
-        });
-    });
-    it('should solve the normal quiz in the first module and save the answers', function(){
-        ptor.findElements(protractor.By.className('handle')).then(function(drags){
 
-            ptor.actions().dragAndDrop(drags[2], drags[0]).perform();
-            ptor.actions().dragAndDrop(drags[1], drags[0]).perform();
-        });
-
-        var text;
-        ptor.findElement(protractor.By.id('middle')).then(function(middle){
-            middle.findElements(protractor.By.tagName('td')).then(function(data){
-                data[1].getText().then(function(value){
-                    text = value;
-                    text.split('"').forEach(function(item, i){
-                        choices[i] = item;
-                    });
-                });
-            });
-        });
-        ptor.findElements(protractor.By.tagName('input')).then(function(checks){
-            checks[0].click();
-            checks[1].click();
-            checks[3].click();
-        });
-        ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
-            buttons[0].click().then(function(){
-//                feedback(ptor, 'Quiz was successfully saved', 1);
-            });
-        });
-        doRefresh(ptor);
-        ptor.findElements(protractor.By.tagName('input')).then(function(checks){
-            expect(checks[0].getAttribute('checked')).toBe('true');
-            expect(checks[1].getAttribute('checked')).toBe('true');
-            expect(checks[2].getAttribute('checked')).toBe(null);
-        });
-        var counter = 0;
-        ptor.findElement(protractor.By.id('middle')).then(function(middle){
-            middle.findElements(protractor.By.tagName('td')).then(function(data){
-                data[1].getText().then(function(value){
-                    text = value;
-                    text.split('"').forEach(function(item, i){
-                        if(choices[i] == item){
-                            counter++;
-                        }
-                    });
-                    expect(choices.length).toBe(counter);
-                });
-            });
-        });
-    });
-    it('should submit the answers', function(){
-        ptor.executeScript('window.scrollBy(0, 2000)', '');
-        ptor.findElement(protractor.By.xpath('//*[@id="middle"]/center/form/input[2]')).then(function(button){
-            button.click();
-        });
-    });
-    it('should see that all the attempts have been used', function(){
-        ptor.findElement(protractor.By.className('alert')).then(function(alert){
-            expect(alert.getText()).toContain('You\'ve submitted the Quiz and have no more attempts left');
-        });
-    });
-    it('should display which questions were solved correctly and which were not', function(){
-        ptor.findElement(protractor.By.id('middle')).then(function(middle){
-            middle.findElements(protractor.By.tagName('th')).then(function(results){
-                results[2].getText().then(function(value){
-                    if(value == 'Incorrect'){
-                        expect(results[2].getText()).toContain('Incorrect');
-                    }
-                    else if(value == 'Correct'){
-                        expect(results[2].getText()).toContain('Correct');
-                    }
-                    else{
-                        expect(results[2].getText()).toContain('Correct or Incorrect');
-                    }
-                });
-                expect(results[5].getText()).toBe('Correct');
-                expect(results[8].getText()).toBe('Correct');
-            });
-        });
-    });
-//    cancelAccount(ptor, driver);
+describe('Student', function(){
+        signUp(ptor, driver, 'menshawi', 'menshawi@guerrillamail.com', 'password', 1);
 });
-
 
 //functions definitions
 function doRefresh(ptor){
@@ -1459,7 +1477,45 @@ function signUp(ptor, driver, name, email, password, role){
                 }
                 fields[8].click().then(function(){
                     driver.findElement(protractor.By.id('flash_notice')).then(function(confirmation){
-                        expect(confirmation.getText()).toContain('Welcome! You have signed up successfully.');
+                        expect(confirmation.getText()).toContain('A message with a confirmation link has been sent');
+                    });
+                    driver.get('https://www.guerrillamail.com/inbox').then(function(){
+                        driver.findElement(protractor.By.id('inbox-id')).then(function(button){
+                            button.click().then(function(){
+                                driver.findElement(protractor.By.tagName('input')).then(function(field){
+                                    field.sendKeys('menshawi').then(function(){
+                                        driver.findElement(protractor.By.className('save')).then(function(button){
+                                            button.click().then(function(){
+                                                driver.findElements(protractor.By.tagName('tr')).then(function(emails){
+                                                    emails[0].click().then(function(){
+                                                        driver.sleep(10000).then(function(){
+                                                            driver.findElement(protractor.By.linkText('Confirm my account')).then(function(link){
+                                                                link.getAttribute('href').then(function(confirm_link){
+                                                                    var final_link = ptor.params.auth+confirm_link.split('.com/')[1];
+                                                                    driver.get(final_link).then(function(){
+                                                                        driver.findElement(protractor.By.id('flash_notice')).then(function(flash){
+                                                                            expect(flash.getText()).toContain('Your account was successfully confirmed. You are now signed in.');
+                                                                        }).then(function(){
+                                                                                driver.findElement(protractor.By.className('btn-primary')).then(function(start){
+                                                                                    start.click().then(function(){
+                                                                                        ptor.getCurrentUrl().then(function(url){
+                                                                                            expect(url).toContain('student_courses');
+                                                                                        })
+                                                                                    });
+                                                                                });
+                                                                            });
+                                                                    });
+                                                                });
+                                                            });
+                                                        });
+                                                    });
+                                                });
+                                            });
+                                        });
+                                    });
+                                });
+                            });
+                        });
                     });
                     driver.get(ptor.params.frontend+'#/login').then(function(){
                         ptor.findElement(protractor.By.className('btn')).then(function(login_button){

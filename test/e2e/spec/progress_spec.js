@@ -1,5 +1,5 @@
 var current_date = new Date();
-var no_students, no_modules, percentage, dummy, enroll_key='ae83257a73', course_id='976', module_id='1262', count = 0;
+var no_students, no_modules, percentage, dummy, enroll_key='', course_id='', module_id='', count = 0;
 //var frontend = 'http://localhost:9000/';
 //var backend = 'http://localhost:3000/';
 //var auth = 'http://localhost:4000/';
@@ -173,6 +173,13 @@ describe('Teacher', function(){
                 })
 //                feedback(ptor, 'Lecture was successfully updated.');
             });
+            ptor.wait(function(){
+                return ptor.findElement(protractor.By.className('overlay')).then(function(overlay){
+                    return overlay.isDisplayed().then(function(disp){
+                        return !disp;
+                    });
+                });
+            });
         });
         it('should wait', function(){
             ptor.sleep(10000);
@@ -252,6 +259,13 @@ describe('Teacher', function(){
                     confirm[1].click();
                 })
 //                feedback(ptor, 'Lecture was successfully updated.');
+            });
+            ptor.wait(function(){
+                return ptor.findElement(protractor.By.className('overlay')).then(function(overlay){
+                    return overlay.isDisplayed().then(function(disp){
+                        return !disp;
+                    });
+                });
             });
         });
         it('should wait', function(){
@@ -546,6 +560,13 @@ describe('Teacher', function(){
                 })
 //                feedback(ptor, 'Lecture was successfully updated.');
             });
+            ptor.wait(function(){
+                return ptor.findElement(protractor.By.className('overlay')).then(function(overlay){
+                    return overlay.isDisplayed().then(function(disp){
+                        return !disp;
+                    });
+                });
+            });
         });
         it('should wait', function(){
             ptor.sleep(3000);
@@ -666,6 +687,13 @@ describe('Teacher', function(){
                 })
 //                feedback(ptor, 'Lecture was successfully updated.');
             });
+            ptor.wait(function(){
+                return ptor.findElement(protractor.By.className('overlay')).then(function(overlay){
+                    return overlay.isDisplayed().then(function(disp){
+                        return !disp;
+                    });
+                });
+            });
         });
         it('should wait', function(){
             ptor.sleep(3000);
@@ -738,7 +766,7 @@ describe('Student', function(){
     it('should click on check answer', function(){
         ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
             buttons[1].click().then(function(){
-                ptor.sleep(5000);
+                waitForChecks(ptor, 1);
             });
         });
     });
@@ -753,6 +781,7 @@ describe('Student', function(){
             inputs[1].click();
             inputs[3].click().then(function(){
                 feedback(ptor, 'saved');
+                waitForChecks(ptor, 2);
             });
         });
     });
@@ -771,7 +800,8 @@ describe('Student', function(){
             });
             inputs[4].click().then(function(){
                 feedback(ptor, 'saved');
-            });;
+                waitForChecks(ptor, 3);
+            });
         });
     });
     it('should open the second module', function(){
@@ -783,16 +813,17 @@ describe('Student', function(){
         ptor.executeScript('window.scrollBy(0, -1000)', '');
         ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
             lectures[5].click().then(function(){
-                ptor.wait(function(){
-                    return ptor.isElementPresent(protractor.By.tagName('youtube')).then(function(present){
-                        return present;
-                    });
-//                    return ptor.findElement(protractor.By.tagName('youtube')).then(function(youtube){
-//                        return youtube.isDisplayed().then(function(disp){
-//                            return disp;
-//                        });
+//                ptor.wait(function(){
+//                    return ptor.isElementPresent(protractor.By.tagName('youtube')).then(function(present){
+//                        return present;
 //                    });
-                });
+////                    return ptor.findElement(protractor.By.tagName('youtube')).then(function(youtube){
+////                        return youtube.isDisplayed().then(function(disp){
+////                            return disp;
+////                        });
+////                    });
+//                });
+                waitForChecks(ptor, 4);
             });
             lectures[6].click();
             ptor.sleep(10000);
@@ -803,6 +834,7 @@ describe('Student', function(){
             inputs[1].click();
             inputs[3].click().then(function(){
                 feedback(ptor, 'saved');
+                waitForChecks(ptor, 5);
             });
         });
     });
@@ -859,7 +891,7 @@ describe('Student', function(){
     it('should click on check answer', function(){
         ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
             buttons[1].click().then(function(){
-                ptor.sleep(5000);
+                waitForChecks(ptor, 1);
             });
         });
     });
@@ -902,7 +934,7 @@ describe('Student', function(){
     it('should click on check answer', function(){
         ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
             buttons[1].click().then(function(){
-                ptor.sleep(5000);
+                waitForChecks(ptor, 2);
             });
         });
     });
@@ -919,6 +951,7 @@ describe('Student', function(){
         ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
             buttons[1].click().then(function(){
                 feedback(ptor, 'saved');
+                waitForChecks(ptor, 3);
             });
         });
     });
@@ -932,16 +965,17 @@ describe('Student', function(){
         ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
             lectures[5].click().then(function(){
 //                ptor.sleep(8000);
-                ptor.wait(function(){
-                    return ptor.isElementPresent(protractor.By.tagName('youtube')).then(function(present){
-                        return present;
-                    });
-//                    return ptor.findElement(protractor.By.tagName('youtube')).then(function(youtube){
-//                        return youtube.isDisplayed().then(function(disp){
-//                            return disp;
-//                        });
+//                ptor.wait(function(){
+//                    return ptor.isElementPresent(protractor.By.tagName('youtube')).then(function(present){
+//                        return present;
 //                    });
-                });
+////                    return ptor.findElement(protractor.By.tagName('youtube')).then(function(youtube){
+////                        return youtube.isDisplayed().then(function(disp){
+////                            return disp;
+////                        });
+////                    });
+//                });
+                waitForChecks(ptor, 4);
             });
             lectures[6].click();
         });
@@ -953,6 +987,7 @@ describe('Student', function(){
         ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons){
             buttons[1].click().then(function(){
                 feedback(ptor, 'saved');
+                waitForChecks(ptor, 5);
             });
         });
     });
@@ -964,16 +999,17 @@ describe('Student', function(){
     it('should open the third lecture and then open New Quiz', function(){
         ptor.findElements(protractor.By.className('trigger2')).then(function(lectures){
             lectures[8].click().then(function(){
-                ptor.wait(function(){
-                    return ptor.isElementPresent(protractor.By.tagName('youtube')).then(function(present){
-                        return present;
-                    });
-//                    return ptor.findElement(protractor.By.tagName('youtube')).then(function(youtube){
-//                        return youtube.isDisplayed().then(function(disp){
-//                            return disp;
-//                        });
+//                ptor.wait(function(){
+//                    return ptor.isElementPresent(protractor.By.tagName('youtube')).then(function(present){
+//                        return present;
 //                    });
-                });
+////                    return ptor.findElement(protractor.By.tagName('youtube')).then(function(youtube){
+////                        return youtube.isDisplayed().then(function(disp){
+////                            return disp;
+////                        });
+////                    });
+//                });
+                waitForChecks(ptor, 6);
             });
             lectures[9].click();
             ptor.sleep(5000);
@@ -1367,8 +1403,8 @@ describe('Modules Progress', function(){
         ptor.findElements(protractor.By.tagName('svg')).then(function(charts){
             charts[1].findElements(protractor.By.tagName('text')).then(function(titles){
                 expect(titles[0].getText()).toBe('First Quiz');
-                expect(titles[1].getText()).toBe('Incorrect');
-                expect(titles[2].getText()).toBe('Correct');
+                expect(titles[1].getText()).toContain('Inc');
+                expect(titles[2].getText()).toContain('Cor');
                 expect(titles[3].getText()).toBe('OK (Correct)');
                 expect(titles[4].getText()).toBe('Cancel (Incorrect)');
                 expect(titles[5].getText()).toBe('Other (Incorrect)');
@@ -1913,7 +1949,7 @@ describe('Modules Progress', function(){
 
 
 
-//
+
 describe('Teacher', function(){
 //    var ptor = protractor.getInstance();
 //    var driver = ptor.driver;
@@ -3033,6 +3069,22 @@ function addMCQAnswers(ptor){
                 });
             });
 
+        });
+    });
+}
+
+function waitForChecks(ptor, n){
+    ptor.wait(function(){
+        return ptor.findElement(protractor.By.id('tree')).then(function(tree){
+            return tree.findElements(protractor.By.className('finished_item')).then(function(checks){
+                if(checks.length == n){
+                    console.log('found '+n);
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            });
         });
     });
 }

@@ -38,6 +38,29 @@ angular.module('scalearAngularApp')
  	$scope.lecture_player.events.onReady= function(){
  		$scope.hide_overlay = true
  	}
+	$scope.lecture_player.events.onPlay= function(){
+		var paused_time= $scope.lecture_player.controls.getTime()
+		if($scope.editing_mode)
+			$scope.lecture_player.controls.seek_and_pause(paused_time)
+ 	}
+
+ 	var checkQuizTimeConflict=function(time){
+ 		var new_time = time 
+ 		var inc = 0
+ 		$scope.quiz_list.forEach(function(quiz){
+ 			console.log(quiz.time +'----'+ parseInt(new_time))
+ 		    if(quiz.time == parseInt(new_time+1))
+ 				new_time+= 3
+ 			else if(quiz.time == parseInt(new_time)){
+ 				new_time+= 2
+ 				console.log(new_time)
+ 			}
+ 					
+ 			else if(quiz.time == parseInt(new_time-1))
+ 				new_time+= 1
+ 		})
+ 		return new_time
+ 	}
 
 	$scope.insertQuiz=function(quiz_type, question_type){
 		var insert_time= $scope.lecture_player.controls.getTime()
@@ -48,6 +71,8 @@ angular.module('scalearAngularApp')
 		else if (insert_time >= duration)
 			insert_time = duration - 1
 
+		insert_time = checkQuizTimeConflict(insert_time)
+		console.log(insert_time)
 		$scope.lecture_player.controls.seek_and_pause(insert_time)
 
 		$scope.quiz_loading = true;
@@ -66,35 +91,35 @@ angular.module('scalearAngularApp')
 		}, 
 		function(){ //error
 			$scope.quiz_loading = false;
-		    //alert("Could not insert new quiz, please check network connection.");
 		})
 
 	}
 
 	$scope.showOnlineQuiz= function(quiz){
+		if($scope.selected_quiz != quiz){
+			$log.debug("SHOWONLINEQUIX")
+			$log.debug(quiz)
+			$scope.hide_alerts = true;
+			$scope.submitted= false
+			$scope.editing_mode = true;
+			$scope.selected_quiz = quiz
+			$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
-		$log.debug("SHOWONLINEQUIX")
-		$log.debug(quiz)
-		$scope.hide_alerts = true;
-		$scope.submitted= false
-		$scope.editing_mode = true;
-		$scope.selected_quiz = quiz
-		$scope.lecture_player.controls.seek_and_pause(quiz.time)
-
-		if(quiz.quiz_type =="invideo"){
-			$scope.double_click_msg = "online_quiz.double_click_new_answer";
-			$scope.quiz_layer.backgroundColor="transparent"
-			$scope.quiz_layer.overflowX= ''
-			$scope.quiz_layer.overflowY= ''
-			getQuizData();
-		}
-		else{ // html quiz
-			$log.debug("HTML quiz")
-			$scope.double_click_msg=""
-			$scope.quiz_layer.backgroundColor= "white"
-			$scope.quiz_layer.overflowX= 'hidden'
-            $scope.quiz_layer.overflowY= 'auto'
-			getHTMLData()
+			if(quiz.quiz_type =="invideo"){
+				$scope.double_click_msg = "online_quiz.double_click_new_answer";
+				$scope.quiz_layer.backgroundColor="transparent"
+				$scope.quiz_layer.overflowX= ''
+				$scope.quiz_layer.overflowY= ''
+				getQuizData();
+			}
+			else{ // html quiz
+				$log.debug("HTML quiz")
+				$scope.double_click_msg=""
+				$scope.quiz_layer.backgroundColor= "white"
+				$scope.quiz_layer.overflowX= 'hidden'
+	            $scope.quiz_layer.overflowY= 'auto'
+				getHTMLData()
+			}
 		}
 	}
 

@@ -25,7 +25,7 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1&autohide=0" ,{ width: 500, controls: 0});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&showinfo=0&rel=0&autoplay=1&autohide=0&vq=large" ,{ width: 500, controls: 0});
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
-					player_controls.pause()
+					//player_controls.pause()
 					player.currentTime(time);
 					parent.focus()
 				}
@@ -90,9 +90,8 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.replay=function(){					
-					player_controls.pause()
 					player_controls.seek(0)
-					player_controls.play()
+					//player_controls.play()
 				}
 
 				var setupEvents=function(){

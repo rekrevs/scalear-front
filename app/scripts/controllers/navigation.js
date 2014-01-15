@@ -14,5 +14,13 @@ angular.module('scalearAngularApp')
   	$scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams){ 
     	$scope.current_state= $state;
    	})
+
+    $scope.url_with_protocol = function(url)
+    {
+        if(url)
+            return url.match(/^http/)? url: 'http://'+url;
+        else
+            return url;
+    }
   	
   }]);

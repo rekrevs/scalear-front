@@ -1,4 +1,3 @@
-<link rel="stylesheet" href="styles/student/courseware.css" type="text/css" media="screen" />
 <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="alert">
 	 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
 </div>
@@ -23,8 +22,9 @@
 <table class="table table-striped">
 	<tr ng-repeat="quiz in lecture.online_quizzes">
 		<td style='width:20px;'><img ng-show="quiz.is_quiz_solved" src="images/check7.png" /></td>
-		<td><p ng-class="{'solved': quiz.is_quiz_solved}" ng-click="seek(quiz.time)">{{quiz.question}}</p></td>
-		<td><p ng-show="quiz.is_quiz_solved" ng-class="{'solved': quiz.is_quiz_solved}" ng-click="seek(quiz.time)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
+		<td ng-show="!quiz.is_quiz_solved"><p>{{quiz.question}}</p></td>
+		<td ng-show="quiz.is_quiz_solved"><p class="solved" ng-click="seek(quiz.time)" >{{quiz.question}}</p></td>
+		<td><p ng-show="quiz.is_quiz_solved" class="solved" ng-click="seek(quiz.time)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
 	</tr>
 </table>
 </div>

@@ -61,8 +61,7 @@ angular.module('scalearAngularApp')
             $scope.lecture_scroll_disable = true
             $scope.quiz_scroll_disable = true
             $scope.chart_scroll_disable= false
-        }
- 		
+        } 		
     }
 
     $scope.lecture_player.events.onReady=function(){
@@ -70,7 +69,15 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek= function(id){
-        $scope.lecture_player.controls.seek_and_pause(getTime(id))
+        var url = getURL(id)
+        if(url != $scope.url){
+            $scope.url = url
+            $scope.lecture_player.events.onReady=function(){
+                $scope.lecture_player.controls.seek_and_pause(getTime(id))
+            }
+        }
+        else
+            $scope.lecture_player.controls.seek_and_pause(getTime(id))        
 	}
 
 	var getQuizTitle= function(id){
@@ -139,7 +146,7 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": $translate("quizzes.number_of_students"),
+                "title": $translate(data.vtitle || "quizzes.number_of_students"),
             },
         };
         chart.data = $scope.formatLectureChartData(chart_data[id])
@@ -155,8 +162,5 @@ angular.module('scalearAngularApp')
             })
         }
     }
-
-    //$scope.lectureQuizzesTab()
-
 
   }]);

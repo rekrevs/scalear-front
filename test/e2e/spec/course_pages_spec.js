@@ -3,9 +3,9 @@ var enroll_key = '';
 var names = new Array ();
 var fetched_data = new Array();
 
-var frontend = 'http://localhost:9000/';
-var backend = 'http://localhost:3000/';
-var auth = 'http://localhost:4000/';
+//var frontend = 'http://localhost:9000/';
+//var backend = 'http://localhost:3000/';
+//var auth = 'http://localhost:4000/';
 
 function getNextDay(date){
     var result = date;
@@ -31,27 +31,27 @@ var tomorrow = formatDate(getNextDay(new Date()), 1);
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-        driver.get(frontend+"#/login");
-//        driver.get("http://angular-edu.herokuapp.com/#/login");
-        ptor.findElement(protractor.By.className('btn')).then(function(login_button){
-            login_button.click();
-        });
+        driver.get(ptor.params.auth+'users/sign_in');
         findByName("user[email]").sendKeys(email);
         findByName("user[password]").sendKeys(password);
         findByName("commit").click();
-        ptor.findElements(protractor.By.tagName('a')).then(function(tags){
-            tags[3].getText().then(function(value){
-                expect(value.toLowerCase()).toContain(name.toLowerCase());
-            })
+        driver.get(ptor.params.frontend).then(function(){
+            ptor.findElements(protractor.By.tagName('a')).then(function(tags){
+                tags[3].getText().then(function(value){
+                    expect(value.toLowerCase()).toContain(name.toLowerCase());
+                });
+            });
         });
     });
 }
 
-function logout(driver){
-    it('should logout from scalear Auth', function(){
-        driver.get(auth).then(function(){
-            driver.findElements(protractor.By.tagName('a')).then(function(logout){
-                logout[4].click();
+function logout(ptor, driver){
+    it('should logout', function(){
+        ptor.findElement(protractor.By.linkText('Logout')).then(function(link){
+            link.click().then(function(){
+                driver.findElement(protractor.By.id('flash_notice')).then(function(notice){
+                    expect(notice.getText()).toContain('Signed out successfully.');
+                });
             });
         });
     });
@@ -90,7 +90,7 @@ describe('Course Pages', function(){
         return driver.findElement(protractor.By.id(id))
     };
 
-    login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
+    login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
 //
     describe('Courses List', function(){
         it('should display the list of courses sorted by Course Name by default', function(){
@@ -342,7 +342,7 @@ describe('Course Pages', function(){
 //                });
 //            });
 //        });
-        logout(driver);
+        logout(ptor, driver);
         login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'Bahia', findByName);
         it('should display the list of courses sorted by Course Name by default', function(){
             names = new Array();

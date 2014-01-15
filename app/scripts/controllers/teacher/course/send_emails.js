@@ -44,6 +44,7 @@ angular.module('scalearAngularApp')
             });
 
         }
+        
 
-
+       
   }]);

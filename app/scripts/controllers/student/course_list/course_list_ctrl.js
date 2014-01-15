@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
 
   	$scope.open = function () {
     	var modalInstance = $modal.open({
-      		templateUrl: 'views/student/course_list/enroll_modal.html',
+      		templateUrl: '/views/student/course_list/enroll_modal.html',
       		controller: "StudentEnrollModalCtrl",
     	})
 

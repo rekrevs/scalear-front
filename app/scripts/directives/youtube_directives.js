@@ -29,7 +29,7 @@ angular.module('scalearAngularApp')
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
-
+					parent.focus()
 				}
 			
 				player_controls.play=function(){
@@ -65,7 +65,9 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
+					player_controls.pause()
 					player.currentTime(time);
+					parent.focus()
 				}
 
 				player_controls.seek_and_pause=function(time){
@@ -87,10 +89,17 @@ angular.module('scalearAngularApp')
 					player.cue(time, callback)
 				}
 
+				player_controls.replay=function(){					
+					player_controls.pause()
+					player_controls.seek(0)
+					player_controls.play()
+				}
+
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
-							$log.debug("Video data loaded")
+							player_controls.replay()
+							$log.debug("Video data loaded")							
 							if(player_events.onReady){
 								player_events.onReady();
 								scope.$apply();
@@ -99,7 +108,8 @@ angular.module('scalearAngularApp')
 
 					player.on('play',
 						function(){
-							if(player_events.onPlay){
+							parent.focus()
+							if(player_events.onPlay){								
 								player_events.onPlay();
 								scope.$apply();
 							}
@@ -107,7 +117,8 @@ angular.module('scalearAngularApp')
 
 					player.on('pause',
 						function(){
-							if(player_events.onPause){
+							parent.focus()
+							if(player_events.onPause){								
 								player_events.onPause();
 								scope.$apply();
 							}
@@ -132,7 +143,7 @@ angular.module('scalearAngularApp')
 
 		    }
 		};
-}]).directive('resizableVideo', ['$window', '$timeout',function($window, $timeout){
+}]).directive('resizableVideo', ['$window','$rootScope','$timeout','$log',function($window,$rootScope,$timeout, $log){
 	return{
 		restrict:'A',
 		scope:{
@@ -148,18 +159,20 @@ angular.module('scalearAngularApp')
 			angular.element($window).bind('resize',
 				function(){
 					if($scope.fullscreen){
-						$scope.resize.big(); 
-						$scope.$apply()
+						$scope.resize.big();
+                        $scope.$apply()
 					}
 				}
 			)
 
 			$scope.resize.small = function()
-			{	
+			{
+                $rootScope.changeError = false;
 				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 				$scope.fullscreen = false
 
-				angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
+
+                angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
 				angular.element("body").css("overflow","auto");
 				angular.element("body").css("position","");
 
@@ -192,7 +205,8 @@ angular.module('scalearAngularApp')
 			}
 
 			$scope.resize.big = function()
-			{	
+			{
+                $rootScope.changeError = true;
 				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 				var win = angular.element($window)
 
@@ -209,7 +223,7 @@ angular.module('scalearAngularApp')
 					"position":"fixed",
 					"width":win.width()-$scope.max_width,
 					"height":win.height(),
-					"z-index": 1030
+					"z-index": 1031
 				};
 
 				var video_height = win.height() -30;
@@ -230,7 +244,7 @@ angular.module('scalearAngularApp')
 						"height":video_height,
 						"margin-top": margin_top+"px",
 						"margin-left":"0px",
-						"z-index": 1031
+						"z-index": 1531
 					}		
 				}
 				else{		
@@ -243,7 +257,7 @@ angular.module('scalearAngularApp')
 						"height":video_height,
 						"margin-left": margin_left+"px",
 						"margin-top":"0px",
-						"z-index": 1031
+						"z-index": 1531
 					}		
 				 }
 				angular.extend($scope.video_layer, video)

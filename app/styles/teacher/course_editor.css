@@ -70,9 +70,9 @@ ul.accordion ul {margin:0; padding:0 0 0 0px;}
 .accordion a {...}
 */    
 
-a.trigger {display:inline-block !important; padding-left:20px; background-image: url('../../images/plus.gif'); background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
+a.trigger {display:inline-block !important; padding-left:20px; background-image: url('/images/plus.gif'); background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
 
-a.trigger.open {border-color:#dadada; background-image: url('../../images/minus.gif');background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
+a.trigger.open {border-color:#dadada; background-image: url('/images/minus.gif');background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700}
 
 .last-child a.trigger{padding-left:1px; background-image:none; font-weight:normal}
 
@@ -90,7 +90,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 
 .sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
 .sortable li { width: 350px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 25px; }
-.sortable li span { position: absolute; margin-left: -1.3em; }
+/*.sortable li span { position: absolute; margin-left: -1.3em; }*/
 
 .modules{width:270px;}
 
@@ -120,7 +120,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	overflow:auto;
 	margin-left:75%;
 	margin-right:5%;*/
-	width:280px;
+	width:330px;
 }
 
 .datepicker2{

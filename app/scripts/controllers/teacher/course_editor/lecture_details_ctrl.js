@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', '$translate','$log', function ($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', '$translate','$log','$filter', function ($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter) {
 
+        var current_url;
    	//**************************FUNCTIONS****************************************///
  	$scope.validateLecture = function(column,data) {
 	    var d = $q.defer();
 	    var lecture={}
+
 	    lecture[column]=data;
 	    if(column == 'url' && getVideoId(data) == null){
 	    	$log.debug(data)
@@ -35,12 +37,12 @@ angular.module('scalearAngularApp')
               $scope.lecture[type] = data
         } 		
 		var modified_lecture=angular.copy($scope.lecture);
-		delete modified_lecture["id"];
-		delete modified_lecture["created_at"];
-		delete modified_lecture["updated_at"];
-		delete modified_lecture["class_name"];
-		delete modified_lecture["className"];
-		delete modified_lecture["detected_aspect_ratio"];
+		delete modified_lecture.id;
+		delete modified_lecture.created_at;
+		delete modified_lecture.updated_at;
+		delete modified_lecture.class_name;
+		delete modified_lecture.className;
+		delete modified_lecture.detected_aspect_ratio;
 
 		$log.debug(modified_lecture)
 		
@@ -62,13 +64,19 @@ angular.module('scalearAngularApp')
 	$scope.updateLectureUrl= function(){
 		urlFormat()
 		$scope.lecture.aspect_ratio = ""
-		getYoutubeDetails();
+        if($scope.lecture.url)
+			getYoutubeDetails();
+	}
+
+	$scope.updateSlidesUrl=function(){
+		$scope.lecture.slides = $filter('formatURL')($scope.lecture.slides)
+		$scope.updateLecture()
 	}
 
 	var urlFormat =function(){
 		var url=$scope.lecture.url
 		var video_id = getVideoId(url)
-		if(video_id != null) {
+		if(video_id) {
 		   $scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
 		}
 	}
@@ -80,8 +88,7 @@ angular.module('scalearAngularApp')
 	var getYoutubeDetails= function(){
 		var id=$scope.lecture.url.split("v=")[1]
 		$scope.video={}
-		if(id!=null && typeof id != 'undefined')
-		{
+		if(id){
 			id= id.split("&")[0]
 			var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
 			$http.jsonp(url)
@@ -91,7 +98,7 @@ angular.module('scalearAngularApp')
 			        $scope.video.author = data.entry.author[0].name.$t;
 			        var updateFlag = $scope.lecture.duration
 			        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
-			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio === undefined)
+			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio == undefined)
 			        	$scope.lecture.detected_aspect_ratio="smallscreen";
 			        else
 			        	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;
@@ -99,9 +106,9 @@ angular.module('scalearAngularApp')
 			        	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
 
 			        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
-	        		if(!updateFlag){
+	        		if(id != current_url){
 	        			$scope.updateLecture()
-	        			$log.debug("update flag is true******")	
+	        			$log.debug("update flag is true")	
 	        		}
 			});
 		}
@@ -120,8 +127,11 @@ angular.module('scalearAngularApp')
     $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj[$stateParams.lecture_id]){
         $scope.lecture=$scope.items_obj[$stateParams.lecture_id]
-        if($scope.lecture.url)
-      		getYoutubeDetails();
+        if($scope.lecture.url && $scope.lecture.url!="none"){
+            current_url = $scope.lecture.url.split("v=")[1];
+            current_url = current_url.split("&")[0]
+            getYoutubeDetails();
+        }
       }
     })
 

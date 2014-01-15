@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log) {
+  .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout',function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout) {
  
  	$scope.$watch('items_obj['+$stateParams.quiz_id+']', function(){
       if($scope.items_obj && $scope.items_obj[$stateParams.quiz_id]){
@@ -39,12 +39,14 @@ angular.module('scalearAngularApp')
 		  	});
 	    });
 
-	    shortcut.add("Enter",function(){
-			var elem_name=angular.element(document.activeElement).attr('name')
-			if(elem_name =='qlabel')
-				$scope.addQuestion()
-				$scope.$apply()
-		},{"disable_in_input" : false});
+	    shortcut.add("Enter",
+	    	function(){
+				var elem_name=angular.element(document.activeElement).attr('name')
+				if(elem_name =='qlabel')
+					$scope.addQuestion()
+					$scope.$apply()
+			},
+			{"disable_in_input" : false, 'propagate':true});
  	}
  	
  	init();
@@ -59,7 +61,7 @@ angular.module('scalearAngularApp')
 				init();
 			},
 			function(){
-	 		    alert("Could not save changes, please check network connection.");
+	 		   // alert("Could not save changes, please check network connection.");
 			}
 		);
 	}
@@ -120,15 +122,20 @@ angular.module('scalearAngularApp')
  	$scope.removeHtmlAnswer = function(index, question){
 		if(question.answers.length>1)
 		{
-			if(confirm($translate('lectures.you_sure')))
+			//if(confirm($translate('questions.you_sure_delete_answer', {answer: question.answers[index].content})))
 				question.answers.splice(index, 1);
 		}else{
-			$log.debug("Can't delete the last answer..")
+			//$log.debug("Can't delete the last answer..")
+			$rootScope.show_alert="error";
+		      	ErrorHandler.showMessage('Error ' + ': ' + $translate("online_quiz.cannot_delete_alteast_one_answer"), 'errorMessage', 8000);
+		      	$timeout(function(){
+		      		$rootScope.show_alert="";	
+		      	},4000);
 		}
 	}
 	
 	$scope.removeQuestion = function(index){
- 		 if(confirm($translate('lectures.you_sure')))
+ 		// if(confirm($translate('questions.you_sure_delete_question', {question: $scope.questions[index].content})))
 		  	$scope.questions.splice(index, 1);
 	}
  

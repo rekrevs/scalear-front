@@ -1,8 +1,7 @@
-<link rel="stylesheet" href="styles/teacher/course_editor.details.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 <center>
 	<h3 translate>lectures.details</h3>
 	<!-- <%= render 'shared/error_messages' , object: f.object, success: @success %> -->
-	<table class="table table-striped table-bordered" style="width:90%;font-size:12px;text-align:center;overflow-wrap:break-word;word-wrap: break-word;">
+	<table class="table table-striped table-bordered" style="width:97%;font-size:12px;text-align:center;overflow-wrap:break-word;word-wrap: break-word;">
 		<tr>
 			<td><span translate>lectures.lecture_title</span>:</td>
 			<td> 
@@ -72,8 +71,8 @@
 		</tr>
 		<tr>
 			<td><span translate>lectures.slides</span>:</td>
-			<td style="overflow-wrap:break-word;word-wrap: break-word;max-width:10px">
-    			<details-text value="lecture.slides" save="updateLecture()" validate="validateLecture" column="slides" ></details-text>
+			<td style="max-width: 180px;overflow-wrap: break-word;word-wrap: break-word;word-break: break-word;">
+    			<details-text value="lecture.slides" save="updateSlidesUrl()" validate="validateLecture" column="slides" ></details-text>
 			</td>
 		</tr>
 		<tr>

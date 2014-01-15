@@ -1,28 +1,27 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl',['$scope', 'OnlineQuiz', '$translate','$q','$log', function ($scope, OnlineQuiz, $translate, $q, $log) {
+    .controller('lectureQuizListCtrl',['$scope', 'OnlineQuiz', '$translate','$q','$log','$stateParams', function ($scope, OnlineQuiz, $translate, $q, $log, $stateParams) {
 
 	$log.debug("loading quiz list")
 	$scope.editing_mode = false
 
-	$scope.$watch('lecture',function(){
-		if($scope.lecture)
-			init()
-	})
+	//$scope.$watch('lecture',function(){
+		//if($scope.lecture)
+
+	//})
+
 
 	var init= function(){
 		OnlineQuiz.getQuizList(
-			{lecture_id:$scope.lecture.id},
+			{lecture_id:$stateParams.lecture_id},
 			function(data){
 				$scope.$parent.quiz_list = data.quizList
 			},
-			function(){
-				alert("Failed to Load Quiz List")
-			}
+			function(){}
 		);	
 	}
-
+    init()
 	var updateOnlineQuiz=function(quiz){
 		OnlineQuiz.update(
 			{online_quizzes_id: quiz.id},
@@ -58,18 +57,18 @@ angular.module('scalearAngularApp')
 	$scope.validateName= function(data, elem){
 		var d = $q.defer();
 	    var doc={}
-	    doc["question"]=data;
+	    doc.question=data;
 	    $log.debug($scope.$parent.quiz_list);
 	    OnlineQuiz.validateName(
 	    	{online_quizzes_id: elem.id},
 	    	doc,
-	    	function(data){
+	    	function(){
 				d.resolve()
 			},function(data){
 				$log.debug(data.status);
 				$log.debug(data);
 			if(data.status==422)
-			 	d.resolve(data.data.errors['question'].join());
+			 	d.resolve(data.data.errors.join());
 			else
 				d.reject('Server Error');
 			}
@@ -85,7 +84,7 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
-		if(confirm($translate('online_quiz.you_sure_delete_quiz')))
+//		if(confirm($translate('online_quiz.you_sure_delete_quiz', {quiz: quiz.question})))
 			OnlineQuiz.destroy(
 				{online_quizzes_id: quiz.id},{},
 				function(data){

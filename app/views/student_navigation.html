@@ -1,7 +1,7 @@
 <ul class="nav nav-pills">
     <li id="calendar_link" ng-class="{ active: current_state.includes('course.student_calendar')}"><a ui-sref="course.student_calendar({ course_id: current_course_id })" translate="head.calendar"></a></li>
     <li id="lectures_link" ng-class="{ active: current_state.includes('course.lectures')}"><a ui-sref="course.lectures({ course_id: current_course_id })" translate="head.lectures"></a></li>
-    <li id="discussion_link" ng-if="course_information.discussion_link!=''"><a target="_blank" href="{{course_information.discussion_link}}" translate="head.discussion_forum"></a></li>
+    <li id="discussion_link" ng-if="course_information.discussion_link!=''"><a target="_blank" href="{{url_with_protocol(course_information.discussion_link)}}" translate="head.discussion_forum"></a></li>
     <li id="course_information_link" ng-class="{ active: current_state.includes('course.course_information')}"><a ui-sref="course.course_information({ course_id: current_course_id })" translate="head.course_information"></a></li>
      
     <li style="float:right"><b>{{course_information.short_name}} - {{course_information.name}}</b></li>

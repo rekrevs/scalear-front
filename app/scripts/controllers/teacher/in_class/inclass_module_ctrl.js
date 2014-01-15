@@ -1,43 +1,55 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$modal','$timeout','$window','$log', function ($scope, $modal, $timeout,$window, $log) {
-
+  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams) {
     $window.scrollTo(0, 0);
     $scope.inclass_player={}
     $scope.inclass_player.events={}    
-  	$scope.display = function (type) {
-      $scope.play_pause_class = "play_button"
-      $scope.mute_class = "mute_button"
-      $scope.loading_video=true
-      $scope.lecture_url=""
-      $scope.question_title=""
-      $scope.quiz_id=""
-      $scope.questions=[]
-      $scope.lecture_list = []
-      $scope.display_data = {}
-      $scope.total_num_lectures = 0
-      $scope.total_num_quizzes  = 0
-      $scope.current_lecture = 0
-      $scope.current_quiz = 0
-      if($scope.current_quiz_lecture)
-        delete $scope.current_quiz_lecture
-      if($scope.chart_data)
-        delete $scope.chart_data
+  	$scope.display = function (type, disabled) {
+      if(!disabled){
+        $scope.play_pause_class = "play_button"
+        $scope.mute_class = "mute_button"
+        $scope.loading_video=true
+        $scope.lecture_url=""
+        $scope.question_title=""
+        $scope.quiz_id=""
+        $scope.questions=[]
+        $scope.lecture_list = []
+        $scope.display_data = {}
+        $scope.total_num_lectures = 0
+        $scope.total_num_quizzes  = 0
+        $scope.current_lecture = 0
+        $scope.current_quiz = 0
+        if($scope.current_quiz_lecture)
+          delete $scope.current_quiz_lecture
+        if($scope.chart_data)
+          delete $scope.chart_data
 
-      openModal('display', type)
-      setup_screens()
+        openModal('display', type)
+        setup_screens()
 
-      angular.element($window).bind('resize',
-        function(){
-          setup_screens()
-          $scope.$apply()
-      })  
+        angular.element($window).bind('resize',
+          function(){
+            setup_screens()
+            $scope.$apply()
+        })
+      }  
 
   	};
+    var init = function(){
+        Module.getInclassActive(
+          {module_id:$stateParams.module_id, course_id:$stateParams.course_id},
+          function(data){
+                $scope.buttons = data
+                  },
+          function(){}
+        );
+    }
 
-    var openModal=function(view, type){ 
-      angular.element("body").css("overflow","hidden");
+
+var openModal=function(view, type){
+      $rootScope.changeError = true;
+    angular.element("body").css("overflow","hidden");
       var win = angular.element($window)
       win.scrollTop("0px")
       var filename='inclass_'+view
@@ -45,7 +57,7 @@ angular.module('scalearAngularApp')
          filename+= "_"+type.toLowerCase()       
       
       $scope.modalInstance = $modal.open({
-        templateUrl: 'views/teacher/in_class/'+filename+'.html',
+        templateUrl: '/views/teacher/in_class/'+filename+'.html',
         windowClass: 'whiteboard '+view,
         controller: view+type+'Ctrl',
         scope: $scope
@@ -57,19 +69,25 @@ angular.module('scalearAngularApp')
       });
     }
 
-    $scope.review=function(type){
-      openModal('review', type)
+    $scope.review=function(type, disabled){
+      if(!disabled){
+        openModal('review', type)
+      }
     }
 
-    $scope.survey=function(state){
-      $scope.in_review= state
-      openModal('review','Surveys')
+    $scope.survey=function(disabled, state){
+      if(!disabled){
+        $scope.in_review= state
+        openModal('review','Surveys')
+      }
     }
 
     $scope.exitBtn = function () {
+      $rootScope.changeError = false;
       angular.element("body").css("overflow","auto");
       $scope.modalInstance.dismiss();
       $scope.unregister_back_event();
+      init()
     };
 
     $scope.playBtn = function(){
@@ -224,8 +242,10 @@ angular.module('scalearAngularApp')
         height:'60%',
         width:'50px',
         marginLeft:'30px',
-        verticalAlign:'text-bottom',
+        verticalAlign:'text-bottom'
       }
     }
+
+    init();
 
   }]);

@@ -41,14 +41,20 @@ angular.module('scalearAngularApp')
 		 	required: "="
 		 },
 		 restrict: 'E', 
-		 template: '<table><tr><td><img ng-src="{{done && \'images/check7.png\' || \'images/empty7.png\'}}"</td><td><a ng-click="showItem()" class="trigger2"><span translate>{{"groups."+type.toLowerCase()}}</span>: {{name}}</a></td>'+
-		 			'<td><a style="font-size:10px" target="_blank" ng-if="slides && slides!=\'none\'" href="{{slides}}" translate="lectures.slides"></a><span ng-if="required && quizType==\'quiz\'" class="label label-important" translate>{{"courses.required"}}</span></td></tr></table>',
+		 templateUrl: '/views/student/lectures/courseware_item.html',
 		 link: function(scope){
 		 	scope.type= scope.className=="Quiz"? CourseEditor.capitalize(scope.quizType): scope.className;
-		 	scope.showItem= function()
+             scope.url_with_protocol = function(url)
+             {
+                 if(url)
+                     return url.match(/^http/)? url: 'http://'+url;
+                 else
+                     return url;
+             }
+            scope.showItem= function()
 		 	{
 		 		if(scope.className=="Document")
-		 			window.open(scope.url,'_blank');
+		 			window.open(scope.url_with_protocol(scope.url),'_blank');
 		 		else
 		 		{	
 		 			var next_state="course.lectures."+scope.className.toLowerCase();
@@ -58,6 +64,8 @@ angular.module('scalearAngularApp')
 		 			$state.go(next_state, to);
 		 		}
 		 	}
+
+
 		 }
 	};
 }]);

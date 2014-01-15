@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('indexController', ['$scope', '$state', 'User','$rootScope','$translate','$window','$modal', '$log' ,function ($scope, $state, User, $rootScope, $translate, $window, $modal, $log) {
+  .controller('indexController', ['scalear_api','$scope', '$state', 'User','$rootScope','$translate','$window','$modal', '$log','$http' ,function (scalear_api, $scope, $state, User, $rootScope, $translate, $window, $modal, $log, $http) {
 
 	$scope.changeLanguage = function (key) {
 		$log.debug("in change language "+key);
@@ -9,20 +9,20 @@ angular.module('scalearAngularApp')
     	$rootScope.current_lang=key;
     	$window.moment.lang(key);
   	};
-  	
+
   	$scope.changeLanguage($translate.uses());
+
+    $scope.login = function(){
+        $log.debug("in login");
+        window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
+     }
 
    	$scope.logout = function()
    	{
-   		User.logout(function(){
-   			$log.debug("logged out");
-   			$rootScope.current_user=null
-   			$state.go("home");
-   		}, function(){
-   			
-   		})
+        $rootScope.current_user=null
+        window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_out"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
    	}
-   	
+
    	$scope.coursePage = function()
    	{
    		if($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5) // admin
@@ -30,11 +30,11 @@ angular.module('scalearAngularApp')
    		else
    			$state.go("student_courses");
    	}
-   	
+
    	$scope.open = function () {
 
     	var modalInstance = $modal.open({
-      		templateUrl: 'views/invitation.html',
+      		templateUrl: '/views/invitation.html',
       		controller: "InvitationModalCtrl",
       		// resolve: {
         		// items: function () {

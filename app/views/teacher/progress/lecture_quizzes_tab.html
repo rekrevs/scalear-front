@@ -1,13 +1,12 @@
 <div ng-if="lecture_data.question_ids" infinite-scroll='getRemainingLectureCharts()' infinite-scroll-disabled='chart_scroll_disable' infinite-scroll-immediate-check='false' >
 	<center style="overflow:hidden" >
 		<video_container class="largescreen">
-			<loading size='small' show="!url" style="top:50%;position:relative" />
 			<youtube ng-if="url" id="lec_quiz_video" url="url" player="lecture_player" class="largescreen" />
 		</video_container>
 	</center>
 
 	<div ng-repeat="id in sub_question_ids" class="chart" style='min-width: 300px; height: 260px;' ng-init="chart=createLectureChart(lecture_data.charts,id)"> 
-	    <div ng-click="seek(id)" style="cursor:pointer"><a><span translate>answer.question</span> {{$index+1}}</a><br> {{getLectureTitle(id)}} </div>
+	    <div class="seeker" ng-click="seek(id)" style="cursor:pointer"><a><span translate>answer.question</span> {{$index+1}}</a><br> {{getLectureTitle(id)}} </div>
 	    <div google-chart chart="chart" ></div>
 	    <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
 	</div>	

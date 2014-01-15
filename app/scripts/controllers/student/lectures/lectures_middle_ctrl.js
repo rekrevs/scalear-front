@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture','$window','$timeout','$translate', '$state', '$log', function ($scope, Course, $stateParams,Lecture, $window, $timeout, $translate, $state, $log) {
+  .controller('studentLectureMiddleCtrl', ['$scope','Course','$stateParams','Lecture','$window','$interval','$translate', '$state', '$log','CourseEditor', function ($scope, Course, $stateParams,Lecture, $window, $interval, $translate, $state, $log,CourseEditor) {
 
   	$scope.video_layer={}
     $scope.quiz_layer={}
@@ -20,6 +20,8 @@ angular.module('scalearAngularApp')
     $scope.show_notification=false;
     $scope.fullscreen = false
  	
+ 	
+ 
  	var init= function(){
  		Lecture.getLectureStudent(
  			{
@@ -29,7 +31,23 @@ angular.module('scalearAngularApp')
  			function(data){
 	 			$scope.alert_messages=data.alert_messages;
 	 			$scope.lecture=JSON.parse(data.lecture)
+	 			for(var element in $scope.lecture.online_quizzes) // if no answers remove it
+	 			{
+	 				if($scope.lecture.online_quizzes[element].online_answers.length==0)
+	 					$scope.lecture.online_quizzes.splice(element, 1);
+	 			}
 	 			$scope.next_lecture = data.next_lecture
+	 			var watcher=$scope.$watch('course', function(newval){
+	 				if($scope.$parent.course)
+	 				{
+	 					var group_index= CourseEditor.get_index_by_id($scope.$parent.course.groups, data.done[1])
+	 					var lecture_index= CourseEditor.get_index_by_id($scope.$parent.course.groups[group_index].lectures, data.done[0])
+	 					if(lecture_index!=-1 && group_index!=-1)
+	 						$scope.$parent.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
+	 					watcher();
+	 				}	
+	 			})
+	 			
 	 			$log.debug($scope.lecture.online_quizzes)
 
 	 			$scope.lecture_player.events.onReady=function(){
@@ -65,7 +83,8 @@ angular.module('scalearAngularApp')
 			 			}
 	 				})
 	 			}
-	 			$scope.$emit('accordianReload');
+	 			// here need to update scope.parent.
+	 			//$scope.$emit('accordianReload');
 				$scope.$emit('accordianUpdate',{g_id:$scope.lecture.group_id, type:"lecture", id:$scope.lecture.id});	
 	 		}
  		);
@@ -84,10 +103,11 @@ angular.module('scalearAngularApp')
    			if($scope.selected_quiz.is_quiz_solved==false){
    				$log.debug("in notification")
    				$scope.lecture_player.controls.pause();
+   				$scope.lecture_player.controls.seek($scope.selected_quiz.time)
 				$scope.show_notification=$translate('groups.answer_question');	
-   				$timeout(function(){
+   				$interval(function(){
          		 	$scope.show_notification=false;
-	         	}, 2000);
+	         	}, 2000, 1);
    				// show message telling him to answer. notification directive.. pass text to it..
    				// also when just solved it want to set is_quiz_solved.. gheir ely bageebo from there..
    			}

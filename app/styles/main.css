@@ -84,7 +84,7 @@ body {
 }
 
 .container{
-  width:1170px !important;
+  width:1170px;
 }
 
 /*// .accordian-inner > a:hover, a:visited, a:link, a:active{
@@ -148,10 +148,14 @@ body {
     font-family: Helvetica;
     font-weight: bolder;
     font-size: 95%;
-    border-radius: 0px 0px 3px 3px;
+    border-radius: 3px 3px 3px 3px;
     /*border: solid 2px rgb(229,185,108);*/
     box-shadow: 1px 1px 2px #68a04d;
-    z-index: 1200;
+    z-index: 12000000;
+}
+.errorContainer {
+    top: 0px;
+    z-index: 1500;
 }
 .errormove img{
 	margin-right: 6px;
@@ -168,11 +172,23 @@ body {
 .errorpage{
     position: fixed;
 	display:block;
-	top:0px;
-	z-index:11000;
+	top:44px;
+	z-index:1000;
 	/*background-color: rgba(100,100,100,0.45);
 	width:100%;
 	height:100%;*/
+    width:100%;
+    text-align: center;
+    /*margin: 0 auto;*/
+}
+.errorpageclass{
+    position: fixed;
+    display:block;
+    top:44px;
+    z-index:1300;
+    /*background-color: rgba(100,100,100,0.45);
+    width:100%;
+    height:100%;*/
     width:100%;
     text-align: center;
     /*margin: 0 auto;*/
@@ -209,6 +225,7 @@ body {
 .ng-invalid ~ span { color:red; display:inline;font-size:12px;left:300px; }
 input.ng-invalid{ border:1px solid red; }
 select.ng-invalid{ border:1px solid red; }
+textarea.ng-invalid{ border:1px solid red; }
 
 .widescreen{
   width: 500px;
@@ -237,8 +254,35 @@ select.ng-invalid{ border:1px solid red; }
 	height: 375px;
 }
 
+
 .popover{
-	line-height:20px;
+	z-index:2000;
+  line-height:20px;
+  width: 330px;
+  max-width:330px;
+}
+
+.popover-content{
+	width: 300px;
+	word-wrap:break-word;
+	max-height:300px;
+	overflow-y:auto;
 }
 
 
+.ta-editor {
+    min-height: 300px;
+    width:100%;
+    height: auto;
+    overflow: auto;
+    font-family: inherit;
+    font-size: 100%;
+    border: solid darkgray 1px;
+}
+
+.navigation{
+  width: 1170px;
+  margin-left: auto;
+  margin-right: auto;
+
+}

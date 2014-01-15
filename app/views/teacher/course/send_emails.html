@@ -1,4 +1,5 @@
 <!--<div class="well">-->
+
 <form method="post" style="text-align: left;">
     <table style="width: 100%;">
         <tr>
@@ -16,15 +17,11 @@
             </td>
             <td style="width: 100%">
                 <input id="subject" type="text" name="subject" style="width: 80%;" ng-model="subject"/>
-
             </td>
-
         </tr>
     </table>
     <br />
-    <textarea ui-tinymce ng-model="message" id="tinymce_body" name="body" style="height: 200px;"></textarea>
+    <div text-angular ng-model="message" ta-toolbar-button-class="btn btn-default btn-mini"></div>
     <br />
-
-
 </form>
 <!--</div>-->

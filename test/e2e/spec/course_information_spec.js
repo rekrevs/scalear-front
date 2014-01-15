@@ -4,7 +4,7 @@ var frontend = 'http://localhost:9000/';
 var backend = 'http://localhost:3000/';
 var auth = 'http://localhost:4000/';
 
-var enroll_key = '';
+var enroll_key = '', course_id = '';
 function getNextDay(date){
     var result = date;
     result.setTime(date.getTime() + 86400000);
@@ -16,6 +16,8 @@ function formatDate(date, which){
         dd = '0'+dd;
     }
     var mm = date.getMonth()+1;
+    if(mm < 10)
+        mm = '0'+mm
     var yyyy = date.getFullYear();
     if(which == 0){
         return mm+'/'+dd.toString()+'/'+yyyy;
@@ -33,29 +35,49 @@ var tomorrow = formatDate(getNextDay(new Date()), 1);
 
 function login(ptor, driver, email, password, name, findByName){
     it('should login', function(){
-        driver.get(frontend+"#/login");
-//        driver.get("http://angular-edu.herokuapp.com/#/login");
-        ptor.findElement(protractor.By.className('btn')).then(function(login_button){
-            login_button.click();
-        });
+        driver.get(ptor.params.auth+'users/sign_in');
         findByName("user[email]").sendKeys(email);
         findByName("user[password]").sendKeys(password);
         findByName("commit").click();
-        ptor.findElements(protractor.By.tagName('a')).then(function(tags){
-            tags[3].getText().then(function(value){
-                expect(value.toLowerCase()).toContain(name.toLowerCase());
-            })
+        driver.get(ptor.params.frontend).then(function(){
+            ptor.findElements(protractor.By.tagName('a')).then(function(tags){
+                tags[3].getText().then(function(value){
+                    expect(value.toLowerCase()).toContain(name.toLowerCase());
+                });
+            });
         });
     });
 }
 
-function logout(driver){
-    it('should logout from scalear Auth', function(){
-        driver.get(auth).then(function(){
-            driver.findElements(protractor.By.tagName('a')).then(function(logout){
-                logout[4].click();
+function logout(ptor, driver){
+    it('should logout', function(){
+        ptor.findElement(protractor.By.linkText('Logout')).then(function(link){
+            link.click().then(function(){
+                driver.findElement(protractor.By.id('flash_notice')).then(function(notice){
+                    expect(notice.getText()).toContain('Signed out successfully.');
+                });
             });
         });
+    });
+}
+
+function feedback(ptor, message){
+    ptor.wait(function(){
+        return ptor.findElement(protractor.By.id('error_container')).then(function(message){
+            return message.getText().then(function(text){
+                console.log(text);
+                if(text.length > 2){
+
+                    return true;
+                }
+                else{
+                    return false;
+                }
+            });
+        });
+    });
+    ptor.findElement(protractor.By.id('error_container')).then(function(error){
+        expect(error.getText()).toContain(message);
     });
 }
 
@@ -71,26 +93,29 @@ describe("Course Information Pages",function(){
         return driver.findElement(protractor.By.id(id))
     };
 
-    login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
-//    login(ptor, driver, 'admin@scalear.com', 'password', 'admin', findByName);
+//    login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
+    login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
 
     describe('Courses Page', function(){
         it('should create a new course', function(){
-            ptor = protractor.getInstance();
+            browser.driver.manage().window().setSize(ptor.params.width, ptor.params.height);
+            browser.driver.manage().window().setPosition(0, 0);
+//            ptor = protractor.getInstance();
             ptor.get('/#/courses/new');
             ptor.findElements(protractor.By.tagName('input')).then(function(fields){
                 fields[fields.length-1].click();
             });
             ptor.findElements(protractor.By.className('controls')).then(function(rows){
-                expect(rows[0].getText()).toContain('Course Short Name is Required');
-                expect(rows[1].getText()).toContain('Course Name is Required');
-                expect(rows[2].getText()).toContain('Course Start Date is Required');
-                expect(rows[3].getText()).toContain('Course Duration is Required');
-                expect(rows[7].getText()).toContain('Course Time Zone is Required');
+                expect(rows[0].getText()).toContain('Required');
+                expect(rows[1].getText()).toContain('Required');
+                //expect(rows[2].getText()).toContain('Required');
+                expect(rows[3].getText()).toContain('Required');
+                expect(rows[7].getText()).toContain('Required');
             });
             ptor.findElements(protractor.By.tagName('input')).then(function(fields){
                 fields[0].sendKeys('TEST-101');
-                fields[1].sendKeys('Testing Course');
+                fields[1].sendKeys('Z Testing Course');
+                fields[2].clear()
                 fields[2].sendKeys(today_keys);
                 fields[3].sendKeys('5');
                 fields[4].sendKeys('http://google.com/');
@@ -98,14 +123,15 @@ describe("Course Information Pages",function(){
                     fields[0].sendKeys('new description');
                     fields[1].sendKeys('new prerequisites');
                 });
-                ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
-                    dropdown[0].click();
+//                ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
+//                    dropdown[0].click();
                     ptor.findElements(protractor.By.tagName('option')).then(function(options){
                         options[1].click();
                     });
-                });
+//                });
                 fields[fields.length-1].click();
             });
+            feedback(ptor, 'Course was successfully created.');
         });
         it('should go to course information', function(){
             ptor.findElement(protractor.By.className('dropdown-toggle')).click();
@@ -113,9 +139,14 @@ describe("Course Information Pages",function(){
         });
     });
     describe('Teacher Course Information', function(){
+        it('should save course id', function(){
+            ptor.getCurrentUrl().then(function(text){
+                course_id = text.split('/')[text.split('/').length-1];
+            });
+        })
         it('should show course short name and course title', function(){
             ptor.findElement(protractor.By.tagName('h3')).then(function(title){
-                expect(title.getText()).toBe('TEST-101 | Testing Course');
+                expect(title.getText()).toBe('TEST-101 | Z Testing Course');
             });
         });
         it('should display course enrollment key', function(){
@@ -127,6 +158,7 @@ describe("Course Information Pages",function(){
         });
         it('should display course start date', function(){
             ptor.findElements(protractor.By.tagName('p')).then(function(data){
+                console.log(today)
                 expect(data[1].getText()).toBe(today);
             });
         });
@@ -172,13 +204,14 @@ describe("Course Information Pages",function(){
                     field.sendKeys('any text');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
-                expect(date_field.getText()).toBe('Empty');
+                expect(date_field.getText()).toBe(today);
                 date_field.click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
                     field.sendKeys(tomorrow_keys);
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
+                feedback(ptor, 'Course was successfully updated.');
                 expect(date_field.getText()).toBe(tomorrow);
             });
         });
@@ -197,20 +230,21 @@ describe("Course Information Pages",function(){
                     field.sendKeys('any text');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
-                expect(duration_field.getText()).toBe('5');
+                expect(duration_field.getText()).toBe('Duration is not a number');
                 duration_field.click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
                     field.sendKeys('-10');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
-                expect(duration_field.getText()).toBe('5');
+                expect(duration_field.getText()).toBe('Duration must be greater than 0');
                 duration_field.click();
                 ptor.findElement(protractor.By.className('editable-input')).then(function(field){
                     field.clear();
                     field.sendKeys('10');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
+                feedback(ptor, 'Course was successfully updated.');
                 expect(duration_field.getText()).toBe('10');
             });
         });
@@ -237,6 +271,7 @@ describe("Course Information Pages",function(){
                     field.sendKeys('http://www.google.com');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
+                feedback(ptor, 'Course was successfully updated.');
                 expect(fields[1].getText()).toBe('http://www.google.com');
             });
         });
@@ -256,6 +291,7 @@ describe("Course Information Pages",function(){
                     field.sendKeys(' ');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
+                feedback(ptor, 'Course was successfully updated.');
                 expect(fields[0].getText()).toBe('Empty');
 
                 fields[0].click();
@@ -264,6 +300,7 @@ describe("Course Information Pages",function(){
                     field.sendKeys('any description');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
+                feedback(ptor, 'Course was successfully updated.');
                 expect(fields[0].getText()).toBe('any description');
             });
         });
@@ -283,6 +320,7 @@ describe("Course Information Pages",function(){
                     field.sendKeys(' ');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
+                feedback(ptor, 'Course was successfully updated.');
                 expect(fields[1].getText()).toBe('Empty');
 
                 fields[1].click();
@@ -291,18 +329,20 @@ describe("Course Information Pages",function(){
                     field.sendKeys('any prerequisites');
                 });
                 ptor.findElement(protractor.By.className('icon-ok')).click();
+                feedback(ptor, 'Course was successfully updated.');
                 expect(fields[1].getText()).toBe('any prerequisites');
             });
         });
         it('should edit course time zone', function(){
-            ptor.findElement(protractor.By.tagName('details-select')).then(function(field){
+            ptor.findElement(protractor.By.tagName('details-time-zone')).then(function(field){
                 field.click();
-                ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
-                    dropdown[0].click();
+//                ptor.findElements(protractor.By.tagName('select')).then(function(dropdown){
+//                    dropdown[0].click();
                     ptor.findElements(protractor.By.tagName('option')).then(function(options){
                         options[2].click();
                     });
-                });
+//                });
+                feedback(ptor, 'Course was successfully updated.');
                 expect(field.getText()).toBe('Alaska')
             });
         });
@@ -311,7 +351,7 @@ describe("Course Information Pages",function(){
         });
         it('should show course short name and course title after refresh', function(){
             ptor.findElement(protractor.By.tagName('h3')).then(function(title){
-                expect(title.getText()).toBe('TEST-101 | Testing Course');
+                expect(title.getText()).toBe('TEST-101 | Z Testing Course');
             });
         });
 
@@ -346,9 +386,7 @@ describe("Course Information Pages",function(){
             });
         });
     });
-    describe('Teacher Course Enrolled Students', function(){
 
-    });
     describe('Teacher Course Teachers', function(){
         it('should go to teachers', function(){
             ptor.findElement(protractor.By.className('dropdown-toggle')).click();
@@ -361,7 +399,7 @@ describe("Course Information Pages",function(){
         });
         it('should display teacher\'s email', function(){
             ptor.findElement(protractor.By.id('email')).then(function(email){
-                expect(email.getText()).toBe('admin@scalear.com');
+                expect(email.getText()).toBe('anyteacher@email.com');
             })
         });
         it('should display teacher\'s role', function(){
@@ -375,7 +413,7 @@ describe("Course Information Pages",function(){
             });
         });
 
-        it('should add new rows for teachers', function(){
+        it('should add new row for teacher', function(){
             ptor.findElement(protractor.By.id('add_teacher')).then(function(add_teacher){
                 add_teacher.click();
                 ptor.findElements(protractor.By.id('new_teacher')).then(function(new_teachers){
@@ -384,83 +422,132 @@ describe("Course Information Pages",function(){
                 add_teacher.click();
                 add_teacher.click();
                 ptor.findElements(protractor.By.id('new_teacher')).then(function(new_teachers){
-                    expect(new_teachers.length).toBe(3);
+                    expect(new_teachers.length).toBe(1);
                 });
-                ptor.findElement(protractor.By.id('delete_new_teacher')).click();
+                ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+                    delete_buttons[delete_buttons.length-1].click()
+                })
                 ptor.findElements(protractor.By.id('new_teacher')).then(function(new_teachers){
-                    expect(new_teachers.length).toBe(2);
+                    expect(new_teachers.length).toBe(0);
                 });
             });
-        });
-        it('should input new teachers\' emails', function(){
-            ptor.findElements(protractor.By.id('new_email')).then(function(emails){
-                emails[0].sendKeys('prof@email.com');
-                emails[1].sendKeys('ta@email.com');
+            ptor.findElement(protractor.By.id('add_teacher')).then(function(add_teacher){
+                add_teacher.click();
+                ptor.findElements(protractor.By.id('new_teacher')).then(function(new_teachers){
+                    expect(new_teachers.length).toBe(1);
+                });
+                ptor.findElement(protractor.By.id('new_email')).then(function(email){
+                    email.sendKeys('bahiafayez@hotmail.com');
+                })
             })
-        });
-        it('should select new teachers\' roles', function(){
-            ptor.findElements(protractor.By.tagName('select')).then(function(roles){
-                roles[0].click();
+//            ptor.findElement(protractor.By.tagName('select')).then(function(role){
+//                role.click();
                 ptor.findElements(protractor.By.tagName('option')).then(function(options){
                     options[1].click();
                 });
-                roles[1].click();
+//            })
+            ptor.findElement(protractor.By.className('btn-primary')).click();
+            feedback(ptor, 'Saved');
+        });
+        logout(ptor, driver);
+        login(ptor, driver, 'bahiafayez@hotmail.com', 'password', 'bahia', findByName);
+        it('should see notifications and reject the invitation', function(){
+            ptor.findElement(protractor.By.linkText('Notifications')).then(function(link){
+                link.click().then(function(){
+                    ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                        expect(modal.getText()).toContain('by anyteacher, as a Professor');
+                    });
+                    ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+                        button.click().then(function(){
+                            feedback(ptor, 'rejected');
+                        });
+                    });
+                });
+            });
+        });
+        logout(ptor, driver);
+        login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
+        it('should go to course teachers page', function(){
+            ptor.get('/#/courses/'+course_id+'/teachers');
+        });
+        it('should display only one teacher', function(){
+            ptor.findElements(protractor.By.id('email')).then(function(teachers){
+                expect(teachers.length).toBe(1);
+            });
+        });
+        it('should add another row for teacher', function(){
+            ptor.findElement(protractor.By.id('add_teacher')).then(function(add_teacher){
+                add_teacher.click();
+                ptor.findElements(protractor.By.id('new_teacher')).then(function(new_teachers){
+                    expect(new_teachers.length).toBe(1);
+                });
+                ptor.findElement(protractor.By.id('new_email')).then(function(email){
+                    email.sendKeys('bahiafayez@hotmail.com');
+                });
+            })
+//            ptor.findElement(protractor.By.tagName('select')).then(function(role){
+//                role.click();
                 ptor.findElements(protractor.By.tagName('option')).then(function(options){
                     options[options.length-1].click();
                 });
-            })
-
-        });
-        it('should save new teachers', function(){
-//            ptor.sleep(10000);
+//            })
             ptor.findElement(protractor.By.className('btn-primary')).click();
+            feedback(ptor, 'Saved');
+        });
+        logout(ptor, driver);
+        login(ptor, driver, 'bahiafayez@hotmail.com', 'password', 'bahia', findByName);
+        it('should see notifications and accept the invitation', function(){
+            ptor.findElement(protractor.By.linkText('Notifications')).then(function(link){
+                link.click().then(function(){
+                    ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                        expect(modal.getText()).toContain('by anyteacher, as a Teacher Assistant');
+                    });
+                    ptor.findElement(protractor.By.className('btn-primary')).then(function(button){
+                        button.click().then(function(){
+                            feedback(ptor, 'You have accepted the invitation');
+                        });
+                    });
+                });
+            });
+        });
+        logout(ptor, driver);
+        login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
+        it('should go to course teachers page', function(){
+            ptor.get('/#/courses/'+course_id+'/teachers');
+        });
+        it('should display two teachers', function(){
+            ptor.findElements(protractor.By.id('email')).then(function(teachers){
+                expect(teachers.length).toBe(2);
+            });
         });
         it('should display teachers\' emails', function(){
             ptor.findElements(protractor.By.id('email')).then(function(emails){
-                expect(emails[0].getText()).toBe('admin@scalear.com');
-                expect(emails[1].getText()).toBe('prof@email.com');
-                expect(emails[2].getText()).toBe('ta@email.com');
-            })
+                expect(emails[0].getText()).toBe('anyteacher@email.com');
+                expect(emails[1].getText()).toBe('bahiafayez@hotmail.com');
+            });
         });
         it('should display teachers\' roles', function(){
             ptor.findElements(protractor.By.id('role')).then(function(roles){
                 expect(roles[0].getText()).toBe('Professor');
-                expect(roles[1].getText()).toBe('Professor');
-                expect(roles[2].getText()).toBe('TA');
+                expect(roles[1].getText()).toBe('TA');
             });
         });
         it('should display teachers\' status', function(){
             ptor.findElements(protractor.By.id('status')).then(function(status){
                 expect(status[0].getText()).toBe('Owner');
-                expect(status[1].getText()).toBe('Pending');
-                expect(status[2].getText()).toBe('Pending');
-
             });
         });
-        it('should delete a teacher', function(){
-            ptor.findElements(protractor.By.id('delete_teacher')).then(function(delete_buttons){
-                delete_buttons[delete_buttons.length-1].click();
-                var alert_dialog = ptor.switchTo().alert();
-                alert_dialog.dismiss();
-                ptor.findElements(protractor.By.id('teacher')).then(function(teachers){
-                    expect(teachers.length).toBe(3);
-                });
-                delete_buttons[delete_buttons.length-1].click();
-                var alert_dialog = ptor.switchTo().alert();
-                alert_dialog.accept();
-                ptor.findElements(protractor.By.id('teacher')).then(function(teachers){
-                    expect(teachers.length).toBe(2);
-                });
-            })
-        });
-
         it('should allow editing teachers\' roles', function(){
             ptor.findElements(protractor.By.tagName('details-select')).then(function(roles){
                 roles[roles.length-1].click();
-                ptor.findElement(protractor.By.tagName('select')).click();
-                ptor.findElements(protractor.By.tagName('option')).then(function(options){
-                    options[options.length-1].click();
-                });
+//                ptor.findElement(protractor.By.tagName('select')).then(function(select){
+//                    select.click().then(function(){
+                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
+                            options[options.length-2].click();
+                        });
+                        ptor.sleep(4000);
+//                    });
+//                })
             });
         });
         it('should refresh the page', function(){
@@ -468,15 +555,26 @@ describe("Course Information Pages",function(){
         });
         it('should make sure that the role has changed', function(){
             ptor.findElements(protractor.By.id('role')).then(function(roles){
-                expect(roles[roles.length-1].getText()).toBe('TA');
+                expect(roles[roles.length-1].getText()).toBe('Professor');
             });
         });
-    });
-    describe('Teacher', function(){
-        logout(driver);
+        it('should delete a teacher', function(){
+            ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+                delete_buttons[delete_buttons.length-1].click();
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+                    button.click().then(function(){
+                        feedback(ptor, 'Teacher successfully removed from course');
+                    });
+                });
+            });
+            ptor.findElements(protractor.By.id('teacher')).then(function(teachers){
+                expect(teachers.length).toBe(1);
+            });
+        });
+        logout(ptor, driver);
     });
     describe('Student', function(){
-        login(ptor, driver, 'em_menshawi@hotmail.com', 'password', 'Mahmoud Menshawi', findByName);
+        login(ptor, driver, 'anystudent@email.com', 'password', 'anystudent', findByName);
         it('should enroll in the course that was created', function(){
             ptor.findElement(protractor.By.id('join_course')).then(function(join_course){
                 join_course.click();
@@ -498,7 +596,7 @@ describe("Course Information Pages",function(){
                 proceed.click();
             });
             ptor.findElement(protractor.By.className('errormessage')).then(function(validation){
-                expect(validation.getText()).toBe('Course Does Not Exist');
+                expect(validation.getText()).toBe('Course does not exist');
             });
         });
         it('should enter the enrollment key and proceed', function(){
@@ -507,28 +605,32 @@ describe("Course Information Pages",function(){
                 key_field.sendKeys(enroll_key);
             });
             ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
-                proceed.click();
+                proceed.click().then(function(){
+//                    feedback(ptor, 'Successfully Joined Course');
+                    ptor.sleep(3000);
+                });
             });
         });
-        it('should click on the course name', function(){
-            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
-                courses[courses.length-1].click();
-            });
-//            ptor.findElements(protractor.By.binding('course.name')).then(function(links){
-//                links[links.length-1].click();
+//        it('should click on the course name', function(){
+//            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
+//                courses[courses.length-1].click();
 //            });
-//            ptor.sleep(20000);
-        });
+////            ptor.findElements(protractor.By.binding('course.name')).then(function(links){
+////                links[links.length-1].click();
+////            });
+////            ptor.sleep(20000);
+//        });
         it('should go to course information page', function(){
-            ptor.findElement(protractor.By.id('course_information_link')).then(function(info_page){
-                info_page.click();
-            });
+//            ptor.findElement(protractor.By.id('course_information_link')).then(function(info_page){
+//                info_page.click();
+//            });
+            ptor.get('/#/courses/'+course_id+'/course_information');
         });
     });
     describe('Course Information page', function(){
         it('should show course short name and course title', function(){
             ptor.findElement(protractor.By.tagName('h3')).then(function(title){
-                expect(title.getText()).toBe('TEST-101 | Testing Course');
+                expect(title.getText()).toBe('TEST-101 | Z Testing Course');
             });
         });
         it('should display correct start date', function(){
@@ -541,7 +643,7 @@ describe("Course Information Pages",function(){
         });
         it('should display correct course duration', function(){
             ptor.findElements(protractor.By.tagName('p')).then(function(data){
-                expect(data[1].getText()).toBe('10 Weeks');
+                expect(data[1].getText()).toContain('10');
             });
         });
         it('should display correct discussion forum link', function(){
@@ -561,7 +663,7 @@ describe("Course Information Pages",function(){
         });
     });
     describe('Student', function(){
-        logout(driver);
+        logout(ptor, driver);
     });
     describe('Student', function(){
         login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'Bahia', findByName);
@@ -586,7 +688,7 @@ describe("Course Information Pages",function(){
                 proceed.click();
             });
             ptor.findElement(protractor.By.className('errormessage')).then(function(validation){
-                expect(validation.getText()).toBe('Course Does Not Exist');
+                expect(validation.getText()).toBe('Course does not exist');
             });
         });
         it('should enter the enrollment key and proceed', function(){
@@ -595,24 +697,28 @@ describe("Course Information Pages",function(){
                 key_field.sendKeys(enroll_key);
             });
             ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed){
-                proceed.click();
+                proceed.click().then(function(){
+//                    feedback(ptor, 'Successfully Joined Course');
+                    ptor.sleep(3000);
+                });
             });
         });
-        it('should click on the course name', function(){
-            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
-                courses[courses.length-1].click();
-            });
-        });
+//        it('should click on the course name', function(){
+//            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
+//                courses[courses.length-1].click();
+//            });
+//        });
         it('should go to course information page', function(){
-            ptor.findElement(protractor.By.id('course_information_link')).then(function(info_page){
-                info_page.click();
-            });
+//            ptor.findElement(protractor.By.id('course_information_link')).then(function(info_page){
+//                info_page.click();
+//            });
+            ptor.get('/#/courses/'+course_id+'/course_information');
         });
     });
     describe('Course Information page', function(){
         it('should show course short name and course title', function(){
             ptor.findElement(protractor.By.tagName('h3')).then(function(title){
-                expect(title.getText()).toBe('TEST-101 | Testing Course');
+                expect(title.getText()).toBe('TEST-101 | Z Testing Course');
             });
         });
         it('should display correct start date', function(){
@@ -625,7 +731,7 @@ describe("Course Information Pages",function(){
         });
         it('should display correct course duration', function(){
             ptor.findElements(protractor.By.tagName('p')).then(function(data){
-                expect(data[1].getText()).toBe('10 Weeks');
+                expect(data[1].getText()).toContain('10');
             });
         });
         it('should display correct discussion forum link', function(){
@@ -645,24 +751,25 @@ describe("Course Information Pages",function(){
         });
     });
     describe('Student', function(){
-        logout(driver);
+        logout(ptor, driver);
     });
     describe('Teacher', function(){
-        login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
 //        login(ptor, driver, 'admin@scalear.com', 'password', 'Administrator', findByName);
-        it('should go to course', function(){
-            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
-                courses[courses.length-1].click();
-            });
+        login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
+        it('should go to enrolled students page', function(){
+//            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
+//                courses[courses.length-1].click();
+//            });
 //            ptor.findElements(protractor.By.tagName('a')).then(function(links){
 //                links[links.length-6].click();
 //            });
+            ptor.get('/#/courses/'+course_id+'/enrolled_students');
         });
-        it('should go to enrolled students page', function(){
-            ptor.executeScript('window.scrollBy(0, -1000)', '');
-            ptor.findElement(protractor.By.className('dropdown-toggle')).click();
-            ptor.findElement(protractor.By.id('enrolled')).click();
-        });
+//        it('should go to enrolled students page', function(){
+//            ptor.executeScript('window.scrollBy(0, -1000)', '');
+//            ptor.findElement(protractor.By.className('dropdown-toggle')).click();
+//            ptor.findElement(protractor.By.id('enrolled')).click();
+//        });
     });
     describe('Enrolled Students Page', function(){
         it('should display all enrolled students in the course', function(){
@@ -670,11 +777,10 @@ describe("Course Information Pages",function(){
                 expect(rows.length).toBe(3);
             });
             ptor.findElements(protractor.By.tagName('td')).then(function(data){
-//                expect(data[0].getText()).toBe('Bahia');
-                expect(data[0].getText()).toBe('Bahia');
-                expect(data[1].getText()).toBe('bahia.sharkawy@gmail.com');
-                expect(data[4].getText()).toBe('Mahmoud Menshawi');
-                expect(data[5].getText()).toBe('em_menshawi@hotmail.com');
+                expect(data[0].getText()).toBe('anystudent');
+                expect(data[1].getText()).toBe('anystudent@email.com');
+                expect(data[4].getText()).toBe('Bahia');
+                expect(data[5].getText()).toBe('bahia.sharkawy@gmail.com');
             });
         });
         it('should filter the students according to the search text', function(){
@@ -684,13 +790,13 @@ describe("Course Information Pages",function(){
                     expect(rows.length).toBe(1);
                 });
                 search_field.clear();
-                search_field.sendKeys('mahmoud');
+                search_field.sendKeys('anystudent');
                 ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
                     expect(rows.length).toBe(2);
                 });
                 ptor.findElements(protractor.By.tagName('td')).then(function(data){
-                    expect(data[0].getText()).toBe('Mahmoud Menshawi');
-                    expect(data[1].getText()).toBe('em_menshawi@hotmail.com');
+                    expect(data[0].getText()).toBe('anystudent');
+                    expect(data[1].getText()).toBe('anystudent@email.com');
                 });
                 search_field.clear();
                 search_field.sendKeys('bahia');
@@ -709,7 +815,7 @@ describe("Course Information Pages",function(){
                 email.click();
             });
             ptor.findElement(protractor.By.id('to')).then(function(email_field){
-                expect(email_field.getAttribute('value')).toBe('bahia.sharkawy@gmail.com');
+                expect(email_field.getAttribute('value')).toContain('bahia.sharkawy@gmail.com');
             });
         });
 
@@ -719,10 +825,10 @@ describe("Course Information Pages",function(){
             });
         });
         it('should enter email body', function(){
-            ptor.findElement(protractor.By.id('tinymce_body_ifr')).then(function(tinymce_ifr){
-                ptor.switchTo().frame(tinymce_ifr);
-                driver.findElement(protractor.By.tagName("body")).sendKeys('anything');
-                driver.switchTo().defaultContent();
+            ptor.findElement(protractor.By.className('ta-editor')).then(function(ta_editor){
+                //ptor.switchTo().frame(ta-editor);
+                ta_editor.sendKeys('anything');
+                //driver.switchTo().defaultContent();
 //                ptor.findElement(protractor.By.tagName('body')).then(function(body_field){
 //                    body_field.sendKeys(('anything'));
 //                });
@@ -730,7 +836,9 @@ describe("Course Information Pages",function(){
 
         });
         it('should send the email', function(){
-            driver.findElement(protractor.By.id('send_email')).click();
+            ptor.findElement(protractor.By.id('send_emails')).click().then(function(){
+                feedback(ptor, 'Email will be sent shortly');
+            });
         });
 
         it('should allow emailing several students', function(){
@@ -743,7 +851,7 @@ describe("Course Information Pages",function(){
                 email_button.click();
             });
             ptor.findElement(protractor.By.id('to')).then(function(email_field){
-                expect(email_field.getAttribute('value')).toBe('bahia.sharkawy@gmail.com; em_menshawi@hotmail.com; ');
+                expect(email_field.getAttribute('value')).toBe('bahia.sharkawy@gmail.com; anystudent@email.com; ');
             });
         });
         it('should enter email subject', function(){
@@ -752,28 +860,56 @@ describe("Course Information Pages",function(){
             });
         });
         it('should enter email body', function(){
-            ptor.findElement(protractor.By.id('tinymce_body_ifr')).then(function(tinymce_ifr){
-                ptor.switchTo().frame(tinymce_ifr);
-                driver.findElement(protractor.By.tagName("body")).sendKeys('anything');
-                driver.switchTo().defaultContent();
+            ptor.findElement(protractor.By.className('ta-editor')).then(function(ta_editor){
+                //ptor.switchTo().frame(ta-editor);
+                ta_editor.sendKeys('anything');
+                //driver.switchTo().defaultContent();
+//                ptor.findElement(protractor.By.tagName('body')).then(function(body_field){
+//                    body_field.sendKeys(('anything'));
+//                });
             });
         });
         it('should send the email', function(){
-            driver.findElement(protractor.By.id('send_emails')).click();
+            ptor.findElement(protractor.By.id('send_emails')).click().then(function(){
+                feedback(ptor, 'Email will be sent shortly');
+            });
         });
 
         it('should allow removing students from course', function(){
-            ptor.findElements(protractor.By.id('remove_button')).then(function(remove){
-                remove[0].click();
-                var alert_dialog = ptor.switchTo().alert();
-                alert_dialog.accept();
-                remove[1].click();
-                alert_dialog = ptor.switchTo().alert();
-                alert_dialog.accept();
-                ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
-                    expect(rows.length).toBe(1);
+            ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+                delete_buttons[delete_buttons.length-1].click();
+//                var alert_dialog = ptor.switchTo().alert();
+//                alert_dialog.accept();
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+                    button.click().then(function(){
+                        feedback(ptor, 'was removed from Course');
+                    });
                 });
             });
+            ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
+                delete_buttons[delete_buttons.length-1].click();
+//                var alert_dialog = ptor.switchTo().alert();
+//                alert_dialog.accept();
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+                    button.click().then(function(){
+                        feedback(ptor, 'was removed from Course');
+                    });
+                });
+            });
+            ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
+                expect(rows.length).toBe(1);
+            });
+            // ptor.findElements(protractor.By.id('remove_button')).then(function(remove){
+            //     remove[0].click();
+            //     var alert_dialog = ptor.switchTo().alert();
+            //     alert_dialog.accept();
+            //     remove[1].click();
+            //     alert_dialog = ptor.switchTo().alert();
+            //     alert_dialog.accept();
+            //     ptor.findElements(protractor.By.tagName('tr')).then(function(rows){
+            //         expect(rows.length).toBe(1);
+            //     });
+            // });
         });
 
         it('should refresh the page', function(){
@@ -792,17 +928,25 @@ describe("Course Information Pages",function(){
             ptor.get('/#/courses');
         });
         it('should delete the created course', function(){
-            ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
+           ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons){
                 delete_buttons[delete_buttons.length-1].click();
-                var alert_dialog = ptor.switchTo().alert();
-                alert_dialog.accept();
-                ptor.sleep(1000);
+//                var alert_dialog = ptor.switchTo().alert();
+//                alert_dialog.accept();
+                ptor.findElement(protractor.By.className('btn-danger')).then(function(button){
+                    button.click().then(function(){
+                        feedback(ptor, 'Course was successfully deleted.');
+                    });
+                });
             });
+            // ptor.findElements(protractor.By.className('delete_image')).then(function(delete_buttons){
+            //     delete_buttons[delete_buttons.length-1].click();
+            //     var alert_dialog = ptor.switchTo().alert();
+            //     alert_dialog.accept();
+            //     ptor.sleep(1000);
+            // });
         });
+        logout(ptor, driver);
     });
-
-
-
 });
 
 

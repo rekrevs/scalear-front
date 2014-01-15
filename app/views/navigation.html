@@ -1,14 +1,5 @@
-<style>
-.navigation{
-	width: 1170px;
-	margin-left: auto;
-	margin-right: auto;
-}
-</style>
-
 <div class='navigation' ng-switch="current_user.roles[0].id">
 <teacher_navigation ng-switch-when="1"></teacher_navigation>
 <teacher_navigation ng-switch-when="5"></teacher_navigation>
 <student_navigation ng-switch-when="2"></student_navigation>
-<!-- <student_navigation ng-switch-default></student_navigation> -->
 </div>

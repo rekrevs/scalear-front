@@ -33,5 +33,5 @@ label{
 	font-size:12px !important;
 }
 #details{
-	overflow-x:auto;
+	overflow-x:scroll;
 }

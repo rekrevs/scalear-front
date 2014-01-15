@@ -60,23 +60,21 @@ angular.module('scalearAngularApp')
 		 },
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-switch on='quiz.question_type'>"+
+		 template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+
 		 				"<answer ng-switch-when='MCQ' />"+
 		 				"<answer ng-switch-when='OCQ' />"+
-		 				"<drag ng-switch-when='drag' />"+
+		 				"<drag ng-switch-when='DRAG' />"+
 	 				"</div>",
 	};
 }]).directive('answer', ['$rootScope','$log', function($rootScope,$log){
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-style='{left: xcoor, top: ycoor, position: \"absolute\", lineHeight:\"0px\"}' data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
-		 				"<img ng-src='images/{{imgName}}' ng-class=answerClass  pop-over='popover_options' unique='true' />"+
-	 				"</div>",
+		 templateUrl:'/views/teacher/course_editor/answer.html',
 
 		link: function(scope, element, attrs) {
 
-			//===FUNCTIONS===//
+			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
 				$log.debug("setting answer location")
 				var ontop=angular.element('.ontop');		
@@ -95,9 +93,9 @@ angular.module('scalearAngularApp')
 				$log.debug("image change")
 				$log.debug(scope.data.correct)
 				if(scope.quiz.question_type == "OCQ")
-					scope.imgName = scope.data.correct? 'button_green.png' : 'button8.png';
+					scope.imgName = scope.data.correct? scope.ocq_correct : scope.ocq_incorrect;
 				else
-					scope.imgName = scope.data.correct? 'checkbox_green.gif' : 'checkbox.gif';
+					scope.imgName = scope.data.correct? scope.mcq_correct : scope.mcq_incorrect;
 			}
 
 			scope.calculatePosition=function(){
@@ -126,7 +124,24 @@ angular.module('scalearAngularApp')
 				}
 				
 			}
-			//===============//
+			scope.updateValues= function()
+			{
+				$log.debug("in value update")
+				$log.debug(scope.quiz);
+				$log.debug(scope.quiz.answers);
+				scope.values=0
+				for(var element in scope.quiz.answers)
+				{
+					$log.debug(scope.quiz.answers[element].correct)
+					if(scope.quiz.answers[element].correct==true)
+					{
+						$log.debug("in true");
+						scope.values+=1
+					}
+				}
+				$log.debug(scope.values)
+			}
+			//==========//
 	
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
@@ -138,22 +153,28 @@ angular.module('scalearAngularApp')
 
 			scope.answerClass = "component dropped answer_img"						
 
-			var template = "<p>"+
+			var template = "<form name='aform'>"+
 								"<span translate>lectures.correct</span>:"+
-								"<input class='must_save_check' ng-change='radioChange(data);setAnswerColor()' ng-model='data.correct' style='margin-left:20px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' />"+
-								"<br><span translate>groups.answer</span>:"+ 
-								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}}/>"+
-								"<br><span translate>lectures.explanation</span>:"+
+								"<input class='must_save_check' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/>"+
+								"<span style='display:block' class='help-inline' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
+								"<p>{{'groups.answer'|translate}}:</p>"+ 
+								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}} name='answer' required/>"+
+								"<span style='display:block;' class='help-inline' ng-show='aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
+								"<p>{{'lectures.explanation'|translate}}:</p>"+
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} />"+
 								"<br>"+
 								"<input type='button' ng-click='remove()' class='btn btn-danger remove_button' value={{'lectures.remove'|translate}} />"+
-							"</p>"
+							"</form>"
 
            	scope.popover_options={
             	content: template,
             	html:true,
             	fullscreen:false
             }
+            
+            scope.$watch('quiz.answers', function(){
+				scope.updateValues();	
+			},true)
 
             setAnswerLocation()
 			scope.setAnswerColor()
@@ -166,13 +187,13 @@ angular.module('scalearAngularApp')
 		 template: "<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 				"<div class='input-prepend'>"+
 		 					"<span class='add-on'>{{data.pos}}</span>"+
-		 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true'/>"+
+		 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required  tooltip='{{!data.answer?\"required\":\"\"}}'/>"+
 	 					"</div>"+
  					"</div>",
 
 		link: function(scope, element, attrs) {
 			 
-			//===FUNCTIONS===//
+			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
 				var ontop=angular.element('.ontop');
 				scope.width  = scope.data.width * ontop.width();
@@ -195,7 +216,7 @@ angular.module('scalearAngularApp')
 				scope.data.width= element.width()/ontop.width();
 				scope.data.height= element.height()/(ontop.height());
 			}			
-			//===============//	
+			//==========//	
 			
 			$rootScope.$on("updatePosition",function(){
 				$log.debug("event emiited updated position")
@@ -217,7 +238,7 @@ angular.module('scalearAngularApp')
 
 			if(!(scope.data.explanation instanceof Array)){
 				$log.debug("not an array")
-				scope.data.explanation = new Array()
+				scope.data.explanation = []
 				for(var i in scope.list)
 					scope.data.explanation[i]=""
 			}
@@ -333,7 +354,7 @@ angular.module('scalearAngularApp')
 				scope.$apply()
 				if(element.find('input')[all_inputs.length])
 					element.find('input')[all_inputs.length].focus()
-			},{"disable_in_input" : false});			
+			},{"disable_in_input" : false, 'propagate':true});			
 			
 		}
 	};
@@ -437,10 +458,10 @@ angular.module('scalearAngularApp')
 		replace:true,
 		template:"<li class='ui-state-default'>"+
 					"<ng-form name='aform'>"+
-						"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item'></span>"+
+						"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item' style='float:left'></span>"+
 						"<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
-						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-						"<delete_button size='small' action='removeAnswer($index, quiz)' />"+
+						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required && !hide_valid' style='padding-top: 5px;position:absolute;float:right'>{{'courses.required'|translate}}!</span>"+
+						"<delete_button size='small' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' style='float:right'/>"+
 					"</ng-form>"+
 				"</li>"				 
 	}
@@ -464,74 +485,4 @@ angular.module('scalearAngularApp')
 			});
 		}
 	};
-}]).directive('popOver',['$parse','$compile','$q','$window','$log',function ($parse, $compile, $q, $window, $log) {
-    return{
-  		restrict: 'A',
-  		link: function(scope, element, attr, ctrl) {
-
-	        var getter = $parse(attr.popOver)
-	        scope.$watch(attr.popOver, function(newval){
-	        	var options = getter(scope)
-	        	if(options){
-		        	element.popover('destroy');
-		        	element.popover(options);
-		          	var popover = element.data('popover');
-			        
-			        if(options.content){
-
-		      			if(attr.unique){
-			            	element.on('show', function(){
-			              		$('.popover.in').each(function(){
-			                		var $this = $(this)
-			                		var popover = $this.data('popover');
-			                		if (popover && !popover.$element.is(element)) {
-			                  			$this.popover('hide');		                  			
-			                		}
-		              			});
-			              	});
-	              			
-			          	}
-
-			          	popover.getPosition = function(){
-				            var pop = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
-				            $compile(this.$tip)(scope);
-				            scope.$digest();
-				            this.$tip.data('popover', this);
-				            var arrow = angular.element(".arrow")
-				            arrow.css("top",'50%');
-				            if(options.fullscreen){
-					            var win = angular.element($window)
-								var elem_top= element.offset().top
-								var elem_bottom= win.height() - elem_top;
-								var arrow_pos
-								if(elem_top<170) //too close to top
-								{
-									arrow_pos = pop.top + (pop.height/2)
-							 		arrow.css("top",arrow_pos+'px');
-									pop.top = (angular.element('.popover').height() / 2)  - (pop.height/2)
-								}
-								else if(elem_bottom < 160) //too close to bottom
-								{					
-									arrow_pos =elem_bottom - (pop.height/2) - 20
-							 		arrow.css("top",'initial');
-							 		arrow.css("bottom",arrow_pos+'px');
-									pop.top = win.height() - (angular.element('.popover').height() / 2) - (pop.height/2) - 10
-								}
-							}
-
-				            return pop;
-			          	};
-
-			          	$(document).on("click", function (e) {
-						    var target = $(e.target)
-						    var inPopover = target.closest('.popover').length > 0
-						    var isElem = target.is(element)
-						    if (!inPopover && !isElem)
-						    	element.popover('hide');
-						});	         
-			        }
-			    }
-		    })
-      	}
-    };
-}]);
+}])

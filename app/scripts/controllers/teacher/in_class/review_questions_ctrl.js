@@ -5,15 +5,17 @@ angular.module('scalearAngularApp')
 
     $window.scrollTo(0, 0);
   	var init=function(){
+      $scope.loading_questions = true
   		Module.getStudentQuestions(
   			{
-		   course_id:$stateParams.course_id,
+		      course_id:$stateParams.course_id,
            module_id:$stateParams.module_id
   			},
   			function(data){
   				$log.debug(data)
   				$scope.review_questions= data.questions
           $scope.lecture_names=data.lecture_names
+          $scope.loading_questions = false
   			},
   			function(){
   	 		}

@@ -5,6 +5,7 @@ angular.module('scalearAngularApp')
 
 	$window.scrollTo(0, 0);
 
+	
     var init = function()
     {
     	$scope.open_id="-1";
@@ -28,7 +29,7 @@ angular.module('scalearAngularApp')
     
     $scope.$on('accordianUpdate', function(event, message) {
 		$log.debug("updating accordian now")
-		$scope.open_id=message["g_id"];
+		$scope.open_id=message.g_id;
 		$scope.open[message.g_id]= true;
 		$scope.highlight_item=message.type;
 		$scope.highlight_id=message.id;

@@ -1,11 +1,16 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('ServerInterceptor', ['$rootScope','$q','$timeout','ErrorHandler','$injector','scalear_api','headers','$log', function($rootScope,$q, $timeout, ErrorHandler, $injector, scalear_api, headers, $log) { //server and also front end requests (requesting partials and so on..)
+.factory('ServerInterceptor', ['$rootScope','$q','$timeout','$interval','ErrorHandler','$injector','scalear_api','headers','$log','$translate', function($rootScope,$q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log ,$translate) { //server and also front end requests (requesting partials and so on..)
   return {
     // optional method
     'request': function(config) {
       	// successful request
+        // change language to current language
+
+        var regex = new RegExp(scalear_api.host + "(\/en\/|\/sv\/)");
+        config.url = config.url.replace(regex, scalear_api.host+"/"+$translate.uses()+"/");
+        //
       	return config || $q.when(config);
     },
  
@@ -26,21 +31,29 @@ angular.module('scalearAngularApp')
       var re= new RegExp("^"+scalear_api.host)
       if($rootScope.server_error==true && response.config.url.search(re)!=-1) // if response coming from server, and connection was bad
       {
+        if (angular.isDefined($rootScope.stop)) {
+          $interval.cancel($rootScope.stop);
+          $rootScope.stop = undefined;
+        }
       	$rootScope.show_alert="success";
       	ErrorHandler.showMessage("Connected", 'errorMessage', 2000);
-      	$timeout(function(){
-      		$rootScope.server_error=false;
-      		$rootScope.show_alert="";	
-      	},4000);
+        $rootScope.stop = $interval(function(){
+              $rootScope.server_error = false;
+              $rootScope.show_alert="";
+          }, 4000, 1);
       }
       
       if(response.data.notice && response.config.url.search(re)!=-1)
       {
+        if (angular.isDefined($rootScope.stop)) {
+          $interval.cancel($rootScope.stop);
+          $rootScope.stop = undefined;
+        }
       	$rootScope.show_alert="success";
-      	ErrorHandler.showMessage(response.data.notice, 'errorMessage', 2000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+      	ErrorHandler.showMessage(response.data.notice, 'errorMessage');
+      	$rootScope.stop = $interval(function(){
+      		$rootScope.show_alert="";
+      	}, 4000, 1);
       }
      
       return response || $q.when(response);
@@ -52,11 +65,15 @@ angular.module('scalearAngularApp')
       $log.debug(rejection);
       if(rejection.status==400 && rejection.config.url.search(re)!=-1) 
       {
+        if (angular.isDefined($rootScope.stop)) {
+          $interval.cancel($rootScope.stop);
+          $rootScope.stop = undefined;
+        }
       	$rootScope.show_alert="error";
       	ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+        $rootScope.stop = $interval(function(){
+            $rootScope.show_alert="";
+        }, 4000, 1);
       }
       
       if(rejection.status==404 && rejection.config.url.search(re)!=-1) 
@@ -70,12 +87,17 @@ angular.module('scalearAngularApp')
       		$state.go("course_list") //check
       	else
       		$state.go("login") //check
-      		
+
+
+      	if (angular.isDefined($rootScope.stop)) {
+          $interval.cancel($rootScope.stop);
+          $rootScope.stop = undefined;
+        }	
       	$rootScope.show_alert="error";
-      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data["errors"], 'errorMessage', 8000);
+        $rootScope.stop =$interval(function(){
+            $rootScope.show_alert="";
+        }, 4000, 1);
       }
       
       if(rejection.status==403 && rejection.config.url.search(re)!=-1) 
@@ -88,12 +110,15 @@ angular.module('scalearAngularApp')
       	else
       		$state.go("login") //check
       	
-      	
+      	if (angular.isDefined($rootScope.stop)) {
+          $interval.cancel($rootScope.stop);
+          $rootScope.stop = undefined;
+        }
       	$rootScope.show_alert="error";
       	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+          $rootScope.stop =$interval(function(){
+              $rootScope.show_alert="";
+          }, 4000, 1);
       	
       	
       	
@@ -103,12 +128,15 @@ angular.module('scalearAngularApp')
       {
       	 var $state = $injector.get('$state'); //test connection every 10 seconds.
       	$state.go("login")
-      	
+      	if (angular.isDefined($rootScope.stop)) {
+          $interval.cancel($rootScope.stop);
+          $rootScope.stop = undefined;
+        }
       	$rootScope.show_alert="error";
       	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
-      	$timeout(function(){
-      		$rootScope.show_alert="";	
-      	},4000);
+          $rootScope.stop =$interval(function(){
+              $rootScope.show_alert="";
+          }, 4000, 1);
       	
       	
       }
@@ -122,7 +150,7 @@ angular.module('scalearAngularApp')
       	$rootScope.show_alert="error";
       	
       	if(rejection.data=="")      	
-      		ErrorHandler.showMessage('Error ' + rejection.status + ': ' + "Cannot connect to server", 'errorMessage', 8000);
+      		ErrorHandler.showMessage('Error ' + rejection.status + ': ' + $translate('cant_connect_to_server'), 'errorMessage', 8000);
       	else
       		ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
       	}

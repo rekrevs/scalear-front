@@ -1,16 +1,17 @@
 <center>
-    <h2>Resend Confirmation Instructions</h2>
-    <p>Please enter your email...</p>
+    <form ng-submit="forgot()">
+        <h2 translate="devise.confirmations.resend_instructions"></h2>
+        <br />
+        <p translate="email"></p>
+        <input type="email" id="user_email" ng-model="email" size="50"/>
+        <br />
+        <input type="submit" ng-disabled="!email" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-primary"/>
+    </form>
     <br />
-    <p>E-mail</p>
-    <input type="email" id="user_email" class="string email optional" name="user[email]" size="50"/>
     <br />
-    <input type="button" ng-click="" value="Resend Confirmation Instructions" class="btn btn-primary"/>
-    <br />
-    <br />
-    <a href="/#/users/login">Login</a>
+    <a href="/#/users/login" translate="sign_in"></a>
     <br/>
-    or..
+    {{'or' | translate}}..
     <br/>
-    <a href="/#/users/password/new">Forgot your password?</a>
+    <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
 </center>

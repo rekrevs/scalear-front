@@ -1,0 +1,41 @@
+<div  class="inclass">
+    <div ng-click="muteBtn()" ng-class="mute_class"></div>
+    <div ng-click="playBtn()" ng-class="play_pause_class"></div>
+    <div class="inclass_top">
+        <center ng-show="loading_video" style="position:relative;top:40%"><loading size="small" show="true" ></center>
+        <span ng-show="lecture_url && !loading_video">
+            <div ng-style="left_style">
+                <button_link title="-5" action="skip(-5)"   style="width: 16px;"/>
+                <button_link title="<<" action="prevQuiz()" style="margin-top: 10px" ng-disabled="current_quiz == 1" />
+            </div>
+            
+            <video_container ng-style="video_style" class="inclass_sceen" >
+                <youtube     ng-style="video_style" class="inclass_sceen" id="inclass_vid" url="lecture_url" player="inclass_player" />
+            </video_container>
+            <div ng-style="right_style">
+                <button_link title="+5" action="skip(5)"    style="width: 16px;"/>
+                <button_link title=">>" action="nextQuiz()" style="margin-top: 10px" ng-disabled="current_quiz== total_num_quizzes"/>
+            </div>
+        </span>
+    </div>
+    <div class="inclass_bottom">
+        <div class="left_titles">
+            <div ng-show="question_title" class="question_title">{{question_title}}</div>
+            <div ng-show="questions" style="overflow:auto;height:100%;">
+                <div ng-repeat="question in questions" ng-click="seek(question[1])" class="student_questions" >{{question[0]}}<br></div>
+            </div>
+            <div ng-if="chart_data" class="inclass_chart">
+                <center ng-init="loading_chart=true" style="font-size:14px;position:relative;top:40%;left:15%;">
+                    <loading size="small" show="loading_chart" >
+                </center>
+                <div google-chart chart="chart" on-ready="loading_chart=false"></div>
+            </div>
+        </div>
+       
+        <a ng-click="exitBtn()" class="exit_btn" translate>groups.exit</a>
+        <div class="lecture_count">
+            <b style="padding-left:15px;">Q:{{current_quiz+'/'+total_num_quizzes}}</b>
+            <b style="padding-left:5px;">L:{{current_lecture+'/'+total_num_lectures}}</b>
+        </div>   
+    </div>     
+</div>

@@ -1,0 +1,50 @@
+<!-- build:css(.tmp/styles) styles/announcements.css -->
+<link rel="stylesheet" href="styles/student/announcements.css"/>
+<!-- endbuild -->
+
+<br />
+<center ng-show="!eventSources.length" ><loading size="big" show="!eventSources.length" /></center>
+<center ng-show="eventSources.length">
+	<center>
+    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="min-width: 600px; min-height: 500px;"></div>
+         <br />
+         <div class="alert">
+         	<center style="font-size:14px;font-weight: bold" translate="events.deadline_msg"></center>
+         </div>
+    </center>        
+	<br />
+	<div style="text-align: left; margin-left: 40px;">
+		<table>
+			<tr>
+				<td style="width: 20px; height: 20px; background-color: green;"></td>
+				<td></td>
+				<td translate="events.done"></td>
+			</tr>
+			<tr>
+				<td style="width: 20px; height: 20px; background-color: orange;"></td>
+				<td></td>
+				<td translate="events.not_done"></td>
+			</tr>
+			<tr>
+				<td style="width: 20px; height: 20px; background-color: red;"></td>
+				<td></td>
+				<td translate="events.not_done_due"></td>
+			</tr>
+		</table>
+		<br />
+	</div>
+	<center>
+		<h4 translate="head.announcements"></h4>
+		<table class="table-announce">
+	        <tr ng-repeat="a in announcements">
+	           <td class = "component">
+	            	<span ng-bind-html="a.announcement"></span>
+	           </td>
+	           <td class = "date">
+	            {{ a.updated_at | date:'medium'}}<br>{{ a.user.name }}
+	           </td>
+	        </tr>
+	    </table>
+     </center>
+</center>
+<br />

@@ -1,0 +1,27 @@
+<center><b>{{module.name}}</b></center><br />
+<div style='min-width: 300px; height: 200px;'>
+    <center><loading size="big" show="loading_module_chart" style="top:50px;position:relative"></center>
+    <div ng-if="module_chart" google-chart chart="module_chart"></div>
+</div>
+<br /><br /><br />
+
+<tabset >
+    <tab heading="{{'courses.lecture_quizzes'|translate}}" select="lectureQuizzesTab()" style="cursor:pointer">
+    	<tab1 />
+    </tab>
+    <tab heading="{{'courses.lecture_statistics'|translate}}" select="studentStatisticsTab()" style="cursor:pointer">
+        <tab2 />
+    </tab>
+    <tab heading="{{'courses.lecture_progress'|translate}}" select="lectureProgressTab()" style="cursor:pointer">
+		<tab3 />
+    </tab>
+    <tab heading="{{'courses.quizzes_progress'|translate}}" select="quizzesProgressTab();" style="cursor:pointer">
+   		<tab4 />
+    </tab>
+    <tab heading="{{'courses.surveys'|translate}}" select="surveysTab()" style="cursor:pointer">
+        <tab5 />
+    </tab>
+    <tab heading="{{'groups.quizzes'|translate}}" select="quizzesTab()" style="cursor:pointer">
+        <tab6 />
+    </tab>
+</tabset>

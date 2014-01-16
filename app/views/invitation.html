@@ -1,0 +1,28 @@
+<div class="modal-header">
+    <h3 translate="navigation.notifications"></h3>
+</div>
+<div class="modal-body" style="overflow: auto">
+    <center>
+    	<table class="table">
+			<tr>
+				<td translate="navigation.notification"></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr ng-repeat="(id,invitation) in invitations">
+				<td>
+					<span translate="notification.invited" translate-values='{ course: invitation[0], user:invitation[1], role:invitation[2]}'></span>
+				</td>
+				<td>
+					<a translate="notification.accept" class="btn btn-primary" ng-click="accept(id)"></a>
+				</td>
+				<td>
+					<a translate="notification.reject" class="btn btn-danger" ng-click="reject(id)"></a>
+				</td>
+			</tr>
+		</table>
+    </center>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" ng-click="cancel()" translate="lectures.cancel">Cancel</button>
+</div>

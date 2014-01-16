@@ -3,21 +3,40 @@
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
-  <head>
+  <head> 
+    <script type="text/javascript">
+    if (navigator.appName == 'Microsoft Internet Explorer')
+    {
+       self.location = "ie.html"
+    }
+    </script>   
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title></title>
+    <title>Scalable Learning</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+    <link rel="shortcut icon" type="image/x-icon" href="/logo.ico">
 
-        <!-- build:css(.tmp) styles/main.css -->
-        <link rel="stylesheet" href="styles/bootstrap.css">
-        <link rel="stylesheet" href="styles/main.css">
-        <!-- endbuild -->
-</head>
-  <body ng-app="scalearAngularApp">
-    <!--[if lt IE 7]>
+    <!-- build:css(.tmp/styles) styles/main.css -->
+    <link rel="stylesheet" href="styles/bootstrap.css">
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
+    <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
+    <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css" />
+
+    <!-- endbuild -->
+    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
+  </head>
+
+  <body style="overflow:auto;" ng-app="scalearAngularApp" ng-controller="indexController">
+  	<div id="error_container" ng-show="show_alert!=''" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
+        <div style="text-align: center; display:block;">
+            <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
+        </div>
+  	</div>
+
+    <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
@@ -28,7 +47,56 @@
 
     <!-- Add your site or application content here -->
 
-    <div ui-view=""></div>
+
+
+    <header class="navbar navbar-fixed-top">
+        <nav class="navbar-inner cc">
+            <div class="container">
+                <a href="/#" class="brand"><img alt="Logo" src="images/logo.png" width="30px"></a>
+                <a href="/#" class="brand">Scalable</a>
+                <a href="/#" class="brand" style="padding-left:0px; color:green;">Learning</a>
+                <img alt="Beta_tag_small" class="brand" src="images/beta_tag_small.png" style="width:40px;padding-left:0px;padding-top:15px;">
+
+                <ul class="nav pull-right">
+                    <li ng-show="current_user"><a ><span ng-bind="current_user.name"></span></a></li>
+                    <li ng-show="!current_user"><a ng-click="login()" style="cursor:pointer;float: right;" translate="navigation.login"></a></li> <!-- ui-sref="login" -->
+                    <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()" translate="navigation.logout"></a></li>
+                    <!-- <li><a href="">Edit account</a></li> -->
+                    <li ng-show="current_lang=='en'" ng-cloak>
+    					<a style="cursor:pointer;"><img ng-click="changeLanguage('sv')" src="images/sweden.png" style="width:25px;height:15px;" /></a>
+				    </li>
+    				<li ng-show="current_lang=='sv'" ng-cloak>
+    					<a style="cursor:pointer;"><img ng-click="changeLanguage('en')" src="images/uk.png" style="width:25px;height:15px;" /></a>
+					</li>
+                </ul>
+
+                <ul class="nav pull-left">
+                    <li ng-show="current_user"><a ng-click="coursePage()" style="float: left;cursor: pointer" translate="navigation.courses"></a></li>
+                	<li><a ng-click="open()" ng-show='current_user && current_user.roles[0].id!=2 && current_user.invitations' translate="navigation.notifications" style="float:left;color:red;cursor: pointer;"></a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+    <div ui-view="navigation"></div>
+    <div id="main" role="main">
+        <div class="container" style="position:relative;width:1200px">
+            <div class="content" style="width:auto">
+                <div class="row">
+                    <div class="span12" style="">
+                        <div ui-view=""></div>
+                    </div>
+                </div>
+                <footer>
+                    <br /><br /><br />
+                    <br /><br /><br />
+                    <scalear_footer />
+                </footer>
+            </div>
+            <div><br/></div>
+        </div> 
+    </div> 
+
+    
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
@@ -42,35 +110,144 @@
        ga('send', 'pageview');
     </script>
 
-    <script src="bower_components/jquery/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
+    
+    <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+    <!-- build:js({.tmp,app}) scripts/externals.js -->
+    <script src="bower_components/jquery/jquery.min.js"></script>
+    <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+    
+    <script src="bower_components/angular/angular.min.js"></script>   
+    <script src="bower_components/angular-resource/angular-resource.min.js"></script>
+    <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
 
-        <!-- build:js scripts/plugins.js -->
-        <script src="bower_components/bootstrap-sass/js/bootstrap-affix.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-alert.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-modal.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-transition.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-button.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-typeahead.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-carousel.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-scrollspy.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-collapse.js"></script>
-        <script src="bower_components/bootstrap-sass/js/bootstrap-tab.js"></script>
-        <!-- endbuild -->
+    <script src="bower_components/angular-translate/angular-translate.min.js"></script>
+    <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
+    <script src="bower_components/moment/min/moment.min.js"></script>
+    <script src="bower_components/moment/lang/sv.js"></script>
+    <script src="bower_components/angular-moment/angular-moment.min.js"></script>
 
-        <!-- build:js scripts/modules.js -->
-        <script src="bower_components/angular-resource/angular-resource.js"></script>
-        <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-        <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-        <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-        <!-- endbuild -->
+    <script src="bower_components/angular-xeditable/dist/js/xeditable.min.js"></script>
+    <script src="bower_components/angular-dragdrop/src/angular-dragdrop.min.js"></script>
+    <script src="bower_components/ng-infinite-scroller/build/ng-infinite-scroll.min.js"></script>
+    <script src="bower_components/fullcalendar/fullcalendar.min.js"></script>
+    <script src="bower_components/textAngular/textAngular.min.js"></script>
 
-        <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
-        <script src="scripts/controllers/main.js"></script>
-        <!-- endbuild -->
+    <script src="bower_components/canvg-1.3.zip/canvg.js"></script>
+    <script src="bower_components/canvg-1.3.zip/rgbcolor.js"></script>
+    <script src="bower_components/canvg-1.3.zip/StackBlur.js"></script>
+    <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
+    <script src="bower_components/angular-ui-sortable/src/sortable.js"></script>
+    <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
+    <script src="bower_components/angular-bindonce/bindonce.js"></script>
+
+    <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/accordion/accordion.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/collapse/collapse.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/transition/transition.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/position/position.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/datepicker/datepicker.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/alert/alert.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/modal/modal.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
+
+    <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
+    <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
+    <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
+    <!-- endbuild -->
+
+    <!-- build:js({.tmp,app}) scripts/scripts.js -->
+
+    <script src="scripts/externals/shortcut.js"></script>
+
+    <script src="locals/translation_en.js"></script>
+    <script src="locals/translation_sv.js"></script>
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/filters/filters.js"></script>
+
+    <script src="scripts/directives/error_directives.js"></script> 
+    <script src="scripts/directives/youtube_directives.js"></script>
+    <script src="scripts/directives/popover_directives.js"></script>
+    <script src="scripts/directives/navigation_directives.js"></script>
+    <script src="scripts/directives/footer_directives.js"></script> 
+    <script src="scripts/directives/teacher/course_editor/course_editor_directives.js"></script>        
+    <script src="scripts/directives/teacher/course_editor/lecture_middle_directives.js"></script>
+    <script src="scripts/directives/teacher/course_editor/details_directives.js"></script>
+    <script src="scripts/directives/teacher/progress/progress_directives.js"></script>
+    <script src="scripts/directives/student/courseware/courseware_directives.js"></script>
+    <script src="scripts/directives/student/courseware/quiz_middle_directives.js"></script>
+    <script src="scripts/directives/student/courseware/lecture_middle_directives.js"></script>
+
+    <script src="scripts/services/teacher/course.js"></script>
+    <script src="scripts/services/teacher/document.js"></script>
+    <script src="scripts/services/teacher/lecture.js"></script>
+    <script src="scripts/services/teacher/module.js"></script>
+    <script src="scripts/services/teacher/online_quiz.js"></script>
+    <script src="scripts/services/teacher/quiz.js"></script>
+    <script src="scripts/services/teacher/course_editor.js"></script>
+    <script src="scripts/services/teacher/announcement.js"></script>
+    <script src="scripts/services/server_interceptor.js"></script>
+    <script src="scripts/services/error_handler.js"></script>
+    <script src="scripts/services/user.js"></script>
+    <script src="scripts/services/user_session.js"></script>
+    <script src="scripts/services/batch_email_service.js"></script>
+    <script src="scripts/services/home.js"></script>
+
+    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/index.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+    <script src="scripts/controllers/navigation.js"></script>
+    <script src="scripts/controllers/privacy.js"></script>
+    <script src="scripts/controllers/invitation_modal_ctrl.js"></script>
+
+    <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>        
+    <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/lecture_details_ctrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/lecture_middle_ctrl.js"></script>        
+    <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script> 
+    <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/progress_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/progress_main_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/progress_module_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/lecture_quizzes_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/student_statistics_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/lecture_progress_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/quizzes_progress_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/surveys_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/quizzes_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/free_text_table_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course/enrolled_students.js"></script>
+    <script src="scripts/controllers/teacher/course/course_information.js"></script>
+    <script src="scripts/controllers/teacher/course/teachers.js"></script>
+    <script src="scripts/controllers/teacher/course/send_emails.js"></script>
+
+    <script src="scripts/controllers/teacher/in_class/inclass_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/in_class/inclass_module_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/in_class/display_quizzes_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/in_class/display_questions_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/in_class/review_quizzes_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/in_class/review_questions_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/in_class/review_surveys_ctrl.js"></script>
+
+    <script src="scripts/controllers/student/course_list/course_list_ctrl.js"></script>
+    <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>
+    <script src="scripts/controllers/student/course/course_information.js"></script>
+    <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script> 
+
+    <script src="scripts/controllers/student/lectures/lectures_ctrl.js"></script>
+    <script src="scripts/controllers/student/lectures/lectures_middle_ctrl.js"></script>
+    <script src="scripts/controllers/student/lectures/quizzes_middle_ctrl.js"></script>
+
+    <!-- endbuild -->
 </body>
 </html>

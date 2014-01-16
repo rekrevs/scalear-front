@@ -1,0 +1,34 @@
+<div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="alert">
+	 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
+	 <p ng-show='key=="submit"'>{{"controller_msg.already_submitted" | translate}} {{quiz.quiz_type | translate}} {{'controller_msg.no_more_attempts' | translate}} </p>
+</div>
+
+<h4>{{quiz.name}}</h4>
+<p>{{quiz.instructions}}</p>
+<div ng-if="quiz.quiz_type=='quiz'">
+	<p ng-if="status==null || status==''">
+		<span translate="quizzes.attempt_number"></span>: 0/{{quiz.retries+1}}
+	</p>
+	<p ng-if="status!=null && status.attempts==quiz.retries+1">
+		<span translate="quizzes.used_up_all"></span> {{quiz.retries+1}} <span translate="quizzes.attempts"></span>.
+	</p>
+	<p ng-if="status!=null && status.attempts<quiz.retries+1">
+		<span translate="quizzes.attempt_number"></span>: {{status.attempts}}/{{quiz.retries+1}}
+	</p>
+</div>
+<center>
+	<form name="form">
+		<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct"></student-quiz>
+		<input ng-disabled="status.status=='Submitted' || quiz.questions.length==0" type="button" class="btn btn-primary" value="{{ 'save' |translate}}" ng-click="saveQuiz('save')" />
+		<input ng-disabled="(status.status=='Submitted' && status.attempts==quiz.retries+1) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="btn btn-primary" value="{{ 'submit' |translate}}" ng-click="saveQuiz('submit')" />
+	</form>
+	<div ng-show="survey_chart_data" style="padding:10px 40px" >
+		<div ng-repeat="(id,data) in survey_chart_data" class="chart" style='min-width:300px; height:205px;' ng-init="chart=createSurveyChart(data.answers, $index)"> 
+		   	<center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
+			<div google-chart on-ready="loading=false" chart="chart" ></div>
+		</div>
+	</div>
+	<div ng-repeat="(id,question) in survey_free" style="margin-top:60px">
+		<free-text-table ng-if="question.answers" question="question" related-answers="related_answers" display-only="true"/>
+	</div>
+</center>

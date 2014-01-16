@@ -1,0 +1,27 @@
+<!--<div class="well">-->
+
+<form method="post" style="text-align: left;">
+    <table style="width: 100%;">
+        <tr>
+            <td style="width: 70px;">
+                <b><span translate>courses.to</span>:</b>
+            </td>
+            <td>
+                <textarea id="to" name="emails" title="{{'courses.to'|translate}}" style="width: 80%; resize: none;" readonly="readonly" rows="2" >{{final_emails}}</textarea>
+                <input class="btn" id="send_emails" type="button" ng-click="sendBatchEmail(subject, message)" style="float: right; width: 10%" value="{{'courses.send'|translate}}" ng-disabled="!final_emails || !subject || !message" />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b><span translate>courses.subject</span>: </b>
+            </td>
+            <td style="width: 100%">
+                <input id="subject" type="text" name="subject" style="width: 80%;" ng-model="subject"/>
+            </td>
+        </tr>
+    </table>
+    <br />
+    <div text-angular ng-model="message" ta-toolbar-button-class="btn btn-default btn-mini"></div>
+    <br />
+</form>
+<!--</div>-->

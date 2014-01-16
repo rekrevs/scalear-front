@@ -1,0 +1,19 @@
+<div ng-show="all_surveys">
+	<select ng-model="selected_survey" ng-options="q[0] for q in all_surveys" ng-change="changeSurvey()"></select>
+	<center>
+		<b>{{selected_survey[0]}}</b>	
+	</center>
+	<button_link ng-show="button_msg" action="makeVisibleBtn()" title="{{button_msg|translate}}" style="margin:10px 0px" />
+	<div ng-repeat="(id,data) in survey_chart_data" class="chart" ng-init="chart=createSurveyChart(data.answers, $index)">
+	    <div ><span translate>answer.question</span> {{$index+1}}:</div>    
+	    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
+	    <div google-chart on-ready="loading=false" chart="chart" ></div>
+	    <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
+	</div>
+	<free-text-table question="question" survey-id="selected_survey[1]" related-answers="related_answers" ng-repeat="question in survey_free" />
+</div>
+<center>
+	<br /><br />
+	<loading size="small" show="loading_surveys_chart" />
+	<div ng-if="!all_surveys && !loading_surveys_chart" translate>courses.no_surveys</div>
+</center>

@@ -1,0 +1,6 @@
+{
+	"key": "AKIAI7HFHTLWDTALAVEA",
+	"secret": "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",
+	"bucket_staging":"scalear-staging",
+    "bucket_production":"scalable-learning.com"
+}

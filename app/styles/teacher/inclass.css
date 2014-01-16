@@ -1,0 +1,120 @@
+.btn-xlarge {
+    padding: 28px 28px;
+    font-size: 22px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+}
+
+.play_button{
+	position:absolute;
+	width:50px;
+	height:50px;
+	background: url("/images/playN.png") no-repeat center center;
+}
+.pause_button{
+	position:absolute;
+	width:50px;
+	height:50px;
+	background: url("/images/pauseN.png") no-repeat center center;
+}
+.unmute_button{
+	position:absolute;
+	top:40px;
+	width:50px;
+	height:50px;
+	background: url("/images/muteF.png") no-repeat center center;
+}
+.mute_button{
+	position:absolute;
+	top:40px;
+	width:50px;
+	height:50px;
+	background: url("/images/unmuteF.png") no-repeat center center;
+}
+.whiteboard{
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	top: 0 !important;
+	margin-left: 0;
+	left: 0;
+}
+
+.review{
+	max-height: 100%;
+	overflow: auto;
+}
+
+.inclass{
+	width:100%;
+	height:100%; 
+	background-color:white;
+}
+
+.inclass_top{
+	display: block; 
+	height: 60%; 
+	width: 100%;
+}
+
+.inclass_bottom{
+	display:block;
+	width:100%;
+	height:40%;
+	background-color:white;
+}
+
+.left_titles{
+	position:absolute;
+	padding-left:10px;
+	display:inline;
+	font-size:28px;
+	margin-top:0px;
+	line-height:30px;
+	height:40%;
+	width:100%;
+}
+.question_title{
+	position:absolute;
+	width:40%;
+	height:90%;
+	margin-top: 15px;
+}
+
+.student_questions{
+	overflow:auto;
+	display:inline;
+	font-size:20px;
+	margin-top:10px;
+	line-height:30px;
+	height:70%;
+	width:98%;
+	cursor:pointer;
+}
+
+.inclass_chart{
+	overflow:auto;
+	width:60%;
+	height:90%;
+	background-color:white;
+	float:right;
+	display:inline;
+}
+
+.exit_btn{
+	display:inline;
+	font-size:16px;
+	position:absolute;
+	bottom:0;
+	left:0;
+	cursor:pointer
+}
+
+.lecture_count{
+	display:inline;
+	position:absolute;
+	bottom:0;
+	margin-left:35px;
+}

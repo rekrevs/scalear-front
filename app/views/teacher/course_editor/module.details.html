@@ -1,0 +1,29 @@
+<center>
+  <h3 translate>lectures.details</h3>  
+  <table class="table table-striped table-bordered" style="width:95%;font-size:12px;text-align: center">
+    <tr>
+      <td style="width:50%;"><span translate>groups.module_name</span>:</td>
+      <td>
+        <details-text value="module.name" save="updateModule()" validate="validateModule" column="name"></details-text>
+      </td>
+    </tr>
+    <tr>
+      <td><span translate>groups.appearance_date</span>:</td>
+      <td>
+        <details-date date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date>
+      </td>
+    </tr>
+    <tr>
+      <td><span translate>groups.due_date</span>:</td>
+      <td>
+        <details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date>
+      </td>
+    </tr>
+    <tr>
+      <td><span translate>groups.description</span>:</td>
+      <td>
+        <details-area value="module.description" save="updateModule()" validate="validateModule" column="description"></details-area>
+      </td>
+    </tr>
+  </table>
+</center>

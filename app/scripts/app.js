@@ -50,7 +50,7 @@
       }
 
       $log.debug("lang is "+ $rootScope.current_lang);
-    	var statesThatDontRequireAuth =['login', 'home', 'privacy', 'ie']
+    	var statesThatDontRequireAuth =['login', 'teacher_signup', 'student_signup', 'forgot_password', 'new_confirmation', 'home', 'privacy', 'ie']
 		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information', 'course.lectures']
 		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
 
@@ -92,12 +92,12 @@
     		UserSession.getRole().then(function(result){
     			var s=1;
 
-         if(result==0)
-         {
-            window.location=scalear_api.host+"/"+$rootScope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
-
-         }
-          else if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent))
+//         if(result==0)
+//         {
+//            window.location=scalear_api.host+"/"+$rootScope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
+//
+//         }
+          if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent))
           {
               $state.go("ie");
           }
@@ -158,6 +158,7 @@
     $httpProvider.interceptors.push('ServerInterceptor');
 
    
+
     $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('home', {
@@ -170,10 +171,30 @@
         templateUrl: '/views/ie.html'
       })
       .state('login', {
-      	url:'/login',
+      	url:'/users/login',
       templateUrl: '/views/login.html',
       controller: 'LoginCtrl'
    	 })
+    .state('teacher_signup', {
+        url:'/users/teacher',
+        templateUrl: '/views/users/teacher.html',
+        controller: 'UsersTeacherCtrl'
+    })
+    .state('student_signup', {
+        url:'/users/student',
+        templateUrl: '/views/users/student.html',
+        controller: 'UsersStudentCtrl'
+    })
+    .state('forgot_password', {
+        url:'/users/password/new',
+        templateUrl: '/views/users/password/new.html',
+        controller: 'UsersPasswordNewCtrl'
+    })
+    .state('new_confirmation', {
+        url:'/users/confirmation/new',
+        templateUrl: '/views/users/confirmation/new.html',
+        controller: 'UsersConfirmationNewCtrl'
+    })
    	 .state('privacy',{
    	 	url:'/privacy',
    	 	templateUrl:'/views/privacy.html',

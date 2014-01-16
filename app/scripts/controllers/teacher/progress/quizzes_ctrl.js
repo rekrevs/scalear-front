@@ -25,6 +25,7 @@ angular.module('scalearAngularApp')
                 $log.debug(data)
                 $scope.quiz_chart_data = data.chart_data
                 $scope.quiz_chart_questions = data.chart_questions
+                $scope.student_count = data.students_count
                 if(!$scope.selected_quiz){
                 	$scope.all_quizzes = data.all_quizzes
                 	$scope.selected_quiz = $scope.all_quizzes? $scope.all_quizzes[0] : ""
@@ -32,9 +33,7 @@ angular.module('scalearAngularApp')
                 $scope.loading_quizzes_chart = false
                 $scope.$watch("current_lang", redrawChart);
             },
-            function(){
-            	//alert("Failed to load quizzes, please check your internet connection")
-            }
+            function(){}
         )
     }
     var getQuizQuestionTitle = function(index){
@@ -76,7 +75,7 @@ angular.module('scalearAngularApp')
         return formated_data
     }
 
-    $scope.createQuizChart = function(chart_data, ind){
+    $scope.createQuizChart = function(chart_data, ind, student_count){
         var chart = {};
         chart.type = "ColumnChart"
         chart.options = {
@@ -89,6 +88,10 @@ angular.module('scalearAngularApp')
             "fontSize" : 12,
             "vAxis": {
                 "title": $translate("quizzes.number_of_students"),
+                "gridlines": {
+                    "count":10
+                },
+                "maxValue": student_count
             },
         };
         chart.data = $scope.formatQuizChartData(chart_data)

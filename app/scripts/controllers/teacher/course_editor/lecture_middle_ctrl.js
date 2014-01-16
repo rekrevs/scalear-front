@@ -48,14 +48,12 @@ angular.module('scalearAngularApp')
  		var new_time = time 
  		var inc = 0
  		$scope.quiz_list.forEach(function(quiz){
- 			console.log(quiz.time +'----'+ parseInt(new_time))
  		    if(quiz.time == parseInt(new_time+1))
  				new_time+= 3
  			else if(quiz.time == parseInt(new_time)){
  				new_time+= 2
  				console.log(new_time)
- 			}
- 					
+ 			} 					
  			else if(quiz.time == parseInt(new_time-1))
  				new_time+= 1
  		})

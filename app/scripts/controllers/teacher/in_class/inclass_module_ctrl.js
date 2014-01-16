@@ -136,8 +136,14 @@ var openModal=function(view, type){
        $scope.play_pause_class = "play_button"
     }
 
-    $scope.inclass_player.events.onReady=function(){
-      $log.debug("player ready")
+    // $scope.inclass_player.events.onReady=function(){
+    //   $log.debug("player ready")
+    //   $scope.seek($scope.quiz_time);
+    //   $scope.loading_video=false
+    // }
+
+    $scope.inclass_player.events.onMeta=function(){
+      console.log($scope.quiz_time)
       $scope.seek($scope.quiz_time);
       $scope.loading_video=false
     }

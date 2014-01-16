@@ -45,6 +45,7 @@ angular.module('scalearAngularApp')
       
       if(response.data.notice && response.config.url.search(re)!=-1)
       {
+
         if (angular.isDefined($rootScope.stop)) {
           $interval.cancel($rootScope.stop);
           $rootScope.stop = undefined;

@@ -20,6 +20,7 @@ angular.module('scalearAngularApp')
    	$scope.logout = function()
    	{
         $rootScope.current_user=null
+        $rootScope.transition=true;
         window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_out"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
    	}
 

@@ -87,8 +87,32 @@
 		$window.onbeforeunload= function(){
 			$rootScope.unload=true;
 		}
-  		$rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
-    	
+
+//          $rootScope.$on('$viewContentLoading',
+//              function(event, viewConfig){
+//                  $rootScope.start_loading=true;
+//                  // Access to all the view config properties.
+//                  // and one special property 'targetView'
+//                  // viewConfig.targetView
+//              });
+//          $rootScope.$on('$viewContentLoaded',
+//              function(event){
+//                  $rootScope.start_loading=false;
+//              });
+//
+//          $rootScope.$on('stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+//              console.log("in success")
+//              $rootScope.start_loading=false;
+//            });
+//
+//          $rootScope.$on('stateChangeError', function (ev, to, toParams, from, fromParams) {
+//              console.log("in success")
+//              $rootScope.start_loading=false;
+//          });
+
+       $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
+
+            //$rootScope.start_loading=true;
     		UserSession.getRole().then(function(result){
     			var s=1;
 

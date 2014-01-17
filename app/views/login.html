@@ -9,7 +9,7 @@
         <input type="password" ng-model="user.password" id="user_passowrd" class="password optional" name="user[password]" size="50"/>
         <br />
         <p translate="remember_me"></p>
-        <input type="checkbox" ng-model="remember">
+        <input type="checkbox" ng-model="user.remember_me">
         <br />
         <br />
         <input type="submit" ng-click="login()" ng-disabled="sending || !user.email || !user.password" value="{{'sign_in' | translate}}" class="btn btn-primary"/>

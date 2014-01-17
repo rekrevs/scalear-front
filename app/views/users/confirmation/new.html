@@ -4,17 +4,20 @@
         <br />
         <p translate="email"></p>
         <input type="email" ng-model="user.email" id="user_email" class="string email optional" name="user[email]" size="50"/>
+        <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
+        
+        <br/><span class="errormessage" ng-show="user.errors.confirmation_token">{{user.errors.confirmation_token.join()}}</span>
         <br />
         <input type="submit" ng-click="resend()" ng-disabled="!user.email || sending" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-primary"/>
         <br />
         <br />
-        <center ng-show="sending" ><loading size="small" show="sending" ></center>
+        <center ng-show="sending" ><loading size="small" show="sending" ></center>  
     </form>
     <br />
     <br />
     <a href="/#/users/login" translate="sign_in"></a>
     <br/>
-    {{'or' | translate}}..
+    {{'or' | translate}}
     <br/>
     <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
 </center>

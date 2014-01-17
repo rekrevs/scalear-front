@@ -1,16 +1,20 @@
 <center>
+<form ng-submit="change_password()">
     <h2 translate="password_edit.change_password"></h2>
     <br />
-    <p>New Password</p>
+    <p translate="password_edit.new_password"></p>
     <input type="password" ng-model="user.password" id="user_password" class="string password" name="user[password]" size="50"/>
     <br />
-    <p>New Password Confirmation</p>
+    <p translate="password_edit.new_password_confirmation"></p>
     <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" class="string password" name="user[password_confirmation]" size="50"/>
     <br />
-    <input type="button" ng-click="change_password()" value="Change Password" class="btn btn-primary"/>
+    <input type="submit" ng-click="change_password()" ng-disabled="sending || !user.password || !user.password_confirmation || user.password != user.password_confirmation" value="{{'password_edit.change_password2' | translate}}" class="btn btn-primary"/>
     <br />
     <br />
-    <a href="/#/users/login">Login</a>
+    <center ng-show="sending" ><loading size="small" show="sending" ></center>
+    <br />
+    <br />
+    <a href="/#/users/login" translate='sign_in'></a>
     <br/>
 </center>
 

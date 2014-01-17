@@ -1,4 +1,3 @@
-<center ng-show="sending" ><loading size="small" show="sending" ></center>
 <center>
     <form ng-submit="forgot()">
         <h2 translate="devise.confirmations.resend_instructions"></h2>
@@ -6,7 +5,10 @@
         <p translate="email"></p>
         <input type="email" ng-model="user.email" id="user_email" class="string email optional" name="user[email]" size="50"/>
         <br />
-        <input type="submit" ng-click="resend()" ng-disabled="!email" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-primary"/>
+        <input type="submit" ng-click="resend()" ng-disabled="!user.email || sending" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-primary"/>
+        <br />
+        <br />
+        <center ng-show="sending" ><loading size="small" show="sending" ></center>
     </form>
     <br />
     <br />

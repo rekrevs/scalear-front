@@ -12,7 +12,10 @@
         <input type="checkbox" ng-model="remember">
         <br />
         <br />
-        <input type="submit" ng-click="login()" ng-disabled="!user.email || !user.password" value="{{'sign_in' | translate}}" class="btn btn-primary"/>
+        <input type="submit" ng-click="login()" ng-disabled="sending || !user.email || !user.password" value="{{'sign_in' | translate}}" class="btn btn-primary"/>
+        <br />
+        <br />
+        <center ng-show="sending" ><loading size="small" show="sending" ></center>
     </form>
     <br />
     <br />

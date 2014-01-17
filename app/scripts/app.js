@@ -53,6 +53,19 @@
     	var statesThatDontRequireAuth =['login', 'teacher_signup', 'student_signup', 'forgot_password','change_password', 'show_confirmation','new_confirmation', 'home', 'privacy', 'ie']
 		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information', 'course.lectures']
 		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
+      var statesThatRequireNoAuth = ['student_signup', 'teacher_signup', 'new_confirmation', 'forgot_password', 'change_password']
+
+      //check if route requires no auth
+      var stateNoAuth = function(state)
+      {
+        for(var element in statesThatRequireNoAuth)
+        {
+          var input = statesThatRequireNoAuth[element];
+          if(state.substring(0, input.length) == input)
+            return true;
+        }
+        return false;
+      }
 
   		// check if route does not require authentication
   		var routeClean = function(state) {
@@ -124,6 +137,14 @@
     				{
     					$state.go("student_courses");
     				}
+          else if(stateNoAuth(to.name))
+            {
+              if(result == 1 || result == 2)
+              {
+                $state.go("home");
+                s=0;
+              }
+            }
     				
     				if(s==0){
     					$rootScope.show_alert="error";

@@ -163,7 +163,8 @@ angular.module('scalearAngularApp')
           $rootScope.stop = undefined;
         }
       	$rootScope.show_alert="error";
-      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
+        console.log(rejection.data);
+      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data.error, 'errorMessage', 8000);
           $rootScope.stop =$interval(function(){
               $rootScope.show_alert="";
           }, 4000, 1);

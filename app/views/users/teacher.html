@@ -12,7 +12,10 @@
             <p translate="password_confirmation"></p>
             <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" name="user[password_confirmation]" size="50"/>
             <br />
-            <input type="submit" ng-click="sign_up()" ng-disabled="!user.name || !user.email || !user.password || !user.password_confirmation" value="{{'sign_up' | translate}}" class="btn btn-primary" />
+            <input type="submit" ng-click="sign_up()" ng-disabled="sending || !user.name || !user.email || !user.password || !user.password_confirmation" value="{{'sign_up' | translate}}" class="btn btn-primary" />
+            <br />
+            <br />
+            <center ng-show="sending" ><loading size="small" show="sending" ></center>
         </form>
         <br />
         <br />

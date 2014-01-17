@@ -58,7 +58,7 @@
                 <img alt="Beta_tag_small" class="brand" src="images/beta_tag_small.png" style="width:40px;padding-left:0px;padding-top:15px;">
 
                 <ul class="nav pull-right">
-                    <li ng-show="current_user"><a ><span ng-bind="current_user.name"></span></a></li>
+                    <li ng-show="current_user"><a href='/#/users/edit' ><span ng-bind="current_user.name"></span></a></li>
                     <li ng-show="!current_user"><a ng-click="login()" style="cursor:pointer;float: right;" translate="navigation.login"></a></li> <!-- ui-sref="login" -->
                     <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()" translate="navigation.logout"></a></li>
                     <!-- <li><a href="">Edit account</a></li> -->

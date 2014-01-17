@@ -92,6 +92,7 @@ var translation_en=function(){
         change_password: "Change your Password",
         change_password2: "Change my Password",
         new_password: "New password",
+        new_password_confirmation: "New Password Confirmation",
         confirm_password: "Confirm new password",
         forgot_password: "Forgot your Password?",
         send_reset: "Send me Reset Password Instructions",

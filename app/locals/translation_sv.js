@@ -92,6 +92,7 @@ var translation_sv=function(){
               change_password: "Ändra ditt lösenord",
               change_password2: "Ändra mitt lösenord",
               new_password: "Nytt lösenord",
+              new_password_confirmation: "Nytt lösenord Bekräftelse",
               confirm_password: "Bekräfta nytt lösenord",
               forgot_password: "Har du glömt ditt lösenord?",
               send_reset: "Skicka mig instruktioner för att återställa lösenordet",
@@ -609,8 +610,10 @@ var translation_sv=function(){
             registrations:
             {
                 signed_up: "Ett nytt konto har skapats. En bekräftelse har skickats till din epost.",
+                signed_up_but_unconfirmed: "Ett meddelande med en bekräftelselänk har skickats till din e-postadress. Vänligen öppna länken för att aktivera ditt konto.",
                 inactive_signed_up: "Ett nytt konto har skapats. Du kunde inte logga in, för ditt konto är %{reason}.",
                 updated: "Ditt konto har uppdaterats.",
+                
                 user:
                 {
                     updated: "Du har uppdaterat ditt konto framgångsrikt.",

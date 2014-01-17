@@ -1,12 +1,14 @@
-<center ng-show="sending" ><loading size="small" show="sending" ></center>
 <center>
-    <form ng-submit="forgot()">
+    <form ng-submit="reset_password()">
         <h2 translate="password_edit.forgot_password"></h2>
         <br />
         <p translate="email"></p>
         <input type="email" ng-model="user.email" id="user_email" class="string email optional" name="user[email]" size="50"/>
         <br />
-        <input type="submit" ng-click="reset_password()"  ng-disabled="sending || !email" value="{{'password_edit.send_reset' | translate}}" class="btn btn-primary"/>
+        <input type="submit"  ng-disabled="sending || !user.email" value="{{'password_edit.send_reset' | translate}}" class="btn btn-primary"/>
+        <br />
+        <br />
+        <center ng-show="sending" ><loading size="small" show="sending" ></center>
     </form>
     <br />
     <br />

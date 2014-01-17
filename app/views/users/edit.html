@@ -20,7 +20,7 @@
 
         <br/><span class="errormessage" ng-show="user.errors.current_password">{{user.errors.current_password.join()}}</span>
         <br />
-        <input type="submit" value="Update Account"  class="btn btn-primary"  />
+        <input type="submit" value="Update Account"  class="btn btn-primary" ng-disabled="!user.name || !user.email" />
         </form>
         <br />
         <br />

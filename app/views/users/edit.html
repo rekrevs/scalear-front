@@ -2,17 +2,19 @@
     <div style="width: 400px;">
         <h3 translate="account_edit.edit_account"></h3>
 
-        <p>* Name</p>
-        <input type="text" ng-model="user.name" id="user_name" name="user[name]" size="50"/>
-        <p>* E-mail</p>
-        <input type="email" ng-model="user.email" id="user_email" name="user[email]" size="50"/>
-        <p>* Password</p>
-        <input type="password" ng-model="user.password" id="user_password" name="user[password]" size="50"/>
-        <p>* Password Confirmation</p>
-        <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" name="user[password_confirmation]" size="50"/>
-        <p>* Current Confirmation</p>
+        <p translate="devise.sign_in_message"></p>
+            <p translate="name"></p>
+            <input type="text" ng-model="user.name" id="user_name" size="50"/>
+            <p translate="email"></p>
+            <input type="email" ng-model="user.email" id="user_email" size="50"/>
+            <p translate="password"></p>
+            <input type="password" ng-model="user.password" id="user_password" name="user[password]" size="50"/>
+            <p translate="password_confirmation"></p>
+            <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" name="user[password_confirmation]" size="50"/>
+        <p translate="current_password"></p>
         <input type="password" ng-model="user.current_password" id="user_current_confirmation" name="user[current_password]" size="50"/>
         <br />
+        <input type="button" ng-click="init()" value="get info"  class="btn btn-primary" />
         <input type="button" ng-click="update_account()" value="Update Account"  class="btn btn-primary" />
         <br />
         <br />

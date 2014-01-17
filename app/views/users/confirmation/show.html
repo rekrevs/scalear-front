@@ -1,0 +1,6 @@
+<center ng-show="sending" ><loading size="small" show="sending" ></center>
+<center>
+    <span class="errormessage" ng-show="user.errors.confirmation_token">Confirmation Token {{user.errors.confirmation_token.join()}}</span>
+    <br>
+    <a ui-sref="new_confirmation" class="btn btn-primary" translate>{{'devise.confirmations.resend_instructions'}}</a>
+</center>

@@ -5,8 +5,11 @@
         <br />
         <p translate="email"></p>
         <input type="email" ng-model="user.email" id="user_email" class="string email optional" name="user[email]" size="50"/>
+        <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
         <br />
-        <input type="submit" ng-click="resend()" ng-disabled="!email" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-primary"/>
+        <br/><span class="errormessage" ng-show="user.errors.confirmation_token">{{user.errors.confirmation_token.join()}}</span>
+        <br />
+        <input type="submit" ng-click="resend()" ng-disabled="!user.email" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-primary"/>
     </form>
     <br />
     <br />

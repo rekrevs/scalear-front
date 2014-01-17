@@ -4,14 +4,19 @@
 
         <p>* Name</p>
         <input type="text" ng-model="user.name" id="user_name" name="user[name]" size="50"/>
+        <br/><span class="errormessage" ng-show="user.errors.name">{{user.errors.name.join()}}</span>
         <p>* E-mail</p>
         <input type="email" ng-model="user.email" id="user_email" name="user[email]" size="50"/>
+        <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
         <p>* Password</p>
         <input type="password" ng-model="user.password" id="user_password" name="user[password]" size="50"/>
+        <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>
         <p>* Password Confirmation</p>
         <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" name="user[password_confirmation]" size="50"/>
+        <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
         <p>* Current Confirmation</p>
         <input type="password" ng-model="user.current_password" id="user_current_confirmation" name="user[current_password]" size="50"/>
+        <br/><span class="errormessage" ng-show="user.errors.current_password">{{user.errors.current_password.join()}}</span>
         <br />
         <input type="button" ng-click="update_account()" value="Update Account"  class="btn btn-primary" />
         <br />

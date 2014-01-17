@@ -156,14 +156,16 @@ angular.module('scalearAngularApp')
       
       if(rejection.status==401 && rejection.config.url.search(re)!=-1)
       {
+
       	 var $state = $injector.get('$state'); //test connection every 10 seconds.
       	$state.go("login")
       	if (angular.isDefined($rootScope.stop)) {
           $interval.cancel($rootScope.stop);
           $rootScope.stop = undefined;
         }
+
       	$rootScope.show_alert="error";
-      	ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
+      	ErrorHandler.showMessage('Error ' + ': ' + ((typeof rejection.data["error"] === 'undefined') ? rejection.data : rejection.data["error"]), 'errorMessage', 8000);
           $rootScope.stop =$interval(function(){
               $rootScope.show_alert="";
           }, 4000, 1);

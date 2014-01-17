@@ -3,12 +3,15 @@
     <br />
     <p>New Password</p>
     <input type="password" ng-model="user.password" id="user_password" class="string password" name="user[password]" size="50"/>
+    <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>
     <br />
     <p>New Password Confirmation</p>
     <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" class="string password" name="user[password_confirmation]" size="50"/>
+    <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
     <br />
     <input type="button" ng-click="change_password()" value="Change Password" class="btn btn-primary"/>
     <br />
+    <br/><span class="errormessage" ng-show="user.errors.reset_password_token">Reset Password Token {{user.errors.reset_password_token.join()}}</span>
     <br />
     <a href="/#/users/login">Login</a>
     <br/>

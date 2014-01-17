@@ -1,12 +1,22 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersEditCtrl',['$scope','User','$state', function ($scope, User, $state) {
+  .controller('UsersEditCtrl',['$rootScope','$scope','User','$state', function ($rootScope,$scope, User, $state) {
+
+    $scope.user={};
+
+    $scope.$watch('current_user', function(val){
+        if(val)
+        $scope.user={name:$rootScope.current_user.name, email:$rootScope.current_user.email}
+    })
+
     $scope.update_account=function(){
+        delete $scope.user.errors
        User.update_account({},{user:$scope.user}, function(){
            console.log("signed up");
            $state.go("home");
-       }, function(){
+       }, function(response){
+           $scope.user.errors=response.data.errors
            console.log("sign up failed")
        })
     }
@@ -22,5 +32,10 @@ angular.module('scalearAngularApp')
             })
             }
         }
+
+        $scope.$watch('current_lang', function(newval, oldval){
+            if(newval!=oldval)
+                delete $scope.user.errors
+        });
 
   }]);

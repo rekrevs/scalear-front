@@ -116,11 +116,11 @@
     					$state.go("course_list");
     					s=0;
     				}
-    			else if( (to.name=="home" || to.name=="login") && result==1 ) // teacher going to home, redirected to courses page
+    			else if( (to.name=="home" || to.name=="login" || to.name=="teacher_signup" || to.name=="student_signup") && result==1 ) // teacher going to home, redirected to courses page
     				{
     					$state.go("course_list");
     				}
-    			else if( (to.name=="home" || to.name=="login") && result==2 ) // student going to home, redirected to student courses page
+    			else if( (to.name=="home" || to.name=="login" || to.name=="teacher_signup" || to.name=="student_signup") && result==2 ) // student going to home, redirected to student courses page
     				{
     					$state.go("student_courses");
     				}
@@ -207,7 +207,7 @@
     })
     .state('show_confirmation', {
         url:'/users/confirmation?confirmation_token',
-        //templateUrl: '/views/users/confirmation/new.html',
+        templateUrl: '/views/users/confirmation/show.html',
         controller: 'UsersConfirmationShowCtrl'
     })
    	 .state('privacy',{

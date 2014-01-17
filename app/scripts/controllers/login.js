@@ -11,6 +11,8 @@ angular.module('scalearAngularApp')
         },function(){
             console.log("failed")
         });
+
+       $scope.singleModel = 1;
    }
    
   }]);

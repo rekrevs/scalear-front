@@ -1,7 +1,6 @@
 <center>
     <div style="width: 400px;">
-        <h2>Student Sign Up</h2>
-        <p>Please fill in the below information...</p>
+        <h3 translate="account_edit.edit_account"></h3>
 
         <p>* Name</p>
         <input type="text" ng-model="user.name" id="user_name" name="user[name]" size="50"/>
@@ -11,14 +10,14 @@
         <input type="password" ng-model="user.password" id="user_password" name="user[password]" size="50"/>
         <p>* Password Confirmation</p>
         <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" name="user[password_confirmation]" size="50"/>
+        <p>* Current Confirmation</p>
+        <input type="password" ng-model="user.current_password" id="user_current_confirmation" name="user[current_password]" size="50"/>
         <br />
-        <input type="button" ng-click="sign_up()" value="Sign Up"  class="btn btn-primary" />
+        <input type="button" ng-click="update_account()" value="Update Account"  class="btn btn-primary" />
         <br />
         <br />
-        <a href="/#/users/password/new">Forgot your password?</a>
+        <a style="cursor: pointer;" ng-click="delete_account()">Cancel Account?</a>
         <br/>
-        or..
-        <br/>
-        <a href="/#/users/confirmation/new">Didn't receive confirmation instructions</a>
-    </div>
+
+	</div>
 </center>

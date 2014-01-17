@@ -50,7 +50,7 @@
       }
 
       $log.debug("lang is "+ $rootScope.current_lang);
-    	var statesThatDontRequireAuth =['login', 'teacher_signup', 'student_signup', 'forgot_password', 'new_confirmation', 'home', 'privacy', 'ie']
+    	var statesThatDontRequireAuth =['login', 'teacher_signup', 'student_signup', 'forgot_password','change_password', 'show_confirmation','new_confirmation', 'home', 'privacy', 'ie']
 		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information', 'course.lectures']
 		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
 
@@ -116,11 +116,11 @@
     					$state.go("course_list");
     					s=0;
     				}
-    			else if( to.name=="home" && result==1 ) // teacher going to home, redirected to courses page
+    			else if( (to.name=="home" || to.name=="login") && result==1 ) // teacher going to home, redirected to courses page
     				{
     					$state.go("course_list");
     				}
-    			else if( to.name=="home" && result==2 ) // student going to home, redirected to student courses page
+    			else if( (to.name=="home" || to.name=="login") && result==2 ) // student going to home, redirected to student courses page
     				{
     					$state.go("student_courses");
     				}
@@ -185,15 +185,30 @@
         templateUrl: '/views/users/student.html',
         controller: 'UsersStudentCtrl'
     })
+    .state('edit_account', {
+        url:'/users/edit',
+        templateUrl: '/views/users/edit.html',
+        controller: 'UsersEditCtrl'
+    })
     .state('forgot_password', {
         url:'/users/password/new',
         templateUrl: '/views/users/password/new.html',
         controller: 'UsersPasswordNewCtrl'
     })
+    .state('change_password', {
+        url:'/users/password/edit?reset_password_token',
+        templateUrl: '/views/users/password/edit.html',
+        controller: 'UsersPasswordEditCtrl'
+    })
     .state('new_confirmation', {
         url:'/users/confirmation/new',
         templateUrl: '/views/users/confirmation/new.html',
         controller: 'UsersConfirmationNewCtrl'
+    })
+    .state('show_confirmation', {
+        url:'/users/confirmation?confirmation_token',
+        //templateUrl: '/views/users/confirmation/new.html',
+        controller: 'UsersConfirmationShowCtrl'
     })
    	 .state('privacy',{
    	 	url:'/privacy',

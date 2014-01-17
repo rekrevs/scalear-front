@@ -28,6 +28,9 @@ angular.module('scalearAngularApp')
     // optional method
     'response': function(response) {
       // do something on success
+        console.log(response);
+        console.log("headers are");
+        console.log(response.headers());
       var re= new RegExp("^"+scalear_api.host)
       if($rootScope.server_error==true && response.config.url.search(re)!=-1) // if response coming from server, and connection was bad
       {
@@ -55,6 +58,18 @@ angular.module('scalearAngularApp')
       		$rootScope.show_alert="";
       	}, 4000, 1);
       }
+      else if(response.headers()["x-flash-notice"] || response.headers()["x-flash-message"] && response.config.url.search(re)!=-1)
+      {
+          if (angular.isDefined($rootScope.stop)) {
+              $interval.cancel($rootScope.stop);
+              $rootScope.stop = undefined;
+          }
+          $rootScope.show_alert="success";
+          ErrorHandler.showMessage(response.headers()["x-flash-notice"] || response.headers()["x-flash-message"], 'errorMessage');
+          $rootScope.stop = $interval(function(){
+              $rootScope.show_alert="";
+          }, 4000, 1);
+      }
      
       return response || $q.when(response);
     },
@@ -63,6 +78,21 @@ angular.module('scalearAngularApp')
    'responseError': function(rejection) {
       // do something on error
       $log.debug(rejection);
+
+       if(rejection.headers()["x-flash-error"] || rejection.headers()["x-flash-warning"] && rejection.config.url.search(re)!=-1)
+       {
+
+           if (angular.isDefined($rootScope.stop)) {
+               $interval.cancel($rootScope.stop);
+               $rootScope.stop = undefined;
+           }
+           $rootScope.show_alert="error";
+           ErrorHandler.showMessage(rejection.headers()["x-flash-error"] || rejection.headers()["x-flash-warning"], 'errorMessage');
+           $rootScope.stop = $interval(function(){
+               $rootScope.show_alert="";
+           }, 4000, 1);
+       }
+
       if(rejection.status==400 && rejection.config.url.search(re)!=-1) 
       {
         if (angular.isDefined($rootScope.stop)) {

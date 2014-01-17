@@ -339,6 +339,7 @@ var translation_en=function(){
         export_chart: "Export Chart",
         type: "Type",
         student_progress: "Student Progress",
+        out_of: "Out Of",
       },
       courses:{
         confused: "Confused",

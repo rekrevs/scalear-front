@@ -539,7 +539,7 @@ module.exports = function (grunt) {
     constants: {
       scalear_api:{
         host: 'http://localhost:3000', 
-        redirection_url: 'http://localhost:9000/#/',
+        redirection_url: 'http://localhost:3000/#/',
       },
       
     }
@@ -552,6 +552,17 @@ module.exports = function (grunt) {
       scalear_api:{
         host: 'http://scalear-staging.herokuapp.com',//'http://angular-learning.herokuapp.com',
         redirection_url: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/#/',
+      } 
+    }
+  }],
+  staging2: [{
+    dest: '<%= yeoman.app %>/scripts/config.js',
+    wrap: '"use strict";\n\n <%= __ngModule %>',
+    name: 'config',
+    constants: {
+      scalear_api:{
+        host: 'http://morning-crag-4732.herokuapp.com/',//'http://angular-learning.herokuapp.com',
+        redirection_url: 'http://morning-crag-4732.herokuapp.com/',
       } 
     }
   }],
@@ -614,6 +625,7 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('staging',['ngconstant:staging','build','aws_s3:staging', 's3:staging'])
+  grunt.registerTask('staging2',['ngconstant:staging2','build'])
   grunt.registerTask('production',['ngconstant:prod','build','aws_s3:prod', 's3:prod'])
 
   grunt.registerTask('default', [

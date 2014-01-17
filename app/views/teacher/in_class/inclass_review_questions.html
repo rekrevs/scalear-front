@@ -5,13 +5,13 @@
 	<div ng-show="review_questions" style="padding:10px 40px" >
 		<table class="table table-striped"> 
 			<tr>
-				<th translate>groups.hide</th>
+				<th translate>answer.show</th>
 				<th translate>answer.question</th>
 				<th style="width:10%" translate>lectures.lecture_title</th>
 				<th translate>online_quiz.time</th>
 			</tr>
 			<tr ng-repeat="question in review_questions">
-				<td ><input type="checkbox" ng-model="question.hide" ng-change="updateHide(question)" /></td>
+				<td ><input type="checkbox" ng-init="question.hide = !question.hide" ng-model="question.hide" ng-change="updateHide(question.id,!question.hide)" /></td>
 				<td>
 					{{question.question}}
 				</td>

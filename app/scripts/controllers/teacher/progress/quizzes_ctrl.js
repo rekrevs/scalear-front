@@ -87,11 +87,11 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": $translate("quizzes.number_of_students"),
+                "title": $translate("quizzes.number_of_students")+ " ("+$translate("groups.out_of")+" "+student_count+")",
                 "gridlines": {
-                    "count":10
+                    "count":8
                 },
-                "maxValue": student_count
+                "maxValue": student_count-10
             },
         };
         chart.data = $scope.formatQuizChartData(chart_data)

@@ -338,6 +338,7 @@ var translation_sv=function(){
               export_chart: "Exporttabell",
               type: "Typ",
               student_progress: "studentframsteg",
+              out_of: "ut ur",
           },
       courses:{
               confused: "Förvirrad",

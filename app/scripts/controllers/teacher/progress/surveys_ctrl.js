@@ -29,6 +29,7 @@ angular.module('scalearAngularApp')
           $scope.survey_chart_questions = data.chart_questions
           $scope.survey_free= data.survey_free
           $scope.related_answers = data.related
+          $scope.student_count = data.students_count
           if(!$scope.selected_survey){
       		$scope.all_surveys = data.all_surveys                
           	$scope.selected_survey = $scope.all_surveys? $scope.all_surveys[0] : ""
@@ -69,7 +70,7 @@ angular.module('scalearAngularApp')
       return formated_data
     }
 
-    $scope.createSurveyChart = function(chart_data, ind){
+    $scope.createSurveyChart = function(chart_data, ind, student_count){
       var chart = {};
       chart.type = "ColumnChart"
       chart.options = {
@@ -81,7 +82,11 @@ angular.module('scalearAngularApp')
           "displayExactValues": true,
           "fontSize" : 12,
           "vAxis": {
-              "title": $translate("quizzes.number_of_students"),
+              "title": $translate("quizzes.number_of_students")+ " ("+$translate("groups.out_of")+" "+student_count+")",
+              "gridlines": {
+                  "count":8
+              },
+              "maxValue": student_count-10
           },
       };
       chart.data = $scope.formatSurveyChartData(chart_data)

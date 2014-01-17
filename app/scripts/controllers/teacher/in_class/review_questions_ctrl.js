@@ -22,15 +22,15 @@ angular.module('scalearAngularApp')
 		  )
   	}
 
-  	$scope.updateHide=function(question){
+  	$scope.updateHide=function(question_id, question_hide){
   		Module.hideQuestion(
   			{
   				course_id:$stateParams.course_id,
           module_id:$stateParams.module_id
   			},
   			{
-  				question:question.id,
-  				hide:question.hide
+  				question:question_id,
+  				hide:question_hide
   			},
   			function(){},
   			function(){}

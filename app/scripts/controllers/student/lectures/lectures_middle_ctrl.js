@@ -51,7 +51,7 @@ angular.module('scalearAngularApp')
 	 			$log.debug($scope.lecture.online_quizzes)
 
 	 			$scope.lecture_player.events.onReady=function(){
-	 				console.log("should play")
+	 				//console.log("should play")
 	 				
 	 				$scope.lecture.online_quizzes.forEach(function(quiz){
 	 					$scope.lecture_player.controls.cue(quiz.time, function(){
@@ -100,7 +100,7 @@ angular.module('scalearAngularApp')
 
    $scope.lecture_player.events.onPlay=function(){
    		// here check if selected_quiz solved now.. or ever will play, otherwhise will stop again.
-	 				console.log("should play")
+	 				//console.log("should play")
    		
    		if($scope.display_mode==true){
    			$log.debug($scope.selected_quiz)

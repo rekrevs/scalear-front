@@ -72,16 +72,16 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek_and_pause=function(time){
-					console.log("Seeking and pausing")
+					//console.log("Seeking and pausing")
 					player_controls.seek(time)
-					console.log(player_controls.getTime())
+					//console.log(player_controls.getTime())
 					player.pause()
 				}
 
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
-                    console.log("refreshing video!!!")
-                    console.log(element);
+                    //console.log("refreshing video!!!")
+                    //console.log(element);
 					element.find('iframe').remove();
 			  		loadVideo();
 				}
@@ -103,7 +103,9 @@ angular.module('scalearAngularApp')
 					player.on("loadeddata", 
 						function(){
 							//player_controls.replay()
-							$log.debug("Video data loaded")							
+							$log.debug("Video data loaded")	
+     						 //console.log("YOUTUBE READY!!!!!!!!!!")
+
 							if(player_events.onReady){
 								player_events.onReady();
 								scope.$apply();
@@ -113,7 +115,7 @@ angular.module('scalearAngularApp')
 					player.on('play',
 						function(){
 							parent.focus()
-							console.log("youtube playing")
+							//console.log("youtube playing")
 							if(player_events.onPlay){								
 								player_events.onPlay();
 								scope.$apply();
@@ -123,7 +125,7 @@ angular.module('scalearAngularApp')
 					player.on('pause',
 						function(){
 							parent.focus()
-							console.log("youtube pause")
+							//console.log("youtube pause")
 
 							if(player_events.onPause){								
 								player_events.onPause();
@@ -131,20 +133,20 @@ angular.module('scalearAngularApp')
 							}
 					});
 
-					player.on('loadedmetadata',function(){
-						parent.focus()
-						if(player_events.onMeta){
-							player_events.onMeta();
-							scope.$apply();
-						}
-					})
-					player.on('canplaythrough',function(){
-						parent.focus()
-						if(player_events.canPlay){
-							player_events.canPlay();
-							scope.$apply();
-						}
-					})
+					// player.on('loadedmetadata',function(){
+					// 	parent.focus()
+					// 	if(player_events.onMeta){
+					// 		player_events.onMeta();
+					// 		scope.$apply();
+					// 	}
+					// })
+					// player.on('canplaythrough',function(){
+					// 	parent.focus()
+					// 	if(player_events.canPlay){
+					// 		player_events.canPlay();
+					// 		scope.$apply();
+					// 	}
+					// })
 				}
 
 				$rootScope.$on('refreshVideo',function(){
@@ -156,15 +158,15 @@ angular.module('scalearAngularApp')
                 }
 
 				scope.$watch('url', function(){
-                    console.log("url is changing!!")
+                    //console.log("url is changing!!")
                     if(scope.url)
                     {
-                        var matches = is_final_url(scope.url)
-                        if(matches)
-                        {
-                            console.log(scope.url);
+                        // var matches = is_final_url(scope.url)
+                        // if(matches)
+                        // {
+                            //console.log(scope.url);
                             player_controls.refreshVideo();
-                        }
+                        //}
 
                     }
 				})

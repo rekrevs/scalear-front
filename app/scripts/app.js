@@ -31,7 +31,7 @@
   .run(['$http','$rootScope','scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', '$cookies', function($http, $rootScope,scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate, $cookies) {
 
       $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
-      console.log($cookies['XSRF-TOKEN'])
+      //console.log($cookies['XSRF-TOKEN'])
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
       $rootScope.textAngularOpts = {
@@ -116,12 +116,12 @@
 //              });
 //
 //          $rootScope.$on('stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-//              console.log("in success")
+//              //console.log("in success")
 //              $rootScope.start_loading=false;
 //            });
 //
 //          $rootScope.$on('stateChangeError', function (ev, to, toParams, from, fromParams) {
-//              console.log("in success")
+//              //console.log("in success")
 //              $rootScope.start_loading=false;
 //          });
 

@@ -13,12 +13,12 @@ angular.module('scalearAngularApp')
                     user: $scope.user
                 }, function() {
                     $scope.sending = false;
-                    console.log("signed up");
+                    //console.log("signed up");
                     $state.go("home");
                 }, function(response) {
                     $scope.user.errors = response.data.errors
                     $scope.sending = false;
-                    console.log("sign up failed")
+                    //console.log("sign up failed")
                 })
             }
 

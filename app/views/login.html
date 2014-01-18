@@ -1,8 +1,31 @@
 <center>
-	
-<h4 translate="login_with"></h4>
+    <form ng-submit="login()">
+        <h2 translate="welcome"></h2>
+        <p translate="devise.sign_in_message"></p>
+        <br />
+        <p translate="email"></p>
+        <input type="email" ng-model="user.email" id="user_email" class="string email optional" name="user[email]" size="50"/>
+        <p translate="password"></p>
+        <input type="password" ng-model="user.password" id="user_passowrd" class="password optional" name="user[password]" size="50"/>
+        <br />
+        <p translate="remember_me"></p>
+        <input type="checkbox" ng-model="user.remember_me">
+        <br />
+        <br />
+        <input type="submit" ng-click="login()" ng-disabled="sending || !user.email || !user.password" value="{{'sign_in' | translate}}" class="btn btn-primary"/>
+        <br />
+        <br />
+        <center ng-show="sending" ><loading size="small" show="sending" ></center>
+    </form>
+    <br />
+    <br />
+    <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
 
+    <br/>
+    {{'or' | translate}}..
+    <br/>
+    <a href="/#/users/confirmation/new" translate="password_edit.didnt_receive_confirmation"></a>
 
-<input type="button" ng-click="login()" value="Scalable Learning" class="btn"/>
+<!--<input type="button" ng-click="login()" value="Scalable Learning" class="btn"/>-->
 
 </center>

@@ -199,7 +199,7 @@ describe('Announcements Page', function(){
     });
 
     logout(ptor, driver);
-    login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'Bahia', findByName);
+    login(ptor, driver, 'menshawi@guerrillamail.com', 'password', 'menshawi', findByName);
     describe('Student', function(){
         it('should enroll in the course that was created', function(){
             ptor.findElement(protractor.By.id('join_course')).then(function(join_course){
@@ -289,12 +289,17 @@ describe('Announcements Page', function(){
             });
         });
     });
+    addAnnouncement(ptor, driver, '6 announcement');
+    doSave(ptor);
+    it('should display server\'s confirmation', function(){
+        feedback(ptor, 'Announcement was successfully created.');
+    });
 
 
 //
     it('should display modified announcements', function(){
         ptor.findElements(protractor.By.repeater('announcement in announcements')).then(function(announcements){
-            expect(announcements.length).toBe(5);
+            expect(announcements.length).toBe(6);
         });
         ptor.findElements(protractor.By.binding('announcement.announcement')).then(function(announcements){
             announcements.forEach(function(announcement, i){
@@ -326,7 +331,7 @@ describe('Announcements Page', function(){
 //
     it('should display modified announcements after refresh', function(){
         ptor.findElements(protractor.By.repeater('announcement in announcements')).then(function(announcements){
-            expect(announcements.length).toBe(5);
+            expect(announcements.length).toBe(6);
         });
         ptor.findElements(protractor.By.binding('announcement.announcement')).then(function(announcements){
             announcements.forEach(function(announcement, i){
@@ -341,7 +346,7 @@ describe('Announcements Page', function(){
     });
 //
     logout(ptor, driver);
-    login(ptor, driver, 'bahia.sharkawy@gmail.com', 'password', 'Bahia', findByName);
+    login(ptor, driver, 'menshawi@guerrillamail.com', 'password', 'menshawi', findByName);
     describe('Student', function(){
 //        it('should click on the course name', function(){
 //            ptor.findElements(protractor.By.binding('course.name')).then(function(courses){
@@ -357,7 +362,7 @@ describe('Announcements Page', function(){
     });
     it('should display the announcements added by teacher after modification', function(){
         ptor.findElements(protractor.By.repeater('a in announcements')).then(function(announcements){
-            expect(announcements.length).toBe(5);
+            expect(announcements.length).toBe(6);
         });
         ptor.findElements(protractor.By.binding('a.announcement')).then(function(announcements){
             announcements.reverse();
@@ -496,7 +501,11 @@ function doSave(ptor){
     it('should save the announcement', function(){
         ptor.findElement(protractor.By.id('save_button')).then(function(save){
             save.click().then(function(){
-                feedback(ptor, 'Announcement was successfully created.');
+                ptor.findElements(protractor.By.repeater('announcement in announcements')).then(function(announcements){
+                    announcements[announcements.length-1].getText().then(function(text){
+                        console.log(text);
+                    });
+                })
             });
         });
     })

@@ -28,6 +28,8 @@ var translation_sv=function(){
       character_exceed_limit: "Den inmatade texten var för lång.",
       ie_disclaimer: "Internet Explorer är inte helt förenlig med de interaktiva videofunktioner som används om Scalable lärande. Vi rekommenderar att du använder",
       chrome: "Google Chrome webbläsare",
+        welcome: "Välkommen till Scalable Learning",
+        or: "eller",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -90,6 +92,7 @@ var translation_sv=function(){
               change_password: "Ändra ditt lösenord",
               change_password2: "Ändra mitt lösenord",
               new_password: "Nytt lösenord",
+              new_password_confirmation: "Nytt lösenord Bekräftelse",
               confirm_password: "Bekräfta nytt lösenord",
               forgot_password: "Har du glömt ditt lösenord?",
               send_reset: "Skicka mig instruktioner för att återställa lösenordet",
@@ -562,6 +565,95 @@ var translation_sv=function(){
               ask: "Fråga",
               check_answer: "Kontrollera Svaret",
           },
+        devise:{
+            sign_in_message: "Vänligen fyll i nedanstående fält...",
+            register:{
+                teacher: "Läraren Regi",
+                student: "Student Regi"
+            },
+            failure:
+            {
+                already_authenticated: "Du har redan loggat in.",
+                unauthenticated: "Du måste logga in eller skapa ett konto innan du kan fortsätta.",
+                unconfirmed: "Du måste bekräfta ditt konto innan du kan fortsätta.",
+                locked: "Ditt konto är låst.",
+                invalid: "Ogiltig epost eller lösenord.",
+                invalid_token: "Ogiltig token för autentisering.",
+                timeout: "Din session är inte längre giltig, vänligen logga in igen för att fortsätta.",
+                inactive: "Ditt konto har inte aktiverats ännu."
+            },
+            user:
+            {
+                unauthenticated: "Du måste logga in eller registrera dig innan du fortsätter."
+            },
+            sessions:
+            {
+                signed_in: "Loggade in.",
+                signed_out: "Loggade ut.",
+                user:
+                {
+                    signed_in: "Har loggat in."
+                }
+            },
+            passwords:
+            {
+                send_instructions: "Du kommer få epost med instruktioner om hur du kan återställa ditt lösenord inom några minuter.",
+                updated: "Ditt lösenord har uppdaterats. Du är nu inloggad.",
+                send_paranoid_instructions: "Om din email är i vår databas, kommer du att få en lösenordslänk till din mail."
+            },
+            confirmations:
+            {
+                resend_instructions: "Skicka om bekräftelse än",
+                send_instructions: "Du kommer att få epost med instruktioner om hur du kan bekräfta ditt konto inom några minuter.",
+                send_paranoid_instructions: "Om din email är i vår databas, kommer du att få ett mail med instruktioner om hur du ska aktivera ditt konto inom några minuter.",
+                confirmed: "Ditt konto har bekräftats. Du är nu inloggad."
+            },
+            registrations:
+            {
+                signed_up: "Ett nytt konto har skapats. En bekräftelse har skickats till din epost.",
+                signed_up_but_unconfirmed: "Ett meddelande med en bekräftelselänk har skickats till din e-postadress. Vänligen öppna länken för att aktivera ditt konto.",
+                inactive_signed_up: "Ett nytt konto har skapats. Du kunde inte logga in, för ditt konto är %{reason}.",
+                updated: "Ditt konto har uppdaterats.",
+                
+                user:
+                {
+                    updated: "Du har uppdaterat ditt konto framgångsrikt.",
+                    destroyed: "Hej då! Ditt konto har avregistrerats. Vi hoppas få se dig snart igen."
+                },
+                reasons:
+                {
+                    inactive: "inaktivt",
+                    unconfirmed: "inte aktiverat",
+                    locked: "låst"
+                }
+            },
+            unlocks:
+            {
+                send_instructions: "Du kommer få epost med instruktioner om hur du kan låsa upp ditt konto inom några minuter.",
+                unlocked: "Ditt konto har låsts upp. Du är nu inloggad.",
+                send_paranoid_instructions: "Om ditt konto finns, kommer du att få ett email med instruktioner om hur du låser upp det inom några minuter."
+            },
+            omniauth_callbacks:
+            {
+                success: "Autentiserat med %{kind}-konto.",
+
+            },
+            mailer:
+            {
+                confirmation_instructions:
+                {
+                    subject: "Instruktioner om bekräftning av konto"
+                },
+                reset_password_instructions:
+                {
+                    subject: "Instrukionter om återställning av lösenord"
+                },
+                unlock_instructions:
+                {
+                    subject: "Instruktioner om upplåsning av konto"
+                }
+            }
+        }
      
     }
 }  

@@ -80,6 +80,8 @@ angular.module('scalearAngularApp')
 
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
+                    console.log("refreshing video!!!")
+                    console.log(element);
 					element.find('iframe').remove();
 			  		loadVideo();
 				}
@@ -149,9 +151,22 @@ angular.module('scalearAngularApp')
 					player_controls.refreshVideo()
 				})
 
+                var is_final_url= function(url){
+                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[&controls=0]*$/);
+                }
+
 				scope.$watch('url', function(){
-					if(scope.url)
-						player_controls.refreshVideo();
+                    console.log("url is changing!!")
+                    if(scope.url)
+                    {
+                        var matches = is_final_url(scope.url)
+                        if(matches)
+                        {
+                            console.log(scope.url);
+                            player_controls.refreshVideo();
+                        }
+
+                    }
 				})
 				scope.$watch('player', function(){
 					if(scope.player){

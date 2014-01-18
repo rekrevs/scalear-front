@@ -550,8 +550,8 @@ module.exports = function (grunt) {
     name: 'config',
     constants: {
       scalear_api:{
-        host: 'http://scalear-staging.herokuapp.com',//'http://angular-learning.herokuapp.com',
-        redirection_url: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/#/',
+        host: '',//'http://angular-learning.herokuapp.com',
+        redirection_url: '',
       } 
     }
   }],
@@ -620,7 +620,7 @@ module.exports = function (grunt) {
      'usemin',
      'htmlclean',
      'inline_angular_templates',
-     //'compress',
+     'compress',
      'clean:bower'
   ]);
 

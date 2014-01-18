@@ -49,10 +49,10 @@ exports.config = {
 //    'test/e2e/spec/calendar_teacher_spec.js',
 //    'test/e2e/spec/calendar_student_spec.js',
 //    'test/e2e/spec/calendar_student_2_spec.js',
-//    'test/e2e/spec/progress_spec.js'
+    'test/e2e/spec/progress_spec.js'
 //    'test/e2e/spec/course_editor_spec.js'
 //    'test/e2e/spec/course_pages_spec.js'
-    'test/e2e/spec/student_lectures_spec.js'
+//    'test/e2e/spec/student_lectures_spec.js'
 //    'test/e2e/spec/links_spec.js'
 
   ],
@@ -100,8 +100,8 @@ exports.config = {
 //      auth: 'http://localhost:4000/'
       frontend: 'http://scalear-staging.s3-website-eu-west-1.amazonaws.com/',
       auth: 'http://scalear-auth-staging.herokuapp.com/',
-      width: 1920,
-      height: 1080
+      width: 1366,
+      height: 768
 
   },
 
@@ -112,7 +112,7 @@ exports.config = {
     // onComplete will be called just before the driver quits.
     onComplete: null,
     // If true, display spec names.
-    isVerbose: true,
+    isVerbose: false,
     // If true, print colors to the terminal.
     showColors: true,
     // If true, include stack traces in failures.

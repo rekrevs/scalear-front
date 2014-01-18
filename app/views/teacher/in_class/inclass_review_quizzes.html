@@ -10,7 +10,7 @@
 			<tr ng-repeat="id in lecture_data.question_ids">
 				<td style="padding-top:90px" ><input type="checkbox" ng-init = "lecture_data.checked[id] = !lecture_data.checked[id]" ng-model="lecture_data.checked[id]" ng-change="updateHide(id, !lecture_data.checked[id])" /></td>
 				<td>
-					<div class="chart" style='min-width:300px; height:205px;' ng-init="chart=createLectureChart(id)"> 
+					<div class="chart" style='min-width:300px; height:205px;' ng-init="chart=createLectureChart(id, student_count)"> 
 					    <div google-chart chart="chart" ></div>
 					</div>
 				</td>

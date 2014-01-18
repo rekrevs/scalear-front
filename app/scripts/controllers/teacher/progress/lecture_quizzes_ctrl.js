@@ -150,9 +150,9 @@ angular.module('scalearAngularApp')
             "vAxis": {
                 "title": $translate(data.vtitle || "quizzes.number_of_students")+ " ("+$translate("groups.out_of")+" "+student_count+")",
                 "gridlines": {
-                    "count":8
+                    "count":9
                 },
-                "maxValue": student_count -10
+                "maxValue": student_count 
             },
 
 

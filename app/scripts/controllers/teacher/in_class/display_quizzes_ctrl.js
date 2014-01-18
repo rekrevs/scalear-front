@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
 
     $scope.$parent.createChart = function(id){
     	$scope.chart_data.vtitle="quizzes.percentage_of_students"
-        return $scope.createLectureChart($scope.chart_data, id)
+        return $scope.createLectureChart($scope.chart_data, id, 100)
     }
 
 	init()

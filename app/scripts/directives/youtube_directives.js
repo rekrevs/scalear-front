@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autoplay='+scope.autoplay||0+'&autohide=0&vq=large',{ width: 500, controls: 0});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=large&autoplay='+scope.autoplay||0,{ width: 500, controls: 0});
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()

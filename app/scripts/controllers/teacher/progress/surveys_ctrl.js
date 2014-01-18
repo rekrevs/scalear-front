@@ -84,9 +84,9 @@ angular.module('scalearAngularApp')
           "vAxis": {
               "title": $translate("quizzes.number_of_students")+ " ("+$translate("groups.out_of")+" "+student_count+")",
               "gridlines": {
-                  "count":8
+                  "count":9
               },
-              "maxValue": student_count-10
+              "maxValue": student_count
           },
       };
       chart.data = $scope.formatSurveyChartData(chart_data)

@@ -132,7 +132,7 @@ angular.module('scalearAngularApp')
 				})
 
                 var is_final_url= function(url){
-                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}$/);
+                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[&controls=0]*$/);
                 }
 
 				scope.$watch('url', function(){

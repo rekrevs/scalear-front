@@ -19,11 +19,11 @@ angular.module('scalearAngularApp')
                 User.update_account({}, {
                     user: $scope.user
                 }, function() {
-                    console.log("signed up");
+                    //console.log("signed up");
                     $state.go("home");
                 }, function(response) {
                     $scope.user.errors = response.data.errors
-                    console.log("sign up failed")
+                    //console.log("sign up failed")
                 })
             }
 
@@ -31,11 +31,11 @@ angular.module('scalearAngularApp')
                 var confirm = window.confirm("Are you sure?");
                 if (confirm) {
                     User.delete_account({}, {}, function() {
-                        // console.log("deleted ");
+                        // //console.log("deleted ");
                         $state.go("login");
                         $rootScope.current_user = null;
                     }, function() {
-                        console.log("delete failed")
+                        //console.log("delete failed")
                     })
                 }
             }

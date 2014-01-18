@@ -5,14 +5,14 @@ angular.module('scalearAngularApp')
         $scope.user={}
         User.show_confirmation({confirmation_token: $stateParams.confirmation_token }, function(data){
                 $state.go("login");
-                console.log("success confirmation token");
+                //console.log("success confirmation token");
             }, function(data){
                 $scope.sending=false;
             //    $state.go("login");
 
                 $scope.user.errors=data.data;
-            console.log($scope.user)
-            console.log("failure confirmation token");
+            //console.log($scope.user)
+            //console.log("failure confirmation token");
             })
 
         $scope.$watch('current_lang', function(newval, oldval){

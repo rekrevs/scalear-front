@@ -29,9 +29,9 @@ angular.module('scalearAngularApp')
                 // optional method
                 'response': function(response) {
                     // do something on success
-                    console.log(response);
-                    console.log("headers are");
-                    console.log(response.headers());
+                    //console.log(response);
+                    //console.log("headers are");
+                    //console.log(response.headers());
                     var re = new RegExp("^" + scalear_api.host)
                     if ($rootScope.server_error == true && response.config.url.search(re) != -1) // if response coming from server, and connection was bad
                     {

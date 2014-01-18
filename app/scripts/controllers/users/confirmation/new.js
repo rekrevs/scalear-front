@@ -9,12 +9,12 @@ angular.module('scalearAngularApp')
             User.resend_confirmation({},{user:$scope.user}, function(data){
                 $scope.sending=false;
                 $state.go("login");
-                console.log("success password reset");
+                //console.log("success password reset");
             }, function(data){
                 $scope.sending=false;
                 $scope.user.errors=data.data.errors;
                 //$state.go("login");
-                console.log("failure password reset");
+                //console.log("failure password reset");
             })
         }
 

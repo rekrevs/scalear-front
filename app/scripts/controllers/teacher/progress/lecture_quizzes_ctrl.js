@@ -135,7 +135,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.createLectureChart = function(data, id, student_count){
-        console.log(student_count)
+        //console.log(student_count)
         var chart_data = data
         var chart = {};
         chart.type = "ColumnChart"

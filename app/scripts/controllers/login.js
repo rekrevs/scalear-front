@@ -8,11 +8,11 @@ angular.module('scalearAngularApp')
     $scope.sending = true;
         User.sign_in({},{"user":$scope.user}, function(data){
           $scope.sending = false;
-            console.log("signed_in");
+            //console.log("signed_in");
             $state.go("home");
         },function(){
           $scope.sending = false;
-            console.log("failed")
+            //console.log("failed")
         });
 
        $scope.singleModel = 1;

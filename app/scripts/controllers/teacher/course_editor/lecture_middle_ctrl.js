@@ -52,7 +52,7 @@ angular.module('scalearAngularApp')
  				new_time+= 3
  			else if(quiz.time == parseInt(new_time)){
  				new_time+= 2
- 				console.log(new_time)
+ 				//console.log(new_time)
  			} 					
  			else if(quiz.time == parseInt(new_time-1))
  				new_time+= 1
@@ -70,7 +70,7 @@ angular.module('scalearAngularApp')
 			insert_time = duration - 1
 
 		insert_time = checkQuizTimeConflict(insert_time)
-		console.log(insert_time)
+		//console.log(insert_time)
 		$scope.lecture_player.controls.seek_and_pause(insert_time)
 
 		$scope.quiz_loading = true;

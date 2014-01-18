@@ -25,16 +25,16 @@ angular.module('scalearAngularApp')
 		)
   	}
 
-	$scope.$parent.setData=function(url){
+	$scope.$parent.setData=function(lecture_id, url){
 		$scope.$parent.lecture_url= url+'&controls=0'
-		$scope.$parent.quiz_time= $scope.display_data[url][$scope.current_quiz_lecture][0]
-		$scope.$parent.question_title = $scope.display_data[url][$scope.current_quiz_lecture][2]
-		$scope.$parent.quiz_id  = $scope.display_data[url][$scope.current_quiz_lecture][3] 
+		$scope.$parent.quiz_time= $scope.display_data[lecture_id][$scope.current_quiz_lecture][0]
+		$scope.$parent.question_title = $scope.display_data[lecture_id][$scope.current_quiz_lecture][2]
+		$scope.$parent.quiz_id  = $scope.display_data[lecture_id][$scope.current_quiz_lecture][3] 
 	}
 
     $scope.$parent.createChart = function(id){
     	$scope.chart_data.vtitle="quizzes.percentage_of_students"
-        return $scope.createLectureChart($scope.chart_data, id)
+        return $scope.createLectureChart($scope.chart_data, id, 100)
     }
 
 	init()

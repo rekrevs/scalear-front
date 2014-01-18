@@ -87,9 +87,6 @@ angular.module('scalearAngularApp')
                         "min":[min.getUTCHours(),min.getMinutes(),min.getSeconds(),0],
                         "max":[max.getUTCHours(),max.getMinutes(),max.getSeconds(),0]
                     }
-                    //        "maxValue"
-                    //}:[max.getUTCHours(),max.getMinutes(),max.getSeconds(),0],
-					//"minValue":[min.getUTCHours(),min.getMinutes(),min.getSeconds(),0]
 	            },
 	            "legend": 'none', 
 	            chartArea:{left: 85, width:getChartWidth()},   

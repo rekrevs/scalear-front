@@ -8,14 +8,14 @@
 		</td>
 	</tr>
 	<tr>
-		<td ng-hide="display_only" style="border-right: 1px gray solid;"><b translate>groups.hide</b></td>
+		<td ng-hide="display_only" style="border-right: 1px gray solid;"><b translate>answer.show</b></td>
 		<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;"><b translate>groups.groups</b></td>
 		<td></td>
 		<td style="border-left: 1px gray solid;"></td>
 	</tr>
 	<tr ng-repeat="answer in question.answers|survey:display_only">
 		<td style="border-right: 1px gray solid;">
-			<input type="checkbox" ng-hide="display_only" ng-model="answer.hide" ng-change="saveCheckedHide(answer)" />
+			<input type="checkbox" ng-if="!display_only" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHide(answer.id, !answer.hide)" />
 		</td>
 		<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;">
 			<input type="checkbox" ng-model="answer.group_selected" />

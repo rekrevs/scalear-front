@@ -30,6 +30,7 @@ angular.module('scalearAngularApp')
                     $scope.url = getURL($scope.lecture_data.question_ids[0]) 
                     $scope.total = $scope.lecture_data.question_ids.length
                     $scope.sub_question_ids = $scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_limit)
+                    $scope.student_count = $scope.lecture_data.students_count
                     $scope.enableChartsScrolling()
                     $scope.$watch("current_lang", redrawChart);
                 }
@@ -133,7 +134,8 @@ angular.module('scalearAngularApp')
         return formated_data
     }
 
-    $scope.createLectureChart = function(data, id){
+    $scope.createLectureChart = function(data, id, student_count){
+        console.log(student_count)
         var chart_data = data
         var chart = {};
         chart.type = "ColumnChart"
@@ -146,8 +148,14 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": $translate(data.vtitle || "quizzes.number_of_students"),
+                "title": $translate(data.vtitle || "quizzes.number_of_students")+ " ("+$translate("groups.out_of")+" "+student_count+")",
+                "gridlines": {
+                    "count":9
+                },
+                "maxValue": student_count 
             },
+
+
         };
         chart.data = $scope.formatLectureChartData(chart_data[id])
         return chart

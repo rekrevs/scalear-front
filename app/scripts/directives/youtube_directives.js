@@ -9,7 +9,8 @@ angular.module('scalearAngularApp')
 				url:'=',
 				ready:'&',
 				id:'@',
-				player:'='
+				player:'=',
+				autoplay:'@'
 			},
 			link: function(scope, element){
 
@@ -25,7 +26,7 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&html5=True&showinfo=0&rel=0&autoplay=1&autohide=0" ,{ width: 500, controls: 0});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=large&autoplay='+scope.autoplay||0,{ width: 500, controls: 0});
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
@@ -65,13 +66,15 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
-					player_controls.pause()
 					player.currentTime(time);
+					//player_controls.play();
 					parent.focus()
 				}
 
 				player_controls.seek_and_pause=function(time){
+					console.log("Seeking and pausing")
 					player_controls.seek(time)
+					console.log(player_controls.getTime())
 					player.pause()
 				}
 
@@ -92,7 +95,6 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.replay=function(){					
-					player_controls.pause()
 					player_controls.seek(0)
 					player_controls.play()
 				}
@@ -100,7 +102,7 @@ angular.module('scalearAngularApp')
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
-							player_controls.replay()
+							//player_controls.replay()
 							$log.debug("Video data loaded")							
 							if(player_events.onReady){
 								player_events.onReady();
@@ -111,6 +113,7 @@ angular.module('scalearAngularApp')
 					player.on('play',
 						function(){
 							parent.focus()
+							console.log("youtube playing")
 							if(player_events.onPlay){								
 								player_events.onPlay();
 								scope.$apply();
@@ -120,11 +123,28 @@ angular.module('scalearAngularApp')
 					player.on('pause',
 						function(){
 							parent.focus()
+							console.log("youtube pause")
+
 							if(player_events.onPause){								
 								player_events.onPause();
 								scope.$apply();
 							}
 					});
+
+					player.on('loadedmetadata',function(){
+						parent.focus()
+						if(player_events.onMeta){
+							player_events.onMeta();
+							scope.$apply();
+						}
+					})
+					player.on('canplaythrough',function(){
+						parent.focus()
+						if(player_events.canPlay){
+							player_events.canPlay();
+							scope.$apply();
+						}
+					})
 				}
 
 				$rootScope.$on('refreshVideo',function(){
@@ -132,7 +152,7 @@ angular.module('scalearAngularApp')
 				})
 
                 var is_final_url= function(url){
-                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}$/);
+                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[&controls=0]*$/);
                 }
 
 				scope.$watch('url', function(){

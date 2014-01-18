@@ -24,12 +24,14 @@
   'pascalprecht.translate',
   'angularMoment',
   'textAngular',
-   'config'
-])//.constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
+   'config',
+])
 .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(['$rootScope','scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', function($rootScope,scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate) {
+  .run(['$http','$rootScope','scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', '$cookies', function($http, $rootScope,scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate, $cookies) {
 
+      $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
+      console.log($cookies['XSRF-TOKEN'])
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
       $rootScope.textAngularOpts = {
@@ -197,7 +199,7 @@
     $translateProvider.useCookieStorage();
     //**********END*********
 
-    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
+    //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');        
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');

@@ -136,17 +136,31 @@ var openModal=function(view, type){
        $scope.play_pause_class = "play_button"
     }
 
-    $scope.inclass_player.events.onReady=function(){
-      $log.debug("player ready")
+    // $scope.inclass_player.events.onReady=function(){
+    //   $log.debug("player ready")
+    //   $scope.seek($scope.quiz_time);
+    //   $scope.loading_video=false
+    // }
+
+    $scope.inclass_player.events.onMeta=function(){
+      console.log($scope.quiz_time)
       $scope.seek($scope.quiz_time);
       $scope.loading_video=false
     }
 
     $scope.nextQuiz = function(){
       if($scope.current_quiz != $scope.total_num_quizzes){
-        var url=$scope.lecture_list[$scope.current_lecture-1]||$scope.lecture_list[0]
-        if($scope.current_quiz_lecture < $scope.display_data[url].length ){
-          $scope.setData(url)
+        console.log($scope.current_lecture)
+        if($scope.lecture_list[$scope.current_lecture-1]){
+          var lecture_id = $scope.lecture_list[$scope.current_lecture-1][0]
+          var url=$scope.lecture_list[$scope.current_lecture-1][1]
+        }
+        else{
+           var lecture_id = $scope.lecture_list[0][0]
+           var url= $scope.lecture_list[0][1]
+        }
+        if($scope.current_quiz_lecture < $scope.display_data[lecture_id].length ){
+          $scope.setData(lecture_id,url)
           $timeout(function(){
             $scope.seek($scope.quiz_time)
           })
@@ -154,9 +168,10 @@ var openModal=function(view, type){
         else{
           $scope.current_quiz_lecture= 0
           for (var elem=$scope.current_lecture; elem<$scope.lecture_list.length; elem++){
-            var url=$scope.lecture_list[elem]
-            if($scope.display_data[url].length){
-              $scope.setData(url)
+            var lecture_id=$scope.lecture_list[elem][0]
+            var url=$scope.lecture_list[elem][1]
+            if($scope.display_data[lecture_id].length){
+              $scope.setData(lecture_id,url)
               $scope.current_lecture = elem+1;
               break; 
             }
@@ -174,16 +189,20 @@ var openModal=function(view, type){
         $scope.current_quiz-=1
         $scope.current_quiz_lecture-= 2
         if($scope.current_quiz_lecture >= 0){
-          var url=$scope.lecture_list[$scope.current_lecture-1]
-          $scope.setData(url)
-          $scope.seek($scope.quiz_time)
+          var lecture_id=$scope.lecture_list[$scope.current_lecture-1][0]
+          var url=$scope.lecture_list[$scope.current_lecture-1][1]
+          $scope.setData(lecture_id,url)
+          $timeout(function(){
+            $scope.seek($scope.quiz_time)
+          })
         }
         else{
           for (var elem=$scope.current_lecture-2; elem>=0; elem--){
-            var url=$scope.lecture_list[elem]
-            if($scope.display_data[url].length){
-              $scope.current_quiz_lecture = $scope.display_data[url].length -1
-              $scope.setData(url)
+            var lecture_id=$scope.lecture_list[elem][0]
+            var url=$scope.lecture_list[elem][1]
+            if($scope.display_data[lecture_id].length){
+              $scope.current_quiz_lecture = $scope.display_data[lecture_id].length -1
+              $scope.setData(lecture_id,url)
               $scope.current_lecture = elem+1;
               break; 
             }

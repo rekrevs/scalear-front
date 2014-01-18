@@ -19,6 +19,7 @@ angular.module('scalearAngularApp')
             function(data){
             	$log.debug(data)
                 $scope.lecture_data=data.charts_data 
+                $scope.student_count = $scope.lecture_data.students_count
                 $scope.loading_lectures_chart = false
             }
         );
@@ -78,7 +79,7 @@ angular.module('scalearAngularApp')
         return formated_data
     }
 
-    $scope.createLectureChart = function(id){
+    $scope.createLectureChart = function(id,student_count){
         var chart_data = $scope.lecture_data.charts
         var chart = {};
         chart.type = "ColumnChart"
@@ -91,7 +92,11 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": $translate("quizzes.number_of_students"),
+                "title": $translate("quizzes.number_of_students")+ " ("+$translate("groups.out_of")+" "+student_count+")",
+                "gridlines": {
+                    "count":9
+                },
+                "maxValue": student_count
             },
         };
         chart.data = $scope.formatLectureChartData(chart_data[id])

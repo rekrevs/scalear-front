@@ -30,7 +30,8 @@
   </head>
 
   <body style="overflow:auto;" ng-app="scalearAngularApp" ng-controller="indexController">
-  	<div id="error_container" ng-show="show_alert!=''" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
+  	<!--<div ng-show="start_loading" class="errorpagetransparent"></div>-->
+    <div id="error_container" ng-show="show_alert!=''" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
         <div style="text-align: center; display:block;">
             <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
         </div>
@@ -59,7 +60,7 @@
 
                 <ul class="nav pull-right">
                     <li ng-show="current_user"><a ><span ng-bind="current_user.name"></span></a></li>
-                    <li ng-show="!current_user"><a ng-click="login()" style="cursor:pointer;float: right;" translate="navigation.login"></a></li> <!-- ui-sref="login" -->
+                    <li ng-show="!current_user &&!transition"><a ng-click="login()" style="cursor:pointer;float: right;" translate="navigation.login"></a></li> <!-- ui-sref="login" -->
                     <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()" translate="navigation.logout"></a></li>
                     <!-- <li><a href="">Edit account</a></li> -->
                     <li ng-show="current_lang=='en'" ng-cloak>

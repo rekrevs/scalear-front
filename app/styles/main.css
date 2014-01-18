@@ -194,6 +194,18 @@ body {
     /*margin: 0 auto;*/
 }
 
+.errorpagetransparent{
+    position: fixed;
+    display:block;
+    top:0px;
+    z-index:11000;
+
+    width:100%;
+    height:100%;
+    text-align: center;
+    /*margin: 0 auto;*/
+}
+
 .errorpageserver{
     position: fixed;
 	display:block;

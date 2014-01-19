@@ -3,7 +3,8 @@
 angular.module('scalearAngularApp')
   .controller('newCourseCtrl',['$scope','Course','$state','$window', '$log', function ($scope, Course,$state, $window, $log) {
 		$window.scrollTo(0, 0);
-		
+		$scope.submitting=false;
+
 		$scope.course={}
 		Course.newCourse(
 			function(data){
@@ -21,9 +22,11 @@ angular.module('scalearAngularApp')
 		$scope.createCourse = function(){
 			if($scope.form.$valid)
  			{
+                $scope.submitting=true;
  				$scope.course.start_date.setMinutes($scope.course.start_date.getMinutes() + 120);
 			Course.create({course:$scope.course, "import":$scope.import_from},
 			function(data){
+                $scope.submitting=false;
 				$scope.submitted=false;
 				if(data.importing==true){
 					//$(window).scrollTop(0);
@@ -35,6 +38,7 @@ angular.module('scalearAngularApp')
 				}
 			},function(response){
 				//server error must handle.
+                $scope.submitting=false;
 				$scope.server_errors=response.data.errors
 			}
 		);

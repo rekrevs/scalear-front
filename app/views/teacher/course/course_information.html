@@ -5,6 +5,17 @@
 </style>
 <div>
     <h3>{{data.course.short_name}} | {{data.course.name}}</h3>
+
+    <b ><span translate>courses.short_name</span>:</b>
+    <p>
+        <details-text value="data.course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text>
+    </p>
+
+    <b ><span translate>courses.course_name</span>:</b>
+    <p>
+        <details-text value="data.course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
+    </p>
+
     <b ><span translate>courses.course_enrollment_key</span>:</b>
     <p>
         {{data.course.unique_identifier}}

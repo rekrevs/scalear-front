@@ -24,12 +24,14 @@
   'pascalprecht.translate',
   'angularMoment',
   'textAngular',
-   'config'
-])//.constant('scalear_api', {host:'http://localhost:3000'}) // //http://angular-learning.herokuapp.com
+   'config',
+])
 .constant('headers', {withCredentials: true, 'X-Requested-With': 'XMLHttpRequest'})
   .value('$anchorScroll', angular.noop)
-  .run(['$rootScope','scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', function($rootScope,scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate) {
+  .run(['$http','$rootScope','scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log','$translate', '$cookies', function($http, $rootScope,scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window,$log, $translate, $cookies) {
 
+      $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
+      //console.log($cookies['XSRF-TOKEN'])
   	  $rootScope.show_alert="";
       editableOptions.theme = 'bs2';
       $rootScope.textAngularOpts = {
@@ -50,9 +52,22 @@
       }
 
       $log.debug("lang is "+ $rootScope.current_lang);
-    	var statesThatDontRequireAuth =['login', 'home', 'privacy', 'ie']
+    	var statesThatDontRequireAuth =['login', 'teacher_signup', 'student_signup', 'forgot_password','change_password', 'show_confirmation','new_confirmation', 'home', 'privacy', 'ie']
 		  var statesThatForStudents=['student_courses','course.student_calendar', 'course.course_information', 'course.lectures']
 		  var statesThatForTeachers=['course_list','new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information','course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
+      var statesThatRequireNoAuth = ['student_signup', 'teacher_signup', 'new_confirmation', 'forgot_password', 'change_password']
+
+      //check if route requires no auth
+      var stateNoAuth = function(state)
+      {
+        for(var element in statesThatRequireNoAuth)
+        {
+          var input = statesThatRequireNoAuth[element];
+          if(state.substring(0, input.length) == input)
+            return true;
+        }
+        return false;
+      }
 
   		// check if route does not require authentication
   		var routeClean = function(state) {
@@ -87,17 +102,41 @@
 		$window.onbeforeunload= function(){
 			$rootScope.unload=true;
 		}
-  		$rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
-    	
+
+//          $rootScope.$on('$viewContentLoading',
+//              function(event, viewConfig){
+//                  $rootScope.start_loading=true;
+//                  // Access to all the view config properties.
+//                  // and one special property 'targetView'
+//                  // viewConfig.targetView
+//              });
+//          $rootScope.$on('$viewContentLoaded',
+//              function(event){
+//                  $rootScope.start_loading=false;
+//              });
+//
+//          $rootScope.$on('stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
+//              //console.log("in success")
+//              $rootScope.start_loading=false;
+//            });
+//
+//          $rootScope.$on('stateChangeError', function (ev, to, toParams, from, fromParams) {
+//              //console.log("in success")
+//              $rootScope.start_loading=false;
+//          });
+
+       $rootScope.$on('$stateChangeStart', function (ev, to, toParams, from, fromParams) {
+
+            //$rootScope.start_loading=true;
     		UserSession.getRole().then(function(result){
     			var s=1;
 
-         if(result==0)
-         {
-            window.location=scalear_api.host+"/"+$rootScope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
-
-         }
-          else if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent))
+//         if(result==0)
+//         {
+//            window.location=scalear_api.host+"/"+$rootScope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
+//
+//         }
+          if(/MSIE (\d+\.\d+);/.test($window.navigator.userAgent))
           {
               $state.go("ie");
           }
@@ -116,14 +155,22 @@
     					$state.go("course_list");
     					s=0;
     				}
-    			else if( to.name=="home" && result==1 ) // teacher going to home, redirected to courses page
+    			else if( (to.name=="home" || to.name=="login" || to.name=="teacher_signup" || to.name=="student_signup") && result==1 ) // teacher going to home, redirected to courses page
     				{
     					$state.go("course_list");
     				}
-    			else if( to.name=="home" && result==2 ) // student going to home, redirected to student courses page
+    			else if( (to.name=="home" || to.name=="login" || to.name=="teacher_signup" || to.name=="student_signup") && result==2 ) // student going to home, redirected to student courses page
     				{
     					$state.go("student_courses");
     				}
+          else if(stateNoAuth(to.name))
+            {
+              if(result == 1 || result == 2)
+              {
+                $state.go("home");
+                s=0;
+              }
+            }
     				
     				if(s==0){
     					$rootScope.show_alert="error";
@@ -152,12 +199,13 @@
     $translateProvider.useCookieStorage();
     //**********END*********
 
-    $httpProvider.defaults.headers.common['X-CSRF-Token'] = $('meta[name=csrf-token]').attr('content');        
+    //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');        
 
     $httpProvider.defaults.withCredentials = true;
     $httpProvider.interceptors.push('ServerInterceptor');
 
    
+
     $urlRouterProvider.otherwise('/');    
     $stateProvider
       .state('home', {
@@ -170,10 +218,45 @@
         templateUrl: '/views/ie.html'
       })
       .state('login', {
-      	url:'/login',
+      	url:'/users/login',
       templateUrl: '/views/login.html',
       controller: 'LoginCtrl'
    	 })
+    .state('teacher_signup', {
+        url:'/users/teacher',
+        templateUrl: '/views/users/teacher.html',
+        controller: 'UsersTeacherCtrl'
+    })
+    .state('student_signup', {
+        url:'/users/student',
+        templateUrl: '/views/users/student.html',
+        controller: 'UsersStudentCtrl'
+    })
+    .state('edit_account', {
+        url:'/users/edit',
+        templateUrl: '/views/users/edit.html',
+        controller: 'UsersEditCtrl'
+    })
+    .state('forgot_password', {
+        url:'/users/password/new',
+        templateUrl: '/views/users/password/new.html',
+        controller: 'UsersPasswordNewCtrl'
+    })
+    .state('change_password', {
+        url:'/users/password/edit?reset_password_token',
+        templateUrl: '/views/users/password/edit.html',
+        controller: 'UsersPasswordEditCtrl'
+    })
+    .state('new_confirmation', {
+        url:'/users/confirmation/new',
+        templateUrl: '/views/users/confirmation/new.html',
+        controller: 'UsersConfirmationNewCtrl'
+    })
+    .state('show_confirmation', {
+        url:'/users/confirmation?confirmation_token',
+        templateUrl: '/views/users/confirmation/show.html',
+        controller: 'UsersConfirmationShowCtrl'
+    })
    	 .state('privacy',{
    	 	url:'/privacy',
    	 	templateUrl:'/views/privacy.html',

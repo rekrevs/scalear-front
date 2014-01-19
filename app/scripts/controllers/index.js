@@ -13,14 +13,19 @@ angular.module('scalearAngularApp')
   	$scope.changeLanguage($translate.uses());
 
     $scope.login = function(){
-        $log.debug("in login");
-        window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
+        //$log.debug("in login");
+        //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
+        $state.go("login");
      }
 
    	$scope.logout = function()
    	{
-        $rootScope.current_user=null
-        window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_out"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
+        User.sign_out({},function(){
+            $rootScope.current_user=null
+            $state.go("login");
+        });
+
+        //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_out"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
    	}
 
    	$scope.coursePage = function()

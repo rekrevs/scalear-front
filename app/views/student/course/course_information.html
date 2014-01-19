@@ -3,29 +3,37 @@
         margin-left: 15px;
     }
 </style>
+
+
 <div id="course_information">
-    <h3>
-        {{course.short_name}} | {{course.name}}
-    </h3>
-    <b translate="courses.start_date"></b>
-    <p>
-        {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
-    </p>
-    <b translate="courses.duration"></b>
-    <p>
-        {{course.duration}} <span translate="courses.weeks"></span>
-    </p>
-    <b translate="head.discussion_forum"></b>
-    <p>
-        <a href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{course.discussion_link}}</a>
-    </p>
-    <b translate="groups.description"></b>
-    <p>
-        {{course.description}}
-    </p>
-    <b translate="courses.prerequisites"></b>
-    <p>
-        {{course.prerequisites}}
-    </p>
+    <span ng-hide="course">
+        <br />
+        <center><loading size="big" show="true" style="position:relative;top:40%" /></loading></center>
+    </span>
+    <span ng-show="course">
+        <h3>
+            {{course.short_name}} | {{course.name}}
+        </h3>
+        <b translate="courses.start_date"></b>
+        <p>
+            {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
+        </p>
+        <b translate="courses.duration"></b>
+        <p>
+            {{course.duration}} <span translate="courses.weeks"></span>
+        </p>
+        <b translate="head.discussion_forum"></b>
+        <p>
+            <a href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{course.discussion_link}}</a>
+        </p>
+        <b translate="groups.description"></b>
+        <p>
+            {{course.description}}
+        </p>
+        <b translate="courses.prerequisites"></b>
+        <p>
+            {{course.prerequisites}}
+        </p>
+    </span>
 </div>
 

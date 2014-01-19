@@ -1,4 +1,6 @@
-
+<overlay ng-show="!questions">
+    <loading size="big" show="true" style="position:relative; top:40%;" />
+</overlay>
 <form name='tform' novalidate>
 	<div ng-repeat="question in questions">
 			<answerform submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index"/>

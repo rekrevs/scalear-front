@@ -1,4 +1,7 @@
 <center>
+<overlay ng-show="sending">
+            <loading size="big" show="true" style="position:relative; top:40%;" />
+</overlay>
 <form ng-submit="change_password()">
     <h2 translate="password_edit.change_password"></h2>
     <br />
@@ -14,7 +17,6 @@
     <br />
     <br/><span class="errormessage" ng-show="user.errors.reset_password_token">Reset Password Token {{user.errors.reset_password_token.join()}}</span>
     <br />
-    <center ng-show="sending" ><loading size="small" show="sending" ></center>
     <br/>
 </center>
 

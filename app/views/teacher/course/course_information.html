@@ -3,7 +3,13 @@
         margin-left: 15px;
     }
 </style>
+
 <div>
+<span ng-hide="data">
+    <br />
+    <center><loading size="big" show="true" style="position:relative;top:40%" /></loading></center>
+</span>
+<span ng-hide="!data">
     <h3>{{data.course.short_name}} | {{data.course.name}}</h3>
 
     <b ><span translate>courses.short_name</span>:</b>
@@ -53,5 +59,7 @@
     <p>
         <details-time-zone value="data.course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
     </p>
+</span>
+    
 
 </div>

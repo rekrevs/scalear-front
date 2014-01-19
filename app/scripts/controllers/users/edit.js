@@ -15,13 +15,16 @@ angular.module('scalearAngularApp')
             })
 
             $scope.update_account = function() {
+                $scope.sending = true;
                 delete $scope.user.errors
                 User.update_account({}, {
                     user: $scope.user
                 }, function() {
+                    $scope.sending = false;
                     //console.log("signed up");
                     $state.go("home");
                 }, function(response) {
+                    $scope.sending = false;
                     $scope.user.errors = response.data.errors
                     //console.log("sign up failed")
                 })

@@ -55,7 +55,8 @@ angular.module('scalearAngularApp')
                 $log.debug(data)
                 $scope.module = data.module
                 $scope.chart_data = data.module_data
-                $scope.module_chart = createModuleChart($scope.chart_data)
+                $scope.student_count = data.students_count
+                $scope.module_chart = createModuleChart($scope.chart_data, $scope.student_count)
                 $scope.loading_module_chart=false
                 $scope.$watch("current_lang", redrawChart);
             },
@@ -89,7 +90,7 @@ angular.module('scalearAngularApp')
         return formated_data
     }
 
-    var createModuleChart = function(chart_data){
+    var createModuleChart = function(chart_data, student_count){
         var chart = {};
         chart.type = "ColumnChart"
         chart.options = {
@@ -101,7 +102,11 @@ angular.module('scalearAngularApp')
             "displayExactValues": true,
             "fontSize" : 12,
             "vAxis": {
-                "title": $translate("quizzes.number_of_students")
+                "title": $translate("quizzes.number_of_students")+ " ("+$translate("groups.out_of")+" "+student_count+")",
+                "gridlines": {
+                    "count":9
+                },
+                "maxValue": student_count
             }
         };
         chart.data = formatMouleChartData(chart_data)

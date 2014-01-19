@@ -32,8 +32,7 @@ angular.module('scalearAngularApp')
 			function(){}
 		);
 	}
- 	$scope.validateTime=function(time) {
- 		
+ 	$scope.validateTime=function(time) { 		
 		var int_regex = /^\d\d:\d\d:\d\d$/;  //checking format
 		if(int_regex.test(time)) { 
 		    var hhmm = time.split(':'); // split hours and minutes

@@ -133,13 +133,13 @@ angular.module('scalearAngularApp')
 							}
 					});
 
-					// player.on('loadedmetadata',function(){
-					// 	parent.focus()
-					// 	if(player_events.onMeta){
-					// 		player_events.onMeta();
-					// 		scope.$apply();
-					// 	}
-					// })
+					player.on('loadedmetadata',function(){
+						parent.focus()
+						if(player_events.onMeta){
+							player_events.onMeta();
+							scope.$apply();
+						}
+					})
 					// player.on('canplaythrough',function(){
 					// 	parent.focus()
 					// 	if(player_events.canPlay){
@@ -161,12 +161,12 @@ angular.module('scalearAngularApp')
                     //console.log("url is changing!!")
                     if(scope.url)
                     {
-                        // var matches = is_final_url(scope.url)
-                        // if(matches)
-                        // {
-                            //console.log(scope.url);
+                        var matches = is_final_url(scope.url)
+                        if(matches)
+                        {
+                            console.log(scope.url);
                             player_controls.refreshVideo();
-                        //}
+                        }
 
                     }
 				})

@@ -1,9 +1,13 @@
 <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="alert">
 	 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
 </div>
+
 <div ng-hide="!lecture">
 <center><h3>{{lecture.name}}</h3></center>
 <form name="answer_form" novalidate style="margin:0">
+<overlay ng-show="loading_video">
+            <loading size="big" show="true" style="position:relative; top:100px;" />
+</overlay>
 <video_container ng-style="video_layer" ng-class="lecture.aspect_ratio">
 	<div ng-show="display_mode">
 		<quiz ng-style="quiz_layer">

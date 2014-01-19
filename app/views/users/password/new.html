@@ -1,4 +1,7 @@
 <center>
+<overlay ng-show="sending">
+            <loading size="big" show="true" style="position:relative; top:40%;" />
+</overlay>
     <form ng-submit="reset_password()">
         <h2 translate="password_edit.forgot_password"></h2>
         <br />
@@ -9,7 +12,6 @@
         <input type="submit" ng-click="reset_password()"  ng-disabled="sending || !user.email" value="{{'password_edit.send_reset' | translate}}" class="btn btn-primary"/>
         <br />
         <br />
-        <center ng-show="sending" ><loading size="small" show="sending" ></center>
     </form>
     <a href="/#/users/login" translate="sign_in"></a>
     <br/>

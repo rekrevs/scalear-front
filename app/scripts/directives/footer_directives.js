@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
             restrict: 'E',
             template: '<div class="row"><div class="span12" >' +
                 '<center>' +
-                '&copy;2013 ScalableLearning v' + scalear_api.version + '| ' +
+                '&copy;2013 ScalableLearning v' + scalear_api.version + ' | ' +
                 '<span translate="footer.about"></span> | ' +
                 '<a ui-sref="privacy" translate="footer.privacy"></a> ' +
                 '<report_technical ng-show="current_user"/>' +

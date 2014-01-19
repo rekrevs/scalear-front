@@ -538,8 +538,8 @@ module.exports = function (grunt) {
     name: 'config',
     constants: {
       scalear_api:{
-        host: 'http://10.0.0.3:3000', 
-        redirection_url: 'http://10.0.0.3:3000/#/',
+        host: 'http://localhost:3000', 
+        redirection_url: 'http://localhost:3000/#/',
       },
       
     }

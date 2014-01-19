@@ -2,8 +2,10 @@
     <div ng-click="muteBtn()" ng-class="mute_class"></div>
     <div ng-click="playBtn()" ng-class="play_pause_class"></div>
     <div class="inclass_top">
-        <center ng-show="loading_video" style="position:relative;top:40%"><loading size="small" show="true" ></center>
-        <span ng-show="lecture_url && !loading_video">
+        <overlay ng-show="loading_video" style="opacity:0.9;">
+            <loading size="small" show="true" style="position:relative;top:40%" />
+        </overlay>
+        <span ng-show="lecture_url">
             <div ng-style="left_style">
                 <button_link title="-5" action="skip(-5)"   style="width: 16px;"/>
                 <button_link title="<<" action="prevQuiz()" style="margin-top: 10px" ng-disabled="current_quiz == 1" />

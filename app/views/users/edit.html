@@ -3,7 +3,7 @@
     <div style="width: 400px;">
     <form ng-submit="update_account()">
         <h3 translate="account_edit.edit_account"></h3>
-        <p translate="devise.sign_in_message"></p>
+        <br />
             <p translate="name"></p>
             <input type="text" ng-model="user.name" id="user_name" size="50"/>
             <br/><span class="errormessage" ng-show="user.errors.name">{{user.errors.name.join()}}</span>
@@ -15,16 +15,16 @@
             <p translate="password_confirmation"></p>
             <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" name="user[password_confirmation]" size="50"/>
             <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
-        <p translate="current_password"></p>
+        <p>* <span translate="current_password"></span></p>
         <input type="password" ng-model="user.current_password" id="user_current_confirmation" name="user[current_password]" size="50"/>
-
         <br/><span class="errormessage" ng-show="user.errors.current_password">{{user.errors.current_password.join()}}</span>
         <br />
-        <input type="submit" value="Update Account"  class="btn btn-primary" ng-disabled="!user.name || !user.email" />
+        <div class="alert"><span translate="account_edit.need_password"></span></div>
+        
+        <br />
+        <input type="submit" value="{{'account_edit.update' | translate}}" class="btn btn-primary" ng-disabled="!user.name || !user.email" />
         </form>
-        <br />
-        <br />
-        <a style="cursor: pointer;" ng-click="delete_account()">Cancel Account?</a>
+        <a style="cursor: pointer;" ng-click="delete_account()"><span translate="account_edit.cancel_account"></span></a>
         <br/>
 
 	</div>

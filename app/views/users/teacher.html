@@ -2,27 +2,25 @@
     <div style="width: 400px;">
         <form ng-submit="sign_up()">
             <h2 translate="devise.register.teacher"></h2>
-            <p translate="devise.sign_in_message"></p>
-            <p translate="name"></p>
+            <br />
+            <p>* <span translate="name"></span></p>
             <input type="text" ng-model="user.name" id="user_name" name="user[name]" size="50"/>
             <br/><span class="errormessage" ng-show="user.errors.name">{{user.errors.name.join()}}</span>
-            <p translate="email"></p>
+            <p>* <span translate="email"></span></p>
             <input type="email" ng-model="user.email" id="user_email" name="user[email]" size="50"/>
             <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
-            <p translate="password"></p>
+            <p>* <span translate="password"></span></p>
             <input type="password" ng-model="user.password" id="user_password" name="user[password]" size="50"/>
             <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>
-            <p translate="password_confirmation"></p>
+            <p>* <span translate="password_confirmation"></span></p>
             <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" name="user[password_confirmation]" size="50"/>
             <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
             <br />
-            <input type="submit" ng-disabled="!user.name || !user.email || !user.password || !user.password_confirmation" value="{{'sign_up' | translate}}" class="btn btn-primary" />
+            <input type="submit" ng-disabled="sending" value="{{'sign_up' | translate}}" class="btn btn-primary" />
             <br />
             <br />
             <center ng-show="sending" ><loading size="small" show="sending" ></center>
         </form>
-        <br />
-        <br />
         <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
         <br/>
         {{'or' | translate}}

@@ -1,15 +1,22 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive('scalearFooter', function(scalear_api) {
+    .directive('version', function(scalear_api) {
+        return {
+            restrict: 'E',
+            template: '<div style="font-size:10px">v'+scalear_api.version+'</div>'
+        };
+    })
+    .directive('scalearFooter', function() {
         return {
             restrict: 'E',
             template: '<div class="row"><div class="span12" >' +
                 '<center>' +
-                '&copy;2013 ScalableLearning v' + scalear_api.version + ' | ' +
+                '&copy;2013 ScalableLearning | ' +
                 '<span translate="footer.about"></span> | ' +
                 '<a ui-sref="privacy" translate="footer.privacy"></a> ' +
                 '<report_technical ng-show="current_user"/>' +
+                '<br><center><version /></center>'+
                 '</center>' +
                 '</div>'
         };
@@ -19,7 +26,7 @@ angular.module('scalearAngularApp')
             return {
                 restrict: 'E',
                 template: '| <a style="cursor:pointer;" ng-click="toggleTechnicalDisplay()" translate="feedback.report_technical"></a>' +
-                    '<div ng-show="show_technical">' +
+                    '<div ng-show="show_technical"><br>' +
                     '<textarea rows="3" cols="10" style="width:400px;" ng-model="technical_data"></textarea><br />' +
                     '<a style="cursor:pointer;" ng-click="send_technical()" translate="feedback.send"></a>' +
                     '<loading size="small" show="sending_technical"/>' +

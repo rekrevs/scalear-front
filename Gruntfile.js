@@ -548,7 +548,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://localhost:3000',
                         redirection_url: 'http://localhost:3000/#/',
-                        version: '2.0.5'
+                        version: '2.0.6 ('+ new Date().toUTCString()+')'
                     },
 
                 }

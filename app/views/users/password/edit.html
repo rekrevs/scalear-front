@@ -2,22 +2,19 @@
 <form ng-submit="change_password()">
     <h2 translate="password_edit.change_password"></h2>
     <br />
-    <p translate="password_edit.new_password"></p>
+    <p >* <span translate="password_edit.new_password"></span></p>
     <input type="password" ng-model="user.password" id="user_password" class="string password" name="user[password]" size="50"/>
     <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>
     <br />
-    <p translate="password_edit.new_password_confirmation"></p>
+    <p >* <span translate="password_edit.new_password_confirmation"></span></p>
     <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" class="string password" name="user[password_confirmation]" size="50"/>
     <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
     <br />
-    <input type="submit" ng-click="change_password()" ng-disabled="sending || !user.password || !user.password_confirmation || user.password != user.password_confirmation" value="{{'password_edit.change_password2' | translate}}" class="btn btn-primary"/>
+    <input type="submit" ng-click="change_password()" ng-disabled="sending || !user.password && !user.password_confirmation || !user.password" value="{{'password_edit.change_password2' | translate}}" class="btn btn-primary"/>
     <br />
     <br/><span class="errormessage" ng-show="user.errors.reset_password_token">Reset Password Token {{user.errors.reset_password_token.join()}}</span>
     <br />
     <center ng-show="sending" ><loading size="small" show="sending" ></center>
-    <br />
-    <br />
-    <a href="/#/users/login" translate='sign_in'></a>
     <br/>
 </center>
 

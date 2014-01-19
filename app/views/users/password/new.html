@@ -2,7 +2,7 @@
     <form ng-submit="reset_password()">
         <h2 translate="password_edit.forgot_password"></h2>
         <br />
-        <p translate="email"></p>
+        <p>* <span translate="email"></span></p>
         <input type="email" ng-model="user.email" id="user_email" class="string email optional" name="user[email]" size="50"/>
         <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
         <br />
@@ -11,8 +11,6 @@
         <br />
         <center ng-show="sending" ><loading size="small" show="sending" ></center>
     </form>
-    <br />
-    <br />
     <a href="/#/users/login" translate="sign_in"></a>
     <br/>
     {{'or' | translate}}

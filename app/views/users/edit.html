@@ -1,5 +1,7 @@
 <center>
-    
+    <overlay ng-show="sending">
+            <loading size="big" show="true" style="position:relative; top:40%;" />
+    </overlay>
     <div style="width: 400px;">
     <form ng-submit="update_account()">
         <h3 translate="account_edit.edit_account"></h3>
@@ -22,7 +24,7 @@
         <div class="alert"><span translate="account_edit.need_password"></span></div>
         
         <br />
-        <input type="submit" value="{{'account_edit.update' | translate}}" class="btn btn-primary" ng-disabled="!user.name || !user.email" />
+        <input type="submit" value="{{'account_edit.update' | translate}}" class="btn btn-primary" ng-disabled="sending || !user.name || !user.email" />
         </form>
         <a style="cursor: pointer;" ng-click="delete_account()"><span translate="account_edit.cancel_account"></span></a>
         <br/>

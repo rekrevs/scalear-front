@@ -548,7 +548,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://localhost:3000',
                         redirection_url: 'http://localhost:3000/#/',
-                        version: '2.0.7 ('+ new Date().toUTCString()+')'
+                        version: '2.0.8 (' + new Date().toUTCString() + ')'
                     },
 
                 }
@@ -561,7 +561,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '2.0.7 ('+ new Date().toUTCString()+')'
+                        version: '2.0.8 (' + new Date().toUTCString() + ')'
                     }
                 }
             }],
@@ -573,7 +573,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://morning-crag-4732.herokuapp.com/', //'http://angular-learning.herokuapp.com',
                         redirection_url: 'http://morning-crag-4732.herokuapp.com/',
-                        version: '2.0.7 ('+ new Date().toUTCString()+')'
+                        version: '2.0.8 (' + new Date().toUTCString() + ')'
                     }
                 }
             }],
@@ -585,7 +585,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://api.scalable-learning.com', //'http://angular-learning.herokuapp.com',
                         redirection_url: 'http://scalable-learning.com/#/',
-                        version: '2.0.7 ('+ new Date().toUTCString()+')'
+                        version: '2.0.8 (' + new Date().toUTCString() + ')'
                     }
 
                 }

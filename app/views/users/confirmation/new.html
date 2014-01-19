@@ -1,4 +1,7 @@
 <center>
+<overlay ng-show="sending">
+            <loading size="big" show="true" style="position:relative; top:40%;" />
+</overlay>
     <form ng-submit="forgot()">
         <h2 translate="devise.confirmations.resend_instructions"></h2>
         <br />
@@ -11,7 +14,6 @@
         <input type="submit" ng-click="resend()" ng-disabled="!user.email || sending" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-primary"/>
         <br />
         <br />
-        <center ng-show="sending" ><loading size="small" show="sending" ></center>  
     </form>
     <a href="/#/users/login" translate="sign_in"></a>
     <br/>

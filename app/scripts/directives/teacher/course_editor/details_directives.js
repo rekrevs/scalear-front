@@ -66,7 +66,7 @@ angular.module('scalearAngularApp')
                     column: "@"
                 },
                 link: function(scope, element) {
-                    $scope.selectField = function() {
+                    scope.selectField = function() {
                         $timeout(function() {
                             element.find('.editable-input').select();
                         });
@@ -95,11 +95,11 @@ angular.module('scalearAngularApp')
                     column: "@"
                 },
                 link: function(scope, element) {
-                    $scope.selectField = function() {
-                        $timeout(function() {
-                            element.find('.editable-input').select();
-                        });
-                    },
+            // scope.selectField = function() {
+            //     $timeout(function() {
+            //         element.find('.editable-input').select();
+            //     });
+            // },
                     scope.saveData = function() {
                         $timeout(function() {
                             scope.save()
@@ -121,11 +121,11 @@ angular.module('scalearAngularApp')
                     column: "@"
                 },
                 link: function(scope, element) {
-                    $scope.selectField = function() {
-                        $timeout(function() {
-                            element.find('.editable-input').select();
-                        });
-                    },
+            // scope.selectField = function() {
+            //     $timeout(function() {
+            //         element.find('.editable-input').select();
+            //     });
+            // },
                     scope.saveData = function() {
                         $timeout(function() {
                             scope.save()
@@ -148,7 +148,7 @@ angular.module('scalearAngularApp')
                     column: "@"
                 },
                 link: function(scope, element) {
-                    $scope.selectField = function() {
+                    scope.selectField = function() {
                         $timeout(function() {
                             element.find('.editable-input').select();
                         });

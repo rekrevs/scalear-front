@@ -2,7 +2,7 @@
 <overlay ng-show="sending">
             <loading size="big" show="true" style="position:relative; top:40%;" />
 </overlay>
-    <form ng-submit="login()">
+    <form ng-submit="login()" novalidate>
         <h2 translate="welcome"></h2>
         <br />
         <p translate="email"></p>
@@ -14,7 +14,7 @@
         <input type="checkbox" ng-model="user.remember_me">
         <br />
         <br />
-        <input type="submit" ng-disabled="sending || !user.email" value="{{'sign_in' | translate}}" class="btn btn-primary"/>
+        <input type="submit" ng-disabled="sending" value="{{'sign_in' | translate}}" class="btn btn-primary"/>
         <br />
         <br />
     </form>
@@ -22,7 +22,7 @@
     <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
 
     <br/>
-    {{'or' | translate}}..
+    {{'or' | translate}}
     <br/>
     <a href="/#/users/confirmation/new" translate="password_edit.didnt_receive_confirmation"></a>
 

@@ -112,7 +112,7 @@ var openModal=function(view, type){
 
     $scope.seek=function(time){
       $log.debug("seeking")
-      $scope.inclass_player.controls.seek_and_pause(time)
+      $scope.inclass_player.controls.seek(time)
     }
 
     $scope.skip=function(skip_time){
@@ -141,14 +141,16 @@ var openModal=function(view, type){
     }
 
     $scope.inclass_player.events.onMeta=function(){
-      //console.log($scope.quiz_time)
       $scope.seek($scope.quiz_time);
       $scope.loading_video=false
     }
+    $scope.inclass_player.events.seeked=function(){
+      $scope.inclass_player.controls.pause()
+    }
+
 
     $scope.nextQuiz = function(){
       if($scope.current_quiz != $scope.total_num_quizzes){
-        //console.log($scope.current_lecture)
         if($scope.lecture_list[$scope.current_lecture-1]){
           var lecture_id = $scope.lecture_list[$scope.current_lecture-1][0]
           var url=$scope.lecture_list[$scope.current_lecture-1][1]

@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
     .directive('version', function(scalear_api) {
         return {
             restrict: 'E',
-            template: '<div style="font-size:10px">v'+scalear_api.version+'</div>'
+            template: '<div style="font-size:10px">v' + scalear_api.version + '</div>'
         };
     })
     .directive('scalearFooter', function() {
@@ -12,11 +12,11 @@ angular.module('scalearAngularApp')
             restrict: 'E',
             template: '<div class="row"><div class="span12" >' +
                 '<center>' +
-                '&copy;2013 ScalableLearning | ' +
+                '&copy; ' + new Date().getFullYear() + ' ScalableLearning | ' +
                 '<span translate="footer.about"></span> | ' +
                 '<a ui-sref="privacy" translate="footer.privacy"></a> ' +
                 '<report_technical ng-show="current_user"/>' +
-                '<br><center><version /></center>'+
+                '<br><center><version /></center>' +
                 '</center>' +
                 '</div>'
         };

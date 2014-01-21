@@ -17,7 +17,7 @@
 			<td width="150px">
 				<input id="close_button" ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" />
 				<input id="save_button" ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" />
-				<delete_button size="big"  action="deleteAnnouncement($index)" hide-confirm="disable_new"/>
+				<delete_button size="big"  action="deleteAnnouncement($index)" ng-hide="announcement.show"/>
 			</td>
 		</tr>
 	</table>

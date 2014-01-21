@@ -26,10 +26,8 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=large&autoplay='+scope.autoplay||0,{ width: 500, controls: 0});
-					//player = Popcorn.youtube( '#'+scope.id, scope.url+"&fs=0&showinfo=0&rel=0&autoplay=1&autohide=0" ,{ width: 500, controls: 0});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1',{ width: 500, controls: 0});
 					$log.debug("loading!!!")
-					//console.log("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
 					parent.focus()
@@ -74,16 +72,12 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek_and_pause=function(time){
-					//console.log("Seeking and pausing")
 					player_controls.seek(time)
-					////console.log(player_controls.getTime())
 					player.pause()
 				}
 
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
-                    //console.log("refreshing video!!!")
-                    ////console.log(element);
 					element.find('iframe').remove();
 			  		loadVideo();
 				}
@@ -106,7 +100,6 @@ angular.module('scalearAngularApp')
 						function(){
 							//player_controls.replay()
 							$log.debug("Video data loaded")	
-     						 //console.log("YOUTUBE READY!!!!!!!!!!")
 
 							if(player_events.onReady){
 								player_events.onReady();
@@ -117,7 +110,6 @@ angular.module('scalearAngularApp')
 					player.on('play',
 						function(){
 							parent.focus()
-							//console.log("youtube playing")
 							if(player_events.onPlay){								
 								player_events.onPlay();
 								scope.$apply();
@@ -127,7 +119,6 @@ angular.module('scalearAngularApp')
 					player.on('pause',
 						function(){
 							parent.focus()
-							//console.log("youtube pause")
 
 							if(player_events.onPause){								
 								player_events.onPause();
@@ -136,7 +127,6 @@ angular.module('scalearAngularApp')
 					});
 
 					player.on('loadedmetadata',function(){
-						//console.log("Meta ready")
 						parent.focus()
 						if(player_events.onMeta){
 							player_events.onMeta();
@@ -144,10 +134,17 @@ angular.module('scalearAngularApp')
 						}
 					})
 					player.on('canplaythrough',function(){
-						//console.log('can play')
 						parent.focus()
 						if(player_events.canPlay){
 							player_events.canPlay();
+							scope.$apply();
+						}
+					})
+
+					player.on('seeked',function(){
+						parent.focus()
+						if(player_events.seeked){
+							player_events.seeked();
 							scope.$apply();
 						}
 					})
@@ -162,13 +159,11 @@ angular.module('scalearAngularApp')
                 }
 
 				scope.$watch('url', function(){
-                    //console.log("url is changing!!")
                     if(scope.url)
                     {
                         var matches = is_final_url(scope.url)
                          if(matches)
                          {
-                            //console.log(scope.url);
                             player_controls.refreshVideo();
                         }
 

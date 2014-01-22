@@ -1,6 +1,4 @@
-<overlay ng-hide="hide_overlay">
-	<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
-</overlay>
+
 <center><h3>{{lecture.name}}</h3></center>
 <center resizable-video video-layer='video_layer' quiz-layer='quiz_layer' active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' ><a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>
 <center>
@@ -18,6 +16,9 @@
 	</form>
 	</br>
 	<div class="quiz_list" >
+		<overlay ng-hide="true">
+			<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
+		</overlay>
 		<center ng-show="fullscreen"><a class='btn small fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center>
 		<edit_panel ng-show="editing_mode" />
 		<div ng-show="submitted && !hide_alerts">

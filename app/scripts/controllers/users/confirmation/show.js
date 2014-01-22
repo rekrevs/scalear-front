@@ -1,10 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersConfirmationShowCtrl',['$scope','User','$state','$stateParams', function ($scope, User, $state, $stateParams) {
+  .controller('UsersConfirmationShowCtrl',['$scope','User','$state','$stateParams', '$timeout','$rootScope', function ($scope, User, $state, $stateParams, $timeout, $rootScope) {
         $scope.user={}
         User.show_confirmation({confirmation_token: $stateParams.confirmation_token }, function(data){
-                $state.go("login");
+                $rootScope.logging_out = true;
+                $timeout(function(){
+                   //$state.go("login",{},{reload:true})
+                   $rootScope.$emit('$stateChangeStart', {name:'home'},{},{url:''})
+                   $rootScope.logging_out = false;
+                },2500)
                 //console.log("success confirmation token");
             }, function(data){
                 $scope.sending=false;

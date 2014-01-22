@@ -35,7 +35,6 @@ angular.module('scalearAngularApp', [
         function($http, $rootScope, scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies) {
 
             $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
-            //console.log($cookies['XSRF-TOKEN'])
             $rootScope.show_alert = "";
             editableOptions.theme = 'bs2';
             $rootScope.textAngularOpts = {
@@ -56,7 +55,7 @@ angular.module('scalearAngularApp', [
             }
 
             $log.debug("lang is " + $rootScope.current_lang);
-            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']
+            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie', 'confirmation']
             var statesThatForStudents = ['student_courses', 'course.student_calendar', 'course.course_information', 'course.lectures']
             var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module']
             var statesThatRequireNoAuth = ['student_signup', 'teacher_signup', 'new_confirmation', 'forgot_password', 'change_password']
@@ -115,50 +114,49 @@ angular.module('scalearAngularApp', [
             //              });
             //
             //          $rootScope.$on('stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //              //console.log("in success")
             //              $rootScope.start_loading=false;
             //            });
             //
             //          $rootScope.$on('stateChangeError', function (ev, to, toParams, from, fromParams) {
-            //              //console.log("in success")
             //              $rootScope.start_loading=false;
             //          });
 
             $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
 
                 //$rootScope.start_loading=true;
+                if(from.url != '/'){
                 UserSession.getRole().then(function(result) {
                     var s = 1;
 
                     if (result == 0 && !stateNoAuth(to.name)) {
                         // window.location=scalear_api.host+"/"+$rootScope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
-                        $state.go("login");
+                        $state.go("login", {},{notify: false });
 
                     }
                     if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent)) {
-                        $state.go("ie");
+                        $state.go("ie", {},{notify: false });
                     }
                     if (!routeClean(to.name) && result == 0) // user not logged in trying to access a page that needs authentication.
                     {
-                        $state.go("login");
+                        $state.go("login", {},{notify: false });
                         s = 0;
                     } else if ((stateTeacher(to.name) && result == 2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
                     {
-                        $state.go("student_courses");
+                        $state.go("student_courses", {},{notify: false });
                         s = 0;
                     } else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
                     {
-                        $state.go("course_list");
+                        $state.go("course_list", {},{notify: false });
                         s = 0;
                     } else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
                     {
-                        $state.go("course_list");
+                        $state.go("course_list", {},{notify: false });
                     } else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
                     {
-                        $state.go("student_courses");
+                        $state.go("student_courses", {},{notify: false });
                     } else if (stateNoAuth(to.name)) {
                         if (result == 1 || result == 2) {
-                            $state.go("home");
+                            $state.go("home", {},{notify: false });
                             s = 0;
                         }
                     }
@@ -172,11 +170,12 @@ angular.module('scalearAngularApp', [
                     }
                     // success
                 })
+            }
 
-            });
+        });
 
-        }
-    ])
+    }
+])
 
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider',
     function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider) {

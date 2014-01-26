@@ -37,7 +37,8 @@ angular.module('scalearAngularApp')
                             if ($scope.lecture.online_quizzes[element].online_answers.length == 0)
                                 $scope.lecture.online_quizzes.splice(element, 1);
                         }
-                        $scope.next_lecture = data.next_lecture
+                        $scope.next_item = data.next_item
+
                         var watcher = $scope.$watch('course', function(newval) {
                             if ($scope.$parent.course) {
                                 var group_index = CourseEditor.get_index_by_id($scope.$parent.course.groups, data.done[1])
@@ -75,11 +76,11 @@ angular.module('scalearAngularApp')
                                 })
                             })
                             $scope.lecture_player.controls.cue($scope.lecture_player.controls.getDuration() - 1, function() {
-                                if ($scope.next_lecture.id) {
-                                    var next_state = "course.lectures." + $scope.next_lecture.class_name
-                                    var s = $scope.next_lecture.class_name + "_id"
+                                if ($scope.next_item.id) {
+                                    var next_state = "course.lectures." + $scope.next_item.class_name
+                                    var s = $scope.next_item.class_name + "_id"
                                     var to = {}
-                                    to[s] = $scope.next_lecture.id
+                                    to[s] = $scope.next_item.id
                                     $state.go(next_state, to);
                                 }
                             })

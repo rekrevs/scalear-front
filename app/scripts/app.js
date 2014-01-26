@@ -24,6 +24,7 @@ angular.module('scalearAngularApp', [
     'pascalprecht.translate',
     'angularMoment',
     'textAngular',
+    'highcharts-ng',
     'config',
 ])
     .constant('headers', {
@@ -194,8 +195,6 @@ angular.module('scalearAngularApp', [
 
         $httpProvider.defaults.withCredentials = true;
         $httpProvider.interceptors.push('ServerInterceptor');
-
-
 
         $urlRouterProvider.otherwise('/');
         $stateProvider
@@ -425,6 +424,11 @@ angular.module('scalearAngularApp', [
                 url: '/student_courses',
                 templateUrl: '/views/student/course_list/course_list.html',
                 controller: 'studentCourseListCtrl'
+            })
+            .state('statistics', {
+              url: '/statistics',
+              templateUrl: '/views/statistics/statistics.html',
+              controller: 'statisticsCtrl'
             })
     }
 ])

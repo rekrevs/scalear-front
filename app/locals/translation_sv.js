@@ -485,6 +485,8 @@ var translation_sv=function(){
               quiz_title: "Quiz-titel",
               invalid_input: "Ogiltiga Indata",
               duration_invalid: "Tidsutsträckning är ogiltig",
+              charts: "Diagram",
+              total_statistics: "Total Statistik"
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

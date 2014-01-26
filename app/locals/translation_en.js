@@ -487,6 +487,8 @@ var translation_en=function(){
         quiz_title: "Quiz Title",
         invalid_input: "Invalid Input",
         duration_invalid: "Duration is invalid",
+        charts: "Charts",
+        total_statistics: "Total Statistics"
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

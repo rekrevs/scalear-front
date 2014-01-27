@@ -1,5 +1,6 @@
 var translation_en=function(){
     return {
+      next: "Next",
       connected: "Connected",
       cant_connect_to_server: "Cannot connect to server",
       invalid_email: "Invalid Email",

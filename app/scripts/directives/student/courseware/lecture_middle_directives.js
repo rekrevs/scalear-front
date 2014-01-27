@@ -28,7 +28,7 @@ angular.module('scalearAngularApp')
           element.css("z-index",1500);
     		}
     		else{
-	    		scope.pHeight=480;
+	    		scope.pHeight=485;
 	    		scope.pWidth= scope.lecture.aspect_ratio=='widescreen'? 800:600;
            element.css("z-index",1000);
     		}
@@ -210,7 +210,7 @@ angular.module('scalearAngularApp')
         element.css("z-index",10000);
       }
       else{
-        scope.pHeight=443;
+        scope.pHeight=448;
         element.css("z-index",1000);
       }
       if(scope.ipad)        

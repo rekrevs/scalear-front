@@ -271,7 +271,7 @@ angular.module('scalearAngularApp')
 					"z-index": 1031
 				};
 
-				var video_height = win.height() -30;
+				var video_height = win.height() - 35;
 				var video_width = video_height*factor
 				
 				//var video_width = (win.height()-26)*factor
@@ -280,7 +280,7 @@ angular.module('scalearAngularApp')
 				if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
 					$log.debug("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
-					var margin_top = (win.height() - (video_height+30))/2.0;
+					var margin_top = (win.height() - (video_height+35))/2.0;
 					layer={
 						"position":"fixed",
 						"top":0,

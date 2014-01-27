@@ -1,5 +1,6 @@
 var translation_sv=function(){
     return {
+      next: "Nästa",
       connected: "Ansluten",
       cant_connect_to_server: "Kan inte ansluta till servern",
       invalid_email: "ogiltig e-post",

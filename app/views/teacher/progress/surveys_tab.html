@@ -4,13 +4,15 @@
 		<b>{{selected_survey[0]}}</b>	
 	</center>
 	<button_link ng-show="button_msg" action="makeVisibleBtn()" title="{{button_msg|translate}}" style="margin:10px 0px" />
-	<div ng-repeat="(id,data) in survey_chart_data" class="chart" ng-init="chart=createSurveyChart(data.answers, $index, student_count)">
-	    <div ><span translate>answer.question</span> {{$index+1}}:</div>    
-	    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
-	    <div google-chart on-ready="loading=false" chart="chart" ></div>
-	    <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
+	<div ng-repeat="element in ordered_survey">
+        <div ng-if="element[1]!='Free Text Question'" class="chart" ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index, student_count)">
+            <div ><span translate>answer.question</span> {{$index+1}}:</div>
+            <center ng-init="loading=true"><loading size="small" show="loading" /></center>
+            <div google-chart on-ready="loading=false" chart="chart" ></div>
+            <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" />
+        </div>
+        <free-text-table ng-if="element[1]=='Free Text Question'" question="survey_free[element[0]]" survey-id="selected_survey[1]" related-answers="related_answers" />
 	</div>
-	<free-text-table question="question" survey-id="selected_survey[1]" related-answers="related_answers" ng-repeat="question in survey_free" />
 </div>
 <center>
 	<br /><br />

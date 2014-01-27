@@ -12,25 +12,30 @@
 			<tr>
 				<th colspan="2" ng-show="in_review" translate>answer.show</th>
 			</tr>
-			<tr ng-repeat="(id,data) in survey_chart_data|inclass:!in_review" >
-				<td style="padding-top:90px" >
-					<input ng-show="in_review" type="checkbox" ng-model="data.show" ng-change="showInclass(id, data.show)" />
-				</td>
-				<td>
-					<div class="chart" style='width:90%;height:100%' ng-init="chart=createSurveyChart(data.answers, $index, student_count)"> 
-					   	<center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
-						<div google-chart on-ready="loading=false" chart="chart" ></div>
-					</div>
-				</td>
-			</tr>
+            <tbody ng-repeat="element in ordered_survey">
+                <tr ng-if="element[1]!='Free Text Question' && (in_review || survey_chart_data[element[0]].show)" >
+                    <td style="padding-top:90px" >
+                        <input ng-show="in_review" type="checkbox" ng-model="survey_chart_data[element[0]].show" ng-change="showInclass(element[0], survey_chart_data[element[0]].show)" />
+                    </td>
+                    <td>
+                        <div class="chart" style='width:90%;height:100%' ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index, student_count)" >
+                            <center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
+                            <div google-chart on-ready="loading=false" chart="chart" ></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="element[1]=='Free Text Question' && (in_review || survey_free[element[0]].show)" style="margin-top:60px">
+                    <td colspan="2">
+                    <div ng-show="in_review" style="position:absolute">
+                        <input type="checkbox" ng-model="survey_free[element[0]].show" ng-change="showInclass(element[0], survey_free[element[0]].show)" style="margin-bottom:8px; margin-right:10px"/>
+                        <span style="line-height:50px"><span translate>courses.show_in_class</span>?</span>
+                    </div>
+                    <free-text-table question="survey_free[element[0]]" survey-id="selected_survey[1]" related-answers="related_answers" display-only="!in_review"/>
+                    </td>
+                </tr>
+
+            </tbody>
 		</table>
-	</div>
-	<div ng-repeat="(id,question) in survey_free|inclass:!in_review" style="margin-top:60px">
-		<div ng-show="in_review" style="position:absolute">
-			<input type="checkbox" ng-model="question.show" ng-change="showInclass(id, question.show)" style="margin-bottom:8px; margin-right:10px"/>
-			<span style="line-height:50px"><span translate>courses.show_in_class</span>?</span>
-		</div>
-		<free-text-table question="question" survey-id="selected_survey[1]" related-answers="related_answers" display-only="!in_review"/>
 	</div>
 </center>
 <div style="padding:40px;font-size:16px;"><a id="exit_btn" ng-click="exitBtn()" style="cursor:pointer" translate>groups.exit</a></div>

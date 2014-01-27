@@ -107,7 +107,7 @@ angular.module('scalearAngularApp')
 							}
 					});
 
-					player.on('play',
+					player.on('playing',
 						function(){
 							parent.focus()
 							if(player_events.onPlay){								
@@ -145,6 +145,14 @@ angular.module('scalearAngularApp')
 						parent.focus()
 						if(player_events.seeked){
 							player_events.seeked();
+							scope.$apply();
+						}
+					})
+
+					player.on('timeupdate',function(){
+						parent.focus()
+						if(player_events.timeUpdate){
+							player_events.timeUpdate();
 							scope.$apply();
 						}
 					})
@@ -237,7 +245,8 @@ angular.module('scalearAngularApp')
 				angular.extend($scope.quiz_layer, layer)
 				
 				$timeout(function(){$scope.$emit("updatePosition")})
-				$scope.unregister_back_event()		
+				$scope.unregister_back_event()	
+				$scope.unregister_state_event()	
 			}
 
 			$scope.resize.big = function()
@@ -303,6 +312,10 @@ angular.module('scalearAngularApp')
 
 			 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
 			        event.preventDefault()
+			        $scope.resize.small() 
+			        $scope.$apply()
+				});
+				$scope.unregister_state_event = $scope.$on("$stateChangeStart", function(event, next, current) {
 			        $scope.resize.small() 
 			        $scope.$apply()
 				});

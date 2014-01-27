@@ -11,10 +11,7 @@
         }
     </script> 
     <script>
-        console.log(navigator.appName)
-        console.log(navigator.userAgent)
         var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals':'http://popcornjs.org/code/dist'
-        console.log(src)
         var s = document.createElement( 'script' );
         s.setAttribute( 'src', src+'/popcorn-complete.min.js' );
         document.head.appendChild( s );

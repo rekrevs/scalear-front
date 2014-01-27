@@ -1,7 +1,7 @@
 
 
 angular.module('scalearAngularApp')
-  .controller('statisticsCtrl', function ($scope, Kpi) {
+  .controller('statisticsCtrl', function ($scope, Kpi,$translate) {
 
 	var init =function(){
 		$scope.loading_totals = true
@@ -24,7 +24,80 @@ angular.module('scalearAngularApp')
 	  		function(){}
 		)
 
+        createChart()
+        $scope.$watch("current_lang", redrawChart);
 	}
+
+    var createChart=function(){
+        $scope.chartConfig = {
+            options: {
+                chart: {
+                    zoomType: 'x',
+                    spacingRight: 20
+                },
+                tooltip: {
+                    shared: true
+                },
+                legend: {
+                    enabled: false
+                },
+                subtitle: {
+                        text: document.ontouchstart === undefined ? $translate('statistics.drag_to_zoom'):$translate('statistics.pinch_to_zoom')
+                },
+                plotOptions: {
+                    area: {
+                        fillColor: {
+                            linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
+                            stops: [
+                                [0, Highcharts.getOptions().colors[0]],
+                                [1, Highcharts.Color(Highcharts.getOptions().colors[0]).setOpacity(0).get('rgba')]
+                            ]
+                        },
+                        lineWidth: 1,
+                        marker: {
+                            enabled: false
+                        },
+                        shadow: false,
+                        states: {
+                            hover: {
+                                lineWidth: 1
+                            }
+                        },
+                        threshold: null
+                    }
+                }
+            },
+            series: [{
+                type: 'area',
+                name: null,
+                pointInterval: 24 * 3600 * 1000,
+                pointStart: Date.UTC(2014, 0, 15),
+            }],
+            title: {
+                text: null
+            },
+            xAxis: {
+                type: 'datetime',
+                title: {
+                    text: null
+                }
+            },
+            yAxis: {
+                min: 0,
+                title: {
+                    text: null
+                }
+            },
+            loading: false,
+        }
+    }
+
+    var redrawChart=function(){
+        console.log($scope.current_lang)
+        $scope.chartConfig = {}
+        createChart()
+        $scope.getSeriesData($scope.selected_series)
+    }
 
 	$scope.getSeriesData=function(key){
 		$scope.selected_series= key
@@ -35,9 +108,9 @@ angular.module('scalearAngularApp')
 				series.data.forEach(function(elem, ind){
 					chart_data[ind]= elem.value
 				})
-				$scope.chartConfig.series[0].name = key.split("_").join(" ")
+				$scope.chartConfig.series[0].name = $translate('statistics.'+key.toLowerCase())
 				$scope.chartConfig.series[0].data = chart_data
-				$scope.chartConfig.title.text = key.split("_").join(" ")+" rate from "+ series.start.split("T")[0]+" to "+ series.stop.split("T")[0] 
+				$scope.chartConfig.title.text = $translate('statistics.'+key.toLowerCase())+" "+$translate('statistics.rate_from')+" "+series.start.split("T")[0]+" "+$translate('statistics.to')+" "+ series.stop.split("T")[0] 
 				$scope.chartConfig.loading = false
 			},
 			function(){}
@@ -57,9 +130,7 @@ angular.module('scalearAngularApp')
 	            enabled: false
 	        },
 	        subtitle: {
-	                text: document.ontouchstart === undefined ?
-	                    'Click and drag in the plot area to zoom in' :
-	                    'Pinch the chart to zoom in'
+	                text: document.ontouchstart === undefined ? $translate('statistics.drag_to_zoom'):$translate('statistics.pinch_to_zoom')
 	        },
         	plotOptions: {
                 area: {

@@ -162,6 +162,8 @@ angular.module('scalearAngularApp')
     }
 
     var redrawChart = function(new_val, old_val){ 
+        console.log("Sdafg")
+        console.log($scope.current_lang)
         if(new_val != old_val){
             var temp = angular.copy($scope.sub_question_ids)
             $scope.sub_question_ids = {}

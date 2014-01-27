@@ -84,6 +84,7 @@
 
                 <ul class="nav pull-left">
                     <li ng-show="current_user"><a ng-click="coursePage()" style="float: left;cursor: pointer" translate="navigation.courses"></a></li>
+                     <li ng-show="current_user && current_user.roles[0].id==5"><a ui-sref="statistics" style="float: left;cursor: pointer" translate="courses.statistics"></a></li>
                 	<li><a ng-click="open()" ng-show='current_user && current_user.roles[0].id!=2 && current_user.invitations' translate="navigation.notifications" style="float:left;color:red;cursor: pointer;"></a></li>
                 </ul>
             </div>
@@ -151,6 +152,8 @@
     <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
     <script src="bower_components/angular-ui-sortable/src/sortable.js"></script>
     <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
+    <script src="bower_components/highcharts/highcharts.js"></script>
+    <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
 
     <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
@@ -202,6 +205,7 @@
     <script src="scripts/services/teacher/quiz.js"></script>
     <script src="scripts/services/teacher/course_editor.js"></script>
     <script src="scripts/services/teacher/announcement.js"></script>
+    <script src="scripts/services/teacher/kpi.js"></script>
     <script src="scripts/services/server_interceptor.js"></script>
     <script src="scripts/services/error_handler.js"></script>
     <script src="scripts/services/user.js"></script>
@@ -268,6 +272,7 @@
     <script src="scripts/controllers/users/confirmation/show.js"></script>
     <script src="scripts/controllers/users/edit.js"></script>
 
+    <script src="scripts/controllers/statistics/statistics_ctrl.js"></script>
     <!-- endbuild -->
 </body>
 </html>

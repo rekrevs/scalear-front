@@ -57,7 +57,6 @@ angular.module('scalearAngularApp')
                         $log.debug($scope.lecture.online_quizzes)
 
                         $scope.lecture_player.events.onReady = function() {
-                            console.log("play ready")
                             $scope.total_duration = $scope.lecture_player.controls.getDuration()
                             $scope.lecture_player.controls.pause()
                             $scope.lecture_player.controls.seek(0)
@@ -83,7 +82,7 @@ angular.module('scalearAngularApp')
                                     $scope.$apply()
                                 })
                             })
-                            $scope.lecture_player.controls.cue($scope.lecture_player.controls.getDuration() - 1, function() {
+                            $scope.lecture_player.controls.cue($scope.lecture_player.controls.getDuration()-1, function() {
                                 if ($scope.next_lecture.id) {
                                     var next_state = "course.lectures." + $scope.next_lecture.class_name
                                     var s = $scope.next_lecture.class_name + "_id"
@@ -113,7 +112,6 @@ angular.module('scalearAngularApp')
 
             $scope.updateProgress=function(ev){
                 var element = angular.element('.progressBar');
-                console.log(element)
                 var ratio = (ev.pageX-element.offset().left)/element.outerWidth();                
                 $scope.elapsed_width = ratio*100+'%'
                 $scope.seek($scope.total_duration*ratio)
@@ -135,7 +133,6 @@ angular.module('scalearAngularApp')
 
             $scope.lecture_player.events.onPlay = function() {
                 // here check if selected_quiz solved now.. or ever will play, otherwhise will stop again.
-                console.log("should play")
                 $scope.play_pause_class = 'pause'
                 if ($scope.display_mode == true) {
                     $log.debug($scope.selected_quiz)

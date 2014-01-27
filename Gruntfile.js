@@ -546,8 +546,8 @@ module.exports = function(grunt) {
                 name: 'config',
                 constants: {
                     scalear_api: {
-                        host: 'http://192.168.1.105:3000',
-                        redirection_url: 'http://192.168.1.105:3000/#/',
+                        host: 'http://10.0.0.19:3000',
+                        redirection_url: 'http://10.0.0.19:3000/#/',
                         version: '2.0.10 (' + new Date().toUTCString() + ')'
                     },
 

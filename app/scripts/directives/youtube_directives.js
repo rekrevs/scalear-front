@@ -245,7 +245,8 @@ angular.module('scalearAngularApp')
 				angular.extend($scope.quiz_layer, layer)
 				
 				$timeout(function(){$scope.$emit("updatePosition")})
-				$scope.unregister_back_event()		
+				$scope.unregister_back_event()	
+				$scope.unregister_state_event()	
 			}
 
 			$scope.resize.big = function()
@@ -311,6 +312,10 @@ angular.module('scalearAngularApp')
 
 			 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
 			        event.preventDefault()
+			        $scope.resize.small() 
+			        $scope.$apply()
+				});
+				$scope.unregister_state_event = $scope.$on("$stateChangeStart", function(event, next, current) {
 			        $scope.resize.small() 
 			        $scope.$apply()
 				});

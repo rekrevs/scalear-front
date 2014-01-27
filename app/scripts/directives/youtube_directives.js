@@ -107,7 +107,7 @@ angular.module('scalearAngularApp')
 							}
 					});
 
-					player.on('play',
+					player.on('playing',
 						function(){
 							parent.focus()
 							if(player_events.onPlay){								
@@ -145,6 +145,14 @@ angular.module('scalearAngularApp')
 						parent.focus()
 						if(player_events.seeked){
 							player_events.seeked();
+							scope.$apply();
+						}
+					})
+
+					player.on('timeupdate',function(){
+						parent.focus()
+						if(player_events.timeUpdate){
+							player_events.timeUpdate();
 							scope.$apply();
 						}
 					})

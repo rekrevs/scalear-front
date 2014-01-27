@@ -20,12 +20,12 @@ angular.module('scalearAngularApp')
 	  			$scope.collection = data.series
 	  			$scope.selected_series = $scope.collection[0]
 	  			$scope.getSeriesData($scope.selected_series)
+                $scope.$watch("current_lang", redrawChart);
 	  		},
 	  		function(){}
 		)
 
         createChart()
-        $scope.$watch("current_lang", redrawChart);
 	}
 
     var createChart=function(){
@@ -92,11 +92,12 @@ angular.module('scalearAngularApp')
         }
     }
 
-    var redrawChart=function(){
-        console.log($scope.current_lang)
-        $scope.chartConfig = {}
-        createChart()
-        $scope.getSeriesData($scope.selected_series)
+    var redrawChart=function(new_val, old_val){
+        if(new_val != old_val){
+            $scope.chartConfig = {}
+            createChart()
+            $scope.getSeriesData($scope.selected_series)
+        }
     }
 
 	$scope.getSeriesData=function(key){

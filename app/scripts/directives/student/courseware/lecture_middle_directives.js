@@ -28,13 +28,18 @@ angular.module('scalearAngularApp')
           element.css("z-index",1500);
     		}
     		else{
-	    		scope.pHeight=480;
+	    		scope.pHeight=485;
 	    		scope.pWidth= scope.lecture.aspect_ratio=='widescreen'? 800:600;
            element.css("z-index",1000);
     		}
-
-    		element.css("top", scope.pHeight-26+"px");
-    		element.css("left", scope.pWidth-350+"px");
+        if(scope.ipad){
+          element.css("top", scope.pHeight+"px");
+          element.css("left", scope.pWidth-200+"px");
+        }
+    		else{
+          element.css("top", scope.pHeight-26+"px");
+          element.css("left", scope.pWidth-350+"px");
+        }
     	}
     	
     	scope.full = function(){   			
@@ -64,11 +69,6 @@ angular.module('scalearAngularApp')
     	scope.back= function()
     	{
     		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
-  		});
-    	};
-    	scope.pause= function()
-    	{
-    		Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
   		});
     	};
     	scope.question= function(){
@@ -136,11 +136,7 @@ angular.module('scalearAngularApp')
   		setButtonsLocation()
   		scope.setShortcuts();
   		
-  		scope.lecture_player.events.onPause= function(){
-   			$log.debug("in here");
-   			if(scope.display_mode!=true) //not a quiz
-   				scope.pause();
-   		}
+
      		
    		scope.$watch('lecture.aspect_ratio', function(){
    			setButtonsLocation()
@@ -214,11 +210,14 @@ angular.module('scalearAngularApp')
         element.css("z-index",10000);
       }
       else{
-        scope.pHeight=443;
+        scope.pHeight=448;
         element.css("z-index",1000);
       }
-        
-      element.css("top", scope.pHeight+"px");
+      if(scope.ipad)        
+        element.css("top", scope.pHeight+30+"px");
+      else
+        element.css("top", scope.pHeight+"px");
+
     }		
     	
   	setButtonsLocation()

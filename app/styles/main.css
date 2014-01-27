@@ -241,12 +241,12 @@ textarea.ng-invalid{ border:1px solid red; }
 
 .widescreen{
   width: 500px;
-  height: 312px;
+  height: 316px;
 }
 
 .smallscreen{
   width: 500px;
-  height: 405px;
+  height: 410px;
 }
 .largescreen{
   width: 800px;
@@ -259,7 +259,7 @@ textarea.ng-invalid{ border:1px solid red; }
 }
 
 .ontop.widescreen{
-	height: 282px;
+	height: 281px;
 }
 
 .ontop.smallscreen{

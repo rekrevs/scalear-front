@@ -25,6 +25,7 @@ angular.module('scalearAngularApp')
   			},
   			function(data){
   				$log.debug(data)
+          $scope.ordered_survey= data.ordered_survey
           $scope.survey_chart_data = data.chart_data
           $scope.survey_chart_questions = data.chart_questions
           $scope.survey_free= data.survey_free

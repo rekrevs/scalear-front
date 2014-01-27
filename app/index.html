@@ -5,11 +5,17 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
   <head> 
     <script type="text/javascript">
-    if (navigator.appName == 'Microsoft Internet Explorer')
-    {
-       self.location = "ie.html"
-    }
-    </script>   
+        if (navigator.appName == 'Microsoft Internet Explorer')
+        {
+           self.location = "ie.html"
+        }
+    </script> 
+    <script>
+        var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals':'http://popcornjs.org/code/dist'
+        var s = document.createElement( 'script' );
+        s.setAttribute( 'src', src+'/popcorn-complete.min.js' );
+        document.head.appendChild( s );
+    </script>  
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Scalable Learning</title>
@@ -24,7 +30,6 @@
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css" />
-
     <!-- endbuild -->
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
   </head>
@@ -76,6 +81,7 @@
 
                 <ul class="nav pull-left">
                     <li ng-show="current_user"><a ng-click="coursePage()" style="float: left;cursor: pointer" translate="navigation.courses"></a></li>
+                     <li ng-show="current_user && current_user.roles[0].id==5"><a ui-sref="statistics" style="float: left;cursor: pointer" translate="courses.statistics"></a></li>
                 	<li><a ng-click="open()" ng-show='current_user && current_user.roles[0].id!=2 && current_user.invitations' translate="navigation.notifications" style="float:left;color:red;cursor: pointer;"></a></li>
                 </ul>
             </div>
@@ -113,9 +119,8 @@
        ga('create', 'UA-XXXXX-X');
        ga('send', 'pageview');
     </script>
-
     
-    <script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>
+    <!--<script src="http://popcornjs.org/code/dist/popcorn-complete.min.js"></script>-->
     <!-- build:js({.tmp,app}) scripts/externals.js -->
     <script src="bower_components/jquery/jquery.min.js"></script>
     <script src="bower_components/jquery-ui/ui/minified/jquery-ui.min.js"></script>
@@ -144,6 +149,8 @@
     <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
     <script src="bower_components/angular-ui-sortable/src/sortable.js"></script>
     <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
+    <script src="bower_components/highcharts/highcharts.js"></script>
+    <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
 
     <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
@@ -186,6 +193,7 @@
     <script src="scripts/directives/student/courseware/courseware_directives.js"></script>
     <script src="scripts/directives/student/courseware/quiz_middle_directives.js"></script>
     <script src="scripts/directives/student/courseware/lecture_middle_directives.js"></script>
+    <script src="scripts/directives/generic_directives.js"></script>
 
     <script src="scripts/services/teacher/course.js"></script>
     <script src="scripts/services/teacher/document.js"></script>
@@ -195,6 +203,7 @@
     <script src="scripts/services/teacher/quiz.js"></script>
     <script src="scripts/services/teacher/course_editor.js"></script>
     <script src="scripts/services/teacher/announcement.js"></script>
+    <script src="scripts/services/teacher/kpi.js"></script>
     <script src="scripts/services/server_interceptor.js"></script>
     <script src="scripts/services/error_handler.js"></script>
     <script src="scripts/services/user.js"></script>
@@ -261,6 +270,7 @@
     <script src="scripts/controllers/users/confirmation/show.js"></script>
     <script src="scripts/controllers/users/edit.js"></script>
 
+    <script src="scripts/controllers/statistics/statistics_ctrl.js"></script>
     <!-- endbuild -->
 </body>
 </html>

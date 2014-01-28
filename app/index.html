@@ -11,9 +11,9 @@
         }
     </script> 
     <script>
-        var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals':'http://popcornjs.org/code/dist'
+        var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals/':'http://popcornjs.org/code/dist/'
         var s = document.createElement( 'script' );
-        s.setAttribute( 'src', src+'/popcorn-complete.min.js' );
+        s.setAttribute( 'src', src+'popcorn-complete.min.js' );
         document.head.appendChild( s );
     </script>  
     <meta charset="utf-8">

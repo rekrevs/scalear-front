@@ -182,6 +182,11 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 
 }
 
+.widescreen.ipad{
+   width: 800px;
+  height: 450px;
+}
+
 .ontop.widescreen{
   position:absolute;
   height:450px;

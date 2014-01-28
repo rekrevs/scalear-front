@@ -1,5 +1,6 @@
 var translation_en=function(){
     return {
+      issue: "Issue is with the",
       next: "Next",
       connected: "Connected",
       cant_connect_to_server: "Cannot connect to server",
@@ -53,6 +54,7 @@ var translation_en=function(){
         calendar: "Calendar",
         announcements: "Announcements",
         content: "Content",
+        system: "System",
         information: "Information",
         course_information: "Course Information",
         enrolled_students: "Enrolled Students",

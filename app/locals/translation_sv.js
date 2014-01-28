@@ -1,5 +1,6 @@
 var translation_sv=function(){
     return {
+      issue: "Problem är med",
       next: "Nästa",
       connected: "Ansluten",
       cant_connect_to_server: "Kan inte ansluta till servern",
@@ -51,6 +52,7 @@ var translation_sv=function(){
               calendar: "Kalender",
               announcements: "Meddelanden",
               content: "Innehåll",
+              system: "Systemet",
               information: "Information",
               course_information: "Kursinformation",
               enrolled_students: "Inskrivna studenter",

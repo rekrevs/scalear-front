@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
 	.directive('youtube',['$rootScope','$log',function($rootScope,$log){
 		return {
 			restrict: 'E',
-			replace:true, 
+			replace:true,
 			scope:{
 				url:'=',
 				ready:'&',
@@ -12,6 +12,7 @@ angular.module('scalearAngularApp')
 				player:'=',
 				autoplay:'@'
 			},
+            template:"<div></div>",
 			link: function(scope, element){
 
 				$log.debug("YOUTUBE " + scope.id)
@@ -26,7 +27,25 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1',{ width: 500, controls: 0});
+                    var matches = is_final_url(scope.url)
+                    if(matches) //youtube
+                    {
+                        player = Popcorn.smart( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1',{ width: 500, controls: 0});
+                    }
+                    else{
+                        player = Popcorn.smart( '#'+scope.id, scope.url,{ width: '100%', height:'100%', controls: 0});
+                        //player.controls(0);
+
+//                        element.append('<div id="video-controls">' +
+//                            '<button type="button" id="play-pause" class="btn" style="margin-right:2%; width:10%">Play</button>' +
+//                            '<input  type="range" id="seek-bar" value="0" style="margin-right:2%;width:60%">' +
+//                            '<button type="button" id="mute" class="btn" style="margin-right:2%;width:10%">Mute</button>' +
+//                            '<input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1" style="width:10%">' +
+//                            '</div>');
+                    }
+                    console.log(player);
+                    console.log(player.video.videoWidth);
+                    player.video.videoWidth=500;
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
@@ -79,6 +98,7 @@ angular.module('scalearAngularApp')
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
 					element.find('iframe').remove();
+                    element.find('video').remove();
 			  		loadVideo();
 				}
 
@@ -161,11 +181,11 @@ angular.module('scalearAngularApp')
 				scope.$watch('url', function(){
                     if(scope.url)
                     {
-                        var matches = is_final_url(scope.url)
-                         if(matches)
-                         {
+                      //  var matches = is_final_url(scope.url)
+                        // if(matches)
+                         //{
                             player_controls.refreshVideo();
-                        }
+                         //}
 
                     }
 				})
@@ -185,6 +205,7 @@ angular.module('scalearAngularApp')
 		scope:{
 			video_layer:'=videoLayer',
 			quiz_layer:'=quizLayer',
+            ontop_layer:'=ontopLayer',
 			aspect_ratio:'=aspectRatio',
 			fullscreen:'=active',
 			resize:'=',
@@ -235,6 +256,8 @@ angular.module('scalearAngularApp')
 
 				angular.extend($scope.video_layer, video)
 				angular.extend($scope.quiz_layer, layer)
+                angular.extend($scope.ontop_layer, layer)
+                angular.extend($scope.ontop_layer, {"z-index":0})
 				
 				$timeout(function(){$scope.$emit("updatePosition")})
 				$scope.unregister_back_event()		
@@ -243,8 +266,9 @@ angular.module('scalearAngularApp')
 			$scope.resize.big = function()
 			{
                 $rootScope.changeError = true;
-				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-				var win = angular.element($window)
+				//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+				var factor=16.0/9.0
+                var win = angular.element($window)
 
 				$scope.fullscreen = true
 				angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
@@ -262,7 +286,7 @@ angular.module('scalearAngularApp')
 					"z-index": 1031
 				};
 
-				var video_height = win.height() -30;
+				var video_height = win.height();// -30;
 				var video_width = video_height*factor
 				
 				//var video_width = (win.height()-26)*factor
@@ -271,7 +295,7 @@ angular.module('scalearAngularApp')
 				if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
 					$log.debug("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
-					var margin_top = (win.height() - (video_height+30))/2.0;
+					var margin_top = (win.height() - (video_height))/2.0; //+30
 					layer={
 						"position":"fixed",
 						"top":0,
@@ -298,6 +322,8 @@ angular.module('scalearAngularApp')
 				 }
 				angular.extend($scope.video_layer, video)
 				angular.extend($scope.quiz_layer, layer)
+                angular.extend($scope.ontop_layer, layer)
+                angular.extend($scope.ontop_layer,{"z-index":1031});
 
 			 	$timeout(function(){$scope.$emit("updatePosition")})
 

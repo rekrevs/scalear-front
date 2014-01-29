@@ -10,10 +10,10 @@ angular.module('scalearAngularApp')
 	    var lecture={}
 
 	    lecture[column]=data;
-	    if(column == 'url' && getVideoId(data) == null){
-	    	$log.debug(data)
-	    	d.resolve($translate('courses.invalid_input'));
-    	}
+//	    if(column == 'url' && getVideoId(data) == null){
+//	    	$log.debug(data)
+//	    	d.resolve($translate('courses.invalid_input'));
+//    	}
 	    Lecture.validateLecture(
 	    	{course_id: $scope.lecture.course_id, lecture_id:$scope.lecture.id},
 	    	lecture,
@@ -62,10 +62,16 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.updateLectureUrl= function(){
-		urlFormat()
+		var type = urlFormat()
 		$scope.lecture.aspect_ratio = ""
-        if($scope.lecture.url)
+        if($scope.lecture.url && type=="youtube")
 			getYoutubeDetails();
+        else
+        {
+            $scope.lecture.aspect_ratio = "widescreen"
+            $scope.updateLecture();
+        }
+
 	}
 
 	$scope.updateSlidesUrl=function(){
@@ -78,7 +84,11 @@ angular.module('scalearAngularApp')
 		var video_id = getVideoId(url)
 		if(video_id) {
 		   $scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
+           return "youtube";
 		}
+        else{
+            return "other"
+        }
 	}
 
 	var getVideoId= function(url){
@@ -127,7 +137,7 @@ angular.module('scalearAngularApp')
     $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj[$stateParams.lecture_id]){
         $scope.lecture=$scope.items_obj[$stateParams.lecture_id]
-        if($scope.lecture.url && $scope.lecture.url!="none"){
+        if($scope.lecture.url && $scope.lecture.url!="none" && getVideoId($scope.lecture.url)){
             current_url = $scope.lecture.url.split("v=")[1];
             current_url = current_url.split("&")[0]
             getYoutubeDetails();

@@ -15,6 +15,7 @@ angular.module('scalearAngularApp')
     $scope.resize={}
     $scope.video_layer={}
     $scope.quiz_layer={}
+    $scope.ontop_layer={}
     $scope.lecture_player={}
     $scope.lecture_player.events={}
     $scope.alert={

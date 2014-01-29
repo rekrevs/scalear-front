@@ -215,7 +215,8 @@ var translation_en=function(){
         quiz_required:"This Quiz is Required",
         quiz_not_required:"This Quiz is Not Required",
         got_some_errors: "You've got some errors",
-        provide_answer: "Please provide the answer text for each choice"
+        provide_answer: "Please provide the answer text for each choice",
+        provide_url: "Please Provide A Video URL"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -585,7 +586,7 @@ var translation_en=function(){
         total_surveys: "Total Surveys",
         total_questions_asked: "Total Questions Asked",
         total_confused: "Total Confused",
-        active_users: "Active Users",
+        current_active_users: "Active Users",
         rate_from: "rate from",
         to: "to",
         drag_to_zoom: 'Click and drag in the plot area to zoom in',

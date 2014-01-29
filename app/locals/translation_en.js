@@ -622,6 +622,8 @@ var translation_en=function(){
                 signed_up_but_locked: 'You have signed up successfully. However, we could not sign you in because your account is locked.',
                 updated: 'You updated your account successfully.',
                 update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address.",
+                confirm_destroy: "Are you sure you want to cancel your account?",
+                confirm_destroy_note: "Please note that all your data will be deleted from the system and cannot be recovered.",
                 destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
             },
             unlocks:

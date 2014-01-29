@@ -617,7 +617,8 @@ var translation_sv=function(){
                 signed_up_but_unconfirmed: "Ett meddelande med en bekräftelselänk har skickats till din e-postadress. Vänligen öppna länken för att aktivera ditt konto.",
                 inactive_signed_up: "Ett nytt konto har skapats. Du kunde inte logga in, för ditt konto är %{reason}.",
                 updated: "Ditt konto har uppdaterats.",
-                
+                confirm_destroy_note: "Observera att alla data kommer att tas bort från systemet och kan inte återställas.",
+                confirm_destroy: "Är du säker på att du vill avsluta ditt konto?",
                 user:
                 {
                     updated: "Du har uppdaterat ditt konto framgångsrikt.",

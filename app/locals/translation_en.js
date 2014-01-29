@@ -145,6 +145,7 @@ var translation_en=function(){
       lectures:{
         duration: "Duration",
         details: "Details",
+        lecture_details: "Lecture Details",
         lecture_title: "Lecture Title",
         url: "Video URL",
         video_title: "Video Title",
@@ -244,7 +245,9 @@ var translation_en=function(){
         used_up_all: "Used up all",
         attempts: "attempts",
         attempt_number: "Attempt number",
-        percentage_of_students: "% of Students"
+        percentage_of_students: "% of Students",
+        quiz_details: "Quiz Details",
+        survey_details: "Survey Details",
       },
       user_mailer:{
         new_announcement: "New Announcement",

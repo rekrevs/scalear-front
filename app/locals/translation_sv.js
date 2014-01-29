@@ -145,6 +145,7 @@ var translation_sv=function(){
       lectures:{
               duration: "Tidsutsträckning",
               details: "Detaljer",
+              lecture_details: "föreläsnings detaljer",
               lecture_title: "Föreläsningstitel",
               url: "Video URL",
               video_title: "Video Titel",
@@ -243,6 +244,8 @@ var translation_sv=function(){
               used_up_all: "Använt upp alla",
               attempts: "försök",
               attempt_number: "Försök nummer",
+              quiz_details: "Quiz Detaljer",
+              survey_details: "Enkät Detaljer",
           },
       user_mailer:{
               new_announcement: "Nytt meddelande",

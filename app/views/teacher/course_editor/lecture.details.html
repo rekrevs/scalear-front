@@ -56,11 +56,20 @@
 			<tr>
 				<td><span translate>lectures.appearance_date</span></td>
 				<td> 
-					<details-check checked="lecture.appearance_time_module" save="updateLecture()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="appearance_time_module"></details-check> <br />
+					<details-check checked="lecture.appearance_time_module" save="updateLecture()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="appearance_time_module"></details-check> 
+					<span ng-show="lecture.appearance_time_module">
+						<span ng-show="visible(lecture.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span><span tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="icon pull-right icon-eye-close"></span>
+					</span>
+					
+					<br />
 						<p ng-hide="lecture.appearance_time_module">
+
 							<span translate>lectures.set_date</span>:<br>
 							<details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
+
+							<span ng-show="visible(lecture.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span><span tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="icon pull-right icon-eye-close"></span>
 						</p>
+
 				</td>
 			</tr>
 			<tr>

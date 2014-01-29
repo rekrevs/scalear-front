@@ -62,9 +62,10 @@ angular.module('scalearAngularApp')
                     elem: '='
                 },
                 restrict: 'E',
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" onbeforesave="validation()($data, elem)" onaftersave="saveData()" ng-click="action()" ng-dblclick="textBtnForm.$show()" style="cursor:pointer;">' +
+                template: '<a onshow="selectField()" ng-mouseover="show_pencil = true;" ng-mouseleave="show_pencil = false;"  editable-text="value" e-form="textBtnForm" onbeforesave="validation()($data, elem)" onaftersave="saveData()" ng-click="action()" style="cursor:pointer;">' +
                     '{{ value || ("empty"|translate) }}' +
                     '<i ng-class="overclass"></i>' +
+                    ' <span ng-show="show_pencil" class="icon-pencil" ng-click="textBtnForm.$show()"></span>' +
                     '</a>',
                 link: function(scope, element) {
                     scope.selectField = function() {

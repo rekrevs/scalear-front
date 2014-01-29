@@ -15,23 +15,26 @@ angular.module('scalearAngularApp')
             })
 
             $scope.update_account = function() {
-                $scope.sending = true;
-                delete $scope.user.errors
-                User.update_account({}, {
-                    user: $scope.user
-                }, function() {
-                    $scope.sending = false;
-                    //console.log("signed up");
-                    $state.go("home");
-                }, function(response) {
-                    $scope.sending = false;
-                    $scope.user.errors = response.data.errors
-                    //console.log("sign up failed")
-                })
+                var confirm = window.confirm("Are you sure you want to modify your account information?");
+                if (confirm) {
+                    $scope.sending = true;
+                    delete $scope.user.errors
+                    User.update_account({}, {
+                        user: $scope.user
+                    }, function() {
+                        $scope.sending = false;
+                        //console.log("signed up");
+                        $state.go("home");
+                    }, function(response) {
+                        $scope.sending = false;
+                        $scope.user.errors = response.data.errors
+                        //console.log("sign up failed")
+                    })
+                }
             }
 
             $scope.delete_account = function() {
-                var confirm = window.confirm("Are you sure?");
+                var confirm = window.confirm("Are you sure you want to delete your account permanently?");
                 if (confirm) {
                     User.delete_account({}, {}, function() {
                         // //console.log("deleted ");

@@ -215,6 +215,7 @@ var translation_en=function(){
         quiz_required:"This Quiz is Required",
         quiz_not_required:"This Quiz is Not Required",
         got_some_errors: "You've got some errors",
+        provide_answer: "Please provide the answer text for each choice"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

@@ -214,6 +214,7 @@ var translation_sv=function(){
               quiz_required:"Denna Quiz är Obligatoriska",
               quiz_not_required:"Denna Quiz krävs inte",
               got_some_errors: "Du har några fel",
+              provide_answer: "Ange svaret text för varje val"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

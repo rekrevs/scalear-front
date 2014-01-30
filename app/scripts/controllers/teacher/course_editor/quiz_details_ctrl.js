@@ -28,6 +28,16 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
+                        $scope.modules.forEach(function(module, i) {
+                            if (module.id == $scope.quiz.group_id) {
+                                if ($scope.quiz.appearance_time_module) {
+                                    $scope.quiz.appearance_time = module.appearance_time;
+                                }
+                                if ($scope.quiz.due_date_module) {
+                                    $scope.quiz.due_date = module.due_date;
+                                }
+                            }
+                        });
                     }
                 );
             };

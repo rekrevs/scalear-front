@@ -57,6 +57,18 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
+                        // console.log($scope.modules)
+                        $scope.modules.forEach(function(module, i) {
+                            if (module.id == $scope.lecture.group_id) {
+                                if ($scope.lecture.appearance_time_module) {
+                                    $scope.lecture.appearance_time = module.appearance_time;
+                                }
+                                if ($scope.lecture.due_date_module) {
+                                    $scope.lecture.due_date = module.due_date;
+                                }
+                            }
+                        });
+
                     },
                     function() {
                         //alert("Failed to update lecture, please check your internet connection")

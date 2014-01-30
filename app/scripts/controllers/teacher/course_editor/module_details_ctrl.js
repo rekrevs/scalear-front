@@ -7,6 +7,7 @@ angular.module('scalearAngularApp')
             $scope.$watch('module_obj[' + $stateParams.module_id + ']', function() {
                 if ($scope.module_obj && $scope.module_obj[$stateParams.module_id])
                     $scope.module = $scope.module_obj[$stateParams.module_id]
+                    // console.log($scope.module)
             })
 
             //**************************FUNCTIONS****************************************///
@@ -57,6 +58,14 @@ angular.module('scalearAngularApp')
                     },
                     function(response) {
                         $log.debug(response)
+                        $scope.module.items.forEach(function(item, i) {
+                            if (item.appearance_time_module) {
+                                item.appearance_time = $scope.module.appearance_time;
+                            }
+                            if (item.due_date_module) {
+                                item.due_date = $scope.module.due_date;
+                            }
+                        });
                     },
                     function() {}
                 );

@@ -26,7 +26,6 @@
 			<tr>
 				<td style="word-break: break-word;"><span translate>groups.appearance_date</span></td>
 				<td>
-				{{quiz.appearance_time}}
 					<details-check checked="quiz.appearance_time_module" save="updateQuiz()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="appearance_time_module" ></details-check> 
 					<span ng-show="quiz.appearance_time_module">
 						<span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span><span tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right icon-eye-close"></span>

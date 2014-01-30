@@ -27,6 +27,7 @@ angular.module('scalearAngularApp')
                         })
 
                         $scope.init_loading = false
+                        // console.log(data);
                     },
                     function() {}
                 );

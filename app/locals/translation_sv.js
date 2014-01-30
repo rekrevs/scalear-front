@@ -1,5 +1,6 @@
 var translation_sv=function(){
     return {
+      issue: "Problem är med",
       next: "Nästa",
       connected: "Ansluten",
       cant_connect_to_server: "Kan inte ansluta till servern",
@@ -29,8 +30,10 @@ var translation_sv=function(){
       character_exceed_limit: "Den inmatade texten var för lång.",
       ie_disclaimer: "Internet Explorer är inte helt förenlig med de interaktiva videofunktioner som används om Scalable lärande. Vi rekommenderar att du använder",
       chrome: "Google Chrome webbläsare",
-        welcome: "Välkommen till Scalable Learning",
-        or: "eller",
+      welcome: "Välkommen till Scalable Learning",
+      or: "eller",
+      visible: "Synlig",
+      invisible: "Osynlig",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -51,6 +54,7 @@ var translation_sv=function(){
               calendar: "Kalender",
               announcements: "Meddelanden",
               content: "Innehåll",
+              system: "Systemet",
               information: "Information",
               course_information: "Kursinformation",
               enrolled_students: "Inskrivna studenter",
@@ -145,9 +149,12 @@ var translation_sv=function(){
       lectures:{
               duration: "Tidsutsträckning",
               details: "Detaljer",
+              lecture_details: "föreläsnings detaljer",
               lecture_title: "Föreläsningstitel",
-              url: "Föreläsnings-URL",
+              url: "Video URL",
+              video_title: "Video Titel",
               thumbnail: "Thumbnail",
+              video_preview: "Video Preview",
               author: "Författare",
               aspect_ratio: "Bildförhållande",
               detected_aspect_ratio: "Upptäcka bildförhållande",
@@ -214,6 +221,8 @@ var translation_sv=function(){
               quiz_required:"Denna Quiz är Obligatoriska",
               quiz_not_required:"Denna Quiz krävs inte",
               got_some_errors: "Du har några fel",
+              provide_answer: "Ange svaret text för varje val",
+              provide_url: "Ange en URL för video"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",
@@ -239,6 +248,8 @@ var translation_sv=function(){
               used_up_all: "Använt upp alla",
               attempts: "försök",
               attempt_number: "Försök nummer",
+              quiz_details: "Quiz Detaljer",
+              survey_details: "Enkät Detaljer",
           },
       user_mailer:{
               new_announcement: "Nytt meddelande",
@@ -645,7 +656,8 @@ var translation_sv=function(){
                 signed_up_but_unconfirmed: "Ett meddelande med en bekräftelselänk har skickats till din e-postadress. Vänligen öppna länken för att aktivera ditt konto.",
                 inactive_signed_up: "Ett nytt konto har skapats. Du kunde inte logga in, för ditt konto är %{reason}.",
                 updated: "Ditt konto har uppdaterats.",
-                
+                confirm_destroy_note: "Observera att alla data kommer att tas bort från systemet och kan inte återställas.",
+                confirm_destroy: "Är du säker på att du vill avsluta ditt konto?",
                 user:
                 {
                     updated: "Du har uppdaterat ditt konto framgångsrikt.",

@@ -9,7 +9,7 @@
         <input type="email" ng-model="user.email" id="user_email" class="string email optional" name="user[email]" size="50"/>
         <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
         <br />
-        <input type="submit" ng-click="reset_password()"  ng-disabled="sending || !user.email" value="{{'password_edit.send_reset' | translate}}" class="btn btn-primary"/>
+        <input type="submit" ng-disabled="sending || !user.email" value="{{'password_edit.send_reset' | translate}}" class="btn btn-primary"/>
         <br />
         <br />
     </form>

@@ -3,6 +3,7 @@
 angular.module('scalearAngularApp')
     .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout) {
 
+
     // $scope.lecture=lecture.data
     $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj[$stateParams.lecture_id]){
@@ -36,8 +37,17 @@ angular.module('scalearAngularApp')
  		$scope.hide_alerts=true;
  	}
 
+    $scope.lecture_player.events.onMeta= function(){
+        // update duration for all video types.
+        if(Math.ceil($scope.lecture.duration) != Math.ceil($scope.lecture_player.controls.getDuration()))
+        {
+            $scope.lecture.duration=Math.ceil($scope.lecture_player.controls.getDuration());
+            $scope.updateLecture();
+        }
+    }
  	$scope.lecture_player.events.onReady= function(){
  		$scope.hide_overlay = true
+
  	}
 	$scope.lecture_player.events.onPlay= function(){
 		var paused_time= $scope.lecture_player.controls.getTime()

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log', function($interval, Lecture, $stateParams, $window, $log) {
+.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log','$translate', function($interval, Lecture, $stateParams, $window, $log, $translate) {
   return {
     restrict:"E",
     templateUrl:"/views/student/lectures/controls.html",
@@ -51,7 +51,7 @@ angular.module('scalearAngularApp')
            		$log.debug(data)
            		if(data.msg=="ask")
            		{
-             		scope.$parent.show_notification="If you're really confused, please use the question button to ask a question so the teacher can help you.";
+             		scope.$parent.show_notification=$translate("controller_msg.really_confused_use_question");
              		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px"}
              		$interval(function(){
              			scope.$parent.notify_position={"left":"180px"};

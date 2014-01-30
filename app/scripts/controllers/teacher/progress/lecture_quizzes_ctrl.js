@@ -74,11 +74,18 @@ angular.module('scalearAngularApp')
         if(url != $scope.url){
             $scope.url = url
             $scope.lecture_player.events.onReady=function(){
+                console.log("time is");
+                console.log(getTime(id));
+                console.log("url is");
+                console.log($scope.url);
                 $scope.lecture_player.controls.seek_and_pause(getTime(id))
             }
         }
         else
-            $scope.lecture_player.controls.seek_and_pause(getTime(id))        
+        {
+            console.log(getTime(id));
+            $scope.lecture_player.controls.seek_and_pause(getTime(id))
+        }
 	}
 
 	var getQuizTitle= function(id){

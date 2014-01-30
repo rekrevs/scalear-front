@@ -6,6 +6,7 @@ angular.module('scalearAngularApp')
 
             $scope.video_layer = {}
             $scope.quiz_layer = {}
+            $scope.ontop_layer={}
             $scope.resize = {}
             $scope.lecture = {}
             $scope.lecture.aspect_ratio = ""

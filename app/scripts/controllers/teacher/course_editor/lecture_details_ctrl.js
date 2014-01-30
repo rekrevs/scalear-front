@@ -4,6 +4,8 @@ angular.module('scalearAngularApp')
     .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q','$state', 'Lecture', '$translate','$log','$filter', function ($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter) {
 
         var current_url;
+
+        $scope.video={}
    	//**************************FUNCTIONS****************************************///
  	$scope.validateLecture = function(column,data) {
 	    var d = $q.defer();
@@ -31,7 +33,8 @@ angular.module('scalearAngularApp')
 	    return d.promise;
     };
 
-	$scope.updateLecture= function(data,type){
+     // parent because i need it in details and middle. (they are scope - siblings)
+	$scope.$parent.updateLecture= function(data,type){
       	if(data && data instanceof Date){ 
               data.setMinutes(data.getMinutes() + 120);
               $scope.lecture[type] = data
@@ -63,14 +66,15 @@ angular.module('scalearAngularApp')
 
 	$scope.updateLectureUrl= function(){
 		var type = urlFormat()
-		$scope.lecture.aspect_ratio = ""
-        if($scope.lecture.url && type=="youtube")
-			getYoutubeDetails();
-        else
-        {
-            $scope.lecture.aspect_ratio = "widescreen"
-            $scope.updateLecture();
-        }
+        $scope.lecture.aspect_ratio = "widescreen"
+        if($scope.lecture.url && type!="other")
+			getYoutubeDetails(type[1]);
+
+        // or keep them both just in case video doesn't load??
+        // or instead update in metadata instead of loadeddata?? which is better?
+        //$scope.updateLecture();
+        // will do it on ready only..
+
 
 	}
 
@@ -83,8 +87,8 @@ angular.module('scalearAngularApp')
 		var url=$scope.lecture.url
 		var video_id = getVideoId(url)
 		if(video_id) {
-		   $scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
-           return "youtube";
+		   //$scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
+           return video_id; //"youtube";
 		}
         else{
             return "other"
@@ -95,11 +99,11 @@ angular.module('scalearAngularApp')
 		return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
 	}
 
-	var getYoutubeDetails= function(){
-		var id=$scope.lecture.url.split("v=")[1]
-		$scope.video={}
+	var getYoutubeDetails= function(id){
+		//var id=$scope.lecture.url.split("v=")[1]
+
 		if(id){
-			id= id.split("&")[0]
+			//id= id.split("&")[0]
 			var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
 			$http.jsonp(url)
 				.success(function (data) {
@@ -107,19 +111,21 @@ angular.module('scalearAngularApp')
 			        $scope.video.title = data.entry.title.$t;
 			        $scope.video.author = data.entry.author[0].name.$t;
 			        var updateFlag = $scope.lecture.duration
-			        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
-			        if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio == undefined)
-			        	$scope.lecture.detected_aspect_ratio="smallscreen";
-			        else
-			        	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;
+	//		        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
+			        //if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio == undefined)
+			        //	$scope.lecture.detected_aspect_ratio="smallscreen";
+			        //else
+			        //	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;
 
-			        	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
-
+			        //	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
+                    //$scope.lecture.aspect_ratio = "widescreen"
 			        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
-	        		if(id != current_url){
-	        			$scope.updateLecture()
-	        			$log.debug("update flag is true")	
-	        		}
+
+                    //why did i need this?
+	        		//if(id != current_url){
+	        		//	$scope.updateLecture()
+	        	//		$log.debug("update flag is true")
+	        		//}
 			});
 		}
 		else
@@ -140,7 +146,7 @@ angular.module('scalearAngularApp')
         if($scope.lecture.url && $scope.lecture.url!="none" && getVideoId($scope.lecture.url)){
             current_url = $scope.lecture.url.split("v=")[1];
             current_url = current_url.split("&")[0]
-            getYoutubeDetails();
+            getYoutubeDetails(current_url);
         }
       }
     })

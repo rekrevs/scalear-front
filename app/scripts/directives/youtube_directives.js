@@ -27,10 +27,10 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-                    var matches = is_final_url(scope.url)
+                    var matches = getVideoId(scope.url)
                     if(matches) //youtube
                     {
-                        player = Popcorn.smart( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1',{ width: 500, controls: 0});
+                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=1&vq=hd720&autoplay=1',{ width: 500, controls: 0});
                     }
                     else{
                         player = Popcorn.smart( '#'+scope.id, scope.url,{ width: '100%', height:'100%', controls: 0});
@@ -43,9 +43,9 @@ angular.module('scalearAngularApp')
 //                            '<input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1" style="width:10%">' +
 //                            '</div>');
                     }
-                    console.log(player);
-                    console.log(player.video.videoWidth);
-                    player.video.videoWidth=500;
+                   // console.log(player);
+                   // console.log(player.video.videoWidth);
+                   // player.video.videoWidth=500;
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
@@ -85,7 +85,9 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
+                    console.log("time in seek isssss "+time);
 					player.currentTime(time);
+                    console.log(player.currentTime());
 					//player_controls.play();
 					parent.focus()
 				}
@@ -97,6 +99,7 @@ angular.module('scalearAngularApp')
 
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
+                    console.log("in refresh");
 					element.find('iframe').remove();
                     element.find('video').remove();
 			  		loadVideo();
@@ -178,9 +181,15 @@ angular.module('scalearAngularApp')
                     return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[&controls=0]*$/);
                 }
 
+                var getVideoId= function(url){
+                    return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+                }
+
 				scope.$watch('url', function(){
+
                     if(scope.url)
                     {
+                        console.log("in url watch")
                       //  var matches = is_final_url(scope.url)
                         // if(matches)
                          //{

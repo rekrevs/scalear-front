@@ -8,15 +8,15 @@
 <overlay ng-show="loading_video">
             <loading size="big" show="true" style="position:relative; top:100px;" />
 </overlay>
-<video_container ng-style="video_layer" ng-class="lecture.aspect_ratio">
+<video_container ng-style="video_layer" ng-class="lecture.aspect_ratio" style="background-color:black;">
 	<div ng-show="display_mode">
 		<quiz ng-style="quiz_layer">
 			 <div ng-if="selected_quiz.quiz_type == 'html'" ><student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/></div> 
 			 <div ng-if="selected_quiz.quiz_type == 'invideo'"><student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/></div>
 		</quiz>
 	</div>
-	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" autoplay='1' class="youtube"/>
-	<controls ng-show="lecture.url" resizable-video video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' />
+	<youtube ng-show="lecture.url" id="lecture_video" ng-style="ontop_layer" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" autoplay='1' class="youtube"/>
+	<controls ng-show="lecture.url" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' />
 	<check ng-show='display_mode'></check>
 	<notification ng-style="notify_position" ng-if='show_notification!=false'></notification>
 </video_container>

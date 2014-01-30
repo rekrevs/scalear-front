@@ -8,7 +8,7 @@
 		<table class="table table-striped table-bordered" style="width:97%;font-size:12px;text-align:center;overflow-wrap:break-word;word-wrap: break-word;">
 			<tr>
 				<td><span translate>lectures.lecture_title</span>:</td>
-				<td> 
+				<td>
 	    			<details-text value="lecture.name" save="updateLecture()" validate="validateLecture" column="name"></details-text>
 				</td>
 			</tr>
@@ -19,17 +19,17 @@
 				</td>
 			</tr>
 
-			<tr>
+			<tr ng-show="video.thumbnail">
 				<td><span translate>lectures.thumbnail</span>:</td>
 				<td id="lecture_thumbnail" ng-bind-html="video.thumbnail" ></td>
 			</tr>
-			<tr>
+			<tr ng-show="video.title">
 				<td><span translate>lectures.title</span>:</td>
 				<td>
 					<label style ="width:140px;font-size:10px;cursor:text;">{{video.title}}</label>
 				</td>
 			</tr>
-			<tr>
+			<tr ng-show="video.author">
 				<td><span translate>lectures.author</span>:</td>
 				<td>
 					<label style= "width:140px;font-size:10px;cursor:text;" >{{video.author}}</label>
@@ -39,18 +39,6 @@
 				<td><span translate>lectures.duration</span>:</td>
 				<td>
 					<label style="width:140px;font-size:10px;cursor:text;">{{lecture.duration}}<span translate>Seconds</span></label>
-				</td>
-			</tr>
-			<tr>
-				<td><span translate>lectures.detected_aspect_ratio</span>:</td>
-				<td>
-					<label style="width:140px;font-size:10px;cursor:text;">{{lecture.detected_aspect_ratio}}</label>
-				</td>
-			</tr>
-			<tr>
-				<td><span translate>lectures.aspect_ratio</span>:</td>
-				<td>
-					<details-select value="lecture.aspect_ratio" options="screen_options" save="updateLecture()" validate="validateLecture" column="aspect_ratio" style="width: 120px;" ></details-select>
 				</td>
 			</tr>
 			<tr>

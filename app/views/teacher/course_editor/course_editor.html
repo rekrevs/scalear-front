@@ -7,7 +7,33 @@
 <div class="row" style="width:1230px;">
 	<div class="span3" id="tree">
 		<center><loading size="small" show="init_loading" /></center>
-		<accordion  close-others="true" id="acc1" class="accordion" ui-sortable="moduleSortableOptions" ng-model='modules' >
+		<ul ui-sortable="moduleSortableOptions" ng-model='modules' id="acc1" class="accordion">
+			<li ng-repeat="module in modules" class='module accordion-group' ng-init="module.open = false">
+				<!-- <button >{{module.name}}</button> -->
+				<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" />
+				<div class="outer" collapse="!(module.open || module.id==open_id)">
+		        	<div class="inner" id="modules">
+	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
+		            		<li class="last-child item" ng-repeat="item in module.items" >
+	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ></item>
+		            		</li>
+		            	</ul>
+		            	<center><loading size="small" show="item_loading" /></center>
+			            <center class="item-buttons">
+			            	<button_link title="{{'courses.add_lecture'|translate}}" class="btn-mini adding" action="addLecture($index)" />
+			            	<button_link title="{{'lectures.add_quiz'|translate}}"    class="btn-mini adding" action="addQuiz($index, 'quiz')"/>
+			            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn-mini adding" action="addQuiz($index, 'survey')"/>
+		                </center>
+		        	</div>
+		    	</div>
+			</li>
+			<!-- <li><button ng-click="isColapsed =! isColapsed">module 2</button>
+			<div collapse="isColapsed"><div>Hello world 2</div></div></li>
+
+			<li><button ng-click="isColapsed =! isColapsed">module 3</button>
+			<div collapse="isColapsed"><div>Hello world 3</div></div></li> -->
+		</ul>
+		<!-- <accordion  close-others="true" id="acc1" class="accordion" ui-sortable="moduleSortableOptions" ng-model='modules' >
 			<accordion-group ng-repeat="module in modules" is-open="module.id==open_id" class='module'>
 				<accordion-heading>
 		        	<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" />
@@ -28,7 +54,7 @@
 		        	</div>
 		    	</div>
 	      	</accordion-group>	
-		</accordion>
+		</accordion> -->
 		<center><loading size="small" show="module_loading" /></center>
 		<button_link ng-show="!module_loading" title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
 		<hr />

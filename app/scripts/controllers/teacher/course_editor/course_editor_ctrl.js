@@ -152,6 +152,21 @@ angular.module('scalearAngularApp')
 			);
     }
 
+    $scope.closeAll=function(index){
+    	for(var i in $scope.modules)
+    		if(i != index)
+    			$scope.modules[i].open = false
+
+    	$scope.modules[index].open=! $scope.modules[index].open
+    	$scope.open_id = null
+    }
+
+    // $scope.isCollapse = function(module){
+    // 	if($scope.open_id)
+
+    // 	if(!module.open)
+    // }
+
     /*************************************************************************************/
     
 	$rootScope.$on('accordianUpdate', function(event, message) {
@@ -190,7 +205,7 @@ angular.module('scalearAngularApp')
 		scroll: true,
 		update: function(e, ui) {
 			var group_id=ui.item.scope().item.group_id
-			var group_position=ui.item.scope().$parent.$parent.module.position -1
+			var group_position=ui.item.scope().$parent.module.position -1
 			Lecture.saveSort(
 				{course_id:$stateParams.course_id, 
 				 group: ui.item.scope().item.group_id},

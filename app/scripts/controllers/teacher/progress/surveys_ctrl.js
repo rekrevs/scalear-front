@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
   	}
 
     $scope.getSurveyQuestionTitle = function(index){
-    	return $scope.survey_chart_questions[index]	
+    	return $scope.survey_chart_questions[index].question
     }
 
     $scope.getSurveyQuestionType = function(index) {

@@ -187,7 +187,7 @@ angular.module('scalearAngularApp')
 				{group: $scope.modules},
 				function(response){
 					$log.debug(response)
-				}, 
+				},
 				function(){
 					$log.debug('Error')
 				}

@@ -49,6 +49,10 @@ angular.module('scalearAngularApp')
     	return $scope.survey_chart_questions[index]	
     }
 
+    $scope.getSurveyQuestionType = function(index) {
+        return $scope.survey_chart_questions[index].type + ' | '
+    }
+
     $scope.formatSurveyChartData = function(data){
       var formated_data ={}
       formated_data.cols=
@@ -76,7 +80,7 @@ angular.module('scalearAngularApp')
       chart.type = "ColumnChart"
       chart.options = {
           "colors": ['green','gray'],
-          "title": $scope.getSurveyQuestionTitle(ind),
+          "title": $scope.getSurveyQuestionType(ind) + $scope.getSurveyQuestionTitle(ind),
           "isStacked": "true",
           "fill": 20,
           "height": 200,

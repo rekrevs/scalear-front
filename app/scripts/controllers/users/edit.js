@@ -44,6 +44,7 @@ angular.module('scalearAngularApp')
  //                       $log.info('Modal dismissed at: ' + new Date());
                     })
             }
+            
             $scope.$watch('current_lang', function(newval, oldval) {
                 if (newval != oldval)
                     delete $scope.user.errors

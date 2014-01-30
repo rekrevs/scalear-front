@@ -32,8 +32,9 @@ var translation_en=function(){
       ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
       chrome: "Google's Chrome Browser",
       welcome: "Welcome to Scalable Learning",
-        or: "or",
-
+      or: "or",
+      visible: "Visible",
+      invisible: "Invisible",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",

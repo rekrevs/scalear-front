@@ -161,12 +161,6 @@ angular.module('scalearAngularApp')
     	$scope.open_id = null
     }
 
-    // $scope.isCollapse = function(module){
-    // 	if($scope.open_id)
-
-    // 	if(!module.open)
-    // }
-
     /*************************************************************************************/
     
 	$rootScope.$on('accordianUpdate', function(event, message) {

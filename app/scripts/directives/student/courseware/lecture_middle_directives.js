@@ -135,12 +135,13 @@ angular.module('scalearAngularApp')
 
   		setButtonsLocation()
   		scope.setShortcuts();
-  		
-  		scope.lecture_player.events.onPause= function(){
-   			$log.debug("in here");
-   			if(scope.display_mode!=true) //not a quiz
-   				scope.pause();
-   		}
+
+// Karim put this somewhere else..
+//  		scope.lecture_player.events.onPause= function(){
+//   			$log.debug("in here");
+//   			if(scope.display_mode!=true) //not a quiz
+//   				scope.pause();
+//   		}
      		
    		scope.$watch('lecture.aspect_ratio', function(){
    			setButtonsLocation()

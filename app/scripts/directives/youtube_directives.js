@@ -143,11 +143,22 @@ angular.module('scalearAngularApp')
 						function(){
 							parent.focus()
 
-							if(player_events.onPause){								
+							if(player_events.onPause){
+                                console.log("in pause event");
 								player_events.onPause();
 								scope.$apply();
 							}
 					});
+
+                    player.on('timeupdate',
+                        function(){
+                            parent.focus()
+
+                            if(player_events.timeUpdate){
+                                player_events.timeUpdate();
+                                scope.$apply();
+                            }
+                        });
 
 					player.on('loadedmetadata',function(){
 						parent.focus()

@@ -1,0 +1,10 @@
+<div id="controls" style="width:800px;height:40px;position:absolute;top:610px;">
+    <div class="timer">
+        <p style='float:left;margin-left:60px;left:50px;line-height:60px;color:gray'>{{current_time|format}}</p>
+        <p style='float:left;margin-left:0px;line-height:60px;color:gray'> / {{total_duration|format}}</p>
+    </div>
+    <div class="controlDiv" ng-class="play_pause_class" ng-click="playBtn()"></div>
+    <div class="progressBar" ng-click="updateProgress($event)">
+        <div class="elapsed" ng-style="{width: elapsed_width}"></div>
+    </div>
+</div>

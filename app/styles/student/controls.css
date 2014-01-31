@@ -110,3 +110,46 @@
 li{
 	list-style-type: none;
 }
+
+.controlDiv.replay{
+    background:url('/images/replay3.png') no-repeat center center;
+}
+.controlDiv.play{
+    background:url('/images/play34.png') no-repeat center center;
+}
+
+.controlDiv.pause{
+    background:url('/images/pause3.png') no-repeat center center;
+}
+
+.progressBar{
+    /*display:none;*/
+    display:block;
+    position:absolute;
+    width:auto;
+    height:8px;
+    left:0px;
+    right:0px;
+    bottom:40px;
+    background-color:#141414;
+    overflow:hidden;
+    cursor:pointer;
+
+    /* A light CSS3 bottom highlight */
+
+    -moz-box-shadow:0 1px 0 rgba(255, 255, 255, 0.3);
+    -webkit-box-shadow:0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow:0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.progressBar .elapsed{
+    position:absolute;
+    width:0;
+    height:100%;
+    background-color:#1fa2f6;
+    border-right:1px solid #49AFF0;
+}
+
+
+
+

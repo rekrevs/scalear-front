@@ -345,3 +345,20 @@ angular.module('scalearAngularApp')
 		}
 	}
 }])
+.directive('progressBar',['$rootScope','$log',function($rootScope,$log){
+    return {
+        restrict: 'E',
+        replace:true,
+//        scope:{
+//            url:'=',
+//            ready:'&',
+//            id:'@',
+//            player:'=',
+//            autoplay:'@'
+//        },
+        templateUrl:"/views/progress_bar.html",
+        link: function(scope, element){
+
+        }
+    }
+}]);

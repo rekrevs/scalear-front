@@ -16,7 +16,8 @@
 		</quiz>
 	</div>
 	<youtube ng-show="lecture.url" id="lecture_video" ng-style="ontop_layer" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" autoplay='1' class="youtube"/>
-	<controls ng-show="lecture.url" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' />
+	<progress-bar></progress-bar>
+    <controls ng-show="lecture.url" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' />
 	<check ng-show='display_mode'></check>
 	<notification ng-style="notify_position" ng-if='show_notification!=false'></notification>
 </video_container>

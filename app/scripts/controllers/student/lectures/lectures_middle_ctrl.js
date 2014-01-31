@@ -21,7 +21,9 @@ angular.module('scalearAngularApp')
             $scope.pWidth = 0;
             $scope.show_notification = false;
             $scope.fullscreen = false
-
+            $scope.play_pause_class = 'play'
+            $scope.current_time = 0
+            $scope.total_duration = 0
 
 
             var init = function() {
@@ -54,6 +56,7 @@ angular.module('scalearAngularApp')
                         $scope.lecture_player.events.onReady = function() {
                             //console.log("should play")
                             $scope.loading_video = false;
+                            $scope.total_duration = $scope.lecture_player.controls.getDuration()
                             $scope.lecture.online_quizzes.forEach(function(quiz) {
                                 $scope.lecture_player.controls.cue(quiz.time, function() {
                                     $scope.studentAnswers[quiz.id] = {}
@@ -102,9 +105,14 @@ angular.module('scalearAngularApp')
                 $scope.lecture_player.controls.seek(time)
             }
 
+            $scope.lecture_player.events.onPause = function() {
+                $scope.play_pause_class = "play"
+            }
+
             $scope.lecture_player.events.onPlay = function() {
                 // here check if selected_quiz solved now.. or ever will play, otherwhise will stop again.
                 //console.log("should play")
+                $scope.play_pause_class = 'pause'
 
                 if ($scope.display_mode == true) {
                     $log.debug($scope.selected_quiz)
@@ -127,5 +135,27 @@ angular.module('scalearAngularApp')
 
             init();
 
-        }
-    ]);
+
+            $scope.playBtn = function(){
+                if($scope.play_pause_class == "play"){
+                    $scope.lecture_player.controls.play()
+                }
+                else{
+                    $scope.lecture_player.controls.pause()
+                }
+            }
+
+            $scope.updateProgress=function(ev){
+                var element = angular.element('.progressBar');
+                var ratio = (ev.pageX-element.offset().left)/element.outerWidth();
+                $scope.elapsed_width = ratio*100+'%'
+                $scope.seek($scope.total_duration*ratio)
+            }
+
+            $scope.lecture_player.events.timeUpdate = function(){
+                $scope.current_time = $scope.lecture_player.controls.getTime()
+                $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
+            }
+
+
+        }]);

@@ -1,3 +1,5 @@
+<iframe src="//player.vimeo.com/video/85040589?title=0&amp;byline=0&amp;portrait=0" width="500" height="281" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe> <p><a href="http://vimeo.com/85040589">THE GAP by Ira Glass</a> from <a href="http://vimeo.com/frohlocke">frohlocke</a> on <a href="https://vimeo.com">Vimeo</a>.</p>
+
 <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="alert">
 	 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
 </div>
@@ -8,7 +10,7 @@
 <overlay ng-show="loading_video">
             <loading size="big" show="true" style="position:relative; top:100px;" />
 </overlay>
-<video_container ng-style="video_layer" ng-class="lecture.aspect_ratio" style="background-color:black;">
+<video_container ng-style="video_layer" ng-class="videoborder" style="background-color:black;">
 	<div ng-show="display_mode">
 		<quiz ng-style="quiz_layer">
 			 <div ng-if="selected_quiz.quiz_type == 'html'" ><student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/></div> 

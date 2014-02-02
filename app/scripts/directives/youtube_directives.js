@@ -28,12 +28,21 @@ angular.module('scalearAngularApp')
 					if(player)
 						Popcorn.destroy(player)
                     var matches = getVideoId(scope.url)
+                    var vimeo= scope.url.match(/vimeo/)  // improve this..
                     if(matches) //youtube
                     {
-                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=1&vq=hd720&autoplay=1',{ width: 500, controls: 0});
+                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1&controls=0',{ width: 500, controls: 0});
+                    }
+                    else if(vimeo)
+                    {
+                        player = Popcorn.smart( '#'+scope.id, scope.url+"?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0",{ width: '100%', height:'100%', controls: 0});
+                        player.controls(0);
+                        player.autoplay(true);
                     }
                     else{
                         player = Popcorn.smart( '#'+scope.id, scope.url,{ width: '100%', height:'100%', controls: 0});
+                        player.controls(0);
+                        player.autoplay(true);
                         //player.controls(0);
 
 //                        element.append('<div id="video-controls">' +
@@ -306,7 +315,7 @@ angular.module('scalearAngularApp')
 					"z-index": 1031
 				};
 
-				var video_height = win.height();// -30;
+				var video_height = win.height()-50;// -30;
 				var video_width = video_height*factor
 				
 				//var video_width = (win.height()-26)*factor
@@ -315,7 +324,7 @@ angular.module('scalearAngularApp')
 				if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
 					$log.debug("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
-					var margin_top = (win.height() - (video_height))/2.0; //+30
+					var margin_top = ((win.height()-50) - (video_height))/2.0; //+30
 					layer={
 						"position":"fixed",
 						"top":0,
@@ -356,7 +365,7 @@ angular.module('scalearAngularApp')
 		}
 	}
 }])
-.directive('progressBar',['$rootScope','$log',function($rootScope,$log){
+.directive('progressBar',['$rootScope','$log','$window',function($rootScope,$log, $window){
     return {
         restrict: 'E',
         replace:true,
@@ -369,6 +378,27 @@ angular.module('scalearAngularApp')
 //        },
         templateUrl:"/views/progress_bar.html",
         link: function(scope, element){
+
+            scope.$on('updatePosition',function(){
+                setButtonsLocation()
+            })
+
+
+            var setButtonsLocation=function(){
+                if(scope.fullscreen){
+                    scope.pWidth=angular.element($window).width();
+                    scope.pHeight=angular.element($window).height();
+                    element.css("z-index",1500);
+                }
+                else{
+                    scope.pHeight=500;
+                    scope.pWidth= scope.lecture.aspect_ratio=='widescreen'? 800:600;
+                    element.css("z-index",1000);
+                }
+
+                element.css("top", scope.pHeight-40+"px");
+                //element.css("left", scope.pWidth-350+"px");
+            }
 
         }
     }

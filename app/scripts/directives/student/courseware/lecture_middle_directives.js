@@ -28,12 +28,12 @@ angular.module('scalearAngularApp')
           element.css("z-index",1500);
     		}
     		else{
-	    		scope.pHeight=480;
+	    		scope.pHeight=500;
 	    		scope.pWidth= scope.lecture.aspect_ratio=='widescreen'? 800:600;
            element.css("z-index",1000);
     		}
 
-    		element.css("top", scope.pHeight-26+"px");
+    		element.css("top", scope.pHeight-70+"px");
     		element.css("left", scope.pWidth-350+"px");
     	}
     	

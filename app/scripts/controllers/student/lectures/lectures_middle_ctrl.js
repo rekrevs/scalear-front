@@ -21,7 +21,7 @@ angular.module('scalearAngularApp')
             $scope.pWidth = 0;
             $scope.show_notification = false;
             $scope.fullscreen = false
-            $scope.play_pause_class = 'pause'
+            $scope.play_pause_class = 'play'
             $scope.current_time = 0
             $scope.total_duration = 0
 
@@ -151,16 +151,28 @@ angular.module('scalearAngularApp')
             }
 
             $scope.lecture_player.events.timeUpdate = function(){
-                console.log("in timeupdate")
+               // console.log("in timeupdate")
                 $scope.current_time = $scope.lecture_player.controls.getTime()
                 $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
             }
 
-            //not called why??
-            $scope.lecture_player.events.onPause = function() {
-                console.log("in pause22");
-                $scope.play_pause_class = "play";
+            $scope.lecture_player.events.onPause= function(){
+                $log.debug("in here");
+//                if(!$scope.fix_play){
+//                    $scope.lecture_player.controls.play()
+//                    $scope.fix_play = true
+//                }
+
+                $scope.play_pause_class = "play"
+                if($scope.display_mode!=true) //not a quiz
+                    $scope.submitPause();
             }
+
+            $scope.submitPause= function()
+            {
+                Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:$scope.lecture_player.controls.getTime()}, function(data){});
+            }
+
 
             init();
 

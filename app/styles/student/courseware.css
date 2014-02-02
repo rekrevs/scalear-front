@@ -171,6 +171,11 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
   height: 450px;
 }
 
+.videoborder{
+    width:800px;
+    height:500px;
+}
+
 .smallscreen{
   width: 600px;
   height: 480px;
@@ -316,3 +321,4 @@ input[type="checkbox"], input[type="radio"] {
   box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
 
 }
+

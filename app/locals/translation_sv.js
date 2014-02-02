@@ -222,7 +222,9 @@ var translation_sv=function(){
               quiz_not_required:"Denna Quiz krävs inte",
               got_some_errors: "Du har några fel",
               provide_answer: "Ange svaret text för varje val",
-              provide_url: "Ange en URL för video"
+              provide_url: "Ange en URL för video",
+              shown_in_graph: "*Visas i resultat diagram",
+              shown_to_student: "*Visas i studenter",
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",
@@ -498,7 +500,8 @@ var translation_sv=function(){
               invalid_input: "Ogiltiga Indata",
               duration_invalid: "Tidsutsträckning är ogiltig",
               charts: "Diagram",
-              total_statistics: "Total Statistik"
+              total_statistics: "Total Statistik",
+              enroll_instruction: "För att anmäla dig till en kurs klicka på 'Ansluta Kurs' nedan och ange kursens kursnyckel från din instruktör."
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

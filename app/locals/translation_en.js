@@ -222,7 +222,9 @@ var translation_en=function(){
         quiz_not_required:"This Quiz is Not Required",
         got_some_errors: "You've got some errors",
         provide_answer: "Please provide the answer text for each choice",
-        provide_url: "Please Provide A Video URL"
+        provide_url: "Please Provide A Video URL",
+        shown_in_graph: "*Shown in results graph",
+        shown_to_student: "*Shown to students",
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -499,7 +501,8 @@ var translation_en=function(){
         invalid_input: "Invalid Input",
         duration_invalid: "Duration is invalid",
         charts: "Charts",
-        total_statistics: "Total Statistics"
+        total_statistics: "Total Statistics",
+        enroll_instruction: "To enroll in a course click 'Join Course' below and enter the course enrollment key from your instructor."
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

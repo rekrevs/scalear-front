@@ -1,9 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersConfirmationShowCtrl',['$scope','User','$state','$stateParams', '$timeout','$rootScope', function ($scope, User, $state, $stateParams, $timeout, $rootScope) {
+  .controller('UsersConfirmationShowCtrl',['$scope','User','$state','$stateParams', '$timeout','$rootScope','UserSession', function ($scope, User, $state, $stateParams, $timeout, $rootScope, UserSession) {
         $scope.user={}
         $scope.sending=true
+
+        UserSession.getRole().then(function(result) {
+        if(result==0)
+        {
         User.show_confirmation({confirmation_token: $stateParams.confirmation_token }, function(data){
 
                 $timeout(function(){
@@ -21,6 +25,8 @@ angular.module('scalearAngularApp')
             //console.log($scope.user)
             //console.log("failure confirmation token");
             })
+            }
+        })
 
         $scope.$watch('current_lang', function(newval, oldval){
             if(newval!=oldval)

@@ -2,13 +2,13 @@
 		width:150px;
 	}
 	a.editable-click { 
-    color: green;
-    border-bottom: dotted 2px green;
+    /*color: green;*/
+    border-bottom: none;
 }
-a.editable-click:hover { 
+/*a.editable-click:hover { 
     color: #47a447;
     border-bottom-color: #47a447;
-}
+}*/
 input[type='text'].editable-input {
 	width:120px !important;
 	font-size:12px !important;

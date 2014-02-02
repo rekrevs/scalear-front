@@ -161,6 +161,7 @@ angular.module('scalearAngularApp')
                 if(!$scope.fix_play){
                     $scope.lecture_player.controls.play()
                     $scope.fix_play = true
+                    return
                 }
 
                 $scope.play_pause_class = "play"

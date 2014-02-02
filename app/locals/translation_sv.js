@@ -278,6 +278,7 @@ var translation_sv=function(){
               change_role: "Ändra Roll",
               close: "Stäng",
               enter_enrollment: "Ange kursnyckel",
+              get_enrollment_key: "Kontakta din instruktör om du inte fick en kursnyckel.",
               enroll: "Skriva in",
               users: "Användare",
               username: "Användarnamn",

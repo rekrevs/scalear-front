@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state',
-        function($rootScope, $scope, User, $state) {
+    .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state','$modal',
+        function($rootScope, $scope, User, $state, $modal) {
 
             $scope.user = {};
 
@@ -30,18 +30,21 @@ angular.module('scalearAngularApp')
                 })
             }
 
-            $scope.delete_account = function() {
-                var confirm = window.confirm("Are you sure?");
-                if (confirm) {
-                    User.delete_account({}, {}, function() {
-                        // //console.log("deleted ");
+
+            $scope.open = function () {
+                var modalInstance = $modal.open({
+                    templateUrl: '/views/users/confirm_delete.html',
+                    controller: "ConfirmDeleteCtrl"
+                })
+
+                modalInstance.result.then(function (enrollment_key) {
                         $state.go("login");
-                        $rootScope.current_user = null;
-                    }, function() {
-                        //console.log("delete failed")
+                    },
+                    function () {
+ //                       $log.info('Modal dismissed at: ' + new Date());
                     })
-                }
             }
+            
             $scope.$watch('current_lang', function(newval, oldval) {
                 if (newval != oldval)
                     delete $scope.user.errors

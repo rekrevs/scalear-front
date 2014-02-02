@@ -7,12 +7,10 @@
 <div class="row" style="width:1230px;">
 	<div class="span3" id="tree">
 		<center><loading size="small" show="init_loading" /></center>
-		<accordion  close-others="true" id="acc1" class="accordion" ui-sortable="moduleSortableOptions" ng-model='modules' >
-			<accordion-group ng-repeat="module in modules" is-open="module.id==open_id" class='module'>
-				<accordion-heading>
-		        	<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" />
-	        	</accordion-heading>
-        		<div class="outer">
+		<ul ui-sortable="moduleSortableOptions" ng-model='modules' id="acc1" class="accordion">
+			<li ng-repeat="module in modules" class='module accordion-group' ng-init="module.open = false">
+				<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" />
+				<div class="outer" collapse="!(module.open || module.id==open_id)">
 		        	<div class="inner" id="modules">
 	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child item" ng-repeat="item in module.items" >
@@ -21,14 +19,14 @@
 		            	</ul>
 		            	<center><loading size="small" show="item_loading" /></center>
 			            <center class="item-buttons">
-			            	<button_link title="{{'courses.add_lecture'|translate}}" class="btn-mini adding" action="addLecture($parent.$index)" />
-			            	<button_link title="{{'lectures.add_quiz'|translate}}"    class="btn-mini adding" action="addQuiz($parent.$index, 'quiz')"/>
-			            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn-mini adding" action="addQuiz($parent.$index, 'survey')"/>
+			            	<button_link title="{{'courses.add_lecture'|translate}}" class="btn-mini adding" action="addLecture($index)" />
+			            	<button_link title="{{'lectures.add_quiz'|translate}}"    class="btn-mini adding" action="addQuiz($index, 'quiz')"/>
+			            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn-mini adding" action="addQuiz($index, 'survey')"/>
 		                </center>
 		        	</div>
 		    	</div>
-	      	</accordion-group>	
-		</accordion>
+			</li>
+		</ul>
 		<center><loading size="small" show="module_loading" /></center>
 		<button_link ng-show="!module_loading" title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
 		<hr />

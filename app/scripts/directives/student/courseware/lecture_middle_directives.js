@@ -33,7 +33,7 @@ angular.module('scalearAngularApp')
            element.css("z-index",1000);
     		}
         if(scope.ipad){
-          element.css("top", scope.pHeight+"px");
+          element.css("top", scope.pHeight-15+"px");
           element.css("left", scope.pWidth-200+"px");
         }
     		else{
@@ -214,7 +214,7 @@ angular.module('scalearAngularApp')
         element.css("z-index",1000);
       }
       if(scope.ipad)        
-        element.css("top", scope.pHeight+30+"px");
+        element.css("top", scope.pHeight+15+"px");
       else
         element.css("top", scope.pHeight+"px");
 

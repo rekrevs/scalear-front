@@ -13,7 +13,7 @@
     <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" class="string password" name="user[password_confirmation]" size="50"/>
     <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
     <br />
-    <input type="submit" ng-click="change_password()" ng-disabled="sending || !user.password && !user.password_confirmation || !user.password" value="{{'password_edit.change_password2' | translate}}" class="btn btn-primary"/>
+    <input type="submit" ng-disabled="sending || !user.password && !user.password_confirmation || !user.password" value="{{'password_edit.change_password2' | translate}}" class="btn btn-primary"/>
     <br />
     <br/><span class="errormessage" ng-show="user.errors.reset_password_token">Reset Password Token {{user.errors.reset_password_token.join()}}</span>
     <br />

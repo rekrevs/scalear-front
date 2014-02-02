@@ -1,7 +1,7 @@
 var current_date = new Date();
 var no_students, no_modules, percentage, dummy, enroll_key = '2a713aee49',
-    course_id = '1012',
-    module_id = '1316',
+    course_id = '75',
+    module_id = '281',
     count = 0;
 //var frontend = 'http://localhost:9000/';
 //var backend = 'http://localhost:3000/';
@@ -1032,6 +1032,8 @@ describe('Student', function() {
 describe('Teacher', function() {
     login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
     it('should go to the main progress page', function() {
+        browser.driver.manage().window().setSize(ptor.params.width, ptor.params.height);
+        browser.driver.manage().window().setPosition(0, 0);
         ptor.get('/#/courses/' + course_id + '/progress/main');
     });
 })
@@ -1343,7 +1345,7 @@ describe('Modules Progress', function() {
             charts[0].findElements(protractor.By.tagName('text')).then(function(texts) {
                 expect(texts[0].getText()).toContain('Module Progress Charts');
                 expect(texts[1].getText()).toBe('Students');
-                expect(texts[11].getText()).toBe('Number of Students');
+                expect(texts[15].getText()).toBe('Number of Students');
                 expect(texts[5].getText()).toBe('Completed Late');
                 expect(texts[4].getText()).toBe('Completed on Time');
                 expect(texts[3].getText()).toBe('Watched <= 50%');
@@ -1355,12 +1357,12 @@ describe('Modules Progress', function() {
     it('should display the bars on the top chart and display their data when hovering on them', function() {
         ptor.findElements(protractor.By.tagName('svg')).then(function(charts) {
             charts[0].findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].click()
+                rects[17].click()
                     .then(function() {
                         charts[0].findElements(protractor.By.tagName('text')).then(function(texts) {
-                            expect(texts[12].getText()).toBe('Completed on Time');
-                            expect(texts[13].getText()).toBe('Students:');
-                            expect(texts[14].getText()).toBe('1');
+                            expect(texts[17].getText()).toBe('Completed on Time');
+                            expect(texts[18].getText()).toBe('Students:');
+                            expect(texts[19].getText()).toBe('1');
                         });
                     });
             });
@@ -1373,24 +1375,24 @@ describe('Modules Progress', function() {
             expect(seekers[1].getText()).toBe('Question 2\nNew Lecture2');
             seekers[0].click()
                 .then(function() {
-                    ptor.sleep(4000);
-                    driver.switchTo().frame(0);
-                    driver.findElement(protractor.By.className("ytp-time-current")).then(function(time) {
-                        expect(time.getText()).toBe('0:07');
-                    });
-                    driver.switchTo().defaultContent();
+                    ptor.sleep(10000);
+                    // driver.switchTo().frame(0);
+                    // driver.findElement(protractor.By.className("ytp-time-current")).then(function(time) {
+                    //     expect(time.getText()).toBe('0:07');
+                    // });
+                    // driver.switchTo().defaultContent();
                     ptor.findElement(protractor.By.tagName('iframe')).then(function(player) {
                         expect(player.getAttribute('src')).toContain('XtyzOo7nJrQ');
                     });
                 });
             seekers[1].click()
                 .then(function() {
-                    ptor.sleep(4000);
-                    driver.switchTo().frame(0);
-                    driver.findElement(protractor.By.className("ytp-time-current")).then(function(time) {
-                        expect(time.getText()).toBe('0:12');
-                    });
-                    driver.switchTo().defaultContent();
+                    ptor.sleep(10000);
+                    // driver.switchTo().frame(0);
+                    // driver.findElement(protractor.By.className("ytp-time-current")).then(function(time) {
+                    //     expect(time.getText()).toBe('0:12');
+                    // });
+                    // driver.switchTo().defaultContent();
                     ptor.findElement(protractor.By.tagName('iframe')).then(function(player) {
                         expect(player.getAttribute('src')).toContain('PlavjNH_RRU');
                     })
@@ -1407,19 +1409,19 @@ describe('Modules Progress', function() {
                 expect(titles[3].getText()).toBe('OK (Correct)');
                 expect(titles[4].getText()).toBe('Cancel (Incorrect)');
                 expect(titles[5].getText()).toBe('Other (Incorrect)');
-                expect(titles[11].getText()).toBe('Number of Students');
+                expect(titles[15].getText()).toBe('Number of Students');
             });
         });
     });
     it('should display the bars on the first quiz chart in lecture quizzes and display their data when hovering on them', function() {
         ptor.findElements(protractor.By.tagName('svg')).then(function(charts) {
             charts[1].findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].click()
+                rects[17].click()
                     .then(function() {
                         charts[1].findElements(protractor.By.tagName('text')).then(function(texts) {
-                            expect(texts[12].getText()).toBe('OK (Correct)');
-                            expect(texts[13].getText()).toBe('Correct:');
-                            expect(texts[14].getText()).toBe('1');
+                            expect(texts[17].getText()).toBe('OK (Correct)');
+                            expect(texts[18].getText()).toBe('Correct:');
+                            expect(texts[19].getText()).toBe('1');
                         });
                     });
             });
@@ -1433,7 +1435,7 @@ describe('Modules Progress', function() {
                 expect(titles[2].getText()).toBe('Correct');
                 expect(titles[3].getText()).toBe('First Answer (Correct)');
                 expect(titles[4].getText()).toBe('Second Answer (Incorrect)');
-                expect(titles[10].getText()).toBe('Number of Students');
+                expect(titles[14].getText()).toBe('Number of Students');
             })
         });
     });
@@ -1441,7 +1443,7 @@ describe('Modules Progress', function() {
         ptor.executeScript('window.scrollBy(0, 1000)', '');
         ptor.findElements(protractor.By.tagName('svg')).then(function(charts) {
             charts[2].findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].click()
+                rects[17].click()
                     .then(function() {
                         ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
                             expect(texts[texts.length - 3].getText()).toBe('First Answer (Correct)');
@@ -1449,7 +1451,7 @@ describe('Modules Progress', function() {
                             expect(texts[texts.length - 1].getText()).toBe('1');
                         });
                     });
-                rects[16].click()
+                rects[20].click()
                     .then(function() {
                         ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
                             expect(texts[texts.length - 3].getText()).toBe('Second Answer (Incorrect)');
@@ -1486,7 +1488,7 @@ describe('Modules Progress', function() {
             rects[rects.length - 3].click()
                 .then(function() {
                     ptor.executeScript('window.scrollBy(0, -2000)', '');
-                    ptor.sleep(20000);
+                    ptor.sleep(10000);
                     ptor.findElement(protractor.By.className('google-visualization-tooltip')).then(function(tooltip) {
                         tooltip.getText().then(function(value) {
                             var test = value;
@@ -1499,11 +1501,11 @@ describe('Modules Progress', function() {
                     ptor.findElements(protractor.By.tagName('iframe')).then(function(player) {
                         expect(player[1].getAttribute('src')).toContain('PlavjNH_RRU');
                     });
-                    driver.switchTo().frame(1);
-                    driver.findElement(protractor.By.className("ytp-time-current")).then(function(time) {
-                        expect(time.getText()).toBe('0:00');
-                    });
-                    driver.switchTo().defaultContent();
+                    // driver.switchTo().frame(1);
+                    // driver.findElement(protractor.By.className("ytp-time-current")).then(function(time) {
+                    //     expect(time.getText()).toBe('0:00');
+                    // });
+                    // driver.switchTo().defaultContent();
                 });
         });
         ptor.executeScript('window.scrollBy(0, -2000)', '');
@@ -1826,20 +1828,20 @@ describe('Modules Progress', function() {
             expect(survey_name.getText()).toBe('New Survey');
         });
         ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
-            expect(texts[texts.length - 20].getText()).toBe('First Question');
-            expect(texts[texts.length - 19].getText()).toBe('Answered');
-            expect(texts[texts.length - 18].getText()).toBe('first answer');
-            expect(texts[texts.length - 17].getText()).toBe('second answer');
-            expect(texts[texts.length - 11].getText()).toBe('Number of Students');
-            expect(texts[texts.length - 10].getText()).toBe('Second Question');
-            expect(texts[texts.length - 9].getText()).toBe('Answered');
-            expect(texts[texts.length - 8].getText()).toBe('first answer');
-            expect(texts[texts.length - 7].getText()).toBe('second answer');
-            expect(texts[texts.length - 1].getText()).toBe('Number of Students');
+            expect(texts[texts.length - 30].getText()).toBe('First Question');
+            expect(texts[texts.length - 29].getText()).toBe('Answered');
+            expect(texts[texts.length - 28].getText()).toBe('first answer');
+            expect(texts[texts.length - 27].getText()).toBe('second answer');
+            expect(texts[texts.length - 17].getText()).toBe('Number of Students');
+            expect(texts[texts.length - 15].getText()).toBe('Second Question');
+            expect(texts[texts.length - 14].getText()).toBe('Answered');
+            expect(texts[texts.length - 13].getText()).toBe('first answer');
+            expect(texts[texts.length - 12].getText()).toBe('second answer');
+            expect(texts[texts.length - 2].getText()).toBe('Number of Students');
         });
         ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
             ptor.executeScript('window.scrollBy(0, 500)', '');
-            rects[rects.length - 17].click()
+            rects[rects.length - 21].click()
                 .then(function() {
                     //                            ptor.sleep(20000);
                     ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
@@ -1848,9 +1850,9 @@ describe('Modules Progress', function() {
                         //                                        console.log(value);
                         //                                    })
                         //                                })
-                        expect(texts[texts.length - 13].getText()).toBe('first answer');
-                        expect(texts[texts.length - 12].getText()).toBe('Answered:');
-                        expect(texts[texts.length - 11].getText()).toBe('1');
+                        expect(texts[texts.length - 18].getText()).toBe('first answer');
+                        expect(texts[texts.length - 17].getText()).toBe('Answered:');
+                        expect(texts[texts.length - 16].getText()).toBe('1');
                     });
                 });
             rects[rects.length - 2].click()
@@ -1882,13 +1884,13 @@ describe('Modules Progress', function() {
                 //                            console.log(value+' + '+i);
                 //                        });
                 //                    });
-                expect(texts[texts.length - 12].getText()).toBe('First Question');
-                expect(texts[texts.length - 11].getText()).toBe('Incorrect');
-                expect(texts[texts.length - 10].getText()).toBe('Correct');
-                expect(texts[texts.length - 9].getText()).toBe('First Answer (Correct)');
-                expect(texts[texts.length - 8].getText()).toBe('Second Answer (Incorrect)');
-                expect(texts[texts.length - 7].getText()).toBe('Third Answer (Incorrect)');
-                expect(texts[texts.length - 1].getText()).toBe('Number of Students');
+                expect(texts[texts.length - 17].getText()).toBe('First Question');
+                expect(texts[texts.length - 16].getText()).toBe('Incorrect');
+                expect(texts[texts.length - 15].getText()).toBe('Correct');
+                expect(texts[texts.length - 14].getText()).toBe('First Answer (Correct)');
+                expect(texts[texts.length - 13].getText()).toBe('Second Answer (Incorrect)');
+                expect(texts[texts.length - 12].getText()).toBe('Third Answer (Incorrect)');
+                expect(texts[texts.length - 2].getText()).toBe('Number of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
                 rects[rects.length - 7].click()
@@ -1912,12 +1914,12 @@ describe('Modules Progress', function() {
                 //                            console.log(value+' + '+i);
                 //                        });
                 //                    });
-                expect(texts[texts.length - 11].getText()).toBe('First Question');
-                expect(texts[texts.length - 10].getText()).toBe('Incorrect');
-                expect(texts[texts.length - 9].getText()).toBe('Correct');
-                expect(texts[texts.length - 8].getText()).toBe('Should be correct (Correct)');
-                expect(texts[texts.length - 7].getText()).toBe('should be false (Incorrect)');
-                expect(texts[texts.length - 1].getText()).toBe('Number of Students');
+                expect(texts[texts.length - 16].getText()).toBe('First Question');
+                expect(texts[texts.length - 15].getText()).toBe('Incorrect');
+                expect(texts[texts.length - 14].getText()).toBe('Correct');
+                expect(texts[texts.length - 13].getText()).toBe('Should be correct (Correct)');
+                expect(texts[texts.length - 12].getText()).toBe('should be false (Incorrect)');
+                expect(texts[texts.length - 2].getText()).toBe('Number of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
                 rects[rects.length - 2].click()
@@ -1934,7 +1936,7 @@ describe('Modules Progress', function() {
 });
 
 
-
+//in class start
 
 
 describe('Teacher', function() {
@@ -1951,7 +1953,7 @@ describe('Teacher', function() {
     });
 })
 
-//In-Class Tests
+// //In-Class Tests
 
 
 
@@ -2021,7 +2023,7 @@ describe('In-Class', function() {
     reviewQuizzesModal(ptor);
     describe('Review Quizzes', function() {
         it('should exit the modal', function() {
-            ptor.findElement(protractor.By.xpath('/html/body/div[4]/div[1]/a')).click();
+            ptor.findElement(protractor.By.linkText('Exit')).click();
         });
     });
     describe('Main View', function() {
@@ -2077,18 +2079,18 @@ describe('In-Class', function() {
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('% of Students');
+                expect(texts[14].getText()).toContain('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].getAttribute('height').then(function(height) {
+                rects[17].getAttribute('height').then(function(height) {
                     expect(height).toBe('122');
                     expect(height / 122 * 100).toBe(100);
                 });
-                rects[13].click().then(function() {
+                rects[17].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
-                        expect(texts[11].getText()).toBe('OK (Correct)');
-                        expect(texts[12].getText()).toBe('Correct:');
-                        expect(texts[13].getText()).toBe('100');
+                        expect(texts[16].getText()).toBe('OK (Correct)');
+                        expect(texts[17].getText()).toBe('Correct:');
+                        expect(texts[18].getText()).toBe('100');
                     });
                 });
             });
@@ -2107,17 +2109,27 @@ describe('In-Class', function() {
                 expect(texts[1].getText()).toContain('Cor');
                 expect(texts[2].getText()).toBe('First Answer (Correct)');
                 expect(texts[3].getText()).toBe('Second Answer (Incorrect)');
-                expect(texts[9].getText()).toBe('% of Students');
+                expect(texts[13].getText()).toContain('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].getAttribute('height').then(function(height) {
-                    expect(height).toBe('101');
+                rects[17].getAttribute('height').then(function(height) {
+                    expect(height).toBe('60');
                 });
-                rects[13].click().then(function() {
+                rects[17].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
-                        expect(texts[10].getText()).toBe('First Answer (Correct)');
-                        expect(texts[11].getText()).toBe('Correct:');
-                        expect(texts[12].getText()).toBe('50');
+                        expect(texts[15].getText()).toBe('First Answer (Correct)');
+                        expect(texts[16].getText()).toBe('Correct:');
+                        expect(texts[17].getText()).toBe('50');
+                    });
+                });
+                rects[20].getAttribute('height').then(function(height) {
+                    expect(height).toBe('60');
+                });
+                rects[20].click().then(function() {
+                    ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
+                        expect(texts[15].getText()).toBe('Second Answer (Incorrect)');
+                        expect(texts[16].getText()).toBe('Incorrect:');
+                        expect(texts[17].getText()).toBe('50');
                     });
                 });
             });
@@ -2130,22 +2142,22 @@ describe('In-Class', function() {
         it('should display the quiz chart with its correct data', function() {
             ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
                 expect(texts[0].getText()).toContain('Inco');
-                expect(texts[1].getText()).toContain('Cor');
+                expect(texts[1].getText()).toContain('Corr');
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('% of Students');
+                expect(texts[14].getText()).toContain('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].getAttribute('height').then(function(height) {
+                rects[17].getAttribute('height').then(function(height) {
                     expect(height).toBe('122');
                     expect(height / 122 * 100).toBe(100);
                 });
-                rects[13].click().then(function() {
+                rects[17].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
-                        expect(texts[11].getText()).toBe('OK (Correct)');
-                        expect(texts[12].getText()).toBe('Correct:');
-                        expect(texts[13].getText()).toBe('100');
+                        expect(texts[16].getText()).toBe('OK (Correct)');
+                        expect(texts[17].getText()).toBe('Correct:');
+                        expect(texts[18].getText()).toBe('100');
                     });
                 });
             });
@@ -2165,7 +2177,7 @@ describe('In-Class', function() {
             });
         });
         it('should exit the modal', function() {
-            ptor.findElement(protractor.By.xpath('/html/body/div[4]/div[1]/a')).click();
+            ptor.findElement(protractor.By.linkText('Exit')).click();
         });
     });
     describe('Main View', function() {
@@ -2183,24 +2195,31 @@ describe('In-Class', function() {
             });
         });
         it('should display the quiz chart with its correct data', function() {
+            ptor.wait(function() {
+                return ptor.findElement(protractor.By.className('overlay')).then(function(overlay) {
+                    return overlay.isDisplayed().then(function(disp) {
+                        return !disp;
+                    });
+                });
+            });
             ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
                 expect(texts[0].getText()).toContain('Inco');
                 expect(texts[1].getText()).toContain('Cor');
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('% of Students');
+                expect(texts[14].getText()).toContain('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].getAttribute('height').then(function(height) {
+                rects[17].getAttribute('height').then(function(height) {
                     expect(height).toBe('122');
                     expect(height / 122 * 100).toBe(100);
                 });
-                rects[13].click().then(function() {
+                rects[17].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
-                        expect(texts[11].getText()).toBe('OK (Correct)');
-                        expect(texts[12].getText()).toBe('Correct:');
-                        expect(texts[13].getText()).toBe('100');
+                        expect(texts[16].getText()).toBe('OK (Correct)');
+                        expect(texts[17].getText()).toBe('Correct:');
+                        expect(texts[18].getText()).toBe('100');
                     });
                 });
             });
@@ -2221,7 +2240,7 @@ describe('In-Class', function() {
             });
         });
         it('should exit the modal', function() {
-            ptor.findElement(protractor.By.xpath('/html/body/div[4]/div[1]/a')).click();
+            ptor.findElement(protractor.By.linkText('Exit')).click();
         });
     });
     describe('Main View', function() {
@@ -2255,7 +2274,7 @@ describe('In-Class', function() {
             });
         });
         it('should exit the modal', function() {
-            ptor.findElement(protractor.By.xpath('/html/body/div[4]/div[1]/a')).click();
+            ptor.findElement(protractor.By.linkText('Exit')).click();
         });
     });
     describe('Main View', function() {
@@ -2311,25 +2330,27 @@ describe('In-Class', function() {
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('% of Students');
+                expect(texts[14].getText()).toContain('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].getAttribute('height').then(function(height) {
+                rects[17].getAttribute('height').then(function(height) {
                     expect(height).toBe('122');
                     expect(height / 122 * 100).toBe(100);
                 });
-                rects[13].click().then(function() {
+                rects[17].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
-                        expect(texts[11].getText()).toBe('OK (Correct)');
-                        expect(texts[12].getText()).toBe('Correct:');
-                        expect(texts[13].getText()).toBe('100');
+                        expect(texts[16].getText()).toBe('OK (Correct)');
+                        expect(texts[17].getText()).toBe('Correct:');
+                        expect(texts[18].getText()).toBe('100');
                     });
                 });
             });
         });
         it('should move to next quiz', function() {
             ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                buttons[9].click();
+                buttons[9].click().then(function() {
+                    ptor.sleep(5000);
+                });
             });
         });
         it('should display the second quiz title', function() {
@@ -2341,20 +2362,32 @@ describe('In-Class', function() {
                 expect(texts[1].getText()).toContain('Cor');
                 expect(texts[2].getText()).toBe('First Answer (Correct)');
                 expect(texts[3].getText()).toBe('Second Answer (Incorrect)');
-                expect(texts[9].getText()).toBe('% of Students');
+                expect(texts[13].getText()).toContain('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].getAttribute('height').then(function(height) {
-                    expect(height).toBe('101');
+                rects[17].getAttribute('height').then(function(height) {
+                    expect(height).toBe('60');
                 });
-                rects[13].click().then(function() {
+                rects[17].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
-                        expect(texts[10].getText()).toBe('First Answer (Correct)');
-                        expect(texts[11].getText()).toBe('Correct:');
-                        expect(texts[12].getText()).toBe('50');
+                        expect(texts[15].getText()).toBe('First Answer (Correct)');
+                        expect(texts[16].getText()).toBe('Correct:');
+                        expect(texts[17].getText()).toBe('50');
                     });
                 });
             });
+            // ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
+            //     rects[20].getAttribute('height').then(function(height) {
+            //         expect(height).toBe('65');
+            //     });
+            //     rects[20].click().then(function() {
+            //         ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
+            //             expect(texts[15].getText()).toBe('Second Answer (Incorrect)');
+            //             expect(texts[16].getText()).toBe('Incorrect:');
+            //             expect(texts[17].getText()).toBe('50');
+            //         });
+            //     });
+            // });
         });
         it('should go back to the first quiz', function() {
             ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
@@ -2368,18 +2401,18 @@ describe('In-Class', function() {
                 expect(texts[2].getText()).toBe('OK (Correct)');
                 expect(texts[3].getText()).toBe('Cancel (Incorrect)');
                 expect(texts[4].getText()).toBe('Other (Incorrect)');
-                expect(texts[10].getText()).toBe('% of Students');
+                expect(texts[14].getText()).toContain('% of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].getAttribute('height').then(function(height) {
+                rects[17].getAttribute('height').then(function(height) {
                     expect(height).toBe('122');
                     expect(height / 122 * 100).toBe(100);
                 });
-                rects[13].click().then(function() {
+                rects[17].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
-                        expect(texts[11].getText()).toBe('OK (Correct)');
-                        expect(texts[12].getText()).toBe('Correct:');
-                        expect(texts[13].getText()).toBe('100');
+                        expect(texts[16].getText()).toBe('OK (Correct)');
+                        expect(texts[17].getText()).toBe('Correct:');
+                        expect(texts[18].getText()).toBe('100');
                     });
                 });
             });
@@ -2861,7 +2894,7 @@ function reviewQuizzesModal(ptor) {
             });
         });
         it('should display the table head', function() {
-            expect(ptor.findElement(protractor.By.tagName('th')).getText()).toBe('Hide');
+            expect(ptor.findElement(protractor.By.tagName('th')).getText()).toBe('Show');
         });
         it('should display two charts for two quizzes', function() {
             ptor.findElements(protractor.By.repeater('id in lecture_data.question_ids')).then(function(charts) {
@@ -2882,18 +2915,18 @@ function reviewQuizzesModal(ptor) {
                 expect(names[3].getText()).toBe('OK (Correct)');
                 expect(names[4].getText()).toBe('Cancel (Incorrect)');
                 expect(names[5].getText()).toBe('Other (Incorrect)');
-                expect(names[11].getText()).toBe('Number of Students');
+                expect(names[15].getText()).toBe('Number of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[13].getAttribute('height').then(function(height) {
-                    expect(height).toBe('122');
-                    expect(height / 122 * 100).toBe(100);
+                rects[17].getAttribute('height').then(function(height) {
+                    expect(height).toBe('60');
+                    expect(height / 120 * 100).toBe(50);
                 });
-                rects[13].click().then(function() {
+                rects[17].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(names) {
-                        expect(names[12].getText()).toBe('OK (Correct)');
-                        expect(names[13].getText()).toBe('Correct:');
-                        expect(names[14].getText()).toBe('1');
+                        expect(names[17].getText()).toBe('OK (Correct)');
+                        expect(names[18].getText()).toBe('Correct:');
+                        expect(names[19].getText()).toBe('1');
                     });
                 });
             });
@@ -2901,40 +2934,50 @@ function reviewQuizzesModal(ptor) {
         doRefresh(ptor);
         it('should click on Review Quizzes', function() {
             ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                buttons[3].click();
+                buttons[3].click().then(function() {
+                    ptor.wait(function() {
+                        return ptor.findElements(protractor.By.tagName('svg')).then(function(charts) {
+                            if (charts.length == 2) {
+                                return true;
+                            } else {
+                                return false;
+                            }
+                        });
+                    });
+                });
             });
         });
-        it('should display the chart for the first quiz with its correct data', function() {
+        it('should display the chart for the second quiz with its correct data', function() {
             ptor.findElements(protractor.By.tagName('text')).then(function(names) {
-                expect(names[12].getText()).toBe('New Quiz2');
-                expect(names[13].getText()).toBe('Incorrect');
-                expect(names[14].getText()).toBe('Correct');
-                expect(names[15].getText()).toBe('First Answer (Correct)')
-                expect(names[16].getText()).toBe('Second Answer (Incorrect)')
-                expect(names[22].getText()).toBe('Number of Students');
+                expect(names[17].getText()).toBe('New Quiz2');
+                expect(names[18].getText()).toBe('Incorrect');
+                expect(names[19].getText()).toBe('Correct');
+                expect(names[20].getText()).toBe('First Answer (Correct)')
+                expect(names[21].getText()).toBe('Second Answer (Incorrect)')
+                expect(names[31].getText()).toBe('Number of Students');
             });
             ptor.findElements(protractor.By.tagName('rect')).then(function(rects) {
-                rects[33].getAttribute('height').then(function(height) {
-                    expect(height).toBe('122');
-                    expect(height / 122 * 100).toBe(100);
+                rects[41].getAttribute('height').then(function(height) {
+                    expect(height).toBe('60');
+                    expect(height / 120 * 100).toBe(50);
                 });
-                rects[36].getAttribute('height').then(function(height) {
-                    expect(height).toBe('122');
-                    expect(height / 122 * 100).toBe(100);
+                rects[44].getAttribute('height').then(function(height) {
+                    expect(height).toBe('60');
+                    expect(height / 120 * 100).toBe(50);
                 });
-                rects[33].click().then(function() {
+                rects[41].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(names) {
-                        expect(names[23].getText()).toBe('First Answer (Correct)');
-                        expect(names[24].getText()).toBe('Correct:');
-                        expect(names[25].getText()).toBe('1');
+                        expect(names[33].getText()).toBe('First Answer (Correct)');
+                        expect(names[34].getText()).toBe('Correct:');
+                        expect(names[35].getText()).toBe('1');
                     });
                 });
                 ptor.findElement(protractor.By.tagName('text')).click();
-                rects[36].click().then(function() {
+                rects[44].click().then(function() {
                     ptor.findElements(protractor.By.tagName('text')).then(function(names) {
-                        expect(names[23].getText()).toBe('Second Answer (Incorrect)');
-                        expect(names[24].getText()).toBe('Incorrect:');
-                        expect(names[25].getText()).toBe('1');
+                        expect(names[33].getText()).toBe('Second Answer (Incorrect)');
+                        expect(names[34].getText()).toBe('Incorrect:');
+                        expect(names[35].getText()).toBe('1');
                     });
                 });
             });

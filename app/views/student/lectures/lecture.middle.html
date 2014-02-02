@@ -12,8 +12,8 @@
 			 <div ng-if="selected_quiz.quiz_type == 'invideo'"><student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/></div>
 		</quiz>
 	</div>
-	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" autoplay='1' class="youtube"/>
-	<div ng-if="ipad && !loading_video" id="controls" style="width:800px;height:40px;position:absolute;top:625px;;">
+	<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url"  player="lecture_player" ng-class="{ipad:ipad}" autoplay='1' class="{{lecture.aspect_ratio}} youtube"/>
+	<div ng-if="ipad && !loading_video" id="controls" style="width:800px;height:40px;position:absolute;top:610px;">
 		<div class="timer">
 			<p style='float:left;margin-left:60px;left:50px;line-height:60px;color:gray'>{{current_time|format}}</p>
 			<p style='float:left;margin-left:0px;line-height:60px;color:gray'> / {{total_duration|format}}</p>

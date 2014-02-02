@@ -1,5 +1,6 @@
 var translation_en=function(){
     return {
+      issue: "Issue is with the",
       next: "Next",
       connected: "Connected",
       cant_connect_to_server: "Cannot connect to server",
@@ -31,8 +32,9 @@ var translation_en=function(){
       ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
       chrome: "Google's Chrome Browser",
       welcome: "Welcome to Scalable Learning",
-        or: "or",
-
+      or: "or",
+      visible: "Visible",
+      invisible: "Invisible",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -53,6 +55,7 @@ var translation_en=function(){
         calendar: "Calendar",
         announcements: "Announcements",
         content: "Content",
+        system: "System",
         information: "Information",
         course_information: "Course Information",
         enrolled_students: "Enrolled Students",
@@ -145,9 +148,12 @@ var translation_en=function(){
       lectures:{
         duration: "Duration",
         details: "Details",
+        lecture_details: "Lecture Details",
         lecture_title: "Lecture Title",
-        url: "Lecture URL",
+        url: "Video URL",
+        video_title: "Video Title",
         thumbnail: "Thumbnail",
+        video_preview: "Video Preview",
         aspect_ratio: "Aspect Ratio",
         detected_aspect_ratio: "Detected Aspect Ratio",
         author: "Author",
@@ -215,6 +221,8 @@ var translation_en=function(){
         quiz_required:"This Quiz is Required",
         quiz_not_required:"This Quiz is Not Required",
         got_some_errors: "You've got some errors",
+        provide_answer: "Please provide the answer text for each choice",
+        provide_url: "Please Provide A Video URL"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -240,7 +248,9 @@ var translation_en=function(){
         used_up_all: "Used up all",
         attempts: "attempts",
         attempt_number: "Attempt number",
-        percentage_of_students: "% of Students"
+        percentage_of_students: "% of Students",
+        quiz_details: "Quiz Details",
+        survey_details: "Survey Details",
       },
       user_mailer:{
         new_announcement: "New Announcement",
@@ -584,7 +594,7 @@ var translation_en=function(){
         total_surveys: "Total Surveys",
         total_questions_asked: "Total Questions Asked",
         total_confused: "Total Confused",
-        active_users: "Active Users",
+        current_active_users: "Active Users",
         rate_from: "rate from",
         to: "to",
         drag_to_zoom: 'Click and drag in the plot area to zoom in',
@@ -649,6 +659,8 @@ var translation_en=function(){
             signed_up_but_inactive: 'You have signed up successfully. However, we could not sign you in because your account is not yet activated.',
             signed_up_but_locked: 'You have signed up successfully. However, we could not sign you in because your account is locked.',
             updated: 'You updated your account successfully.',
+            confirm_destroy: "Are you sure you want to cancel your account?",
+            confirm_destroy_note: "Please note that all your data will be deleted from the system and cannot be recovered.",
             update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address.",
             destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
         },

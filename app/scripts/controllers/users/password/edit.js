@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersPasswordEditCtrl',['$scope','User','$state','$stateParams', function ($scope, User, $state, $stateParams) {
+  .controller('UsersPasswordEditCtrl',['$scope','User','$state','$stateParams','$rootScope', function ($scope, User, $state, $stateParams, $rootScope) {
     ////console.log($location.search());
     ////console.log($stateParams)
         //($location.search()).reset_password_token
@@ -10,7 +10,8 @@ angular.module('scalearAngularApp')
     $scope.change_password = function(){
         delete $scope.user.errors;
             User.change_password({},{user:$scope.user}, function(data){
-                $state.go("home");
+                $rootScope.$emit('$stateChangeStart', {name:'home'},{},{url:''})
+                //$state.go("home");
                 //console.log("success password reset");
             }, function(data){
                 //$state.go("login");

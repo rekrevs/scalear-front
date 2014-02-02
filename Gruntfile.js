@@ -149,7 +149,7 @@ module.exports = function(grunt) {
             dist: {
                 files: {
                     src: [
-                        '<%= yeoman.dist %>/scripts/{,*/}*.js',
+                        '<%= yeoman.dist %>/scripts/*.js',
                         '<%= yeoman.dist %>/styles/{,*/}*.css',
                         '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
                         '<%= yeoman.dist %>/styles/fonts/*'
@@ -300,7 +300,8 @@ module.exports = function(grunt) {
                         'styles/fonts/*',
                         'template/**/*',
                         '*.html',
-                        'views/**/*.html'
+                        'views/**/*.html',
+                        'scripts/externals/popcorn-complete.min.js'
                     ]
                 }, {
                     expand: true,
@@ -585,7 +586,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '2.1.0 (' + new Date().toUTCString() + ')'
+                        version: '2.1.1 (' + new Date().toUTCString() + ')'
                     }
 
                 }
@@ -633,7 +634,7 @@ module.exports = function(grunt) {
         'usemin',
         'htmlclean',
         'inline_angular_templates',
-        'compress',
+        //'compress',
         'clean:bower'
     ]);
 

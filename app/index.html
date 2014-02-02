@@ -9,13 +9,13 @@
         {
            self.location = "ie.html"
         }
+       var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals/':'http://popcornjs.org/code/dist/'
+       var head= document.getElementsByTagName('head')[0];
+       var script= document.createElement('script');
+       script.type= 'text/javascript';
+       script.src= src+'popcorn-complete.min.js';
+       head.appendChild(script);
     </script> 
-    <script>
-        var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals':'http://popcornjs.org/code/dist'
-        var s = document.createElement( 'script' );
-        s.setAttribute( 'src', src+'/popcorn-complete.min.js' );
-        document.head.appendChild( s );
-    </script>  
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Scalable Learning</title>
@@ -27,6 +27,7 @@
     <!-- build:css(.tmp/styles) styles/main.css -->
     <link rel="stylesheet" href="styles/bootstrap.css">
     <link rel="stylesheet" href="styles/main.css">
+    <link rel="stylesheet" href="styles/toggle-switch.css">
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" href="bower_components/jquery-ui/themes/base/jquery-ui.css" />
@@ -147,7 +148,7 @@
     <script src="bower_components/canvg-1.3.zip/rgbcolor.js"></script>
     <script src="bower_components/canvg-1.3.zip/StackBlur.js"></script>
     <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
-    <script src="bower_components/angular-ui-sortable/src/sortable.js"></script>
+    <!--<script src="bower_components/angular-ui-sortable/src/sortable.js"></script>-->
     <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
     <script src="bower_components/highcharts/highcharts.js"></script>
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
@@ -173,6 +174,7 @@
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
 
     <script src="scripts/externals/shortcut.js"></script>
+    <script src="scripts/externals/sortable.js"></script>
 
     <script src="locals/translation_en.js"></script>
     <script src="locals/translation_sv.js"></script>
@@ -269,6 +271,7 @@
     <script src="scripts/controllers/users/confirmation/new.js"></script>
     <script src="scripts/controllers/users/confirmation/show.js"></script>
     <script src="scripts/controllers/users/edit.js"></script>
+    <script src="scripts/controllers/users/confirm_delete_ctrl.js"></script>
 
     <script src="scripts/controllers/statistics/statistics_ctrl.js"></script>
     <!-- endbuild -->

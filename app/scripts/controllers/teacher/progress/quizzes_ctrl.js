@@ -23,7 +23,6 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
-                        console.log(data);
                         $scope.quiz_chart_data = data.chart_data
                         $scope.quiz_chart_questions = data.chart_questions
                         $scope.student_count = data.students_count

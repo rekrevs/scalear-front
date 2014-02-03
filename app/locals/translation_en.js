@@ -277,6 +277,7 @@ var translation_en=function(){
         change_role: "Change Role",
         close: "Close",
         enter_enrollment: "Please Enter Enrollment Key",
+        get_enrollment_key: "Please contact your instructor if you didn't receive e an enrollment key.",
         enroll: "Enroll",
         users: "Users",
         username: "Username",

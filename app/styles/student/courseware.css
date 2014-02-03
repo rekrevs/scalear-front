@@ -177,8 +177,10 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 }
 
 .smallscreen{
-  width: 600px;
-  height: 480px;
+  /*width: 600px;*/
+  /*height: 480px;*/
+    width: 800px;
+    height: 450px;
 }
 .solved{
 	display: inline;

@@ -29,7 +29,7 @@ angular.module('scalearAngularApp')
     		}
     		else{
 	    		scope.pHeight=500;
-	    		scope.pWidth= scope.lecture.aspect_ratio=='widescreen'? 800:600;
+	    		scope.pWidth= 800;//scope.lecture.aspect_ratio=='widescreen'? 800:600;
            element.css("z-index",1000);
     		}
 
@@ -176,11 +176,11 @@ angular.module('scalearAngularApp')
       var setNotficationPosition=function(){
         $log.debug(scope.fullscreen)
         if(scope.fullscreen){
-          scope.pHeight=angular.element($window).height()- 180;
+          scope.pHeight=angular.element($window).height()- 230;
           element.css("z-index",10000);
         }
         else{
-          scope.pHeight= 300;
+          scope.pHeight= 250;
           element.css("z-index",1000);
         }
           element.css("top", scope.pHeight+"px");
@@ -201,7 +201,7 @@ angular.module('scalearAngularApp')
     
     element.css("position", "relative");
 		element.css("z-index",10000);
-		element.children().css("height", "25px");
+		element.children().css("height", "30px");
 
 		scope.$on('updatePosition',function(){
 			$log.debug('updatePosition')
@@ -211,11 +211,11 @@ angular.module('scalearAngularApp')
     var setButtonsLocation=function(){
       $log.debug(scope.fullscreen)
       if(scope.fullscreen){
-        scope.pHeight=angular.element($window).height()- 36;
+        scope.pHeight=angular.element($window).height()- 80;
         element.css("z-index",10000);
       }
       else{
-        scope.pHeight=443;
+        scope.pHeight=418;
         element.css("z-index",1000);
       }
         

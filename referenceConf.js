@@ -72,8 +72,8 @@ exports.config = {
     //
     // A base URL for your application under test. Calls to protractor.get()
     // with relative paths will be prepended with this.
-    baseUrl: 'http://localhost:9000/#/',
-    // baseUrl: 'http://staging.scalable-learning.com/#/',
+    // baseUrl: 'http://localhost:9000/#/',
+    baseUrl: 'http://staging.scalable-learning.com/#/',
 
     // Selector for the element housing the angular app - this defaults to
     // body, but is necessary if ng-app is on a descendant of <body>
@@ -96,10 +96,10 @@ exports.config = {
     // This can be changed via the command line as:
     //   --params.login.user 'Joe'
     params: {
-        frontend: 'http://localhost:9000/#/',
+        // frontend: 'http://localhost:9000/#/',
         //      backend: 'http://localhost:3000/',
         //      auth: 'http://localhost:4000/'
-        // frontend: 'http://staging.scalable-learning.com/#/',
+        frontend: 'http://staging.scalable-learning.com/#/',
         width: 1366,
         height: 768
 

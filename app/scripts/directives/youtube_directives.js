@@ -10,14 +10,16 @@ angular.module('scalearAngularApp')
 				ready:'&',
 				id:'@',
 				player:'=',
-				autoplay:'@'
+				autoplay:'@',
+                controls: '@'
+
 			},
             template:"<div></div>",
 			link: function(scope, element){
 
 				$log.debug("YOUTUBE " + scope.id)
-				$log.debug(scope.controls);
-				
+
+
 				var player
 
 				var player_controls={}
@@ -27,22 +29,27 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
+
+                    if(!scope.controls || scope.controls==undefined)
+                        scope.controls=0;
+
                     var matches = getVideoId(scope.url)
                     var vimeo= scope.url.match(/vimeo/)  // improve this..
                     if(matches) //youtube
                     {
-                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1&controls=0',{ width: 500, controls: 0});
+                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=0&controls='+scope.controls,{ width: 500, controls: 0});
+                        console.log("http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=0&controls='+scope.controls);
                     }
                     else if(vimeo)
                     {
                         player = Popcorn.smart( '#'+scope.id, scope.url+"?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0",{ width: '100%', height:'100%', controls: 0});
-                        player.controls(0);
-                        player.autoplay(true);
+                        player.controls(scope.controls);
+                       // player.autoplay(true);
                     }
                     else{
                         player = Popcorn.smart( '#'+scope.id, scope.url,{ width: '100%', height:'100%', controls: 0});
-                        player.controls(0);
-                        player.autoplay(true);
+                        player.controls(scope.controls);
+                       // player.autoplay(true);
                         //player.controls(0);
 
 //                        element.append('<div id="video-controls">' +
@@ -369,37 +376,60 @@ angular.module('scalearAngularApp')
     return {
         restrict: 'E',
         replace:true,
-//        scope:{
-//            url:'=',
-//            ready:'&',
-//            id:'@',
-//            player:'=',
-//            autoplay:'@'
-//        },
+        scope:{
+            view:'@',
+            active:'=',
+            play_btn:'&playBtn',
+            player:'=',
+            play_pause_class:'=playPauseClass',
+            updateProgress:'&updateProgress',
+            elapsed_width: '=elapsedWidth',
+            current_time: '=currentTime',
+            total_duration: '=totalDuration'
+           // autoplay:'@'
+        },
         templateUrl:"/views/progress_bar.html",
-        link: function(scope, element){
+        link: function(scope, element, attrs){
 
-            scope.$on('updatePosition',function(){
+
+            $rootScope.$on('updatePosition',function(){
                 setButtonsLocation()
             })
 
+            scope.playBtn = function(){
+                console.log("here");
+                scope.play_btn();
+            }
+
+            scope.progress = function(event){
+                console.log("here"+event);
+                scope.updateProgress({$event:event});
+            }
 
             var setButtonsLocation=function(){
-                if(scope.fullscreen){
-                    scope.pWidth=angular.element($window).width();
+                if(scope.active){
+                    console.log("full is ");
+                    console.log(scope.active);
                     scope.pHeight=angular.element($window).height();
                     element.css("z-index",1500);
                 }
                 else{
-                    scope.pHeight=500;
-                    scope.pWidth= scope.lecture.aspect_ratio=='widescreen'? 800:600;
+                    if(scope.view=="student")
+                    {scope.pHeight=500;
+                    }
+                    else{
+                        scope.pHeight=331;
+                    }
                     element.css("z-index",1000);
                 }
 
-                element.css("top", scope.pHeight-40+"px");
+                if(scope.view=="student")
+                    element.css("top", scope.pHeight-40+"px");
+                else
+                    element.css("top", scope.pHeight-40+"px");
                 //element.css("left", scope.pWidth-350+"px");
             }
-
+            setButtonsLocation();
         }
     }
 }]);

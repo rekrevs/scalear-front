@@ -143,7 +143,8 @@ angular.module('scalearAngularApp')
                 }
             }
 
-            $scope.updateProgress=function(ev){
+            $scope.updateProgress=function($event){
+                var ev=$event;
                 var element = angular.element('.progressBar');
                 var ratio = (ev.pageX-element.offset().left)/element.outerWidth();
                 $scope.elapsed_width = ratio*100+'%'

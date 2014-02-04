@@ -4,7 +4,7 @@
         <p style='float:left;margin-left:0px;line-height:60px;color:gray'> / {{total_duration|format}}</p>
     </div>
     <div class="controlDiv" ng-class="play_pause_class" ng-click="playBtn()"></div>
-    <div class="progressBar" ng-click="updateProgress($event)">
+    <div class="progressBar" ng-click="progress($event)">
         <div class="elapsed" ng-style="{width: elapsed_width}"></div>
     </div>
 </div>

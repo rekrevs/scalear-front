@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
     $scope.resize={}
     $scope.video_layer={}
     $scope.quiz_layer={}
-    $scope.ontop_layer={}
+    $scope.ontop_layer={'position':'absolute'}
     $scope.lecture_player={}
     $scope.lecture_player.events={}
     $scope.alert={
@@ -28,6 +28,10 @@ angular.module('scalearAngularApp')
 		{type:'OCQ', text:"insert_ocq"}, 
 		{type:'drag',text:"insert_drag"}
 	]
+    $scope.play_pause_class = 'play'
+    $scope.current_time = 0
+    $scope.total_duration = 0
+    $scope.fullscreen = false
 	
     $state.go('course.course_editor.lecture.quizList');
 
@@ -47,15 +51,48 @@ angular.module('scalearAngularApp')
     }
  	$scope.lecture_player.events.onReady= function(){
  		$scope.hide_overlay = true
+        $scope.total_duration = $scope.lecture_player.controls.getDuration()
 
  	}
 	$scope.lecture_player.events.onPlay= function(){
+        $scope.play_pause_class = 'pause'
 		var paused_time= $scope.lecture_player.controls.getTime()
 		if($scope.editing_mode)
 			$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
 
- 	var checkQuizTimeConflict=function(time){
+        $scope.playBtn = function(){
+            console.log($scope.play_pause_class)
+            if($scope.play_pause_class == "play"){
+                $scope.lecture_player.controls.play()
+            }
+            else{
+                $scope.lecture_player.controls.pause()
+            }
+        }
+
+        $scope.seek = function(time) {
+            $scope.lecture_player.controls.seek(time)
+        }
+
+        $scope.updateProgress=function($event){
+            var element = angular.element('.progressBar');
+            var ratio = ($event.pageX-element.offset().left)/element.outerWidth();
+            $scope.elapsed_width = ratio*100+'%'
+            $scope.seek($scope.total_duration*ratio)
+        }
+
+        $scope.lecture_player.events.timeUpdate = function(){
+            // console.log("in timeupdate")
+            $scope.current_time = $scope.lecture_player.controls.getTime()
+            $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
+        }
+
+        $scope.lecture_player.events.onPause= function(){
+            $scope.play_pause_class = "play"
+        }
+
+        var checkQuizTimeConflict=function(time){
  		var new_time = time 
  		var inc = 0
  		$scope.quiz_list.forEach(function(quiz){

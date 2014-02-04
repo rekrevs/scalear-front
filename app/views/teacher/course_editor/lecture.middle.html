@@ -13,7 +13,8 @@
 			</quiz>
 		</div>
 		<youtube ng-show="lecture.url" id="lecture_video" ng-style="ontop_layer" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio" style="background-color:black;"/>
-	</video_container>
+        <progress-bar play_pause_class="play_pause_class" view="teacher" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration'></progress-bar>
+    </video_container>
 	</form>
 	</br>
 	<div class="quiz_list" >

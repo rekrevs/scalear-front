@@ -222,7 +222,7 @@ var translation_sv=function(){
               quiz_not_required:"Denna Quiz krävs inte",
               got_some_errors: "Du har några fel",
               provide_answer: "Ange svaret text för varje val",
-              provide_url: "Ange en URL för video",
+              provide_url: "Skriv in webbadressen (länk) till din video i avsnittet Föreläsning Detaljer till höger",
               shown_in_graph: "*Visas i resultat diagram",
               shown_to_student: "*Visas i studenter",
           },

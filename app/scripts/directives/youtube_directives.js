@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
             });
         };	
 	}])
-	.directive('youtube',['$rootScope','$log','$q','popcornApiProxy',function($rootScope,$log,$q,popcornApiProxy){
+	.directive('youtube',['$rootScope','$log','$timeout','popcornApiProxy',function($rootScope,$log,$timeout,popcornApiProxy){
 		return {
 			restrict: 'E',
 			replace:true, 
@@ -54,6 +54,11 @@ angular.module('scalearAngularApp')
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
+					$timeout(function(){
+						console.log('timeout with '+ player_controls.readyState())
+						if(!player_controls.readyState())
+							scope.$emit('slow')
+					},10000)
 					parent.focus()
 				}
 			
@@ -83,6 +88,10 @@ angular.module('scalearAngularApp')
 
 				player_controls.getDuration=function(){
 					return player.duration()
+				}				
+
+				player_controls.readyState=function(){
+					return player.readyState()
 				}
 
 				player_controls.seek = function(time){
@@ -91,7 +100,6 @@ angular.module('scalearAngularApp')
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
 					player.currentTime(time);
-					//player_controls.play();
 					parent.focus()
 				}
 
@@ -114,7 +122,8 @@ angular.module('scalearAngularApp')
 					player.cue(time, callback)
 				}
 
-				player_controls.replay=function(){					
+				player_controls.replay=function(){	
+					player_controls.pause()		
 					player_controls.seek(0)
 					player_controls.play()
 				}
@@ -177,6 +186,22 @@ angular.module('scalearAngularApp')
 						parent.focus()
 						if(player_events.timeUpdate){
 							player_events.timeUpdate();
+							scope.$apply();
+						}
+					})
+
+					player.on('ended',function(){
+						parent.focus()
+						if(player_events.onEnd){
+							player_events.onEnd();
+							scope.$apply();
+						}
+					})
+					scope.$on('slow',function(){
+						console.log('event slow called')
+						parent.focus()
+						if(player_events.onSlow){
+							player_events.onSlow();
 							scope.$apply();
 						}
 					})

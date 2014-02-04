@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
                         },
                         threshold: null
                     },
-                    spline:{
+                    line:{
                         fillColor: {
                             linearGradient: { x1: 0, y1: 0, x2: 0, y2: 1},
                             stops: [
@@ -87,7 +87,7 @@ angular.module('scalearAngularApp')
                 }
             },
             series: [{
-                type: 'spline',
+                type: 'line',
                 name: '#',
                 pointInterval: 24 * 3600 * 1000,
                 pointStart: Date.UTC(2012, 0, 1),

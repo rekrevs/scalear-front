@@ -549,33 +549,9 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://localhost:3000',
                         redirection_url: 'http://localhost:3000/#/',
-                        version: '2.0.12 (' + new Date().toUTCString() + ')'
+                        version: '2.1.2 (' + new Date().toUTCString() + ')'
                     },
 
-                }
-            }],
-            staging: [{
-                dest: '<%= yeoman.app %>/scripts/config.js',
-                wrap: '"use strict";\n\n <%= __ngModule %>',
-                name: 'config',
-                constants: {
-                    scalear_api: {
-                        host: '', //'http://angular-learning.herokuapp.com',
-                        redirection_url: '',
-                        version: '2.0.12 (' + new Date().toUTCString() + ')'
-                    }
-                }
-            }],
-            staging2: [{
-                dest: '<%= yeoman.app %>/scripts/config.js',
-                wrap: '"use strict";\n\n <%= __ngModule %>',
-                name: 'config',
-                constants: {
-                    scalear_api: {
-                        host: 'http://morning-crag-4732.herokuapp.com/', //'http://angular-learning.herokuapp.com',
-                        redirection_url: 'http://morning-crag-4732.herokuapp.com/',
-                        version: '2.0.12 (' + new Date().toUTCString() + ')'
-                    }
                 }
             }],
             prod: [{
@@ -586,7 +562,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '2.1.0 (' + new Date().toUTCString() + ')'
+                        version: '2.1.2 (' + new Date().toUTCString() + ')'
                     }
 
                 }

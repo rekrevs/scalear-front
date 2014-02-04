@@ -66,7 +66,7 @@ angular.module('scalearAngularApp')
 		 				"<drag ng-switch-when='DRAG' />"+
 	 				"</div>",
 	};
-}]).directive('answer', ['$rootScope','$log', function($rootScope,$log){
+}]).directive('answer', ['$rootScope','$log','$timeout', function($rootScope,$log,$timeout){
 	return {
 		 replace:true,
 		 restrict: 'E',
@@ -124,6 +124,13 @@ angular.module('scalearAngularApp')
 				}
 				
 			}
+			scope.selectField=function(ev){
+				var target = angular.element(ev.target)
+				$timeout(function(){
+					target.select()
+				})
+				
+			}
 			scope.updateValues= function()
 			{
 				$log.debug("in value update")
@@ -156,11 +163,11 @@ angular.module('scalearAngularApp')
 			var template = "<form name='aform'>"+
 								"<span translate>lectures.correct</span>:"+
 								"<input class='must_save_check' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/>"+
-								"<span style='display:block' class='help-inline' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
-								"<p>{{'groups.answer'|translate}}:</p>"+ 
-								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' value={{data.answer}} name='answer' required/>"+
-								"<span style='display:block;' class='help-inline' ng-show='aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-								"<p>{{'lectures.explanation'|translate}}:</p>"+
+								"<span class='help-inline' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
+								"<p style='margin: 4px 0 0 0;'>{{'groups.answer'|translate}}:</p><small class='muted' style='font-size:9px' translate>lectures.shown_in_graph</small>"+ 
+								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' required/>"+
+								"<span class='help-inline' ng-show='aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
+								"<p style='margin: 4px 0 0 0;'>{{'lectures.explanation'|translate}}:</p><small class='muted' style='font-size:9px' translate>lectures.shown_to_student</small>"+
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} />"+
 								"<br>"+
 								"<input type='button' ng-click='remove()' class='btn btn-danger remove_button' value={{'lectures.remove'|translate}} />"+

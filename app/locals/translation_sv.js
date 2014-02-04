@@ -33,7 +33,7 @@ var translation_sv=function(){
       welcome: "Välkommen till Scalable Learning",
       or: "eller",
       visible: "Synlig",
-      invisible: "Osynlig",
+      invisible: "Inte synliga för eleverna. Kommer att synas på detta datum.",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -222,7 +222,9 @@ var translation_sv=function(){
               quiz_not_required:"Denna Quiz krävs inte",
               got_some_errors: "Du har några fel",
               provide_answer: "Ange svaret text för varje val",
-              provide_url: "Ange en URL för video"
+              provide_url: "Ange en URL för video",
+              shown_in_graph: "*Visas i resultat diagram",
+              shown_to_student: "*Visas i studenter",
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",
@@ -499,7 +501,8 @@ var translation_sv=function(){
               invalid_input: "Ogiltiga Indata",
               duration_invalid: "Tidsutsträckning är ogiltig",
               charts: "Diagram",
-              total_statistics: "Total Statistik"
+              total_statistics: "Total Statistik",
+              enroll_instruction: "För att anmäla dig till en kurs klicka på 'Ansluta Kurs' nedan och ange kursens kursnyckel från din instruktör."
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",
@@ -579,8 +582,9 @@ var translation_sv=function(){
             lecture_views: "Föreläsning Visningar",
             questions_asked: "Frågor Ställda",
             confused: "Förvirrad",
+            courses_created: "Kurser Skapad",
             lectures_created: "Föreläsningar Skapad",
-            video_quizzes_created: "Video Quiz-frågor Tillverkad",
+            video_quizzes_created: "Video Quiz-frågor Skapad",
             normal_quizzes_created: "Normala Quiz-frågor skapats",
             surveys_created: "Undersökningar Skapad",
             video_quizzes_solved: "Video Quiz-frågor Löste",

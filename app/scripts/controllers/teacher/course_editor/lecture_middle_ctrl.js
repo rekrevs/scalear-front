@@ -37,6 +37,8 @@ angular.module('scalearAngularApp')
 
  	$scope.lecture_player.events.onReady= function(){
  		$scope.hide_overlay = true
+ 		$scope.lecture_player.controls.pause()
+        $scope.lecture_player.controls.seek(0)
  	}
 	$scope.lecture_player.events.onPlay= function(){
 		var paused_time= $scope.lecture_player.controls.getTime()
@@ -210,7 +212,7 @@ angular.module('scalearAngularApp')
 	      	var the_left= left / element.width()
 	     	var the_width = answer_width/element.width();
 	      	var the_height= answer_height/(element.height());
-	      	$scope.addAnswer("", the_height, the_width, the_left, the_top)
+	      	$scope.addAnswer("Answer "+($scope.selected_quiz.answers.length+1), the_height, the_width, the_left, the_top)
 	      	if (window.getSelection)
 		        window.getSelection().removeAllRanges();
 		    else if (document.selection)

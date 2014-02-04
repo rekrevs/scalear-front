@@ -50,7 +50,6 @@ angular.module('scalearAngularApp')
                     }
                     scope.send_technical = function() {
                         $log.debug("in sending");
-                        console.log(scope);
                         scope.sending_technical = true;
                         Home.technicalProblem({
                                 issue_type: scope.issue_type,

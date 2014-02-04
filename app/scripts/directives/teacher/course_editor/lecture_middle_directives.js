@@ -125,7 +125,6 @@ angular.module('scalearAngularApp')
 				
 			}
 			scope.selectField=function(ev){
-				console.log(ev.target)
 				var target = angular.element(ev.target)
 				$timeout(function(){
 					target.select()

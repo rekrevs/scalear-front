@@ -17,21 +17,14 @@ angular.module('scalearAngularApp')
 		var apiReady = $q.defer()
 		var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals/':'http://popcornjs.org/code/dist/'
 		loadScript(src+'popcorn-complete.min.js', function(){
-			console.log('loaded script');
 			$rootScope.$apply(function () {
                 apiReady.resolve();
             });
 		})
 		return function (callback) {
-            //var args = Array.prototype.slice.call(arguments, 2);
-            console.log('there?')
-            //return function () {
-                apiReady.promise.then(function () {
-                    //fn.apply(context, args.concat(Array.prototype.slice.call(arguments)));
-                    console.log('here?')
-                    callback()
-                });
-           // };
+            apiReady.promise.then(function () {
+                callback()
+            });
         };	
 	}])
 	.directive('youtube',['$rootScope','$log','$q','popcornApiProxy',function($rootScope,$log,$q,popcornApiProxy){
@@ -55,7 +48,6 @@ angular.module('scalearAngularApp')
 				var player_events = {}
 
 				var loadVideo = function(){
-					console.log('loadded video')
 					if(player)
 						Popcorn.destroy(player)
 					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1',{ width: 500, controls: 0});

@@ -33,8 +33,15 @@ angular.module('scalearAngularApp')
            element.css("z-index",1000);
     		}
 
+           // if(scope.ipad){
+             //   element.css("top", scope.pHeight-15+"px");
+               // element.css("left", scope.pWidth-200+"px");
+            //}
+            //else{
     		element.css("top", scope.pHeight-70+"px");
     		element.css("left", scope.pWidth-350+"px");
+//            }
+
     	}
     	
     	scope.full = function(){   			
@@ -64,11 +71,6 @@ angular.module('scalearAngularApp')
     	scope.back= function()
     	{
     		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
-  		});
-    	};
-    	scope.pause= function()
-    	{
-    		Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
   		});
     	};
     	scope.question= function(){
@@ -135,14 +137,6 @@ angular.module('scalearAngularApp')
 
   		setButtonsLocation()
   		scope.setShortcuts();
-
-// Karim put this somewhere else..
-//  		scope.lecture_player.events.onPause= function(){
-//   			$log.debug("in here");
-//   			if(scope.display_mode!=true) //not a quiz
-//   				scope.pause();
-//   		}
-     		
    		scope.$watch('lecture.aspect_ratio', function(){
    			setButtonsLocation()
    		})
@@ -218,8 +212,11 @@ angular.module('scalearAngularApp')
         scope.pHeight=418;
         element.css("z-index",1000);
       }
-        
-      element.css("top", scope.pHeight+"px");
+     // if(scope.ipad)
+       // element.css("top", scope.pHeight+15+"px");
+      //else
+        element.css("top", scope.pHeight+"px");
+
     }		
     	
   	setButtonsLocation()
@@ -293,7 +290,7 @@ angular.module('scalearAngularApp')
         Lecture.saveOnline(
           {
             course_id:$stateParams.course_id,
-            lecture_id:$stateParams.lecture_id,
+            lecture_id:$stateParams.lecture_id
           },
           {
             quiz: scope.selected_quiz.id,
@@ -343,7 +340,7 @@ angular.module('scalearAngularApp')
 			quiz:"=",
 			studentAnswers:"=",
 			submitted: "=",
-			explanation:"=",
+			explanation:"="
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+

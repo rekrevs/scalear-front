@@ -25,6 +25,7 @@ angular.module('scalearAngularApp')
   			},
   			function(data){
   				$log.debug(data)
+          $scope.ordered_survey= data.ordered_survey
           $scope.survey_chart_data = data.chart_data
           $scope.survey_chart_questions = data.chart_questions
           $scope.survey_free= data.survey_free
@@ -45,7 +46,11 @@ angular.module('scalearAngularApp')
   	}
 
     $scope.getSurveyQuestionTitle = function(index){
-    	return $scope.survey_chart_questions[index]	
+    	return $scope.survey_chart_questions[index].question
+    }
+
+    $scope.getSurveyQuestionType = function(index) {
+        return $scope.survey_chart_questions[index].type + ' | '
     }
 
     $scope.formatSurveyChartData = function(data){
@@ -75,7 +80,7 @@ angular.module('scalearAngularApp')
       chart.type = "ColumnChart"
       chart.options = {
           "colors": ['green','gray'],
-          "title": $scope.getSurveyQuestionTitle(ind),
+          "title": $scope.getSurveyQuestionType(ind) + $scope.getSurveyQuestionTitle(ind),
           "isStacked": "true",
           "fill": 20,
           "height": 200,

@@ -513,7 +513,7 @@ describe('Teacher', function() {
 
     it('should display the second quiz name', function() {
         ptor.findElement(protractor.By.className('question_title')).then(function(title) {
-            expect(title.getText()).toBe('New Quiz2');
+            expect(title.getText()).toBe('2');
         });
     });
     it('should navigate to next quiz', function() {
@@ -524,7 +524,7 @@ describe('Teacher', function() {
 
     it('should display the third quiz name', function() {
         ptor.findElement(protractor.By.className('question_title')).then(function(title) {
-            expect(title.getText()).toBe('New Quiz3');
+            expect(title.getText()).toBe('3');
         });
     });
     it('should navigate to next quiz', function() {
@@ -535,7 +535,7 @@ describe('Teacher', function() {
 
     it('should display the fourth quiz name', function() {
         ptor.findElement(protractor.By.className('question_title')).then(function(title) {
-            expect(title.getText()).toBe('New Quiz4');
+            expect(title.getText()).toBe('4');
         });
     });
 
@@ -549,7 +549,7 @@ describe('Teacher', function() {
 
     it('should display the third quiz name', function() {
         ptor.findElement(protractor.By.className('question_title')).then(function(title) {
-            expect(title.getText()).toBe('New Quiz3');
+            expect(title.getText()).toBe('3');
         });
     });
     it('should navigate to previous quiz', function() {
@@ -560,7 +560,7 @@ describe('Teacher', function() {
 
     it('should display the second quiz name', function() {
         ptor.findElement(protractor.By.className('question_title')).then(function(title) {
-            expect(title.getText()).toBe('New Quiz2');
+            expect(title.getText()).toBe('2');
         });
     });
     it('should navigate to previous quiz', function() {

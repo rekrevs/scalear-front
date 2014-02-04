@@ -1,4 +1,8 @@
 <center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
+<center ng-show="courses && !courses.length" style="height:70px">
+	<br>
+	<h5 class="muted" translate>courses.enroll_instruction</h5>
+</center>
 <div ng-show="courses">
 	<h4 translate="courses.all_courses"></h4>
 	</br>

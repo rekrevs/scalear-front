@@ -52,7 +52,8 @@ angular.module('scalearAngularApp')
  	$scope.lecture_player.events.onReady= function(){
  		$scope.hide_overlay = true
         $scope.total_duration = $scope.lecture_player.controls.getDuration()
-
+ 		$scope.lecture_player.controls.pause()
+        $scope.lecture_player.controls.seek(0)
  	}
 	$scope.lecture_player.events.onPlay= function(){
         $scope.play_pause_class = 'pause'
@@ -100,7 +101,6 @@ angular.module('scalearAngularApp')
  				new_time+= 3
  			else if(quiz.time == parseInt(new_time)){
  				new_time+= 2
- 				//console.log(new_time)
  			} 					
  			else if(quiz.time == parseInt(new_time-1))
  				new_time+= 1
@@ -118,7 +118,6 @@ angular.module('scalearAngularApp')
 			insert_time = duration - 1
 
 		insert_time = checkQuizTimeConflict(insert_time)
-		//console.log(insert_time)
 		$scope.lecture_player.controls.seek_and_pause(insert_time)
 
 		$scope.quiz_loading = true;
@@ -180,9 +179,7 @@ angular.module('scalearAngularApp')
 					$log.debug($scope.allPos)
 				}
 			},
-			function(){ //error
-			 //   alert("Could not get data, please check network connection."); 
-			}
+			function(){}
 		);
 	}
 
@@ -204,9 +201,7 @@ angular.module('scalearAngularApp')
 						$scope.addHtmlAnswer()				
 				}			
 			},
-			function(){ //error
-				//alert("Could not get data, please check network connection.");
-			}
+			function(){}
 		);
 	}
 
@@ -264,7 +259,7 @@ angular.module('scalearAngularApp')
 	      	var the_left= left / element.width()
 	     	var the_width = answer_width/element.width();
 	      	var the_height= answer_height/(element.height());
-	      	$scope.addAnswer("", the_height, the_width, the_left, the_top)
+	      	$scope.addAnswer("Answer "+($scope.selected_quiz.answers.length+1), the_height, the_width, the_left, the_top)
 	      	if (window.getSelection)
 		        window.getSelection().removeAllRanges();
 		    else if (document.selection)
@@ -284,22 +279,6 @@ angular.module('scalearAngularApp')
 			$scope.new_answer.pos=max+1
 		    $scope.allPos=mergeDragPos($scope.selected_quiz.answers)
 		}
-		// Lecture.addAnswer(
-			// {course_id:$stateParams.course_id,
-			// lecture_id:$scope.lecture.id},
-			// {answer:$scope.new_answer, "flag":true},
-			// function(data){
-				// $log.debug(data)
-				// $scope.new_answer.id= data.current.id
-				// if($scope.selected_quiz.question_type=="drag"){
-					// $scope.new_answer.pos = data.current.pos
-					// $scope.allPos=mergeDragPos($scope.selected_quiz.answers)
-				// }
-				// $log.debug($scope.new_answer)
-			// },
-			// function(){
-				// //alert("Could not add answer, please check network connection.");
-			// });
 	}
 	
 	$scope.removeAnswer = function(index){
@@ -311,31 +290,15 @@ angular.module('scalearAngularApp')
 			$scope.allPos=mergeDragPos($scope.selected_quiz.answers)
 			$log.debug($scope.allPos)
 		}
-		// Lecture.removeAnswer(
-			// {course_id:$stateParams.course_id,
-			// lecture_id: $scope.lecture.id},
-			// {answer_id:backup.id},
-			// function(data){
-				// $log.debug(data)
-				// if($scope.selected_quiz.question_type=="drag"){
-					// $scope.allPos=mergeDragPos($scope.selected_quiz.answers)
-					// $log.debug($scope.allPos)
-				// }
-			// },
-			// function(){
-				// $scope.selected_quiz.answers.push(backup)
-				// // alert("Could not remove element, please check network connection.");
-			// }
-		// );
 	}
 
 	var updateAnswers=function(ans, title){
 		$log.debug("savingAll")
 		Lecture.updateAnswers(
 			{
-			course_id:$stateParams.course_id,
-			lecture_id:$scope.lecture.id,
-			online_quiz_id: $scope.selected_quiz.id
+				course_id:$stateParams.course_id,
+				lecture_id:$scope.lecture.id,
+				online_quiz_id: $scope.selected_quiz.id
 			},
 			{answer: ans, quiz_title:title },
 			function(data){ //success
@@ -345,9 +308,7 @@ angular.module('scalearAngularApp')
 					getHTMLData();
 				
 			},
-			function(){
-	 		    //alert("Could not save changes, please check network connection.");
-			}
+			function(){}
 		);
 	}
 	
@@ -356,14 +317,20 @@ angular.module('scalearAngularApp')
 		var correct=0;
 		for( var element in $scope.selected_quiz.answers)
 		{
-			if(!$scope.selected_quiz.answers[element].answer || $scope.selected_quiz.answers[element].answer.trim()=="")
+			if(!$scope.selected_quiz.answers[element].answer || $scope.selected_quiz.answers[element].answer.trim()==""){
+				$scope.alert.msg="lectures.provide_answer"
 				return false
+			}
 			if($scope.selected_quiz.question_type.toUpperCase()=="DRAG")
 			correct=1
 			else	
 			correct= $scope.selected_quiz.answers[element].correct || correct;
 		}
-		return correct==0?false:true;
+		if(!correct){
+			$scope.alert.msg="lectures.please_choose_one_answer"
+			return false
+		}
+		return true;
 	};
 	
 	$scope.saveBtn = function(){
@@ -390,6 +357,8 @@ angular.module('scalearAngularApp')
 			updateAnswers(data, $scope.selected_quiz.question);
 		}
 		else{
+			if($scope.selected_quiz.quiz_type == 'html')
+				$scope.alert.msg=$scope.answer_form.$error.atleastone? "lectures.please_choose_one_answer" :"lectures.provide_answer"
 			$scope.submitted=true;
 			$scope.hide_alerts=false;
 		}

@@ -49,7 +49,7 @@ angular.module('scalearAngularApp')
 			formated_data.cols=
 				[
 					{"label": $translate('courses.students'),"type": "timeofday"},
-					{"label": "#"+$translate('courses.students'),"type": "number"},
+					{"label": "#"+$translate('courses.students'),"type": "number"}
 				]
 			formated_data.rows= []
 			for(var ind in data)
@@ -59,7 +59,7 @@ angular.module('scalearAngularApp')
 				{"c":
 					[
 						{"v":[d.getUTCHours(),d.getMinutes(),d.getSeconds(),0]},
-						{"v":data[ind][1]},
+						{"v":data[ind][1]}
 					]
 				}
 				formated_data.rows.push(row)
@@ -91,7 +91,7 @@ angular.module('scalearAngularApp')
 	            "legend": 'none', 
 	            chartArea:{left: 85, width:getChartWidth()},   
 	            "vAxis": {
-	                "title": "#"+$translate('courses.'+type),
+	                "title": "#"+$translate('courses.'+type)
 	            },
 	            "bar":{"groupWidth":5}
 	        };
@@ -106,26 +106,20 @@ angular.module('scalearAngularApp')
 		  	return chart
 	    }
 
-	     var getReallyConfused= function(data){
+	 	     var getReallyConfused= function(data){
 	     	data.cols.push({"label": $translate('courses.really_confused'),"type": "number"})
 	     	for (var i in data.rows)
 	     		if($scope.statistics.really_confused[i]){
-//	     			if($scope.statistics.really_confused[i][0] == $scope.statistics.confused[i][0]){
-//	     				data.rows[i].c.push({"v":$scope.statistics.really_confused[i][1]})
-//	     			}
-//                    else
-//                    {
-                        var d = new Date($scope.statistics.really_confused[i][0]*1000)
-                        data.rows.push(
-                            {"c":
-                                [
-                                    {"v":[d.getUTCHours(),d.getMinutes(),d.getSeconds(),0]},
-                                    {"v":0},
-                                    {"v":$scope.statistics.really_confused[i][1]}
-                                ]
-                            }
-                        )
-                   // }
+                    var d = new Date($scope.statistics.really_confused[i][0]*1000)
+                    data.rows.push(
+                        {"c":
+                            [
+                                {"v":[d.getUTCHours(),d.getMinutes(),d.getSeconds(),0]},
+                                {"v":0},
+                                {"v":$scope.statistics.really_confused[i][1]}
+                            ]
+                        }
+                    )
 	     		}
 
      		return data
@@ -159,10 +153,7 @@ angular.module('scalearAngularApp')
 	    }
 
 	    $scope.skipToTime=function(selectedItem, type){
-            console.log(selectedItem)
-            console.log(type)
             if(type == 'confused' && selectedItem.column== 2){
-                console.log($scope.statistics)
                 var d = new Date($scope.statistics.really_confused[selectedItem.row-$scope.statistics.confused.length][0]*1000)
             }
             else

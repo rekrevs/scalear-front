@@ -51,7 +51,7 @@ a {
 
 ul.accordion ul {margin:0; padding:0 0 0 0px;}
 
-.accordion .outer {border:1px solid #dadada; border-width:0 1px 1px; background: #fff}
+.accordion .outer { background: #fff}
 
 .accordion .inner {margin-bottom:0; padding:.5em 20px 1em; position:relative; overflow:hidden}
 
@@ -144,7 +144,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 }
 
 .overlay {
-  height: 90%;
+  height: 50%;
   position: absolute;
   display: block;
   opacity: 0.7;

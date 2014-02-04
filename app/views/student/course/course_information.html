@@ -34,6 +34,12 @@
         <p>
             {{course.prerequisites}}
         </p>
+        <b translate="courses.teachers"></b>
+        <p>
+            <ul ng-repeat="teacher in teachers">
+                {{teacher.name}} ({{teacher.role}})
+            </ul>
+        </p>
     </span>
 </div>
 

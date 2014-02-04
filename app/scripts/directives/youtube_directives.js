@@ -1,7 +1,33 @@
+(function (document, window) {
 'use strict';
 
+function loadScript(url, callback) {
+        var script = document.createElement('script');
+        script.src = url;
+        script.onload = callback;
+        script.onerror = function () {
+            throw Error('Error loading "' + url + '"');
+        };
+
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+
 angular.module('scalearAngularApp')
-	.directive('youtube',['$rootScope','$log',function($rootScope,$log){
+	.factory('popcornApiProxy',['$rootScope','$q',function($rootScope,$q){
+		var apiReady = $q.defer()
+		var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals/':'http://popcornjs.org/code/dist/'
+		loadScript(src+'popcorn-complete.min.js', function(){
+			$rootScope.$apply(function () {
+                apiReady.resolve();
+            });
+		})
+		return function (callback) {
+            apiReady.promise.then(function () {
+                callback()
+            });
+        };	
+	}])
+	.directive('youtube',['$rootScope','$log','$q','popcornApiProxy',function($rootScope,$log,$q,popcornApiProxy){
 		return {
 			restrict: 'E',
 			replace:true,
@@ -21,10 +47,8 @@ angular.module('scalearAngularApp')
 
 
 				var player
-
 				var player_controls={}
 				var player_events = {}
-
 
 				var loadVideo = function(){
 					if(player)
@@ -37,19 +61,20 @@ angular.module('scalearAngularApp')
                     var vimeo= scope.url.match(/vimeo/)  // improve this..
                     if(matches) //youtube
                     {
-                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=0&controls='+scope.controls,{ width: 500, controls: 0});
-                        console.log("http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=0&controls='+scope.controls);
+                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1&controls='+scope.controls,{ width: 500, controls: 0});
                     }
                     else if(vimeo)
                     {
                         player = Popcorn.smart( '#'+scope.id, scope.url+"?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0",{ width: '100%', height:'100%', controls: 0});
                         player.controls(scope.controls);
-                       // player.autoplay(true);
+                        player.autoplay(true);
                     }
                     else{
-                        player = Popcorn.smart( '#'+scope.id, scope.url,{ width: '100%', height:'100%', controls: 0});
+                        console.log(scope.url);
+                        player = Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
+                        //player = Popcorn.smart( '#'+scope.id, ["http://videos.mozilla.org/serv/webmademovies/popcornplug.mp4", "http://videos.mozilla.org/serv/webmademovies/popcornplug.ogv", "http://videos.mozilla.org/serv/webmademovies/popcornplug.webm"])//, scope.url,{ width: '100%', height:'100%', controls: 0});
                         player.controls(scope.controls);
-                       // player.autoplay(true);
+                        player.autoplay(true);
                         //player.controls(0);
 
 //                        element.append('<div id="video-controls">' +
@@ -101,9 +126,9 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
-                    console.log("time in seek isssss "+time);
+
 					player.currentTime(time);
-                    console.log(player.currentTime());
+
 					//player_controls.play();
 					parent.focus()
 				}
@@ -115,10 +140,10 @@ angular.module('scalearAngularApp')
 
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
-                    console.log("in refresh");
+
 					element.find('iframe').remove();
                     element.find('video').remove();
-			  		loadVideo();
+					popcornApiProxy(loadVideo);
 				}
 
 				player_controls.hideControls=function(){
@@ -146,7 +171,7 @@ angular.module('scalearAngularApp')
 							}
 					});
 
-					player.on('play',
+					player.on('playing',
 						function(){
 							parent.focus()
 							if(player_events.onPlay){								
@@ -160,7 +185,7 @@ angular.module('scalearAngularApp')
 							parent.focus()
 
 							if(player_events.onPause){
-                                console.log("in pause event");
+
 								player_events.onPause();
 								scope.$apply();
 							}
@@ -198,6 +223,14 @@ angular.module('scalearAngularApp')
 							scope.$apply();
 						}
 					})
+
+					player.on('timeupdate',function(){
+						parent.focus()
+						if(player_events.timeUpdate){
+							player_events.timeUpdate();
+							scope.$apply();
+						}
+					})
 				}
 
 				$rootScope.$on('refreshVideo',function(){
@@ -216,7 +249,7 @@ angular.module('scalearAngularApp')
 
                     if(scope.url)
                     {
-                        console.log("in url watch")
+
                       //  var matches = is_final_url(scope.url)
                         // if(matches)
                          //{
@@ -296,7 +329,8 @@ angular.module('scalearAngularApp')
                 angular.extend($scope.ontop_layer, {"z-index":0})
 				
 				$timeout(function(){$scope.$emit("updatePosition")})
-				$scope.unregister_back_event()		
+				$scope.unregister_back_event()	
+				$scope.unregister_state_event()	
 			}
 
 			$scope.resize.big = function()
@@ -322,7 +356,8 @@ angular.module('scalearAngularApp')
 					"z-index": 1031
 				};
 
-				var video_height = win.height()-50;// -30;
+
+				var video_height = win.height()-50;
 				var video_width = video_height*factor
 				
 				//var video_width = (win.height()-26)*factor
@@ -332,6 +367,7 @@ angular.module('scalearAngularApp')
 					$log.debug("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
 					var margin_top = ((win.height()-50) - (video_height))/2.0; //+30
+
 					layer={
 						"position":"fixed",
 						"top":0,
@@ -368,6 +404,10 @@ angular.module('scalearAngularApp')
 			        $scope.resize.small() 
 			        $scope.$apply()
 				});
+				$scope.unregister_state_event = $scope.$on("$stateChangeStart", function(event, next, current) {
+			        $scope.resize.small() 
+			        $scope.$apply()
+				});
 			}
 		}
 	}
@@ -397,19 +437,15 @@ angular.module('scalearAngularApp')
             })
 
             scope.playBtn = function(){
-                console.log("here");
                 scope.play_btn();
             }
 
             scope.progress = function(event){
-                console.log("here"+event);
                 scope.updateProgress({$event:event});
             }
 
             var setButtonsLocation=function(){
                 if(scope.active){
-                    console.log("full is ");
-                    console.log(scope.active);
                     scope.pHeight=angular.element($window).height();
                     element.css("z-index",1500);
                 }
@@ -432,4 +468,5 @@ angular.module('scalearAngularApp')
             setButtonsLocation();
         }
     }
-}]);
+}])
+})(document, window);

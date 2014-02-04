@@ -19,7 +19,10 @@ angular.module('scalearAngularApp')
    				else if($rootScope.current_user.roles[0].id!=2)
    					return deferred.resolve(1) //1(teacher) or 5(admin)
    			}else
-   				return deferred.resolve(0) //not signed in
+            {
+                $rootScope.current_user=null;
+                return deferred.resolve(0) //not signed in
+            }
    			
    		})
    		

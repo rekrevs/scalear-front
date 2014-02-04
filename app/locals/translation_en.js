@@ -1,5 +1,7 @@
 var translation_en=function(){
     return {
+      issue: "Issue is with the",
+      next: "Next",
       connected: "Connected",
       cant_connect_to_server: "Cannot connect to server",
       invalid_email: "Invalid Email",
@@ -30,8 +32,9 @@ var translation_en=function(){
       ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
       chrome: "Google's Chrome Browser",
       welcome: "Welcome to Scalable Learning",
-        or: "or",
-
+      or: "or",
+      visible: "Visible",
+      invisible: "Not currently visible to the students. Will be visible on this date.",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -52,6 +55,7 @@ var translation_en=function(){
         calendar: "Calendar",
         announcements: "Announcements",
         content: "Content",
+        system: "System",
         information: "Information",
         course_information: "Course Information",
         enrolled_students: "Enrolled Students",
@@ -144,9 +148,12 @@ var translation_en=function(){
       lectures:{
         duration: "Duration",
         details: "Details",
+        lecture_details: "Lecture Details",
         lecture_title: "Lecture Title",
-        url: "Lecture URL",
+        url: "Video URL",
+        video_title: "Video Title",
         thumbnail: "Thumbnail",
+        video_preview: "Video Preview",
         aspect_ratio: "Aspect Ratio",
         detected_aspect_ratio: "Detected Aspect Ratio",
         author: "Author",
@@ -214,6 +221,10 @@ var translation_en=function(){
         quiz_required:"This Quiz is Required",
         quiz_not_required:"This Quiz is Not Required",
         got_some_errors: "You've got some errors",
+        provide_answer: "Please provide the answer text for each choice",
+        provide_url: "Please Provide A Video URL",
+        shown_in_graph: "*Shown in results graph",
+        shown_to_student: "*Shown to students",
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -239,7 +250,9 @@ var translation_en=function(){
         used_up_all: "Used up all",
         attempts: "attempts",
         attempt_number: "Attempt number",
-        percentage_of_students: "% of Students"
+        percentage_of_students: "% of Students",
+        quiz_details: "Quiz Details",
+        survey_details: "Survey Details",
       },
       user_mailer:{
         new_announcement: "New Announcement",
@@ -266,6 +279,7 @@ var translation_en=function(){
         change_role: "Change Role",
         close: "Close",
         enter_enrollment: "Please Enter Enrollment Key",
+        get_enrollment_key: "Please contact your instructor if you didn't receive an enrollment key.",
         enroll: "Enroll",
         users: "Users",
         username: "Username",
@@ -487,6 +501,9 @@ var translation_en=function(){
         quiz_title: "Quiz Title",
         invalid_input: "Invalid Input",
         duration_invalid: "Duration is invalid",
+        charts: "Charts",
+        total_statistics: "Total Statistics",
+        enroll_instruction: "To enroll in a course click 'Join Course' below and enter the course enrollment key from your instructor."
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",
@@ -559,6 +576,35 @@ var translation_en=function(){
         in_correct_place: "in correct place",
         another_quiz_consider_shifting: "There's another quiz within 5 seconds from this one - consider shifting it.",
       },
+      statistics:{
+        statistics_dashboard: "Statistics Dashboard",
+        registration: "Registration",
+        login: "Login",
+        lecture_views: "Lecture Views",
+        questions_asked: "Questions Asked",
+        confused: "Confused",
+        courses_created: "Courses Created",
+        lectures_created: "Lectures Created",
+        video_quizzes_created: "Video Quizzes Created",
+        normal_quizzes_created: "Normal Quizzes Created",
+        surveys_created: "Surveys Created",
+        video_quizzes_solved: "Video Quizzes Solved",
+        normal_quizzes_solved: "Normal Quizzes Solved",
+        surveys_solved: "Surveys Solved",
+        total_courses: "Total Courses",
+        total_students: "Total Students",
+        total_teachers: "Total Teachers",
+        total_lectures: "Total Lectures",
+        total_quizzes: "Total Quizzes",
+        total_surveys: "Total Surveys",
+        total_questions_asked: "Total Questions Asked",
+        total_confused: "Total Confused",
+        current_active_users: "Active Users",
+        rate_from: "rate from",
+        to: "to",
+        drag_to_zoom: 'Click and drag in the plot area to zoom in',
+        pinch_to_zoom: 'Pinch the chart to zoom in'
+      },
       youtube:{
         click_tell_confused: "Click to tell the teacher you're confused.",
         click_ask_question: "Click to ask a question.",
@@ -567,87 +613,89 @@ var translation_en=function(){
         ask: "Ask",
         check_answer: "Check Answer",
      },
-        devise:
+    devise:
+    {
+        sign_in_message: "Please fill in the below fields...",
+        register:{
+            teacher: "Teacher Registration",
+            student: "Student Registration"
+        },
+        failure:
         {
-            sign_in_message: "Please fill in the below fields...",
-            register:{
-                teacher: "Teacher Registration",
-                student: "Student Registration"
-            },
-            failure:
+            already_authenticated: 'You are already signed in.',
+            unauthenticated: 'You need to sign in or sign up before continuing.',
+            unconfirmed: 'You have to confirm your account before continuing.',
+            locked: 'Your account is locked.',
+            invalid: 'Invalid email or password.',
+            invalid_token: 'Invalid authentication token.',
+            timeout: 'Your session expired, please sign in again to continue.',
+            inactive: 'Your account was not activated yet.'
+        },
+        sessions:
+        {
+            signed_in: 'Signed in successfully.',
+            signed_out: 'Signed out successfully.'
+        },
+        passwords:
+        {
+            ignore: "If you didn't request this, please ignore this email.",
+            no_change: "Your password won't change until you access the link above and create a new one.",
+            change: 'Change my password',
+            link_change_password: 'Someone has requested a link to change your password. You can do this through the link below.',
+            send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.',
+            updated: 'Your password was changed successfully. You are now signed in.',
+            updated_not_active: 'Your password was changed successfully.',
+            send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.",
+            no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
+        },
+        confirmations:
+        {
+            confirm_account: "Confirm my account",
+            confirm_through_link: "You can confirm your account email through the link below",
+            resend_instructions: "Resend confirmation instructions",
+            send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.',
+            send_paranoid_instructions: 'If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes.',
+            confirmed: 'Your account was successfully confirmed. You are now signed in.'
+        },
+        registrations:
+        {
+            signed_up: 'Welcome! You have signed up successfully.',
+            signed_up_but_unconfirmed: 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.',
+            signed_up_but_inactive: 'You have signed up successfully. However, we could not sign you in because your account is not yet activated.',
+            signed_up_but_locked: 'You have signed up successfully. However, we could not sign you in because your account is locked.',
+            updated: 'You updated your account successfully.',
+            confirm_destroy: "Are you sure you want to cancel your account?",
+            confirm_destroy_note: "Please note that all your data will be deleted from the system and cannot be recovered.",
+            update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address.",
+            destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
+        },
+        unlocks:
+        {
+            send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.',
+            unlocked: 'Your account has been unlocked successfully. Please sign in to continue.',
+            send_paranoid_instructions: 'If your account exists, you will receive an email with instructions about how to unlock it in a few minutes.'
+        },
+        omniauth_callbacks:
+        {
+            success: 'Successfully authenticated from %{kind} account.',
+            failure: 'Could not authenticate you from %{kind} because "%{reason}".'
+        },
+        mailer:
+        {
+            confirmation_instructions:
             {
-                already_authenticated: 'You are already signed in.',
-                unauthenticated: 'You need to sign in or sign up before continuing.',
-                unconfirmed: 'You have to confirm your account before continuing.',
-                locked: 'Your account is locked.',
-                invalid: 'Invalid email or password.',
-                invalid_token: 'Invalid authentication token.',
-                timeout: 'Your session expired, please sign in again to continue.',
-                inactive: 'Your account was not activated yet.'
+                subject: 'Confirmation instructions'
             },
-            sessions:
+            reset_password_instructions:
             {
-                signed_in: 'Signed in successfully.',
-                signed_out: 'Signed out successfully.'
+                subject: 'Reset password instructions'
             },
-            passwords:
+            unlock_instructions:
             {
-                ignore: "If you didn't request this, please ignore this email.",
-                no_change: "Your password won't change until you access the link above and create a new one.",
-                change: 'Change my password',
-                link_change_password: 'Someone has requested a link to change your password. You can do this through the link below.',
-                send_instructions: 'You will receive an email with instructions about how to reset your password in a few minutes.',
-                updated: 'Your password was changed successfully. You are now signed in.',
-                updated_not_active: 'Your password was changed successfully.',
-                send_paranoid_instructions: "If your email address exists in our database, you will receive a password recovery link at your email address in a few minutes.",
-                no_token: "You can't access this page without coming from a password reset email. If you do come from a password reset email, please make sure you used the full URL provided."
-            },
-            confirmations:
-            {
-                confirm_account: "Confirm my account",
-                confirm_through_link: "You can confirm your account email through the link below",
-                resend_instructions: "Resend confirmation instructions",
-                send_instructions: 'You will receive an email with instructions about how to confirm your account in a few minutes.',
-                send_paranoid_instructions: 'If your email address exists in our database, you will receive an email with instructions about how to confirm your account in a few minutes.',
-                confirmed: 'Your account was successfully confirmed. You are now signed in.'
-            },
-            registrations:
-            {
-                signed_up: 'Welcome! You have signed up successfully.',
-                signed_up_but_unconfirmed: 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.',
-                signed_up_but_inactive: 'You have signed up successfully. However, we could not sign you in because your account is not yet activated.',
-                signed_up_but_locked: 'You have signed up successfully. However, we could not sign you in because your account is locked.',
-                updated: 'You updated your account successfully.',
-                update_needs_confirmation: "You updated your account successfully, but we need to verify your new email address. Please check your email and click on the confirm link to finalize confirming your new email address.",
-                destroyed: 'Bye! Your account was successfully cancelled. We hope to see you again soon.'
-            },
-            unlocks:
-            {
-                send_instructions: 'You will receive an email with instructions about how to unlock your account in a few minutes.',
-                unlocked: 'Your account has been unlocked successfully. Please sign in to continue.',
-                send_paranoid_instructions: 'If your account exists, you will receive an email with instructions about how to unlock it in a few minutes.'
-            },
-            omniauth_callbacks:
-            {
-                success: 'Successfully authenticated from %{kind} account.',
-                failure: 'Could not authenticate you from %{kind} because "%{reason}".'
-            },
-            mailer:
-            {
-                confirmation_instructions:
-                {
-                    subject: 'Confirmation instructions'
-                },
-                reset_password_instructions:
-                {
-                    subject: 'Reset password instructions'
-                },
-                unlock_instructions:
-                {
-                    subject: 'Unlock Instructions'
-                }
+                subject: 'Unlock Instructions'
             }
         }
+    }
 
 
  }

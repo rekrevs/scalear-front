@@ -1,9 +1,6 @@
 <div ng-hide="!lecture">
 <center><h3>{{lecture.name}}</h3></center>
 <form name="answer_form" novalidate style="margin:0">
-<overlay ng-show="loading_video">
-            <loading size="big" show="true" style="position:relative; top:100px;" />
-</overlay>
 <video_container ng-style="video_layer" ng-class="videoborder" style="background-color:black;">
 	<div ng-show="display_mode">
 		<quiz ng-style="quiz_layer">
@@ -11,14 +8,27 @@
 			 <div ng-if="selected_quiz.quiz_type == 'invideo'"><student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/></div>
 		</quiz>
 	</div>
-	<youtube ng-show="lecture.url" id="lecture_video" ng-style="ontop_layer" url="lecture.url"  player="lecture_player" ng-class="lecture.aspect_ratio" autoplay='1' class="youtube"/>
+	<youtube ng-show="lecture.url" id="lecture_video" ng-style="ontop_layer" url="lecture.url"  player="lecture_player" ng-class="{ipad:ipad}" autoplay='1' class="{{lecture.aspect_ratio}} youtube"/>
     <progress-bar play_pause_class="play_pause_class" view="student" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration'></progress-bar>
-    <controls ng-show="lecture.url" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' />
+	<!--<div ng-if="ipad && !loading_video" id="controls" style="width:800px;height:40px;position:absolute;top:610px;">-->
+		<!--<div class="timer">-->
+			<!--<p style='float:left;margin-left:60px;left:50px;line-height:60px;color:gray'>{{current_time|format}}</p>-->
+			<!--<p style='float:left;margin-left:0px;line-height:60px;color:gray'> / {{total_duration|format}}</p>-->
+		<!--</div>-->
+		<!--<div class="controlDiv" ng-class="play_pause_class" ng-click="playBtn()"></div>-->
+		<!--<div class="progressBar" ng-click="updateProgress($event)">-->
+			<!--<div class="elapsed" ng-style="{width: elapsed_width}"></div>-->
+		<!--</div>-->
+	<!--</div>-->
+	<controls ng-show="lecture.url && !loading_video" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' ng-class="{ipad_controls:ipad}"/>
 	<check ng-show='display_mode'></check>
 	<notification ng-style="notify_position" ng-if='show_notification!=false'></notification>
 </video_container>
 </form>
 <br><br>
+<overlay ng-show="loading_video">
+    <loading size="big" show="true" style="position:relative; top:100px;" />
+</overlay>
 <h4 ng-show="lecture.online_quizzes" translate="questions.questions"></h4>
 <table class="table table-striped">
 	<tr ng-repeat="quiz in lecture.online_quizzes">

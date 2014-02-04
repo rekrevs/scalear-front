@@ -28,17 +28,15 @@
 				<td style="word-break: break-word;"><span translate>groups.appearance_date</span></td>
 				<td>
 					<details-check checked="quiz.appearance_time_module" save="updateQuiz()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="appearance_time_module" ></details-check> 
-					<span ng-show="quiz.appearance_time_module">
-						<span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span><span tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right icon-eye-close"></span>
-					</span>
 					<br />
 					<div ng-hide="!quiz.appearance_time_module">
+						<!-- <span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
 						<input type='text' ng-model='quiz.appearance_time' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
 					</div>
   					<p ng-hide="quiz.appearance_time_module">
   						<span translate>lectures.set_date</span>:<br>
   						<details-date date="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-date>
-  						<span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span><span tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right icon-eye-close"></span>
+  						<!-- <span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
   					</p>
 				</td>
 			</tr>

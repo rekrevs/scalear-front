@@ -14,7 +14,7 @@
     <tr>
       <td><span translate>groups.appearance_date</span>:</td>
       <td>
-        <details-date date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <span ng-show="visible(module.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span><span tooltip="{{'invisible' | translate}}" ng-hide="visible(module.appearance_time)" class="icon pull-right icon-eye-close"></span>
+        <details-date date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <!-- <span ng-show="visible(module.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span  tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(module.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
       </td>
     </tr>
     <tr>

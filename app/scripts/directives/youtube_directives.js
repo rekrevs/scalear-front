@@ -1,7 +1,33 @@
+(function (document, window) {
 'use strict';
 
+function loadScript(url, callback) {
+        var script = document.createElement('script');
+        script.src = url;
+        script.onload = callback;
+        script.onerror = function () {
+            throw Error('Error loading "' + url + '"');
+        };
+
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+
 angular.module('scalearAngularApp')
-	.directive('youtube',['$rootScope','$log',function($rootScope,$log){
+	.factory('popcornApiProxy',['$rootScope','$q',function($rootScope,$q){
+		var apiReady = $q.defer()
+		var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals/':'http://popcornjs.org/code/dist/'
+		loadScript(src+'popcorn-complete.min.js', function(){
+			$rootScope.$apply(function () {
+                apiReady.resolve();
+            });
+		})
+		return function (callback) {
+            apiReady.promise.then(function () {
+                callback()
+            });
+        };	
+	}])
+	.directive('youtube',['$rootScope','$log','$q','popcornApiProxy',function($rootScope,$log,$q,popcornApiProxy){
 		return {
 			restrict: 'E',
 			replace:true, 
@@ -18,10 +44,8 @@ angular.module('scalearAngularApp')
 				$log.debug(scope.controls);
 				
 				var player
-
 				var player_controls={}
 				var player_events = {}
-
 
 				var loadVideo = function(){
 					if(player)
@@ -79,7 +103,7 @@ angular.module('scalearAngularApp')
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
 					element.find('iframe').remove();
-			  		loadVideo();
+					popcornApiProxy(loadVideo);
 				}
 
 				player_controls.hideControls=function(){
@@ -323,3 +347,5 @@ angular.module('scalearAngularApp')
 		}
 	}
 }])
+
+})(document, window);

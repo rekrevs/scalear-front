@@ -1,7 +1,7 @@
 var current_date = new Date();
-var no_students, no_modules, percentage, dummy, enroll_key = '2a713aee49',
-    course_id = '75',
-    module_id = '281',
+var no_students, no_modules, percentage, dummy, enroll_key = 'eb6efc261d',
+    course_id = '94',
+    module_id = '337',
     count = 0;
 //var frontend = 'http://localhost:9000/';
 //var backend = 'http://localhost:3000/';
@@ -43,7 +43,7 @@ function login(ptor, driver, email, password, name, findByName) {
             password_field.sendKeys(password);
         });
         ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
-            fields[fields.length - 1].click().then(function() {
+            fields[3].click().then(function() {
                 feedback(ptor, 'Signed in successfully');
             });
         });
@@ -105,7 +105,7 @@ describe('Teacher', function() {
                     options[1].click();
                 });
                 //                });
-                fields[fields.length - 1].click().then(function() {
+                fields[fields.length - 3].click().then(function() {
                     feedback(ptor, 'created');
                 });
             });
@@ -205,7 +205,12 @@ describe('Teacher', function() {
         });
         it('should edit quiz name and time', function() {
             ptor.findElement(protractor.By.tagName('editable_text')).then(function(name) {
-                ptor.actions().doubleClick(name).perform();
+                ptor.actions().mouseMove(name).perform().then(function(){
+                    name.findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                        edit.click();
+                    })
+                });
+                // ptor.actions().doubleClick(name).perform();
             });
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
@@ -216,7 +221,11 @@ describe('Teacher', function() {
             });
             //            feedback(ptor, 'Quiz was successfully updated. -');
             ptor.findElements(protractor.By.tagName('editable_text')).then(function(time) {
-                ptor.actions().doubleClick(time[1]).perform();
+                ptor.actions().mouseMove(time[1]).perform().then(function(){
+                    time[1].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                        edit.click();
+                    })
+                });
             });
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
@@ -292,7 +301,11 @@ describe('Teacher', function() {
         });
         it('should edit quiz name and time', function() {
             ptor.findElement(protractor.By.tagName('editable_text')).then(function(name) {
-                ptor.actions().doubleClick(name).perform();
+                ptor.actions().mouseMove(name).perform().then(function(){
+                    name.findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                        edit.click();
+                    })
+                });
             });
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
@@ -303,7 +316,11 @@ describe('Teacher', function() {
             });
             //            feedback(ptor, 'Quiz was successfully updated. -');
             ptor.findElements(protractor.By.tagName('editable_text')).then(function(time) {
-                ptor.actions().doubleClick(time[1]).perform();
+                ptor.actions().mouseMove(time[1]).perform().then(function(){
+                    time[1].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                        edit.click();
+                    })
+                });
             });
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
@@ -352,7 +369,7 @@ describe('Teacher', function() {
                 details[0].click();
             });
             ptor.findElements(protractor.By.tagName('input')).then(function(inputs) {
-                inputs[inputs.length - 1].click();
+                inputs[5].click();
             });
             ptor.findElements(protractor.By.tagName('button')).then(function(buttons) {
                 buttons[buttons.length - 2].click().then(function() {
@@ -596,7 +613,7 @@ describe('Teacher', function() {
                 details[0].click();
             });
             ptor.findElements(protractor.By.tagName('input')).then(function(inputs) {
-                inputs[inputs.length - 1].click();
+                inputs[5].click();
             });
             ptor.findElements(protractor.By.tagName('button')).then(function(buttons) {
                 buttons[buttons.length - 2].click().then(function() {
@@ -737,9 +754,9 @@ describe('Student', function() {
         });
     });
     it('should enter the enrollment key and proceed', function() {
-        ptor.findElement(protractor.By.tagName('input')).then(function(key_field) {
-            key_field.clear();
-            key_field.sendKeys(enroll_key);
+        ptor.findElements(protractor.By.tagName('input')).then(function(key_field) {
+            key_field[key_field.length-1].clear();
+            key_field[key_field.length-1].sendKeys(enroll_key);
         });
         ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed) {
             proceed.click().then(function() {
@@ -762,7 +779,7 @@ describe('Student', function() {
     it('should wait for the first in-lecture quiz to appear', function() {
         ptor.wait(function() {
             return ptor.findElements(protractor.By.tagName('input')).then(function(inputs) {
-                if (inputs.length == 5) {
+                if (inputs.length == 7) {
                     return true;
                 }
                 return false;
@@ -856,9 +873,9 @@ describe('Student', function() {
         });
     });
     it('should enter the enrollment key and proceed', function() {
-        ptor.findElement(protractor.By.tagName('input')).then(function(key_field) {
-            key_field.clear();
-            key_field.sendKeys(enroll_key);
+        ptor.findElements(protractor.By.tagName('input')).then(function(key_field) {
+            key_field[key_field.length-1].clear();
+            key_field[key_field.length-1].sendKeys(enroll_key);
         });
         ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed) {
             proceed.click().then(function() {
@@ -887,7 +904,7 @@ describe('Student', function() {
     it('should wait for the first in lecture quiz to appear', function() {
         ptor.wait(function() {
             return ptor.findElements(protractor.By.tagName('input')).then(function(inputs) {
-                if (inputs.length == 6) {
+                if (inputs.length == 8) {
                     return true;
                 }
                 return false;
@@ -928,7 +945,7 @@ describe('Student', function() {
     it('should wait for the first in lecture quiz to appear', function() {
         ptor.wait(function() {
             return ptor.findElements(protractor.By.tagName('input')).then(function(inputs) {
-                if (inputs.length == 5) {
+                if (inputs.length == 7) {
                     return true;
                 }
                 return false;
@@ -2794,23 +2811,23 @@ describe('In-Class', function() {
         it('should go to course editor', function() {
             ptor.get('/#/courses/' + course_id + '/course_editor');
         });
-        it('should delete All lectures and modules', function() {
-            ptor.findElements(protractor.By.className('module')).then(function(modules) {
-                for (var i = modules.length - 1; i >= 0; i--) {
-                    modules[i].click()
-                    modules[i].findElements(protractor.By.className('delete')).then(function(delete_buttons) {
-                        //                        console.log(delete_buttons.length)
-                        for (var n = delete_buttons.length - 1; n >= 0; n--) {
-                            delete_buttons[n].click().then(function() {
-                                ptor.findElement(protractor.By.className('btn-danger')).click().then(function() {
-                                    feedback(ptor, 'deleted');
-                                })
-                            });
-                        }
-                    });
-                }
-            });
-        });
+        // it('should delete All lectures and modules', function() {
+        //     ptor.findElements(protractor.By.className('module')).then(function(modules) {
+        //         for (var i = modules.length - 1; i >= 0; i--) {
+        //             modules[i].click()
+        //             modules[i].findElements(protractor.By.className('delete')).then(function(delete_buttons) {
+        //                 //                        console.log(delete_buttons.length)
+        //                 for (var n = delete_buttons.length - 1; n >= 0; n--) {
+        //                     delete_buttons[n].click().then(function() {
+        //                         ptor.findElement(protractor.By.className('btn-danger')).click().then(function() {
+        //                             feedback(ptor, 'deleted');
+        //                         })
+        //                     });
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
         it('should delete the created course', function() {
             ptor.get('/#/courses');
             ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons) {
@@ -3115,8 +3132,8 @@ function waitForChecks(ptor, n) {
     ptor.wait(function() {
         return ptor.findElement(protractor.By.id('tree')).then(function(tree) {
             return tree.findElements(protractor.By.className('finished_item')).then(function(checks) {
+                console.log('found ' + n);
                 if (checks.length == n) {
-                    console.log('found ' + n);
                     return true;
                 } else {
                     return false;

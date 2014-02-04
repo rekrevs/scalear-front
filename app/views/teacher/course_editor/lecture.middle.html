@@ -1,5 +1,5 @@
 <overlay ng-hide="hide_overlay || lecture.url!='none'" style="height:90%">
-	<h3 style="position:absolute;top:20%;left:32%;z-index: 1;" translate>lectures.provide_url</h3>
+	<h3 style="position:absolute;top:20%;padding: 0 100px;z-index: 1;" translate>lectures.provide_url</h3>
 </overlay>
 <center><h3>{{lecture.name}}</h3></center>
 <center resizable-video video-layer='video_layer' quiz-layer='quiz_layer' active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' ><a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>

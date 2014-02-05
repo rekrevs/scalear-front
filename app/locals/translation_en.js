@@ -225,6 +225,8 @@ var translation_en=function(){
         provide_url: "Please enter the URL (link) for your video in the Lecture Details section to the right",
         shown_in_graph: "*Shown in results graph",
         shown_to_student: "*Shown to students",
+        server_slow:"The server 'Youtube.com' is taking a long time to load this video",
+        try_reload:"You can continue waiting, or try reloading the page",
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

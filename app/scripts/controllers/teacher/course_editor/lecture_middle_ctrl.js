@@ -40,11 +40,21 @@ angular.module('scalearAngularApp')
  		$scope.lecture_player.controls.pause()
         $scope.lecture_player.controls.seek(0)
  	}
+
+ 	$scope.lecture_player.events.onMeta = function(){
+ 		$scope.slow_message = false
+ 	}
+
 	$scope.lecture_player.events.onPlay= function(){
+		$scope.slow_message = false
 		var paused_time= $scope.lecture_player.controls.getTime()
 		if($scope.editing_mode)
 			$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
+
+ 	$scope.lecture_player.events.onSlow=function(){
+        $scope.slow_message = true
+    }
 
  	var checkQuizTimeConflict=function(time){
  		var new_time = time 

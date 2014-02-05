@@ -225,6 +225,8 @@ var translation_sv=function(){
               provide_url: "Skriv in webbadressen (länk) till din video i avsnittet Föreläsning Detaljer till höger",
               shown_in_graph: "*Visas i resultat diagram",
               shown_to_student: "*Visas i studenter",
+              server_slow:"Servern 'Youtube.com' tar lång tid att läsa in den här videon",
+              try_reload:"Du kan fortsätta vänta, eller prova att uppdatera sidan",
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

@@ -20,6 +20,8 @@ angular.module('scalearAngularApp')
     	scope.show_message=false;
     	scope.show_question=false;
     	scope.show_shortcuts=false;
+        scope.quality=false;
+        scope.chosen_quality='hd720';
       	
     	var setButtonsLocation=function(){
     		if(scope.fullscreen){
@@ -39,7 +41,7 @@ angular.module('scalearAngularApp')
             //}
             //else{
     		element.css("top", scope.pHeight-70+"px");
-    		element.css("left", scope.pWidth-350+"px");
+    		element.css("left", scope.pWidth-200+"px");
 //            }
 
     	}
@@ -106,6 +108,17 @@ angular.module('scalearAngularApp')
   		});
     		
     	};
+
+        scope.showQuality = function(){
+            scope.quality=!scope.quality
+        }
+
+        scope.setQuality = function(quality){
+            scope.lecture_player.controls.refreshVideo(quality);
+            scope.chosen_quality=quality;
+            scope.quality=false;
+        }
+
     	scope.setShortcuts = function()
   		{
   				// adding shortcuts

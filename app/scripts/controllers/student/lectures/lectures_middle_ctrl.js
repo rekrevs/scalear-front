@@ -9,6 +9,7 @@ angular.module('scalearAngularApp')
             $scope.ontop_layer={}
             $scope.resize = {}
             $scope.lecture = {}
+            $scope.youtube_video=false;
             $scope.lecture.aspect_ratio = ""
             $scope.lecture_player = {}
             $scope.lecture_player.events = {}
@@ -26,7 +27,21 @@ angular.module('scalearAngularApp')
             $scope.total_duration = 0
             $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
 
+            var getVideoId= function(url){
+                return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+            }
 
+            $scope.setup_confused = function()
+            {
+                var element = angular.element('.progressBar');
+                for(var e in $scope.confused)
+                {
+                    console.log($scope.confused[e].time);
+                }
+                //var ratio = (ev.pageX-element.offset().left)/element.outerWidth();
+                //$scope.elapsed_width = ratio*100+'%'
+                //$scope.seek($scope.total_duration*ratio)
+            }
 
             var init = function() {
                 $scope.loading_video = true;
@@ -37,6 +52,12 @@ angular.module('scalearAngularApp')
                     function(data) {
                         $scope.alert_messages = data.alert_messages;
                         $scope.lecture = JSON.parse(data.lecture)
+                        $scope.confused= data.confuseds;
+                        $scope.youtube_video= getVideoId($scope.lecture.url);
+
+
+                        // setup confused areas
+                        $scope.setup_confused();
                         //if($scope.ipad)
                         //    $scope.lecture.url+="&controls=0"
                         for (var element in $scope.lecture.online_quizzes) // if no answers remove it
@@ -129,12 +150,6 @@ angular.module('scalearAngularApp')
               }
             }
 
-            $scope.submitPause= function()
-            {
-                Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:$scope.lecture_player.controls.getTime()}, function(data){});
-            }
-
-
 
             $scope.lecture_player.events.onPlay = function() {
                 // here check if selected_quiz solved now.. or ever will play, otherwhise will stop again.
@@ -159,25 +174,6 @@ angular.module('scalearAngularApp')
                         $scope.display_mode = false;
                     }
                 }
-            }
-
-
-
-            $scope.playBtn = function(){
-                if($scope.play_pause_class == "play"){
-                    $scope.lecture_player.controls.play()
-                }
-                else{
-                    $scope.lecture_player.controls.pause()
-                }
-            }
-
-            $scope.updateProgress=function($event){
-                var ev=$event;
-                var element = angular.element('.progressBar');
-                var ratio = (ev.pageX-element.offset().left)/element.outerWidth();
-                $scope.elapsed_width = ratio*100+'%'
-                $scope.seek($scope.total_duration*ratio)
             }
 
             $scope.lecture_player.events.timeUpdate = function(){

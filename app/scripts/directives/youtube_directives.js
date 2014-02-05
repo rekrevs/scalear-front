@@ -21,9 +21,9 @@ angular.module('scalearAngularApp')
                 apiReady.resolve();
             });
 		})
-		return function (callback) {
+		return function (callback, quality) {
             apiReady.promise.then(function () {
-                callback()
+                callback(quality)
             });
         };	
 	}])
@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
 				id:'@',
 				player:'=',
 				autoplay:'@',
-                controls: '@'
+                controls: '@',
 
 			},
             template:"<div></div>",
@@ -50,18 +50,21 @@ angular.module('scalearAngularApp')
 				var player_controls={}
 				var player_events = {}
 
-				var loadVideo = function(){
+				var loadVideo = function(vq){
 					if(player)
 						Popcorn.destroy(player)
 
                     if(!scope.controls || scope.controls==undefined)
                         scope.controls=0;
 
+                    if(!vq || vq==undefined)
+                        vq='hd720';
+
                     var matches = getVideoId(scope.url)
                     var vimeo= scope.url.match(/vimeo/)  // improve this..
                     if(matches) //youtube
                     {
-                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1&controls='+scope.controls,{ width: 500, controls: 0});
+                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1&controls='+scope.controls,{ width: 500, controls: 0});
                     }
                     else if(vimeo)
                     {
@@ -138,12 +141,12 @@ angular.module('scalearAngularApp')
 					player.pause()
 				}
 
-				player_controls.refreshVideo = function(){
+				player_controls.refreshVideo = function(quality){
 					$log.debug("refreshVideo!")
 
 					element.find('iframe').remove();
                     element.find('video').remove();
-					popcornApiProxy(loadVideo);
+					popcornApiProxy(loadVideo, quality);
 				}
 
 				player_controls.hideControls=function(){
@@ -425,7 +428,8 @@ angular.module('scalearAngularApp')
             updateProgress:'&updateProgress',
             elapsed_width: '=elapsedWidth',
             current_time: '=currentTime',
-            total_duration: '=totalDuration'
+            total_duration: '=totalDuration',
+            confused_areas: '=confusedAreas'
            // autoplay:'@'
         },
         templateUrl:"/views/progress_bar.html",

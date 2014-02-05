@@ -9,7 +9,7 @@
 		</quiz>
 	</div>
 	<youtube ng-show="lecture.url" id="lecture_video" ng-style="ontop_layer" url="lecture.url"  player="lecture_player" ng-class="{ipad:ipad}" autoplay='1' class="{{lecture.aspect_ratio}} youtube"/>
-    <progress-bar play_pause_class="play_pause_class" view="student" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration'></progress-bar>
+    <progress-bar  confused_areas='confused_areas' play_pause_class="play_pause_class" view="student" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration'></progress-bar>
 	<!--<div ng-if="ipad && !loading_video" id="controls" style="width:800px;height:40px;position:absolute;top:610px;">-->
 		<!--<div class="timer">-->
 			<!--<p style='float:left;margin-left:60px;left:50px;line-height:60px;color:gray'>{{current_time|format}}</p>-->

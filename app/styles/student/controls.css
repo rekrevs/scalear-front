@@ -88,7 +88,23 @@
 	bottom: 0px;
 }
 
+.qualityDiv{
+    position:absolute;
+    width:50px;
+    height:25px;
+    cursor:pointer;
+    /*top:50%;
+    left:50%;*/
+    margin-top:-50px;
+    right:160px;
+    bottom: 0px;
+}
+
 .shortcutDiv{
+    background:url('/images/shortcuts2.png') no-repeat center center;
+}
+
+.qualityDiv{
     background:url('/images/shortcuts2.png') no-repeat center center;
 }
 

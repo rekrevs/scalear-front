@@ -49,8 +49,8 @@ exports.config = {
         //    'test/e2e/spec/calendar_teacher_spec.js',
         //    'test/e2e/spec/calendar_student_spec.js',
         //    'test/e2e/spec/calendar_student_2_spec.js',
-        'test/e2e/spec/progress_spec.js'
-        // 'test/e2e/spec/course_editor_spec.js'
+        // 'test/e2e/spec/progress_spec.js'
+        'test/e2e/spec/course_editor_spec.js'
         //    'test/e2e/spec/course_pages_spec.js'
         //    'test/e2e/spec/student_lectures_spec.js'
         // 'test/e2e/spec/links_spec.js',

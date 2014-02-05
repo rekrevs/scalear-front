@@ -1,7 +1,7 @@
 var current_date = new Date();
 var no_students, no_modules, percentage, dummy, enroll_key = 'eb6efc261d',
-    course_id = '914',
-    module_id = '1177',
+    course_id = '904',
+    module_id = '1160',
     count = 0;
 //var frontend = 'http://localhost:9000/';
 //var backend = 'http://localhost:3000/';
@@ -2681,7 +2681,7 @@ describe('In-Class', function() {
             });
         });
     });
-    describe('Display Surveys', function() {
+    describe('Review Surveys', function() {
         it('should display a fullscreen modal', function() {
             ptor.findElement(protractor.By.className('modal')).then(function(modal) {
                 modal.isDisplayed().then(function(disp) {
@@ -2707,16 +2707,18 @@ describe('In-Class', function() {
             });
         });
         it('should mark the two charts as shown', function() {
-            ptor.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
-                checkboxes[0].click().then(function() {
-                    //                    feedback(ptor, 'Question was successfully updated - now visible', 1);
-                    feedback(ptor, 'now visible');
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
+                    checkboxes[0].click().then(function() {
+                        //                    feedback(ptor, 'Question was successfully updated - now visible', 1);
+                        feedback(ptor, 'now visible');
+                    });
+                    checkboxes[1].click().then(function() {
+                        //                    feedback(ptor, 'Question was successfully updated - now visible', 1);
+                        feedback(ptor, 'now visible');
+                    });
                 });
-                checkboxes[1].click().then(function() {
-                    //                    feedback(ptor, 'Question was successfully updated - now visible', 1);
-                    feedback(ptor, 'now visible');
-                });
-            });
+            })
         });
         it('should exit the modal', function() {
             ptor.findElement(protractor.By.id('exit_btn')).then(function(button) {

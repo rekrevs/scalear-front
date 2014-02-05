@@ -6,7 +6,7 @@
         <h2 translate="devise.confirmations.resend_instructions"></h2>
         <br />
         <p>* <span translate="email"></span></p>
-        <input type="email" ng-model="user.email" id="user_email" class="string email optional" name="user[email]" size="50"/>
+        <input type="email" ng-model="user.email" id="user_email" class="string email optional" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}(.[a-zA-Z]{2,3})*$" name="user[email]" size="50"/>
         <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
         
         <span class="errormessage" ng-show="user.errors.confirmation_token">{{user.errors.confirmation_token.join()}}</span>

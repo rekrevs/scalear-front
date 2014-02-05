@@ -26,7 +26,7 @@
                     <td style="width: 300px;">
 
                     	<form name='email_form' novalidate>
-                        <input name='email' type="email" id="new_email" pattern="^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}(.[a-zA-Z]{2,3})*$" placeholder="{{'email'|translate}}" ng-model="new_teachers[$index].email" value="new_teacher.email" ng-change="$parent.check(new_teacher.email, $index)"/>
+                        <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'email'|translate}}" ng-model="new_teachers[$index].email" value="new_teacher.email" ng-change="$parent.check(new_teacher.email, $index)"/>
                         <span class='help-inline' ng-show='email_form.email.$dirty && email_form.email.$invalid'>{{'invalid_email'|translate}}</span>
                         <br><span class="errormessage" ng-show="new_teachers[$index].error">{{new_teachers[$index].error}}</span>
                         

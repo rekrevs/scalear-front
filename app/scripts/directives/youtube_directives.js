@@ -55,7 +55,6 @@ angular.module('scalearAngularApp')
 					$log.debug(scope.url);
 					setupEvents()
 					$timeout(function(){
-						console.log('timeout with '+ player_controls.readyState())
 						if(!player_controls.readyState())
 							scope.$emit('slow')
 					},10000)
@@ -198,7 +197,6 @@ angular.module('scalearAngularApp')
 						}
 					})
 					scope.$on('slow',function(){
-						console.log('event slow called')
 						parent.focus()
 						if(player_events.onSlow){
 							player_events.onSlow();

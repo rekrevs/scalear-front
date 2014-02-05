@@ -411,7 +411,7 @@ describe("Course Editor", function() {
         it('should display the Details section', function() {
             ptor.findElements(protractor.By.tagName('h3')).
             then(function(tag) {
-                expect(tag[3].getText()).toBe('Lecture Details');
+                expect(tag[5].getText()).toBe('Lecture Details');
             });
         });
 

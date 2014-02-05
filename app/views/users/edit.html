@@ -10,7 +10,7 @@
             <input type="text" ng-model="user.name" id="user_name" size="50"/>
             <br/><span class="errormessage" ng-show="user.errors.name">{{user.errors.name.join()}}</span>
             <p translate="email"></p>
-            <input type="email" ng-model="user.email" id="user_email" size="50"/>
+            <input type="email" ng-model="user.email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" id="user_email" size="50"/>
             <p translate="password"></p>
             <input type="password" ng-model="user.password" id="user_password" name="user[password]" size="50"/>
             <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>

@@ -562,7 +562,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '2.1.3 (' + new Date().toUTCString() + ')'
+                        version: '2.1.4 (' + new Date().toUTCString() + ')'
                     }
 
                 }

@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
  	}
 
  	$scope.lecture_player.events.onReady= function(){
- 		$scope.hide_overlay = true
+ 		$scope.quiz_overlay = true
  		$scope.lecture_player.controls.pause()
         $scope.lecture_player.controls.seek(0)
  	}
@@ -83,7 +83,7 @@ angular.module('scalearAngularApp')
 		insert_time = checkQuizTimeConflict(insert_time)
 		$scope.lecture_player.controls.seek_and_pause(insert_time)
 
-		$scope.quiz_loading = true;
+		$scope.quiz_overlay = false;
 		Lecture.newQuiz({
 			course_id: $stateParams.course_id,
 			lecture_id: $scope.lecture.id,
@@ -95,10 +95,10 @@ angular.module('scalearAngularApp')
 			$log.debug(data);
 			$scope.showOnlineQuiz(data.quiz)
 			$scope.quiz_list.push(data.quiz)
-			$scope.quiz_loading = false;
+			$scope.quiz_overlay = true;
 		}, 
 		function(){ //error
-			$scope.quiz_loading = false;
+			$scope.quiz_overlay = true;
 		})
 
 	}

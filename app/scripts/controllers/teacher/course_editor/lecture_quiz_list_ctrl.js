@@ -83,17 +83,18 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
-//		if(confirm($translate('online_quiz.you_sure_delete_quiz', {quiz: quiz.question})))
-			OnlineQuiz.destroy(
-				{online_quizzes_id: quiz.id},{},
-				function(data){
-					$log.debug(data)
-					$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
-					$scope.$parent.editing_mode = false;
-					$scope.$parent.selected_quiz={}
-				},
-				function(){}
-			);
+		$scope.$parent.quiz_overlay = false
+		OnlineQuiz.destroy(
+			{online_quizzes_id: quiz.id},{},
+			function(data){
+				$log.debug(data)
+				$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
+				$scope.$parent.editing_mode = false;
+				$scope.$parent.selected_quiz={}
+				$scope.$parent.quiz_overlay = true
+			},
+			function(){}
+		);
 	}
 
 }]);

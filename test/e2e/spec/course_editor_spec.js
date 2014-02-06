@@ -267,6 +267,11 @@ describe("Course Editor", function() {
         it('should display module\'s appearance date and allow editing it', function() {
             //----------------------//
             //edit appearance date//
+            ptor.findElement(protractor.By.id('details')).then(function(details){
+                details.findElement(protractor.By.className('icon')).then(function(warning){
+                    expect(warning.isDisplayed()).toBe(false);
+                });
+            });
             ptor.findElements(protractor.By.className('editable-click')).then(function(details) {
                 expect(details[1].getText()).toBe(today);
                 details[1].click();
@@ -279,7 +284,6 @@ describe("Course Editor", function() {
                         feedback(ptor, 'updated');
                     });
                 });
-
                 details[1].getText().then(function(text) {
                     expect(text).toBe(tomorrow);
                 });
@@ -295,6 +299,7 @@ describe("Course Editor", function() {
                 details[1].getText().then(function(text) {
                     expect(text).toBe(tomorrow);
                 });
+                
             });
         });
 
@@ -473,6 +478,14 @@ describe("Course Editor", function() {
                 ptor.findElements(protractor.By.tagName('button')).then(function(button) {
                     button[1].click();
                 });
+                ptor.wait(function(){
+                    return ptor.findElement(protractor.By.className('overlay')).then(function(loading){
+                        return loading.isDisplayed().then(function(disp){
+                            console.log('.');
+                            return !disp;
+                        });
+                    });
+                });
                 //wait for video to load
                 ptor.sleep(10000);
                 //check video, thumbnail, author, duration, title, and aspect ratio
@@ -519,6 +532,13 @@ describe("Course Editor", function() {
                 //confirm the change
                 ptor.findElements(protractor.By.tagName('button')).then(function(buttons) {
                     buttons[1].click();
+                });
+                ptor.wait(function(){
+                    return ptor.findElement(protractor.By.className('overlay')).then(function(loading){
+                        return loading.isDisplayed().then(function(disp){
+                            return !disp;
+                        });
+                    });
                 });
                 ptor.sleep(5000);
                 //check video, thumbnail, author, duration, title, and aspect ratio
@@ -666,6 +686,7 @@ describe("Course Editor", function() {
                 details[4].getText().then(function(text) {
                     expect(text).toBe(after_tomorrow);
                 });
+                
             });
 
         });
@@ -857,13 +878,13 @@ describe("Course Editor", function() {
             });
 
         });
-        // waitForOverlay(ptor);
-        // MCQTest(0, ptor);
-        // doRefresh(ptor);
-        // waitForOverlay(ptor);
-        // MCQTest(1, ptor);
-        // doRefresh(ptor);
-        // waitForOverlay(ptor);
+        waitForOverlay(ptor);
+        MCQTest(0, ptor);
+        doRefresh(ptor);
+        waitForOverlay(ptor);
+        MCQTest(1, ptor);
+        doRefresh(ptor);
+        waitForOverlay(ptor);
         // OCQTest(0, ptor);
         // doRefresh(ptor);
         // waitForOverlay(ptor);
@@ -1027,6 +1048,7 @@ describe("Course Editor", function() {
                     //
                     expect(text).toBe(after_tomorrow);
                 });
+                
                 //use module's due date//
                 expect(details[5].getText()).toBe('Using Module\'s due Date');
                 details[5].click();
@@ -1446,6 +1468,7 @@ describe("Course Editor", function() {
                 details[2].getText().then(function(text) {
                     expect(text).toBe(after_tomorrow);
                 });
+
                 //use module's due date//
                 expect(details[3].getText()).toBe('Using Module\'s due Date');
                 details[3].click();
@@ -1650,6 +1673,7 @@ describe("Course Editor", function() {
         it('should refresh the page', function() {
             ptor.navigate().refresh();
         });
+        waitForOverlay(ptor);
         it('should display correct questions and answers', function() {
             ptor.findElements(protractor.By.tagName('input')).then(function(questions) {
                 expect(questions[0].getAttribute('value')).toBe('first MCQ question')
@@ -1684,8 +1708,9 @@ describe("Course Editor", function() {
                     });
                 });
             });
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                buttons[buttons.length - 2].click().then(function() {
+            ptor.executeScript('window.scrollBy(0, -2000)', '');
+            ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons) {
+                buttons[0].click().then(function() {
                     feedback(ptor, 'saved');
                 });
                 //                ptor.sleep(1000);
@@ -1803,7 +1828,12 @@ function MCQTest(mode, ptor) {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables) {
             expect(editables[0].getText()).toBe('New Quiz');
             //edit quiz name
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('My Quiz');
@@ -1814,7 +1844,12 @@ function MCQTest(mode, ptor) {
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
-            ptor.actions().doubleClick(editables[0]).perform();
+            // ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('New Quiz');

@@ -178,6 +178,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onEnd= function() {
+        if($scope.fullscreen)
+            $scope.resize.small()
         $scope.end_buttons = true
     }
 

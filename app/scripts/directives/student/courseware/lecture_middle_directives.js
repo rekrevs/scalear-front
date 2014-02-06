@@ -116,13 +116,11 @@ angular.module('scalearAngularApp')
   				},{"disable_in_input" : true});
   			
   				shortcut.add("b",function(){
-                    scope.back();
-                    var t=scope.lecture_player.controls.getTime();
-                    scope.lecture_player.controls.play();
-                    scope.seek(t-10)
-  				  
-       //      scope.display_mode = false
-
+              scope.back();
+              var t=scope.lecture_player.controls.getTime();
+              scope.lecture_player.controls.pause();
+              scope.seek(t-10)
+              scope.lecture_player.controls.play();
   				},{"disable_in_input" : true});
 
           shortcut.add("Enter",function(){

@@ -125,9 +125,10 @@ var openModal=function(view, type){
           seek_to_time = 0
         else if(seek_to_time >duration)
           seek_to_time = duration
-        $scope.seek(seek_to_time)
-        $scope.play_pause_class = "play_button"
         $scope.skipping = true
+        $scope.seek(seek_to_time)
+        //$scope.play_pause_class = "play_button"
+        
       }
     }
 

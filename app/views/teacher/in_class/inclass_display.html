@@ -23,7 +23,7 @@
     <div class="inclass_bottom">
         <div class="left_titles">
             <div ng-show="question_title" class="question_title">{{question_title}}</div>
-            <div ng-show="questions" style="overflow:auto;height:100%;">
+            <div ng-show="questions" style="overflow:auto;height:100%;width:98%;">
                 <div ng-repeat="question in questions" ng-click="seek(question[1])" class="student_questions" >{{question[0]}}<br></div>
             </div>
             <div ng-if="chart_data" class="inclass_chart">

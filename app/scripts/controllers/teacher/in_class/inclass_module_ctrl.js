@@ -112,8 +112,8 @@ var openModal=function(view, type){
 
     $scope.seek=function(time,first){
       $log.debug("seeking")
-      if(!first)
-        $scope.inclass_player.controls.pause()
+      //if(!first)
+        //$scope.inclass_player.controls.pause()
       $scope.inclass_player.controls.seek(time)
     }
 
@@ -149,10 +149,10 @@ var openModal=function(view, type){
       $scope.loading_video=false
     }
     $scope.inclass_player.events.seeked=function(){
-      if(!$scope.skipping){
-        $scope.inclass_player.controls.pause()
-      }
-      $scope.skipping=false
+      //if(!$scope.skipping){
+        //$scope.inclass_player.controls.pause()
+     // }
+     // $scope.skipping=false
     }
 
 

@@ -16,11 +16,11 @@ angular.module('scalearAngularApp')
 	.factory('popcornApiProxy',['$rootScope','$q',function($rootScope,$q){
 		var apiReady = $q.defer()
 		var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals/':'http://popcornjs.org/code/dist/'
-		loadScript(src+'popcorn-complete.min.js', function(){
-			$rootScope.$apply(function () {
+		//loadScript(src+'popcorn-complete.min.js', function(){
+			//$rootScope.$apply(function () {
                 apiReady.resolve();
-            });
-		})
+            ///});
+		//})
 		return function (callback) {
             apiReady.promise.then(function () {
                 callback()
@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1',{ width: 500, controls: 0});
+					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=large&autoplay=1',{ width: 500, controls: 0});
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
@@ -110,7 +110,8 @@ angular.module('scalearAngularApp')
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
 					element.find('iframe').remove();
-					popcornApiProxy(loadVideo);
+					//popcornApiProxy(loadVideo);
+					loadVideo()
 				}
 
 				player_controls.hideControls=function(){

@@ -115,6 +115,12 @@ body {
 	z-index: 1200;
 }
 
+.progress-events{
+    width:3px;
+    height: 8px;
+    z-index: 5000;
+    position: absolute;
+}
 
 /*.successmove{
 	top: 45px;
@@ -241,7 +247,7 @@ textarea.ng-invalid{ border:1px solid red; }
 
 .widescreen{
   width: 500px;
-  height:281px;
+  height:282px;
   /*height: 316px;*/
 }
 
@@ -268,6 +274,20 @@ textarea.ng-invalid{ border:1px solid red; }
 	height: 375px;
 }
 
+.video-info{
+    margin-bottom: -2px;
+    margin-left:2px;
+    display:inline-block;
+    width:13px;
+    height:13px;
+    background:url('/images/info.png') no-repeat center center;
+    background-size:10px 10px;
+}
+
+.video-info:hover{
+    background:url('/images/info_hover.png') no-repeat center center;
+    background-size:10px 10px;
+}
 
 .popover{
 	z-index:2000;

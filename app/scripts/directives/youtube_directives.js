@@ -108,6 +108,10 @@ angular.module('scalearAngularApp')
 					player.mute();
 				}
 
+                player_controls.volume = function(val){
+                    player.volume(val);
+                }
+
 				player_controls.unmute = function(){
 					player.unmute();
 				}
@@ -360,7 +364,7 @@ angular.module('scalearAngularApp')
 				};
 
 
-				var video_height = win.height()-50;
+				var video_height = win.height()-40;
 				var video_width = video_height*factor
 				
 				//var video_width = (win.height()-26)*factor
@@ -369,7 +373,7 @@ angular.module('scalearAngularApp')
 				if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
 					$log.debug("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
-					var margin_top = ((win.height()-50) - (video_height))/2.0; //+30
+					var margin_top = ((win.height()-40) - (video_height))/2.0; //+30
 
 					layer={
 						"position":"fixed",
@@ -429,12 +433,13 @@ angular.module('scalearAngularApp')
             elapsed_width: '=elapsedWidth',
             current_time: '=currentTime',
             total_duration: '=totalDuration',
-            confused_areas: '=confusedAreas'
+            confused_areas: '=confusedAreas',
+            progressEvents: '='
            // autoplay:'@'
         },
         templateUrl:"/views/progress_bar.html",
         link: function(scope, element, attrs){
-
+            scope.mute_unmute_class="mute";
 
             $rootScope.$on('updatePosition',function(){
                 setButtonsLocation()
@@ -442,6 +447,40 @@ angular.module('scalearAngularApp')
 
             scope.playBtn = function(){
                 scope.play_btn();
+            }
+
+            scope.mute_btn = function(type)
+            {
+                if(type=="mute")
+                    scope.mute();
+                else
+                    scope.unmute();
+            }
+
+            scope.$watch("volume",function()
+            {
+                if(scope.volume)
+                {
+                    scope.player.controls.volume(scope.volume);
+                    if(scope.volume!=0)
+                        scope.mute_unmute_class="mute";
+                    else
+                        scope.mute_unmute_class="unmute";
+                }
+            });
+
+            scope.mute= function()
+            {
+                scope.player.controls.mute();
+                scope.mute_unmute_class="unmute";
+                scope.volume=0;
+            }
+
+            scope.unmute = function()
+            {
+                scope.player.controls.unmute();
+                scope.mute_unmute_class="mute";
+                scope.volume=0.5;
             }
 
             scope.progress = function(event){
@@ -455,18 +494,18 @@ angular.module('scalearAngularApp')
                 }
                 else{
                     if(scope.view=="student")
-                    {scope.pHeight=500;
+                    {scope.pHeight=490;
                     }
                     else{
-                        scope.pHeight=331;
+                        scope.pHeight=320;
                     }
                     element.css("z-index",1000);
                 }
 
                 if(scope.view=="student")
-                    element.css("top", scope.pHeight-40+"px");
+                    element.css("top", scope.pHeight-30+"px");
                 else
-                    element.css("top", scope.pHeight-40+"px");
+                    element.css("top", scope.pHeight-30+"px");
                 //element.css("left", scope.pWidth-350+"px");
             }
             setButtonsLocation();

@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
           element.css("z-index",1500);
     		}
     		else{
-	    		scope.pHeight=500;
+	    		scope.pHeight=490;
 	    		scope.pWidth= 800;//scope.lecture.aspect_ratio=='widescreen'? 800:600;
            element.css("z-index",1000);
     		}
@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
                // element.css("left", scope.pWidth-200+"px");
             //}
             //else{
-    		element.css("top", scope.pHeight-70+"px");
+    		element.css("top", scope.pHeight-60+"px");
     		element.css("left", scope.pWidth-200+"px");
 //            }
 
@@ -53,20 +53,39 @@ angular.module('scalearAngularApp')
     	{
     		$log.debug(scope.$parent);
     		$log.debug("in confusde");
-        scope.show_message=true;
+            scope.show_message=true;
+            var time=scope.lecture_player.controls.getTime()
     		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
-  			$interval(function(){
+                $interval(function(){
            		scope.show_message=false;
            		$log.debug(data)
            		if(data.msg=="ask")
            		{
              		scope.$parent.show_notification=$translate("controller_msg.really_confused_use_question");
-             		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px"}
+             		scope.$parent.notify_position={"left":(scope.pWidth - 180) + "px"}
              		$interval(function(){
-             			scope.$parent.notify_position={"left":"180px"};
+             			scope.$parent.notify_position={"left":"240px"};
              			scope.$parent.show_notification=false;
              		}, 6000, 1)
              	}
+                //else{
+                if(!data.flag) //first time confused in these 15 seconds
+                {
+                    scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'red', 'courses.confused',data.id ]);
+                }
+
+                if(data.flag && data.msg!="ask") // confused before but not third time - very confused
+                {
+                    for(var element in scope.progressEvents)
+                    {
+                        if(scope.progressEvents[element][3]==data.id)
+                        {
+                            scope.progressEvents[element][2]='courses.really_confused'
+                            scope.progressEvents[element][1]='purple'
+                            return;
+                        }
+                    }
+                }
        		}, 2000, 1);
   		  });
     	};
@@ -167,8 +186,8 @@ angular.module('scalearAngularApp')
       scope.incorrect_notify=$translate("lectures.incorrect")
 
       element.css("position", "relative");
-      element.css("top", "300px");
-      element.css("left","180px");
+      element.css("top", "310px");
+      element.css("left","240px");
       element.css("padding","5px");
       element.css("font-size", "12px");
       element.children().css("width", "150px");
@@ -183,11 +202,11 @@ angular.module('scalearAngularApp')
       var setNotficationPosition=function(){
         $log.debug(scope.fullscreen)
         if(scope.fullscreen){
-          scope.pHeight=angular.element($window).height()- 230;
+          scope.pHeight=angular.element($window).height()- 205;
           element.css("z-index",10000);
         }
         else{
-          scope.pHeight= 250;
+          scope.pHeight= 280;
           element.css("z-index",1000);
         }
           element.css("top", scope.pHeight+"px");
@@ -207,8 +226,10 @@ angular.module('scalearAngularApp')
    
     
     element.css("position", "relative");
+        element.css("left","60px");
 		element.css("z-index",10000);
-		element.children().css("height", "30px");
+		element.children().css("height", "25px");
+        element.children().css("line-height", "15px");
 
 		scope.$on('updatePosition',function(){
 			$log.debug('updatePosition')
@@ -218,11 +239,11 @@ angular.module('scalearAngularApp')
     var setButtonsLocation=function(){
       $log.debug(scope.fullscreen)
       if(scope.fullscreen){
-        scope.pHeight=angular.element($window).height()- 80;
+        scope.pHeight=angular.element($window).height()- 68;
         element.css("z-index",10000);
       }
       else{
-        scope.pHeight=418;
+        scope.pHeight=423;
         element.css("z-index",1000);
       }
      // if(scope.ipad)

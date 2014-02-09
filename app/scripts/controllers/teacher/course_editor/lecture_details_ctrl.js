@@ -12,10 +12,10 @@ angular.module('scalearAngularApp')
                 var lecture = {}
 
                 lecture[column] = data;
-//                if (column == 'url' && getVideoId(data) == null) {
-//                    $log.debug(data)
-//                    d.resolve($translate('courses.invalid_input'));
-//                }
+                if (column == 'url' && invalid_url(data)) {
+                    $log.debug(data)
+                    d.resolve($translate('courses.invalid_input'));
+                }
                 Lecture.validateLecture({
                         course_id: $scope.lecture.course_id,
                         lecture_id: $scope.lecture.id
@@ -99,7 +99,7 @@ angular.module('scalearAngularApp')
 
                 // or keep them both just in case video doesn't load??
                 // or instead update in metadata instead of loadeddata?? which is better?
-                //$scope.updateLecture();
+                $scope.updateLecture();
                 // will do it on ready only..
             }
             $scope.updateSlidesUrl = function() {
@@ -120,6 +120,17 @@ angular.module('scalearAngularApp')
                 }
             }
 
+            var invalid_url=function(url){
+                if (!is_mp4(url) && !getVideoId(url))
+                    return true;
+                else
+                    return false;
+            }
+
+            var is_mp4= function(url)
+            {
+                return url.match(/(.*mp4$)/);
+            }
             var getVideoId= function(url){
                 return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
             }

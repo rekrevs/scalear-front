@@ -45,7 +45,7 @@ angular.module('scalearAngularApp')
         // update duration for all video types.
         if(Math.ceil($scope.lecture.duration) != Math.ceil($scope.lecture_player.controls.getDuration()))
         {
-            $scope.lecture.duration=Math.ceil($scope.lecture_player.controls.getDuration());
+            $scope.lecture.duration=$scope.lecture_player.controls.getDuration();
             $scope.updateLecture();
         }
     }
@@ -54,6 +54,7 @@ angular.module('scalearAngularApp')
         $scope.total_duration = $scope.lecture_player.controls.getDuration()
  		$scope.lecture_player.controls.pause()
         $scope.lecture_player.controls.seek(0)
+        $scope.lecture_player.controls.volume(0.5);
  	}
 	$scope.lecture_player.events.onPlay= function(){
         $scope.play_pause_class = 'pause'

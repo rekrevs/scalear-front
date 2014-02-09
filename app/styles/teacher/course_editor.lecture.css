@@ -138,19 +138,18 @@
 .controlDiv{
     /* Centering the control div */
     position:absolute;
-    width:50px;
-    height:40px;
+    width:30px;
+    height:25px;
     cursor:pointer;
     /*top:50%;
     left:50%;*/
-    bottom: 0px;
+    bottom: 4px;
     margin:-50px 0 0 0px;
 }
-
 .timer{
     position: absolute;
     width: 100%;
-    height: 50px;
+    height: 30px;
     /*cursor: pointer;*/
     margin: -50px 0px 0px 0px;
     background-color: black;
@@ -159,7 +158,6 @@
     right: 0px;
 
 }
-
 
 .check_answer{
     left:200px;
@@ -209,13 +207,16 @@
 
 .controlDiv.replay{
     background:url('/images/replay3.png') no-repeat center center;
+    background-size:20px 20px;
 }
 .controlDiv.play{
-    background:url('/images/play34.png') no-repeat center center;
+    background:url('/images/plays.png') no-repeat center center;
+    background-size:20px 20px;
 }
 
 .controlDiv.pause{
-    background:url('/images/pause3.png') no-repeat center center;
+    background:url('/images/pauses.png') no-repeat center center;
+    background-size:20px 20px;
 }
 
 .progressBar{
@@ -226,8 +227,8 @@
     height:8px;
     left:0px;
     right:0px;
-    bottom:40px;
-    background-color:#141414;
+    bottom:30px;
+    background-color:#525252;
     overflow:hidden;
     cursor:pointer;
 
@@ -246,7 +247,28 @@
     border-right:1px solid #49AFF0;
 }
 
+.volumeDiv.mute{
+    background:url('/images/max_volume.png') no-repeat center center;
+    background-size:20px 20px;
+}
 
+.volumeDiv.unmute{
+    background:url('/images/min_volume.png') no-repeat center center;
+    background-size:20px 20px;
+}
+
+.volumeDiv{
+    /* Centering the control div */
+    position:absolute;
+    width:30px;
+    height:25px;
+    cursor:pointer;
+    left: 35px;
+    /*top:50%;
+    left:50%;*/
+    bottom: 4px;
+    margin:-50px 0 0 0px;
+}
 
 
 

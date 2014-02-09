@@ -609,9 +609,11 @@ var translation_en=function(){
         click_tell_confused: "Click to tell the teacher you're confused.",
         click_ask_question: "Click to ask a question.",
         click_video_shortcuts: "Click for video shortcuts",
+        click_video_quality: "Click to change video quality",
         enter_question: "Enter Question",
         ask: "Ask",
         check_answer: "Check Answer",
+        info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed"
      },
     devise:
     {

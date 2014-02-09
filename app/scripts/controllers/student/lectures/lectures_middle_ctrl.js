@@ -26,21 +26,28 @@ angular.module('scalearAngularApp')
             $scope.current_time = 0
             $scope.total_duration = 0
             $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
+            $scope.progressEvents=[]
 
             var getVideoId= function(url){
                 return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
             }
+
 
             $scope.setup_confused = function()
             {
                 var element = angular.element('.progressBar');
                 for(var e in $scope.confused)
                 {
-                    console.log($scope.confused[e].time);
+                    console.log((($scope.confused[e].time/$scope.total_duration)*100) + '%')
+                    if($scope.confused[e].very==true)
+                        $scope.progressEvents.push([(($scope.confused[e].time/$scope.total_duration)*100) + '%', 'purple' ,'courses.really_confused', $scope.confused[e].id]);
+                    else
+                        $scope.progressEvents.push([(($scope.confused[e].time/$scope.total_duration)*100) + '%', 'red' ,'courses.confused', $scope.confused[e].id]);
+                    console.log($scope.progressEvents)
                 }
-                //var ratio = (ev.pageX-element.offset().left)/element.outerWidth();
-                //$scope.elapsed_width = ratio*100+'%'
-                //$scope.seek($scope.total_duration*ratio)
+
+                console.log($scope.progressEvents)
+            //finish here.. will need to add elements!
             }
 
             var init = function() {
@@ -57,7 +64,7 @@ angular.module('scalearAngularApp')
 
 
                         // setup confused areas
-                        $scope.setup_confused();
+
                         //if($scope.ipad)
                         //    $scope.lecture.url+="&controls=0"
                         for (var element in $scope.lecture.online_quizzes) // if no answers remove it
@@ -83,9 +90,12 @@ angular.module('scalearAngularApp')
                             $scope.total_duration = $scope.lecture_player.controls.getDuration()
                             $scope.lecture_player.controls.pause()
                             $scope.lecture_player.controls.seek(0)
+                            $scope.lecture_player.controls.volume(0.5);
                             //console.log("should play")
                             $scope.loading_video = false;
-                            $scope.total_duration = $scope.lecture_player.controls.getDuration()
+
+                            if($scope.progressEvents.length==0) // first load.
+                                $scope.setup_confused();
                             $scope.lecture.online_quizzes.forEach(function(quiz) {
                                 $scope.lecture_player.controls.cue(quiz.time, function() {
                                     $scope.studentAnswers[quiz.id] = {}

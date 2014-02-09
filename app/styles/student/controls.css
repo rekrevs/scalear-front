@@ -14,7 +14,7 @@
 }
 .fading{
 	width:40px;
-	height:10px;
+	height:14px;
 	padding-top:2px;
 	padding-bottom:2px;
 	text-align:center;
@@ -22,8 +22,8 @@
 	line-height:12px;
 	padding-left:20px;
 	position:absolute;
-	right:160px;
-	bottom: -15px;
+	right:180px;
+	bottom: -20px;
 }
 .fullscreenDiv{
     position:absolute;
@@ -32,7 +32,7 @@
 	cursor:pointer;
 	/*top:50%;
 	left:50%;*/
-	right:0px;
+	right:5px;
 	margin-top:-50px;
 	/*#margin-right:0px;*/
 	bottom: 0px;
@@ -40,13 +40,13 @@
 
 .confusedDiv{
     position:absolute;
-	width:50px;
+	width:30px;
 	height:25px;
 	cursor:pointer;
 	/*top:50%;
 	left:50%;*/
 	margin-top:-50px;
-	right:30px;
+	right:70px;
 	bottom: 0px;
 }
 
@@ -66,61 +66,67 @@
 
 .questionDiv{
     position:absolute;
-	width:50px;
-	height:25px;
+	width:30px;
+	height:24px;
 	cursor:pointer;
 	/*top:50%;
 	left:50%;*/
 	margin-top:-50px;
-	right:120px;
+	right:105px;
 	bottom: 0px;
 }
 
 .shortcutDiv{
     position:absolute;
-	width:50px;
+	width:30px;
 	height:25px;
 	cursor:pointer;
 	/*top:50%;
 	left:50%;*/
 	margin-top:-50px;
-	right:80px;
+	right:35px;
 	bottom: 0px;
 }
 
 .qualityDiv{
     position:absolute;
-    width:50px;
+    width:30px;
     height:25px;
     cursor:pointer;
     /*top:50%;
     left:50%;*/
     margin-top:-50px;
-    right:160px;
+    right:140px;
     bottom: 0px;
 }
 
 .shortcutDiv{
-    background:url('/images/shortcuts2.png') no-repeat center center;
+    background:url('/images/shortcuts3.png') no-repeat center center;
+    background-size:20px 20px;
 }
 
 .qualityDiv{
-    background:url('/images/shortcuts2.png') no-repeat center center;
+    background:url('/images/quality.png') no-repeat center center;
+    background-size:20px 20px;
 }
 
 .confusedDiv{
-    background:url('/images/confused2.png') no-repeat center center;
+    background:url('/images/confused3.png') no-repeat center center;
+    background-size:20px 20px;
 }
 
 .questionDiv{
-    background:url('/images/question5.png') no-repeat center center;
+    background:url('/images/question6.png') no-repeat center center;
+    background-size:20px 20px;
 }
 
 .fullscreenDiv.full{
-    background:url('/images/fullscreen2.png') no-repeat center center;
+    background:url('/images/fullscreen3.png') no-repeat center center;
+    background-size:20px 20px;
 }
 .fullscreenDiv.small{
-    background:url('/images/fullscreen3_exit.png') no-repeat center center;
+    background:url('/images/smallscreen3.png') no-repeat center center;
+    background-size:20px 20px;
 }
 
 li{
@@ -132,19 +138,32 @@ li{
 .controlDiv{
     /* Centering the control div */
     position:absolute;
-    width:50px;
-    height:40px;
+    width:30px;
+    height:25px;
     cursor:pointer;
     /*top:50%;
     left:50%;*/
-    bottom: 0px;
+    bottom: 4px;
+    margin:-50px 0 0 0px;
+}
+
+.volumeDiv{
+    /* Centering the control div */
+    position:absolute;
+    width:30px;
+    height:25px;
+    cursor:pointer;
+    left: 35px;
+    /*top:50%;
+    left:50%;*/
+    bottom: 4px;
     margin:-50px 0 0 0px;
 }
 
 .timer{
     position: absolute;
     width: 100%;
-    height: 50px;
+    height: 30px;
     /*cursor: pointer;*/
     margin: -50px 0px 0px 0px;
     background-color: black;
@@ -201,15 +220,28 @@ li{
     z-index:3;
 }
 
+.volumeDiv.mute{
+    background:url('/images/max_volume.png') no-repeat center center;
+    background-size:20px 20px;
+}
+
+.volumeDiv.unmute{
+    background:url('/images/min_volume.png') no-repeat center center;
+    background-size:20px 20px;
+}
+
 .controlDiv.replay{
     background:url('/images/replay3.png') no-repeat center center;
+    background-size:20px 20px;
 }
 .controlDiv.play{
-    background:url('/images/play34.png') no-repeat center center;
+    background:url('/images/plays.png') no-repeat center center;
+    background-size:20px 20px;
 }
 
 .controlDiv.pause{
-    background:url('/images/pause3.png') no-repeat center center;
+    background:url('/images/pauses.png') no-repeat center center;
+    background-size:20px 20px;
 }
 
 .progressBar{
@@ -220,9 +252,9 @@ li{
     height:8px;
     left:0px;
     right:0px;
-    bottom:40px;
-    background-color:#141414;
-    overflow:hidden;
+    bottom:30px;
+    background-color:#525252;
+    /*overflow:hidden;*/
     cursor:pointer;
 
     /* A light CSS3 bottom highlight */

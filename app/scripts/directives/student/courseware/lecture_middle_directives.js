@@ -120,8 +120,10 @@ angular.module('scalearAngularApp')
     	scope.submit_question = function()
     	{
     		$log.debug("will submit "+scope.question_asked);
-  		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
-  			scope.question_asked="";
+            var time=scope.lecture_player.controls.getTime()
+  		    Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:time, ques: scope.question_asked}, function(data){
+            scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'yellow', 'courses.you_asked',data.id, scope.question_asked ]);
+            scope.question_asked="";
   			scope.show_question=false;
   			scope.lecture_player.controls.play();	
   		});

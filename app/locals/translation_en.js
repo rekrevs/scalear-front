@@ -360,6 +360,7 @@ var translation_en=function(){
         out_of: "Out Of",
       },
       courses:{
+        you_asked: "You asked: ",
         confused: "Confused",
         really_confused: "Really Confused",
         back: "Back",

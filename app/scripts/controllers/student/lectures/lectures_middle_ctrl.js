@@ -50,6 +50,22 @@ angular.module('scalearAngularApp')
             //finish here.. will need to add elements!
             }
 
+            $scope.setup_student_questions = function()
+            {
+                var element = angular.element('.progressBar');
+                console.log("questions are");
+                console.log($scope.student_questions);
+
+                for(var e in $scope.student_questions)
+                {
+                    console.log((($scope.student_questions[e].time/$scope.total_duration)*100) + '%')
+                    $scope.progressEvents.push([(($scope.student_questions[e].time/$scope.total_duration)*100) + '%', 'yellow' ,'courses.you_asked', $scope.student_questions[e].id, $scope.student_questions[e].question]);
+                }
+
+                console.log($scope.progressEvents)
+                //finish here.. will need to add elements!
+            }
+
             var init = function() {
                 $scope.loading_video = true;
                 Lecture.getLectureStudent({
@@ -60,6 +76,7 @@ angular.module('scalearAngularApp')
                         $scope.alert_messages = data.alert_messages;
                         $scope.lecture = JSON.parse(data.lecture)
                         $scope.confused= data.confuseds;
+                        $scope.student_questions= data.lecture_questions;
                         $scope.youtube_video= getVideoId($scope.lecture.url);
 
 
@@ -95,7 +112,10 @@ angular.module('scalearAngularApp')
                             $scope.loading_video = false;
 
                             if($scope.progressEvents.length==0) // first load.
+                            {
                                 $scope.setup_confused();
+                                $scope.setup_student_questions();
+                            }
                             $scope.lecture.online_quizzes.forEach(function(quiz) {
                                 $scope.lecture_player.controls.cue(quiz.time, function() {
                                     $scope.studentAnswers[quiz.id] = {}

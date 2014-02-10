@@ -37,8 +37,6 @@ angular.module('scalearAngularApp')
 
  	$scope.lecture_player.events.onReady= function(){
  		$scope.quiz_overlay = true
- 		$scope.lecture_player.controls.pause()
-        $scope.lecture_player.controls.seek(0)
  	}
 
  	$scope.lecture_player.events.onMeta = function(){

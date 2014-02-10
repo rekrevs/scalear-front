@@ -43,17 +43,23 @@ angular.module('scalearAngularApp')
 				$log.debug("YOUTUBE " + scope.id)
 				$log.debug(scope.controls);
 				
-				var player
-				var player_controls={}
-				var player_events = {}
+				var player,
+				player_controls={},
+				player_events = {}
 
 				var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=large&autoplay=1',{ width: 500, controls: 0});
+					var media = Popcorn.HTMLYouTubeVideoElement('#'+scope.id),
+					url= scope.url.split('?'),
+					base_url = url[0],
+					query = '&'+url[1]
+					media.src = base_url+"?fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
+			        player = Popcorn(media,{});
+			        setupEvents()
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
-					setupEvents()
+					
 					$timeout(function(){
 						if(!player_controls.readyState())
 							scope.$emit('slow')
@@ -75,6 +81,10 @@ angular.module('scalearAngularApp')
 
 				player_controls.unmute = function(){
 					player.unmute();
+				}
+
+				player_controls.volume= function(value){
+					player.volume(value);
 				}
 				
 				player_controls.paused = function(){
@@ -131,9 +141,7 @@ angular.module('scalearAngularApp')
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
-							//player_controls.replay()
 							$log.debug("Video data loaded")	
-
 							if(player_events.onReady){
 								player_events.onReady();
 								scope.$apply();
@@ -211,7 +219,7 @@ angular.module('scalearAngularApp')
 				})
 
                 var is_final_url= function(url){
-                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[&controls=0]*$/);
+                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
                 }
 
 				scope.$watch('url', function(){

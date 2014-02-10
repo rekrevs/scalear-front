@@ -416,7 +416,7 @@ describe("Course Editor", function() {
         it('should display the Details section', function() {
             ptor.findElements(protractor.By.tagName('h3')).
             then(function(tag) {
-                expect(tag[5].getText()).toBe('Lecture Details');
+                expect(tag[4].getText()).toBe('Lecture Details');
             });
         });
 
@@ -885,23 +885,23 @@ describe("Course Editor", function() {
         MCQTest(1, ptor);
         doRefresh(ptor);
         waitForOverlay(ptor);
-        // OCQTest(0, ptor);
-        // doRefresh(ptor);
-        // waitForOverlay(ptor);
-        // OCQTest(1, ptor);
-        // doRefresh(ptor);
-        // waitForOverlay(ptor);
-        // DRAGTest(0, ptor);
-        // doRefresh(ptor);
-        // waitForOverlay(ptor);
-        // DRAGTest(1, ptor);
-        // doRefresh(ptor);
-        // waitForOverlay(ptor);
+        OCQTest(0, ptor);
+        doRefresh(ptor);
+        waitForOverlay(ptor);
+        OCQTest(1, ptor);
+        doRefresh(ptor);
+        waitForOverlay(ptor);
+        DRAGTest(0, ptor);
+        doRefresh(ptor);
+        waitForOverlay(ptor);
+        DRAGTest(1, ptor);
+        doRefresh(ptor);
+        waitForOverlay(ptor);
     });
 
     describe('Over Video', function() {
-        // MCQOCQVideo(ptor, 0);
-        // MCQOCQVideo(ptor, 1);
+        MCQOCQVideo(ptor, 0);
+        MCQOCQVideo(ptor, 1);
         // DRAGVideo(ptor);
     });
     //-----------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -923,6 +923,7 @@ describe("Course Editor", function() {
             })
         });
         it('should open a quiz', function() {
+            ptor.executeScript('window.scrollBy(0, -2000)', '');
             ptor.findElements(protractor.By.className('trigger2')).then(function(quizes) {
                 quizes[quizes.length - 1].click();
             });
@@ -2080,7 +2081,12 @@ function OCQTest(mode, ptor) {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables) {
             expect(editables[0].getText()).toBe('New Quiz');
             //edit quiz name
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('My Quiz');
@@ -2091,7 +2097,12 @@ function OCQTest(mode, ptor) {
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('New Quiz');
@@ -2324,7 +2335,12 @@ function DRAGTest(mode, ptor) {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables) {
             expect(editables[0].getText()).toBe('New Quiz');
             //edit quiz name
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('My Quiz');
@@ -2335,7 +2351,12 @@ function DRAGTest(mode, ptor) {
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('New Quiz');
@@ -3226,7 +3247,12 @@ function DRAGVideo(ptor) {
     });
     it('should allow changing quiz time - MCQ Video', function() {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(time) {
-            ptor.actions().doubleClick(time[1]).perform();
+            ptor.actions().mouseMove(time[1]).perform().then(function(){
+                time[1].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(time[1]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('any text');
@@ -3551,7 +3577,12 @@ function MCQOCQVideo(ptor, type) {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables) {
             expect(editables[0].getText()).toBe('New Quiz');
             //edit quiz name
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('My Quiz');
@@ -3562,7 +3593,12 @@ function MCQOCQVideo(ptor, type) {
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('New Quiz');
@@ -3575,7 +3611,12 @@ function MCQOCQVideo(ptor, type) {
     });
     it('should allow changing quiz time - MCQ Video', function() {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(time) {
-            ptor.actions().doubleClick(time[1]).perform();
+            // ptor.actions().doubleClick(time[1]).perform();
+            ptor.actions().mouseMove(time[1]).perform().then(function(){
+                time[1].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('any text');
@@ -3808,7 +3849,12 @@ function MCQOCQVideo(ptor, type) {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables) {
             expect(editables[0].getText()).toBe('My Quiz');
             //edit quiz name
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('The Quiz');
@@ -3819,7 +3865,12 @@ function MCQOCQVideo(ptor, type) {
                 });
             });
             expect(editables[0].getText()).toBe('The Quiz');
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('New Quiz');
@@ -3832,7 +3883,12 @@ function MCQOCQVideo(ptor, type) {
     });
     it('should allow changing quiz time - MCQ Video', function() {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(time) {
-            ptor.actions().doubleClick(time[1]).perform();
+            ptor.actions().mouseMove(time[1]).perform().then(function(){
+                time[1].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(time[1]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('any text');
@@ -4006,7 +4062,12 @@ function MCQOCQVideo(ptor, type) {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables) {
             expect(editables[0].getText()).toBe('New Quiz');
             //edit quiz name
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('My Quiz');
@@ -4017,7 +4078,12 @@ function MCQOCQVideo(ptor, type) {
                 });
             });
             expect(editables[0].getText()).toBe('My Quiz');
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('New Quiz');
@@ -4030,7 +4096,12 @@ function MCQOCQVideo(ptor, type) {
     });
     it('should allow changing quiz time - MCQ Video', function() {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(time) {
-            ptor.actions().doubleClick(time[1]).perform();
+            ptor.actions().mouseMove(time[1]).perform().then(function(){
+                time[1].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(time[1]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('any text');
@@ -4261,7 +4332,12 @@ function MCQOCQVideo(ptor, type) {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(editables) {
             expect(editables[0].getText()).toBe('My Quiz');
             //edit quiz name
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('The Quiz');
@@ -4272,7 +4348,12 @@ function MCQOCQVideo(ptor, type) {
                 });
             });
             expect(editables[0].getText()).toBe('The Quiz');
-            ptor.actions().doubleClick(editables[0]).perform();
+            ptor.actions().mouseMove(editables[0]).perform().then(function(){
+                editables[0].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(editables[0]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('New Quiz');
@@ -4285,7 +4366,12 @@ function MCQOCQVideo(ptor, type) {
     });
     it('should allow changing quiz time - MCQ Video', function() {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(time) {
-            ptor.actions().doubleClick(time[1]).perform();
+            ptor.actions().mouseMove(time[1]).perform().then(function(){
+                time[1].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            // ptor.actions().doubleClick(time[1]).perform();
             ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
                 field.clear();
                 field.sendKeys('any text');
@@ -4612,6 +4698,13 @@ function addMCQAnswers(ptor) {
 
 function openMCQ(ptor) {
     it('should reopen the quiz', function() {
+        ptor.wait(function(){
+            return ptor.findElement(protractor.By.className('overlay')).then(function(loading){
+                return loading.isDisplayed().then(function(disp){
+                    return !disp;
+                });
+            });
+        });
         ptor.findElement(protractor.By.tagName('editable_text')).then(function(quiz_name) {
             quiz_name.click().then(function() {
                 ptor.sleep(5000);

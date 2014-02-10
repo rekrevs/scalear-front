@@ -157,16 +157,21 @@ describe('Teacher', function() {
         });
     });
     it('should see only one video', function() {
-        ptor.wait(function() {
-            // return ptor.findElement(protractor.By.tagName('iframe')).then(function(frame) {
-            //     return frame.isDisplayed().then(function(disp) {
-            //         return disp;
-            //     });
-            // });
-            return ptor.isElementPresent(protractor.By.tagName('iframe')).then(function(present) {
-                return present;
-            });
-        });
+        // ptor.wait(function() {
+        //     // return ptor.findElement(protractor.By.tagName('iframe')).then(function(frame) {
+        //     //     return frame.isDisplayed().then(function(disp) {
+        //     //         return disp;
+        //     //     });
+        //     // });
+        //     // return ptor.isElementPresent(protractor.By.tagName('iframe')).then(function(present) {
+        //     //     return present;
+        //     // });
+        //     return ptor.findElement(protractor.By.className('overlay')).then(function(loading){
+        //         return loading.isDisplayed().then(function(disp){
+        //             return !disp;
+        //         });
+        //     });
+        // });
         ptor.sleep(10000);
         ptor.findElements(protractor.By.tagName('iframe')).then(function(frames) {
             expect(frames.length).toBe(1);
@@ -359,18 +364,22 @@ describe('Teacher', function() {
     addMCQAnswers(ptor);
     it('should edit quiz name', function() {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(names) {
-            ptor.actions().doubleClick(names[names.length - 2]).perform().then(function() {
-                ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
-                    field.sendKeys('2').then(function() {
-                        ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm) {
-                            confirm.click().then(function() {
-                                feedback(ptor, 'updated');
-                                ptor.sleep(10000);
-                            });
+            ptor.actions().mouseMove(names[names.length-2]).perform().then(function(){
+                names[names.length-2].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
+                field.sendKeys('2').then(function() {
+                    ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm) {
+                        confirm.click().then(function() {
+                            feedback(ptor, 'updated');
+                            ptor.sleep(10000);
                         });
                     });
                 });
             });
+            
         });
     });
     it('should see their answers not deleted', function() {
@@ -405,11 +414,16 @@ describe('Teacher', function() {
                         ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm) {
                             confirm.click().then(function() {
                                 feedback(ptor, 'updated');
-                                ptor.wait(function() {
-                                    return ptor.isElementPresent(protractor.By.tagName('iframe')).then(function(present) {
-                                        return present;
-                                    });
-                                });
+                                // ptor.wait(function() {
+                                //     // return ptor.isElementPresent(protractor.By.tagName('iframe')).then(function(present) {
+                                //     //     return present;
+                                //     // });
+                                //     return ptor.findElement(protractor.By.className('overlay')).then(function(loading){
+                                //         return loading.isDisplayed().then(function(disp){
+                                //             return !disp;
+                                //         });
+                                //     });
+                                // });
                             });
                         });
                     });
@@ -447,26 +461,33 @@ describe('Teacher', function() {
     doSave(ptor);
     it('should edit quiz names', function() {
         ptor.findElements(protractor.By.tagName('editable_text')).then(function(names) {
-            ptor.actions().doubleClick(names[names.length - 2]).perform().then(function() {
-                ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
-                    field.sendKeys('4').then(function() {
-                        ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm) {
-                            confirm.click().then(function() {
-                                feedback(ptor, 'updated');
-                                ptor.sleep(10000);
-                            });
+            ptor.actions().mouseMove(names[names.length-2]).perform().then(function(){
+                names[names.length-2].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
+                field.sendKeys('4').then(function() {
+                    ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm) {
+                        confirm.click().then(function() {
+                            feedback(ptor, 'updated');
+                            ptor.sleep(10000);
                         });
                     });
                 });
             });
-            ptor.actions().doubleClick(names[names.length - 4]).perform().then(function() {
-                ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
-                    field.sendKeys('3').then(function() {
-                        ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm) {
-                            confirm.click().then(function() {
-                                feedback(ptor, 'updated');
-                                ptor.sleep(10000);
-                            });
+            
+            ptor.actions().mouseMove(names[names.length-4]).perform().then(function(){
+                names[names.length-4].findElement(protractor.By.className('icon-pencil')).then(function(edit){
+                    edit.click();
+                })
+            });
+            ptor.findElement(protractor.By.className('editable-input')).then(function(field) {
+                field.sendKeys('3').then(function() {
+                    ptor.findElement(protractor.By.className('icon-ok')).then(function(confirm) {
+                        confirm.click().then(function() {
+                            feedback(ptor, 'updated');
+                            ptor.sleep(10000);
                         });
                     });
                 });
@@ -509,7 +530,7 @@ describe('Teacher', function() {
     });
     it('should navigate to next quiz', function() {
         ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-            buttons[9].click();
+            buttons[10].click();
         });
     });
 
@@ -520,7 +541,7 @@ describe('Teacher', function() {
     });
     it('should navigate to next quiz', function() {
         ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-            buttons[9].click();
+            buttons[10].click();
         });
     });
 
@@ -531,7 +552,7 @@ describe('Teacher', function() {
     });
     it('should navigate to next quiz', function() {
         ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-            buttons[9].click();
+            buttons[10].click();
         });
     });
 
@@ -578,35 +599,35 @@ describe('Teacher', function() {
     });
 
     // delete the course and lecture
-    it('should delete All lectures and modules', function() {
-        ptor.get('/#/courses/' + course_id + '/course_editor');
-        ptor.findElements(protractor.By.className('module')).then(function(modules) {
-            for (var i = modules.length - 1; i >= 0; i--) {
-                modules[i].click()
-                modules[i].findElements(protractor.By.className('delete')).then(function(delete_buttons) {
-                    //                        console.log(delete_buttons.length)
-                    for (var n = delete_buttons.length - 1; n >= 0; n--) {
-                        delete_buttons[n].click().then(function() {
-                            ptor.findElement(protractor.By.className('btn-danger')).click().then(function() {
-                                feedback(ptor, 'deleted');
-                            })
-                        });
-                    }
-                });
-            }
-        });
-    });
-    it('should delete the created course', function() {
-        ptor.get('/#/courses');
-        ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons) {
-            delete_buttons[delete_buttons.length - 1].click();
-            ptor.findElements(protractor.By.className('btn-danger')).then(function(danger_button) {
-                danger_button[danger_button.length - 1].click().then(function() {
-                    feedback(ptor, 'deleted');
-                });
-            });
-        });
-    });
+    // it('should delete All lectures and modules', function() {
+    //     ptor.get('/#/courses/' + course_id + '/course_editor');
+    //     ptor.findElements(protractor.By.className('module')).then(function(modules) {
+    //         for (var i = modules.length - 1; i >= 0; i--) {
+    //             modules[i].click()
+    //             modules[i].findElements(protractor.By.className('delete')).then(function(delete_buttons) {
+    //                 //                        console.log(delete_buttons.length)
+    //                 for (var n = delete_buttons.length - 1; n >= 0; n--) {
+    //                     delete_buttons[n].click().then(function() {
+    //                         ptor.findElement(protractor.By.className('btn-danger')).click().then(function() {
+    //                             feedback(ptor, 'deleted');
+    //                         })
+    //                     });
+    //                 }
+    //             });
+    //         }
+    //     });
+    // });
+    // it('should delete the created course', function() {
+    //     ptor.get('/#/courses');
+    //     ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons) {
+    //         delete_buttons[delete_buttons.length - 1].click();
+    //         ptor.findElements(protractor.By.className('btn-danger')).then(function(danger_button) {
+    //             danger_button[danger_button.length - 1].click().then(function() {
+    //                 feedback(ptor, 'deleted');
+    //             });
+    //         });
+    //     });
+    // });
 });
 
 

@@ -46,16 +46,15 @@ exports.config = {
     specs: [
         // 'test/e2e/spec/course_information_spec.js',
         // 'test/e2e/spec/announcements_spec.js',
-        //    'test/e2e/spec/calendar_teacher_spec.js',
-        //    'test/e2e/spec/calendar_student_spec.js',
-        //    'test/e2e/spec/calendar_student_2_spec.js',
+           // 'test/e2e/spec/calendar_teacher_spec.js',
+           'test/e2e/spec/calendar_student_spec.js',
+           // 'test/e2e/spec/calendar_student_2_spec.js',
         // 'test/e2e/spec/progress_spec.js'
         // 'test/e2e/spec/course_editor_spec.js'
         //    'test/e2e/spec/course_pages_spec.js'
         //    'test/e2e/spec/student_lectures_spec.js'
         // 'test/e2e/spec/links_spec.js',
         // 'test/e2e/spec/hotfixes_2.0.1_2.0.2.js'
-        'test/e2e/spec/batie5.js'
 
     ],
 
@@ -101,8 +100,8 @@ exports.config = {
         //      backend: 'http://localhost:3000/',
         //      auth: 'http://localhost:4000/'
         frontend: 'http://staging.scalable-learning.com/#/',
-        width: 1366,
-        height: 768
+        width: 1920,
+        height: 1080
 
     },
 

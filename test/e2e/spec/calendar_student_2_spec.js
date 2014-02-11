@@ -108,29 +108,35 @@ function waitForElementNotVisible(element,ptor){
     })
 }
 
-function login(ptor, driver, email, password, name, findByName){
-    it('should login', function(){
-        driver.get(ptor.params.auth+'users/sign_in');
-        findByName("user[email]").sendKeys(email);
-        findByName("user[password]").sendKeys(password);
-        findByName("commit").click();
-        driver.get(ptor.params.frontend).then(function(){
-            ptor.findElements(protractor.By.tagName('a')).then(function(tags){
-                tags[3].getText().then(function(value){
-                    expect(value.toLowerCase()).toContain(name.toLowerCase());
-                });
+function login(ptor, driver, email, password, name, findByName) {
+    it('should login', function() {
+        ptor.get(ptor.params.frontend + 'users/login');
+        ptor.findElement(protractor.By.id('user_email')).then(function(email_field) {
+            email_field.sendKeys(email);
+        });
+        ptor.findElement(protractor.By.id('user_passowrd')).then(function(password_field) {
+            password_field.sendKeys(password);
+        });
+        ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
+            fields[3].click().then(function() {
+                feedback(ptor, 'Signed in successfully');
             });
         });
+
+        ptor.findElement(protractor.By.xpath('/html/body/header/nav/div/ul[1]/li[1]/a/span')).then(function(tag) {
+            tag.getText().then(function(value) {
+                expect(value.toLowerCase()).toContain(name.toLowerCase());
+            });
+        });
+
     });
 }
 
-function logout(ptor, driver){
-    it('should logout', function(){
-        ptor.findElement(protractor.By.linkText('Logout')).then(function(link){
-            link.click().then(function(){
-                driver.findElement(protractor.By.id('flash_notice')).then(function(notice){
-                    expect(notice.getText()).toContain('Signed out successfully.');
-                });
+function logout(ptor, driver) {
+    it('should logout', function() {
+        ptor.findElement(protractor.By.linkText('Logout')).then(function(link) {
+            link.click().then(function() {
+                feedback(ptor, 'Signed out successfully.');
             });
         });
     });

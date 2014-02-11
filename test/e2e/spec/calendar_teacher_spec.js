@@ -108,29 +108,35 @@ function waitForElementNotVisible(element,ptor){
     })
 }
 
-function login(ptor, driver, email, password, name, findByName){
-    it('should login', function(){
-        driver.get(ptor.params.auth+'users/sign_in');
-        findByName("user[email]").sendKeys(email);
-        findByName("user[password]").sendKeys(password);
-        findByName("commit").click();
-        driver.get(ptor.params.frontend).then(function(){
-            ptor.findElements(protractor.By.tagName('a')).then(function(tags){
-                tags[3].getText().then(function(value){
-                    expect(value.toLowerCase()).toContain(name.toLowerCase());
-                });
+function login(ptor, driver, email, password, name, findByName) {
+    it('should login', function() {
+        ptor.get(ptor.params.frontend + 'users/login');
+        ptor.findElement(protractor.By.id('user_email')).then(function(email_field) {
+            email_field.sendKeys(email);
+        });
+        ptor.findElement(protractor.By.id('user_passowrd')).then(function(password_field) {
+            password_field.sendKeys(password);
+        });
+        ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
+            fields[3].click().then(function() {
+                feedback(ptor, 'Signed in successfully');
             });
         });
+
+        ptor.findElement(protractor.By.xpath('/html/body/header/nav/div/ul[1]/li[1]/a/span')).then(function(tag) {
+            tag.getText().then(function(value) {
+                expect(value.toLowerCase()).toContain(name.toLowerCase());
+            });
+        });
+
     });
 }
 
-function logout(ptor, driver){
-    it('should logout', function(){
-        ptor.findElement(protractor.By.linkText('Logout')).then(function(link){
-            link.click().then(function(){
-                driver.findElement(protractor.By.id('flash_notice')).then(function(notice){
-                    expect(notice.getText()).toContain('Signed out successfully.');
-                });
+function logout(ptor, driver) {
+    it('should logout', function() {
+        ptor.findElement(protractor.By.linkText('Logout')).then(function(link) {
+            link.click().then(function() {
+                feedback(ptor, 'Signed out successfully.');
             });
         });
     });
@@ -210,7 +216,7 @@ describe("Calendar",function(){
                         options[1].click();
                     });
 //                });
-                fields[fields.length-1].click().then(function(){
+                fields[5].click().then(function(){
                     feedback(ptor, 'Course was successfully created');
                 });
             });
@@ -604,54 +610,85 @@ describe("Calendar",function(){
                 });
             });
         })
-         it('should allow adding questions to quiz', function(){
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-2].click();
-                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
-                    fields[fields.length-3].sendKeys('first MCQ question');
-                    fields[fields.length-2].sendKeys('first answer');
-                    fields[fields.length-1].click();
+        it('should allow adding questions to quiz', function() {
+            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
+                buttons[buttons.length - 3].click();
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
+                    fields[0].sendKeys('first MCQ question');
+                    fields[1].sendKeys('first answer');
+                    fields[2].click();
                 });
                 ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                ptor.findElements(protractor.By.name('answer')).then(function(fields) {
                     fields[fields.length-1].sendKeys('second answer');
                 });
                 ptor.findElement(protractor.By.className('add_multiple_answer')).click();
-                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                ptor.findElements(protractor.By.name('answer')).then(function(fields) {
                     fields[fields.length-1].sendKeys('third answer');
                 });
 
-                buttons[buttons.length-2].click();
 
-                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
-                    fields[fields.length-3].sendKeys('first OCQ question');
-                    ptor.findElement(protractor.By.tagName('select')).then(function(question_type){
-                        question_type.click();
-                        ptor.findElements(protractor.By.tagName('option')).then(function(options){
-                            options[options.length-2].click();
+                buttons[buttons.length - 3].click();
+
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
+                    fields[7].sendKeys('first OCQ question');
+                    // ptor.findElement(protractor.By.tagName('select')).then(function(question_type) {
+                        // question_type.click();
+                        ptor.findElements(protractor.By.tagName('option')).then(function(options) {
+                            options[options.length - 2].click();
                         });
-                    });
+                    // });
+
                 });
-                ptor.findElements(protractor.By.tagName('input')).then(function(fields){
-                    fields[fields.length-2].sendKeys('first answer');
-                    fields[fields.length-1].click();
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
+                    fields[8].sendKeys('first answer');
+                    fields[9].click();
                 });
-                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
-                    add_multiple[add_multiple.length-1].click();
+                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple) {
+                    add_multiple[add_multiple.length - 1].click();
                 });
-                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                ptor.findElements(protractor.By.name('answer')).then(function(fields) {
                     fields[fields.length-1].sendKeys('second answer');
                 });
-                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple){
-                    add_multiple[add_multiple.length-1].click();
-                });                ptor.findElements(protractor.By.name('answer')).then(function(fields){
+                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple) {
+                    add_multiple[add_multiple.length - 1].click();
+                });
+                ptor.findElements(protractor.By.name('answer')).then(function(fields) {
+                    fields[fields.length-1].sendKeys('third answer');
+                });
+
+                buttons[buttons.length - 3].click();
+
+                ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
+                    fields[14].sendKeys('first DRAG question');
+                    // ptor.findElements(protractor.By.tagName('select')).then(function(question_type) {
+                        // question_type[question_type.length - 1].click();
+                        ptor.findElements(protractor.By.tagName('option')).then(function(options) {
+                            options[options.length - 1].click();
+                        });
+                    // });
+
+                });
+                ptor.findElements(protractor.By.name('answer')).then(function(fields) {
+                    fields[fields.length-1].sendKeys('first answer');
+                });
+                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple) {
+                    add_multiple[add_multiple.length - 1].click();
+                });
+                ptor.findElements(protractor.By.name('answer')).then(function(fields) {
+                    fields[fields.length-1].sendKeys('second answer');
+                });
+                ptor.findElements(protractor.By.className('add_multiple_answer')).then(function(add_multiple) {
+                    add_multiple[add_multiple.length - 1].click();
+                });
+                ptor.findElements(protractor.By.name('answer')).then(function(fields) {
                     fields[fields.length-1].sendKeys('third answer');
                 });
             });
         });
         it('should save the questions', function(){
             ptor.findElements(protractor.By.className('btn')).then(function(buttons){
-                buttons[buttons.length-1].click().then(function(){
+                buttons[buttons.length-2].click().then(function(){
                     feedback(ptor, 'saved');
                 });
             });

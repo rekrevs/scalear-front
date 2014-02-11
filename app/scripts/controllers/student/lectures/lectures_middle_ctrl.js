@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor', function($scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor) {
+    .controller('studentLectureMiddleCtrl', ['$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','editor', function($scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, editor) {
 
     $scope.video_layer = {}
     $scope.quiz_layer = {}
@@ -61,6 +61,8 @@ angular.module('scalearAngularApp')
                     $scope.lecture_player.controls.seek(0)
                     $scope.slow_message = false
                     $scope.loading_video = false;
+                    editor.create($scope.lecture.url, $scope.lecture_player);
+
                     $scope.lecture.online_quizzes.forEach(function(quiz) {
                         $scope.lecture_player.controls.cue(quiz.time, function() {
                             $scope.studentAnswers[quiz.id] = {}

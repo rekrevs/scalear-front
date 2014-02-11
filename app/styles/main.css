@@ -308,3 +308,9 @@ textarea.ng-invalid{ border:1px solid red; }
   z-index: 99;
   text-align: center;
 }
+
+.ace_editor { height: 200px; }
+
+.ace_gutter-cell.ace_breakpoint {
+    background-color: #ffc000;
+}

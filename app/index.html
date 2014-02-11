@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="styles/jquery-ui.css" />    
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
+
     <!-- endbuild -->
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
   </head>
@@ -163,12 +164,14 @@
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
 
+
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
 
     <script src="scripts/externals/shortcut.js"></script>
     <script src="scripts/externals/sortable.js"></script>
+    <script src="scripts/externals/ace.min.js"></script>
 
     <script src="locals/translation_en.js"></script>
     <script src="locals/translation_sv.js"></script>
@@ -206,6 +209,8 @@
     <script src="scripts/services/user_session.js"></script>
     <script src="scripts/services/batch_email_service.js"></script>
     <script src="scripts/services/home.js"></script>
+    <script src="scripts/services/doc.js"></script>
+    <script src="scripts/services/editor.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>
@@ -213,6 +218,7 @@
     <script src="scripts/controllers/navigation.js"></script>
     <script src="scripts/controllers/privacy.js"></script>
     <script src="scripts/controllers/invitation_modal_ctrl.js"></script>
+    <script src="scripts/controllers/student/lectures/editor_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>

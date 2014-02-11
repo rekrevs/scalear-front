@@ -1,5 +1,29 @@
 'use strict';
 
+var EditorState = {
+    CLEAN: 0, // NO CHANGES
+    DIRTY: 1, // UNSAVED CHANGES
+    SAVE: 2, // SAVE IN PROGRESS
+    LOAD: 3, // LOADING
+    READONLY: 4
+};
+
+var Actions = {
+    LOAD: "load",
+    CREATE: "create"
+};
+
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+                ;
+        });
+    };
+}
 
 angular.module('scalearAngularApp', [
     'ngCookies',
@@ -25,7 +49,7 @@ angular.module('scalearAngularApp', [
     'angularMoment',
     'textAngular',
     'highcharts-ng',
-    'config',
+    'config'
 ])
     .constant('headers', {
         withCredentials: true,
@@ -54,6 +78,17 @@ angular.module('scalearAngularApp', [
                     htmlEditor: 'form-control'
                 }
             }
+
+            $rootScope.safeApply = function(fn) {
+                var phase = this.$root.$$phase;
+                if(phase == '$apply' || phase == '$digest') {
+                    if(fn && (typeof(fn) === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
 
             $log.debug("lang is " + $rootScope.current_lang);
             var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']

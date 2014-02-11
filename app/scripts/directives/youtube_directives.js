@@ -490,7 +490,7 @@ angular.module('scalearAngularApp')
             var setButtonsLocation=function(){
                 if(scope.active){
                     scope.pHeight=angular.element($window).height();
-                    element.css("z-index",1500);
+                    //element.css("z-index",1500);
                 }
                 else{
                     if(scope.view=="student")
@@ -499,7 +499,7 @@ angular.module('scalearAngularApp')
                     else{
                         scope.pHeight=320;
                     }
-                    element.css("z-index",1000);
+                    //element.css("z-index",1000);
                 }
 
                 if(scope.view=="student")

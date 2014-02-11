@@ -84,7 +84,7 @@ angular.module('scalearAngularApp')
 
                         //if($scope.ipad)
                         //    $scope.lecture.url+="&controls=0"
-                        for (var element in $scope.lecture.online_quizzes) // if no answers remove it
+                        for (var element=$scope.lecture.online_quizzes.length-1; element>=0; element--) // if no answers remove it
                         {
                             if ($scope.lecture.online_quizzes[element].online_answers.length == 0)
                                 $scope.lecture.online_quizzes.splice(element, 1);

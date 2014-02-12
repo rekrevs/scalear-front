@@ -73,12 +73,15 @@ angular.module('scalearAngularApp')
 		var insert_time= $scope.lecture_player.controls.getTime()
 		var duration = $scope.lecture_player.controls.getDuration()
 
+		insert_time = checkQuizTimeConflict(insert_time)
+
 		if(insert_time < 1 )
 			insert_time = 1
-		else if (insert_time >= duration)
-			insert_time = duration - 1
+		else if (insert_time >= duration){
+			insert_time = duration - 2
+		}
 
-		insert_time = checkQuizTimeConflict(insert_time)
+		
 		$scope.lecture_player.controls.seek_and_pause(insert_time)
 
 		$scope.quiz_overlay = false;

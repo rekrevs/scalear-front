@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
 		    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
 	       		return $translate('online_quiz.incorrect_format_time')
 		    }
-		    else if( ($scope.lecture_player.controls.getDuration()-1) < total_duration || total_duration <= 0 ){
+		    else if( ($scope.lecture_player.controls.getDuration()-1) <= total_duration || total_duration <= 0 ){
 	       		return $translate('online_quiz.time_outside_range')
 		    }
 		}

@@ -16,6 +16,17 @@ angular.module('scalearAngularApp')
   		scope.$on('updatePosition',function(){
   			setButtonsLocation()
   		})
+
+        scope.$on('$destroy', function() {
+            //alert("In destroy of:" + scope);
+            console.log("in destroy of");
+            console.log(scope);
+            shortcut.remove("c");
+            shortcut.remove("q");
+            shortcut.remove("b");
+            shortcut.remove("Space");
+            shortcut.remove("Enter");
+        });
     	
     	scope.show_message=false;
     	scope.show_question=false;
@@ -59,8 +70,13 @@ angular.module('scalearAngularApp')
                 $interval(function(){
            		scope.show_message=false;
            		$log.debug(data)
+                    console.log("confused are:");
+                    console.log(scope.progressEvents);
            		if(data.msg=="ask")
            		{
+                    console.log("parent in confused is");
+                    console.log(scope.$parent);
+                    console.log(scope);
              		scope.$parent.show_notification=$translate("controller_msg.really_confused_use_question");
              		scope.$parent.notify_position={"left":(scope.pWidth - 180) + "px"}
              		$interval(function(){
@@ -142,6 +158,8 @@ angular.module('scalearAngularApp')
 
     	scope.setShortcuts = function()
   		{
+            console.log("here player is");
+            console.log(scope.lecture_player.controls.getDuration());
   				// adding shortcuts
   				shortcut.add("c", scope.confused, {"disable_in_input" : true});
   			
@@ -170,7 +188,10 @@ angular.module('scalearAngularApp')
   		};
 
   		setButtonsLocation()
-  		scope.setShortcuts();
+        scope.$on('player_ready', function(){
+            scope.setShortcuts();
+        });
+
    		scope.$watch('lecture.aspect_ratio', function(){
    			setButtonsLocation()
    		})

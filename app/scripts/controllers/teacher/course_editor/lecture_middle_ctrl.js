@@ -5,9 +5,9 @@ angular.module('scalearAngularApp')
 
 
     // $scope.lecture=lecture.data
-    $scope.$watch('items_obj['+$stateParams.lecture_id+']', function(){
-      if($scope.items_obj && $scope.items_obj[$stateParams.lecture_id]){
-        $scope.lecture=$scope.items_obj[$stateParams.lecture_id]
+    $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
+      if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
+        $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
         $scope.$emit('accordianUpdate',$scope.lecture.group_id);
       }
     })

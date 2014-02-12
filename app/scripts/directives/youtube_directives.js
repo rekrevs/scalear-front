@@ -43,8 +43,18 @@ angular.module('scalearAngularApp')
             template:"<div></div>",
 			link: function(scope, element){
 
+
+                scope.$on('$destroy', function() {
+                    //alert("In destroy of:" + scope);
+                    scope.kill_popcorn();
+                    scope.player={};
+                    scope.id="";
+                    scope.ready="";
+                    scope.url="";
+                });
+
 				$log.debug("YOUTUBE " + scope.id)
-                console.log("in link function");
+
 
 				var player
 				var player_controls={}
@@ -61,8 +71,6 @@ angular.module('scalearAngularApp')
                         }
                     }
 
-                    console.log("player is ");
-                    console.log(player);
 
                     if(!scope.controls || scope.controls==undefined)
                         scope.controls=0;
@@ -83,7 +91,6 @@ angular.module('scalearAngularApp')
                         player.autoplay(true);
                     }
                     else{
-                        console.log(scope.url);
                         player = Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
                         //player = Popcorn.smart( '#'+scope.id, ["http://videos.mozilla.org/serv/webmademovies/popcornplug.mp4", "http://videos.mozilla.org/serv/webmademovies/popcornplug.ogv", "http://videos.mozilla.org/serv/webmademovies/popcornplug.webm"])//, scope.url,{ width: '100%', height:'100%', controls: 0});
                         player.controls(scope.controls);
@@ -105,6 +112,13 @@ angular.module('scalearAngularApp')
 					setupEvents()
 					parent.focus()
 				}
+
+                scope.kill_popcorn = function(){
+                    if(player)
+                    {
+                        player.destroy();
+                    }
+                }
 			
 				player_controls.play=function(){
 					player.play();
@@ -125,7 +139,7 @@ angular.module('scalearAngularApp')
 				player_controls.unmute = function(){
 					player.unmute();
 				}
-				
+
 				player_controls.paused = function(){
 					return player.paused();
 				}
@@ -276,17 +290,12 @@ angular.module('scalearAngularApp')
                     }
 				})
 				scope.$watch('player', function(){
-                    console.log("in watch");
-                    console.log(scope.player);
-                    //Popcorn.destroy(player);
 					if(scope.player){
 						scope.player.controls=player_controls
 					}
 					if(scope.player && scope.player.events)
                     {
                         player_events = scope.player.events
-                        console.log("player events are");
-                        console.log(player_events);
                     }
 
 				})

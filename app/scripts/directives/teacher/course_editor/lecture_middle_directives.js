@@ -334,6 +334,10 @@ angular.module('scalearAngularApp')
 			scope.addAnswer=scope.add()
 			scope.removeQuestion=scope.removeq()
 			element.find('input')[0].focus()
+
+            scope.$on('$destroy', function() {
+                shortcut.remove("Enter");
+            });
 			
 			scope.isSurvey = function()
 			{

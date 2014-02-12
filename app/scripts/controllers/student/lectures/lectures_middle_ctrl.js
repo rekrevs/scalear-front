@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor',
-        function($scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor) {
+    .controller('studentLectureMiddleCtrl', ['$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$rootScope',
+        function($scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $rootScope) {
 
             $scope.video_layer = {}
             $scope.quiz_layer = {}
@@ -28,7 +28,9 @@ angular.module('scalearAngularApp')
             $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
             $scope.progressEvents=[]
 
+
             console.log("over here middle ctrl");
+            console.log($scope);
             console.log($scope.lecture_player.controls);
 
             var getVideoId= function(url){

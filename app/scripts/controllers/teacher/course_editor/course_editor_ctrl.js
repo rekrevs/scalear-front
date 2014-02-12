@@ -17,10 +17,12 @@ angular.module('scalearAngularApp')
 		 		$scope.modules=data.groups
 		 		$scope.module_obj ={}
 		 		$scope.items_obj ={}
+                $scope.items_obj["lecture"]={}
+                $scope.items_obj["quiz"]={}
 		 		$scope.modules.forEach(function(module){
 		 			$scope.module_obj[module.id] = module
 		 			module.items.forEach(function(item){
-		 				$scope.items_obj[item.id] = item
+		 				$scope.items_obj[item.class_name][item.id] = item
 		 			})
 		 		})
 
@@ -85,7 +87,7 @@ angular.module('scalearAngularApp')
 	    		$log.debug(data)
 	    		data.lecture.class_name='lecture'
 	    	    $scope.modules[module_index].items.push(data.lecture)
-	    	    $scope.items_obj[data.lecture.id] = data.lecture
+	    	    $scope.items_obj["lecture"][data.lecture.id] = data.lecture
     			$scope.item_loading=false
 	    	}, 
 	    	function(){}
@@ -104,7 +106,7 @@ angular.module('scalearAngularApp')
 	    		function(response){
 	    			 $log.debug(response)
 	    			 var item = $scope.modules[module_index].items.splice(item_index, 1)
-	    			 delete $scope.items_obj[item.id]
+	    			 delete $scope.items_obj["lecture"][item.id]
 
 	    			 var str = $location.path();
 					 var res = str.match(/.*\/lectures\/(\d+)/);
@@ -126,7 +128,7 @@ angular.module('scalearAngularApp')
 	    		$log.debug(data)
 	    		data.quiz.class_name='quiz'
 	    	    $scope.modules[module_index].items.push(data.quiz)
-	    	    $scope.items_obj[data.quiz.id] = data.quiz
+	    	    $scope.items_obj["quiz"][data.quiz.id] = data.quiz
     			$scope.item_loading=false
 	    	}, 
 	    	function(){}
@@ -142,7 +144,7 @@ angular.module('scalearAngularApp')
 	    		{},
 	    		function(response){
 	    			 var quiz = $scope.modules[module_index].items.splice(item_index, 1)
-	    			 delete $scope.items_obj[quiz.id]
+	    			 delete $scope.items_obj["quiz"][quiz.id]
 	    			 var str = $location.path();
 					 var res = str.match(/.*\/quizzes\/(\d+)/);
 					 if(res && res[1]==q_id)

@@ -3,12 +3,17 @@
 angular.module('scalearAngularApp')
   .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout',function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout) {
  
- 	$scope.$watch('items_obj['+$stateParams.quiz_id+']', function(){
-      if($scope.items_obj && $scope.items_obj[$stateParams.quiz_id]){
-        $scope.quiz=$scope.items_obj[$stateParams.quiz_id]
+ 	$scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
+      if($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]){
+        $scope.quiz=$scope.items_obj["quiz"][$stateParams.quiz_id]
         $scope.$emit('accordianUpdate',$scope.quiz.group_id);
       }
     })
+
+    $scope.$on('$destroy', function() {
+            shortcut.remove("Enter");
+    });
+
  	$scope.alert={type:"error", msg:"lectures.got_some_errors"}
  
  	$scope.closeAlerts= function(){

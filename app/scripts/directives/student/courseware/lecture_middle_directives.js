@@ -67,6 +67,7 @@ angular.module('scalearAngularApp')
     		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
                 $interval(function(){
            		scope.show_message=false;
+                }, 2000, 1);
            		$log.debug(data)
            		if(data.msg=="ask")
            		{
@@ -95,7 +96,7 @@ angular.module('scalearAngularApp')
                         }
                     }
                 }
-       		}, 2000, 1);
+
   		  });
     	};
     	scope.back= function()

@@ -166,7 +166,7 @@ angular.module('scalearAngularApp')
             $scope.seek = function(time) {
                 $scope.selected_quiz = '';
                 $scope.display_mode = false;
-                $scope.lecture_player.controls.seek_and_pause(time)
+                $scope.lecture_player.controls.seek(time)
             }
 
             $scope.updateProgress=function(ev){

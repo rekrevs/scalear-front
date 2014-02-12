@@ -5,5 +5,7 @@
 .constant("scalear_api", {
   "host": "http://localhost:3000",
   "redirection_url": "http://localhost:3000/#/",
-  "version": "2.1.3 (Sun, 09 Feb 2014 14:25:23 GMT)"
-});
+  "version": "2.1.5 (Wed, 12 Feb 2014 12:25:43 GMT)"
+})
+
+;

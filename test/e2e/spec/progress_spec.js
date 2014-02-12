@@ -1,7 +1,7 @@
 var current_date = new Date();
 var no_students, no_modules, percentage, dummy, enroll_key = 'eb6efc261d',
-    course_id = '94',
-    module_id = '337',
+    course_id = '904',
+    module_id = '1160',
     count = 0;
 //var frontend = 'http://localhost:9000/';
 //var backend = 'http://localhost:3000/';
@@ -369,7 +369,7 @@ describe('Teacher', function() {
                 details[0].click();
             });
             ptor.findElements(protractor.By.tagName('input')).then(function(inputs) {
-                inputs[5].click();
+                inputs[0].click();
             });
             ptor.findElements(protractor.By.tagName('button')).then(function(buttons) {
                 buttons[buttons.length - 2].click().then(function() {
@@ -613,7 +613,7 @@ describe('Teacher', function() {
                 details[0].click();
             });
             ptor.findElements(protractor.By.tagName('input')).then(function(inputs) {
-                inputs[5].click();
+                inputs[0].click();
             });
             ptor.findElements(protractor.By.tagName('button')).then(function(buttons) {
                 buttons[buttons.length - 2].click().then(function() {
@@ -1420,7 +1420,7 @@ describe('Modules Progress', function() {
     it('should display the correct titles on the first quiz chart in lecture quizzes', function() {
         ptor.findElements(protractor.By.tagName('svg')).then(function(charts) {
             charts[1].findElements(protractor.By.tagName('text')).then(function(titles) {
-                expect(titles[0].getText()).toBe('First Quiz');
+                expect(titles[0].getText()).toBe('MCQ | First Quiz');
                 expect(titles[1].getText()).toContain('Inc');
                 expect(titles[2].getText()).toContain('Cor');
                 expect(titles[3].getText()).toBe('OK (Correct)');
@@ -1447,7 +1447,7 @@ describe('Modules Progress', function() {
     it('should display correct titles on the chart for the second quiz in lecture quizzes', function() {
         ptor.findElements(protractor.By.tagName('svg')).then(function(charts) {
             charts[2].findElements(protractor.By.tagName('text')).then(function(titles) {
-                expect(titles[0].getText()).toBe('New Quiz2');
+                expect(titles[0].getText()).toBe('OCQ | New Quiz2');
                 expect(titles[1].getText()).toBe('Incorrect');
                 expect(titles[2].getText()).toBe('Correct');
                 expect(titles[3].getText()).toBe('First Answer (Correct)');
@@ -1845,12 +1845,12 @@ describe('Modules Progress', function() {
             expect(survey_name.getText()).toBe('New Survey');
         });
         ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
-            expect(texts[texts.length - 30].getText()).toBe('First Question');
+            expect(texts[texts.length - 30].getText()).toBe('MCQ | First Question');
             expect(texts[texts.length - 29].getText()).toBe('Answered');
             expect(texts[texts.length - 28].getText()).toBe('first answer');
             expect(texts[texts.length - 27].getText()).toBe('second answer');
             expect(texts[texts.length - 17].getText()).toBe('Number of Students');
-            expect(texts[texts.length - 15].getText()).toBe('Second Question');
+            expect(texts[texts.length - 15].getText()).toBe('OCQ | Second Question');
             expect(texts[texts.length - 14].getText()).toBe('Answered');
             expect(texts[texts.length - 13].getText()).toBe('first answer');
             expect(texts[texts.length - 12].getText()).toBe('second answer');
@@ -1901,7 +1901,7 @@ describe('Modules Progress', function() {
                 //                            console.log(value+' + '+i);
                 //                        });
                 //                    });
-                expect(texts[texts.length - 17].getText()).toBe('First Question');
+                expect(texts[texts.length - 17].getText()).toBe('MCQ | First Question');
                 expect(texts[texts.length - 16].getText()).toBe('Incorrect');
                 expect(texts[texts.length - 15].getText()).toBe('Correct');
                 expect(texts[texts.length - 14].getText()).toBe('First Answer (Correct)');
@@ -1931,7 +1931,7 @@ describe('Modules Progress', function() {
                 //                            console.log(value+' + '+i);
                 //                        });
                 //                    });
-                expect(texts[texts.length - 16].getText()).toBe('First Question');
+                expect(texts[texts.length - 16].getText()).toBe('OCQ | First Question');
                 expect(texts[texts.length - 15].getText()).toBe('Incorrect');
                 expect(texts[texts.length - 14].getText()).toBe('Correct');
                 expect(texts[texts.length - 13].getText()).toBe('Should be correct (Correct)');
@@ -1961,7 +1961,7 @@ describe('Teacher', function() {
     //    var driver = ptor.driver;
     //    var ptor = protractor.getInstance();
     //    var driver = ptor.driver;
-    //    login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
+       // login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
     it('should navigate to In-Class', function() {
         ptor.get('/#/courses/' + course_id + '/inclass');
         //        ptor.findElement(protractor.By.id('inclass_link')).then(function(link){
@@ -2055,6 +2055,13 @@ describe('In-Class', function() {
                     expect(disp).toEqual(true)
                 });
             });
+            ptor.wait(function(){
+                return ptor.findElement(protractor.By.className('overlay')).then(function(overlay){
+                    return overlay.isDisplayed().then(function(disp){
+                        return !disp;
+                    });
+                });
+            });
         });
         it('should display the video container', function() {
             ptor.sleep(10000);
@@ -2079,12 +2086,15 @@ describe('In-Class', function() {
             });
         });
         it('should display the -5 and +5 buttons and >> , << buttons', function() {
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                expect(buttons[6].getText()).toBe('-5');
-                expect(buttons[7].getText()).toBe('<<');
-                expect(buttons[8].getText()).toBe('+5');
-                expect(buttons[9].getText()).toBe('>>');
-            });
+            ptor.findElement(protractor.By.className('inclass_top')).then(function(inclass_top){
+                inclass_top.findElements(protractor.By.className('btn')).then(function(buttons) {
+                    expect(buttons[0].getText()).toBe('-5');
+                    expect(buttons[1].getText()).toBe('<<');
+                    expect(buttons[2].getText()).toBe('+5');
+                    expect(buttons[3].getText()).toBe('>>');
+                });
+            })
+            
         });
         it('should display the first quiz title', function() {
             expect(ptor.findElement(protractor.By.className('question_title')).getText()).toBe('First Quiz');
@@ -2113,9 +2123,11 @@ describe('In-Class', function() {
             });
         });
         it('should move to next quiz', function() {
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                buttons[9].click();
-            });
+            ptor.findElement(protractor.By.className('inclass_top')).then(function(inclass_top){
+                inclass_top.findElements(protractor.By.className('btn')).then(function(buttons) {
+                    buttons[3].click();
+                });
+            })
         });
         it('should display the second quiz title', function() {
             expect(ptor.findElement(protractor.By.className('question_title')).getText()).toBe('New Quiz2');
@@ -2152,9 +2164,11 @@ describe('In-Class', function() {
             });
         });
         it('should go back to the first quiz', function() {
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                buttons[7].click();
-            });
+            ptor.findElement(protractor.By.className('inclass_top')).then(function(inclass_top){
+                inclass_top.findElements(protractor.By.className('btn')).then(function(buttons) {
+                    buttons[1].click();
+                });
+            })
         });
         it('should display the quiz chart with its correct data', function() {
             ptor.findElements(protractor.By.tagName('text')).then(function(texts) {
@@ -2187,11 +2201,13 @@ describe('In-Class', function() {
     reviewQuizzesModal(ptor);
     describe('Review Quizzes', function() {
         it('should hide one of the quizzes', function() {
-            ptor.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
-                checkboxes[1].click().then(function() {
-                    feedback(ptor, 'hidden');
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
+                    checkboxes[1].click().then(function() {
+                        feedback(ptor, 'hidden');
+                    });
                 });
-            });
+            })
         });
         it('should exit the modal', function() {
             ptor.findElement(protractor.By.linkText('Exit')).click();
@@ -2200,16 +2216,26 @@ describe('In-Class', function() {
     describe('Main View', function() {
         it('should go to Display Quizzes', function() {
             ptor.findElement(protractor.By.className('btn-primary')).then(function(button) {
-                button.click();
+                button.click().then(function(){
+                    ptor.wait(function(){
+                        return ptor.findElement(protractor.By.className('overlay')).then(function(loading){
+                            return loading.isDisplayed().then(function(disp){
+                                return !disp;
+                            });
+                        });
+                    });
+                });
             });
         });
     });
     describe('Display Quizzes', function() {
         it('<< and >> buttons should be disabled', function() {
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                expect(buttons[7].getAttribute('disabled')).toBe('true');
-                expect(buttons[9].getAttribute('disabled')).toBe('true');
-            });
+            ptor.findElement(protractor.By.className('inclass_top')).then(function(inclass_top){
+                inclass_top.findElements(protractor.By.className('btn')).then(function(buttons) {
+                    expect(buttons[1].getAttribute('disabled')).toBe('true');
+                    expect(buttons[3].getAttribute('disabled')).toBe('true');
+                });
+            })
         });
         it('should display the quiz chart with its correct data', function() {
             ptor.wait(function() {
@@ -2250,9 +2276,11 @@ describe('In-Class', function() {
     reviewQuizzesModal(ptor);
     describe('Review Quizzes', function() {
         it('should hide the other quiz', function() {
-            ptor.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
-                checkboxes[0].click().then(function() {
-                    feedback(ptor, 'hidden');
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
+                    checkboxes[0].click().then(function() {
+                        feedback(ptor, 'hidden');
+                    });
                 });
             });
         });
@@ -2281,12 +2309,14 @@ describe('In-Class', function() {
     reviewQuizzesModal(ptor);
     describe('Review Quizzes', function() {
         it('should unhide all quizzes', function() {
-            ptor.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
-                checkboxes[0].click().then(function() {
-                    feedback(ptor, 'visible');
-                });
-                checkboxes[1].click().then(function() {
-                    feedback(ptor, 'visible');
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
+                    checkboxes[0].click().then(function() {
+                        feedback(ptor, 'visible');
+                    });
+                    checkboxes[1].click().then(function() {
+                        feedback(ptor, 'visible');
+                    });
                 });
             });
         });
@@ -2304,6 +2334,13 @@ describe('In-Class', function() {
             ptor.findElement(protractor.By.className('modal')).then(function(modal) {
                 modal.isDisplayed().then(function(disp) {
                     expect(disp).toEqual(true)
+                });
+            });
+            ptor.wait(function(){
+                return ptor.findElement(protractor.By.className('overlay')).then(function(loading){
+                    return loading.isDisplayed().then(function(disp){
+                        return !disp;
+                    });
                 });
             });
         });
@@ -2330,12 +2367,14 @@ describe('In-Class', function() {
             });
         });
         it('should display the -5 and +5 buttons and >> , << buttons', function() {
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                expect(buttons[6].getText()).toBe('-5');
-                expect(buttons[7].getText()).toBe('<<');
-                expect(buttons[8].getText()).toBe('+5');
-                expect(buttons[9].getText()).toBe('>>');
-            });
+            ptor.findElement(protractor.By.className('inclass_top')).then(function(inclass_top){
+                inclass_top.findElements(protractor.By.className('btn')).then(function(buttons) {
+                    expect(buttons[0].getText()).toBe('-5');
+                    expect(buttons[1].getText()).toBe('<<');
+                    expect(buttons[2].getText()).toBe('+5');
+                    expect(buttons[3].getText()).toBe('>>');
+                });
+            })
         });
         it('should display the first quiz title', function() {
             expect(ptor.findElement(protractor.By.className('question_title')).getText()).toBe('First Quiz');
@@ -2364,9 +2403,11 @@ describe('In-Class', function() {
             });
         });
         it('should move to next quiz', function() {
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                buttons[9].click().then(function() {
-                    ptor.sleep(5000);
+            ptor.findElement(protractor.By.className('inclass_top')).then(function(inclass_top){
+                inclass_top.findElements(protractor.By.className('btn')).then(function(buttons) {
+                    buttons[3].click().then(function() {
+                        ptor.sleep(5000);
+                    });
                 });
             });
         });
@@ -2407,8 +2448,12 @@ describe('In-Class', function() {
             // });
         });
         it('should go back to the first quiz', function() {
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                buttons[7].click();
+            ptor.findElement(protractor.By.className('inclass_top')).then(function(inclass_top){
+                inclass_top.findElements(protractor.By.className('btn')).then(function(buttons) {
+                    buttons[1].click().then(function() {
+                        ptor.sleep(5000);
+                    });
+                });
             });
         });
         it('should display the quiz chart with its correct data', function() {
@@ -2484,12 +2529,14 @@ describe('In-Class', function() {
             });
         });
         it('should display the -5 and +5 buttons and >> , << buttons', function() {
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                expect(buttons[6].getText()).toBe('-5');
-                expect(buttons[7].getText()).toBe('<<');
-                expect(buttons[8].getText()).toBe('+5');
-                expect(buttons[9].getText()).toBe('>>');
-            });
+            ptor.findElement(protractor.By.className('inclass_top')).then(function(inclass_top){
+                inclass_top.findElements(protractor.By.className('btn')).then(function(buttons) {
+                    expect(buttons[0].getText()).toBe('-5');
+                    expect(buttons[1].getText()).toBe('<<');
+                    expect(buttons[2].getText()).toBe('+5');
+                    expect(buttons[3].getText()).toBe('>>');
+                });
+            })
         });
         it('should display the question posted by student', function() {
             ptor.findElements(protractor.By.repeater('question in questions')).then(function(questions) {
@@ -2505,9 +2552,11 @@ describe('In-Class', function() {
     reviewQuestionsModal(ptor);
     describe('Review Questions', function() {
         it('should hide the question', function() {
-            ptor.findElement(protractor.By.tagName('input')).then(function(hide) {
-                hide.click().then(function() {
-                    feedback(ptor, 'hidden');
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.findElement(protractor.By.tagName('input')).then(function(hide) {
+                    hide.click().then(function() {
+                        feedback(ptor, 'hidden');
+                    });
                 });
             });
         });
@@ -2544,15 +2593,17 @@ describe('In-Class', function() {
     });
     describe('Review Questions', function() {
         it('should unhide the question', function() {
-            ptor.findElement(protractor.By.tagName('input')).then(function(hide) {
-                hide.click().then(function() {
-                    feedback(ptor, 'visible');
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.findElement(protractor.By.tagName('input')).then(function(hide) {
+                    hide.click().then(function() {
+                        feedback(ptor, 'visible');
+                    });
                 });
             });
         });
         it('should exit the modal', function() {
-            ptor.findElements(protractor.By.tagName('a')).then(function(buttons) {
-                buttons[buttons.length - 2].click();
+            ptor.findElement(protractor.By.linkText('Exit')).then(function(exit){
+                exit.click();
             });
         });
     });
@@ -2561,6 +2612,7 @@ describe('In-Class', function() {
             ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons) {
                 buttons[1].click();
             });
+
         });
     });
     describe('Display Questions', function() {
@@ -2568,6 +2620,13 @@ describe('In-Class', function() {
             ptor.findElement(protractor.By.className('modal')).then(function(modal) {
                 modal.isDisplayed().then(function(disp) {
                     expect(disp).toEqual(true)
+                });
+            });
+            ptor.wait(function(){
+                return ptor.findElement(protractor.By.className('overlay')).then(function(loading){
+                    return loading.isDisplayed().then(function(disp){
+                        return !disp;
+                    });
                 });
             });
         });
@@ -2594,12 +2653,14 @@ describe('In-Class', function() {
             });
         });
         it('should display the -5 and +5 buttons and >> , << buttons', function() {
-            ptor.findElements(protractor.By.className('btn')).then(function(buttons) {
-                expect(buttons[6].getText()).toBe('-5');
-                expect(buttons[7].getText()).toBe('<<');
-                expect(buttons[8].getText()).toBe('+5');
-                expect(buttons[9].getText()).toBe('>>');
-            });
+            ptor.findElement(protractor.By.className('inclass_top')).then(function(inclass_top){
+                inclass_top.findElements(protractor.By.className('btn')).then(function(buttons) {
+                    expect(buttons[0].getText()).toBe('-5');
+                    expect(buttons[1].getText()).toBe('<<');
+                    expect(buttons[2].getText()).toBe('+5');
+                    expect(buttons[3].getText()).toBe('>>');
+                });
+            })
         });
         it('should display the question posted by student', function() {
             ptor.findElements(protractor.By.repeater('question in questions')).then(function(questions) {
@@ -2620,7 +2681,7 @@ describe('In-Class', function() {
             });
         });
     });
-    describe('Display Surveys', function() {
+    describe('Review Surveys', function() {
         it('should display a fullscreen modal', function() {
             ptor.findElement(protractor.By.className('modal')).then(function(modal) {
                 modal.isDisplayed().then(function(disp) {
@@ -2646,16 +2707,18 @@ describe('In-Class', function() {
             });
         });
         it('should mark the two charts as shown', function() {
-            ptor.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
-                checkboxes[0].click().then(function() {
-                    //                    feedback(ptor, 'Question was successfully updated - now visible', 1);
-                    feedback(ptor, 'now visible');
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
+                    checkboxes[0].click().then(function() {
+                        //                    feedback(ptor, 'Question was successfully updated - now visible', 1);
+                        feedback(ptor, 'now visible');
+                    });
+                    checkboxes[1].click().then(function() {
+                        //                    feedback(ptor, 'Question was successfully updated - now visible', 1);
+                        feedback(ptor, 'now visible');
+                    });
                 });
-                checkboxes[1].click().then(function() {
-                    //                    feedback(ptor, 'Question was successfully updated - now visible', 1);
-                    feedback(ptor, 'now visible');
-                });
-            });
+            })
         });
         it('should exit the modal', function() {
             ptor.findElement(protractor.By.id('exit_btn')).then(function(button) {
@@ -2711,7 +2774,7 @@ describe('In-Class', function() {
         });
         it('should mark the question as shown', function() {
             ptor.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
-                checkboxes[2].click().then(function() {
+                checkboxes[4].click().then(function() {
                     //                    feedback(ptor, 'Question was successfully updated - now visible', 1);
                     feedback(ptor, 'now visible');
                 });
@@ -2811,23 +2874,23 @@ describe('In-Class', function() {
         it('should go to course editor', function() {
             ptor.get('/#/courses/' + course_id + '/course_editor');
         });
-        // it('should delete All lectures and modules', function() {
-        //     ptor.findElements(protractor.By.className('module')).then(function(modules) {
-        //         for (var i = modules.length - 1; i >= 0; i--) {
-        //             modules[i].click()
-        //             modules[i].findElements(protractor.By.className('delete')).then(function(delete_buttons) {
-        //                 //                        console.log(delete_buttons.length)
-        //                 for (var n = delete_buttons.length - 1; n >= 0; n--) {
-        //                     delete_buttons[n].click().then(function() {
-        //                         ptor.findElement(protractor.By.className('btn-danger')).click().then(function() {
-        //                             feedback(ptor, 'deleted');
-        //                         })
-        //                     });
-        //                 }
-        //             });
-        //         }
-        //     });
-        // });
+        it('should delete All lectures and modules', function() {
+            ptor.findElements(protractor.By.className('module')).then(function(modules) {
+                for (var i = modules.length - 1; i >= 0; i--) {
+                    modules[i].click()
+                    modules[i].findElements(protractor.By.className('delete')).then(function(delete_buttons) {
+                        //                        console.log(delete_buttons.length)
+                        for (var n = delete_buttons.length - 1; n >= 0; n--) {
+                            delete_buttons[n].click().then(function() {
+                                ptor.findElement(protractor.By.className('btn-danger')).click().then(function() {
+                                    feedback(ptor, 'deleted');
+                                })
+                            });
+                        }
+                    });
+                }
+            });
+        });
         it('should delete the created course', function() {
             ptor.get('/#/courses');
             ptor.findElements(protractor.By.className('delete')).then(function(delete_buttons) {
@@ -2878,9 +2941,11 @@ function reviewQuestionsModal(ptor) {
             });
         });
         it('should display a hide checkbox for each question', function() {
-            ptor.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
-                expect(checkboxes.length).toBe(1);
-            })
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
+                    expect(checkboxes.length).toBe(1);
+                });
+            });
         });
         it('should display the question data', function() {
             ptor.findElements(protractor.By.tagName('td')).then(function(data) {
@@ -2920,13 +2985,13 @@ function reviewQuizzesModal(ptor) {
         });
         it('should display a hide checkbox for each quiz', function() {
             ptor.findElements(protractor.By.tagName('input')).then(function(checkboxes) {
-                expect(checkboxes.length).toBe(2);
+                expect(checkboxes.length).toBe(4);
             });
             ptor.sleep(5000);
         });
         it('should display the chart for the first quiz with its correct data', function() {
             ptor.findElements(protractor.By.tagName('text')).then(function(names) {
-                expect(names[0].getText()).toBe('First Quiz');
+                expect(names[0].getText()).toBe('MCQ | First Quiz');
                 expect(names[1].getText()).toBe('Incorrect');
                 expect(names[2].getText()).toBe('Correct');
                 expect(names[3].getText()).toBe('OK (Correct)');
@@ -2966,7 +3031,7 @@ function reviewQuizzesModal(ptor) {
         });
         it('should display the chart for the second quiz with its correct data', function() {
             ptor.findElements(protractor.By.tagName('text')).then(function(names) {
-                expect(names[17].getText()).toBe('New Quiz2');
+                expect(names[17].getText()).toBe('OCQ | New Quiz2');
                 expect(names[18].getText()).toBe('Incorrect');
                 expect(names[19].getText()).toBe('Correct');
                 expect(names[20].getText()).toBe('First Answer (Correct)')

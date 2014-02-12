@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
 
  	$scope.addModule=function(){
     	$log.debug("adding mod")
-    	$scope.module_loading=true
+    	$scope.module_overlay = true 
     	$log.debug("course id is "+$stateParams.course_id);
     	Module.newModule({course_id: $stateParams.course_id, lang:$translate.uses()},{},
 	    	function(module){
@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
 	    		module.group.items=[]
 	    		$scope.modules.push(module.group)
 	    		$scope.module_obj[module.group.id] = module.group
-    			$scope.module_loading=false
+    			$scope.module_overlay=false
 	    	}, 
 	    	function(){}
 		);
@@ -55,7 +55,8 @@ angular.module('scalearAngularApp')
     $scope.removeModule=function(event, index){
     	$log.debug("remove mod")
     	event.preventDefault();
-  		event.stopPropagation();  
+  		event.stopPropagation(); 
+  		$scope.module_overlay = true 
   		var m_id= $scope.modules[index].id;
 	    	Module.destroy(
 	    		{
@@ -66,6 +67,7 @@ angular.module('scalearAngularApp')
 	    			$log.debug(response)
 	    				var module = $scope.modules.splice(index, 1)
 	    				delete $scope.module_obj[module.id]
+	    				$scope.module_overlay = false 
 	    			 	var str = $location.path();
 					 	var res = str.match(/.*\/modules\/(\d+)/);
 					 	if(res && res[1]==m_id)
@@ -79,14 +81,14 @@ angular.module('scalearAngularApp')
     $scope.addLecture=function(module_index){
     	$log.debug("adding lec "+ module_index)
     	$log.debug($scope.modules)
-    	$scope.item_loading=true
+    	$scope.item_overlay = true  
     	Lecture.newLecture({course_id: $stateParams.course_id, group: $scope.modules[module_index].id},
 	    	function(data){
 	    		$log.debug(data)
 	    		data.lecture.class_name='lecture'
 	    	    $scope.modules[module_index].items.push(data.lecture)
 	    	    $scope.items_obj[data.lecture.id] = data.lecture
-    			$scope.item_loading=false
+    			$scope.item_overlay = false  
 	    	}, 
 	    	function(){}
 		);
@@ -94,6 +96,7 @@ angular.module('scalearAngularApp')
 
     $scope.removeLecture=function(module_index, item_index){
     	$log.debug("remove lec " + module_index + " " + item_index) 
+    	$scope.item_overlay = true  
     	var l_id=$scope.modules[module_index].items[item_index].id
 	    	Lecture.destroy(
 	    		{
@@ -105,7 +108,7 @@ angular.module('scalearAngularApp')
 	    			 $log.debug(response)
 	    			 var item = $scope.modules[module_index].items.splice(item_index, 1)
 	    			 delete $scope.items_obj[item.id]
-
+	    			 $scope.item_overlay = false  
 	    			 var str = $location.path();
 					 var res = str.match(/.*\/lectures\/(\d+)/);
 					 if(res && res[1]==l_id)
@@ -118,7 +121,7 @@ angular.module('scalearAngularApp')
     $scope.addQuiz=function(module_index, type){
     	$log.debug("adding quiz "+ module_index)
     	$log.debug($scope.modules)
-    	$scope.item_loading=true
+    	$scope.item_overlay=true
     	Quiz.newQuiz({course_id: $stateParams.course_id, group: $scope.modules[module_index].id, type:type},
     	{},
 
@@ -127,7 +130,7 @@ angular.module('scalearAngularApp')
 	    		data.quiz.class_name='quiz'
 	    	    $scope.modules[module_index].items.push(data.quiz)
 	    	    $scope.items_obj[data.quiz.id] = data.quiz
-    			$scope.item_loading=false
+    			$scope.item_overlay=false
 	    	}, 
 	    	function(){}
 		);
@@ -135,6 +138,7 @@ angular.module('scalearAngularApp')
     
     $scope.removeQuiz=function(module_index, item_index){
     	$log.debug("remove quiz " + module_index + " " + item_index) 
+    	$scope.item_overlay = true  
     	var q_id=$scope.modules[module_index].items[item_index].id;
 	    	Quiz.destroy(
 	    		{course_id: $stateParams.course_id,
@@ -143,6 +147,7 @@ angular.module('scalearAngularApp')
 	    		function(response){
 	    			 var quiz = $scope.modules[module_index].items.splice(item_index, 1)
 	    			 delete $scope.items_obj[quiz.id]
+	    			 $scope.item_overlay=false
 	    			 var str = $location.path();
 					 var res = str.match(/.*\/quizzes\/(\d+)/);
 					 if(res && res[1]==q_id)

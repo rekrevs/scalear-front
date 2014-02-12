@@ -15,8 +15,8 @@
 			</td>
 			<td width="200px">{{announcement.created_at | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</td>
 			<td width="150px">
-				<input id="close_button" ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" />
-				<input id="save_button" ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" />
+				<input id="close_button" ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" ng-disabled="saving"/>
+				<input id="save_button" ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" ng-disabled="saving"/>
 				<delete_button size="big"  action="deleteAnnouncement($index)" ng-hide="announcement.show"/>
 			</td>
 		</tr>

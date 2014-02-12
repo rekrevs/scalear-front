@@ -47,7 +47,17 @@ angular.module('scalearAngularApp')
 				var player_controls={}
 				var player_events = {}
 
-				var loadVideo = function(){
+                scope.$on('$destroy', function() {
+                    //alert("In destroy of:" + scope);
+                    scope.kill_popcorn();
+                    scope.player={};
+                    scope.id="";
+                    scope.ready="";
+                    scope.url="";
+                });
+
+
+                var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
 					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1',{ width: 500, controls: 0});
@@ -61,8 +71,16 @@ angular.module('scalearAngularApp')
 					},10000)
 					parent.focus()
 				}
-			
-				player_controls.play=function(){
+
+                scope.kill_popcorn = function(){
+                    if(player)
+                    {
+                        player.destroy();
+                    }
+                }
+
+
+                player_controls.play=function(){
 					player.play();
 				}
 

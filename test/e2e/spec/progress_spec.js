@@ -1,7 +1,7 @@
 var current_date = new Date();
-var no_students, no_modules, percentage, dummy, enroll_key = 'eb6efc261d',
-    course_id = '904',
-    module_id = '1160',
+var no_students, no_modules, percentage, dummy, enroll_key = '76a4689cbb',
+    course_id = '1010',
+    module_id = '1356',
     count = 0;
 //var frontend = 'http://localhost:9000/';
 //var backend = 'http://localhost:3000/';
@@ -791,7 +791,7 @@ describe('Student', function() {
     });
     it('should click on check answer', function() {
         ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons) {
-            buttons[1].click().then(function() {
+            buttons[buttons.length-1].click().then(function() {
                 waitForChecks(ptor, 1);
             });
         });
@@ -912,11 +912,13 @@ describe('Student', function() {
         });
     });
     it('should select first answer', function() {
-        ptor.findElement(protractor.By.name('student_answer')).click();
+        ptor.findElement(protractor.By.name('student_answer')).then(function(answer){
+            answer.click();
+        });
     });
     it('should click on check answer', function() {
         ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons) {
-            buttons[1].click().then(function() {
+            buttons[buttons.length-1].click().then(function() {
                 waitForChecks(ptor, 1);
             });
         });
@@ -959,7 +961,7 @@ describe('Student', function() {
     });
     it('should click on check answer', function() {
         ptor.findElements(protractor.By.className('btn-primary')).then(function(buttons) {
-            buttons[1].click().then(function() {
+            buttons[buttons.length-1].click().then(function() {
                 waitForChecks(ptor, 2);
             });
         });

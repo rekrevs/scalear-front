@@ -58,7 +58,7 @@ angular.module('scalearAngularApp', [
             $log.debug("lang is " + $rootScope.current_lang);
             var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']
             var statesThatForStudents = ['student_courses', 'course.student_calendar', 'course.course_information', 'course.lectures']
-            var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
+            var statesThatForTeachers = ['course_list', 'new_course', 'course.statistics','course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
 
             //check if route requires no auth
@@ -200,6 +200,7 @@ angular.module('scalearAngularApp', [
         $httpProvider.defaults.withCredentials = true;
         $httpProvider.interceptors.push('ServerInterceptor');
 
+        
         $urlRouterProvider.otherwise('/');
         $stateProvider
             .state('home', {
@@ -278,6 +279,11 @@ angular.module('scalearAngularApp', [
                     }
                 },
                 abstract: true
+            })
+            .state('course.statistics', {
+              url: '/statistics',
+              templateUrl: 'views/teacher/statistics/statistics.html',
+              controller: 'CourseStatisticsCtrl'
             })
             .state('course.lectures', {
                 url: '/courseware',

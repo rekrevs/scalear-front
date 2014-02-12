@@ -12,7 +12,11 @@ angular.module('scalearAngularApp')
         'show':{method: 'GET', headers:headers},
         'readData':{method: 'GET', headers:headers, params: {action: 'read_data'} },
         'readTotals':{method: 'GET', headers:headers, params: {action: 'read_totals'} },
-        'readSeries':{method: 'GET', headers:headers, params: {action: 'read_series'} }
+        'readSeries':{method: 'GET', headers:headers, params: {action: 'read_series'} },
+        //per course stats
+        'readCourseData':{method: 'GET', headers:headers, params:{action: 'read_course_data'}},
+        'readCourseTotals':{method: 'GET', headers:headers, params:{action: 'read_course_totals'}},
+        'readCourseSeries':{method: 'GET', headers:headers, params:{action: 'read_course_series'}}
       });
 
 }])

@@ -6,6 +6,4 @@
   "host": "http://localhost:3000",
   "redirection_url": "http://localhost:3000/#/",
   "version": "2.1.3 (Sun, 09 Feb 2014 14:25:23 GMT)"
-})
-
-;
+});

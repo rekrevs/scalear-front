@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
 		    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
 	       		return $translate('online_quiz.incorrect_format_time')
 		    }
-		    else if( ($scope.lecture_player.controls.getDuration()-1) < total_duration || total_duration <= 0 ){
+		    else if( ($scope.lecture_player.controls.getDuration()-1) <= total_duration || total_duration <= 0 ){
 	       		return $translate('online_quiz.time_outside_range')
 		    }
 		}
@@ -83,17 +83,18 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
-//		if(confirm($translate('online_quiz.you_sure_delete_quiz', {quiz: quiz.question})))
-			OnlineQuiz.destroy(
-				{online_quizzes_id: quiz.id},{},
-				function(data){
-					$log.debug(data)
-					$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
-					$scope.$parent.editing_mode = false;
-					$scope.$parent.selected_quiz={}
-				},
-				function(){}
-			);
+		$scope.$parent.quiz_overlay = false
+		OnlineQuiz.destroy(
+			{online_quizzes_id: quiz.id},{},
+			function(data){
+				$log.debug(data)
+				$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
+				$scope.$parent.editing_mode = false;
+				$scope.$parent.selected_quiz={}
+				$scope.$parent.quiz_overlay = true
+			},
+			function(){}
+		);
 	}
 
 }]);

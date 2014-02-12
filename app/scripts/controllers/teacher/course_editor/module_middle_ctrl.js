@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate','$q','$log', '$filter', function ($scope, $state, Module, Document, $stateParams, $translate, $q, $log, $filter) {
-        
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document','$stateParams', '$translate','$q','$log', '$filter', function ($scope, $state, Module, Document, $stateParams, $translate, $q, $log, $filter) {      
 
         $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
             if($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
@@ -18,12 +17,10 @@ angular.module('scalearAngularApp')
                     module_id:$stateParams.module_id
                 },
                 function(data){
-
                     $scope.$watch('module',function(){
                         if($scope.module)
                             angular.extend($scope.module, data)
-                    })
-                    
+                    })                    
                 },
                 function(){}
             )
@@ -31,34 +28,30 @@ angular.module('scalearAngularApp')
 
     	$scope.addDocument=function(){
     		$log.debug($scope.module.id)
-    		$scope.document_loading=true
+    		$scope.document_overlay=true
     		Module.newDocument({course_id:$stateParams.course_id, module_id:$scope.module.id},
     			{},
     			function(doc){
     				$log.debug(doc)
                     doc.document.url = "http://"
     				$scope.module.documents.push(doc.document)
-    				$scope.document_loading=false
+    				$scope.document_overlay=true
     			}, 
-    			function(){
-    				//alert("Failed to add document, please check your internet connection")
-    			}
+    			function(){}
 			);
     	}
 
 
     	$scope.removeDocument=function (elem) {
-    		//if(confirm($translate('groups.you_sure_delete_document', {doc: elem.name}))){
-	    		Document.destroy(
-					{document_id: elem.id},{},
-					function(){
-						$scope.module.documents.splice($scope.module.documents.indexOf(elem), 1)
-					}, 
-					function(){
-						//alert("Failed to delete document, please check your internet connection")
-					}
-				);
-	    	//}
+            $scope.document_overlay=true
+    		Document.destroy(
+				{document_id: elem.id},{},
+				function(){
+					$scope.module.documents.splice($scope.module.documents.indexOf(elem), 1)
+                    $scope.document_overlay=false
+				}, 
+				function(){}
+			);
     	}
 		$scope.validateName= function(data, elem){
 			var d = $q.defer();
@@ -102,7 +95,6 @@ angular.module('scalearAngularApp')
 		    return d.promise;
 		}
     	$scope.updateDocument=function(elem){
-    		//$log.debug($scope.module.documents[index])
             elem.url = $filter("formatURL")(elem.url)
     		Document.update(
     			{document_id: elem.id},
@@ -115,7 +107,6 @@ angular.module('scalearAngularApp')
     				elem.errors=""
     			},
     			function(resp){
-    				//alert("Failed to update document information, please check your internet connection")
     				elem.errors=resp.data.errors;
     			}
 			);

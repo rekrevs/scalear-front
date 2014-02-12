@@ -43,7 +43,7 @@ function login(ptor, driver, email, password, name, findByName) {
             password_field.sendKeys(password);
         });
         ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
-            fields[fields.length - 1].click().then(function() {
+            fields[3].click().then(function() {
                 feedback(ptor, 'Signed in successfully');
             });
         });
@@ -87,7 +87,7 @@ describe('Announcements Page', function() {
             ptor = protractor.getInstance();
             ptor.get('/#/courses/new');
             ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
-                fields[fields.length - 1].click();
+                fields[fields.length - 3].click();
             });
             ptor.findElements(protractor.By.className('controls')).then(function(rows) {
                 expect(rows[0].getText()).toContain('Required');
@@ -108,7 +108,7 @@ describe('Announcements Page', function() {
                     options[1].click();
                 });
                 //                });
-                fields[fields.length - 1].click().then(function() {
+                fields[fields.length - 3].click().then(function() {
                     feedback(ptor, 'Course was successfully created');
                 });
             });
@@ -213,9 +213,11 @@ describe('Announcements Page', function() {
             });
         });
         it('should enter the enrollment key and proceed', function() {
-            ptor.findElement(protractor.By.tagName('input')).then(function(key_field) {
-                key_field.clear();
-                key_field.sendKeys(enroll_key);
+            ptor.findElement(protractor.By.className('modal')).then(function(modal){
+                modal.findElement(protractor.By.tagName('input')).then(function(key_field) {
+                    key_field.clear();
+                    key_field.sendKeys(enroll_key);
+                });
             });
             ptor.findElement(protractor.By.className('btn-primary')).then(function(proceed) {
                 proceed.click().then(function() {

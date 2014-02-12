@@ -7,17 +7,22 @@
 <div class="row" style="width:1230px;">
 	<div class="span3" id="tree">
 		<center><loading size="small" show="init_loading" /></center>
+		<overlay ng-show="module_overlay" style="height:80%">
+			<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
+		</overlay>
 		<ul ui-sortable="moduleSortableOptions" ng-model='modules' id="acc1" class="accordion">
 			<li ng-repeat="module in modules" class='module accordion-group' ng-init="module.open = false">
 				<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" />
 				<div class="outer" collapse="!(module.open || module.id==open_id)">
+					<overlay ng-show="item_overlay" style="height:100%">
+						<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
+					</overlay>
 		        	<div class="inner" id="modules">
 	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child item" ng-repeat="item in module.items" >
 	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ></item>
 		            		</li>
 		            	</ul>
-		            	<center><loading size="small" show="item_loading" /></center>
 			            <center class="item-buttons">
 			            	<button_link title="{{'courses.add_lecture'|translate}}" class="btn-mini adding" action="addLecture($index)" />
 			            	<button_link title="{{'lectures.add_quiz'|translate}}"    class="btn-mini adding" action="addQuiz($index, 'quiz')"/>
@@ -27,7 +32,6 @@
 		    	</div>
 			</li>
 		</ul>
-		<center><loading size="small" show="module_loading" /></center>
 		<button_link ng-show="!module_loading" title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
 		<hr />
 	</div>

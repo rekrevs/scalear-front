@@ -16,11 +16,11 @@ angular.module('scalearAngularApp')
 	.factory('popcornApiProxy',['$rootScope','$q',function($rootScope,$q){
 		var apiReady = $q.defer()
 		var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals/':'http://popcornjs.org/code/dist/'
-		loadScript(src+'popcorn-complete.min.js', function(){
-			$rootScope.$apply(function () {
+		//loadScript(src+'popcorn-complete.min.js', function(){
+			//$rootScope.$apply(function () {
                 apiReady.resolve();
-            });
-		})
+            ///});
+		//})
 		return function (callback) {
             apiReady.promise.then(function () {
                 callback()
@@ -43,9 +43,9 @@ angular.module('scalearAngularApp')
 				$log.debug("YOUTUBE " + scope.id)
 				$log.debug(scope.controls);
 				
-				var player
-				var player_controls={}
-				var player_events = {}
+				var player,
+				player_controls={},
+				player_events = {}
 
                 scope.$on('$destroy', function() {
                     //alert("In destroy of:" + scope);
@@ -60,12 +60,17 @@ angular.module('scalearAngularApp')
                 var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					player = Popcorn.youtube( '#'+scope.id, scope.url+'&fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=1',{ width: 500, controls: 0});
+					var media = Popcorn.HTMLYouTubeVideoElement('#'+scope.id),
+					url= scope.url.split('?'),
+					base_url = url[0],
+					query = '&'+url[1]
+					media.src = base_url+"?fs=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
+			        player = Popcorn(media,{});
+			        setupEvents()
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
-					setupEvents()
+					
 					$timeout(function(){
-						console.log('timeout with '+ player_controls.readyState())
 						if(!player_controls.readyState())
 							scope.$emit('slow')
 					},10000)
@@ -94,6 +99,10 @@ angular.module('scalearAngularApp')
 
 				player_controls.unmute = function(){
 					player.unmute();
+				}
+
+				player_controls.volume= function(value){
+					player.volume(value);
 				}
 				
 				player_controls.paused = function(){
@@ -129,7 +138,8 @@ angular.module('scalearAngularApp')
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
 					element.find('iframe').remove();
-					popcornApiProxy(loadVideo);
+					//popcornApiProxy(loadVideo);
+					loadVideo()
 				}
 
 				player_controls.hideControls=function(){
@@ -149,9 +159,7 @@ angular.module('scalearAngularApp')
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
-							//player_controls.replay()
 							$log.debug("Video data loaded")	
-
 							if(player_events.onReady){
 								player_events.onReady();
 								scope.$apply();
@@ -216,7 +224,6 @@ angular.module('scalearAngularApp')
 						}
 					})
 					scope.$on('slow',function(){
-						console.log('event slow called')
 						parent.focus()
 						if(player_events.onSlow){
 							player_events.onSlow();
@@ -230,7 +237,7 @@ angular.module('scalearAngularApp')
 				})
 
                 var is_final_url= function(url){
-                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[&controls=0]*$/);
+                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
                 }
 
 				scope.$watch('url', function(){

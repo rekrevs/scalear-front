@@ -43,7 +43,7 @@ function login(ptor, driver, email, password, name, findByName) {
             password_field.sendKeys(password);
         });
         ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
-            fields[fields.length - 1].click().then(function() {
+            fields[3].click().then(function() {
                 feedback(ptor, 'Signed in successfully');
             });
         });
@@ -85,7 +85,7 @@ describe('Teacher', function() {
         browser.driver.manage().window().setPosition(0, 0);
         ptor.get('/#/courses/new');
         ptor.findElements(protractor.By.tagName('input')).then(function(fields) {
-            fields[fields.length - 1].click();
+            fields[fields.length - 3].click();
         });
         ptor.findElements(protractor.By.className('controls')).then(function(rows) {
             expect(rows[0].getText()).toContain('Required');
@@ -106,7 +106,7 @@ describe('Teacher', function() {
                 options[1].click();
             });
             //                });
-            fields[fields.length - 1].click().then(function() {
+            fields[fields.length - 3].click().then(function() {
                 feedback(ptor, 'Course was successfully created');
             });
         });
@@ -310,7 +310,6 @@ function feedback(ptor, message) {
                     console.log(text);
                     return true;
                 } else {
-                    console.debug('.');
                     return false;
                 }
             });

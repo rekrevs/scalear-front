@@ -28,6 +28,9 @@ angular.module('scalearAngularApp')
             $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
             $scope.progressEvents=[]
 
+            console.log("over here middle ctrl");
+            console.log($scope.lecture_player.controls);
+
             var getVideoId= function(url){
                 return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
             }

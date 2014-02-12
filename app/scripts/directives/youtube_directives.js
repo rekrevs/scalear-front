@@ -44,15 +44,25 @@ angular.module('scalearAngularApp')
 			link: function(scope, element){
 
 				$log.debug("YOUTUBE " + scope.id)
-
+                console.log("in link function");
 
 				var player
 				var player_controls={}
 				var player_events = {}
 
 				var loadVideo = function(vq){
+
 					if(player)
+                    {
 						Popcorn.destroy(player)
+                        var events = Popcorn.getTrackEvents();
+                        for (var e in events) {
+                            Popcorn.removeTrackEvent(events[e]._id);
+                        }
+                    }
+
+                    console.log("player is ");
+                    console.log(player);
 
                     if(!scope.controls || scope.controls==undefined)
                         scope.controls=0;
@@ -150,7 +160,7 @@ angular.module('scalearAngularApp')
 
 					element.find('iframe').remove();
                     element.find('video').remove();
-					popcornApiProxy(loadVideo, quality);
+                    popcornApiProxy(loadVideo, quality);
 				}
 
 				player_controls.hideControls=function(){
@@ -266,11 +276,19 @@ angular.module('scalearAngularApp')
                     }
 				})
 				scope.$watch('player', function(){
+                    console.log("in watch");
+                    console.log(scope.player);
+                    //Popcorn.destroy(player);
 					if(scope.player){
 						scope.player.controls=player_controls
 					}
 					if(scope.player && scope.player.events)
-						player_events = scope.player.events
+                    {
+                        player_events = scope.player.events
+                        console.log("player events are");
+                        console.log(player_events);
+                    }
+
 				})
 
 		    }

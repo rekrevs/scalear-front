@@ -103,6 +103,7 @@ var openModal=function(view, type){
       if($scope.mute_class == "unmute_button"){
         $scope.mute_class = "mute_button"
         $scope.inclass_player.controls.unmute()
+        $scope.inclass_player.controls.volume(1)
       }
       else{
         $scope.mute_class = "unmute_button"
@@ -112,8 +113,6 @@ var openModal=function(view, type){
 
     $scope.seek=function(time,first){
       $log.debug("seeking")
-      if(!first)
-        $scope.inclass_player.controls.pause()
       $scope.inclass_player.controls.seek(time)
     }
 
@@ -126,8 +125,6 @@ var openModal=function(view, type){
         else if(seek_to_time >duration)
           seek_to_time = duration
         $scope.seek(seek_to_time)
-        $scope.play_pause_class = "play_button"
-        $scope.skipping = true
       }
     }
 
@@ -144,14 +141,11 @@ var openModal=function(view, type){
     }
 
     $scope.inclass_player.events.onMeta=function(){
-      $scope.seek($scope.quiz_time, true);
+      $scope.play_pause_class = "play_button"
       $scope.loading_video=false
     }
     $scope.inclass_player.events.seeked=function(){
-      if(!$scope.skipping){
         $scope.inclass_player.controls.pause()
-      }
-      $scope.skipping=false
     }
 
 

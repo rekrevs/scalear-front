@@ -93,8 +93,14 @@ angular.module('scalearAngularApp')
                 scope.getWidth = function() {
                     return parent.width()
                 };
+                scope.getHeight = function() {
+                    return parent.height()
+                };
                 scope.$watch(scope.getWidth, function(newValue, oldValue) {
                     element.css("width", newValue)
+                });
+                scope.$watch(scope.getHeight, function(newValue, oldValue) {
+                    element.css("height", newValue)
                 });
             }
         }

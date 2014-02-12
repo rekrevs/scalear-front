@@ -50,6 +50,7 @@ angular.module('scalearAngularApp')
   	}
   	$scope.hideAnnouncement = function(index){ //get old data.
         $scope.disable_new = false;
+        $scope.saving = false;
         $scope.announcements[index].show=false
   		if($scope.announcements[index].id){
   		Announcement.show({course_id: $stateParams.course_id,announcement_id:$scope.announcements[index].id },
@@ -75,6 +76,7 @@ angular.module('scalearAngularApp')
   		$scope.announcements[index].overclass='';
   	};
   	$scope.saveAnnouncement = function(index){
+      $scope.saving= true
       var tmp = document.createElement("DIV")
       tmp.innerHTML = $scope.announcements[index].announcement
       var inner_text =  tmp.textContent || tmp.innerText || ""
@@ -89,9 +91,11 @@ angular.module('scalearAngularApp')
           function(data){
             $scope.announcements[index]=data.announcement;
             $scope.disable_new = false;
+            $scope.saving = false;
   		    },
           function(response){
       			$scope.announcements[index].errors=response.data.errors
+            $scope.saving = false;
       		}
         )
   		}

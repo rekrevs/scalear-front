@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
                 $scope.alert_messages = data.alert_messages;
                 $scope.lecture = JSON.parse(data.lecture)
                 if($scope.ipad)
-                    $scope.lecture.url+="&controls=0"
+                    $scope.lecture.url+="&controls"
                 for (var element in $scope.lecture.online_quizzes) // if no answers remove it
                 {
                     if ($scope.lecture.online_quizzes[element].online_answers.length == 0)
@@ -57,8 +57,7 @@ angular.module('scalearAngularApp')
 
                 $scope.lecture_player.events.onReady = function() {
                     $scope.total_duration = $scope.lecture_player.controls.getDuration()
-                    $scope.lecture_player.controls.pause()
-                    $scope.lecture_player.controls.seek(0)
+                    $scope.lecture_player.controls.play()
                     $scope.slow_message = false
                     $scope.loading_video = false;
                     $scope.lecture.online_quizzes.forEach(function(quiz) {
@@ -106,7 +105,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.replay=function(){
-        $scope.lecture_player.controls.replay()
+        $scope.lecture.url +=" "
         $scope.end_buttons = false
     }
 
@@ -161,12 +160,6 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onPause= function(){
         $log.debug("in here");
-        if(!$scope.fix_play){
-            $scope.lecture_player.controls.play()
-            $scope.fix_play = true
-            return
-        }
-
         $scope.play_pause_class = "play"
         if($scope.display_mode!=true) //not a quiz
             $scope.submitPause();
@@ -178,6 +171,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onEnd= function() {
+        if($scope.fullscreen)
+            $scope.resize.small()
         $scope.end_buttons = true
     }
 

@@ -69,11 +69,8 @@ angular.module('scalearAngularApp')
 
             $scope.seek = function(id) {
                 var url = getURL(id)
-                if (url != $scope.url) {
-                    $scope.url = url
-                    $scope.lecture_player.events.onReady = function() {
-                        $scope.lecture_player.controls.seek_and_pause(getTime(id))
-                    }
+                if ($scope.url.indexOf(url) == -1) {
+                    $scope.url = url+'&start='+Math.round(getTime(id))
                 } else
                     $scope.lecture_player.controls.seek_and_pause(getTime(id))
             }

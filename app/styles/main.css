@@ -268,7 +268,7 @@ textarea.ng-invalid{ border:1px solid red; }
 
 
 .popover{
-	z-index:2000;
+	z-index:20000;
   line-height:20px;
   width: 330px;
   max-width:330px;
@@ -307,4 +307,7 @@ textarea.ng-invalid{ border:1px solid red; }
   background-color: #fff;
   z-index: 99;
   text-align: center;
+}
+a.editable-click { 
+  border-bottom: none !important;
 }

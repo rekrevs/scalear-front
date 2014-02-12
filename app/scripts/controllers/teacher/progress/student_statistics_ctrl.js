@@ -172,11 +172,8 @@ angular.module('scalearAngularApp')
         		}
         		before=parseInt(time)
         	}
-        	if(lec !=$scope.lecture_url){
-	            $scope.lecture_url = lec
-	            $scope.statistics_player.events.onReady=function(){
-	                $scope.statistics_player.controls.seek_and_pause(to_seek)
-	            }
+        	if($scope.lecture_url.indexOf(lec) == -1){
+	            $scope.lecture_url = lec+'&start='+Math.round(to_seek)
 	        }
 	        else
              	$scope.statistics_player.controls.seek_and_pause(to_seek)

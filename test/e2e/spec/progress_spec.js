@@ -1,7 +1,7 @@
 var current_date = new Date();
 var no_students, no_modules, percentage, dummy, enroll_key = '76a4689cbb',
-    course_id = '1010',
-    module_id = '1356',
+    course_id = '1015',
+    module_id = '1371',
     count = 0;
 //var frontend = 'http://localhost:9000/';
 //var backend = 'http://localhost:3000/';

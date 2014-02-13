@@ -19,8 +19,8 @@ angular.module('scalearAngularApp')
 
         scope.$on('$destroy', function() {
             //alert("In destroy of:" + scope);
-            console.log("in destroy of");
-            console.log(scope);
+            //console.log("in destroy of");
+            //console.log(scope);
             shortcut.remove("c");
             shortcut.remove("q");
             shortcut.remove("b");

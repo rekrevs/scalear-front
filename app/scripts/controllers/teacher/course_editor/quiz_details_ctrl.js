@@ -4,9 +4,9 @@ angular.module('scalearAngularApp')
     .controller('quizDetailsCtrl', ['$stateParams', '$scope', '$q', 'Quiz', '$log',
         function($stateParams, $scope, $q, Quiz, $log) {
 
-            $scope.$watch('items_obj[' + $stateParams.quiz_id + ']', function() {
-                if ($scope.items_obj && $scope.items_obj[$stateParams.quiz_id]) {
-                    $scope.quiz = $scope.items_obj[$stateParams.quiz_id]
+            $scope.$watch('items_obj["quiz"][' + $stateParams.quiz_id + ']', function() {
+                if ($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]) {
+                    $scope.quiz = $scope.items_obj["quiz"][$stateParams.quiz_id]
                 }
             })
 

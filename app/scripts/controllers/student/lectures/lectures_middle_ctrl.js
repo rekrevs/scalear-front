@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','editor', function($scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, editor) {
+    .controller('studentLectureMiddleCtrl', ['$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','editor','doc', function($scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, editor, doc) {
 
     $scope.video_layer = {}
     $scope.quiz_layer = {}
@@ -24,6 +24,15 @@ angular.module('scalearAngularApp')
     $scope.total_duration = 0
     $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
 
+
+    $scope.$on("$destroy", function(){
+        //console.log("cancelling intervel");
+        // cancel autosave when leave lecture.
+        $interval.cancel(editor.autosave);
+        doc.dirty=false;
+        doc.lastSave = 0;
+        doc.info=null;
+    });
 
     var init = function() {
         $scope.loading_video = true;

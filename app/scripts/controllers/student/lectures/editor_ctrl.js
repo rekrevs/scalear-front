@@ -24,6 +24,11 @@ angular.module('scalearAngularApp')
         editor.save();
     }
 
+    $scope.disableSave= function(){
+        return !doc.dirty
+    }
+
+
     $scope.$on('loaded', $scope.init);
 
     $scope.init();

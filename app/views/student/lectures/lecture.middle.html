@@ -54,8 +54,8 @@
 </table>
 
 
-<div ng-controller="EditorCtrl">
-    <input type="button" class="btn btn-primary" value="Save" ng-click="save()"/>
+<div ng-controller="EditorCtrl" ng-show="!loading_video">
+    <input type="button" class="btn btn-primary" value="Save" ng-click="save()" ng-disabled="disableSave()"/>
     <div id="editor" ace-editor sync="sync.enabled" player="lecture_player" url="lecture.url"></div>
 </div>
 

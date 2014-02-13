@@ -1,5 +1,6 @@
 angular.module('scalearAngularApp').factory('editor',
     ['$q', '$rootScope', '$log', '$timeout', 'doc', function ($q, $rootScope, $log, $timeout, doc) {
+        var ONE_HOUR_IN_MS = 1000 * 60 * 60;
         var editor = null,
             EditSession = require("ace/edit_session").EditSession,
             service = $rootScope.$new(true);
@@ -127,7 +128,10 @@ angular.module('scalearAngularApp').factory('editor',
             }
             service.saving = true;
             var file = service.snapshot();
+            console.log("file is");
+            console.log(file);
 
+            // what is saved is the file, along with its revision. (as a param)
             if (!doc.info.id) {
                 $rootScope.$broadcast('firstSaving');
             }

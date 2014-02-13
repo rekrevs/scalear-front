@@ -313,4 +313,13 @@ textarea.ng-invalid{ border:1px solid red; }
 
 .ace_gutter-cell.ace_breakpoint {
     background-color: #ffc000;
+    padding-left: 0px;
+    min-width: 40px;
+}
+
+.ace_layer{
+    min-width: 40px;
+}
+.ace_gutter{
+    min-width: 40px;
 }

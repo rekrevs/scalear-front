@@ -19,6 +19,11 @@ angular.module('scalearAngularApp')
 
     };
 
+    $scope.save = function(){
+        console.log("in save");
+        editor.save();
+    }
+
     $scope.$on('loaded', $scope.init);
 
     $scope.init();

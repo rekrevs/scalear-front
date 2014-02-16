@@ -1,5 +1,4 @@
 <ul class="nav nav-pills">
-    <li id="progress_link" ng-show="current_user && current_user.roles[0].id==5" ng-class="{ active: current_state.includes('course.statistics')}"><a ui-sref="course.statistics({ course_id: current_course_id })"translate>courses.statistics</a></li>
     <li id="progress_link" ng-class="{ active: current_state.includes('course.progress')}"><a ui-sref="course.progress.main({ course_id: current_course_id })"translate>head.progress</a></li>
     <li id="inclass_link" ng-class="{ active: current_state.includes('course.inclass')}"><a ui-sref="course.inclass({ course_id: current_course_id })" translate>head.in_class</a></li>
     <li id="calendar_link" ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: current_course_id })"translate>head.calendar</a></li>
@@ -10,6 +9,7 @@
             <li><a id="info" ui-sref="course.edit_course_information({ course_id: current_course_id })"translate>head.course_information</a></li>
             <li><a id="enrolled" ui-sref="course.enrolled_students({ course_id: current_course_id })"translate>head.enrolled_students</a></li>
             <li><a id="teachers" ui-sref="course.teachers({ course_id: current_course_id })"translate>head.teachers</a></li>
+            <li><a id="teachers" ui-sref="course.statistics({ course_id: current_course_id })"translate>courses.statistics</a></li>
         </ul>
     </li>
     <li style="float:right"><b>{{course_information.short_name}} - {{course_information.name}}</b></li>

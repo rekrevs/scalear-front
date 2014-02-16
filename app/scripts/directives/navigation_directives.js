@@ -11,7 +11,8 @@ angular.module('scalearAngularApp')
 					return scope.current_state.includes('course.edit_course_information') ||
 					scope.current_state.includes('course.enrolled_students') ||
 					scope.current_state.includes('course.teachers') ||
-					scope.current_state.includes('course.send_emails');
+					scope.current_state.includes('course.send_emails') ||
+					scope.current_state.includes('course.statistics');
 				};
 			}
 		};

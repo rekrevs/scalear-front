@@ -282,7 +282,7 @@ angular.module('scalearAngularApp', [
             })
             .state('course.statistics', {
               url: '/statistics',
-              templateUrl: 'views/teacher/statistics/statistics.html',
+              templateUrl: '/views/teacher/statistics/statistics.html',
               controller: 'CourseStatisticsCtrl'
             })
             .state('course.lectures', {

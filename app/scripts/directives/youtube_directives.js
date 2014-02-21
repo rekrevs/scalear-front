@@ -64,7 +64,7 @@ angular.module('scalearAngularApp')
 					url= scope.url.split('?'),
 					base_url = url[0],
 					query = '&'+url[1]
-					media.src = base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&vq=hd720&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
+					media.src = base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
 			        player = Popcorn(media,{});
 			        setupEvents()
 					$log.debug("loading!!!")

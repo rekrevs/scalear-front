@@ -311,3 +311,15 @@ textarea.ng-invalid{ border:1px solid red; }
 a.editable-click { 
   border-bottom: none !important;
 }
+
+.up_active {
+    background-color: lightcyan;
+}
+
+.down_active {
+    background-color: lightcyan;
+}
+
+.flag_active {
+    background-color: lightcyan;
+}

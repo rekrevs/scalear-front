@@ -549,7 +549,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://localhost:3000',
                         redirection_url: 'http://localhost:3000/#/',
-                        version: '2.1.7 (' + new Date().toUTCString() + ')'
+                        version: '2.1.8 (' + new Date().toUTCString() + ')'
                     },
 
                 }
@@ -562,7 +562,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '2.1.7 (' + new Date().toUTCString() + ')'
+                        version: '2.1.8 (' + new Date().toUTCString() + ')'
                     }
 
                 }

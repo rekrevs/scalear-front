@@ -11,11 +11,15 @@ angular.module('scalearAngularApp')
   		quiz: 3,
   		question: 2
   	}
+
+    $scope.$on('$destroy', function() {
+      removeShortcuts()
+    });
+
     $scope.filters={ "All":"",
                     "Confused":"confused",
                     "Questions":"question",
                     "Charts": "charts",
-                    "Free Text Questions":"Free Text Question"
                   }
 
   	var init= function(){
@@ -177,6 +181,12 @@ angular.module('scalearAngularApp')
     		$scope.inner_highlight_index = $scope.inner_highlight_index < 0 ? inner_li.length+$scope.inner_highlight_index : $scope.inner_highlight_index;	    
 	    
   			angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
+
+        if ($scope.selected_item && $scope.selected_item.type=="Free Text Question"){
+          var view_index = $scope.inner_highlight_index-3 < 0? 0: $scope.inner_highlight_index - 3
+          inner_li[view_index].scrollIntoView()
+          $timeout(function(){$window.scrollTo($window.ScrollX,150)})
+        }
   		}
 	    $scope.$apply()
   	}
@@ -214,6 +224,7 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.updateHideQuiz = function(id, value) {
+      console.log("sgr")
   		if(value)
   			$scope.review_quizzes_count--
   		else
@@ -510,6 +521,16 @@ angular.module('scalearAngularApp')
           }
         }
 	    },{"disable_in_input" : true});
+    }
+
+    var removeShortcuts=function(){
+      shortcut.remove("r");
+      shortcut.remove("Down");
+      shortcut.remove("Up");
+      shortcut.remove("Right");
+      shortcut.remove("Left");
+      shortcut.remove("Space");
+      shortcut.remove("h");
     }
 
 	$scope.getKeys = function( obj ) {

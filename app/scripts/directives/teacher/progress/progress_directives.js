@@ -40,6 +40,42 @@ angular.module('scalearAngularApp')
 	    }
     };
 })
+.directive("innerTitle",function(){
+    return{
+	    restrict: "E",
+	    scope: {
+	    	time:'=',
+	    	type:'@',
+	    	title:'@'
+	    },
+	    template:'<span class="inner_title" >'+
+					'<span style="cursor:pointer"><span ng-show="time!=null">[{{time|format:"mm:ss"}}]</span> {{type}}: '+ 
+						'<span style="color:black;font-weight:normal">{{title}}</span>'+
+					'</span>'+
+				'</span>', 
+	    link:function(scope){
+
+	    }
+    };
+})
+.directive("showBox",function(){
+    return{
+	    restrict: "E",
+	    scope: {
+	    	value:"=",
+	    	action:"&"
+	    },
+	    template:'<span>| '+
+					'<input type="checkbox" ng-model="value" ng-change="change()" />'+
+					'<span style="font-size:12px;color:black;font-weight:normal"> Show in-class</span>'+
+				'</span>', 
+	    link:function(scope){
+	    	scope.change=function(){
+	    	 	scope.action()
+	    	}
+	    }
+    };
+})
 .directive("freeTextTable", function(){
 	return {
 		restrict:'E',

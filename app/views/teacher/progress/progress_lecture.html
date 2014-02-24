@@ -26,40 +26,28 @@
 				<p class="title">{{quiz.meta.name}} <span style="font-size:12px">({{getKeys(quiz.charts).length}} questions)</span></p>
 				<ul class="ul_item inner_content" ng-click="highlight($event,item)" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items|filter:{data:'!!',type:custom_filter}" >
 					<li ng-if="item.type=='charts'" ng-init="quiz_chart=createChart(item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData')" class="li_inner blue">
-						<span class="inner_title" >
-							<span style="cursor:pointer">Title: 
-								<span style="color:black;font-weight:normal">{{item.data.title}} ({{item.data.type}})</span>
-							</span>
-						</span>
+						<inner_title type="Title" title="{{item.data.title+' ('+item.data.type+')'}}"/>
 						<div google-chart chart="quiz_chart" class="progress_chart" ></div>
 					</li>
 					<li ng-if="item.type=='Free Text Question'" class="li_inner coral">
-						<span class="inner_title" >
-							<span>Free Text Question: 
-								<span style="color:black;font-weight:normal">{{item.data.title}} </span>
-							</span>
-							<span >| 
-								<input type="checkbox" ng-model="item.data.show" ng-change="updateHideFreeText(quiz.meta.id,item.data.id,item.data.show)" style="margin:0"/>
-								<span style="font-size:12px;color:black;font-weight:normal"> Show in-class</span>
-							</span>	
-							</br>
-							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">
-								<li ng-repeat="question in item.data.answers" style="list-style-position:inside; padding:3px 15px">
-									<span style="float:right"> | 
-										<input type="checkbox" ng-init="question.hide = !question.hide" ng-model="question.hide" ng-change="updateHideResponse(quiz.meta.id,question.id,!question.hide)" style="margin:0 2px"/>
-										<span style="font-size:12px;color:black;font-weight:normal"> Show in-class</span> | 
-										<button_link ng-show="!question.show_feedback" title="replay" action="question.show_feedback = true" class="btn-mini" style="margin:0 5px"/>
-										<button_link ng-show="question.show_feedback" title="cancel" action="question.show_feedback = false" class="btn-mini" style="margin:0 5px"/>
-									</span>	
-									<p style="width:600px;margin-bottom:0">{{question.answer}}</p>
-									<i ng-show="question.response && !question.show_feedback" style="padding-left: 30px;color: steelblue">{{question.response}}</i>
-									<div ng-show="question.show_feedback">
-										<textarea ng-model="question.temp_response"  style="width: 65%;" />
-										<button_link title="{{'courses.send'|translate}}" class="btn-mini" action="sendFeedback(question);question.show_feedback = false" />
-									</div>
-								</li>
-							</ul>
-						</span>
+						<inner_title type="Free Text Question" title="{{item.data.title}}"/>
+						<show_box value="item.data.show" action="updateHideFreeText(quiz.meta.id,item.data.id,!item.data.show)"/>
+						</br>
+						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">
+							<li ng-repeat="question in item.data.answers" style="list-style-position:inside; padding:3px 15px">
+								<show_box ng-init="question.hide = !question.hide" value="question.hide" action="updateHideResponse(quiz.meta.id,question.id,question.hide)" style="float:right"/>
+								<span style="float:right">| 
+									<button_link ng-show="!question.show_feedback" title="replay" action="question.show_feedback = true" class="btn-mini" style="margin:0 5px"/>
+									<button_link ng-show="question.show_feedback" title="cancel" action="question.show_feedback = false" class="btn-mini" style="margin:0 5px"/>
+								</span>	
+								<p style="width:600px;margin-bottom:0">{{question.answer}}</p>
+								<i ng-show="question.response && !question.show_feedback" style="padding-left: 30px;color: steelblue">{{question.response}}</i>
+								<div ng-show="question.show_feedback">
+									<textarea ng-model="question.temp_response"  style="width: 65%;" />
+									<button_link title="{{'courses.send'|translate}}" class="btn-mini" action="sendFeedback(question);question.show_feedback = false" />
+								</div>
+							</li>
+						</ul>						
 					</li>
 				</ul>
 			</div>
@@ -67,37 +55,23 @@
 				<p class="title">{{lec.meta.name}} <span style="font-size:12px">({{lec.meta.duration|format}}, {{getKeys(lec.charts).length}} questions)</span></p>
 				<ul class="ul_item vline inner_content" ng-click="highlight($event, item)" ng-repeat="item in timeline['lecture'][lec.meta.id].items|filter:{data:'!!', type:custom_filter}">
 					<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner maroon" >
-						<span class="inner_title">
-							<span ng-click="seek(item.time, lec.meta.url)" style="cursor:pointer">[{{item.time|format:'mm:ss'}}] {{(item.type[0].toUpperCase()+item.type.slice(1)).split('_').join(' ')}}: </span>
-							<span class="inner_value"> {{item.data}}</span>
-						</span>
+						<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{(item.type[0].toUpperCase()+item.type.slice(1)).split('_').join(' ')}}" />
+						<span class="inner_value"> {{item.data}}</span>
 					</li>
 					<li ng-if="item.type=='question'" class="li_inner coral">
-						<span class="inner_title" >
-							<span ng-click="seek(item.time, lec.meta.url)" style="cursor:pointer">[{{item.time|format:'mm:ss'}}] Questions:</span></br>
-							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">
-								<li ng-repeat="question in item.data" style="list-style-position:inside; padding:3px 15px">
-									<span style="float:right">| 
-										<input type="checkbox" ng-init="question[2] = !question[2]" ng-model="question[2]" ng-change="updateHideQuestion(question[1],!question[2])" style="margin:0 0 0 5px"/>
-										<span style="font-size:12px;color:black;font-weight:normal"> Show in-class</span>
-									</span>	
-									<p style="width:600px">{{question[0]}}</p>
-								</li>
-							</ul>
-						</span>
+						<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="Questions" />
+						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
+							<li ng-repeat="question in item.data" style="list-style-position:inside; padding:3px 15px">
+								<show_box ng-init="question[2] = !question[2]" value="question[2]" action="updateHideQuestion(question[1],question[2])" style="float:right"/>
+								<p style="width:600px">{{question[0]}}</p>
+							</li>
+						</ul>						
 					</li>
 					<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData')" class="li_inner blue">
-						<span class="inner_title" >
-							<span ng-click="seek(item.time, lec.meta.url)" style="cursor:pointer">[{{item.time|format:'mm:ss'}}] Quiz: 
-								<span style="color:black;font-weight:normal">{{item.data.title}} ({{item.data.type}})</span>
-							</span>
-						</span>
+						<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="Quiz" title="{{item.data.title+' ('+item.data.type+')'}}" />
 						<i ng-show="item.data.hide" class="icon-check" style="margin-top:8px;float:right"></i>
 						<div google-chart chart="chart" class="progress_chart" ></div>
-						<span style="margin-left:30px">
-							<input type="checkbox" ng-init="item.data.hide = !item.data.hide" ng-model="item.data.hide" ng-change="updateHideQuiz(item.data.id,!item.data.hide)" />
-							<span style="font-size:12px;color:black;font-weight:normal"> Show in-class</span>
-						</span>
+						<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" style="margin-left:30px"/>
 					</li>
 				</ul>
 			</div>

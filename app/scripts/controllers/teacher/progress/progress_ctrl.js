@@ -31,7 +31,14 @@ angular.module('scalearAngularApp')
 			}
 		}
 
-		$scope.scrollTo = function(id) {
+		$scope.scrollTo = function(item) {
+			var id
+			if(item.class_name == 'quiz')
+				id = item.quiz_type
+			else
+				id="lecture"
+			id+="_"+item.id
+
 	      $location.hash(id);
 	      $anchorScroll();
 	      $timeout(function(){$window.scrollTo($window.scrollX, $window.scrollY-44)})

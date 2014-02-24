@@ -17,11 +17,13 @@ angular.module('scalearAngularApp')
 		 		$scope.modules=data.groups
 		 		$scope.module_obj ={}
 		 		$scope.items_obj ={}
-		 		$scope.modules.forEach(function(module){
+                $scope.items_obj["lecture"]={}
+                $scope.items_obj["quiz"]={}
+                $scope.modules.forEach(function(module){
 		 			$scope.module_obj[module.id] = module
 		 			module.items.forEach(function(item){
-		 				$scope.items_obj[item.id] = item
-		 			})
+                        $scope.items_obj[item.class_name][item.id] = item
+                    })
 		 		})
 
 		 		$scope.init_loading=false
@@ -87,9 +89,9 @@ angular.module('scalearAngularApp')
 	    		$log.debug(data)
 	    		data.lecture.class_name='lecture'
 	    	    $scope.modules[module_index].items.push(data.lecture)
-	    	    $scope.items_obj[data.lecture.id] = data.lecture
-    			$scope.item_overlay = false  
-	    	}, 
+                $scope.items_obj["lecture"][data.lecture.id] = data.lecture
+                $scope.item_overlay=false
+	    	},
 	    	function(){}
 		);
     }
@@ -107,9 +109,9 @@ angular.module('scalearAngularApp')
 	    		function(response){
 	    			 $log.debug(response)
 	    			 var item = $scope.modules[module_index].items.splice(item_index, 1)
-	    			 delete $scope.items_obj[item.id]
-	    			 $scope.item_overlay = false  
-	    			 var str = $location.path();
+                    delete $scope.items_obj["lecture"][item.id]
+                    $scope.item_overlay = false
+                    var str = $location.path();
 					 var res = str.match(/.*\/lectures\/(\d+)/);
 					 if(res && res[1]==l_id)
 	    			 	$state.go('course.course_editor')
@@ -129,9 +131,9 @@ angular.module('scalearAngularApp')
 	    		$log.debug(data)
 	    		data.quiz.class_name='quiz'
 	    	    $scope.modules[module_index].items.push(data.quiz)
-	    	    $scope.items_obj[data.quiz.id] = data.quiz
-    			$scope.item_overlay=false
-	    	}, 
+                $scope.items_obj["quiz"][data.quiz.id] = data.quiz
+                $scope.item_overlay=false
+	    	},
 	    	function(){}
 		);
     }
@@ -146,9 +148,10 @@ angular.module('scalearAngularApp')
 	    		{},
 	    		function(response){
 	    			 var quiz = $scope.modules[module_index].items.splice(item_index, 1)
-	    			 delete $scope.items_obj[quiz.id]
-	    			 $scope.item_overlay=false
-	    			 var str = $location.path();
+
+                    delete $scope.items_obj["quiz"][quiz.id]
+                    $scope.item_overlay=false
+                    var str = $location.path();
 					 var res = str.match(/.*\/quizzes\/(\d+)/);
 					 if(res && res[1]==q_id)
 	    			 	$state.go('course.course_editor')

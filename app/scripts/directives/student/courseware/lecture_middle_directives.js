@@ -16,8 +16,20 @@ angular.module('scalearAngularApp')
   		scope.$on('updatePosition',function(){
   			setButtonsLocation()
   		})
-    	
-    	scope.show_message=false;
+
+        scope.$on('$destroy', function() {
+            //alert("In destroy of:" + scope);
+            //console.log("in destroy of");
+            //console.log(scope);
+            shortcut.remove("c");
+            shortcut.remove("q");
+            shortcut.remove("b");
+            shortcut.remove("Space");
+            shortcut.remove("Enter");
+        });
+
+
+        scope.show_message=false;
     	scope.show_question=false;
     	scope.show_shortcuts=false;
       	

@@ -311,3 +311,8 @@ textarea.ng-invalid{ border:1px solid red; }
 a.editable-click { 
   border-bottom: none !important;
 }
+
+.circle:before {
+      content: ' \25CF';
+      font-size: 30px;
+}

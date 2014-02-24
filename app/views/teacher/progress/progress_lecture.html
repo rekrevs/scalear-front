@@ -8,18 +8,12 @@
 		<a style="float:right;color:white;cursor:pointer" pop-over='popover_options'>more...</a>
 	</div>
 	<div style="">
-		<div ng-init="custom_filter=''" style="width: 790px;margin-left: 20px;padding: 5px;padding-bottom: 0px;color: white;height: 30px;float: left;background: #0088cc;">
+		<div ng-init="custom_filter=''" class="filter">
 			<span>Filter:</span>
-			<input type="radio" name="filter" ng-model="custom_filter" style="margin-left:20px;margin-top:0" value=""/>
-			<span>All</span>
-			<input type="radio" name="filter" ng-model="custom_filter" style="margin-left:20px;margin-top:0" value="confused"/>
-			<span>Confused</span>
-			<input type="radio" name="filter" ng-model="custom_filter" style="margin-left:20px;margin-top:0" value="question"/>
-			<span>Questions</span>
-			<input type="radio" name="filter" ng-model="custom_filter" style="margin-left:20px;margin-top:0" value="charts"/>
-			<span>Charts</span>
-			<input type="radio" name="filter" ng-model="custom_filter" style="margin-left:20px;margin-top:0" value="Free Text Question"/>
-			<span>Free Text Questions</span>
+			<span ng-repeat ="(key,val) in filters">
+				<input type="radio" name="filter" ng-model="$parent.custom_filter" style="margin-left:20px;margin-top:0" value="{{val}}"/>
+				<span>{{key}}</span>
+			</span>
 		</div>
 	</div>
 	<div class="main_content">

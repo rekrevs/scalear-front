@@ -4,20 +4,26 @@ angular.module('scalearAngularApp')
   .controller('progressLectureCtrl', ['$scope', '$stateParams', '$location','Module','Quiz','$log', '$window','$translate','$timeout', function ($scope, $stateParams, $location, Module,Quiz, $log, $window, $translate,$timeout) {
 
   	$scope.highlight_index = -1
-	$scope.inner_highlight_index = -1
-	$scope.progress_player= {}
-	$scope.timeline = {}
+  	$scope.inner_highlight_index = -1
+  	$scope.progress_player= {}
+  	$scope.timeline = {}
   	$scope.time_parameters={
   		quiz: 3,
   		question: 2
   	}
+    $scope.filters={ "All":"",
+                    "Confused":"confused",
+                    "Questions":"question",
+                    "Charts": "charts",
+                    "Free Text Questions":"Free Text Question"
+                  }
 
   	var init= function(){
   		
   		$scope.timeline = new Timeline()
   		Module.getModuleProgress({
 	  			course_id: $stateParams.course_id,
-                module_id: $stateParams.module_id
+          module_id: $stateParams.module_id
 	  		},
 	  		function(data){
 	  			angular.extend($scope, data)
@@ -472,7 +478,10 @@ angular.module('scalearAngularApp')
 	    },{"disable_in_input" : true});
 
 	    shortcut.add("Space",function(){
-			 $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+        if($scope.selected_item.time>0){
+		      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+          $scope.$apply()
+        }
 	    },{"disable_in_input" : true});
 
 	    shortcut.add("h",function(){

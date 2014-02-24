@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
     		selected_id=$scope.selected_survey? $scope.selected_survey[1] : ""
       var id = survey_id || selected_id
     	$scope.loading_surveys_chart = true
-  		Module.getSurveyCharts(
+  		Module.getSurveyChart(
   			{
           course_id: $stateParams.course_id,
   				module_id: $stateParams.module_id || module_id,

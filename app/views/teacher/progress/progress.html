@@ -4,18 +4,37 @@
 
 <div class="row">        
 	<div class="span3">
-	    <ul class="nav nav-list">
+	    <ul class="nav">
 			<li class="nav-header" translate>courses.total_progress</li>    
-			<li ng-class="{active: getLocation() == 0}">
+			<li ng-class="{active: getLocation() == 0}" style="margin-left:15px">
 			    <a ui-sref="course.progress.main()" class="lecture" id="progress_chart" translate>courses.progress_chart</a>
 			</li>           
 	        <li class="nav-header" translate>courses.modules</li>
-			<li bindonce ng-repeat="module in modules" style="cursor:pointer" ng-class="{active: module.id == getLocation()}">
+			<!-- <li bindonce ng-repeat="module in modules" style="cursor:pointer" ng-class="{active: module.id == getLocation()}">
 			    <a ui-sref="course.progress.module({ module_id: module.id })" class="module" bo-text="module.name" ></a>
-			</li>
-	    </ul>                   
+			</li> -->	                  
+		    <accordion  close-others="true" id="acc1" class="accordion">
+				<accordion-group ng-repeat="module in modules | orderBy:'position'" is-open="module.id==open_id" class='module'>
+					<accordion-heading>
+			        	<div ng-click='invertOpen(module.id)' class="module_title">
+							<a class='trigger' ui-sref="course.progress.lecture({module_id:module.id})" ng-class='{open:open[module.id]}' >{{module.name}}</a>
+						</div>
+		        	</accordion-heading>
+	        		<div class="outer">
+			        	<div class="inner" id="modules">
+			        		<ul class="items">
+			            		<li class="last-child item" ng-repeat="item in module.items" style="padding-left: 10px;" >
+		             				<a class="trigger2" ng-click="scrollTo(item.id)" >{{item.name}}</a>
+			            		</li>
+			            	</ul>
+			        	</div>
+			    	</div>
+		      	</accordion-group>	
+			</accordion>  
+		</ul>   
 	</div>
 	<div id='details' class="span11" >
 	    <ui-view/>
 	</div>
 </div>
+<!-- ui-sref="course.progress.lecture({module_id:module.id})" -->

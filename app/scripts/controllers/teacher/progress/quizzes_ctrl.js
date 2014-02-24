@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
                 if ($scope.selected_quiz)
                     quiz_id = $scope.selected_quiz[1]
                 $scope.loading_quizzes_chart = true
-                Module.getQuizCharts({
+                Module.getQuizChart({
                         course_id: $stateParams.course_id,
                         module_id: $stateParams.module_id,
                         quiz_id: quiz_id

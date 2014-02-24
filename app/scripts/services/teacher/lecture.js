@@ -28,7 +28,6 @@ angular.module('scalearAngularApp')
 		"confusedQuestion":{method:'POST', params:{action:'confused_question'}, headers:headers},
 		"saveOnline":{method:'POST', params:{action:'save_online'}, headers:headers},
 		"saveHtml":{method:'POST', params:{action:'save_html'}, headers:headers},
-		
 	});
 
 }]) 

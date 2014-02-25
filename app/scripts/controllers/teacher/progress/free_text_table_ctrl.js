@@ -1,8 +1,26 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('freeTextTableCtrl', ['$scope', '$timeout', 'Quiz', '$log', function ($scope, $timeout, Quiz, $log) {
-        $scope.showFeedback = function(answers, index){
+  .controller('freeTextTableCtrl', ['$scope', '$timeout', 'Quiz', '$log','Lecture','$stateParams', function ($scope, $timeout, Quiz, $log, Lecture, $stateParams) {
+
+    $scope.grade_options= [{
+        value: 0, // not set
+        text: 'Under Review'
+    }, {
+        value: 1, // wrong
+        text: 'Wrong'
+    }, {
+        value: 2,
+        text: 'Partial'
+    }, {
+        value: 3,
+        text: 'Good'
+    }]
+
+    $scope.grade_display={0 : "Under Review", 1: "Wrong", 2:"Partial", 3:"Good"}
+
+
+    $scope.showFeedback = function(answers, index){
     	answers.showGroups = true
 		for(var i in answers){
     		answers[i].show_feedback = false
@@ -18,20 +36,34 @@ angular.module('scalearAngularApp')
 		answers[index].group_selected = false
     }
 
-    $scope.saveCheckedHide = function(answer_id, answer_hide){
-    	Quiz.hideResponses(
-    		{quiz_id: $scope.survey_id},
-    		{
-                hide:{
-                    id:answer_id, 
-                    hide: answer_hide
-                }                
-            }
-		)
+    $scope.saveCheckedHide = function(answer_id, answer_hide, type){
+    	if(type=='survey')
+        {
+            Quiz.hideResponses(
+                {quiz_id: $scope.survey_id},
+                {
+                    hide:{
+                        id:answer_id,
+                        hide: answer_hide
+                    }
+                }
+            )
+        }else{
+            Lecture.hideResponses(
+                {lecture_id: $scope.lecture_id},
+                {
+                    hide:{
+                        id:answer_id,
+                        hide: answer_hide
+                    }
+                }
+            )
+        }
     }
 
-    $scope.sendFeedback=function(answers,index){
+    $scope.sendFeedback=function(answers,index, type){
     	var survey_id = $scope.survey_id
+        var lecture_id = $scope.lecture_id // continue this.
     	var selected = []
     	var ind = 0
     	var response = answers[index].response
@@ -42,6 +74,8 @@ angular.module('scalearAngularApp')
     			ind++
     		}
     	})
+        if(type=='survey')
+        {
 		Quiz.sendFeedback(
 			{quiz_id: survey_id},
 			{
@@ -53,12 +87,28 @@ angular.module('scalearAngularApp')
 			},
 			function(){}
 		)
+        }else{
+            Lecture.sendFeedback(
+                {lecture_id: lecture_id},
+                {
+                    groups:selected,
+                    response:response
+                },
+                function(){
+                    hideFeedback(answers, index)
+                },
+                function(){}
+            )
+        }
     }
 
-    $scope.deleteFeedback=function(answers,index){
+    $scope.deleteFeedback=function(answers,index, type){
     	var survey_id = $scope.survey_id
     	var id = answers[index].id
     	$log.debug(answers[index])
+
+        if(type=='survey')
+        {
     	Quiz.deleteFeedback(
     		{quiz_id: survey_id},
     		{answer:id},
@@ -68,5 +118,26 @@ angular.module('scalearAngularApp')
     		},
     		function(){}
 		)
+        }
+        else{
+            Lecture.deleteFeedback(
+                {lecture_id: $scope.lecture_id, answer:id},
+                {},
+                function(){
+                    answers[index].response=""
+                    hideFeedback(answers, index)
+                },
+                function(){}
+            )
+        }
+    }
+
+    $scope.updateGrade = function(answer){
+        Quiz.updateGrade(
+            {course_id:$stateParams.course_id, quiz_id: answer.quiz_id },
+            {answer_id: answer.id, grade:answer.grade},
+            function(response){
+                //$scope.data=response;
+            });
     }
   }]);

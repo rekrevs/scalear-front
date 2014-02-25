@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
                     $scope.lecture.url+="&controls"
                 for(var element=$scope.lecture.online_quizzes.length-1; element>=0; element--) // if no answers remove it
                 {
-                    if ($scope.lecture.online_quizzes[element].online_answers.length == 0)
+                    if ($scope.lecture.online_quizzes[element].online_answers.length == 0 && $scope.lecture.online_quizzes[element].question_type!="Free Text Question")
                         $scope.lecture.online_quizzes.splice(element, 1);
                 }
                 $scope.next_item = data.next_item
@@ -77,6 +77,8 @@ angular.module('scalearAngularApp')
                                 $scope.quiz_layer.overflowY = 'auto'
                                 if (quiz.question_type.toUpperCase() == "DRAG")
                                     $scope.studentAnswers[quiz.id] = quiz.online_answers[0].answer;
+                                if (quiz.question_type.toUpperCase() == "FREE TEXT QUESTION")
+                                    $scope.studentAnswers[quiz.id] = "";
                             }
                             $scope.$apply()
                         })

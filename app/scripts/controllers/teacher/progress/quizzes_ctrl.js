@@ -1,35 +1,45 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('quizzesCtrl', ['$scope', '$stateParams', '$timeout', 'Module', '$translate', '$log',
-        function($scope, $stateParams, $timeout, Module, $translate, $log) {
+    .controller('quizzesCtrl', ['$scope', '$stateParams', '$timeout', 'Module', '$translate', '$log','Quiz',
+        function($scope, $stateParams, $timeout, Module, $translate, $log,Quiz) {
 
             $scope.quizzesTab = function() {
                 $scope.tabState(6)
                 $scope.disableInfinitScrolling()
                 if (!$scope.selected_quiz)
-                    getQuizCharts()
+                    $scope.getQuizCharts()
             }
 
-            var getQuizCharts = function() {
-                var quiz_id
-                if ($scope.selected_quiz)
+            $scope.getQuizCharts = function(view, module_id, given_id) {
+
+                var quiz_id;
+                if($scope.selected_quiz)
                     quiz_id = $scope.selected_quiz[1]
+                var id = quiz_id || given_id
                 $scope.loading_quizzes_chart = true
                 Module.getQuizCharts({
                         course_id: $stateParams.course_id,
-                        module_id: $stateParams.module_id,
-                        quiz_id: quiz_id
+                        module_id: $stateParams.module_id ||module_id,
+                        quiz_id: id,
+                        display_only:view
                     },
                     function(data) {
                         $log.debug(data)
                         $scope.quiz_chart_data = data.chart_data
                         $scope.quiz_chart_questions = data.chart_questions
                         $scope.student_count = data.students_count
+
+                        $scope.ordered_quiz= data.ordered_quiz
+                        $scope.quiz_free= data.quiz_free
+                        $scope.related_answers = data.related
+
+
                         if (!$scope.selected_quiz) {
                             $scope.all_quizzes = data.all_quizzes
                             $scope.selected_quiz = $scope.all_quizzes ? $scope.all_quizzes[0] : ""
                         }
+                        $scope.quiz_button_msg = $scope.selected_quiz[2]? "groups.hide" : "groups.make_visible"
                         $scope.loading_quizzes_chart = false
                         $scope.$watch("current_lang", redrawChart);
                     },
@@ -82,6 +92,17 @@ angular.module('scalearAngularApp')
                 return formated_data
             }
 
+            $scope.makeQuizVisibleBtn=function(visible){
+                var quiz_id = $scope.selected_quiz[1]
+                $scope.selected_quiz[2] = !$scope.selected_quiz[2]
+                Quiz.makeVisible({quiz_id:quiz_id},
+                    {visible:$scope.selected_quiz[2]},
+                    function(data){
+                        $scope.quiz_button_msg = $scope.selected_quiz[2]? "groups.hide" : "groups.make_visible"
+                    }
+                )
+            }
+
             $scope.createQuizChart = function(chart_data, ind, student_count) {
                 var chart = {};
                 chart.type = "ColumnChart"
@@ -110,7 +131,7 @@ angular.module('scalearAngularApp')
                 $log.debug($scope.selected_quiz)
                 $scope.quiz_chart_data = {}
                 $scope.quiz_chart_questions = {}
-                getQuizCharts()
+                $scope.getQuizCharts()
             }
 
             var redrawChart = function(new_val, old_val) {

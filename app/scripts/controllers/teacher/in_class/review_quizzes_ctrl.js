@@ -21,6 +21,9 @@ angular.module('scalearAngularApp')
                     $scope.lecture_data = data.charts_data
                     $scope.student_count = $scope.lecture_data.students_count
                     $scope.loading_lectures_chart = false
+
+                    $scope.quiz_free= data.quiz_free
+                    $scope.related_answers = data.related
                 }
             );
         }

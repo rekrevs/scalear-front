@@ -10,9 +10,10 @@
 			<tr ng-repeat="id in lecture_data.question_ids">
 				<td style="padding-top:90px" ><input type="checkbox" ng-init = "lecture_data.checked[id] = !lecture_data.checked[id]" ng-model="lecture_data.checked[id]" ng-change="updateHide(id, !lecture_data.checked[id])" /></td>
 				<td>
-					<div class="chart" style='min-width:300px; height:205px;' ng-init="chart=createLectureChart(id, student_count)"> 
+					<div ng-if="lecture_data.questions[id][2]!='Free Text Question'" class="chart" style='min-width:300px; height:205px;' ng-init="chart=createLectureChart(id, student_count)">
 					    <div google-chart chart="chart" ></div>
 					</div>
+                    <free-text-table ng-if="lecture_data.questions[id][2]=='Free Text Question'" question="quiz_free[id]" lecture_id="quiz_free[id]['lecture_id']" related-answers="related_answers" />
 				</td>
 			</tr>
 		</table>

@@ -28,6 +28,9 @@ angular.module('scalearAngularApp')
 		"confusedQuestion":{method:'POST', params:{action:'confused_question'}, headers:headers},
 		"saveOnline":{method:'POST', params:{action:'save_online'}, headers:headers},
 		"saveHtml":{method:'POST', params:{action:'save_html'}, headers:headers},
+        "hideResponses":{method:'POST',params:{action:'hide_responses'},headers:headers},
+        "sendFeedback":{method:'POST', params:{action:'create_or_update_survey_responses'},headers:headers},
+        "deleteFeedback":{method:'DELETE',params:{action:'delete_response'},headers:headers}
 		
 	});
 

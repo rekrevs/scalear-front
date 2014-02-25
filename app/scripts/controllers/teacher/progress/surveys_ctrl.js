@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
           $scope.$watch("current_lang", redrawChart);
   			}, 
   			function(){
-  				//alert("Failed to load survyes, please check your internet connection")
+  				//alert("Failed to load surveys, please check your internet connection")
   			}
 		)
   	}

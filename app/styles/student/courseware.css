@@ -161,6 +161,16 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	float:right;
 }
 
+.orange{
+    color:orange;
+    float:right;
+}
+
+.gray{
+    color:gray;
+    float:right;
+}
+
 .red{
 	color:#DD1144;
 	float:right;

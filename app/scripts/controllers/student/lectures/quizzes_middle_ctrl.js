@@ -3,6 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state) {
     $controller('surveysCtrl', {$scope: $scope});
+    $controller('quizzesCtrl', {$scope: $scope});
     
  	var init = function(){
         $scope.studentAnswers={};
@@ -24,6 +25,8 @@ angular.module('scalearAngularApp')
 			});
             if($scope.quiz.quiz_type=='survey')
                 $scope.getSurveyCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)
+            else
+                $scope.getQuizCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)
 	    });
 	}
  	

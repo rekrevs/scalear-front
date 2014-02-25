@@ -82,6 +82,13 @@ var openModal=function(view, type){
       }
     }
 
+    $scope.quiz=function(disabled, state){
+        if(!disabled){
+            $scope.in_review= state
+            openModal('review','NormalQuizzes')
+        }
+    }
+
     $scope.exitBtn = function () {
       $rootScope.changeError = false;
       angular.element("body").css("overflow","auto");

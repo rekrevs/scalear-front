@@ -24,7 +24,8 @@ angular.module('scalearAngularApp')
 	$scope.quiz_types_list=[
 		{type:'MCQ', text:"insert_mcq"},
 		{type:'OCQ', text:"insert_ocq"}, 
-		{type:'drag',text:"insert_drag"}
+		{type:'drag',text:"insert_drag"},
+        {type:'Free Text Question',text:"insert_free_text_question", only:"html"}
 	]
 	
     $state.go('course.course_editor.lecture.quizList');

@@ -6,10 +6,14 @@
 		<loading size="small" show="loading_quizzes_chart" />
 		<div ng-if="!all_quizzes && !loading_quizzes_chart" translate>courses.no_quizzes</div>
 	</center>
-	<div ng-repeat="(id,value) in quiz_chart_data" class="chart" ng-init="chart=createQuizChart(value, $index,student_count)">
-	    <div ><span translate>answer.question</span> {{$index+1}}:</div>
-	    <center ng-init="loading=true"><loading size="small" show="loading" /></center>
-	    <div google-chart on-ready="loading=false" chart="chart"></div>
-	    <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
-	</div>
+    <button_link ng-show="quiz_button_msg && all_quizzes" action="makeQuizVisibleBtn()" title="{{quiz_button_msg|translate}}" style="margin:10px 0px" />
+    <div ng-repeat="element in ordered_quiz">
+        <div ng-if="element[1]!='Free Text Question'" class="chart" ng-init="chart=createQuizChart(quiz_chart_data[element[0]].answers, $index,student_count)">
+            <div ><span translate>answer.question</span> {{$index+1}}:</div>
+            <center ng-init="loading=true"><loading size="small" show="loading" /></center>
+            <div google-chart on-ready="loading=false" chart="chart"></div>
+            <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
+        </div>
+        <free-text-table graded="true" ng-if="element[1]=='Free Text Question'" question="quiz_free[element[0]]" survey-id="selected_quiz[1]" related-answers="related_answers" />
+    </div>
 </div>

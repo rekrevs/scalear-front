@@ -20,17 +20,29 @@
             </div>
         </span>
     </div>
-    <div class="inclass_bottom">
-        <div class="left_titles">
-            <div ng-show="question_title" class="question_title">{{question_title}}</div>
+    <div class="inclass_bottom" ng-style="bottom">
+        <div class="left_titles" ng-style="left">
+            <div ng-show="question_title" class="question_title" ng-style="title">{{question_title}}</div>
             <div ng-show="questions" style="overflow:auto;height:100%;width:98%;">
                 <div ng-repeat="question in questions" ng-click="seek(question[1])" class="student_questions" >{{question[0]}}<br></div>
             </div>
-            <div ng-if="chart_data" class="inclass_chart">
+            <div ng-if="chart_data && quiz_type!='Free Text Question'" class="inclass_chart">
                 <center ng-init="loading_chart=true" style="font-size:14px;position:relative;top:40%;left:15%;">
                     <loading size="small" show="loading_chart" >
                 </center>
                 <div google-chart chart="chart" on-ready="loading_chart=false"></div>
+            </div>
+
+            <div ng-style="right" ng-if="quiz_type=='Free Text Question'" style="width: 50%;display: block;float: right;overflow: scroll;height: 100%;line-height: 30px">
+                <input ng-click="enlarge()" type="button" value={{enlarge_text}} class="btn" style="float: right;margin-right: 20px;">
+                <free-text-table question="quiz_free[quiz_id]" lecture_id="lecture_id" related-answers="related_answers" display-only="true"/>
+            <!--<input ng-click="enlarge()" type="button" value={{enlarge_text}} class="btn" style="float: right;margin-right: 20px;">-->
+            <!--<table class="table">-->
+                <!--<tr ng-repeat="answer in quiz_free[quiz_id].answers|survey:true">-->
+                    <!--<td style="line-height: 30px">{{answer.online_answer}}</td>-->
+                    <!--<td style="line-height: 30px">{{answer.response}}</td>-->
+                <!--</tr>-->
+            <!--</table>-->
             </div>
         </div>
        

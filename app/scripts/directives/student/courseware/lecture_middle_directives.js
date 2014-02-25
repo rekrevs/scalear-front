@@ -109,11 +109,17 @@ angular.module('scalearAngularApp')
     	scope.submit_question = function()
     	{
     		$log.debug("will submit "+scope.question_asked);
-  		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
-  			scope.question_asked="";
-  			scope.show_question=false;
-  			scope.lecture_player.controls.play();	
-  		});
+  		    if(scope.question_asked!="")
+            {
+                Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
+                    scope.question_asked="";
+                    scope.show_question=false;
+                    scope.lecture_player.controls.play();
+                });
+            }else{
+                scope.show_question=false;
+                scope.lecture_player.controls.play();
+            }
     		
     	};
     	scope.setShortcuts = function()
@@ -158,7 +164,7 @@ angular.module('scalearAngularApp')
 .directive("notification", ['$translate', '$window', '$log', function($translate, $window, $log) {
   return {
     restrict:"E",
-    template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification==true" style="vertical-align:middle"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div></div>',
+    template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification==true" style="vertical-align:middle"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && (selected_quiz.question_type.toUpperCase()==\'DRAG\' || selected_quiz.question_type.toUpperCase()==\'FREE TEXT QUESTION\')" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div></div>',
 
     link: function(scope, element, attrs) {
       scope.correct_notify=$translate("lectures.correct")
@@ -239,7 +245,9 @@ angular.module('scalearAngularApp')
 			 	sendAnswers()
     		}else{
     			$log.debug(scope.answer_form);
-    			if(!scope.answer_form.$error.atleastone || scope.answer_form.$error.atleastone==false)
+                console.log(scope.selected_quiz.question_type=='Free Text Question');
+                console.log(scope.answer_form.$error.required);
+    			if((!scope.answer_form.$error.atleastone || scope.answer_form.$error.atleastone==false) && !(scope.selected_quiz.question_type=='Free Text Question' && scope.answer_form.$error.required))
     			{
     				$log.debug("valid form")
     				scope.submitted=false;
@@ -321,8 +329,12 @@ angular.module('scalearAngularApp')
         for(var el in data.detailed_exp)
           scope.explanation[el]= data.detailed_exp[el];
 
-        scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
-        scope.$parent.show_notification=true;
+        if(data.review)
+            scope.verdict= $translate("lectures.reviewed");
+        else
+            scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
+
+          scope.$parent.show_notification=true;
 
 		if(data.msg!="Empty") // he chose sthg
 	    {
@@ -369,7 +381,8 @@ angular.module('scalearAngularApp')
 	 	restrict: 'E',
 	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' style='/*overflow:auto*/' >"+
 					"<div ng-switch-when='MCQ' ><student-html-mcq  ng-repeat='answer in quiz.online_answers' /></div>"+
-					"<div ng-switch-when='OCQ' ><student-html-ocq  ng-repeat='answer in quiz.online_answers' /></div>"+	
+					"<div ng-switch-when='OCQ' ><student-html-ocq  ng-repeat='answer in quiz.online_answers' /></div>"+
+                    "<div ng-switch-when='FREE TEXT QUESTION'><student-html-free /></div>"+
 					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='studentAnswers[quiz.id]'>"+
 						"<student-html-drag ng-repeat='answer in studentAnswers[quiz.id]' />"+
 					"</ul>"+
@@ -410,7 +423,32 @@ angular.module('scalearAngularApp')
 			
 		}
 	};
-}]).directive('studentHtmlMcq',['$translate','$log',function($translate, $log){	
+}]).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
+        return{
+            restrict:'E',
+            template:"<ng-form name='aform'>"+
+                "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
+                "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='courses.required'></span><br/>"+
+                "</ng-form>",
+            link:function(scope){
+
+//                scope.$watch('explanation[answer.id]', function(newval){
+//                    if(scope.explanation && scope.explanation[scope.answer.id])
+//                    {
+//                        $log.debug("exp changed!!!")
+//                        scope.mypop={
+//                            title:'<b ng-class="{\'green_notification\':explanation[answer.id][0]==true, \'red_notification\':explanation[answer.id][0]==false}">{{explanation[answer.id][0]==true?("lectures.correct"|translate) : ("lectures.incorrect"| translate)}}</b>',
+//                            content:'<div>{{explanation[answer.id][1]}}</div>',
+//                            html:true,
+//                            trigger:'hover'
+//                        }
+//                    }
+//                })
+            }
+
+        }
+
+    }]).directive('studentHtmlMcq',['$translate','$log',function($translate, $log){
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform'>"+

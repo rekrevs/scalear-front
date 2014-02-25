@@ -3,14 +3,21 @@
       <tr>
          <th width='10px'>{{$index+1}}</th>
          <th colspan='2'>{{question.content}}</th>
-         <th ng-if='quiz.quiz_type=="quiz"'>
+         <th ng-if='quiz.quiz_type=="quiz" && question.question_type!="Free Text Question"'>
             <p ng-if='correct[question.id]==1' class='green' translate='lectures.correct'></p>
             <p ng-if='correct[question.id]==0' class='red' translate='lectures.incorrect'></p>
+         </th>
+         <th ng-if='quiz.quiz_type=="quiz" && question.question_type=="Free Text Question"'>
+             <p ng-if='correct[question.id]==0' class='gray' translate='lectures.reviewed'></p>
+             <p ng-if='correct[question.id]==1' class='red' translate='lectures.incorrect'></p>
+             <p ng-if='correct[question.id]==2' class='orange' translate='lectures.partial'></p>
+             <p ng-if='correct[question.id]==3' class='green' translate='lectures.correct'></p>
          </th>
       </tr>
       <tr ng-if='question.question_type == "Free Text Question"'>
          <td><img src='images/spacer.gif' height='1px' width='1px' /></td>
          <td colspan='2'><textarea ng-model='studentAnswers[question.id]' style='width:500px;height:100px;'></textarea></td>
+         <td ng-if='quiz.quiz_type=="quiz"'></td>
       </tr>
       <tr ng-if='question.question_type.toUpperCase()=="OCQ" || question.question_type.toUpperCase()=="MCQ"' ng-repeat='answer in question.answers'>
          <td><img src='images/spacer.gif' height='1px' width='1px' /></td>

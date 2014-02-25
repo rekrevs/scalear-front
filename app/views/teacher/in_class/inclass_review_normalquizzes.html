@@ -1,0 +1,41 @@
+<div style="margin-top: -20px; padding:40px;font-size:16px;"><a ng-click="exitBtn()"  style="cursor:pointer" translate>groups.exit</a></div>
+<center>
+	<loading size="big" show="loading_quizzes_chart" />
+	<div ng-show="!loading_quizzes_chart">
+		<h4><b><span ng-show="in_review" translate>courses.review</span><span translate>courses.student_quizzes</span> {{selected_module.name}}</b></h4>
+		<button_link title="<<" action="prevQuiz()" style="margin-right:10px" ng-disabled="current_quiz<= 0" />
+		<b>{{selected_quiz[0]}}</b>
+	 	<button_link title=">>" action="nextQuiz()" style="margin-left:10px" ng-disabled="current_quiz == all_quizzes.length -1"/>
+	</div>
+	<div ng-show="all_quizzes && !loading_quizzes_chart" style="padding:10px 40px" >
+		<table class="table table-striped"> 
+			<tr>
+				<th colspan="2" ng-show="in_review" translate>answer.show</th>
+			</tr>
+            <tbody ng-repeat="element in ordered_quiz">
+                <tr ng-if="element[1]!='Free Text Question' && (in_review || quiz_chart_data[element[0]].show)" >
+                    <td style="padding-top:90px" >
+                        <input ng-show="in_review" type="checkbox" ng-model="quiz_chart_data[element[0]].show" ng-change="showInclass(element[0], quiz_chart_data[element[0]].show)" />
+                    </td>
+                    <td>
+                        <div class="chart" style='width:90%;height:100%' ng-init="chart=createQuizChart(quiz_chart_data[element[0]].answers, $index, student_count)" >
+                            <center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
+                            <div google-chart on-ready="loading=false" chart="chart" ></div>
+                        </div>
+                    </td>
+                </tr>
+                <tr ng-if="element[1]=='Free Text Question' && (in_review || quiz_free[element[0]].show)" style="margin-top:60px">
+                    <td colspan="2">
+                    <div ng-show="in_review" style="position:absolute">
+                        <input type="checkbox" ng-model="quiz_free[element[0]].show" ng-change="showInclass(element[0], quiz_free[element[0]].show)" style="margin-bottom:8px; margin-right:10px"/>
+                        <span style="line-height:50px"><span translate>courses.show_in_class</span>?</span>
+                    </div>
+                    <free-text-table graded="true" question="quiz_free[element[0]]" survey-id="selected_quiz[1]" related-answers="related_answers" display-only="!in_review"/>
+                    </td>
+                </tr>
+
+            </tbody>
+		</table>
+	</div>
+</center>
+<div style="padding:40px;font-size:16px;"><a id="exit_btn" ng-click="exitBtn()" style="cursor:pointer" translate>groups.exit</a></div>

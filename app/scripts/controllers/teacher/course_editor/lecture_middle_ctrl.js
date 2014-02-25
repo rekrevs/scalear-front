@@ -58,12 +58,12 @@ angular.module('scalearAngularApp')
  		var new_time = time 
  		var inc = 0
  		$scope.quiz_list.forEach(function(quiz){
- 		    if(quiz.time == parseInt(new_time+1))
+ 		    if(parseInt(quiz.time) == parseInt(new_time+1))
  				new_time+= 3
- 			else if(quiz.time == parseInt(new_time)){
+ 			else if(parseInt(quiz.time) == parseInt(new_time)){
  				new_time+= 2
  			} 					
- 			else if(quiz.time == parseInt(new_time-1))
+ 			else if(parseInt(quiz.time) == parseInt(new_time-1))
  				new_time+= 1
  		})
  		return new_time
@@ -88,7 +88,7 @@ angular.module('scalearAngularApp')
 		Lecture.newQuiz({
 			course_id: $stateParams.course_id,
 			lecture_id: $scope.lecture.id,
-			time: Math.floor($scope.lecture_player.controls.getTime()), 
+			time: $scope.lecture_player.controls.getTime(), 
 			quiz_type: quiz_type, 
 			ques_type: question_type
 		},

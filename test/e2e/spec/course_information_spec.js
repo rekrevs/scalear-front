@@ -457,7 +457,7 @@ describe("Course Information Pages", function() {
             feedback(ptor, 'Saved');
         });
         logout(ptor, driver);
-        login(ptor, driver, 'bahiafayez@hotmail.com', 'password', 'bahia', findByName);
+        login(ptor, driver, 'bahiafayez@hotmail.com', 'password', 'baheya', findByName);
         it('should see notifications and reject the invitation', function() {
             ptor.findElement(protractor.By.linkText('Notifications')).then(function(link) {
                 link.click().then(function() {
@@ -502,7 +502,7 @@ describe("Course Information Pages", function() {
             feedback(ptor, 'Saved');
         });
         logout(ptor, driver);
-        login(ptor, driver, 'bahiafayez@hotmail.com', 'password', 'bahia', findByName);
+        login(ptor, driver, 'bahiafayez@hotmail.com', 'password', 'baheya', findByName);
         it('should see notifications and accept the invitation', function() {
             ptor.findElement(protractor.By.linkText('Notifications')).then(function(link) {
                 link.click().then(function() {

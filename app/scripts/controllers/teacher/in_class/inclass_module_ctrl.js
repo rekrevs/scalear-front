@@ -138,6 +138,9 @@ var openModal=function(view, type){
 
     $scope.inclass_player.events.onReady=function(){
       $scope.loading_video=false
+      if($scope.should_mute == true){
+        $scope.muteBtn()
+      }
     }
 
     $scope.inclass_player.events.onMeta=function(){

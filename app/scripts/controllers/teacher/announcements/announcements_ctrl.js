@@ -106,9 +106,12 @@ angular.module('scalearAngularApp')
           function(data){
       			$scope.announcements[index]=data.announcement;
       			$scope.disable_new = false;
+            $scope.saving = false;
+
       		},
           function(response){
       			$scope.announcements[index].errors=response.data.errors
+            $scope.saving = false;
       		}
         )
   		}

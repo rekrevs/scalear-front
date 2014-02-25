@@ -44,12 +44,11 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        // 'test/e2e/spec/course_information_spec.js',
-        // 'test/e2e/spec/announcements_spec.js',
-        //    'test/e2e/spec/calendar_teacher_spec.js',
+        'test/e2e/spec/course_information_spec.js',
+        'test/e2e/spec/announcements_spec.js',
+           // 'test/e2e/spec/calendar_teacher_spec.js',
         //    'test/e2e/spec/calendar_student_spec.js',
         //    'test/e2e/spec/calendar_student_2_spec.js',
-        //'test/e2e/spec/progress_spec.js'
         // 'test/e2e/spec/progress_spec.js'
 
         // 'test/e2e/spec/course_editor_spec.js'
@@ -57,7 +56,7 @@ exports.config = {
         //    'test/e2e/spec/student_lectures_spec.js'
         // 'test/e2e/spec/links_spec.js',
         // 'test/e2e/spec/hotfixes_2.0.1_2.0.2.js'
-        'test/e2e/spec/batie5.js'
+        // 'test/e2e/spec/batie5.js'
 
     ],
 
@@ -75,8 +74,8 @@ exports.config = {
     //
     // A base URL for your application under test. Calls to protractor.get()
     // with relative paths will be prepended with this.
-    // baseUrl: 'http://localhost:9000/#/',
-    baseUrl: 'http://staging.scalable-learning.com/#/',
+    baseUrl: 'http://localhost:9000/#/',
+    // baseUrl: 'http://staging.scalable-learning.com/#/',
 
 
     // Selector for the element housing the angular app - this defaults to
@@ -101,10 +100,8 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
 
-        //frontend: 'http://localhost:9000/#/',
-        //      backend: 'http://localhost:3000/',
-        //      auth: 'http://localhost:4000/'
-        frontend: 'http://staging.scalable-learning.com/#/',
+        frontend: 'http://localhost:9000/#/',
+        // frontend: 'http://staging.scalable-learning.com/#/',
         width: 1366,
         height: 768
 

@@ -2,11 +2,7 @@
 	<video_container class="largescreen span" style="margin-left:20px">
 		<youtube id="progress_lec_video" url="url" player="progress_player" class="largescreen" />
 	</video_container>
-	<div ng-show="inclass_estimate!=null" class="time_estimate">
-		<h4>Time Estimate</h4>
-		<span>In-class: <b>{{inclass_estimate}} minutes</b></span>
-		<a style="float:right;color:white;cursor:pointer" pop-over='popover_options'>more...</a>
-	</div>
+	<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count" />
 	<div style="">
 		<div ng-init="custom_filter=''" class="filter">
 			<span>Filter:</span>

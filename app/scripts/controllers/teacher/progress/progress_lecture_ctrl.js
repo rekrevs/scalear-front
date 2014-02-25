@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams', '$location','Module','Quiz','$log', '$window','$translate','$timeout', function ($scope, $stateParams, $location, Module,Quiz, $log, $window, $translate,$timeout) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','$log', '$window','$translate','$timeout', function ($scope, $stateParams, Timeline, Module,Quiz, $log, $window, $translate,$timeout) {
 
   	$scope.highlight_index = -1
   	$scope.inner_highlight_index = -1
@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
       removeShortcuts()
     });
 
-    $scope.filters={ "All":"",
+    $scope.filters={"All":"",
                     "Confused":"confused",
                     "Questions":"question",
                     "Charts": "charts",
@@ -38,106 +38,79 @@ angular.module('scalearAngularApp')
 	  	 			for(var type in $scope.lectures[lec_id]){
 	  	 				if(type!= "meta")
 		  	 				for(var it in $scope.lectures[lec_id][type] ){
-			  	 				var item = new TimeItem($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])
-			  	 				$scope.timeline['lecture'][lec_id].add(item)	
+			  	 				$scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])	
 			  	 			}
 	  	 			}	  	 			
 	  	 		}
 	  	 		getModuleCharts()
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
-	  	 		$scope.numbers = []
-	  	 		for (var i = 0; i <= 60; i++) {
-			        $scope.numbers.push(i);
-			    }
-	  	 		var template = "<div style='color:black;font-size:12px'>"+
-	  	 						"<span class='span2' style='margin-left:0'>Time per quiz:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_parameters.quiz' ng-options='i for i in numbers'></select></span>"+
-	  	 						"<span class='span2' style='margin-top: 5px;margin-left: 15px;'>Quizzes for review: {{review_quizzes_count}}</span><br><br>"+
-	  	 						"<span class='span2' style='margin-left:0; width:160px'>Time per question:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_parameters.question' ng-options='i for i in numbers'></select></span>"+	  	 						
-	  	 						"<span class='span2' style='margin-top: 5px;margin-left:0'>Questions for review: {{review_question_count}}</span><br><br>"+
-	  	 						"<span>Formula:</span><br>"+
-	  	 					    "<i style='text-align:center;'>( #Quizzes for review  * {{time_parameters.quiz}} ) + ( #Questions for review * {{time_parameters.question}} )</i>"+
-	  	 					   "</div>"
-
-	           	$scope.popover_options={
-	            	content: template,
-	            	html:true,
-	            	placement:"bottom"
-	            }
-
-	            $scope.$watchCollection('[time_parameters.quiz, time_parameters.question,review_quizzes_count,review_question_count]', function(newValues){
-	  	 			$scope.inclass_estimate = estimateCalculator($scope.review_quizzes_count, $scope.review_question_count)					
-				});
-
-				setupShortcuts()
+				  setupShortcuts()
 	  		},	
 	  		function(){}
 		)
   	}
 
  	var getModuleCharts = function(){
-        Module.getModuleCharts(
-            {             
-                course_id: $stateParams.course_id,
-                module_id:$stateParams.module_id
-            },
-            function(data){   
-            	var item = new TimeItem(0, 'module', data.module_data)
-            	$scope.timeline["module"]= new Timeline()
-            	$scope.timeline["module"].add(item)
-            },
-            function(){}
-        )
-    }
+    Module.getModuleCharts(
+        {             
+            course_id: $stateParams.course_id,
+            module_id:$stateParams.module_id
+        },
+        function(data){ 
+        	$scope.timeline["module"]= new Timeline()
+        	$scope.timeline["module"].add(0, 'module', data.module_data)
+        },
+        function(){}
+    )
+  }
 
 	var getQuizCharts = function(){
-        Module.getQuizCharts(
-          {             
-              course_id: $stateParams.course_id,
-              module_id:$stateParams.module_id
-          },
-          function(data){
-          	$scope.quizzes = data.quizzes  
-          	$scope.timeline['quiz'] ={}
-  	  	 		for(var quiz_id in $scope.quizzes){
-  	  	 			$scope.timeline['quiz'][quiz_id] = new Timeline()
-  	  	 			for(var q_idx in $scope.quizzes[quiz_id].questions){
-                var q_id = $scope.quizzes[quiz_id].questions[q_idx].id
-                $scope.quizzes[quiz_id].charts[q_id].type = $scope.quizzes[quiz_id].questions[q_idx].type
-                $scope.quizzes[quiz_id].charts[q_id].title = $scope.quizzes[quiz_id].questions[q_idx].question
-  	  	 			  var item = new TimeItem(0, 'charts', $scope.quizzes[quiz_id].charts[q_id])
-  	  	 			  $scope.timeline['quiz'][quiz_id].add(item)
-              }
-  	  	 		}
-  	 	    },
-          function(){}
-        )
-    }
+    Module.getQuizCharts(
+      {             
+          course_id: $stateParams.course_id,
+          module_id:$stateParams.module_id
+      },
+      function(data){
+      	$scope.quizzes = data.quizzes  
+      	$scope.timeline['quiz'] ={}
+  	 		for(var quiz_id in $scope.quizzes){
+  	 			$scope.timeline['quiz'][quiz_id] = new Timeline()
+  	 			for(var q_idx in $scope.quizzes[quiz_id].questions){
+            var q_id = $scope.quizzes[quiz_id].questions[q_idx].id
+            $scope.quizzes[quiz_id].charts[q_id].type = $scope.quizzes[quiz_id].questions[q_idx].type
+            $scope.quizzes[quiz_id].charts[q_id].title = $scope.quizzes[quiz_id].questions[q_idx].question
+  	 			  $scope.timeline['quiz'][quiz_id].add(0, 'charts', $scope.quizzes[quiz_id].charts[q_id])
+          }
+  	 		}
+ 	    },
+      function(){}
+    )
+  }
 
     var getSurveyCharts = function(){
-        Module.getSurveyCharts(
-            {             
-                course_id: $stateParams.course_id,
-                module_id:$stateParams.module_id
-            },
-            function(data){
-              console.log(data)
-            	$scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
-            	$scope.timeline["survey"]={}
-            	for (var survey_id in $scope.quizzes ){
-            		$scope.timeline["survey"][survey_id]=new Timeline()
-            		for(var q_idx in $scope.quizzes[survey_id].questions){
-            			var q_id = $scope.quizzes[survey_id].questions[q_idx].id
-            			$scope.quizzes[survey_id].charts[q_id].type = $scope.quizzes[survey_id].questions[q_idx].type
-                  var type = $scope.quizzes[survey_id].charts[q_id].type == "Free Text Question"? $scope.quizzes[survey_id].charts[q_id].type : 'charts'
-                  $scope.quizzes[survey_id].charts[q_id].id = q_id
-            			var item = new TimeItem(0, type, $scope.quizzes[survey_id].charts[q_id])
-                  $scope.timeline['survey'][survey_id].add(item)
-            		}
-            	}
-	  	 	},
+      Module.getSurveyCharts(
+        {             
+            course_id: $stateParams.course_id,
+            module_id:$stateParams.module_id
+        },
+        function(data){
+          console.log(data)
+        	$scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
+        	$scope.timeline["survey"]={}
+        	for (var survey_id in $scope.quizzes ){
+        		$scope.timeline["survey"][survey_id]=new Timeline()
+        		for(var q_idx in $scope.quizzes[survey_id].questions){
+        			var q_id = $scope.quizzes[survey_id].questions[q_idx].id
+        			$scope.quizzes[survey_id].charts[q_id].type = $scope.quizzes[survey_id].questions[q_idx].type
+              var type = $scope.quizzes[survey_id].charts[q_id].type == "Free Text Question"? $scope.quizzes[survey_id].charts[q_id].type : 'charts'
+              $scope.quizzes[survey_id].charts[q_id].id = q_id
+              $scope.timeline['survey'][survey_id].add(0, type, $scope.quizzes[survey_id].charts[q_id])
+        		}
+        	}
+    	 	},
         function(){}
-        )
+      )
     }
 
   	$scope.manageHighlight=function(x){
@@ -201,26 +174,6 @@ angular.module('scalearAngularApp')
         return
       $scope.selected_item =item
   		$scope.inner_highlight_index = -1	
-  	}
-
-  	var TimeItem = function(time,type, data){
-  		this.time= time || 0
-  		this.type= type || ""
-  		this.data= data ||null
-  	}
-
-  	var Timeline=function(){
-  		this.items= []
-  		this.items.push(new TimeItem())
-  	}
-
-  	Timeline.prototype.add=function(item){
-  		for ( var time_index = this.items.length - 1; time_index >= 0; time_index-- ) {
-  	      if ( item.time >= this.items[ time_index ].time ) {
-  	        this.items.splice( time_index + 1, 0, item );
-  	        break;
-  	      }
-  	    }
   	}
 
   	$scope.updateHideQuiz = function(id, value) {
@@ -302,36 +255,36 @@ angular.module('scalearAngularApp')
 
 	$scope.seek=function(time, url){
 		if ($scope.url.indexOf(url) == -1) 
-          $scope.url = url+'&start='+Math.round(time)
-      else
-      	$scope.progress_player.controls.seek_and_pause(time)
+        $scope.url = url+'&start='+Math.round(time)
+    else
+    	$scope.progress_player.controls.seek_and_pause(time)
 	}
 
-    $scope.formatMouleChartData = function(data){
-        var formated_data ={}
-        formated_data.cols=
+  $scope.formatMouleChartData = function(data){
+    var formated_data ={}
+    formated_data.cols=
+        [
+            {"label": $translate('courses.students'),"type": "string"},
+            {"label": $translate('courses.students'),"type": "number"}
+        ]
+    formated_data.rows= []
+    var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
+    for(var ind in data)
+    {
+        var row=
+        {"c":
             [
-                {"label": $translate('courses.students'),"type": "string"},
-                {"label": $translate('courses.students'),"type": "number"}
+                {"v":x_titles[ind]},
+                {"v":data[ind]}
             ]
-        formated_data.rows= []
-        var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
-        for(var ind in data)
-        {
-            var row=
-            {"c":
-                [
-                    {"v":x_titles[ind]},
-                    {"v":data[ind]}
-                ]
-            }
-            formated_data.rows.push(row)
         }
-        return formated_data
+        formated_data.rows.push(row)
     }
+    return formated_data
+  }
 
 
-    $scope.formatLectureChartData = function(data) {
+  $scope.formatLectureChartData = function(data) {
 		var formated_data = {}
 		formated_data.cols =
 	    [{
@@ -370,67 +323,67 @@ angular.module('scalearAngularApp')
 		return formated_data
 	}
 
-    $scope.formatQuizChartData = function(data) {
-        var formated_data = {}
-        formated_data.cols =
-            [{
-            "label": $translate('courses.students'),
-            "type": "string"
-        }, {
-            "label": $translate('lectures.correct'),
-            "type": "number"
-        }, {
-            "label": $translate('lectures.incorrect'),
-            "type": "number"
-        }, ]
-        formated_data.rows = []
-        var text, correct, incorrect
-        for (var ind in data) {
-            if (!data[ind][1]) {
-                text = data[ind][2] + " " + "(" + $translate('lectures.incorrect') + ")";
-                correct = 0
-                incorrect = data[ind][0]
-            } else {
-                text = data[ind][2] + " " + "(" + $translate('lectures.correct') + ")";
-                correct = data[ind][0]
-                incorrect = 0
-            }
-            var row = {
-                "c": [{
-                    "v": text
-                }, {
-                    "v": correct
-                }, {
-                    "v": incorrect
-                }, ]
-            }
-            formated_data.rows.push(row)
-        }
-        return formated_data
-    }
-
-
-    $scope.formatSurveyChartData = function(data){
-      var formated_data ={}
-      formated_data.cols=
-          [
-              {"label": $translate('courses.students'),"type": "string"},
-              {"label": $translate('controller_msg.answered'),"type": "number"},
-          ]
-      formated_data.rows= []
-      for(var ind in data)
-      {
-          var row=
-          {"c":
-              [
-                  {"v": data[ind][1]},
-                  {"v": data[ind][0]},
-              ]
+  $scope.formatQuizChartData = function(data) {
+      var formated_data = {}
+      formated_data.cols =
+          [{
+          "label": $translate('courses.students'),
+          "type": "string"
+      }, {
+          "label": $translate('lectures.correct'),
+          "type": "number"
+      }, {
+          "label": $translate('lectures.incorrect'),
+          "type": "number"
+      }, ]
+      formated_data.rows = []
+      var text, correct, incorrect
+      for (var ind in data) {
+          if (!data[ind][1]) {
+              text = data[ind][2] + " " + "(" + $translate('lectures.incorrect') + ")";
+              correct = 0
+              incorrect = data[ind][0]
+          } else {
+              text = data[ind][2] + " " + "(" + $translate('lectures.correct') + ")";
+              correct = data[ind][0]
+              incorrect = 0
+          }
+          var row = {
+              "c": [{
+                  "v": text
+              }, {
+                  "v": correct
+              }, {
+                  "v": incorrect
+              }, ]
           }
           formated_data.rows.push(row)
       }
       return formated_data
+  }
+
+
+  $scope.formatSurveyChartData = function(data){
+    var formated_data ={}
+    formated_data.cols=
+        [
+            {"label": $translate('courses.students'),"type": "string"},
+            {"label": $translate('controller_msg.answered'),"type": "number"},
+        ]
+    formated_data.rows= []
+    for(var ind in data)
+    {
+        var row=
+        {"c":
+            [
+                {"v": data[ind][1]},
+                {"v": data[ind][0]},
+            ]
+        }
+        formated_data.rows.push(row)
     }
+    return formated_data
+  }
 
 	$scope.createChart = function(data,student_count, options, formatter) {
 		var chart = {};
@@ -457,81 +410,76 @@ angular.module('scalearAngularApp')
 		return chart
 	}
 
+  var setupShortcuts=function(){
+    shortcut.add("r",function(){
+      if($scope.selected_item && $scope.selected_item.type == "Free Text Question") 
+          if($scope.inner_highlight_index >= 0){
+            $scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback = !$scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback
+            $scope.$apply()
+            angular.element('li.highlight').find('textarea').focus()
+          }
+    },{"disable_in_input" : true});
 
-    var estimateCalculator=function(quiz_count, question_count){
-    	return quiz_count * $scope.time_parameters.quiz + question_count * $scope.time_parameters.question
-    }
+	  shortcut.add("Down",function(){
+		 $scope.manageHighlight(1)    				
+    },{"disable_in_input" : true});
 
-    var setupShortcuts=function(){
-      shortcut.add("r",function(){
-        if($scope.selected_item && $scope.selected_item.type == "Free Text Question") 
-            if($scope.inner_highlight_index >= 0){
-              $scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback = !$scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback
-              $scope.$apply()
-              angular.element('li.highlight').find('textarea').focus()
-            }
-      },{"disable_in_input" : true});
+    shortcut.add("Up",function(){
+		 $scope.manageHighlight(-1)
+    },{"disable_in_input" : true});
 
-		  shortcut.add("Down",function(){
-			 $scope.manageHighlight(1)    				
-	    },{"disable_in_input" : true});
+    shortcut.add("Right",function(){
+		 $scope.manageInnerHighlight(1)
+    },{"disable_in_input" : true});
 
-	    shortcut.add("Up",function(){
-			 $scope.manageHighlight(-1)
-	    },{"disable_in_input" : true});
+    shortcut.add("Left",function(){
+		 $scope.manageInnerHighlight(-1)
+    },{"disable_in_input" : true});
 
-	    shortcut.add("Right",function(){
-			 $scope.manageInnerHighlight(1)
-	    },{"disable_in_input" : true});
+    shortcut.add("Space",function(){
+      if($scope.selected_item.time>0){
+	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+        $scope.$apply()
+      }
+    },{"disable_in_input" : true});
 
-	    shortcut.add("Left",function(){
-			 $scope.manageInnerHighlight(-1)
-	    },{"disable_in_input" : true});
-
-	    shortcut.add("Space",function(){
-        if($scope.selected_item.time>0){
-		      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
-          $scope.$apply()
-        }
-	    },{"disable_in_input" : true});
-
-	    shortcut.add("h",function(){
-        if($scope.selected_item){
-    			if ($scope.selected_item.type == "question"){
-    				var q_ind = $scope.inner_highlight_index <0 ? 0 : $scope.inner_highlight_index
-    				$scope.selected_item.data[q_ind][2] = !$scope.selected_item.data[q_ind][2]
-    				$scope.updateHideQuestion($scope.selected_item.data[q_ind][1],!$scope.selected_item.data[q_ind][2])
-    			}
-    			else if ($scope.selected_item.type == "charts"){
-            if($scope.selected_item.data.hide != null){
-      				$scope.selected_item.data.hide = !$scope.selected_item.data.hide
-      				$scope.updateHideQuiz($scope.selected_item.data.id,!$scope.selected_item.data.hide )
-            }
-    			}
-          else if($scope.selected_item.type == "Free Text Question"){
-            if($scope.inner_highlight_index < 0){
-              $scope.selected_item.data.show = !$scope.selected_item.data.show
-              $scope.updateHideFreeText($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show)
-            }
-            else{
-              var q_ind = $scope.inner_highlight_index
-              $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
-              $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
-            }
+    shortcut.add("h",function(){
+      if($scope.selected_item){
+  			if ($scope.selected_item.type == "question"){
+  				var q_ind = $scope.inner_highlight_index <0 ? 0 : $scope.inner_highlight_index
+  				$scope.selected_item.data[q_ind][2] = !$scope.selected_item.data[q_ind][2]
+  				$scope.updateHideQuestion($scope.selected_item.data[q_ind][1],!$scope.selected_item.data[q_ind][2])
+  			}
+  			else if ($scope.selected_item.type == "charts"){
+          if($scope.selected_item.data.hide != null){
+    				$scope.selected_item.data.hide = !$scope.selected_item.data.hide
+    				$scope.updateHideQuiz($scope.selected_item.data.id,!$scope.selected_item.data.hide )
+          }
+  			}
+        else if($scope.selected_item.type == "Free Text Question"){
+          if($scope.inner_highlight_index < 0){
+            $scope.selected_item.data.show = !$scope.selected_item.data.show
+            $scope.updateHideFreeText($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show)
+          }
+          else{
+            var q_ind = $scope.inner_highlight_index
+            $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
+            $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
           }
         }
-	    },{"disable_in_input" : true});
-    }
+      }
+    },{"disable_in_input" : true});
+  }
 
-    var removeShortcuts=function(){
-      shortcut.remove("r");
-      shortcut.remove("Down");
-      shortcut.remove("Up");
-      shortcut.remove("Right");
-      shortcut.remove("Left");
-      shortcut.remove("Space");
-      shortcut.remove("h");
-    }
+  var removeShortcuts=function(){
+    shortcut.remove("r");
+    shortcut.remove("Down");
+    shortcut.remove("Up");
+    shortcut.remove("Right");
+    shortcut.remove("Left");
+    shortcut.remove("Space");
+    shortcut.remove("h");
+  }
 
 	$scope.getKeys = function( obj ) {
 		return Object.keys ? Object.keys( obj ) : (function( obj ) {			

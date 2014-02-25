@@ -63,6 +63,7 @@ var translation_sv=function(){
               calendar: "Kalender",
               discussion_forum: "Diskussionsforum",
               course_information: "Kursinformation",
+              help: "Hjälp"
           },
       footer:{
               about: "Om ",

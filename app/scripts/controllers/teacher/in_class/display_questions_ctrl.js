@@ -12,6 +12,7 @@ angular.module('scalearAngularApp')
 	  		},
 	  		function(data){
 	  			$log.debug(data)
+	  			$scope.$parent.should_mute = true
 	  			$scope.$parent.lecture_list = data.lecture_list
 	  			$scope.$parent.display_data = data.display_data
 	  			$scope.$parent.total_num_lectures = data.num_lectures

@@ -5,9 +5,19 @@
 <!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
   <head> 
     <script type="text/javascript">
+
         if (navigator.appName == 'Microsoft Internet Explorer')
         {
-           self.location = "ie.html"
+           if(self.location.href.split('/')[self.location.href.split('/').length-1].split('?')[0] == "confirmation"){
+                var confirmation_token = self.location.href.split('confirmation_token=')[1]
+                self.location = "users/confirmation?confirmation_token="+confirmation_token;
+            }
+            else{
+                self.location = "ie.html"
+                // console.log(to.name)
+                // $state.go("ie", {},{notify: false });
+            }
+           
         }
     </script> 
     <meta charset="utf-8">

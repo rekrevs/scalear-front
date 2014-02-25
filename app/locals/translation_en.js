@@ -62,6 +62,7 @@ var translation_en=function(){
         teachers: "Teachers",
         lectures: "Lectures",
         discussion_forum: "Discussion Forum",
+        help: "Help"
       },
       footer:{
         about: "About ",

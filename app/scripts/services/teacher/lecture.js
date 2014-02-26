@@ -22,6 +22,7 @@ angular.module('scalearAngularApp')
 		'saveSort':{method:'POST', params:{action:'sort'}, headers:headers},
 		"validateLecture": {method: 'PUT', params: {action: 'validate_lecture_angular'},headers: headers},
 		"getLectureStudent":{method:'GET', params:{action:'get_lecture_data_angular'}, headers:headers},
+        "switchQuiz":{method:'GET', params:{action:'switch_quiz'}, headers:headers},
 		"confused":{method:'POST', params:{action:'confused'}, headers:headers},
 		"back":{method:'POST', params:{action:'back'}, headers:headers},
 		"pause":{method:'POST', params:{action:'pause'}, headers:headers},

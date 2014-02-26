@@ -289,8 +289,17 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/student/lectures/lectures.html',
                 controller: 'studentLecturesCtrl'
             })
-            .state('course.lectures.lecture', {
-                url: '/lectures/:lecture_id',
+            .state('course.lectures.module',{
+                url:'/modules/:module_id',
+                views: {
+                    'middle1': {
+                        templateUrl: '/views/student/lectures/module.middle.html',
+                        controller: 'studentModulesCtrl'
+                    }
+                }
+            })
+            .state('course.lectures.module.lecture', {
+                url: '/lectures/:lecture_id?time',
                 views: {
                     'middle': {
                         templateUrl: '/views/student/lectures/lecture.middle.html',
@@ -298,7 +307,7 @@ angular.module('scalearAngularApp', [
                     }
                 }
             })
-            .state('course.lectures.quiz', {
+            .state('course.lectures.module.quiz', {
                 url: '/quizzes/:quiz_id',
                 views: {
                     'middle': {

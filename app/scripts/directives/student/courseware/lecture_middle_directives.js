@@ -309,6 +309,7 @@ angular.module('scalearAngularApp')
           },
           function(data){
             $log.debug(data)
+            console.log(data)
             displayResult(data)
           },
           function(){}

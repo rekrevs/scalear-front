@@ -1,3 +1,24 @@
+<div style="margin:10px;float:right">
+    <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px;">Help on enrolling students</button>
+    <hr>
+    <div collapse="!isCollapsed">
+        <div class="well well-lg">
+            <p><b>Help on Enrollment:</b></p>
+            <p>Students enroll by first registering on the scalable learning website and then entering the Course Enrollment Key. To help your students do this, please send them an email with the following instructions. Ideally the correct enrollment key should be filled in</p>
+            <br>
+            <div  ng-click="this.select()" class="well well-lg" style="background: white;color: brown;" >
+                <div id="kk" select-on-click>
+                    <p >Dear Student,</p>
+                    <p >&emsp;This term we will be using an online system to make your learning
+                    experience more interactive. To use this system you will need to create an account and add this course. To do so, please visit: http://www.scalable-learning.com/#/users/student
+                    and create a student account with your university email address. You can then add the course by clicking on “Join Course” under “Courses” and entering the course Enrollment Key XXXXXX.</p>
+                    <p>Sincerely,<br>Teacher</p>
+                </div>
+                <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right;position: relative;top: -30px;">Click to Select<br>Copy: cmd+C or ctrl+C</div>
+            </div>
+        </div> 
+    </div>
+</div>
 <div class="row">
     <div class="span12">
         <p style="display:inline; float: right;">

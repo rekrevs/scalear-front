@@ -311,3 +311,75 @@ textarea.ng-invalid{ border:1px solid red; }
 a.editable-click { 
   border-bottom: none !important;
 }
+
+.modern-navbar{
+  /*top: 0px;
+  box-shadow: 0px 1px 3px lightgray;
+  padding-top: 10px;
+  padding-left: 20px;
+  padding-right: 20px;
+  padding-bottom: 10px;
+  border-bottom: 2px 2px 2px #000;
+  display: compact;
+  text-align: center;*/
+  text-align: center; 
+  height: 30px; 
+  padding-top: 5px; 
+  padding-left: 20px; 
+  padding-right: 20px; 
+  background: white; 
+  padding-bottom: 10px; 
+  background-image: url('../images/navbar-bg.png');
+  height: 25px;
+  box-shadow: 0.5px 0.5px 2px #777;
+}
+.modern-logo{
+  float: left;
+  vertical-align: top;
+  top: 5px;
+  position: fixed;
+}
+.modern-logo a{
+  text-decoration: none;
+}
+
+.state{
+  padding-top: 7px;
+  /*padding-bottom: 7px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background: lightgray;
+  border-radius: 5px;*/
+  vertical-align: -webkit-baseline-middle;
+  
+  /*width: auto;*/  
+}
+.dropdown-header{
+  font-size: 13px;
+  color: #696969;
+  padding-left: 8px;
+}
+
+.app-menu {
+  /*margin-right: 30px;*/
+  text-align: left;
+  width: 280px;
+  padding: 10px; 
+  word-wrap: normal;
+}
+
+header > a{
+  font-size: 14px;
+  font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+  color: #777;
+  text-shadow: 0 1px 0 #fff;
+}
+header > a:hover{
+  color: #333;
+  text-decoration: none;
+}
+
+.menu-icon{
+  margin-top: 0.5px;
+  content: url("../images/menu_icon_small.png");
+}

@@ -1,11 +1,51 @@
-<ul class="nav nav-pills">
-    <li id="calendar_link" ng-class="{ active: current_state.includes('course.student_calendar')}"><a ui-sref="course.student_calendar({ course_id: current_course_id })" translate="head.calendar"></a></li>
+
+<ul class="dropdown pull-right" id="navmenu" style="right: 20px; position: fixed;">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+        <span class="icon icon-list">
+            
+        </span>
+        <!-- <b class="caret"></b> -->
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right app-menu">
+        <span class="dropdown-header" style="padding-left: 0px;"><b>{{course_information.short_name}} | {{course_information.name}}</b></span>
+        <li><a id="calendar" ui-sref="course.student_calendar({ course_id: current_course_id })" translate>head.calendar</a></li>
+        <li><a id="info" ui-sref="course.course_information({ course_id: current_course_id })" translate>head.course_information</a></li>
+        <li><a id="lectures" ui-sref="course.lectures({ course_id: current_course_id })" translate>head.lectures</a></li>
+        <li class="divider"></li>
+
+        <span class="dropdown-header"><b>Courses</b></span>
+        {{courses}}
+        <li><a id="info" ui-sref="course.edit_course_information({ course_id: current_course_id })"translate>1234 | Course One</a></li>
+        <li><a id="info" ui-sref="course.edit_course_information({ course_id: current_course_id })"translate>5678 | Course Two</a></li>
+        <li class="divider"></li>
+
+        <span class="dropdown-header"><b>Settings</b></span>
+        <li><a id="info" ui-sref="course.edit_course_information({ course_id: current_course_id })"translate>Account</a></li>
+        <li ng-show="current_lang=='en'" ng-cloak>
+            <a style="cursor:pointer;" ng-click="changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /> Swedish</a>
+        </li>
+        <li ng-show="current_lang=='sv'" ng-cloak>
+            <a style="cursor:pointer;" ng-click="changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /> English</a>
+        </li>
+        <li class="divider"></li>
+        
+        
+        <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()" translate="navigation.logout"></a></li>
+    </ul>
+
+
+</span>
+
+
+
+<!-- <ul> -->
+    <!-- <li id="calendar_link" ng-class="{ active: current_state.includes('course.student_calendar')}"><a ui-sref="course.student_calendar({ course_id: current_course_id })" translate="head.calendar"></a></li>
+
     <li id="lectures_link" ng-class="{ active: current_state.includes('course.lectures')}"><a ui-sref="course.lectures({ course_id: current_course_id })" translate="head.lectures"></a></li>
+
     <li id="discussion_link" ng-if="course_information.discussion_link!=''"><a target="_blank" href="{{url_with_protocol(course_information.discussion_link)}}" translate="head.discussion_forum"></a></li>
-    <li id="course_information_link" ng-class="{ active: current_state.includes('course.course_information')}"><a ui-sref="course.course_information({ course_id: current_course_id })" translate="head.course_information"></a></li>
+
+    <li id="course_information_link" ng-class="{ active: current_state.includes('course.course_information')}"><a ui-sref="course.course_information({ course_id: current_course_id })" translate="head.course_information"></a></li> -->
      
-    <li style="float:right"><b>{{course_information.short_name}} - {{course_information.name}}</b></li>
-</ul>
-
-
-
+    <!-- <li style="float:right"><b>{{course_information.short_name}} - {{course_information.name}}</b></li> -->
+<!-- </ul> -->

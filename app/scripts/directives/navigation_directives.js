@@ -22,6 +22,7 @@ angular.module('scalearAngularApp')
            return{
 			replace:true,
 			restrict: "E",
-			templateUrl: '/views/student_navigation.html',
+			courses: "=",
+			templateUrl: '/views/student_navigation.html'
 		};
  }]);

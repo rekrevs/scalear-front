@@ -61,6 +61,23 @@ angular.module('scalearAngularApp', [
             var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
 
+
+            //returns the title for the state
+            var getStateTitle = function(name){
+                if(name == "course_list" || name == "student_courses"){
+                    return "courses.all_courses";
+                }
+                else if(name == "course.student_calendar" || name == "course.calendar"){
+                    return "head.calendar";
+                }
+                else if(name == "course.course_information" || name == "course.edit_course_information"){
+                    return "head.course_information";
+                }
+                else if(name == "course.lectures"){
+                    return "head.lectures";
+                }
+
+            }
             //check if route requires no auth
             var stateNoAuth = function(state) {
                 for (var element in statesThatRequireNoAuth) {
@@ -125,6 +142,7 @@ angular.module('scalearAngularApp', [
             $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
 
                 //$rootScope.start_loading=true;
+                $rootScope.current = getStateTitle(to.name)
                 if(from.url != '/'){
                 UserSession.getRole().then(function(result) {
                     var s = 1;

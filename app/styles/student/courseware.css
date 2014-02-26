@@ -266,7 +266,7 @@ input[type="checkbox"], input[type="radio"] {
   -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
-  margin: 0 0 0 10px;
+  /*margin: 0 0 0 10px;*/
   background: #fff;
   overflow: :auto;
 }
@@ -308,6 +308,9 @@ input[type="checkbox"], input[type="radio"] {
    -moz-border-radius: 10px;
   -webkit-border-radius: 10px;
   border-radius: 10px;
+   -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  -webkit-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
+  box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
 }
 
 .ui-state-active{

@@ -579,9 +579,9 @@ angular.module('scalearAngularApp')
       var setAnswerLocation=function(){
         $log.debug("setAnswerLocation")
         var ontop=angular.element('.ontop');
-        scope.width  = scope.data.width * ontop.width();
+        scope.width  = scope.data.width * ontop.width() -27;
         scope.height = scope.data.height* (ontop.height());
-        scope.xcoor = (scope.data.xcoor * ontop.width())
+        scope.xcoor = (scope.data.xcoor * ontop.width())+27
         scope.ycoor = (scope.data.ycoor * (ontop.height()))
         scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
       }
@@ -681,7 +681,7 @@ angular.module('scalearAngularApp')
         $log.debug('in resize answer')
         draggable.width(scope.width);
         draggable.height(scope.height);
-        draggable.css('left', scope.xcoor+12)
+        draggable.css('left', scope.xcoor+2)
         draggable.css('top', scope.ycoor+2)
       }
      

@@ -45,7 +45,8 @@ angular.module('scalearAngularApp')
             Forum.createComment({content: $scope.comment}, function(response){
                 console.log("success");
                 //$scope.getComments();
-                $scope.comments.push({email: $scope.current_user.email, content: $scope.comment, votes_count: 0, id:response.id, user_flag:0})
+                var post={"post": {email: $scope.current_user.email, content: $scope.comment, votes_count: 0, id:response.post.id, user_flag:0}}
+                $scope.comments.push(post);
                 $scope.comment="";
             }, function(){
                 console.log("failure")

@@ -52,17 +52,29 @@
     <accordion close-others="true">
         <accordion-group ng-repeat="l in module_lectures" heading={{l.name}} is-open="l.id == lecture.id" id={{"outline_"+l.id}}>
             <table class="table table-striped">
-                <tr ng-repeat="quiz in l.online_quizzes">
-                    <td style='width:20px;'><img ng-show="quiz.is_quiz_solved" src="images/check7.png" /></td>
-                    <td ng-show="!quiz.is_quiz_solved"><p>{{quiz.question}}</p></td>
-                    <td ng-show="quiz.is_quiz_solved"><p class="solved" ng-click="seek(quiz.time, l.id)" >{{quiz.question}}</p></td>
-                    <td><p ng-show="quiz.is_quiz_solved" class="solved" ng-click="seek(quiz.time, l.id)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
+                <tr ng-repeat="e in timeline['lecture'][l.id].items | filter:checkEmpty">
+                    <!--<td>{{e.time}}</td>-->
+                    <!--<td>{{e.type}}</td>-->
+                    <!--<td></td>-->
+                    <!--<td></td>-->
+                    <td><p ng-show="(e.type=='quiz' && e.data.is_quiz_solved) || e.type=='confused'" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Current Lecture: {{ e.time | formattime:'hh:mm:ss'}}">{{(e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}</p></td>
+                    <td ng-show="e.type=='quiz' && !e.data.is_quiz_solved"><p>{{e.data.question}}</p></td>
+                    <td ng-show="e.type=='quiz' && e.data.is_quiz_solved"><p class="solved" ng-click="seek(e.time, l.id)" >{{e.data.question}}</p></td>
+                    <td ng-show="e.type=='confused' && !e.data.very"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.confused"}}</p></td>
+                    <td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.really_confused"}}</p></td>
+                    <td style='width:20px;'>
+                        <img ng-show="e.type=='quiz' && e.data.is_quiz_solved" src="images/check7.png" />
+                        <delete_button ng-show="e.type=='confused'" size="small" action="deleteConfused(e.data.id, l.id, e)" />
+                    </td>
+
                     <!--<td ng-if="quiz.very==false">{{quiz.time}}</td>-->
                 </tr>
             </table>
         </accordion-group>
     </accordion>
     </div>
+
+    <discussion></discussion>
 
 
 </div>

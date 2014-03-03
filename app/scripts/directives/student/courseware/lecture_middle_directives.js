@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
 
 
         scope.show_message=false;
-    	scope.show_question=false;
+    	scope.$parent.show_question=false;
     	scope.show_shortcuts=false;
       	
     	var setButtonsLocation=function(){
@@ -62,9 +62,11 @@ angular.module('scalearAngularApp')
     		$log.debug(scope.$parent);
     		$log.debug("in confusde");
         scope.show_message=true;
-    		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
+            var time=scope.lecture_player.controls.getTime();
+    		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:time}, function(data){
   			$interval(function(){
            		scope.show_message=false;
+            }, 2000, 1);
            		$log.debug(data)
            		if(data.msg=="ask")
            		{
@@ -75,7 +77,22 @@ angular.module('scalearAngularApp')
              			scope.$parent.show_notification=false;
              		}, 6000, 1)
              	}
-       		}, 2000, 1);
+                //else{
+                if(!data.flag) //first time confused in these 15 seconds
+                {
+                    //scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'red', 'courses.confused',data.id ]);
+                    scope.timeline['lecture'][$stateParams.lecture_id].add(time, "confused", data.item)
+                }
+
+                if(data.flag && data.msg!="ask") // confused before but not third time - very confused
+                {
+
+                    var elem=scope.timeline['lecture'][$stateParams.lecture_id].search_by_id(data.id);
+                    scope.timeline['lecture'][$stateParams.lecture_id].items[elem].data.very=true;
+                }
+
+
+
   		  });
     	};
     	scope.back= function()
@@ -84,9 +101,13 @@ angular.module('scalearAngularApp')
   		});
     	};
     	scope.question= function(){
-    		$log.debug("in question");
-    		scope.show_question=!scope.show_question;
-    		if(scope.show_question==true)
+    		console.log("in question");
+    		scope.$parent.show_question=!scope.$parent.show_question;
+            console.log(scope.$parent.show_question);
+            console.log(scope.lecture_player.controls.getTime());
+            scope.$parent.current_question_time=scope.lecture_player.controls.getTime();
+            scope.safeApply();
+    		if(scope.$parent.show_question==true)
     			scope.lecture_player.controls.pause();	
     		else
     			scope.lecture_player.controls.play();
@@ -111,7 +132,7 @@ angular.module('scalearAngularApp')
     		$log.debug("will submit "+scope.question_asked);
   		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
   			scope.question_asked="";
-  			scope.show_question=false;
+  			scope.$parent.show_question=false;
   			scope.lecture_player.controls.play();	
   		});
     		

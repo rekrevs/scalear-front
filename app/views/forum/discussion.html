@@ -1,0 +1,69 @@
+<br><br>
+DISCUSSIONS
+<br>
+<div style="width:400px;height:200px;">
+    <div ng-show="show_question" style="height:100px"> <!-- For question -->
+        <textarea ng-model="current_question" style="display:inline; width:250px;height:73px"></textarea>
+        <input type="text" disabled ng-model="current_question_time" format='hh:mm:ss' style="display:inline; width:60px;position: relative;top: -20px;"/>
+        <select ng-model='privacy' ng-options="f.text for f in choices" style="display:inline; width:80px;position: relative;top: -60px;left: 270px;"></select>
+        <input type="button" class="btn btn-primary btn-small" ng-click="saveQuestion()" value={{"youtube.ask"|translate}} style="display:inline;position: relative;top: -85px;height: 70px;left: 270px;"/>
+    </div>
+    <div style="overflow:auto;height:100%;width:400px"> <!-- has all discussions -->
+        <accordion close-others="true">
+            <accordion-group ng-repeat="l in module_lectures" heading={{l.name}} is-open="l.id == lecture.id" id={{"discussion"+l.id}}>
+                <table class="table table-striped">
+                    <tbody ng-repeat="e in timeline['discussion'][l.id].items | filter:checkEmpty">
+                        <!--<td>{{e.time}}</td>-->
+                        <!--<td>{{e.type}}</td>-->
+                        <!--<td></td>-->
+                        <!--<td></td>-->
+                        <!--<td>{{e.data.question}}</td>-->
+                        <tr>
+                        <td><p ng-show="(e.type=='discussion')" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Current Lecture: {{ e.time | formattime:'hh:mm:ss'}}">{{(e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}</p></td>
+                        <!--<td ng-show="e.type=='quiz' && !e.data.is_quiz_solved"><p>{{e.data.question}}</p></td>-->
+                        <!--<td ng-show="e.type=='quiz' && e.data.is_quiz_solved"><p class="solved" ng-click="seek(e.time, l.id)" >{{e.data.question}}</p></td>-->
+                        <td ng-show="e.type=='discussion'"><p class="solved" ng-click="seek(e.time, l.id)">{{e.data.email}}: {{"q"|translate}} {{e.data.content}}</p></td>
+                        <!--<td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.really_confused"}}</p></td>-->
+                        <td style='width:20px;'>
+                            <!--<img ng-show="e.type=='quiz' && e.data.is_quiz_solved" src="images/check7.png" />-->
+                            <delete_button ng-show="e.type=='discussion'" size="small" action="deleteDiscussion(e.data.id, l.id, e)" />
+                            <input type="button" class="btn btn-mini" ng-show="e.type=='discussion'" ng-click="show_reply(e)" value="Reply" />
+                            <img style="width:20px;height:20px;" ng-show="e.data.privacy==0" src="/images/lock.png"/>
+                            <img style="width:20px;height:20px;" ng-show="e.data.privacy==1" src="/images/unlock.png"/>
+                            <input style="width:30px;height:20px;" value={{e.data.user_flag==1?"Unflag":"Flag"}} ng-click="flagPost(e.data.id, l.id, e)" class="btn btn-mini btn-danger"/>
+                            <input style="width:30px;height:20px;" value={{e.data.user_vote==1?"Unlike":"Like"}} ng-click="votePost(e.data.id, l.id, e)" class="btn btn-mini btn-primary"/>
+                            <p>Likes: {{e.data.votes_count}}</p>
+                        </td>
+                        </tr>
+                        <tr ng-show="show_reply[e.data.id]">
+                            <td></td>
+                            <td>
+                                    <textarea ng-model="current_reply[e.data.id]" style="width:100%;"></textarea>
+                            </td>
+                            <td>
+                                    <input type="button" class="btn btn-primary btn-small" ng-click="reply(e)" value={{"youtube.ask"|translate}} />
+                            </td>
+                        </tr>
+                        <tr ng-repeat="e2 in timeline['discussion'][l.id][e.data.id].items | filter:checkEmpty">
+                            <td></td>
+                            <td>{{e2.data.email}}: {{e2.data.content}}</td>
+                            <td>
+                                <delete_button size="small" action="deleteAnswer(e2.data.id,e.data.id, l.id, e2)" />
+                                <input style="width:30px;height:20px;" value={{e2.data.user_flag==1?"Unflag":"Flag"}} ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini btn-danger"/>
+                                <input style="width:30px;height:20px;" value={{e2.data.user_vote==1?"Unlike":"Like"}} ng-click="voteComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini btn-primary"/>
+                                <p>Likes: {{e2.data.votes_count}}</p>
+                            </td>
+                        </tr>
+                        <!--<td ng-if="quiz.very==false">{{quiz.time}}</td>-->
+                    </tbody>
+                </table>
+            </accordion-group>
+        </accordion>
+
+    </div>
+</div>
+
+
+
+
+

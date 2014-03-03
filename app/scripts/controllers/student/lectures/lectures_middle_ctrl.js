@@ -35,6 +35,11 @@ angular.module('scalearAngularApp')
         });
     }
 
+        $scope.checkEmpty= function(item){
+            return item.type!=''
+        }
+
+
 
     $scope.load_player = function(time){
         $scope.lecture_player.events.onReady = function() {
@@ -89,6 +94,8 @@ angular.module('scalearAngularApp')
                 $scope.alert_messages = data.alert_messages;
                 $scope.lecture = JSON.parse(data.lecture);
                 $scope.time = data.time;
+
+
 
 //                $scope.events={}
 //                $scope.events["confused"]=$scope.lecture.confuseds;

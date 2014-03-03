@@ -30,6 +30,8 @@ angular.module('scalearAngularApp')
 		"saveOnline":{method:'POST', params:{action:'save_online'}, headers:headers},
 		"saveHtml":{method:'POST', params:{action:'save_html'}, headers:headers},
         "deleteConfused":{method:'DELETE', params:{action:'delete_confused'}, headers:headers},
+        "saveNote":{method:'POST', params:{action:'save_note'}, headers:headers},
+        "loadNote":{method:'GET', params:{action:'load_note'}, headers:headers}
 		
 	});
 

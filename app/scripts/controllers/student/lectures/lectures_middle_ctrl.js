@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout', function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout) {
-
+    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc', function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc) {
 
 
     $scope.video_layer = {}
@@ -53,6 +52,7 @@ angular.module('scalearAngularApp')
             }
             $scope.slow_message = false
             $scope.loading_video = false;
+            editor.create($scope.lecture.url, $scope.lecture_player);
             var i= $scope.lecture_ids.indexOf($scope.lecture.id);
             $scope.module_lectures[i].online_quizzes.forEach(function(quiz) {
                 $scope.lecture_player.controls.cue(quiz.time, function() {
@@ -80,6 +80,15 @@ angular.module('scalearAngularApp')
 
         }
     }
+
+    $scope.$on("$destroy", function(){
+        //console.log("cancelling intervel");
+        // cancel autosave when leave lecture.
+        $interval.cancel(editor.autosave);
+        doc.dirty=false;
+        doc.lastSave = 0;
+        doc.info=null;
+    });
 
     var init = function() {
         $scope.loading_video = true;

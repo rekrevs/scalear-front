@@ -308,6 +308,7 @@ textarea.ng-invalid{ border:1px solid red; }
   z-index: 99;
   text-align: center;
 }
+
 a.editable-click { 
   border-bottom: none !important;
 }
@@ -323,3 +324,19 @@ a.editable-click {
 .flag_active {
     background-color: lightcyan;
 }
+
+.ace_editor { height: 200px; }
+
+.ace_gutter-cell.ace_breakpoint {
+    background-color: #ffc000;
+    padding-left: 0px;
+    min-width: 40px;
+}
+
+.ace_layer{
+    min-width: 40px;
+}
+.ace_gutter{
+    min-width: 40px;
+}
+

@@ -161,7 +161,7 @@ angular.module('scalearAngularApp')
             if(elem_name =='ask')
               scope.submit_question()
               scope.$apply()
-          },{"disable_in_input" : false});
+          },{"disable_in_input" : false, "disable_in_editable" :true});
   		};
 
   		setButtonsLocation()
@@ -726,3 +726,35 @@ angular.module('scalearAngularApp')
     }
   }
 }])
+.directive('aceEditor',
+    ['editor', function (editor) {
+        return {
+            restrict: 'A',
+            scope: {
+                sync: "=",
+                player: "=",
+                url: "="
+            },
+            link: function (scope, element) {
+                editor.rebind(element[0]);
+
+                scope.$watch("url", function(val){
+
+                    if(scope.url)
+                    {
+                        console.log(scope.url);
+//                        editor.create(scope.url);
+                        //console.log(scope.player.controls.getUrl());
+                    }
+                })
+
+
+                scope.$watch('sync', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        var gutter = $(element).find('.ace_gutter');
+                        newValue ? gutter.removeClass('inactive') : gutter.addClass('inactive');
+                    }
+                }, true);
+            }
+        };
+    }]);

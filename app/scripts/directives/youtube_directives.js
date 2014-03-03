@@ -115,7 +115,7 @@ angular.module('scalearAngularApp')
 
 				player_controls.getDuration=function(){
 					return player.duration()
-				}				
+				}
 
 				player_controls.readyState=function(){
 					return player.readyState()

@@ -31,14 +31,12 @@ angular.module('scalearAngularApp')
                 // arrange timeline
                 $scope.timeline = new Timeline()
                 $scope.timeline['lecture']={}
-                $scope.timeline['discussion']={}
 
                 for(var l in $scope.module_lectures)
                 {
                     var lec= $scope.module_lectures[l]
                     //console.log(lec)
                     $scope.timeline['lecture'][lec.id] = new Timeline()
-                    $scope.timeline['discussion'][lec.id] = new Timeline()
                     for(var type in lec.online_quizzes){
                         $scope.timeline['lecture'][lec.id].add(lec.online_quizzes[type].time, "quiz", lec.online_quizzes[type])
                     }
@@ -48,15 +46,15 @@ angular.module('scalearAngularApp')
                     }
 
                     // will be the same timeline later to be able to put in one and filter. (so both will be lecture, no discussion)
-                    for(var type in lec.posts){
-                        $scope.timeline['discussion'][lec.id].add(lec.posts[type].post.time, "discussion", lec.posts[type].post)
-                        if(!$scope.timeline['discussion'][lec.id][lec.posts[type].post.id])
-                            $scope.timeline['discussion'][lec.id][lec.posts[type].post.id]= new Timeline();
+                    for(var type in lec.posts_public){
+                        $scope.timeline['lecture'][lec.id].add(lec.posts_public[type].post.time, "discussion", lec.posts_public[type].post)
+                        if(!$scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id])
+                            $scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id]= new Timeline();
 
 
-                        for(var comment in lec.posts[type].post.comments)
+                        for(var comment in lec.posts_public[type].post.comments)
                         {
-                            $scope.timeline['discussion'][lec.id][lec.posts[type].post.id].add(lec.posts[type].post.time, "comment", lec.posts[type].post.comments[comment].comment);
+                            $scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id].add(lec.posts_public[type].post.time, "comment", lec.posts_public[type].post.comments[comment].comment);
                         }
                     }
                 }
@@ -67,14 +65,7 @@ angular.module('scalearAngularApp')
 	
 	init();
 
-    $scope.deleteConfused = function(confused_id, lecture_id, c){
-        Lecture.deleteConfused({lecture_id: lecture_id, confused_id: confused_id}, function(response){
-            console.log("deleted");
-            // now want to remove from list (both l.confuseds and $scope.timeline..)
-            var index=$scope.timeline['lecture'][lecture_id].items.indexOf(c);
-            $scope.timeline['lecture'][lecture_id].items.splice(index, 1)
-        });
-    }
+
 
     
   }]);

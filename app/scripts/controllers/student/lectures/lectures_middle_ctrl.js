@@ -35,9 +35,7 @@ angular.module('scalearAngularApp')
         });
     }
 
-        $scope.checkEmpty= function(item){
-            return item.type!=''
-        }
+
 
 
 

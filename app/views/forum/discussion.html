@@ -1,5 +1,26 @@
 <br><br>
 DISCUSSIONS
+        {{checkModel}}
+{{checkModel["outline"]}}
+<!--<div class="btn-group">-->
+    <!--<button type="button" class="btn btn-primary" ng-model="checkModel['outline']" btn-checkbox>Outline</button>-->
+    <!--<button type="button" class="btn btn-primary" ng-model="checkModel.discussion" btn-checkbox>Discussion</button>{{checkModel.discussion}}-->
+    <!--<button type="button" class="btn btn-primary" ng-model="checkModel.right" btn-checkbox>Right</button>-->
+<!--</div>-->
+<div class="btn-group" data-toggle="buttons">
+    <label class="btn btn-default btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.quiz"> Outline
+    </label>
+    <label class="btn btn-default btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.confused"> Confused
+    </label>
+    <label class="btn btn-default btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.discussion"> Discussion
+    </label>
+    <!--<label class="btn btn-default btn-checkbox">-->
+        <!--<input type="checkbox"> Option 3-->
+    <!--</label>-->
+</div>
 <br>
 <div style="width:400px;height:200px;">
     <div ng-show="show_question" style="height:100px"> <!-- For question -->
@@ -10,15 +31,26 @@ DISCUSSIONS
     </div>
     <div style="overflow:auto;height:100%;width:400px"> <!-- has all discussions -->
         <accordion close-others="true">
-            <accordion-group ng-repeat="l in module_lectures" heading={{l.name}} is-open="l.id == lecture.id" id={{"discussion"+l.id}}>
+            <accordion-group ng-repeat="l in module_lectures" heading={{l.name}} is-open="l.id == lecture.id" id={{"outline_"+l.id}}>
                 <table class="table table-striped">
-                    <tbody ng-repeat="e in timeline['discussion'][l.id].items | filter:checkEmpty">
+                    <tbody ng-repeat="e in timeline['lecture'][l.id].items | filter:filterType">
                         <!--<td>{{e.time}}</td>-->
                         <!--<td>{{e.type}}</td>-->
                         <!--<td></td>-->
                         <!--<td></td>-->
                         <!--<td>{{e.data.question}}</td>-->
-                        <tr>
+                        <tr ng-show="e.type!='discussion'">
+                        <td><p ng-show="(e.type=='quiz' && e.data.is_quiz_solved) || e.type=='confused'" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Current Lecture: {{ e.time | formattime:'hh:mm:ss'}}">{{(e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}</p></td>
+                        <td ng-show="e.type=='quiz' && !e.data.is_quiz_solved"><p>{{e.data.question}}</p></td>
+                        <td ng-show="e.type=='quiz' && e.data.is_quiz_solved"><p class="solved" ng-click="seek(e.time, l.id)" >{{e.data.question}}</p></td>
+                        <td ng-show="e.type=='confused' && !e.data.very"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.confused"}}</p></td>
+                        <td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.really_confused"}}</p></td>
+                        <td style='width:20px;'>
+                           <img ng-show="e.type=='quiz' && e.data.is_quiz_solved" src="images/check7.png" />
+                           <delete_button ng-show="e.type=='confused'" size="small" action="deleteConfused(e.data.id, l.id, e)" />
+                        </td>
+                        </tr>
+                        <tr ng-show="e.type=='discussion'">
                         <td><p ng-show="(e.type=='discussion')" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Current Lecture: {{ e.time | formattime:'hh:mm:ss'}}">{{(e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}</p></td>
                         <!--<td ng-show="e.type=='quiz' && !e.data.is_quiz_solved"><p>{{e.data.question}}</p></td>-->
                         <!--<td ng-show="e.type=='quiz' && e.data.is_quiz_solved"><p class="solved" ng-click="seek(e.time, l.id)" >{{e.data.question}}</p></td>-->
@@ -26,12 +58,12 @@ DISCUSSIONS
                         <!--<td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.really_confused"}}</p></td>-->
                         <td style='width:20px;'>
                             <!--<img ng-show="e.type=='quiz' && e.data.is_quiz_solved" src="images/check7.png" />-->
-                            <delete_button ng-show="e.type=='discussion'" size="small" action="deleteDiscussion(e.data.id, l.id, e)" />
+                            <delete_button ng-show="e.type=='discussion' && e.data.user_id == current_user.id" size="small" action="deleteDiscussion(e.data.id, l.id, e)" />
                             <input type="button" class="btn btn-mini" ng-show="e.type=='discussion'" ng-click="show_reply(e)" value="Reply" />
                             <img style="width:20px;height:20px;" ng-show="e.data.privacy==0" src="/images/lock.png"/>
                             <img style="width:20px;height:20px;" ng-show="e.data.privacy==1" src="/images/unlock.png"/>
-                            <input style="width:30px;height:20px;" value={{e.data.user_flag==1?"Unflag":"Flag"}} ng-click="flagPost(e.data.id, l.id, e)" class="btn btn-mini btn-danger"/>
-                            <input style="width:30px;height:20px;" value={{e.data.user_vote==1?"Unlike":"Like"}} ng-click="votePost(e.data.id, l.id, e)" class="btn btn-mini btn-primary"/>
+                            <input ng-show="e.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e.data.user_flag==1?"Unflag":"Flag"}} ng-click="flagPost(e.data.id, l.id, e)" class="btn btn-mini btn-danger"/>
+                            <input ng-show="e.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e.data.user_vote==1?"Unlike":"Like"}} ng-click="votePost(e.data.id, l.id, e)" class="btn btn-mini btn-primary"/>
                             <p>Likes: {{e.data.votes_count}}</p>
                         </td>
                         </tr>
@@ -44,13 +76,13 @@ DISCUSSIONS
                                     <input type="button" class="btn btn-primary btn-small" ng-click="reply(e)" value={{"youtube.ask"|translate}} />
                             </td>
                         </tr>
-                        <tr ng-repeat="e2 in timeline['discussion'][l.id][e.data.id].items | filter:checkEmpty">
+                        <tr ng-show="e.type=='discussion'" ng-repeat="e2 in timeline['lecture'][l.id][e.data.id].items | filter:checkEmpty">
                             <td></td>
                             <td>{{e2.data.email}}: {{e2.data.content}}</td>
                             <td>
-                                <delete_button size="small" action="deleteAnswer(e2.data.id,e.data.id, l.id, e2)" />
-                                <input style="width:30px;height:20px;" value={{e2.data.user_flag==1?"Unflag":"Flag"}} ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini btn-danger"/>
-                                <input style="width:30px;height:20px;" value={{e2.data.user_vote==1?"Unlike":"Like"}} ng-click="voteComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini btn-primary"/>
+                                <delete_button ng-show="e2.data.user_id == current_user.id" size="small" action="deleteAnswer(e2.data.id,e.data.id, l.id, e2)" />
+                                <input ng-show="e2.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e2.data.user_flag==1?"Unflag":"Flag"}} ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini btn-danger"/>
+                                <input ng-show="e2.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e2.data.user_vote==1?"Unlike":"Like"}} ng-click="voteComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini btn-primary"/>
                                 <p>Likes: {{e2.data.votes_count}}</p>
                             </td>
                         </tr>
@@ -62,8 +94,5 @@ DISCUSSIONS
 
     </div>
 </div>
-
-
-
 
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive('discussion',["$timeout","$stateParams","Forum","Timeline", function($timeout, $stateParams, Forum, Timeline) {
+    .directive('discussion',["$timeout","$stateParams","Forum","Timeline","Lecture", function($timeout, $stateParams, Forum, Timeline, Lecture) {
     return {
         restrict:"E",
         templateUrl:'/views/forum/discussion.html',
@@ -9,13 +9,32 @@ angular.module('scalearAngularApp')
             console.log("here@!!!!")
             scope.choices= [{text:'Private',value:0},{text:'Public', value:1}];
             scope.privacy = scope.choices[0];
+            scope.checkModel={quiz:true,confused:false, discussion:false};
 
+            scope.checkEmpty= function(item){
+
+                return  item.type!=''
+
+            }
+
+            scope.filterType= function(item){
+                var condition=false;
+                for(var e in scope.checkModel)
+                {
+                    if(scope.checkModel[e])
+                        condition = (condition || item.type==e)
+                }
+                var x = item.type!='' && condition
+
+                return x;
+
+            }
 
             scope.saveQuestion = function(){
 
                 Forum.createPost({post: {content: scope.current_question, time:scope.current_question_time, lecture_id:$stateParams.lecture_id, privacy:scope.privacy.value}}, function(response){
                     console.log("success");
-                    scope.timeline['discussion'][$stateParams.lecture_id].add(scope.current_question_time, "discussion",  response.post);
+                    scope.timeline['lecture'][$stateParams.lecture_id].add(scope.current_question_time, "discussion",  response.post);
                     scope.show_question=false;
                     scope.current_question="";
                     scope.lecture_player.controls.play();
@@ -29,11 +48,11 @@ angular.module('scalearAngularApp')
             scope.deleteDiscussion = function(id, lecture_id, discussion){
                 Forum.deletePost({post_id: id}, function(response){
                     //console.log("begin")
-                    var index=scope.timeline['discussion'][lecture_id].items.indexOf(discussion);
+                    var index=scope.timeline['lecture'][lecture_id].items.indexOf(discussion);
                     //console.log(index)
                     //scope.timeline['discussion'][lecture_id][id]={}
                     //console.log("hna")
-                    scope.timeline['discussion'][lecture_id].items.splice(index, 1);
+                    scope.timeline['lecture'][lecture_id].items.splice(index, 1);
                     //console.log("hna2")
                 }, function(){
                     console.log("failure");
@@ -85,11 +104,11 @@ angular.module('scalearAngularApp')
             scope.deleteAnswer = function(id,q_id, lecture_id, answer){
                 Forum.deleteComment({id: id, post_id: q_id}, function(response){
                     //console.log("begin")
-                    var index=scope.timeline['discussion'][lecture_id][q_id].items.indexOf(answer);
+                    var index=scope.timeline['lecture'][lecture_id][q_id].items.indexOf(answer);
                     //console.log(index)
                     //scope.timeline['discussion'][lecture_id][id]={}
                     //console.log("hna")
-                    scope.timeline['discussion'][lecture_id][q_id].items.splice(index, 1);
+                    scope.timeline['lecture'][lecture_id][q_id].items.splice(index, 1);
                     //console.log("hna2")
                 }, function(){
                     console.log("failure");
@@ -98,11 +117,11 @@ angular.module('scalearAngularApp')
 
             scope.reply = function(discussion){
                 Forum.createComment({comment: {content: scope.current_reply[discussion.data.id], post_id:discussion.data.id, lecture_id:discussion.data.lecture_id}}, function(response){
-                    if(!scope.timeline['discussion'][discussion.data.lecture_id][discussion.data.id])
-                        scope.timeline['discussion'][discussion.data.lecture_id][discussion.data.id]= new Timeline();
+                    if(!scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id])
+                        scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id]= new Timeline();
 
                     console.log(response);
-                    scope.timeline['discussion'][discussion.data.lecture_id][discussion.data.id].add(discussion.data.time, "comment", response.comment);
+                    scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id].add(discussion.data.time, "comment", response.comment);
                     scope.show_reply[discussion.data.id]=false
                     scope.current_reply[discussion.data.id]=""
                     scope.lecture_player.controls.play();
@@ -123,7 +142,14 @@ angular.module('scalearAngularApp')
                 }
             }
 
-
+            scope.deleteConfused = function(confused_id, lecture_id, c){
+                Lecture.deleteConfused({lecture_id: lecture_id, confused_id: confused_id}, function(response){
+                    console.log("deleted");
+                    // now want to remove from list (both l.confuseds and $scope.timeline..)
+                    var index=scope.timeline['lecture'][lecture_id].items.indexOf(c);
+                    scope.timeline['lecture'][lecture_id].items.splice(index, 1)
+                });
+            }
         }
     }
 }]);

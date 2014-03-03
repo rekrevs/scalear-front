@@ -35,10 +35,10 @@ angular.module('scalearAngularApp')
             };
 
             $scope.updateLecture = function(data, type) {
-                if (data && data instanceof Date) {
-                    data.setMinutes(data.getMinutes() + 120);
-                    $scope.lecture[type] = data
-                }
+                // if (data && data instanceof Date) {
+                //     data.setMinutes(data.getMinutes() + 120);
+                //     $scope.lecture[type] = data
+                // }
                 var modified_lecture = angular.copy($scope.lecture);
                 delete modified_lecture.id;
                 delete modified_lecture.created_at;
@@ -70,9 +70,7 @@ angular.module('scalearAngularApp')
                         });
 
                     },
-                    function() {
-                        //alert("Failed to update lecture, please check your internet connection")
-                    }
+                    function() {}
                 );
             }
 

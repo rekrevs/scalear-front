@@ -36,10 +36,10 @@ angular.module('scalearAngularApp')
             };
 
             $scope.updateModule = function(data, type) {
-                if (data && data instanceof Date) {
-                    data.setMinutes(data.getMinutes() + 120);
-                    $scope.module[type] = data
-                }
+                // if (data && data instanceof Date) {
+                //     data.setMinutes(data.getMinutes() + 120);
+                //     $scope.module[type] = data
+                // }
                 var modified_module = angular.copy($scope.module);
                 delete modified_module.id;
                 delete modified_module.items;

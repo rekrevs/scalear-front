@@ -11,10 +11,10 @@ angular.module('scalearAngularApp')
             })
 
             $scope.updateQuiz = function(data, type) {
-                if (data && data instanceof Date) {
-                    data.setMinutes(data.getMinutes() + 120);
-                    $scope.quiz[type] = data
-                }
+                // if (data && data instanceof Date) {
+                //     data.setMinutes(data.getMinutes() + 120);
+                //     $scope.quiz[type] = data
+                // }
                 var modified_quiz = angular.copy($scope.quiz);
                 delete modified_quiz.class_name;
                 delete modified_quiz.created_at;

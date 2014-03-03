@@ -35,3 +35,26 @@ label{
 #details{
 	overflow-x:scroll;
 }
+
+.timepicker td, .timepicker td a{
+	padding:0;
+	text-align: center;
+	vertical-align: middle;
+	border:initial;
+}
+.timepicker input{
+	padding:0;
+}
+.timepicker table{
+	vertical-align: middle;
+}
+.timepicker .well{
+	padding: 0px 5px;
+}
+.timepicker .well .btn{
+	padding: 2px 4px;
+	margin: 0 4px;
+}
+}
+
+

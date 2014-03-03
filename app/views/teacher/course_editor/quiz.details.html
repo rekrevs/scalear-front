@@ -37,6 +37,8 @@
   						<span translate>lectures.set_date</span>:<br>
   						<details-date date="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-date>
   						<!-- <span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+  						<br>
+						<details-time class="timepicker" time="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-time>
   					</p>
 				</td>
 			</tr>
@@ -50,6 +52,8 @@
   					<p ng-hide="quiz.due_date_module">
   						<span translate>lectures.set_date</span>:<br>
   						<details-date date="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-date>
+  						<br>
+						<details-time class="timepicker" time="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-time>
   					</p>
 				</td>
 			</tr>

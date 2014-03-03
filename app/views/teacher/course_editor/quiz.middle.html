@@ -7,7 +7,7 @@
 			<div ng-repeat="question in questions">
 				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index"/>
 				<div ng-if="question.question_type=='header'">
-					<label class='q_label'>Header:</label>
+					<label class='q_label'><span translate>quizzes.header</span>:</label>
 					<delete_button  size='small' action='removeHeader($index)' />
 					<div text-angular ng-model="question.content" ta-toolbar-button-class="btn btn-default btn-mini"></div>
 				</div>
@@ -19,7 +19,7 @@
 			</div>
 			
 			<button value="Add Question" class="btn" ng-click="addQuestion()" translate>groups.add_question</button>
-			<button value="Add Header" class="btn" ng-click="addHeader()" >Add Header</button>
+			<button value="Add Header" class="btn" ng-click="addHeader()" translate>groups.add_header</button>
 			<button value="Save" class="btn btn-primary" ng-click="saveAll()" translate>save</button>
 			<button value="Preview" class="btn btn-info" ng-click="openPreview()" translate>preview</button>
 		</center>

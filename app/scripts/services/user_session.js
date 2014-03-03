@@ -13,6 +13,8 @@ angular.module('scalearAngularApp')
    			if(data.signed_in == true)
    			{
    				$rootScope.current_user=data.user
+          $rootScope.current_user.profile_image = data.profile_image
+
    				$rootScope.current_user.invitations=data.invitations
    				if($rootScope.current_user.roles[0].id==2) //student
    					return deferred.resolve(2)

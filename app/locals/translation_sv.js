@@ -65,6 +65,9 @@ var translation_sv=function(){
               course_information: "Kursinformation",
               help: "Hjälp"
           },
+          settings:{
+            lectures: "Föredrag Inställningar"
+          },
       footer:{
               about: "Om ",
               privacy: "Sekretessregler",

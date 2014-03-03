@@ -26,3 +26,18 @@ angular.module('scalearAngularApp')
 			templateUrl: '/views/student_navigation.html'
 		};
  }]);
+
+angular.module('scalearAngularApp')
+	.directive('userNavigation', ['ErrorHandler','$rootScope',function(ErrorHandler,$rootScope) {
+           return{
+			replace:true,
+			restrict: "E",
+			scope: {
+				courses: "=",
+				//currentuser: '=',
+				iscollapsed: '=',
+				role: '='
+			},
+			templateUrl: '/views/user_navigation.html'
+		};
+ }]);

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('indexController', ['scalear_api', '$scope', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', '$http',
-        function(scalear_api, $scope, $state, User, $rootScope, $translate, $window, $modal, $log, $http) {
+    .controller('indexController', ['scalear_api', '$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', '$http',
+        function(scalear_api, $scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, $http) {
 
             $scope.changeLanguage = function(key) {
                 $log.debug("in change language " + key);
@@ -21,11 +21,15 @@ angular.module('scalearAngularApp')
 
             $scope.logout = function() {
                 $rootScope.logging_out = true;
-                User.sign_out({}, function() {
-                    $rootScope.current_user = null
-                    $state.go("login");
-                    $rootScope.logging_out = false;
-                });
+                $scope.iscollapsed = true;
+                $timeout(function() {
+                    User.sign_out({}, function() {
+                        $rootScope.current_user = null
+                        $state.go("login");
+                        $rootScope.logging_out = false;
+                    });
+                }, 200);
+                
 
                 //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_out"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
             }

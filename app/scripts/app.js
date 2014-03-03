@@ -76,6 +76,12 @@ angular.module('scalearAngularApp', [
                 else if(name == "course.lectures"){
                     return "head.lectures";
                 }
+                else if(name == "edit_account"){
+                    return "account_edit.edit_account";
+                }
+                else if(name == "privacy"){
+                    return "privacy.policy";
+                }
 
             }
             //check if route requires no auth
@@ -246,8 +252,16 @@ angular.module('scalearAngularApp', [
             })
             .state('edit_account', {
                 url: '/users/edit',
-                templateUrl: '/views/users/edit.html',
-                controller: 'UsersEditCtrl'
+                views:{
+                    'user_navigation':{
+                        templateUrl: 'views/user_navigation.html',
+                        controller: 'navigationCtrl'
+                    },
+                    '':{
+                        templateUrl: '/views/users/edit.html',
+                        controller: 'UsersEditCtrl'
+                    }
+                }
             })
             .state('forgot_password', {
                 url: '/users/password/new',
@@ -288,7 +302,7 @@ angular.module('scalearAngularApp', [
                 url: '/courses/:course_id',
                 views: {
                     'navigation': {
-                        templateUrl: '/views/navigation.html',
+                        templateUrl: '/views/user_navigation.html',
                         controller: 'navigationCtrl'
                     },
                     '': {

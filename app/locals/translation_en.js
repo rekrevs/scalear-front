@@ -64,6 +64,9 @@ var translation_en=function(){
         discussion_forum: "Discussion Forum",
         help: "Help"
       },
+      settings:{
+        lectures: "Lectures Settings"
+      },
       footer:{
         about: "About ",
         privacy: "Privacy",

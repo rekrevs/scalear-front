@@ -10,14 +10,14 @@ angular.module('scalearAngularApp')
     .directive('scalearFooter', function() {
         return {
             restrict: 'E',
-            template: '<div class="row"><div class="span12" >' +
-                '<center>' +
+            template: '<div class="row" style="text-align: center;">' +
+                
                 '&copy; ' + new Date().getFullYear() + ' ScalableLearning | ' +
                 '<span translate="footer.about"></span> | ' +
                 '<a ui-sref="privacy" translate="footer.privacy"></a> ' +
                 '<report_technical ng-show="current_user"/>' +
                 '<br><center><version /></center>' +
-                '</center>' +
+                
                 '</div>'
         };
     })
@@ -26,8 +26,8 @@ angular.module('scalearAngularApp')
             return {
                 restrict: 'E',
                 template: '| <a style="cursor:pointer;" ng-click="toggleTechnicalDisplay()" translate="feedback.report_technical"></a>' +
-                    '<div style="width:500px;" ng-show="show_technical"><br>' +
-                    '<div style="margin-left:3px;width:400px;" class="row toggle-demo">'+
+                    '<span style="text-align: center;"><div ng-show="show_technical"><br>' +
+                    '<div style="margin:0 auto;width:400px;" class="row toggle-demo">'+
                         '<div class="switch-toggle switch-2 well col-lg-9">'+
                             '<input id="week-d1" name="view-d" type="radio" ng-checked="issue_type==\'system\'">'+
                             '<label for="week-d1" ng-click="issue_type=\'system\'">{{"head.system"|translate}}</label>'+
@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
                     '<textarea rows="3" cols="10" style="width:400px;" ng-model="technical_data"></textarea><br />' +
                     '<a style="cursor:pointer;" ng-click="send_technical()" translate="feedback.send"></a>' +
                     '<loading size="small" show="sending_technical"/>' +
-                    '</div>',
+                    '</div></span>',
                 link: function(scope, element) {
                     scope.issue_type="system"
                     scope.show_technical = false

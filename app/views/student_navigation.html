@@ -29,17 +29,17 @@
                         </td>
                         <tr>
                             <td id="info" style="text-align: center;" ng-class="{current: current == 'head.course_information'}">
-                                <a ui-sref="course.course_information({ course_id: current_course_id })" ng-click="$parent.iscollapsed = !$parent.iscollapsed"><br />{{'head.information' | translate}}</a>
+                                <a ui-sref="course.course_information({ course_id: current_course_id })" ng-click="$parent.$parent.iscollapsed = !$parent.$parent.iscollapsed"><br />{{'head.information' | translate}}</a>
                             </td>
                             <td>
                             </td>
                             <td id="calendar" style="text-align: center;" ng-class="{current: current == 'head.calendar'}">
-                                <a  ui-sref="course.student_calendar({ course_id: current_course_id })" ng-click="$parent.iscollapsed = !$parent.iscollapsed"><br />{{'head.calendar' | translate}}</a>
+                                <a  ui-sref="course.student_calendar({ course_id: current_course_id })" ng-click="$parent.$parent.iscollapsed = !$parent.$parent.iscollapsed"><br />{{'head.calendar' | translate}}</a>
                             </td>
                             <td>
                             </td>
                             <td id="lectures" style="text-align: center;" ng-class="{current: current == 'head.lectures'}">
-                                <a  ui-sref="course.lectures({ course_id: current_course_id })" ng-click="$parent.iscollapsed = !$parent.iscollapsed"><br />{{'head.lectures' | translate}}</a>
+                                <a  ui-sref="course.lectures({ course_id: current_course_id })" ng-click="$parent.$parent.iscollapsed = !$parent.$parent.iscollapsed"><br />{{'head.lectures' | translate}}</a>
                             </td>
                         <tr>
 

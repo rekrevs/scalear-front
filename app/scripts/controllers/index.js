@@ -12,6 +12,7 @@ angular.module('scalearAngularApp')
             };
 
             $scope.changeLanguage($translate.uses());
+            $rootScope.iscollapsed = true;
 
             $scope.login = function() {
                 //$log.debug("in login");

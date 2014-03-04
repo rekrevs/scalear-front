@@ -62,7 +62,7 @@
     <!-- Add your site or application content here -->
 
         <header class="navbar-fixed-top modern-navbar">
-            <span class="modern-menu-button" ng-show="current_user" ng-init="iscollapsed = true" ng-click="iscollapsed = !iscollapsed" ng-class="{menuopen: !iscollapsed}">
+            <span class="modern-menu-button" ng-show="current_user" ng-click="iscollapsed = !iscollapsed; collapse_course = !collapse_course;" ng-class="{menuopen: !iscollapsed}">
                 <span class="menu-icon" style="margin-top: 8px;">
                 </span>
             </span>

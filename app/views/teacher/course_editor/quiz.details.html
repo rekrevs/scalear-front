@@ -45,16 +45,19 @@
 			<tr>
 				<td><span translate>groups.due_date</span></td>
 				<td>
-					<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br />
-					<div ng-hide="!quiz.due_date_module">
-						<input type='text' ng-model='quiz.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
-					</div>
-  					<p ng-hide="quiz.due_date_module">
-  						<span translate>lectures.set_date</span>:<br>
-  						<details-date date="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-date>
-  						<br>
-						<details-time class="timepicker" time="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-time>
-  					</p>
+					<details-check checked="quiz.due_date_enabled" validate="updateDueDate" save="updateQuiz()" yes="with due date" no="without due date" title="has due date?" ></details-check> 
+					<div ng-show="quiz.due_date_enabled">
+						<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br />
+						<div ng-hide="!quiz.due_date_module">
+							<input type='text' ng-model='quiz.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
+						</div>
+	  					<p ng-hide="quiz.due_date_module">
+	  						<span translate>lectures.set_date</span>:<br>
+	  						<details-date date="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-date>
+	  						<br>
+							<details-time class="timepicker" time="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-time>
+	  					</p>
+	  				</div>
 				</td>
 			</tr>
 			<tr>

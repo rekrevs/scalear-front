@@ -1,5 +1,6 @@
 <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="alert">
 	 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
+	 <p ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message}}</b></p>
 </div>
 
 <div ng-hide="!lecture">

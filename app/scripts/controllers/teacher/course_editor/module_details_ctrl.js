@@ -5,9 +5,11 @@ angular.module('scalearAngularApp')
         function($scope, $state, Module, Documents, $q, $stateParams, $log) {
 
             $scope.$watch('module_obj[' + $stateParams.module_id + ']', function() {
-                if ($scope.module_obj && $scope.module_obj[$stateParams.module_id])
+                if ($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
                     $scope.module = $scope.module_obj[$stateParams.module_id]
-                    // console.log($scope.module)
+                    if($scope.module.due_date)
+                        $scope.module.due_date_enabled =!isDueDateDisabled()
+                }
             })
 
             //**************************FUNCTIONS****************************************///
@@ -50,6 +52,7 @@ angular.module('scalearAngularApp')
                 delete modified_module.total_questions;
                 delete modified_module.total_quiz_questions;
                 delete modified_module.open;
+                delete modified_module.due_date_enabled;
 
                 Module.update({
                         course_id: $stateParams.course_id,
@@ -70,6 +73,26 @@ angular.module('scalearAngularApp')
                     },
                     function() {}
                 );
+            }
+
+
+            var isDueDateDisabled=function(){
+                var due = new Date($scope.module.due_date)
+                var today = new Date()
+                return due.getFullYear() > today.getFullYear()+100
+            }
+
+            $scope.updateDueDate=function(type,enabled){
+                var d = new Date($scope.module.due_date)
+                if(isDueDateDisabled() && enabled) 
+                    var years =  -200 
+                else if(!isDueDateDisabled() && !enabled)
+                    var years  =  200
+                else
+                    var years = 0
+                d.setFullYear(d.getFullYear()+ years)
+                $scope.module.due_date = d
+                $scope.module.due_date_enabled =!isDueDateDisabled()
             }
 
             $scope.visible = function(appearance_time) {

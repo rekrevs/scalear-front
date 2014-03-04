@@ -6,20 +6,29 @@ angular.module('scalearAngularApp')
 
             $scope.$watch('items_obj["quiz"][' + $stateParams.quiz_id + ']', function() {
                 if ($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]) {
-                    $scope.quiz = $scope.items_obj["quiz"][$stateParams.quiz_id]
+                    $scope.quiz = $scope.items_obj["quiz"][$stateParams.quiz_id]                    
+                    if($scope.quiz.due_date)
+                        $scope.quiz.due_date_enabled =!isDueDateDisabled()
+                    $scope.$watch('module_obj[' + $scope.quiz.group_id + ']',function(){                 
+                        if ($scope.quiz.appearance_time_module) {
+                            $scope.quiz.appearance_time = $scope.module_obj[$scope.quiz.group_id].appearance_time;
+                        }
+                        if ($scope.quiz.due_date_module) {
+                            $scope.quiz.due_date = $scope.module_obj[$scope.quiz.group_id].due_date;
+                            $scope.quiz.due_date_enabled = !isDueDateDisabled()
+                        }
+                    })
                 }
             })
 
             $scope.updateQuiz = function(data, type) {
-                // if (data && data instanceof Date) {
-                //     data.setMinutes(data.getMinutes() + 120);
-                //     $scope.quiz[type] = data
-                // }
                 var modified_quiz = angular.copy($scope.quiz);
                 delete modified_quiz.class_name;
                 delete modified_quiz.created_at;
                 delete modified_quiz.updated_at;
                 delete modified_quiz.id;
+                delete modified_quiz.due_date_enabled;
+
                 Quiz.update({
                         course_id: $stateParams.course_id,
                         quiz_id: $scope.quiz.id
@@ -28,19 +37,29 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
-                        $scope.modules.forEach(function(module, i) {
-                            if (module.id == $scope.quiz.group_id) {
-                                if ($scope.quiz.appearance_time_module) {
-                                    $scope.quiz.appearance_time = module.appearance_time;
-                                }
-                                if ($scope.quiz.due_date_module) {
-                                    $scope.quiz.due_date = module.due_date;
-                                }
-                            }
-                        });
                     }
                 );
             };
+
+            var isDueDateDisabled=function(){
+                var due = new Date($scope.quiz.due_date)
+                var today = new Date()
+                return due.getFullYear() > today.getFullYear()+100
+            }
+
+            $scope.updateDueDate=function(type,enabled){
+                var d = new Date($scope.quiz.due_date)
+                if(isDueDateDisabled() && enabled) 
+                    var years =  -200 
+                else if(!isDueDateDisabled() && !enabled)
+                    var years  =  200
+                else
+                    var years = 0
+                d.setFullYear(d.getFullYear()+ years)
+                $scope.quiz.due_date = d
+                $scope.quiz.due_date_enabled =!isDueDateDisabled()
+            }
+
 
             $scope.visible = function(appearance_time) {
                 if (new Date(appearance_time) <= new Date()) {

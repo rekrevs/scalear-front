@@ -96,6 +96,20 @@ var translation_en=function(){
         you_sure: "Are you sure?",
         new_answer: "New Answer",
       },
+      profile:{
+        profile: "Profile",
+        member_since: "Member since",
+        year_ago: "year ago",
+        month_ago: "month ago",
+        week_ago: "week ago",
+        day_ago: "day ago",
+        years_ago: "years ago",
+        months_ago: "months ago",
+        weeks_ago: "weeks ago",
+        days_ago: "days ago",
+        scores: "Badges & Reputation",
+        history: "History"
+      },
       password_edit:{
         change_password: "Change your Password",
         change_password2: "Change my Password",
@@ -116,6 +130,14 @@ var translation_en=function(){
         unhappy: "Unhappy",
         you_sure: "Are you sure?",
         back: "Back",
+        account_information: "Account Information",
+        account_settings: "Account Settings",
+        first_name: "First Name",
+        last_name: "Last Name",
+        screen_name: "Screen Name",
+        university: "University",
+        link: "Website",
+        bio: "Biography"
       },
       events:{
         deadline_msg: "All deadlines are at midnight on the day specified",

@@ -1,5 +1,5 @@
-<div class='navigation' ng-switch="current_user.roles[0].id">
+<ul class="app-menu" collapse="iscollapsed" style="display: block;" ng-switch="current_user.roles[0].id">
 	<teacher_navigation ng-switch-when="1"></teacher_navigation>
 	<teacher_navigation ng-switch-when="5"></teacher_navigation>
 	<student_navigation ng-switch-when="2"></student_navigation>
-</div>
+</ul>

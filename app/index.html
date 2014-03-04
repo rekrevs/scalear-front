@@ -80,14 +80,10 @@
         </header>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">
-                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'courses.all_courses' && current != 'account_edit.edit_account' && current != 'privacy.policy')"/></span>
-                <span ui-view="navigation" currentuser="current_user"></span>
+                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'courses.all_courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile')"/></span>
+                <span ui-view="navigation" iscollapsed="iscollapsed"></span>
                 <div class="row" style="width: auto; padding: 20px 70px 20px 70px; text-align: center;">
-
-                    <div class="span12">
-
-                        <div ui-view=""></div>
-                    </div>
+                    <div ui-view=""></div>
                 </div>
                 <div><br/></div>
                 <footer style="bottom: 0px;">
@@ -268,6 +264,8 @@
     <script src="scripts/controllers/users/confirm_delete_ctrl.js"></script>
 
     <script src="scripts/controllers/statistics/statistics_ctrl.js"></script>
+    <script src="scripts/directives/settings_directives.js"></script>
+    <script src="scripts/controllers/users/profile.js"></script>
     <!-- endbuild -->
 </body>
 </html>

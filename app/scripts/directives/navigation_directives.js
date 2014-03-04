@@ -28,7 +28,7 @@ angular.module('scalearAngularApp')
  }]);
 
 angular.module('scalearAngularApp')
-	.directive('userNavigation', ['ErrorHandler','$rootScope',function(ErrorHandler,$rootScope) {
+	.directive('userNavigation', ['ErrorHandler','$rootScope', 'User',function(ErrorHandler,$rootScope, User) {
            return{
 			replace:true,
 			restrict: "E",
@@ -38,6 +38,28 @@ angular.module('scalearAngularApp')
 				iscollapsed: '=',
 				role: '='
 			},
-			templateUrl: '/views/user_navigation.html'
+			templateUrl: '/views/user_navigation.html',
+			link: function(scope){
+				scope.update_account = function() {
+	                scope.sending = true;
+	                delete $rootScope.current_user.errors
+	                User.update_account({}, {
+	                    user: $rootScope.current_user
+	                }, function() {
+	                    scope.sending = false;
+	                    //console.log("signed up");
+	                    scope.iscollapsed=true;
+	                }, function(response) {
+	                    scope.sending = false;
+	                    $rootScope.current_user.errors = response.data.errors
+	                    //console.log("sign up failed")
+	                })
+	            };
+				// $rootScope.$watch('current_user', function(){
+				// 	scope.user = $rootScope.current_user
+				// 	console.log(scope.user)
+				// 	scope.$apply()
+				// })
+			}
 		};
  }]);

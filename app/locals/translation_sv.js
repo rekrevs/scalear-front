@@ -97,6 +97,20 @@ var translation_sv=function(){
               you_sure: "Är du säker?",
               new_answer: "Nytt Svar",
           },
+      profile:{
+        profile: "Profil",
+        member_since: "Medlem sedan",
+        year_ago: "år sedan",
+        month_ago: "månad sedan",
+        week_ago: "vecka sedan",
+        day_ago: "dag sedan",
+        years_ago: "år sedan",
+        months_ago: "månader sedan",
+        weeks_ago: "veckor sedan",
+        days_ago: "dagar sedan",
+        scores: "Emblem & Omdömes",
+        history: "Historia"
+      },
       password_edit:{
               change_password: "Ändra ditt lösenord",
               change_password2: "Ändra mitt lösenord",
@@ -117,6 +131,14 @@ var translation_sv=function(){
               unhappy: "Olycklig",
               you_sure: "Är du säker?",
               back: "Tillbaka",
+              account_information: "Kontoinformation",
+              account_settings: "Kontoinställningar",
+              first_name: "Förnamn",
+              last_name: "Efternamn",
+              screen_name: "Skärmnamn",
+              university: "Universitet",
+              link: "Hemsida",
+              bio: "Biografi"
           },
       events:{
               deadline_msg: "Alla deadlines är vid midnatt den angivna dagen",

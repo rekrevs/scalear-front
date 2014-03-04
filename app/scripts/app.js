@@ -82,6 +82,9 @@ angular.module('scalearAngularApp', [
                 else if(name == "privacy"){
                     return "privacy.policy";
                 }
+                else if(name == "profile"){
+                    return "profile.profile";
+                }
 
             }
             //check if route requires no auth
@@ -263,6 +266,11 @@ angular.module('scalearAngularApp', [
                     }
                 }
             })
+            .state('profile', {
+                url: '/users/:user_id',
+                templateUrl: 'views/users/profile.html',
+                controller: 'UsersProfileCtrl'
+            })
             .state('forgot_password', {
                 url: '/users/password/new',
                 templateUrl: '/views/users/password/new.html',
@@ -302,7 +310,7 @@ angular.module('scalearAngularApp', [
                 url: '/courses/:course_id',
                 views: {
                     'navigation': {
-                        templateUrl: '/views/user_navigation.html',
+                        templateUrl: '/views/navigation.html',
                         controller: 'navigationCtrl'
                     },
                     '': {

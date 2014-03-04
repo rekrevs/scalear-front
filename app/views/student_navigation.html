@@ -1,59 +1,102 @@
+<div style="min-width: 1075px;">
+    <table style="vertical-align: baseline;">
+        <tr>
+            <td style="vertical-align: initial;">
+                <a ui-sref="edit_account" href="">
+                    <img src="{{'http://www.gravatar.com/avatar/'+$parent.current_user.profile_image+'?r=g&s=70'}}" style="overflow: hidden; min-width: 70px;" />
+                </a>
+            </td>
+            <td style="min-width: 280px; display: inline-block;">
+                    <ul>
+                        <span style="color: rgb(0, 162, 86); font-size: 22px; font-weight: lighter;" ng-bind="$parent.current_user.screen_name"></span>
+                    </ul>
+                    <ul style="font-size: 19px;" ng-bind="$parent.current_user.name +' '+ $parent.current_user.last_name">
+                    </ul>
+                    <ul style="font-size: 19px;" ng-bind="$parent.current_user.university">
+                    </ul>
+            </td>
+            <td ng-init="show_settings = false" style="display: inline-table; margin-left: 20px;">
+                <div class="headerdivider" style="display: table-column; padding-right: 20px;">
+                </div>
+                <span style="margin-left: 20px; display: inline-block;" ng-hide="!course_information || show_settings">
+                    <div style="word-wrap: normal; width: 450px;">
+                        <span style="font-size: 16px; ">
+                        {{course_information.short_name}} | {{course_information.name}}
+                        </span>
+                    </div>
+                    <table>
+                        <td style="height: 7px;">
+                        </td>
+                        <tr>
+                            <td id="info" style="text-align: center;" ng-class="{current: current == 'head.course_information'}">
+                                <a ui-sref="course.course_information({ course_id: current_course_id })" ng-click="$parent.iscollapsed = !$parent.iscollapsed"><br />{{'head.information' | translate}}</a>
+                            </td>
+                            <td>
+                            </td>
+                            <td id="calendar" style="text-align: center;" ng-class="{current: current == 'head.calendar'}">
+                                <a  ui-sref="course.student_calendar({ course_id: current_course_id })" ng-click="$parent.iscollapsed = !$parent.iscollapsed"><br />{{'head.calendar' | translate}}</a>
+                            </td>
+                            <td>
+                            </td>
+                            <td id="lectures" style="text-align: center;" ng-class="{current: current == 'head.lectures'}">
+                                <a  ui-sref="course.lectures({ course_id: current_course_id })" ng-click="$parent.iscollapsed = !$parent.iscollapsed"><br />{{'head.lectures' | translate}}</a>
+                            </td>
+                        <tr>
 
-<!-- <ul class="dropdown pull-right" id="navmenu" style="right: 20px; position: fixed;">
-    <button type="button" class="btn btn-default dropdown-toggle" style="background-image: initial; background-color: white;" data-toggle="dropdown">
-        <span class="icon icon-list">
-            
-        </span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-right app-menu">
-        <span class="dropdown-header"><b>{{course_information.short_name}} | {{course_information.name}}</b></span>
-        <li><a id="calendar" ui-sref="course.student_calendar({ course_id: current_course_id })" translate>head.calendar</a></li>
-        <li><a id="info" ui-sref="course.course_information({ course_id: current_course_id })" translate>head.course_information</a></li>
-        <li><a id="lectures" ui-sref="course.lectures({ course_id: current_course_id })" translate>head.lectures</a></li>
-        <li class="divider"></li>
-
-        <span class="dropdown-header"><b>Courses</b></span>
-        {{courses}}
-        <li><a id="info" ui-sref="course.edit_course_information({ course_id: current_course_id })"translate>1234 | Course One</a></li>
-        <li><a id="info" ui-sref="course.edit_course_information({ course_id: current_course_id })"translate>5678 | Course Two</a></li>
-        <li class="divider"></li>
-
-        <span class="dropdown-header"><b>Settings</b></span>
-        <li><a id="info" ui-sref="course.edit_course_information({ course_id: current_course_id })"translate>Account</a></li>
-        <li ng-show="current_lang=='en'" ng-cloak>
-            <a style="cursor:pointer;" ng-click="changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /> Swedish</a>
-        </li>
-        <li ng-show="current_lang=='sv'" ng-cloak>
-            <a style="cursor:pointer;" ng-click="changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /> English</a>
-        </li>
-        <li class="divider"></li>
-        
-        
-        <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()" translate="navigation.logout"></a></li>
-    </ul>
-
-
-</span> -->
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- <ul> -->
-    <!-- <li id="calendar_link" ng-class="{ active: current_state.includes('course.student_calendar')}"><a ui-sref="course.student_calendar({ course_id: current_course_id })" translate="head.calendar"></a></li>
-
-    <li id="lectures_link" ng-class="{ active: current_state.includes('course.lectures')}"><a ui-sref="course.lectures({ course_id: current_course_id })" translate="head.lectures"></a></li>
-
-    <li id="discussion_link" ng-if="course_information.discussion_link!=''"><a target="_blank" href="{{url_with_protocol(course_information.discussion_link)}}" translate="head.discussion_forum"></a></li>
-
-    <li id="course_information_link" ng-class="{ active: current_state.includes('course.course_information')}"><a ui-sref="course.course_information({ course_id: current_course_id })" translate="head.course_information"></a></li> -->
-     
-    <!-- <li style="float:right"><b>{{course_information.short_name}} - {{course_information.name}}</b></li> -->
-<!-- </ul> -->
+                        </tr>
+                    </table>
+                </span>
+                <span style="margin-left: 20px; display: inline-block;" ng-show="show_settings">
+                    
+                    <table>
+                        <tr>
+                            <td style="padding-left: 20px; padding-right: 5px; min-width: 150px;">
+                                <span class="dropdown-header" ng-hide="!show_settings"><b translate>account_edit.account_settings</b></span>
+                                <div ng-init="selected = 0" class="settings-tabs">
+                                    <a href="" ng-click="selected = 0">
+                                        <ul ng-class="{tabactive: selected == 0}" class="tab-pill" ng-bind='"account_edit.account_information" | translate'>
+                                            
+                                        </ul>
+                                    </a>
+                                    <a href="" ng-click="selected = 1">
+                                        <ul ng-class="{tabactive: selected == 1}" class="tab-pill" ng-bind="'settings.lectures' | translate">
+                                        </ul>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </span>
+            </td>
+            <td ng-show="show_settings">
+                <div class="tab-content">
+                        <span ng-show="selected == 0">
+                            <account-information>
+                        </span>
+                        <span ng-show="selected == 1">
+                            test2
+                        </span>
+                    </div>
+            </td>
+            <span style="float: right;">
+                <ul><a style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
+            </span>
+            <span style="float: right;">
+                <a href="" >
+                    <ul ng-bind="'head.help' | translate">
+                    </ul>
+                </a>
+            </span>
+            <span style="float: right; display: inline-table;">
+                <ul ng-show="$parent.current_lang=='en'" ng-cloak>
+                    <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                </ul>
+                <ul ng-show="$parent.current_lang=='sv'" ng-cloak>
+                    <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                </ul>
+            </span>
+            <span class="settings-menu-button" ng-click="show_settings = !show_settings" ng-class="{settingsopen: show_settings}">
+            </span>
+        </tr>
+    </table>
+</div>

@@ -3,38 +3,47 @@
 <!-- endbuild -->
 <center ng-show="!eventSources.length" style="height: 80%;"><loading size="big" show="!eventSources.length" /></center>
 <div ng-show="eventSources.length" style="padding-bottom: 30px;">
-	<div style="float:left;width:50%;height: auto;position: initial;left: 0px;top: 0px;">
-		<h3 style="margin: 0;margin-left:20px" translate="head.announcements"></h3>
-		<div style="overflow:auto; height:460px">
-			<table class="table-announce">
-		        <tr ng-repeat="a in announcements">
-		           <td class = "component">
-		            	<span ng-bind-html="a.announcement"></span>
-		            	<div class="well well-lg" style="color: lightslategrey;font-size: 12px;font-weight: bold;float: right;position: relative;top: 10px;padding: 10px;background: white;margin-bottom: 0;">{{ a.updated_at | date:'medium'}}<br>{{ a.user.name }}</div>
-		           </td>
-		        </tr>
-		    </table>
-	    </div>
-     </div>
-	<div style="float:left;font-size:12px;margin-top:5px; position: absolute; bottom: 0px;left: 50%;top: 0px;height: auto;overflow: auto; padding-bottom: 30px;">
-    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style=" width:580px; min-width: 200px; min-height:100px;margin-bottom: 10px;"></div>
-         <div class="alert">
-         	<div style="font-size:14px;font-weight: bold;margin-bottom:5px" translate="events.deadline_msg"></div>
-         	<div class="span2" style="margin-right: 5px;margin-left:0px">
-	         		<div style="width:45%;float:left">
-	         		<div style="width: 20px; height: 20px; background-color: green;float:left;margin-right: 5px;border-radius: 1em;opacity: 0.8;"></div>
-	         		<div translate="events.done"></div>
-	         	</div>
-	         	<div >
-	         		<div style="width: 20px; height: 20px; background-color: orange;float:left;margin-right: 5px;border-radius: 1em;opacity: 0.8;"></div>
-	     			<div translate="events.not_done"></div>
-	     		</div>
-	     	</div>
-         	<div >
-         		<div style="width: 20px; height: 20px; background-color: red;float:left;margin-right: 5px;border-radius: 1em;opacity: 0.8;"></div>
-     			<div translate="events.not_done_due"></div>
-     		</div>
-         </div>
-    </div> 
+	<table>
+		<tr>
+			<td style="float:left;width:50%;height: auto;position: initial;left: 0px;top: 0px;">
+				<div>
+					<h3 style="margin: 0;margin-left:20px" translate="head.announcements"></h3>
+					<div style="">
+						<table class="table-announce">
+					        <tr ng-repeat="a in announcements">
+					           <td class = "component">
+					            	<span ng-bind-html="a.announcement"></span>
+					            	<div class="well well-lg" style="color: lightslategrey;font-size: 12px;font-weight: bold;float: right;position: relative;top: 10px;padding: 10px;background: white;margin-bottom: 0;">{{ a.updated_at | date:'medium'}}<br>{{ a.user.name }}</div>
+					           </td>
+					        </tr>
+					    </table>
+				    </div>
+			    </div>
+	     	</td>
+	     	<td style="float:left;font-size:12px;margin-top:5px; bottom: 0px;left: 50%;top: 0px;height: auto;overflow: auto; padding-bottom: 30px;">
+	     		<div>
+			    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style=" width:580px; min-width: 200px; min-height:100px;margin-bottom: 10px;"></div>
+			        <div class="alert">
+			         	<div style="font-size:14px;font-weight: bold;margin-bottom:5px" translate="events.deadline_msg"></div>
+			         	<div class="span2" style="margin-right: 5px;margin-left:0px">
+				         		<div style="width:45%;float:left">
+				         		<div style="width: 20px; height: 20px; background-color: green;float:left;margin-right: 5px;border-radius: 1em;opacity: 0.8;"></div>
+				         		<div translate="events.done"></div>
+				         	</div>
+				         	<div >
+				         		<div style="width: 20px; height: 20px; background-color: orange;float:left;margin-right: 5px;border-radius: 1em;opacity: 0.8;"></div>
+				     			<div translate="events.not_done"></div>
+				     		</div>
+				     	</div>
+			         	<div >
+			         		<div style="width: 20px; height: 20px; background-color: red;float:left;margin-right: 5px;border-radius: 1em;opacity: 0.8;"></div>
+			     			<div translate="events.not_done_due"></div>
+			     		</div>
+			         </div>
+			    </div> 
+	     	</td>
+	     </tr>
+		
+    </table>
 
 </div>

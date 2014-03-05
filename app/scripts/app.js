@@ -152,6 +152,7 @@ angular.module('scalearAngularApp', [
 
                 //$rootScope.start_loading=true;
                 $rootScope.current = getStateTitle(to.name)
+                $rootScope.iscollapsed = true;
                 if(from.url != '/'){
                 UserSession.getRole().then(function(result) {
                     var s = 1;

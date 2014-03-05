@@ -19,6 +19,9 @@ angular.module('scalearAngularApp')
                 //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
                 $state.go("login");
             }
+            $scope.toggleCollapse = function(){
+                $rootScope.iscollapsed = !$rootScope.iscollapsed
+            }
 
             $scope.logout = function() {
                 $rootScope.logging_out = true;

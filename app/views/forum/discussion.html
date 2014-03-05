@@ -1,12 +1,4 @@
 <br><br>
-DISCUSSIONS
-        {{checkModel}}
-{{checkModel["outline"]}}
-<!--<div class="btn-group">-->
-    <!--<button type="button" class="btn btn-primary" ng-model="checkModel['outline']" btn-checkbox>Outline</button>-->
-    <!--<button type="button" class="btn btn-primary" ng-model="checkModel.discussion" btn-checkbox>Discussion</button>{{checkModel.discussion}}-->
-    <!--<button type="button" class="btn btn-primary" ng-model="checkModel.right" btn-checkbox>Right</button>-->
-<!--</div>-->
 <div class="btn-group" data-toggle="buttons">
     <label class="btn btn-default btn-checkbox">
         <input type="checkbox" ng-model="checkModel.quiz"> Outline
@@ -40,7 +32,7 @@ DISCUSSIONS
                         <!--<td></td>-->
                         <!--<td>{{e.data.question}}</td>-->
                         <tr ng-show="e.type!='discussion'">
-                        <td><p ng-show="(e.type=='quiz' && e.data.is_quiz_solved) || e.type=='confused'" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Current Lecture: {{ e.time | formattime:'hh:mm:ss'}}">{{(e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}</p></td>
+                        <td><p ng-show="(e.type=='quiz' && e.data.is_quiz_solved) || e.type=='confused'" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Relative to Module: {{ (e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}">{{(e.time) | formattime:'hh:mm:ss'}}</p></td>
                         <td ng-show="e.type=='quiz' && !e.data.is_quiz_solved"><p>{{e.data.question}}</p></td>
                         <td ng-show="e.type=='quiz' && e.data.is_quiz_solved"><p class="solved" ng-click="seek(e.time, l.id)" >{{e.data.question}}</p></td>
                         <td ng-show="e.type=='confused' && !e.data.very"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.confused"}}</p></td>
@@ -51,7 +43,7 @@ DISCUSSIONS
                         </td>
                         </tr>
                         <tr ng-show="e.type=='discussion'">
-                        <td><p ng-show="(e.type=='discussion')" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Current Lecture: {{ e.time | formattime:'hh:mm:ss'}}">{{(e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}</p></td>
+                        <td><p ng-show="(e.type=='discussion')" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Relative to Module: {{ (e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}">{{(e.time) | formattime:'hh:mm:ss'}}</p></td>
                         <!--<td ng-show="e.type=='quiz' && !e.data.is_quiz_solved"><p>{{e.data.question}}</p></td>-->
                         <!--<td ng-show="e.type=='quiz' && e.data.is_quiz_solved"><p class="solved" ng-click="seek(e.time, l.id)" >{{e.data.question}}</p></td>-->
                         <td ng-show="e.type=='discussion'"><p class="solved" ng-click="seek(e.time, l.id)">{{e.data.email}}: {{"q"|translate}} {{e.data.content}}</p></td>

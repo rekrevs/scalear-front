@@ -10,8 +10,8 @@ angular.module('scalearAngularApp')
     //lecture is the current lecture
     $scope.lecture = {}
     $scope.lecture.aspect_ratio = ""
-    $scope.lecture_player = {}
-    $scope.lecture_player.events = {}
+    $scope.$parent.lecture_player = {}
+    $scope.$parent.lecture_player.events = {}
     $scope.display_mode = false
     $scope.studentAnswers = {}
     $scope.explanation = {}
@@ -25,6 +25,8 @@ angular.module('scalearAngularApp')
     $scope.current_time = 0
     $scope.total_duration = 0
     $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
+    $scope.editors={}
+
 
     $scope.adjust_accordion= function(){
         $scope.$emit('accordianUpdate', {
@@ -52,7 +54,7 @@ angular.module('scalearAngularApp')
             }
             $scope.slow_message = false
             $scope.loading_video = false;
-            editor.create($scope.lecture.url, $scope.lecture_player);
+            //editor.create($scope.lecture.url, $scope.lecture_player);
             var i= $scope.lecture_ids.indexOf($scope.lecture.id);
             $scope.module_lectures[i].online_quizzes.forEach(function(quiz) {
                 $scope.lecture_player.controls.cue(quiz.time, function() {
@@ -81,14 +83,11 @@ angular.module('scalearAngularApp')
         }
     }
 
-    $scope.$on("$destroy", function(){
-        //console.log("cancelling intervel");
-        // cancel autosave when leave lecture.
-        $interval.cancel(editor.autosave);
-        doc.dirty=false;
-        doc.lastSave = 0;
-        doc.info=null;
-    });
+//    $scope.$on("$destroy", function(){
+//        //console.log("cancelling intervel");
+//        // cancel autosave when leave lecture.
+//
+//    });
 
     var init = function() {
         $scope.loading_video = true;
@@ -133,7 +132,9 @@ angular.module('scalearAngularApp')
                         $timeout(function(){
                             console.log($scope.module_lectures.length)
                             var to="outline_"+$scope.lecture.id.toString()
+                            var to2="notes_"+$scope.lecture.id.toString()
                             document.getElementById(to).scrollIntoView();
+                            document.getElementById(to2).scrollIntoView();
                             watcher2();
                         }, 500);
 
@@ -180,7 +181,7 @@ angular.module('scalearAngularApp')
         $scope.selected_quiz = '';
         $scope.display_mode = false;
         if(lecture_id == $scope.lecture.id){ //if current lecture
-            $scope.lecture_player.controls.seek_and_pause(time)
+            $scope.lecture_player.controls.seek_and_pause(parseInt(time))
         }
         else{
 

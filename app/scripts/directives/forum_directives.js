@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive('discussion',["$timeout","$stateParams","Forum","Timeline","Lecture", function($timeout, $stateParams, Forum, Timeline, Lecture) {
+    .directive('discussion',["$timeout","$stateParams","Forum","Timeline","Lecture","editor", function($timeout, $stateParams, Forum, Timeline, Lecture,editor) {
     return {
         restrict:"E",
         templateUrl:'/views/forum/discussion.html',
@@ -35,6 +35,9 @@ angular.module('scalearAngularApp')
                 Forum.createPost({post: {content: scope.current_question, time:scope.current_question_time, lecture_id:$stateParams.lecture_id, privacy:scope.privacy.value}}, function(response){
                     console.log("success");
                     scope.timeline['lecture'][$stateParams.lecture_id].add(scope.current_question_time, "discussion",  response.post);
+                    // also add to notes.
+                    //console.log(scope.editors);
+                    scope.editors[$stateParams.lecture_id].insert(scope.current_question_time, scope.current_question);
                     scope.show_question=false;
                     scope.current_question="";
                     scope.lecture_player.controls.play();

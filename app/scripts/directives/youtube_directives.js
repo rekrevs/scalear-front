@@ -131,6 +131,7 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek_and_pause=function(time){
+                    console.log("seeking to "+time);
 					player_controls.seek(time)
 					player.pause()
 				}

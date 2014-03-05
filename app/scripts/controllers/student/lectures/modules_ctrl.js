@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentModulesCtrl', ['$scope','Course','$stateParams','$rootScope', '$log','$window','Module','Timeline','Lecture', function ($scope, Course, $stateParams, $rootScope, $log, $window, Module, Timeline, Lecture) {
+  .controller('studentModulesCtrl', ['$scope','Course','$stateParams','$rootScope', '$log','$window','Module','Timeline','Lecture','editor', function ($scope, Course, $stateParams, $rootScope, $log, $window, Module, Timeline, Lecture, editor) {
 
 	$window.scrollTo(0, 0);
     $scope.show_reply={}
@@ -35,6 +35,9 @@ angular.module('scalearAngularApp')
                 for(var l in $scope.module_lectures)
                 {
                     var lec= $scope.module_lectures[l]
+
+                    //editor.create(lec.url, $scope.lecture_player);
+
                     //console.log(lec)
                     $scope.timeline['lecture'][lec.id] = new Timeline()
                     for(var type in lec.online_quizzes){

@@ -1,19 +1,25 @@
 angular.module('scalearAngularApp').factory('editor',
-    ['$q', '$rootScope', '$log', '$timeout', 'doc','$stateParams','Lecture','$window','$interval', function ($q, $rootScope, $log, $timeout, doc, $stateParams, Lecture, $window, $interval) {
+    ['$state','$q', '$rootScope', '$log', '$timeout', 'doc','$stateParams','Lecture','$window','$interval', function ($state,$q, $rootScope, $log, $timeout, doc, $stateParams, Lecture, $window, $interval) {
+        return function() {
+
+        //console.log("new editor");
+
         var ONE_HOUR_IN_MS = 1000 * 60 * 60;
         var saveInterval=15000;
         var editor = null,
             EditSession = require("ace/edit_session").EditSession,
+            //Tooltip= require("ace/mouse/default_gutter_handler").GutterHandler,
             service = $rootScope.$new(true);
 
-        service.doc = doc;
-        service.loading = false;
+        //console.log(Tooltip);
+        service.doc = new doc();
         service.loading = false;
         service.saving = false;
         service.savingErrors = 0;
         service.lastRow = -1;
         service.video="";
         service.autosave="";
+        service.lecture_id="";
 
 
 
@@ -29,6 +35,7 @@ angular.module('scalearAngularApp').factory('editor',
             editor = ace.edit(element);
             editor.commands.removeCommand('splitline');
             editor.commands.removeCommand('golinedown');
+            editor.resize();
             editor.on("gutterclick", function (e) {
                 var lineCursorPosition = e.getDocumentPosition().row;
 
@@ -36,21 +43,40 @@ angular.module('scalearAngularApp').factory('editor',
                     service.jump(lineCursorPosition);
                 //}
             });
-            service.updateEditor(doc.info);
+//            editor.on("guttermousemove", function(e){
+//                console.log("row "+ service.getCurrentSync(e.getDocumentPosition().row).time);
+//                //var tooltip = Tooltip(editor);
+//
+////                var target = e.domEvent.target;
+////                if (target.className.indexOf("ace_gutter-cell") == -1)
+////                    return;
+////                if (!editor.isFocused())
+////                    return;
+////                if (e.clientX > 25 + target.getBoundingClientRect().left)
+////                    return;
+////
+////                var row = e.getDocumentPosition().row
+////                e.editor.session.setBreakpoint(row)
+////                e.stop()
+//            });
+            service.updateEditor(service.doc.info);
         };
 
         service.snapshot = function () {
-            //console.log("snapshot");
+            //console.log("snapshot!!!!!!!!!!!!!!!!!!!!!");
 
-            doc.dirty = false;
-            var data = angular.extend({}, doc.info);
-            if (doc.info.editable) {
-                data.content = doc.info.content;
-            }
+            service.doc.dirty = false;
+            var data = angular.extend({}, service.doc.info);
+            //if (service.doc.info.editable) {
+                data.content = service.doc.info.content;
+            //}
+            //console.log(data);
             return data;
         };
-        service.create = function (url, player, parentId) {
-
+        service.create = function (url, player,lecture_id,cumulative_duration,lecture_name, parentId) {
+            service.lecture_id=lecture_id
+            service.lecture_name=lecture_name;
+            service.cumulative_duration=cumulative_duration;
             var vs= {
                 version: 2,
                 content: '',
@@ -76,16 +102,21 @@ angular.module('scalearAngularApp').factory('editor',
 
             Lecture.loadNote({
                 course_id: $stateParams.course_id,
-                lecture_id: $stateParams.lecture_id
+                lecture_id: lecture_id
             }, function(response){
                 service.loading = false;
                 if(response.exists)
                     service.updateEditor(response.note.data);
                 else
                     service.updateEditor(vs);
-                $rootScope.$broadcast('loaded', doc.info);
+
+                if(service.doc.info.content.trim()==='')
+                    service.insert(0,"Start of Lecture "+service.lecture_name, "note")
+                service.doc.initWatcher();
+                service.initTimeout();
+                //$rootScope.$broadcast('loaded', service.doc.info);
             }, function(response){
-                $log.warn("Error loading", response);
+               // $log.warn("Error loading", response);
                 service.loading = false;
             });
 
@@ -102,7 +133,7 @@ angular.module('scalearAngularApp').factory('editor',
         };
         service.copy = function (templateId) {
             //console.log("copy")
-            $log.info("Copying template", templateId);
+            //$log.info("Copying template", templateId);
 //            backend.copy(templateId).then(angular.bind(service,
 //                function (result) {
 //                    doc.info.id = result.id;
@@ -159,17 +190,19 @@ angular.module('scalearAngularApp').factory('editor',
         };
         service.save = function (newRevision) {
             //console.log("save")
-            $log.info("Saving file", newRevision);
+            //$log.info("Saving file", newRevision);
             if (service.saving || service.loading) {
                 throw 'Save called from incorrect state';
             }
             service.saving = true;
             var file = service.snapshot();
+            //console.log("saving file ");
+            //console.log(file);
             //console.log("file is");
             //console.log(file);
 
             // what is saved is the file, along with its revision. (as a param)
-            if (!doc.info.id) {
+            if (!service.doc.info.id) {
                 $rootScope.$broadcast('firstSaving');
             }
             else {
@@ -177,21 +210,21 @@ angular.module('scalearAngularApp').factory('editor',
             }
 
             // Force revision if first save of the session
-            newRevision = newRevision || doc.timeSinceLastSave() > ONE_HOUR_IN_MS;
+            newRevision = newRevision || service.doc.timeSinceLastSave() > ONE_HOUR_IN_MS;
             Lecture.saveNote({
                 course_id: $stateParams.course_id,
-                lecture_id: $stateParams.lecture_id
+                lecture_id: service.lecture_id
             }, {
                 data: file
             }, function(response){
-                $log.info("Saved file", response);
+                //$log.info("Saved file", response);
                 service.saving = false;
                 service.savingErrors = 0;
-                doc.lastSave = new Date().getTime();
+                service.doc.lastSave = new Date().getTime();
             }, function(response){
                 service.saving = false;
                 service.savingErrors++;
-                doc.dirty = true;
+                service.doc.dirty = true;
             });
             //var promise = backend.save(file, newRevision);
 //            promise.then(
@@ -200,29 +233,29 @@ angular.module('scalearAngularApp').factory('editor',
 //                    service.saving = false;
 //                    service.savingErrors = 0;
 //
-//                    if (!doc.info.id) {
-//                        doc.info.id = result.data.id;
-//                        $rootScope.$broadcast('firstSaved', doc.info.id);
+//                    if (!service.doc.info.id) {
+//                        service.doc.info.id = result.data.id;
+//                        $rootScope.$broadcast('firstSaved', service.doc.info.id);
 //                    }
 //
-//                    doc.lastSave = new Date().getTime();
-//                    $rootScope.$broadcast('saved', doc.info);
-//                    return doc.info;
+//                    service.doc.lastSave = new Date().getTime();
+//                    $rootScope.$broadcast('saved', service.doc.info);
+//                    return service.doc.info;
 //                },
 //                function (result) {
 //                    service.saving = false;
 //                    service.savingErrors++;
-//                    doc.dirty = true;
+//                    service.doc.dirty = true;
 //
 //                    if (service.savingErrors === 5) {
-//                        doc.info.editable = false;
+//                        service.doc.info.editable = false;
 //                        $rootScope.$broadcast('error', {
 //                            action: 'save',
 //                            message: "Too many errors occurred while saving the file. Please contact us"
 //                        });
 //                    }
 //                    else if(result.status === 403) {
-//                        doc.info.editable = false;
+//                        service.doc.info.editable = false;
 //                        $rootScope.$broadcast('error', {
 //                            action: 'save',
 //                            message: "You are not authorized to save or update this file. Please contact us"
@@ -243,21 +276,21 @@ angular.module('scalearAngularApp').factory('editor',
         service.jump = function (line) {
             //console.log("jump")
             var timestamp, videoUrl;
-            //console.log(doc.info.videos);
-            for(var sync in doc.info.videos) {
-                if(doc.info.videos[sync][line]) {
-                    timestamp = doc.info.videos[sync][line]['time'];
+            //console.log(service.doc.info.videos);
+            for(var sync in service.doc.info.videos) {
+                if(service.doc.info.videos[sync][line]) {
+                    timestamp = service.doc.info.videos[sync][line]['time'];
                     videoUrl = sync;
                     break;
                 }
             }
 
             if (typeof timestamp !== "undefined" && typeof videoUrl !== "undefined") {
-                $log.info('Timestamp', line, timestamp);
+                //$log.info('Timestamp', line, timestamp);
                 if (timestamp > -1) {
                     if(service.url !== videoUrl) {
-                        doc.info.currentVideo = videoUrl;
-                        service.url = doc.info.currentVideo;
+                        service.doc.info.currentVideo = videoUrl;
+                        service.url = service.doc.info.currentVideo;
                         //video.load();
                        // var offListener = service.$on('video::loadeddata', function () {
                          //   video.currentTime(timestamp);
@@ -265,7 +298,15 @@ angular.module('scalearAngularApp').factory('editor',
                         //});
                     }
                     else {
-                        service.video.controls.seek(timestamp);
+                        if(service.lecture_id == $stateParams.lecture_id){ //if current lecture
+                            //$scope.lecture_player.controls.seek_and_pause(time)
+                            service.video.controls.seek(timestamp);
+                        }
+                        else{
+
+                            $state.go("course.lectures.module.lecture", {"lecture_id":service.lecture_id, "time":timestamp});
+                            return;
+                        }
                     }
 
                     editor.gotoLine(line+1);
@@ -273,9 +314,63 @@ angular.module('scalearAngularApp').factory('editor',
                 }
             }
             else {
-                $log.info('No timestamp');
+                //$log.info('No timestamp');
             }
         };
+
+        // To insert text manually.
+        service.insert = function (time, question, note) {
+//            console.log(line);
+
+            var position=-1;
+            if(!note)
+                var text= "YOU ASKED: "+question.toUpperCase();
+            else{
+                var text= question.toUpperCase();
+            }
+            //var time= 50;
+            var currentSync= service.getCurrentSync();
+            var element=-1;
+            for(element in currentSync){
+                //console.log("element "+element+" time is ");
+                //console.log(currentSync[element].time)
+                if(parseInt(currentSync[element].time)>parseInt(time))
+                {
+                    position=element
+                  //  console.log("position isssssssssssss "+position);
+                    break;
+                }
+            }
+
+            snapshotSymbol = '<snapshot>',
+            session = editor.getSession();
+            element= parseInt(element);
+            if(position==-1) // largest element // put at the end.
+            {
+                // if currentSync not empty, want to push time one row ta7t
+
+                //console.log("element is "+parseInt(element+1))
+                session.insert({row:(element+1), column:0}, "\n");
+                service.doc.info.videos[service.doc.info.currentVideo][parseInt(element+1)]={time:parseInt(time)};
+                session.insert({row:(parseInt(element+1)), column:0}, text + "\n");
+                currentSyncLine = service.getCurrentSync(parseInt(element+1));
+                currentSyncLine.time=time;
+                //console.log(currentSyncLine);
+
+
+            }else{
+
+                // here need to move everything down one row first.
+                position=parseInt(position);
+                session.insert({row:(position), column:0}, "\n");
+                service.doc.info.videos[service.doc.info.currentVideo][position]={time:parseInt(time)};
+                session.insert({row:(position), column:0}, text + "\n");
+                currentSyncLine = service.getCurrentSync(position);
+                currentSyncLine.time=time;
+
+            }
+
+        }
 
         service.updateEditor = function (fileInfo) {
             //console.log("woohoo!" + fileInfo)
@@ -284,7 +379,7 @@ angular.module('scalearAngularApp').factory('editor',
                 return;
             }
 
-            $log.info("Updating editor", fileInfo);
+            //$log.info("Updating editor", fileInfo);
 
             var session = new EditSession(fileInfo.content);
             session.setUseWrapMode(true);
@@ -292,21 +387,20 @@ angular.module('scalearAngularApp').factory('editor',
 
             session.on('change', function () {
                 //console.log("in change")
-                if (doc && doc.info) {
+                if (service.doc && service.doc.info) {
                     $rootScope.safeApply(function () {
-                        doc.info.content = session.getValue();
+                        service.doc.info.content = session.getValue();
                         ///console.log("in change!!!!!!")
-                        //console.log(doc.info);
+                        //console.log(service.doc.info);
                     });
                 }
             });
 
             session.$breakpointListener = function (e) {
 
-                //console.log("over here! in breakpoint");
 
                 var currentSync = service.getCurrentSync();
-                if (!doc.info || !currentSync)
+                if (!service.doc.info || !currentSync)
                     return;
                 var delta = e.data;
                 var range = delta.range;
@@ -314,12 +408,16 @@ angular.module('scalearAngularApp').factory('editor',
                 //console.log(range.start.row);
                 if (range.end.row == range.start.row) {
                     // Removing sync mark if line is now empty
+                    //console.log("line is")
+                    //console.log(session.getLine(range.start.row));
                     if (session.getLine(range.start.row).trim() === '') {
                         service.unsync(range.start.row);
                     }
                     else if (!(range.start.row in currentSync)) {
+                        //console.log(currentSync);
                         //console.log("wll call sync")
-                        service.syncLine(range.start.row, true);
+                        //console.log(range.start.row );
+                        service.syncLine(range.start.row, false);
                     }
 
                     return;
@@ -336,7 +434,9 @@ angular.module('scalearAngularApp').factory('editor',
                 }
 
                 var shiftedSyncNotesVideo = {};
-                for (var line in currentSync) {
+                for (var line in currentSync) {// here
+                    //console.log("line: "+line)
+                    //console.log(currentSync[line]);
                     var intLine = parseInt(line);
                     if (!isNaN(intLine)) {
                         if (line < firstRow) {
@@ -348,7 +448,7 @@ angular.module('scalearAngularApp').factory('editor',
                         }
                     }
                 }
-                doc.info.videos[doc.info.currentVideo] = shiftedSyncNotesVideo;
+                service.doc.info.videos[service.doc.info.currentVideo] = shiftedSyncNotesVideo;
 
                 service.updateBreakpoints();
             }.bind(session);
@@ -361,9 +461,9 @@ angular.module('scalearAngularApp').factory('editor',
                 if (lineCursorPosition != service.lastRow) {
                     service.lastRow = lineCursorPosition;
 
-                    if (doc.info.syncNotesVideo) {
+                   // if (service.doc.info.syncNotesVideo) {
                         service.jump(service.lastRow);
-                    }
+                  //  }
                 }
             });
 
@@ -373,31 +473,36 @@ angular.module('scalearAngularApp').factory('editor',
             }
 
             //console.log("over here")
-            doc.lastSave = 0;
-            doc.info = fileInfo;
+            service.doc.lastSave = 0;
+            service.doc.info = fileInfo;
 
             service.updateBreakpoints();
-            service.jump(0);
+            //service.jump(0); //jumps to time of line 0, so if not 0, video jumps from the beginning, don't want that.
         };
         service.updateBreakpoints = function () {
             //console.log("update breakpoints")
-            if (doc.info) {
+            if (service.doc.info) {
                 var session = editor.getSession(),
                     annotations = [],
                     breakpoints = [];
 
                 session.clearBreakpoints();
-                for(var sync in doc.info.videos) {
-                    for (var line in doc.info.videos[sync]) {
-                        var timestamp = parseFloat(doc.info.videos[sync][line].time);
+                for(var sync in service.doc.info.videos) {
+                    for (var line in service.doc.info.videos[sync]) {
+                        var timestamp = parseFloat(service.doc.info.videos[sync][line].time);
                         if (timestamp > -1)
                         {
-                            var minutes = parseInt(timestamp / 60, 10) % 60,
-                                seconds = ("0" + parseInt(timestamp % 60, 10)).slice(-2);
+                            var hours2= parseInt((timestamp + service.cumulative_duration)/60/60,10)
+                            var minutes2 = parseInt((timestamp + service.cumulative_duration) / 60, 10) % 60,
+                                seconds2 = ("0" + parseInt((timestamp+service.cumulative_duration) % 60, 10)).slice(-2);
+
+                            var hours= parseInt((timestamp)/60/60,10)
+                            var minutes = parseInt((timestamp) / 60, 10) % 60,
+                                seconds = ("0" + parseInt((timestamp) % 60, 10)).slice(-2);
 
                             breakpoints.push(line);
                             annotations.push({row:line, text:
-                                '{0}:{1}'.format(minutes, seconds)});
+                                "{0}:{1}:{2}".format(hours, minutes, seconds)}); // change these to be relative to module.
                         }
                     }
                 }
@@ -409,11 +514,18 @@ angular.module('scalearAngularApp').factory('editor',
 
         service.getCurrentSync = function (line) {
 //            console.log(line);
-//            console.log("getcurrentsync");
-//            console.log(doc.info.currentVideo)
-            if (doc.info.currentVideo) {
-                var currentSync = doc.info.videos[doc.info.currentVideo];
+            //console.log("getcurrentsync");
+            //console.log(service.doc.info.videos[service.doc.info.currentVideo])
+            if (service.doc.info.currentVideo) {
+                var currentSync = service.doc.info.videos[service.doc.info.currentVideo];
+                if(service.doc.info.content.trim()==='') // This condition here to empty everything on ctrl+a delete.
+                {
+                    service.doc.info.videos[service.doc.info.currentVideo]={}
+                    return {}
+                }
                 if (undefined != line) {
+                    //console.log("not undefined it is");
+                    //console.log(currentSync);
                     if(!currentSync[line]) {
                         currentSync[line] = {
                             time: null
@@ -423,32 +535,43 @@ angular.module('scalearAngularApp').factory('editor',
                     return currentSync[line];
                 }
 
-                return doc.info.videos[doc.info.currentVideo];
+                return service.doc.info.videos[service.doc.info.currentVideo];
             }
         };
 
         service.syncLine = function (line, shift) {
             //console.log("syncline");
             // Is there a video loaded?
+            //console.log("in sync lineeeee");
             var currentSync = service.getCurrentSync(),
                 currentSyncLine = service.getCurrentSync(line),
                 currentTime = service.video.controls.getTime();
 
-            if (doc.info && doc.info.currentVideo) {
-                $log.info('Video loaded');
+            //console.log(currentTime);
+            //console.log("current sync issss");
+            //console.log(currentSync)
+            if (service.doc.info && service.doc.info.currentVideo) {
+                //$log.info('Video loaded');
 
                 // Is there some texts before and after?
                 var timestampBefore, isLineBefore = false,
                     timestampAfter, isLineAfter = false;
 
                 for (var lineSynced in currentSync) {
-                    if (!isLineBefore && lineSynced < line) {
-                        isLineBefore = true;
+                    if (lineSynced < line) { //!isLineBefore &&
+                        //isLineBefore = true;
+
+                       // console.log("in before here");
+                        //console.log(lineSynced);
+                        //console.log(currentSync[lineSynced].time);
                         timestampBefore = currentSync[lineSynced].time;
                     }
                     else if (!isLineAfter && lineSynced > line) {
                         isLineAfter = true;
+                        isLineBefore= true;
                         timestampAfter = currentSync[lineSynced].time;
+                        if(!timestampBefore)
+                            timestampBefore= 0
                     }
 
                     if (isLineBefore && isLineAfter) {
@@ -460,24 +583,30 @@ angular.module('scalearAngularApp').factory('editor',
                     // Text before and after and video currently further (refactoring mode)
                     // Timestamp for this line must be average time between nearest line before/after
                     currentSyncLine.time = (timestampBefore + timestampAfter) / 2;
+                   // console.log(timestampBefore);
+                   // console.log(timestampAfter);
+                   // console.log("in second one  "+currentSyncLine.time);
                 }
                 else {
                     // No text or only before / after
                     // Using current player time minus a delta
                     if(shift) {
                         if(parseInt(currentTime - 3, 10) > 0) {
+                           // console.log("first condition" +currentTime);
                             currentSyncLine.time = currentTime - 3;
                         }
                         else {
                             currentSyncLine.time = currentTime - currentTime;
+                            //console.log("second condition" +currentSyncLine.time);
                         }
                     }
                     else {
                         currentSyncLine.time = currentTime;
+                        //console.log("no shift "+currentSyncLine.time)
                     }
                 }
 
-                $log.info('Setting timestamp', line, currentSyncLine.time);
+                //$log.info('Setting timestamp', line, currentSyncLine.time);
                 this.updateBreakpoints();
             }
             // No video => mark it anyway, don't want to sync this line
@@ -508,8 +637,8 @@ angular.module('scalearAngularApp').factory('editor',
             var currentSync = service.getCurrentSync(line),
                 session = editor.getSession();
 
-            if (doc.info && currentSync) {
-                delete doc.info.videos[doc.info.currentVideo][line];
+            if (service.doc.info && currentSync) {
+                delete service.doc.info.videos[service.doc.info.currentVideo][line];
                 service.updateBreakpoints();
             }
         };
@@ -520,39 +649,39 @@ angular.module('scalearAngularApp').factory('editor',
                 return EditorState.LOAD;
             } else if (service.saving) {
                 return EditorState.SAVE;
-            } else if (doc.info && !doc.info.editable) {
+            } else if (service.doc.info && !service.doc.info.editable) {
                 return EditorState.READONLY;
             }
-            else if (doc.dirty) {
+            else if (service.doc.dirty) {
                 return EditorState.DIRTY;
             }
             return EditorState.CLEAN;
         };
 
-        service.$on('video::seeked', function () {
-            service.focusEditor();
-        });
-        service.$on('video::ratechange', function () {
-            service.focusEditor();
-        });
-        service.$on('video::play', function () {
-            service.focusEditor();
-        });
-        service.$on('video::pause', function () {
-            service.focusEditor();
-        });
-        service.$on('saving', function () {
-            service.focusEditor();
-        });
-        service.$on('loading', function () {
+//        service.$on('video::seeked', function () {
+//            service.focusEditor();
+//        });
+//        service.$on('video::ratechange', function () {
+//            service.focusEditor();
+//        });
+//        service.$on('video::play', function () {
+//            service.focusEditor();
+//        });
+//        service.$on('video::pause', function () {
+//            service.focusEditor();
+//        });
+//        service.$on('saving', function () {
+//            service.focusEditor();
+//        });
+//        service.$on('loading', function () {
+//            service.focusEditor();
+//        });
+
+        service.$watch('service.doc.info.syncVideoNotes', function () {
             service.focusEditor();
         });
 
-        service.$watch('doc.info.syncVideoNotes', function () {
-            service.focusEditor();
-        });
-
-        service.$watch('doc.info.editable', function (newValue, oldValue) {
+        service.$watch('service.doc.info.editable', function (newValue, oldValue) {
             if (editor && newValue !== oldValue) {
                 editor.setReadOnly(!newValue);
             }
@@ -561,7 +690,7 @@ angular.module('scalearAngularApp').factory('editor',
         // autosaving
 
         service.confirmOnLeave = function (e) {
-            if (doc.dirty) {
+            if (service.doc.dirty) {
                 var msg = "You have unsaved data.";
 
                 // For IE and Firefox
@@ -578,19 +707,25 @@ angular.module('scalearAngularApp').factory('editor',
 
         // this happens if we go to another site. but need also to do it on state change.
         $window.addEventListener('beforeunload', service.confirmOnLeave);
-        $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
-            if(doc.dirty && !confirm("You have unsaved changes, do you want to continue?"))
-                ev.preventDefault();
-        })
+
+
+           // removed for now, because keeps bugging me when going from one lecture to another.
+//        $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
+//            if(service.doc.dirty && !confirm("You have unsaved changes, do you want to continue?"))
+//                ev.preventDefault();
+//        })
 
         service.saveFn = function () {
-            if (doc.dirty) {
+           // console.log(service.doc.dirty);
+            if (service.doc.dirty) {
                 service.save(false);
             }
         };
 
-        var initTimeout = function () {
-            if (doc.info && doc.info.editable) {
+        service.initTimeout = function () {
+            //console.log("info is");
+            //console.log(service.doc.info);
+            if (service.doc.info) {
                 var createTimeout = function () {
                     service.autosave=$interval(service.saveFn, saveInterval)
                 };
@@ -600,10 +735,11 @@ angular.module('scalearAngularApp').factory('editor',
         };
 
         //service.$on('firstSaved', initTimeout);
-        service.$on('loaded', initTimeout);
+        //service.$on('loaded', initTimeout);
 
         service.focusEditor();
 
         return service;
+        }
     }]);
 

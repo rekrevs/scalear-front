@@ -330,13 +330,24 @@ a.editable-click {
 .ace_gutter-cell.ace_breakpoint {
     background-color: #ffc000;
     padding-left: 0px;
-    min-width: 40px;
+    min-width: 70px;
 }
 
 .ace_layer{
-    min-width: 40px;
+    min-width: 70px;
 }
 .ace_gutter{
-    min-width: 40px;
+    min-width: 70px;
+    /*height:180px;*/
+}
+.ace_scroller{
+    /*height:180px;*/
+}
+.ace_gutter-tooltip {
+    white-space: pre-line;
+}
+
+.ace_scrollbar-h{
+    display:none;
 }
 

@@ -727,23 +727,44 @@ angular.module('scalearAngularApp')
   }
 }])
 .directive('aceEditor',
-    ['editor', function (editor) {
+    ['editor','$interval', function (editor, $interval) {
         return {
             restrict: 'A',
             scope: {
                 sync: "=",
                 player: "=",
-                url: "="
+                lecture: "=",
+                editors:"="
             },
             link: function (scope, element) {
-                editor.rebind(element[0]);
+
+                scope.$on('$destroy', function() {
+                    //alert("In destroy of:" + scope);
+                    //editor.destroy();
+                    $interval.cancel(scope.editor.autosave);
+
+                    scope.editor.doc.dirty=false;
+                    scope.editor.doc.lastSave = 0;
+                    scope.editor.doc.info=null;
+                    delete scope.editor;
+                    //console.log("killing editor");
+
+                });
+                //console.log("elment issss ");
+                //console.log(element[0]);
+
+                scope.editor = new editor();
+                scope.editor.rebind(element[0]);
+                scope.editors[scope.lecture.id]=scope.editor;
+                //scope.editor.resize();
 
                 scope.$watch("url", function(val){
 
-                    if(scope.url)
+                    if(scope.lecture)
                     {
-                        console.log(scope.url);
-//                        editor.create(scope.url);
+                        //console.log(scope.lecture);
+                        //editor.create(scope.url);
+                       scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name);
                         //console.log(scope.player.controls.getUrl());
                     }
                 })

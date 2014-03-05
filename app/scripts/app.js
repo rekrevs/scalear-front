@@ -14,6 +14,7 @@ angular.module('scalearAngularApp', [
     'ui.bootstrap.alert',
     'ui.bootstrap.modal',
     'ui.bootstrap.tooltip',
+    'ui.bootstrap.timepicker',
     'ui.sortable',
     'ui.calendar',
     'ngDragDrop',

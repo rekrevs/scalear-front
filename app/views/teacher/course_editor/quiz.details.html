@@ -37,20 +37,27 @@
   						<span translate>lectures.set_date</span>:<br>
   						<details-date date="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-date>
   						<!-- <span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+  						<br>
+						<details-time class="timepicker" time="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-time>
   					</p>
 				</td>
 			</tr>
 			<tr>
 				<td><span translate>groups.due_date</span></td>
 				<td>
-					<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br />
-					<div ng-hide="!quiz.due_date_module">
-						<input type='text' ng-model='quiz.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
-					</div>
-  					<p ng-hide="quiz.due_date_module">
-  						<span translate>lectures.set_date</span>:<br>
-  						<details-date date="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-date>
-  					</p>
+					<details-check checked="quiz.due_date_enabled" validate="updateDueDate" save="updateQuiz()" yes="with due date" no="without due date" title="has due date?" ></details-check> 
+					<div ng-show="quiz.due_date_enabled">
+						<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br />
+						<div ng-hide="!quiz.due_date_module">
+							<input type='text' ng-model='quiz.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
+						</div>
+	  					<p ng-hide="quiz.due_date_module">
+	  						<span translate>lectures.set_date</span>:<br>
+	  						<details-date date="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-date>
+	  						<br>
+							<details-time class="timepicker" time="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-time>
+	  					</p>
+	  				</div>
 				</td>
 			</tr>
 			<tr>

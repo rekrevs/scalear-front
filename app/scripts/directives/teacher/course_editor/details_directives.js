@@ -225,4 +225,32 @@ angular.module('scalearAngularApp')
             };
 
         }
+    ]).directive('detailsTime', ['$timeout',
+        function($timeout) {
+            return {
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-bstime="time" e-show-meridian="true" e-minute-step="15" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (time | date:"shortTime") || ("empty"|translate) }}<i ng-class="overclass"></i></a><timepicker ng-hide="true" />',
+                restrict: 'E',
+                scope: {
+                    time: "=",
+                    save: "&",
+                    validate: "&",
+                    column: "@"
+                },
+                link: function(scope, element) {
+                    scope.selectField = function() {
+                        $timeout(function() {
+                            element.find('.editable-input').select();
+                        });
+                    },
+                    scope.saveData = function(data) {
+                        $timeout(function() {
+                            scope.save({
+                                data: data,
+                                type: scope.column
+                            })
+                        })
+                    }
+                }
+            };
+        }
     ]);

@@ -8,7 +8,7 @@
 img{border:0 none}
 
 /* --- Headings --- */
-h1 {font-family:georgia,'times new roman',times,serif; font-size:2.5em; font-weight:normal; color:#f60}
+h1 {font-family:georgia,'times new roman',times,serif; font-size:2.5em; font-weight:normal;}
 
 h5, h6{margin-top:1px; margin-bottom:0px;}
 
@@ -20,7 +20,7 @@ h3,h4 {font-size:16px;}
 
 h5, h6 a {font-size:12px;}
 
-h2 {background-color:#f0f0f0}
+/*h2 {background-color:#f0f0f0}*/
 
 ul, ol {margin:0;}
 
@@ -90,7 +90,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 
 .sortable { list-style-type: none; margin: 0; padding: 0; width: 80%; }
 .sortable li { width: 350px; margin: 0 3px 3px 3px; padding: 0.4em; padding-left: 1.5em; font-size: 1.4em; height: 25px; }
-/*.sortable li span { position: absolute; margin-left: -1.3em; }*/
+.custome li span { position: absolute !important; margin-left: -1.3em; }
 
 .modules{width:270px;}
 
@@ -152,3 +152,14 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
   z-index: 99;
   text-align: center;
 }
+
+.ta-editor{
+	min-height:70px;
+	margin-bottom: 30px;
+}
+.ta-editor ul, .ta-editor ol {
+	padding: 0;
+	margin: 0 0 10px 25px;
+}
+
+

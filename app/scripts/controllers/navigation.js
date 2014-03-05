@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
   	Course.show(
   		{course_id: $stateParams.course_id},
   		function(data){
-  			$scope.course_information = data.course
+  			$scope.$parent.course_information = data.course
   		},
   		function(){}
 	)

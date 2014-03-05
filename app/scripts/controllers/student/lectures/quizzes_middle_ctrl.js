@@ -34,6 +34,7 @@ angular.module('scalearAngularApp')
             var s = $scope.next_item.class_name + "_id"
             var to = {}
             to[s] = $scope.next_item.id
+            to["module_id"]=$scope.next_item.group_id
             $state.go(next_state, to);
     }
 

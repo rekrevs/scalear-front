@@ -115,7 +115,7 @@ angular.module('scalearAngularApp')
 
 				player_controls.getDuration=function(){
 					return player.duration()
-				}				
+				}
 
 				player_controls.readyState=function(){
 					return player.readyState()
@@ -131,6 +131,7 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek_and_pause=function(time){
+                    console.log("seeking to "+time);
 					player_controls.seek(time)
 					player.pause()
 				}

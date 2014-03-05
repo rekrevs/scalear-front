@@ -1,3 +1,22 @@
+<div style="margin:10px;float:right">
+    <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px;"><span translate>enroll.help_enroll_student</span></button>
+    <hr>
+    <div collapse="!isCollapsed">
+        <div class="well well-lg">
+            <p><b><span translate>enroll.help_enroll</span>:</b></p>
+            <p translate>enroll.instruction</p>
+            <br>
+            <div  ng-click="this.select()" class="well well-lg" style="background: white;color: brown;" >
+                <div id="kk" select-on-click>
+                    <p ><span translate>enroll.dear_student</span>,</p>
+                    <p >&emsp;<span translate>enroll.this_term_new_system</span> <b>{{course_information.unique_identifier}}</b>.</p>
+                    <p ><span translate>enroll.sincerely</span>,<br>{{current_user.name}}</p>
+                </div>
+                <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right;position: relative;top: -30px;">Click to Select<br>Copy: cmd+C or ctrl+C</div>
+            </div>
+        </div> 
+    </div>
+</div>
 <div class="row">
     <div class="span12">
         <p style="display:inline; float: right;">

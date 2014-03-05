@@ -29,7 +29,8 @@ angular.module('scalearAngularApp')
       	'hideQuiz':{method:'POST',params:{action:'hide_invideo_quiz'},headers:headers},
       	'hideQuestion':{method:'POST',params:{action:'hide_student_question'},headers:headers},
             'getStudentQuestions':{method:'GET', params:{action:'get_student_questions'},headers:headers},
-      	'getInclassActive':{method:'GET', params:{action:'get_inclass_active_angular'},headers:headers}
+      	'getInclassActive':{method:'GET', params:{action:'get_inclass_active_angular'},headers:headers},
+          'getStudentModule':{method:'GET', params:{action:'get_module_data_angular'},headers:headers}
 
 	  });
 

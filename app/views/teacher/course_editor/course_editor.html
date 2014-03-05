@@ -20,12 +20,13 @@
 		        	<div class="inner" id="modules">
 	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child item" ng-repeat="item in module.items" >
+                                {{item.position}}
 	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ></item>
 		            		</li>
 		            	</ul>
 			            <center class="item-buttons">
 			            	<button_link title="{{'courses.add_lecture'|translate}}" class="btn-mini adding" action="addLecture($index)" />
-			            	<button_link title="{{'lectures.add_quiz'|translate}}"    class="btn-mini adding" action="addQuiz($index, 'quiz')"/>
+			            	<button_link title="{{'lectures.add_quiz'|translate}}"   class="btn-mini adding" action="addQuiz($index, 'quiz')"/>
 			            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn-mini adding" action="addQuiz($index, 'survey')"/>
 		                </center>
 		        	</div>

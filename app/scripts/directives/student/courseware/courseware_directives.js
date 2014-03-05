@@ -33,6 +33,7 @@ angular.module('scalearAngularApp')
 		 scope: {
 		 	name:'=',
 		 	id:'=',
+            groupId: '=',
 		 	className:'=',
 		 	slides:"=",
 		 	url:"=",
@@ -57,10 +58,13 @@ angular.module('scalearAngularApp')
 		 			window.open(scope.url_with_protocol(scope.url),'_blank');
 		 		else
 		 		{	
-		 			var next_state="course.lectures."+scope.className.toLowerCase();
+		 			var next_state="course.lectures.module."+scope.className.toLowerCase();
 		 			var s= scope.className.toLowerCase()+"_id"
 		 			var to={}
 		 			to[s] = scope.id
+                    console.log("group id iss");
+                    console.log(scope.groupId)
+                    to["module_id"]=scope.groupId
 		 			$state.go(next_state, to);
 		 		}
 		 	}

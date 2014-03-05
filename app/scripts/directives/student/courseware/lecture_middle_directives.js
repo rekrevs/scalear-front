@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
 
 
         scope.show_message=false;
-    	scope.show_question=false;
+    	scope.$parent.show_question=false;
     	scope.show_shortcuts=false;
       	
     	var setButtonsLocation=function(){
@@ -62,9 +62,11 @@ angular.module('scalearAngularApp')
     		$log.debug(scope.$parent);
     		$log.debug("in confusde");
         scope.show_message=true;
-    		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
+            var time=scope.lecture_player.controls.getTime();
+    		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:time}, function(data){
   			$interval(function(){
            		scope.show_message=false;
+            }, 2000, 1);
            		$log.debug(data)
            		if(data.msg=="ask")
            		{
@@ -75,7 +77,22 @@ angular.module('scalearAngularApp')
              			scope.$parent.show_notification=false;
              		}, 6000, 1)
              	}
-       		}, 2000, 1);
+                //else{
+                if(!data.flag) //first time confused in these 15 seconds
+                {
+                    //scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'red', 'courses.confused',data.id ]);
+                    scope.timeline['lecture'][$stateParams.lecture_id].add(time, "confused", data.item)
+                }
+
+                if(data.flag && data.msg!="ask") // confused before but not third time - very confused
+                {
+
+                    var elem=scope.timeline['lecture'][$stateParams.lecture_id].search_by_id(data.id);
+                    scope.timeline['lecture'][$stateParams.lecture_id].items[elem].data.very=true;
+                }
+
+
+
   		  });
     	};
     	scope.back= function()
@@ -84,10 +101,17 @@ angular.module('scalearAngularApp')
   		});
     	};
     	scope.question= function(){
-    		$log.debug("in question");
-    		scope.show_question=!scope.show_question;
-    		if(scope.show_question==true)
-    			scope.lecture_player.controls.pause();	
+    		console.log("in question");
+    		scope.$parent.show_question=!scope.$parent.show_question;
+            console.log(scope.$parent.show_question);
+            console.log(scope.lecture_player.controls.getTime());
+            scope.$parent.current_question_time=scope.lecture_player.controls.getTime();
+            scope.safeApply();
+    		if(scope.$parent.show_question==true)
+            {
+    			scope.lecture_player.controls.pause();
+                scope.$parent.tabs[0].active = true;
+            }
     		else
     			scope.lecture_player.controls.play();
     	};
@@ -106,16 +130,16 @@ angular.module('scalearAngularApp')
             $(document).off("click")        
       }
 
-    	scope.submit_question = function()
-    	{
-    		$log.debug("will submit "+scope.question_asked);
-  		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
-  			scope.question_asked="";
-  			scope.show_question=false;
-  			scope.lecture_player.controls.play();	
-  		});
-    		
-    	};
+//    	scope.submit_question = function()
+//    	{
+//    		$log.debug("will submit "+scope.question_asked);
+//  		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
+//  			scope.question_asked="";
+//  			scope.$parent.show_question=false;
+//  			scope.lecture_player.controls.play();
+//  		});
+//
+//    	};
     	scope.setShortcuts = function()
   		{
   				// adding shortcuts
@@ -140,7 +164,7 @@ angular.module('scalearAngularApp')
             if(elem_name =='ask')
               scope.submit_question()
               scope.$apply()
-          },{"disable_in_input" : false});
+          },{"disable_in_input" : false, "disable_in_editable" :true});
   		};
 
   		setButtonsLocation()
@@ -309,6 +333,7 @@ angular.module('scalearAngularApp')
           },
           function(data){
             $log.debug(data)
+            console.log(data)
             displayResult(data)
           },
           function(){}
@@ -578,9 +603,9 @@ angular.module('scalearAngularApp')
       var setAnswerLocation=function(){
         $log.debug("setAnswerLocation")
         var ontop=angular.element('.ontop');
-        scope.width  = scope.data.width * ontop.width();
+        scope.width  = scope.data.width * ontop.width() -27;
         scope.height = scope.data.height* (ontop.height());
-        scope.xcoor = (scope.data.xcoor * ontop.width())
+        scope.xcoor = (scope.data.xcoor * ontop.width())+27
         scope.ycoor = (scope.data.ycoor * (ontop.height()))
         scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
       }
@@ -680,7 +705,7 @@ angular.module('scalearAngularApp')
         $log.debug('in resize answer')
         draggable.width(scope.width);
         draggable.height(scope.height);
-        draggable.css('left', scope.xcoor+12)
+        draggable.css('left', scope.xcoor+2)
         draggable.css('top', scope.ycoor+2)
       }
      
@@ -705,3 +730,56 @@ angular.module('scalearAngularApp')
     }
   }
 }])
+.directive('aceEditor',
+    ['editor','$interval', function (editor, $interval) {
+        return {
+            restrict: 'A',
+            scope: {
+                sync: "=",
+                player: "=",
+                lecture: "=",
+                editors:"="
+            },
+            link: function (scope, element) {
+
+                scope.$on('$destroy', function() {
+                    //alert("In destroy of:" + scope);
+                    //editor.destroy();
+                    $interval.cancel(scope.editor.autosave);
+
+                    scope.editor.doc.dirty=false;
+                    scope.editor.doc.lastSave = 0;
+                    scope.editor.doc.info=null;
+                    delete scope.editor;
+                    //console.log("killing editor");
+
+                });
+                //console.log("elment issss ");
+                //console.log(element[0]);
+
+                scope.editor = new editor();
+                scope.editor.rebind(element[0]);
+                scope.editors[scope.lecture.id]=scope.editor;
+                //scope.editor.resize();
+
+                scope.$watch("url", function(val){
+
+                    if(scope.lecture)
+                    {
+                        //console.log(scope.lecture);
+                        //editor.create(scope.url);
+                       scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note);
+                        //console.log(scope.player.controls.getUrl());
+                    }
+                })
+
+
+                scope.$watch('sync', function (newValue, oldValue) {
+                    if (newValue !== oldValue) {
+                        var gutter = $(element).find('.ace_gutter');
+                        newValue ? gutter.removeClass('inactive') : gutter.addClass('inactive');
+                    }
+                }, true);
+            }
+        };
+    }]);

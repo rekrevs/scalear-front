@@ -268,7 +268,7 @@ input[type="checkbox"], input[type="radio"] {
   border-radius: 10px;
   /*margin: 0 0 0 10px;*/
   background: #fff;
-  overflow: :auto;
+  overflow: auto;
 }
 
 .dragged{

@@ -308,6 +308,46 @@ textarea.ng-invalid{ border:1px solid red; }
   z-index: 99;
   text-align: center;
 }
+
 a.editable-click { 
   border-bottom: none !important;
 }
+
+.up_active {
+    background-color: lightcyan;
+}
+
+.down_active {
+    background-color: lightcyan;
+}
+
+.flag_active {
+    background-color: lightcyan;
+}
+
+.ace_editor { height: 200px; }
+
+.ace_gutter-cell.ace_breakpoint {
+    background-color: #ffc000;
+    padding-left: 0px;
+    min-width: 70px;
+}
+
+.ace_layer{
+    min-width: 70px;
+}
+.ace_gutter{
+    min-width: 70px;
+    /*height:180px;*/
+}
+.ace_scroller{
+    /*height:180px;*/
+}
+.ace_gutter-tooltip {
+    white-space: pre-line;
+}
+
+.ace_scrollbar-h{
+    display:none;
+}
+

@@ -41,18 +41,22 @@
 	</video_container>
 	</form>
 	<br><br>
-	<div>
-		<overlay ng-show="loading_video">
-		    <loading size="small" show="true" style="position:relative; top:50%;" />
-		</overlay>
-		<h4 ng-show="lecture.online_quizzes" translate="questions.questions"></h4>
-		<table class="table table-striped">
-			<tr ng-repeat="quiz in lecture.online_quizzes">
-				<td style='width:20px;'><img ng-show="quiz.is_quiz_solved" src="images/check7.png" /></td>
-				<td ng-show="!quiz.is_quiz_solved"><p>{{quiz.question}}</p></td>
-				<td ng-show="quiz.is_quiz_solved"><p class="solved" ng-click="seek(quiz.time)" >{{quiz.question}}</p></td>
-				<td><p ng-show="quiz.is_quiz_solved" class="solved" ng-click="seek(quiz.time)">{{quiz.time | format:'hh:mm:ss'}}</p></td>
-			</tr>
-		</table>
-	</div>
+
+
+    <tabset>
+        <tab active="tabs[0].active" heading="Video Events">
+            <discussion></discussion>
+        </tab>
+        <tab active="tabs[1].active" heading="Video Notes">
+            <notes></notes>
+        </tab>
+    </tabset>
+
+
+
+
+
+
+
+
 </div>

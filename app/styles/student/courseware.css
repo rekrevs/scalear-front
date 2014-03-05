@@ -22,7 +22,7 @@ h5, h6 a {font-size:12px;}
 
 h2 {background-color:#f0f0f0}
 
-ul, ol {margin:0;}
+/*ul, ol {margin:0;}*/
 
 /* --- Links --- */
 a {
@@ -320,5 +320,17 @@ input[type="checkbox"], input[type="radio"] {
   -webkit-box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
   box-shadow: 0 0 .5em rgba(0, 0, 0, .8);
 
+}
+
+.myrow, .mycol { overflow: hidden; position: absolute; }
+.myrow { left: 0; right: 0; }
+.mycol { top: 0; bottom: 0; }
+.scroll-x { overflow-x: auto; }
+.scroll-y { overflow-y: auto; }
+
+.middle-content{
+  top: 100px;
+  bottom: 100px;
+  background-color: black;
 }
 

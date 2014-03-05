@@ -13,8 +13,8 @@ angular.module('scalearAngularApp').factory('editor',
 
         //console.log(Tooltip);
         service.doc = new doc();
-        service.loading = false;
-        service.saving = false;
+        //service.loading = false;
+        //service.saving = false;
         service.savingErrors = 0;
         service.lastRow = -1;
         service.video="";
@@ -73,10 +73,11 @@ angular.module('scalearAngularApp').factory('editor',
             //console.log(data);
             return data;
         };
-        service.create = function (url, player,lecture_id,cumulative_duration,lecture_name, parentId) {
+        service.create = function (url, player,lecture_id,cumulative_duration,lecture_name,note, parentId) {
             service.lecture_id=lecture_id
             service.lecture_name=lecture_name;
             service.cumulative_duration=cumulative_duration;
+            service.note=note;
             var vs= {
                 version: 2,
                 content: '',
@@ -96,29 +97,39 @@ angular.module('scalearAngularApp').factory('editor',
             vs["videos"][url]={}
             service.url=url;
             service.video=player;
-            service.loading = true;
+            //service.loading = true;
             //doc.dirty = true;
-            $rootScope.$broadcast('loading');
+            //$rootScope.$broadcast('loading');
 
-            Lecture.loadNote({
-                course_id: $stateParams.course_id,
-                lecture_id: lecture_id
-            }, function(response){
-                service.loading = false;
-                if(response.exists)
-                    service.updateEditor(response.note.data);
-                else
-                    service.updateEditor(vs);
+            if(service.note)
+                service.updateEditor(service.note.data);
+            else
+                service.updateEditor(vs);
 
-                if(service.doc.info.content.trim()==='')
-                    service.insert(0,"Start of Lecture "+service.lecture_name, "note")
+            if(service.doc.info.content.trim()==='')
+                service.insert(0,"Start of Lecture "+service.lecture_name, "note")
                 service.doc.initWatcher();
                 service.initTimeout();
-                //$rootScope.$broadcast('loaded', service.doc.info);
-            }, function(response){
-               // $log.warn("Error loading", response);
-                service.loading = false;
-            });
+
+//            Lecture.loadNote({
+//                course_id: $stateParams.course_id,
+//                lecture_id: lecture_id
+//            }, function(response){
+//                service.loading = false;
+//                if(response.exists)
+//                    service.updateEditor(response.note.data);
+//                else
+//                    service.updateEditor(vs);
+//
+//                if(service.doc.info.content.trim()==='')
+//                    service.insert(0,"Start of Lecture "+service.lecture_name, "note")
+//                service.doc.initWatcher();
+//                service.initTimeout();
+//                //$rootScope.$broadcast('loaded', service.doc.info);
+//            }, function(response){
+//               // $log.warn("Error loading", response);
+//                service.loading = false;
+//            });
 
 
 
@@ -191,10 +202,10 @@ angular.module('scalearAngularApp').factory('editor',
         service.save = function (newRevision) {
             //console.log("save")
             //$log.info("Saving file", newRevision);
-            if (service.saving || service.loading) {
-                throw 'Save called from incorrect state';
-            }
-            service.saving = true;
+//            if (service.saving || service.loading) {
+//                throw 'Save called from incorrect state';
+//            }
+//            service.saving = true;
             var file = service.snapshot();
             //console.log("saving file ");
             //console.log(file);
@@ -202,12 +213,12 @@ angular.module('scalearAngularApp').factory('editor',
             //console.log(file);
 
             // what is saved is the file, along with its revision. (as a param)
-            if (!service.doc.info.id) {
-                $rootScope.$broadcast('firstSaving');
-            }
-            else {
-                $rootScope.$broadcast('saving');
-            }
+//            if (!service.doc.info.id) {
+//                $rootScope.$broadcast('firstSaving');
+//            }
+//            else {
+//                $rootScope.$broadcast('saving');
+//            }
 
             // Force revision if first save of the session
             newRevision = newRevision || service.doc.timeSinceLastSave() > ONE_HOUR_IN_MS;
@@ -218,11 +229,11 @@ angular.module('scalearAngularApp').factory('editor',
                 data: file
             }, function(response){
                 //$log.info("Saved file", response);
-                service.saving = false;
+                //service.saving = false;
                 service.savingErrors = 0;
                 service.doc.lastSave = new Date().getTime();
             }, function(response){
-                service.saving = false;
+                //service.saving = false;
                 service.savingErrors++;
                 service.doc.dirty = true;
             });
@@ -643,20 +654,20 @@ angular.module('scalearAngularApp').factory('editor',
             }
         };
 
-        service.state = function () {
-            //console.log("state")
-            if (service.loading) {
-                return EditorState.LOAD;
-            } else if (service.saving) {
-                return EditorState.SAVE;
-            } else if (service.doc.info && !service.doc.info.editable) {
-                return EditorState.READONLY;
-            }
-            else if (service.doc.dirty) {
-                return EditorState.DIRTY;
-            }
-            return EditorState.CLEAN;
-        };
+//        service.state = function () {
+//            //console.log("state")
+//            if (service.loading) {
+//                return EditorState.LOAD;
+//            } else if (service.saving) {
+//                return EditorState.SAVE;
+//            } else if (service.doc.info && !service.doc.info.editable) {
+//                return EditorState.READONLY;
+//            }
+//            else if (service.doc.dirty) {
+//                return EditorState.DIRTY;
+//            }
+//            return EditorState.CLEAN;
+//        };
 
 //        service.$on('video::seeked', function () {
 //            service.focusEditor();

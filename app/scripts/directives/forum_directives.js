@@ -155,4 +155,12 @@ angular.module('scalearAngularApp')
             }
         }
     }
+}]).directive('notes',["$stateParams","editor", function( $stateParams, editor) {
+        return {
+            restrict:"E",
+            templateUrl:'/views/forum/notes.html',
+            link: function(scope, elem, attrs, ngModel) {
+
+            }
+        }
 }]);

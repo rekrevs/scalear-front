@@ -1,4 +1,3 @@
-<br><br>
 <div class="btn-group" data-toggle="buttons">
     <label class="btn btn-default btn-checkbox">
         <input type="checkbox" ng-model="checkModel.quiz"> Outline
@@ -9,13 +8,10 @@
     <label class="btn btn-default btn-checkbox">
         <input type="checkbox" ng-model="checkModel.discussion"> Discussion
     </label>
-    <!--<label class="btn btn-default btn-checkbox">-->
-        <!--<input type="checkbox"> Option 3-->
-    <!--</label>-->
 </div>
 <br>
 <div style="width:400px;height:200px;">
-    <div ng-show="show_question" style="height:100px"> <!-- For question -->
+    <div ng-show="show_question" style="height:100px" id="show_question"> <!-- For question -->
         <textarea ng-model="current_question" style="display:inline; width:250px;height:73px"></textarea>
         <input type="text" disabled ng-model="current_question_time" format='hh:mm:ss' style="display:inline; width:60px;position: relative;top: -20px;"/>
         <select ng-model='privacy' ng-options="f.text for f in choices" style="display:inline; width:80px;position: relative;top: -60px;left: 270px;"></select>

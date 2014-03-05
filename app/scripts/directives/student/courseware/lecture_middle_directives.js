@@ -108,7 +108,10 @@ angular.module('scalearAngularApp')
             scope.$parent.current_question_time=scope.lecture_player.controls.getTime();
             scope.safeApply();
     		if(scope.$parent.show_question==true)
-    			scope.lecture_player.controls.pause();	
+            {
+    			scope.lecture_player.controls.pause();
+                scope.$parent.tabs[0].active = true;
+            }
     		else
     			scope.lecture_player.controls.play();
     	};
@@ -127,16 +130,16 @@ angular.module('scalearAngularApp')
             $(document).off("click")        
       }
 
-    	scope.submit_question = function()
-    	{
-    		$log.debug("will submit "+scope.question_asked);
-  		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
-  			scope.question_asked="";
-  			scope.$parent.show_question=false;
-  			scope.lecture_player.controls.play();	
-  		});
-    		
-    	};
+//    	scope.submit_question = function()
+//    	{
+//    		$log.debug("will submit "+scope.question_asked);
+//  		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
+//  			scope.question_asked="";
+//  			scope.$parent.show_question=false;
+//  			scope.lecture_player.controls.play();
+//  		});
+//
+//    	};
     	scope.setShortcuts = function()
   		{
   				// adding shortcuts
@@ -764,7 +767,7 @@ angular.module('scalearAngularApp')
                     {
                         //console.log(scope.lecture);
                         //editor.create(scope.url);
-                       scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name);
+                       scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note);
                         //console.log(scope.player.controls.getUrl());
                     }
                 })

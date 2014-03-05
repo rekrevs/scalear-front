@@ -6,6 +6,8 @@ angular.module('scalearAngularApp')
 	$window.scrollTo(0, 0);
     $scope.show_reply={}
     $scope.current_reply={}
+    $scope.notes={}
+    $scope.tabs=[{"active":true},{"active":false}]
 	
     var init = function()
     {
@@ -18,16 +20,6 @@ angular.module('scalearAngularApp')
                 $scope.module_lectures= JSON.parse(data.module_lectures);
                 $scope.lecture_ids = data.lecture_ids;
 
-                for(var e=0; e<$scope.module_lectures.length; e ++)
-                {
-                    for(var element=$scope.module_lectures[e].online_quizzes.length-1; element>=0; element--) // if no answers remove it
-                    {
-                        if ($scope.module_lectures[e].online_quizzes[element].online_answers.length == 0 && $scope.module_lectures[e].online_quizzes[element].question_type!= "Free Text Question")
-                            $scope.module_lectures[e].online_quizzes.splice(element, 1);
-                    }
-                }
-
-
                 // arrange timeline
                 $scope.timeline = new Timeline()
                 $scope.timeline['lecture']={}
@@ -35,14 +27,24 @@ angular.module('scalearAngularApp')
                 for(var l in $scope.module_lectures)
                 {
                     var lec= $scope.module_lectures[l]
+                    $scope.timeline['lecture'][lec.id] = new Timeline()
+
+                    // remove quizzes with no answers - else - add it to timeline.
+                    for(var element=lec.online_quizzes.length-1; element>=0; element--) // if no answers remove it
+                    {
+                        if (lec.online_quizzes[element].online_answers.length == 0 && lec.online_quizzes[element].question_type!= "Free Text Question")
+                            lec.online_quizzes.splice(element, 1);
+                        else
+                            $scope.timeline['lecture'][lec.id].add(lec.online_quizzes[element].time, "quiz", lec.online_quizzes[element])
+                    }
 
                     //editor.create(lec.url, $scope.lecture_player);
 
                     //console.log(lec)
-                    $scope.timeline['lecture'][lec.id] = new Timeline()
-                    for(var type in lec.online_quizzes){
-                        $scope.timeline['lecture'][lec.id].add(lec.online_quizzes[type].time, "quiz", lec.online_quizzes[type])
-                    }
+
+//                    for(var type in lec.online_quizzes){
+//                        $scope.timeline['lecture'][lec.id].add(lec.online_quizzes[type].time, "quiz", lec.online_quizzes[type])
+//                    }
 
                     for(var type in lec.current_confused){
                         $scope.timeline['lecture'][lec.id].add(lec.current_confused[type].time, "confused", lec.current_confused[type])
@@ -60,6 +62,8 @@ angular.module('scalearAngularApp')
                             $scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id].add(lec.posts_public[type].post.time, "comment", lec.posts_public[type].post.comments[comment].comment);
                         }
                     }
+
+                    $scope.notes[lec.id]= lec.note;
                 }
 
             });

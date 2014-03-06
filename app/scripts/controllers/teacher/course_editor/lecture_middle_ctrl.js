@@ -29,6 +29,12 @@ angular.module('scalearAngularApp')
 	
     $state.go('course.course_editor.lecture.quizList');
 
+    $scope.dynamic = 30
+
+$timeout(function(){
+	$scope.dynamic = 70
+}, 4000)   
+
 //////////////////////////////////////FUNCTIONS/////////////////////////////////////////////
 
 	$scope.closeAlerts= function(){
@@ -40,18 +46,25 @@ angular.module('scalearAngularApp')
  	}
 
  	$scope.lecture_player.events.onMeta = function(){
- 		$scope.slow_message = false
+ 		$scope.slow = false
  	}
 
 	$scope.lecture_player.events.onPlay= function(){
-		$scope.slow_message = false
+		$scope.slow = false
 		var paused_time= $scope.lecture_player.controls.getTime()
 		if($scope.editing_mode)
 			$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
 
  	$scope.lecture_player.events.onSlow=function(){
-        $scope.slow_message = true
+        $scope.slow = true
+    }
+
+    $scope.lecture_player.events.waiting=function(){
+        if($scope.editing_mode && $scope.selected_quiz && $scope.lecture_player.controls.getTime() != $scope.selected_quiz.time){
+        	$scope.editing_mode = false;
+        	$scope.selected_quiz=null
+    	}
     }
 
  	var checkQuizTimeConflict=function(time){

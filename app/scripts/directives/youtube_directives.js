@@ -71,9 +71,9 @@ angular.module('scalearAngularApp')
 					$log.debug(scope.url);
 					
 					$timeout(function(){
-						if(!player_controls.readyState())
+						if(player_controls.readyState() == 0)
 							scope.$emit('slow')
-					},10000)
+					},15000)
 					parent.focus()
 				}
 
@@ -131,7 +131,6 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek_and_pause=function(time){
-                    console.log("seeking to "+time);
 					player_controls.seek(time)
 					player.pause()
 				}
@@ -213,6 +212,14 @@ angular.module('scalearAngularApp')
 						parent.focus()
 						if(player_events.timeUpdate){
 							player_events.timeUpdate();
+							scope.$apply();
+						}
+					})
+
+					player.on('waiting',function(){
+						parent.focus()
+						if(player_events.waiting){
+							player_events.waiting();
 							scope.$apply();
 						}
 					})

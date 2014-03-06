@@ -52,7 +52,7 @@ angular.module('scalearAngularApp')
             else{
                 $scope.lecture_player.controls.play()
             }
-            $scope.slow_message = false
+            $scope.slow = false
             $scope.loading_video = false;
             //editor.create($scope.lecture.url, $scope.lecture_player);
             var i= $scope.lecture_ids.indexOf($scope.lecture.id);
@@ -271,7 +271,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onSlow=function(){
-        $scope.slow_message = true
+        $scope.slow = true
     }
 
 

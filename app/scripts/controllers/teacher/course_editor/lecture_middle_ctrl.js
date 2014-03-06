@@ -198,6 +198,7 @@ angular.module('scalearAngularApp')
 	}
 
  	$scope.addDoubleClickBind= function(event){
+ 		console.log("hell worll.ds")
  		var answer_width, answer_height
  		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
  			answer_width = 300
@@ -208,6 +209,7 @@ angular.module('scalearAngularApp')
  			answer_height= 13
  		}
 	    var element = angular.element(event.target);
+
 	    //$log.debug(element.attr('id').contains("ontop"))
 	    if(element.attr('id') =="ontop"){
 	    	$log.debug("adding on top ontop")
@@ -228,7 +230,7 @@ angular.module('scalearAngularApp')
 		        window.getSelection().removeAllRanges();
 		    else if (document.selection)
 		        document.selection.empty();
-	      	}    	
+      	}    	
 	}
 
 	$scope.addAnswer= function(ans,h,w,l,t){

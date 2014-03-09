@@ -57,7 +57,7 @@ var translation_en=function(){
         calendar: "Calendar",
         announcements: "Announcements",
         content: "Content",
-        system: "System",
+        system: "ScalableLearning Website",
         information: "Information",
         course_information: "Course Information",
         enrolled_students: "Enrolled Students",
@@ -74,6 +74,9 @@ var translation_en=function(){
         report_technical: "Report a technical problem",
         send: "Send",
         close: "Close",
+        cancel: "Cancel",
+        instructions:"Please use this form to report any problems you are having. The more detail you can provide easier it is for us to fix your problem!",
+        problem_is:"My problem is with",
       },
       enroll:{
         help_enroll_student:"Help on enrolling students",

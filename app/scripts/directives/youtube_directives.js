@@ -60,12 +60,11 @@ angular.module('scalearAngularApp')
                 var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					var media = Popcorn.HTMLYouTubeVideoElement('#'+scope.id),
-					url= scope.url.split('?'),
-					base_url = url[0],
-					query = '&'+url[1]
-			        player = Popcorn(media,{});
-					media.src = base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
+
+					scope.video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
+					player = Popcorn(scope.video,{});        
+					scope.video.src = formatURL(scope.url)
+			        
 			        setupEvents()
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
@@ -77,13 +76,19 @@ angular.module('scalearAngularApp')
 					parent.focus()
 				}
 
+				var formatURL=function(url){
+					var splitted_url= url.split('?'),
+					base_url = splitted_url[0],
+					query = '&'+splitted_url[1]	
+					return base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
+				}
+
                 scope.kill_popcorn = function(){
                     if(player)
                     {
                         player.destroy();
                     }
                 }
-
 
                 player_controls.play=function(){
 					player.play();
@@ -137,10 +142,9 @@ angular.module('scalearAngularApp')
 
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
-					console.log(element.find('iframe').length)
 					scope.kill_popcorn()
 					element.find('iframe').remove();
-					//popcornApiProxy(loadVideo);
+					// //popcornApiProxy(loadVideo);
 					loadVideo()
 				}
 

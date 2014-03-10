@@ -15,7 +15,7 @@
     "angular-dragdrop": "~1.0.4",
     "angular-bindonce": "~0.2.1",
     "ng-infinite-scroller": "~1.0.0",
-    "popcornjs": "~1.5.0",
+    "popcornjs": "1.5.0",
     "angular-ui-bootstrap": "~0.6.0",
     "angular-xeditable": "~0.1.7",
     "angular-ui-calendar": "~0.1.3",

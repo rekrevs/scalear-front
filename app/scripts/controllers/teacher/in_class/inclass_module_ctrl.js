@@ -224,12 +224,14 @@ angular.module('scalearAngularApp')
       shortcut.add("Page_up",function() {
          console.log('page up')
          $scope.nextQuiz()
-      },{"disable_in_input" : false});
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
 
       shortcut.add("Page_down",function() {
         console.log('page down')
          $scope.prevQuiz()
-      },{"disable_in_input" : false});
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
     }
 
     var getVideoWidth=function(){

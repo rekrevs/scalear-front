@@ -5,6 +5,7 @@ angular.module('scalearAngularApp')
     $window.scrollTo(0, 0);
     $scope.inclass_player={}
     $scope.inclass_player.events={}    
+
   	$scope.display = function (type, disabled) {
       if(!disabled){
         $scope.play_pause_class = "play_button"
@@ -36,6 +37,7 @@ angular.module('scalearAngularApp')
       }  
 
   	};
+
     var init = function(){
         Module.getInclassActive(
           {module_id:$stateParams.module_id, course_id:$stateParams.course_id},
@@ -47,9 +49,9 @@ angular.module('scalearAngularApp')
     }
 
 
-var openModal=function(view, type){
+    var openModal=function(view, type){
       $rootScope.changeError = true;
-    angular.element("body").css("overflow","hidden");
+      angular.element("body").css("overflow","hidden");
       var win = angular.element($window)
       win.scrollTop("0px")
       var filename='inclass_'+view
@@ -215,6 +217,19 @@ var openModal=function(view, type){
         if($scope.chart_data)
           $scope.chart = $scope.createChart($scope.quiz_id)
       }
+    }
+
+    $scope.setShortcuts=function(){
+      console.log("seeting shortucts ")
+      shortcut.add("Page_up",function() {
+         console.log('page up')
+         $scope.nextQuiz()
+      },{"disable_in_input" : false});
+
+      shortcut.add("Page_down",function() {
+        console.log('page down')
+         $scope.prevQuiz()
+      },{"disable_in_input" : false});
     }
 
     var getVideoWidth=function(){

@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','scalear_api','$location','$log', '$translate', 'User', function ($state, $scope, scalear_api, $location, $log, $translate, User) {
+  .controller('LoginCtrl',['$state','$scope','scalear_api','$location','$log', '$translate', 'User','Page', function ($state, $scope, scalear_api, $location, $log, $translate, User,Page) {
    $scope.user={}
-
+   Page.setTitle('Login')
    $scope.login = function(){
     $scope.sending = true;
         User.sign_in({},{"user":$scope.user}, function(data){

@@ -8,7 +8,7 @@
 				<span translate>{{"groups."+type.toLowerCase()}}</span>: {{name}}
 			</a>
 		</td>
-			<td>
+		<td>
  			<a style="font-size:10px" target="_blank" ng-if="slides && slides!='none'" href="{{url_with_protocol(slides)}}" translate="lectures.slides"></a>
  			<span ng-if="required && quizType=='quiz'" class="label label-important" translate>{{"courses.required"}}</span>
  		</td>

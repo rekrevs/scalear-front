@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="scalearAngularApp" ng-controller="indexController"> <!--<![endif]-->
   <head> 
     <script type="text/javascript">
 
@@ -22,7 +22,7 @@
     </script> 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Scalable Learning</title>
+    <title ng-bind="'Scalable learning - '+Page.title()">Scalable learning - </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -40,7 +40,7 @@
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
   </head>
 
-  <body style="overflow:auto;" ng-app="scalearAngularApp" ng-controller="indexController">
+  <body style="overflow:auto;"  >
   	<!--<div ng-show="start_loading" class="errorpagetransparent"></div>-->
     <div class="errorpageserver" ng-show="logging_out">
         <loading size="big" show="true" style="position: relative; top:40%;"></loading>
@@ -233,6 +233,7 @@
     <script src="scripts/services/timeline.js"></script>
     <script src="scripts/services/doc.js"></script>
     <script src="scripts/services/editor.js"></script>
+    <script src="scripts/services/page.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc', function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc) {
+    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc','Page', function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc,Page) {
 
 
     $scope.video_layer = {}
@@ -26,6 +26,7 @@ angular.module('scalearAngularApp')
     $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
     $scope.editors={}
 
+    
 
     $scope.adjust_accordion= function(){
         $scope.$emit('accordianUpdate', {
@@ -86,7 +87,7 @@ angular.module('scalearAngularApp')
                 $scope.alert_messages = data.alert_messages;
                 $scope.lecture = JSON.parse(data.lecture);
                 $scope.time = data.time;
-
+                Page.setTitle($scope.lecture.name);
 
 
 //                $scope.events={}
@@ -259,7 +260,7 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onSlow=function(){
         $scope.slow = true
     }
-    
+
     init();
 
 

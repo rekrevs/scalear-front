@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state) {
+  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state','Page', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state, Page) {
     $controller('surveysCtrl', {$scope: $scope});
     
  	var init = function(){
@@ -9,6 +9,7 @@ angular.module('scalearAngularApp')
 
  		Quiz.getQuestions({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},function(data){
             $scope.quiz= data.quiz
+            Page.setTitle($scope.quiz.name)
 	 		$scope.quiz.questions=data.questions
 	 		$scope.studentAnswers=data.quiz_grades;
 	 		$scope.status=data.status;

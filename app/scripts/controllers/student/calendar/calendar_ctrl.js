@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', '$window', function ($scope,$state, $stateParams, Course, $window) {
+  .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', '$window','Page', function ($scope,$state, $stateParams, Course, $window,Page) {
      $window.scrollTo(0, 0);
+     Page.setTitle('Calendar');
     var change_lang = function(){
     	if($scope.eventSources){
 	    	angular.element($scope.myCalendar.children()).remove();

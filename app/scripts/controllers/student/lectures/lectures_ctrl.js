@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$log','$window', function ($scope, Course, $stateParams, $rootScope, $log, $window) {
+  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$log','$window','Page', function ($scope, Course, $stateParams, $rootScope, $log, $window,Page) {
 
 	$window.scrollTo(0, 0);
-
+	Page.setTitle('Lectures');
 	
     var init = function()
     {
@@ -17,6 +17,15 @@ angular.module('scalearAngularApp')
 	    	 $scope.course= JSON.parse(data.course);
 	    	 $scope.today = data.today;	
 	    	 $log.debug($scope.course);
+	    	 $scope.course.groups.forEach(function(module){
+	    	 	var count = 0
+	    	 	var items = module.quizzes.concat(module.lectures)
+	    	 	items.forEach(function(item){
+	    	 		if(item.is_done)
+	    	 			count++
+	    	 	})
+    	 		module.is_done = (count == items.length) 
+	    	 })
 	    	});
 	}
 	

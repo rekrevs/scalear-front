@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
             return {
                 restrict: 'E',
                 template: '| <a style="cursor:pointer;" ng-click="toggleTechnicalDisplay()" translate="feedback.report_technical"></a>' +
-                    '<div style="width:500px;" ng-show="show_technical"><br>' +
+                    '<div class="well" style="width:500px;background:wheat;padding:10px 0" ng-show="show_technical"><br>' +
                         // '<div style="margin-left:3px;width:400px;" class="row toggle-demo">'+
                         //     '<div class="switch-toggle switch-2 well col-lg-9">'+
                         //         '<input id="week-d1" name="view-d" type="radio" ng-checked="issue_type==\'system\'">'+

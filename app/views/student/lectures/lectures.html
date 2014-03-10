@@ -8,7 +8,7 @@
 		<accordion  close-others="true" id="acc1" class="accordion">
 			<accordion-group ng-if="today >= group.appearance_time" ng-repeat="group in course.groups | orderBy:'position'" is-open="group.id==open_id" class='module'>
 				<accordion-heading>
-		        	<courseware-module name="group.name" id="group.id" time="group.total_time" questions="group.total_questions" open="open" />
+		        	<courseware-module done="group.is_done" name="group.name" id="group.id" time="group.total_time" questions="group.total_questions" open="open" />
 	        	</accordion-heading>
         		<div class="outer">
 		        	<div class="inner" id="modules">

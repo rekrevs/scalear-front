@@ -2,10 +2,10 @@
 
 var app = angular.module('scalearAngularApp')
 
-  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window) {
+  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page) {
  
         $log.debug("in enrolled students");
-
+        Page.setTitle('Enrolled Students')
         $window.scrollTo(0, 0);
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)

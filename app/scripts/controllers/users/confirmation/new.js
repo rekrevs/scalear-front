@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersConfirmationNewCtrl',['$scope','User','$state', function ($scope, User, $state) {
+  .controller('UsersConfirmationNewCtrl',['$scope','User','$state','Page', function ($scope, User, $state,Page) {
+        Page.setTitle('Request new confirmation token')
         $scope.user={}
         $scope.resend = function(){
             delete $scope.user.errors;

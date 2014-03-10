@@ -21,7 +21,8 @@ angular.module('scalearAngularApp')
 	  			$scope.$parent.total_num_quizzes  = data.num_quizzes
 	  			$scope.$parent.chart_data = data.chart_data
 	  			$scope.nextQuiz()
-	  			$scope.setShortcuts()
+	  			$scope.setQuizShortcuts()
+	  			$scope.setBlankShortcut()
 	  		},
 	  		function(){}
 		)

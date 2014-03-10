@@ -21,6 +21,7 @@ angular.module('scalearAngularApp')
         $scope.total_num_quizzes  = 0
         $scope.current_lecture = 0
         $scope.current_quiz = 0
+        $scope.show_black_screen= false
         if($scope.current_quiz_lecture)
           delete $scope.current_quiz_lecture
         if($scope.chart_data)
@@ -89,6 +90,7 @@ angular.module('scalearAngularApp')
       angular.element("body").css("overflow","auto");
       $scope.modalInstance.dismiss();
       $scope.unregister_back_event();
+      $scope.removeShortcuts()
       init()
     };
 
@@ -219,8 +221,9 @@ angular.module('scalearAngularApp')
       }
     }
 
-    $scope.setShortcuts=function(){
+    $scope.setQuizShortcuts=function(){
       console.log("seeting shortucts ")
+      $scope.removeShortcuts()
       shortcut.add("Page_up",function() {
          console.log('page up')
          $scope.nextQuiz()
@@ -234,6 +237,25 @@ angular.module('scalearAngularApp')
       },{"disable_in_input" : false, 'propagate':false});
     }
 
+    $scope.removeShortcuts=function(){
+      shortcut.remove("Page_up")
+      shortcut.remove("Page_down")
+      shortcut.remove("b")
+    }
+
+    $scope.setBlankShortcut=function(){
+      shortcut.add("b",function() {
+         console.log('black screen')
+         $scope.toggleBlackScreen()
+         $scope.$apply()
+         console.log($scope.show_black_screen)
+      },{"disable_in_input" : false, 'propagate':false});
+    }
+
+    $scope.toggleBlackScreen=function(){
+      $scope.show_black_screen = !$scope.show_black_screen
+    }
+    
     var getVideoWidth=function(){
       var win = angular.element($window)
       var video_height = (win.height()*60)/100

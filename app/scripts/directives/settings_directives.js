@@ -20,7 +20,7 @@ angular.module('scalearAngularApp')
                     link: $rootScope.current_user.link,
                     bio: $rootScope.current_user.bio
                 }
-                console.log(scope.user)
+                // console.log(scope.user)
         })
         $rootScope.$watch('current_lang', function(newval, oldval) {
                 if (newval != oldval)

@@ -252,11 +252,6 @@ textarea.ng-invalid{ border:1px solid red; }
   width: 800px;
   height: 450px;
 }
-.inclass_sceen{
-  display: inline-block;
-  width:444px;
-  height: 250px
-}
 
 .ontop.widescreen{
 	height: 281px;

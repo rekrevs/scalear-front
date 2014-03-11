@@ -150,6 +150,7 @@ angular.module('scalearAngularApp')
                     "fill": 20,
                     "height": 200,
                     "displayExactValues": true,
+                    "legend": {"position": 'none'},
                     "fontSize": 12,
                     "vAxis": {
                         "title": $translate(data.vtitle || "quizzes.number_of_students") + " (" + $translate("groups.out_of") + " " + student_count + ")",

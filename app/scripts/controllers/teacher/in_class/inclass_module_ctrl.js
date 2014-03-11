@@ -20,6 +20,8 @@ angular.module('scalearAngularApp')
         $scope.total_num_quizzes  = 0
         $scope.current_lecture = 0
         $scope.current_quiz = 0
+        $scope.hide_questions = false
+        $scope.hide_text = "Hide"
         if($scope.current_quiz_lecture)
           delete $scope.current_quiz_lecture
         if($scope.chart_data)
@@ -27,7 +29,7 @@ angular.module('scalearAngularApp')
 
         openModal('display', type)
         setup_screens()
-
+        $scope.setOriginalClass()
         angular.element($window).bind('resize',
           function(){
             setup_screens()
@@ -266,6 +268,31 @@ var openModal=function(view, type){
         marginLeft:'30px',
         verticalAlign:'text-bottom'
       }
+    }
+
+    $scope.setOriginalClass=function(){
+      $scope.video_class = 'original_video'
+      $scope.question_class = 'original_question'
+      $scope.chart_class = 'original_chart'
+      showQuestions()
+    }
+
+    $scope.setZoomClass=function(){
+      $scope.video_class = 'zoom_video'
+      $scope.question_class = 'zoom_question'
+      $scope.chart_class = 'zoom_chart'
+    }
+
+    $scope.toggleHideQuestions=function(){
+      $scope.hide_questions = !$scope.hide_questions
+      $scope.hide_text = $scope.hide_questions? "Unhide" : "Hide"
+      if($scope.question_class == 'original_question')
+      $scope.video_class = $scope.hide_questions?'zoom_video' : 'original_video'
+    }
+
+    var showQuestions = function(){
+      $scope.hide_questions = false
+      $scope.hide_text =  "Hide"
     }
 
     init();

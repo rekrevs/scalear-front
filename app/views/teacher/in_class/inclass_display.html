@@ -42,46 +42,42 @@
     </div>     
 </div> -->
 
-
-    <!-- <div style="border:2px solid red;height:800px"> -->
-    <div style="min-height:6%;position:relative">
-        <div style="padding-top:20px">
-            <span style="padding-left: 8%;font-size: 25px;float: left;width: 55%;">Lecture Title</span>
-            <div style="float:left" >
-                <button ng-click="playBtn()" style="padding:5px 25px; font-size: 20px;font-weight:100">Play</button>
-                <button ng-click="muteBtn()" style="padding:5px 25px; font-size: 20px;font-weight:100">Mute</button>
-                <button style="padding:5px 25px; font-size: 20px;font-weight:100">Quality</button>
+    <div style="min-height:54px;position:relative">
+        <div style="padding-top:1%;">
+            <span style="padding-left: 8%;font-size: 25px;float: left;font-weight:100;">{{lecture_name}}</span>
+            <div style="float:right; margin-right: 50px;" >
+                <button ng-class="button_class" ng-click="playBtn()" style="font-weight:100">Play</button>
+                <button ng-class="button_class" ng-click="muteBtn()" style="font-weight:100">Mute</button>
+                <button ng-class="button_class" style="font-weight:100">Quality</button>
             </div>
         </div>
     </div>
-    <div style="min-height:88%;position:relative;left:0;right:0;border: 2px solid #949292;">
-        <div style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;">
+    <div style="position: fixed;bottom: 50px;top: 54px;left:0;right:0;border: 2px solid #949292;">
+        <div class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;">
             <video_container class="inclass_sceen well" ng-class="video_class" >
+            <div class="ontop inclass_sceen" style="position:absolute"></div>
                 <youtube class="inclass_sceen" id="inclass_vid" url="lecture_url" player="inclass_player" />
             </video_container>
-            <div ng-show="!hide_questions" style="position:relative;border-top: 3px solid darkgrey;">
-                <div ng-class="question_class">{{question_title}}</div>
-                <div ng-if="chart_data" ng-class="chart_class" >
+            <div ng-show="!hide_questions && question_title" ng-style="question_block" class="question_block">
+                <div ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}">{{question_title}}</div>
+                <div ng-if="chart_data" ng-class="chart_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}">
                     <div google-chart chart="chart" on-ready="loading_chart=false"></div>
                 </div>
             </div>
+            <div ng-show="!hide_questions && questions" ng-style="question_block" class="question_block student_padding">
+                <ul><li ng-repeat="question in questions" ng-click="seek(question[1])" ng-class="student_question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >{{question[0]}}<br></li>
+            </div>
         </div>
     </div>
-    <div style="min-height:6%;position:relative;padding-top:10px">
-        <div style="width: 30%;float: left;margin-left: 8%;">
-            <button ng-click="exitBtn()" style="padding:5px 25px;font-size:25px;font-weight:100">Exit</button>
-        </div>
-        <div style="width: 40%;float: left;">
-            <button ng-click="skip(-5)" style="padding: 5px 20px;font-size: 20px;font-weight:200">-5</button>
-            <button ng-click="prevQuiz()" style="padding: 5px 20px;font-size: 20px;font-weight:200;margin-right:15%;"><<</button>
-            <button ng-click="nextQuiz()" style="padding: 5px 20px;font-size: 20px;font-weight:200">>></button>
-            <button ng-click="skip(5)"style="padding: 5px 20px;font-size: 20px;font-weight:200">+5</button>
-        </div>
-        <div style="float:left">
-            <button ng-click="setZoomClass()" ng-show="video_class=='original_video'" style="padding: 5px 20px;font-size: 20px;font-weight:100">Zoom In</button>
-            <button ng-click="setOriginalClass()" ng-show="video_class=='zoom_video'" style="padding: 5px 20px;font-size: 20px;font-weight:100">Zoom Out</button>
-            <button ng-click="toggleHideQuestions()" style="padding: 5px 20px;font-size: 20px;font-weight:100">{{hide_text}}</button>
-        </div>
+    <div style="position:fixed;padding-top:5px; text-align: center; bottom: 10px; width: 100%;">
+            <button ng-class="button_class" ng-click="exitBtn()" style="font-weight:100; float: left;margin-left: 20px;">{{button_names[0]}}</button>
+
+            <button ng-class="button_class" ng-click="skip(-5)" style="font-weight:200">-5</button>
+            <button ng-class="button_class" ng-click="prevQuiz()" style="font-weight:200;margin-right:3%"><<</button>
+            <button ng-class="button_class" ng-click="nextQuiz()" style="font-weight:200">>></button>
+            <button ng-class="button_class" ng-click="skip(5)"style="font-weight:200">+5</button>
+            
+            <button ng-class="button_class" ng-click="toggleHideQuestions()" style="font-weight:100; float:right; margin-right: 50px">{{hide_text}}</button>
+            <button ng-class="button_class" ng-click="setZoomClass()" ng-show="video_class=='original_video'" style="font-weight:100; float:right; margin-right: 10px">{{button_names[1]}}</button>
+            <button ng-class="button_class" ng-click="setOriginalClass()" ng-show="video_class=='zoom_video'" style="font-weight:100; float:right; margin-right: 10px">{{button_names[2]}}</button>
     </div>
-    <!-- </div> -->
-    <!-- <div style="border:2px solid blue;height:800px"></div> -->

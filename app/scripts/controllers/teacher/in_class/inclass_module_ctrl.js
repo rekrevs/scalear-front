@@ -20,8 +20,7 @@ angular.module('scalearAngularApp')
         $scope.total_num_quizzes  = 0
         $scope.current_lecture = 0
         $scope.current_quiz = 0
-        $scope.hide_questions = false
-        $scope.hide_text = "Hide"
+        $scope.hide_questions = false        
         if($scope.current_quiz_lecture)
           delete $scope.current_quiz_lecture
         if($scope.chart_data)
@@ -29,10 +28,14 @@ angular.module('scalearAngularApp')
 
         openModal('display', type)
         setup_screens()
+        changeButtonsSize()
+        $scope.hide_text = $scope.button_names[3]
         $scope.setOriginalClass()
+
         angular.element($window).bind('resize',
           function(){
             setup_screens()
+            changeButtonsSize()
             $scope.$apply()
         })
       }  
@@ -159,13 +162,15 @@ var openModal=function(view, type){
         if($scope.lecture_list[$scope.current_lecture-1]){
           var lecture_id = $scope.lecture_list[$scope.current_lecture-1][0]
           var url=$scope.lecture_list[$scope.current_lecture-1][1]
+          var name = $scope.lecture_list[$scope.current_lecture-1][2]
         }
         else{
            var lecture_id = $scope.lecture_list[0][0]
            var url= $scope.lecture_list[0][1]
+           var name = $scope.lecture_list[0][2]
         }
         if($scope.current_quiz_lecture < $scope.display_data[lecture_id].length ){
-          $scope.setData(lecture_id,url)
+          $scope.setData(lecture_id,url, name)
           $timeout(function(){
             $scope.seek($scope.quiz_time)
           })
@@ -176,7 +181,7 @@ var openModal=function(view, type){
             var lecture_id=$scope.lecture_list[elem][0]
             var url=$scope.lecture_list[elem][1]
             if($scope.display_data[lecture_id].length){
-              $scope.setData(lecture_id,url)
+              $scope.setData(lecture_id,url, name)
               $scope.current_lecture = elem+1;
               break; 
             }
@@ -196,7 +201,8 @@ var openModal=function(view, type){
         if($scope.current_quiz_lecture >= 0){
           var lecture_id=$scope.lecture_list[$scope.current_lecture-1][0]
           var url=$scope.lecture_list[$scope.current_lecture-1][1]
-          $scope.setData(lecture_id,url)
+          var name = $scope.lecture_list[$scope.current_lecture-1][2]
+          $scope.setData(lecture_id,url, name)
           $timeout(function(){
             $scope.seek($scope.quiz_time)
           })
@@ -205,9 +211,10 @@ var openModal=function(view, type){
           for (var elem=$scope.current_lecture-2; elem>=0; elem--){
             var lecture_id=$scope.lecture_list[elem][0]
             var url=$scope.lecture_list[elem][1]
+            var name = $scope.lecture_list[elem][2]
             if($scope.display_data[lecture_id].length){
               $scope.current_quiz_lecture = $scope.display_data[lecture_id].length -1
-              $scope.setData(lecture_id,url)
+              $scope.setData(lecture_id,url, name)
               $scope.current_lecture = elem+1;
               break; 
             }
@@ -235,7 +242,7 @@ var openModal=function(view, type){
       }
     }
 
-    var setup_screens = function(){
+    var setup_screens = function(){ 
       var win = angular.element($window)
       var win_width= win.width()
       var video_width= getVideoWidth()
@@ -274,6 +281,10 @@ var openModal=function(view, type){
       $scope.video_class = 'original_video'
       $scope.question_class = 'original_question'
       $scope.chart_class = 'original_chart'
+      $scope.student_question_class = 'original_student_question'
+      $scope.question_block={
+        'overflowY':'auto'
+      }
       showQuestions()
     }
 
@@ -281,18 +292,39 @@ var openModal=function(view, type){
       $scope.video_class = 'zoom_video'
       $scope.question_class = 'zoom_question'
       $scope.chart_class = 'zoom_chart'
+      $scope.student_question_class = 'zoom_question'
+      $scope.question_block={
+        'overflowY':'visible'
+      }
     }
 
     $scope.toggleHideQuestions=function(){
       $scope.hide_questions = !$scope.hide_questions
-      $scope.hide_text = $scope.hide_questions? "Unhide" : "Hide"
+      $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
       if($scope.question_class == 'original_question')
       $scope.video_class = $scope.hide_questions?'zoom_video' : 'original_video'
     }
 
     var showQuestions = function(){
       $scope.hide_questions = false
-      $scope.hide_text =  "Hide"
+      $scope.hide_text =  $scope.button_names[3]
+    }
+
+    var changeButtonsSize=function(){
+      var win = angular.element($window)
+      var win_width= win.width()
+      if(win_width < 660 ){
+        $scope.button_names=['Ex', 'In', 'Out','H','U']
+        if(win_width <510)
+          $scope.button_class = 'btn btn-default smallest_font_button' 
+        else
+          $scope.button_class = 'btn btn-default small_font_button' 
+      }
+      else{
+        $scope.button_class = 'btn btn-default big_font_button' 
+        $scope.button_names=['Exit', 'Zoom In', 'Zoom Out','Hide', 'Unhide']
+      }
+      $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
     }
 
     init();

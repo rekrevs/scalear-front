@@ -200,7 +200,7 @@ angular.module('scalearAngularApp')
              }
             scope.showItem= function(item_id)
 		 	{	
-		 		// scope.$parent.$parent.collapse = true;
+		 		scope.$parent.$parent.close_selector = true;
 		 		scope.$parent.$parent.current_item = item_id
 		 		if(scope.className=="Document")
 		 			window.open(scope.url_with_protocol(scope.url),'_blank');

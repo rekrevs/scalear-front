@@ -103,7 +103,8 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 }
 #middle{
 	/*background-color: whitesmoke;*/
-	min-height:700px;	
+	/*min-height:700px;	*/
+  height: 90%;
 	/*position:absolute;
 	overflow:auto;
 	margin-left:30%;*/
@@ -338,5 +339,17 @@ input[type="checkbox"], input[type="radio"] {
   top: 100px;
   bottom: 100px;
   background-color: black;
+}
+
+.middle-container{
+  /*background-color: aliceblue;*/
+  position: fixed;
+  bottom: 60px;
+  top: 100px;
+  right: 40px;
+  left: 40px;
+  padding-top: 0px; 
+  overflow-y: auto; 
+  text-align: left;
 }
 

@@ -46,6 +46,7 @@
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-top: -10px;
+	z-index: 1;
 }
 /*.multicol > div{
 	margin-top: 5px;

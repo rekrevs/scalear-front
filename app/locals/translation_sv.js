@@ -197,7 +197,7 @@ var translation_sv=function(){
               title: "Titel",
               appearance_date: "Använd modulens publiceringsdatum?",
               due_date: "Använd modulens färdigdatum?",
-              slides: "Presentation/ Slides",
+              slides: "Slides",
               description: "Beskrivning",
               save_lecture: "Spara Föreläsning",
               module: "Modul",

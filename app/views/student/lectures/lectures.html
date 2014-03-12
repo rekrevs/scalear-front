@@ -17,7 +17,7 @@
 						<div class="bar-container">
 							<table style="width: 100%;">
 								<tr>
-									<td style="widthe: {{spacing}}%; text-align: left;" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
+									<td style="width: {{spacing}}%; text-align: left;" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
 										<courseware-item name="item.name" id="item.id" circlesize="12" group_id="current_module.id" class_name="item.get_class_name" slides="item.slides" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
 									</td>
 								</tr>
@@ -41,6 +41,7 @@
 				</div>
 			</div>
 		</div>
+
 
 
 <!-- <accordion  close-others="true" id="acc1" class="accordion"> -->
@@ -69,5 +70,5 @@
 			<br />Hey There! -->
 		<!-- </div> -->
 	</div>
-	<div class="span11" id="middle1"  ui-view="middle1"></div>
+	<div ng-show="course" class="middle-container" id="middle1" style="top:{{middle_top+'px;'}}"  ui-view="middle1"></div>
 </div>

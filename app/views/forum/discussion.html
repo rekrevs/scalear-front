@@ -10,14 +10,14 @@
     </label>
 </div>
 <br>
-<div style="width:400px;height:200px;">
+<div>
     <div ng-show="show_question" style="height:100px" id="show_question"> <!-- For question -->
         <textarea ng-model="current_question" style="display:inline; width:250px;height:73px"></textarea>
         <input type="text" disabled ng-model="current_question_time" format='hh:mm:ss' style="display:inline; width:60px;position: relative;top: -20px;"/>
         <select ng-model='privacy' ng-options="f.text for f in choices" style="display:inline; width:80px;position: relative;top: -60px;left: 270px;"></select>
         <input type="button" class="btn btn-primary btn-small" ng-click="saveQuestion()" value={{"youtube.ask"|translate}} style="display:inline;position: relative;top: -85px;height: 70px;left: 270px;"/>
     </div>
-    <div style="overflow:auto;height:100%;width:400px"> <!-- has all discussions -->
+    <div style="overflow:auto;height:100%;"> <!-- has all discussions -->
         <accordion close-others="true">
             <accordion-group ng-repeat="l in module_lectures" heading={{l.name}} is-open="l.id == lecture.id" id={{"outline_"+l.id}}>
                 <table class="table table-striped">

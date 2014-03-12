@@ -38,10 +38,25 @@
     	/*border: 2px solid lightslategray;*/
     	border: 2px solid orange;
     }
+    .info_link{
+    	display: inline-block;
+    	color: white;
+    	width: 51%;
+    	border-radius: 3px;
+    	background-color: orange;
+    	padding-right: 1px;
+    	padding-left: 1px;
+    	font-size: small;
+    	font-weight: lighter;
+    	text-align: center;
+    	box-shadow: 1px 1px 1px black;
+    }
 </style>
 <a ng-click="showItem(id)" href="" tooltip-placement="bottom" tooltip="{{isFinished(done)+isRequired(required)+className+': '+name}}" >
-	<canvas name="canvas" class="courseware-item-circle" ng-class="{itemdone: done, itemrequired: required, currentitem: $parent.$parent.current_item == id}" width="{{circlesize}}" height="{{circlesize}}" >
-</a>
+	<canvas name="canvas" class="courseware-item-circle" ng-class="{itemdone: done, itemrequired: required, currentitem: $parent.$parent.current_item == id}" width="{{circlesize}}" height="{{circlesize}}" ></canvas>
+	</a>
+	<!-- <a href="{{url_with_protocol(slides)}}" target="_blank" ng-if="slides && slides!='none'"><div class="info_link">{{"lectures.slides" | translate}}</div></a> -->
+
 
 
 

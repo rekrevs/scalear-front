@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
 
     	element.css("width", "200px");
   		element.css("height", "26px");
-  		element.css("position", "relative");
+  		element.css("position", "absolute");
   		element.css("display", "inline-block");
   		//element.css("z-index",10000);
 
@@ -49,8 +49,9 @@ angular.module('scalearAngularApp')
           element.css("left", scope.pWidth-200+"px");
         }
     		else{
-          element.css("top", scope.pHeight-26+"px");
+          // element.css("top", scope.pHeight-26+"px");
           element.css("left", scope.pWidth-350+"px");
+          element.css("bottom", "2%")
         }
     	}
     	

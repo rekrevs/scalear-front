@@ -1,18 +1,20 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$log','$window', '$state', function ($scope, Course, $stateParams, $rootScope, $log, $window, $state) {
+  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log','$window', '$state', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $window, $state) {
 
 	$window.scrollTo(0, 0);
-	if($stateParams.lecture_id){
-		$scope.current_item = $stateParams.lecture_id
-	}
-	else if($stateParams.quiz_id){
-		$scope.current_item = $stateParams.quiz_id
-	}
-	else{
-		$scope.current_item = ''
-	}
+	// $state.$watch('params', function(){
+		if($state.params.lecture_id){
+			$scope.current_item = $state.params.lecture_id
+		}
+		else if($state.params.quiz_id){
+			$scope.current_item = $state.params.quiz_id
+		}
+		else{
+			$scope.current_item = ''
+		}
+	// })
 	
     var init = function()
     {
@@ -33,6 +35,25 @@ angular.module('scalearAngularApp')
 				$scope.initSelector();
 	    	});
 	}
+	$rootScope.$watch('iscollapsed', function(){
+		console.log($rootScope.iscollapsed);
+		if($rootScope.iscollapsed == true){
+			// $scope.middle_top = 243;
+			$interval(function() {
+	            // for(var value = 243; value >99; value--){
+	            	$scope.middle_top = 100;
+	            // }
+	        }, 90, 1);
+		}
+		else if($rootScope.iscollapsed == false){
+			// $scope.middle_top = 100;
+			$interval(function() {
+	            // for(var value = 100; value <244; value++){
+	            	$scope.middle_top = 243;
+	            // }
+	        }, 90, 1);
+		}
+	})
 	
 	init();
 	$scope.initSelector = function(){
@@ -67,13 +88,14 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.shortenModuleName = function(name){
-		if(name.length > 20) {
+		if(name.length > 18) {
 		    name = name.substring(0,14)+"...";
 		}
 		return name;
 	}
 	$scope.showModule = function(module_id){
 		$scope.current_module = $scope.modules_obj[module_id];
+		$scope.close_selector = true;
 	}
 	$scope.$watch('current_module', function(){
 		if($scope.current_module){

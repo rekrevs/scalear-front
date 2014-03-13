@@ -22,7 +22,16 @@ angular.module('scalearAngularApp')
            return{
 			replace:true,
 			restrict: "E",
-			templateUrl: '/views/student_navigation.html'
+			templateUrl: '/views/student_navigation.html',
+			link: function(scope){
+				scope.settingsOpened = function(which){
+					scope.selected=which;
+					scope.$emit('settingsOpened', [which]);
+				}
+				scope.$on('mainMenuToggled', function(event, collapsed){
+					scope.show_settings = false;
+				})
+			}
 		};
  }]);
 
@@ -54,11 +63,9 @@ angular.module('scalearAngularApp')
 	                    //console.log("sign up failed")
 	                })
 	            };
-				// $rootScope.$watch('current_user', function(){
-				// 	scope.user = $rootScope.current_user
-				// 	console.log(scope.user)
-				// 	scope.$apply()
-				// })
+	            scope.$on('mainMenuToggled', function(event, collapsed){
+					scope.show_settings = false;
+				})
 			}
 		};
  }]);

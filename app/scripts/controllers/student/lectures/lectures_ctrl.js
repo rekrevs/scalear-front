@@ -54,6 +54,16 @@ angular.module('scalearAngularApp')
 	        }, 90, 1);
 		}
 	})
+	$rootScope.$on('settingsOpened', function(event, which){
+		console.log('received '+which)
+		if(which == 0){
+			$scope.middle_top = 543;
+		}
+		else{
+			$scope.middle_top = 243;
+		}
+
+	})
 	
 	init();
 	$scope.initSelector = function(){

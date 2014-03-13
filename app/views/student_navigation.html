@@ -55,11 +55,11 @@
                             <td style="padding-left: 20px; padding-right: 5px; min-width: 150px;">
                                 <span class="dropdown-header" ng-hide="!show_settings"><b translate>account_edit.account_settings</b></span>
                                 <div ng-init="selected = 1" class="settings-tabs">
-                                    <a href="" ng-click="selected = 1">
+                                    <a href="" ng-click="settingsOpened(1)">
                                         <ul ng-class="{tabactive: selected == 1}" class="tab-pill" ng-bind="'settings.lectures' | translate">
                                         </ul>
                                     </a>
-                                    <a href="" ng-click="selected = 0">
+                                    <a href="" ng-click="settingsOpened(0)">
                                         <ul ng-class="{tabactive: selected == 0}" class="tab-pill" ng-bind='"account_edit.account_information" | translate'>
                                             
                                         </ul>
@@ -71,7 +71,7 @@
                 </span>
             </td>
             <td ng-show="show_settings">
-                <div class="tab-content">
+                <div class="tab-content" style="height: auto;">
                         <span ng-show="selected == 0">
                             <account-information>
                         </span>
@@ -97,7 +97,7 @@
                     <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
                 </ul>
             </span>
-            <span class="settings-menu-button" ng-click="show_settings = !show_settings" ng-class="{settingsopen: show_settings}">
+            <span class="settings-menu-button" ng-click="show_settings = !show_settings; selected = 1;" ng-class="{settingsopen: show_settings}">
             </span>
         </tr>
     </table>

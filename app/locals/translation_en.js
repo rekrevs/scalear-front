@@ -263,6 +263,11 @@ var translation_en=function(){
         shown_to_student: "*Shown to students",
         server_slow:"The server 'Youtube.com' is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
+        video_events: "Video Events",
+        video_notes: "Video Notes",
+        outline: "Outline",
+        confused: "Confused",
+        discussion: "Discussion"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

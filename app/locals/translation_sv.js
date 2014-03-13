@@ -185,7 +185,7 @@ var translation_sv=function(){
       lectures:{
               duration: "Tidsutsträckning",
               details: "Detaljer",
-              lecture_details: "föreläsnings detaljer",
+              lecture_details: "Föreläsnings Detaljer",
               lecture_title: "Föreläsningstitel",
               url: "Video URL",
               video_title: "Video Titel",
@@ -263,6 +263,11 @@ var translation_sv=function(){
               shown_to_student: "*Visas i studenter",
               server_slow:"Servern 'Youtube.com' tar lång tid att läsa in den här videon",
               try_reload:"Du kan fortsätta vänta, eller prova att uppdatera sidan",
+              video_events: "Video Händelser",
+              video_notes: "Video Anmärkningar",
+              outline: "Disposition",
+              confused: "Förvirrad",
+              discussion: "Diskussion"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

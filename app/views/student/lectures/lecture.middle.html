@@ -8,6 +8,11 @@
 		overflow: auto;
 		height:80%;
 	}
+	.nav {
+		margin-bottom: 0px;
+		margin-left: 0px;
+		list-style: none;
+	}
 </style>
 
 <div ng-hide="!lecture">
@@ -34,7 +39,7 @@
 							 <div ng-if="selected_quiz.quiz_type == 'invideo'"><student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/></div>
 						</quiz>
 					</div>
-					<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url"  player="lecture_player" ng-class="{ipad:ipad}" autoplay='1' style="height:90%;" class="{{lecture.aspect_ratio}} youtube"/>
+					<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url"  player="lecture_player" ng-class="{ipad:ipad}" autoplay='1' style="height:90%; width: 60%;" class="{{lecture.aspect_ratio}} youtube"/>
 					<div ng-if="ipad && !loading_video" id="controls" style="width:800px;height:40px;position:absolute;top:610px;">
 						<div class="timer">
 							<p style='float:left;margin-left:60px;left:50px;line-height:60px;color:gray'>{{current_time|format}}</p>
@@ -55,14 +60,18 @@
 	</table> -->
 
 	<!-- <div > -->
-	    <tabset style="width: 37%; float: right; position: absolute; right: 0px; bottom: 6px;top: 35px;">
-	        <tab active="tabs[0].active" heading="Video Events" >
-	        	<!-- <div style="position: absolute; overflow-y: auto;" > -->
+	    <tabset style="width: 40%; float: right; position: absolute; right: 0px; bottom: 6px;top: 35px;">
+	        <tab active="tabs[0].active" heading="{{'lectures.video_events' | translate}}" style="cursor: pointer; text-align: center;" >
+	        	<!-- <div style="margin-top: -10px;" > -->
 	            	<discussion></discussion>
 	            <!-- </div> -->
 	        </tab>
-	        <tab active="tabs[1].active" heading="Video Notes">
+	        <tab active="tabs[1].active" heading="{{'lectures.video_notes' | translate}}" style="cursor: pointer;">
 	            <notes></notes>
+	        </tab>
+	        <tab active="tabs[2].active" heading="{{'lectures.lecture_details' | translate}}" style="cursor: pointer;">
+	            <!-- <notes></notes> -->
+	            hello
 	        </tab>
 	    </tabset>
     <!-- </div> -->

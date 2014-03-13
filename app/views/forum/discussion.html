@@ -1,21 +1,71 @@
-<div class="btn-group" data-toggle="buttons">
-    <label class="btn btn-default btn-checkbox">
-        <input type="checkbox" ng-model="checkModel.quiz"> Outline
+<style>
+    .accordion-heading{
+        padding: 5px;
+        background-color: rgb(0, 162, 86);
+        text-decoration: none;
+        display: block;
+        /*border-radius: 0px;
+        border:;*/
+    }
+    .accordion-toggle{
+        color: white;
+    }
+    .accordion-toggle:hover{
+        color: black;
+    }
+    .accordion-body{
+        background-color: #fffdfa;
+    }
+    .table-striped tbody > tr:nth-child(odd) > td, .table-striped tbody > tr:nth-child(odd) > th{
+        background-color: transparent;
+        color: currentcolor;
+        border: none;
+    }
+    .table th, .table td{
+        padding: 3px;
+    }
+    .align-center{
+        text-align: center;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+</style>
+<div class="btn-group align-center" data-toggle="buttons">
+    <label class="btn btn-warning btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.quiz"> {{'lectures.outline' | translate}}
     </label>
-    <label class="btn btn-default btn-checkbox">
-        <input type="checkbox" ng-model="checkModel.confused"> Confused
+    <label class="btn btn-warning btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.confused"> {{'lectures.confused' | translate}}
     </label>
-    <label class="btn btn-default btn-checkbox">
-        <input type="checkbox" ng-model="checkModel.discussion"> Discussion
+    <label class="btn btn-warning btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.discussion"> {{'lectures.discussion' | translate}}
     </label>
 </div>
 <br>
 <div>
-    <div ng-show="show_question" style="height:100px" id="show_question"> <!-- For question -->
-        <textarea ng-model="current_question" style="display:inline; width:250px;height:73px"></textarea>
-        <input type="text" disabled ng-model="current_question_time" format='hh:mm:ss' style="display:inline; width:60px;position: relative;top: -20px;"/>
-        <select ng-model='privacy' ng-options="f.text for f in choices" style="display:inline; width:80px;position: relative;top: -60px;left: 270px;"></select>
-        <input type="button" class="btn btn-primary btn-small" ng-click="saveQuestion()" value={{"youtube.ask"|translate}} style="display:inline;position: relative;top: -85px;height: 70px;left: 270px;"/>
+    <div ng-show="show_question" style="" id="show_question"> <!-- For question -->
+
+        <table class="table" style="margin-top: 10px;">
+            <tr>
+                <td colspan="2">
+                    <textarea placeholder="{{'lectures.ask_question' | translate}}" ng-model="current_question" style="width: 100%; height: 100%;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:70%;">
+                    <input type="text" disabled ng-model="current_question_time" format='hh:mm:ss' style="width: 90%;"/>
+                    <select ng-model='privacy' ng-options="f.text for f in choices" style="width: 100%;"></select>
+                </td>
+                <td>
+                    <input type="button" class="btn btn-primary btn-small" ng-click="saveQuestion()" value={{"youtube.ask"|translate}} style="width: 95%; height: 100%;"/>
+                </td>
+            </tr>
+        </table>
+        
+
+        
+        
+        
     </div>
     <div style="overflow:auto;height:100%;"> <!-- has all discussions -->
         <accordion close-others="true">

@@ -112,6 +112,7 @@ angular.module('scalearAngularApp', [
 
             //returns the title for the state
             var getStateTitle = function(name){
+                console.log(name)
                 if(name == "course_list" || name == "student_courses"){
                     return "courses.all_courses";
                 }
@@ -121,7 +122,7 @@ angular.module('scalearAngularApp', [
                 else if(name == "course.course_information" || name == "course.edit_course_information"){
                     return "head.course_information";
                 }
-                else if(name == "course.lectures"){
+                else if(name == "course.lectures" || name == "course.lectures.module.lecture" || name == "course.lectures.module.quiz"){
                     return "head.lectures";
                 }
                 else if(name == "edit_account"){

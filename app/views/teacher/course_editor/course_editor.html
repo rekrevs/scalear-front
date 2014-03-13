@@ -20,7 +20,6 @@
 		        	<div class="inner" id="modules">
 	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child item" ng-repeat="item in module.items" >
-                                {{item.position}}
 	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ></item>
 		            		</li>
 		            	</ul>

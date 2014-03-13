@@ -1,0 +1,25 @@
+Please select the data you would like to import
+
+
+<accordion close-others="false">
+    <accordion-group ng-repeat="course in courses" is-open="isopen">
+        <accordion-heading>
+            <input value="Select All" class="btn btn-primary" ng-click="select_all_modules(course, $event)"/>
+            <!--<input type="checkbox" ng-model="course.checked" ng-click="checkboxClick(course, $event)"/>--> {{course.name}} <i class="pull-right glyphicon" ng-class="{'icon-chevron-down': isopen, 'icon-chevron-right': !isopen}"></i>
+        </accordion-heading>
+        <accordion close-others="false">
+            <accordion-group ng-repeat="module in course.access_groups" is-open="isopen">
+                <accordion-heading>
+                    <input value="Select All" class="btn btn-primary" ng-click="select_all_items(module, $event)"/>
+                    <!--<input type="checkbox" ng-model="module.checked"  ng-click="checkboxClick(module, $event)"/>--> {{module.name}} <i class="pull-right glyphicon" ng-class="{'icon-chevron-down': isopen, 'icon-chevron-right': !isopen}"></i>
+                </accordion-heading>
+
+                <div ng-repeat="item in module.access_items" is-open="isopen">
+                    <input type="checkbox" ng-model="item.checked" ng-click="itemClick(item,$event)"/> {{item.name}}
+                </div>
+            </accordion-group>
+        </accordion>
+    </accordion-group>
+</accordion>
+
+        {{data_to_copy}}

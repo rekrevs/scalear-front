@@ -34,7 +34,6 @@
   },
   "resolutions": {
     "jquery": "2.x",
-    "angular": "1.2.0",
-    "es5-shim": "~2.0.8"
+    "angular": "1.2.0"
   }
 }

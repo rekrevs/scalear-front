@@ -88,7 +88,7 @@
                 <ul class="nav pull-left">
                     <li ng-show="current_user"><a ng-click="coursePage()" style="float: left;cursor: pointer" translate="navigation.courses"></a></li>
                      <li ng-show="current_user && current_user.roles[0].id==5"><a ui-sref="statistics" style="float: left;cursor: pointer" translate="courses.statistics"></a></li>
-                	<li><a ng-click="open()" ng-show='current_user && current_user.roles[0].id!=2 && current_user.invitations' translate="navigation.notifications" style="float:left;color:red;cursor: pointer;"></a></li>
+                	<li><a ng-click="open()" ng-show='are_notifications()' translate="navigation.notifications" style="float:left;color:red;cursor: pointer;"></a></li>
                 </ul>
             </div>
         </nav>
@@ -175,6 +175,7 @@
     <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/typeahead/typeahead.js"></script>
 
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
@@ -232,6 +233,7 @@
     <script src="scripts/services/timeline.js"></script>
     <script src="scripts/services/doc.js"></script>
     <script src="scripts/services/editor.js"></script>
+    <script src="scripts/services/teacher/shared_item.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>
@@ -245,7 +247,9 @@
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>        
+    <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_list/copy_course_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_list/import_from_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script> 

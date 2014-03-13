@@ -1,15 +1,20 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('InvitationModalCtrl',['$scope','$modalInstance','Course','$window','Home', function ($scope, $modalInstance, Course, $window, Home) {
+  .controller('InvitationModalCtrl',['$state','$scope','$modalInstance','Course','$window','Home','SharedItem', function ($state, $scope, $modalInstance, Course, $window, Home, SharedItem) {
 	$window.scrollTo(0, 0);
 	
 	$scope.invitations={}
 	$scope.form={}  	
 	
-	Home.getInvitations({},function(response){
-		$scope.invitations=response.invitations
-	})
+//	Home.getInvitations({},function(response){
+//		$scope.invitations=response.invitations
+//	})
+
+    Home.getNotifications({},function(response){
+        $scope.invitations=response.invitations
+        $scope.shared_items = JSON.parse(response.shared_items)
+    })
 	
   $scope.accept = function (id) {
   	
@@ -36,5 +41,10 @@ angular.module('scalearAngularApp')
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
+
+  $scope.import_new = function(){
+      $modalInstance.dismiss('cancel');
+      $state.go("new_course")
+  }
 
 }]);

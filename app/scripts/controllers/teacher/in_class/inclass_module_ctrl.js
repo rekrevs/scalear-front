@@ -36,6 +36,9 @@ angular.module('scalearAngularApp')
           function(){
             setup_screens()
             changeButtonsSize()
+             $timeout(function(){
+              $scope.adjustTextSize()
+            })
             $scope.$apply()
         })
       }  
@@ -192,6 +195,10 @@ var openModal=function(view, type){
         if($scope.chart_data)
           $scope.chart = $scope.createChart($scope.quiz_id)
       }
+
+       $timeout(function(){
+        $scope.adjustTextSize()
+      })
     }
 
     $scope.prevQuiz = function(){
@@ -224,6 +231,9 @@ var openModal=function(view, type){
         if($scope.chart_data)
           $scope.chart = $scope.createChart($scope.quiz_id)
       }
+      $timeout(function(){
+        $scope.adjustTextSize()
+      })
     }
 
     var getVideoWidth=function(){
@@ -282,9 +292,10 @@ var openModal=function(view, type){
       $scope.question_class = 'original_question'
       $scope.chart_class = 'original_chart'
       $scope.student_question_class = 'original_student_question'
-      $scope.question_block={
-        'overflowY':'auto'
-      }
+      $scope.question_block = 'question_block'
+      // $scope.question_block={
+      //   'overflowY':'visible'
+      // }
       showQuestions()
     }
 
@@ -293,16 +304,17 @@ var openModal=function(view, type){
       $scope.question_class = 'zoom_question'
       $scope.chart_class = 'zoom_chart'
       $scope.student_question_class = 'zoom_question'
-      $scope.question_block={
-        'overflowY':'visible'
-      }
+      $scope.question_block = 'zoom_question_block'
+      // $scope.question_block={
+      //   'overflowY':'visible'
+      // }
     }
 
     $scope.toggleHideQuestions=function(){
       $scope.hide_questions = !$scope.hide_questions
       $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
       if($scope.question_class == 'original_question')
-      $scope.video_class = $scope.hide_questions?'zoom_video' : 'original_video'
+        $scope.video_class = $scope.hide_questions?'zoom_video' : 'original_video'
     }
 
     var showQuestions = function(){
@@ -314,7 +326,7 @@ var openModal=function(view, type){
       var win = angular.element($window)
       var win_width= win.width()
       if(win_width < 660 ){
-        $scope.button_names=['Ex', 'In', 'Out','H','U']
+        $scope.button_names=['Ex', 'Ov', 'Un','H','U']
         if(win_width <510)
           $scope.button_class = 'btn btn-default smallest_font_button' 
         else
@@ -322,9 +334,38 @@ var openModal=function(view, type){
       }
       else{
         $scope.button_class = 'btn btn-default big_font_button' 
-        $scope.button_names=['Exit', 'Zoom In', 'Zoom Out','Hide', 'Unhide']
+        $scope.button_names=['Exit', 'Show Over', 'Show Under','Hide', 'Unhide']
       }
       $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
+    }
+
+    $scope.adjustTextSize=function(){
+      var question_block = angular.element('.question_block')
+      console.log('scroll='+question_block.get(0).scrollHeight+' height='+question_block.height()+' diff='+(question_block.get(0).scrollHeight - question_block.height()))
+      if(question_block.get(0).scrollHeight > question_block.height()){
+        if(question_block.get(0).scrollHeight - question_block.height() >=10){
+          $scope.question_class = 'smallest_question'
+          $scope.chart.options.height=question_block.height() - 10
+        }
+        else{
+          $scope.question_class = 'small_question'
+          $scope.chart.options.height=question_block.height() - 10
+        }
+      }
+      else{
+        if(question_block.height()>180 || question_block.height() == 0){
+          $scope.question_class = $scope.hide_questions?'zoom_question' : 'original_question'
+          $scope.chart.options.height=question_block.height() - 10
+        }        
+        else if(question_block.height()>150 && question_block.height()<180){
+          $scope.question_class = 'small_question'
+          $scope.chart.options.height=question_block.height() - 10
+        }
+        else{
+          $scope.question_class = 'smallest_question'
+          $scope.chart.options.height=question_block.height() - 10
+        }      
+      }
     }
 
     init();

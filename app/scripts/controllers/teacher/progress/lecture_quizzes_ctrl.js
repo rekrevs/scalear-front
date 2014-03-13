@@ -148,7 +148,7 @@ angular.module('scalearAngularApp')
                     "title": getQuizType(id) + getQuizTitle(id),
                     "isStacked": "true",
                     "fill": 20,
-                    "height": 200,
+                    "height": 170,
                     "displayExactValues": true,
                     "legend": {"position": 'none'},
                     "fontSize": 12,

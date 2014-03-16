@@ -14,7 +14,6 @@ angular.module('scalearAngularApp')
             },
 	  		function(data){
 	  			$log.debug(data)
-	  			$scope.$parent.should_mute = false
 	  			$scope.$parent.lecture_list = data.lecture_list
 	  			$scope.$parent.display_data = data.display_data
 	  			$scope.$parent.total_num_lectures = data.num_lectures
@@ -27,12 +26,10 @@ angular.module('scalearAngularApp')
   	}
 
 	$scope.$parent.setData=function(lecture_id, url){
+		$scope.$parent.lecture_url= url; //+'&controls=0'
 		$scope.$parent.quiz_time= $scope.display_data[lecture_id][$scope.current_quiz_lecture][0]
 		$scope.$parent.question_title = $scope.display_data[lecture_id][$scope.current_quiz_lecture][2]
 		$scope.$parent.quiz_id  = $scope.display_data[lecture_id][$scope.current_quiz_lecture][3] 
-		if($scope.$parent.lecture_url.indexOf(url) == -1)
-			$scope.$parent.lecture_url= url+'&controls&start='+Math.round($scope.$parent.quiz_time)
-
 	}
 
     $scope.$parent.createChart = function(id){

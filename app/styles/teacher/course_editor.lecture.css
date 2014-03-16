@@ -1,3 +1,6 @@
+.videoborder{
+    background-color: black;
+}
 .selected{
 	background-color: rgb(252,248,227);
 }
@@ -13,7 +16,7 @@
 .ontop{
   position:absolute;
   width:500px;
-  height:281px;
+  /*height:282px;*/
   z-index:5;
 }
 
@@ -114,6 +117,9 @@
 .quiz_title{
   width: 50%;
 }
+.quiz_list{
+    margin-top: 50px;
+}
 
 .sidebar{
   width:400px;
@@ -126,7 +132,143 @@
   z-index: 1030
 }
 
-.red_font{
-  color:red;
+
+/*******************************/
+
+.controlDiv{
+    /* Centering the control div */
+    position:absolute;
+    width:30px;
+    height:25px;
+    cursor:pointer;
+    /*top:50%;
+    left:50%;*/
+    bottom: 4px;
+    margin:-50px 0 0 0px;
 }
+.timer{
+    position: absolute;
+    width: 100%;
+    height: 30px;
+    /*cursor: pointer;*/
+    margin: -50px 0px 0px 0px;
+    background-color: black;
+    text-align: right;
+    bottom: 0px;
+    right: 0px;
+
+}
+
+.check_answer{
+    left:200px;
+    bottom:5px;
+}
+
+.check_answer_area{
+    left:200px;
+    bottom:30px;
+}
+
+.submit-html{
+    left:200px;
+    bottom:5px;
+}
+
+.exit{
+    top:0px;
+    right:10px;
+    position:absolute;
+    color:gray;
+    text-decoration: none;
+}
+
+.confused_notif{
+    position:absolute;
+    /*#margin-top::-60px;*/
+    right:110px;
+    bottom: -15px;
+}
+
+.hidden_div2{
+    position:absolute;
+    /*#margin-top:-50px;*/
+    right:110px;
+    bottom: -1px;
+    z-index:3;
+}
+
+.hidden_shortcuts2{
+    position:absolute;
+    /*#margin-top:-50px;*/
+    left:10px;
+    top: -440px;
+    z-index:3;
+}
+
+.controlDiv.replay{
+    background:url('/images/replay3.png') no-repeat center center;
+    background-size:20px 20px;
+}
+.controlDiv.play{
+    background:url('/images/plays.png') no-repeat center center;
+    background-size:20px 20px;
+}
+
+.controlDiv.pause{
+    background:url('/images/pauses.png') no-repeat center center;
+    background-size:20px 20px;
+}
+
+.progressBar{
+    /*display:none;*/
+    display:block;
+    position:absolute;
+    width:auto;
+    height:8px;
+    left:0px;
+    right:0px;
+    bottom:30px;
+    background-color:#525252;
+    overflow:hidden;
+    cursor:pointer;
+
+    /* A light CSS3 bottom highlight */
+
+    -moz-box-shadow:0 1px 0 rgba(255, 255, 255, 0.3);
+    -webkit-box-shadow:0 1px 0 rgba(255, 255, 255, 0.3);
+    box-shadow:0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.progressBar .elapsed{
+    position:absolute;
+    width:0;
+    height:100%;
+    background-color:#1fa2f6;
+    border-right:1px solid #49AFF0;
+}
+
+.volumeDiv.mute{
+    background:url('/images/max_volume.png') no-repeat center center;
+    background-size:20px 20px;
+}
+
+.volumeDiv.unmute{
+    background:url('/images/min_volume.png') no-repeat center center;
+    background-size:20px 20px;
+}
+
+.volumeDiv{
+    /* Centering the control div */
+    position:absolute;
+    width:30px;
+    height:25px;
+    cursor:pointer;
+    left: 35px;
+    /*top:50%;
+    left:50%;*/
+    bottom: 4px;
+    margin:-50px 0 0 0px;
+}
+
+
 

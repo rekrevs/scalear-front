@@ -404,6 +404,7 @@ var translation_sv=function(){
               out_of: "ut ur",
           },
       courses:{
+              you_asked: "Du frågade: ",
               confused: "Förvirrad",
               really_confused: "Verkligen Förvirrad",
               back: "Tillbaka",
@@ -654,9 +655,11 @@ var translation_sv=function(){
               click_tell_confused: "Klicka här för att berätta för läraren du är förvirrad.",
               click_ask_question: "Klicka här för att ställa en fråga.",
               click_video_shortcuts: "Klicka här för video-genvägar",
+              click_video_quality: "Klicka för att ändra videokvalitet",
               enter_question: "Ange Fråga",
               ask: "Fråga",
               check_answer: "Kontrollera Svaret",
+              info: "Endast YouTube webbadresser och MP4 H.264 kodade videofilmer tillåts"
           },
         devise:{
             sign_in_message: "Vänligen fyll i nedanstående fält...",

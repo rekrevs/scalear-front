@@ -172,12 +172,19 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 
 .widescreen{
   width: 800px;
-  height: 485px;
+  height: 450px;
+}
+
+.videoborder{
+    width:800px;
+    height:490px;
 }
 
 .smallscreen{
-  width: 600px;
-  height: 485px;
+  /*width: 600px;*/
+  /*height: 480px;*/
+    width: 800px;
+    height: 450px;
 }
 .solved{
 	display: inline;

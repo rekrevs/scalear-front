@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log', function($interval, Lecture, $stateParams, $window, $log) {
+.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log','$translate', function($interval, Lecture, $stateParams, $window, $log, $translate) {
   return {
     restrict:"E",
     templateUrl:"/views/student/lectures/controls.html",
@@ -19,19 +19,18 @@ angular.module('scalearAngularApp')
 
         scope.$on('$destroy', function() {
             //alert("In destroy of:" + scope);
-            //console.log("in destroy of");
-            //console.log(scope);
             shortcut.remove("c");
             shortcut.remove("q");
             shortcut.remove("b");
             shortcut.remove("Space");
             shortcut.remove("Enter");
         });
-
-
-        scope.show_message=false;
-    	scope.$parent.show_question=false;
+    	
+    	scope.show_message=false;
+    	scope.show_question=false;
     	scope.show_shortcuts=false;
+      scope.quality=false;
+      scope.chosen_quality='hd720';
       	
     	var setButtonsLocation=function(){
     		if(scope.fullscreen){
@@ -40,19 +39,18 @@ angular.module('scalearAngularApp')
           element.css("z-index",1500);
     		}
     		else{
-	    		scope.pHeight=485;
-	    		scope.pWidth= scope.lecture.aspect_ratio=='widescreen'? 800:600;
+	    		scope.pHeight=490;
+	    		scope.pWidth= 800;//scope.lecture.aspect_ratio=='widescreen'? 800:600;
            element.css("z-index",1000);
     		}
-        if(scope.ipad){
-          element.css("top", scope.pHeight-15+"px");
-          element.css("left", scope.pWidth-200+"px");
-        }
-    		else{
-          // element.css("top", scope.pHeight-26+"px");
-          element.css("left", scope.pWidth-350+"px");
-          element.css("bottom", "2%")
-        }
+           // if(scope.ipad){
+             //   element.css("top", scope.pHeight-15+"px");
+               // element.css("left", scope.pWidth-200+"px");
+            //}
+            //else{
+    		element.css("top", scope.pHeight-60+"px");
+    		element.css("left", scope.pWidth-200+"px");
+//            }
     	}
     	
     	scope.full = function(){   			
@@ -63,18 +61,19 @@ angular.module('scalearAngularApp')
     		$log.debug(scope.$parent);
     		$log.debug("in confusde");
         scope.show_message=true;
-            var time=scope.lecture_player.controls.getTime();
-    		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:time}, function(data){
-  			$interval(function(){
+        var time=scope.lecture_player.controls.getTime()
+    		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
+                $interval(function(){
            		scope.show_message=false;
-            }, 2000, 1);
+                }, 2000, 1);
+
            		$log.debug(data)
            		if(data.msg=="ask")
            		{
-             		scope.$parent.show_notification="If you're really confused, please use the question button to ask a question so the teacher can help you.";
-             		scope.$parent.notify_position={"left":(scope.pWidth - 300) + "px"}
+             		scope.$parent.show_notification=$translate("controller_msg.really_confused_use_question");
+             		scope.$parent.notify_position={"left":(scope.pWidth - 180) + "px"}
              		$interval(function(){
-             			scope.$parent.notify_position={"left":"180px"};
+             			scope.$parent.notify_position={"left":"240px"};
              			scope.$parent.show_notification=false;
              		}, 6000, 1)
              	}
@@ -87,13 +86,18 @@ angular.module('scalearAngularApp')
 
                 if(data.flag && data.msg!="ask") // confused before but not third time - very confused
                 {
-
-                    var elem=scope.timeline['lecture'][$stateParams.lecture_id].search_by_id(data.id);
+                    var elem=scope.timeline['lecture'][$stateParams.lecture_id].search_by_id(data.id, "confused");
                     scope.timeline['lecture'][$stateParams.lecture_id].items[elem].data.very=true;
+                    // for(var element in scope.timeline['lecture'])
+                    // {
+                    //     if(scope.timeline['lecture'][element]==data.id)
+                    //     {
+                    //         scope.progressEvents[element][2]='courses.really_confused'
+                    //         scope.progressEvents[element][1]='purple'
+                    //         return;
+                    //     }
+                    // }
                 }
-
-
-
   		  });
     	};
     	scope.back= function()
@@ -131,19 +135,31 @@ angular.module('scalearAngularApp')
             $(document).off("click")        
       }
 
-//    	scope.submit_question = function()
-//    	{
-//    		$log.debug("will submit "+scope.question_asked);
-//  		Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime(), ques: scope.question_asked}, function(data){
-//  			scope.question_asked="";
-//  			scope.$parent.show_question=false;
-//  			scope.lecture_player.controls.play();
-//  		});
-//
-//    	};
+    	scope.submit_question = function()
+    	{
+    		$log.debug("will submit "+scope.question_asked);
+            var time=scope.lecture_player.controls.getTime()
+  		    Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:time, ques: scope.question_asked}, function(data){
+            scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'yellow', 'courses.you_asked',data.id, scope.question_asked ]);
+            scope.question_asked="";
+  			scope.show_question=false;
+  			scope.lecture_player.controls.play();	
+  		});
+    		
+    	};
+
+        scope.showQuality = function(){
+            scope.quality=!scope.quality
+        }
+
+        scope.setQuality = function(quality){
+            scope.lecture_player.controls.refreshVideo(quality);
+            scope.chosen_quality=quality;
+            scope.quality=false;
+        }
     	scope.setShortcuts = function()
   		{
-  				// adding shortcuts
+
   				shortcut.add("c", scope.confused, {"disable_in_input" : true});
   			
   				shortcut.add("q", scope.question, {"disable_in_input" : true});
@@ -169,10 +185,10 @@ angular.module('scalearAngularApp')
   		};
 
   		setButtonsLocation()
-  		scope.setShortcuts();
-  		
+        //scope.$on('player_ready', function(){
+            scope.setShortcuts();
+        //});
 
-     		
    		scope.$watch('lecture.aspect_ratio', function(){
    			setButtonsLocation()
    		})
@@ -190,8 +206,8 @@ angular.module('scalearAngularApp')
       scope.incorrect_notify=$translate("lectures.incorrect")
 
       element.css("position", "relative");
-      element.css("top", "300px");
-      element.css("left","180px");
+      element.css("top", "310px");
+      element.css("left","240px");
       element.css("padding","5px");
       element.css("font-size", "12px");
       element.children().css("width", "150px");
@@ -206,11 +222,11 @@ angular.module('scalearAngularApp')
       var setNotficationPosition=function(){
         $log.debug(scope.fullscreen)
         if(scope.fullscreen){
-          scope.pHeight=angular.element($window).height()- 180;
+          scope.pHeight=angular.element($window).height()- 205;
           element.css("z-index",10000);
         }
         else{
-          scope.pHeight= 300;
+          scope.pHeight= 280;
           element.css("z-index",1000);
         }
           element.css("top", scope.pHeight+"px");
@@ -230,8 +246,10 @@ angular.module('scalearAngularApp')
    
     
     element.css("position", "relative");
+        element.css("left","60px");
 		element.css("z-index",10000);
 		element.children().css("height", "25px");
+        element.children().css("line-height", "15px");
 
 		scope.$on('updatePosition',function(){
 			$log.debug('updatePosition')
@@ -241,16 +259,16 @@ angular.module('scalearAngularApp')
     var setButtonsLocation=function(){
       $log.debug(scope.fullscreen)
       if(scope.fullscreen){
-        scope.pHeight=angular.element($window).height()- 36;
+        scope.pHeight=angular.element($window).height()- 68;
         element.css("z-index",10000);
       }
       else{
-        scope.pHeight=448;
+        scope.pHeight=423;
         element.css("z-index",1000);
       }
-      if(scope.ipad)        
-        element.css("top", scope.pHeight+15+"px");
-      else
+     // if(scope.ipad)
+       // element.css("top", scope.pHeight+15+"px");
+      //else
         element.css("top", scope.pHeight+"px");
 
     }		
@@ -326,7 +344,7 @@ angular.module('scalearAngularApp')
         Lecture.saveOnline(
           {
             course_id:$stateParams.course_id,
-            lecture_id:$stateParams.lecture_id,
+            lecture_id:$stateParams.lecture_id
           },
           {
             quiz: scope.selected_quiz.id,
@@ -377,7 +395,7 @@ angular.module('scalearAngularApp')
 			quiz:"=",
 			studentAnswers:"=",
 			submitted: "=",
-			explanation:"=",
+			explanation:"="
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+

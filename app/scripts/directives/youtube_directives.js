@@ -19,33 +19,29 @@ angular.module('scalearAngularApp')
 		//loadScript(src+'popcorn-complete.min.js', function(){
 			//$rootScope.$apply(function () {
                 apiReady.resolve();
-            ///});
-		//})
-		return function (callback) {
+            
+		return function (callback, quality) {
             apiReady.promise.then(function () {
-                callback()
+                callback(quality)
             });
         };	
 	}])
 	.directive('youtube',['$rootScope','$log','$timeout','popcornApiProxy',function($rootScope,$log,$timeout,popcornApiProxy){
 		return {
 			restrict: 'E',
-			replace:true, 
+			replace:true,
 			scope:{
 				url:'=',
 				ready:'&',
 				id:'@',
 				player:'=',
-				autoplay:'@'
+				autoplay:'@',
+                controls: '@',
+
 			},
+            template:"<div></div>",
 			link: function(scope, element){
 
-				$log.debug("YOUTUBE " + scope.id)
-				$log.debug(scope.controls);
-				
-				var player,
-				player_controls={},
-				player_events = {}
 
                 scope.$on('$destroy', function() {
                     //alert("In destroy of:" + scope);
@@ -56,20 +52,70 @@ angular.module('scalearAngularApp')
                     scope.url="";
                 });
 
+				$log.debug("YOUTUBE " + scope.id)
+				
+				var player,
+				player_controls={},
+				player_events = {}
 
-                var loadVideo = function(){
+                // scope.$on('$destroy', function() {
+                //     //alert("In destroy of:" + scope);
+                //     scope.kill_popcorn();
+                //     scope.player={};
+                //     scope.id="";
+                //     scope.ready="";
+                //     scope.url="";
+                // });
+
+				var loadVideo = function(vq){
 					if(player)
+                    {
 						Popcorn.destroy(player)
-					var media = Popcorn.HTMLYouTubeVideoElement('#'+scope.id),
-					url= scope.url.split('?'),
-					base_url = url[0],
-					query = '&'+url[1]
-					media.src = base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
-			        player = Popcorn(media,{});
-			        setupEvents()
+                        var events = Popcorn.getTrackEvents();
+                        for (var e in events) {
+                            Popcorn.removeTrackEvent(events[e]._id);
+                        }
+                    }
+
+
+                    if(!scope.controls || scope.controls==undefined)
+                        scope.controls=0;
+
+                    if(!vq || vq==undefined)
+                        vq='hd720';
+
+                    var matches = getVideoId(scope.url)
+                    var vimeo= scope.url.match(/vimeo/)  // improve this..
+                    if(matches) //youtube
+                    {
+                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1&controls='+scope.controls,{ width: 500, controls: 0});
+                    }
+                    else if(vimeo)
+                    {
+                        player = Popcorn.smart( '#'+scope.id, scope.url+"?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0",{ width: '100%', height:'100%', controls: 0});
+                        player.controls(scope.controls);
+                        player.autoplay(true);
+                    }
+                    else{
+                        player = Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
+                        //player = Popcorn.smart( '#'+scope.id, ["http://videos.mozilla.org/serv/webmademovies/popcornplug.mp4", "http://videos.mozilla.org/serv/webmademovies/popcornplug.ogv", "http://videos.mozilla.org/serv/webmademovies/popcornplug.webm"])//, scope.url,{ width: '100%', height:'100%', controls: 0});
+                        player.controls(scope.controls);
+                        player.autoplay(true);
+                        //player.controls(0);
+
+//                        element.append('<div id="video-controls">' +
+//                            '<button type="button" id="play-pause" class="btn" style="margin-right:2%; width:10%">Play</button>' +
+//                            '<input  type="range" id="seek-bar" value="0" style="margin-right:2%;width:60%">' +
+//                            '<button type="button" id="mute" class="btn" style="margin-right:2%;width:10%">Mute</button>' +
+//                            '<input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1" style="width:10%">' +
+//                            '</div>');
+                    }
+                   // console.log(player);
+                   // console.log(player.video.videoWidth);
+                   // player.video.videoWidth=500;
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
-					
+					setupEvents()
 					$timeout(function(){
 						if(!player_controls.readyState())
 							scope.$emit('slow')
@@ -83,9 +129,8 @@ angular.module('scalearAngularApp')
                         player.destroy();
                     }
                 }
-
-
-                player_controls.play=function(){
+			
+				player_controls.play=function(){
 					player.play();
 				}
 
@@ -97,14 +142,13 @@ angular.module('scalearAngularApp')
 					player.mute();
 				}
 
+                player_controls.volume = function(val){
+                    player.volume(val);
+                }
+
 				player_controls.unmute = function(){
 					player.unmute();
 				}
-
-				player_controls.volume= function(value){
-					player.volume(value);
-				}
-				
 				player_controls.paused = function(){
 					return player.paused();
 				}
@@ -126,6 +170,7 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
+
 					player.currentTime(time);
 					parent.focus()
 				}
@@ -136,11 +181,12 @@ angular.module('scalearAngularApp')
 					player.pause()
 				}
 
-				player_controls.refreshVideo = function(){
+				player_controls.refreshVideo = function(quality){
 					$log.debug("refreshVideo!")
+
 					element.find('iframe').remove();
-					//popcornApiProxy(loadVideo);
-					loadVideo()
+                    element.find('video').remove();
+                    popcornApiProxy(loadVideo, quality);
 				}
 
 				player_controls.hideControls=function(){
@@ -180,11 +226,22 @@ angular.module('scalearAngularApp')
 						function(){
 							parent.focus()
 
-							if(player_events.onPause){								
+							if(player_events.onPause){
+
 								player_events.onPause();
 								scope.$apply();
 							}
 					});
+
+                    player.on('timeupdate',
+                        function(){
+                            parent.focus()
+
+                            if(player_events.timeUpdate){
+                                player_events.timeUpdate();
+                                scope.$apply();
+                            }
+                        });
 
 					player.on('loadedmetadata',function(){
 						parent.focus()
@@ -241,14 +298,20 @@ angular.module('scalearAngularApp')
                     return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
                 }
 
+                var getVideoId= function(url){
+                    return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+                }
+
 				scope.$watch('url', function(){
+
                     if(scope.url)
                     {
-                        var matches = is_final_url(scope.url)
-                         if(matches)
-                         {
+
+                      //  var matches = is_final_url(scope.url)
+                        // if(matches)
+                         //{
                             player_controls.refreshVideo();
-                        }
+                         //}
 
                     }
 				})
@@ -257,7 +320,10 @@ angular.module('scalearAngularApp')
 						scope.player.controls=player_controls
 					}
 					if(scope.player && scope.player.events)
-						player_events = scope.player.events
+                    {
+                        player_events = scope.player.events
+                    }
+
 				})
 
 		    }
@@ -268,6 +334,7 @@ angular.module('scalearAngularApp')
 		scope:{
 			video_layer:'=videoLayer',
 			quiz_layer:'=quizLayer',
+            ontop_layer:'=ontopLayer',
 			aspect_ratio:'=aspectRatio',
 			fullscreen:'=active',
 			resize:'=',
@@ -318,6 +385,8 @@ angular.module('scalearAngularApp')
 
 				angular.extend($scope.video_layer, video)
 				angular.extend($scope.quiz_layer, layer)
+                angular.extend($scope.ontop_layer, layer)
+                angular.extend($scope.ontop_layer, {"z-index":0})
 				
 				$timeout(function(){$scope.$emit("updatePosition")})
 				$scope.unregister_back_event()	
@@ -327,8 +396,9 @@ angular.module('scalearAngularApp')
 			$scope.resize.big = function()
 			{
                 $rootScope.changeError = true;
-				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-				var win = angular.element($window)
+				//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+				var factor=16.0/9.0
+                var win = angular.element($window)
 
 				$scope.fullscreen = true
 				angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
@@ -346,7 +416,8 @@ angular.module('scalearAngularApp')
 					"z-index": 1031
 				};
 
-				var video_height = win.height() - 35;
+
+				var video_height = win.height()-40;
 				var video_width = video_height*factor
 				
 				//var video_width = (win.height()-26)*factor
@@ -355,7 +426,8 @@ angular.module('scalearAngularApp')
 				if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
 					$log.debug("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
-					var margin_top = (win.height() - (video_height+35))/2.0;
+					var margin_top = ((win.height()-40) - (video_height))/2.0; //+30
+
 					layer={
 						"position":"fixed",
 						"top":0,
@@ -382,6 +454,8 @@ angular.module('scalearAngularApp')
 				 }
 				angular.extend($scope.video_layer, video)
 				angular.extend($scope.quiz_layer, layer)
+                angular.extend($scope.ontop_layer, layer)
+                angular.extend($scope.ontop_layer,{"z-index":1031});
 
 			 	$timeout(function(){$scope.$emit("updatePosition")})
 
@@ -398,5 +472,99 @@ angular.module('scalearAngularApp')
 		}
 	}
 }])
+.directive('progressBar',['$rootScope','$log','$window',function($rootScope,$log, $window){
+    return {
+        restrict: 'E',
+        replace:true,
+        scope:{
+            view:'@',
+            active:'=',
+            play_btn:'&playBtn',
+            player:'=',
+            play_pause_class:'=playPauseClass',
+            updateProgress:'&updateProgress',
+            elapsed_width: '=elapsedWidth',
+            current_time: '=currentTime',
+            total_duration: '=totalDuration',
+            confused_areas: '=confusedAreas',
+            progressEvents: '=',
+            timeline: '=',
+            lecture: '='
+           // autoplay:'@'
+        },
+        templateUrl:"/views/progress_bar.html",
+        link: function(scope, element, attrs){
+            scope.mute_unmute_class="mute";
 
+            $rootScope.$on('updatePosition',function(){
+                setButtonsLocation()
+            })
+
+            scope.playBtn = function(){
+                scope.play_btn();
+            }
+
+            scope.mute_btn = function(type)
+            {
+                if(type=="mute")
+                    scope.mute();
+                else
+                    scope.unmute();
+            }
+
+            scope.$watch("volume",function()
+            {
+                if(scope.volume)
+                {
+                    scope.player.controls.volume(scope.volume);
+                    if(scope.volume!=0)
+                        scope.mute_unmute_class="mute";
+                    else
+                        scope.mute_unmute_class="unmute";
+                }
+            });
+
+            scope.mute= function()
+            {
+                scope.player.controls.mute();
+                scope.mute_unmute_class="unmute";
+                scope.volume=0;
+            }
+
+            scope.unmute = function()
+            {
+                scope.player.controls.unmute();
+                scope.mute_unmute_class="mute";
+                scope.volume=0.5;
+            }
+
+            scope.progress = function(event){
+                scope.updateProgress({$event:event});
+            }
+
+            var setButtonsLocation=function(){
+                if(scope.active){
+                    scope.pHeight=angular.element($window).height();
+                    //element.css("z-index",1500);
+                }
+                else{
+                    if(scope.view=="student")
+                    {scope.pHeight=490;
+                    }
+                    else{
+                        scope.pHeight=320;
+                    }
+                    //element.css("z-index",1000);
+                }
+
+                if(scope.view=="student")
+                    element.css("top", scope.pHeight-30+"px");
+                else
+                    element.css("top", scope.pHeight-30+"px");
+                //element.css("left", scope.pWidth-350+"px");
+            }
+            setButtonsLocation();
+        }
+    }
+}])
 })(document, window);

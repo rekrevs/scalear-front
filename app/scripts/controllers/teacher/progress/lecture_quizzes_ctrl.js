@@ -15,6 +15,7 @@ angular.module('scalearAngularApp')
                     $scope.getLectureCharts(0, 5)
                 }
             }
+
             $scope.getLectureCharts = function(offset, limit) {
                 $scope.chart_limit = limit
                 $scope.chart_offset = offset
@@ -111,7 +112,7 @@ angular.module('scalearAngularApp')
                 }, {
                     "label": $translate('lectures.incorrect'),
                     "type": "number"
-                }, ]
+                } ]
                 formated_data.rows = []
                 for (var ind in data) {
                     var text, correct, incorrect
@@ -131,7 +132,7 @@ angular.module('scalearAngularApp')
                             "v": correct
                         }, {
                             "v": incorrect
-                        }, ]
+                        } ]
                     }
                     formated_data.rows.push(row)
                 }
@@ -157,7 +158,7 @@ angular.module('scalearAngularApp')
                             "count": 9
                         },
                         "maxValue": student_count
-                    },
+                    }
 
 
                 };

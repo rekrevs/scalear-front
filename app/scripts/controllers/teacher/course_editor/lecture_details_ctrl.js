@@ -15,14 +15,29 @@ angular.module('scalearAngularApp')
                     $log.debug(data)
                     d.resolve($translate('courses.invalid_input'));
                 }
+
                 Lecture.validateLecture({
                         course_id: $scope.lecture.course_id,
                         lecture_id: $scope.lecture.id
                     },
                     lecture,
+                    function(data) {                        
+                        if(lecture.url){
+                            var id = lecture.url.split("v=")[1].split("&")[0]
+                            var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
+                            $http.jsonp(url).success(function(data) {
+                                if(data.entry.media$group.yt$duration.seconds<1)
+                                    d.reject("video may not exist or may still be uploading");
+                                else
+                                    d.resolve()
+                            }).error(function(){
+                                d.reject("video may not exist or may still be uploading");
+                            });                    
+                        }
+                        else
+                            d.resolve()
+                    }, 
                     function(data) {
-                        d.resolve()
-                    }, function(data) {
                         $log.debug(data.status);
                         $log.debug(data);
                         if (data.status == 422)
@@ -54,9 +69,6 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
-                        // console.log($scope.modules)
-                       
-
                     },
                     function() {}
                 );
@@ -69,7 +81,6 @@ angular.module('scalearAngularApp')
             }
 
             $scope.updateDueDate=function(type,enabled){
-                console.log($scope.lecture.due_date)
                 var d = new Date($scope.lecture.due_date)
                 if(isDueDateDisabled() && enabled) 
                     var years =  -200 
@@ -80,7 +91,6 @@ angular.module('scalearAngularApp')
                 d.setFullYear(d.getFullYear()+ years)
                 $scope.lecture.due_date = d
                 $scope.lecture.due_date_enabled =!isDueDateDisabled()
-                console.log($scope.lecture.due_date)
             }
 
             $scope.visible = function(appearance_time) {

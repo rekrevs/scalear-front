@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('announcementsCtrl',['$scope', 'Announcement','$stateParams','$translate', '$log','$window',  function ($scope, Announcement, $stateParams, $translate ,$log, $window) {
+  .controller('announcementsCtrl',['$scope', 'Announcement','$stateParams','$translate', '$log','$window','Page',  function ($scope, Announcement, $stateParams, $translate ,$log, $window,Page) {
   	
     $log.debug("in announcements");
 
     $window.scrollTo(0, 0);
-    
+    Page.setTitle('Announcements')
   	$scope.disable_new = false;
   	var init = function()
   	{

@@ -77,7 +77,7 @@ angular.module('scalearAngularApp')
 	            "colors": ['#0c81c8', 'darkred'],
 	            "isStacked": "true",
 	            "fill": 20,
-	            "height": 150,
+	            "height": 100,
 	            "width": getChartWidth(),
 	            "displayExactValues": true,
 	            "fontSize" : 12,
@@ -89,10 +89,10 @@ angular.module('scalearAngularApp')
                     }
 	            },
 	            "legend": 'none', 
-	            chartArea:{left: 85, width:getChartWidth()},   
-	            "vAxis": {
-	                "title": "#"+$translate('courses.'+type),
-	            },
+	            chartArea:{left: 35, width:getChartWidth()},   
+	            // "vAxis": {
+	            //     "title": "#"+$translate('courses.'+type),
+	            // },
 	            "bar":{"groupWidth":5}
 	        };
 		  	chart.data = $scope.formatStatisticsChartData(chart_data)
@@ -106,7 +106,7 @@ angular.module('scalearAngularApp')
 		  	return chart
 	    }
 
-	 	     var getReallyConfused= function(data){
+ 		var getReallyConfused= function(data){
 	     	data.cols.push({"label": $translate('courses.really_confused'),"type": "number"})
 	     	for (var i in data.rows)
 	     		if($scope.statistics.really_confused[i]){

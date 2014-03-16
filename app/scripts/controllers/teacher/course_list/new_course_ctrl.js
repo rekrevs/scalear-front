@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl',['$scope','Course','$state','$window', '$log', function ($scope, Course,$state, $window, $log) {
+  .controller('newCourseCtrl',['$scope','Course','$state','$window', '$log','Page', function ($scope, Course,$state, $window, $log,Page) {
 		$window.scrollTo(0, 0);
+		Page.setTitle('New Course')
 		$scope.submitting=false;
 
 		$scope.course={}

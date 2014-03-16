@@ -1,13 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc', function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc) {
+    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc','Page', function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc,Page) {
 
 
     $scope.video_layer = {}
     $scope.quiz_layer = {}
     $scope.resize = {}
-    //lecture is the current lecture
     $scope.lecture = {}
     $scope.lecture.aspect_ratio = ""
     $scope.$parent.lecture_player = {}
@@ -27,6 +26,7 @@ angular.module('scalearAngularApp')
     $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
     $scope.editors={}
 
+    
 
     $scope.adjust_accordion= function(){
         $scope.$emit('accordianUpdate', {
@@ -35,10 +35,6 @@ angular.module('scalearAngularApp')
             id: $scope.lecture.id
         });
     }
-
-
-
-
 
     $scope.load_player = function(time){
         $scope.lecture_player.events.onReady = function() {
@@ -52,7 +48,7 @@ angular.module('scalearAngularApp')
             else{
                 $scope.lecture_player.controls.play()
             }
-            $scope.slow_message = false
+            $scope.slow = false
             $scope.loading_video = false;
             //editor.create($scope.lecture.url, $scope.lecture_player);
             var i= $scope.lecture_ids.indexOf($scope.lecture.id);
@@ -77,17 +73,8 @@ angular.module('scalearAngularApp')
                     $scope.$apply()
                 })
             })
-
-
-
         }
     }
-
-//    $scope.$on("$destroy", function(){
-//        //console.log("cancelling intervel");
-//        // cancel autosave when leave lecture.
-//
-//    });
 
     var init = function() {
         $scope.loading_video = true;
@@ -100,7 +87,7 @@ angular.module('scalearAngularApp')
                 $scope.alert_messages = data.alert_messages;
                 $scope.lecture = JSON.parse(data.lecture);
                 $scope.time = data.time;
-
+                Page.setTitle($scope.lecture.name);
 
 
 //                $scope.events={}
@@ -213,7 +200,7 @@ angular.module('scalearAngularApp')
         var element = angular.element('.progressBar');
         var ratio = (ev.pageX-element.offset().left)/element.outerWidth();                
         $scope.elapsed_width = ratio*100+'%'
-        $scope.seek($scope.total_duration*ratio)
+        $scope.seek($scope.total_duration*ratio, $stateParams.lecture_id)
     }
 
     $scope.playBtn = function(){
@@ -230,22 +217,22 @@ angular.module('scalearAngularApp')
         Lecture.pause({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:$scope.lecture_player.controls.getTime()}, function(data){});
     }
 
+    var returnToQuiz=function(time){
+        $log.debug("in notification")
+        $scope.lecture_player.controls.pause();
+        $scope.lecture_player.controls.seek(time)
+        $scope.show_notification = $translate('groups.answer_question');
+        $interval(function() {
+            $scope.show_notification = false;
+        }, 2000, 1);
+    }
+
     $scope.lecture_player.events.onPlay = function() {
-        // here check if selected_quiz solved now.. or ever will play, otherwhise will stop again.
         $scope.play_pause_class = 'pause'
-        if ($scope.display_mode == true) {
-            $log.debug($scope.selected_quiz)
-            if ($scope.selected_quiz.is_quiz_solved == false) {
-                $log.debug("in notification")
-                $scope.lecture_player.controls.pause();
-                $scope.lecture_player.controls.seek($scope.selected_quiz.time)
-                $scope.show_notification = $translate('groups.answer_question');
-                $interval(function() {
-                    $scope.show_notification = false;
-                }, 2000, 1);
-                // show message telling him to answer. notification directive.. pass text to it..
-                // also when just solved it want to set is_quiz_solved.. gheir ely bageebo from there..
-            } else {
+        if ($scope.display_mode && !$scope.selected_quiz.is_quiz_solved) {
+            if($scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
+                returnToQuiz($scope.selected_quiz.time)
+            else {
                 $scope.selected_quiz = '';
                 $scope.display_mode = false;
             }
@@ -271,9 +258,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onSlow=function(){
-        $scope.slow_message = true
+        $scope.slow = true
     }
-
 
     init();
 

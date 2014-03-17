@@ -7,10 +7,10 @@ angular.module('scalearAngularApp')
     templateUrl:"/views/student/lectures/controls.html",
     link: function(scope, element, attrs) {
 
-    	element.css("width", "200px");
-  		element.css("height", "26px");
-  		element.css("position", "absolute");
-  		element.css("display", "inline-block");
+    // 	element.css("width", "200px");
+  		// element.css("height", "26px");
+  		// element.css("position", "absolute");
+  		// element.css("display", "inline-block");
   		//element.css("z-index",10000);
 
   		scope.$on('updatePosition',function(){
@@ -107,7 +107,7 @@ angular.module('scalearAngularApp')
     	};
     	scope.question= function(){
     		console.log("in question");
-    		scope.$parent.show_question=!scope.$parent.show_question;
+    		scope.show_question=!scope.show_question;
             console.log(scope.$parent.show_question);
             console.log(scope.lecture_player.controls.getTime());
             scope.$parent.current_question_time=scope.lecture_player.controls.getTime();

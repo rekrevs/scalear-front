@@ -120,7 +120,7 @@ body {
 
 .progress-events{
     width:3px;
-    height: 8px;
+    height: 9px;
     z-index: 5000;
     position: absolute;
 }

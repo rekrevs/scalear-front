@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
             });
         };	
 	}])
-	.directive('youtube',['$rootScope','$log','$timeout','popcornApiProxy',function($rootScope,$log,$timeout,popcornApiProxy){
+	.directive('youtube',['$rootScope','$log','$timeout','$window','popcornApiProxy',function($rootScope,$log,$timeout,$window, popcornApiProxy){
 		return {
 			restrict: 'E',
 			replace:true,
@@ -41,7 +41,9 @@ angular.module('scalearAngularApp')
 			},
             template:"<div></div>",
 			link: function(scope, element){
-
+				var win = angular.element($window)
+				var video_layer_height = win.height()*0.6
+				element.css('height', video_layer_height+'px')
 
                 scope.$on('$destroy', function() {
                     //alert("In destroy of:" + scope);
@@ -71,10 +73,10 @@ angular.module('scalearAngularApp')
 					if(player)
                     {
 						Popcorn.destroy(player)
-                        var events = Popcorn.getTrackEvents();
-                        for (var e in events) {
-                            Popcorn.removeTrackEvent(events[e]._id);
-                        }
+                        // var events = Popcorn.getTrackEvents();
+                        // for (var e in events) {
+                        //     Popcorn.removeTrackEvent(events[e]._id);
+                        // }
                     }
 
 
@@ -88,7 +90,7 @@ angular.module('scalearAngularApp')
                     var vimeo= scope.url.match(/vimeo/)  // improve this..
                     if(matches) //youtube
                     {
-                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1&controls='+scope.controls,{ width: 500, controls: 0});
+                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1');
                     }
                     else if(vimeo)
                     {
@@ -563,7 +565,7 @@ angular.module('scalearAngularApp')
                     element.css("top", scope.pHeight-30+"px");
                 //element.css("left", scope.pWidth-350+"px");
             }
-            setButtonsLocation();
+            // setButtonsLocation();
         }
     }
 }])

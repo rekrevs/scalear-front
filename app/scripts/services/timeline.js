@@ -3,10 +3,11 @@
 angular.module('scalearAngularApp')
     .factory('TimeItem',function () {
 
-        var x = function(time,type, data){
+        var x = function(time,type, data, extra_data){
             this.time= time || 0
             this.type= type || ""
             this.data= data ||null
+            this.extra_data = extra_data||null
         }
         return x;
     })

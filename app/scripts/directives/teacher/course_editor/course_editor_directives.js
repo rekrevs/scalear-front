@@ -8,10 +8,12 @@ angular.module('scalearAngularApp')
                 name: "=",
                 id: '=',
                 remove: "&",
-                open: "="
+                open: "=",
+                copy:"&"
             },
             templateUrl: '/views/teacher/course_editor/module.html',
             link: function(scope) {
+                scope.menu_status = false
                 scope.invertOpen = function() {
                     if (scope.open[scope.id])
                         scope.open[scope.id] = false
@@ -21,6 +23,11 @@ angular.module('scalearAngularApp')
                         scope.open[scope.id] = true
                     }
                 }
+                scope.createCopy=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.copy()(scope.id)
+                }
             }
         }
     }).directive('item', function($translate) {
@@ -29,7 +36,8 @@ angular.module('scalearAngularApp')
                 name: '=',
                 id: '=',
                 className: '=',
-                remove: '&'
+                remove: '&',
+                copy:"&"
             },
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/item.html',
@@ -38,6 +46,11 @@ angular.module('scalearAngularApp')
                     var translation_value = {}
                     translation_value[scope.className] = scope.name
                     return $translate('groups.you_sure_delete_' + scope.className, translation_value)
+                }
+                scope.createCopy=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.copy()(scope.id, scope.className)
                 }
             }
         };

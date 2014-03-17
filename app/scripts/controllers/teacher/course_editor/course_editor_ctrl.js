@@ -170,6 +170,57 @@ angular.module('scalearAngularApp')
     	$scope.open_id = null
     }
 
+    $scope.moduleCopy=function(module_id){
+    	$scope.module_overlay = true 
+    	Module.moduleCopy(
+    		{
+    			course_id: $stateParams.course_id, 
+    		 	module_id: module_id
+    		},{},
+    		function(data){
+    			console.log(data)
+	    		$scope.modules.push(data.group)
+	    		$scope.module_obj[data.group.id] = data.group
+	    		$scope.module_obj[data.group.id].items.forEach(function(item){
+	    			$scope.items_obj[item.class_name][item.id] = item
+	    		})
+    			$scope.module_overlay=false
+    		},
+    		function(){}
+    		)
+    }
+
+    $scope.itemCopy=function(item_id,class_name){
+    	console.log(item_id)    	
+    	if(class_name == 'lecture')
+    		lectureCopy(item_id)
+    	else
+    		quizCopy(item_id)
+
+    }
+
+    var lectureCopy=function(lecture_id){
+    	console.log("lecture copy")
+    	$scope.item_overlay = true  
+    	Lecture.lectureCopy(
+    		{
+    			course_id: $stateParams.course_id, 
+    			lecture_id: lecture_id
+    		},{},
+    		function(data){
+    			console.log(data)
+    			$scope.item_overlay = false  
+    		}, 
+    		function(){}
+		)
+    }
+
+    var quizCopy=function(quiz_id){
+    	console.log("quiz copy")
+
+
+    }
+
     /*************************************************************************************/
     
 	$rootScope.$on('accordianUpdate', function(event, message) {

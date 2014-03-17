@@ -17,10 +17,7 @@ if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;
         return this.replace(/{(\d+)}/g, function (match, number) {
-            return typeof args[number] != 'undefined'
-                ? args[number]
-                : match
-                ;
+            return typeof args[number] != 'undefined'? args[number]: match
         });
     };
 }
@@ -151,38 +148,10 @@ angular.module('scalearAngularApp', [
                 $rootScope.unload = true;
             }
 
-            //          $rootScope.$on('$viewContentLoading',
-            //              function(event, viewConfig){
-            //                  $rootScope.start_loading=true;
-            //                  // Access to all the view config properties.
-            //                  // and one special property 'targetView'
-            //                  // viewConfig.targetView
-            //              });
-            //          $rootScope.$on('$viewContentLoaded',
-            //              function(event){
-            //                  $rootScope.start_loading=false;
-            //              });
-            //
-            //          $rootScope.$on('stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //              $rootScope.start_loading=false;
-            //            });
-            //
-            //          $rootScope.$on('stateChangeError', function (ev, to, toParams, from, fromParams) {
-            //              $rootScope.start_loading=false;
-            //          });
-
             $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
-
-                //$rootScope.start_loading=true;
                 if(from.url != '/'){
                 UserSession.getRole().then(function(result) {
                     var s = 1;
-
-//                    if (result == 0 && !stateNoAuth(to.name)) {
-//                        // window.location=scalear_api.host+"/"+$rootScope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
-//                        $state.go("login", {},{notify: false });
-//
-//                    }
                     if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent)) {
                         $state.go("ie", {},{notify: false });
                     }

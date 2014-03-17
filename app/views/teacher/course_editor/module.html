@@ -1,5 +1,13 @@
-<div ng-click='invertOpen()' style="font-size: 12px;margin-top: 1px;margin: 1px 0;line-height: 20px;padding: 3px 0;">
+<div context-menu data-target="menu" opened='menu_status' ng-click='invertOpen()' class="disable_selection" style="font-size: 12px;margin-top: 1px;margin: 1px 0;line-height: 20px;padding: 3px 0;" >
 	<img src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}" />
 	<a class='trigger' ng-class='{open:open[id]}' ui-sref="course.course_editor.module({ module_id: id })">{{name}}</a>
 	<delete_button size='small' action='remove({event:event})' />
+	<div class="menu">
+	  <ul class="dropdown-menu" style="font-size:14px">
+	    <li >
+	      <a ng-click='createCopy($event)' >Create Copy</a>
+	    </li>	    
+	  </ul>
+	</div>
 </div>
+

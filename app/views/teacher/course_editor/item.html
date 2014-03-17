@@ -1,3 +1,12 @@
-<img src="images/move2.png" class="handle" title={{"courses.drag_to_reorder"|translate}} />
-<a class="trigger2" ui-sref="course.course_editor.{{(className=='lecture') && 'lecture.quizList' || className}}({ {{className}}_id: id })" >{{name}}</a>
-<delete_button size="small" action="remove()" />
+<div context-menu data-target="menu" opened='menu_status' class="disable_selection">
+	<img src="images/move2.png" class="handle" title={{"courses.drag_to_reorder"|translate}} />
+	<a class="trigger2" ui-sref="course.course_editor.{{(className=='lecture') && 'lecture.quizList' || className}}({ {{className}}_id: id })" >{{name}}</a>
+	<delete_button size="small" action="remove()" />
+	<div class="menu">
+	  <ul class="dropdown-menu" style="font-size:14px">
+	    <li >
+	      <a ng-click='createCopy($event)' >Create Copy</a>
+	    </li>	    
+	  </ul>
+	</div>
+</div>

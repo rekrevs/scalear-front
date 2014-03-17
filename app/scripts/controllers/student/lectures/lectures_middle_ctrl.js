@@ -137,6 +137,14 @@ angular.module('scalearAngularApp')
 //    });
 
     var init = function() {
+        var factor = 16/9
+        var win = angular.element($window)
+        var video_layer_height = win.height()*0.6
+        var main_video_container = angular.element('#main-video-container')
+        var ontop_layer = angular.element('.ontop')
+        main_video_container.css('height', video_layer_height+'px')
+        angular.element('#student-accordion').css('height', main_video_container.height()+39)
+
         $scope.loading_video = true;
         Lecture.getLectureStudent({
                 course_id: $stateParams.course_id,
@@ -146,6 +154,13 @@ angular.module('scalearAngularApp')
             function(data) {
                 $scope.alert_messages = data.alert_messages;
                 $scope.lecture = JSON.parse(data.lecture);
+                console.log($scope.lecture)
+                if($scope.lecture.aspect_ratio == 'smallscreen'){
+                    factor = 4/3
+                }
+                main_video_container.css('width', (factor*main_video_container.height())+'px')
+                ontop_layer.css('width', main_video_container.width()+'px')
+                ontop_layer.css('height', '100%')
                 $scope.time = data.time;
 
                 $scope.confused= data.confuseds;

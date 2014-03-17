@@ -48,8 +48,8 @@ angular.module('scalearAngularApp')
                // element.css("left", scope.pWidth-200+"px");
             //}
             //else{
-    		element.css("top", scope.pHeight-60+"px");
-    		element.css("left", scope.pWidth-200+"px");
+    		// element.css("top", scope.pHeight-60+"px");
+    		// element.css("left", scope.pWidth-200+"px");
 //            }
     	}
     	

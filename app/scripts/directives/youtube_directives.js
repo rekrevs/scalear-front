@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
 			link: function(scope, element){
 				var win = angular.element($window)
 				var video_layer_height = win.height()*0.6
-				element.css('height', video_layer_height+'px')
+				// element.css('height', video_layer_height+'px')
 
                 scope.$on('$destroy', function() {
                     //alert("In destroy of:" + scope);

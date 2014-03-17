@@ -225,6 +225,8 @@ angular.module('scalearAngularApp')
 
 	init();
 
+
+
 }]);
 
 

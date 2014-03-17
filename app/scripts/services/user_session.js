@@ -14,6 +14,7 @@ angular.module('scalearAngularApp')
    			{
    				$rootScope.current_user=data.user
    				$rootScope.current_user.invitations=data.invitations
+                $rootScope.current_user.shared_items = data.shared_items
    				if($rootScope.current_user.roles[0].id==2) //student
    					return deferred.resolve(2)
    				else if($rootScope.current_user.roles[0].id!=2)

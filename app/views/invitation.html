@@ -20,6 +20,18 @@
 					<a translate="notification.reject" class="btn btn-danger" ng-click="reject(id)"></a>
 				</td>
 			</tr>
+
+            <tr ng-repeat="item in shared_items">
+                <td>
+                    <span translate="notification.shared" translate-values='{user:item.sharer_email}'></span>
+                </td>
+                <td>
+                    <a translate="notification.import_new_course" class="btn btn-primary" ng-click="import_new(item)"></a>
+                </td>
+                <td>
+                    <a translate="notification.import_existing_course" class="btn btn-danger" ng-click="import_old(item)"></a>
+                </td>
+            </tr>
 		</table>
     </center>
 </div>

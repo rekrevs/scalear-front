@@ -16,6 +16,15 @@ angular.module('scalearAngularApp')
 
             $scope.changeLanguage($translate.uses());
 
+            $scope.are_notifications = function(){
+
+                if($scope.current_user && $scope.current_user.roles[0].id!=2 && ($scope.current_user.invitations.length!=0 || $scope.current_user.shared_items.length!=0))
+                {
+                   return true;
+                }
+                else
+                    return false;
+            }
             $scope.login = function() {
                 //$log.debug("in login");
                 //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/

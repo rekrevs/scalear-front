@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
                 scope.createCopy=function(event){
                     event.stopPropagation() 
                     scope.menu_status = false
-                    scope.copy()(scope.id)
+                    scope.copy()
                 }
             }
         }
@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
                 scope.createCopy=function(event){
                     event.stopPropagation() 
                     scope.menu_status = false
-                    scope.copy()(scope.id, scope.className)
+                    scope.copy()
                 }
             }
         };

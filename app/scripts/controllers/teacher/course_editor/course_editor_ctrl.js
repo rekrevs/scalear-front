@@ -190,17 +190,16 @@ angular.module('scalearAngularApp')
     		)
     }
 
-    $scope.itemCopy=function(item_id,class_name){
+    $scope.itemCopy=function(item_id,class_name, module_index){
     	console.log(item_id)    	
     	if(class_name == 'lecture')
-    		lectureCopy(item_id)
+    		lectureCopy(item_id,module_index)
     	else
-    		quizCopy(item_id)
+    		quizCopy(item_id, module_index)
 
     }
 
-    var lectureCopy=function(lecture_id){
-    	console.log("lecture copy")
+    var lectureCopy=function(lecture_id,module_index){
     	$scope.item_overlay = true  
     	Lecture.lectureCopy(
     		{
@@ -209,15 +208,32 @@ angular.module('scalearAngularApp')
     		},{},
     		function(data){
     			console.log(data)
-    			$scope.item_overlay = false  
+    			$scope.item_overlay = false 
+    			data.lecture.class_name='lecture'
+    			$scope.modules[module_index].items.push(data.lecture)
+                $scope.items_obj["lecture"][data.lecture.id] = data.lecture
     		}, 
     		function(){}
 		)
     }
 
-    var quizCopy=function(quiz_id){
+    var quizCopy=function(quiz_id,module_index){
     	console.log("quiz copy")
-
+    	$scope.item_overlay = true  
+    	Quiz.quizCopy(
+    		{
+    			course_id: $stateParams.course_id, 
+    			quiz_id: quiz_id
+    		},{},
+    		function(data){
+    			console.log(data)
+    			$scope.item_overlay = false 
+    			data.quiz.class_name='quiz'
+    			$scope.modules[module_index].items.push(data.quiz)
+                $scope.items_obj["quiz"][data.quiz.id] = data.quiz
+    		}, 
+    		function(){}
+		)
 
     }
 

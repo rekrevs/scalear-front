@@ -10,13 +10,79 @@
 		list-style: none;
 	}
 	#main-video-container{
-		width: 59%; 
-		min-width: 500px;
 	}
-	@media (max-width: 600px) {
+	/*@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
+	  #main-video-container{
+		clear:both;
+	  }
+	  #student-accordion{
+	  	float: left;
+	  	margin-top: 50px;
+	  	width: 500px;
+	  }
+	}*/
+	#student-accordion{
+		width: 46%;
+		float: right; 
+		position: relative;
+		right: 0px;
+		bottom: 6px;
+		overflow-y: auto; 
+	}
+	/*@media only screen and (max-width : 1312px) {
+	  #student-accordion{
+		width: 43%;
+		overflow-y: auto;
+	  }
+	}
+	@media only screen and (max-width : 1262px) {
+	  #student-accordion{
+	  	width: 40%;
+	  	overflow-y: auto;
+	  }
+	}
+	@media only screen and (max-width : 1262px) {
+	  #student-accordion{
+	  	width: 39%;
+	  	overflow-y: auto;
+	  }
+	}
+	@media only screen and (max-width : 1169px) {
+	  #student-accordion{
+	  	width: 35%;
+	  	overflow-y: auto;
+	  }
+	}*/
+	/*@media only screen and (max-width : 1112px) {
+	  #student-accordion{
+	  	width: 30%;
+	  	overflow-y: auto;
+	  }
+	}
+	@media only screen and (max-width : 1000px) {
+	  #student-accordion{
+	  	width: 24%;
+	  	overflow-y: auto;
+	  }
+	}*/
+	/*@media only screen and (max-width : 955px) {*/
+	@media only screen and (max-width : 1024px) {
 	  #main-video-container{
 		width: 100%; 
 		clear:both;
+	  }
+	  #student-accordion{
+	  	width: 100%;
+	  	float: left;
+	  	margin-top: 50px;
+	  	clear: both;
+	  	overflow-y: visible;
+	  }
+	  #lecture-details{
+	  	display: none;
+	  }
+	  #user_information_container{
+	  	display: none;
 	  }
 	}
 </style>
@@ -26,7 +92,7 @@
 	<!-- <table>
 		<tr>
 			<td> -->
-			<div id="main-video-container" style="min-width: 500px; float: left;">
+			<div id="main-video-container" style="float: left;">
 				<form name="answer_form" novalidate style="margin:0">
 					<!-- <video_container ng-style="video_layer" ng-class="videoborder" style="background-color:black;"> -->
 						<div ng-show="display_mode" style="position: absolute; top: 36px; bottom: 53px; left: 0px; width: 59%; z-index: 1;">
@@ -38,8 +104,11 @@
 						<youtube ng-show="lecture.url" style="width: 100%; z-index: 0; position: relative; bottom: 0px; top: 0px; height: auto;" id="lecture_video" ng-style="ontop_layer" url="lecture.url"  player="lecture_player" autoplay='1' class="{{lecture.aspect_ratio}} youtube"/>
 					    <progress-bar style="width: 100%;" lecture='lecture' timeline='timeline' progress_events='progressEvents' confused_areas='confused_areas' play_pause_class="play_pause_class" view="student" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration' player="lecture_player"></progress-bar>
 
-						<controls ng-show="lecture.url && !loading_video" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' ng-class="{ipad_controls:ipad}" style="position: relative; display: inline-block; z-index: 1000; top: -18px; left: 100%;margin-top: 5px;"/>
-						<check ng-show='display_mode'></check>
+					    <check ng-show='display_mode' style="position: relative; display: inline-block; z-index: 1000; top: -30px; left: 47%; width: 0px;"></check>
+
+						<controls ng-show="lecture.url && !loading_video" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' ng-class="{ipad_controls:ipad}" style="position: relative; display: inline-block; z-index: 1000; top: -18px; left: 100%; margin-top: 5px;">
+						</controls>
+						
 						<notification ng-style="notify_position" ng-if='show_notification!=false'></notification>
 					<!-- </video_container> -->
 				</form>
@@ -48,7 +117,7 @@
 		</tr>
 	</table> -->
 
-	<div id="student-accordion" style="width: 47%; float: right; position: relative; right: 0px; bottom: 6px; overflow-y: auto;">
+	<div id="student-accordion">
 	    <tabset style="width:100%;">
 	        <tab active="tabs[0].active" heading="{{'lectures.video_events' | translate}}" style="cursor: pointer; text-align: center;" >
 	        	<!-- <div style="margin-top: -10px;" > -->
@@ -58,11 +127,26 @@
 	        <tab active="tabs[1].active" heading="{{'lectures.video_notes' | translate}}" style="cursor: pointer;">
 	            <notes></notes>
 	        </tab>
-	        <tab active="tabs[2].active" heading="{{'lectures.lecture_details' | translate}}" style="cursor: pointer;">
+	        <tab id="lecture-details" active="tabs[2].active" heading="{{'lectures.lecture_details' | translate}}" style="cursor: pointer;">
+	        
 	            <!-- <notes></notes> -->
-	            hello
+	            <li>
+	            {{'lectures.description' | translate}}
+	            	<ul>
+	            		{{lecture.description}}
+	            	</ul>
+	            </li>
+	            <li>
+	            {{'lectures.slides' | translate}}
+	            	<ul>
+	            		{{lecture}}
+	            	</ul>
+	            </li>
 	        </tab>
 	    </tabset>
+	    <div id="smaller-lecture-details">
+
+	    </div>
     </div>
 
 

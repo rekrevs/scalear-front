@@ -141,10 +141,14 @@ angular.module('scalearAngularApp')
         var win = angular.element($window)
         var video_layer_height = win.height()*0.6
         var main_video_container = angular.element('#main-video-container')
-        var ontop_layer = angular.element('.ontop')
+        // var ontop_layer = angular.element('.ontop')
         main_video_container.css('height', video_layer_height+'px')
         angular.element('#student-accordion').css('height', main_video_container.height()+39)
+        
 
+        angular.element($window).bind('resize', function(){
+            $scope.resizeVideo();
+        })
         $scope.loading_video = true;
         Lecture.getLectureStudent({
                 course_id: $stateParams.course_id,
@@ -158,9 +162,17 @@ angular.module('scalearAngularApp')
                 if($scope.lecture.aspect_ratio == 'smallscreen'){
                     factor = 4/3
                 }
-                main_video_container.css('width', (factor*main_video_container.height())+'px')
-                ontop_layer.css('width', main_video_container.width()+'px')
-                ontop_layer.css('height', '100%')
+                
+                if(win.width() >= 1024){
+                    $scope.initial_width = factor*main_video_container.height()/win.width()*100;
+                }
+                else{
+                    $scope.initial_width = 47.5
+                }
+                main_video_container.css('width', $scope.initial_width+'%' )
+                $scope.resizeVideo()
+                
+                
                 $scope.time = data.time;
 
                 $scope.confused= data.confuseds;
@@ -225,7 +237,37 @@ angular.module('scalearAngularApp')
         );
     }
 
-    
+    $scope.resizeVideo = function(){
+        console.log('resizing the video')
+        var flag_width = false;
+        var factor = 9/16;
+        if($scope.lecture.aspect_ratio == 'smallscreen'){
+            factor = 3/4
+        }
+        var win = angular.element($window)
+        // var video_layer_height = win.height()*0.6
+        var main_video_container = angular.element('#main-video-container')
+        if(win.width() < 1024){
+            main_video_container.css('width', 100+'%');
+            var flag_width = false;
+        }
+        else if(flag_width == false && win.width() >= 1024){
+            main_video_container.css('width', $scope.initial_width+'%');
+            flag_width = true;
+        }
+        var video_layer_height = main_video_container.width()*factor
+        var ontop_layer = angular.element('.ontop')
+        main_video_container.css('height', video_layer_height+'px')
+        // main_video_container.css('width', (main_video_container.height()/factor)/win.width+'%')
+        angular.element('#student-accordion').css('height', main_video_container.height()+39)
+        
+        // main_video_container.css('width', (factor*main_video_container.height())+'px')
+        ontop_layer.css('width', main_video_container.width())
+        ontop_layer.css('height', main_video_container.height())
+        $timeout(function(){$scope.$emit("updatePosition")})
+        $timeout(function(){angular.element('#controls').css('top', '')})
+
+    }
 
     $scope.nextItem=function(){
         if ($scope.next_item.id) {

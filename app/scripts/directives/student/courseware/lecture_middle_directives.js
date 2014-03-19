@@ -58,8 +58,9 @@ angular.module('scalearAngularApp')
     	};
     	scope.confused= function()
     	{
-    		$log.debug(scope.$parent);
-    		$log.debug("in confusde");
+    		$log.debug(scope);
+        console.log(scope)
+    		$log.debug("in confusd");
         scope.show_message=true;
         var time=scope.lecture_player.controls.getTime()
     		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
@@ -70,11 +71,11 @@ angular.module('scalearAngularApp')
            		$log.debug(data)
            		if(data.msg=="ask")
            		{
-             		scope.$parent.show_notification=$translate("controller_msg.really_confused_use_question");
-             		scope.$parent.notify_position={"left":(scope.pWidth - 180) + "px"}
+             		scope.show_notification=$translate("controller_msg.really_confused_use_question");
+             		scope.notify_position={"left":(scope.pWidth - 180) + "px"}
              		$interval(function(){
-             			scope.$parent.notify_position={"left":"240px"};
-             			scope.$parent.show_notification=false;
+             			scope.notify_position={"left":"240px"};
+             			scope.show_notification=false;
              		}, 6000, 1)
              	}
                 //else{
@@ -241,20 +242,13 @@ angular.module('scalearAngularApp')
 .directive("check",['$interval', 'Lecture', '$stateParams','$translate', '$window', '$log','CourseEditor', function($interval, Lecture, $stateParams, $translate, $window, $log, CourseEditor) {
   return {
     restrict:"E",
-	template:'<input type="button" class="btn btn-primary" value="{{\'youtube.check_answer\'|translate}}" ng-click="check_answer()" />',
+	template:'<input type="button" class="btn btn-success" value="{{\'youtube.check_answer\'|translate}}" ng-click="check_answer()" style="height: 25px; vertical-align: -webkit-baseline-middle; padding: 0px 10px; background-image: initial;" />',
 	link: function(scope, element, attrs) {
    
     
-    element.css("position", "relative");
-        element.css("left","60px");
-		element.css("z-index",10000);
-		element.children().css("height", "25px");
-        element.children().css("line-height", "15px");
+    
 
-		scope.$on('updatePosition',function(){
-			$log.debug('updatePosition')
-			setButtonsLocation()
-		})
+		
 
     var setButtonsLocation=function(){
       $log.debug(scope.fullscreen)
@@ -269,7 +263,7 @@ angular.module('scalearAngularApp')
      // if(scope.ipad)
        // element.css("top", scope.pHeight+15+"px");
       //else
-        element.css("top", scope.pHeight+"px");
+        // element.css("top", scope.pHeight+"px");
 
     }		
     	

@@ -342,8 +342,7 @@ angular.module('scalearAngularApp')
 			resize:'=',
 			max_width:'=maxWidth'
 		},
-		link: function($scope){
-
+		link: function($scope, element){
 			angular.element($window).bind('resize',
 				function(){
 					if($scope.fullscreen){
@@ -352,7 +351,6 @@ angular.module('scalearAngularApp')
 					}
 				}
 			)
-
 			$scope.resize.small = function()
 			{
                 $rootScope.changeError = false;

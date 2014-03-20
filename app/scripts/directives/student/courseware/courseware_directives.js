@@ -156,7 +156,8 @@ angular.module('scalearAngularApp')
 		 	url:"=",
 		 	quizType:"=", 
 		 	done: "=",
-		 	required: "="
+		 	required: "=",
+		 	duration: "="
 		 },
 		 restrict: 'E', 
 		 templateUrl: '/views/student/lectures/courseware_item.html',
@@ -169,7 +170,7 @@ angular.module('scalearAngularApp')
 				var ctx = ctx = bg.getContext('2d');
 		 		if(scope.done == true){
 					ctx.clearRect(0, 0, bg.width, bg.height);
-					ctx.fillStyle = 'rgb(0, 162, 86);';
+					ctx.fillStyle = 'lightgreen';
 					ctx.beginPath();
 					ctx.moveTo(bg.width/2,bg.height/2);
 					// console.log(scope.percentage)
@@ -217,6 +218,13 @@ angular.module('scalearAngularApp')
 		 			$state.go(next_state, to);
 		 		}
 		 	}
+		 	scope.$watch('duration', function(){
+		 		scope.spacing = scope.duration
+		 		if(!scope.spacing){
+		 			scope.spacing = -1;
+		 		}
+		 		console.log(scope.spacing+'%')
+		 	})
 
 
 		 }

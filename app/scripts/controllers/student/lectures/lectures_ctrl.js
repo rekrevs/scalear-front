@@ -116,9 +116,10 @@ angular.module('scalearAngularApp')
 
 			// })
 			// $scope.spacing = 80/$scope.current_module.quizzes.concat($scope.current_module.lectures).length
-			$scope.spacing = 1;
+			$scope.spacing = 4;
 			console.log($scope.current_module)
 			console.log($scope.convertToSeconds($scope.current_module.total_time))
+			$scope.total_module_time = $scope.convertToSeconds($scope.current_module.total_time)
 		}
 	})
 	$scope.getSpacingValue = function(item){

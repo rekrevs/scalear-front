@@ -14,10 +14,10 @@
 					<span translate="notification.invited" translate-values='{ course: invitation[0], user:invitation[1], role:invitation[2]}'></span>
 				</td>
 				<td>
-					<a translate="notification.accept" class="btn btn-primary" ng-click="accept(id)"></a>
+					<a translate="notification.accept" class="btn btn-primary" ng-click="acceptInvitation(id)"></a>
 				</td>
 				<td>
-					<a translate="notification.reject" class="btn btn-danger" ng-click="reject(id)"></a>
+					<a translate="notification.reject" class="btn btn-danger" ng-click="rejectInvitation(id)"></a>
 				</td>
 			</tr>
 
@@ -26,10 +26,10 @@
                     <span translate="notification.shared" translate-values='{user:item.sharer_email}'></span>
                 </td>
                 <td>
-                    <a translate="notification.import_new_course" class="btn btn-primary" ng-click="import_new(item)"></a>
+                    <a translate="notification.accept" class="btn btn-primary" ng-click="acceptShare(item)"></a>
                 </td>
                 <td>
-                    <a translate="notification.import_existing_course" class="btn btn-danger" ng-click="import_old(item)"></a>
+                    <a translate="notification.reject" class="btn btn-danger" ng-click="rejectShare(item)"></a>
                 </td>
             </tr>
 		</table>

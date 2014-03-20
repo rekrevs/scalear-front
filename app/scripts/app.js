@@ -476,5 +476,10 @@ angular.module('scalearAngularApp', [
               templateUrl: '/views/statistics/statistics.html',
               controller: 'statisticsCtrl'
             })
+            .state('show_shared', {
+              url: '/show_shared',
+              templateUrl: '/views/shared.html',
+              controller: 'sharedCtrl'
+            })
     }
 ])

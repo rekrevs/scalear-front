@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal) {
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('Content Editor')
@@ -234,8 +234,28 @@ angular.module('scalearAngularApp')
     		}, 
     		function(){}
 		)
-
     }
+
+    $scope.share_item = function (id, class_name) {
+	    var modalInstance = $modal.open({
+	      templateUrl: '/views/teacher/course_editor/sharing_modal.html',
+	      controller: "sharingModalCtrl",	      
+	      resolve: {
+	        selected_item: function () {
+	        	if(class_name)
+	        		return $scope.items_obj[class_name][id]	
+	        },
+	        selected_module:function(){
+	        	if(class_name)
+	        		return $scope.module_obj[$scope.items_obj[class_name][id].group_id]
+	        	return $scope.module_obj[id]
+	        },
+	        modules: function(){
+	        	return $scope.modules
+	        }
+	      }
+	    });
+  	};
 
     /*************************************************************************************/
     

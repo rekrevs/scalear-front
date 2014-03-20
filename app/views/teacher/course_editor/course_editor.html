@@ -12,7 +12,7 @@
 		</overlay>
 		<ul ui-sortable="moduleSortableOptions" ng-model='modules' id="acc1" class="accordion">
 			<li ng-repeat="module in modules" class='module accordion-group' ng-init="module.open = false">
-				<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" copy="moduleCopy(module.id)"/>
+				<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" copy="moduleCopy(module.id)" share="share_item(module.id)"/>
 				<div class="outer" collapse="!(module.open || module.id==open_id)">
 					<overlay ng-show="item_overlay" style="height:100%">
 						<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
@@ -20,7 +20,7 @@
 		        	<div class="inner" id="modules">
 	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child item" ng-repeat="item in module.items" >
-	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="itemCopy(item.id, item.class_name, $parent.$index)" ></item>
+	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="itemCopy(item.id, item.class_name, $parent.$index)" share="share_item(item.id,item.class_name)" ></item>
 		            		</li>
 		            	</ul>
 			            <center class="item-buttons">

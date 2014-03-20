@@ -31,9 +31,6 @@ angular.module('scalearAngularApp')
             console.log($event.target.checked);
             console.log(group.checked)
             $event.stopPropagation();
-
-
-
         }
 
         $scope.select_all_modules = function(course, $event){

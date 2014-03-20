@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
     .directive('scalearFooter', function() {
         return {
             restrict: 'E',
-            template: '<div class="row" style="text-align: center;">' +
+            template: '<div class="row" style="text-align: center; line-height: 13px;">' +
                 
                 '&copy; ' + new Date().getFullYear() + ' ScalableLearning | ' +
                 '<span translate="footer.about"></span> | ' +

@@ -6,7 +6,7 @@
 <div class="row" style="width:100%; margin-right: -20px;">
 <center ng-show="!course"><br/><br/><loading size="small" show="!course"/></center>
 	<!-- <div class="span3" id="tree" style="min-height: 450px; max-height: 450px; overflow-y: scroll; width: auto; min-width: 100%; padding: 20px; background-color: white;"> -->
-		<table ng-show="course" class="header-container">
+		<table ng-show="course && !hide_all" class="header-container">
 			<tr>
 				<td colspan="1" style="padding: 10px; width: 170px;">
 					<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="
@@ -17,9 +17,7 @@
 						<div class="bar-container">
 							<table style="width: 100%;">
 								<tr>
-									<td style="width: {{spacing}}%; text-align: left;" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
-										<courseware-item name="item.name" id="item.id" circlesize="12" group_id="current_module.id" class_name="item.get_class_name" slides="item.slides" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
-									</td>
+										<courseware-item ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'" name="item.name" duration="item.duration" id="item.id" circlesize="12" group_id="current_module.id" class_name="item.get_class_name" slides="item.slides" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
 								</tr>
 							</table>
 						</div>
@@ -29,7 +27,7 @@
 			</tr>
 		</table>
 		<!-- {{course.groups}} -->
-		<div class="modules-selector-dropdown" collapse="close_selector" ng-hide="hide">
+		<div class="modules-selector-dropdown" collapse="close_selector" ng-hide="hide || hide_all">
 			<div class="multicol" style="{{columns_style}}">
 				<div ng-if="today >= modules_obj[module.id].appearance_time" ng-repeat="module in course.groups | orderBy:'position'">
 					<a href="" ng-click="showModule(module.id)">
@@ -70,5 +68,5 @@
 			<br />Hey There! -->
 		<!-- </div> -->
 	</div>
-	<div ng-show="course" class="middle-container" id="middle1" style="top:{{middle_top-1+'px;'}}"  ui-view="middle1"></div>
+	<div ng-show="course && !hide_all" class="middle-container" id="middle1" style="top:{{middle_top-1+'px;'}}"  ui-view="middle1"></div>
 </div>

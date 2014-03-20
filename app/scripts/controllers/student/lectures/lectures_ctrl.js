@@ -38,6 +38,7 @@ angular.module('scalearAngularApp')
 	$rootScope.$watch('iscollapsed', function(){
 		console.log($rootScope.iscollapsed);
 		if($rootScope.iscollapsed == true){
+			$scope.hide_all = false;
 			// $scope.middle_top = 243;
 			$interval(function() {
 	            // for(var value = 243; value >99; value--){
@@ -57,10 +58,11 @@ angular.module('scalearAngularApp')
 	$rootScope.$on('settingsOpened', function(event, which){
 		console.log('received '+which)
 		if(which == 0){
-			$scope.middle_top = 543;
+			$scope.hide_all = true;
 		}
 		else{
 			$scope.middle_top = 243;
+			$scope.hide_all = false;
 		}
 
 	})
@@ -110,12 +112,25 @@ angular.module('scalearAngularApp')
 	$scope.$watch('current_module', function(){
 		if($scope.current_module){
 			$scope.short_name = $scope.shortenModuleName($scope.current_module.name);
-			$scope.spacing = 80/$scope.current_module.quizzes.concat($scope.current_module.lectures).length
-			console.log($scope.spacing)
+			// $scope.current_module.forEach(function(){
+
+			// })
+			// $scope.spacing = 80/$scope.current_module.quizzes.concat($scope.current_module.lectures).length
+			$scope.spacing = 1;
+			console.log($scope.current_module)
+			console.log($scope.convertToSeconds($scope.current_module.total_time))
 		}
 	})
 	$scope.getSpacingValue = function(item){
 
+	}
+	$scope.convertToSeconds = function(time){
+		var timeArray = time.split(':')
+		var hours = parseInt(timeArray[0])
+		var minutes = parseInt(timeArray[2])
+		var seconds = parseInt(timeArray[2])
+
+		return (hours*3600)+(minutes*60)+seconds
 	}
 
    //  $rootScope.$on("accordianReload", function(event, args) {

@@ -167,9 +167,11 @@ angular.module('scalearAngularApp')
                     $scope.initial_width = factor*main_video_container.height()/win.width()*100;
                 }
                 else{
-                    $scope.initial_width = 47.5
+                    $scope.initial_width = 50
+                    angular.element('#student-accordion').css('height', '44%')
                 }
                 main_video_container.css('width', $scope.initial_width+'%' )
+
                 $scope.resizeVideo()
                 
                 
@@ -247,11 +249,11 @@ angular.module('scalearAngularApp')
         var win = angular.element($window)
         // var video_layer_height = win.height()*0.6
         var main_video_container = angular.element('#main-video-container')
-        if(win.width() < 1024){
+        if(win.width() <= 1024){
             main_video_container.css('width', 100+'%');
             var flag_width = false;
         }
-        else if(flag_width == false && win.width() >= 1024){
+        else if(flag_width == false && win.width() > 1024){
             main_video_container.css('width', $scope.initial_width+'%');
             flag_width = true;
         }
@@ -259,14 +261,15 @@ angular.module('scalearAngularApp')
         var ontop_layer = angular.element('.ontop')
         main_video_container.css('height', video_layer_height+'px')
         // main_video_container.css('width', (main_video_container.height()/factor)/win.width+'%')
-        angular.element('#student-accordion').css('height', main_video_container.height()+39)
+        // angular.element('#student-accordion').css('height', main_video_container.height()+39)
         
         // main_video_container.css('width', (factor*main_video_container.height())+'px')
         ontop_layer.css('width', main_video_container.width())
         ontop_layer.css('height', main_video_container.height())
         $timeout(function(){$scope.$emit("updatePosition")})
         $timeout(function(){angular.element('#controls').css('top', '')})
-
+        // console.log('the value is '+100-main_video_container.width()-6)
+        // angular.element('#student-accordion').css('width', 100-main_video_container.width()-6+'%')
     }
 
     $scope.nextItem=function(){
@@ -380,6 +383,14 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onSlow=function(){
         $scope.slow_message = true
+    }
+    
+    $scope.url_with_protocol = function(url)
+    {
+        if(url)
+            return url.match(/^http/)? url: 'http://'+url;
+        else
+            return url;
     }
 
 

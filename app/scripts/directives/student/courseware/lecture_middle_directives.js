@@ -59,7 +59,7 @@ angular.module('scalearAngularApp')
     	scope.confused= function()
     	{
     		$log.debug(scope);
-        console.log(scope)
+        console.log('should do the confused')
     		$log.debug("in confusd");
         scope.show_message=true;
         var time=scope.lecture_player.controls.getTime()
@@ -100,7 +100,7 @@ angular.module('scalearAngularApp')
                     // }
                 }
   		  });
-    	};
+    	}
     	scope.back= function()
     	{
     		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
@@ -173,7 +173,7 @@ angular.module('scalearAngularApp')
               scope.back();
               var t=scope.lecture_player.controls.getTime();
               scope.lecture_player.controls.pause();
-              scope.seek(t-10)
+              scope.lecture_player.controls.seek(t-10)
               scope.lecture_player.controls.play();
   				},{"disable_in_input" : true});
 

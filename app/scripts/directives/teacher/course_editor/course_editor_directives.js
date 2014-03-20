@@ -10,6 +10,7 @@ angular.module('scalearAngularApp')
                 remove: "&",
                 open: "=",
                 copy:"&",
+                paste: "&",
                 share:"&"
             },
             templateUrl: '/views/teacher/course_editor/module.html',
@@ -24,10 +25,16 @@ angular.module('scalearAngularApp')
                         scope.open[scope.id] = true
                     }
                 }
-                scope.createCopy=function(event){
+                scope.copyModule=function(event){
                     event.stopPropagation() 
                     scope.menu_status = false
                     scope.copy()
+                }
+
+                scope.doPaste=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.paste()
                 }
 
                 scope.shareModule=function(event){
@@ -45,6 +52,7 @@ angular.module('scalearAngularApp')
                 className: '=',
                 remove: '&',
                 copy:"&",
+                paste:"&",
                 share:"&"
             },
             restrict: 'E',
@@ -55,10 +63,16 @@ angular.module('scalearAngularApp')
                     translation_value[scope.className] = scope.name
                     return $translate('groups.you_sure_delete_' + scope.className, translation_value)
                 }
-                scope.createCopy=function(event){
+                scope.copyItem=function(event){
                     event.stopPropagation() 
                     scope.menu_status = false
                     scope.copy()
+                }
+
+                scope.doPaste=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.paste()
                 }
 
                 scope.shareItem=function(event){

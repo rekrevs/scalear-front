@@ -94,6 +94,7 @@
             </div>
         </nav>
     </header>
+    <div ng-show="clipboard" style="width: 100%;background: #0088cc;color: white;padding-left: 15%;font-size: 15px;font-weight: bold;position: absolute;top: 43px;z-index:1">You Have {{clipboard.type[0].toUpperCase()+clipboard.type.slice(1)}}: {{clipboard.name}} in you clipboard</div>
     <div ui-view="navigation"></div>
     <div id="main" role="main">
         <div class="container" style="position:relative;width:1200px">

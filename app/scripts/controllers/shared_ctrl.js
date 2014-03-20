@@ -44,7 +44,10 @@ angular.module('scalearAngularApp')
   	$scope.addLecture =function(shared_item_index, lecture_index,course_id, module_id){
   		Lecture.lectureCopy(
   			{course_id:course_id},
-  			{lecture_id:$scope.shared_items[shared_item_index].lecture[lecture_index].id, module_id:module_id},
+  			{
+  				lecture_id:$scope.shared_items[shared_item_index].lecture[lecture_index].id, 
+  				module_id:module_id
+  			},
   			function(data){
   				console.log(data)
 				$scope.shared_items[shared_item_index].lecture.splice(lecture_index,1)
@@ -72,7 +75,10 @@ angular.module('scalearAngularApp')
   	$scope.addQuiz =function(shared_item_index, quiz_index,course_id, module_id){
   		Quiz.quizCopy(
   			{course_id:course_id},
-  			{quiz_id:$scope.shared_items[shared_item_index].quiz[quiz_index].id, module_id:module_id},
+  			{
+  				quiz_id:$scope.shared_items[shared_item_index].quiz[quiz_index].id, 
+  				module_id:module_id
+  			},
   			function(data){
   				console.log(data)
 				$scope.shared_items[shared_item_index].quiz.splice(quiz_index,1)

@@ -5,7 +5,8 @@
 	<div class="menu">
 	  <ul class="dropdown-menu" style="font-size:14px">
 	    <li >
-	      <a ng-click='createCopy($event)' >Create Copy</a>
+	      <a ng-click='copyModule($event)' >Copy</a>
+	      <a ng-show="$parent.clipboard" ng-click='doPaste($event)' >Paste</a>
 	      <a ng-click='shareModule($event)' >Share</a>
 	    </li>	    
 	  </ul>

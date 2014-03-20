@@ -17,13 +17,11 @@ angular.module('scalearAngularApp')
             $scope.changeLanguage($translate.uses());
 
             $scope.are_notifications = function(){
+                return $scope.current_user && $scope.current_user.roles[0].id!=2 && ($scope.current_user.invitations || $scope.current_user.shared)
+            }
 
-                if($scope.current_user && $scope.current_user.roles[0].id!=2 && ($scope.current_user.invitations.length!=0 || $scope.current_user.shared_items.length!=0))
-                {
-                   return true;
-                }
-                else
-                    return false;
+            $scope.are_shared=function(){
+                return $scope.current_user && $scope.current_user.roles[0].id!=2 && $scope.current_user.accepted_shared
             }
             $scope.login = function() {
                 //$log.debug("in login");

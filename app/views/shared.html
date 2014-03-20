@@ -16,7 +16,7 @@
 				<div style="background:#e5eecc;width:60%;float:right;border-bottom: 2px groove lightgray;padding-top: 5px;">
 					<span style="margin: 15px;font-size: 20px;">Add To:</span>
 					<select ng-model="selected_course" ng-options="course.name for course in courses" style="margin:4px;margin-top:0;height:25px"></select>
-					<button ng-click="addModule($parent.$index, $index,selected_course)" class="btn btn-info" style="padding: 2px 15px;margin: 0 0 5px 15px;">Add</button>
+					<button ng-click="addModule($parent.$index, $index,selected_course.id)" class="btn btn-info" style="padding: 2px 15px;margin: 0 0 5px 15px;">Add</button>
 				</div>
 			</div>
 		</li>
@@ -29,7 +29,7 @@
 					<span style="margin: 15px;font-size: 20px;">Add To:</span>
 					<select ng-model="selected_course" ng-options="course.name for course in courses" style="margin:4px;margin-top:0;height:25px"></select>
 					<select ng-model="selected_module" ng-options="module.name for module in selected_course.modules" style="margin:4px;margin-top:0;height:25px"></select>
-					<button ng-click="addLecture()" class="btn btn-info" style="padding: 2px 15px;margin: 0 0 5px 8px;">Add</button>
+					<button ng-click="addLecture($parent.$index,$index,selected_course.id,selected_module.id)" class="btn btn-info" style="padding: 2px 15px;margin: 0 0 5px 8px;">Add</button>
 
 				</div>
 			</div>
@@ -43,7 +43,7 @@
 					<span style="margin: 15px;font-size: 20px;">Add To:</span>
 					<select ng-model="selected_course" ng-options="course.name for course in courses" style="margin:4px;margin-top:0;height:25px"></select>
 					<select ng-model="selected_module" ng-options="module.name for module in selected_course.modules" style="margin:4px;margin-top:0;height:25px"></select>
-					<button ng-click="addQuiz()" class="btn btn-info" style="padding: 2px 15px;margin: 0 0 5px 8px;">Add</button>
+					<button ng-click="addQuiz($parent.$index,$index,selected_course.id,selected_module.id)" class="btn btn-info" style="padding: 2px 15px;margin: 0 0 5px 8px;">Add</button>
 
 				</div>
 			</div>

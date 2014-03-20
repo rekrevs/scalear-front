@@ -11,6 +11,7 @@ angular.module('scalearAngularApp')
         'destroy': { method: 'DELETE', headers:headers },
         'showShared':{method:'GET',headers:headers,params:{action: 'show_shared'}},
         'accpetShared':{method:'POST',headers:headers,params:{action: 'accept_shared'}},
+        'rejectShared':{method:'POST',headers:headers,params:{action: 'reject_shared'}},
         'updateSharedData':{method:'POST',headers:headers,params:{action: 'update_shared_data'}}
     });
 

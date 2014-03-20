@@ -15,6 +15,7 @@ angular.module('scalearAngularApp')
     Home.getNotifications({},function(response){
         $scope.invitations=response.invitations
         $scope.shared_items = JSON.parse(response.shared_items)
+        console.log($scope.shared_items)
     })
 	
   $scope.acceptInvitation = function (id) {
@@ -55,9 +56,21 @@ angular.module('scalearAngularApp')
   $scope.acceptShare=function(item){
     SharedItem.accpetShared(
       {shared_item_id: item.id},{},
+      function(data){
+        $modalInstance.close();
+        $rootScope.current_user.shared = data.shared_items
+        $state.go('show_shared')
+      },
+      function(){}
+    )
+  }
+
+  $scope.rejectShare=function(item){
+    SharedItem.rejectShared(
+      {shared_item_id: item.id},{},
       function(){
         $modalInstance.close();
-        $state.go('show_shared')
+        $rootScope.current_user.shared = data.shared_items
       },
       function(){}
     )

@@ -17,7 +17,9 @@
 						<div class="bar-container">
 							<table style="width: 100%;">
 								<tr>
-										<courseware-item ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'" name="item.name" duration="80/current_module.quizzes.concat(current_module.lectures).length" id="item.id" circlesize="12" group_id="current_module.id" class_name="item.get_class_name" slides="item.slides" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
+									<td style="width: {{spacing}}%; text-align: left;" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
+										<courseware-item name="item.name" id="item.id" circlesize="12" group_id="current_module.id" class_name="item.get_class_name" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
+									</td>
 								</tr>
 							</table>
 						</div>

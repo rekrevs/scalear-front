@@ -35,9 +35,9 @@
     }
 </style>
 <td style="text-align: left;">
-<a ng-click="showItem(id)" style="margin-right: {{spacing}}%;" href="" tooltip-placement="bottom" tooltip="{{isFinished(done)+isRequired(required)+className+': '+name}}" >
-	<canvas name="canvas" class="courseware-item-circle" ng-class="{itemdone: done, itemrequired: required, currentitem: $parent.$parent.current_item == id}" width="{{circlesize}}" height="{{circlesize}}" ></canvas>
-	</a>
+    <a ng-click="showItem(id)" href="" style="margin-right: {{duration}}%" tooltip-placement="bottom" tooltip="{{isFinished(done)+isRequired(required)+className+': '+name}}" >
+    	<canvas name="canvas" class="courseware-item-circle" ng-class="{itemdone: done, itemrequired: required, currentitem: $parent.$parent.current_item == id}" width="{{circlesize}}" height="{{circlesize}}" ></canvas>
+    </a>
 	<!-- <a href="{{url_with_protocol(slides)}}" target="_blank" ng-if="slides && slides!='none'"><div class="info_link">{{"lectures.slides" | translate}}</div></a> -->
 </td>
 

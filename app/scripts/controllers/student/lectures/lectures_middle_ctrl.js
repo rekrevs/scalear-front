@@ -139,11 +139,18 @@ angular.module('scalearAngularApp')
     var init = function() {
         var factor = 16/9
         var win = angular.element($window)
-        var video_layer_height = win.height()*0.6
+        if(win.width()/win.height() < factor){
+            console.log('yesssssssssssssssssssssss'+win.width()/win.height())
+            var video_layer_height = win.height()*0.35
+        }
+        else{
+            var video_layer_height = win.height()*0.54
+        }
+        
         var main_video_container = angular.element('#main-video-container')
         // var ontop_layer = angular.element('.ontop')
         main_video_container.css('height', video_layer_height+'px')
-        angular.element('#student-accordion').css('height', main_video_container.height()+39)
+        angular.element('#student-accordion').css('height', video_layer_height+39)
         
 
         angular.element($window).bind('resize', function(){
@@ -168,7 +175,7 @@ angular.module('scalearAngularApp')
                 }
                 else{
                     $scope.initial_width = 50
-                    angular.element('#student-accordion').css('height', '44%')
+                    // angular.element('#student-accordion').css('height', '44%')
                 }
                 main_video_container.css('width', $scope.initial_width+'%' )
 

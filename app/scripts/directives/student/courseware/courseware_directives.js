@@ -152,12 +152,10 @@ angular.module('scalearAngularApp')
 		 	id:'=',
             groupId: '=',
 		 	className:'=',
-		 	slides:"=",
 		 	url:"=",
 		 	quizType:"=", 
 		 	done: "=",
-		 	required: "=",
-		 	duration: "="
+		 	required: "="
 		 },
 		 restrict: 'E', 
 		 templateUrl: '/views/student/lectures/courseware_item.html',
@@ -218,15 +216,6 @@ angular.module('scalearAngularApp')
 		 			$state.go(next_state, to);
 		 		}
 		 	}
-		 	scope.$watch('duration', function(){
-		 		scope.spacing = scope.duration
-		 		if(!scope.spacing){
-		 			scope.spacing = -1;
-		 		}
-		 		console.log(scope.spacing+'%')
-		 	})
-
-
 		 }
 	};
 }]);

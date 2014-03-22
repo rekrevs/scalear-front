@@ -3,7 +3,7 @@
             <center><loading size="big" show="true" style="position:relative;top:40%" /></loading></center>
 </span>
 <center ng-show="course" style="margin-bottom: 30px; display: flex; display: -webkit-flex; display: -moz-flex; display: -ms-flexbox; display: flexbox;">
-    <span style="position: relative;">
+    <div style="position: relative;">
         <table class="profile-table" style="width: 17%;">
             <tr>
                 <td style="border-right: 1px solid lightgray; background-color: light">
@@ -25,21 +25,21 @@
 
             </tr>
         </table>
-    </span>
-    <span style="position: absolute; float: left; padding-right: 30px;">
-        <table style="profile-table">
+    </div>
+    <div style="position: absolute; float: left; padding-right: 30px;">
+        <table >
             <tr>
                 <td colspan="4" style="vertical-align: top; border-bottom: 1px solid lightgray;">
                         <span class="dropdown-header"><b translate>head.information</b></span>
                         <br />
                     <span style="padding-left: 30px;">
                         <b translate="groups.description"></b>
-                        <p style="margin-left: 40px; overflow-y: auto; height: 150px;">
+                        <p style="margin-left: 40px;">
                             {{course.description}}
                         </p>
                     <span style="padding-left: 30px;">
                         <b translate="courses.prerequisites"></b>
-                        <p style="margin-left: 40px; overflow-y: auto; height: 53px;">
+                        <p style="margin-left: 40px;">
                             {{course.prerequisites}}
                         </p>
                     </span>
@@ -66,7 +66,7 @@
                 </td>
             </tr>
         </table>
-    </span>
+    </div>
     <!-- <div id="course_information">
         <span ng-hide="course">
             <br />

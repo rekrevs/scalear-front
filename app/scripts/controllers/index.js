@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
             };
 
             $scope.changeLanguage($translate.uses());
-            $rootScope.iscollapsed = true;
+            
 
             $scope.login = function() {
                 //$log.debug("in login");
@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
 
             $scope.logout = function() {
                 $rootScope.logging_out = true;
-                $scope.iscollapsed = true;
+                $rootScope.iscollapsed = true;
                 $timeout(function() {
                     User.sign_out({}, function() {
                         $rootScope.current_user = null

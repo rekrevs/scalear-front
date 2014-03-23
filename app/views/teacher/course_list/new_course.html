@@ -58,7 +58,7 @@
   <div class="control-group">
     <label class="control-label" for="inputTimeZone" ><span translate>courses.time_zone</span>:</label>
     <div class="controls">
-      <select name="timezone" ng-model="course.time_zone" ng-options="element for element in timezones" required></select><br>
+      <select name="timezone" ng-model="course.time_zone" ng-options="element.text for element in timezones" required></select><br>
       <span ng-show="form.timezone.$error.required && submitted" translate>courses.required</span>
 	  <span class="errormessage" ng-show="server_errors['time_zone']">{{server_errors['time_zone'].join()}}</span>
     </div>

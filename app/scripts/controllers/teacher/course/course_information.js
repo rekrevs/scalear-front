@@ -48,6 +48,12 @@ angular.module('scalearAngularApp')
 		      return d.promise;
     	};
 
+        $scope.exportCourse = function(course){;
+            Course.exportCsv({course_id: $stateParams.course_id}, function(){
+              console.log("success");
+            })
+        }
+
         $scope.url_with_protocol = function(url)
         {
             if(url)

@@ -174,8 +174,11 @@ var translation_sv=function(){
           },
       notification:{
               invited: "Du har blivit inbjuden till kursen {{course}} av {{user}} som {{role}}",
+              shared: "{{user}} har delat sina kursuppgifter med dig",
               accept: "Acceptera",
               reject: "Avböj",
+              import_new_course: "Import till ny kurs",
+              import_existing_course: "Import till befintlig kurs"
           },
       privacy:{
               policy: "Sekretesspolicy",

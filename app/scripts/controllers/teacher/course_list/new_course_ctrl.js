@@ -63,7 +63,14 @@ angular.module('scalearAngularApp')
  			{
                 $scope.submitting=true;
  				$scope.course.start_date.setMinutes($scope.course.start_date.getMinutes() + 120);
-			Course.create({course:$scope.course, "import":$scope.import_from},
+
+                if($scope.import_from)
+                {
+                    console.log($scope.import_from);
+                    $state.go("import_from",{"shared_item":$scope.import_from})
+                }
+                else{
+                Course.create({course:$scope.course, "import":$scope.import_from},
 			function(data){
                 $scope.submitting=false;
 				$scope.submitted=false;
@@ -80,7 +87,7 @@ angular.module('scalearAngularApp')
                 $scope.submitting=false;
 				$scope.server_errors=response.data.errors
 			}
-		);
+		);}
 		}else{
 			$scope.submitted=true
 		}

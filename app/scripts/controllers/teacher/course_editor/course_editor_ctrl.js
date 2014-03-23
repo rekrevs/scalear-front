@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal) {
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('Content Editor')
@@ -164,6 +164,166 @@ angular.module('scalearAngularApp')
     	$scope.open_id = null
     }
 
+    // $scope.moduleCopy=function(module_id){
+    // 	$scope.module_overlay = true 
+    // 	Module.moduleCopy(
+    // 		{
+    // 			course_id: $stateParams.course_id, 
+    // 		 	module_id: module_id
+    // 		},{},
+    // 		function(data){
+    // 			console.log(data)
+	   //  		$scope.modules.push(data.group)
+	   //  		$scope.module_obj[data.group.id] = data.group
+	   //  		$scope.module_obj[data.group.id].items.forEach(function(item){
+	   //  			$scope.items_obj[item.class_name][item.id] = item
+	   //  		})
+    // 			$scope.module_overlay=false
+    // 		},
+    // 		function(){}
+    // 		)
+    // }
+
+    $scope.copy=function(item){
+    	$rootScope.clipboard = {id:item.id, name:item.name, type:item.class_name||'module'}
+    }
+
+    $scope.paste=function(module_id, module_index){
+    	console.log("Dsf")
+    	var clipboard = $rootScope.clipboard
+    	$rootScope.clipboard = null
+
+    	if(clipboard.type == 'module')
+	 		pasteModule(clipboard)
+	 	else if(clipboard.type == 'lecture')
+	 		pasteLecture(clipboard, module_id,module_index)
+	 	else if(clipboard.type == 'quiz')
+	 		pasteQuiz(clipboard, module_id, module_index)
+    }
+
+   var pasteModule=function(module){
+   		$scope.module_overlay = true 
+    	Module.moduleCopy(
+		{course_id: $stateParams.course_id	},
+		{module_id: module.id},
+		function(data){
+			console.log(data)
+    		$scope.modules.push(data.group)
+    		$scope.module_obj[data.group.id] = data.group
+    		$scope.module_obj[data.group.id].items.forEach(function(item){
+    			$scope.items_obj[item.class_name][item.id] = item
+    		})
+			$scope.module_overlay=false
+		},
+		function(){}
+		)
+    }
+
+    var pasteLecture=function(item, module_id, module_index){
+    	$scope.item_overlay = true  
+    	Lecture.lectureCopy(
+    		{course_id: $stateParams.course_id},
+    		{
+    			lecture_id: item.id,
+    			module_id :module_id
+    		},
+    		function(data){
+    			console.log(data)
+    			$scope.item_overlay = false 
+    			data.lecture.class_name='lecture'
+    			$scope.modules[module_index].items.push(data.lecture)
+                $scope.items_obj["lecture"][data.lecture.id] = data.lecture
+    		}, 
+    		function(){}
+		)
+    }
+
+    var pasteQuiz=function(item, module_id, module_index){
+    	$scope.item_overlay = true  
+    	Quiz.quizCopy(
+    		{course_id: $stateParams.course_id},
+    		{
+    			quiz_id: item.id,
+    			module_id:module_id
+    		},
+    		function(data){
+    			console.log(data)
+    			$scope.item_overlay = false 
+    			data.quiz.class_name='quiz'
+    			$scope.modules[module_index].items.push(data.quiz)
+                $scope.items_obj["quiz"][data.quiz.id] = data.quiz
+    		}, 
+    		function(){}
+		)
+    }
+
+    // $scope.itemCopy=function(item_id,class_name, module_index){
+    // 	console.log(item_id)    	
+    // 	if(class_name == 'lecture')
+    // 		lectureCopy(item_id,module_index)
+    // 	else
+    // 		quizCopy(item_id, module_index)
+
+    // }
+
+  //   var lectureCopy=function(lecture_id,module_index){
+  //   	$scope.item_overlay = true  
+  //   	Lecture.lectureCopy(
+  //   		{
+  //   			course_id: $stateParams.course_id, 
+  //   			lecture_id: lecture_id
+  //   		},{},
+  //   		function(data){
+  //   			console.log(data)
+  //   			$scope.item_overlay = false 
+  //   			data.lecture.class_name='lecture'
+  //   			$scope.modules[module_index].items.push(data.lecture)
+  //               $scope.items_obj["lecture"][data.lecture.id] = data.lecture
+  //   		}, 
+  //   		function(){}
+		// )
+  //   }
+
+    var quizCopy=function(quiz_id,module_index){
+    	console.log("quiz copy")
+    	$scope.item_overlay = true  
+    	Quiz.quizCopy(
+    		{
+    			course_id: $stateParams.course_id, 
+    			quiz_id: quiz_id
+    		},{},
+    		function(data){
+    			console.log(data)
+    			$scope.item_overlay = false 
+    			data.quiz.class_name='quiz'
+    			$scope.modules[module_index].items.push(data.quiz)
+                $scope.items_obj["quiz"][data.quiz.id] = data.quiz
+    		}, 
+    		function(){}
+		)
+    }
+
+    $scope.openShareModal = function (id, class_name) {
+	    var modalInstance = $modal.open({
+	      templateUrl: '/views/teacher/course_editor/sharing_modal.html',
+	      controller: "sharingModalCtrl",	      
+	      resolve: {
+	        selected_item: function () {
+	        	if(class_name)
+	        		return $scope.items_obj[class_name][id]	
+	        },
+	        selected_module:function(){
+	        	if(class_name)
+	        		return $scope.module_obj[$scope.items_obj[class_name][id].group_id]
+	        	return $scope.module_obj[id]
+	        },
+	        modules: function(){
+	        	return $scope.modules
+	        }
+	      }
+	    });
+  	};
+
     /*************************************************************************************/
     
 	$rootScope.$on('accordianUpdate', function(event, message) {
@@ -218,6 +378,8 @@ angular.module('scalearAngularApp')
  	}
 
 	init();
+
+
 
 }]);
 

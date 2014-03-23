@@ -173,8 +173,11 @@ var translation_en=function(){
       },
       notification:{
         invited: "You have been invited to the course {{course}}, by {{user}}, as a {{role}},",
+        shared: "{{user}} has shared course data with you",
         accept: "Accept",
         reject: "Reject",
+        import_new_course: "Import into new course",
+        import_existing_course: "Import into existing course"
       },
       privacy:{
         policy: "Privacy Policy",

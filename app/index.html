@@ -63,7 +63,6 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-
         <header class="navbar-fixed-top modern-navbar">
             <span class="modern-menu-button" ng-show="current_user" ng-click="toggleCollapse()" ng-class="{menuopen: !iscollapsed}">
                 <span class="menu-icon" style="margin-top: 8px;">
@@ -81,6 +80,10 @@
                 </a>
             </div>
         </header>
+        <div ng-show="clipboard" style="width: 100%;background: #0088cc;color: white;padding-left: 53%;font-size: 15px;font-weight: bold;position: absolute;top: 37px;z-index:1031">
+            <span ng-bind="'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'"></span>
+            <button ng-click="emptyClipboard()" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">Remove</button>
+        </div>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">
                 <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'courses.all_courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile')"/></span>
@@ -158,7 +161,7 @@
     <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
-    <script src="bower_components/angular-ui-bootstrap/src/progressbar/progressbar.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/typeahead/typeahead.js"></script>
 
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
@@ -206,6 +209,7 @@
     <script src="scripts/services/teacher/course_editor.js"></script>
     <script src="scripts/services/teacher/announcement.js"></script>
     <script src="scripts/services/teacher/kpi.js"></script>
+    <script src="scripts/services/teacher/shared_item.js"></script>
     <script src="scripts/services/server_interceptor.js"></script>
     <script src="scripts/services/error_handler.js"></script>
     <script src="scripts/services/user.js"></script>
@@ -224,13 +228,14 @@
     <script src="scripts/controllers/navigation.js"></script>
     <script src="scripts/controllers/privacy.js"></script>
     <script src="scripts/controllers/invitation_modal_ctrl.js"></script>
+    <script src="scripts/controllers/shared_ctrl.js"></script>
     <script src="scripts/controllers/forum/forum_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/editor_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>        
+    <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script> 
@@ -239,6 +244,7 @@
     <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/sharing_modal_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_main_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_module_ctrl.js"></script>

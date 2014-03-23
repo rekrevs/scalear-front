@@ -8,10 +8,14 @@ angular.module('scalearAngularApp')
                 name: "=",
                 id: '=',
                 remove: "&",
-                open: "="
+                open: "=",
+                copy:"&",
+                paste: "&",
+                share:"&"
             },
             templateUrl: '/views/teacher/course_editor/module.html',
             link: function(scope) {
+                scope.menu_status = false
                 scope.invertOpen = function() {
                     if (scope.open[scope.id])
                         scope.open[scope.id] = false
@@ -21,6 +25,23 @@ angular.module('scalearAngularApp')
                         scope.open[scope.id] = true
                     }
                 }
+                scope.copyModule=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.copy()
+                }
+
+                scope.doPaste=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.paste()
+                }
+
+                scope.shareModule=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.share()
+                }
             }
         }
     }).directive('item', function($translate) {
@@ -29,7 +50,10 @@ angular.module('scalearAngularApp')
                 name: '=',
                 id: '=',
                 className: '=',
-                remove: '&'
+                remove: '&',
+                copy:"&",
+                paste:"&",
+                share:"&"
             },
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/item.html',
@@ -38,6 +62,23 @@ angular.module('scalearAngularApp')
                     var translation_value = {}
                     translation_value[scope.className] = scope.name
                     return $translate('groups.you_sure_delete_' + scope.className, translation_value)
+                }
+                scope.copyItem=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.copy()
+                }
+
+                scope.doPaste=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.paste()
+                }
+
+                scope.shareItem=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.share()
                 }
             }
         };

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersPasswordNewCtrl',['$scope','User','$state', function ($scope, User, $state) {
+  .controller('UsersPasswordNewCtrl',['$scope','User','$state','Page', function ($scope, User, $state,Page) {
+    Page.setTitle('New Password')
     $scope.user={}
     $scope.reset_password = function(){
             $scope.sending=true

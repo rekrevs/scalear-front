@@ -44,12 +44,6 @@
 					<label style="width:140px;font-size:10px;cursor:text;">{{lecture.duration|format}}</label>
 				</td>
 			</tr>
-			<!-- <tr>
-				<td><span translate>lectures.detected_aspect_ratio</span>:</td>
-				<td>
-					<label style="width:140px;font-size:10px;cursor:text;">{{lecture.detected_aspect_ratio}}</label>
-				</td>
-			</tr> -->
 			<tr>
 				<td><span translate>lectures.aspect_ratio</span>:</td>
 				<td>
@@ -62,28 +56,33 @@
 					<details-check checked="lecture.appearance_time_module" save="updateLecture()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="appearance_time_module"></details-check> 
 					<br />
 					<div ng-hide="!lecture.appearance_time_module">
-						<input type='text' ng-model='lecture.appearance_time' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
-						<!-- <span ng-show="visible(lecture.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+						<input type='text' ng-model='lecture.appearance_time' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
 					</div>
 					<p ng-hide="lecture.appearance_time_module">
 						<span translate>lectures.set_date</span>:<br>
-						<details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
-						<!-- <span ng-show="visible(lecture.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
+						<details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
+						<br>
+						<details-time class="timepicker" time="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-time>
 					</p>
 				</td>
 			</tr>
 			<tr>
 				<td><span translate>lectures.due_date</span></td>
 				<td>
-					<details-check checked="lecture.due_date_module" save="updateLecture()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="due_date_module"></details-check> 
-					<br />
-					<div ng-hide="!lecture.due_date_module">
-						<input type='text' ng-model='lecture.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
+					<details-check checked="lecture.due_date_enabled" validate="updateDueDate" save="updateLecture()" yes="with due date" no="without due date" title="has due date?" ></details-check> 
+					<div ng-show="lecture.due_date_enabled">
+						<details-check checked="lecture.due_date_module" save="updateLecture()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="due_date_module"></details-check> 
+						<br />
+						<div ng-hide="!lecture.due_date_module">
+							<input type='text' ng-model='lecture.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
+						</div>
+						<p ng-hide="lecture.due_date_module">
+							<span translate>lectures.set_date</span>:<br>
+							<details-date date="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-date>
+							<br>
+							<details-time class="timepicker" time="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-time>
+						</p> 
 					</div>
-					<p ng-hide="lecture.due_date_module">
-						<span translate>lectures.set_date</span>:<br>
-						<details-date date="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-date>
-					</p> 
 				</td>
 			</tr>
 			<tr>

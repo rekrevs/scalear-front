@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersConfirmationShowCtrl',['$scope','User','$state','$stateParams', '$timeout','$rootScope','UserSession', function ($scope, User, $state, $stateParams, $timeout, $rootScope, UserSession) {
+  .controller('UsersConfirmationShowCtrl',['$scope','User','$state','$stateParams', '$timeout','$rootScope','UserSession','Page', function ($scope, User, $state, $stateParams, $timeout, $rootScope, UserSession,Page) {
+        Page.setTitle('Verifying Account')
         $scope.user={}
         $scope.sending=true
 

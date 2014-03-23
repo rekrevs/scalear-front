@@ -5,6 +5,7 @@ angular.module('scalearAngularApp')
     $window.scrollTo(0, 0);
     $scope.inclass_player={}
     $scope.inclass_player.events={}    
+
   	$scope.display = function (type, disabled) {
       if(!disabled){
         $scope.play_pause_class = "play_button"
@@ -20,6 +21,7 @@ angular.module('scalearAngularApp')
         $scope.total_num_quizzes  = 0
         $scope.current_lecture = 0
         $scope.current_quiz = 0
+        $scope.show_black_screen= false
         if($scope.current_quiz_lecture)
           delete $scope.current_quiz_lecture
         if($scope.chart_data)
@@ -36,6 +38,7 @@ angular.module('scalearAngularApp')
       }  
 
   	};
+
     var init = function(){
         Module.getInclassActive(
           {module_id:$stateParams.module_id, course_id:$stateParams.course_id},
@@ -47,9 +50,9 @@ angular.module('scalearAngularApp')
     }
 
 
-var openModal=function(view, type){
+    var openModal=function(view, type){
       $rootScope.changeError = true;
-    angular.element("body").css("overflow","hidden");
+      angular.element("body").css("overflow","hidden");
       var win = angular.element($window)
       win.scrollTop("0px")
       var filename='inclass_'+view
@@ -87,6 +90,7 @@ var openModal=function(view, type){
       angular.element("body").css("overflow","auto");
       $scope.modalInstance.dismiss();
       $scope.unregister_back_event();
+      $scope.removeShortcuts()
       init()
     };
 
@@ -217,6 +221,41 @@ var openModal=function(view, type){
       }
     }
 
+    $scope.setQuizShortcuts=function(){
+      console.log("seeting shortucts ")
+      $scope.removeShortcuts()
+      shortcut.add("Page_up",function() {
+         console.log('page up')
+         $scope.nextQuiz()
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
+
+      shortcut.add("Page_down",function() {
+        console.log('page down')
+         $scope.prevQuiz()
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
+    }
+
+    $scope.removeShortcuts=function(){
+      shortcut.remove("Page_up")
+      shortcut.remove("Page_down")
+      shortcut.remove("b")
+    }
+
+    $scope.setBlankShortcut=function(){
+      shortcut.add("b",function() {
+         console.log('black screen')
+         $scope.toggleBlackScreen()
+         $scope.$apply()
+         console.log($scope.show_black_screen)
+      },{"disable_in_input" : false, 'propagate':false});
+    }
+
+    $scope.toggleBlackScreen=function(){
+      $scope.show_black_screen = !$scope.show_black_screen
+    }
+    
     var getVideoWidth=function(){
       var win = angular.element($window)
       var video_height = (win.height()*60)/100

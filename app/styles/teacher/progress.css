@@ -2,3 +2,59 @@
    padding-top:10px;
    padding-bottom:10px;
 }
+
+#labels {
+	width: 25px;
+	display: inline-block;
+	height: 400px;
+	position: relative;
+	top: 20px;
+	bottom: 0px;
+	background-color: rgb(242,242,242);
+	margin-top: 20px;
+	vertical-align: top;
+	float:left;
+}
+
+.inverted {
+-webkit-transform: rotate(-90deg);
+-moz-transform: rotate(-90deg);
+-ms-transform: rotate(-90deg);
+-o-transform: rotate(-90deg);
+transform: rotate(-90deg);
+color: #0088CC;
+font-size: 10px;
+}
+
+#first_label {
+	margin-bottom: 120px;
+	width: 100px;
+	right: 40px;
+	position: relative;
+	bottom: -20px;
+	}
+
+#second_label {
+	margin-bottom: 120px;
+	bottom: 30px;
+	position: relative;
+	width: 100px;
+	right: 40px;
+}
+
+#third_label {
+	width: 100px;
+	display: inline-block;
+	margin-bottom: 120px;
+	position: relative;
+	margin-right: 10px;
+	right: 40px;
+	bottom: 60px;
+}
+
+#fourth_label {
+	bottom: 130px;
+	width: 150px;
+	right: 65px;
+	position: relative;
+}

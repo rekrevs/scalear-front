@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('UsersTeacherCtrl', ['$scope', 'User', '$state',
-        function($scope, User, $state) {
+    .controller('UsersTeacherCtrl', ['$scope', 'User', '$state','Page',
+        function($scope, User, $state, Page) {
+            Page.setTitle('Sign Up')
             $scope.user = {
                 "role_ids": "1"
             }

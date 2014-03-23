@@ -1,5 +1,29 @@
 'use strict';
 
+var EditorState = {
+    CLEAN: 0, // NO CHANGES
+    DIRTY: 1, // UNSAVED CHANGES
+    SAVE: 2, // SAVE IN PROGRESS
+    LOAD: 3, // LOADING
+    READONLY: 4
+};
+
+var Actions = {
+    LOAD: "load",
+    CREATE: "create"
+};
+
+if (!String.prototype.format) {
+    String.prototype.format = function () {
+        var args = arguments;
+        return this.replace(/{(\d+)}/g, function (match, number) {
+            return typeof args[number] != 'undefined'
+                ? args[number]
+                : match
+                ;
+        });
+    };
+}
 
 angular.module('scalearAngularApp', [
     'ngCookies',
@@ -14,6 +38,8 @@ angular.module('scalearAngularApp', [
     'ui.bootstrap.alert',
     'ui.bootstrap.modal',
     'ui.bootstrap.tooltip',
+    'ui.bootstrap.timepicker',
+    'ui.bootstrap.progressbar',
     'ui.sortable',
     'ui.calendar',
     'ngDragDrop',
@@ -25,7 +51,7 @@ angular.module('scalearAngularApp', [
     'angularMoment',
     'textAngular',
     'highcharts-ng',
-    'config',
+    'config'
 ])
     .constant('headers', {
         withCredentials: true,
@@ -34,6 +60,18 @@ angular.module('scalearAngularApp', [
     .value('$anchorScroll', angular.noop)
     .run(['$http', '$rootScope', 'scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies',
         function($http, $rootScope, scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies) {
+
+
+            $rootScope.safeApply = function(fn) {
+                var phase = this.$root.$$phase;
+                if(phase == '$apply' || phase == '$digest') {
+                    if(fn && (typeof(fn) === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
 
             $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
             $rootScope.show_alert = "";
@@ -54,6 +92,17 @@ angular.module('scalearAngularApp', [
                     htmlEditor: 'form-control'
                 }
             }
+
+            $rootScope.safeApply = function(fn) {
+                var phase = this.$root.$$phase;
+                if(phase == '$apply' || phase == '$digest') {
+                    if(fn && (typeof(fn) === 'function')) {
+                        fn();
+                    }
+                } else {
+                    this.$apply(fn);
+                }
+            };
 
             $log.debug("lang is " + $rootScope.current_lang);
             var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']
@@ -211,6 +260,11 @@ angular.module('scalearAngularApp', [
                 url: '/ie',
                 templateUrl: '/views/ie.html'
             })
+            .state('forum', {
+                url: '/forum',
+                templateUrl: '/views/forum/forum.html',
+                controller: 'forumCtrl'
+            })
             .state('login', {
                 url: '/users/login',
                 templateUrl: '/views/login.html',
@@ -284,8 +338,17 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/student/lectures/lectures.html',
                 controller: 'studentLecturesCtrl'
             })
-            .state('course.lectures.lecture', {
-                url: '/lectures/:lecture_id',
+            .state('course.lectures.module',{
+                url:'/modules/:module_id',
+                views: {
+                    'middle1': {
+                        templateUrl: '/views/student/lectures/module.middle.html',
+                        controller: 'studentModulesCtrl'
+                    }
+                }
+            })
+            .state('course.lectures.module.lecture', {
+                url: '/lectures/:lecture_id?time',
                 views: {
                     'middle': {
                         templateUrl: '/views/student/lectures/lecture.middle.html',
@@ -293,7 +356,7 @@ angular.module('scalearAngularApp', [
                     }
                 }
             })
-            .state('course.lectures.quiz', {
+            .state('course.lectures.module.quiz', {
                 url: '/quizzes/:quiz_id',
                 views: {
                     'middle': {

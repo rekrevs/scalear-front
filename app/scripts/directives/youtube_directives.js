@@ -60,21 +60,27 @@ angular.module('scalearAngularApp')
                 var loadVideo = function(){
 					if(player)
 						Popcorn.destroy(player)
-					var media = Popcorn.HTMLYouTubeVideoElement('#'+scope.id),
-					url= scope.url.split('?'),
-					base_url = url[0],
-					query = '&'+url[1]
-					media.src = base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
-			        player = Popcorn(media,{});
+
+					scope.video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
+					player = Popcorn(scope.video,{});        
+					scope.video.src = formatURL(scope.url)
+			        
 			        setupEvents()
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					
 					$timeout(function(){
-						if(!player_controls.readyState())
+						if(player_controls.readyState() == 0)
 							scope.$emit('slow')
-					},10000)
+					},15000)
 					parent.focus()
+				}
+
+				var formatURL=function(url){
+					var splitted_url= url.split('?'),
+					base_url = splitted_url[0],
+					query = '&'+splitted_url[1]	
+					return base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
 				}
 
                 scope.kill_popcorn = function(){
@@ -83,7 +89,6 @@ angular.module('scalearAngularApp')
                         player.destroy();
                     }
                 }
-
 
                 player_controls.play=function(){
 					player.play();
@@ -115,7 +120,7 @@ angular.module('scalearAngularApp')
 
 				player_controls.getDuration=function(){
 					return player.duration()
-				}				
+				}
 
 				player_controls.readyState=function(){
 					return player.readyState()
@@ -137,8 +142,9 @@ angular.module('scalearAngularApp')
 
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
+					scope.kill_popcorn()
 					element.find('iframe').remove();
-					//popcornApiProxy(loadVideo);
+					// //popcornApiProxy(loadVideo);
 					loadVideo()
 				}
 
@@ -212,6 +218,14 @@ angular.module('scalearAngularApp')
 						parent.focus()
 						if(player_events.timeUpdate){
 							player_events.timeUpdate();
+							scope.$apply();
+						}
+					})
+
+					player.on('waiting',function(){
+						parent.focus()
+						if(player_events.waiting){
+							player_events.waiting();
 							scope.$apply();
 						}
 					})

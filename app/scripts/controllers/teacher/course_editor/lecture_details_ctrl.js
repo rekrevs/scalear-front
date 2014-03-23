@@ -15,14 +15,29 @@ angular.module('scalearAngularApp')
                     $log.debug(data)
                     d.resolve($translate('courses.invalid_input'));
                 }
+
                 Lecture.validateLecture({
                         course_id: $scope.lecture.course_id,
                         lecture_id: $scope.lecture.id
                     },
                     lecture,
+                    function(data) {                        
+                        if(lecture.url){
+                            var id = lecture.url.split("v=")[1].split("&")[0]
+                            var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
+                            $http.jsonp(url).success(function(data) {
+                                if(data.entry.media$group.yt$duration.seconds<1)
+                                    d.reject("video may not exist or may still be uploading");
+                                else
+                                    d.resolve()
+                            }).error(function(){
+                                d.reject("video may not exist or may still be uploading");
+                            });                    
+                        }
+                        else
+                            d.resolve()
+                    }, 
                     function(data) {
-                        d.resolve()
-                    }, function(data) {
                         $log.debug(data.status);
                         $log.debug(data);
                         if (data.status == 422)
@@ -35,10 +50,6 @@ angular.module('scalearAngularApp')
             };
 
             $scope.updateLecture = function(data, type) {
-                if (data && data instanceof Date) {
-                    data.setMinutes(data.getMinutes() + 120);
-                    $scope.lecture[type] = data
-                }
                 var modified_lecture = angular.copy($scope.lecture);
                 delete modified_lecture.id;
                 delete modified_lecture.created_at;
@@ -46,6 +57,7 @@ angular.module('scalearAngularApp')
                 delete modified_lecture.class_name;
                 delete modified_lecture.className;
                 delete modified_lecture.detected_aspect_ratio;
+                delete modified_lecture.due_date_enabled;
 
                 $log.debug(modified_lecture)
 
@@ -57,23 +69,28 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
-                        // console.log($scope.modules)
-                        $scope.modules.forEach(function(module, i) {
-                            if (module.id == $scope.lecture.group_id) {
-                                if ($scope.lecture.appearance_time_module) {
-                                    $scope.lecture.appearance_time = module.appearance_time;
-                                }
-                                if ($scope.lecture.due_date_module) {
-                                    $scope.lecture.due_date = module.due_date;
-                                }
-                            }
-                        });
-
                     },
-                    function() {
-                        //alert("Failed to update lecture, please check your internet connection")
-                    }
+                    function() {}
                 );
+            }
+
+            var isDueDateDisabled=function(){
+                var due = new Date($scope.lecture.due_date)
+                var today = new Date()
+                return due.getFullYear() > today.getFullYear()+100
+            }
+
+            $scope.updateDueDate=function(type,enabled){
+                var d = new Date($scope.lecture.due_date)
+                if(isDueDateDisabled() && enabled) 
+                    var years =  -200 
+                else if(!isDueDateDisabled() && !enabled)
+                    var years  =  200
+                else
+                    var years = 0
+                d.setFullYear(d.getFullYear()+ years)
+                $scope.lecture.due_date = d
+                $scope.lecture.due_date_enabled =!isDueDateDisabled()
             }
 
             $scope.visible = function(appearance_time) {
@@ -157,10 +174,20 @@ angular.module('scalearAngularApp')
                         current_url = current_url.split("&")[0]
                         getYoutubeDetails();
                     }
+                    if($scope.lecture.due_date)
+                        $scope.lecture.due_date_enabled =!isDueDateDisabled()
+                    
+                     $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){                 
+                        if ($scope.lecture.appearance_time_module) {
+                            $scope.lecture.appearance_time = $scope.module_obj[$scope.lecture.group_id].appearance_time;
+                        }
+                        if ($scope.lecture.due_date_module) {
+                            $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date;
+                            $scope.lecture.due_date_enabled = !isDueDateDisabled()
+                        }
+                    })
                 }
             })
-
-
 
         }
     ]);

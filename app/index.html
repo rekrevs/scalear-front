@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="scalearAngularApp" ng-controller="indexController"> <!--<![endif]-->
   <head> 
     <script type="text/javascript">
 
@@ -22,7 +22,7 @@
     </script> 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Scalable Learning</title>
+    <title ng-bind="'Scalable learning - '+Page.title()">Scalable learning - </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -35,11 +35,12 @@
     <link rel="stylesheet" href="styles/jquery-ui.css" />    
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
+
     <!-- endbuild -->
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
   </head>
 
-  <body style="overflow:auto;" ng-app="scalearAngularApp" ng-controller="indexController">
+  <body style="overflow:auto;"  >
   	<!--<div ng-show="start_loading" class="errorpagetransparent"></div>-->
     <div class="errorpageserver" ng-show="logging_out">
         <loading size="big" show="true" style="position: relative; top:40%;"></loading>
@@ -173,10 +174,13 @@
     <script src="bower_components/angular-ui-bootstrap/src/modal/modal.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/progressbar/progressbar.js"></script>
 
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
+
 
     <!-- endbuild -->
 
@@ -184,6 +188,7 @@
 
     <script src="scripts/externals/shortcut.js"></script>
     <script src="scripts/externals/sortable.js"></script>
+    <script src="scripts/externals/ace.min.js"></script>
 
     <script src="locals/translation_en.js"></script>
     <script src="locals/translation_sv.js"></script>
@@ -192,6 +197,7 @@
     <script src="scripts/config.js"></script>
     <script src="scripts/filters/filters.js"></script>
 
+    <script src="scripts/directives/generic_directives.js"></script>
     <script src="scripts/directives/error_directives.js"></script> 
     <script src="scripts/directives/youtube_directives.js"></script>
     <script src="scripts/directives/popover_directives.js"></script>
@@ -204,7 +210,9 @@
     <script src="scripts/directives/student/courseware/courseware_directives.js"></script>
     <script src="scripts/directives/student/courseware/quiz_middle_directives.js"></script>
     <script src="scripts/directives/student/courseware/lecture_middle_directives.js"></script>
-    <script src="scripts/directives/generic_directives.js"></script>
+    <script src="scripts/directives/student/courseware/discussion_directives.js"></script>
+    <script src="scripts/directives/forum_directives.js"></script>
+
 
     <script src="scripts/services/teacher/course.js"></script>
     <script src="scripts/services/teacher/document.js"></script>
@@ -221,6 +229,11 @@
     <script src="scripts/services/user_session.js"></script>
     <script src="scripts/services/batch_email_service.js"></script>
     <script src="scripts/services/home.js"></script>
+    <script src="scripts/services/forum.js"></script>
+    <script src="scripts/services/timeline.js"></script>
+    <script src="scripts/services/doc.js"></script>
+    <script src="scripts/services/editor.js"></script>
+    <script src="scripts/services/page.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>
@@ -228,6 +241,8 @@
     <script src="scripts/controllers/navigation.js"></script>
     <script src="scripts/controllers/privacy.js"></script>
     <script src="scripts/controllers/invitation_modal_ctrl.js"></script>
+    <script src="scripts/controllers/forum/forum_ctrl.js"></script>
+    <script src="scripts/controllers/student/lectures/editor_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
@@ -270,6 +285,7 @@
     <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script> 
 
     <script src="scripts/controllers/student/lectures/lectures_ctrl.js"></script>
+    <script src="scripts/controllers/student/lectures/modules_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/lectures_middle_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/quizzes_middle_ctrl.js"></script>
 

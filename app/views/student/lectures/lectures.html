@@ -8,16 +8,16 @@
 		<accordion  close-others="true" id="acc1" class="accordion">
 			<accordion-group ng-if="today >= group.appearance_time" ng-repeat="group in course.groups | orderBy:'position'" is-open="group.id==open_id" class='module'>
 				<accordion-heading>
-		        	<courseware-module name="group.name" id="group.id" time="group.total_time" questions="group.total_questions" open="open" />
+		        	<courseware-module done="group.is_done" name="group.name" id="group.id" time="group.total_time" questions="group.total_questions" open="open" />
 	        	</accordion-heading>
         		<div class="outer">
 		        	<div class="inner" id="modules">
 	          			<ul class="items" >
 		            		<li ng-class="{highlight: highlight_item == item.get_class_name.toLowerCase() && highlight_id==item.id }" class="last-child item" ng-if="today >= item.appearance_time" ng-repeat="item in group.quizzes.concat(group.lectures) | orderBy:'position'" >
-	             				<courseware-item name="item.name" id="item.id" class_name="item.get_class_name" slides="item.slides" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
+	             				<courseware-item name="item.name" id="item.id" group_id="group.id" class_name="item.get_class_name" slides="item.slides" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
 		            		</li>
 		            		<li class="last-child item" ng-repeat="item in group.documents" >
-	             				<courseware-item name="item.name" id="item.id" class_name="item.get_class_name" url="item.url"></courseware-item>
+	             				<courseware-item name="item.name" id="item.id" group_id="group.id" class_name="item.get_class_name" url="item.url"></courseware-item>
 		            		</li>
 		            	</ul>
 		        	</div>
@@ -25,5 +25,5 @@
 	      	</accordion-group>	
 		</accordion>
 	</div>
-	<div class="span11" id="middle"  ui-view="middle"></div>	
+	<div class="span11" id="middle1"  ui-view="middle1"></div>
 </div>

@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', '$window', function ($scope,$state, $stateParams, Course, $window) {
+  .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', '$window','Page', function ($scope,$state, $stateParams, Course, $window,Page) {
      $window.scrollTo(0, 0);
+     Page.setTitle('Calendar');
     var change_lang = function(){
     	if($scope.eventSources){
 	    	angular.element($scope.myCalendar.children()).remove();
@@ -33,17 +34,17 @@ angular.module('scalearAngularApp')
 				
 			   	 for (var element in $scope.calendar.events){
 			   		if($scope.calendar.events[element].quizId)
-			   			$scope.calendar.events[element].url= $state.href("course.lectures.quiz",{course_id: $scope.calendar.events[element].courseId, quiz_id:$scope.calendar.events[element].quizId})
+			   			$scope.calendar.events[element].url= $state.href("course.lectures.module.quiz",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId ,quiz_id:$scope.calendar.events[element].quizId})
 			 		else if($scope.calendar.events[element].lectureId)
-			        	$scope.calendar.events[element].url= $state.href("course.lectures.lecture",{course_id: $scope.calendar.events[element].courseId, lecture_id:$scope.calendar.events[element].lectureId})
+			        	$scope.calendar.events[element].url= $state.href("course.lectures.module.lecture",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId, lecture_id:$scope.calendar.events[element].lectureId})
 					else{
 						if(!$scope.calendar.events[element].firstItem)
 							$scope.calendar.events[element].url= $state.href("course.lectures",{course_id: $scope.calendar.events[element].courseId})
 						else{
 							if($scope.calendar.events[element].firstItemType=="Lecture")
-								$scope.calendar.events[element].url= $state.href("course.lectures.lecture",{course_id: $scope.calendar.events[element].courseId, lecture_id:$scope.calendar.events[element].firstItem.id})
+								$scope.calendar.events[element].url= $state.href("course.lectures.module.lecture",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId, lecture_id:$scope.calendar.events[element].firstItem.id})
 							else
-								$scope.calendar.events[element].url= $state.href("course.lectures.quiz",{course_id: $scope.calendar.events[element].courseId, quiz_id:$scope.calendar.events[element].firstItem.id})
+								$scope.calendar.events[element].url= $state.href("course.lectures.module.quiz",{course_id: $scope.calendar.events[element].courseId,module_id:$scope.calendar.events[element].groupId, quiz_id:$scope.calendar.events[element].firstItem.id})
 						}
 					}  
 				}

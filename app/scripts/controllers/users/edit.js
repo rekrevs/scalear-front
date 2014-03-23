@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state','$modal',
-        function($rootScope, $scope, User, $state, $modal) {
-
+    .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state','$modal','Page',
+        function($rootScope, $scope, User, $state, $modal,Page) {
+            Page.setTitle('Edit Account')
             $scope.user = {};
 
             $scope.$watch('current_user', function(val) {

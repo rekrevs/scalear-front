@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window', function ($scope, $stateParams, Course, $q, $translate, $log, $window) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page) {
 
         $window.scrollTo(0, 0);
+        Page.setTitle('Information')
         Course.show({course_id:$stateParams.course_id},function(response){
         	$scope.data=response
         	$scope.timezones=response.timezones;

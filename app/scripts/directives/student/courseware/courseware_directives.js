@@ -9,12 +9,10 @@ angular.module('scalearAngularApp')
 			time:"=",
 			questions:"=",
 			id:'=',
-			open: "="
+			open: "=",
+			done:"="
 		},
-		template: "<h5 ng-click='invertOpen()'>"+
-					"<table><tr><td><a class='trigger' ng-class='{open:open[id]}'>{{name}}</a></td>"+
-					"<td><p style=\"display:inline;font-size:10px;\">{{time}} - {{questions}} {{'q' | translate}}</p></td></td></table>"+
-				  "</h5>",
+		templateUrl: '/views/student/lectures/courseware_module.html',
 	  link: function(scope){
 			scope.invertOpen = function()
 			{
@@ -33,6 +31,7 @@ angular.module('scalearAngularApp')
 		 scope: {
 		 	name:'=',
 		 	id:'=',
+            groupId: '=',
 		 	className:'=',
 		 	slides:"=",
 		 	url:"=",
@@ -57,10 +56,13 @@ angular.module('scalearAngularApp')
 		 			window.open(scope.url_with_protocol(scope.url),'_blank');
 		 		else
 		 		{	
-		 			var next_state="course.lectures."+scope.className.toLowerCase();
+		 			var next_state="course.lectures.module."+scope.className.toLowerCase();
 		 			var s= scope.className.toLowerCase()+"_id"
 		 			var to={}
 		 			to[s] = scope.id
+                    console.log("group id iss");
+                    console.log(scope.groupId)
+                    to["module_id"]=scope.groupId
 		 			$state.go(next_state, to);
 		 		}
 		 	}

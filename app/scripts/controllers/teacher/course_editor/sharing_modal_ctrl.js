@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('sharingModalCtrl', ['$scope','$rootScope','$timeout','$window','$log','Module','$stateParams','Course','selected_item','selected_module','modules','SharedItem','$modalInstance', function ($scope, $rootScope, $timeout,$window, $log, Module, $stateParams, courses,selected_item,selected_module,modules,SharedItem,$modalInstance) {
+  .controller('sharingModalCtrl', ['$scope','$rootScope','$timeout','$window','$log','Module','$stateParams','Course','selected_item','selected_module','modules','SharedItem','$modalInstance','$translate', function ($scope, $rootScope, $timeout,$window, $log, Module, $stateParams, courses,selected_item,selected_module,modules,SharedItem,$modalInstance, $translate) {
     
   		var init =function(){  	
   			$scope.item= selected_item
@@ -42,14 +42,13 @@ angular.module('scalearAngularApp')
   			})
 
         if(!selected.modules.length && !selected.lecture.length && !selected.quiz.length){
-          $scope.errors = "Nothing is selected"
+          $scope.errors = $translate('sharing.nothing_selected')
         }
         else if(!$scope.selected_teacher)
-          $scope.errors = "Please enter an Email"
+          $scope.errors = $translate('sharing.please_enter_email')
         else{
           SharedItem.create({},{data: selected, shared_with: $scope.selected_teacher}, 
           	function(){
-                console.log("success")
                 $modalInstance.close();
             },
             function(response){

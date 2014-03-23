@@ -78,6 +78,20 @@ var translation_sv=function(){
             flag_post: "Flagga detta Inlägg",
             unflag_post: "Un-flagga detta inlägg"
           },
+          sharing:{
+            nothing_selected: "Ingenting är vald",
+            please_enter_email:"Ange en email",
+            share_content:"dela innehåll med",
+            teacher_email:"Läraren Email",
+            with_you:"Delat med dig",
+            add_to:"Lägg till",
+            add: "Lägg",
+          },
+          menu:{
+            copy:"Kopiera",
+            paste: "Klistra in",
+            share: "Dela"
+          },
           settings:{
             lectures: "Föredrag Inställningar"
           },
@@ -284,7 +298,8 @@ var translation_sv=function(){
               video_notes: "Video Anmärkningar",
               outline: "Disposition",
               confused: "Förvirrad",
-              discussion: "Diskussion"
+              discussion: "Diskussion",
+              provide_url:"vg ange en video URL"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",
@@ -565,7 +580,8 @@ var translation_sv=function(){
               duration_invalid: "Tidsutsträckning är ogiltig",
               charts: "Diagram",
               total_statistics: "Total Statistik",
-              enroll_instruction: "För att anmäla dig till en kurs klicka på 'Ansluta Kurs' nedan och ange kursens kursnyckel från din instruktör."
+              enroll_instruction: "För att anmäla dig till en kurs klicka på 'Ansluta Kurs' nedan och ange kursens kursnyckel från din instruktör.",
+              export_as: "Exportera kurs som"
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

@@ -48,7 +48,9 @@
 				<td><b ng-init="course.quiz = (course.quizzes|filter:{quiz_type:'quiz'})">{{course.quiz.length }}</b></td>
 				<td><b ng-init="course.survey = (course.quizzes|filter:{quiz_type:'survey'})">{{course.survey.length }}</b></td>
 				<td ng-if="course.importing" translate>controller_msg.importing_data</td>
-				<td ng-if="!course.importing"><delete_button size="big" action="deleteCourse(course)" /></td>
+				<td ng-if="!course.importing">
+                    <delete_button size="big" action="deleteCourse(course)" />                    
+                </td>
 			</tr>
 		</tbody>
 	</table>	

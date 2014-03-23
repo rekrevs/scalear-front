@@ -3,11 +3,12 @@
 angular.module('scalearAngularApp')
     .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout) {
 
+
     // $scope.lecture=lecture.data
-        $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
-            if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
-                $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
-                $scope.$emit('accordianUpdate',$scope.lecture.group_id);
+    $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
+      if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
+        $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
+        $scope.$emit('accordianUpdate',$scope.lecture.group_id);
       }
     })
 
@@ -15,6 +16,7 @@ angular.module('scalearAngularApp')
     $scope.resize={}
     $scope.video_layer={}
     $scope.quiz_layer={}
+    // $scope.ontop_layer={'position':'absolute'}
     $scope.lecture_player={}
     $scope.lecture_player.events={}
     $scope.alert={
@@ -26,6 +28,10 @@ angular.module('scalearAngularApp')
 		{type:'OCQ', text:"insert_ocq"}, 
 		{type:'drag',text:"insert_drag"}
 	]
+    $scope.play_pause_class = 'play'
+    $scope.current_time = 0
+    $scope.total_duration = 0
+    $scope.fullscreen = false
 	
     $state.go('course.course_editor.lecture.quizList');
 
@@ -41,20 +47,62 @@ $timeout(function(){
  		$scope.hide_alerts=true;
  	}
 
+    $scope.lecture_player.events.onMeta= function(){
+        // update duration for all video types.
+        if(Math.ceil($scope.lecture.duration) != Math.ceil($scope.lecture_player.controls.getDuration()))
+        {
+            $scope.lecture.duration=$scope.lecture_player.controls.getDuration();
+            $scope.updateLecture();
+        }
+    }
  	$scope.lecture_player.events.onReady= function(){
- 		$scope.quiz_overlay = true
+ 		$scope.hide_overlay = true
+        $scope.total_duration = $scope.lecture_player.controls.getDuration()
+ 		$scope.lecture_player.controls.pause()
+        $scope.lecture_player.controls.seek(0)
+        $scope.lecture_player.controls.volume(0.5);
  	}
 
  	$scope.lecture_player.events.onMeta = function(){
  		$scope.slow = false
  	}
-
 	$scope.lecture_player.events.onPlay= function(){
+        $scope.play_pause_class = 'pause'
 		$scope.slow = false
 		var paused_time= $scope.lecture_player.controls.getTime()
 		if($scope.editing_mode)
 			$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
+        $scope.playBtn = function(){
+            console.log($scope.play_pause_class)
+            if($scope.play_pause_class == "play"){
+                $scope.lecture_player.controls.play()
+            }
+            else{
+                $scope.lecture_player.controls.pause()
+            }
+        }
+
+        $scope.seek = function(time) {
+            $scope.lecture_player.controls.seek(time)
+        }
+
+        $scope.updateProgress=function($event){
+            var element = angular.element('.progressBar');
+            var ratio = ($event.pageX-element.offset().left)/element.outerWidth();
+            $scope.elapsed_width = ratio*100+'%'
+            $scope.seek($scope.total_duration*ratio)
+        }
+
+        $scope.lecture_player.events.timeUpdate = function(){
+            // console.log("in timeupdate")
+            $scope.current_time = $scope.lecture_player.controls.getTime()
+            $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
+        }
+
+        $scope.lecture_player.events.onPause= function(){
+            $scope.play_pause_class = "play"
+        }
 
  	$scope.lecture_player.events.onSlow=function(){
         $scope.slow = true
@@ -71,12 +119,12 @@ $timeout(function(){
  		var new_time = time 
  		var inc = 0
  		$scope.quiz_list.forEach(function(quiz){
- 		    if(parseInt(quiz.time) == parseInt(new_time+1))
+ 		    if(quiz.time == parseInt(new_time+1))
  				new_time+= 3
- 			else if(parseInt(quiz.time) == parseInt(new_time)){
+ 			else if(quiz.time == parseInt(new_time)){
  				new_time+= 2
  			} 					
- 			else if(parseInt(quiz.time) == parseInt(new_time-1))
+ 			else if(quiz.time == parseInt(new_time-1))
  				new_time+= 1
  		})
  		return new_time
@@ -86,22 +134,19 @@ $timeout(function(){
 		var insert_time= $scope.lecture_player.controls.getTime()
 		var duration = $scope.lecture_player.controls.getDuration()
 
-		insert_time = checkQuizTimeConflict(insert_time)
-
 		if(insert_time < 1 )
 			insert_time = 1
-		else if (insert_time >= duration){
-			insert_time = duration - 2
-		}
+		else if (insert_time >= duration)
+			insert_time = duration - 1
 
-		
+		insert_time = checkQuizTimeConflict(insert_time)
 		$scope.lecture_player.controls.seek_and_pause(insert_time)
 
-		$scope.quiz_overlay = false;
+		$scope.quiz_loading = true;
 		Lecture.newQuiz({
 			course_id: $stateParams.course_id,
 			lecture_id: $scope.lecture.id,
-			time: $scope.lecture_player.controls.getTime(), 
+			time: Math.floor($scope.lecture_player.controls.getTime()), 
 			quiz_type: quiz_type, 
 			ques_type: question_type
 		},
@@ -109,10 +154,10 @@ $timeout(function(){
 			$log.debug(data);
 			$scope.showOnlineQuiz(data.quiz)
 			$scope.quiz_list.push(data.quiz)
-			$scope.quiz_overlay = true;
+			$scope.quiz_loading = false;
 		}, 
 		function(){ //error
-			$scope.quiz_overlay = true;
+			$scope.quiz_loading = false;
 		})
 
 	}

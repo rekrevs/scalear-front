@@ -7,8 +7,9 @@ angular.module('scalearAngularApp')
     $scope.show_reply={}
     $scope.current_reply={}
     $scope.notes={}
-    $scope.tabs=[{"active":true},{"active":false}]
+    $scope.tabs=[{"active":true},{"active":false}, {"active":false}]
 	Page.setTitle('Lectures');
+
     var init = function()
     {
     	$scope.open_id="-1";

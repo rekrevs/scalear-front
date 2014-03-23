@@ -1,16 +1,43 @@
-<table>
-	<tr>
-		<td style="width:15px;">
-			<img class="finished_item" ng-if="done" src="images/check7.png" />
-		</td>
-		<td>
-			<a ng-click="showItem()" class="trigger2">
-				<span translate>{{"groups."+type.toLowerCase()}}</span>: {{name}}
-			</a>
-		</td>
-		<td>
- 			<a style="font-size:10px" target="_blank" ng-if="slides && slides!='none'" href="{{url_with_protocol(slides)}}" translate="lectures.slides"></a>
- 			<span ng-if="required && quizType=='quiz'" class="label label-important" translate>{{"courses.required"}}</span>
- 		</td>
-	</tr>
-</table>
+
+<style>
+	.courseware-item-circle{
+		border: 2px solid white;
+		box-shadow: 1px 1px 1px black;
+		background: white;
+    	border-radius: 200px;
+    	margin-top: 2px;
+    	vertical-align: text-bottom;
+    }
+    .itemdone{
+    	/*border: 2px solid rgb(0, 162, 86);*/
+    	/*border: 2px solid lightgreen;*/
+    	background: lightgreen;
+    }
+    .itemrequired{
+    	border: 2px solid red;
+    	background: white;
+    }
+    .currentitem{
+    	/*border: 2px solid lightslategray;*/
+    	border: 2px solid orange;
+    }
+    .info_link{
+    	display: inline-block;
+    	color: white;
+    	width: 51%;
+    	border-radius: 3px;
+    	background-color: orange;
+    	padding-right: 1px;
+    	padding-left: 1px;
+    	font-size: small;
+    	font-weight: lighter;
+    	text-align: center;
+    	box-shadow: 1px 1px 1px black;
+    }
+</style>
+<td style="text-align: left;">
+    <a ng-click="showItem(id)" href="" style="margin-right: {{duration}}%" tooltip-placement="bottom" tooltip="{{isFinished(done)+isRequired(required)+className+': '+name}}" >
+    	<canvas name="canvas" class="courseware-item-circle" ng-class="{itemdone: done, itemrequired: required, currentitem: $parent.$parent.current_item == id}" width="{{circlesize}}" height="{{circlesize}}" ></canvas>
+    </a>
+	<!-- <a href="{{url_with_protocol(slides)}}" target="_blank" ng-if="slides && slides!='none'"><div class="info_link">{{"lectures.slides" | translate}}</div></a> -->
+</td>

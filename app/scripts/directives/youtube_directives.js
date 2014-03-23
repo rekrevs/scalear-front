@@ -19,33 +19,31 @@ angular.module('scalearAngularApp')
 		//loadScript(src+'popcorn-complete.min.js', function(){
 			//$rootScope.$apply(function () {
                 apiReady.resolve();
-            ///});
-		//})
-		return function (callback) {
+            
+		return function (callback, quality) {
             apiReady.promise.then(function () {
-                callback()
+                callback(quality)
             });
         };	
 	}])
-	.directive('youtube',['$rootScope','$log','$timeout','popcornApiProxy',function($rootScope,$log,$timeout,popcornApiProxy){
+	.directive('youtube',['$rootScope','$log','$timeout','$window','popcornApiProxy',function($rootScope,$log,$timeout,$window, popcornApiProxy){
 		return {
 			restrict: 'E',
-			replace:true, 
+			replace:true,
 			scope:{
 				url:'=',
 				ready:'&',
 				id:'@',
 				player:'=',
-				autoplay:'@'
-			},
-			link: function(scope, element){
+				autoplay:'@',
+                controls: '@',
 
-				$log.debug("YOUTUBE " + scope.id)
-				$log.debug(scope.controls);
-				
-				var player,
-				player_controls={},
-				player_events = {}
+			},
+            template:"<div></div>",
+			link: function(scope, element){
+				var win = angular.element($window)
+				var video_layer_height = win.height()*0.6
+				// element.css('height', video_layer_height+'px')
 
                 scope.$on('$destroy', function() {
                     //alert("In destroy of:" + scope);
@@ -56,19 +54,61 @@ angular.module('scalearAngularApp')
                     scope.url="";
                 });
 
+				$log.debug("YOUTUBE " + scope.id)
+				
+				var player,
+				player_controls={},
+				player_events = {}
 
-                var loadVideo = function(){
+                // scope.$on('$destroy', function() {
+                //     //alert("In destroy of:" + scope);
+                //     scope.kill_popcorn();
+                //     scope.player={};
+                //     scope.id="";
+                //     scope.ready="";
+                //     scope.url="";
+                // });
+
+				var loadVideo = function(vq){
 					if(player)
+                    {
 						Popcorn.destroy(player)
+                        // var events = Popcorn.getTrackEvents();
+                        // for (var e in events) {
+                        //     Popcorn.removeTrackEvent(events[e]._id);
+                        // }
+                    }
 
-					scope.video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
-					player = Popcorn(scope.video,{});        
-					scope.video.src = formatURL(scope.url)
-			        
-			        setupEvents()
+
+                    if(!scope.controls || scope.controls==undefined)
+                        scope.controls=0;
+
+                    if(!vq || vq==undefined)
+                        vq='hd720';
+
+                    var matches = getVideoId(scope.url)
+                    var vimeo= scope.url.match(/vimeo/)  // improve this..
+                    if(matches) //youtube
+                    {
+                    	scope.video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
+                    	player = Popcorn(scope.video,{});
+                    	scope.video.src = formatURL(scope.url)
+                        // player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1');
+                    }
+                    else if(vimeo)
+                    {
+                        player = Popcorn.smart( '#'+scope.id, scope.url+"?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0",{ width: '100%', height:'100%', controls: 0});
+                        player.controls(scope.controls);
+                        player.autoplay(true);
+                    }
+                    else{
+                        player = Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
+                        player.controls(scope.controls);
+                        player.autoplay(true);
+                    }
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
-					
+					setupEvents()
 					$timeout(function(){
 						if(player_controls.readyState() == 0)
 							scope.$emit('slow')
@@ -80,7 +120,7 @@ angular.module('scalearAngularApp')
 					var splitted_url= url.split('?'),
 					base_url = splitted_url[0],
 					query = '&'+splitted_url[1]	
-					return base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls=2&origin=https://www.youtube.com"+query;
+					return base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls&origin=https://www.youtube.com"+query;
 				}
 
                 scope.kill_popcorn = function(){
@@ -89,7 +129,6 @@ angular.module('scalearAngularApp')
                         player.destroy();
                     }
                 }
-
                 player_controls.play=function(){
 					player.play();
 				}
@@ -102,14 +141,13 @@ angular.module('scalearAngularApp')
 					player.mute();
 				}
 
+                player_controls.volume = function(val){
+                    player.volume(val);
+                }
+
 				player_controls.unmute = function(){
 					player.unmute();
 				}
-
-				player_controls.volume= function(value){
-					player.volume(value);
-				}
-				
 				player_controls.paused = function(){
 					return player.paused();
 				}
@@ -131,6 +169,7 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
+
 					player.currentTime(time);
 					parent.focus()
 				}
@@ -140,7 +179,7 @@ angular.module('scalearAngularApp')
 					player.pause()
 				}
 
-				player_controls.refreshVideo = function(){
+				player_controls.refreshVideo = function(quality){
 					$log.debug("refreshVideo!")
 					scope.kill_popcorn()
 					element.find('iframe').remove();
@@ -185,11 +224,22 @@ angular.module('scalearAngularApp')
 						function(){
 							parent.focus()
 
-							if(player_events.onPause){								
+							if(player_events.onPause){
+
 								player_events.onPause();
 								scope.$apply();
 							}
 					});
+
+                    player.on('timeupdate',
+                        function(){
+                            parent.focus()
+
+                            if(player_events.timeUpdate){
+                                player_events.timeUpdate();
+                                scope.$apply();
+                            }
+                        });
 
 					player.on('loadedmetadata',function(){
 						parent.focus()
@@ -254,14 +304,20 @@ angular.module('scalearAngularApp')
                     return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
                 }
 
+                var getVideoId= function(url){
+                    return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+                }
+
 				scope.$watch('url', function(){
+
                     if(scope.url)
                     {
-                        var matches = is_final_url(scope.url)
-                         if(matches)
-                         {
+
+                      //  var matches = is_final_url(scope.url)
+                        // if(matches)
+                         //{
                             player_controls.refreshVideo();
-                        }
+                         //}
 
                     }
 				})
@@ -270,7 +326,10 @@ angular.module('scalearAngularApp')
 						scope.player.controls=player_controls
 					}
 					if(scope.player && scope.player.events)
-						player_events = scope.player.events
+                    {
+                        player_events = scope.player.events
+                    }
+
 				})
 
 		    }
@@ -281,13 +340,13 @@ angular.module('scalearAngularApp')
 		scope:{
 			video_layer:'=videoLayer',
 			quiz_layer:'=quizLayer',
+            ontop_layer:'=ontopLayer',
 			aspect_ratio:'=aspectRatio',
 			fullscreen:'=active',
 			resize:'=',
 			max_width:'=maxWidth'
 		},
-		link: function($scope){
-
+		link: function($scope, element){
 			angular.element($window).bind('resize',
 				function(){
 					if($scope.fullscreen){
@@ -296,7 +355,6 @@ angular.module('scalearAngularApp')
 					}
 				}
 			)
-
 			$scope.resize.small = function()
 			{
                 $rootScope.changeError = false;
@@ -331,17 +389,20 @@ angular.module('scalearAngularApp')
 
 				angular.extend($scope.video_layer, video)
 				angular.extend($scope.quiz_layer, layer)
+                angular.extend($scope.ontop_layer, layer)
+                angular.extend($scope.ontop_layer, {"z-index":0})
 				
 				$timeout(function(){$scope.$emit("updatePosition")})
 				$scope.unregister_back_event()	
 				$scope.unregister_state_event()	
 			}
 
-			$scope.resize.big = function()
+			$scope.resize.big = function(which)
 			{
                 $rootScope.changeError = true;
-				var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
-				var win = angular.element($window)
+				//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+				var factor=16.0/9.0
+                var win = angular.element($window)
 
 				$scope.fullscreen = true
 				angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
@@ -359,7 +420,8 @@ angular.module('scalearAngularApp')
 					"z-index": 1031
 				};
 
-				var video_height = win.height() - 35;
+
+				var video_height = win.height()-40;
 				var video_width = video_height*factor
 				
 				//var video_width = (win.height()-26)*factor
@@ -368,7 +430,8 @@ angular.module('scalearAngularApp')
 				if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
 					$log.debug("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
-					var margin_top = (win.height() - (video_height+35))/2.0;
+					var margin_top = ((win.height()-40) - (video_height))/2.0; //+30
+
 					layer={
 						"position":"fixed",
 						"top":0,
@@ -395,6 +458,8 @@ angular.module('scalearAngularApp')
 				 }
 				angular.extend($scope.video_layer, video)
 				angular.extend($scope.quiz_layer, layer)
+                angular.extend($scope.ontop_layer, layer)
+                angular.extend($scope.ontop_layer,{"z-index":1031});
 
 			 	$timeout(function(){$scope.$emit("updatePosition")})
 
@@ -408,8 +473,132 @@ angular.module('scalearAngularApp')
 			        $scope.$apply()
 				});
 			}
+
+			$scope.lecturesFullScreen = function(){
+				var win = angular.elemen($window)
+				var video_layer = angular.element('#main-video-container')
+				var controls_bar = angular.element('#controls-bar')
+				var progress_bar = angular.element('player_progress_bar')
+				var factor = 16/9
+
+				controls_bar.css('width', win.width())
+				controls_bar.css('position', 'fixed')
+				controls_bar.css('bottom', '0')
+				controls_bar.css('left', '0')
+				controls_bar.css('right', '0')
+				controls_bar.css('z-index', '1531')
+
+
+				progress_bar.css('width', win.width())
+				progress_bar.css('position', 'fixed')
+				progress_bar.css('bottom', controls_bar.height())
+				progress_bar.css('right', '0')
+				progress_bar.css('left', '0')
+				progress_bar.css('z-index', '1531')
+
+
+				video_layer.css('height', win.height()-progress_bar.height()-controls_bar.height());
+				video_layer.css('width', video_layer*factor);
+				video_layer.css('z-index', '1531')
+				
+
+			}
 		}
 	}
 }])
+.directive('progressBar',['$rootScope','$log','$window',function($rootScope,$log, $window){
+    return {
+        restrict: 'E',
+        replace:true,
+        scope:{
+            view:'@',
+            active:'=',
+            play_btn:'&playBtn',
+            player:'=',
+            play_pause_class:'=playPauseClass',
+            updateProgress:'&updateProgress',
+            elapsed_width: '=elapsedWidth',
+            current_time: '=currentTime',
+            total_duration: '=totalDuration',
+            confused_areas: '=confusedAreas',
+            progressEvents: '=',
+            timeline: '=',
+            lecture: '='
+           // autoplay:'@'
+        },
+        templateUrl:"/views/progress_bar.html",
+        link: function(scope, element, attrs){
+            scope.mute_unmute_class="mute";
 
+            $rootScope.$on('updatePosition',function(){
+                setButtonsLocation()
+            })
+
+            scope.playBtn = function(){
+                scope.play_btn();
+            }
+
+            scope.mute_btn = function(type)
+            {
+                if(type=="mute")
+                    scope.mute();
+                else
+                    scope.unmute();
+            }
+
+            scope.$watch("volume",function()
+            {
+                if(scope.volume)
+                {
+                    scope.player.controls.volume(scope.volume);
+                    if(scope.volume!=0)
+                        scope.mute_unmute_class="mute";
+                    else
+                        scope.mute_unmute_class="unmute";
+                }
+            });
+
+            scope.mute= function()
+            {
+                scope.player.controls.mute();
+                scope.mute_unmute_class="unmute";
+                scope.volume=0;
+            }
+
+            scope.unmute = function()
+            {
+                scope.player.controls.unmute();
+                scope.mute_unmute_class="mute";
+                scope.volume=0.5;
+            }
+
+            scope.progress = function(event){
+                scope.updateProgress({$event:event});
+            }
+
+            var setButtonsLocation=function(){
+                if(scope.active){
+                    scope.pHeight=angular.element($window).height();
+                    //element.css("z-index",1500);
+                }
+                else{
+                    if(scope.view=="student")
+                    {scope.pHeight=490;
+                    }
+                    else{
+                        scope.pHeight=320;
+                    }
+                    //element.css("z-index",1000);
+                }
+
+                if(scope.view=="student")
+                    element.css("top", scope.pHeight-30+"px");
+                else
+                    element.css("top", scope.pHeight-30+"px");
+                //element.css("left", scope.pWidth-350+"px");
+            }
+            // setButtonsLocation();
+        }
+    }
+}])
 })(document, window);

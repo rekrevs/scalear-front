@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
 	    'newModule':{method:'POST', params:{action:'new_module_angular'}, headers:headers},
 	    'newDocument':{method:'POST', params:{action:'new_document_angular'}, headers:headers},
 	    'saveSort':{method:'POST', params:{action:'sort'}, headers:headers},
-      'getModules':{method:'GET', params:{action:'get_group_angular'},headers:headers},
+          'getModules':{method:'GET', params:{action:'get_group_angular'},headers:headers},
 	    'validateModule': {method: 'PUT', params: {action: 'validate_group_angular'},headers: headers},
 	      'getLectureProgress': {method: 'GET', params: {action: 'get_lecture_progress_angular'}, headers:headers},
       	'getQuizzesProgress': {method: 'GET', params: {action: 'get_quizzes_progress_angular'}, headers:headers},
@@ -30,8 +30,8 @@ angular.module('scalearAngularApp')
       	'hideQuestion':{method:'POST',params:{action:'hide_student_question'},headers:headers},
             'getStudentQuestions':{method:'GET', params:{action:'get_student_questions'},headers:headers},
       	'getInclassActive':{method:'GET', params:{action:'get_inclass_active_angular'},headers:headers},
-          'getStudentModule':{method:'GET', params:{action:'get_module_data_angular'},headers:headers}
-
+            'getStudentModule':{method:'GET', params:{action:'get_module_data_angular'},headers:headers},
+            'moduleCopy':{method:'POST', params:{action:'module_copy'},headers:headers},
 	  });
 
 }])

@@ -67,6 +67,20 @@ var translation_sv=function(){
               course_information: "Kursinformation",
               help: "Hjälp"
           },
+          discussion:{
+            private_post: "Privat Inlägget",
+            public_post: "Public Inlaägget",
+            comment: "Kommentera",
+            like: "Behaga",
+            unlike: "Un-liknande",
+            liked_this: "gillade detta",
+            write_comment: "Lämna en kommentar...",
+            flag_post: "Flagga detta Inlägg",
+            unflag_post: "Un-flagga detta inlägg"
+          },
+          settings:{
+            lectures: "Föredrag Inställningar"
+          },
       footer:{
               about: "Om ",
               privacy: "Sekretessregler",
@@ -107,6 +121,20 @@ var translation_sv=function(){
               you_sure: "Är du säker?",
               new_answer: "Nytt Svar",
           },
+      profile:{
+        profile: "Profil",
+        member_since: "Medlem sedan",
+        year_ago: "år sedan",
+        month_ago: "månad sedan",
+        week_ago: "vecka sedan",
+        day_ago: "dag sedan",
+        years_ago: "år sedan",
+        months_ago: "månader sedan",
+        weeks_ago: "veckor sedan",
+        days_ago: "dagar sedan",
+        scores: "Emblem & Omdömes",
+        history: "Historia"
+      },
       password_edit:{
               change_password: "Ändra ditt lösenord",
               change_password2: "Ändra mitt lösenord",
@@ -127,6 +155,14 @@ var translation_sv=function(){
               unhappy: "Olycklig",
               you_sure: "Är du säker?",
               back: "Tillbaka",
+              account_information: "Kontoinformation",
+              account_settings: "Kontoinställningar",
+              first_name: "Förnamn",
+              last_name: "Efternamn",
+              screen_name: "Skärmnamn",
+              university: "Universitet",
+              link: "Hemsida",
+              bio: "Biografi"
           },
       events:{
               deadline_msg: "Alla deadlines är vid midnatt den angivna dagen",
@@ -138,8 +174,11 @@ var translation_sv=function(){
           },
       notification:{
               invited: "Du har blivit inbjuden till kursen {{course}} av {{user}} som {{role}}",
+              shared: "{{user}} har delat sina kursuppgifter med dig",
               accept: "Acceptera",
               reject: "Avböj",
+              import_new_course: "Import till ny kurs",
+              import_existing_course: "Import till befintlig kurs"
           },
       privacy:{
               policy: "Sekretesspolicy",
@@ -163,7 +202,7 @@ var translation_sv=function(){
       lectures:{
               duration: "Tidsutsträckning",
               details: "Detaljer",
-              lecture_details: "föreläsnings detaljer",
+              lecture_details: "Föreläsnings Detaljer",
               lecture_title: "Föreläsningstitel",
               url: "Video URL",
               video_title: "Video Titel",
@@ -175,7 +214,7 @@ var translation_sv=function(){
               title: "Titel",
               appearance_date: "Använd modulens publiceringsdatum?",
               due_date: "Använd modulens färdigdatum?",
-              slides: "Presentation/ Slides",
+              slides: "Slides",
               description: "Beskrivning",
               save_lecture: "Spara Föreläsning",
               module: "Modul",
@@ -241,6 +280,11 @@ var translation_sv=function(){
               shown_to_student: "*Visas i studenter",
               server_slow:"Servern 'Youtube.com' tar lång tid att läsa in den här videon",
               try_reload:"Du kan fortsätta vänta, eller prova att uppdatera sidan",
+              video_events: "Video Händelser",
+              video_notes: "Video Anmärkningar",
+              outline: "Disposition",
+              confused: "Förvirrad",
+              discussion: "Diskussion"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",
@@ -377,6 +421,7 @@ var translation_sv=function(){
               out_of: "ut ur",
           },
       courses:{
+              you_asked: "Du frågade: ",
               confused: "Förvirrad",
               really_confused: "Verkligen Förvirrad",
               back: "Tillbaka",
@@ -627,9 +672,11 @@ var translation_sv=function(){
               click_tell_confused: "Klicka här för att berätta för läraren du är förvirrad.",
               click_ask_question: "Klicka här för att ställa en fråga.",
               click_video_shortcuts: "Klicka här för video-genvägar",
+              click_video_quality: "Klicka för att ändra videokvalitet",
               enter_question: "Ange Fråga",
               ask: "Fråga",
               check_answer: "Kontrollera Svaret",
+              info: "Endast YouTube webbadresser och MP4 H.264 kodade videofilmer tillåts"
           },
         devise:{
             sign_in_message: "Vänligen fyll i nedanstående fält...",

@@ -1,29 +1,46 @@
 <!-- build:css(.tmp/styles) styles/courseware.css -->
 <link rel="stylesheet" href="styles/student/courseware.css"/>
+<link rel="stylesheet" href="styles/student/modules_selector.css"/>
 <!-- endbuild -->
 
-<div class="row" style="width:1200px;">
-	<div class="span3" id="tree">
-		<center ng-show="!course"><br/><br/><loading size="small" show="!course"/></center>
-		<accordion  close-others="true" id="acc1" class="accordion">
-			<accordion-group ng-if="today >= group.appearance_time" ng-repeat="group in course.groups | orderBy:'position'" is-open="group.id==open_id" class='module'>
-				<accordion-heading>
-		        	<courseware-module done="group.is_done" name="group.name" id="group.id" time="group.total_time" questions="group.total_questions" open="open" />
-	        	</accordion-heading>
-        		<div class="outer">
-		        	<div class="inner" id="modules">
-	          			<ul class="items" >
-		            		<li ng-class="{highlight: highlight_item == item.get_class_name.toLowerCase() && highlight_id==item.id }" class="last-child item" ng-if="today >= item.appearance_time" ng-repeat="item in group.quizzes.concat(group.lectures) | orderBy:'position'" >
-	             				<courseware-item name="item.name" id="item.id" group_id="group.id" class_name="item.get_class_name" slides="item.slides" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
-		            		</li>
-		            		<li class="last-child item" ng-repeat="item in group.documents" >
-	             				<courseware-item name="item.name" id="item.id" group_id="group.id" class_name="item.get_class_name" url="item.url"></courseware-item>
-		            		</li>
-		            	</ul>
-		        	</div>
-		    	</div>
-	      	</accordion-group>	
-		</accordion>
+<div class="row" style="width:100%; margin-right: -20px;">
+<center ng-show="!course"><br/><br/><loading size="small" show="!course"/></center>
+	<!-- <div class="span3" id="tree" style="min-height: 450px; max-height: 450px; overflow-y: scroll; width: auto; min-width: 100%; padding: 20px; background-color: white;"> -->
+		<table ng-show="course && !hide_all" class="header-container">
+			<tr>
+				<td colspan="1" style="padding: 10px; width: 170px;">
+					<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="
+					toggleSelector(true)" title="{{current_module.name}}">{{short_name}}<span class="caret" style="margin-left: 5px;"></span></button>
+				</td>
+				<td colspan="9" style="padding: 10px; color: white; text-align: left;">
+					<span ng-show="current_module">
+						<div class="bar-container">
+							<table style="width: 100%;">
+								<tr>
+									<td style="width: {{spacing}}%; text-align: left;" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
+										<courseware-item name="item.name" id="item.id" circlesize="12" group_id="current_module.id" class_name="item.get_class_name" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
+									</td>
+								</tr>
+							</table>
+						</div>
+						<hr style="width: 100%; margin: 0; position: relative; top: -12px; z-index: -1;">
+					</span>
+				</td>
+			</tr>
+		</table>
+		<!-- {{course.groups}} -->
+		<div class="modules-selector-dropdown" collapse="close_selector" ng-hide="hide || hide_all">
+			<div class="multicol" style="{{columns_style}}">
+				<div ng-if="today >= modules_obj[module.id].appearance_time" ng-repeat="module in course.groups | orderBy:'position'">
+					<a href="" ng-click="showModule(module.id)">
+						<ul style="float: left; margin: 0;" ng-class="{moduleactive: current_module.id == module.id}">
+							<module-progress-circle circlesize="12" innercolor="white" module="modules_obj[module.id]" ></module-progress-circle>
+							{{modules_obj[module.id].name}}
+						</ul>
+					</a>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="span11" id="middle1"  ui-view="middle1"></div>
+	<div ng-show="course && !hide_all" class="middle-container" id="middle1" style="top:{{middle_top-1+'px;'}}"  ui-view="middle1"></div>
 </div>

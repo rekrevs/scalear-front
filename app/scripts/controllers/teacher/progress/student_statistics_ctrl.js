@@ -49,7 +49,7 @@ angular.module('scalearAngularApp')
 			formated_data.cols=
 				[
 					{"label": $translate('courses.students'),"type": "timeofday"},
-					{"label": "#"+$translate('courses.students'),"type": "number"},
+					{"label": "#"+$translate('courses.students'),"type": "number"}
 				]
 			formated_data.rows= []
 			for(var ind in data)
@@ -59,7 +59,7 @@ angular.module('scalearAngularApp')
 				{"c":
 					[
 						{"v":[d.getUTCHours(),d.getMinutes(),d.getSeconds(),0]},
-						{"v":data[ind][1]},
+						{"v":data[ind][1]}
 					]
 				}
 				formated_data.rows.push(row)
@@ -88,7 +88,7 @@ angular.module('scalearAngularApp')
                         "max":[max.getUTCHours(),max.getMinutes(),max.getSeconds(),0]
                     }
 	            },
-	            "legend": 'none', 
+	            "legend": 'none',
 	            chartArea:{left: 35, width:getChartWidth()},   
 	            // "vAxis": {
 	            //     "title": "#"+$translate('courses.'+type),

@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: 'E', 
-			template: '<div class="ontop" id="ontop" ng-class="lecture.aspect_ratio" ng-transclude></div>'
+			template: '<div class="ontop" id="ontop" style="" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
 }).directive('editPanel',function(){
 	return {		
@@ -187,19 +187,22 @@ angular.module('scalearAngularApp')
 			scope.setAnswerColor()
 		}
 	};
-}]).directive('drag', ['$rootScope','$log', function($rootScope, $log){
+}]).directive('drag', ['$rootScope','$log','$translate', function($rootScope, $log, $translate){
 	return {
 		 replace:true,
 		 restrict: 'E',
 		 template: "<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 				"<div class='input-prepend'>"+
 		 					"<span class='add-on'>{{data.pos}}</span>"+
-		 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required  tooltip='{{!data.answer?\"required\":\"\"}}'/>"+
+		 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required  tooltip='{{!data.answer?require_translated:\"\"}}'/>"+
 	 					"</div>"+
  					"</div>",
 
 		link: function(scope, element, attrs) {
-			 
+
+            $rootScope.$watch("current_lang", function(){
+                scope.require_translated= $translate("courses.required")
+            });
 			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
 				var ontop=angular.element('.ontop');
@@ -335,9 +338,8 @@ angular.module('scalearAngularApp')
             scope.$on('$destroy', function() {
                 shortcut.remove("Enter");
             });
-
-
-            scope.isSurvey = function()
+			
+			scope.isSurvey = function()
 			{
 				if(scope.subtype)
 					return scope.subtype.toUpperCase()=="SURVEY"

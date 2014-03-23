@@ -17,10 +17,7 @@ if (!String.prototype.format) {
     String.prototype.format = function () {
         var args = arguments;
         return this.replace(/{(\d+)}/g, function (match, number) {
-            return typeof args[number] != 'undefined'
-                ? args[number]
-                : match
-                ;
+            return typeof args[number] != 'undefined'? args[number]: match
         });
     };
 }
@@ -39,7 +36,7 @@ angular.module('scalearAngularApp', [
     'ui.bootstrap.modal',
     'ui.bootstrap.tooltip',
     'ui.bootstrap.timepicker',
-    'ui.bootstrap.progressbar',
+    'ui.bootstrap.typeahead',
     'ui.sortable',
     'ui.calendar',
     'ngDragDrop',
@@ -110,6 +107,33 @@ angular.module('scalearAngularApp', [
             var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
 
+
+            //returns the title for the state
+            var getStateTitle = function(name){
+                console.log(name)
+                if(name == "course_list" || name == "student_courses"){
+                    return "courses.all_courses";
+                }
+                else if(name == "course.student_calendar" || name == "course.calendar"){
+                    return "head.calendar";
+                }
+                else if(name == "course.course_information" || name == "course.edit_course_information"){
+                    return "head.course_information";
+                }
+                else if(name == "course.lectures" || name == "course.lectures.module.lecture" || name == "course.lectures.module.quiz"){
+                    return "head.lectures";
+                }
+                else if(name == "edit_account"){
+                    return "account_edit.edit_account";
+                }
+                else if(name == "privacy"){
+                    return "privacy.policy";
+                }
+                else if(name == "profile"){
+                    return "profile.profile";
+                }
+
+            }
             //check if route requires no auth
             var stateNoAuth = function(state) {
                 for (var element in statesThatRequireNoAuth) {
@@ -151,38 +175,13 @@ angular.module('scalearAngularApp', [
                 $rootScope.unload = true;
             }
 
-            //          $rootScope.$on('$viewContentLoading',
-            //              function(event, viewConfig){
-            //                  $rootScope.start_loading=true;
-            //                  // Access to all the view config properties.
-            //                  // and one special property 'targetView'
-            //                  // viewConfig.targetView
-            //              });
-            //          $rootScope.$on('$viewContentLoaded',
-            //              function(event){
-            //                  $rootScope.start_loading=false;
-            //              });
-            //
-            //          $rootScope.$on('stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //              $rootScope.start_loading=false;
-            //            });
-            //
-            //          $rootScope.$on('stateChangeError', function (ev, to, toParams, from, fromParams) {
-            //              $rootScope.start_loading=false;
-            //          });
-
             $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
-
                 //$rootScope.start_loading=true;
+                $rootScope.current = getStateTitle(to.name)
+                $rootScope.iscollapsed = true;
                 if(from.url != '/'){
                 UserSession.getRole().then(function(result) {
                     var s = 1;
-
-//                    if (result == 0 && !stateNoAuth(to.name)) {
-//                        // window.location=scalear_api.host+"/"+$rootScope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
-//                        $state.go("login", {},{notify: false });
-//
-//                    }
                     if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent)) {
                         $state.go("ie", {},{notify: false });
                     }
@@ -282,8 +281,21 @@ angular.module('scalearAngularApp', [
             })
             .state('edit_account', {
                 url: '/users/edit',
-                templateUrl: '/views/users/edit.html',
-                controller: 'UsersEditCtrl'
+                views:{
+                    'user_navigation':{
+                        templateUrl: 'views/user_navigation.html',
+                        controller: 'navigationCtrl'
+                    },
+                    '':{
+                        templateUrl: '/views/users/edit.html',
+                        controller: 'UsersEditCtrl'
+                    }
+                }
+            })
+            .state('profile', {
+                url: '/users/:user_id',
+                templateUrl: 'views/users/profile.html',
+                controller: 'UsersProfileCtrl'
             })
             .state('forgot_password', {
                 url: '/users/password/new',
@@ -496,6 +508,11 @@ angular.module('scalearAngularApp', [
               url: '/statistics',
               templateUrl: '/views/statistics/statistics.html',
               controller: 'statisticsCtrl'
+            })
+            .state('show_shared', {
+              url: '/show_shared',
+              templateUrl: '/views/shared.html',
+              controller: 'sharedCtrl'
             })
     }
 ])

@@ -1,0 +1,142 @@
+<style>
+	.header-container{
+		width: 100%;
+		/*background-color: rgba(0,162,86,0.5);*/
+		/*background-color: rgb(106, 196, 131);*/
+		/*background-color: rgb(220, 220, 220);*/
+		background-color: currentcolor;
+		box-shadow: 1px 1px 1px black;
+		padding: 10px;
+		border-radius: 4px;
+		z-index: 1000;
+		position: relative;
+	}
+	.inner-container{
+		padding: 10px;
+	}
+	.modules-collapser{
+	  -webkit-touch-callout: none;
+	  -webkit-user-select: none;
+	  -khtml-user-select: none;
+	  -moz-user-select: none;
+	  -ms-user-select: none;
+	  user-select: none;
+	  float: left;
+	}
+	.modules-collapser:focus{
+		outline-width: 0px;
+	}
+	.modules-selector-dropdown{
+		position: absolute;
+		background-color: rgb(51,51,51);
+		color: #fff;
+		border-radius: 0px 0px 3px 3px;
+		border: 1px rgb(51,51,51) solid;
+		text-align: center;
+		/*width: 500px;*/
+		min-width: 50%;
+		max-width: 60%;
+		overflow-x: auto;
+		/*overflow-y: auto; */
+		/*height: auto;*/
+		
+		/*max-height: 399px;*/
+		height: 200px;
+		
+		/*display: -webkit-box;*/
+		padding-left: 5px;
+		padding-right: 5px;
+		margin-top: -10px;
+	}
+	/*.multicol > div{
+		margin-top: 5px;
+		margin-bottom: 5px;
+		text-align: center;
+		width: 150px;
+		position: relative;
+		border-right: 2px dotted rgb(0, 162, 86);
+	}*/
+	
+
+	.multicol {
+		margin: 10px;
+		padding: 10px;
+		padding-bottom: 15px;
+		/* CSS3 */
+		/*column-count: 3; */
+		column-rule: 2px dotted rgb(0, 162, 86);
+
+		/* Safari and Chrome */
+		/*-webkit-column-count: 3;*/
+		-webkit-column-rule: 2px dotted rgb(0, 162, 86);
+
+		/* Firefox */
+		/*-moz-column-count: 3; */
+		-moz-column-rule: 2px dotted rgb(0, 162, 86);
+
+		/* Internet Explorer */
+		/*-ms-column-count: 3; */
+		-ms-column-rule: 2px dotted rgb(0, 162, 86);
+
+		/* Opera */
+		/*-o-column-count: 3; */
+		-o-column-rule: 2px dotted rgb(0, 162, 86);
+
+		vertical-align:text-top;
+		/*max-height:100px;*/
+	}
+
+	.multicol div {
+		margin-top: 5px;
+		margin-bottom: 5px;
+		text-align: center;
+		/*width: 150px;*/
+		width: 90%;
+		position: relative;
+		break-before: column;
+		-webkit-column-break-before: column;
+		-moz-column-break-before: column;
+		-ms-column-break-before: column;
+		-o-column-break-before: column;
+	}
+	.multicol > div > a > ul{
+		padding-left: 10px;
+		padding-bottom: 5px;
+		padding-top: 5px;
+		padding-right: 10px;
+		text-align: left;
+		width: 100%;
+		word-wrap: normal;
+	}
+	.multicol > div >  a {
+		color: white;
+	}
+	.multicol > div > a > ul:hover, .moduleactive{
+		background-color: rgba(0,162,86,0.5);
+		border-radius: 3px;
+	}
+</style>
+<table class="header-container">
+	<tr>
+		<td colspan="1" style="padding: 10px; width: 170px;">
+			<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="
+			toggleCollapse(true)" title="{{modules[current_module].name}}">{{current_module}}<span class="caret" style="margin-left: 5px;"></span></button>
+		</td>
+		<td colspan="9" style="padding: 10px; color: white; text-align: left;">
+			<lectures-bar ></lectures-bar>
+		</td>
+	</tr>
+</table>
+<div class="modules-selector-dropdown" collapse="collapse" ng-hide="hide">
+	<div class="multicol" style="{{columns_style}}">
+		<div ng-repeat="module in modules" >
+			<a href="" ng-click="showModule(module.id)">
+				<ul style="float: left;" ng-class="{moduleactive: current_module_index == $index}">
+					<module-progress-circle circlesize="12" innercolor="white" module="module" ></module-progress-circle>
+					{{module.name}}
+				</ul>
+			</a>
+		</div>
+	</div>
+</div>
+

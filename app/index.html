@@ -40,8 +40,10 @@
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
   </head>
 
+
   <body style="overflow:auto;"  >
   	<!--<div ng-show="start_loading" class="errorpagetransparent"></div>-->
+
     <div class="errorpageserver" ng-show="logging_out">
         <loading size="big" show="true" style="position: relative; top:40%;"></loading>
     </div>
@@ -49,7 +51,7 @@
         <div style="text-align: center; display:block;">
             <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
         </div>
-  	</div>
+    </div>
 
     <!--[if lt IE 9]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
@@ -61,56 +63,40 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-
-
-
-    <header class="navbar navbar-fixed-top">
-        <nav class="navbar-inner cc">
-            <div class="container">
-                <a href="/#" class="brand"><img alt="Logo" src="images/logo.png" width="30px"></a>
-                <a href="/#" class="brand">Scalable</a>
-                <a href="/#" class="brand" style="padding-left:0px; color:green;">Learning</a>
-                <img alt="Beta_tag_small" class="brand" src="images/beta_tag_small.png" style="width:40px;padding-left:0px;padding-top:15px;">
-
-                <ul class="nav pull-right">
-                    <li ng-show="current_user"><a href='/#/users/edit' ><span ng-bind="current_user.name"></span></a></li>
-                    <li ng-show="!current_user"><a ng-click="login()" style="cursor:pointer;float: right;" translate="navigation.login"></a></li> <!-- ui-sref="login" -->
-                    <li ng-show="current_user"><a style="cursor: pointer;" ng-click="logout()" translate="navigation.logout"></a></li>
-                    <!-- <li><a href="">Edit account</a></li> -->
-                    <li ng-show="current_lang=='en'" ng-cloak>
-    					<a style="cursor:pointer;"><img ng-click="changeLanguage('sv')" src="images/sweden.png" style="width:25px;height:15px;" /></a>
-				    </li>
-    				<li ng-show="current_lang=='sv'" ng-cloak>
-    					<a style="cursor:pointer;"><img ng-click="changeLanguage('en')" src="images/uk.png" style="width:25px;height:15px;" /></a>
-					</li>
-                </ul>
-
-                <ul class="nav pull-left">
-                    <li ng-show="current_user"><a ng-click="coursePage()" style="float: left;cursor: pointer" translate="navigation.courses"></a></li>
-                     <li ng-show="current_user && current_user.roles[0].id==5"><a ui-sref="statistics" style="float: left;cursor: pointer" translate="courses.statistics"></a></li>
-                	<li><a ng-click="open()" ng-show='current_user && current_user.roles[0].id!=2 && current_user.invitations' translate="navigation.notifications" style="float:left;color:red;cursor: pointer;"></a></li>
-                </ul>
+        <header class="navbar-fixed-top modern-navbar">
+            <span class="modern-menu-button" ng-show="current_user" ng-click="toggleCollapse()" ng-class="{menuopen: !iscollapsed}">
+                <span class="menu-icon" style="margin-top: 8px;">
+                </span>
+            </span>
+            <a ui-sref='profile({user_id: current_user.id})' ng-show="current_user" class="pull-right" style="right: 100px; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; ">
+                <span ng-bind="current_user.name +' '+ current_user.last_name">    
+                </span>
+            </a>
+            <div class="state">
+                <big><span ng-bind="current | translate"></span></big>
             </div>
-        </nav>
-    </header>
-    <div ui-view="navigation"></div>
-    <div id="main" role="main">
-        <div class="container" style="position:relative;width:1200px">
-            <div class="content" style="width:auto">
-                <div class="row">
-                    <div class="span12" style="">
-                        <div ui-view=""></div>
-                    </div>
+            <div class="modern-logo">
+                <a href="/#" class="brand"><img alt="Logo" src="images/logo.png" width="30px"> Scalable<span style="padding-left:0px; color:black;">Learning</span> <img alt="Beta_tag_small" class="brand" src="images/beta_tag_small.png" style="width:40px;padding-left:0px;padding-top:10px;">
+                </a>
+            </div>
+        </header>
+        <div ng-show="clipboard" style="width: 100%;background: #0088cc;color: white;padding-left: 53%;font-size: 15px;font-weight: bold;position: absolute;top: 37px;z-index:1031">
+            <span ng-bind="'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'"></span>
+            <button ng-click="emptyClipboard()" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">Remove</button>
+        </div>
+        <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
+            <div class="container">
+                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'courses.all_courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile')"/></span>
+                <span ui-view="navigation" iscollapsed="iscollapsed"></span>
+                <div class="row" style="width: auto; padding: 10px 15px 20px 70px; text-align: center;">
+                    <div ui-view=""></div>
                 </div>
-                <footer>
-                    <br /><br /><br />
-                    <br /><br /><br />
+                <div><br/></div>
+                <footer style="bottom: 0px; z-index: 1000;">
                     <scalear_footer />
                 </footer>
-            </div>
-            <div><br/></div>
+            </div> 
         </div> 
-    </div> 
 
     
 
@@ -175,7 +161,7 @@
     <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
-    <script src="bower_components/angular-ui-bootstrap/src/progressbar/progressbar.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/typeahead/typeahead.js"></script>
 
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
@@ -223,6 +209,7 @@
     <script src="scripts/services/teacher/course_editor.js"></script>
     <script src="scripts/services/teacher/announcement.js"></script>
     <script src="scripts/services/teacher/kpi.js"></script>
+    <script src="scripts/services/teacher/shared_item.js"></script>
     <script src="scripts/services/server_interceptor.js"></script>
     <script src="scripts/services/error_handler.js"></script>
     <script src="scripts/services/user.js"></script>
@@ -241,13 +228,14 @@
     <script src="scripts/controllers/navigation.js"></script>
     <script src="scripts/controllers/privacy.js"></script>
     <script src="scripts/controllers/invitation_modal_ctrl.js"></script>
+    <script src="scripts/controllers/shared_ctrl.js"></script>
     <script src="scripts/controllers/forum/forum_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/editor_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>        
+    <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script> 
@@ -256,6 +244,7 @@
     <script src="scripts/controllers/teacher/course_editor/lecture_quiz_list_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_details_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/quiz_middle_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/course_editor/sharing_modal_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_main_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_module_ctrl.js"></script>
@@ -299,6 +288,8 @@
     <script src="scripts/controllers/users/confirm_delete_ctrl.js"></script>
 
     <script src="scripts/controllers/statistics/statistics_ctrl.js"></script>
+    <script src="scripts/directives/settings_directives.js"></script>
+    <script src="scripts/controllers/users/profile.js"></script>
     <!-- endbuild -->
 </body>
 </html>

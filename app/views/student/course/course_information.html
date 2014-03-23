@@ -1,45 +1,89 @@
-<style>
-    p{
-        margin-left: 15px;
-    }
-</style>
+<span ng-hide="course">
+            <br />
+            <center><loading size="big" show="true" style="position:relative;top:40%" /></loading></center>
+</span>
+<center ng-show="course" style="margin-bottom: 30px; display: flex; display: -webkit-flex; display: -moz-flex; display: -ms-flexbox; display: flexbox;">
+    <div style="position: relative;">
+        <table class="profile-table" style="width: 17%;">
+            <tr>
+                <td style="border-right: 1px solid lightgray; background-color: light">
+                    <div class="profile-image" style="background: url({{image_link}}) no-repeat center;">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width: 220px; border-right: 1px solid lightgray;">
+                    <br />
+                    <b>{{course.short_name +' | '+ course.name}}</b>
+                    <hr />
+                    <ul style="font-size: 15px; margin: 0px;" ng-show="course.discussion_link"><span class="link-icon" ></span><a href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a></ul>
 
+                    <ul style="font-size: 15px; margin: 0px;"><span class="calendar-icon" /></span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</ul>
 
-<div id="course_information">
-    <span ng-hide="course">
-        <br />
-        <center><loading size="big" show="true" style="position:relative;top:40%" /></loading></center>
-    </span>
-    <span ng-show="course">
-        <h3>
-            {{course.short_name}} | {{course.name}}
-        </h3>
-        <b translate="courses.start_date"></b>
-        <p>
-            {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
-        </p>
-        <b translate="courses.duration"></b>
-        <p>
-            {{course.duration}} <span translate="courses.weeks"></span>
-        </p>
-        <b translate="head.discussion_forum"></b>
-        <p>
-            <a href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{course.discussion_link}}</a>
-        </p>
-        <b translate="groups.description"></b>
-        <p>
-            {{course.description}}
-        </p>
-        <b translate="courses.prerequisites"></b>
-        <p>
-            {{course.prerequisites}}
-        </p>
-        <b translate="courses.teachers"></b>
-        <p>
-            <ul ng-repeat="teacher in teachers">
-                {{teacher.name}} ({{teacher.role}})
-            </ul>
-        </p>
-    </span>
-</div>
+                    <ul style="font-size: 15px; margin: 0px;"><span class="duration-icon" /></span>{{course.duration}} <span translate="courses.weeks"></span></ul>
+                </td>
 
+            </tr>
+        </table>
+    </div>
+    <div style="position: absolute; float: left; padding-right: 30px;">
+        <table >
+            <tr>
+                <td colspan="4" style="vertical-align: top; border-bottom: 1px solid lightgray;">
+                        <span class="dropdown-header"><b translate>head.information</b></span>
+                        <br />
+                    <span style="padding-left: 30px;">
+                        <b translate="groups.description"></b>
+                        <p style="margin-left: 40px;">
+                            {{course.description}}
+                        </p>
+                    <span style="padding-left: 30px;">
+                        <b translate="courses.prerequisites"></b>
+                        <p style="margin-left: 40px;">
+                            {{course.prerequisites}}
+                        </p>
+                    </span>
+
+                </td>
+            </tr>
+            <tr>
+                <td colspan="4" style="vertical-align: top; height: 100px;">
+                    <span class="dropdown-header"><b translate>courses.teachers</b></span>
+                    <div style="padding-left: 30px; padding-top: 10px;">
+                        <table>
+                            <tr>
+                                <td ng-repeat="teacher in teachers" style="text-align: center;">
+                                    <a ui-sref="profile({ user_id: teacher.id })">
+                                        <img src="{{'http://www.gravatar.com/avatar/'+teacher.photo+'?r=g&s=70'}}" style="margin-bottom: 5px;" />
+                                        <br />
+                                        
+                                        {{teacher.name}} ({{teacher.role}})
+                                    </a>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+    <!-- <div id="course_information">
+        <span ng-hide="course">
+            <br />
+            <center><loading size="big" show="true" style="position:relative;top:40%" /></loading></center>
+        </span>
+        <span ng-show="course">
+            <h3>
+                {{course.short_name}} | {{course.name}}
+            </h3>
+            
+            
+            <b translate="courses.teachers"></b>
+            <p>
+                <ul ng-repeat="teacher in teachers">
+                    {{teacher.name}} ({{teacher.role}})
+                </ul>
+            </p>
+        </span>
+    </div> -->
+</center>

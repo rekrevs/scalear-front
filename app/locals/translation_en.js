@@ -66,6 +66,20 @@ var translation_en=function(){
         discussion_forum: "Discussion Forum",
         help: "Help"
       },
+      discussion:{
+        private_post: "Private Post",
+        public_post: "Public Post",
+        comment: "Comment",
+        like: "Like",
+        unlike: "Unlike",
+        liked_this: "liked this",
+        write_comment: "Leave a comment...",
+        flag_post: "Flag this post",
+        unflag_post: "Unflag this post"
+      },
+      settings:{
+        lectures: "Lectures Settings"
+      },
       footer:{
         about: "About ",
         privacy: "Privacy",
@@ -106,6 +120,20 @@ var translation_en=function(){
         you_sure: "Are you sure?",
         new_answer: "New Answer",
       },
+      profile:{
+        profile: "Profile",
+        member_since: "Member since",
+        year_ago: "year ago",
+        month_ago: "month ago",
+        week_ago: "week ago",
+        day_ago: "day ago",
+        years_ago: "years ago",
+        months_ago: "months ago",
+        weeks_ago: "weeks ago",
+        days_ago: "days ago",
+        scores: "Badges & Reputation",
+        history: "History"
+      },
       password_edit:{
         change_password: "Change your Password",
         change_password2: "Change my Password",
@@ -126,6 +154,14 @@ var translation_en=function(){
         unhappy: "Unhappy",
         you_sure: "Are you sure?",
         back: "Back",
+        account_information: "Account Information",
+        account_settings: "Account Settings",
+        first_name: "First Name",
+        last_name: "Last Name",
+        screen_name: "Screen Name",
+        university: "University",
+        link: "Website",
+        bio: "Biography"
       },
       events:{
         deadline_msg: "All deadlines are at midnight on the day specified",
@@ -137,8 +173,11 @@ var translation_en=function(){
       },
       notification:{
         invited: "You have been invited to the course {{course}}, by {{user}}, as a {{role}},",
+        shared: "{{user}} has shared course data with you",
         accept: "Accept",
         reject: "Reject",
+        import_new_course: "Import into new course",
+        import_existing_course: "Import into existing course"
       },
       privacy:{
         policy: "Privacy Policy",
@@ -241,6 +280,11 @@ var translation_en=function(){
         shown_to_student: "*Shown to students",
         server_slow:"The server 'Youtube.com' is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
+        video_events: "Video Events",
+        video_notes: "Video Notes",
+        outline: "Outline",
+        confused: "Confused",
+        discussion: "Discussion"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -378,6 +422,7 @@ var translation_en=function(){
         out_of: "Out Of",
       },
       courses:{
+        you_asked: "You asked: ",
         confused: "Confused",
         really_confused: "Really Confused",
         back: "Back",
@@ -628,9 +673,11 @@ var translation_en=function(){
         click_tell_confused: "Click to tell the teacher you're confused.",
         click_ask_question: "Click to ask a question.",
         click_video_shortcuts: "Click for video shortcuts",
+        click_video_quality: "Click to change video quality",
         enter_question: "Enter Question",
         ask: "Ask",
         check_answer: "Check Answer",
+        info: "Only YouTube URLs and MP4 H.264 encoded videos are allowed"
      },
     devise:
     {

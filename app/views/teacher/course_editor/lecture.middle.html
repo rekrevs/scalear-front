@@ -1,12 +1,11 @@
 <overlay ng-hide="hide_overlay || lecture.url!='none'" style="height:90%">
-	<h3 style="position:absolute;top:20%;padding: 0 100px;z-index: 1;" translate>lectures.provide_url</h3>
+	<h3 style="position:absolute;top:20%;left:32%;z-index: 1;" translate>lectures.provide_url</h3>
 </overlay>
 <center><h3>{{lecture.name}}</h3></center>
-<center resizable-video video-layer='video_layer' quiz-layer='quiz_layer' active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' ><a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>
+<center resizable-video ontop-layer='ontop_layer' video-layer='video_layer' quiz-layer='quiz_layer' active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' ><a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>
 <center>
 	<form name="answer_form" novalidate style="margin:0;margin-top:10px">
 	<video_container ng-style="video_layer" ng-class="lecture.aspect_ratio">
-	
 		<div style='color:#428bca' ng-show="slow">
 				<h3 style="position:relative;top:70px" translate>lectures.server_slow</h3>
 				<h3 style="position:relative;top:30px" translate>lectures.try_reload</h3>
@@ -18,13 +17,16 @@
 				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 			</quiz>
 		</div>
-		<youtube ng-show="!slow && lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio"/>		
-	</video_container>
+		<youtube ng-show="!slow && lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio" style="background-color:black;"/>
+        <progress-bar play_pause_class="play_pause_class" view="teacher" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration' player="lecture_player"></progress-bar>
+    </video_container>
+
 	</form>
 	</br>
 	<div class="quiz_list" >
-		<overlay ng-hide="quiz_overlay || lecture.url=='none'">
-			<loading size="small" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
+		<overlay ng-hide="hide_overlay || lecture.url=='none'">
+			<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
+			<h3 ng-show="lecture.url=='none'">Please Provide A Video URL</h3>
 		</overlay>
 		<center ng-show="fullscreen"><a class='btn small fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center>
 		<edit_panel ng-show="editing_mode" />

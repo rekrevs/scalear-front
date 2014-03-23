@@ -1,17 +1,24 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('InvitationModalCtrl',['$scope','$modalInstance','Course','$window','Home','$rootScope', function ($scope, $modalInstance, Course, $window, Home, $rootScope) {
+  .controller('InvitationModalCtrl',['$state','$scope','$modalInstance','Course','$window','Home','$rootScope','SharedItem', function ($state, $scope, $modalInstance, Course, $window, Home, $rootScope, SharedItem) {
+
 	$window.scrollTo(0, 0);
 	
 	$scope.invitations={}
 	$scope.form={}  	
 	
-	Home.getInvitations({},function(response){
-		$scope.invitations=response.invitations
-	})
+//	Home.getInvitations({},function(response){
+//		$scope.invitations=response.invitations
+//	})
+
+    Home.getNotifications({},function(response){
+        $scope.invitations=response.invitations
+        $scope.shared_items = JSON.parse(response.shared_items)
+        console.log($scope.shared_items)
+    })
 	
-  $scope.accept = function (id) {
+  $scope.acceptInvitation = function (id) {
   	
   	Home.acceptCourse({},{invitation : id},function(data){
   		$modalInstance.close(data.course_id);	
@@ -24,7 +31,7 @@ angular.module('scalearAngularApp')
   		
   };
 
-  $scope.reject = function (id) {
+  $scope.rejectInvitation = function (id) {
     Home.rejectCourse({},{invitation : id},
     function(data){
   		$modalInstance.close();
@@ -40,5 +47,33 @@ angular.module('scalearAngularApp')
   $scope.cancel = function () {
     $modalInstance.dismiss('cancel');
   };
+
+  // $scope.import_new = function(){
+  //     $modalInstance.dismiss('cancel');
+  //     $state.go("new_course")
+  // }
+
+  $scope.acceptShare=function(item){
+    SharedItem.accpetShared(
+      {shared_item_id: item.id},{},
+      function(data){
+        $modalInstance.close();
+        $rootScope.current_user.shared = data.shared_items
+        $state.go('show_shared')
+      },
+      function(){}
+    )
+  }
+
+  $scope.rejectShare=function(item){
+    SharedItem.rejectShared(
+      {shared_item_id: item.id},{},
+      function(data){
+        $modalInstance.close();
+        $rootScope.current_user.shared = data.shared_items
+      },
+      function(){}
+    )
+  }
 
 }]);

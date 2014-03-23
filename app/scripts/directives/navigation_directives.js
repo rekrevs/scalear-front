@@ -23,5 +23,49 @@ angular.module('scalearAngularApp')
 			replace:true,
 			restrict: "E",
 			templateUrl: '/views/student_navigation.html',
+			link: function(scope){
+				scope.settingsOpened = function(which){
+					scope.selected=which;
+					scope.$emit('settingsOpened', [which]);
+				}
+				scope.$on('mainMenuToggled', function(event, collapsed){
+					scope.show_settings = false;
+				})
+			}
+		};
+ }]);
+
+angular.module('scalearAngularApp')
+	.directive('userNavigation', ['ErrorHandler','$rootScope', 'User',function(ErrorHandler,$rootScope, User) {
+           return{
+			replace:true,
+			restrict: "E",
+			scope: {
+				courses: "=",
+				//currentuser: '=',
+				iscollapsed: '=',
+				role: '='
+			},
+			templateUrl: '/views/user_navigation.html',
+			link: function(scope){
+				scope.update_account = function() {
+	                scope.sending = true;
+	                delete $rootScope.current_user.errors
+	                User.update_account({}, {
+	                    user: $rootScope.current_user
+	                }, function() {
+	                    scope.sending = false;
+	                    //console.log("signed up");
+	                    scope.iscollapsed=true;
+	                }, function(response) {
+	                    scope.sending = false;
+	                    $rootScope.current_user.errors = response.data.errors
+	                    //console.log("sign up failed")
+	                })
+	            };
+	            scope.$on('mainMenuToggled', function(event, collapsed){
+					scope.show_settings = false;
+				})
+			}
 		};
  }]);

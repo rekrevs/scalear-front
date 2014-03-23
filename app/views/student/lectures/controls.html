@@ -17,6 +17,14 @@
 		<li><b>c:</b> {{'lectures.confused' | translate}}</li>
 	</ul>
 </div>
-<div class="confusedDiv" ng-click= 'confused()' title="{{'youtube.click_tell_confused'|translate}}"></div>
-<div class="questionDiv" ng-click= 'question()' title="{{'youtube.click_ask_question'|translate}}"></div>
-<div class="shortcutDiv" ng-click= 'showShortcuts()' title="{{'youtube.click_video_shortcuts'|translate}}"></div>
+<div class="confusedDiv" ng-click='confused()' title="{{'youtube.click_tell_confused'|translate}}"></div>
+<div class="questionDiv" ng-click='question()' title="{{'youtube.click_ask_question'|translate}}"></div>
+<div class="shortcutDiv" ng-click='showShortcuts()' title="{{'youtube.click_video_shortcuts'|translate}}"></div>
+<div ng-if="youtube_video" class="qualityDiv" ng-click='showQuality()' title="{{'youtube.click_video_quality'|translate}}"></div>
+<div ng-show="quality" class="dropup">
+<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:inline; left:  -250px; top: -116px; border-radius: 0px; background-color: currentcolor; padding: 0px; bottom: auto; min-width: 0px;">
+    <li ng-class="{active: chosen_quality=='small' }"><a tabindex="-1" ng-click="setQuality('small')" style="color: white;">240p</a></li>
+    <li ng-class="{active: chosen_quality=='large'}"><a tabindex="-1" ng-click="setQuality('large')" style="color: white;">480p</a></li>
+    <li ng-class="{active: chosen_quality=='hd720' }"><a tabindex="-1" ng-click="setQuality('hd720')" style="color: white;">720p (HD)</a></li>
+</ul>
+</div>

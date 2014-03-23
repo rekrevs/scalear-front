@@ -47,14 +47,64 @@ angular.module('scalearAngularApp')
                     ctrl.$formatters.unshift(function (a) {
                         return $filter('formattime')(ctrl.$modelValue, attrs.format)
                     });
-
-//
-//                    ctrl.$parsers.unshift(function (viewValue) {
-//                        var plainNumber = viewValue.replace(/[^\d|\-+|\.+]/g, '');
-//                        elem.val($filter('number')(plainNumber));
-//                        return plainNumber;
-//                    });
                 }
             };
-}]);
+}]).directive('contextMenu', ['$window', function($window) {
+    return {
+      restrict: 'A',
+      scope:{
+        opened:'='
+      },
+      link: function(scope, element, attrs) {
+           var menuElement = angular.element(element.find('.'+attrs.target)),
+            open = function open(event, element) {
+              angular.element('.open').removeClass('open')
+              scope.opened = true;
+              element.css('top', event.clientY + 'px');
+              element.css('left', event.clientX + 'px');
+              element.css('zIndex', 1)
+              element.addClass('open');
+              angular.element('body').css('overflow', 'hidden')
+            },
+            close = function close(element) {
+              scope.opened = false;
+              element.removeClass('open');
+              angular.element('body').css('overflow', 'auto')
+            };
 
+        menuElement.css('position', 'fixed');
+        menuElement.css('cursor', 'pointer');
+
+        scope.$watch('opened',function(){
+          if(scope.opened)
+            open(event, menuElement);
+          else
+            close(menuElement);
+        })
+
+        element.bind('contextmenu', function(event) {          
+          if (scope.opened) {
+            scope.$apply(function() {
+              event.preventDefault();
+              close(menuElement);
+            });
+          }
+          else{
+            scope.$apply(function() {
+              event.preventDefault();
+              open(event, menuElement);
+            });
+          }
+        });
+
+        angular.element($window).bind('click', function(event) {
+          if (scope.opened) {
+            scope.$apply(function() {
+              event.preventDefault();
+              close(menuElement);
+            });
+          }
+        });
+      }
+    };
+  }]);

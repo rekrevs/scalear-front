@@ -20,7 +20,8 @@ angular.module('scalearAngularApp')
           'resend_confirmation':{method:'POST', headers:headers, params:{action: 'confirmation'}},
           'show_confirmation':{method:'GET', headers:headers, params:{action: 'confirmation'}},
           'update_account':{method:'PUT', headers:headers},
-          'delete_account':{method:'delete', headers:headers}
+          'delete_account':{method:'delete', headers:headers},
+          'get_user': {method: 'GET', headers: headers, params:{action: 'get_user_angular'}}
 
       });
 

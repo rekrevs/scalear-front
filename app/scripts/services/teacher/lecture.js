@@ -31,7 +31,8 @@ angular.module('scalearAngularApp')
 		"saveHtml":{method:'POST', params:{action:'save_html'}, headers:headers},
         "deleteConfused":{method:'DELETE', params:{action:'delete_confused'}, headers:headers},
         "saveNote":{method:'POST', params:{action:'save_note'}, headers:headers},
-        "loadNote":{method:'GET', params:{action:'load_note'}, headers:headers}
+        "loadNote":{method:'GET', params:{action:'load_note'}, headers:headers},
+        "lectureCopy":{method:'POST', params:{action:'lecture_copy'}, headers:headers},
 		
 	});
 

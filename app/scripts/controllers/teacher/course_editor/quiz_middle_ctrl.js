@@ -2,20 +2,19 @@
 
 angular.module('scalearAngularApp')
   .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout',function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout) {
-
-        $scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
-            if($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]){
-                $scope.quiz=$scope.items_obj["quiz"][$stateParams.quiz_id]
-                $scope.$emit('accordianUpdate',$scope.quiz.group_id);
+ 
+ 	$scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
+      if($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]){
+        $scope.quiz=$scope.items_obj["quiz"][$stateParams.quiz_id]
+        $scope.$emit('accordianUpdate',$scope.quiz.group_id);
       }
     })
 
-        $scope.$on('$destroy', function() {
+    $scope.$on('$destroy', function() {
             shortcut.remove("Enter");
-        });
+    });
 
-
-        $scope.alert={type:"error", msg:"lectures.got_some_errors"}
+ 	$scope.alert={type:"error", msg:"lectures.got_some_errors"}
  
  	$scope.closeAlerts= function(){
  		$scope.hide_alerts=true;
@@ -143,41 +142,6 @@ angular.module('scalearAngularApp')
 	$scope.removeQuestion = function(index){
  		// if(confirm($translate('questions.you_sure_delete_question', {question: $scope.questions[index].content})))
 		  	$scope.questions.splice(index, 1);
-	}
-
-	$scope.addHeader=function(){
-		var new_header = {quiz_id:$scope.quiz.id, content:"", question_type:"header"}
-		$scope.questions.push(new_header)
-	}
-
-	$scope.removeHeader=function(index){
-		$scope.removeQuestion(index)
-	}
-	$scope.openPreview=function(){
-		$scope.preview=true
-		$scope.temp_quiz={questions:$scope.questions}
-		$scope.formatted_answers={}
-		for(var elem in $scope.temp_quiz.questions){			
-			if($scope.temp_quiz.questions[elem].question_type.toUpperCase() == 'DRAG'){
-				$scope.formatted_answers[$scope.temp_quiz.questions[elem].id] = CourseEditor.mergeDragAnswers($scope.temp_quiz.questions[elem].answers, "quiz", $scope.temp_quiz.questions[elem].id).content
-				console.log($scope.formatted_answers[$scope.temp_quiz.questions[elem].id])
-				//$scope.formatted_answers[$scope.temp_quiz.questions[elem].id] =[]
-
-				// $scope.temp_quiz.questions[elem].answers.forEach(function(ans){
-				// 	if(ans.id && obj.id==null){
-				// 		obj.id = ans.id
-				// 		return 
-				// 	}
-				// })
-				// var y=angular.copy($scope.temp_quiz.questions[elem])
-				// y.answers=[obj]
-				// data[elem]= y
-			}
-		}
-	}
-	$scope.closePreview=function(){
-		$scope.preview=false
-		$scope.temp_quiz=null
 	}
  
  }])

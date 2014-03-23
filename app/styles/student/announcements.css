@@ -28,4 +28,31 @@
 .table-announce{
     border-collapse: separate;
     border-spacing: 1em;
+    width: 100%;
+}
+.announcements-container{
+    float:left;
+    width:50%;
+    height: auto;
+    position: initial;
+    left: 0px;
+    top: 0px;
+}
+.calendar-container{
+    width: 45%;
+    left: 50%;
+    float:left;
+    font-size:12px;
+}
+
+@media only screen and (max-width : 1024px) {
+    .announcements-container{
+        width: 100%;
+        clear: both;
+    }
+    .calendar-container{
+        left: 0px;
+        width: 99%;
+        clear: both;
+    }
 }

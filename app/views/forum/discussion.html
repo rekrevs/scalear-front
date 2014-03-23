@@ -1,85 +1,251 @@
-<div class="btn-group" data-toggle="buttons">
-    <label class="btn btn-default btn-checkbox">
-        <input type="checkbox" ng-model="checkModel.quiz"> Outline
+<style>
+    .accordion-heading{
+        padding: 5px;
+        background-color: rgb(0, 162, 86);
+        text-decoration: none;
+        display: block;
+        /*border-radius: 0px;
+        border:;*/
+    }
+    .accordion-toggle{
+        color: white;
+    }
+    .accordion-toggle:hover{
+        color: black;
+    }
+    .accordion-body{
+        background-color: #fffdfa;
+    }
+    .table-striped tbody > tr:nth-child(odd) > td, .table-striped tbody > tr:nth-child(odd) > th{
+        background-color: transparent;
+        color: currentcolor;
+        border: none;
+    }
+    /*.table th, .table td{
+        padding: 3px;
+    }*/
+    .align-center{
+        text-align: center;
+        width: 100%;
+        margin-bottom: 5px;
+    }
+    .dimmed{
+        border-left: 2px solid slategray;
+        opacity: 0.5;
+        background-color: whitesmoke;
+    }
+    .lectureopen{
+        border-left: 2px solid slategray;
+        opacity: 1;
+        min-height: 100%;
+        background-color: transparent;
+    }
+    .table{
+        border-collapse: separate;
+    }
+    /*.table td{
+        border-bottom: 1px lightgrey;
+    }*/
+    .table tr{
+        border-bottom: 1px whitesmoke;
+    }
+    .timeline-item{
+        cursor: pointer;
+        width: 45px;
+        position: relative;
+        left: -13px;
+    }
+    .timeline-icon-container{
+        width: 30px;
+    }
+    .table tr td{
+        border: none;
+    }
+    .discussion-content{
+        background-color: whitesmoke;
+    }
+    .discussion-comment{
+        background-color: white;
+        margin-top: 10px;
+    }
+    table .comments-table{
+        border-collapse: separate;
+        border-spacing: 0 0.1em;
+        width: 100%;
+        font-size: 13px;
+    }
+    textarea{
+        width: 80%;
+        resize: vertical;
+        overflow: visible;
+        border-radius: 0px;
+    }
+</style>
+<div class="btn-group align-center" data-toggle="buttons">
+    <label class="btn btn-warning btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.quiz"> {{'lectures.outline' | translate}}
     </label>
-    <label class="btn btn-default btn-checkbox">
-        <input type="checkbox" ng-model="checkModel.confused"> Confused
+    <label class="btn btn-warning btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.confused"> {{'lectures.confused' | translate}}
     </label>
-    <label class="btn btn-default btn-checkbox">
-        <input type="checkbox" ng-model="checkModel.discussion"> Discussion
+    <label class="btn btn-warning btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.discussion"> {{'lectures.discussion' | translate}}
     </label>
 </div>
 <br>
-<div style="width:400px;height:200px;">
-    <div ng-show="show_question" style="height:100px" id="show_question"> <!-- For question -->
-        <textarea ng-model="current_question" style="display:inline; width:250px;height:73px"></textarea>
-        <input type="text" disabled ng-model="current_question_time" format='hh:mm:ss' style="display:inline; width:60px;position: relative;top: -20px;"/>
-        <select ng-model='privacy' ng-options="f.text for f in choices" style="display:inline; width:80px;position: relative;top: -60px;left: 270px;"></select>
-        <input type="button" class="btn btn-primary btn-small" ng-click="saveQuestion()" value={{"youtube.ask"|translate}} style="display:inline;position: relative;top: -85px;height: 70px;left: 270px;"/>
+<div>
+    <div ng-show="show_question" style="" id="show_question"> <!-- For question -->
+
+        <table class="table" style="margin-top: 10px;">
+            <tr>
+                <td colspan="2">
+                    <textarea placeholder="{{'lectures.ask_question' | translate}}" ng-model="current_question" style="width: 100%; height: 100%;"></textarea>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:70%;">
+                    <input type="text" disabled ng-model="current_question_time" format='hh:mm:ss' style="width: 90%;"/>
+                    <select ng-model='privacy' ng-options="f.text for f in choices" style="width: 100%;"></select>
+                </td>
+                <td>
+                    <input type="button" class="btn btn-primary btn-small" ng-click="saveQuestion()" value={{"youtube.ask"|translate}} style="width: 95%; height: 100%;"/>
+                </td>
+            </tr>
+        </table>
+        
+
+        
+        
+        
     </div>
-    <div style="overflow:auto;height:100%;width:400px"> <!-- has all discussions -->
-        <accordion close-others="true">
-            <accordion-group ng-repeat="l in module_lectures" heading={{l.name}} is-open="l.id == lecture.id" id={{"outline_"+l.id}}>
-                <table class="table table-striped">
-                    <tbody ng-repeat="e in timeline['lecture'][l.id].items | filter:filterType">
-                        <!--<td>{{e.time}}</td>-->
-                        <!--<td>{{e.type}}</td>-->
-                        <!--<td></td>-->
-                        <!--<td></td>-->
-                        <!--<td>{{e.data.question}}</td>-->
-                        <tr ng-show="e.type!='discussion'">
-                        <td><p ng-show="(e.type=='quiz' && e.data.is_quiz_solved) || e.type=='confused'" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Relative to Module: {{ (e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}">{{(e.time) | formattime:'hh:mm:ss'}}</p></td>
-                        <td ng-show="e.type=='quiz' && !e.data.is_quiz_solved"><p>{{e.data.question}}</p></td>
-                        <td ng-show="e.type=='quiz' && e.data.is_quiz_solved"><p class="solved" ng-click="seek(e.time, l.id)" >{{e.data.question}}</p></td>
-                        <td ng-show="e.type=='confused' && !e.data.very"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.confused"}}</p></td>
-                        <td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.really_confused"}}</p></td>
+    <div style="overflow:auto;height:79%; position: absolute;"> <!-- has all discussions -->
+        
+        <div ng-repeat="l in module_lectures" class='dimmed' ng-class="{lectureopen: l.id == lecture.id}" id={{"outline_"+l.id}}>
+        
+            <h3>{{l.name}}</h3>
+            <table class="table table-striped" style="border-spacing: 0.2em;">
+                <tbody ng-repeat="e in timeline['lecture'][l.id].items | filter:filterType">
+                    <!--<td>{{e.time}}</td>-->
+                    <!--<td>{{e.type}}</td>-->
+                    <!--<td></td>-->
+                    <!--<td></td>-->
+                    <!--<td>{{e.data.question}}</td>-->
+                    <tr ng-show="e.type!='discussion'">
+                        <td class="timeline-icon-container">
+                                <div ng-show="(e.type=='quiz' && e.data.is_quiz_solved) || e.type=='confused'" ng-click="seek(e.time, l.id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(e.time) | formattime:'hh:mm:ss'}}" tooltip-append-to-body="true" >
+                                    <img src="../images/{{e.type}}-timeline.png" />
+                                </div>
+                        </td>
+                        <td ng-show="e.type=='quiz' && !e.data.is_quiz_solved">
+                            <p>
+                                {{e.data.question}}
+                            </p>
+                        </td>
+                        <td ng-show="e.type=='quiz' && e.data.is_quiz_solved">
+                            <p class="solved" ng-click="seek(e.time, l.id)" >
+                                {{e.data.question}}
+                            </p>
+                        </td>
+                        <td ng-show="e.type=='confused' && !e.data.very">
+                            <p class="solved" ng-click="seek(e.time, l.id)" translate>
+                                {{"courses.confused"}}
+                            </p>
+                        </td>
+                        <td ng-show="e.type=='confused' && e.data.very==true">
+                            <p class="solved" ng-click="seek(e.time, l.id)" translate>
+                                {{"courses.really_confused"}}
+                            </p>
+                        </td>
                         <td style='width:20px;'>
                            <img ng-show="e.type=='quiz' && e.data.is_quiz_solved" src="images/check7.png" />
                            <delete_button ng-show="e.type=='confused'" size="small" action="deleteConfused(e.data.id, l.id, e)" />
                         </td>
-                        </tr>
-                        <tr ng-show="e.type=='discussion'">
-                        <td><p ng-show="(e.type=='discussion')" class="solved" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="Relative to Module: {{ (e.time+l.cumulative_duration) | formattime:'hh:mm:ss'}}">{{(e.time) | formattime:'hh:mm:ss'}}</p></td>
+                    </tr>
+                    <tr ng-show="e.type=='discussion'">
+                        <td>
+                            <div ng-show="(e.type=='discussion')" class="solved timeline-item" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="{{(e.time) | formattime:'hh:mm:ss'}}">
+                                <img src="../images/{{e.type}}-timeline.png" />
+                            </p>
+                        </td>
                         <!--<td ng-show="e.type=='quiz' && !e.data.is_quiz_solved"><p>{{e.data.question}}</p></td>-->
                         <!--<td ng-show="e.type=='quiz' && e.data.is_quiz_solved"><p class="solved" ng-click="seek(e.time, l.id)" >{{e.data.question}}</p></td>-->
-                        <td ng-show="e.type=='discussion'"><p class="solved" ng-click="seek(e.time, l.id)">{{e.data.email}}: {{"q"|translate}} {{e.data.content}}</p></td>
-                        <!--<td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.really_confused"}}</p></td>-->
-                        <td style='width:20px;'>
-                            <!--<img ng-show="e.type=='quiz' && e.data.is_quiz_solved" src="images/check7.png" />-->
-                            <delete_button ng-show="e.type=='discussion' && e.data.user_id == current_user.id" size="small" action="deleteDiscussion(e.data.id, l.id, e)" />
-                            <input type="button" class="btn btn-mini" ng-show="e.type=='discussion'" ng-click="show_reply(e)" value="Reply" />
-                            <img style="width:20px;height:20px;" ng-show="e.data.privacy==0" src="/images/lock.png"/>
-                            <img style="width:20px;height:20px;" ng-show="e.data.privacy==1" src="/images/unlock.png"/>
-                            <input ng-show="e.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e.data.user_flag==1?"Unflag":"Flag"}} ng-click="flagPost(e.data.id, l.id, e)" class="btn btn-mini btn-danger"/>
-                            <input ng-show="e.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e.data.user_vote==1?"Unlike":"Like"}} ng-click="votePost(e.data.id, l.id, e)" class="btn btn-mini btn-primary"/>
-                            <p>Likes: {{e.data.votes_count}}</p>
-                        </td>
-                        </tr>
-                        <tr ng-show="show_reply[e.data.id]">
-                            <td></td>
-                            <td>
-                                    <textarea ng-model="current_reply[e.data.id]" style="width:100%;"></textarea>
-                            </td>
-                            <td>
-                                    <input type="button" class="btn btn-primary btn-small" ng-click="reply(e)" value={{"youtube.ask"|translate}} />
-                            </td>
-                        </tr>
-                        <tr ng-show="e.type=='discussion'" ng-repeat="e2 in timeline['lecture'][l.id][e.data.id].items | filter:checkEmpty">
-                            <td></td>
-                            <td>{{e2.data.email}}: {{e2.data.content}}</td>
-                            <td>
-                                <delete_button ng-show="e2.data.user_id == current_user.id" size="small" action="deleteAnswer(e2.data.id,e.data.id, l.id, e2)" />
-                                <input ng-show="e2.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e2.data.user_flag==1?"Unflag":"Flag"}} ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini btn-danger"/>
-                                <input ng-show="e2.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e2.data.user_vote==1?"Unlike":"Like"}} ng-click="voteComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini btn-primary"/>
-                                <p>Likes: {{e2.data.votes_count}}</p>
-                            </td>
-                        </tr>
-                        <!--<td ng-if="quiz.very==false">{{quiz.time}}</td>-->
-                    </tbody>
-                </table>
-            </accordion-group>
-        </accordion>
+                        <td ng-show="e.type=='discussion'" class="discussion-content">
+                            <table class="comments-table">
+                                <tr>
+                                    <td>
+                                        <b>{{e.data.screen_name}}</b>
+                                    </td>
 
+                                    <td>
+                                        <span style="float: right;">
+                                            <img ng-show="e.data.user_id != current_user.id && e.data.user_flag==1" src='{{e.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(e.data.id, l.id, e)" style="cursor: pointer; float: right;" tooltip="{{'discussion.dunflag_post' | translate}}"/>
+
+                                            <img ng-show="e.data.user_id != current_user.id && e.data.user_flag!=1" src='{{e.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(e.data.id, l.id, e)" style="cursor: pointer; float: right;" tooltip="{{'discussion.flag_post' | translate}}"/>
+
+                                            <delete_button ng-show="e.type=='discussion' && e.data.user_id == current_user.id" size="small" action="deleteDiscussion(e.data.id, l.id, e)" ></delete_button>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="solved" ng-click="seek(e.time, l.id)" colspan="2">
+                                        <p>
+                                            <img ng-show="e.data.privacy==0" src="/images/private.png" tooltip="{{'discussion.private_post' | translate}}"/>
+                                            <img ng-show="e.data.privacy==1" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}"/>
+                                            {{"q"|translate}} {{e.data.content}}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr ng-show="e.type=='discussion'" ng-repeat="e2 in timeline['lecture'][l.id][e.data.id].items | filter:checkEmpty" class="discussion-comment">
+                                    <td style="padding-left: 30px; width: 100%;">
+                                        <img ng-show="e2.data.user_id != current_user.id && e2.data.user_flag==1" src='{{e2.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" style="cursor: pointer; float: right;" tooltip="{{'discussion.unflag_post' | translate}}"/>
+
+                                        <img ng-show="e2.data.user_id != current_user.id && e2.data.user_flag!=1" src='{{e2.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" style="cursor: pointer; float: right;" tooltip="{{'discussion.flag_post' | translate}}"/>
+                                        <delete_button ng-show="e2.data.user_id == current_user.id" size="small" action="deleteAnswer(e2.data.id,e.data.id, l.id, e2)" />
+                                        <b>{{e2.data.screen_name}}</b><br />{{e2.data.content}}
+                                        <br />
+                                        <p ng-hide="e.data.votes_count == 0" style="float: right;"><small>{{e.data.votes_count}} {{'discussion.liked_this' | translate}}</small></p>
+                                        
+                                        <input ng-show="e2.data.user_id != current_user.id && e2.data.user_vote==1" style="width: 70px; height:20px;" value="{{'discussion.unlike' | translate}}" ng-click="voteComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini"/>
+
+                                        <input ng-show="e2.data.user_id != current_user.id && e2.data.user_vote!=1" style="width: 70px; height:20px;" value="{{'discussion.like' | translate}}" ng-click="voteComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini"/>
+                                        
+                                    </td>
+                                </tr>
+                            </table>
+                            <!-- <p class="solved" ng-click="seek(e.time, l.id)">
+                                {{e.data.screen_name}}: 
+                            </p> -->
+                            <div>
+                            </div>
+
+                            <p ng-show="e.data.privacy==1" ng-hide="e.data.votes_count == 0" style="float: right;"><small>{{e.data.votes_count}} person liked this.</small></p>
+                            <input ng-show="e.data.user_id != current_user.id && e.data.user_vote==1" style="width: 70px; height:20px;" value="{{'discussion.unlike' | translate}}" ng-click="votePost(e.data.id, l.id, e)" class="btn btn-mini"/>
+
+                            <input ng-show="e.data.user_id != current_user.id && e.data.user_vote!=1" style="width: 70px; height:20px;" value="{{'discussion.like' | translate}}" ng-click="votePost(e.data.id, l.id, e)" class="btn btn-mini"/>
+                            <!-- <input type="button" class="btn btn-mini" ng-show="e.type=='discussion'" ng-click="show_reply(e)" value="Reply" /> -->
+                            <br />
+                            <!-- <tr ng-show="show_reply[e.data.id]"> -->
+                                <!-- <td>
+                                    
+                                </td>
+                                <td>
+                                        <textarea ng-model="current_reply[e.data.id]" style="width:80%;" placeholder="{{'discussion.write_comment' | translate}}"></textarea>
+                                        <input type="button" class="btn btn-primary btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(e)" value={{"discussion.comment"|translate}} />
+                                </td>
+                            </tr> -->
+                        <span>
+                            <textarea ng-model="current_reply[e.data.id]" style="width:80%;" placeholder="{{'discussion.write_comment' | translate}}"></textarea>
+                            <input type="button" class="btn btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(e)" value={{"discussion.comment"|translate}} />
+                        </span>
+                        </td>
+                        <!--<td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.really_confused"}}</p></td>-->
+                    </tr>
+                    
+                    <!--<td ng-if="quiz.very==false">{{quiz.time}}</td>-->
+                </tbody>
+            </table>
+            <hr>
+        </div>
     </div>
 </div>
 

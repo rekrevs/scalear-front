@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: 'E', 
-			template: '<div class="ontop" id="ontop" style="" ng-class="lecture.aspect_ratio" ng-transclude></div>'
+			template: '<div class="ontop" id="ontop" style="position: absolute;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
 }).directive('editPanel',function(){
 	return {		
@@ -76,6 +76,7 @@ angular.module('scalearAngularApp')
 
 			//==FUNCTIONS==//
 			var setAnswerLocation=function(){
+				element.css('z-index', 5)
 				$log.debug("setting answer location")
 				var ontop=angular.element('.ontop');		
 				var w = scope.data.width * ontop.width();

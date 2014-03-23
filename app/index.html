@@ -94,13 +94,16 @@
             </div>
         </nav>
     </header>
-    <div ng-show="clipboard" style="width: 100%;background: #0088cc;color: white;padding-left: 15%;font-size: 15px;font-weight: bold;position: absolute;top: 43px;z-index:1">You Have {{clipboard.type[0].toUpperCase()+clipboard.type.slice(1)}}: {{clipboard.name}} in you clipboard</div>
+    <div ng-show="clipboard" style="width: 100%;background: #0088cc;color: white;padding-left: 53%;font-size: 15px;font-weight: bold;position: absolute;top: 37px;z-index:1031">
+        <span ng-bind="'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'"></span>
+        <button ng-click="emptyClipboard()" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">Remove</button>
+    </div>
     <div ui-view="navigation"></div>
     <div id="main" role="main">
         <div class="container" style="position:relative;width:1200px">
             <div class="content" style="width:auto">
                 <div class="row">
-                    <div class="span12" style="">
+                    <div class="span12">
                         <div ui-view=""></div>
                     </div>
                 </div>
@@ -252,8 +255,6 @@
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/course_list_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_list/new_course_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/course_list/copy_course_ctrl.js"></script>
-    <script src="scripts/controllers/teacher/course_list/import_from_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/course_editor_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course_editor/module_middle_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/module_details_ctrl.js"></script> 

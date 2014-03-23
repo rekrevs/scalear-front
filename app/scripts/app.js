@@ -289,16 +289,6 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/course_list/new_course.html',
                 controller: 'newCourseCtrl'
             })
-            .state('import_from',{
-               url:'/courses/import_from?shared_item',
-                templateUrl: '/views/teacher/course_list/import_from.html',
-                controller: 'importFromCtrl'
-            })
-            .state('copy_course', {
-                url: '/courses/copy',
-                templateUrl: '/views/teacher/course_list/copy_course.html',
-                controller: 'copyCourseCtrl'
-            })
             .state('course', {
                 url: '/courses/:course_id',
                 views: {

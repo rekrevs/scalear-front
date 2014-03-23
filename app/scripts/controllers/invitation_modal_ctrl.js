@@ -68,7 +68,7 @@ angular.module('scalearAngularApp')
   $scope.rejectShare=function(item){
     SharedItem.rejectShared(
       {shared_item_id: item.id},{},
-      function(){
+      function(data){
         $modalInstance.close();
         $rootScope.current_user.shared = data.shared_items
       },

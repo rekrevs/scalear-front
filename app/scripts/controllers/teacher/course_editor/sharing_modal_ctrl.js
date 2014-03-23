@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('sharingModalCtrl', ['$scope','$rootScope','$timeout','$window','$log','Module','$stateParams','Course','selected_item','selected_module','modules','SharedItem', function ($scope, $rootScope, $timeout,$window, $log, Module, $stateParams, courses,selected_item,selected_module,modules,SharedItem) {
+  .controller('sharingModalCtrl', ['$scope','$rootScope','$timeout','$window','$log','Module','$stateParams','Course','selected_item','selected_module','modules','SharedItem','$modalInstance', function ($scope, $rootScope, $timeout,$window, $log, Module, $stateParams, courses,selected_item,selected_module,modules,SharedItem,$modalInstance) {
     
   		var init =function(){  	
   			$scope.item= selected_item
@@ -11,7 +11,6 @@ angular.module('scalearAngularApp')
   			$scope.modules = modules
   			$scope.modules.forEach(function(module){
   				if(module == $scope.selected_module){
-  					console.log($scope.item)
   					if($scope.item)
 						module.items.forEach(function(item){
 							if(item == $scope.item)
@@ -22,11 +21,11 @@ angular.module('scalearAngularApp')
   				}
 
   			})
-  			courses.getAllTeachers({course_id:null}, function(response){
-            // $scope.courses=JSON.parse(response.courses);
-            	console.log(response)
-	            $scope.teachers = response.teachers;
-	        });
+  			// courses.getAllTeachers({course_id:null}, function(response){
+     //        // $scope.courses=JSON.parse(response.courses);
+     //        	console.log(response)
+	    //         $scope.teachers = response.teachers;
+	    //     });
   		}
 
 
@@ -41,32 +40,44 @@ angular.module('scalearAngularApp')
   							selected[item.class_name].push(item.id)
   					})
   			})
-  			console.log($scope.selected_teacher)
-            SharedItem.create({},{data: selected, shared_with: $scope.selected_teacher}, 
-        	function(){
+
+        if(!selected.modules.length && !selected.lecture.length && !selected.quiz.length){
+          $scope.errors = "Nothing is selected"
+        }
+        else if(!$scope.selected_teacher)
+          $scope.errors = "Please enter an Email"
+        else{
+          SharedItem.create({},{data: selected, shared_with: $scope.selected_teacher}, 
+          	function(){
                 console.log("success")
-                // $state.go("course_list");
+                $modalInstance.close();
+            },
+            function(response){
+              // console.log(data)
+              $scope.errors = response.data.errors
+              console.log($scope.errors)
             })
+          }
         }
 
-        $scope.selectAll=function(module,event){
-			module.selected = !module.selected
-        	module.items.forEach(function(item){
-        		item.selected=module.selected
-        	})
-        	event.stopPropagation()
-        }
+      $scope.selectAll=function(module,event){
+	      module.selected = !module.selected
+      	module.items.forEach(function(item){
+      		item.selected=module.selected
+      	})
+      	event.stopPropagation()
+      }
 
-        $scope.selectItem=function(module, item, event){
-        	event.stopPropagation()
-        	item.selected = !item.selected
-        	var count = 0
-        	module.items.forEach(function(item){
-        		if(item.selected)
-        			count+=1
-        	})
-        	module.selected = count == module.items.length
-        }
+      $scope.selectItem=function(module, item, event){
+      	event.stopPropagation()
+      	item.selected = !item.selected
+      	var count = 0
+      	module.items.forEach(function(item){
+      		if(item.selected)
+      			count+=1
+      	})
+      	module.selected = count == module.items.length
+      }
 
   		init()
 

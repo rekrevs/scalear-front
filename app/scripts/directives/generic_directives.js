@@ -73,6 +73,7 @@ angular.module('scalearAngularApp')
             };
 
         menuElement.css('position', 'fixed');
+        menuElement.css('cursor', 'pointer');
 
         scope.$watch('opened',function(){
           if(scope.opened)

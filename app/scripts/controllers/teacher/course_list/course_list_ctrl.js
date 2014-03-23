@@ -31,13 +31,6 @@ angular.module('scalearAngularApp')
 	  	//	}
   		}
 
-        $scope.exportCourse = function(course){
-            //export_data.export_course(course.id);
-            Course.exportCsv({course_id: course.id}, function(){
-                console.log("success");
-            })
-        }
-
   		$scope.filterTeacher=function(teacher_name){
   			$scope.filtered_teacher= teacher_name;
   		}

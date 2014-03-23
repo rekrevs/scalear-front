@@ -1,8 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window',
-        function($scope, $stateParams, Course, $window) {
+    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page',
+        function($scope, $stateParams, Course, $window, Page) {
+
+            Page.setTitle('Information');
             $window.scrollTo(0, 0);
             $scope.init = function(){
                 Course.show({

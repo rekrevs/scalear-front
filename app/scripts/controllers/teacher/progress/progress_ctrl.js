@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course','$log', '$window', function ($scope, $stateParams, $location, Course, $log, $window) {
+  .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course','$log', '$window','Page', function ($scope, $stateParams, $location, Course, $log, $window,Page) {
 
   		$window.scrollTo(0, 0);
+  		Page.setTitle('Progress')
    		Course.getCourse({course_id:$stateParams.course_id},
 			function(data){
 				$scope.modules = data.groups

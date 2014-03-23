@@ -1,9 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('indexController', ['scalear_api', '$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', '$http',
-        function(scalear_api, $scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, $http) {
+    .controller('indexController', ['scalear_api', '$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', '$http', 'Page',
+        function(scalear_api, $scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, $http, Page) {
 
+
+            $scope.Page = Page;
+            
             $scope.changeLanguage = function(key) {
                 $log.debug("in change language " + key);
                 $translate.uses(key);

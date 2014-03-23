@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder" ng-transclude></div>' //style="border:4px solid" 
+			template: '<div class="videoborder well" style="padding:0" ng-transclude></div>' //style="border:4px solid" 
 		};
 }).directive('quiz',function(){
 		return {

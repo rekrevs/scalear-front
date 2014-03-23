@@ -3,14 +3,21 @@
 			<video_container class="largescreen">
 				<youtube  id="statistics_video" url="lecture_url" controls="1" player="statistics_player" class="largescreen"/>
 			</video_container>
-			<br><br>		
-	</center> 
-	<div style="overflow-x:auto; overflow-y:hidden;" >
-		<div style="margin-left:85px;" ng-style="{width:statistics.width}"> 
-			<div class="lecture_name" ng-repeat="name in statistics.lecture_names" ng-style="{width:name[0], backgroundColor:($index%2)?'':'rgb(242,242,242)'}" style="display:inline-block;text-align:center">{{name[1]}}</div>
+	</center>
+	<div>
+		<div id="labels">
+			<div id="first_label" class="inverted">#Confused</div>
+			<div id="second_label" class="inverted">#Back</div>
+			<div id="third_label" class="inverted">#Pauses</div>
+			<div id="fourth_label" class="inverted">#Questions</div>
 		</div>
-		<div ng-repeat="type in types" ng-init="chart=createStatisticsChart(type)">
-			<div google-chart chart="chart" select="skipToTime(selectedItem, type)"></div>
+		<div style="overflow-x:auto; overflow-y:hidden;" >
+			<div style="margin-left:35px;" ng-style="{width:statistics.width}"> 
+				<div class="lecture_name" ng-repeat="name in statistics.lecture_names" ng-style="{width:name[0], backgroundColor:($index%2)?'':'rgb(242,242,242)'}" style="display:inline-block;text-align:center">{{name[1]}}</div>
+			</div>
+			<div ng-repeat="type in types" ng-init="chart=createStatisticsChart(type)">
+				<div google-chart chart="chart" select="skipToTime(selectedItem, type)"></div>
+			</div>
 		</div>
 	</div>
 </div>

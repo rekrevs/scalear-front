@@ -9,12 +9,10 @@ angular.module('scalearAngularApp')
 			time:"=",
 			questions:"=",
 			id:'=',
-			open: "="
+			open: "=",
+			done:"="
 		},
-		template: "<h5 ng-click='invertOpen()'>"+
-					"<table><tr><td><a class='trigger' ng-class='{open:open[id]}'>{{name}}</a></td>"+
-					"<td><p style=\"display:inline;font-size:10px;\">{{time}} - {{questions}} {{'q' | translate}}</p></td></td></table>"+
-				  "</h5>",
+		templateUrl: '/views/student/lectures/courseware_module.html',
 	  link: function(scope){
 			scope.invertOpen = function()
 			{

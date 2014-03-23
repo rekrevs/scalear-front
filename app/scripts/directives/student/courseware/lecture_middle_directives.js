@@ -362,24 +362,31 @@ angular.module('scalearAngularApp')
         scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
         scope.$parent.show_notification=true;
 
-		if(data.msg!="Empty") // he chose sthg
-	    {
-	    	// here need to update scope.$parent.$parent
-	    	var group_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups, data.done[1])
-	 		var lecture_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
-	    	if(lecture_index!=-1 && group_index!=-1)
-	    		scope.$parent.$parent.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
-	    	scope.selected_quiz.is_quiz_solved=true;
-	    	
-	    	//scope.$emit('accordianReload');
-			//scope.$emit('accordianUpdate',{g_id:scope.lecture.group_id, type:"lecture", id:scope.lecture.id});
-	    }
-        $interval(function(){
+        if(data.msg!="Empty") // he chose sthg
+        {
+          // here need to update scope.$parent.$parent
+          var group_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups, data.done[1])
+          var lecture_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+          if(lecture_index!=-1 && group_index!=-1)
+            scope.$parent.$parent.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
+          scope.selected_quiz.is_quiz_solved=true;
+
+          //scope.$emit('accordianReload');
+          //scope.$emit('accordianUpdate',{g_id:scope.lecture.group_id, type:"lecture", id:scope.lecture.id});
+        }
+        var removeNotification = function(){
           scope.$parent.show_notification=false;
-        }, 2000, 1);
+          window.onmousemove = null
+          scope.$apply()
+        }
+
+        // ()
+
+        $interval(function(){
+          window.onmousemove = removeNotification
+        }, 600, 1);
+
       }
-
-
     }
   }
 }])

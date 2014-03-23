@@ -90,7 +90,10 @@ angular.module('scalearAngularApp')
                     var vimeo= scope.url.match(/vimeo/)  // improve this..
                     if(matches) //youtube
                     {
-                        player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1');
+                    	scope.video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
+                    	player = Popcorn(scope.video,{});
+                    	scope.video.src = formatURL(scope.url)
+                        // player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1');
                     }
                     else if(vimeo)
                     {
@@ -100,29 +103,24 @@ angular.module('scalearAngularApp')
                     }
                     else{
                         player = Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
-                        //player = Popcorn.smart( '#'+scope.id, ["http://videos.mozilla.org/serv/webmademovies/popcornplug.mp4", "http://videos.mozilla.org/serv/webmademovies/popcornplug.ogv", "http://videos.mozilla.org/serv/webmademovies/popcornplug.webm"])//, scope.url,{ width: '100%', height:'100%', controls: 0});
                         player.controls(scope.controls);
                         player.autoplay(true);
-                        //player.controls(0);
-
-//                        element.append('<div id="video-controls">' +
-//                            '<button type="button" id="play-pause" class="btn" style="margin-right:2%; width:10%">Play</button>' +
-//                            '<input  type="range" id="seek-bar" value="0" style="margin-right:2%;width:60%">' +
-//                            '<button type="button" id="mute" class="btn" style="margin-right:2%;width:10%">Mute</button>' +
-//                            '<input type="range" id="volume-bar" min="0" max="1" step="0.1" value="1" style="width:10%">' +
-//                            '</div>');
                     }
-                   // console.log(player);
-                   // console.log(player.video.videoWidth);
-                   // player.video.videoWidth=500;
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
 					$timeout(function(){
-						if(!player_controls.readyState())
+						if(player_controls.readyState() == 0)
 							scope.$emit('slow')
-					},10000)
+					},15000)
 					parent.focus()
+				}
+
+				var formatURL=function(url){
+					var splitted_url= url.split('?'),
+					base_url = splitted_url[0],
+					query = '&'+splitted_url[1]	
+					return base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls&origin=https://www.youtube.com"+query;
 				}
 
                 scope.kill_popcorn = function(){
@@ -131,8 +129,7 @@ angular.module('scalearAngularApp')
                         player.destroy();
                     }
                 }
-			
-				player_controls.play=function(){
+                player_controls.play=function(){
 					player.play();
 				}
 
@@ -178,17 +175,16 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek_and_pause=function(time){
-                    console.log("seeking to "+time);
 					player_controls.seek(time)
 					player.pause()
 				}
 
 				player_controls.refreshVideo = function(quality){
 					$log.debug("refreshVideo!")
-
+					scope.kill_popcorn()
 					element.find('iframe').remove();
-                    element.find('video').remove();
-                    popcornApiProxy(loadVideo, quality);
+					// //popcornApiProxy(loadVideo);
+					loadVideo()
 				}
 
 				player_controls.hideControls=function(){
@@ -272,6 +268,14 @@ angular.module('scalearAngularApp')
 						parent.focus()
 						if(player_events.timeUpdate){
 							player_events.timeUpdate();
+							scope.$apply();
+						}
+					})
+
+					player.on('waiting',function(){
+						parent.focus()
+						if(player_events.waiting){
+							player_events.waiting();
 							scope.$apply();
 						}
 					})

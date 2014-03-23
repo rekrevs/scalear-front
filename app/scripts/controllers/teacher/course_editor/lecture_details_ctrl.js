@@ -16,14 +16,29 @@ angular.module('scalearAngularApp')
                     $log.debug(data)
                     d.resolve($translate('courses.invalid_input'));
                 }
+
                 Lecture.validateLecture({
                         course_id: $scope.lecture.course_id,
                         lecture_id: $scope.lecture.id
                     },
                     lecture,
+                    function(data) {                        
+                        if(lecture.url){
+                            var id = lecture.url.split("v=")[1].split("&")[0]
+                            var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
+                            $http.jsonp(url).success(function(data) {
+                                if(data.entry.media$group.yt$duration.seconds<1)
+                                    d.reject("video may not exist or may still be uploading");
+                                else
+                                    d.resolve()
+                            }).error(function(){
+                                d.reject("video may not exist or may still be uploading");
+                            });                    
+                        }
+                        else
+                            d.resolve()
+                    }, 
                     function(data) {
-                        d.resolve()
-                    }, function(data) {
                         $log.debug(data.status);
                         $log.debug(data);
                         if (data.status == 422)
@@ -58,7 +73,6 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
-                        // console.log($scope.modules)
                         $scope.modules.forEach(function(module, i) {
                             if (module.id == $scope.lecture.group_id) {
                                 if ($scope.lecture.appearance_time_module) {
@@ -69,14 +83,30 @@ angular.module('scalearAngularApp')
                                 }
                             }
                         });
-
                     },
                     function() {
-                        //alert("Failed to update lecture, please check your internet connection")
+                        
                     }
                 );
             }
+            var isDueDateDisabled=function(){
+                var due = new Date($scope.lecture.due_date)
+                var today = new Date()
+                return due.getFullYear() > today.getFullYear()+100
+            }
 
+            $scope.updateDueDate=function(type,enabled){
+                var d = new Date($scope.lecture.due_date)
+                if(isDueDateDisabled() && enabled) 
+                    var years =  -200 
+                else if(!isDueDateDisabled() && !enabled)
+                    var years  =  200
+                else
+                    var years = 0
+                d.setFullYear(d.getFullYear()+ years)
+                $scope.lecture.due_date = d
+                $scope.lecture.due_date_enabled =!isDueDateDisabled()
+            }
             $scope.visible = function(appearance_time) {
                 if (new Date(appearance_time) <= new Date()) {
                     return true;

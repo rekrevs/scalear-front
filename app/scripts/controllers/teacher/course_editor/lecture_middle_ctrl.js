@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
     $scope.resize={}
     $scope.video_layer={}
     $scope.quiz_layer={}
-    $scope.ontop_layer={'position':'absolute'}
+    // $scope.ontop_layer={'position':'absolute'}
     $scope.lecture_player={}
     $scope.lecture_player.events={}
     $scope.alert={
@@ -34,6 +34,12 @@ angular.module('scalearAngularApp')
     $scope.fullscreen = false
 	
     $state.go('course.course_editor.lecture.quizList');
+
+    $scope.dynamic = 30
+
+$timeout(function(){
+	$scope.dynamic = 70
+}, 4000)   
 
 //////////////////////////////////////FUNCTIONS/////////////////////////////////////////////
 
@@ -56,13 +62,17 @@ angular.module('scalearAngularApp')
         $scope.lecture_player.controls.seek(0)
         $scope.lecture_player.controls.volume(0.5);
  	}
+
+ 	$scope.lecture_player.events.onMeta = function(){
+ 		$scope.slow = false
+ 	}
 	$scope.lecture_player.events.onPlay= function(){
         $scope.play_pause_class = 'pause'
+		$scope.slow = false
 		var paused_time= $scope.lecture_player.controls.getTime()
 		if($scope.editing_mode)
 			$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
-
         $scope.playBtn = function(){
             console.log($scope.play_pause_class)
             if($scope.play_pause_class == "play"){
@@ -94,7 +104,18 @@ angular.module('scalearAngularApp')
             $scope.play_pause_class = "play"
         }
 
-        var checkQuizTimeConflict=function(time){
+ 	$scope.lecture_player.events.onSlow=function(){
+        $scope.slow = true
+    }
+
+    $scope.lecture_player.events.waiting=function(){
+        if($scope.editing_mode && $scope.selected_quiz && $scope.lecture_player.controls.getTime() != $scope.selected_quiz.time){
+        	$scope.editing_mode = false;
+        	$scope.selected_quiz=null
+    	}
+    }
+
+ 	var checkQuizTimeConflict=function(time){
  		var new_time = time 
  		var inc = 0
  		$scope.quiz_list.forEach(function(quiz){
@@ -235,6 +256,7 @@ angular.module('scalearAngularApp')
 	}
 
  	$scope.addDoubleClickBind= function(event){
+ 		console.log("hell worll.ds")
  		var answer_width, answer_height
  		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
  			answer_width = 300
@@ -245,6 +267,7 @@ angular.module('scalearAngularApp')
  			answer_height= 13
  		}
 	    var element = angular.element(event.target);
+
 	    //$log.debug(element.attr('id').contains("ontop"))
 	    if(element.attr('id') =="ontop"){
 	    	$log.debug("adding on top ontop")
@@ -265,7 +288,7 @@ angular.module('scalearAngularApp')
 		        window.getSelection().removeAllRanges();
 		    else if (document.selection)
 		        document.selection.empty();
-	      	}    	
+      	}    	
 	}
 
 	$scope.addAnswer= function(ans,h,w,l,t){

@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log','$window', '$state', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $window, $state) {
+  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log','$window', '$state', 'Page', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $window, $state, Page) {
 
 	$window.scrollTo(0, 0);
 	// $state.$watch('params', function(){
+		Page.setTitle('Lectures');
 		if($state.params.lecture_id){
 			$scope.current_item = $state.params.lecture_id
 		}
@@ -33,6 +34,20 @@ angular.module('scalearAngularApp')
 				$scope.today = data.today;	
 				$log.debug($scope.course);
 				$scope.initSelector();
+
+	    	 // $scope.course= JSON.parse(data.course);
+	    	 // $scope.today = data.today;	
+	    	 // $log.debug($scope.course);
+	    	 // $scope.course.groups.forEach(function(module){
+	    	 // 	var count = 0
+	    	 // 	var items = module.quizzes.concat(module.lectures)
+	    	 // 	items.forEach(function(item){
+	    	 // 		if(item.is_done)
+	    	 // 			count++
+	    	 // 	})
+    	 	// 	module.is_done = (count == items.length) 
+	    	 // })
+
 	    	});
 	}
 	$rootScope.$watch('iscollapsed', function(){

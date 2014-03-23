@@ -67,6 +67,17 @@ var translation_sv=function(){
               course_information: "Kursinformation",
               help: "Hjälp"
           },
+          discussion:{
+            private_post: "Privat Inlägget",
+            public_post: "Public Inlaägget",
+            comment: "Kommentera",
+            like: "Behaga",
+            unlike: "Un-liknande",
+            liked_this: "gillade detta",
+            write_comment: "Lämna en kommentar...",
+            flag_post: "Flagga detta Inlägg",
+            unflag_post: "Un-flagga detta inlägg"
+          },
           settings:{
             lectures: "Föredrag Inställningar"
           },

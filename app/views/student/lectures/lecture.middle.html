@@ -97,11 +97,11 @@
 							</quiz>
 						</div>
 						<youtube ng-show="lecture.url" style="width: 100%; z-index: 0; position: relative; bottom: 0px; top: 0px; height: auto;" id="lecture_video" ng-style="ontop_layer" url="lecture.url"  player="lecture_player" autoplay='1' class="{{lecture.aspect_ratio}} youtube"/>
-					    <progress-bar style="width: 100%;" lecture='lecture' timeline='timeline' progress_events='progressEvents' confused_areas='confused_areas' play_pause_class="play_pause_class" view="student" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration' player="lecture_player"></progress-bar>
+					    <progress-bar name="player_progress_bar" style="width: 100%;" lecture='lecture' timeline='timeline' progress_events='progressEvents' confused_areas='confused_areas' play_pause_class="play_pause_class" view="student" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration' player="lecture_player"></progress-bar>
 
 					    <check ng-show='display_mode' style="position: relative; display: inline-block; z-index: 1000; top: -30px; left: 47%; width: 0px;"></check>
 
-						<controls ng-show="lecture.url && !loading_video" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' ng-class="{ipad_controls:ipad}" style="position: relative; display: inline-block; z-index: 1000; top: -18px; left: 100%; margin-top: 5px;">
+						<controls id="controls-bar" ng-show="lecture.url && !loading_video" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' ng-class="{ipad_controls:ipad}" style="position: relative; display: inline-block; z-index: 1000; top: -18px; left: 100%; margin-top: 5px;">
 						</controls>
 						
 						<notification ng-style="notify_position" ng-if='show_notification!=false'></notification>

@@ -178,7 +178,10 @@
 
                                     <td>
                                         <span style="float: right;">
-                                            <img ng-show="e.data.user_id != current_user.id" src='{{e.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(e.data.id, l.id, e)" style="cursor: pointer; float: right;" tooltip="{{e2.data.user_flag==1?'Unflag this post':'Flag this post'}}"/>
+                                            <img ng-show="e.data.user_id != current_user.id && e.data.user_flag==1" src='{{e.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(e.data.id, l.id, e)" style="cursor: pointer; float: right;" tooltip="{{'discussion.dunflag_post' | translate}}"/>
+
+                                            <img ng-show="e.data.user_id != current_user.id && e.data.user_flag!=1" src='{{e.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(e.data.id, l.id, e)" style="cursor: pointer; float: right;" tooltip="{{'discussion.flag_post' | translate}}"/>
+
                                             <delete_button ng-show="e.type=='discussion' && e.data.user_id == current_user.id" size="small" action="deleteDiscussion(e.data.id, l.id, e)" ></delete_button>
                                         </span>
                                     </td>
@@ -186,21 +189,25 @@
                                 <tr>
                                     <td class="solved" ng-click="seek(e.time, l.id)" colspan="2">
                                         <p>
-                                            <img ng-show="e.data.privacy==0" src="/images/private.png" tooltip="Private Post"/>
-                                            <img ng-show="e.data.privacy==1" src="/images/public.png" tooltip="Public Post"/>
+                                            <img ng-show="e.data.privacy==0" src="/images/private.png" tooltip="{{'discussion.private_post' | translate}}"/>
+                                            <img ng-show="e.data.privacy==1" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}"/>
                                             {{"q"|translate}} {{e.data.content}}
                                         </p>
                                     </td>
                                 </tr>
                                 <tr ng-show="e.type=='discussion'" ng-repeat="e2 in timeline['lecture'][l.id][e.data.id].items | filter:checkEmpty" class="discussion-comment">
                                     <td style="padding-left: 30px; width: 100%;">
-                                        <img ng-show="e2.data.user_id != current_user.id" src='{{e2.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" style="cursor: pointer; float: right;" tooltip="{{e2.data.user_flag==1?'Unflag this post':'Flag this post'}}"/>
+                                        <img ng-show="e2.data.user_id != current_user.id && e2.data.user_flag==1" src='{{e2.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" style="cursor: pointer; float: right;" tooltip="{{'discussion.unflag_post' | translate}}"/>
+
+                                        <img ng-show="e2.data.user_id != current_user.id && e2.data.user_flag!=1" src='{{e2.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" style="cursor: pointer; float: right;" tooltip="{{'discussion.flag_post' | translate}}"/>
                                         <delete_button ng-show="e2.data.user_id == current_user.id" size="small" action="deleteAnswer(e2.data.id,e.data.id, l.id, e2)" />
                                         <b>{{e2.data.screen_name}}</b><br />{{e2.data.content}}
                                         <br />
-                                        <p ng-hide="e.data.votes_count == 0" style="float: right;"><small>{{e.data.votes_count}} person liked this.</small></p>
+                                        <p ng-hide="e.data.votes_count == 0" style="float: right;"><small>{{e.data.votes_count}} {{'discussion.liked_this' | translate}}</small></p>
                                         
-                                        <input ng-show="e2.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e2.data.user_vote==1?"Unlike":"Like"}} ng-click="voteComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini btn-primary"/>
+                                        <input ng-show="e2.data.user_id != current_user.id && e2.data.user_vote==1" style="width: 70px; height:20px;" value="{{'discussion.unlike' | translate}}" ng-click="voteComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini"/>
+
+                                        <input ng-show="e2.data.user_id != current_user.id && e2.data.user_vote!=1" style="width: 70px; height:20px;" value="{{'discussion.like' | translate}}" ng-click="voteComment(e2.data.id,e.data.id, l.id, e2)" class="btn btn-mini"/>
                                         
                                     </td>
                                 </tr>
@@ -212,7 +219,9 @@
                             </div>
 
                             <p ng-show="e.data.privacy==1" ng-hide="e.data.votes_count == 0" style="float: right;"><small>{{e.data.votes_count}} person liked this.</small></p>
-                            <input ng-show="e.data.user_id != current_user.id" style="width:30px;height:20px;" value={{e.data.user_vote==1?"Unlike":"Like"}} ng-click="votePost(e.data.id, l.id, e)" class="btn btn-mini"/>
+                            <input ng-show="e.data.user_id != current_user.id && e.data.user_vote==1" style="width: 70px; height:20px;" value="{{'discussion.unlike' | translate}}" ng-click="votePost(e.data.id, l.id, e)" class="btn btn-mini"/>
+
+                            <input ng-show="e.data.user_id != current_user.id && e.data.user_vote!=1" style="width: 70px; height:20px;" value="{{'discussion.like' | translate}}" ng-click="votePost(e.data.id, l.id, e)" class="btn btn-mini"/>
                             <!-- <input type="button" class="btn btn-mini" ng-show="e.type=='discussion'" ng-click="show_reply(e)" value="Reply" /> -->
                             <br />
                             <!-- <tr ng-show="show_reply[e.data.id]"> -->
@@ -220,13 +229,13 @@
                                     
                                 </td>
                                 <td>
-                                        <textarea ng-model="current_reply[e.data.id]" style="width:80%;" placeholder="Write your reply..."></textarea>
-                                        <input type="button" class="btn btn-primary btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(e)" value={{"youtube.ask"|translate}} />
+                                        <textarea ng-model="current_reply[e.data.id]" style="width:80%;" placeholder="{{'discussion.write_comment' | translate}}"></textarea>
+                                        <input type="button" class="btn btn-primary btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(e)" value={{"discussion.comment"|translate}} />
                                 </td>
                             </tr> -->
                         <span>
-                            <textarea ng-model="current_reply[e.data.id]" style="width:80%;" placeholder="Write your reply..."></textarea>
-                            <input type="button" class="btn btn-primary btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(e)" value={{"youtube.ask"|translate}} />
+                            <textarea ng-model="current_reply[e.data.id]" style="width:80%;" placeholder="{{'discussion.write_comment' | translate}}"></textarea>
+                            <input type="button" class="btn btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(e)" value={{"discussion.comment"|translate}} />
                         </span>
                         </td>
                         <!--<td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek(e.time, l.id)" translate>{{"courses.really_confused"}}</p></td>-->

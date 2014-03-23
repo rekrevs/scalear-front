@@ -393,7 +393,7 @@ angular.module('scalearAngularApp')
 				$scope.unregister_state_event()	
 			}
 
-			$scope.resize.big = function()
+			$scope.resize.big = function(which)
 			{
                 $rootScope.changeError = true;
 				//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
@@ -468,6 +468,36 @@ angular.module('scalearAngularApp')
 			        $scope.resize.small() 
 			        $scope.$apply()
 				});
+			}
+
+			$scope.lecturesFullScreen = function(){
+				var win = angular.elemen($window)
+				var video_layer = angular.element('#main-video-container')
+				var controls_bar = angular.element('#controls-bar')
+				var progress_bar = angular.element('player_progress_bar')
+				var factor = 16/9
+
+				controls_bar.css('width', win.width())
+				controls_bar.css('position', 'fixed')
+				controls_bar.css('bottom', '0')
+				controls_bar.css('left', '0')
+				controls_bar.css('right', '0')
+				controls_bar.css('z-index', '1531')
+
+
+				progress_bar.css('width', win.width())
+				progress_bar.css('position', 'fixed')
+				progress_bar.css('bottom', controls_bar.height())
+				progress_bar.css('right', '0')
+				progress_bar.css('left', '0')
+				progress_bar.css('z-index', '1531')
+
+
+				video_layer.css('height', win.height()-progress_bar.height()-controls_bar.height());
+				video_layer.css('width', video_layer*factor);
+				video_layer.css('z-index', '1531')
+				
+
 			}
 		}
 	}

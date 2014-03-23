@@ -66,6 +66,17 @@ var translation_en=function(){
         discussion_forum: "Discussion Forum",
         help: "Help"
       },
+      discussion:{
+        private_post: "Private Post",
+        public_post: "Public Post",
+        comment: "Comment",
+        like: "Like",
+        unlike: "Unlike",
+        liked_this: "liked this",
+        write_comment: "Leave a comment...",
+        flag_post: "Flag this post",
+        unflag_post: "Unflag this post"
+      },
       settings:{
         lectures: "Lectures Settings"
       },

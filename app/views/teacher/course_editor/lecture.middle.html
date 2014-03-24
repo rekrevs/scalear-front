@@ -26,7 +26,7 @@
 	<div class="quiz_list" >
 		<overlay ng-hide="hide_overlay || lecture.url=='none'">
 			<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
-			<h3 ng-show="lecture.url=='none'">Please Provide A Video URL</h3>
+			<h3 ng-show="lecture.url=='none'"translate>lectures.provide_url</h3>
 		</overlay>
 		<center ng-show="fullscreen"><a class='btn small fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center>
 		<edit_panel ng-show="editing_mode" />

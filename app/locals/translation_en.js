@@ -77,6 +77,20 @@ var translation_en=function(){
         flag_post: "Flag this post",
         unflag_post: "Unflag this post"
       },
+      menu:{
+        copy:"Copy",
+        paste: "Paste",
+        share: "Share",
+      },
+      sharing:{
+        nothing_selected: "Nothing is selected",
+        please_enter_email:"Please enter an Email",
+        share_content:"Share content with",
+        teacher_email:"Teacher Email",
+        with_you:"Shared with you",
+        add_to:"Add To",
+        add: "Add",
+      },
       settings:{
         lectures: "Lectures Settings"
       },
@@ -284,7 +298,8 @@ var translation_en=function(){
         video_notes: "Video Notes",
         outline: "Outline",
         confused: "Confused",
-        discussion: "Discussion"
+        discussion: "Discussion",
+        provide_url:"Please Provide A Video URL"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -566,7 +581,8 @@ var translation_en=function(){
         duration_invalid: "Duration is invalid",
         charts: "Charts",
         total_statistics: "Total Statistics",
-        enroll_instruction: "To enroll in a course click 'Join Course' below and enter the course enrollment key from your instructor."
+        enroll_instruction: "To enroll in a course click 'Join Course' below and enter the course enrollment key from your instructor.",
+        export_as: "Export course as"
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

@@ -1,9 +1,9 @@
 <div style="height:500px">
-	<h3>Share This Module with:</h3>
-	<span style="margin: 5px 24px;margin-right: 10px;">Teacher Email:</span>
+	<h3><span translate>sharing.share_content</span>:</h3>
+	<span style="margin: 5px 24px;margin-right: 10px;" ><span translate>sharing.teacher_email</span>:</span>
 	<!-- <input type="text" ng-model="$parent.selected_teacher" class="form-control" style="margin: 0;"> -->
 	<input type="email" ng-model="$parent.selected_teacher" class="string email optional" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" size="50" style="margin: 0;"/>
-	<button ng-click="shareItem()" class="btn btn-info">Share</button>
+	<button ng-click="shareItem()" class="btn btn-info" translate>menu.share</button>
 	<div class="errormessage" style="margin-left: 135px;height:5%">{{errors}}</div>
 
 	<ul style="overflow:auto;height:72%;margin:0 25px;">

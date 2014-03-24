@@ -196,7 +196,7 @@ angular.module('scalearAngularApp')
         function($timeout, $filter) {
             return {
 
-                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-select="value" buttons="no" e-ng-options="s as s for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ status }}<i ng-class="overclass"></i></a> ',
+                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-select="value" buttons="no" e-ng-options="s.text for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ status }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -208,7 +208,7 @@ angular.module('scalearAngularApp')
                 link: function(scope) {
                     scope.showStatus = function() {
                         var selected = $filter('filter')(scope.options, scope.value);
-                        return selected.length ? selected[0] : 'Not set';
+                        return selected.length ? selected[0].text : 'Not set';
                     };
                     scope.saveData = function() {
                         $timeout(function() {

@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
                     // '<loading size="small" show="sending_technical"/>' +
                     // '</div></span>',
 // ----------------------------->>>
-                    '<div class="well" style="width:500px;background:wheat;padding:10px 0" ng-show="show_technical"><br>' +
+                    '<div class="well" style="width:500px;background:whitesmoke;padding:10px; margin: 0 auto; margin-top: 15px;" ng-show="show_technical"><br>' +
                         // '<div style="margin-left:3px;width:400px;" class="row toggle-demo">'+
                         //     '<div class="switch-toggle switch-2 well col-lg-9">'+
                         //         '<input id="week-d1" name="view-d" type="radio" ng-checked="issue_type==\'system\'">'+
@@ -73,6 +73,7 @@ angular.module('scalearAngularApp')
                         scope.sending_technical = false;
                     }
                     scope.cancel=function(){
+                        scope.show_technical = false
                         scope.selected_type=scope.issue_types[0];
                         scope.technical_data =null
                         scope.no_text=null

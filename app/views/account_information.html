@@ -29,6 +29,7 @@
             <td>
                 <p translate="account_edit.university"></p>
                 <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="text" ng-model="user.university" id="user_university" size="50"/>
+                <br/><span class="errormessage" ng-show="user.errors.university">{{user.errors.university.join()}}</span>
             </td>
         </tr>
         <tr>
@@ -39,14 +40,14 @@
             </td>
             <td style="vertical-align: top;">
                 <p translate="account_edit.link"></p>
-                <input type="text" ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" ng-model="user.link" id="user_link" size="50"/>
+                <input type="text" ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" ng-model="user.link" id="user_link" size="50" autocomplete="off"/>
                 <br/><span class="errormessage" ng-show="user.errors.link">{{user.errors.link.join()}}</span>
             </td>
         </tr>
         <tr>
             <td>
                 <p translate="password"></p>
-                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="password" ng-model="user.password" id="user_password" name="user[password]" size="50"/>
+                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="password" ng-model="user.password" id="user_password" name="user[password]" size="50" autocomplete="off"/>
                 <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>
             </td>
             <td>

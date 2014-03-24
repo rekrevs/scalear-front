@@ -227,10 +227,11 @@ angular.module('scalearAngularApp')
           element.css("z-index",10000);
         }
         else{
-          scope.pHeight= 280;
+          scope.pHeight= angular.element('#main-video-container').height()-90;
           element.css("z-index",1000);
         }
           element.css("top", scope.pHeight+"px");
+          element.css("position", "absolute");
       }
 
       setNotficationPosition()
@@ -306,9 +307,9 @@ angular.module('scalearAngularApp')
           {
           	$log.debug(scope.$parent);
           	// notify
-          	scope.$parent.show_notification=$translate("groups.choose_correct_answer")//"You must choose atleast one answer";
+          	scope.show_notification=$translate("groups.choose_correct_answer")//"You must choose atleast one answer";
    				$interval(function(){
-	             		 scope.$parent.show_notification=false;
+	             		 scope.show_notification=false;
 	         	}, 2000, 1);
           	return		
           }
@@ -328,9 +329,9 @@ angular.module('scalearAngularApp')
             
           if(count<scope.selected_quiz.online_answers.length)
           {
-          	scope.$parent.show_notification=$translate("groups.must_place_items");
+          	scope.show_notification=$translate("groups.must_place_items");
    				$interval(function(){
-	             		 scope.$parent.show_notification=false;
+	             		 scope.show_notification=false;
 	         	}, 2000, 1);
             return
            }
@@ -360,7 +361,7 @@ angular.module('scalearAngularApp')
           scope.explanation[el]= data.detailed_exp[el];
 
         scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
-        scope.$parent.show_notification=true;
+        scope.show_notification=true;
 
         if(data.msg!="Empty") // he chose sthg
         {
@@ -375,7 +376,7 @@ angular.module('scalearAngularApp')
           //scope.$emit('accordianUpdate',{g_id:scope.lecture.group_id, type:"lecture", id:scope.lecture.id});
         }
         var removeNotification = function(){
-          scope.$parent.show_notification=false;
+          scope.show_notification=false;
           window.onmousemove = null
           scope.$apply()
         }
@@ -554,7 +555,7 @@ angular.module('scalearAngularApp')
 
     link: function(scope, element, attrs, controller) {
       $log.debug("student answer link")
-
+      element.css('z-index', 5)
       //==FUNCTIONS==//
       var setup=function(){
         scope.explanation_pop ={}

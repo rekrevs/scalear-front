@@ -78,10 +78,10 @@ angular.module('scalearAngularApp')
     $scope.load_player = function(time){
         $scope.lecture_player.events.onReady = function() {
             $scope.total_duration = $scope.lecture_player.controls.getDuration()
-            $scope.lecture_player.controls.pause()
+            // $scope.lecture_player.controls.pause()
             $scope.lecture_player.controls.seek(0)
-            $scope.lecture_player.controls.volume(0.5);
-            //$scope.lecture_player.controls.play()
+            $scope.lecture_player.controls.volume(0.8);
+            // $scope.lecture_player.controls.play()
             if(time!=0){
                 console.log("seeking")
                 $scope.lecture_player.controls.seek_and_pause(time);
@@ -354,6 +354,9 @@ angular.module('scalearAngularApp')
                 $scope.selected_quiz = '';
                 $scope.display_mode = false;
             }
+        }
+        else if($scope.display_mode && $scope.selected_quiz.is_quiz_solved){
+            $scope.display_mode = false;
         }
     }
 

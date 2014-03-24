@@ -14,8 +14,9 @@ angular.module('scalearAngularApp')
 
 	
     $scope.resize={}
-    $scope.video_layer={}
+    $scope.container_layer={}
     $scope.quiz_layer={}
+    $scope.video_layer={}
     // $scope.ontop_layer={'position':'absolute'}
     $scope.lecture_player={}
     $scope.lecture_player.events={}

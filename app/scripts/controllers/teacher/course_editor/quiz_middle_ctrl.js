@@ -14,6 +14,7 @@ angular.module('scalearAngularApp')
             shortcut.remove("Enter");
     });
 
+
  	$scope.alert={type:"error", msg:"lectures.got_some_errors"}
  
  	$scope.closeAlerts= function(){
@@ -142,6 +143,29 @@ angular.module('scalearAngularApp')
 	$scope.removeQuestion = function(index){
  		// if(confirm($translate('questions.you_sure_delete_question', {question: $scope.questions[index].content})))
 		  	$scope.questions.splice(index, 1);
+	}
+ 
+	$scope.addHeader=function(){
+		var new_header = {quiz_id:$scope.quiz.id, content:"", question_type:"header"}
+		$scope.questions.push(new_header)
+	}
+
+	$scope.removeHeader=function(index){
+		$scope.removeQuestion(index)
+	}
+	$scope.openPreview=function(){
+		$scope.preview=true
+		$scope.temp_quiz={questions:$scope.questions}
+		$scope.formatted_answers={}
+		for(var elem in $scope.temp_quiz.questions){			
+			if($scope.temp_quiz.questions[elem].question_type.toUpperCase() == 'DRAG'){
+				$scope.formatted_answers[$scope.temp_quiz.questions[elem].id] = CourseEditor.mergeDragAnswers($scope.temp_quiz.questions[elem].answers, "quiz", $scope.temp_quiz.questions[elem].id).content
+			}
+		}
+	}
+	$scope.closePreview=function(){
+		$scope.preview=false
+		$scope.temp_quiz=null
 	}
  
  }])

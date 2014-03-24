@@ -338,9 +338,10 @@ angular.module('scalearAngularApp')
 	return{
 		restrict:'A',
 		scope:{
-			video_layer:'=videoLayer',
+			container:'=',
 			quiz_layer:'=quizLayer',
-            ontop_layer:'=ontopLayer',
+			video_layer:'=videoLayer',
+            // ontop_layer:'=ontopLayer',
 			aspect_ratio:'=aspectRatio',
 			fullscreen:'=active',
 			resize:'=',
@@ -367,7 +368,7 @@ angular.module('scalearAngularApp')
 				angular.element("body").css("position","");
 
 
-				var video={
+				var container={
 					"top":"",
 					"left":"",
 					"position":"",
@@ -375,6 +376,9 @@ angular.module('scalearAngularApp')
 					"height":"",//(500*1.0/factor +30) +'px',
 					"z-index": 0
 				};
+
+				var video=angular.copy(container)
+				// video["height"]-=40
 
 				var layer={		
 					"top":"",
@@ -387,17 +391,18 @@ angular.module('scalearAngularApp')
 					"z-index":2
 				}
 
+				angular.extend($scope.container, container)
 				angular.extend($scope.video_layer, video)
 				angular.extend($scope.quiz_layer, layer)
-                angular.extend($scope.ontop_layer, layer)
-                angular.extend($scope.ontop_layer, {"z-index":0})
+                // angular.extend($scope.ontop_layer, layer)
+                // angular.extend($scope.ontop_layer, {"z-index":0})
 				
 				$timeout(function(){$scope.$emit("updatePosition")})
 				$scope.unregister_back_event()	
 				$scope.unregister_state_event()	
 			}
 
-			$scope.resize.big = function(which)
+			$scope.resize.big = function()
 			{
                 $rootScope.changeError = true;
 				//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
@@ -411,7 +416,7 @@ angular.module('scalearAngularApp')
 
 				win.scrollTop("0px")
 
-				var video={
+				var container={
 					"top":0, 
 					"left":0, 
 					"position":"fixed",
@@ -419,6 +424,10 @@ angular.module('scalearAngularApp')
 					"height":win.height(),
 					"z-index": 1031
 				};
+
+				var video=angular.copy(container)
+				video["height"]-=40
+				video["position"]=""
 
 
 				var video_height = win.height()-40;
@@ -456,10 +465,11 @@ angular.module('scalearAngularApp')
 						"z-index": 1531
 					}		
 				 }
+				angular.extend($scope.container, container)
 				angular.extend($scope.video_layer, video)
 				angular.extend($scope.quiz_layer, layer)
-                angular.extend($scope.ontop_layer, layer)
-                angular.extend($scope.ontop_layer,{"z-index":1031});
+                // angular.extend($scope.ontop_layer, layer)
+                // angular.extend($scope.ontop_layer,{"z-index":1031});
 
 			 	$timeout(function(){$scope.$emit("updatePosition")})
 
@@ -474,35 +484,32 @@ angular.module('scalearAngularApp')
 				});
 			}
 
-			$scope.lecturesFullScreen = function(){
-				var win = angular.elemen($window)
-				var video_layer = angular.element('#main-video-container')
-				var controls_bar = angular.element('#controls-bar')
-				var progress_bar = angular.element('player_progress_bar')
-				var factor = 16/9
+			// $scope.lecturesFullScreen = function(){
+			// 	var win = angular.elemen($window)
+			// 	var video_layer = angular.element('#main-video-container')
+			// 	var controls_bar = angular.element('#controls-bar')
+			// 	var progress_bar = angular.element('player_progress_bar')
+			// 	var factor = 16/9
 
-				controls_bar.css('width', win.width())
-				controls_bar.css('position', 'fixed')
-				controls_bar.css('bottom', '0')
-				controls_bar.css('left', '0')
-				controls_bar.css('right', '0')
-				controls_bar.css('z-index', '1531')
+			// 	controls_bar.css('width', win.width())
+			// 	controls_bar.css('position', 'fixed')
+			// 	controls_bar.css('bottom', '0')
+			// 	controls_bar.css('left', '0')
+			// 	controls_bar.css('right', '0')
+			// 	controls_bar.css('z-index', '1531')
 
+			// 	progress_bar.css('width', win.width())
+			// 	progress_bar.css('position', 'fixed')
+			// 	progress_bar.css('bottom', controls_bar.height())
+			// 	progress_bar.css('right', '0')
+			// 	progress_bar.css('left', '0')
+			// 	progress_bar.css('z-index', '1531')
 
-				progress_bar.css('width', win.width())
-				progress_bar.css('position', 'fixed')
-				progress_bar.css('bottom', controls_bar.height())
-				progress_bar.css('right', '0')
-				progress_bar.css('left', '0')
-				progress_bar.css('z-index', '1531')
+			// 	video_layer.css('height', win.height()-progress_bar.height()-controls_bar.height());
+			// 	video_layer.css('width', video_layer*factor);
+			// 	video_layer.css('z-index', '1531')				
 
-
-				video_layer.css('height', win.height()-progress_bar.height()-controls_bar.height());
-				video_layer.css('width', video_layer*factor);
-				video_layer.css('z-index', '1531')
-				
-
-			}
+			// }
 		}
 	}
 }])
@@ -577,25 +584,25 @@ angular.module('scalearAngularApp')
             }
 
             var setButtonsLocation=function(){
-                if(scope.active){
-                    scope.pHeight=angular.element($window).height();
-                    //element.css("z-index",1500);
-                }
-                else{
-                    if(scope.view=="student")
-                    {scope.pHeight=490;
-                    }
-                    else{
-                        scope.pHeight=320;
-                    }
-                    //element.css("z-index",1000);
-                }
+                // if(scope.active){
+                //     scope.pHeight=angular.element($window).height();
+                //     //element.css("z-index",1500);
+                // }
+                // else{
+                //     if(scope.view=="student")
+                //     {scope.pHeight=490;
+                //     }
+                //     else{
+                //         scope.pHeight=320;
+                //     }
+                //     //element.css("z-index",1000);
+                // }
 
-                if(scope.view=="student")
-                    element.css("top", scope.pHeight-30+"px");
-                else
-                    element.css("top", scope.pHeight-30+"px");
-                //element.css("left", scope.pWidth-350+"px");
+                // if(scope.view=="student")
+                //     element.css("top", scope.pHeight-30+"px");
+                // else
+                //     element.css("top", scope.pHeight-30+"px");
+                // //element.css("left", scope.pWidth-350+"px");
             }
             // setButtonsLocation();
         }

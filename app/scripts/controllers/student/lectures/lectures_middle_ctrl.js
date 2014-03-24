@@ -43,37 +43,37 @@ angular.module('scalearAngularApp')
             }
 
     $scope.setup_confused = function()
-            {
-                var element = angular.element('.progressBar');
-                for(var e in $scope.confused)
-                {
-                    console.log((($scope.confused[e].time/$scope.total_duration)*100) + '%')
-                    if($scope.confused[e].very==true)
-                        $scope.progressEvents.push([(($scope.confused[e].time/$scope.total_duration)*100) + '%', 'purple' ,'courses.really_confused', $scope.confused[e].id]);
-                    else
-                        $scope.progressEvents.push([(($scope.confused[e].time/$scope.total_duration)*100) + '%', 'red' ,'courses.confused', $scope.confused[e].id]);
-                    console.log($scope.progressEvents)
-                }
+    {
+        var element = angular.element('.progressBar');
+        for(var e in $scope.confused)
+        {
+            console.log((($scope.confused[e].time/$scope.total_duration)*100) + '%')
+            if($scope.confused[e].very==true)
+                $scope.progressEvents.push([(($scope.confused[e].time/$scope.total_duration)*100) + '%', 'purple' ,'courses.really_confused', $scope.confused[e].id]);
+            else
+                $scope.progressEvents.push([(($scope.confused[e].time/$scope.total_duration)*100) + '%', 'red' ,'courses.confused', $scope.confused[e].id]);
+            console.log($scope.progressEvents)
+        }
 
-                console.log($scope.progressEvents)
-            //finish here.. will need to add elements!
-            }
+        console.log($scope.progressEvents)
+    //finish here.. will need to add elements!
+    }
 
-            $scope.setup_student_questions = function()
-            {
-                var element = angular.element('.progressBar');
-                console.log("questions are");
-                console.log($scope.student_questions);
+    $scope.setup_student_questions = function()
+    {
+        var element = angular.element('.progressBar');
+        console.log("questions are");
+        console.log($scope.student_questions);
 
-                for(var e in $scope.student_questions)
-                {
-                    console.log((($scope.student_questions[e].time/$scope.total_duration)*100) + '%')
-                    $scope.progressEvents.push([(($scope.student_questions[e].time/$scope.total_duration)*100) + '%', 'yellow' ,'courses.you_asked', $scope.student_questions[e].id, $scope.student_questions[e].question]);
-                }
+        for(var e in $scope.student_questions)
+        {
+            console.log((($scope.student_questions[e].time/$scope.total_duration)*100) + '%')
+            $scope.progressEvents.push([(($scope.student_questions[e].time/$scope.total_duration)*100) + '%', 'yellow' ,'courses.you_asked', $scope.student_questions[e].id, $scope.student_questions[e].question]);
+        }
 
-                console.log($scope.progressEvents)
-                //finish here.. will need to add elements!
-            }
+        console.log($scope.progressEvents)
+        //finish here.. will need to add elements!
+    }
 
     $scope.load_player = function(time){
         $scope.lecture_player.events.onReady = function() {

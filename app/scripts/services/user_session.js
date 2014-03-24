@@ -13,6 +13,9 @@ angular.module('scalearAngularApp')
    			if(data.signed_in == true)
    			{
    				$rootScope.current_user=data.user
+          if($rootScope.current_user.last_name == null){
+            $rootScope.current_user.last_name = ''
+          }
           $rootScope.current_user.profile_image = data.profile_image
           $rootScope.current_user.invitations=data.invitations
    				$rootScope.current_user.shared=data.shared

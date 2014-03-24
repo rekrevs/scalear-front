@@ -39,8 +39,8 @@ angular.module('scalearAngularApp')
     }
 
     var getVideoId= function(url){
-                return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
-            }
+        return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+    }
 
     $scope.setup_confused = function()
     {

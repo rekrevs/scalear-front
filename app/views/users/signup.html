@@ -69,7 +69,7 @@
                                     <tr>
                                         <td>
                                             <!-- <p>* <span translate="email"></span></p> -->
-                                            <input placeholder="*{{'email' | translate}}" type="email" ng-model="user.email" id="user_email" class="string email optional modern-input" style="border: 2px orange solid; width: 230px;" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" auto-fill-sync autocomplete="off"/>
+                                            <input placeholder="*{{'email' | translate}}" type="email" ng-model="user.email" id="user_email" class="string email optional modern-input" style="border: 2px orange solid; width: 230px;" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50"  autocomplete="off"/>
                                             <span class="errormessage" ng-show="user.errors.email">
                                                 {{user.errors.email.join()}}
                                             </span>
@@ -101,14 +101,14 @@
                                     </tr>
                                         <td>
                                             <!-- <p><span translate="password"></span></p> -->
-                                            <input placeholder="*{{'password' | translate}}" type="password" ng-model="user.password" id="user_passowrd" class="password optional" style="border: 2px orange solid; width: 230px;" name="user[password]" size="50" auto-fill-sync/>
+                                            <input placeholder="*{{'password' | translate}}" type="password" ng-model="user.password" id="user_passowrd" class="password optional" style="border: 2px orange solid; width: 230px;" name="user[password]" size="50" />
                                             <span class="errormessage" ng-show="user.errors.password">
                                                 {{user.errors.password.join()}}
                                             </span>
                                         </td>   
                                         <td style="vertical-align: top;">
                                             <!-- <p><span translate="password_confirmation"></span></p> -->
-                                            <input placeholder="*{{'password_confirmation' | translate}}" type="password" ng-model="user.password_confirmation" id="user_passowrd" class="password_confirmation optional" style="border: 2px orange solid; width: 230px;" name="user[password_confirmation]" size="50" auto-fill-sync/>
+                                            <input placeholder="*{{'password_confirmation' | translate}}" type="password" ng-model="user.password_confirmation" id="user_passowrd" class="password_confirmation optional" style="border: 2px orange solid; width: 230px;" name="user[password_confirmation]" size="50" />
                                             <span class="errormessage" ng-show="user.errors.password_confirmation">
                                                 {{user.errors.password_confirmation.join()}}
                                             </span>

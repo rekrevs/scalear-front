@@ -1,24 +1,48 @@
-<center>
-<overlay ng-show="sending">
-            <loading size="big" show="true" style="position:relative; top:40%;" />
-</overlay>
-<form ng-submit="change_password()">
-    <h2 translate="password_edit.change_password"></h2>
-    <br />
-    <p >* <span translate="password_edit.new_password"></span></p>
-    <input type="password" ng-model="user.password" id="user_password" class="string password" name="user[password]" size="50"/>
-    <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>
-    <br />
-    <p >* <span translate="password_edit.new_password_confirmation"></span></p>
-    <input type="password" ng-model="user.password_confirmation" id="user_password_confirmation" class="string password" name="user[password_confirmation]" size="50"/>
-    <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
-    <br />
-    <input type="submit" ng-disabled="sending || !user.password && !user.password_confirmation || !user.password" value="{{'password_edit.change_password2' | translate}}" class="btn btn-primary"/>
-    <br />
-    <br/><span class="errormessage" ng-show="user.errors.reset_password_token">Reset Password Token {{user.errors.reset_password_token.join()}}</span>
-    <br />
-    <br/>
-</center>
+<link href="styles/authentication.css" rel="stylesheet">
+<div class="main-login-container">
+    <center>
+
+        <overlay ng-show="sending">
+                    <loading size="big" show="true" style="position:relative; top:40%;" />
+        </overlay>
+        <div style="float: left; display: inline-table; margin: 20px; position: relative; z-index: 5;">
+            <table>
+                <tr>
+                    <td>
+                        {{'language' | translate}}
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <div ng-show="$parent.current_lang=='en'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                        <div ng-show="$parent.current_lang=='sv'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="middle-ribbon">
+            <form ng-submit="change_password()">
+                <h2 translate="password_edit.change_password"></h2>
+                <br />
+                <!-- <p >* <span translate="password_edit.new_password"></span></p> -->
+                <input placeholder="*{{'password_edit.new_password' | translate}}" type="password" ng-model="user.password" id="user_passowrd" class="password optional" style="border: 2px orange solid; width: 230px;" name="user[password]" size="50" auto-fill-sync/>
+                <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>
+                <br />
+                <!-- <p >* <span translate="password_edit.new_password_confirmation"></span></p> -->
+                <input placeholder="*{{'password_edit.new_password_confirmation' | translate}}" type="password" ng-model="user.password_confirmation" id="user_passowrd" class="password_confirmation optional" style="border: 2px orange solid; width: 230px;" name="user[password_confirmation]" size="50" />
+                <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
+                <br />
+                <input type="submit" ng-disabled="sending || !user.password && !user.password_confirmation || !user.password" value="{{'password_edit.change_password2' | translate}}" class="btn btn-warning" style="background-image: initial;"/>
+                <br />
+                <br/><span class="errormessage" ng-show="user.errors.reset_password_token">Reset Password Token {{user.errors.reset_password_token.join()}}</span>
+            </form>
+        </div>
+    </center>
+</div>
 
 
 

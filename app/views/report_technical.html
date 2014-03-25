@@ -1,0 +1,37 @@
+| 
+<a style="cursor:pointer;" ng-click="toggleTechnicalDisplay()" translate="feedback.report_technical"></a>
+<div class="well" style="width:500px;background:whitesmoke;padding:10px; margin: 0 auto; margin-top: 15px;" ng-show="show_technical">
+    <br>
+    <div style="width:82%;margin-bottom: 15px;color: brown;font-family: monospace;text-align: left;">
+        <span translate>
+            feedback.instructions
+        </span>
+        <br>
+        <br>
+        <b translate>name</b>: <input ng-show="!current_user" type="text" ng-model="user_name" class="string name optional" name="user[name]" size="50" autocomplete="off" translate/><br />
+        <b translate>email</b>: <input ng-show="!current_user" type="email" ng-model="user_email" class="string email optional" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" autocomplete="off" translate/>
+
+        <div style="color: #0088cc;">
+            <b translate>
+                feedback.problem_is
+            </b>: 
+            <select ng-model="selected_type" ng-options="type.text for type in issue_types">
+                ...
+            </select>
+        </div>
+        </div>
+        <div ng-show="no_text" class="alert-error" style="width:50%">
+            {{no_text}}
+        </div>
+        {{user_name}}
+        <textarea rows="5" cols="12" style="width:400px;" ng-model="technical_data">
+        </textarea>
+        <br />
+        <a style="cursor:pointer;" ng-click="send_technical()" translate="feedback.send">
+        </a> | 
+        <a style="cursor:pointer;" ng-click="cancel()" translate="feedback.cancel">
+        </a>
+        <loading size="small" show="sending_technical">
+        </loading>
+    </div>
+</div>

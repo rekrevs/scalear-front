@@ -68,6 +68,9 @@
             <td>
                 <input ng-disabled="sending" type="submit" class="btn btn-success" style="background-image: initial;" value="{{'account_edit.update' | translate}}" class="btn btn-primary" ng-disabled="sending || !user.name || !user.screen_name || !user.last_name || !user.email" />
             </td>
+            <td>
+                <input type="button" class="btn btn-danger" style="background-image: initial;" ng-click="open()" value="{{'account_edit.cancel_account' | translate}}" />
+            </td>
         </tr>
     </table>
 </form>

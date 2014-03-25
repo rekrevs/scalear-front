@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .directive('accountInformation', ['ErrorHandler','$rootScope', 'User',function(ErrorHandler, $rootScope, User) {
+  .directive('accountInformation', ['ErrorHandler', '$rootScope', '$modal', 'User',function(ErrorHandler, $rootScope, $modal, User) {
     return {
       replace: true,
       restrict: 'E',
@@ -38,6 +38,19 @@ angular.module('scalearAngularApp')
                 }, function(response) {
                     scope.sending = false;
                     scope.user.errors = response.data.errors
+                })
+        }
+        scope.open = function () {
+            var modalInstance = $modal.open({
+                templateUrl: '/views/users/confirm_delete.html',
+                controller: "ConfirmDeleteCtrl"
+            })
+
+            modalInstance.result.then(function (enrollment_key) {
+                    $state.go("login");
+                },
+                function () {
+//                       $log.info('Modal dismissed at: ' + new Date());
                 })
         }
       }

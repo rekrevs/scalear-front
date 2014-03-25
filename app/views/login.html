@@ -1,31 +1,89 @@
-<center>
-<overlay ng-show="sending">
-            <loading size="big" show="true" style="position:relative; top:40%;" />
-</overlay>
-    <form ng-submit="login()" novalidate>
-        <h2 translate="welcome"></h2>
-        <br />
-        <p translate="email"></p>
-        <input type="email" ng-model="user.email" id="user_email" class="string email optional" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" auto-fill-sync/>
-        <p translate="password"></p>
-        <input type="password" ng-model="user.password" id="user_passowrd" class="password optional" name="user[password]" size="50" auto-fill-sync/>
-        <br />
-        <p translate="remember_me"></p>
-        <input type="checkbox" ng-model="user.remember_me">
-        <br />
-        <br />
-        <input type="submit" ng-disabled="sending" value="{{'sign_in' | translate}}" class="btn btn-primary"/>
-        <br />
-        <br />
-    </form>
-    
-    <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
+<link href="styles/login.css" rel="stylesheet">
+<div class="main-login-container">
+    <center>
 
-    <br/>
-    {{'or' | translate}}
-    <br/>
-    <a href="/#/users/confirmation/new" translate="password_edit.didnt_receive_confirmation"></a>
+        <overlay ng-show="sending">
+                    <loading size="big" show="true" style="position:relative; top:40%;" />
+        </overlay>
+        <!-- <div class="modern-logo">
+            <a href="/#" class="brand"><img alt="Logo" src="../../images/logo.png" width="30px"> Scalable<span style="padding-left:0px; color:black;">Learning</span> <img alt="Beta_tag_small" class="brand" src="images/beta_tag_small.png" style="width:40px;padding-left:0px;padding-top:10px;">
+            </a>
+        </div> -->
+        <div style="float: left; display: inline-table; margin: 20px;">
+            <table>
+                <tr>
+                    <td>
+                        {{'language' | translate}}
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <div ng-show="$parent.current_lang=='en'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                        <div ng-show="$parent.current_lang=='sv'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="middle-ribbon">
+            <form ng-submit="login()" novalidate>
+                <h2 translate="welcome"></h2>
+                <br />
+                <!-- <p translate="email"></p> -->
+                <div class="fields-container">
+                    <table>
+                        <tr>
+                            <td>
+                                <!-- <img style="max-width: none;" src="http://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=150&r=pg&d=404" /> -->
+                                <profile-image email="user.email" imagesize="150"></profile-image>
+                            </td>
+                            <td>
+                            </td>
+                            <td>
+                                <table>
+                                    <tr>
+                                        <td>
+                                            <input placeholder="{{'email' | translate}}" type="email" ng-model="user.email" id="user_email" class="string email optional modern-input" style="border: 2px orange solid; width: 230px;" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" auto-fill-sync autocomplete="off"/>
+                                            <!-- <p translate="password"></p> -->
+                                            <input placeholder="{{'password' | translate}}" type="password" ng-model="user.password" id="user_passowrd" class="password optional" style="border: 2px orange solid; width: 230px;" name="user[password]" size="50" auto-fill-sync/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input style="margin-top: -2px;" type="checkbox" ng-model="user.remember_me" style="margin-right: 10px;">
 
-<!--<input type="button" ng-click="login()" value="Scalable Learning" class="btn"/>-->
+                                            <span style="margin-top: -5px;" translate="remember_me"></span>
+                                        </td>  
+                                        
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <input style="width: 245px; background-image: initial;" type="submit" ng-disabled="sending" value="{{'sign_in' | translate}}" class="btn btn-warning"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>            
+                    </table>
+                </div>
+                
+            </form>
+            <br />
+            <br />
+            <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
 
-</center>
+            <br/>
+            {{'or' | translate}}
+            <br/>
+            <a href="/#/users/confirmation/new" translate="password_edit.didnt_receive_confirmation"></a>
+        </div>
+        
+        
+
+        <!--<input type="button" ng-click="login()" value="Scalable Learning" class="btn"/>-->
+
+    </center>
+</div>

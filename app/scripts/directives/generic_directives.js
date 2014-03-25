@@ -49,6 +49,29 @@ angular.module('scalearAngularApp')
                     });
                 }
             };
+}]).directive('profileImage', ['$window', function($window) {
+            return {
+                replace: true,
+                restrict: "E",
+                scope:{
+                  email: "=",
+                  imagesize: "@"
+                },
+                templateUrl: "/views/profile_image.html",
+                link: function (scope, element) {
+                  scope.$watch('email', function(){
+                    if(scope.email){
+                      scope.source_image = 'http://www.gravatar.com/avatar/'+md5(scope.email)+'?s='+scope.imagesize+'&r=pg';
+                    }
+                    else{
+                      element.css('height', scope.imagesize+'px');
+                      element.css('width', scope.imagesize+'px');
+                      scope.source_image = '../../images/user_image.png'
+                    }
+                    element.attr('src', scope.source_image)
+                  });
+                }
+            };
 }]).directive('contextMenu', ['$window', function($window) {
     return {
       restrict: 'A',

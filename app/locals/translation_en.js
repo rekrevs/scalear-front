@@ -30,6 +30,7 @@ var translation_en=function(){
       empty:"Empty",
       close: "Close",
       back: "Back",
+      language: "Language",
       delete: "Delete",
       ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
       chrome: "Google's Chrome Browser",

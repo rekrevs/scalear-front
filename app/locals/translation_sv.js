@@ -28,6 +28,7 @@ var translation_sv=function(){
       preview: "Förhandsgranska",     
       empty:"Tomma",
       close: "Stänga",
+      language: "Språk",
       delete: "Radera",
       character_exceed_limit: "Den inmatade texten var för lång.",
       ie_disclaimer: "Internet Explorer är inte helt förenlig med de interaktiva videofunktioner som används om Scalable lärande. Vi rekommenderar att du använder",

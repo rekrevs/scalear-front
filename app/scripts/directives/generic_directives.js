@@ -107,4 +107,16 @@ angular.module('scalearAngularApp')
         });
       }
     };
-  }]);
+  }]).directive('courseItem', ['ErrorHandler',function(ErrorHandler) {
+        return{
+          replace:true,
+          restrict: "E",
+          scope:{
+            course: '='
+          },
+          templateUrl: '/views/courseItem.html',
+          link: function(scope){
+            
+          }
+        };
+     }]);

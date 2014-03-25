@@ -4,9 +4,9 @@
 	<h5 class="muted" translate>courses.enroll_instruction</h5>
 </center>
 <div ng-show="courses">
-	<h4 translate="courses.all_courses"></h4>
+	<!-- <h4 translate="courses.all_courses"></h4> -->
 	</br>
-	<table class="table table-striped">
+	<!-- <table class="table table-striped">
 		<thead style="cursor:pointer" >
 			<th><a ng-click="order('short_name')" translate="courses.course_code"></a></th>
 			<th><a ng-click="order('name')" translate="courses.course_name">Course Name</a></th>
@@ -18,7 +18,8 @@
 				
 			</tr>
 		</tbody>
-	</table>
+	</table> -->
+	<course-item ng-repeat="course in courses|orderBy:column:is_reverse" course='course' ></course-item>
 </div>
 
 <a ng-hide="!courses" id="join_course" ng-click="open()" style="cursor:pointer" translate="courses.join_course"></a>

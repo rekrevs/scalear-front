@@ -271,12 +271,12 @@ angular.module('scalearAngularApp', [
             })
             .state('teacher_signup', {
                 url: '/users/teacher',
-                templateUrl: '/views/users/teacher.html',
+                templateUrl: '/views/users/signup.html',
                 controller: 'UsersTeacherCtrl'
             })
             .state('student_signup', {
                 url: '/users/student',
-                templateUrl: '/views/users/student.html',
+                templateUrl: '/views/users/signup.html',
                 controller: 'UsersStudentCtrl'
             })
             .state('edit_account', {
@@ -293,7 +293,7 @@ angular.module('scalearAngularApp', [
                 }
             })
             .state('profile', {
-                url: '/users/:user_id',
+                url: '/users/profile/:user_id',
                 templateUrl: 'views/users/profile.html',
                 controller: 'UsersProfileCtrl'
             })

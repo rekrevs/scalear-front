@@ -46,12 +46,12 @@ angular.module('scalearAngularApp')
                 controller: "ConfirmDeleteCtrl"
             })
 
-            modalInstance.result.then(function (enrollment_key) {
-                    $state.go("login");
-                },
-                function () {
-//                       $log.info('Modal dismissed at: ' + new Date());
-                })
+//             modalInstance.result.then(function (enrollment_key) {
+//                     $state.go("login");
+//                 },
+//                 function () {
+// //                       $log.info('Modal dismissed at: ' + new Date());
+//                 })
         }
       }
     };

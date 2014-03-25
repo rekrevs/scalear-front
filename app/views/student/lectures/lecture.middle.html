@@ -81,14 +81,21 @@
 	  #user_information_container{
 	  	display: none;
 	  }
-	}
+	 }
+	  .video_class{
+	  	width: 100%; z-index: 0; position: relative; bottom: 0px; top: 0px; height: auto;
+	  }
+	  .video_container{
+	  	float: left;
+	  	/*width:63%;*/
+	  }
 </style>
 
-<div ng-hide="!lecture">
+<div ng-hide="!lecture" >
 	<h3 style="margin-bottom: 10px; line-height: 10px;" ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name"></h3>
 		<div style="width: 100%; height: 100%;">
-			<div id="main-video-container" style="float: left;">
-				<form name="answer_form" novalidate style="margin:0">
+			<div id="main-video-container" class="video_container" ng-style="container_layer"><!-- style="" -->
+				<form name="answer_form" novalidate style="margin:0" >
 					<center ng-show='slow' style='color:#428bca'>
 						<h3 style="position:relative;top:125px" translate>lectures.server_slow</h3>
 						<h3 style="position:relative;top:100px" translate>lectures.try_reload</h3>
@@ -105,12 +112,12 @@
 								 <div ng-if="selected_quiz.quiz_type == 'invideo'"><student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/></div>
 							</quiz>
 						</div>
-						<youtube ng-show="lecture.url" style="width: 100%; z-index: 0; position: relative; bottom: 0px; top: 0px; height: auto;" id="lecture_video" ng-style="ontop_layer" url="lecture.url"  player="lecture_player" autoplay='1'/>
-					    <progress-bar name="player_progress_bar" style="margin-top:-4px"lecture='lecture' timeline='timeline' progress_events='progressEvents' confused_areas='confused_areas' play_pause_class="play_pause_class" view="student" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration' player="lecture_player"></progress-bar>
+						<youtube ng-show="lecture.url" class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1'/>
+					    <progress-bar name="player_progress_bar" style="margin-top:-4px" lecture='lecture' timeline='timeline' progress_events='progressEvents' confused_areas='confused_areas' play_pause_class="play_pause_class" view="student" ng-show="lecture.url" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'total_duration' player="lecture_player"></progress-bar>
 
 					    <check ng-show='display_mode' style="position: relative; display: inline-block; z-index: 1000; top: -30px; left: 47%; width: 0px;"></check>
 
-						<controls id="controls-bar" ng-show="lecture.url && !loading_video" resizable-video ontop-layer="ontop_layer" video-layer='video_layer' quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' ng-class="{ipad_controls:ipad}" style="position: relative; display: inline-block; z-index: 1000; top: -18px; left: 100%; margin-top: 5px;">
+						<controls id="controls-bar" ng-show="lecture.url && !loading_video" resizable-video video-layer='video_layer' container="container_layer" quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' ng-class="{ipad_controls:ipad}" style="position: relative; display: inline-block; z-index: 1000; top: -18px; left: 100%; margin-top: 5px;">
 						</controls>
 						
 						<notification ng-style="notify_position" ng-show='show_notification'></notification>

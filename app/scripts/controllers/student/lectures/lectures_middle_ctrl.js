@@ -6,9 +6,8 @@ angular.module('scalearAngularApp')
 
     $scope.video_layer = {}
     $scope.quiz_layer = {}
+    $scope.container_layer = {}
     $scope.resize = {}
-    $scope.ontop_layer={}
-    //lecture is the current lecture
     $scope.youtube_video=false;
     $scope.lecture = {}
     $scope.lecture.aspect_ratio = ""
@@ -137,7 +136,6 @@ angular.module('scalearAngularApp')
         }
         
         var main_video_container = angular.element('#main-video-container')
-        // var ontop_layer = angular.element('.ontop')
         main_video_container.css('height', video_layer_height+'px')
         angular.element('#student-accordion').css('height', video_layer_height+39)
         

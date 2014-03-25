@@ -21,8 +21,8 @@ angular.module('scalearAngularApp')
                 '</div>'
         };
     })
-    .directive('reportTechnical', ['Home', '$location', '$log','$stateParams','$interval','$translate',
-        function(Home, $location, $log, $stateParams,$interval,$translate) {
+    .directive('reportTechnical', ['Home', '$location', '$log','$stateParams','$interval','$translate', '$rootScope',
+        function(Home, $location, $log, $stateParams,$interval,$translate, $rootScope) {
             return {
                 restrict: 'E',
                 templateUrl: '/views/report_technical.html',
@@ -32,8 +32,6 @@ angular.module('scalearAngularApp')
                     scope.toggleTechnicalDisplay = function() {
                         scope.show_technical = !scope.show_technical
                         scope.selected_type=scope.issue_types[0];
-                        scope.user_name=""
-                        scope.user_email=""
                         scope.sending_technical = false;
                     }
                     scope.cancel=function(){
@@ -45,12 +43,17 @@ angular.module('scalearAngularApp')
 
                     scope.send_technical = function() {
                         $log.debug("in sending");
-                        if(scope.user_email && scope.user_name){
+                        if(!$rootScope.current_user){
+                            var user_name = angular.element('#report_name').val();
+                            var user_email = angular.element('#report_email').val();
+                        }
+                        
+                        if((user_name && user_email) || $rootScope.current_user){
                             if(scope.technical_data && scope.technical_data.trim() !=""){
                                 scope.sending_technical = true;
                                 Home.technicalProblem({
-                                        name: scope.user_name,
-                                        email: scope.user_email,
+                                        name: user_name,
+                                        email: user_email,
                                         issue_type: scope.selected_type.value,
                                         course: $stateParams.course_id || -1,
                                         module: $stateParams.module_id || -1,

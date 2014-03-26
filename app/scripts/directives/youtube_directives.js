@@ -513,6 +513,17 @@ angular.module('scalearAngularApp')
 		}
 	}
 }])
+
+
+.directive('prevent_full_screen',function($rootscope){
+	return{
+		restrict: 'A',
+		link: function($rootscope, element){
+			
+		}
+	}
+})
+
 .directive('progressBar',['$rootScope','$log','$window',function($rootScope,$log, $window){
     return {
         restrict: 'E',

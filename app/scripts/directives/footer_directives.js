@@ -81,6 +81,7 @@ angular.module('scalearAngularApp')
 
                     scope.send_technical = function() {
                         $log.debug("in sending");
+
                         if(scope.technical_data && scope.technical_data.trim() !=""){
                             scope.sending_technical = true;
                             Home.technicalProblem({
@@ -91,7 +92,8 @@ angular.module('scalearAngularApp')
                                     quiz: $stateParams.quiz_id || -1,
                                     url: $location.url(),
                                     problem: scope.technical_data,
-                                    lang: scope.current_lang
+                                    lang: scope.current_lang,
+                                    agent:navigator.userAgent
                                 },
                                 function(data) {
                                     scope.technical_data = null;                                    

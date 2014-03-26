@@ -63,7 +63,7 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-        <header class="navbar-fixed-top modern-navbar">
+        <header class="navbar-fixed-top modern-navbar" ng-show="current_user">
             <span class="modern-menu-button" ng-show="current_user" ng-click="toggleCollapse()" ng-class="{menuopen: !iscollapsed}">
                 <span class="menu-icon" style="margin-top: 8px;">
                 </span>
@@ -167,6 +167,8 @@
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
+
+    <script src="bower_components/js-md5/js/md5.min.js"></script>
 
 
     <!-- endbuild -->

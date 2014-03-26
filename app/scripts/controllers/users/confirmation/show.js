@@ -5,10 +5,13 @@ angular.module('scalearAngularApp')
         Page.setTitle('Verifying Account')
         $scope.user={}
         $scope.sending=true
+        console.log('showing confirmation ')
+        console.log($stateParams)
 
         UserSession.getRole().then(function(result) {
         if(result==0)
         {
+
         User.show_confirmation({confirmation_token: $stateParams.confirmation_token }, function(data){
 
                 $timeout(function(){

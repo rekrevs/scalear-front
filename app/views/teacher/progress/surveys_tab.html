@@ -5,7 +5,7 @@
 	</center>
 	<button_link ng-show="button_msg" action="makeVisibleBtn()" title="{{button_msg|translate}}" style="margin:10px 0px" />
 	<div ng-repeat="element in ordered_survey">
-        <div ng-if="element[1]!='Free Text Question'" class="chart" ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index, student_count)">
+        <div ng-if="element[1]!='Free Text Question' && element[1]!='header'" class="chart" ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index, student_count)">
             <div ><span translate>answer.question</span> {{$index+1}}:</div>
             <center ng-init="loading=true"><loading size="small" show="loading" /></center>
             <div google-chart on-ready="loading=false" chart="chart" ></div>

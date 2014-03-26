@@ -16,8 +16,8 @@
 		<tr>
 			<td class="course-image">
 				<a ui-sref="course.student_calendar({ course_id: course.id })">
-					<img ng-if="!course.image_url" src="../images/course.png" style="height: 120px;" />
-					<img ng-if="course.image_url" src="course.image_url" style="height: 120px;"/>
+					<img ng-src="{{course.image_url || '../images/course.png'}}" style="height: 120px;" />
+					
 				</a>
 			</td>
 			<td class="course-info-container" colspan="1">
@@ -45,7 +45,7 @@
                         			<td style="color: black; text-align: center; padding-left: 10px;" ng-repeat="teacher in teachers" style="text-align: center;">
 			                            <small>
 			                            	<a ui-sref="profile({ user_id: teacher.user.id })">
-			                                	{{teacher.user.name}}<br />({{teacher.role.name}})
+			                                	<profile-image email="teacher.user.email" imagesize="40"> </profile-image> {{teacher.user.name}} ({{teacher.role.name}})
 			                            	</a>
 			                        	</small>
 			                        </td>

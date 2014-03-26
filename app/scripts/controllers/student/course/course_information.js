@@ -14,12 +14,6 @@ angular.module('scalearAngularApp')
                         $scope.course = data.course;
                         $scope.teachers = data.teachers;
                         console.log($scope.teachers)
-                        if(!$scope.course.image){
-                            $scope.image_link = "../images/course.png";
-                        }
-                        else{
-                            $scope.image_link = $scope.course.image;
-                        }
                         $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
                     },
                     function() {}

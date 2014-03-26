@@ -1,14 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive("videoContainer",function(){
-		return{
-			transclude: true,
-			replace:true,
-			restrict: "E",
-			template: '<div class="videoborder well" style="padding:0" ng-transclude></div>' //style="border:4px solid" 
-		};
-}).directive('quiz',function(){
+.directive('quiz',function(){
 		return {
 			transclude: true,
 			replace:true,

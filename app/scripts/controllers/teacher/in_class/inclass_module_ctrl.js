@@ -8,8 +8,8 @@ angular.module('scalearAngularApp')
 
   	$scope.display = function (type, disabled) {
       if(!disabled){
-        $scope.play_pause_class = "play_button"
-        $scope.mute_class = "mute_button"
+        $scope.play_pause_class = "icon-play"
+        $scope.mute_class = "icon-volume-up"
         $scope.loading_video=true
         $scope.lecture_url=""
         $scope.question_title=""
@@ -22,7 +22,9 @@ angular.module('scalearAngularApp')
         $scope.current_lecture = 0
         $scope.current_quiz = 0
         $scope.show_black_screen= false
-        $scope.hide_questions = false        
+        $scope.hide_questions = false  
+        $scope.dark_buttons="dark_button" 
+        $scope.mouse_movement_count = 0     
         if($scope.current_quiz_lecture)
           delete $scope.current_quiz_lecture
         if($scope.chart_data)
@@ -61,6 +63,8 @@ angular.module('scalearAngularApp')
     var openModal=function(view, type){
       $rootScope.changeError = true;
       angular.element("body").css("overflow","hidden");
+      angular.element("#main").css("overflow","hidden");
+      angular.element("html").css("overflow","hidden");
       var win = angular.element($window)
       win.scrollTop("0px")
       var filename='inclass_'+view
@@ -74,10 +78,21 @@ angular.module('scalearAngularApp')
         scope: $scope
       });
 
+      $scope.modalInstance.result.then(
+      function(){},
+      function(){
+        $scope.exitBtn()
+      });
+
       $scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
           event.preventDefault()
           $scope.exitBtn() 
       });
+
+      $scope.unregister_state_event = $scope.$on("$stateChangeStart", function(event, next, current) {
+              $scope.exitBtn() 
+              $scope.$apply()
+        });
     }
 
     $scope.review=function(type, disabled){
@@ -96,15 +111,19 @@ angular.module('scalearAngularApp')
     $scope.exitBtn = function () {
       $rootScope.changeError = false;
       angular.element("body").css("overflow","auto");
+      angular.element("#main").css("overflow","");
+      angular.element("html").css("overflow","");
       $scope.modalInstance.dismiss();
       $scope.unregister_back_event();
+      $scope.unregister_state_event();
       $scope.removeShortcuts()
       init()
     };
 
     $scope.playBtn = function(){
-      if($scope.play_pause_class == "play_button"){
+      if($scope.play_pause_class == "icon-play"){
         $scope.inclass_player.controls.play()
+        $scope.play_pause_class = "icon-pause"
       }
       else{
         $scope.inclass_player.controls.pause()
@@ -112,13 +131,13 @@ angular.module('scalearAngularApp')
     }
 
     $scope.muteBtn= function(){
-      if($scope.mute_class == "unmute_button"){
-        $scope.mute_class = "mute_button"
+      if($scope.mute_class == "icon-volume-off"){
+        $scope.mute_class = "icon-volume-up"
         $scope.inclass_player.controls.unmute()
         $scope.inclass_player.controls.volume(1)
       }
       else{
-        $scope.mute_class = "unmute_button"
+        $scope.mute_class = "icon-volume-off"
         $scope.inclass_player.controls.mute()
       }
     }
@@ -141,11 +160,11 @@ angular.module('scalearAngularApp')
     }
 
     $scope.inclass_player.events.onPlay=function(){
-       $scope.play_pause_class = "pause_button"
+       $scope.play_pause_class = "icon-pause"
     }
 
     $scope.inclass_player.events.onPause=function(){
-       $scope.play_pause_class = "play_button"
+       $scope.play_pause_class = "icon-play"
     }
 
     $scope.inclass_player.events.onReady=function(){
@@ -156,7 +175,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.inclass_player.events.onMeta=function(){
-      $scope.play_pause_class = "play_button"
+      $scope.play_pause_class = "icon-play"
       $scope.loading_video=false
     }
     $scope.inclass_player.events.seeked=function(){
@@ -249,26 +268,66 @@ angular.module('scalearAngularApp')
          $scope.$apply()
       },{"disable_in_input" : false, 'propagate':false});
 
+      shortcut.add("Right",function() {
+         console.log('page up')
+         $scope.nextQuiz()
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
+
       shortcut.add("Page_down",function() {
         console.log('page down')
          $scope.prevQuiz()
          $scope.$apply()
       },{"disable_in_input" : false, 'propagate':false});
-    }
 
-    $scope.removeShortcuts=function(){
-      shortcut.remove("Page_up")
-      shortcut.remove("Page_down")
-      shortcut.remove("b")
-    }
+      shortcut.add("Left",function() {
+        console.log('page down')
+         $scope.prevQuiz()
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
 
-    $scope.setBlankShortcut=function(){
-      shortcut.add("b",function() {
+       shortcut.add("z",function() {
+        if($scope.video_class=='original_video')
+          $scope.setZoomClass()
+        else
+          $scope.setOriginalClass()
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
+
+       shortcut.add("b",function() {
          console.log('black screen')
          $scope.toggleBlackScreen()
          $scope.$apply()
          console.log($scope.show_black_screen)
       },{"disable_in_input" : false, 'propagate':false});
+
+      shortcut.add("h",function() {
+         $scope.toggleHideQuestions()
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
+
+      shortcut.add("Space",function() {
+         $scope.playBtn()
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
+
+       shortcut.add("m",function() {
+         $scope.muteBtn()
+         $scope.$apply()
+      },{"disable_in_input" : false, 'propagate':false});
+
+    }
+
+    $scope.removeShortcuts=function(){
+      shortcut.remove("Page_up")
+      shortcut.remove("Page_down")
+      shortcut.remove("Right")
+      shortcut.remove("Left")
+      shortcut.remove("b")
+      shortcut.remove("z")
+      shortcut.remove("h")
+      shortcut.remove("Space")
+      shortcut.remove("m")
     }
 
     $scope.toggleBlackScreen=function(){
@@ -365,15 +424,15 @@ angular.module('scalearAngularApp')
       var win = angular.element($window)
       var win_width= win.width()
       if(win_width < 660 ){
-        $scope.button_names=['Ex', 'Ov', 'Un','H','U']
+        $scope.button_names=['Ex', 'Ov', 'Un','H','U','']
         if(win_width <510)
-          $scope.button_class = 'btn btn-default smallest_font_button' 
+          $scope.button_class = 'smallest_font_button' 
         else
-          $scope.button_class = 'btn btn-default small_font_button' 
+          $scope.button_class = 'small_font_button' 
       }
       else{
-        $scope.button_class = 'btn btn-default big_font_button' 
-        $scope.button_names=['Exit', 'Show Over', 'Show Under','Hide', 'Unhide']
+        $scope.button_class = 'big_font_button' 
+        $scope.button_names=['Exit', 'Over', 'Under','Hide', 'Unhide', '5sec']
       }
       $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
     }
@@ -382,29 +441,38 @@ angular.module('scalearAngularApp')
       var question_block = angular.element('.question_block')
       console.log('scroll='+question_block.get(0).scrollHeight+' height='+question_block.height()+' diff='+(question_block.get(0).scrollHeight - question_block.height()))
       if(question_block.get(0).scrollHeight > question_block.height()){
-        if(question_block.get(0).scrollHeight - question_block.height() >=10){
-          $scope.question_class = 'smallest_question'
-          $scope.chart.options.height=question_block.height() - 10
-        }
-        else{
-          $scope.question_class = 'small_question'
-          $scope.chart.options.height=question_block.height() - 10
-        }
+        if(question_block.get(0).scrollHeight - question_block.height() >=10)
+          $scope.question_class = 'smallest_question' 
+        else
+          $scope.question_class = 'small_question'         
       }
       else{
-        if(question_block.height()>180 || question_block.height() == 0){
+        if(question_block.height()>180 || question_block.height() == 0)
           $scope.question_class = $scope.hide_questions?'zoom_question' : 'original_question'
-          $scope.chart.options.height=question_block.height() - 10
-        }        
-        else if(question_block.height()>150 && question_block.height()<180){
+        else if(question_block.height()>150 && question_block.height()<180)
           $scope.question_class = 'small_question'
-          $scope.chart.options.height=question_block.height() - 10
-        }
-        else{
+        else
           $scope.question_class = 'smallest_question'
-          $scope.chart.options.height=question_block.height() - 10
-        }      
       }
+      $scope.chart.options.height=question_block.height() - 10
+    }
+
+    $scope.lightUpButtons=function(){
+      $scope.last_movement_time= new Date()
+      $scope.dark_buttons =null
+      $timeout(function(){
+        // console.log((new Date()) - $scope.last_movement_time)
+        if((new Date()) - $scope.last_movement_time  >=5000){
+          $scope.dark_buttons="dark_button"
+        }
+          
+      },5000)
+    }
+
+    $scope.toggleFullscreen=function(){
+      $scope.fullscreen = !$scope.fullscreen
+      console.log("toggleing " +$scope.fullscreen)
+
     }
 
     init();

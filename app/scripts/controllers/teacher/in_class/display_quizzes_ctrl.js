@@ -18,9 +18,9 @@ angular.module('scalearAngularApp')
 	  			$scope.$parent.total_num_lectures = data.num_lectures
 	  			$scope.$parent.total_num_quizzes  = data.num_quizzes
 	  			$scope.$parent.chart_data = data.chart_data
+	  			$scope.total_student_count = data.students_count
 	  			$scope.nextQuiz()
 	  			$scope.setQuizShortcuts()
-	  			$scope.setBlankShortcut()
 	  		},
 	  		function(){}
 		)
@@ -34,77 +34,118 @@ angular.module('scalearAngularApp')
 	}
 
     $scope.$parent.createChart = function(id){
-    	$scope.chart_data.vtitle="quizzes.percentage_of_students"
-        return createLectureChart($scope.chart_data, id, 100)
+        return createLectureChart($scope.chart_data[id], 100)
     }
 
-    var createLectureChart = function(data, id, student_count) {
-        //console.log(student_count)
-        var chart_data = data
-        var chart = {};
-        chart.type = "ColumnChart"
-        chart.options = {
-            "colors": ['green', 'gray'],
-            //"title": getQuizType(id) + getQuizTitle(id),
-            "isStacked": "true",
-            "fill": 25,
-            "height": 180,
-            backgroundColor: 'beige',
-            "displayExactValues": true,
-            "legend": {"position": 'none'},
-            "fontSize": 12,
-            "chartArea":{width:'82%'},
-            "vAxis": {
-                // "title": $translate(data.vtitle || "quizzes.number_of_students") + " (" + $translate("groups.out_of") + " " + student_count + ")",
-                ticks: [25,50,75,100],
-                "maxValue": student_count,
-                viewWindowMode:'maximized'
-            },
-
-
+    var createLectureChart = function(data, student_count) {
+        var chart = {
+        	type: "ColumnChart",
+        	options :{
+	            "colors": ['green', 'gray'],
+	            "isStacked": "true",
+	            "fill": 25,
+	            "height": 180,
+	            "backgroundColor": 'beige',
+	            "displayExactValues": true,
+	            "legend": {"position": 'none'},
+	            "fontSize": 12,
+	            "chartArea":{width:'82%'},
+	            "tooltip": {"isHtml": true},
+	            "vAxis": {
+	                "ticks": [25,50,75,100],
+	                "maxValue": student_count,
+	                "viewWindowMode":'maximized',
+	                "textPosition": 'none' 
+	            }
+	        }, 
+	        data: $scope.formatLectureChartData(data)
         };
-        chart.data = $scope.formatLectureChartData(chart_data[id])
         return chart
     }
 
 	    $scope.formatLectureChartData = function(data) {
 		    var formated_data = {}
 		    formated_data.cols =
-		        [{
-		        "label": $translate('courses.students'),
-		        "type": "string"
-		    }, {
-		        "label": $translate('lectures.correct'),
-		        "type": "number"
-		    }, {
-		        "label": $translate('lectures.incorrect'),
-		        "type": "number"
-		    }, ]
+		        [
+			        {
+				        "label": $translate('courses.students'),
+				        "type": "string"
+				    }, 
+				    {
+				        "label": $translate('lectures.correct'),
+				        "type": "number"
+				    }, 
+				     {
+				    	"type":"string",
+				    	"p":{
+				    		"role":"tooltip", 
+				    		"html": true
+				    	}
+				    },
+				    {
+				        "label": $translate('lectures.incorrect'),
+				        "type": "number"
+				    }, 
+				    {
+				    	"type":"string",
+				    	"p":{
+				    		"role":"tooltip", 
+				    		"html": true
+				    	}
+				    }
+			    ]
 		    formated_data.rows = []
 		    for (var ind in data) {
-		        var text, correct, incorrect
+		        var text, correct, incorrect, tooltip_text
+		        tooltip_text = "<div style='padding:8px 0 0 5px'><b>"+data[ind][2]+"</b><br>"
 		        if (data[ind][1] == "gray") {
-		            text = data[ind][2] + " " + "(" + $translate('lectures.incorrect') + ")";
 		            correct = 0
 		            incorrect = data[ind][0]
-		        } else {
-		            text = data[ind][2] + " " + "(" + $translate('lectures.correct') + ")";
+		            tooltip_text +="Incorrect: "
+		        } else {		            
 		            correct = data[ind][0]
 		            incorrect = 0
+		            tooltip_text +="Correct: "
+
 		        }
+		        text = data[ind][2]
+		        tooltip_text += Math.floor(($scope.total_student_count*data[ind][0])/100 )+" answers "+"("+data[ind][0] +"%)</div>"
 		        var row = {
-		            "c": [{
-		                "v": text
-		            }, {
-		                "v": correct
-		            }, {
-		                "v": incorrect
-		            }, ]
+		            "c": [
+			            {"v": text}, 
+			            {"v": correct}, 
+			            {"v": tooltip_text},
+			            {"v": incorrect}, 
+			            {"v": tooltip_text}
+		            ]
 		        }
 		        formated_data.rows.push(row)
 		    }
 		    return formated_data
 		}
+
+		    var setChartTooltip = function(data){
+	     	data.cols.push({"type":"string","p":{"role":"tooltip", 'html': true}})
+	     	for(var i in data.rows){
+	     		var tooltip_text = generateTooltipHtml(data.rows[i].c[0].v, data.rows[i].c[1].v, $scope.statistics.question_text[i][1])
+	     		data.rows[i].c.push({"v":tooltip_text})
+     		}
+	     	return data
+	     }
+
+	     var generateTooltipHtml = function(time, count, questions){
+	     	var new_time=[]
+	     	new_time[0] = time[0]
+     		new_time[1]=time[1]<10? "0"+time[1] : time[1]
+     		new_time[2]=time[2]<10? "0"+time[2] : time[2]
+	     	var formatted_time = new_time[0]+":"+new_time[1]+":"+new_time[2]
+	     	var html = "<div style='padding:8px 0 0 5px'><b>"+formatted_time+"</b><br>#"+$translate('courses.students')+":  <b>"+count+"</b></div><hr style='padding:0;margin:4px 0'>"
+	     	for(var i in questions)
+	     	{
+	     		html +="<div style='width:400px;margin-left:5px;overflow-wrap:break-word'>- "+questions[i]+"</div><br>"
+	     	}
+	     	return html
+	     }
 
 
 	init()

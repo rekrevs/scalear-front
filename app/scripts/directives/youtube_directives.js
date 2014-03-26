@@ -26,6 +26,14 @@ angular.module('scalearAngularApp')
             });
         };	
 	}])
+	.directive("videoContainer",function(){
+		return{
+			transclude: true,
+			replace:true,
+			restrict: "E",
+			template: '<div class="videoborder" style="padding:0" ng-transclude></div>' //style="border:4px solid" 
+		};
+	})
 	.directive('youtube',['$rootScope','$log','$timeout','$window','popcornApiProxy',function($rootScope,$log,$timeout,$window, popcornApiProxy){
 		return {
 			restrict: 'E',

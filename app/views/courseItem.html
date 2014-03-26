@@ -1,49 +1,35 @@
-<div class="whole-box">
+<!-- <div class="whole-box">
 	<link rel="stylesheet" href="styles/courseItem.css"/>
-	<table>
+	<table style="height: 100%; width: 100%;">
 		<tr>
-			<td>
-				<table>
-					<tr>
-						<td class="course-image">
-
-						</td>
-						<td class="course-stats-container" ng-show="course.lectures">
-							<table>
-								<tr>
-									<td>
-									</td>
-								</tr>
-								<tr>
-									<td>
-									</td>
-								</tr>
-								<tr>
-									<td>
-									</td>
-								</tr>
-								<tr>
-									<td>
-									</td>
-								</tr>
-								<tr>
-									<td>
-									</td>
-								</tr>
-								<tr>
-									<td>
-									</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
+			<td class="course-image" ng-if="!course.image_url" style="background-image: url('../images/course.png')">
+			<td class="course-image" ng-if="course.image_url" style="background-image: url('course.image_url')">
 			</td>
 		</tr>
 		<tr>
 			<td class="course-info-container">
-				{{course.short_name}} | {{course.name}} {{course.name}} {{course.name}} {{course.name}}
+				<a ui-sref="course.student_calendar({ course_id: course.id })"><b>{{course.short_name}}</b> | {{course.name}}</a>
 			</td>
 		</tr>
 	</table>
+</div> -->
+
+
+
+<div class="whole-box">
+	<link rel="stylesheet" href="styles/courseItem.css"/>
+	<!-- <table style="width: 100%;">
+		<tr>
+			<td class="course-image" ng-if="!course.image_url" style="background-image: url('../images/course.png')">
+			<td class="course-image" ng-if="course.image_url" style="background-image: url('course.image_url')">
+			</td>
+		</tr>
+		<tr>
+			<td class="course-info-container">
+				<a ui-sref="course.student_calendar({ course_id: course.id })"><b>{{course.short_name}}</b> | {{course.name}}</a>
+			</td>
+		</tr>
+	</table> -->
+
+	asduhaisdhaiush
 </div>

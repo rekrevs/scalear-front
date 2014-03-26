@@ -19,7 +19,15 @@
 			</tr>
 		</tbody>
 	</table> -->
+	<div style="float: left; clear: both;">
+		<span class="dropdown" ><button class="dropdown-toggle btn" data-toggle="dropdown">Sort By <b class="caret"></b></button>
+	        <ul class="dropdown-menu">
+	            <li><a ng-click="order('short_name')" translate="courses.course_code"></a></li>
+	            <li><a ng-click="order('name')" translate="courses.course_name">Course Name</a></li>
+	        </ul>
+	    </span>
+    </div>
 	<course-item ng-repeat="course in courses|orderBy:column:is_reverse" course='course' ></course-item>
+	<a ng-hide="!courses" id="join_course" ng-click="open()" style="cursor:pointer" translate="courses.join_course"></a>
 </div>
 
-<a ng-hide="!courses" id="join_course" ng-click="open()" style="cursor:pointer" translate="courses.join_course"></a>

@@ -4,21 +4,7 @@
 	<h5 class="muted" translate>courses.enroll_instruction</h5>
 </center>
 <div ng-show="courses">
-	<!-- <h4 translate="courses.all_courses"></h4> -->
 	</br>
-	<!-- <table class="table table-striped">
-		<thead style="cursor:pointer" >
-			<th><a ng-click="order('short_name')" translate="courses.course_code"></a></th>
-			<th><a ng-click="order('name')" translate="courses.course_name">Course Name</a></th>
-		</thead>
-		<tbody>
-			<tr ng-repeat="course in courses|orderBy:column:is_reverse">
-				<td><a ui-sref="course.student_calendar({ course_id: course.id })">{{course.short_name}}</a></td>
-				<td><a ui-sref="course.student_calendar({ course_id: course.id })">{{course.name}}</a></td>
-				
-			</tr>
-		</tbody>
-	</table> -->
 	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
 		<div style="float: left;">
 			<span class="dropdown" ><button class="dropdown-toggle btn" data-toggle="dropdown">Sort By <b class="caret"></b></button>
@@ -32,9 +18,6 @@
     </div>
     <br />
     <br />
-
 	<course-item ng-repeat="course in courses|orderBy:column:is_reverse" course='course' teachers='course.teacher_enrollments' ></course-item>
-
-	
 </div>
 

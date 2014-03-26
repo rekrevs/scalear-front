@@ -68,6 +68,7 @@
                 <span class="menu-icon" style="margin-top: 8px;">
                 </span>
             </span>
+            <a ng-click="open()" style="float: right;" ng-show="current_user &amp;&amp; current_user.roles[0].id!=2 &amp;&amp; current_user.invitations" translate="navigation.notifications" style="float:left;color:red;cursor: pointer;" class="ng-scope ng-hide">Notifications</a>
             <a ui-sref='profile({user_id: current_user.id})' ng-show="current_user" class="pull-right" style="right: 100px; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; ">
                 <span ng-bind="current_user.name +' '+ current_user.last_name">    
                 </span>

@@ -145,8 +145,8 @@ angular.module('scalearAngularApp')
                 });
             }
         }
-    })
-    .directive('loading', function() {
+    })    
+        .directive('loading', ['ngProgress',function(ngProgress) {        
         return {
             scope: {
                 size: '@',
@@ -155,8 +155,25 @@ angular.module('scalearAngularApp')
             restrict: 'E',
             replace: true,
             templateUrl: '/views/teacher/course_editor/loading.html',
-        };
-    }).directive('deleteButton', function() {
+            link: function(scope, element){
+                scope.$watch('show', function(){
+                    if (scope.show == true) {
+                        ngProgress.set(Math.floor((Math.random()*80)+20));
+                        console.log('loading bar started');
+                    }
+                    else
+                        {
+                            ngProgress.complete();
+                            console.log('loading bar completed');
+                        }
+                })
+                }
+            }
+        }
+        ])
+
+    
+    .directive('deleteButton', function() {
         return {
             scope: {
                 size: "@",

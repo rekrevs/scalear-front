@@ -32,6 +32,7 @@ angular.module('scalearAngularApp')
       	'getInclassActive':{method:'GET', params:{action:'get_inclass_active_angular'},headers:headers},
             'getStudentModule':{method:'GET', params:{action:'get_module_data_angular'},headers:headers},
             'moduleCopy':{method:'POST', params:{action:'module_copy'},headers:headers},
+            'displayAll':{method:'GET', params:{action:'display_all'},headers:headers},
 	  });
 
 }])

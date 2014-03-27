@@ -21,6 +21,11 @@ angular.module('scalearAngularApp')
 	  		},
 	  		function(){}
 		)
+
+		Module.displayAll({
+	  			course_id:$stateParams.course_id,
+                module_id:$stateParams.module_id
+	  		})
   	}
 
 	$scope.$parent.setData=function(lecture_id,url){

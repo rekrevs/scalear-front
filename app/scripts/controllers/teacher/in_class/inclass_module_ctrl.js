@@ -24,21 +24,21 @@ angular.module('scalearAngularApp')
         $scope.show_black_screen= false
         $scope.hide_questions = false  
         $scope.dark_buttons="dark_button" 
-        $scope.mouse_movement_count = 0     
+        $scope.fullscreen = false  
         if($scope.current_quiz_lecture)
           delete $scope.current_quiz_lecture
         if($scope.chart_data)
           delete $scope.chart_data
 
         openModal('display', type)
-        setup_screens()
+        // setup_screens()
         changeButtonsSize()
         $scope.hide_text = $scope.button_names[3]
         $scope.setOriginalClass()
 
         angular.element($window).bind('resize',
           function(){
-            setup_screens()
+            // setup_screens()
             changeButtonsSize()
              $timeout(function(){
               $scope.adjustTextSize()
@@ -352,57 +352,6 @@ angular.module('scalearAngularApp')
     $scope.toggleBlackScreen=function(){
       $scope.show_black_screen = !$scope.show_black_screen
     }
-    
-    var getVideoWidth=function(){
-      var win = angular.element($window)
-      var video_height = (win.height()*60)/100
-      var video_width= video_height*(16/9)
-      return video_width
-    }
-
-    var setVideoWidth=function(video_width){
-      $scope.video_style={
-        height:'100%',
-        marginTop: '0px',
-        width: video_width+'px',
-        display: 'inline-block'
-      }
-    }
-
-    var setup_screens = function(){ 
-      var win = angular.element($window)
-      var win_width= win.width()
-      var video_width= getVideoWidth()
-      if(video_width+260 > win_width){
-        video_width = win_width -260
-      }
-      setVideoWidth(video_width)
-      var remaining = win_width - video_width
-      setButtonsPosition(remaining)
-    }
-
-    var setButtonsPosition = function(remaining){
-      
-      remaining = remaining>400? remaining/3 +30 : remaining/5 
-      $scope.left_style={
-        display:'inline-block',
-        minWidth:'50px',
-        height:'60%',
-        width:'50px',
-        marginLeft:remaining,
-        marginRight:'30px',
-        verticalAlign:'text-bottom'
-      }
-
-      $scope.right_style={
-        display:'inline-block',
-        minWidth:'50px',
-        height:'60%',
-        width:'50px',
-        marginLeft:'30px',
-        verticalAlign:'text-bottom'
-      }
-    }
 
     $scope.setOriginalClass=function(){
       $scope.video_class = 'original_video'
@@ -476,7 +425,8 @@ angular.module('scalearAngularApp')
         else
           $scope.question_class = 'smallest_question'
       }
-      $scope.chart.options.height=question_block.height() - 10
+      if($scope.chart)
+        $scope.chart.options.height=question_block.height() - 10
     }
 
     $scope.lightUpButtons=function(){
@@ -492,7 +442,6 @@ angular.module('scalearAngularApp')
 
     $scope.toggleFullscreen=function(){
       $scope.fullscreen = !$scope.fullscreen
-      console.log("toggleing " +$scope.fullscreen)
       $scope.blurButtons()
     }
 

@@ -3,52 +3,6 @@
         <b style="position: absolute;top: 95%;left: 48%;">Click or Press 'b' to return</b>
     </center>
 </div>
-<!-- <div  class="inclass "> -->
-
-<!-- <div  class="inclass disable_selection">
->>>>>>> 274f023b50fb54de7dcb6e8ef1bfc30bc88ceed0
-    <div ng-click="muteBtn()" ng-class="mute_class"></div>
-    <div ng-click="playBtn()" ng-class="play_pause_class"></div>
-    <div class="inclass_top">
-        <overlay ng-show="loading_video" style="opacity:0.9;">
-            <loading size="big" show="true" style="position:relative;top:40%" />
-        </overlay>
-        <span ng-show="lecture_url">
-            <div ng-style="left_style">
-                <button_link title="-5" action="skip(-5)"   style="width: 16px;"/>
-                <button_link title="<<" action="prevQuiz()" style="margin-top: 10px" ng-disabled="current_quiz == 1" />
-            </div>
-            
-            <video_container ng-style="video_style" class="inclass_sceen" >
-                <youtube     ng-style="video_style" class="inclass_sceen" id="inclass_vid" url="lecture_url" player="inclass_player" />
-            </video_container>
-            <div ng-style="right_style">
-                <button_link title="+5" action="skip(5)"    style="width: 16px;"/>
-                <button_link title=">>" action="nextQuiz()" style="margin-top: 10px" ng-disabled="current_quiz== total_num_quizzes"/>
-            </div>
-        </span>
-    </div>
-    <div class="inclass_bottom">
-        <div class="left_titles">
-            <div ng-show="question_title" class="question_title">{{question_title}}</div>
-            <div ng-show="questions" style="overflow:auto;height:100%;width:98%;">
-                <div ng-repeat="question in questions" ng-click="seek(question[1])" class="student_questions" >{{question[0]}}<br></div>
-            </div>
-            <div ng-if="chart_data" class="inclass_chart">
-                <center ng-init="loading_chart=true" style="font-size:14px;position:relative;top:40%;left:15%;">
-                    <loading size="small" show="loading_chart" >
-                </center>
-                <div google-chart chart="chart" on-ready="loading_chart=false"></div>
-            </div>
-        </div>
-       
-        <a ng-click="exitBtn()" class="exit_btn" translate>groups.exit</a>
-        <div class="lecture_count">
-            <b style="padding-left:15px;">Q:{{current_quiz+'/'+total_num_quizzes}}</b>
-            <b style="padding-left:5px;">L:{{current_lecture+'/'+total_num_lectures}}</b>
-        </div>   
-    </div>     
-</div> -->
 <span ng-mousemove="lightUpButtons()" class="disable_selection" style="overflow:hidden" >
     <div style="min-height:34px;position:relative">
         <span style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray">{{lecture_name}}</span>
@@ -72,7 +26,7 @@
                 </div>
             </div>
             <div ng-show="!hide_questions && questions" ng-style="question_block" ng-class="question_block">  <!-- student_padding -->
-                <ul><li ng-repeat="question in questions" ng-click="seek(question[1])" ng-class="student_question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >{{question[0]}}<br></li>
+                <ul style="padding-left:5px"><li ng-repeat="question in questions" ng-click="seek(question[1])" ng-class="student_question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >{{question[0]}}<br></li>
             </div>
         </div>
     </div>

@@ -68,30 +68,12 @@ angular.module('scalearAngularApp')
 				player_controls={},
 				player_events = {}
 
-                // scope.$on('$destroy', function() {
-                //     //alert("In destroy of:" + scope);
-                //     scope.kill_popcorn();
-                //     scope.player={};
-                //     scope.id="";
-                //     scope.ready="";
-                //     scope.url="";
-                // });
-
 				var loadVideo = function(){
 					if(player)
-                    {
 						Popcorn.destroy(player)
-                        // var events = Popcorn.getTrackEvents();
-                        // for (var e in events) {
-                        //     Popcorn.removeTrackEvent(events[e]._id);
-                        // }
-                    }
-
 
                     if(!scope.controls || scope.controls==undefined)
-                        scope.controls=0;
-
-                    
+                        scope.controls=0;                   
 
                     var matches = getVideoId(scope.url)
                     var vimeo= scope.url.match(/vimeo/)  // improve this..

@@ -22,12 +22,6 @@ angular.module('scalearAngularApp')
 	  		function(){}
 		)
   	}
-	$scope.$parent.setData=function(lecture_id,url,name){
-		$scope.$parent.lecture_url= url //+'&controls=0'
-		$scope.$parent.lecture_name = name
-		$scope.$parent.quiz_time= $scope.display_data[lecture_id][$scope.current_quiz_lecture][0][1]
-		$scope.$parent.questions = $scope.display_data[lecture_id][$scope.current_quiz_lecture]
-	}
 
 	$scope.$parent.setData=function(lecture_id,url){
 		$scope.$parent.quiz_time= $scope.display_data[lecture_id][$scope.current_quiz_lecture][0][1]

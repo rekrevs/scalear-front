@@ -128,6 +128,7 @@ angular.module('scalearAngularApp')
       else{
         $scope.inclass_player.controls.pause()
       }
+      $scope.blurButtons()
     }
 
     $scope.muteBtn= function(){
@@ -140,6 +141,21 @@ angular.module('scalearAngularApp')
         $scope.mute_class = "icon-volume-off"
         $scope.inclass_player.controls.mute()
       }
+      $scope.blurButtons()
+    }
+
+    $scope.qualityBtn= function(){
+      var time = $scope.inclass_player.controls.getTime()
+      if(!$scope.quality_set){
+        $scope.inclass_player.controls.changeQuality('hd720',time)
+        $scope.quality_set='blue_font'
+      }
+      else{
+        $scope.inclass_player.controls.changeQuality(null,time)
+        $scope.quality_set=null
+
+      }
+      $scope.blurButtons()
     }
 
     $scope.seek=function(time,first){
@@ -157,6 +173,7 @@ angular.module('scalearAngularApp')
           seek_to_time = duration
         $scope.seek(seek_to_time)
       }
+      $scope.blurButtons()
     }
 
     $scope.inclass_player.events.onPlay=function(){
@@ -222,6 +239,7 @@ angular.module('scalearAngularApp')
        $timeout(function(){
         $scope.adjustTextSize()
       })
+       $scope.blurButtons()
     }
 
     $scope.prevQuiz = function(){
@@ -257,6 +275,7 @@ angular.module('scalearAngularApp')
       $timeout(function(){
         $scope.adjustTextSize()
       })
+      $scope.blurButtons()
     }
 
     $scope.setQuizShortcuts=function(){
@@ -395,6 +414,7 @@ angular.module('scalearAngularApp')
       //   'overflowY':'visible'
       // }
       showQuestions()
+      $scope.blurButtons()
     }
 
     $scope.setZoomClass=function(){
@@ -406,6 +426,7 @@ angular.module('scalearAngularApp')
       // $scope.question_block={
       //   'overflowY':'visible'
       // }
+      $scope.blurButtons()
     }
 
     $scope.toggleHideQuestions=function(){
@@ -413,6 +434,7 @@ angular.module('scalearAngularApp')
       $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
       if($scope.question_class == 'original_question')
         $scope.video_class = $scope.hide_questions?'zoom_video' : 'original_video'
+      $scope.blurButtons()
     }
 
     var showQuestions = function(){
@@ -461,7 +483,6 @@ angular.module('scalearAngularApp')
       $scope.last_movement_time= new Date()
       $scope.dark_buttons =null
       $timeout(function(){
-        // console.log((new Date()) - $scope.last_movement_time)
         if((new Date()) - $scope.last_movement_time  >=5000){
           $scope.dark_buttons="dark_button"
         }
@@ -472,7 +493,11 @@ angular.module('scalearAngularApp')
     $scope.toggleFullscreen=function(){
       $scope.fullscreen = !$scope.fullscreen
       console.log("toggleing " +$scope.fullscreen)
+      $scope.blurButtons()
+    }
 
+    $scope.blurButtons=function(){
+      angular.element('.btn').blur()
     }
 
     init();

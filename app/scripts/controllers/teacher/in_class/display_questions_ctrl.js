@@ -29,5 +29,15 @@ angular.module('scalearAngularApp')
 		$scope.$parent.questions = $scope.display_data[lecture_id][$scope.current_quiz_lecture]
 	}
 
+	$scope.$parent.setData=function(lecture_id,url){
+		$scope.$parent.quiz_time= $scope.display_data[lecture_id][$scope.current_quiz_lecture][0][1]
+		$scope.$parent.questions = $scope.display_data[lecture_id][$scope.current_quiz_lecture]
+		if($scope.$parent.lecture_url.indexOf(url) == -1){
+			$scope.$parent.inclass_player.controls.setStartTime($scope.$parent.quiz_time)
+			$scope.$parent.lecture_url= url
+		}
+	}
+
+
 	init()
   }]);

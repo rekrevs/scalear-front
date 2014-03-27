@@ -50,11 +50,11 @@ angular.module('scalearAngularApp')
             template:"<div></div>",
 			link: function(scope, element){
 				var win = angular.element($window)
-				var video_layer_height = win.height()*0.6
-				// element.css('height', video_layer_height+'px')
+
+                scope.vq;
+                scope.start_time
 
                 scope.$on('$destroy', function() {
-                    //alert("In destroy of:" + scope);
                     scope.kill_popcorn();
                     scope.player={};
                     scope.id="";
@@ -77,7 +77,7 @@ angular.module('scalearAngularApp')
                 //     scope.url="";
                 // });
 
-				var loadVideo = function(vq){
+				var loadVideo = function(){
 					if(player)
                     {
 						Popcorn.destroy(player)
@@ -91,8 +91,7 @@ angular.module('scalearAngularApp')
                     if(!scope.controls || scope.controls==undefined)
                         scope.controls=0;
 
-                    if(!vq || vq==undefined)
-                        vq='hd720';
+                    
 
                     var matches = getVideoId(scope.url)
                     var vimeo= scope.url.match(/vimeo/)  // improve this..
@@ -100,7 +99,7 @@ angular.module('scalearAngularApp')
                     {
                     	scope.video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
                     	player = Popcorn(scope.video,{});
-                    	scope.video.src = formatURL(scope.url)
+                    	scope.video.src = formatURL(scope.url, scope.vq, scope.start_time)
                         // player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1');
                     }
                     else if(vimeo)
@@ -124,11 +123,12 @@ angular.module('scalearAngularApp')
 					parent.focus()
 				}
 
-				var formatURL=function(url){
+				var formatURL=function(url,vq,time){
+					console.log(vq)
 					var splitted_url= url.split('?'),
 					base_url = splitted_url[0],
 					query = '&'+splitted_url[1]	
-					return base_url+"?fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls&origin=https://www.youtube.com"+query;
+					return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls&origin=https://www.youtube.com"+query;
 				}
 
                 scope.kill_popcorn = function(){
@@ -187,7 +187,17 @@ angular.module('scalearAngularApp')
 					player.pause()
 				}
 
-				player_controls.refreshVideo = function(quality){
+				player_controls.changeQuality=function(quality, time){
+					scope.vq = quality
+					player_controls.setStartTime(time)
+					player_controls.refreshVideo()
+				}
+
+				player_controls.setStartTime=function(time){
+					scope.start_time = Math.round(time)
+				}
+
+				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
 					scope.kill_popcorn()
 					element.find('iframe').remove();

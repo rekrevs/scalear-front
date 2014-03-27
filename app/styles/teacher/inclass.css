@@ -130,7 +130,7 @@
 .dark_button{
 	background: #1a1a1a;
 	border:none;
-	color: black;
+	color: black !important;
 	text-shadow: 0 1px 1px rgba(93, 93, 93, 0.75);
 }
 
@@ -310,4 +310,8 @@
 	font-weight:200 !important;
 	background-image: initial;
 	border: none;
+}
+
+.blue_font{
+	color:blue ;
 }

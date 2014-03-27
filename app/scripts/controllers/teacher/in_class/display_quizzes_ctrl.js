@@ -27,10 +27,14 @@ angular.module('scalearAngularApp')
   	}
 	$scope.$parent.setData=function(lecture_id, url, name){
 		$scope.$parent.lecture_name = name
-		$scope.$parent.lecture_url= url; //+'&controls=0'
+		// $scope.$parent.lecture_url= url; //+'&controls=0'
 		$scope.$parent.quiz_time= $scope.display_data[lecture_id][$scope.current_quiz_lecture][0]
 		$scope.$parent.question_title = $scope.display_data[lecture_id][$scope.current_quiz_lecture][2]
 		$scope.$parent.quiz_id  = $scope.display_data[lecture_id][$scope.current_quiz_lecture][3] 
+		if($scope.$parent.lecture_url.indexOf(url) == -1){
+			$scope.$parent.inclass_player.controls.setStartTime($scope.$parent.quiz_time)
+			$scope.$parent.lecture_url= url
+		}
 	}
 
     $scope.$parent.createChart = function(id){

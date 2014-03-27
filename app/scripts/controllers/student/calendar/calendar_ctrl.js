@@ -49,7 +49,7 @@ angular.module('scalearAngularApp')
 					}  
 				}
 				$scope.eventSources.push($scope.calendar); 
-				
+				$(window).resize()
 			},
 			function(){}
 		)

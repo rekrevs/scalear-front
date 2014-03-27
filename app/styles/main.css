@@ -617,6 +617,14 @@ a:hover{
   margin-top: 5px;
   content: url('../images/duration.png');
 }
+.key-icon:before{
+  margin-top: 5px;
+  content: url('../images/key.png');
+}
+.clock-icon:before{
+  margin-top: 5px;
+  content: url('../images/clock.png');
+}
 
 .up_active {
     background-color: lightcyan;

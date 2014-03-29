@@ -7,6 +7,13 @@ angular.module('scalearAngularApp')
 			restrict: "E",
 			templateUrl: '/views/teacher_navigation.html',
 			link: function(scope){
+				scope.settingsOpened = function(which){
+					scope.selected=which;
+					scope.$emit('settingsOpened', [which]);
+				}
+				scope.$on('mainMenuToggled', function(event, collapsed){
+					scope.show_settings = false;
+				})
 				scope.course_information_state=function(){
 					return scope.current_state.includes('course.edit_course_information') ||
 					scope.current_state.includes('course.enrolled_students') ||

@@ -528,11 +528,12 @@ a:hover{
     height: 100px;
     margin: 0px 10px 0px 10px;
 }
-#info, #calendar, #lectures{
+#info, #calendar, #lectures, #progress, #students, #inclass, #content, #announcements{
   padding-top: 3px;
   padding: 0px 10px 0px 10px;
+  color: white;
 }
-#info > a, #calendar > a, #lectures > a{
+#info > a, #calendar > a, #lectures > a, #content > a, #students > a, #announcements > a, #inclass > a, #progress > a{
   color: white;
 }
 
@@ -542,10 +543,26 @@ a:hover{
 #calendar > a:before{
   content: url("../images/calendar-icon.png");
 }
+#announcements > a:before{
+  content: url("../images/announcements-icon.png");
+}
+#students > a:before{
+  content: url("../images/students-icon.png");
+}
+#progress > a:before{
+  content: url("../images/progress-icon.png");
+}
+#inclass > a:before{
+  content: url("../images/inclass-icon.png");
+}
+#content > a:before{
+  content: url("../images/content-icon.png");
+}
+
 #lectures > a:before{
   content: url("../images/lectures-icon.png");
 }
-#info:hover, #calendar:hover, #lectures:hover, .current{
+#info:hover, #calendar:hover, #lectures:hover, #announcements:hover, #students:hover, #progress:hover, #inclass:hover, #content:hover,.current{
   border-bottom: 4px solid rgb(0, 162, 86);
 }
 

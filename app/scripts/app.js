@@ -132,6 +132,22 @@ angular.module('scalearAngularApp', [
                 else if(name == "profile"){
                     return "profile.profile";
                 }
+                else if(name == "course.announcements"){
+                    return "head.announcements"
+                }
+                else if(name == "course.enrolled_students"){
+                    return "head.enrolled_students"
+                }
+                else if(name == "course.course_editor"){
+                    return "head.content"
+                }
+                else if(name == "course.progress.main", "course.progress.module"){
+                    return "head.progress"
+                }
+                else if(name == "course.inclass"){
+                    return "head.in_class"
+                }
+
 
             }
             //check if route requires no auth

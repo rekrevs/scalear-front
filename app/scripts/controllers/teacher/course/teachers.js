@@ -27,6 +27,7 @@ angular.module('scalearAngularApp')
         $scope.updateTeacher = function(index){
             Course.updateTeacher({course_id:$stateParams.course_id},{email:$scope.teachers[index].email, role_id:$scope.teachers[index].role});
         }
+        //--------
         $scope.removeNewRow = function(index){
             $scope.new_teachers.splice(index, 1);
         }

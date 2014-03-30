@@ -2,14 +2,14 @@
 	<br />
 	<h3>{{selected_module.name}}</h3>
 	<br />
-	<h4 translate>courses.display_lecture_results</h4>
-	<button_link title="{{'courses.display_quizzes'|translate}}"   action="display('Quizzes',!buttons.quizzes_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.quizzes_display_count" />
-	<button_link title="{{'courses.display_questions'|translate}}" action="display('Questions',!buttons.questions_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.questions_display_count"/>
+	<!-- <h4 >courses.display_lecture_results</h4> -->
+	<button_link title="Go To Class"   action="display('Quizzes',buttons.quizzes_display_count)" class="btn-xlarge btn-primary" ng-disabled="!inclass_ready"/>
+	<!-- <button_link title="{{'courses.display_questions'|translate}}" action="display('Questions',!buttons.questions_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.questions_display_count"/>
 	<button_link title="{{'courses.display_surveys'|translate}}"   action="survey(!buttons.survey_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.survey_display_count"/>
 	<h4 translate>courses.review_lecture_results</h4>
 	<button_link title="{{'courses.review_quizzes'|translate}}"   action="review('Quizzes',!buttons.quizzes_review_count)" class="btn-xlarge" ng-disabled="!buttons.quizzes_review_count" />
 	<button_link title="{{'courses.review_questions'|translate}}" action="review('Questions',!buttons.questions_review_count)" class="btn-xlarge" ng-disabled="!buttons.questions_review_count" />
-	<button_link title="{{'courses.review_surveys'|translate}}"   action="survey(!buttons.survey_display_count,'review')" class="btn-xlarge" ng-disabled="!buttons.survey_display_count" />
+	<button_link title="{{'courses.review_surveys'|translate}}"   action="survey(!buttons.survey_display_count,'review')" class="btn-xlarge" ng-disabled="!buttons.survey_display_count" /> -->
 </center>
 <br /><br /><br />
 <br /><br /><br />

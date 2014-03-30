@@ -34,6 +34,7 @@ angular.module('scalearAngularApp')
             'moduleCopy':{method:'POST', params:{action:'module_copy'},headers:headers},
             'displayAll':{method:'GET', params:{action:'display_all'},headers:headers},
             'getModuleProgress':{method:'GET', params:{action:'get_module_progress'},headers:headers},
+            'getModuleInclass':{method:'GET', params:{action:'get_module_inclass'},headers:headers},
             'getQuizCharts':{method:'GET', params:{action:'get_quiz_charts'},headers:headers},
       	'getSurveyCharts':{method:'GET', params:{action:'get_survey_charts'},headers:headers},
 	  });

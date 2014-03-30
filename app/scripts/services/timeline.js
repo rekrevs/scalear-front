@@ -32,9 +32,7 @@ angular.module('scalearAngularApp')
             {
                 for ( var time_index = this.items.length - 1; time_index >= 0; time_index-- ) {
                     if ( this.items[time_index].data.id == id && this.items[time_index].type==type) {
-                        //this.items[time_index].data.very = true;
                         return time_index
-                        //break;
                     }
                 }
             }
@@ -42,3 +40,4 @@ angular.module('scalearAngularApp')
         return x;
 
     }]);
+

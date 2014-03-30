@@ -19,8 +19,8 @@ angular.module('scalearAngularApp')
       	'getQuizzesProgress': {method: 'GET', params: {action: 'get_quizzes_progress_angular'}, headers:headers},
       	'getModuleCharts':{method:'GET', params:{action:'get_module_charts_angular'}, headers:headers},
       	'getLectureCharts':{method:'GET', params:{action: 'get_lecture_charts_angular'}, headers:headers},
-      	'getQuizCharts':{method:'GET', params:{action: 'get_quiz_charts_angular'}, headers:headers},
-      	'getSurveyCharts':{method:'GET', params:{action:'get_survey_charts_angular'}, headers:headers},
+      	'getQuizChart':{method:'GET', params:{action: 'get_quiz_chart_angular'}, headers:headers},
+      	'getSurveyChart':{method:'GET', params:{action:'get_survey_chart_angular'}, headers:headers},
       	'getStudentStatistics':{method:'GET', params:{action:'get_student_statistics_angular'},headers:headers},
       	'changeModuleStatus':{method:'POST', params:{action:'change_status_angular'},headers:headers},
       	'displayQuizzes':{method:'GET', params:{action:'display_quizzes_angular'},headers:headers},
@@ -33,6 +33,9 @@ angular.module('scalearAngularApp')
             'getStudentModule':{method:'GET', params:{action:'get_module_data_angular'},headers:headers},
             'moduleCopy':{method:'POST', params:{action:'module_copy'},headers:headers},
             'displayAll':{method:'GET', params:{action:'display_all'},headers:headers},
+            'getModuleProgress':{method:'GET', params:{action:'get_module_progress'},headers:headers},
+            'getQuizCharts':{method:'GET', params:{action:'get_quiz_charts'},headers:headers},
+      	'getSurveyCharts':{method:'GET', params:{action:'get_survey_charts'},headers:headers},
 	  });
 
 }])

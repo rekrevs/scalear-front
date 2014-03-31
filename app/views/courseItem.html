@@ -1,0 +1,65 @@
+<div class="whole-box">
+	<link rel="stylesheet" href="styles/courseItem.css"/>
+	<!-- <table style="width: 100%;">
+		<tr>
+			<td class="course-image" ng-if="!course.image_url" style="background-image: url('../images/course.png')">
+			<td class="course-image" ng-if="course.image_url" style="background-image: url('course.image_url')">
+			</td>
+		</tr>
+		<tr>
+			<td class="course-info-container">
+				<a ui-sref="course.student_calendar({ course_id: course.id })"><b>{{course.short_name}}</b> | {{course.name}}</a>
+			</td>
+		</tr>
+	</table> -->
+	<table>
+		<tr>
+			<td class="course-image">
+				<a ui-sref="course.student_calendar({ course_id: course.id })">
+					<img ng-src="{{course.image_url || '../images/course.png'}}" style="height: 120px;" />
+					
+				</a>
+			</td>
+			<td class="course-info-container" colspan="1">
+				<table>
+					<tr>
+						<td colspan="2">
+								<a ui-sref="course.student_calendar({ course_id: course.id })">
+									{{course.short_name}} | {{course.name}}
+								</a>
+						</td>
+					</tr>
+					<tr>
+						<td style="color: #2d2d2d;">
+							<div style="font-size: 15px; margin: 0px;"><span class="calendar-icon"></span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div> 
+						</td>
+						<td style="color: #2d2d2d;">
+							<div style="font-size: 15px; margin: 0px;"><span class="duration-icon"></span>{{course.duration}} <span translate="courses.weeks"></span></div>
+						</td>
+					</tr>
+					<tr>
+                        <td colspan="2">
+                        	<span ng-if="teachers" class="dropdown-header" style="margin-left: -10px;"><b translate>courses.teachers</b><br /></span>
+                        	<table>
+                        		<tr>
+                        			<td style="color: black; text-align: center; padding-left: 10px;" ng-repeat="teacher in teachers" style="text-align: center;">
+			                            <small>
+			                            	<a ui-sref="profile({ user_id: teacher.user.id })">
+			                                	<profile-image email="teacher.user.email" imagesize="40"> </profile-image> {{teacher.user.name}} ({{teacher.role.name}})
+			                            	</a>
+			                        	</small>
+			                        </td>
+                        		</tr>
+                        	</table>
+                        </td>
+					</tr>
+					
+					
+				</table>
+			</td>
+			<!-- <td ng-if="course.lectures">
+			</td> -->
+		</tr>
+	</table>
+	
+</div>

@@ -1,20 +1,131 @@
-<ul class="nav nav-pills" style="margin-top: 15px;">
-    <li id="progress_link" ng-class="{ active: current_state.includes('course.progress')}"><a ui-sref="course.progress.main({ course_id: current_course_id })"translate>head.progress</a></li>
-    <li id="inclass_link" ng-class="{ active: current_state.includes('course.inclass')}"><a ui-sref="course.inclass({ course_id: current_course_id })" translate>head.in_class</a></li>
-    <li id="calendar_link" ng-class="{ active: current_state.includes('course.calendar')}"><a ui-sref="course.calendar({ course_id: current_course_id })"translate>head.calendar</a></li>
-    <li id="announcements_link" ng-class="{ active: current_state.includes('course.announcements')}"><a ui-sref="course.announcements({ course_id: current_course_id })"translate>head.announcements</a></li>
-    <li id="course_editor_link" ng-class="{ active: current_state.includes('course.course_editor')}"><a ui-sref="course.course_editor({ course_id: current_course_id })"translate>head.content</a></li>
-     <li class="dropdown" ng-class="{ active: course_information_state()}"><a class="dropdown-toggle" data-toggle="dropdown" href=""><span translate>head.information</span><b class="caret"></b></a>
-        <ul class="dropdown-menu">
-            <li><a id="info" ui-sref="course.edit_course_information({ course_id: current_course_id })"translate>head.course_information</a></li>
-            <li><a id="enrolled" ui-sref="course.enrolled_students({ course_id: current_course_id })"translate>head.enrolled_students</a></li>
-            <li><a id="teachers" ui-sref="course.teachers({ course_id: current_course_id })"translate>head.teachers</a></li>
-        </ul>
-    </li>
-    <li id="help_link"><a href="http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf" target="_blank" translate>head.help</a></li>
-    <li>
-        <a style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a>
-    </li>
-    <li style="float:right"><b>{{course_information.short_name}} - {{course_information.name}}</b></li>
+<div style="min-width: 80%;">
+<style>
+    #user_information_container{
+        min-width: 280px;
+        display: inline-block;
+    }
+    #user_profile_image{
+        min-width: 70px;
+        overflow: hidden;
+    }
+    @media only screen and (max-width : 1282px) {
+        #user_information_container{
+            display: none;
+        }
+        #user_profile_image{
+            min-width: 50px;
+        }
+    }
+</style>
+    <table style="vertical-align: baseline;">
+        <tr>
+            <td style="vertical-align: initial;">
+                <a ui-sref="profile({user_id: $parent.current_user.id})" href="">
+                    <profile-image email="$parent.current_user.email" imagesize="70" style="overflow: hidden; min-width: 70px;"></profile-image>
+                </a>
+            </td>
+            <td id="user_information_container">
+                <a href="" ui-sref="profile({user_id: $parent.current_user.id})" style="color: white;">
+                    <ul>
+                        <span style="color: rgb(0, 162, 86); font-size: 22px; font-weight: lighter;" ng-bind="$parent.current_user.screen_name"></span>
+                    </ul>
+                    <ul style="font-size: 19px;" ng-bind="$parent.current_user.name +' '+ $parent.current_user.last_name">
+                    </ul>
+                    <ul style="font-size: 19px;" ng-bind="$parent.current_user.university">
+                    </ul>
+                </a>
+            </td>
+            <td ng-init="show_settings = false" style="display: inline-table; margin-left: 20px;">
+                <div class="headerdivider" style="display: table-column; padding-right: 20px;">
+                </div>
+                <span style="margin-left: 20px; display: inline-block;" ng-hide="!course_information || show_settings">
+                    <div style="word-wrap: normal; width: 450px;">
+                        <span style="font-size: 16px; ">
+                        {{course_information.short_name}} | {{course_information.name}}
+                        </span>
+                    </div>
+                    <table>
+                        <td style="height: 7px;">
+                        </td>
+                        <tr>
+                            <td id="info" style="text-align: center;" ng-class="{current: current == 'head.course_information'}">
+                                <a ui-sref="course.edit_course_information({ course_id: current_course_id })"><br />{{'head.information' | translate}}</a>
+                            </td>
+                            <td>
+                            </td>
+                            <td id="calendar" style="text-align: center;" ng-class="{current: current == 'head.calendar'}">
+                                <a  ui-sref="course.calendar({ course_id: current_course_id })"><br />{{'head.calendar' | translate}}</a>
+                            </td>
+                            <td>
+                            </td>
+                            <td id="announcements" style="text-align: center;" ng-class="{current: current == 'head.announcements'}">
+                                <a  ui-sref="course.announcements({ course_id: current_course_id })"><br />{{'head.announcements' | translate}}</a>
+                            </td>
+                            <td>
+                            </td>
+                            <td id="students" style="text-align: center;" ng-class="{current: current == 'head.enrolled_students'}">
+                                <a  ui-sref="course.enrolled_students({ course_id: current_course_id })"><br />{{'head.enrolled_students' | translate}}</a>
+                            </td>
+                            <td id="content" style="text-align: center;" ng-class="{current: current == 'head.content'}">
+                                <a ui-sref="course.course_editor({ course_id: current_course_id })"><br />{{'head.content' | translate}}</a>
+                            </td>
+                            <td>
+                            </td>
+                            <td id="progress" style="text-align: center;" ng-class="{current: current == 'head.progress'}">
+                                <a  ui-sref="course.progress.main({ course_id: current_course_id })"><br />{{'head.progress' | translate}}</a>
+                            </td>
+                            <td>
+                            </td>
+                            <td id="inclass" style="text-align: center;" ng-class="{current: current == 'head.in_class'}">
+                                <a  ui-sref="course.inclass({ course_id: current_course_id })"><br />{{'head.in_class' | translate}}</a>
+                            </td>
+                        <tr>
 
-</ul>
+                        </tr>
+                    </table>
+                </span>
+                <span style="margin-left: 20px; display: inline-block;" ng-show="show_settings">
+                    
+                    <table>
+                        <tr>
+                            <td style="padding-left: 20px; padding-right: 5px; min-width: 150px;">
+                                <span class="dropdown-header" ng-hide="!show_settings"><b translate>account_edit.account_settings</b></span>
+                                <div class="settings-tabs">
+                                    <a href="">
+                                        <ul class="tab-pill tabactive" ng-bind='"account_edit.account_information" | translate'>
+                                            
+                                        </ul>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </span>
+            </td>
+            <td ng-show="show_settings">
+                <div class="tab-content" style="height: auto;">
+                        <account-information>
+                    </div>
+            </td>
+            <span style="float: right;">
+                <ul><a style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
+            </span>
+            <span style="float: right;">
+                <a href="" >
+                    <ul ng-bind="'head.help' | translate">
+                    </ul>
+                </a>
+            </span>
+            <span style="float: right; display: inline-table;">
+                <ul ng-show="$parent.current_lang=='en'" ng-cloak>
+                    <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                </ul>
+                <ul ng-show="$parent.current_lang=='sv'" ng-cloak>
+                    <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                </ul>
+            </span>
+            <span class="settings-menu-button" ng-click="show_settings = !show_settings; selected = 1;" ng-class="{settingsopen: show_settings}">
+            </span>
+        </tr>
+    </table>
+</div>

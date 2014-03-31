@@ -22,7 +22,7 @@
         <tr>
             <td style="vertical-align: initial;">
                 <a ui-sref="profile({user_id: $parent.current_user.id})" href="">
-                    <img id="user_profile_image" src="{{'http://www.gravatar.com/avatar/'+$parent.current_user.profile_image+'?r=g&s=70'}}"/>
+                    <profile-image email="$parent.current_user.email" imagesize="70" style="overflow: hidden; min-width: 70px;"></profile-image>
                 </a>
             </td>
             <td id="user_information_container">

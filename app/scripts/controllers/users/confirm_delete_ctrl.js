@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('ConfirmDeleteCtrl',['$scope','$modalInstance','User','$log','$window','$rootScope', function ($scope, $modalInstance, User, $log, $window,$rootScope) {
+  .controller('ConfirmDeleteCtrl',['$scope','$modalInstance','User','$log','$window','$rootScope','$state', function ($scope, $modalInstance, User, $log, $window,$rootScope, $state) {
 
 	$window.scrollTo(0, 0);
 	$scope.enrollment={}
@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
         $rootScope.current_user = null;
         $scope.form.processing=false;
         $modalInstance.close();
+        $state.go('login')
     }, function(response) {
         $scope.form.processing=false;
         $scope.form.server_error=response.data.errors.join();

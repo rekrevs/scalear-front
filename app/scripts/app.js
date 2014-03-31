@@ -132,6 +132,22 @@ angular.module('scalearAngularApp', [
                 else if(name == "profile"){
                     return "profile.profile";
                 }
+                else if(name == "course.announcements"){
+                    return "head.announcements"
+                }
+                else if(name == "course.enrolled_students"){
+                    return "head.enrolled_students"
+                }
+                else if(name == "course.course_editor"){
+                    return "head.content"
+                }
+                else if(name == "course.progress.main", "course.progress.module"){
+                    return "head.progress"
+                }
+                else if(name == "course.inclass"){
+                    return "head.in_class"
+                }
+
 
             }
             //check if route requires no auth
@@ -271,12 +287,12 @@ angular.module('scalearAngularApp', [
             })
             .state('teacher_signup', {
                 url: '/users/teacher',
-                templateUrl: '/views/users/teacher.html',
+                templateUrl: '/views/users/signup.html',
                 controller: 'UsersTeacherCtrl'
             })
             .state('student_signup', {
                 url: '/users/student',
-                templateUrl: '/views/users/student.html',
+                templateUrl: '/views/users/signup.html',
                 controller: 'UsersStudentCtrl'
             })
             .state('edit_account', {
@@ -293,7 +309,7 @@ angular.module('scalearAngularApp', [
                 }
             })
             .state('profile', {
-                url: '/users/:user_id',
+                url: '/users/profile/:user_id',
                 templateUrl: 'views/users/profile.html',
                 controller: 'UsersProfileCtrl'
             })

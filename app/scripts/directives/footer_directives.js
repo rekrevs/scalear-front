@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
                                         quiz: $stateParams.quiz_id || -1,
                                         url: $location.url(),
                                         problem: scope.technical_data,
-                                        lang: scope.current_lang
+                                        lang: scope.current_lang,
                                         agent:navigator.userAgent
                                     },
                                     function(data) {

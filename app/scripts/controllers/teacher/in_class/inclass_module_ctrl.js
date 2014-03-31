@@ -8,25 +8,7 @@ angular.module('scalearAngularApp')
 
   	$scope.display = function (type, disabled) {
       if(!disabled){
-        $scope.play_pause_class = "icon-play"
-        $scope.mute_class = "icon-volume-up"
-        $scope.loading_video=true
-        $scope.lecture_url=""
-        $scope.question_title=""
-        $scope.quiz_id=""
-        $scope.questions=[]
-        $scope.lecture_list = []
-        $scope.display_data = {}
-        $scope.total_num_lectures = 0
-        $scope.total_num_quizzes  = 0
-        $scope.current_lecture = 0
-        $scope.current_quiz = 0
-        $scope.item_itr = 0
-        $scope.timeline_itr= 0
-        $scope.show_black_screen= false
-        $scope.hide_questions = false  
-        $scope.dark_buttons="dark_button" 
-        $scope.fullscreen = false  
+        resetVariables()
         if($scope.current_quiz_lecture)
           delete $scope.current_quiz_lecture
         if($scope.chart_data)
@@ -37,6 +19,7 @@ angular.module('scalearAngularApp')
         changeButtonsSize()
         $scope.hide_text = $scope.button_names[3]
         $scope.setOriginalClass()
+        $scope.setQuizShortcuts()
         // var unwatch = $scope.$watch('inclass_player',function(){
         //   console.log("changinf")
         //   if($scope.inclass_player.controls){
@@ -57,6 +40,30 @@ angular.module('scalearAngularApp')
       }  
 
   	};
+
+    var resetVariables=function(){
+        $scope.play_pause_class = "icon-play"
+        $scope.mute_class = "icon-volume-up"
+        $scope.loading_video=true
+        $scope.lecture_url=""
+        $scope.question_title=""
+        $scope.quiz_id=""
+        $scope.questions=[]
+        $scope.lecture_list = []
+        $scope.display_data = {}
+        $scope.total_num_lectures = 0
+        $scope.total_num_quizzes  = 0
+        $scope.current_lecture = 0
+        $scope.current_quiz = 0
+        $scope.item_itr = 0
+        $scope.timeline_itr= 0
+        $scope.show_black_screen= false
+        $scope.hide_questions = false  
+        $scope.dark_buttons="dark_button" 
+        $scope.fullscreen = false 
+        $scope.selected_item=null
+        $scope.selected_timeline_item=null
+    }
 
     var init = function(){
         // Module.getInclassActive(
@@ -115,44 +122,50 @@ angular.module('scalearAngularApp')
       $scope.modalInstance.result.then(
       function(){},
       function(){
-        $scope.exitBtn()
+        cleanUp()
+        //$scope.exitBtn()
       });
 
       $scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
           event.preventDefault()
-          $scope.exitBtn() 
+         cleanUp()
       });
 
       $scope.unregister_state_event = $scope.$on("$stateChangeStart", function(event, next, current) {
-              $scope.exitBtn() 
+              cleanUp()
               $scope.$apply()
         });
     }
 
-    $scope.review=function(type, disabled){
-      if(!disabled){
-        openModal('review', type)
-      }
-    }
+    // $scope.review=function(type, disabled){
+    //   if(!disabled){
+    //     openModal('review', type)
+    //   }
+    // }
 
-    $scope.survey=function(disabled, state){
-      if(!disabled){
-        $scope.in_review= state
-        openModal('review','Surveys')
-      }
-    }
+    // $scope.survey=function(disabled, state){
+    //   if(!disabled){
+    //     $scope.in_review= state
+    //     openModal('review','Surveys')
+    //   }
+    // }
 
     $scope.exitBtn = function () {
+      $scope.modalInstance.dismiss();
+      cleanUp()
+    };
+
+    var cleanUp=function(){
       $rootScope.changeError = false;
       angular.element("body").css("overflow","auto");
       angular.element("#main").css("overflow","");
       angular.element("html").css("overflow","");
-      $scope.modalInstance.dismiss();
       $scope.unregister_back_event();
       $scope.unregister_state_event();
       $scope.removeShortcuts()
-      init()
-    };
+      // init()
+      resetVariables()
+    }
 
     $scope.playBtn = function(){
       if($scope.play_pause_class == "icon-play"){

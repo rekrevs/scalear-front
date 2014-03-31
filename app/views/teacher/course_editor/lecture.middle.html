@@ -11,7 +11,7 @@
 				<h3 style="position:relative;top:30px" translate>lectures.try_reload</h3>
 				<loading size='small' show='true' style="position:relative;top:30px;" />
 		</div>
-		<div ng-show="editing_mode">
+		<div>
 			<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
 				<answervideo ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
 				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>

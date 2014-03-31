@@ -250,6 +250,9 @@ angular.module('scalearAngularApp')
 	}
 
  	$scope.addDoubleClickBind= function(event){
+	  if ($scope.editing_mode) {
+	    
+	  
  		console.log("hell worll.ds")
  		var answer_width, answer_height
  		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
@@ -282,7 +285,8 @@ angular.module('scalearAngularApp')
 		        window.getSelection().removeAllRanges();
 		    else if (document.selection)
 		        document.selection.empty();
-      	}    	
+      	}
+	}
 	}
 
 	$scope.deleteQuiz=function(quiz){

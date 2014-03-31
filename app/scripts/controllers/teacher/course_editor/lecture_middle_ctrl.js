@@ -257,9 +257,6 @@ $timeout(function(){
 	}
 
  	$scope.addDoubleClickBind= function(event){
-	  if ($scope.editing_mode) {
-	    
-	  
  		console.log("hell worll.ds")
  		var answer_width, answer_height
  		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
@@ -292,8 +289,7 @@ $timeout(function(){
 		        window.getSelection().removeAllRanges();
 		    else if (document.selection)
 		        document.selection.empty();
-      	}
-	}
+      	}    	
 	}
 
 	$scope.addAnswer= function(ans,h,w,l,t){

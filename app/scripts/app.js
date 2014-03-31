@@ -48,8 +48,7 @@ angular.module('scalearAngularApp', [
     'angularMoment',
     'textAngular',
     'highcharts-ng',
-    'config',
-    'ngProgress'
+    'config'
 ])
     .constant('headers', {
         withCredentials: true,

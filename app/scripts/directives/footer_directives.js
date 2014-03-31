@@ -62,6 +62,7 @@ angular.module('scalearAngularApp')
                                         url: $location.url(),
                                         problem: scope.technical_data,
                                         lang: scope.current_lang
+                                        agent:navigator.userAgent
                                     },
                                     function(data) {
                                         scope.technical_data = null;                                    
@@ -72,12 +73,8 @@ angular.module('scalearAngularApp')
                             else
                                 scope.no_text = "Please provide more description"
                         }
-                        else{
-                            console.log('user_name '+scope.user_name)
-                            console.log('user_email '+scope.user_email)
-                            scope.no_text = "Please make sure that you provided your name and email address"
-                        }
-                        
+                        else
+                            scope.no_text = "Please make sure that you provided your name and email address"                        
                     };
                 }
             };

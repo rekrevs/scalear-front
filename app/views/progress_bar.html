@@ -16,14 +16,13 @@
         }
     </style>
     <div class="progressBar" ng-click="progress($event)">
-        <div class="elapsed" ng-style="{width: elapsed_width}" ></div><!--  -->
+        <div class="elapsed" ng-style="{width: elapsed_width}" >
+            <div class="progress-events" ng-repeat="element in timeline['lecture'][lecture.id].items | filter:{ type: 'discussion' } " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: black; z-index: 10000;'}}" tooltip="{{'answer.question'|translate}}"></div>
 
-        <div class="progress-events" ng-repeat="element in timeline['lecture'][lecture.id].items | filter:{ type: 'discussion' } " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: black; z-index: 10000;'}}" tooltip="{{'answer.question'|translate}}"></div>
+            <div class="progress-events" ng-repeat="element in timeline['lecture'][lecture.id].items | filter:{ type: 'confused', data.very: false} " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: orange; z-index: 10000;'}}" tooltip="{{'courses.confused' | translate}}"></div>
 
-        <div class="progress-events" ng-repeat="element in timeline['lecture'][lecture.id].items | filter:{ type: 'confused', data.very: false} " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: orange; z-index: 10000;'}}" tooltip="{{'courses.confused' | translate}}"></div>
-
-        <div class="progress-events" ng-repeat="element in timeline['lecture'][lecture.id].items | filter:{ type: 'confused', data.very: true} " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: red; z-index: 10000;'}}" tooltip="{{'courses.really_confused'|translate}}"></div>
-
+            <div class="progress-events" ng-repeat="element in timeline['lecture'][lecture.id].items | filter:{ type: 'confused', data.very: true} " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: red; z-index: 10000;'}}" tooltip="{{'courses.really_confused'|translate}}"></div>
+        </div>
         <!-- <div class="progress-events" ng-repeat="element in timeline['lecture'][lecture.id].items | filter:{ type: 'confused' } " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: red; z-index: 10000;'}}" tooltip="{{element['type']|translate}} {{element['very']}}"></div> -->
 
     </div>

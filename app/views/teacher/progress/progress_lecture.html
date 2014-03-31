@@ -1,0 +1,76 @@
+<div style="overflow-y:auto; height:700px;">
+	<video_container class="largescreen span" style="margin-left:20px">
+		<youtube id="progress_lec_video" url="url" player="progress_player" class="largescreen" />
+	</video_container>
+	<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count" />
+	<div style="">
+		<div ng-init="custom_filter=''" class="filter">
+			<span>Filter:</span>
+			<span ng-repeat ="(key,val) in filters">
+				<input type="radio" name="filter" ng-model="$parent.custom_filter" style="margin-left:20px;margin-top:0" value="{{val}}"/>
+				<span>{{key}}</span>
+			</span>
+		</div>
+	</div>
+	<div class="main_content">
+		<div ng-if="timeline['module']" ng-init="module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatMouleChartData')">
+			<p class="title">Module Progress <span style="font-size:12px">(Based on in-video questions answered)</span><a ui-sref="course.progress.module({module_id:module.id})" style="font-size:12px;color: white;float: right;cursor: pointer;">View Details Progress...</a></p>
+			<div google-chart chart="module_chart" class="progress_chart" ></div>
+		</div>
+		<div ng-repeat="module_item in module.items">
+			<div  id="{{module_item.quiz_type+'_'+module_item.id}}" ng-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];">
+				<p class="title">{{quiz.meta.name}} <span style="font-size:12px">({{getKeys(quiz.charts).length}} questions)</span></p>
+				<ul class="ul_item inner_content" ng-click="highlight($event,item)" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items|filter:{data:'!!',type:custom_filter}" >
+					<li ng-if="item.type=='charts'" ng-init="quiz_chart=createChart(item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData')" class="li_inner blue">
+						<inner_title type="Title" title="{{item.data.title+' ('+item.data.type+')'}}"/>
+						<div google-chart chart="quiz_chart" class="progress_chart" ></div>
+					</li>
+					<li ng-if="item.type=='Free Text Question'" class="li_inner coral">
+						<inner_title type="Free Text Question" title="{{item.data.title}}"/>
+						<show_box value="item.data.show" action="updateHideFreeText(quiz.meta.id,item.data.id,!item.data.show)"/>
+						</br>
+						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">
+							<li ng-repeat="question in item.data.answers" style="list-style-position:inside; padding:3px 15px">
+								<show_box ng-init="question.hide = !question.hide" value="question.hide" action="updateHideResponse(quiz.meta.id,question.id,question.hide)" style="float:right"/>
+								<span style="float:right">| 
+									<button_link ng-show="!question.show_feedback" title="replay" action="question.show_feedback = true" class="btn-mini" style="margin:0 5px"/>
+									<button_link ng-show="question.show_feedback" title="cancel" action="question.show_feedback = false" class="btn-mini" style="margin:0 5px"/>
+								</span>	
+								<p style="width:600px;margin-bottom:0">{{question.answer}}</p>
+								<i ng-show="question.response && !question.show_feedback" style="padding-left: 30px;color: steelblue">{{question.response}}</i>
+								<div ng-show="question.show_feedback">
+									<textarea ng-model="question.temp_response"  style="width: 65%;" />
+									<button_link title="{{'courses.send'|translate}}" class="btn-mini" action="sendFeedback(question);question.show_feedback = false" />
+								</div>
+							</li>
+						</ul>						
+					</li>
+				</ul>
+			</div>
+			<div id="lecture_{{module_item.id}}" ng-if="module_item.class_name=='lecture'" ng-init='lec=lectures[module_item.id]'>
+				<p class="title">{{lec.meta.name}} <span style="font-size:12px">({{lec.meta.duration|format}}, {{getKeys(lec.charts).length}} questions)</span></p>
+				<ul class="ul_item vline inner_content" ng-click="highlight($event, item)" ng-repeat="item in timeline['lecture'][lec.meta.id].items|filter:{data:'!!', type:custom_filter}">
+					<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner maroon" >
+						<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{(item.type[0].toUpperCase()+item.type.slice(1)).split('_').join(' ')}}" />
+						<span class="inner_value"> {{item.data}}</span>
+					</li>
+					<li ng-if="item.type=='question'" class="li_inner coral">
+						<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="Questions" />
+						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
+							<li ng-repeat="question in item.data" style="list-style-position:inside; padding:3px 15px">
+								<show_box ng-init="question[2] = !question[2]" value="question[2]" action="updateHideQuestion(question[1],question[2])" style="float:right"/>
+								<p style="width:600px">{{question[0]}}</p>
+							</li>
+						</ul>						
+					</li>
+					<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData')" class="li_inner blue">
+						<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="Quiz" title="{{item.data.title+' ('+item.data.type+')'}}" />
+						<i ng-show="item.data.hide" class="icon-check" style="margin-top:8px;float:right"></i>
+						<div google-chart chart="chart" class="progress_chart" ></div>
+						<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" style="margin-left:30px"/>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</div>

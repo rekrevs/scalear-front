@@ -1,14 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive("videoContainer",function(){
-		return{
-			transclude: true,
-			replace:true,
-			restrict: "E",
-			template: '<div class="videoborder well" style="padding:0" ng-transclude></div>' //style="border:4px solid" 
-		};
-}).directive('quiz',function(){
+.directive('quiz',function(){
 		return {
 			transclude: true,
 			replace:true,
@@ -309,17 +302,18 @@ angular.module('scalearAngularApp')
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform' style='overflow: auto;'><div style='text-align:left;margin:10px;'>"+
+						"<img src='images/move2.png' class='handle' title=\"{{'courses.drag_to_reorder'|translate}}\"  style='margin-top:10px;margin-right:4px'/>"+
 						"<label class='q_label'><span translate>answer.question</span>:</label>"+
 						"<input required name='qlabel' type='text' ng-model='quiz[column]' />"+
 						"<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'><span translate>courses.required</span>!</span>"+
 						// ADD QUESTION TYPE IF ITS A QUIZ QUESTION.. SELECT LIST.
 						"<br />"+
 						"<label ng-if='show_question()' class='q_label'><span translate>groups.question_type</span>:</label>"+
-						"<select ng-if='show_question()' ng-model='quiz.question_type' required  class='choices'>"+
-							"<option value='MCQ'>MCQ</option>"+
-							"<option value='OCQ' >OCQ</option>"+
-							"<option value='DRAG' ng-if='!isSurvey()' translate>groups.drag</option>"+
-							"<option ng-if='isSurvey()' value='Free Text Question' translate>groups.free_text_question</option>"+
+						"<select ng-if='show_question()' ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'>"+
+							// "<option value='MCQ'>MCQ</option>"+
+							// "<option value='OCQ' >OCQ</option>"+
+							// "<option value='DRAG' ng-if='!isSurvey()' translate>groups.drag</option>"+
+							// "<option value='Free Text Question' ng-if='isSurvey()' translate>groups.free_text_question</option>"+
 						"</select>"+
 						"<delete_button ng-if='show_question()' size='small' action='removeQuestion(index)' />"+
 						"<br/>"+
@@ -329,16 +323,7 @@ angular.module('scalearAngularApp')
 							"<br/>"+
 						"</div>"+
 					"</ng-form>",
-		link: function(scope, element, iAttrs) {
-			$log.debug("QUIZZ is ");
-			$log.debug(scope.quiz);
-			scope.addAnswer=scope.add()
-			scope.removeQuestion=scope.removeq()
-			element.find('input')[0].focus()
-
-            scope.$on('$destroy', function() {
-                shortcut.remove("Enter");
-            });
+		link: function(scope, element, iAttrs) {			
 			
 			scope.isSurvey = function()
 			{
@@ -356,6 +341,21 @@ angular.module('scalearAngularApp')
 			{
 				return "content" in scope.quiz
 			}
+
+			scope.cc =['MCQ', 'OCQ']
+			if(!scope.isSurvey())
+				scope.cc.push('DRAG')
+			else
+				scope.cc.push('Free Text Question')
+			$log.debug("QUIZZ is ");
+			$log.debug(scope.quiz);
+			scope.addAnswer=scope.add()
+			scope.removeQuestion=scope.removeq()
+			element.find('input')[0].focus()
+
+            scope.$on('$destroy', function() {
+                shortcut.remove("Enter");
+            });
 
 			shortcut.add("Enter",function(){
 				var all_inputs= element.find('input')

@@ -1,23 +1,49 @@
-<center>
-<overlay ng-show="sending">
-            <loading size="big" show="true" style="position:relative; top:40%;" />
-</overlay>
-    <form ng-submit="resend()">
-        <h2 translate="devise.confirmations.resend_instructions"></h2>
-        <br />
-        <p>* <span translate="email"></span></p>
-        <input type="email" ng-model="user.email" id="user_email" class="string email optional" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50"/>
-        <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
-        
-        <span class="errormessage" ng-show="user.errors.confirmation_token">{{user.errors.confirmation_token.join()}}</span>
-        <br />
-        <input type="submit" ng-disabled="!user.email || sending" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-primary"/>
-        <br />
-        <br />
-    </form>
-    <a href="/#/users/login" translate="sign_in"></a>
-    <br/>
-    {{'or' | translate}}
-    <br/>
-    <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
-</center>
+<link href="styles/authentication.css" rel="stylesheet">
+<div class="main-login-container">
+    <center>
+
+        <overlay ng-show="sending">
+                    <loading size="big" show="true" style="position:relative; top:40%;" />
+        </overlay>
+        <div style="float: left; display: inline-table; margin: 20px; position: relative; z-index: 5;">
+            <table>
+                <tr>
+                    <td>
+                        {{'language' | translate}}
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <div ng-show="$parent.current_lang=='en'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                        <div ng-show="$parent.current_lang=='sv'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="middle-ribbon">
+            <form ng-submit="resend()">
+                <h2 translate="devise.confirmations.resend_instructions"></h2>
+                <br />
+                <!-- <p>* <span translate="email"></span></p> -->
+                <input placeholder="*{{'email' | translate}}" type="email" ng-model="user.email" id="user_email" class="string email optional modern-input" style="border: 2px orange solid; width: 230px;" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" autocomplete="off"/>
+                <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
+                
+                <span class="errormessage" ng-show="user.errors.confirmation_token">{{user.errors.confirmation_token.join()}}</span>
+                <br />
+                <input type="submit" ng-disabled="!user.email || sending" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-warning" style="background-image: initial;"/>
+                <br />
+                <br />
+            </form>
+            <br />
+            <a href="/#/users/login" translate="sign_in"></a>
+            <br/>
+            {{'or' | translate}}
+            <br/>
+            <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
+        </div>
+    </center>
+</div>

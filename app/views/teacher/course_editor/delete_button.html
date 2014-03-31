@@ -5,7 +5,7 @@
 	            <a ng-if="displayDeletePopup" class="btn btn-mini" ng-click="showDeletePopup(false)" translate>lectures.cancel</a>
 	        </span>
 	</div>
-	<a class="delete" ng-hide="displayDeletePopup" style="float:right;width:20px;cursor:pointer;" title="{{'delete'|translate}}" ng-click="!hideConfirm?showDeletePopup(true):action({event:$event})">
+	<a class="delete" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" title="{{'delete'|translate}}" ng-click="!hideConfirm?showDeletePopup(true):action({event:$event})">
 		<img alt="Trash" ng-src="{{size=='big' && 'images/trash_big.png' || 'images/trash_small.png'}}" >
 	</a>
 </span>   

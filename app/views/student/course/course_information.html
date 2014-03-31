@@ -7,7 +7,7 @@
         <table class="profile-table" style="width: 17%;">
             <tr>
                 <td style="border-right: 1px solid lightgray; background-color: light">
-                    <div class="profile-image" style="background: url({{image_link}}) no-repeat center;">
+                    <div class="profile-image" style="background: url({{course.image_url || '../images/course_image.png'}}) no-repeat center; background-size: cover;">
                     </div>
                 </td>
             </tr>
@@ -54,7 +54,7 @@
                             <tr>
                                 <td ng-repeat="teacher in teachers" style="text-align: center;">
                                     <a ui-sref="profile({ user_id: teacher.id })">
-                                        <img src="{{'http://www.gravatar.com/avatar/'+teacher.photo+'?r=g&s=70'}}" style="margin-bottom: 5px;" />
+                                        <profile-image email="teacher.email" imagesize="70" style="margin-bottom: 5px;"></profile-image>
                                         <br />
                                         
                                         {{teacher.name}} ({{teacher.role}})

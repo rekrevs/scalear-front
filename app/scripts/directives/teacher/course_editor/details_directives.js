@@ -30,6 +30,70 @@ angular.module('scalearAngularApp')
             };
         }
     ])
+    .directive('detailsLink', ['$timeout',
+        function($timeout) {
+            return {
+                template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ short_url || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                restrict: 'E',
+                scope: {
+                    value: "=",
+                    save: "&",
+                    validate: "&",
+                    column: "@"
+                },
+                link: function(scope, element) {
+                    scope.selectField = function() {
+                        // if(scope.column=="url"){
+                        $timeout(function() {
+                            element.find('.editable-input').select();
+                        });
+                        // }
+                    };
+                    scope.$watch('value', function(){
+                        if(scope.value){
+                            scope.short_url = shorten(scope.value, 20)
+                        }
+                        else{
+                            scope.short_url = null;
+                        }
+                    })
+                    var shorten = function(url, l){
+                        var l = typeof(l) != "undefined" ? l : 50;
+                        var chunk_l = (l/2);
+                        var url = url.replace("http://","").replace("https://","");
+
+                        if(url.length <= l){ return url; }
+
+                        var start_chunk = shortString(url, chunk_l, false);
+                        var end_chunk = shortString(url, chunk_l, true);
+                        return start_chunk + ".." + end_chunk;
+                    }
+                    var shortString = function(s, l, reverse){
+                        var stop_chars = [' ','/', '&'];
+                        var acceptable_shortness = l * 0.80; // When to start looking for stop characters
+                        var reverse = typeof(reverse) != "undefined" ? reverse : false;
+                        var s = reverse ? s.split("").reverse().join("") : s;
+                        var short_s = "";
+
+                        for(var i=0; i < l-1; i++){
+                            short_s += s[i];
+                            if(i >= acceptable_shortness && stop_chars.indexOf(s[i]) >= 0){
+                                break;
+                            }
+                        }
+                        if(reverse){ return short_s.split("").reverse().join(""); }
+                        return short_s;
+                    }
+
+                    scope.saveData = function() {
+                        $timeout(function() {
+                            scope.save()
+                        })
+                    }
+                }
+            };
+        }
+    ])
     .directive('detailsCheck', ['$timeout',
         function($timeout) {
             return {
@@ -196,7 +260,7 @@ angular.module('scalearAngularApp')
         function($timeout, $filter) {
             return {
 
-                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-select="value" buttons="no" e-ng-options="s.text for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ status }}<i ng-class="overclass"></i></a> ',
+                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-select="value" buttons="no" e-ng-options="s.text for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ short_timezone }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -206,6 +270,11 @@ angular.module('scalearAngularApp')
                     column: "@"
                 },
                 link: function(scope) {
+                    scope.$watch('status', function(){
+                        if(scope.status){
+                            scope.short_timezone = shorten(scope.status, 20)
+                        }
+                    })
                     scope.showStatus = function() {
                         var selected = $filter('filter')(scope.options, scope.value);
                         return selected.length ? selected[0].text : 'Not set';
@@ -214,6 +283,33 @@ angular.module('scalearAngularApp')
                         $timeout(function() {
                             scope.save()
                         })
+                    }
+                    var shorten = function(url, l){
+                        var l = typeof(l) != "undefined" ? l : 50;
+                        var chunk_l = (l/2);
+                        var url = url.replace("http://","").replace("https://","");
+
+                        if(url.length <= l){ return url; }
+
+                        var start_chunk = shortString(url, chunk_l, false);
+                        var end_chunk = shortString(url, chunk_l, true);
+                        return start_chunk + ".." + end_chunk;
+                    }
+                    var shortString = function(s, l, reverse){
+                        var stop_chars = [' ','/', '&'];
+                        var acceptable_shortness = l * 0.80; // When to start looking for stop characters
+                        var reverse = typeof(reverse) != "undefined" ? reverse : false;
+                        var s = reverse ? s.split("").reverse().join("") : s;
+                        var short_s = "";
+
+                        for(var i=0; i < l-1; i++){
+                            short_s += s[i];
+                            if(i >= acceptable_shortness && stop_chars.indexOf(s[i]) >= 0){
+                                break;
+                            }
+                        }
+                        if(reverse){ return short_s.split("").reverse().join(""); }
+                        return short_s;
                     }
 
                     scope.$watch('value', function(newval) {

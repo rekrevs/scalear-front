@@ -56,49 +56,51 @@ angular.module('scalearAngularApp')
     	scope.full = function(){   			
     		scope.fullscreen? scope.resize.small() : scope.resize.big();
     	};
-    	scope.confused= function()
-    	{
-    		$log.debug(scope);
-        console.log('should do the confused')
-    		$log.debug("in confusd");
+
+    	scope.confusedBtn= function(){
+        console.log("caosdnsakn")
         scope.show_message=true;
         var time=scope.lecture_player.controls.getTime()
-    		Lecture.confused({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
-                $interval(function(){
-           		scope.show_message=false;
-                }, 2000, 1);
+    		Lecture.confused(
+          {
+            course_id:$stateParams.course_id, 
+            lecture_id:$stateParams.lecture_id
+          },
+          {time:scope.lecture_player.controls.getTime()}, 
+          function(data){
+            $interval(function(){
+              scope.show_message=false;
+            }, 2000, 1);
 
-           		$log.debug(data)
-           		if(data.msg=="ask")
-           		{
-             		scope.show_notification=$translate("controller_msg.really_confused_use_question");
-             		scope.notify_position={"left":(scope.pWidth - 180) + "px"}
-             		$interval(function(){
-             			scope.notify_position={"left":"240px"};
-             			scope.show_notification=false;
-             		}, 6000, 1)
-             	}
-                //else{
-                if(!data.flag) //first time confused in these 15 seconds
-                {
-                    //scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'red', 'courses.confused',data.id ]);
-                    scope.timeline['lecture'][$stateParams.lecture_id].add(time, "confused", data.item)
-                }
+         		$log.debug(data)
+         		if(data.msg=="ask"){
+           		scope.show_notification=$translate("controller_msg.really_confused_use_question");
+           		scope.notify_position={"left":(scope.pWidth - 180) + "px"}
+           		$interval(function(){
+           			scope.notify_position={"left":"240px"};
+           			scope.show_notification=false;
+           		}, 6000, 1)
+           	}
+            if(!data.flag) //first time confused in these 15 seconds
+            {
+                //scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'red', 'courses.confused',data.id ]);
+                scope.timeline['lecture'][$stateParams.lecture_id].add(time, "confused", data.item)
+            }
 
-                if(data.flag && data.msg!="ask") // confused before but not third time - very confused
-                {
-                    var elem=scope.timeline['lecture'][$stateParams.lecture_id].search_by_id(data.id, "confused");
-                    scope.timeline['lecture'][$stateParams.lecture_id].items[elem].data.very=true;
-                    // for(var element in scope.timeline['lecture'])
-                    // {
-                    //     if(scope.timeline['lecture'][element]==data.id)
-                    //     {
-                    //         scope.progressEvents[element][2]='courses.really_confused'
-                    //         scope.progressEvents[element][1]='purple'
-                    //         return;
-                    //     }
-                    // }
-                }
+            if(data.flag && data.msg!="ask") // confused before but not third time - very confused
+            {
+                var elem=scope.timeline['lecture'][$stateParams.lecture_id].search_by_id(data.id, "confused");
+                scope.timeline['lecture'][$stateParams.lecture_id].items[elem].data.very=true;
+                // for(var element in scope.timeline['lecture'])
+                // {
+                //     if(scope.timeline['lecture'][element]==data.id)
+                //     {
+                //         scope.progressEvents[element][2]='courses.really_confused'
+                //         scope.progressEvents[element][1]='purple'
+                //         return;
+                //     }
+                // }
+            }
   		  });
     	}
     	scope.back= function()
@@ -106,11 +108,8 @@ angular.module('scalearAngularApp')
     		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
   		});
     	};
-    	scope.question= function(){
-    		console.log("in question");
+    	scope.questionBtn= function(){
     		scope.show_question=!scope.show_question;
-            console.log(scope.$parent.show_question);
-            console.log(scope.lecture_player.controls.getTime());
             scope.$parent.current_question_time=scope.lecture_player.controls.getTime();
             scope.safeApply();
     		if(scope.$parent.show_question==true)
@@ -154,16 +153,17 @@ angular.module('scalearAngularApp')
         }
 
         scope.setQuality = function(quality){
-            scope.lecture_player.controls.refreshVideo(quality);
+            var time = scope.lecture_player.controls.getTime()
+            scope.lecture_player.controls.changeQuality(quality, time);
             scope.chosen_quality=quality;
             scope.quality=false;
         }
     	scope.setShortcuts = function()
   		{
 
-  				shortcut.add("c", scope.confused, {"disable_in_input" : true});
+  				shortcut.add("c", scope.confusedBtn, {"disable_in_input" : true});
   			
-  				shortcut.add("q", scope.question, {"disable_in_input" : true});
+  				shortcut.add("q", scope.questionBtn, {"disable_in_input" : true});
   			
   				shortcut.add("Space",function(){
   					scope.lecture_player.controls.paused()? scope.lecture_player.controls.play(): scope.lecture_player.controls.pause();
@@ -186,9 +186,7 @@ angular.module('scalearAngularApp')
   		};
 
   		setButtonsLocation()
-        //scope.$on('player_ready', function(){
-            scope.setShortcuts();
-        //});
+      scope.setShortcuts();
 
    		scope.$watch('lecture.aspect_ratio', function(){
    			setButtonsLocation()

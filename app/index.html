@@ -63,11 +63,12 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-        <header class="navbar-fixed-top modern-navbar">
+        <header class="navbar-fixed-top modern-navbar" ng-show="current_user">
             <span class="modern-menu-button" ng-show="current_user" ng-click="toggleCollapse()" ng-class="{menuopen: !iscollapsed}">
                 <span class="menu-icon" style="margin-top: 8px;">
                 </span>
             </span>
+            <a ng-click="open()" style="float: right;" ng-show="current_user &amp;&amp; current_user.roles[0].id!=2 &amp;&amp; current_user.invitations" translate="navigation.notifications" style="float:left;color:red;cursor: pointer;" class="ng-scope ng-hide">Notifications</a>
             <a ui-sref='profile({user_id: current_user.id})' ng-show="current_user" class="pull-right" style="right: 100px; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; ">
                 <span ng-bind="current_user.name +' '+ current_user.last_name">    
                 </span>
@@ -139,6 +140,7 @@
     <script src="bower_components/ng-infinite-scroller/build/ng-infinite-scroll.min.js"></script>
     <script src="bower_components/fullcalendar/fullcalendar.min.js"></script>
     <script src="bower_components/textAngular/textAngular.min.js"></script>
+    <script src="bower_components/screenfull/dist/screenfull.min.js"></script>
 
     <script src="bower_components/canvg-1.3.zip/canvg.js"></script>
     <script src="bower_components/canvg-1.3.zip/rgbcolor.js"></script>
@@ -161,11 +163,12 @@
     <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
-    <script src="bower_components/angular-ui-bootstrap/src/typeahead/typeahead.js"></script>
 
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
+
+    <script src="bower_components/js-md5/js/md5.min.js"></script>
 
 
     <!-- endbuild -->
@@ -221,6 +224,7 @@
     <script src="scripts/services/doc.js"></script>
     <script src="scripts/services/editor.js"></script>
     <script src="scripts/services/page.js"></script>
+    <script src="scripts/services/util.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>
@@ -248,6 +252,7 @@
     <script src="scripts/controllers/teacher/progress/progress_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_main_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_module_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/progress_lecture_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/lecture_quizzes_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/student_statistics_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/lecture_progress_ctrl.js"></script>

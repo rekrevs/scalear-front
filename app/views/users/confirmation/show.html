@@ -1,6 +1,33 @@
-<center ng-show="sending" ><loading size="small" show="sending" ></center>
-<center>
-    <span class="errormessage" ng-show="user.errors.confirmation_token">Confirmation Token {{user.errors.confirmation_token.join()}}</span>
-    <br>
-    <a ui-sref="new_confirmation" class="btn btn-primary" translate>{{'devise.confirmations.resend_instructions'}}</a>
-</center>
+<link href="styles/authentication.css" rel="stylesheet">
+<div class="main-login-container">
+    <center>
+
+        <overlay ng-show="sending">
+                    <loading size="big" show="true" style="position:relative; top:40%;" />
+        </overlay>
+        <div style="float: left; display: inline-table; margin: 20px; position: relative; z-index: 5;">
+            <table>
+                <tr>
+                    <td>
+                        {{'language' | translate}}
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                        <div ng-show="$parent.current_lang=='en'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                        <div ng-show="$parent.current_lang=='sv'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="middle-ribbon">
+		    <span class="errormessage" ng-show="user.errors.confirmation_token">Confirmation Token {{user.errors.confirmation_token.join()}}</span>
+		    <br>
+		    <a ui-sref="new_confirmation" class="btn btn-warning" style="background-color: initial;" translate>{{'devise.confirmations.resend_instructions'}}</a>
+		</div>
+    </center>
+</div>

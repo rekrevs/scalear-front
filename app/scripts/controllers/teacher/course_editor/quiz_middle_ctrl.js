@@ -22,28 +22,39 @@ angular.module('scalearAngularApp')
  	}
 
  	var init = function(){
- 		Quiz.getQuestions({course_id:$stateParams.course_id, quiz_id: $stateParams.quiz_id},function(data){
- 			$log.debug("init data is");
- 			$log.debug(data);
-	 		$scope.questions=data.questions
-		  	$scope.questions.forEach(function(question,index){
-		  		if(question.question_type.toUpperCase() == 'DRAG'){
-					question.answers = []
-					if(!data.answers[index].length)
-						$scope.addHtmlAnswer("", question)
-					else
-						question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id)
-				}else if(question.question_type == 'Free Text Question'){
-					question.answers=[];
-					$scope.addHtmlAnswer("",question)
-				}
-				else{
-					question.answers = data.answers[index]
-					if(!data.answers[index].length)
-						$scope.addHtmlAnswer("",question)				
-				}	
-		  	});
-	    });
+ 		Quiz.getQuestions({course_id:$stateParams.course_id, quiz_id: $stateParams.quiz_id},
+ 			function(data){
+	 			$log.debug("init data is");
+	 			$log.debug(data);
+		 		$scope.questions=data.questions
+			  	$scope.questions.forEach(function(question,index){
+			  		if(question.question_type.toUpperCase() == 'DRAG'){
+						question.answers = []
+						if(!data.answers[index].length)
+							$scope.addHtmlAnswer("", question)
+						else
+							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id)
+					}else if(question.question_type == 'Free Text Question'){
+						question.answers=[];
+						$scope.addHtmlAnswer("",question)
+					}
+					else{
+						question.answers = data.answers[index]
+						if(!data.answers[index].length)
+							$scope.addHtmlAnswer("",question)				
+					}	
+			  	});
+
+			  	$scope.quizSortableOptions={
+			 		axis: 'y',
+					dropOnEmpty: false,
+					handle: '.handle',
+					cursor: 'crosshair',
+					items: '.quiz_sort',
+					opacity: 0.4,
+					scroll: true,
+			 	}
+		    });
 
 	    shortcut.add("Enter",
 	    	function(){

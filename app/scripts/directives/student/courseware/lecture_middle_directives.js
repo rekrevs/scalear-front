@@ -153,7 +153,8 @@ angular.module('scalearAngularApp')
         }
 
         scope.setQuality = function(quality){
-            scope.lecture_player.controls.refreshVideo(quality);
+            var time = scope.lecture_player.controls.getTime()
+            scope.lecture_player.controls.changeQuality(quality, time);
             scope.chosen_quality=quality;
             scope.quality=false;
         }

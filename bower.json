@@ -27,7 +27,8 @@
     "textAngular": "~1.1.2",
     "highcharts-ng": "~0.0.3",
     "highcharts": "~3.0.7",
-    "js-md5": "~1.1.0"
+    "js-md5": "~1.1.0",
+    "screenfull": "~1.1.1"
   },
   "devDependencies": {
     "angular-mocks": ">1.0.7",

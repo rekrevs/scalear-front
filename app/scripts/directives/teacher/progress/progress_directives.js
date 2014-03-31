@@ -40,6 +40,42 @@ angular.module('scalearAngularApp')
 	    }
     };
 })
+.directive("innerTitle",function(){
+    return{
+	    restrict: "E",
+	    scope: {
+	    	time:'=',
+	    	type:'@',
+	    	title:'@'
+	    },
+	    template:'<span class="inner_title" >'+
+					'<span style="cursor:pointer"><span ng-show="time!=null">[{{time|format:"mm:ss"}}]</span> {{type}}: '+ 
+						'<span style="color:black;font-weight:normal">{{title}}</span>'+
+					'</span>'+
+				'</span>', 
+	    link:function(scope){
+
+	    }
+    };
+})
+.directive("showBox",function(){
+    return{
+	    restrict: "E",
+	    scope: {
+	    	value:"=",
+	    	action:"&"
+	    },
+	    template:'<span>| '+
+					'<input type="checkbox" ng-model="value" ng-change="change()" />'+
+					'<span style="font-size:12px;color:black;font-weight:normal"> Show in-class</span>'+
+				'</span>', 
+	    link:function(scope){
+	    	scope.change=function(){
+	    	 	scope.action()
+	    	}
+	    }
+    };
+})
 .directive("freeTextTable", function(){
 	return {
 		restrict:'E',
@@ -52,6 +88,50 @@ angular.module('scalearAngularApp')
 	    templateUrl:'/views/teacher/progress/free_text_table.html', 
 	    controller:'freeTextTableCtrl'
 	}
+})
+.directive("inclassEstimate",function(){
+    return{
+	    restrict: "E",
+	    scope: {
+	    	time_quiz:'=timeQuiz',
+	    	time_question:'=timeQuestion',
+	    	quiz_count:'=quizCount',
+	    	question_count:'=questionCount'
+	    },
+	    template:'<div ng-show="inclass_estimate" class="time_estimate">'+
+					'<h4>Time Estimate</h4>'+
+					'<span>In-class: <b>{{inclass_estimate}} minutes</b></span>'+
+					'<a style="float:right;color:white;cursor:pointer" pop-over="popover_options">more...</a>'+
+				'</div>', 
+	    link:function(scope){
+	    	scope.numbers = []
+  	 		for (var i = 0; i <= 60; i++) {
+		        scope.numbers.push(i);
+		    }
+  	 		var template = "<div style='color:black;font-size:12px'>"+
+  	 						"<span class='span2' style='margin-left:0'>Time per quiz:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_quiz' ng-options='i for i in numbers'></select></span>"+
+  	 						"<span class='span2' style='margin-top: 5px;margin-left: 15px;'>Quizzes for review: {{quiz_count}}</span><br><br>"+
+  	 						"<span class='span2' style='margin-left:0; width:160px'>Time per question:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_question' ng-options='i for i in numbers'></select></span>"+	  	 						
+  	 						"<span class='span2' style='margin-top: 5px;margin-left:0'>Questions for review: {{question_count}}</span><br><br>"+
+  	 						"<span>Formula:</span><br>"+
+  	 					    "<i style='text-align:center;'>( #Quizzes for review  * {{time_quiz}} ) + ( #Questions for review * {{time_question}} )</i>"+
+  	 					   "</div>"
+
+           	scope.popover_options={
+            	content: template,
+            	html:true,
+            	placement:"bottom"
+            }
+
+            var estimateCalculator=function(){
+		    	return scope.quiz_count * scope.time_quiz + scope.question_count * scope.time_question
+		    }
+
+            scope.$watchCollection('[time_quiz, time_question,quiz_count,question_count]', function(newValues){
+  	 			scope.inclass_estimate = estimateCalculator()					
+			});
+	    }
+    };
 })
 .directive("tab1",function(){
     return{

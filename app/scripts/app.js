@@ -36,7 +36,6 @@ angular.module('scalearAngularApp', [
     'ui.bootstrap.modal',
     'ui.bootstrap.tooltip',
     'ui.bootstrap.timepicker',
-    'ui.bootstrap.typeahead',
     'ui.sortable',
     'ui.calendar',
     'ngDragDrop',
@@ -54,7 +53,7 @@ angular.module('scalearAngularApp', [
         withCredentials: true,
         'X-Requested-With': 'XMLHttpRequest'
     })
-    .value('$anchorScroll', angular.noop)
+   // .value('$anchorScroll', angular.noop)
     .run(['$http', '$rootScope', 'scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies',
         function($http, $rootScope, scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies) {
 
@@ -459,6 +458,11 @@ angular.module('scalearAngularApp', [
                 url: "/modules/:module_id",
                 templateUrl: '/views/teacher/progress/progress_module.html',
                 controller: 'progressModuleCtrl'
+            })
+            .state('course.progress.lecture', {
+                url: "/lectures/:module_id",
+                templateUrl: '/views/teacher/progress/progress_lecture.html',
+                controller: 'progressLectureCtrl'
             })
             .state('course.calendar', {
                 url: '/events',

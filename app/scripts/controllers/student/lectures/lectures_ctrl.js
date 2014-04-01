@@ -1,52 +1,47 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log','$window', '$state', 'Page', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $window, $state, Page) {
+  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log','$window', '$state', 'Page', 'Lecture', '$timeout', 'Module', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $window, $state, Page, Lecture, $timeout, Module) {
 
 	$window.scrollTo(0, 0);
-	// $state.$watch('params', function(){
-		Page.setTitle('Lectures');
-		if($state.params.lecture_id){
-			$scope.current_item = $state.params.lecture_id
-		}
-		else if($state.params.quiz_id){
-			$scope.current_item = $state.params.quiz_id
-		}
-		else{
-			$scope.current_item = ''
-		}
-	// })
+	Page.setTitle('Lectures');
+	
+	if($state.params.lecture_id){
+		$scope.current_item = $state.params.lecture_id
+	}
+	else if($state.params.quiz_id){
+		$scope.current_item = $state.params.quiz_id
+	}
+	else{
+		$scope.current_item = ''
+	}
 	
     var init = function()
     {
-    	$scope.open_id="-1";
-		$scope.open={};
-		$scope.oneAtATime = true;
 		$scope.modules_obj = {}
 		$scope.items_obj = {}
 
 		$scope.close_selector = false;
   		$scope.hide = true;
-	
 	    Course.getCourseware(
 	    	{course_id: $stateParams.course_id}, function(data){
+	    		console.log(data)
 				$scope.course= JSON.parse(data.course);
 				$scope.today = data.today;	
+				$scope.last_viewed = data.last_viewed
+				if(!$stateParams.lecture_id && $scope.last_viewed.module != -1){
+
+			    	$state.go('course.lectures.module.lecture', {'module_id': $scope.last_viewed.module, 'lecture_id': $scope.last_viewed.lecture})
+			    	$scope.current_item = $scope.last_viewed.lecture
+			    	
+			    }
 				$log.debug($scope.course);
 				$scope.initSelector();
-
-	    	 // $scope.course= JSON.parse(data.course);
-	    	 // $scope.today = data.today;	
-	    	 // $log.debug($scope.course);
-	    	 // $scope.course.groups.forEach(function(module){
-	    	 // 	var count = 0
-	    	 // 	var items = module.quizzes.concat(module.lectures)
-	    	 // 	items.forEach(function(item){
-	    	 // 		if(item.is_done)
-	    	 // 			count++
-	    	 // 	})
-    	 	// 	module.is_done = (count == items.length) 
-	    	 // })
+				$scope.showModuleContent($scope.last_viewed.module)
+				if($scope.last_viewed.module == -1){
+					$scope.current_item = $scope.current_module.lectures[0].id
+					$state.go('course.lectures.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})
+				}
 
 	    	});
 	}
@@ -82,7 +77,6 @@ angular.module('scalearAngularApp')
 
 	})
 	
-	init();
 	$scope.initSelector = function(){
 		$scope.course.groups.forEach(function(module){
 			$scope.modules_obj[module.id] = module;
@@ -123,6 +117,30 @@ angular.module('scalearAngularApp')
 	$scope.showModule = function(module_id){
 		$scope.current_module = $scope.modules_obj[module_id];
 		$scope.close_selector = true;
+		Module.getLastWatched(
+			{module_id: module_id}, function(data){
+				console.log('hereeeeeeeeeeeeeeee')
+				console.log(data)
+				if(data.last_watched != -1){
+					$state.go('course.lectures.module.lecture', {'module_id': module_id, 'lecture_id': data.last_watched})
+					$scope.current_item = data.last_watched
+				}
+			})
+		// if($scope.modules_obj[module_id].last_viewed != -1){
+		// 	$state.go('course.lectures.module.lecture', {'module_id': module_id, 'lecture_id': $scope.current_module.last_viewed})
+		// 	$scope.current_item = $scope.current_module.last_viewed
+		// }
+	}
+	$scope.showModuleContent = function(module_id){
+		if(module_id == -1){
+			$scope.current_module = $scope.modules_obj[Object.keys($scope.modules_obj)[0]];
+			$scope.close_selector = true;
+		}
+		else{
+			$scope.current_module = $scope.modules_obj[module_id];
+			$scope.close_selector = true;
+		}
+		
 	}
 	$scope.$watch('current_module', function(){
 		if($scope.current_module){
@@ -137,9 +155,6 @@ angular.module('scalearAngularApp')
 			$scope.total_module_time = $scope.convertToSeconds($scope.current_module.total_time)
 		}
 	})
-	$scope.getSpacingValue = function(item){
-
-	}
 	$scope.convertToSeconds = function(time){
 		var timeArray = time.split(':')
 		var hours = parseInt(timeArray[0])
@@ -148,6 +163,7 @@ angular.module('scalearAngularApp')
 
 		return (hours*3600)+(minutes*60)+seconds
 	}
+	init();
 
    //  $rootScope.$on("accordianReload", function(event, args) {
   	// 	$log.debug("reloading accordian now..");

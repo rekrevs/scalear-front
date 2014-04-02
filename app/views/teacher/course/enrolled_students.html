@@ -1,19 +1,14 @@
-
-
-
-
-
-<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
+<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 5;">
     <div style="float: left;">
         <input id="search" placeholder="{{'courses.search'|translate}}..." type="search" name="search" ng-model="searchText"/>
     </div>
     <!-- <div> -->
-        <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px;"><span translate>enroll.help_enroll_student</span></button>
+        <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px; margin-left: 50px;"><span translate>enroll.help_enroll_student</span></button>
     <!-- </div> -->
-    <div style="float: right;">
-        <input class="btn" ng-show="!searchText" id="email_button" value="{{'email'|translate}}" style="float: right; margin-right: 3%;" ng-disabled="(students | filter:{'checked':true}).length == 0" type="button" ng-click="emailForm()" />
-        <input class="btn btn-primary" value="{{'courses.select_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length"/>
-        <input class="btn btn-danger" value="{{'courses.deselect_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0"/>
+    <div style="float: right; display: inline-block; width: 300px; margin-right: 50px;">
+        <input class="btn" ng-show="!searchText" id="email_button" value="{{'email'|translate}}" style="background-image: initial; float: right; margin-right: 3%;" ng-disabled="(students | filter:{'checked':true}).length == 0" type="button" ng-click="emailForm()" />
+        <input class="btn btn-primary" value="{{'courses.select_all'|translate}}" type="button" style="background-image: initial; float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length"/>
+        <input class="btn btn-danger" value="{{'courses.deselect_all'|translate}}" type="button" style="background-image: initial; float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0"/>
     </div>
     
 </div>
@@ -21,7 +16,7 @@
 <div collapse="!isCollapsed" style="position: initial;">
     <br />
     <br />
-    <div class="well well-lg">
+    <div class="well well-lg" style="text-align: left;">
         <p><b><span translate>enroll.help_enroll</span>:</b></p>
         <p translate>enroll.instruction</p>
         <br>
@@ -38,11 +33,9 @@
 
 <div ng-show="students" id="invited_students">
     <form name="email_form">
-        
-                    <!-- <delete_button size="big" action="removeStudent(student)" /> -->
         <br />
         <br />
-        <user-item ng-repeat="student in students | filter: searchText" user="student" select="toggleSelect" emailsingle="emailSingle"></user-item>
+        <user-item ng-repeat="student in students | filter: searchText" user="student" select="toggleSelect" emailsingle="emailSingle" removestudent="removeStudent"></user-item>
     </form>
 </div>
 <loading size="big" show="loading_students" />

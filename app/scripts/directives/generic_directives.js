@@ -147,7 +147,8 @@ angular.module('scalearAngularApp')
     scope:{
       user: '=',
       select: '=',
-      emailsingle: '='
+      emailsingle: '=',
+      removestudent: '='
       // marked: '='
     },
     templateUrl: '/views/user_item.html',

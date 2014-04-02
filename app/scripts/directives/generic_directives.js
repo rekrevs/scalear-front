@@ -140,6 +140,17 @@ angular.module('scalearAngularApp')
     templateUrl: '/views/courseItem.html',
     link: function(scope){}
   };
+}]).directive('teacherCourseItem', ['ErrorHandler',function(ErrorHandler) {
+  return{
+    replace:true,
+    restrict: "E",
+    scope:{
+      course: '=',
+      teachers: '='
+    },
+    templateUrl: '/views/teacher_course_item.html',
+    link: function(scope){}
+  };
 }]).directive('screenfull', function(){
   return {
     restrict: 'A',

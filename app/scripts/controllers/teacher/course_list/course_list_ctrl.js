@@ -31,8 +31,10 @@ angular.module('scalearAngularApp')
 	  	//	}
   		}
 
-  		$scope.filterTeacher=function(teacher_name){
-  			$scope.filtered_teacher= teacher_name;
+  		$scope.filterTeacher=function(teacher_name, teacher_email){
+  			$scope.filtered_teacher_name = teacher_name
+        $scope.filtered_teacher = teacher_email;
+
   		}
 
       $scope.removeFilter=function(){

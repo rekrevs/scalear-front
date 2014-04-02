@@ -2,7 +2,7 @@
 
 var app = angular.module('scalearAngularApp')
 
-  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page) {
+  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', '$filter', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page, $filter) {
  
         $log.debug("in enrolled students");
         Page.setTitle('Enrolled Students')
@@ -18,7 +18,6 @@ var app = angular.module('scalearAngularApp')
           },
           function(){}
         )
-
 
         $scope.removeStudent = function(student){
             $log.debug(student)
@@ -42,67 +41,39 @@ var app = angular.module('scalearAngularApp')
            // }
         }
 
-        $scope.emailSingle=function(id, email){
+        $scope.emailSingle=function(student){
           $scope.deSelectAll()
-          $scope.select(id, email)
+          $scope.toggleSelect(student)
           $scope.emailForm()
         }
 
         $scope.emailForm = function(){
-            var i=0;
-            $scope.selected.forEach(function(email){
-                $scope.emails[i] = email;
-                i++;
-            });
+            var selected_students = $filter('filter')($scope.students, {'checked': true}, true)
+            selected_students.forEach(function(student){
+              $scope.emails.push(student.email);
+            })
+            console.log($scope.emails.length)
             $state.go('course.send_emails');
         }
         $scope.selected = []
-        $scope.select = function(id, email){
-          if($scope.selected[id] == email){
-              $log.debug('should deselect');
-              $scope.selected[id] = ',';
-              var i=0;
-              $scope.selected.forEach(function(e){
-                  $scope.emails[i] = e;
-                  i++;
-              });
-          }
-          else{
-              $log.debug('should select');
-              $scope.selected[id] = email;
-              var i=0;
-              $scope.selected.forEach(function(email){
-                  $scope.emails[i] = email;
-                  i++;
-              });
-          }
+        $scope.toggleSelect = function(student){
+          student.checked = !student.checked
         }
         $scope.selectAll = function(){
-            var checkboxes = angular.element('.checks');
-            for(var i=0; i<checkboxes.length; i++){
-                $scope.selected[checkboxes[i].id] = checkboxes[i].value;
-            }
-            $log.debug($scope.selected);
-            var i=0;
-            $scope.selected.forEach(function(email){
-                $scope.emails[i] = email;
-                i++;
-            });
+          var filtered_students = $filter('filter')($scope.students, $scope.searchText)
+          // console.log('filtered students')
+          // console.log(filtered_students.length)
+          filtered_students.forEach(function(item){
+            console.log('1')
+            $filter('filter')($scope.students, {'id': item.id}, true)[0].checked = true;
 
+          })
         }
         $scope.deSelectAll = function(){
-            var checkboxes = angular.element('.checks');
-            for(var i=0; i<checkboxes.length; i++){
-                $scope.selected[checkboxes[i].id] = ',';
-            }
-            $log.debug($scope.selected+' => selected');
-            var i=0;
-            $scope.selected.forEach(function(email){
-                $scope.emails[i] = email;
-                i++;
-            });
-            $log.debug($scope.emails+' => emails');
-
+          var filtered_students = $filter('filter')($scope.students, $scope.searchText)
+          filtered_students.forEach(function(item){
+            $filter('filter')($scope.students, {'id': item.id}, true)[0].checked = false;
+          })
         }
   }]);
 

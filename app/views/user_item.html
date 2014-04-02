@@ -1,29 +1,11 @@
-<div class="main-box" ng-class="{selected: marked != ','}" ng-click="toggleSelect()">
+<div class="main-box" ng-class="{selected: user.checked}" ng-click="toggleSelect()">
 	<link rel="stylesheet" href="styles/user_item.css"/>
 	<div class="profile-image-container">
 		<profile-image email="user.email" imagesize="80"> </profile-image>
 	</div>
 	<div class="info-container">
-		
-			{{user.full_name}}
-		
-			{{user.email}}
-		
-		<!-- <table>
-			<tr>
-				<td>
-				</td>
-				<td>
-					
-				</td>
-			</tr>
-			<tr>
-				<td>
-				</td>
-				<td>
-					{{user.email}}
-				</td>
-			</tr>	
-		</table> -->
+			<span title="{{user.full_name}}">{{user.full_name}}</span>
+			<br />
+			<a href="" ng-click="emailsingle(user)" title="{{'email' | translate}}: {{user.email}}">{{user.email}}</a>
 	</div>
 </div>

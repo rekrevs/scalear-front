@@ -1,62 +1,48 @@
-<div style="margin:10px;float:right">
-    <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px;"><span translate>enroll.help_enroll_student</span></button>
-    <hr>
-    <div collapse="!isCollapsed">
-        <div class="well well-lg">
-            <p><b><span translate>enroll.help_enroll</span>:</b></p>
-            <p translate>enroll.instruction</p>
-            <br>
-            <div  ng-click="this.select()" class="well well-lg" style="background: white;color: brown;" >
-                <div id="kk" select-on-click>
-                    <p ><span translate>enroll.dear_student</span>,</p>
-                    <p >&emsp;<span translate>enroll.this_term_new_system</span> <b>{{course_information.unique_identifier}}</b>.</p>
-                    <p ><span translate>enroll.sincerely</span>,<br>{{current_user.name}}</p>
-                </div>
-                <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right;position: relative;top: -30px;">Click to Select<br>Copy: cmd+C or ctrl+C</div>
-            </div>
-        </div> 
-    </div>
-</div>
-<div class="row">
-    <div class="span12">
-        <p style="display:inline; float: right;">
-            <input id="search" placeholder="{{'courses.search'|translate}}..." type="search" name="search" ng-model="searchText"/>
-        </p>
-    </div>
-</div>
-<br />
-<center>
-    <div ng-show="students" id="invited_students">
-        <form name="email_form">
-            <table class="table table-striped" id="students_table">
-                <tr>
-                    <th style="text-align: center;" translate>courses.student_name</th>
-                    <th style="text-align: center;" translate>courses.student_email</th>
-                    <th style="text-align: center;" translate>email</th>
-                    <th style="text-align: right;" translate>delete</th>
-                </tr>
-                <tr ng-repeat="student in students | filter:searchText">
-                    <td style="text-align: center;">
-                        {{student.name}}
-                    </td>
-                    <td style="text-align: center;">
-                        <a id="email_address" ng-click="emailSingle(student.id, student.email)" style="cursor:pointer">{{student.email}}</a>
-                    </td>
-                    <td style="text-align: center;" ng-init="$parent.emails[$index] = ','">
-                        <input id="{{student.id}}" class="checks" ng-checked="$parent.selected[{{student.id}}] == student.email" type="checkbox" ng-click="select(student.id, student.email)" value="{{student.email}}"/>
-                    </td>
-                    <td style="width:120px">
-                        <!-- <input id="remove_button" class="btn" type="button" ng-click="removeStudent(student)" value="{{'lectures.remove'|translate}}" ng-disabled="student.removing"/>
-                        <loading size="small" show="student.removing"/> -->
-                        <delete_button size="big" action="removeStudent(student)" />
 
-                    </td>
-                </tr>
-            </table>
-            <input class="btn" ng-show="!searchText" id="email_button" value="{{'email'|translate}}" style="float: right; margin-right: 3%;" ng-disabled="(selected | filter: '@').length == 0" type="button" ng-click="emailForm()" />
-            <input class="btn btn-primary" value="{{'courses.select_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (emails | filter: ',').length == 0"/>
-            <input class="btn btn-danger" value="{{'courses.deselect_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (selected | filter: '@').length == 0"/>
-        </form>
+
+
+
+
+<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
+    <div style="float: left;">
+        <input id="search" placeholder="{{'courses.search'|translate}}..." type="search" name="search" ng-model="searchText"/>
     </div>
-    <loading size="big" show="loading_students" />
-</center>
+    <!-- <div> -->
+        <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px;"><span translate>enroll.help_enroll_student</span></button>
+    <!-- </div> -->
+    <div style="float: right;">
+        <input class="btn" ng-show="!searchText" id="email_button" value="{{'email'|translate}}" style="float: right; margin-right: 3%;" ng-disabled="(students | filter:{'checked':true}).length == 0" type="button" ng-click="emailForm()" />
+        <input class="btn btn-primary" value="{{'courses.select_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length"/>
+        <input class="btn btn-danger" value="{{'courses.deselect_all'|translate}}" type="button" style="float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0"/>
+    </div>
+    
+</div>
+
+<div collapse="!isCollapsed" style="position: initial;">
+    <br />
+    <br />
+    <div class="well well-lg">
+        <p><b><span translate>enroll.help_enroll</span>:</b></p>
+        <p translate>enroll.instruction</p>
+        <br>
+        <div  ng-click="this.select()" class="well well-lg" style="background: white;color: brown;" >
+            <div id="kk" select-on-click>
+                <p ><span translate>enroll.dear_student</span>,</p>
+                <p >&emsp;<span translate>enroll.this_term_new_system</span> <b>{{course_information.unique_identifier}}</b>.</p>
+                <p ><span translate>enroll.sincerely</span>,<br>{{current_user.name}}</p>
+            </div>
+            <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right;position: relative;top: -30px;">Click to Select<br>Copy: cmd+C or ctrl+C</div>
+        </div>
+    </div> 
+</div>
+
+<div ng-show="students" id="invited_students">
+    <form name="email_form">
+        
+                    <!-- <delete_button size="big" action="removeStudent(student)" /> -->
+        <br />
+        <br />
+        <user-item ng-repeat="student in students | filter: searchText" user="student" select="toggleSelect" emailsingle="emailSingle"></user-item>
+    </form>
+</div>
+<loading size="big" show="loading_students" />

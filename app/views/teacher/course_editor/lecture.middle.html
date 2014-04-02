@@ -15,6 +15,8 @@
 			<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
 				<answervideo ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
 				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
+				<answersurvey ng-if="selected_quiz.quiz_type == 'survey'" ng-repeat="answer in selected_quiz.answers" data="answer" survey="selected_quiz" remove="removeAnswer($index)"/>
+
 			</quiz>
 		</div>
 		<youtube ng-show="!slow && lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio"/>
@@ -36,6 +38,7 @@
 		<div id="foo" class="btn-toolbar">
 			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="invideo" title="{{'lectures.insert_invideo_quiz'|translate}}" />
 			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="html" title="{{'lectures.insert_html_quiz'|translate}}" />
+			<dropdown_list  list="survey_types_list" action="insertQuiz" quiztype="survey" title="Insert Survey (Over video)" />
 		</div>
 		<br />
 		<div ui-view="quizList"></div>

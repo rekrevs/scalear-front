@@ -26,6 +26,10 @@ angular.module('scalearAngularApp')
 		{type:'OCQ', text:"insert_ocq"}, 
 		{type:'drag',text:"insert_drag"}
 	]
+	$scope.survey_types_list=[
+		{type:'MCQ', text:"MCQ - Multiple Choice Answers"},
+		{type:'OCQ', text:"OCQ - One Choice Answer"}, 
+	]
     $scope.play_pause_class = 'play'
     $scope.current_time = 0
     $scope.total_duration = 0

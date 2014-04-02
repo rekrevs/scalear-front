@@ -3,7 +3,7 @@
 	<h3>{{selected_module.name}}</h3>
 	<br />
 	<!-- <h4 >courses.display_lecture_results</h4> -->
-	<button_link title="Go To Class"   action="display('Quizzes',buttons.quizzes_display_count)" class="btn-xlarge btn-primary" ng-disabled="!inclass_ready"/>
+	<button_link title="Go To Class"   action="display('Quizzes',!inclass_ready)" class="btn-xlarge btn-primary" ng-disabled="!inclass_ready"/>
 	<!-- <button_link title="{{'courses.display_questions'|translate}}" action="display('Questions',!buttons.questions_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.questions_display_count"/>
 	<button_link title="{{'courses.display_surveys'|translate}}"   action="survey(!buttons.survey_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.survey_display_count"/>
 	<h4 translate>courses.review_lecture_results</h4>

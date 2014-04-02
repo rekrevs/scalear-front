@@ -279,13 +279,40 @@
 	/*overflow-y: auto;
 	background:beige;*/
 }
-.original_student_question{
-	font-size: 30px;
+li.original_question{
+	font-size: 40px;
 	line-height: 32px;
 	opacity: 1;
 	left: 0 !important;
 	top: 0 !important;
 	padding-top: 1%;
+	max-width: initial;
+	min-width: initial;
+	float: none;
+}
+
+li.small_question{
+	font-size: 35px;
+	line-height: 30px;
+	opacity: 1;
+	left: 0 !important;
+	top: 0 !important;
+	padding-top: 1%;
+	max-width: initial;
+	min-width: initial;
+	float: none;
+}
+
+li.smallest_question{
+	font-size: 29px;
+	line-height: 27px;
+	opacity: 1;
+	left: 0 !important;
+	top: 0 !important;
+	padding-top: 1%;
+	max-width: initial;
+	min-width: initial;
+	float: none;
 }
 
 .student_padding{	

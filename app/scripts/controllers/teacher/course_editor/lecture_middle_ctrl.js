@@ -398,6 +398,7 @@ $timeout(function(){
 		$scope.hide_alerts = true;
 		$scope.submitted= false
 		$scope.selected_quiz={}
+		$scope.quiz_layer.backgroundColor= ""
 		$log.debug("exiting")		
 	}
 

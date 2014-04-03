@@ -170,20 +170,20 @@ angular.module('scalearAngularApp')
 			$scope.selected_quiz = quiz
 			$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
-			if(quiz.quiz_type =="invideo"){
-				$scope.double_click_msg = "online_quiz.double_click_new_answer";
-				$scope.quiz_layer.backgroundColor="transparent"
-				$scope.quiz_layer.overflowX= ''
-				$scope.quiz_layer.overflowY= ''
-				getQuizData();
-			}
-			else{ // html quiz
+			if(quiz.quiz_type =="html"){
 				$log.debug("HTML quiz")
 				$scope.double_click_msg=""
 				$scope.quiz_layer.backgroundColor= "white"
 				$scope.quiz_layer.overflowX= 'hidden'
 	            $scope.quiz_layer.overflowY= 'auto'
 				getHTMLData()
+			}
+			else{ // invideo or survey quiz				
+				$scope.double_click_msg = "online_quiz.double_click_new_answer";
+				$scope.quiz_layer.backgroundColor="transparent"
+				$scope.quiz_layer.overflowX= ''
+				$scope.quiz_layer.overflowY= ''
+				getQuizData();				
 			}
 		}
 	}
@@ -367,7 +367,7 @@ angular.module('scalearAngularApp')
 			else	
 			correct= $scope.selected_quiz.answers[element].correct || correct;
 		}
-		if(!correct){
+		if(!correct && $scope.selected_quiz.quiz_type!='survey'){
 			$scope.alert.msg="lectures.please_choose_one_answer"
 			return false
 		}

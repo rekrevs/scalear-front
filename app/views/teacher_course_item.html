@@ -1,6 +1,16 @@
 <div class="whole-box" style="width: 100%;">
 	<link rel="stylesheet" href="styles/courseItem.css"/>
-	<table style="width: 100%;">
+	<style>
+		@media only screen and (max-width : 1024px) {
+			.course-image{
+				display: none;
+			}
+		}
+	</style>
+	<div style="float: right; display: inline-block;">
+		<delete_button size="big" action="deletecourse(course)" />
+	</div>
+	<table style="width: 91%;">
 		<tr>
 			<td class="course-image">
 				<a ui-sref="course.course_editor({ course_id: course.id })">
@@ -17,25 +27,25 @@
 								</a>
 						</td>
 					</tr>
-					<tr>
+					<tr style="border-bottom: 1px solid lightgray;">
 						<td style="color: #2d2d2d; padding-top: 5px;">
 							<div style="font-size: 15px; margin: 0px;"><span class="calendar-icon"></span><span tooltip="{{'courses.start_date'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div> 
 						</td>
-						<td style="color: #2d2d2d; padding-top: 5px;">
+						<td style="color: #2d2d2d; padding-top: 5px; border-left: 1px solid lightgray;">
 							<div style="font-size: 15px; margin: 0px;"><span class="duration-icon"></span><span tooltip="{{'courses.duration'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.duration}} <span translate="courses.weeks"></span></div>
 						</td>
-						<td style="color: #2d2d2d;">
+						<td style="color: #2d2d2d; border-left: 1px solid lightgray;">
 							<div style="font-size: 15px; margin: 0px;"><span class="students-icon"></span><span tooltip="#{{'courses.students'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.enrollments.length}}</span></div>
 						</td>
-						<td style="color: #2d2d2d;">
+						<td style="color: #2d2d2d; border-left: 1px solid lightgray;">
 							<div style="font-size: 15px; margin: 0px;"><span class="lectures-icon"></span><span tooltip="#{{'head.lectures'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.lectures.length}}</span></div>
 						</td>
 					</tr>
 					<tr>
-						<td style="color: #2d2d2d;">
+						<td style="color: #2d2d2d;" colspan="2">
 							<div ng-init="course.quiz = (course.quizzes|filter:{quiz_type:'quiz'})" style="font-size: 15px; margin: 0px;"><span class="quizzes-icon"></span><span tooltip="#{{'groups.quizzes'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.quiz.length}}</span></div>
 						</td>
-						<td style="color: #2d2d2d;">
+						<td style="color: #2d2d2d; border-left: 1px solid lightgray;" colspan="2">
 							<div ng-init="course.survey = (course.quizzes|filter:{quiz_type:'survey'})" style="font-size: 15px; margin: 0px;"><span class="surveys-icon"></span><span tooltip="#{{'courses.surveys'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.survey.length}}</span></div>
 						</td>
 
@@ -48,13 +58,13 @@
             		<tr ng-repeat="teacher in teachers">
             			<td style="color: black; text-align: center; padding-left: 10px;" style="text-align: center;">
                             <small>
-                            	<a href="" ng-click="$parent.$parent.$parent.filterTeacher(teacher.user.name, teacher.user.email)">
+                            	<a href="" ng-click="filterteacher(teacher.user.name, teacher.user.email)">
                                 	<profile-image email="teacher.user.email" imagesize="40"> </profile-image> 
                             	</a>
                         	</small>
                         </td>
                         <td style="text-align: left; padding-left: 10px;">
-                        	<a href="" ng-click="$parent.$parent.$parent.filterTeacher(teacher.user.name, teacher.user.email)">{{teacher.user.name}} ({{'courses.'+teacher.role.name | translate}})</a>
+                        	<a href="" ng-click="filterteacher(teacher.user.name, teacher.user.email)">{{teacher.user.name}} ({{'courses.'+teacher.role.name | translate}})</a>
                         	<br />
                         	<a href="mailto:{{teacher.user.email}}">{{teacher.user.email}}</a>
                         </td>
@@ -63,7 +73,5 @@
             </td>
 		</tr>
 	</table>
-	<div style="float: right;">
-		<delete_button size="big" action="$parent.$parent.$parent.deleteCourse(course)" />
-	</div>
+	
 </div>

@@ -146,7 +146,9 @@ angular.module('scalearAngularApp')
     restrict: "E",
     scope:{
       course: '=',
-      teachers: '='
+      teachers: '=',
+      deletecourse: '=',
+      filterteacher: '='
     },
     templateUrl: '/views/teacher_course_item.html',
     link: function(scope){}

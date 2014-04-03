@@ -16,5 +16,9 @@
 }
 .created-at{
 	/*float: right;*/
+	margin-top: 10px;
 	text-align: right;
+}
+.ta-editor{
+	border: 1px solid lightgray;
 }

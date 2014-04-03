@@ -1,0 +1,35 @@
+<div class="announcement-box">
+	<link rel="stylesheet" href="styles/teacher/announcements.css"/>
+	<div style="display: inline-block; float: right;">
+		<delete_button size="big" action="deleteannouncement(index)" ng-hide="announcement.show"/>
+		</delete_button>
+	</div>
+	<div class="announcement-body" ng-click="showannouncement(index)" ng-mouseover="announcement.overclass = 'icon-pencil'" ng-mouseleave="announcement.overclass= ''" ng-if="!announcement.show">
+		<span ng-bind-html='announcement.announcement'>
+		</span>
+		<p ng-if="announcement.announcement.trim()==''" translate>
+			empty
+		</p>
+		<i ng-if="!announcement.show" ng-class="announcement.overclass"></i>
+		<span class="errormessage" ng-show="announcement.errors">{{announcement.errors.announcement.join()}}</span>
+	</div>
+	<div ng-if="announcement.show==true">
+        	<div text-angular ng-model="announcement.announcement" ta-toolbar-button-class="btn btn-default btn-mini">
+        	</div>
+	</div>
+
+	<div class="created-at">
+		<span style="float: left;">
+			<input id="close_button" ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideannouncement(index)" ng-disabled="saving"/>
+			<input id="save_button" ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-primary" ng-click="saveannouncement(index)" ng-disabled="saving"/>
+		</span>
+		<small>
+			<b>
+				{{'announcement_form.date_created' | translate}}:
+			</b>
+			{{announcement.created_at | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}
+		</small>
+	</div>
+
+
+</div>

@@ -140,6 +140,28 @@ angular.module('scalearAngularApp')
     templateUrl: '/views/courseItem.html',
     link: function(scope){}
   };
+}]).directive('announcementItem', ['ErrorHandler',function(ErrorHandler) {
+  return{
+    replace:true,
+    restrict: "E",
+    scope:{
+      announcement: '=',
+      saveannouncement: '=',
+      showannouncement:'=',
+      hideannouncement: '=',
+      deleteannouncement: '=',
+      saving: '=',
+      index: '='
+    },
+    templateUrl: '/views/announcementItem.html',
+    link: function(scope){
+      scope.$watch('announcement', function(val, val2){
+        if(val != val2){
+          console.log(scope.announcement)
+        }
+      })
+    }
+  };
 }]).directive('screenfull', function(){
   return {
     restrict: 'A',

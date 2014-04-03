@@ -1,29 +1,11 @@
-<center ng-show="announcements.length">
-	<table class="table table-striped" style="width:90%">
-		<tr>
-			<th translate>head.announcements</th>
-			<th translate>announcement_form.date_created</th>
-			<th translate>announcement_form.action</th>
-		</tr>
-		<tr ng-repeat="announcement in announcements">
-			<td ><div style="display:inline-block;width:90%" ng-click="showAnnouncement($index)" ng-mouseover="announcement.overclass = 'icon-pencil'" ng-mouseleave="announcement.overclass= ''" ng-if="!announcement.show"><span ng-bind-html='announcement.announcement'></span><p ng-if="announcement.announcement.trim()==''" translate>empty</p></div>
-				<i ng-if="!announcement.show" ng-class="announcement.overclass"></i>
-	  			<div ng-if="announcement.show==true">
-                    <div text-angular ng-model="announcement.announcement" ta-toolbar-button-class="btn btn-default btn-mini"></div>
-	            </div>
-	  			<span class="errormessage" ng-show="announcement.errors">{{announcement.errors.announcement.join()}}</span>
-			</td>
-			<td width="200px">{{announcement.created_at | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</td>
-			<td width="150px">
-				<input id="close_button" ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideAnnouncement($index)" ng-disabled="saving"/>
-				<input id="save_button" ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-primary" ng-click="saveAnnouncement($index)" ng-disabled="saving"/>
-				<delete_button size="big"  action="deleteAnnouncement($index)" ng-hide="announcement.show"/>
-			</td>
-		</tr>
-	</table>
-</center>
+<div ng-show="announcements.length">
+	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
+		<input id="new_announcement" ng-show="show_button" type="button" value="{{'announcement_form.create_announcement'|translate}}" class="btn btn-success" style="background-image: initial; float: right; margin-right: 60px;" ng-disabled="disable_new" ng-click="createAnnouncement()"/>
+		<!-- <input id="search_announcement" ng-model="searchAnnouncement" type="search" style="float: right; margin-right: 60px;" /> -->
+    </div>
+    <br />
+    <br />
+	<announcement-item ng-repeat="announcement in announcements | filter:{announcement: searchAnnouncement}" announcement="announcement" saveannouncement="saveAnnouncement" showannouncement="showAnnouncement" hideannouncement="hideAnnouncement" deleteannouncement="deleteAnnouncement" saving="saving" index="$index"></announcement-item>
+</div>
 <br><br>
 <center ng-show="!announcements" ><loading size="big" show="!announcements" ></center>
-<center ng-show="show_button"> 
-	<input id="new_announcement" type="button" value="{{'announcement_form.create_announcement'|translate}}" class="btn btn-primary" ng-disabled="disable_new" ng-click="createAnnouncement()"/>
-</center>

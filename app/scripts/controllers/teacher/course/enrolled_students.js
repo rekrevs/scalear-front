@@ -6,7 +6,7 @@ var app = angular.module('scalearAngularApp')
  
         $log.debug("in enrolled students");
         Page.setTitle('Enrolled Students')
-        $window.scrollTo(0, 0);
+        // $window.scrollTo(0, 0);
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
         $scope.loading_students = true
@@ -74,6 +74,10 @@ var app = angular.module('scalearAngularApp')
           filtered_students.forEach(function(item){
             $filter('filter')($scope.students, {'id': item.id}, true)[0].checked = false;
           })
+        }
+        $scope.toggleHelpEnrolling = function(){
+          $scope.isCollapsed = !$scope.isCollapsed
+          $window.scrollTo(0, 0);
         }
   }]);
 

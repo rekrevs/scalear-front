@@ -3,7 +3,7 @@
         <input id="search" placeholder="{{'courses.search'|translate}}..." type="search" name="search" ng-model="searchText"/>
     </div>
     <!-- <div> -->
-        <button class="btn btn-default" ng-click="isCollapsed = !isCollapsed" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px; margin-left: 50px;"><span translate>enroll.help_enroll_student</span></button>
+        <button class="btn btn-default" ng-click="toggleHelpEnrolling()" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px; margin-left: 50px;"><span translate>enroll.help_enroll_student</span></button>
     <!-- </div> -->
     <div style="float: right; display: inline-block; width: 300px; margin-right: 50px;">
         <input class="btn" ng-show="!searchText" id="email_button" value="{{'email'|translate}}" style="background-image: initial; float: right; margin-right: 3%;" ng-disabled="(students | filter:{'checked':true}).length == 0" type="button" ng-click="emailForm()" />
@@ -35,7 +35,10 @@
     <form name="email_form">
         <br />
         <br />
+        <br />
         <user-item ng-repeat="student in students | filter: searchText" user="student" select="toggleSelect" emailsingle="emailSingle" removestudent="removeStudent"></user-item>
     </form>
 </div>
+<br />
+<br />
 <loading size="big" show="loading_students" />

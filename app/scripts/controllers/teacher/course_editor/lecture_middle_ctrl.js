@@ -128,6 +128,10 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.insertQuiz=function(quiz_type, question_type){
+		if ($scope.selected_quiz && $scope.quiz_deletable){
+			$scope.deleteQuiz($scope.selected_quiz)
+		}
+		
 		var insert_time= $scope.lecture_player.controls.getTime()
 		var duration = $scope.lecture_player.controls.getDuration()
 
@@ -393,7 +397,8 @@ angular.module('scalearAngularApp')
 				data=[obj]
 			}
 			else
-				data = $scope.selected_quiz.answers
+				data = angular.copy($scope.selected_quiz.answers)
+
 
 			$scope.quiz_deletable = false
 			updateAnswers(data, $scope.selected_quiz.question);

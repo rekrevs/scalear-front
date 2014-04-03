@@ -109,7 +109,7 @@
 						<div ng-show="display_mode" style="position: absolute; top: 36px; bottom: 53px; left: 0px;z-index: 1;">
 							<quiz ng-style="quiz_layer" ng-show="display_mode">
 								 <div ng-if="selected_quiz.quiz_type == 'html'" ><student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/></div>
-								 <div ng-if="selected_quiz.quiz_type == 'invideo'"><student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/></div>
+								 <div ng-if="selected_quiz.quiz_type != 'html'"><student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/></div>
 							</quiz>
 						</div>
 						<youtube ng-show="lecture.url" class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1'/>

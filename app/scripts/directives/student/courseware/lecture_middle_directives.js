@@ -198,7 +198,17 @@ angular.module('scalearAngularApp')
 .directive("notification", ['$translate', '$window', '$log', function($translate, $window, $log) {
   return {
     restrict:"E",
-    template:'<div class="well" style="font-size:12px;padding:5px;"><div ng-show="show_notification==true" style="vertical-align:middle"><center><b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }"><span>{{verdict}}</span></b><br/><p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details"></center></div><div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div></div>',
+    template:'<div class="well" style="font-size:12px;padding:5px;">'+
+                '<div ng-show="show_notification==true" style="vertical-align:middle">'+
+                  '<center>'+
+                    '<b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }">'+
+                      '<span>{{verdict}}</span>'+
+                    '</b><br/>'+
+                    '<p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details" />'+
+                  '</center>'+
+                '</div>'+
+                '<div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div>'+
+              '</div>',
 
     link: function(scope, element, attrs) {
       scope.correct_notify=$translate("lectures.correct")
@@ -243,11 +253,6 @@ angular.module('scalearAngularApp')
     restrict:"E",
 	template:'<input type="button" class="btn btn-success" value="{{\'youtube.check_answer\'|translate}}" ng-click="check_answer()" style="height: 25px; vertical-align: -webkit-baseline-middle; padding: 0px 10px; background-image: initial;" />',
 	link: function(scope, element, attrs) {
-   
-    
-    
-
-		
 
     var setButtonsLocation=function(){
       $log.debug(scope.fullscreen)
@@ -268,27 +273,33 @@ angular.module('scalearAngularApp')
     	
   	setButtonsLocation()
 
-		scope.check_answer = function()
-		{			
+		scope.check_answer = function(){			
 			$log.debug("check answer "+scope.solution);
-			if(scope.selected_quiz.quiz_type=="invideo"){
-			 	sendAnswers()
-    		}else{
-    			$log.debug(scope.answer_form);
-    			if(!scope.answer_form.$error.atleastone || scope.answer_form.$error.atleastone==false)
-    			{
-    				$log.debug("valid form")
-    				scope.submitted=false;
-	    			Lecture.saveHtml({course_id: $stateParams.course_id, lecture_id:$stateParams.lecture_id},{quiz:scope.selected_quiz.id, answer:scope.studentAnswers[scope.selected_quiz.id]}, function(data){
-	    			 
-	    			 displayResult(data);
-	    			
-    		 	});
-    		 }else{
-
-    		 	$log.debug("invalid form")
-    		 	scope.submitted=true;
-    		 }
+			if(scope.selected_quiz.quiz_type=="html"){			 	
+        $log.debug(scope.answer_form);
+        if(!scope.answer_form.$error.atleastone || scope.answer_form.$error.atleastone==false){
+          $log.debug("valid form")
+          scope.submitted=false;
+          Lecture.saveHtml(
+            {
+              course_id: $stateParams.course_id, 
+              lecture_id:$stateParams.lecture_id
+            },
+            {
+              quiz:scope.selected_quiz.id, 
+              answer:scope.studentAnswers[scope.selected_quiz.id]
+            }, 
+            function(data){
+              displayResult(data);
+            });
+        }
+        else{
+          $log.debug("invalid form")
+          scope.submitted=true;
+        }
+  		}
+      else{
+       sendAnswers()
 			};
 		}
     	
@@ -306,7 +317,7 @@ angular.module('scalearAngularApp')
           	$log.debug(scope.$parent);
           	// notify
           	scope.show_notification=$translate("groups.choose_correct_answer")//"You must choose atleast one answer";
-   				$interval(function(){
+   				  $interval(function(){
 	             		 scope.show_notification=false;
 	         	}, 2000, 1);
           	return		
@@ -344,9 +355,22 @@ angular.module('scalearAngularApp')
             answer:selected_answers
           },
           function(data){
-            $log.debug(data)
-            console.log(data)
-            displayResult(data)
+            if(scope.selected_quiz.quiz_type == 'survey'){
+              if(data.msg!="Empty"){
+                scope.selected_quiz.is_quiz_solved=true;
+                scope.show_notification='Thank you for your answer';
+                var removeNotification = function(){
+                  scope.show_notification=false;
+                  window.onmousemove = null
+                  scope.$apply()
+                }
+                $interval(function(){
+                  window.onmousemove = removeNotification
+                }, 600, 1);
+              }
+            }
+            else
+              displayResult(data)
           },
           function(){}
         )
@@ -370,16 +394,12 @@ angular.module('scalearAngularApp')
             scope.$parent.$parent.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
           scope.selected_quiz.is_quiz_solved=true;
 
-          //scope.$emit('accordianReload');
-          //scope.$emit('accordianUpdate',{g_id:scope.lecture.group_id, type:"lecture", id:scope.lecture.id});
         }
         var removeNotification = function(){
           scope.show_notification=false;
           window.onmousemove = null
           scope.$apply()
         }
-
-        // ()
 
         $interval(function(){
           window.onmousemove = removeNotification

@@ -87,6 +87,7 @@ var translation_sv=function(){
             with_you:"Delat med dig",
             add_to:"Lägg till",
             add: "Lägg",
+            view: "Syn Delas"
           },
           menu:{
             copy:"Kopiera",
@@ -158,6 +159,7 @@ var translation_sv=function(){
               confirm_password: "Bekräfta nytt lösenord",
               forgot_password: "Har du glömt ditt lösenord?",
               send_reset: "Skicka mig instruktioner för att återställa lösenordet",
+              resetting: "Återställning av Lösenord",
               didnt_receive_confirmation: "Fick inte någon bekräftelse ännu?",
               didnt_receive_unlock: "Fick inte instruktioner för upplåsning ännu?",
           },

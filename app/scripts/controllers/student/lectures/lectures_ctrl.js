@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
 	$window.scrollTo(0, 0);
 	// $state.$watch('params', function(){
-		Page.setTitle('Lectures');
+		Page.setTitle('head.lectures');
 		if($state.params.lecture_id){
 			$scope.current_item = $state.params.lecture_id
 		}

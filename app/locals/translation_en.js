@@ -91,6 +91,7 @@ var translation_en=function(){
         with_you:"Shared with you",
         add_to:"Add To",
         add: "Add",
+        view: "View Shared"
       },
       settings:{
         lectures: "Lectures Settings"
@@ -157,6 +158,7 @@ var translation_en=function(){
         confirm_password: "Confirm new password",
         forgot_password: "Forgot your Password?",
         send_reset: "Send me Reset Password Instructions",
+        resetting: "Resetting Password",
         didnt_receive_confirmation: "Didn't receive confirmation instructions?",
         didnt_receive_unlock: "Didn't receive unlock instructions?",
       },

@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
     $scope.current_reply={}
     $scope.notes={}
     $scope.tabs=[{"active":true},{"active":false}, {"active":false}]
-	Page.setTitle('Lectures');
+	Page.setTitle('head.lectures');
 
     var init = function()
     {

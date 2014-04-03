@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course','$log', '$window','Page','$anchorScroll','$timeout', function ($scope, $stateParams, $location, Course, $log, $window,Page,$anchorScroll,$timeout) {
 
   		$window.scrollTo(0, 0);
-  		Page.setTitle('Progress')
+  		Page.setTitle('head.progress')
    		//Course.getCourse({course_id:$stateParams.course_id},
   		$scope.open=[]
    		Course.getCourseEditor({course_id:$stateParams.course_id},

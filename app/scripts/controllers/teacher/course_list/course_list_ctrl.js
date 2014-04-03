@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
   	$log.debug("in course list")
     $window.scrollTo(0, 0);
-    Page.setTitle('Courses')
+    Page.setTitle('navigation.courses')
   		Course.index({},
 			function(data){
 				$log.debug(data)

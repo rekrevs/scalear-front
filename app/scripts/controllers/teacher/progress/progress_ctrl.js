@@ -7,10 +7,12 @@ angular.module('scalearAngularApp')
   		Page.setTitle('Progress')
    		//Course.getCourse({course_id:$stateParams.course_id},
   		$scope.open=[]
+  		$scope.close_selector = false;
    		Course.getCourseEditor({course_id:$stateParams.course_id},
 			function(data){
 				$scope.modules = data.groups
 				$log.debug(data)
+				$scope.initSelector();
 			}, 
 			function(){
 
@@ -46,5 +48,21 @@ angular.module('scalearAngularApp')
 	      $anchorScroll();
 	      $timeout(function(){$window.scrollTo($window.scrollX, $window.scrollY-44)})
 	   	}
+
+	   	//modules selector functions
+	   	$scope.initSelector = function(){
+	   		var count = Math.ceil($scope.modules.length/10)
+	   		$scope.dropdown_styling = '-webkit-column-count:'+count+';-moz-column-count:'+count+';column-count:'+count+';'
+	   	}
+	   	$scope.toggleSelector = function(){
+	   		$scope.close_selector = !$scope.close_selector;
+	   	}
+	   	$scope.showModule = function(index){
+	   		console.log('showing module')
+	   		$scope.selected_module = $scope.modules[index]
+	   		$scope.toggleSelector();
+	   		console.log($scope.selected_module)
+   		}
 			
   }]);
+	   	

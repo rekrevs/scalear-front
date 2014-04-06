@@ -5,44 +5,39 @@
 <!-- endbuild -->
 
 <div class="row">        
-	<!-- <div class="span3">
-	    <ul class="nav">
-			<li class="nav-header" translate>courses.total_progress</li>    
-			<li ng-class="{active: getLocation() == 0}" style="margin-left:15px">
-			    <a ui-sref="course.progress.main()" class="lecture" id="progress_chart" translate>courses.progress_chart</a>
-			</li>           
-	        <li class="nav-header" translate>courses.modules</li>
-		    <accordion  close-others="true" id="acc1" class="accordion">
-				<accordion-group ng-repeat="module in modules | orderBy:'position'" is-open="module.id==open_id" class='module'>
-					<accordion-heading>
-			        	<div ng-click='invertOpen(module.id)' class="module_title">
-							<a class='trigger' ui-sref="course.progress.lecture({module_id:module.id})" ng-class='{open:open[module.id]}' >{{module.name}}</a>
-						</div>
-		        	</accordion-heading>
-	        		<div class="outer">
-			        	<div class="inner" id="modules">
-			        		<ul class="items">
-			            		<li class="last-child item" ng-repeat="item in module.items" style="padding-left: 10px;" >
-		             				<a class="trigger2" ng-click="scrollTo(item)" >{{item.name}}</a>
-			            		</li>
-			            	</ul>
-			        	</div>
-			    	</div>
-		      	</accordion-group>	
-			</accordion>  
-		</ul>   
-	</div> -->
-	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 15px; left: 0px; right; 0px; bottom: 45px; padding-top: 10px; background-color: black; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2;">
-		<!-- <div style="float: left; display: inline-block;">
-			<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="toggleSelector()" title="{{selected_module.name}}">{{selected_module.name}}<span class="caret" style="margin-left: 5px;"></span></button>
-	    </div>
-	    <div style="margin-left: 190px; text-align: left;">
-	    	<progress-item ng-repeat="item in selected_module.items" style="display: inline-block;" name="item.name" id="item.id" circlesize="100" group_id="selected_module.id" class_name="item.class_name" quiz_type="item.quiz_type" ng-click="scrollTo(item)"></progress-item>
-	    </div> -->
+	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2;">
+		<table style="width: 95%;">
+			<tr>
+				<td style="width: 170px;">
+					<div style="float: left; display: inline-block;">
+						<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="toggleSelector()" title="{{selected_module.name}}">{{shortenModuleName(selected_module.name) || 'Select Module'}}<span class="caret" style="margin-left: 5px;"></span></button>
+				    </div>
+				</td>
+				<td style="min-width: 15px;">
+				</td>
+				<td style="width: {{80/selected_module.items.length}}%;" ng-repeat="item in selected_module.items | orderBy:'position'">
+					<div style="text-align: left;">
+				    	<progress-item style="display: inline-block;" name="item.name" id="item.id" circlesize="13" group_id="selected_module.id" class_name="item.class_name" quiz_type="item.quiz_type" ng-click="scrollTo(item)"></progress-item>
+				    </div>
+				    <hr style="width: 100%; margin: 0; position: relative; top: -9px; z-index: -1;">
+				</td>
+			</tr>
+		</table>
 	</div>
-	 
-	<!-- <div id='details' class="span11" >
+	<div class="modules-selector-dropdown" collapse="!close_selector" ng-hide="hide || hide_all" style="z-index: 1; top: 30px; background-color: whitesmoke; border: none; width: 0;">
+		<div class="multicol" style="{{dropdown_styling || '-webkit-column-count:1;-moz-column-count:1;column-count:1;'}}">
+			<div ng-repeat="module in modules | orderBy:'position'">
+				<a ui-sref="course.progress.lecture({module_id:module.id})" ng-click="showModule($index)">
+					<ul style="float: left; margin: 0; color: #2d2d2d;" ng-class="{moduleactive: current_module.id == module.id}">
+						<!-- <module-progress-circle circlesize="12" innercolor="white" module="modules_obj[module.id]" ></module-progress-circle> -->
+						{{module.name}}
+					</ul>
+				</a>
+			</div>
+		</div>
+	</div>
+	<div id='details'>
 	    <ui-view/>
-	</div> -->
+	</div>
 </div>
 <!-- ui-sref="course.progress.lecture({module_id:module.id})" -->

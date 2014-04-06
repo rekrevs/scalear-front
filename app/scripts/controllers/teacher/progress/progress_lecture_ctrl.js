@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','$log', '$window','$translate','$timeout', function ($scope, $stateParams, Timeline, Module,Quiz, $log, $window, $translate,$timeout) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','$log', '$window','$translate','$timeout',function ($scope, $stateParams, Timeline, Module,Quiz, $log, $window, $translate,$timeout) {
 
   	$scope.highlight_index = -1
   	$scope.inner_highlight_index = -1
   	$scope.progress_player= {}
   	$scope.timeline = {}
+    $scope.right_container = angular.element('#right-container')
+
   	$scope.time_parameters={
   		quiz: 3,
   		question: 2
@@ -46,11 +48,18 @@ angular.module('scalearAngularApp')
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
 				  setupShortcuts()
+          resizeContainer()
 	  		},	
 	  		function(){}
 		)
-  	}
-
+	}
+  var resizeContainer = function(){
+    $scope.right_container.css('height', angular.element($window).height() - 190)
+    console.log('height should be '+angular.element($window).height())
+  }
+  angular.element($window).bind('resize', function () {
+    resizeContainer();
+  });
  	var getModuleCharts = function(){
     Module.getModuleCharts(
         {             

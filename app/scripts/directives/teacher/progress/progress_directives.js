@@ -120,7 +120,7 @@ angular.module('scalearAngularApp')
            	scope.popover_options={
             	content: template,
             	html:true,
-            	placement:"bottom"
+            	placement:"right"
             }
 
             var estimateCalculator=function(){
@@ -188,25 +188,6 @@ angular.module('scalearAngularApp')
 		 restrict: 'E', 
 		 templateUrl: '/views/teacher/progress/progress_item.html',
 		 link: function(scope, element){
-		 	scope.$watch('done', function(){
-		 		var canvas;
-				var ctx;
-				// console.log(element.children())
-				var bg = element.children()[1].children[0]
-				var ctx = ctx = bg.getContext('2d');
-		 		if(scope.done == true){
-					ctx.clearRect(0, 0, bg.width, bg.height);
-					ctx.fillStyle = 'lightgreen';
-					ctx.beginPath();
-					ctx.moveTo(bg.width/2,bg.height/2);
-					// console.log(scope.percentage)
-					ctx.arc(bg.width/2,bg.height/2,bg.height/2,0,(Math.PI*2*(1)),false);
-					ctx.lineTo(bg.width/2,bg.height/2);
-					ctx.fill();
-		 		}
-
-		 	})
-
 		 	scope.type= scope.className=="Quiz"? CourseEditor.capitalize(scope.quizType): scope.className;
              scope.url_with_protocol = function(url)
              {

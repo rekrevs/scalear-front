@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course','$log', '$window','Page','$anchorScroll','$timeout', function ($scope, $stateParams, $location, Course, $log, $window,Page,$anchorScroll,$timeout) {
+  .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course','$log', '$window','Page','$anchorScroll','$timeout', '$filter', '$state',function ($scope, $stateParams, $location, Course, $log, $window,Page,$anchorScroll,$timeout, $filter, $state) {
 
   		$window.scrollTo(0, 0);
   		Page.setTitle('Progress')
@@ -53,6 +53,10 @@ angular.module('scalearAngularApp')
 	   	$scope.initSelector = function(){
 	   		var count = Math.ceil($scope.modules.length/10)
 	   		$scope.dropdown_styling = '-webkit-column-count:'+count+';-moz-column-count:'+count+';column-count:'+count+';'
+	   		console.log('state params are '+$state.params.module_id)
+	   		$scope.selected_module = $filter('filter')($scope.modules, {'id': $state.params.module_id}, true)
+			console.log('should be here')
+	   		console.log($filter('filter')($scope.modules, {'id': '34'}, true))
 	   	}
 	   	$scope.toggleSelector = function(){
 	   		$scope.close_selector = !$scope.close_selector;
@@ -63,6 +67,18 @@ angular.module('scalearAngularApp')
 	   		$scope.toggleSelector();
 	   		console.log($scope.selected_module)
    		}
+   		$scope.shortenModuleName = function(name){
+			if(name){
+				if(name.length > 18) {
+			    	name = name.substring(0,14)+"...";
+				}
+				return name;
+			}
+			else{
+				return null;
+			}
+			
+		}
 			
   }]);
 	   	

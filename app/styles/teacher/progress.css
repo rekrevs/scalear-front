@@ -160,15 +160,16 @@ ul.highlight, li.highlight{
 	color: white;
 	padding:5px;
 	text-align:center;
-	position:absolute; 
-	left:70%
+	position:fixed; 
+	top: 400px;
+	left:30px;
 }
 
 .main_content{
 	overflow-y:auto; 
-	height:550px; 
-	width:800px;
-	margin-left:20px;
+	height:100%; 
+	width:100%;
+	/*margin-left:20px;*/
 	background:white
 }
 
@@ -223,8 +224,8 @@ ul.highlight, li.highlight{
 }
 
 .filter{
-	width: 790px;
-	margin-left: 20px;
+	width: 100%;
+	/*margin-left: 20px;*/
 	padding: 5px;
 	padding-bottom: 0px;
 	color: white;

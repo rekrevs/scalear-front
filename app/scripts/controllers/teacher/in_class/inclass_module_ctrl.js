@@ -4,7 +4,12 @@ angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','util','$translate','Timeline', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, util,$translate, Timeline) {
     $window.scrollTo(0, 0);
     $scope.inclass_player={}
-    $scope.inclass_player.events={}    
+    $scope.inclass_player.events={}   
+
+    $scope.time_parameters={
+      quiz: 3,
+      question: 2
+    } 
 
   	$scope.display = function (type, disabled) {
       if(!disabled){
@@ -53,6 +58,7 @@ angular.module('scalearAngularApp')
         $scope.fullscreen = false 
         $scope.selected_item=null
         $scope.selected_timeline_item=null
+
     }
 
     var init = function(){
@@ -63,6 +69,7 @@ angular.module('scalearAngularApp')
           module_id: $stateParams.module_id
         },
         function(data){
+          console.log(data)
           angular.extend($scope, data)
           $scope.timeline['lecture'] = {}
           for(var lec_id in $scope.lectures){

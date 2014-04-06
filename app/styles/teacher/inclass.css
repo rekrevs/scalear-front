@@ -342,3 +342,20 @@ li.smallest_question{
 .blue_font{
 	color:blue ;
 }
+
+.time_estimate{
+	width:250px;
+	border: solid 2px;
+	border-color: chocolate;
+	color: black;
+	padding:5px;
+	text-align:center;
+	margin-bottom:7px;
+}
+.time_estimate a{
+	color:orange;
+}
+
+.popover.bottom .arrow{
+	top:-11px !important;
+}

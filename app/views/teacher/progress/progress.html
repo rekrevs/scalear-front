@@ -9,7 +9,7 @@
 			<tr>
 				<td style="width: 170px;">
 					<div style="float: left; display: inline-block;">
-						<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="toggleSelector()" title="{{selected_module.name}}">{{shortenModuleName(selected_module.name) || 'Select Module'}}<span class="caret" style="margin-left: 5px;"></span></button>
+						<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="toggleSelector()" ng-disabled="!modules" title="{{selected_module.name}}">{{shortenModuleName(selected_module.name) || 'courses.select_module' | translate}}<span class="caret" style="margin-left: 5px;"></span></button>
 				    </div>
 				</td>
 				<td style="min-width: 15px;">
@@ -17,7 +17,7 @@
 				</td>
 				<td style="width: {{80/selected_module.items.length}}%;" ng-repeat="item in selected_module.items | orderBy:'position'">
 					<div style="text-align: left;">
-				    	<progress-item style="display: inline-block;" selected="item.id == selected_item" name="item.name" id="item.id" circlesize="13" group_id="selected_module.id" class_name="item.class_name" quiz_type="item.quiz_type" ng-click="scrollTo(item)"></progress-item>
+				    	<progress-item style="display: inline-block;" selected="item.id == selected_item" name="item.name" id="item.id" circlesize="13" group_id="selected_module.id" class_name="item.class_name" quiz_type="item.quiz_type" ng-click="showItem(item)"></progress-item>
 				    </div>
 				    <hr style="width: 100%; margin: 0; position: relative; top: -9px; z-index: -1;">
 				</td>

@@ -25,7 +25,6 @@ angular.module('scalearAngularApp')
                   }
 
   	var init= function(){
-  		
   		$scope.timeline = new Timeline()
   		Module.getModuleProgress({
 	  			course_id: $stateParams.course_id,

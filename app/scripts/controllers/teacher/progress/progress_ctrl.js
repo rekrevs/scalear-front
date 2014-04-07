@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course','$log', '$window','Page','$anchorScroll','$timeout', '$filter', '$state',function ($scope, $stateParams, $location, Course, $log, $window,Page,$anchorScroll,$timeout, $filter, $state) {
 
-  		$window.scrollTo(0, 0);
+  		// $window.scrollTo(0, 0);
   		Page.setTitle('Progress')
    		//Course.getCourse({course_id:$stateParams.course_id},
   		$scope.open=[]
@@ -35,6 +35,10 @@ angular.module('scalearAngularApp')
 				$scope.open[id] = true
 			}
 		}
+		$scope.showItem = function(item){
+			$timeout(function(){$state.go('course.progress.lecture', {module_id: item.group_id});});
+			$scope.scrollTo(item);
+		}
 
 		$scope.scrollTo = function(item) {
 			$scope.selected_item = item.id 
@@ -60,6 +64,7 @@ angular.module('scalearAngularApp')
 	   		$scope.selected_module = $filter('filter')($scope.modules, {'id': parseInt($state.params.module_id)}, true)[0]
 	   	}
 	   	$scope.toggleSelector = function(){
+  			$window.scrollTo(0, 0);
 	   		$scope.close_selector = !$scope.close_selector;
 	   	}
 	   	$scope.showModule = function(index){

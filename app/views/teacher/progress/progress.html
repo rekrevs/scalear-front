@@ -1,7 +1,6 @@
 <!-- build:css(.tmp/styles) styles/progress.css -->
 <link rel="stylesheet" href="styles/teacher/progress.css"/>
 <link rel="stylesheet" href="styles/student/modules_selector.css"/>
-
 <!-- endbuild -->
 
 <div class="row">        
@@ -14,10 +13,11 @@
 				    </div>
 				</td>
 				<td style="min-width: 15px;">
+					<a ui-sref="course.progress.main" ng-click="clearCurrent()" ng-show="selected_module" tooltip-placement="bottom" tooltip="Back to main progress page"><small translate>back</small></a>
 				</td>
 				<td style="width: {{80/selected_module.items.length}}%;" ng-repeat="item in selected_module.items | orderBy:'position'">
 					<div style="text-align: left;">
-				    	<progress-item style="display: inline-block;" name="item.name" id="item.id" circlesize="13" group_id="selected_module.id" class_name="item.class_name" quiz_type="item.quiz_type" ng-click="scrollTo(item)"></progress-item>
+				    	<progress-item style="display: inline-block;" selected="item.id == selected_item" name="item.name" id="item.id" circlesize="13" group_id="selected_module.id" class_name="item.class_name" quiz_type="item.quiz_type" ng-click="scrollTo(item)"></progress-item>
 				    </div>
 				    <hr style="width: 100%; margin: 0; position: relative; top: -9px; z-index: -1;">
 				</td>

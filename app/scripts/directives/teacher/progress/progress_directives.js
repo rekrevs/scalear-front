@@ -183,7 +183,8 @@ angular.module('scalearAngularApp')
             groupId: '=',
 		 	className:'=',
 		 	quizType:"=",
-		 	spacing: '='
+		 	spacing: '=',
+		 	selected: '='
 		 },
 		 restrict: 'E', 
 		 templateUrl: '/views/teacher/progress/progress_item.html',

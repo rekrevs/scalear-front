@@ -37,6 +37,7 @@ angular.module('scalearAngularApp')
 		}
 
 		$scope.scrollTo = function(item) {
+			$scope.selected_item = item.id 
 			var id
 			if(item.class_name == 'quiz')
 				id = item.quiz_type
@@ -48,15 +49,15 @@ angular.module('scalearAngularApp')
 	      $anchorScroll();
 	      $timeout(function(){$window.scrollTo($window.scrollX, $window.scrollY-44)})
 	   	}
+	   	$scope.clearCurrent = function(){
+	   		$scope.selected_module = null;
+	   	}
 
 	   	//modules selector functions
 	   	$scope.initSelector = function(){
 	   		var count = Math.ceil($scope.modules.length/10)
 	   		$scope.dropdown_styling = '-webkit-column-count:'+count+';-moz-column-count:'+count+';column-count:'+count+';'
-	   		console.log('state params are '+$state.params.module_id)
-	   		$scope.selected_module = $filter('filter')($scope.modules, {'id': $state.params.module_id}, true)
-			console.log('should be here')
-	   		console.log($filter('filter')($scope.modules, {'id': '34'}, true))
+	   		$scope.selected_module = $filter('filter')($scope.modules, {'id': parseInt($state.params.module_id)}, true)[0]
 	   	}
 	   	$scope.toggleSelector = function(){
 	   		$scope.close_selector = !$scope.close_selector;

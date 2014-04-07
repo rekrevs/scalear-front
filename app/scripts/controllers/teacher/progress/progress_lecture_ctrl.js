@@ -262,7 +262,8 @@ angular.module('scalearAngularApp')
     )
   }
 
-	$scope.seek=function(time, url){
+	$scope.seek=function(time, url, item){
+    $scope.$parent.selected_item = item;
 		if ($scope.url.indexOf(url) == -1) 
         $scope.url = url+'&start='+Math.round(time)
     else
@@ -447,7 +448,7 @@ angular.module('scalearAngularApp')
 
     shortcut.add("Space",function(){
       if($scope.selected_item.time>0){
-	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url, $scope.lectures[$scope.selected_item.lec_id].meta.id)
         $scope.$apply()
       }
     },{"disable_in_input" : true});

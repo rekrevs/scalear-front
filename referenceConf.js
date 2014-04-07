@@ -93,7 +93,7 @@ exports.config = {
         width: 1366,
         height: 768,
         sign_in: function(ptor, email, password, feedback){
-            ptor.get('/');
+            ptor.get('http://localhost:9000/#/');
             ptor.sleep(1000);
             ptor.findElement(protractor.By.id('user_email')).then(function(email_field) {
                 email_field.sendKeys(email);
@@ -116,8 +116,8 @@ exports.config = {
                 });
             });
         },
-        sign_up: function(ptor){
-            ptor.get(signupurl);
+        sign_up: function(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, feedback){
+            ptor.get('http://localhost:9000/#/users/student');
 
             ptor.findElement(protractor.By.id('screen_name')).then(function(screenname) {
                     screenname.sendKeys(screen_name);
@@ -151,24 +151,24 @@ exports.config = {
                 });
             });
         },
-        confirm_account: function(ptor){
+        confirm_account: function(ptor, feedback){
             ptor.driver.get('https://www.guerrillamail.com/inbox');
                 ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
                     inbox.click().then(function(){
-                        ptor.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
+                        ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
                             mail.sendKeys('studenttest').then(function(){
-                                ptor.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
+                                ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
                                     set_btn.click().then(function(){
-                                        ptor.findElement(protractor.By.id('use-alias')).then(function(check_scram){
+                                        ptor.driver.findElement(protractor.By.id('use-alias')).then(function(check_scram){
                                             check_scram.click().then(function(){
-                                                ptor.sleep(11000);
-                                                ptor.findElements(protractor.By.tagName('td')).then(function(emails){
+                                                ptor.driver.sleep(11000);
+                                                ptor.driver.findElements(protractor.By.tagName('td')).then(function(emails){
                                                     console.log(emails.length);
                                                     emails[1].click();
-                                                    ptor.sleep(3000).then(function(){
-                                                        ptor.findElement(protractor.By.linkText('Confirm my account')).then(function(confirm_link){
+                                                    ptor.driver.sleep(3000).then(function(){
+                                                        ptor.driver.findElement(protractor.By.linkText('Confirm my account')).then(function(confirm_link){
                                                             confirm_link.click();
-                                                            ptor.sleep(5000);
+                                                            ptor.driver.sleep(5000);
                                                             feedback(ptor, '');
                                                         })
                                                     })
@@ -206,7 +206,7 @@ exports.config = {
                 ptor.sleep(1000);
             });
         },
-        cancel_account: function(ptor , name ,password){
+        cancel_account: function(ptor , name ,password, feedback){
             ptor.findElement(protractor.By.id('settings_btn')).then(function(setting_btn){
                 ptor.sleep(500);
                 setting_btn.click().then(function(){
@@ -216,7 +216,7 @@ exports.config = {
                                 pwd_field.sendKeys(password)
                                 ptor.findElement(protractor.By.id('del_ok_btn')).then(function(ok_btn){
                                     ok_btn.click().then(function(){
-                                        feedback(ptor,'bye');
+                                        feedback(ptor,'Bye! Your account was successfully cancelled. We hope to see you again soon.');
                                     })
                                 })
                             })
@@ -224,6 +224,37 @@ exports.config = {
                     })
                 })
             })
+        },
+
+        clean_mail: function(ptor){
+            ptor.driver.get('https://www.guerrillamail.com/inbox');
+                ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
+                    inbox.click().then(function(){
+                        ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
+                            mail.sendKeys('studenttest').then(function(){
+                                ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
+                                    set_btn.click().then(function(){
+                                        ptor.driver.findElement(protractor.By.id('use-alias')).then(function(check_scram){
+                                            check_scram.click().then(function(){
+                                                ptor.sleep(11000);
+                                                ptor.driver.findElements(protractor.By.tagName('td')).then(function(emails){
+                                                    console.log(emails.length);
+                                                    emails[0].click();
+                                                    ptor.sleep(2000).then(function(){
+                                                        ptor.driver.findElement(protractor.By.id('del_button')).then(function(del_button){
+                                                            del_button.click();
+                                                            ptor.sleep(3000);
+                                                        })
+                                                    })
+                                                })
+                                            })
+                                        })
+                                    })
+                                })   
+                            })
+                        });
+                   })
+               })
         }
 
     },

@@ -1,4 +1,5 @@
 var ptor = protractor.getInstance();
+//var nosyncptor = protractor.getInstance();
 var driver = ptor.driver;
 
 var frontend = 'http://localhost:9000/';
@@ -19,9 +20,7 @@ var univer = "world university";
 var studentmail = 'studenttest@sharklasers.com';
 var biog = "kalam keteeer yege 140 char";
 var webs = "www.website.com";
-var password = "password";
-var passwordconf = "password";
-
+var password = 'password';
 var enrollment_key = '';
 var functions = ptor.params //testing course enrollment key
 /*//////////////////////////////////////////
@@ -38,15 +37,18 @@ sign_in: function(ptor, email, password, feedback)
 ptor.driver.manage().window().maximize();
 ptor.sleep(3000);
 describe('signup', function(){ 
-    //ptor.ignoreSynchronization = true;   
-    //signup(ptor);
-    //ptor.sleep(10000);
-    //confirm_signup(ptor);
-    //functions.sign_in(ptor,studentmail,password, functions.feedback);
+    // it('should create user', function(){
+    //     functions.sign_up(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, functions.feedback);
+    // })
+    // it('should confirm user',function(){
+    //      functions.confirm_account(ptor, functions.feedback);
+    //      functions.clean_mail(ptor);
+    // }) 
     it('should delete account',function(){
-    	functions.sign_in(ptor, studentmail, password, functions.feedback);
-    	functions.open_tray(ptor);
-    	functions.cancel_account(ptor , studentmail ,password);
-    })
+     	 functions.sign_in(ptor, studentmail, password, functions.feedback);
+     	 functions.open_tray(ptor);
+     	 functions.cancel_account(ptor , studentmail ,password, functions.feedback);
+         ptor.sleep(5000);
+    })  
 });
 

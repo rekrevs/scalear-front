@@ -44,19 +44,7 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/course_information_spec.js',
-        // 'test/e2e/spec/announcements_spec.js',
-           // 'test/e2e/spec/calendar_teacher_spec.js',
-        //    'test/e2e/spec/calendar_student_spec.js',
-        //    'test/e2e/spec/calendar_student_2_spec.js',
-        // 'test/e2e/spec/progress_spec.js'
-
-        // 'test/e2e/spec/course_editor_spec.js'
-        //    'test/e2e/spec/course_pages_spec.js'
-        //    'test/e2e/spec/student_lectures_spec.js'
-        // 'test/e2e/spec/links_spec.js',
-        // 'test/e2e/spec/hotfixes_2.0.1_2.0.2.js'
-        // 'test/e2e/spec/batie5.js'
+        'test/e2e/spec/signup.js',
 
     ],
 
@@ -103,7 +91,140 @@ exports.config = {
         frontend: 'http://localhost:9000/#/',
         // frontend: 'http://staging.scalable-learning.com/#/',
         width: 1366,
-        height: 768
+        height: 768,
+        sign_in: function(ptor, email, password, feedback){
+            ptor.get('/');
+            ptor.sleep(1000);
+            ptor.findElement(protractor.By.id('user_email')).then(function(email_field) {
+                email_field.sendKeys(email);
+            });
+            ptor.findElement(protractor.By.id('user_passowrd')).then(function(password_field) {
+                password_field.sendKeys(password);
+            });
+            
+            ptor.findElement(protractor.By.xpath('//*[@id="main"]/div/div[1]/div/div/center/div[3]/form/div/table/tbody/tr/td[3]/table/tbody/tr[3]/td/input')).then(function(fields){
+                fields.click().then(function() {
+                    feedback(ptor, 'Signed in successfully');
+                });
+            });
+        },
+        log_out: function(ptor){
+            ptor.sleep(3000);
+            ptor.findElement(protractor.By.id('logout_link')).then(function(link) {
+                link.click().then(function() {
+                    
+                });
+            });
+        },
+        sign_up: function(ptor){
+            ptor.get(signupurl);
+
+            ptor.findElement(protractor.By.id('screen_name')).then(function(screenname) {
+                    screenname.sendKeys(screen_name);
+                });
+            ptor.findElement(protractor.By.id('name')).then(function(name) {
+                    name.sendKeys(fname);
+                });
+            ptor.findElement(protractor.By.id('last_name')).then(function(lastname) {
+                    lastname.sendKeys(lname);
+                });
+            ptor.findElement(protractor.By.id('user_email')).then(function(email) {
+                    email.sendKeys(studentmail);
+                });
+            ptor.findElement(protractor.By.id('university')).then(function(uni) {
+                    uni.sendKeys(univer);
+                });
+            ptor.findElement(protractor.By.id('bio')).then(function(bio) {
+                    bio.sendKeys(biog);
+                });
+            ptor.findElement(protractor.By.id('link')).then(function(website) {
+                    website.sendKeys(webs);
+                });
+            ptor.findElements(protractor.By.id('user_passowrd')).then(function(pass) {
+                    console.log("number of element with id = user_passowrd = "+pass.length);
+                    pass[0].sendKeys(password);
+                    pass[1].sendKeys(password);
+                });
+            ptor.findElement(protractor.By.id('signup_btn')).then(function(signup_btn){
+                signup_btn.click().then(function(){
+                    feedback(ptor, 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.');
+                });
+            });
+        },
+        confirm_account: function(ptor){
+            ptor.driver.get('https://www.guerrillamail.com/inbox');
+                ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
+                    inbox.click().then(function(){
+                        ptor.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
+                            mail.sendKeys('studenttest').then(function(){
+                                ptor.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
+                                    set_btn.click().then(function(){
+                                        ptor.findElement(protractor.By.id('use-alias')).then(function(check_scram){
+                                            check_scram.click().then(function(){
+                                                ptor.sleep(11000);
+                                                ptor.findElements(protractor.By.tagName('td')).then(function(emails){
+                                                    console.log(emails.length);
+                                                    emails[1].click();
+                                                    ptor.sleep(3000).then(function(){
+                                                        ptor.findElement(protractor.By.linkText('Confirm my account')).then(function(confirm_link){
+                                                            confirm_link.click();
+                                                            ptor.sleep(5000);
+                                                            feedback(ptor, '');
+                                                        })
+                                                    })
+                                                })
+                                            })
+                                        })
+                                    })
+                                })   
+                            })
+                        });
+                   })
+               })
+        },
+        feedback: function(ptor, message){
+            ptor.wait(function() {
+                return ptor.findElement(protractor.By.id('error_container')).then(function(message) {
+                    return message.getText().then(function(text) {
+                        console.log(text);
+                        if (text.length > 2) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    });
+                });
+            });
+
+            ptor.findElement(protractor.By.id('error_container')).then(function(error) {
+                expect(error.getText()).toContain(message);
+            });
+        },
+        open_tray: function(ptor){
+            ptor.findElement(protractor.By.className('menu-icon')).then(function(toggler) {
+                toggler.click()
+                ptor.sleep(1000);
+            });
+        },
+        cancel_account: function(ptor , name ,password){
+            ptor.findElement(protractor.By.id('settings_btn')).then(function(setting_btn){
+                ptor.sleep(500);
+                setting_btn.click().then(function(){
+                    ptor.findElement(protractor.By.id('del_acc_btn')).then(function(del_btn){
+                        del_btn.click().then(function(){
+                            ptor.findElement(protractor.By.id('del_con_pwd')).then(function(pwd_field){
+                                pwd_field.sendKeys(password)
+                                ptor.findElement(protractor.By.id('del_ok_btn')).then(function(ok_btn){
+                                    ok_btn.click().then(function(){
+                                        feedback(ptor,'bye');
+                                    })
+                                })
+                            })
+                        })
+                    })
+                })
+            })
+        }
 
     },
 

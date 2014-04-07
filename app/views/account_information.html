@@ -5,62 +5,62 @@
         <tr>
             <td colspan="2">
                 <p translate="account_edit.screen_name"></p>
-                <input ng-disabled="sending" class="moderninput" style="border: 2px rgb(0, 162, 86) solid;" type="text" ng-model="user.screen_name" id="screen_name" size="50"/>
+                <input ng-disabled="sending" class="moderninput" style="border: 2px rgb(0, 162, 86) solid;" type="text" ng-model="user.screen_name" id="settings_screen_name" size="50"/>
                 <br/><span class="errormessage" ng-show="user.errors.screen_name">{{user.errors.screen_name.join()}}</span>
             </td>
         </tr>
         <tr>
             <td>
                 <p translate="account_edit.first_name"></p>
-                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="text" ng-model="user.name" id="user_name" size="50"/>
+                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="text" ng-model="user.name" id="setting_user_name" size="50"/>
                 <br/><span class="errormessage" ng-show="user.errors.name">{{user.errors.name.join()}}</span>
             </td>
             <td>
                 <p translate="account_edit.last_name"></p>
-                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="text" ng-model="user.last_name" id="last_name" size="50"/>
+                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="text" ng-model="user.last_name" id="setting_last_name" size="50"/>
                 <br/><span class="errormessage" ng-show="user.errors.last_name">{{user.errors.last_name.join()}}</span>
             </td>
         </tr>
         <tr>
             <td>
                 <p translate="email"></p>
-                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="email" ng-model="user.email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" id="user_email" size="50"/>
+                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="email" ng-model="user.email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" id="setting_user_email" size="50"/>
                 <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
             </td>
             <td>
                 <p translate="account_edit.university"></p>
-                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="text" ng-model="user.university" id="user_university" size="50"/>
+                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="text" ng-model="user.university" id="setting_user_university" size="50"/>
                 <br/><span class="errormessage" ng-show="user.errors.university">{{user.errors.university.join()}}</span>
             </td>
         </tr>
         <tr>
             <td>
                 <p translate="account_edit.bio"></p>
-                <textarea ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" ng-model="user.bio" id="user_bio"></textarea>
+                <textarea ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" ng-model="user.bio" id="setting_user_bio"></textarea>
                 <br/><span class="errormessage" ng-show="user.errors.bio">{{user.errors.bio.join()}}</span>
             </td>
             <td style="vertical-align: top;">
                 <p translate="account_edit.link"></p>
-                <input type="text" ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" ng-model="user.link" id="user_link" size="50" autocomplete="off"/>
+                <input type="text" ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" ng-model="user.link" id="setting_user_link" size="50" autocomplete="off"/>
                 <br/><span class="errormessage" ng-show="user.errors.link">{{user.errors.link.join()}}</span>
             </td>
         </tr>
         <tr>
             <td>
                 <p translate="password"></p>
-                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="password" ng-model="user.password" id="user_password" name="user[password]" size="50" autocomplete="off"/>
+                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="password" ng-model="user.password" id="setting_user_password" name="user[password]" size="50" autocomplete="off"/>
                 <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>
             </td>
             <td>
                 <p translate="password_confirmation"></p>
-                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="password" ng-model="user.password_confirmation" id="user_password_confirmation" name="user[password_confirmation]" size="50"/>
+                <input ng-disabled="sending" style="border: 2px rgb(0, 162, 86) solid;" type="password" ng-model="user.password_confirmation" id="setting_user_password_confirmation" name="user[password_confirmation]" size="50"/>
                 <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
             </td>
         </tr>
         <tr>
             <td colspan="2">
                 <p>* <span translate="current_password"></span></p>
-                <input ng-disabled="sending" style="border: 2px orange solid;" type="password" ng-model="user.current_password" id="user_current_confirmation" name="user[current_password]" size="50"/>
+                <input ng-disabled="sending" style="border: 2px orange solid;" type="password" ng-model="user.current_password" id="setting_user_current_confirmation" name="user[current_password]" size="50"/>
                 <br/><span class="errormessage" ng-show="user.errors.current_password">{{user.errors.current_password.join()}}</span>
                 <div class="alert success"><span translate="account_edit.need_password"></span></div>
             </td>
@@ -70,7 +70,7 @@
                 <input type="submit" class="btn btn-success" style="background-image: initial;" value="{{'account_edit.update' | translate}}" class="btn btn-primary" ng-disabled="sending" />
             </td>
             <td>
-                <input type="button" class="btn btn-danger" style="background-image: initial;" ng-click="open()" value="{{'account_edit.cancel_account' | translate}}" />
+                <input type="button" id="del_acc_btn" class="btn btn-danger" style="background-image: initial;" ng-click="open()" value="{{'account_edit.cancel_account' | translate}}" />
             </td>
         </tr>
     </table>

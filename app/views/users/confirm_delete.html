@@ -5,7 +5,7 @@
     <p>{{"devise.registrations.confirm_destroy_note"|translate}}</p>
 	<form name="form.key">
     <center>
-        <input type="password" ng-model="enrollment.key" name="key" placeholder="{{'current_password'|translate}}" required/><br>
+        <input type="password" id="del_con_pwd" ng-model="enrollment.key" name="key" placeholder="{{'current_password'|translate}}" required/><br>
         <span class='help-inline' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
         <span class='errormessage' ng-if='form.server_error'>{{form.server_error}}</span>
         <label style="font-size: 10px;" translate>{{"account_edit.need_password"}}</label>
@@ -14,6 +14,6 @@
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-danger" style="background-image: initial;" ng-click="ok()" translate="account_edit.cancel_account"></button>
+    <button class="btn btn-danger" id="del_ok_btn" style="background-image: initial;" ng-click="ok()" translate="account_edit.cancel_account"></button>
     <button class="btn btn-primary" style="background-image: initial;" ng-click="cancel()" translate="close"></button>
 </div>

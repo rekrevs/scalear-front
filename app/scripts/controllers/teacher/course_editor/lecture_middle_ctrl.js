@@ -413,11 +413,14 @@ angular.module('scalearAngularApp')
 
 	$scope.exitBtn = function(){
 		console.log($scope.selected_quiz)
-		if($scope.quiz_deletable)
+		if($scope.quiz_deletable){
+			console.log($scope.selected_quiz)
 			$scope.deleteQuiz($scope.selected_quiz)
+		}
 		$scope.editing_mode = false;
 		$scope.hide_alerts = true;
 		$scope.submitted= false
+		$scope.quiz_deletable = false
 		$scope.selected_quiz={}
 		$log.debug("exiting")		
 	}

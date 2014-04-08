@@ -4,10 +4,11 @@
     <!--<input type="button" ng-click="insert()" value="Insert"/>-->
     <input type="button" class="btn btn-primary" value="Save" ng-click="save()" ng-disabled="disableSave()"/>
     <div style="overflow:auto;"> <!-- has all discussions -->
-        <accordion close-others="true">
-            <accordion-group ng-repeat="l in module_lectures" heading={{l.name}} is-open="l.id == lecture.id" id={{"notes_"+l.id}}>
+        <!-- <accordion close-others="true"> -->
+            <div ng-repeat="l in module_lectures" class="dimmed" ng-class="{lectureopen: l.id == lecture.id}" id={{"notes_"+l.id}}>
+                <h3>{{l.name}}</h3>
                 <div id="editor_{{l.id}}" style="width: 100%;" ace-editor sync="sync.enabled" player="lecture_player" lecture="l" editors="editors" ng-if="!loading_video"></div>
-            </accordion-group>
-        </accordion>
+            </div>
+        <!-- </accordion> -->
     </div>
 </div>

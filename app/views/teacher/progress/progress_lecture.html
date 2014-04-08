@@ -17,7 +17,7 @@
 			</span>
 		</div>
 	</div>
-	<div id="right-container" style="width: 70%; display: inline-block; margin-left: 29%; min-height: 80%; margin-top: 35px;">
+	<div id="right-container" class="whole-right-container">
 		<div class="main_content">
 			<div ng-if="timeline['module']" ng-init="module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatMouleChartData')">
 				<p class="title">Module Progress <span style="font-size:12px">(Based on in-video questions answered)</span><a ui-sref="course.progress.module({module_id:module.id})" style="font-size:12px;color: white;float: right;cursor: pointer;">View Details Progress...</a></p>

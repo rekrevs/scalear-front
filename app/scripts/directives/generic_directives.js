@@ -149,7 +149,6 @@ angular.module('scalearAngularApp')
       select: '=',
       emailsingle: '=',
       removestudent: '='
-      // marked: '='
     },
     templateUrl: '/views/user_item.html',
     link: function(scope){
@@ -159,25 +158,8 @@ angular.module('scalearAngularApp')
         }
       });
       scope.toggleSelect = function(){
-        // console.log('selected is '+scope.marked)
-        // if(scope.user.checked == true){
-        //   scope.setDeselected();
-        // }
-        // else{
-        //   scope.setSelected();
-        // }
         scope.select(scope.user)
       }
-      // scope.setSelected = function(){
-      //     console.log('selecting'+scope.user.id+', '+scope.user.email)
-      //     scope.marked = scope.user.email;
-      //     scope.select(scope.user.id, scope.user.email);
-      // }
-      
-      // scope.setDeselected = function(){
-      //   scope.marked = ',';
-      //   scope.select(scope.user.id, scope.user.email);
-      // }
     }
   };
 }]).directive('screenfull', function(){

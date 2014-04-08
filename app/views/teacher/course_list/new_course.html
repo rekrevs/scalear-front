@@ -1,78 +1,91 @@
-<h4 ><span translate>courses.new_course</h4>
 <form novalidate class="form-horizontal" name="form">
-  <div class="control-group">
-    <label class="control-label" for="inputShortName" ><span translate>courses.short_name</span>:</label>
-    <div class="controls">
-      <input name="short" type="text" ng-model="course.short_name" placeholder="CS-201" required/><br>
-      <span ng-show="form.short.$error.required && submitted" translate>courses.required</span>
-      <span class="errormessage" ng-show="server_errors['short_name']">{{server_errors['short_name'].join()}}</span>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputName" ><span translate>name</span>:</label>
-    <div class="controls">
-      <input name="name" type="text" ng-model="course.name" required/><br>
+  <style>
+    .field{
+      display: inline-block;
+      margin:10px; 
+      max-width: 45%;
+      vertical-align: top;
+    }
+    .fields-row{
+      width: 100%;
+      /*margin-top: 20px;*/
+      clear: both;
+    }
+    .main-fields-container{
+      width: 500px;
+    }
+  </style>
+  <center>
+    <div class="main-fields-container">
+      <div class="fields-row" style="min-height: 200px; max-height: 250px; max-width: 250px;">
+        <alterant imageurl="course.image_url" defaultimage="'../images/course_image.png'"></alterant>
+      </div>
+      <div class="fields-row">
+        <div class="field">
+          <input name="short" type="text" ng-model="course.short_name" placeholder="*{{'courses.short_name' | translate}}"/><br>
+          <span ng-show="form.short.$error.required && submitted" translate>courses.required</span>
+          <span class="errormessage" ng-show="server_errors['short_name']">{{server_errors['short_name'].join()}}</span>
+        </div>
+        <div class="field">
+          <input name="name" type="text" ng-model="course.name" placeholder="*{{'name' | translate}}" /><br>
+          <span ng-show="form.name.$error.required && submitted" translate>courses.required</span>
+          <span class="errormessage"  ng-show="server_errors['name']">{{server_errors['name'].join()}}</span>
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field">
+          <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.start_date" is-open="opened"  ng-required="true" placeholder="*{{'courses.start_date' | translate}}"/><br>
+          <span ng-show="form.date.$error.required && submitted" translate>courses.required</span>
+          <span class="errormessage" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</span>
+        </div>
+        <div class="field">
+          <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.duration' | translate}}"/><br>
+          <span ng-show="form.duration.$error.required && submitted" translate>courses.required</span>
+          <span ng-show="form.duration.$error.min && submitted" translate>courses.invalid_input</span>
+          <span class="errormessage" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</span>
+        </div>
+      </div>
+      <div class="fields-row">
+        <div class="field">
+          <input type="text" ng-model="course.discussion_link" placeholder="{{'courses.discussion_forum_link' | translate}}" />
+          <span class="errormessage" ng-show="server_errors['discussion_link']">{{server_errors['discussion_link'].join()}}</span>
+        </div>
+        <div class="field">
+          <input type="text" ng-model="course.image_url" placeholder="{{'courses.course_image' | translate}}"/>
+          <br />
+          <span class="errormessage" ng-show="server_errors['image_url']">{{server_errors['image_url'].join()}}</span>
+        </div>
+      </div>
+      <div class="fields-row">
+        <!-- <div class="field" style="width: 35%;"> -->
+          <textarea rows="3" ng-model="course.description" style="width: 90%; margin: 10px;" placeholder="{{'courses.course_description' | translate}}"></textarea>
+          <span class="errormessage" ng-show="server_errors['description']">{{server_errors['description'].join()}}</span>
+        <!-- </div> -->
+      </div>
+      <div class="fields-row">
+        <!-- <div class="field"> -->
+          <textarea rows="3" ng-model="course.prerequisites" style="width: 90%; margin: 10px;" placeholder="{{'courses.prerequisites' | translate}}"></textarea>
+          <span class="errormessage" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</span>
+        <!-- </div> -->
+      </div>
+      <div class="fields-row">
+        <div class="field">
+          <select name="timezone" ng-model="course.time_zone" ng-options="element.text for element in timezones" placeholder="*{{'courses.time_zone' | translate}}"></select>
+          <span ng-show="form.timezone.$error.required && submitted" translate>courses.required</span>
+          <span class="errormessage" ng-show="server_errors['time_zone']">{{server_errors['time_zone'].join()}}</span>
+        </div>
+        <div class="field">
+          <select ng-model="import_from" ng-options="element.id as element.name for element in importing">
+            <option value="" disabled selected translate>courses.import_data</option>
+          </select>
+        </div>
+      </div>
 
-      <span ng-show="form.name.$error.required && submitted" translate>courses.required</span>
-	  <span class="errormessage"  ng-show="server_errors['name']">{{server_errors['name'].join()}}</span>
+      
+    
+      <div class="form-actions">
+        <input ng-disabled="submitting" type="button" value="{{'courses.create_course'|translate}}" class="btn" ng-click="createCourse()"/>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputStartAt" ><span translate>courses.start_date</span>:</label>
-    <div class="controls">
-      <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.start_date" is-open="opened"  ng-required="true" required/><br>
-      <span ng-show="form.date.$error.required && submitted" translate>courses.required</span>
-	  <span class="errormessage" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</span>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputDuration" ><span translate>courses.duration</span> (<span translate>courses.weeks</span>):</label>
-    <div class="controls">
-      <input name="duration" min="0" type="number" ng-model="course.duration" required/><br>
-      <span ng-show="form.duration.$error.required && submitted" translate>courses.required</span>
-      <span ng-show="form.duration.$error.min && submitted" translate>courses.invalid_input</span>
-      <span class="errormessage" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</span>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputDiscussionLink" ><span translate>courses.discussion_forum_link</span>:</label>
-    <div class="controls">
-      <input type="text" ng-model="course.discussion_link" />
-      <span class="errormessage" ng-show="server_errors['discussion_link']">{{server_errors['discussion_link'].join()}}</span>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputCourseDescription" ><span translate>courses.course_description</span>:</label>
-    <div class="controls">
-      <textarea rows="3" ng-model="course.description"></textarea>
-      <span class="errormessage" ng-show="server_errors['description']">{{server_errors['description'].join()}}</span>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputCoursePrerequisites" ><span translate>courses.prerequisites</span>:</label>
-    <div class="controls">
-      <textarea rows="3" ng-model="course.prerequisites"></textarea>
-      <span class="errormessage" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</span>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputTimeZone" ><span translate>courses.time_zone</span>:</label>
-    <div class="controls">
-      <select name="timezone" ng-model="course.time_zone" ng-options="element.text for element in timezones" required></select><br>
-      <span ng-show="form.timezone.$error.required && submitted" translate>courses.required</span>
-	  <span class="errormessage" ng-show="server_errors['time_zone']">{{server_errors['time_zone'].join()}}</span>
-    </div>
-  </div>
-  <div class="control-group">
-    <label class="control-label" for="inputImport" ><span translate>courses.import_data</span>:[<span translate>courses.optional</span>]</label>
-    <div class="controls">
-      <select ng-model="import_from" ng-options="element.id as element.name for element in importing"></select>
-    </div>
-  </div>
-  
-   <div class="form-actions">
-    <input ng-disabled="submitting" type="button" value="{{'courses.create_course'|translate}}" class="btn" ng-click="createCourse()"/>
-  </div>
+  </center>
 </form>
-
-

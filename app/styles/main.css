@@ -634,6 +634,22 @@ a:hover{
   margin-top: 5px;
   content: url('../images/duration.png');
 }
+.students-icon:before{
+  margin-top: 5px;
+  content: url('../images/students.png');
+}
+.lectures-icon:before{
+  margin-top: 5px;
+  content: url('../images/lectures.png');
+}
+.quizzes-icon:before{
+  margin-top: 5px;
+  content: url('../images/quizzes.png');
+}
+.surveys-icon:before{
+  margin-top: 5px;
+  content: url('../images/surveys.png');
+}
 .key-icon:before{
   margin-top: 5px;
   content: url('../images/key.png');

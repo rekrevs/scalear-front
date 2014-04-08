@@ -492,6 +492,7 @@ var translation_en=function(){
         save_all: "Save All",
         enter_valid_email: "Enter a valid email address",
         professor: "Professor",
+        prof: "Professor",
         ta: "TA",
         student_grades: "Student Grades",
         grades: "Grades",

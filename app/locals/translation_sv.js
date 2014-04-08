@@ -491,6 +491,7 @@ var translation_sv=function(){
               save_all: "Spara allt",
               enter_valid_email: "Ange en giltig e-postadress",
               professor: "Lärare",
+              prof: "Lärare",
               ta: "Lärarassistent",
               student_grades: "Studentbetyg",
               grades: "Betyg",

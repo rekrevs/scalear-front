@@ -140,6 +140,31 @@ angular.module('scalearAngularApp')
     templateUrl: '/views/courseItem.html',
     link: function(scope){}
   };
+
+}]).directive('teacherCourseItem', ['ErrorHandler',function(ErrorHandler) {
+  return{
+    replace:true,
+    restrict: "E",
+    scope:{
+      course: '=',
+      teachers: '=',
+      deletecourse: '=',
+      filterteacher: '='
+    },
+    templateUrl: '/views/teacher_course_item.html',
+    link: function(scope){}
+  };
+}]).directive('courseItem', ['ErrorHandler',function(ErrorHandler) {
+  return{
+    replace:true,
+    restrict: "E",
+    scope:{
+      course: '=',
+      teachers: '='
+    },
+    templateUrl: '/views/courseItem.html',
+    link: function(scope){}
+  };
 }]).directive('userItem', ['ErrorHandler',function(ErrorHandler) {
   return{
     replace:true,

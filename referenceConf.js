@@ -90,8 +90,6 @@ exports.config = {
 
         frontend: 'http://localhost:9000/#/',
         // frontend: 'http://staging.scalable-learning.com/#/',
-        width: 1366,
-        height: 768,
         sign_in: function(ptor, email, password, feedback){
             ptor.get('http://localhost:9000/#/');
             ptor.sleep(1000);
@@ -166,10 +164,12 @@ exports.config = {
                                                     console.log(emails.length);
                                                     emails[1].click();
                                                     ptor.driver.sleep(3000).then(function(){
-                                                        ptor.driver.findElement(protractor.By.linkText('Confirm my account')).then(function(confirm_link){
+                                                        ptor.driver.findElement(protractor.By.partialLinkText('confirmation?confirmation_token')).then(function(confirm_link){
+                                                            ptor.executeScript('window.scrollTo(0,800);');
                                                             confirm_link.click();
                                                             ptor.driver.sleep(5000);
-                                                            feedback(ptor, '');
+                                                            feedback(ptor, 'conf');
+                                                            ptor.driver.close()
                                                         })
                                                     })
                                                 })

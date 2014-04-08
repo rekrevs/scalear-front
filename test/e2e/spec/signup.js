@@ -34,16 +34,20 @@ log_out: function(ptor)
 sign_in: function(ptor, email, password, feedback)
 */
 
+
+var scrollIntoView = function () {
+  arguments[0].scrollIntoView();
+}
 ptor.driver.manage().window().maximize();
-ptor.sleep(3000);
-describe('signup', function(){ 
-    // it('should create user', function(){
-    //     functions.sign_up(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, functions.feedback);
-    // })
-    // it('should confirm user',function(){
-    //      functions.confirm_account(ptor, functions.feedback);
-    //      functions.clean_mail(ptor);
-    // }) 
+describe('', function(){ 
+     it('should create user', function(){
+         //functions.sign_up(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, functions.feedback);
+     })
+     it('should confirm user',function(){
+           functions.confirm_account(ptor, functions.feedback);
+           //ptor.sleep(3000);
+          //functions.clean_mail(ptor);
+     }) 
     it('should delete account',function(){
      	 functions.sign_in(ptor, studentmail, password, functions.feedback);
      	 functions.open_tray(ptor);

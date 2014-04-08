@@ -160,6 +160,28 @@ angular.module('scalearAngularApp')
 
 		return (hours*3600)+(minutes*60)+seconds
 	}
+	$scope.shouldBeHidden = function(module_id){
+		// console.log($scope.modules_obj[module_id]);
+		var result = 0;
+		var module = $scope.modules_obj[module_id]
+		module.lectures.forEach(function(lecture){
+			if($scope.today >= lecture.appearance_time){
+				result++;
+			}
+		})
+		module.quizzes.forEach(function(quiz){
+			if($scope.today >= quiz.appearance_time){
+				result++;
+			}
+		})
+		
+		if(result <= 0){
+			return true;
+		}
+		else if(result > 0){
+			return false;
+		}
+	}
 	init();
 
    //  $rootScope.$on("accordianReload", function(event, args) {

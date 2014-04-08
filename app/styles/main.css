@@ -365,7 +365,7 @@ a.editable-click {
 }
 .modern-logo a{
   text-decoration: none;
-  color: white;
+  color: white !important;
   font-size: 23px;
   font-weight: lighter;
 }
@@ -404,7 +404,7 @@ a.editable-click {
   word-wrap: normal;
   padding: 0px; 
   background-color: transparent;
-  margin-left: 0px;
+  margin-left: 0px !important;
   position: initial;
   margin-top: -30px;
   left: 0px;

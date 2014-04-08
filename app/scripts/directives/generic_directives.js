@@ -140,6 +140,46 @@ angular.module('scalearAngularApp')
     templateUrl: '/views/courseItem.html',
     link: function(scope){}
   };
+}]).directive('userItem', ['ErrorHandler',function(ErrorHandler) {
+  return{
+    replace:true,
+    restrict: "E",
+    scope:{
+      user: '=',
+      select: '=',
+      emailsingle: '=',
+      removestudent: '='
+      // marked: '='
+    },
+    templateUrl: '/views/user_item.html',
+    link: function(scope){
+      scope.$watch('user', function(){
+        if(scope.user){
+          scope.user.full_name = scope.user.name+' '+scope.user.last_name;
+        }
+      });
+      scope.toggleSelect = function(){
+        // console.log('selected is '+scope.marked)
+        // if(scope.user.checked == true){
+        //   scope.setDeselected();
+        // }
+        // else{
+        //   scope.setSelected();
+        // }
+        scope.select(scope.user)
+      }
+      // scope.setSelected = function(){
+      //     console.log('selecting'+scope.user.id+', '+scope.user.email)
+      //     scope.marked = scope.user.email;
+      //     scope.select(scope.user.id, scope.user.email);
+      // }
+      
+      // scope.setDeselected = function(){
+      //   scope.marked = ',';
+      //   scope.select(scope.user.id, scope.user.email);
+      // }
+    }
+  };
 }]).directive('screenfull', function(){
   return {
     restrict: 'A',

@@ -89,10 +89,10 @@
             <div class="container">
                 <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile')"/></span>
                 <span ui-view="navigation" iscollapsed="iscollapsed"></span>
-                <div class="row" style="width: auto; padding: 10px 15px 20px 70px; text-align: center;">
+                <div class="row" style="width: auto; padding: 10px 15px 20px 70px; text-align: center; margin-bottom: 50px;">
                     <div ui-view=""></div>
                 </div>
-                <div><br/></div>
+                <!-- <div style="height: 50px;"></div> -->
                 <footer style="bottom: 0px; z-index: 1000;">
                     <scalear_footer />
                 </footer>

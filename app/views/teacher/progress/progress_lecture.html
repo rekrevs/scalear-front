@@ -63,12 +63,14 @@
 							</li>
 						</ul>						
 					</li>
-					<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData')" class="li_inner blue">
-						<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="Quiz" title="{{item.data.title+' ('+item.data.type+')'}}" />
-						<i ng-show="item.data.hide" class="icon-check" style="margin-top:8px;float:right"></i>
-						<div google-chart chart="chart" class="progress_chart" ></div>
-						<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" style="margin-left:30px"/>
-					</li>
+					<span ng-init="quiz_type = item.data.quiz_type=='survey'? 'formatSurveyLectureChartData' : 'formatLectureChartData'" >
+						<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, quiz_type)" class="li_inner blue">
+							<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="Quiz" title="{{item.data.title+' ('+item.data.type+')'}}" />
+							<i ng-show="item.data.hide" class="icon-check" style="margin-top:8px;float:right"></i>
+							<div google-chart chart="chart" class="progress_chart" ></div>
+							<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" style="margin-left:30px"/>
+						</li>
+					</span>
 				</ul>
 			</div>
 		</div>

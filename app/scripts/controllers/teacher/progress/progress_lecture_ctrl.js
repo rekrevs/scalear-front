@@ -46,6 +46,8 @@ angular.module('scalearAngularApp')
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
 				  setupShortcuts()
+
+          console.log($scope.timeline)
 	  		},	
 	  		function(){}
 		)
@@ -95,7 +97,6 @@ angular.module('scalearAngularApp')
             module_id:$stateParams.module_id
         },
         function(data){
-          console.log(data)
         	$scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
         	$scope.timeline["survey"]={}
         	for (var survey_id in $scope.quizzes ){
@@ -377,13 +378,35 @@ angular.module('scalearAngularApp')
         {"c":
             [
                 {"v": data[ind][1]},
-                {"v": data[ind][0]},
+                {"v": data[ind][0]}
             ]
         }
         formated_data.rows.push(row)
     }
     return formated_data
   }
+
+  $scope.formatSurveyLectureChartData = function(data) {
+    var formated_data = {}
+    formated_data.cols=
+        [
+            {"label": $translate('courses.students'),"type": "string"},
+            {"label": $translate('controller_msg.answered'),"type": "number"},
+        ]
+    formated_data.rows = []
+    for (var ind in data) {
+        var row = 
+        {"c": 
+            [
+              {"v": data[ind][2]}, 
+              {"v": data[ind][0]} 
+            ]
+        }
+        formated_data.rows.push(row)
+    }
+    return formated_data
+  }
+
 
 	$scope.createChart = function(data,student_count, options, formatter) {
 		var chart = {};

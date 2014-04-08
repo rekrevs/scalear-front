@@ -152,9 +152,19 @@ angular.module('scalearAngularApp')
 				setAnswerLocation()
 			})	
 
-			scope.answerClass = "component dropped answer_img"						
+			scope.answerClass = "component dropped answer_img"	
 
-			var template = "<form name='aform'>"+
+			var template =""
+			if(scope.quiz.quiz_type == 'survey')
+				template = "<form name='aform'>"+								
+								"<p style='margin: 4px 0 0 0;'>{{'groups.answer'|translate}}:</p><small class='muted' style='font-size:9px' translate>lectures.shown_in_graph</small>"+ 
+								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' required/>"+
+								"<span class='help-inline' ng-show='aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
+								"<br>"+
+								"<input type='button' ng-click='remove()' class='btn btn-danger remove_button' value={{'lectures.remove'|translate}} />"+
+							"</form>"
+			else
+				template = "<form name='aform'>"+
 								"<span translate>lectures.correct</span>:"+
 								"<input class='must_save_check' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/>"+
 								"<span class='help-inline' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</span>"+

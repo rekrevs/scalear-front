@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: 'E', 
-			template: '<div class="ontop" id="ontop" style="position: absolute;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
+			template: '<div class="ontop" id="ontop" style="position: absolute; min-width:570px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
 }).directive('editPanel',function(){
 	return {		

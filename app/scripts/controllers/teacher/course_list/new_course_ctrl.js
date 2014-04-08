@@ -70,6 +70,7 @@ angular.module('scalearAngularApp')
                     $state.go("import_from",{"shared_item":$scope.import_from})
                 }
                 else{
+                	$scope.course.time_zone = $scope.course.time_zone.value;
                 Course.create({course:$scope.course, "import":$scope.import_from},
 			function(data){
                 $scope.submitting=false;

@@ -47,8 +47,8 @@
     <div class="errorpageserver" ng-show="logging_out">
         <loading size="big" show="true" style="position: relative; top:40%;"></loading>
     </div>
-    <div id="error_container" ng-show="show_alert!=''" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
-        <div style="text-align: center; display:block;">
+    <div id="error_container" ng-show="show_alert!=''" style="height: 0px;" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
+        <div style="text-align: center; display:block; height: 0px;">
             <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
         </div>
     </div>

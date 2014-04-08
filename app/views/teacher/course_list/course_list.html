@@ -1,14 +1,34 @@
 <center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
 <div ng-show="courses">
-	<h4 >
-		<span translate>courses.all_courses</span>
-		<span ng-show="filtered_teacher">
-			<span translate>courses.taught_by</span> 
-			{{filtered_teacher}}
-		</span>
-	</h4>
+	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
+		<div style="float: left; display: inline-block;">
+			<span class="dropdown" ><button class="dropdown-toggle btn" data-toggle="dropdown">Sort By <b class="caret"></b></button>
+		        <ul class="dropdown-menu" style="margin-top: 10px; border-radius: 0px;">
+		            <li><a href="" ng-click="order('short_name')" translate>courses.course_code</a></li>
+					<li><a href="" ng-click="order('name')" translate>courses.course_name</a></li>
+					<li><a href="" ng-click="order('enrollments')" >#<span translate>courses.students</span></a></li>
+					<li><a href="" ng-click="order('lectures')" >#<span translate>groups.lectures</span></a></li>
+					<li><a href="" ng-click="order('quiz')" >#<span translate>groups.quizzes</span></a></li>
+					<li><a href="" ng-click="order('survey')" >#<span translate>courses.surveys</span></a></li>
+		        </ul>
+		    </span>
+	    </div>
+	    <div ng-show="filtered_teacher" style="margin-top: 5px; display: inline-block;">
+			<big>
+				<b>
+					<span translate>navigation.courses</span>
+					<span translate>courses.taught_by</span> 
+					{{filtered_teacher_name}}
+				</b>
+			</big>
+		</div>
+		<div style="display: inline-block; float: right;">
+	    	<button class="btn btn-success" style="background-image: initial; float: right; margin-right: 60px;" ng-hide="!courses" id="new_course" ui-sref="new_course" translate>courses.new_course</button>
+    	</div>
+	</div>
 	</br>
-	<table class="table table-striped">
+
+	<!-- <table class="table table-striped">
 		<thead style="cursor:pointer" >
 			<th><a ng-click="order('short_name')" translate>courses.course_code</a></th>
 			<th><a ng-click="order('name')" translate>courses.course_name</a></th>
@@ -32,7 +52,6 @@
 				<td ng-if="!course.importing"><a ui-sref="course.course_editor({ course_id: course.id })">{{course.name}}</a></td>
 				<td>
 					<div ng-repeat="enrolled in course.teacher_enrollments">
-						<!-- filters only in current courses, so no problem if not an admin-->
 						<a  style="cursor:pointer" ng-click="filterTeacher(enrolled.user.name)" >{{enrolled.user.name}} ({{enrolled.role.name}})</a>	
 						</br>
 				    </div>
@@ -53,8 +72,16 @@
                 </td>
 			</tr>
 		</tbody>
-	</table>	
-	<a ng-show="filtered_teacher" ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
+	</table>	 -->
+	<br />
+	<br />
+	<input id="search" placeholder="{{'courses.search'|translate}}..." type="search" style="border: 2px rgb(0, 162, 86) solid;" name="search" ng-model="searchText"/>
+	<span ng-show="filtered_teacher">
+		<br />
+		<a ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
+	</span>
+	<teacher-course-item ng-if="!course.importing" ng-repeat="course in courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher" ></course-item>
+	<br />
 </div>
 
-<a ng-hide="!courses" ui-sref="new_course" translate>courses.new_course</a><br />
+<!-- <a ng-hide="!courses" ui-sref="new_course" translate>courses.new_course</a><br /> -->

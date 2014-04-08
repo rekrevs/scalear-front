@@ -129,6 +129,19 @@ angular.module('scalearAngularApp')
       });
     }
   };
+}]).directive('teacherCourseItem', ['ErrorHandler',function(ErrorHandler) {
+  return{
+    replace:true,
+    restrict: "E",
+    scope:{
+      course: '=',
+      teachers: '=',
+      deletecourse: '=',
+      filterteacher: '='
+    },
+    templateUrl: '/views/teacher_course_item.html',
+    link: function(scope){}
+  };
 }]).directive('courseItem', ['ErrorHandler',function(ErrorHandler) {
   return{
     replace:true,
@@ -139,6 +152,50 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/courseItem.html',
     link: function(scope){}
+  };
+}]).directive('userItem', ['ErrorHandler',function(ErrorHandler) {
+  return{
+    replace:true,
+    restrict: "E",
+    scope:{
+      user: '=',
+      select: '=',
+      emailsingle: '=',
+      removestudent: '='
+    },
+    templateUrl: '/views/user_item.html',
+    link: function(scope){
+      scope.$watch('user', function(){
+        if(scope.user){
+          scope.user.full_name = scope.user.name+' '+scope.user.last_name;
+        }
+      });
+      scope.toggleSelect = function(){
+        scope.select(scope.user)
+      }
+    }
+  };
+}]).directive('announcementItem', ['ErrorHandler',function(ErrorHandler) {
+  return{
+    replace:true,
+    restrict: "E",
+    scope:{
+      announcement: '=',
+      saveannouncement: '=',
+      showannouncement:'=',
+      hideannouncement: '=',
+      deleteannouncement: '=',
+      saving: '=',
+      index: '='
+    },
+    templateUrl: '/views/announcementItem.html',
+    link: function(scope){
+      scope.$watch('announcement', function(val, val2){
+        if(val != val2){
+          console.log(scope.announcement)
+        }
+      })
+      }
   };
 }]).directive('screenfull', function(){
   return {

@@ -106,49 +106,6 @@ angular.module('scalearAngularApp', [
             var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
 
-
-            //returns the title for the state
-            var getStateTitle = function(name){
-                console.log(name)
-                if(name == "course_list" || name == "student_courses"){
-                    return "courses.all_courses";
-                }
-                else if(name == "course.student_calendar" || name == "course.calendar"){
-                    return "head.calendar";
-                }
-                else if(name == "course.course_information" || name == "course.edit_course_information"){
-                    return "head.course_information";
-                }
-                else if(name == "course.lectures" || name == "course.lectures.module.lecture" || name == "course.lectures.module.quiz"){
-                    return "head.lectures";
-                }
-                else if(name == "edit_account"){
-                    return "account_edit.edit_account";
-                }
-                else if(name == "privacy"){
-                    return "privacy.policy";
-                }
-                else if(name == "profile"){
-                    return "profile.profile";
-                }
-                else if(name == "course.announcements"){
-                    return "head.announcements"
-                }
-                else if(name == "course.enrolled_students"){
-                    return "head.enrolled_students"
-                }
-                else if(name == "course.course_editor"){
-                    return "head.content"
-                }
-                else if(name == "course.progress.main", "course.progress.module"){
-                    return "head.progress"
-                }
-                else if(name == "course.inclass"){
-                    return "head.in_class"
-                }
-
-
-            }
             //check if route requires no auth
             var stateNoAuth = function(state) {
                 for (var element in statesThatRequireNoAuth) {
@@ -192,7 +149,6 @@ angular.module('scalearAngularApp', [
 
             $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
                 //$rootScope.start_loading=true;
-                $rootScope.current = getStateTitle(to.name)
                 $rootScope.iscollapsed = true;
                 if(from.url != '/'){
                 UserSession.getRole().then(function(result) {

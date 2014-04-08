@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('newCourseCtrl',['$scope','Course','$state','$window', '$log','Page', function ($scope, Course,$state, $window, $log,Page) {
 		$window.scrollTo(0, 0);
-		Page.setTitle('New Course')
+		Page.setTitle('courses.new_course')
 		$scope.submitting=false;
 
 		$scope.course={}

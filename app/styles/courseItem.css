@@ -5,7 +5,7 @@
 	height: auto;
 	background-color: transparent;
 	/*border-radius: 3px;*/
-	/*box-shadow: 1px 1px 2px darkgrey;*/
+	box-shadow: 1px 1px 1px 1px lightgray;
 	border: 1px solid lightgrey;
 	margin: 9px;
 	padding: 0px;

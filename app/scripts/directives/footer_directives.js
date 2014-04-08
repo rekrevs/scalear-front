@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
             restrict: 'E',
             template: '<div class="row" style="text-align: center; line-height: 13px;">' +
                 
-                '&copy; ' + new Date().getFullYear() + ' ScalableLearning | ' +
+                '&copy; ' + new Date().getFullYear() + ' <a ui-sref="home">ScalableLearning</a> | ' +
                 '<span translate="footer.about"></span> | ' +
                 '<a ui-sref="privacy" translate="footer.privacy"></a> ' +
                 '<report_technical />' +

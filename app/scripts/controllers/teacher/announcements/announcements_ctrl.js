@@ -5,8 +5,7 @@ angular.module('scalearAngularApp')
   	
     $log.debug("in announcements");
 
-    $window.scrollTo(0, 0);
-    Page.setTitle('Announcements')
+    Page.setTitle('head.announcements')
   	$scope.disable_new = false;
   	var init = function()
   	{

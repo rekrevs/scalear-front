@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('statisticsCtrl',['$scope', 'Kpi','$translate','Page', function ($scope, Kpi,$translate, Page) {
 
-    Page.setTitle('Statistics');
+    Page.setTitle('courses.statistics');
 
 	var init =function(){
 		$scope.loading_totals = true

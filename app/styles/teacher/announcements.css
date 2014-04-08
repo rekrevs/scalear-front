@@ -1,0 +1,24 @@
+.announcement-box{
+	width: 90%;
+	clear: both;
+	background-color: white;
+	box-shadow: 1px 1px 1px 1px lightgray;
+	padding: 10px;
+	margin: 10px;
+	color: #2d2d2d;
+	min-width: 500px;
+}
+.announcement-body{
+	/*text-align: left;*/
+	display:inline-block;
+	width:90%;
+	cursor: pointer;
+}
+.created-at{
+	/*float: right;*/
+	margin-top: 10px;
+	text-align: right;
+}
+.ta-editor{
+	border: 1px solid lightgray;
+}

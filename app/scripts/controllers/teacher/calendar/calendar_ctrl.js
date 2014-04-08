@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
     $log.debug("in calendar ctrl")
 
 	$window.scrollTo(0, 0);
-	Page.setTitle('Calendar')
+	Page.setTitle('head.calendar')
     var change_lang = function(){
     	if($scope.eventSources){
     		angular.element($scope.myCalendar.children()).remove();

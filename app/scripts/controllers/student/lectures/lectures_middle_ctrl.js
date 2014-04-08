@@ -106,17 +106,18 @@ angular.module('scalearAngularApp')
                     $scope.selected_quiz = quiz
                     $scope.display_mode = true
                     $scope.lecture_player.controls.pause()
-                    if (quiz.quiz_type == 'invideo') {
-                        $scope.quiz_layer.backgroundColor = ""
-                        $scope.quiz_layer.overflowX = ''
-                        $scope.quiz_layer.overflowY = ''
-                    } else {
+                    if (quiz.quiz_type == 'html') {    
                         $log.debug("HTML quiz")
                         $scope.quiz_layer.backgroundColor = "white"
                         $scope.quiz_layer.overflowX = 'hidden'
                         $scope.quiz_layer.overflowY = 'auto'
                         if (quiz.question_type.toUpperCase() == "DRAG")
                             $scope.studentAnswers[quiz.id] = quiz.online_answers[0].answer;
+                    }
+                    else {
+                        $scope.quiz_layer.backgroundColor = ""
+                        $scope.quiz_layer.overflowX = ''
+                        $scope.quiz_layer.overflowY = ''
                     }
                     $scope.$apply()
                 })

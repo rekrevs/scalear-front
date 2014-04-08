@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','$log', '$window','$translate','$timeout', function ($scope, $stateParams, Timeline, Module,Quiz, $log, $window, $translate,$timeout) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','$log', '$window','$translate','$timeout',function ($scope, $stateParams, Timeline, Module,Quiz, $log, $window, $translate,$timeout) {
 
   	$scope.highlight_index = -1
   	$scope.inner_highlight_index = -1
   	$scope.progress_player= {}
   	$scope.timeline = {}
+    $scope.right_container = angular.element('#right-container')
+
   	$scope.time_parameters={
   		quiz: 3,
   		question: 2
@@ -23,7 +25,6 @@ angular.module('scalearAngularApp')
                   }
 
   	var init= function(){
-  		
   		$scope.timeline = new Timeline()
   		Module.getModuleProgress({
 	  			course_id: $stateParams.course_id,
@@ -46,11 +47,18 @@ angular.module('scalearAngularApp')
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
 				  setupShortcuts()
+          resizeContainer()
 	  		},	
 	  		function(){}
 		)
-  	}
-
+	}
+  var resizeContainer = function(){
+    $scope.right_container.css('height', angular.element($window).height() - 190)
+    console.log('height should be '+angular.element($window).height())
+  }
+  angular.element($window).bind('resize', function () {
+    resizeContainer();
+  });
  	var getModuleCharts = function(){
     Module.getModuleCharts(
         {             
@@ -95,7 +103,6 @@ angular.module('scalearAngularApp')
             module_id:$stateParams.module_id
         },
         function(data){
-          console.log(data)
         	$scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
         	$scope.timeline["survey"]={}
         	for (var survey_id in $scope.quizzes ){
@@ -253,7 +260,8 @@ angular.module('scalearAngularApp')
     )
   }
 
-	$scope.seek=function(time, url){
+	$scope.seek=function(time, url, item){
+    $scope.$parent.selected_item = item;
 		if ($scope.url.indexOf(url) == -1) 
         $scope.url = url+'&start='+Math.round(time)
     else
@@ -377,13 +385,35 @@ angular.module('scalearAngularApp')
         {"c":
             [
                 {"v": data[ind][1]},
-                {"v": data[ind][0]},
+                {"v": data[ind][0]}
             ]
         }
         formated_data.rows.push(row)
     }
     return formated_data
   }
+
+  $scope.formatSurveyLectureChartData = function(data) {
+    var formated_data = {}
+    formated_data.cols=
+        [
+            {"label": $translate('courses.students'),"type": "string"},
+            {"label": $translate('controller_msg.answered'),"type": "number"},
+        ]
+    formated_data.rows = []
+    for (var ind in data) {
+        var row = 
+        {"c": 
+            [
+              {"v": data[ind][2]}, 
+              {"v": data[ind][0]} 
+            ]
+        }
+        formated_data.rows.push(row)
+    }
+    return formated_data
+  }
+
 
 	$scope.createChart = function(data,student_count, options, formatter) {
 		var chart = {};
@@ -438,7 +468,7 @@ angular.module('scalearAngularApp')
 
     shortcut.add("Space",function(){
       if($scope.selected_item.time>0){
-	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url, $scope.lectures[$scope.selected_item.lec_id].meta.id)
         $scope.$apply()
       }
     },{"disable_in_input" : true});

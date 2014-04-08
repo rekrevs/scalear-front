@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
     				$log.debug(doc)
                     doc.document.url = "http://"
     				$scope.module.documents.push(doc.document)
-    				$scope.document_overlay=true
+    				$scope.document_overlay=false
     			}, 
     			function(){}
 			);

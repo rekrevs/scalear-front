@@ -33,6 +33,7 @@ angular.module('scalearAngularApp')
         "saveNote":{method:'POST', params:{action:'save_note'}, headers:headers},
         "loadNote":{method:'GET', params:{action:'load_note'}, headers:headers},
         "lectureCopy":{method:'POST', params:{action:'lecture_copy'}, headers:headers},
+        "lastViewed":{method: 'GET', params:{action:'last_viewed'}, headers:headers}
 	});
 
 }]) 

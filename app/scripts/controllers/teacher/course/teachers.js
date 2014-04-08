@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
     .controller('courseTeachersCtrl', ['$scope', 'Course', '$stateParams', '$translate','$log','$window','Page', function ($scope, Course, $stateParams, $translate, $log, $window,Page) {
         
         $window.scrollTo(0, 0);
-        Page.setTitle('Teachers')
+        Page.setTitle('head.teachers')
         $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
 
         $scope.addRow = function(index){

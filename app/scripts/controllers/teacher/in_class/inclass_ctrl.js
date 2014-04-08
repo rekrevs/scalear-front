@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('inclassCtrl', ['$scope', '$stateParams', '$location', 'Course','$log', '$window','Page', function ($scope, $stateParams, $location, Course, $log, $window,Page) {
 
     $window.scrollTo(0, 0);
-    Page.setTitle('In-Class')
+    Page.setTitle('head.in_class')
     Course.getCourse(
     	{course_id:$stateParams.course_id},
 		function(data){

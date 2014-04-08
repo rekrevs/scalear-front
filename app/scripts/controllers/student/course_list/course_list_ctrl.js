@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('studentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', '$window','Page',function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler, $window,Page) {
 
   	$window.scrollTo(0, 0);
-    Page.setTitle('Courses');
+    Page.setTitle('navigation.courses');
     
 		var init= function(){
 			Course.index({},

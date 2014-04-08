@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('UsersConfirmationShowCtrl',['$scope','User','$state','$stateParams', '$timeout','$rootScope','UserSession','Page', function ($scope, User, $state, $stateParams, $timeout, $rootScope, UserSession,Page) {
-        Page.setTitle('Verifying Account')
+        Page.setTitle('confirmations.confirm_account')
         $scope.user={}
         $scope.sending=true
         console.log('showing confirmation ')

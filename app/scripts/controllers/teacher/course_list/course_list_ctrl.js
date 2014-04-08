@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
   	$log.debug("in course list")
     $window.scrollTo(0, 0);
-    Page.setTitle('Courses')
+    Page.setTitle('navigation.courses')
   		Course.index({},
 			function(data){
 				$log.debug(data)
@@ -31,8 +31,10 @@ angular.module('scalearAngularApp')
 	  	//	}
   		}
 
-  		$scope.filterTeacher=function(teacher_name){
-  			$scope.filtered_teacher= teacher_name;
+  		$scope.filterTeacher=function(teacher_name, teacher_email){
+  			$scope.filtered_teacher_name = teacher_name
+        $scope.filtered_teacher = teacher_email;
+
   		}
 
       $scope.removeFilter=function(){

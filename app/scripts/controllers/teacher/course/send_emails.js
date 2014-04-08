@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams','$log','$window','Page', function ($scope, $state, Course, batchEmailService, $stateParams,$log, $window,Page) {
 
         $window.scrollTo(0, 0);
-        Page.setTitle('Email')
+        Page.setTitle('email')
         $log.debug("in sending emails");
         $scope.batch_emails = batchEmailService.getEmails();
         $log.debug($scope.batch_emails.length);

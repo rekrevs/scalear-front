@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('sharedCtrl',['$scope','Page','SharedItem','Module','Lecture','Quiz', function ($scope,Page,SharedItem,Module,Lecture,Quiz) {
-  	Page.setTitle('View Shared')
+  	Page.setTitle('sharing.view')
 
   	var init=function(){
   		SharedItem.showShared(

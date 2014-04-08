@@ -22,7 +22,7 @@
     </script> 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title ng-bind="'Scalable learning - '+Page.title()">Scalable learning - </title>
+    <title ng-bind="'Scalable learning'+' - '+Page.title()">Scalable learning</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -47,8 +47,8 @@
     <div class="errorpageserver" ng-show="logging_out">
         <loading size="big" show="true" style="position: relative; top:40%;"></loading>
     </div>
-    <div id="error_container" ng-show="show_alert!=''" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
-        <div style="text-align: center; display:block;">
+    <div id="error_container" ng-show="show_alert!=''" style="height: 0px;" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
+        <div style="text-align: center; display:block; height: 0px;">
             <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
         </div>
     </div>
@@ -87,12 +87,12 @@
         </div>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">
-                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'courses.all_courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile')"/></span>
+                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile')"/></span>
                 <span ui-view="navigation" iscollapsed="iscollapsed"></span>
-                <div class="row" style="width: auto; padding: 10px 15px 20px 70px; text-align: center;">
+                <div class="row" style="width: auto; padding: 10px 15px 20px 70px; text-align: center; margin-bottom: 50px;">
                     <div ui-view=""></div>
                 </div>
-                <div><br/></div>
+                <!-- <div style="height: 50px;"></div> -->
                 <footer style="bottom: 0px; z-index: 1000;">
                     <scalear_footer />
                 </footer>

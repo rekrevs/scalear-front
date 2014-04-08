@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('newCourseCtrl',['$scope','Course','$state','$window', '$log','Page', function ($scope, Course,$state, $window, $log,Page) {
 		$window.scrollTo(0, 0);
-		Page.setTitle('New Course')
+		Page.setTitle('courses.new_course')
 		$scope.submitting=false;
 
 		$scope.course={}
@@ -70,7 +70,7 @@ angular.module('scalearAngularApp')
                     $state.go("import_from",{"shared_item":$scope.import_from})
                 }
                 else{
-                	course.time_zone = course.time_zone.value
+                	$scope.course.time_zone = $scope.course.time_zone.value;
                 Course.create({course:$scope.course, "import":$scope.import_from},
 			function(data){
                 $scope.submitting=false;

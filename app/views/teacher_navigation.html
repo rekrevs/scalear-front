@@ -8,6 +8,10 @@
         min-width: 70px;
         overflow: hidden;
     }
+    ul{
+        margin-left: 5px !important;
+        margin-right: 5px !important;
+    }
     @media only screen and (max-width : 1282px) {
         #user_information_container{
             display: none;
@@ -48,7 +52,7 @@
                         <td style="height: 7px;">
                         </td>
                         <tr>
-                            <td id="info" style="text-align: center;" ng-class="{current: current == 'head.course_information'}">
+                            <td id="info" style="text-align: center;" ng-class="{current: current == 'head.information'}">
                                 <a ui-sref="course.edit_course_information({ course_id: current_course_id })"><br />{{'head.information' | translate}}</a>
                             </td>
                             <td>

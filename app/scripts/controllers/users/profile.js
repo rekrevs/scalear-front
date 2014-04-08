@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('UsersProfileCtrl', ['$scope', '$stateParams', 'User', function ($scope, $stateParams, User) {
+  .controller('UsersProfileCtrl', ['$scope', '$stateParams', 'User', 'Page', function ($scope, $stateParams, User, Page) {
+  	Page.setTitle('profile.profile')
     $scope.init = function(){
     	User.get_user({user_id: $stateParams.user_id},
   			function(data){

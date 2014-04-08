@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
         $scope.toggle_message = 'courses.remove_teacher'
         $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
         $scope.role_names = {'3': 'courses.professor', '4': 'courses.ta'};
-        Page.setTitle('Information')
+        Page.setTitle('head.information')
         Course.show({course_id:$stateParams.course_id},function(response){
         	$scope.data=response
           console.log($scope.data)

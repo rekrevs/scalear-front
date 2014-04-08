@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','$log', '$window','$translate','$timeout', function ($scope, $stateParams, Timeline, Module,Quiz, $log, $window, $translate,$timeout) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','$log', '$window','$translate','$timeout',function ($scope, $stateParams, Timeline, Module,Quiz, $log, $window, $translate,$timeout) {
 
   	$scope.highlight_index = -1
   	$scope.inner_highlight_index = -1
   	$scope.progress_player= {}
   	$scope.timeline = {}
+    $scope.right_container = angular.element('#right-container')
+
   	$scope.time_parameters={
   		quiz: 3,
   		question: 2
@@ -23,7 +25,6 @@ angular.module('scalearAngularApp')
                   }
 
   	var init= function(){
-  		
   		$scope.timeline = new Timeline()
   		Module.getModuleProgress({
 	  			course_id: $stateParams.course_id,
@@ -46,13 +47,18 @@ angular.module('scalearAngularApp')
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
 				  setupShortcuts()
-
-          console.log($scope.timeline)
+          resizeContainer()
 	  		},	
 	  		function(){}
 		)
-  	}
-
+	}
+  var resizeContainer = function(){
+    $scope.right_container.css('height', angular.element($window).height() - 190)
+    console.log('height should be '+angular.element($window).height())
+  }
+  angular.element($window).bind('resize', function () {
+    resizeContainer();
+  });
  	var getModuleCharts = function(){
     Module.getModuleCharts(
         {             
@@ -254,7 +260,8 @@ angular.module('scalearAngularApp')
     )
   }
 
-	$scope.seek=function(time, url){
+	$scope.seek=function(time, url, item){
+    $scope.$parent.selected_item = item;
 		if ($scope.url.indexOf(url) == -1) 
         $scope.url = url+'&start='+Math.round(time)
     else
@@ -461,7 +468,7 @@ angular.module('scalearAngularApp')
 
     shortcut.add("Space",function(){
       if($scope.selected_item.time>0){
-	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url, $scope.lectures[$scope.selected_item.lec_id].meta.id)
         $scope.$apply()
       }
     },{"disable_in_input" : true});

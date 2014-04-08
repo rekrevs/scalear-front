@@ -1,5 +1,5 @@
 <ul class="app-menu" collapse="iscollapsed" style="display: block;">
-    <div style="min-width: 1075px;">
+    <div>
     <table style="vertical-align: baseline;">
         <tr>
             <td style="vertical-align: initial;">
@@ -70,7 +70,7 @@
                     <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
                 </ul>
             </span>
-            <span class="settings-menu-button" ng-click="show_settings = !show_settings" ng-class="{settingsopen: show_settings}">
+            <span class="settings-menu-button" id="settings_btn" ng-click="show_settings = !show_settings" ng-class="{settingsopen: show_settings}">
             </span>
         </tr>
     </table>

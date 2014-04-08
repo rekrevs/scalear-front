@@ -422,6 +422,7 @@ angular.module('scalearAngularApp')
 		$scope.submitted= false
 		$scope.quiz_deletable = false
 		$scope.selected_quiz={}
+		$scope.quiz_layer.backgroundColor= ""
 		$log.debug("exiting")		
 	}
 

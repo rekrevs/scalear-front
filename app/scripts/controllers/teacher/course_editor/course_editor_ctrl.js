@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
 .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal) {
 
  	$window.scrollTo(0, 0);
- 	Page.setTitle('Content Editor')
+ 	Page.setTitle('head.content')
  	/***********************Functions*******************************/
  	var init = function(){
  		$scope.open_id="-1";

@@ -33,10 +33,6 @@
                                             
                                         </ul>
                                     </a>
-                                    <a href="" ng-click="selected = 1">
-                                        <ul ng-class="{tabactive: selected == 1}" class="tab-pill" ng-bind="'settings.lectures' | translate">
-                                        </ul>
-                                    </a>
                                 </div>
                             </td>
                         </tr>
@@ -48,10 +44,7 @@
                         <span ng-show="selected == 0">
                             <account-information>
                         </span>
-                        <span ng-show="selected == 1">
-                            test2
-                        </span>
-                    </div>
+                </div>
             </td>
             <span style="float: right;">
                 <ul><a style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>

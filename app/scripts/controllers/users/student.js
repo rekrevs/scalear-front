@@ -9,9 +9,13 @@ angular.module('scalearAngularApp')
             }
             $scope.sign_up = function() {
                 $scope.sending = true;
-                delete $scope.user.errors
+                $scope.final_user = angular.copy($scope.user)
+                if(!$scope.final_user.password_confirmation){
+                    $scope.final_user.password_confirmation = ' '
+                }
+                delete $scope.final_user.errors
                 User.sign_up({}, {
-                    user: $scope.user
+                    user: $scope.final_user
                 }, function() {
                     $scope.sending = false;
                     //console.log("signed up");

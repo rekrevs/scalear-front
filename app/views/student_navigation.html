@@ -73,14 +73,9 @@
                         <tr>
                             <td style="padding-left: 20px; padding-right: 5px; min-width: 150px;">
                                 <span class="dropdown-header" ng-hide="!show_settings"><b translate>account_edit.account_settings</b></span>
-                                <div ng-init="selected = 1" class="settings-tabs">
-                                    <a href="" ng-click="settingsOpened(1)">
-                                        <ul ng-class="{tabactive: selected == 1}" class="tab-pill" ng-bind="'settings.lectures' | translate">
-                                        </ul>
-                                    </a>
+                                <div ng-init="selected = 0" class="settings-tabs">
                                     <a href="" ng-click="settingsOpened(0)">
-                                        <ul ng-class="{tabactive: selected == 0}" class="tab-pill" ng-bind='"account_edit.account_information" | translate'>
-                                            
+                                        <ul ng-class="{tabactive: selected == 0}" class="tab-pill" ng-bind="'settings.lectures' | translate">
                                         </ul>
                                     </a>
                                 </div>
@@ -91,13 +86,10 @@
             </td>
             <td ng-show="show_settings">
                 <div class="tab-content" style="height: auto;">
-                        <span ng-show="selected == 0">
-                            <account-information>
-                        </span>
-                        <span ng-show="selected == 1">
-                            test2
-                        </span>
-                    </div>
+                    <span ng-show="selected == 0">
+                        <account-information>
+                    </span>
+                </div>
             </td>
             <span style="float: right;">
                 <ul><a style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>

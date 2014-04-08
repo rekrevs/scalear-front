@@ -6,35 +6,55 @@
 <span ng-mousemove="lightUpButtons()" class="disable_selection" style="overflow:hidden" >
     <div style="min-height:34px;position:relative">
         <span style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray">{{lecture_name}}</span>
-        <div style="float:right; margin-right: 50px;padding-top:0px" >
+        <div ng-hide="selected_item.class_name=='quiz'" style="float:right; margin-right: 50px;padding-top:0px" >
             <button ng-class="button_class+' '+dark_buttons" ng-click="playBtn()" class="btn btn-default"><i ng-class="play_pause_class" /></button>
             <button ng-class="button_class+' '+dark_buttons" ng-click="muteBtn()" class="btn btn-default"><i ng-class="mute_class" /></button>
             <button ng-class="button_class+' '+dark_buttons+' '+quality_set" ng-click="qualityBtn()" class="btn btn-default" style="font-weight:bolder">HD</button>
         </div>
     </div>
-    <div style="position: fixed;bottom: 35px;top: 34px;left:0;right:0;">
-        <div class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;">
-            <video_container class="inclass_sceen" ng-class="video_class" screenfull active="fullscreen" >
-            <div class="ontop inclass_sceen" style="position:absolute"></div>
+    <div style="position: fixed;bottom: 35px;top: 34px;left:0;right:0;" >
+        
+        <div ng-show="selected_item.class_name=='lecture'" class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;" screenfull active="fullscreen">
+            <video_container class="inclass_sceen" ng-class="video_class"  >
+                <div class="ontop inclass_sceen" style="position:absolute"></div>
                 <youtube class="inclass_sceen" id="inclass_vid" url="lecture_url" player="inclass_player" />
-                <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:50%; left:50%;position:absolute;z-index:-1"/>
+                <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:100%; left:0;position:absolute;z-index:-1"/>
             </video_container>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'charts'" ng-class="question_block">
-                <div ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
+                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
                 <div ng-show="chart" ng-class="chart_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}">
                     <div google-chart chart="chart" ></div>
                 </div>
             </div>
-            <div ng-show="!hide_questions && selected_timeline_item.type == 'question'" ng-class="question_block">  <!-- student_padding -->
+            <div ng-show="!hide_questions && selected_timeline_item.type == 'question'" ng-class="question_block">
                 <ul style="padding-left:5px">
-                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])" ng-class="student_question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
+                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])" ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
                         {{question[0]}}
                         <br>
                     </li>
                 </ul>
             </div>
         </div>
+
+        <div ng-show="selected_item.class_name=='quiz'" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;overflow:auto">
+            <div ng-repeat="item in timeline['survey'][selected_item.id].items|filter:{data:'!!'}" style="background:white;">
+                <div style="padding-top: 1%;padding-left: 1%;font-size: 40px;line-height: 40px;opacity: 1;">{{item.data.title}}</div>
+                <div ng-if="item.type == 'charts'" ng-init="chart = createChart(item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')">
+                    <div google-chart chart="chart" ></div>
+                </div>
+                <div ng-if="item.type == 'Free Text Question'">
+                    <ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">
+                        <li ng-repeat="question in item.data.answers" style="list-style-position:inside; padding:3px 15px;">
+                            <p style="font-size:20px">{{question.answer}}</p>
+                            <i ng-show="question.response" style="padding-left: 30px;color: steelblue;font-size:16px">{{question.response}}</i>
+                        </li>
+                    </ul>               
+                </div>
+                <hr>
+            </div>
+        </div>
     </div>
+
     <div style="position:fixed;padding-top:5px; text-align: center; bottom: 5px; width: 100%;">
             <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()"  class="btn btn-default exit_btn">{{button_names[0]}}</button>
 
@@ -48,8 +68,10 @@
             </button>
             
             <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="btn btn-default" style="float:right; margin-right: 3%"><i class="icon-fullscreen" /></button>
-            <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%"  class="btn btn-default">{{hide_text}}</button>           
-            <button ng-class="button_class+' '+dark_buttons" ng-click="setZoomClass()" ng-show="video_class=='original_video'" style="float:right; margin-right: 1%" class="btn btn-default"><i class="icon-zoom-in" /><span> {{button_names[1]}}</span></button>
-            <button ng-class="button_class+' '+dark_buttons" ng-click="setOriginalClass()" ng-show="video_class=='zoom_video'" style="float:right; margin-right: 1%" class="btn btn-default"><i class="icon-zoom-out" /><span> {{button_names[2]}}</span></button>
+            <span ng-hide="selected_item.class_name=='quiz'">
+                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%"  class="btn btn-default">{{hide_text}}</button>           
+                <button ng-class="button_class+' '+dark_buttons" ng-click="setZoomClass()" ng-show="video_class=='original_video'" style="float:right; margin-right: 1%" class="btn btn-default"><i class="icon-zoom-in" /><span> {{button_names[1]}}</span></button>
+                <button ng-class="button_class+' '+dark_buttons" ng-click="setOriginalClass()" ng-show="video_class=='zoom_video'" style="float:right; margin-right: 1%" class="btn btn-default"><i class="icon-zoom-out" /><span> {{button_names[2]}}</span></button>
+            </span>
     </div>
 </span>

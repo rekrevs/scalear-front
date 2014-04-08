@@ -165,6 +165,10 @@ ul.highlight, li.highlight{
 	left:30px;
 }
 
+.time_estimate a{
+	color:white;
+}
+
 .main_content{
 	overflow-y:auto; 
 	height:100%; 

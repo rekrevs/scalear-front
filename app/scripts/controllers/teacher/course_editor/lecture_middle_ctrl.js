@@ -26,6 +26,10 @@ angular.module('scalearAngularApp')
 		{type:'OCQ', text:"insert_ocq"}, 
 		{type:'drag',text:"insert_drag"}
 	]
+	$scope.survey_types_list=[
+		{type:'MCQ', text:"MCQ - Multiple Choice Answers"},
+		{type:'OCQ', text:"OCQ - One Choice Answer"}, 
+	]
     $scope.play_pause_class = 'play'
     $scope.current_time = 0
     $scope.total_duration = 0
@@ -124,6 +128,10 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.insertQuiz=function(quiz_type, question_type){
+		if ($scope.selected_quiz && $scope.quiz_deletable){
+			$scope.deleteQuiz($scope.selected_quiz)
+		}
+		
 		var insert_time= $scope.lecture_player.controls.getTime()
 		var duration = $scope.lecture_player.controls.getDuration()
 
@@ -166,20 +174,20 @@ angular.module('scalearAngularApp')
 			$scope.selected_quiz = quiz
 			$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
-			if(quiz.quiz_type =="invideo"){
-				$scope.double_click_msg = "online_quiz.double_click_new_answer";
-				$scope.quiz_layer.backgroundColor="transparent"
-				$scope.quiz_layer.overflowX= ''
-				$scope.quiz_layer.overflowY= ''
-				getQuizData();
-			}
-			else{ // html quiz
+			if(quiz.quiz_type =="html"){
 				$log.debug("HTML quiz")
 				$scope.double_click_msg=""
 				$scope.quiz_layer.backgroundColor= "white"
 				$scope.quiz_layer.overflowX= 'hidden'
 	            $scope.quiz_layer.overflowY= 'auto'
 				getHTMLData()
+			}
+			else{ // invideo or survey quiz				
+				$scope.double_click_msg = "online_quiz.double_click_new_answer";
+				$scope.quiz_layer.backgroundColor="transparent"
+				$scope.quiz_layer.overflowX= ''
+				$scope.quiz_layer.overflowY= ''
+				getQuizData();				
 			}
 		}
 	}
@@ -363,7 +371,7 @@ angular.module('scalearAngularApp')
 			else	
 			correct= $scope.selected_quiz.answers[element].correct || correct;
 		}
-		if(!correct){
+		if(!correct && $scope.selected_quiz.quiz_type!='survey'){
 			$scope.alert.msg="lectures.please_choose_one_answer"
 			return false
 		}
@@ -389,7 +397,8 @@ angular.module('scalearAngularApp')
 				data=[obj]
 			}
 			else
-				data = $scope.selected_quiz.answers
+				data = angular.copy($scope.selected_quiz.answers)
+
 
 			$scope.quiz_deletable = false
 			updateAnswers(data, $scope.selected_quiz.question);

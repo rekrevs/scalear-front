@@ -106,7 +106,6 @@ angular.module('scalearAngularApp')
 				}
 
 				var formatURL=function(url,vq,time){
-					console.log(vq)
 					var splitted_url= url.split('?'),
 					base_url = splitted_url[0],
 					query = '&'+splitted_url[1]	
@@ -404,8 +403,6 @@ angular.module('scalearAngularApp')
 
 			$scope.resize.big = function()
 			{
-
-				console.log("sdafdsagd")
                 $rootScope.changeError = true;
 				//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 				var factor=16.0/9.0

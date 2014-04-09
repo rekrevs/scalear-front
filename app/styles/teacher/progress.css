@@ -251,12 +251,26 @@ ul.highlight, li.highlight{
 	background: #0088cc;
 }
 .whole-right-container{
-	width: 70%; 
+	/*width: 70%; 
 	min-width: 700px; 
 	display: inline-block; 
 	margin-left: 29%; 
 	min-height: 80%; 
-	margin-top: 35px;
+	margin-top: 35px;*/
+
+	/*new responsive styling*/
+	width: 68%;
+	min-width: 650px;
+	display: inline-block;
+	position: fixed;
+	top: 135px;
+	right: 10px;
+}
+.filter-bar{
+	width: 68%; 
+	display: inline-block; 
+	margin-left:28%; 
+	position: fixed;
 }
 
 @media (max-width: 1024px) {
@@ -265,6 +279,7 @@ ul.highlight, li.highlight{
 		clear: both;
 		display: block;
 		margin-left: 1%;
+		position: relative;
 
 	}
 	.video-showroom{
@@ -272,5 +287,13 @@ ul.highlight, li.highlight{
 		clear: both;
 		position: relative;
 		display: block;
+	}
+	.video-container-styling{
+		height: auto;
+	}
+	.filter-bar{
+		width: 90%; 
+		display: inline-block; 
+		position: relative;
 	}
 }

@@ -14,12 +14,15 @@ var password = 'password';
 var enrollment_key = '';
 var functions = ptor.params;
 
-describe('', function(){
-	it('should create user', funcion(){
-		functions.sign_up(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, functions.feedback);
-	})
+var mail = 'mena.happy@yahoo.com'
 
-	it('should confirm that user', funcion(){
-		functions.confirm_account(ptor, functions.feedback);
+describe('', function(){
+	it('should login', function(){
+		functions.sign_in(ptor, mail, password, functions.feedback)
+	})
+	it('should open tray', function(){
+		functions.open_tray(ptor).then(function(){
+			console.log('eshta');
+		})
 	})
 })

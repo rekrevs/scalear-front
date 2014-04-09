@@ -44,7 +44,7 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/signup.js',
+        'test/e2e/spec/mainmenu.spec.js',
 
     ],
 

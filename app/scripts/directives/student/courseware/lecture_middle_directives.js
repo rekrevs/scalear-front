@@ -195,7 +195,7 @@ angular.module('scalearAngularApp')
     }
   };
 }])
-.directive("notification", ['$translate', '$window', '$log', function($translate, $window, $log) {
+.directive("notification", ['$translate', '$window', '$log','OnlineQuiz' function($translate, $window, $log, OnlineQuiz) {
   return {
     restrict:"E",
     template:'<div class="well" style="font-size:12px;padding:5px;">'+
@@ -207,14 +207,15 @@ angular.module('scalearAngularApp')
                     '<p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details" />'+
                   '</center>'+
                 '</div>'+
-                '<div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div>'+
+                '<div ng-show="show_notification!=true && show_notification!=false" style="vertical-align:middle">{{show_notification}}</div>'+
                 '<div ng-show="review_inclass" style="vertical-align:middle">'+
                   '<center>'+
                     '<b style="color:blue">'+
                       '<span>Would you like this question to be reviewed In Class?</span>'+
                     '</b><br/>'+
-                    '<button style="margin-right: 5px;border-radius: 5px;background: white;">YES</button>'+
-                    '<button style="margin-right: 5px;border-radius: 5px;background: white;">NO</button>'+
+                    '<button ng-click="voteForReview()" style="margin-right: 5px;border-radius: 5px;background: white;">YES</button>'+
+                    '<button ng-click="closeReviewNotify()" style="margin-right: 5px;border-radius: 5px;background: white;">NO</button>'+
+                    '<button style="margin-right: 5px;border-radius: 5px;background: white;">Retry</button>'+
                   '</center>'+
                 '</div>'+
               '</div>',
@@ -249,6 +250,20 @@ angular.module('scalearAngularApp')
         }
           element.css("top", scope.pHeight+"px");
           element.css("position", "absolute");
+      }
+
+      $scope.voteForReview=function(){
+        OnlineQuiz.voteForReview(
+          {quiz_id:scope.selected_quiz.id},{},
+          function(res){
+            if(res.done)
+              $scope.closeReviewNotify()
+          }
+        )
+      }
+
+      $scope.closeReviewNotify=function(){
+        scope.review_inclass= false 
       }
 
       setNotficationPosition()
@@ -405,7 +420,7 @@ angular.module('scalearAngularApp')
 
         }
         var removeNotification = function(){
-          scope.show_notification=true;
+          scope.show_notification=false;
           window.onmousemove = null
 
           scope.review_inclass= true 

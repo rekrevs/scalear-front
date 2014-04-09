@@ -120,7 +120,7 @@
 						<controls id="controls-bar" ng-show="lecture.url && !loading_video" resizable-video video-layer='video_layer' container="container_layer" quiz-layer='quiz_layer' active="$parent.fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='0' ng-class="{ipad_controls:ipad}" style="position: relative; display: inline-block; z-index: 1000; top: -18px; left: 100%; margin-top: 5px;">
 						</controls>
 						
-						<notification ng-style="notify_position" ng-show='show_notification'></notification>
+						<notification ng-style="notify_position" ng-show='show_notification || review_inclass'></notification>
 					<!-- </video_container> -->
 				</form>
 			</div>

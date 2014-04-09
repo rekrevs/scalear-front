@@ -13,6 +13,8 @@ angular.module('scalearAngularApp')
 		$scope.current_item = ''
 	}
 	
+
+	
     var init = function()
     {
 		$scope.modules_obj = {}
@@ -24,17 +26,25 @@ angular.module('scalearAngularApp')
 	    	{course_id: $stateParams.course_id}, function(data){
 	    		console.log(data)
 				$scope.course= JSON.parse(data.course);
+				$log.debug($scope.course);
 				$scope.today = data.today;	
 				$scope.last_viewed = data.last_viewed
-				if(!$stateParams.lecture_id && $scope.last_viewed.module != -1){
+				if(!$state.params.lecture_id && $scope.last_viewed.module != -1){
 
 			    	$state.go('course.lectures.module.lecture', {'module_id': $scope.last_viewed.module, 'lecture_id': $scope.last_viewed.lecture})
 			    	$scope.current_item = $scope.last_viewed.lecture
 			    	
 			    }
-				$log.debug($scope.course);
 				$scope.initSelector();
-				$scope.showModuleContent($scope.last_viewed.module)
+				if(!$state.params.module_id){
+					console.log('doing dooaisdiauhsdiauhsdiuahsdiuashdiuahs aisudhaisudh')
+					$scope.showModuleContent($scope.last_viewed.module)
+				}
+				else{
+					console.log('doing the right thing')
+					$scope.showModuleContent($state.params.module_id)	
+				}
+				console.log('dakhal hena ahooooooo dakhal hena ahooooooo dakhal hena ahooooooo')
 				if($scope.last_viewed.module == -1){
 					$scope.current_item = $scope.current_module.lectures[0].id
 					$state.go('course.lectures.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})
@@ -84,8 +94,9 @@ angular.module('scalearAngularApp')
 		});
 		console.log($scope.modules_obj)
 		if($state.params.module_id){
-			$scope.open_module = $state.params.module_id
-			$scope.current_module = $scope.modules_obj[$scope.open_module]
+			$scope.current_module = $scope.modules_obj[$state.params.module_id]
+			console.log('hena')
+			console.log($scope.current_module)
 		}
 		if($scope.course.groups.length > 10){
 	    	$scope.columns = Math.ceil(($scope.course.groups.length/10)+1)
@@ -123,11 +134,10 @@ angular.module('scalearAngularApp')
 					$scope.current_item = data.last_watched
 				}
 			})
-		// if($scope.modules_obj[module_id].last_viewed != -1){
-		// 	$state.go('course.lectures.module.lecture', {'module_id': module_id, 'lecture_id': $scope.current_module.last_viewed})
-		// 	$scope.current_item = $scope.current_module.last_viewed
-		// }
+		
 	}
+
+
 	$scope.showModuleContent = function(module_id){
 		if(module_id == -1){
 			$scope.current_module = $scope.modules_obj[Object.keys($scope.modules_obj)[0]];

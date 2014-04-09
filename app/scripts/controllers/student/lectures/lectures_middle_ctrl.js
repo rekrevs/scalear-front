@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc','Page', function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc,Page) {
+    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc','Page', '$filter',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc,Page, $filter) {
 
 
     $scope.video_layer = {}
@@ -174,7 +174,7 @@ angular.module('scalearAngularApp')
                 $scope.confused= data.confuseds;
                 $scope.student_questions= data.lecture_questions;
                 $scope.youtube_video= getVideoId($scope.lecture.url);
-                Page.setTitle($scope.lecture.name);
+                // Page.setTitle($filter('translate')('head.lectures')+': '+$scope.lecture.name);
 //                $scope.events={}
 //                $scope.events["confused"]=$scope.lecture.confuseds;
 //                $scope.events["questions"]=$scope.lecture.lecture_questions;

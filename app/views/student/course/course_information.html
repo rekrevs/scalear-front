@@ -14,13 +14,13 @@
             <tr>
                 <td style="width: 220px; border-right: 1px solid lightgray;">
                     <br />
-                    <b>{{course.short_name +' | '+ course.name}}</b>
+                    <b id="course_code_name">{{course.short_name +' | '+ course.name}}</b>
                     <hr />
-                    <ul style="font-size: 15px; margin: 0px;" ng-show="course.discussion_link"><span class="link-icon" ></span><a href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a></ul>
+                    <ul style="font-size: 15px; margin: 0px;" ng-show="course.discussion_link"><span class="link-icon" ></span><a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a></ul>
 
-                    <ul style="font-size: 15px; margin: 0px;"><span class="calendar-icon" /></span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</ul>
+                    <ul id="course_date" style="font-size: 15px; margin: 0px;"><span class="calendar-icon" /></span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</ul>
 
-                    <ul style="font-size: 15px; margin: 0px;"><span class="duration-icon" /></span>{{course.duration}} <span translate="courses.weeks"></span></ul>
+                    <ul id="course_duration" style="font-size: 15px; margin: 0px;"><span class="duration-icon" /></span>{{course.duration}} <span translate="courses.weeks"></span></ul>
                 </td>
 
             </tr>
@@ -34,12 +34,12 @@
                         <br />
                     <span style="padding-left: 30px;">
                         <b translate="groups.description"></b>
-                        <p style="margin-left: 40px;">
+                        <p id="course_description" style="margin-left: 40px;">
                             {{course.description}}
                         </p>
                     <span style="padding-left: 30px;">
                         <b translate="courses.prerequisites"></b>
-                        <p style="margin-left: 40px;">
+                        <p id="course_prerequisites" style="margin-left: 40px;">
                             {{course.prerequisites}}
                         </p>
                     </span>

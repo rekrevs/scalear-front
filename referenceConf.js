@@ -44,7 +44,7 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/mainmenu.spec.js',
+        'test/e2e/spec/course_info_student.spec.js',
 
     ],
 
@@ -255,6 +255,18 @@ exports.config = {
                         });
                    })
                })
+        },
+
+        open_course: function(ptor){
+            ptor.findElements(protractor.By.partialLinkText('|')).then(function(course){
+            course[0].click();
+         })
+        },
+
+        open_course_by_name: function(ptor, course_name){
+            ptor.findElement(protractor.By.partialLinkText(course_name)).then(function(course){
+                course.click();
+            })
         }
 
     },

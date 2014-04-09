@@ -32,7 +32,7 @@
 		<!-- {{course.groups}} -->
 		<div class="modules-selector-dropdown" collapse="close_selector" ng-hide="hide || hide_all">
 			<div class="multicol" style="{{columns_style}}">
-				<div ng-if="today >= modules_obj[module.id].appearance_time" ng-repeat="module in course.groups | orderBy:'position'">
+				<div ng-repeat="module in course.groups | orderBy:'position'" ng-show="today >= modules_obj[module.id].appearance_time && !shouldBeHidden(module.id)">
 					<a href="" ng-click="showModule(module.id)">
 						<ul style="float: left; margin: 0;" ng-class="{moduleactive: current_module.id == module.id}">
 							<module-progress-circle circlesize="12" innercolor="white" module="modules_obj[module.id]" ></module-progress-circle>

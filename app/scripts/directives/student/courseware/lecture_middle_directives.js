@@ -208,6 +208,15 @@ angular.module('scalearAngularApp')
                   '</center>'+
                 '</div>'+
                 '<div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div>'+
+                '<div ng-show="review_inclass" style="vertical-align:middle">'+
+                  '<center>'+
+                    '<b style="color:blue">'+
+                      '<span>Would you like this question to be reviewed In Class?</span>'+
+                    '</b><br/>'+
+                    '<button style="margin-right: 5px;border-radius: 5px;background: white;">YES</button>'+
+                    '<button style="margin-right: 5px;border-radius: 5px;background: white;">NO</button>'+
+                  '</center>'+
+                '</div>'+
               '</div>',
 
     link: function(scope, element, attrs) {
@@ -396,9 +405,13 @@ angular.module('scalearAngularApp')
 
         }
         var removeNotification = function(){
-          scope.show_notification=false;
+          scope.show_notification=true;
           window.onmousemove = null
+
+          scope.review_inclass= true 
           scope.$apply()
+          reviewInclass()
+         
         }
 
         $interval(function(){
@@ -406,6 +419,10 @@ angular.module('scalearAngularApp')
         }, 600, 1);
 
       }
+
+      var reviewInclass =function(){
+      }
+
     }
   }
 }])

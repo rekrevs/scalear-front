@@ -195,7 +195,7 @@ angular.module('scalearAngularApp')
     }
   };
 }])
-.directive("notification", ['$translate', '$window', '$log','OnlineQuiz' function($translate, $window, $log, OnlineQuiz) {
+.directive("notification", ['$translate', '$window', '$log','OnlineQuiz', function($translate, $window, $log, OnlineQuiz) {
   return {
     restrict:"E",
     template:'<div class="well" style="font-size:12px;padding:5px;">'+
@@ -213,9 +213,9 @@ angular.module('scalearAngularApp')
                     '<b style="color:blue">'+
                       '<span>Would you like this question to be reviewed In Class?</span>'+
                     '</b><br/>'+
-                    '<button ng-click="voteForReview()" style="margin-right: 5px;border-radius: 5px;background: white;">YES</button>'+
-                    '<button ng-click="closeReviewNotify()" style="margin-right: 5px;border-radius: 5px;background: white;">NO</button>'+
-                    '<button style="margin-right: 5px;border-radius: 5px;background: white;">Retry</button>'+
+                    '<button ng-click="voteForReview()" style="margin-right: 5px;border-radius: 5px;background: white;font-size: 10px;padding: 2px 10px;margin-top:5px">YES</button>'+
+                    '<button ng-click="closeReviewNotify()" style="margin-right: 5px;border-radius: 5px;background: white;font-size: 10px;padding: 2px 10px;margin-top:5px">NO</button>'+
+                    '<button ng-click="retryQuiz()" style="margin-right: 5px;border-radius: 5px;background: white;font-size: 10px;  padding: 2px 10px;margin-top:5px">Retry</button>'+
                   '</center>'+
                 '</div>'+
               '</div>',
@@ -252,18 +252,23 @@ angular.module('scalearAngularApp')
           element.css("position", "absolute");
       }
 
-      $scope.voteForReview=function(){
+      scope.voteForReview=function(){
         OnlineQuiz.voteForReview(
-          {quiz_id:scope.selected_quiz.id},{},
+          {online_quizzes_id:scope.selected_quiz.id},{},
           function(res){
             if(res.done)
-              $scope.closeReviewNotify()
+              scope.closeReviewNotify()
           }
         )
       }
 
-      $scope.closeReviewNotify=function(){
+      scope.closeReviewNotify=function(){
         scope.review_inclass= false 
+      }
+
+      scope.retryQuiz=function(){
+        scope.seek(scope.selected_quiz.time, scope.selected_quiz.lecture_id)
+        scope.closeReviewNotify()
       }
 
       setNotficationPosition()
@@ -422,10 +427,8 @@ angular.module('scalearAngularApp')
         var removeNotification = function(){
           scope.show_notification=false;
           window.onmousemove = null
-
-          scope.review_inclass= true 
+          reviewInclass()          
           scope.$apply()
-          reviewInclass()
          
         }
 
@@ -436,6 +439,9 @@ angular.module('scalearAngularApp')
       }
 
       var reviewInclass =function(){
+        //if()
+        if(!scope.selected_quiz.reviewed)
+          scope.review_inclass= true 
       }
 
     }

@@ -3,6 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','$log', '$window','$translate','$timeout',function ($scope, $stateParams, Timeline, Module,Quiz, $log, $window, $translate,$timeout) {
 
+    $scope.Math = window.Math;
   	$scope.highlight_index = -1
   	$scope.inner_highlight_index = -1
   	$scope.progress_player= {}
@@ -31,6 +32,7 @@ angular.module('scalearAngularApp')
           module_id: $stateParams.module_id
 	  		},
 	  		function(data){
+          console.log(data)
 	  			angular.extend($scope, data)
 	  	 		$scope.url = $scope.first_lecture
 	  	 		$scope.timeline['lecture'] = {}

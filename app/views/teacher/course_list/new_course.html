@@ -17,29 +17,42 @@
   </style>
   <center>
     <div class="main-fields-container">
-      <div class="fields-row" style="min-height: 200px; max-height: 250px; max-width: 250px;">
-        <alterant imageurl="course.image_url" defaultimage="'../images/course_image.png'"></alterant>
+      <div class="fields-row" style="max-width: 250px; min-height: 200px;margin-top: 20px; margin-bottom: 20px;">
+        <smart-image defaultimage="'../images/course_image.png'" desiredimage="course.image_url" notfound="image_not_found" style="height: 200px;">
+        </smart-image>
       </div>
       <div class="fields-row">
         <div class="field">
-          <input name="short" type="text" ng-model="course.short_name" placeholder="*{{'courses.short_name' | translate}}"/><br>
+          <p translate>
+            courses.short_name
+          </p>
+          <input name="short" type="text" ng-model="course.short_name" placeholder="*{{'courses.required' | translate}}"/><br>
           <span ng-show="form.short.$error.required && submitted" translate>courses.required</span>
           <span class="errormessage" ng-show="server_errors['short_name']">{{server_errors['short_name'].join()}}</span>
         </div>
         <div class="field">
-          <input name="name" type="text" ng-model="course.name" placeholder="*{{'name' | translate}}" /><br>
+          <p translate>
+            courses.course_name
+          </p>
+          <input name="name" type="text" ng-model="course.name" placeholder="*{{'courses.required' | translate}}" /><br>
           <span ng-show="form.name.$error.required && submitted" translate>courses.required</span>
           <span class="errormessage"  ng-show="server_errors['name']">{{server_errors['name'].join()}}</span>
         </div>
       </div>
       <div class="fields-row">
         <div class="field">
+          <p translate>
+            courses.start_date
+          </p>
           <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.start_date" is-open="opened"  ng-required="true" placeholder="*{{'courses.start_date' | translate}}"/><br>
           <span ng-show="form.date.$error.required && submitted" translate>courses.required</span>
           <span class="errormessage" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</span>
         </div>
         <div class="field">
-          <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.duration' | translate}}"/><br>
+          <p translate>
+            courses.duration
+          </p>
+          <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.weeks' | translate}}"/><br>
           <span ng-show="form.duration.$error.required && submitted" translate>courses.required</span>
           <span ng-show="form.duration.$error.min && submitted" translate>courses.invalid_input</span>
           <span class="errormessage" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</span>
@@ -47,44 +60,62 @@
       </div>
       <div class="fields-row">
         <div class="field">
+          <p translate>
+            courses.discussion_forum_link
+          </p>
           <input type="text" ng-model="course.discussion_link" placeholder="{{'courses.discussion_forum_link' | translate}}" />
           <span class="errormessage" ng-show="server_errors['discussion_link']">{{server_errors['discussion_link'].join()}}</span>
         </div>
         <div class="field">
+          <p translate>
+            courses.course_image
+          </p>
           <input type="text" ng-model="course.image_url" placeholder="{{'courses.course_image' | translate}}"/>
           <br />
+          <span class="errormessage" ng-show="image_not_found">{{image_not_found | translate}}</span>
           <span class="errormessage" ng-show="server_errors['image_url']">{{server_errors['image_url'].join()}}</span>
         </div>
       </div>
       <div class="fields-row">
         <!-- <div class="field" style="width: 35%;"> -->
+          <p translate>
+            courses.course_description
+          </p>
           <textarea rows="3" ng-model="course.description" style="width: 90%; margin: 10px;" placeholder="{{'courses.course_description' | translate}}"></textarea>
           <span class="errormessage" ng-show="server_errors['description']">{{server_errors['description'].join()}}</span>
         <!-- </div> -->
       </div>
       <div class="fields-row">
         <!-- <div class="field"> -->
+          <p translate>
+            courses.prerequisites
+          </p>
           <textarea rows="3" ng-model="course.prerequisites" style="width: 90%; margin: 10px;" placeholder="{{'courses.prerequisites' | translate}}"></textarea>
           <span class="errormessage" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</span>
         <!-- </div> -->
       </div>
       <div class="fields-row">
         <div class="field">
+          <p translate>
+            courses.time_zone
+          </p>
           <select name="timezone" ng-model="course.time_zone" ng-options="element.text for element in timezones" placeholder="*{{'courses.time_zone' | translate}}"></select>
           <span ng-show="form.timezone.$error.required && submitted" translate>courses.required</span>
           <span class="errormessage" ng-show="server_errors['time_zone']">{{server_errors['time_zone'].join()}}</span>
         </div>
         <div class="field">
+          <p translate>
+            courses.import_data
+          </p>
           <select ng-model="import_from" ng-options="element.id as element.name for element in importing">
-            <option value="" disabled selected translate>courses.import_data</option>
           </select>
         </div>
       </div>
 
       
     
-      <div class="form-actions">
-        <input ng-disabled="submitting" type="button" value="{{'courses.create_course'|translate}}" class="btn" ng-click="createCourse()"/>
+      <div class="form-actions" style="background-color: transparent;">
+        <input ng-disabled="submitting || image_not_found" type="button" style="background-image: initial;" value="{{'courses.create_course'|translate}}" class="btn btn-success" ng-click="createCourse()"/>
       </div>
     </div>
   </center>

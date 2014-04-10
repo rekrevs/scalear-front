@@ -274,12 +274,18 @@ ul.highlight, li.highlight{
 }
 
 @media (max-width: 1024px) {
+	.time_estimate{
+		top: 45px;
+		left: 73%;
+		position: absolute;
+	}
 	.whole-right-container{
-		width: 90%;
+		width: 97%;
 		clear: both;
 		display: block;
-		margin-left: 1%;
+		margin-left: 0px;
 		position: relative;
+		top: 20px;
 
 	}
 	.video-showroom{

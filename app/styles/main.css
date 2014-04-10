@@ -753,3 +753,19 @@ iframe{
   -ms-user-select: none;
   user-select: none;
 }
+.current-user-name{
+  right: 100px; 
+  vertical-align: -webkit-baseline-middle; 
+  margin-top: 5px; 
+  position: fixed; 
+}
+@media (max-width: 700px) {
+  .state{
+    display: none;
+  }
+}
+@media (max-width: 490px) {
+  .current-user-name{
+    display: none;
+  }
+}

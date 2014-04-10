@@ -3,11 +3,11 @@
 <link rel="stylesheet" href="styles/student/modules_selector.css"/>
 
 <!-- endbuild -->
-<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2;">
+<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2; min-width: 600px;">
 	<div style="float: left; display: inline-block;">
 		<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="toggleSelector()" ng-disabled="!modules" title="{{selected_module.name}}">{{shortenModuleName(selected_module.name) || 'courses.select_module' | translate}}<span class="caret" style="margin-left: 5px;"></span></button>
     </div>
-    <div style="margin-top: 5px; display: inline-block;">
+    <div class="module-title">
 		<big>
 			<b>
 				{{selected_module.name}}
@@ -15,7 +15,7 @@
 		</big>
 	</div>
 	<div style="display: inline-block; float: right;">
-    	<button class="btn btn-success" style="background-image: initial; float: right; margin-right: 60px;" id="new_course" action="display('Quizzes',!inclass_ready)" ng-disabled="!inclass_ready" translate>Go to Class</button>
+    	<!-- <button class="btn btn-success" style="background-image: initial; float: right; margin-right: 60px;" id="new_course" action="display('Quizzes',!inclass_ready)" ng-disabled="!inclass_ready" translate>Go to Class</button> -->
 	</div>
 </div>
 <div class="modules-selector-dropdown" collapse="!close_selector" style="z-index: 1; top: 30px; background-color: whitesmoke; border: none; width: 0;">
@@ -30,9 +30,7 @@
 	</div>
 </div>
 <div class="row">        
-	<div id='details' class="span11" >
-		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count" />
-		<button_link title="Go To Class"   action="display('Quizzes',!inclass_ready)" class="btn-xlarge btn-primary" ng-disabled="!inclass_ready"/>
-	    <!-- <ui-view></ui-view> -->
+	<div id='details' class="span4" style="border-right: 1px solid lightgray;">
+	    <ui-view></ui-view>
 	</div>
 </div>

@@ -3,6 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','util','$translate','Timeline', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, util,$translate, Timeline) {
     $window.scrollTo(0, 0);
+    console.log('got in hereeeeee');
     $scope.inclass_player={}
     $scope.inclass_player.events={}   
 
@@ -62,6 +63,7 @@ angular.module('scalearAngularApp')
     }
 
     var init = function(){
+      console.log('got inhere')
       $scope.timeline = {}
       Module.getModuleInclass(
         {

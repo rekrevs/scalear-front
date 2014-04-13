@@ -44,7 +44,7 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/course_info_student.spec.js',
+        'test/e2e/spec/announcments.spec.js',
 
     ],
 
@@ -99,7 +99,7 @@ exports.config = {
             ptor.findElement(protractor.By.id('user_passowrd')).then(function(password_field) {
                 password_field.sendKeys(password);
             });
-            
+
             ptor.findElement(protractor.By.xpath('//*[@id="main"]/div/div[1]/div/div/center/div[3]/form/div/table/tbody/tr/td[3]/table/tbody/tr[3]/td/input')).then(function(fields){
                 fields.click().then(function() {
                     feedback(ptor, 'Signed in successfully');
@@ -110,7 +110,7 @@ exports.config = {
             ptor.sleep(3000);
             ptor.findElement(protractor.By.id('logout_link')).then(function(link) {
                 link.click().then(function() {
-                    
+
                 });
             });
         },
@@ -176,7 +176,7 @@ exports.config = {
                                             })
                                         })
                                     })
-                                })   
+                                })
                             })
                         });
                    })
@@ -250,7 +250,7 @@ exports.config = {
                                             })
                                         })
                                     })
-                                })   
+                                })
                             })
                         });
                    })
@@ -267,7 +267,15 @@ exports.config = {
             ptor.findElement(protractor.By.partialLinkText(course_name)).then(function(course){
                 course.click();
             })
-        }
+        },
+
+          wait_for_element: function(ptor, element){
+          ptor.wait(function(){
+            return ptor.isElementPresent(element).then(function(value){
+                return value
+            });
+        })
+}
 
     },
 

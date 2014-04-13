@@ -32,6 +32,11 @@ describe('', function(){
 	})
 })
 
+
+//=====================================
+//check for nav_bar icons_is_displayed
+//=====================================
+
 check_for_menu_icons_inside_lec_student_true = function(ptor){
 
 	info_icon = ptor.findElement(protractor.By.id("info"));

@@ -169,7 +169,7 @@ angular.module('scalearAngularApp')
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
 						console.log(time)
-					player.currentTime(10);
+					player.currentTime(time);
 					parent.focus()
 				}
 
@@ -339,8 +339,6 @@ angular.module('scalearAngularApp')
                       //  var matches = is_final_url(scope.url)
                         // if(matches)
                          //{
-                         	console.log(")")
-                         	console.log(scope.url)
                             player_controls.refreshVideo();
                          //}
 

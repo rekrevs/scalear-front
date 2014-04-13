@@ -57,9 +57,10 @@ angular.module('scalearAngularApp')
  	$scope.lecture_player.events.onReady= function(){
  		$scope.hide_overlay = true
         $scope.lecture.duration = $scope.lecture_player.controls.getDuration()
- 		// $scope.lecture_player.controls.pause()
-        $scope.lecture_player.controls.seek(10)
+ 		$scope.lecture_player.controls.pause()
+        $scope.lecture_player.controls.seek(0)
         $scope.lecture_player.controls.volume(0.5);
+     	//$scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  	}
 
 	$scope.lecture_player.events.onPlay= function(){
@@ -106,7 +107,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.waiting=function(){
-        if($scope.editing_mode && $scope.selected_quiz && $scope.lecture_player.controls.getTime() != $scope.selected_quiz.time){
+    	console.log("Wainting")
+        if($scope.editing_mode && $scope.selected_quiz && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_quiz.time)){
         	$scope.editing_mode = false;
         	$scope.selected_quiz=null
     	}

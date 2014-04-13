@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
                     },
                     lecture,
                     function(data) {                        
-                        if(lecture.url){
+                        if(lecture.url && lecture.url.split("v=")[1]){
                             var id = lecture.url.split("v=")[1].split("&")[0]
                             var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
                             $http.jsonp(url).success(function(data) {
@@ -121,47 +121,43 @@ angular.module('scalearAngularApp')
 //                if ($scope.lecture.url)
 //                    getYoutubeDetails();
 //            }
-            $scope.updateLectureUrl= function(){
-                var type = urlFormat()
+            $scope.updateLectureUrl= function(){                
                 $scope.lecture.aspect_ratio = "widescreen"
-                if($scope.lecture.url && type!="other")
-                    getYoutubeDetails(type[1]);
-
-                // or keep them both just in case video doesn't load??
-                // or instead update in metadata instead of loadeddata?? which is better?
+                if($scope.lecture.url){
+                    var type = isYoutube($scope.lecture.url)
+                    if(type)                        
+                        getYoutubeDetails(type[1]);
+                }
                 $scope.updateLecture();
-                // will do it on ready only..
             }
+
             $scope.updateSlidesUrl = function() {
                 $scope.lecture.slides = $filter('formatURL')($scope.lecture.slides)
                 $scope.updateLecture()
             }
 
 
-            var urlFormat =function(){
-                var url=$scope.lecture.url
-                var video_id = getVideoId(url)
-                if(video_id) {
-                //$scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
-                return video_id; //"youtube";
-                }
-            else{
-                return "other"
-                }
-            }
+            // var urlFormat =function(){
+            //     var url=
+            //     var video_id = isYoutube($scope.lecture.url)
+            //     if(video_id) {
+            //     //$scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
+            //         return video_id; //"youtube";
+            //     }
+            //     else{
+            //         return "other"
+            //     }
+            // }
 
             var invalid_url=function(url){
-                if (!is_mp4(url) && !getVideoId(url))
-                    return true;
-                else
-                    return false;
+                return (!isMP4(url) && !isYoutube(url))
             }
 
-            var is_mp4= function(url)
+            var isMP4= function(url)
             {
                 return url.match(/(.*mp4$)/);
             }
-            var getVideoId= function(url){
+            var isYoutube= function(url){
                 return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
             }
 
@@ -169,35 +165,40 @@ angular.module('scalearAngularApp')
                 //var id=$scope.lecture.url.split("v=")[1]
 
                 if(id){
-                //id= id.split("&")[0]
-                var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
-                $http.jsonp(url)
-                .success(function (data) {
-                $log.debug(data.entry)
-                $scope.video.title = data.entry.title.$t;
-                $scope.video.author = data.entry.author[0].name.$t;
-                var updateFlag = $scope.lecture.duration
-                //		        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
-                //if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio == undefined)
-                //	$scope.lecture.detected_aspect_ratio="smallscreen";
-                //else
-                //	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;
+                    //id= id.split("&")[0]
+                    var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
+                    $http.jsonp(url)
+                    .success(function (data) {
+                        $log.debug(data.entry)
+                        $scope.video.title = data.entry.title.$t;
+                        $scope.video.author = data.entry.author[0].name.$t;
+                        var updateFlag = $scope.lecture.duration
+        		        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
+                        //if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio == undefined)
+                        //	$scope.lecture.detected_aspect_ratio="smallscreen";
+                        //else
+                        //	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;
 
-                //	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
-                //$scope.lecture.aspect_ratio = "widescreen"
-                $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
+                        //	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
+                        //$scope.lecture.aspect_ratio = "widescreen"
+                        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
 
-                //why did i need this?
-                //if(id != current_url){
-                //	$scope.updateLecture()
-                //		$log.debug("update flag is true")
-                //}
-            });
+                        //why did i need this?
+                        //if(id != current_url){
+                        //	$scope.updateLecture()
+                        //		$log.debug("update flag is true")
+                        //}
+                    });
+                }
+                else
+                $scope.lecture.aspect_ratio = "widescreen"
+
             }
-            else
-            $scope.lecture.aspect_ratio = "widescreen"
 
-            }
+            // var getVideoDetails = function(){
+            //     console.log("Sdfs")
+            //     $scope.lecture.duration = $scope.$parent.lecture_player.controls.getDuration()
+            // }
 
             //********************************************************************//
 
@@ -208,13 +209,13 @@ angular.module('scalearAngularApp')
             ]
             $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
                 if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
-                $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
-                if($scope.lecture.url && $scope.lecture.url!="none" && getVideoId($scope.lecture.url)){
-                current_url = $scope.lecture.url.split("v=")[1];
-                current_url = current_url.split("&")[0]
-                getYoutubeDetails(current_url);
+                    $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
+                    if($scope.lecture.url && $scope.lecture.url!="none"){
+                        var video_id = isYoutube($scope.lecture.url)
+                        if(video_id)
+                            getYoutubeDetails(video_id[1]);
+                    }
                 }
-            }
             })
 
 }]);

@@ -15,7 +15,7 @@
 	</tr>
 	<tr ng-repeat="answer in question.answers|survey:display_only">
 		<td style="border-right: 1px gray solid;">
-			<input type="checkbox" ng-if="!display_only" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHide(answer.id, !answer.hide)" />
+			<input type="checkbox" ng-if="!display_only" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHideSurvey(answer.id, !answer.hide)" />
 		</td>
 		<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;">
 			<input type="checkbox" ng-model="answer.group_selected" />

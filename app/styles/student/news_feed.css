@@ -1,0 +1,41 @@
+.main-events-class{
+	width: 100%;
+	position: relative;
+	/*background-color: grey;*/
+	text-align: left;
+}
+.event-box{
+	width: 100%;
+	margin: 2px;
+	padding: 3px;
+	/*background-color: lightgray; */
+	/*border-radius: 2px;*/
+	border-bottom: 1px lightgray dotted;
+}
+.news-timestamp{
+	display: inline-block;
+	text-align: right;
+	color: grey;
+	right: 0px;
+	float: right;
+	cursor: default;
+}
+.news-course{
+	margin-left: 30px;
+	display: inline-block;
+	/*float: right;*/
+	color: darkgrey;
+	/*color: #2d2d2d;*/
+	font-size: 85%;
+	clear: left;
+}
+.news-course > a{
+	color: #616161;
+}
+.news-course > a:hover{
+	color: #000;
+}
+.news-course:before{
+	content: url('../../images/course_small.png');
+	margin-top: 1px;
+}

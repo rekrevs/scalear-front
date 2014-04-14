@@ -789,6 +789,13 @@ var translation_sv=function(){
                     subject: "Instruktioner om upplåsning av konto"
                 }
             }
+        },
+        news:
+        {
+          new_lecture: "Ny föreläsning läggs ",
+          new_quiz: "Ny frågesport sattes ",
+          new_survey: "Ny undersökning sattes ",
+          added_to: " har lagts till "
         }
      
     }

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', '$window','Page',function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler, $window,Page) {
+  .controller('studentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', '$window','Page', 'NewsFeed',function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler, $window,Page, NewsFeed) {
 
   	$window.scrollTo(0, 0);
     Page.setTitle('navigation.courses');
@@ -14,6 +14,16 @@ angular.module('scalearAngularApp')
   			},
   			function(){}
       )
+
+      NewsFeed.index({}, function(data){
+        $scope.latest_events = data.latest_events
+        $scope.latest_announcements = data.latest_announcements
+        $scope.coming_up = data.coming_up
+        console.log('got these')
+        console.log(data)
+      }, function(){
+        console.log('Couldn\'t get the data');
+      })
 		}
 
 		$scope.order=function(column_name){

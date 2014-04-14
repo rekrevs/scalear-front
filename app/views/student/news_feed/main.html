@@ -1,0 +1,18 @@
+<div class="main-events-class">
+	<link rel="stylesheet" href="styles/student/news_feed.css"/>
+	<!-- <big> -->
+	<div>
+		<b class="dropdown-header">What's New?</b>
+		<event-item ng-repeat="event in latestevents | orderBy:'appearance_time':reverse" event="event"></event-item>
+	</div>
+	<div>
+		<b class="dropdown-header">Latest Announcements</b>
+	</div>
+	<div>
+		<b class="dropdown-header">Coming Up</b>
+	</div>
+		
+		
+
+	<!-- </big> -->
+</div>

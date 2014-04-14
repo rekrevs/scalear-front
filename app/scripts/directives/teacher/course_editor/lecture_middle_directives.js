@@ -38,7 +38,8 @@ angular.module('scalearAngularApp')
 						'</a>'+
 						'<ul class="dropdown-menu" style="left:-35%;font-size:12px">'+
 				              '<li ng-repeat="item in list">'+
-				              		'<a href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{"lectures."+item.text|translate}}</a>'+
+				              		// '<a href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{"lectures."+item.text|translate}}</a>'+
+				              		'<a ng-hide="quiztype==\'invideo\' && item.only==\'html\'" href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{"lectures."+item.text|translate}}</a>'+
 				              '</li>'+ 
 						'</ul>'+
 				  	'</div>'
@@ -308,23 +309,19 @@ angular.module('scalearAngularApp')
 			columna:"@",
 			index: "=",
 			submitted: "=",
-			subtype:"="
+			subtype:"=",
+			sortable:'@'
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform' style='overflow: auto;'><div style='text-align:left;margin:10px;'>"+
-						"<img src='images/move2.png' class='handle' title=\"{{'courses.drag_to_reorder'|translate}}\"  style='margin-top:10px;margin-right:4px'/>"+
+						"<img ng-show='sortable' src='images/move2.png' class='handle' title=\"{{'courses.drag_to_reorder'|translate}}\"  style='margin-top:10px;margin-right:4px'/>"+
 						"<label class='q_label'><span translate>answer.question</span>:</label>"+
 						"<input required name='qlabel' type='text' ng-model='quiz[column]' />"+
 						"<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'><span translate>courses.required</span>!</span>"+
 						// ADD QUESTION TYPE IF ITS A QUIZ QUESTION.. SELECT LIST.
 						"<br />"+
 						"<label ng-if='show_question()' class='q_label'><span translate>groups.question_type</span>:</label>"+
-						"<select ng-if='show_question()' ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'>"+
-							// "<option value='MCQ'>MCQ</option>"+
-							// "<option value='OCQ' >OCQ</option>"+
-							// "<option value='DRAG' ng-if='!isSurvey()' translate>groups.drag</option>"+
-							// "<option value='Free Text Question' ng-if='isSurvey()' translate>groups.free_text_question</option>"+
-						"</select>"+
+						"<select ng-if='show_question()' ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'></select>"+
 						"<delete_button ng-if='show_question()' size='small' action='removeQuestion(index)' />"+
 						"<br/>"+
 						"<div ng-hide='hideAnswer()' class='answer_div'>"+
@@ -344,7 +341,7 @@ angular.module('scalearAngularApp')
 			}
 			scope.hideAnswer = function()
 			{
-				return (scope.isSurvey() && scope.quiz.question_type=="Free Text Question")
+				return (scope.quiz.question_type=="Free Text Question")
 			}
 			
 			scope.show_question = function()
@@ -352,11 +349,11 @@ angular.module('scalearAngularApp')
 				return "content" in scope.quiz
 			}
 
-			scope.cc =['MCQ', 'OCQ']
+			scope.cc =['MCQ', 'OCQ','Free Text Question']
 			if(!scope.isSurvey())
 				scope.cc.push('DRAG')
-			else
-				scope.cc.push('Free Text Question')
+			// else
+			// 	scope.cc.push('Free Text Question')
 			$log.debug("QUIZZ is ");
 			$log.debug(scope.quiz);
 			scope.addAnswer=scope.add()

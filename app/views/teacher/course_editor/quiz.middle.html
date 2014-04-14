@@ -5,7 +5,7 @@
 		</overlay>
 		<form name='tform' novalidate ui-sortable="quizSortableOptions" ng-model='questions' style="overflow:auto">
 			<div ng-repeat="question in questions" class="quiz_sort">
-				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index"/>
+				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index" sortable="true"/>
 				<div ng-if="question.question_type=='header'" style="text-align:left" >
 					<img src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}" style="margin-top:2px"/>
 					<label class='q_label'><span translate>quizzes.header</span>:</label>

@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
       			})
       		}
     	};
-  	})/*.directive('comingItem', function ($filter) {
+  	}).directive('comingItem', function ($filter) {
 		return {
 			replace: true,
 			restrict: 'E',
@@ -45,25 +45,29 @@ angular.module('scalearAngularApp')
 				date: '=',
 				type: '='
 			},
-      		templateUrl: '/views/student/news_feed/coming_item.html',
+      		// templateUrl: '/views/student/news_feed/coming_item.html',
       		link: function (scope, element, attrs) {
       			
       		}
     	};
-  	}).directive('announcementItem', function ($filter) {
+  	}).directive('announcementNewsItem', function ($filter) {
 		return {
 			replace: true,
 			restrict: 'E',
 			scope:{
-				id: '=',
-				title: '=',
-				body: '=',
-				date: '=',
-				type: '='
+				announcement: '='
 			},
-      		templateUrl: '/views/student/news_feed/coming_item.html',
+      		templateUrl: '/views/student/news_feed/announcement_item.html',
       		link: function (scope, element, attrs) {
-      			
+      			scope.shorten = function(body){
+      				if(body.length > 80) {
+					    body = body.substring(0,75)+"...";
+					}
+					return body;
+      			}
+      			scope.$watch('announcement', function(){
+      				scope.announcement_body = scope.shorten(scope.announcement.announcement);
+      			})
       		}
     	};
-  	});*/
+  	});

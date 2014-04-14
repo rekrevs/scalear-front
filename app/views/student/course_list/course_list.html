@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="styles/student/news_feed.css"/>
 <center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
 </br>
 <div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 1;">
@@ -21,6 +22,8 @@
 	<course-item ng-repeat="course in courses|orderBy:column:is_reverse" course='course' teachers='course.teacher_enrollments' ></course-item>
 </div>
 <div class="news-feed-container">
-	<news-feed latestevents="latest_events" comingup="coming_up" latestannouncements="latest_announcements"></news-feed>
+	<b class="dropdown-header">What's New?</b>
+	<news-feed latestevents="latest_events | orderBy:appearance_time:reverse" comingup="coming_up" latestannouncements="latest_announcements"></news-feed>
+	<!-- <event-item ng-repeat="event in latest_events | orderBy:'appearance_time':reverse" event="event"></event-item> -->
 </div>
 

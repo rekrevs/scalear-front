@@ -789,7 +789,8 @@ var translation_en=function(){
       new_lecture: "New lecture added ",
       new_quiz: "New quiz added ",
       new_survey: "New survey added ",
-      added_to: " has been added to "
+      added_to: " has been added to ",
+      announcement: "Announcement"
     }
 
 

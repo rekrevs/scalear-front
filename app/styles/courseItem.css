@@ -1,6 +1,5 @@
 .whole-box{
-	max-width: 95%;
-	width: 55%;
+	width: 100%;
 	min-height: 150px;
 	height: auto;
 	background-color: transparent;
@@ -38,6 +37,11 @@
 	background-color: red;
 	color: #2d2d2d;
 }
+.courses-container{
+	width: 45%;
+	/*display: inline-block;*/
+	margin-right: 30px;
+}
 .course-info-container{
 	font-weight: 200;
 	/*background-color: rgb(0, 150, 86);*/
@@ -59,10 +63,19 @@
 }
 @media only screen and (max-width : 1024px) {
 	.whole-box{
+		width: 100%;
+		clear: both;
+	}
+	.courses-container{
 		width: 95%;
 		clear: both;
-
 	}
+	/*.news-feed-container{
+		width: 95%;
+		clear: both;
+		position: relative;
+		right: 0px;
+	}*/
 }
 
 /*.short_name{

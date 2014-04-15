@@ -98,7 +98,7 @@ angular.module('scalearAngularApp')
 	    	quiz_count:'=quizCount',
 	    	question_count:'=questionCount'
 	    },
-	    template:'<div ng-show="inclass_estimate" class="time_estimate">'+
+	    template:'<div ng-show="inclass_estimate">'+
 					'<h4>Time Estimate</h4>'+
 					'<span>In-class: <b>{{inclass_estimate}} minutes</b></span>'+
 					'<a style="float:right;cursor:pointer" pop-over="popover_options">more...</a>'+

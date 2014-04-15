@@ -250,3 +250,56 @@ ul.highlight, li.highlight{
 	float: left;
 	background: #0088cc;
 }
+.whole-right-container{
+	/*width: 70%; 
+	min-width: 700px; 
+	display: inline-block; 
+	margin-left: 29%; 
+	min-height: 80%; 
+	margin-top: 35px;*/
+
+	/*new responsive styling*/
+	width: 68%;
+	min-width: 650px;
+	display: inline-block;
+	position: fixed;
+	top: 135px;
+	right: 10px;
+}
+.filter-bar{
+	width: 68%; 
+	display: inline-block; 
+	margin-left:28%; 
+	position: fixed;
+}
+
+@media (max-width: 1024px) {
+	.time_estimate{
+		top: 45px;
+		left: 73%;
+		position: absolute;
+	}
+	.whole-right-container{
+		width: 97%;
+		clear: both;
+		display: block;
+		margin-left: 0px;
+		position: relative;
+		top: 20px;
+
+	}
+	.video-showroom{
+		width: 90%;
+		clear: both;
+		position: relative;
+		display: block;
+	}
+	.video-container-styling{
+		height: auto;
+	}
+	.filter-bar{
+		width: 90%; 
+		display: inline-block; 
+		position: relative;
+	}
+}

@@ -8,7 +8,8 @@ angular.module('scalearAngularApp')
 			scope:{
 				comingup: '=',
 				latestevents: '=',
-				latestannouncements: '='
+				latestannouncements: '=',
+				events: '='
 			},
       		templateUrl: '/views/student/news_feed/main.html',
       		link: function (scope, element, attrs) {
@@ -25,39 +26,10 @@ angular.module('scalearAngularApp')
 				// body: '=',
 				// date: '=',
 				// typee: '='
-				event: '=' 
+				event: '='
+				// announcement_body: '='
 			},
       		templateUrl: '/views/student/news_feed/event_item.html',
-      		link: function (scope, element, attrs) {
-      			scope.$watch('event', function(){
-      				console.log(scope.event)
-      			})
-      		}
-    	};
-  	}).directive('comingItem', function ($filter) {
-		return {
-			replace: true,
-			restrict: 'E',
-			scope:{
-				id: '=',
-				title: '=',
-				body: '=',
-				date: '=',
-				type: '='
-			},
-      		// templateUrl: '/views/student/news_feed/coming_item.html',
-      		link: function (scope, element, attrs) {
-      			
-      		}
-    	};
-  	}).directive('announcementNewsItem', function ($filter) {
-		return {
-			replace: true,
-			restrict: 'E',
-			scope:{
-				announcement: '='
-			},
-      		templateUrl: '/views/student/news_feed/announcement_item.html',
       		link: function (scope, element, attrs) {
       			scope.shorten = function(body){
       				if(body.length > 80) {
@@ -65,8 +37,15 @@ angular.module('scalearAngularApp')
 					}
 					return body;
       			}
-      			scope.$watch('announcement', function(){
-      				scope.announcement_body = scope.shorten(scope.announcement.announcement);
+      			scope.strip = function(html){
+      				var tmp = html.replace(/(<([^>]+)>)/ig," ");
+        			return tmp.replace(/\n/g, "")
+      			}
+      			scope.$watch('event', function(){
+      				if(scope.event.class_name == 'announcement' && scope.event.announcement){
+      					scope.announcement_body = scope.shorten(scope.strip(scope.event.announcement));
+      				}	
+	      			
       			})
       		}
     	};

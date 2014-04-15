@@ -1,5 +1,5 @@
 <div class="event-box">
-	<div class="news-body">
+	<div ng-if="event.class_name == 'announcement'" class="news-body">
 		<img ng-src="../images/news-announcement.png" tooltip="{{'news.announcement' | translate}}" tooltip-placement="left" />
 
 		{{announcement_body}}

@@ -21,9 +21,14 @@
 <div ng-show="courses" class="courses-container">
 	<course-item ng-repeat="course in courses|orderBy:column:is_reverse" course='course' teachers='course.teacher_enrollments' ></course-item>
 </div>
+
 <div class="news-feed-container">
-	<b class="dropdown-header">What's New?</b>
-	<news-feed latestevents="latest_events | orderBy:appearance_time:reverse" comingup="coming_up" latestannouncements="latest_announcements"></news-feed>
+	<div>
+		<b class="dropdown-header">What's New?</b>
+	</div>
+	<div style="overflow-y: auto; height: 100%;">
+		<news-feed events="events"></news-feed>
+	</div>
 	<!-- <event-item ng-repeat="event in latest_events | orderBy:'appearance_time':reverse" event="event"></event-item> -->
 </div>
 

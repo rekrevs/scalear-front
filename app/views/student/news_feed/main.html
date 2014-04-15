@@ -1,9 +1,3 @@
 <div class="main-events-class">
-	<link rel="stylesheet" href="styles/student/news_feed.css"/>
-	<!-- <big> -->
-	<div>
-		<event-item ng-repeat="event in latestevents | orderBy:'appearance_time':reverse" event="event"></event-item>
-		<announcement-news-item ng-repeat="announcement in latestannouncements | orderBy:'updated_at':reverse" announcement="announcement"></announcement-news-item>
-	</div>
-	<!-- </big> -->
+	<event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event"></event-item>	
 </div>

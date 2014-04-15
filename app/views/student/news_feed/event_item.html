@@ -1,7 +1,7 @@
 <div class="event-box">
-	<div ng-if="event.class_name == 'lecture' || event.class_name == 'quiz'" class="news-body">
-		<img ng-if="event.quiz_type != 'survey'" ng-src="../images/news-{{event.class_name}}.png" tooltip="{{'groups.lecture' | translate}}" tooltip-placement="left" />
-		<img ng-if="event.quiz_type == 'survey'" src="../images/news-survey.png" tooltip="{{'survey' | translate}}" tooltip-placement="left" />
+	<div ng-show="event.class_name == 'lecture' || event.class_name == 'quiz'" class="news-body">
+		<img ng-if="event.quiz_type != 'survey'" ng-src="../images/news-{{event.class_name}}.png" />
+		<img ng-if="event.quiz_type == 'survey'" src="../images/news-survey.png" />
 
 	
 		<span ng-if="event.quiz_type != 'survey'" translate>
@@ -12,10 +12,19 @@
 		</span>
 		"<a ui-sref="course.lectures.module.{{event.class_name}}({course_id: event.course_id, module_id: event.group_id, {{event.class_name}}_id: event.id})">{{event.name}}</a>"
 	</div>
+
+	<div ng-show="event.class_name == 'announcement'" class="news-body">
+		<img style="vertical-align: top;" ng-src="../images/news-announcement.png"/>
+		<div style="display: inline-block;" ng-bind-html="announcement_body">
+		<!-- {{announcement_body}} -->
+		</div>
+		<!-- <small><small><a ng-if="announcement_body.length < announcement.announcement.length" ui-sref="course.student_calendar({course_id: announcement.course_id})">View</a></small></small> -->
+	</div>
+
 	<div class="news-course">
 		<a ui-sref="course.student_calendar({course_id: event.course_id})">{{event.course_name}}</a>
 	</div>
 	<div class="news-timestamp">
-		<small><small>{{event.appearance_time | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</small></small>
+		<small><small>{{event.timestamp | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</small></small>
 	</div>
 </div>

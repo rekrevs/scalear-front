@@ -7,7 +7,7 @@
 	margin: 5px;
 	display: inline-block;
 	text-align: left;
-	float: left;
+	overflow: auto;
 }
 .selected{
 	border: 3px solid rgb(0, 162, 86);

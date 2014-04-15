@@ -5,7 +5,6 @@ angular.module('scalearAngularApp')
 		$window.scrollTo(0, 0);
 		Page.setTitle('courses.new_course')
 		$scope.submitting=false;
-
 		$scope.course={}
 		Course.newCourse(
 			function(data){

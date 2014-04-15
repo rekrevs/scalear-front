@@ -440,6 +440,7 @@ var translation_en=function(){
         out_of: "Out Of",
       },
       courses:{
+        image_not_found: "Image not found...",
         you_asked: "You asked: ",
         confused: "Confused",
         really_confused: "Really Confused",

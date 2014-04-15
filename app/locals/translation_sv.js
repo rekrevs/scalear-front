@@ -439,6 +439,7 @@ var translation_sv=function(){
               out_of: "ut ur",
           },
       courses:{
+              image_not_found: "Image inte hittad...",
               you_asked: "Du frågade: ",
               confused: "Förvirrad",
               really_confused: "Verkligen Förvirrad",

@@ -88,7 +88,7 @@
         </div>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">
-                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view')"/></span>
+                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course')"/></span>
                 <span ui-view="navigation" iscollapsed="iscollapsed"></span>
                 <div class="row" style="width: auto; padding: 10px 15px 20px 70px; text-align: center; margin-bottom: 50px;">
                     <div ui-view=""></div>

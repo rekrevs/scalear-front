@@ -23,7 +23,7 @@
 	<course-item ng-repeat="course in courses|orderBy:column:is_reverse" course='course' teachers='course.teacher_enrollments' ></course-item>
 </div>
 
-<div class="news-feed-container">
+<div class="news-feed-container" ng-show="courses">
 	<div>
 		<b class="dropdown-header">What's New?</b>
 	</div>

@@ -228,13 +228,16 @@ ul.highlight, li.highlight{
 }
 
 .maroon{	
-	color: red;
+	color: maroon;
 }
 .coral{
 	color: #2d2d2d;
 }
-.blue{
+.green{
 	color: rgb(0, 162, 86);
+}
+.blue{
+	color: #0088cc;
 }
 .red{	
 	color: red;

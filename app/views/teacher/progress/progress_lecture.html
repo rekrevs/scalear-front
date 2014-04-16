@@ -59,7 +59,7 @@
 				<div id="lecture_{{module_item.id}}" ng-if="module_item.class_name=='lecture'" ng-init='lec=lectures[module_item.id]'>
 					<p class="title">{{lec.meta.name}} <span style="font-size:12px">({{lec.meta.duration|format}}, {{getKeys(lec.charts).length}} questions)</span></p>
 					<ul class="ul_item vline inner_content" ng-click="highlight($event, item)" ng-repeat="item in timeline['lecture'][lec.meta.id].items|filter:{data:'!!', type:custom_filter}">
-						<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner maroon" >
+						<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner blue" >
 							<inner_title ng-click="seek(item.time, lec.meta.url, lec.meta.id)" time="item.time" type="{{(item.type[0].toUpperCase()+item.type.slice(1)).split('_').join(' ')}}" />
 							<span class="inner_value"> {{item.data}}</span>
 						</li>
@@ -72,8 +72,8 @@
 								</li>
 							</ul>						
 						</li>
-						<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData')" class="li_inner blue">
-							<inner_title ng-click="seek(item.time, lec.meta.url, lec.meta.id)" time="item.time" type="Quiz" title="{{item.data.title+' ('+item.data.type+')'}}" />
+						<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData'); color =Math.ceil(item.data.review/students_count*100) >= 30? 'red' : ''" class="li_inner green">
+							<inner_title ng-click="seek(item.time, lec.meta.url, lec.meta.id)" time="item.time" type="Quiz" title="{{item.data.title+' ('+item.data.type+') - '+Math.ceil(item.data.review/students_count*100)+'% of students voted for review'}}" color="color" />
 							<i ng-show="item.data.hide" class="icon-check" style="margin-top:8px;float:right"></i>
 							<div google-chart chart="chart" class="progress_chart" ></div>
 							<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" style="margin-left:30px"/>

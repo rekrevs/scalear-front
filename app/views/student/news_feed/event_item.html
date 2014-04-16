@@ -1,6 +1,7 @@
 <div class="event-box">
 	<div ng-show="event.class_name == 'lecture' || event.class_name == 'quiz'" class="news-body">
-		<img ng-if="event.quiz_type != 'survey'" ng-src="../images/news-{{event.class_name}}.png" />
+		<img ng-if="event.class_name == 'lecture'" ng-src="../images/news-lecture.png" />
+		<img ng-if="event.class_name == 'quiz' && event.quiz_type != 'survey'" ng-src="../images/news-quiz.png" />
 		<img ng-if="event.quiz_type == 'survey'" src="../images/news-survey.png" />
 
 	
@@ -14,7 +15,7 @@
 	</div>
 
 	<div ng-show="event.class_name == 'announcement'" class="news-body">
-		<img style="vertical-align: top;" ng-src="../images/news-announcement.png"/>
+		<img style="vertical-align: top;" src="../images/news-announcement.png"/>
 		<div style="display: inline-block;" ng-bind-html="announcement_body">
 		<!-- {{announcement_body}} -->
 		</div>

@@ -53,7 +53,7 @@
 	color: #000;
 }
 .news-course:before{
-	content: url('../../images/course_small.png');
+	content: url('/images/course_small.png');
 	margin-top: 1px;
 }
 

@@ -133,7 +133,9 @@
                     <tr ng-show="e.type!='discussion'">
                         <td class="timeline-icon-container">
                                 <div ng-show="(e.type=='quiz' && e.data.is_quiz_solved) || e.type=='confused'" ng-click="seek(e.time, l.id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(e.time) | formattime:'hh:mm:ss'}}" tooltip-append-to-body="true" >
-                                    <img src="../images/{{e.type}}-timeline.png" />
+                                    <img ng-show="e.type=='confused'" src="../images/confused-timeline.png" />
+                                    <img ng-show="e.type=='discussion'" src="../images/discussion-timeline.png" />
+                                    <img ng-show="e.type=='quiz'" src="../images/quiz-timeline.png" />
                                 </div>
                         </td>
                         <td ng-show="e.type=='quiz' && !e.data.is_quiz_solved">
@@ -164,7 +166,7 @@
                     <tr ng-show="e.type=='discussion'">
                         <td>
                             <div ng-show="(e.type=='discussion')" class="solved timeline-item" ng-click="seek(e.time, l.id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="{{(e.time) | formattime:'hh:mm:ss'}}">
-                                <img src="../images/{{e.type}}-timeline.png" />
+                                <img src="../images/discussion-timeline.png" />
                             </p>
                         </td>
                         <!--<td ng-show="e.type=='quiz' && !e.data.is_quiz_solved"><p>{{e.data.question}}</p></td>-->
@@ -178,9 +180,9 @@
 
                                     <td>
                                         <span style="float: right;">
-                                            <img ng-show="e.data.user_id != current_user.id && e.data.user_flag==1" src='{{e.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(e.data.id, l.id, e)" style="cursor: pointer; float: right;" tooltip="{{'discussion.dunflag_post' | translate}}"/>
+                                            <img ng-show="e.data.user_id != current_user.id && e.data.user_flag==1" ng-src='{{e.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(e.data.id, l.id, e)" style="cursor: pointer; float: right;" tooltip="{{'discussion.dunflag_post' | translate}}"/>
 
-                                            <img ng-show="e.data.user_id != current_user.id && e.data.user_flag!=1" src='{{e.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(e.data.id, l.id, e)" style="cursor: pointer; float: right;" tooltip="{{'discussion.flag_post' | translate}}"/>
+                                            <img ng-show="e.data.user_id != current_user.id && e.data.user_flag!=1" ng-src='{{e.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(e.data.id, l.id, e)" style="cursor: pointer; float: right;" tooltip="{{'discussion.flag_post' | translate}}"/>
 
                                             <delete_button ng-show="e.type=='discussion' && e.data.user_id == current_user.id" size="small" action="deleteDiscussion(e.data.id, l.id, e)" ></delete_button>
                                         </span>
@@ -197,9 +199,9 @@
                                 </tr>
                                 <tr ng-show="e.type=='discussion'" ng-repeat="e2 in timeline['lecture'][l.id][e.data.id].items | filter:checkEmpty" class="discussion-comment">
                                     <td style="padding-left: 30px; width: 100%;">
-                                        <img ng-show="e2.data.user_id != current_user.id && e2.data.user_flag==1" src='{{e2.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" style="cursor: pointer; float: right;" tooltip="{{'discussion.unflag_post' | translate}}"/>
+                                        <img ng-show="e2.data.user_id != current_user.id && e2.data.user_flag==1" ng-src='{{e2.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" style="cursor: pointer; float: right;" tooltip="{{'discussion.unflag_post' | translate}}"/>
 
-                                        <img ng-show="e2.data.user_id != current_user.id && e2.data.user_flag!=1" src='{{e2.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" style="cursor: pointer; float: right;" tooltip="{{'discussion.flag_post' | translate}}"/>
+                                        <img ng-show="e2.data.user_id != current_user.id && e2.data.user_flag!=1" ng-src='{{e2.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(e2.data.id,e.data.id, l.id, e2)" style="cursor: pointer; float: right;" tooltip="{{'discussion.flag_post' | translate}}"/>
                                         <delete_button ng-show="e2.data.user_id == current_user.id" size="small" action="deleteAnswer(e2.data.id,e.data.id, l.id, e2)" />
                                         <b>{{e2.data.screen_name}}</b><br />{{e2.data.content}}
                                         <br />

@@ -8,8 +8,10 @@
         </span>
         <br>
         <br>
-        <b translate>name</b>: <input ng-show="!current_user" type="text" id="report_name" class="string name optional" name="user[name]" size="50" autocomplete="off" translate/><br />
-        <b translate>email</b>: <input ng-show="!current_user" type="email" id="report_email" class="string email optional" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" autocomplete="off" translate/>
+        <span ng-show="!current_user">
+            <b translate>name</b>: <input type="text" id="report_name" class="string name optional" name="user[name]" size="50" autocomplete="off" translate/><br />
+            <b translate>email</b>: <input type="email" id="report_email" class="string email optional" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" autocomplete="off" translate/>
+        </span>
 
         <div style="color: #0088cc;">
             <b translate>

@@ -9,6 +9,8 @@ angular.module('scalearAngularApp')
       'destroy': { method: 'DELETE', headers:headers },
 	  'getQuizList':{method:'GET', params:{action:'get_quiz_list_angular'}, headers:headers},
 	  'validateName':{method:'PUT', params:{action:'validate_name'}, headers:headers},
+	  'hideResponses':{method:'POST', params:{action:'hide_responses'}, headers:headers},
+	  // "showInclass":{method:'POST',params:{action:'show_question_inclass'},headers:headers},
 	});
 
 }])

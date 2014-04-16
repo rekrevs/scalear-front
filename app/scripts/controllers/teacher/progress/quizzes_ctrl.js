@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('quizzesCtrl', ['$scope', '$stateParams', '$timeout', 'Module', '$translate', '$log','Quiz', function($scope, $stateParams, $timeout, Module, $translate, $log, Quiz,) {
+    .controller('quizzesCtrl', ['$scope', '$stateParams', '$timeout', 'Module', '$translate', '$log','Quiz', function($scope, $stateParams, $timeout, Module, $translate, $log, Quiz) {
 
             $scope.quizzesTab = function() {
                 $scope.tabState(6)

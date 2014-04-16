@@ -103,8 +103,8 @@ angular.module('scalearAngularApp')
     $scope.updateGrade = function(answer){
         Quiz.updateGrade(
             {course_id:$stateParams.course_id, quiz_id: answer.quiz_id},
-            {answer_id: answer.id, grade:answer.grade},
-        );
+            {answer_id: answer.id, grade:answer.grade}
+        )
     }
 
 

@@ -9,6 +9,9 @@
 	text-align: left;
 	overflow: auto;
 }
+.main-box:hover{
+	box-shadow: 0 0 5px rgb(0, 162, 86);
+}
 .selected{
 	border: 3px solid rgb(0, 162, 86);
 	margin: 2px;

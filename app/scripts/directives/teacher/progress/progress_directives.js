@@ -88,8 +88,10 @@ angular.module('scalearAngularApp')
 		scope:{
 			question:'=',
 			survey_id:'=surveyId',
+			lecture_id:'=lectureId',
 			related_answers:'=relatedAnswers',
-			display_only:'=displayOnly'
+			display_only:'=displayOnly',
+			graded: '@'
 		},
 	    templateUrl:'/views/teacher/progress/free_text_table.html', 
 	    controller:'freeTextTableCtrl'

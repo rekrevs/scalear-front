@@ -1,8 +1,26 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('freeTextTableCtrl', ['$scope', '$timeout', 'Quiz', '$log', function ($scope, $timeout, Quiz, $log) {
-        $scope.showFeedback = function(answers, index){
+  .controller('freeTextTableCtrl', ['$scope', '$timeout', 'Quiz', '$log','Lecture','$stateParams', function ($scope, $timeout, Quiz, $log, Lecture, $stateParams) {
+    
+    $scope.grade_options= [{
+         value: 0, // not set
+         text: 'Under Review'
+     }, {
+         value: 1, // wrong
+         text: 'Wrong'
+     }, {
+         value: 2,
+         text: 'Partial'
+     }, {
+         value: 3,
+         text: 'Good'
+     }]
+ 
+     // $scope.grade_display={0 : "Under Review", 1: "Wrong", 2:"Partial", 3:"Good"}
+
+
+    $scope.showFeedback = function(answers, index){
     	answers.showGroups = true
 		for(var i in answers){
     		answers[i].show_feedback = false
@@ -18,7 +36,7 @@ angular.module('scalearAngularApp')
 		answers[index].group_selected = false
     }
 
-    $scope.saveCheckedHide = function(answer_id, answer_hide){
+    $scope.saveCheckedHideSurvey = function(answer_id, answer_hide){
     	Quiz.hideResponses(
     		{quiz_id: $scope.survey_id},
     		{
@@ -28,6 +46,18 @@ angular.module('scalearAngularApp')
                 }                
             }
 		)
+    }
+
+   $scope.saveCheckedHideQuiz = function(answer_id, answer_hide){
+        Lecture.hideResponses(
+            {lecture_id: $scope.lecture_id},
+            {
+                hide:{
+                    id:answer_id, 
+                    hide: answer_hide
+                }                
+            }
+        )
     }
 
     $scope.sendFeedback=function(answers,index){
@@ -69,4 +99,13 @@ angular.module('scalearAngularApp')
     		function(){}
 		)
     }
+
+    $scope.updateGrade = function(answer){
+        Quiz.updateGrade(
+            {course_id:$stateParams.course_id, quiz_id: answer.quiz_id},
+            {answer_id: answer.id, grade:answer.grade}
+        )
+    }
+
+
   }]);

@@ -135,6 +135,16 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	display:inline;
 }
 
+.orange{
+   color:orange;
+   float:right;
+}
+
+.gray{
+   color:gray;
+   float:right;
+}
+
 .red{
 	color:red;
 	font-style: italic;

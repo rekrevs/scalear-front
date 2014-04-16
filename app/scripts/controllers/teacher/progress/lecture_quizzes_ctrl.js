@@ -32,6 +32,8 @@ angular.module('scalearAngularApp')
                             $scope.total = $scope.lecture_data.question_ids.length
                             $scope.sub_question_ids = $scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_limit)
                             $scope.student_count = $scope.lecture_data.students_count
+                            $scope.online_quiz_free= data.quiz_free
+                            $scope.related_answers = data.related
                             $scope.enableChartsScrolling()
                             $scope.$watch("current_lang", redrawChart);
                         }

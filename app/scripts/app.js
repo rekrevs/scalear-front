@@ -254,7 +254,7 @@ angular.module('scalearAngularApp', [
                 url: '/users/edit',
                 views:{
                     'user_navigation':{
-                        templateUrl: 'views/user_navigation.html',
+                        templateUrl: '/views/user_navigation.html',
                         controller: 'navigationCtrl'
                     },
                     '':{
@@ -265,7 +265,7 @@ angular.module('scalearAngularApp', [
             })
             .state('profile', {
                 url: '/users/profile/:user_id',
-                templateUrl: 'views/users/profile.html',
+                templateUrl: '/views/users/profile.html',
                 controller: 'UsersProfileCtrl'
             })
             .state('forgot_password', {

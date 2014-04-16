@@ -66,9 +66,9 @@ angular.module('scalearAngularApp')
           else{
             element.css('height', scope.imagesize+'px');
             element.css('width', scope.imagesize+'px');
-            scope.source_image = '../../images/user_image.png'
+            scope.source_image = null
           }
-          element.attr('src', scope.source_image)
+          // element.attr('src', scope.source_image)
         });
       }
     };

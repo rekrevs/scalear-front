@@ -313,23 +313,7 @@ angular.module('scalearAngularApp')
 			sortable:'@'
 		},
 		restrict: 'E',
-		template: "<ng-form name='qform' style='overflow: auto;'><div style='text-align:left;margin:10px;'>"+
-						"<img ng-show='sortable' src='images/move2.png' class='handle' title=\"{{'courses.drag_to_reorder'|translate}}\"  style='margin-top:10px;margin-right:4px'/>"+
-						"<label class='q_label'><span translate>answer.question</span>:</label>"+
-						"<input required name='qlabel' type='text' ng-model='quiz[column]' />"+
-						"<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'><span translate>courses.required</span>!</span>"+
-						// ADD QUESTION TYPE IF ITS A QUIZ QUESTION.. SELECT LIST.
-						"<br />"+
-						"<label ng-if='show_question()' class='q_label'><span translate>groups.question_type</span>:</label>"+
-						"<select ng-if='show_question()' ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'></select>"+
-						"<delete_button ng-if='show_question()' size='small' action='removeQuestion(index)' />"+
-						"<br/>"+
-						"<div ng-hide='hideAnswer()' class='answer_div'>"+
-							"<htmlanswer />"+
-							"<a class='add_multiple_answer' ng-click='addAnswer(\"\",quiz)' href='' translate>groups.add_answer</a>"+
-							"<br/>"+
-						"</div>"+
-					"</ng-form>",
+		templateUrl: '/views/teacher/course_editor/answer_forum.html',
 		link: function(scope, element, iAttrs) {			
 			
 			scope.isSurvey = function()

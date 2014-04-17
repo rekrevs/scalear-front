@@ -69,28 +69,32 @@ angular.module('scalearAngularApp')
 				player_events = {}
 
 				var loadVideo = function(){
-					if(player)
-						Popcorn.destroy(player)
+					scope.kill_popcorn()
 
                     if(!scope.controls || scope.controls==undefined)
                         scope.controls=0;                   
 
-                    var matches = getVideoId(scope.url)
-                    var vimeo= scope.url.match(/vimeo/)  // improve this..
-                    if(matches) //youtube
-                    {
+                    //var matches = 
+                    //var vimeo= scope.url.match(/vimeo/)  // improve this..
+                    if(isYoutube(scope.url)){
+                    	console.log("youtube")
                     	scope.video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
                     	player = Popcorn(scope.video,{});
-                    	scope.video.src = formatURL(scope.url, scope.vq, scope.start_time)
+                    	scope.video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time)
+						$timeout(function(){
+							if(player_controls.readyState() == 0)
+								scope.$emit('slow')
+						},15000)
                         // player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1');
                     }
-                    else if(vimeo)
-                    {
+                    else if(isVimeo(scope.url)){
+                    	console.log("vimeo")
                         player = Popcorn.smart( '#'+scope.id, scope.url+"?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0",{ width: '100%', height:'100%', controls: 0});
                         player.controls(scope.controls);
                         player.autoplay(true);
                     }
-                    else{
+                    else if(isMP4(scope.url)){
+                    	console.log("mp4")
                         player = Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
                         player.controls(scope.controls);
                         player.autoplay(true);
@@ -98,25 +102,31 @@ angular.module('scalearAngularApp')
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
 					setupEvents()
-					$timeout(function(){
-						if(player_controls.readyState() == 0)
-							scope.$emit('slow')
-					},15000)
+
 					parent.focus()
 				}
 
-				var formatURL=function(url,vq,time){
-					var splitted_url= url.split('?'),
-					base_url = splitted_url[0],
-					query = '&'+splitted_url[1]	
+				var formatYoutubeURL=function(url,vq,time){
+					var short_url = isShortYoutube(url)
+					var base_url, query
+					if(short_url){
+						base_url = 'http://www.youtube.com/watch'
+						query = '&v='+short_url[1]
+						console.log("adfgads")
+						console.log(query)
+					}
+					else{
+						var splitted_url= url.split('?')
+						base_url = splitted_url[0]
+						query = '&'+splitted_url[1]	
+					}
 					return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls&origin=https://www.youtube.com"+query;
 				}
 
                 scope.kill_popcorn = function(){
                     if(player)
-                    {
                         player.destroy();
-                    }
+                    element.find('iframe').remove();
                 }
                 player_controls.play=function(){
 					player.play();
@@ -158,7 +168,7 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
-
+						console.log(time)
 					player.currentTime(time);
 					parent.focus()
 				}
@@ -181,7 +191,7 @@ angular.module('scalearAngularApp')
 				player_controls.refreshVideo = function(){
 					$log.debug("refreshVideo!")
 					scope.kill_popcorn()
-					element.find('iframe').remove();
+					
 					// //popcornApiProxy(loadVideo);
 					loadVideo()
 				}
@@ -299,17 +309,31 @@ angular.module('scalearAngularApp')
 					player_controls.refreshVideo()
 				})
 
-                var is_final_url= function(url){
-                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
-                }
+                // var is_final_url= function(url){
+                //     return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
+                // }
 
-                var getVideoId= function(url){
+                var isYoutube= function(url){
                     return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
                 }
 
+
+                var isShortYoutube= function(url){
+                    return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)?\.be\/([^\s&]{11})/);
+                }
+
+                var isVimeo=function(url){
+                	return url.match(/vimeo/)
+                }
+
+              	var isMP4=function(url){
+                	return url.match(/(.*mp4$)/)
+                }
+
+
 				scope.$watch('url', function(){
 
-                    if(scope.url)
+                    if(scope.url && (isYoutube(scope.url) || isVimeo(scope.url) || isMP4(scope.url)) )
                     {
 
                       //  var matches = is_final_url(scope.url)

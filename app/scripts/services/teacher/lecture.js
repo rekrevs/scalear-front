@@ -33,7 +33,10 @@ angular.module('scalearAngularApp')
         "saveNote":{method:'POST', params:{action:'save_note'}, headers:headers},
         "loadNote":{method:'GET', params:{action:'load_note'}, headers:headers},
         "lectureCopy":{method:'POST', params:{action:'lecture_copy'}, headers:headers},
-        "lastViewed":{method: 'GET', params:{action:'last_viewed'}, headers:headers}
+        "lastViewed":{method: 'GET', params:{action:'last_viewed'}, headers:headers},
+		// "hideResponses":{method:'POST',params:{action:'hide_responses'},headers:headers},
+		// "sendFeedback":{method:'POST', params:{action:'create_or_update_survey_responses'},headers:headers},
+		// "deleteFeedback":{method:'DELETE',params:{action:'delete_response'},headers:headers}
 	});
 
 }]) 

@@ -1,0 +1,67 @@
+.news-feed-container{
+	margin: 10px;
+	width: 45%;
+	display: inline-block;
+	/*margin-right: 30px;*/
+	position: fixed;
+	right: 40px;
+	height: 75%;
+	max-height: 75%;
+	min-height: 25%;
+	/*overflow-y: auto;*/
+	/*overflow-x: visible; */
+	text-align: left;
+	/*min-height: 400px;*/
+	/*background-color: lightgray;*/
+}
+.main-events-class{
+	width: 100%;
+	position: relative;
+	/*background-color: grey;*/
+	text-align: left;
+}
+.event-box{
+	width: 97%;
+	margin: 2px;
+	padding: 3px;
+	/*background-color: lightgray; */
+	/*border-radius: 2px;*/
+	border-bottom: 1px lightgray dotted;
+	margin-left: 10px;
+}
+.news-timestamp{
+	display: inline-block;
+	text-align: right;
+	color: grey;
+	right: 0px;
+	float: right;
+	cursor: default;
+}
+.news-course{
+	margin-left: 30px;
+	display: inline-block;
+	/*float: right;*/
+	color: darkgrey;
+	/*color: #2d2d2d;*/
+	font-size: 85%;
+	clear: left;
+}
+.news-course > a{
+	color: #616161;
+}
+.news-course > a:hover{
+	color: #000;
+}
+.news-course:before{
+	content: url('/images/course_small.png');
+	margin-top: 1px;
+}
+
+@media only screen and (max-width: 1024px){
+	.news-feed-container{
+		width: 95%;
+		clear: both;
+		position: relative;
+		right: 0px;
+	}
+}

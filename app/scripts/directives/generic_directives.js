@@ -66,9 +66,9 @@ angular.module('scalearAngularApp')
           else{
             element.css('height', scope.imagesize+'px');
             element.css('width', scope.imagesize+'px');
-            scope.source_image = '../../images/user_image.png'
+            scope.source_image = null
           }
-          element.attr('src', scope.source_image)
+          // element.attr('src', scope.source_image)
         });
       }
     };
@@ -215,4 +215,37 @@ angular.module('scalearAngularApp')
           
     }
   }
-})
+}).directive('smartImage', ['$http', function($http){
+  return{
+    restrict: 'E',
+    scope:{
+      defaultimage: '=',
+      desiredimage: '=',
+      notfound: '='
+    },
+    templateUrl: '/views/smart_image.html',
+    link: function(scope, element){
+      var image_pattern = new RegExp('\.(((g|G)(i|I)(f|F))|((j|J)(p|P)(e|E)?(g|G))|((p|P)(n|N)(g|G)))$');
+      var smart_image = angular.element('#course-image-smart')
+      smart_image[0].onerror = function(){
+        scope.notfound = 'courses.image_not_found'
+        smart_image[0].src = scope.defaultimage
+        scope.$apply();
+      }
+      console.log(smart_image[0])
+      scope.$watch('desiredimage', function(){
+        if(!scope.desiredimage){
+          scope.finalimage = scope.defaultimage;
+          scope.notfound = ''
+        }
+        else{
+          if(image_pattern.test(scope.desiredimage)){
+            scope.finalimage = scope.desiredimage;
+            scope.notfound = ''
+          }
+        }
+
+      });
+    }
+  }
+}]);

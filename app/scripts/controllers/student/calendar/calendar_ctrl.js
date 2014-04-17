@@ -15,6 +15,7 @@ angular.module('scalearAngularApp')
 
 	var init=function(){
 	    $scope.eventSources = [];
+	    $scope.filtered_events = []
 		Course.getCalendarEvents(
 			{course_id: $stateParams.course_id},
 			function(data){
@@ -31,8 +32,13 @@ angular.module('scalearAngularApp')
 			  	};
 				$scope.calendar = data;
 				$scope.announcements= JSON.parse(data.announcements);
-				
-			   	 for (var element in $scope.calendar.events){
+				data.events.forEach(function(event){
+					if(event.firstItem){
+						$scope.filtered_events.push(event)
+					}
+			  	})
+			  	$scope.calendar.events = $scope.filtered_events
+			   	for (var element in $scope.calendar.events){
 			   		if($scope.calendar.events[element].quizId)
 			   			$scope.calendar.events[element].url= $state.href("course.lectures.module.quiz",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId ,quiz_id:$scope.calendar.events[element].quizId})
 			 		else if($scope.calendar.events[element].lectureId)

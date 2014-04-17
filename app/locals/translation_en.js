@@ -440,6 +440,7 @@ var translation_en=function(){
         out_of: "Out Of",
       },
       courses:{
+        image_not_found: "Image not found...",
         you_asked: "You asked: ",
         confused: "Confused",
         really_confused: "Really Confused",
@@ -783,6 +784,14 @@ var translation_en=function(){
                 subject: 'Unlock Instructions'
             }
         }
+    },
+    news:
+    {
+      new_lecture: "New lecture added ",
+      new_quiz: "New quiz added ",
+      new_survey: "New survey added ",
+      added_to: " has been added to ",
+      announcement: "Announcement"
     }
 
 

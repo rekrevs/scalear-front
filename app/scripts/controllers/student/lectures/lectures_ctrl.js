@@ -29,7 +29,7 @@ angular.module('scalearAngularApp')
 				$log.debug($scope.course);
 				$scope.today = data.today;	
 				$scope.last_viewed = data.last_viewed
-				if(!$state.params.lecture_id && $scope.last_viewed.module != -1){
+				if(!$state.params.lecture_id && $scope.last_viewed.module != -1 && !$state.params.quiz_id){
 
 			    	$state.go('course.lectures.module.lecture', {'module_id': $scope.last_viewed.module, 'lecture_id': $scope.last_viewed.lecture})
 			    	$scope.current_item = $scope.last_viewed.lecture
@@ -37,14 +37,12 @@ angular.module('scalearAngularApp')
 			    }
 				$scope.initSelector();
 				if(!$state.params.module_id){
-					console.log('doing dooaisdiauhsdiauhsdiuahsdiuashdiuahs aisudhaisudh')
 					$scope.showModuleContent($scope.last_viewed.module)
 				}
 				else{
 					console.log('doing the right thing')
 					$scope.showModuleContent($state.params.module_id)	
 				}
-				console.log('dakhal hena ahooooooo dakhal hena ahooooooo dakhal hena ahooooooo')
 				if($scope.last_viewed.module == -1){
 					$scope.current_item = $scope.current_module.lectures[0].id
 					$state.go('course.lectures.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})

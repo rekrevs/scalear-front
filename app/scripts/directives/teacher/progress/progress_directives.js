@@ -46,15 +46,21 @@ angular.module('scalearAngularApp')
 	    scope: {
 	    	time:'=',
 	    	type:'@',
-	    	title:'@'
+	    	title:'@',
+	    	color: "="
 	    },
 	    template:'<span class="inner_title" >'+
 					'<span style="cursor:pointer"><span ng-show="time!=null">[{{time|format:"mm:ss"}}]</span> {{type}}: '+ 
-						'<span style="color:black;font-weight:normal">{{title}}</span>'+
+						'<span ng-style="title_style">{{title}}</span>'+
 					'</span>'+
 				'</span>', 
 	    link:function(scope){
-
+	    	scope.title_style = {"color":"black", "fontWeight":"normal"}
+	    	scope.$watch('color',function(){
+	    		if(scope.color)
+	    			scope.title_style.color = scope.color
+	    			
+	    	})
 	    }
     };
 })
@@ -82,8 +88,10 @@ angular.module('scalearAngularApp')
 		scope:{
 			question:'=',
 			survey_id:'=surveyId',
+			lecture_id:'=lectureId',
 			related_answers:'=relatedAnswers',
-			display_only:'=displayOnly'
+			display_only:'=displayOnly',
+			graded: '@'
 		},
 	    templateUrl:'/views/teacher/progress/free_text_table.html', 
 	    controller:'freeTextTableCtrl'

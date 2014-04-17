@@ -464,7 +464,7 @@ header > a:hover{
 footer{
   position: fixed;
   background-color: white;
-  padding: 10px;
+  padding: 5px;
   width: 100%;
   box-shadow: 0.5px 0.5px 2px darkgray;
   margin-left: -70px;
@@ -537,33 +537,34 @@ a:hover{
   color: white;
 }
 
-#info > a:before{
+#info > a > div:before{
   content: url("../images/course-info-icon.png");
 }
-#calendar > a:before{
+#calendar > a > div:before{
   content: url("../images/calendar-icon.png");
 }
-#announcements > a:before{
+#announcements > a > div:before{
   content: url("../images/announcements-icon.png");
 }
-#students > a:before{
+#students > a > div:before{
   content: url("../images/students-icon.png");
 }
-#progress > a:before{
+#progress > a > div:before{
   content: url("../images/progress-icon.png");
 }
-#inclass > a:before{
+#inclass > a > div:before{
   content: url("../images/inclass-icon.png");
 }
-#content > a:before{
+#content > a > div:before{
   content: url("../images/content-icon.png");
 }
 
-#lectures > a:before{
+#lectures > a > div:before{
   content: url("../images/lectures-icon.png");
 }
-#info:hover, #calendar:hover, #lectures:hover, #announcements:hover, #students:hover, #progress:hover, #inclass:hover, #content:hover,.current{
+#info > a > div:hover, #calendar > a > div:hover, #lectures > a > div:hover, #announcements > a > div:hover, #students > a > div:hover, #progress > a > div:hover, #inclass > a > div:hover, #content > a > div:hover,.current{
   border-bottom: 4px solid rgb(0, 162, 86);
+  margin-bottom: -4px;
 }
 
 .tab-content{
@@ -752,4 +753,20 @@ iframe{
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+}
+.current-user-name{
+  right: 100px; 
+  vertical-align: -webkit-baseline-middle; 
+  margin-top: 5px; 
+  position: fixed; 
+}
+@media (max-width: 700px) {
+  .state{
+    display: none;
+  }
+}
+@media (max-width: 490px) {
+  .current-user-name{
+    display: none;
+  }
 }

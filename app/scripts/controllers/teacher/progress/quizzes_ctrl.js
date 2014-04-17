@@ -1,19 +1,18 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('quizzesCtrl', ['$scope', '$stateParams', '$timeout', 'Module', '$translate', '$log',
-        function($scope, $stateParams, $timeout, Module, $translate, $log) {
+    .controller('quizzesCtrl', ['$scope', '$stateParams', '$timeout', 'Module', '$translate', '$log','Quiz', function($scope, $stateParams, $timeout, Module, $translate, $log, Quiz) {
 
             $scope.quizzesTab = function() {
                 $scope.tabState(6)
                 $scope.disableInfinitScrolling()
                 if (!$scope.selected_quiz)
-                    getQuizCharts()
+                    $scope.getQuizCharts()
             }
 
-            var getQuizCharts = function() {
+            $scope.getQuizCharts = function() {
                 var quiz_id
-                if ($scope.selected_quiz)
+                if($scope.selected_quiz)
                     quiz_id = $scope.selected_quiz[1]
                 $scope.loading_quizzes_chart = true
                 Module.getQuizChart({
@@ -26,6 +25,12 @@ angular.module('scalearAngularApp')
                         $scope.quiz_chart_data = data.chart_data
                         $scope.quiz_chart_questions = data.chart_questions
                         $scope.student_count = data.students_count
+
+
+                        $scope.ordered_quiz= data.ordered_quiz
+                        $scope.quiz_free= data.quiz_free
+                        $scope.related_answers = data.related
+
                         if (!$scope.selected_quiz) {
                             $scope.all_quizzes = data.all_quizzes
                             $scope.selected_quiz = $scope.all_quizzes ? $scope.all_quizzes[0] : ""
@@ -110,7 +115,7 @@ angular.module('scalearAngularApp')
                 $log.debug($scope.selected_quiz)
                 $scope.quiz_chart_data = {}
                 $scope.quiz_chart_questions = {}
-                getQuizCharts()
+                $scope.getQuizCharts()
             }
 
             var redrawChart = function(new_val, old_val) {

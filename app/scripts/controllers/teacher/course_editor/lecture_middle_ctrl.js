@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
     $scope.video_layer={}
     $scope.lecture_player={}
     $scope.lecture_player.events={}
+    $scope.$parent.lecture_player =  $scope.lecture_player
     $scope.alert={
     	type:"error", 
     	msg: "lectures.got_some_errors"
@@ -24,7 +25,8 @@ angular.module('scalearAngularApp')
 	$scope.quiz_types_list=[
 		{type:'MCQ', text:"insert_mcq"},
 		{type:'OCQ', text:"insert_ocq"}, 
-		{type:'drag',text:"insert_drag"}
+		{type:'drag',text:"insert_drag"},
+		{type:'Free Text Question',text:"insert_free_text_question", only:"html"}
 	]
 	$scope.survey_types_list=[
 		{type:'MCQ', text:"MCQ - Multiple Choice Answers"},
@@ -32,7 +34,7 @@ angular.module('scalearAngularApp')
 	]
     $scope.play_pause_class = 'play'
     $scope.current_time = 0
-    $scope.total_duration = 0
+    //$scope.lecture.duration = 0
     $scope.fullscreen = false
 	
     $state.go('course.course_editor.lecture.quizList');
@@ -51,18 +53,17 @@ angular.module('scalearAngularApp')
             $scope.lecture.duration=$scope.lecture_player.controls.getDuration();
             $scope.updateLecture();
         }
+        $scope.slow = false
     }
  	$scope.lecture_player.events.onReady= function(){
  		$scope.hide_overlay = true
-        $scope.total_duration = $scope.lecture_player.controls.getDuration()
+        $scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  		$scope.lecture_player.controls.pause()
         $scope.lecture_player.controls.seek(0)
         $scope.lecture_player.controls.volume(0.5);
+     	//$scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  	}
 
- 	$scope.lecture_player.events.onMeta = function(){
- 		$scope.slow = false
- 	}
 	$scope.lecture_player.events.onPlay= function(){
         $scope.play_pause_class = 'pause'
 		$scope.slow = false
@@ -70,6 +71,7 @@ angular.module('scalearAngularApp')
 		if($scope.editing_mode)
 			$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
+
     $scope.playBtn = function(){
         console.log($scope.play_pause_class)
         if($scope.play_pause_class == "play"){
@@ -88,13 +90,13 @@ angular.module('scalearAngularApp')
         var element = angular.element('.progressBar');
         var ratio = ($event.pageX-element.offset().left)/element.outerWidth();
         $scope.elapsed_width = ratio*100+'%'
-        $scope.seek($scope.total_duration*ratio)
+        $scope.seek($scope.lecture.duration*ratio)
     }
 
     $scope.lecture_player.events.timeUpdate = function(){
         // console.log("in timeupdate")
         $scope.current_time = $scope.lecture_player.controls.getTime()
-        $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
+        $scope.elapsed_width = (($scope.current_time/$scope.lecture.duration)*100) + '%'
     }
 
     $scope.lecture_player.events.onPause= function(){
@@ -106,7 +108,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.waiting=function(){
-        if($scope.editing_mode && $scope.selected_quiz && $scope.lecture_player.controls.getTime() != $scope.selected_quiz.time){
+    	console.log("Wainting")
+        if($scope.editing_mode && $scope.selected_quiz && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_quiz.time)){
         	$scope.editing_mode = false;
         	$scope.selected_quiz=null
     	}

@@ -1,6 +1,13 @@
+<!-- build:css(.tmp/styles) styles/news_feed.css -->
+<link rel="stylesheet" href="styles/student/news_feed.css"/>
+<!-- endbuild -->
+
+<!-- build:css(.tmp/styles) styles/course_item.css -->
+<link rel="stylesheet" href="styles/courseItem.css"/>
+<!-- endbuild -->
 <center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
 </br>
-<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
+<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 1;">
 	<div style="float: left;">
 		<span class="dropdown" ><button class="dropdown-toggle btn" ng-show="courses.length > 1" data-toggle="dropdown">Sort By <b class="caret"></b></button>
 	        <ul class="dropdown-menu" style="margin-top: 10px; border-radius: 0px;">
@@ -16,8 +23,18 @@
 	<br>
 	<h5 class="muted" translate>courses.enroll_instruction</h5>
 </center>
-<div ng-show="courses">
-	<br />
+<br />
+<div ng-show="courses" class="courses-container">
 	<course-item ng-repeat="course in courses|orderBy:column:is_reverse" course='course' teachers='course.teacher_enrollments' ></course-item>
+</div>
+
+<div class="news-feed-container" ng-show="courses">
+	<div>
+		<b class="dropdown-header">What's New?</b>
+	</div>
+	<div style="overflow-y: auto; height: 100%;">
+		<news-feed events="events"></news-feed>
+	</div>
+	<!-- <event-item ng-repeat="event in latest_events | orderBy:'appearance_time':reverse" event="event"></event-item> -->
 </div>
 

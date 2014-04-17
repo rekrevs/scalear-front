@@ -5,11 +5,27 @@
 		</video_container>
 	</center>
 
-	<div ng-repeat="id in sub_question_ids" class="chart" style='min-width: 300px; height: 260px;' ng-init="chart=createLectureChart(lecture_data.charts,id, student_count)"> 
+<!-- 	<div ng-repeat="id in sub_question_ids" class="chart" style='min-width: 300px; height: 260px;' ng-init="chart=createLectureChart(lecture_data.charts,id, student_count)"> 
 	    <div class="seeker" ng-click="seek(id)" style="cursor:pointer"><a><span translate>answer.question</span> {{$index+1}}</a><br> {{getLectureTitle(id)}} </div>
 	    <div google-chart chart="chart" ></div>
 	    <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
-	</div>	
+	</div>	 -->
+		<div ng-repeat="id in sub_question_ids">
+        	<div ng-if="lecture_data.questions[id][2]!='Free Text Question'" class="chart" style='min-width: 300px; height: 260px;' ng-init="chart=createLectureChart(lecture_data.charts,id, student_count)">
+            	<div class="seeker" ng-click="seek(id)" style="cursor:pointer">
+            		<a>
+            			<span translate>answer.question</span> {{$index+1}}
+            		</a>
+            		<br> {{getLectureTitle(id)}} 
+            	</div>
+            <div google-chart chart="chart" ></div>
+            <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" />
+        </div>
+
+   <!-- lectures_data.lectures feeha el lectures -->
+        <!-- Over here, give lecture_id and then over there check if invideo quiz, then free_online_quiz_grades.online_answer instead of answer -->
+        <free-text-table ng-if="lecture_data.questions[id][2]=='Free Text Question'" question="online_quiz_free[id]" lecture_id="online_quiz_free[id]['lecture_id']" related-answers="related_answers" />
+    </div>
 </div>
 <center>
 	<br><br>

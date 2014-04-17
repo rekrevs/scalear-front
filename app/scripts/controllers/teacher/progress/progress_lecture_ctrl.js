@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','$log', '$window','$translate','$timeout',function ($scope, $stateParams, Timeline, Module,Quiz, $log, $window, $translate,$timeout) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout',function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout) {
 
+    $scope.Math = window.Math;
   	$scope.highlight_index = -1
   	$scope.inner_highlight_index = -1
   	$scope.progress_player= {}
@@ -18,11 +19,31 @@ angular.module('scalearAngularApp')
       removeShortcuts()
     });
 
-    $scope.filters={"All":"",
-                    "Confused":"confused",
-                    "Questions":"question",
-                    "Charts": "charts",
-                  }
+    $scope.filters=
+    {
+      "All":"",
+      "Confused":"confused",
+      "Questions":"question",
+      "Charts": "charts",
+    }
+
+    $scope.grade_options= [
+    {
+      value: 0, // not set
+      text: 'Under Review'
+    }, 
+    {
+      value: 1, // wrong
+      text: 'Wrong'
+    }, 
+    {
+      value: 2,
+      text: 'Partial'
+    }, 
+    {    
+      value: 3,
+      text: 'Good'
+    }]
 
   	var init= function(){
   		$scope.timeline = new Timeline()
@@ -31,6 +52,7 @@ angular.module('scalearAngularApp')
           module_id: $stateParams.module_id
 	  		},
 	  		function(data){
+          console.log(data)
 	  			angular.extend($scope, data)
 	  	 		$scope.url = $scope.first_lecture
 	  	 		$scope.timeline['lecture'] = {}
@@ -43,6 +65,7 @@ angular.module('scalearAngularApp')
 			  	 			}
 	  	 			}	  	 			
 	  	 		}
+          console.log($scope.timeline['lecture'])
 	  	 		getModuleCharts()
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
@@ -53,7 +76,7 @@ angular.module('scalearAngularApp')
 		)
 	}
   var resizeContainer = function(){
-    $scope.right_container.css('height', angular.element($window).height() - 190)
+    $scope.right_container.css('height', angular.element($window).height() - 200)
     console.log('height should be '+angular.element($window).height())
   }
   angular.element($window).bind('resize', function () {
@@ -74,23 +97,30 @@ angular.module('scalearAngularApp')
   }
 
 	var getQuizCharts = function(){
+
     Module.getQuizCharts(
       {             
           course_id: $stateParams.course_id,
           module_id:$stateParams.module_id
       },
       function(data){
-      	$scope.quizzes = data.quizzes  
+        console.log(data)
+        $scope.quizzes=angular.extend({}, data.quizzes, $scope.quizzes)
       	$scope.timeline['quiz'] ={}
   	 		for(var quiz_id in $scope.quizzes){
   	 			$scope.timeline['quiz'][quiz_id] = new Timeline()
   	 			for(var q_idx in $scope.quizzes[quiz_id].questions){
             var q_id = $scope.quizzes[quiz_id].questions[q_idx].id
-            $scope.quizzes[quiz_id].charts[q_id].type = $scope.quizzes[quiz_id].questions[q_idx].type
-            $scope.quizzes[quiz_id].charts[q_id].title = $scope.quizzes[quiz_id].questions[q_idx].question
-  	 			  $scope.timeline['quiz'][quiz_id].add(0, 'charts', $scope.quizzes[quiz_id].charts[q_id])
+            var data = $scope.quizzes[quiz_id].charts[q_id] || $scope.quizzes[quiz_id].free_question[q_id]
+            data.type = $scope.quizzes[quiz_id].questions[q_idx].type
+            data.id = q_id  
+            data.quiz_type='quiz'
+            var type = $scope.quizzes[quiz_id].questions[q_idx].type == "Free Text Question"? $scope.quizzes[quiz_id].questions[q_idx].type : 'charts'
+  	 			  $scope.timeline['quiz'][quiz_id].add(0, type, data,'quiz')
           }
   	 		}
+
+
  	    },
       function(){}
     )
@@ -109,10 +139,12 @@ angular.module('scalearAngularApp')
         		$scope.timeline["survey"][survey_id]=new Timeline()
         		for(var q_idx in $scope.quizzes[survey_id].questions){
         			var q_id = $scope.quizzes[survey_id].questions[q_idx].id
-        			$scope.quizzes[survey_id].charts[q_id].type = $scope.quizzes[survey_id].questions[q_idx].type
-              var type = $scope.quizzes[survey_id].charts[q_id].type == "Free Text Question"? $scope.quizzes[survey_id].charts[q_id].type : 'charts'
-              $scope.quizzes[survey_id].charts[q_id].id = q_id
-              $scope.timeline['survey'][survey_id].add(0, type, $scope.quizzes[survey_id].charts[q_id])
+              var data = $scope.quizzes[survey_id].charts[q_id] || $scope.quizzes[survey_id].free_question[q_id]
+              data.type = $scope.quizzes[survey_id].questions[q_idx].type
+              data.id = q_id  
+              data.quiz_type='survey'
+              var type = $scope.quizzes[survey_id].questions[q_idx].type == "Free Text Question"? $scope.quizzes[survey_id].questions[q_idx].type : 'charts'
+              $scope.timeline['survey'][survey_id].add(0, type, data)
         		}
         	}
     	 	},
@@ -174,12 +206,18 @@ angular.module('scalearAngularApp')
   	$scope.highlight=function(ev,item){
   		var ul = angular.element(ev.target).closest('ul.ul_item')
   		var divs = angular.element('.ul_item')
-  		angular.element(divs[$scope.highlight_index]).removeClass('highlight')
+  		// angular.element(divs[$scope.highlight_index]).removeClass('highlight')
+      $(".highlight").removeClass("highlight");
   		$scope.highlight_index = divs.index(ul)
   		angular.element(ul).addClass("highlight")
       if($scope.selected_item == item)
         return
       $scope.selected_item =item
+      var parent_div = ul.closest('div')
+      if(parent_div.attr('id')){
+        var id=parent_div.attr('id').split('_') 
+        $scope.selected_item.lec_id = id[1]
+      }
   		$scope.inner_highlight_index = -1	
   	}
 
@@ -232,6 +270,18 @@ angular.module('scalearAngularApp')
       )
     }
 
+   $scope.updateHideResponseOnlineQuiz = function(quiz_id, id, value){
+      OnlineQuiz.hideResponses(
+        {online_quizzes_id: quiz_id},
+        {
+            hide:{
+              id:id, 
+              hide: value
+            }                
+        }
+      )
+    }
+
     $scope.updateHideFreeText=function(quiz_id,id, value){
       Quiz.showInclass(
         {quiz_id:quiz_id},
@@ -241,6 +291,17 @@ angular.module('scalearAngularApp')
         }
       )
     }
+
+
+    // $scope.updateHideFreeTextOnlineQuiz=function(quiz_id,id, value){
+    //   OnlineQuiz.showInclass(
+    //     {quiz_id:quiz_id},
+    //     {
+    //       question:id,
+    //       show:value
+    //     }
+    //   )
+    // }
 
   $scope.sendFeedback=function(question){
     var survey_id = question.quiz_id,
@@ -257,6 +318,13 @@ angular.module('scalearAngularApp')
         question.response = question.temp_response
       },
       function(){}
+    )
+  }
+
+  $scope.updateGrade = function(answer){
+    Quiz.updateGrade(
+        {course_id:$stateParams.course_id, quiz_id: answer.quiz_id},
+        {answer_id: answer.id, grade:answer.grade}
     )
   }
 
@@ -467,14 +535,16 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : true});
 
     shortcut.add("Space",function(){
+      
       if($scope.selected_item.time>0){
+        console.log($scope.selected_item)
 	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url, $scope.lectures[$scope.selected_item.lec_id].meta.id)
         $scope.$apply()
       }
     },{"disable_in_input" : true});
 
     shortcut.add("h",function(){
-      if($scope.selected_item){
+      if($scope.selected_item){        
   			if ($scope.selected_item.type == "question"){
   				var q_ind = $scope.inner_highlight_index <0 ? 0 : $scope.inner_highlight_index
   				$scope.selected_item.data[q_ind][2] = !$scope.selected_item.data[q_ind][2]
@@ -487,14 +557,27 @@ angular.module('scalearAngularApp')
           }
   			}
         else if($scope.selected_item.type == "Free Text Question"){
+          if($scope.selected_item.data.quiz_type == 'survey'){
+            if($scope.inner_highlight_index < 0){
+              $scope.selected_item.data.show = !$scope.selected_item.data.show
+              $scope.updateHideFreeText($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show)
+            }
+            else{
+              var q_ind = $scope.inner_highlight_index
+              $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
+              $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
+            }
+          }
+        }
+        else if($scope.selected_item.type == "free_question"){
           if($scope.inner_highlight_index < 0){
             $scope.selected_item.data.show = !$scope.selected_item.data.show
-            $scope.updateHideFreeText($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show)
+            $scope.updateHideQuiz($scope.selected_item.data.id, !$scope.selected_item.data.show)
           }
           else{
             var q_ind = $scope.inner_highlight_index
             $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
-            $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
+            $scope.updateHideResponseOnlineQuiz($scope.selected_item.data.answers[q_ind].online_quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
           }
         }
       }

@@ -135,16 +135,32 @@ angular.module('scalearAngularApp')
             $(document).off("click")        
       }
 
-    	scope.submit_question = function()
+    	scope.submitQuestion = function()
     	{
     		$log.debug("will submit "+scope.question_asked);
-            var time=scope.lecture_player.controls.getTime()
-  		    Lecture.confusedQuestion({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:time, ques: scope.question_asked}, function(data){
-            scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'yellow', 'courses.you_asked',data.id, scope.question_asked ]);
-            scope.question_asked="";
-  			scope.show_question=false;
-  			scope.lecture_player.controls.play();	
-  		});
+        var time=scope.lecture_player.controls.getTime()
+        if(scope.question_asked!=""){
+  		    Lecture.confusedQuestion(
+            {
+              course_id:$stateParams.course_id, 
+              lecture_id:$stateParams.lecture_id
+            },
+            {
+              time:time, 
+              ques: scope.question_asked
+            }, 
+            function(data){
+              scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'yellow', 'courses.you_asked',data.id, scope.question_asked ]);
+              scope.question_asked="";
+	            scope.show_question=false;
+  			      scope.lecture_player.controls.play();	
+  		      }
+          );
+        }
+        else{
+          scope.show_question=false;
+          scope.lecture_player.controls.play(); 
+        }
     		
     	};
 
@@ -180,7 +196,7 @@ angular.module('scalearAngularApp')
           shortcut.add("Enter",function(){
             var elem_name=angular.element(document.activeElement).attr('name')
             if(elem_name =='ask')
-              scope.submit_question()
+              scope.submitQuestion()
               scope.$apply()
           },{"disable_in_input" : false, "disable_in_editable" :true});
   		};
@@ -195,7 +211,7 @@ angular.module('scalearAngularApp')
     }
   };
 }])
-.directive("notification", ['$translate', '$window', '$log', function($translate, $window, $log) {
+.directive("notification", ['$translate', '$window', '$log','OnlineQuiz', function($translate, $window, $log, OnlineQuiz) {
   return {
     restrict:"E",
     template:'<div class="well" style="font-size:12px;padding:5px;">'+
@@ -204,10 +220,20 @@ angular.module('scalearAngularApp')
                     '<b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }">'+
                       '<span>{{verdict}}</span>'+
                     '</b><br/>'+
-                    '<p ng-hide="selected_quiz.quiz_type==\'html\' && selected_quiz.question_type.toUpperCase()==\'DRAG\'" translate="lectures.hover_for_details" />'+
+                    '<p ng-hide="selected_quiz.quiz_type==\'html\' && (selected_quiz.question_type.toUpperCase()==\'DRAG\' || selected_quiz.question_type.toUpperCase()==\'FREE TEXT QUESTION\')" translate="lectures.hover_for_details" />'+
                   '</center>'+
                 '</div>'+
-                '<div ng-show="show_notification!=true" style="vertical-align:middle">{{show_notification}}</div>'+
+                '<div ng-show="show_notification!=true && show_notification!=false" style="vertical-align:middle">{{show_notification}}</div>'+
+                '<div ng-show="review_inclass" style="vertical-align:middle">'+
+                  '<center>'+
+                    '<b style="color:blue">'+
+                      '<span>Would you like this question to be reviewed In Class?</span>'+
+                    '</b><br/>'+
+                    '<button ng-click="voteForReview()" style="margin-right: 5px;border-radius: 5px;background: white;font-size: 10px;padding: 2px 10px;margin-top:5px">YES</button>'+
+                    '<button ng-click="closeReviewNotify()" style="margin-right: 5px;border-radius: 5px;background: white;font-size: 10px;padding: 2px 10px;margin-top:5px">NO</button>'+
+                    '<button ng-click="retryQuiz()" style="margin-right: 5px;border-radius: 5px;background: white;font-size: 10px;  padding: 2px 10px;margin-top:5px">Retry</button>'+
+                  '</center>'+
+                '</div>'+
               '</div>',
 
     link: function(scope, element, attrs) {
@@ -240,6 +266,25 @@ angular.module('scalearAngularApp')
         }
           element.css("top", scope.pHeight+"px");
           element.css("position", "absolute");
+      }
+
+      scope.voteForReview=function(){
+        OnlineQuiz.voteForReview(
+          {online_quizzes_id:scope.selected_quiz.id},{},
+          function(res){
+            if(res.done)
+              scope.closeReviewNotify()
+          }
+        )
+      }
+
+      scope.closeReviewNotify=function(){
+        scope.review_inclass= false 
+      }
+
+      scope.retryQuiz=function(){
+        scope.seek(scope.selected_quiz.time, scope.selected_quiz.lecture_id)
+        scope.closeReviewNotify()
       }
 
       setNotficationPosition()
@@ -277,7 +322,7 @@ angular.module('scalearAngularApp')
 			$log.debug("check answer "+scope.solution);
 			if(scope.selected_quiz.quiz_type=="html"){			 	
         $log.debug(scope.answer_form);
-        if(!scope.answer_form.$error.atleastone || scope.answer_form.$error.atleastone==false){
+        if((!scope.answer_form.$error.atleastone || scope.answer_form.$error.atleastone==false) && !(scope.selected_quiz.question_type=='Free Text Question' && scope.answer_form.$error.required)){
           $log.debug("valid form")
           scope.submitted=false;
           Lecture.saveHtml(
@@ -355,21 +400,6 @@ angular.module('scalearAngularApp')
             answer:selected_answers
           },
           function(data){
-            if(scope.selected_quiz.quiz_type == 'survey'){
-              if(data.msg!="Empty"){
-                scope.selected_quiz.is_quiz_solved=true;
-                scope.show_notification='Thank you for your answer';
-                var removeNotification = function(){
-                  scope.show_notification=false;
-                  window.onmousemove = null
-                  scope.$apply()
-                }
-                $interval(function(){
-                  window.onmousemove = removeNotification
-                }, 600, 1);
-              }
-            }
-            else
               displayResult(data)
           },
           function(){}
@@ -382,23 +412,41 @@ angular.module('scalearAngularApp')
         for(var el in data.detailed_exp)
           scope.explanation[el]= data.detailed_exp[el];
 
-        scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
-        scope.show_notification=true;
+        // scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
+        // scope.show_notification=true;
 
-        if(data.msg!="Empty") // he chose sthg
-        {
-          // here need to update scope.$parent.$parent
-          var group_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups, data.done[1])
-          var lecture_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
-          if(lecture_index!=-1 && group_index!=-1)
-            scope.$parent.$parent.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
-          scope.selected_quiz.is_quiz_solved=true;
-
+        if(scope.selected_quiz.quiz_type == 'survey' || scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
+           if(data.msg!="Empty"){
+                scope.selected_quiz.is_quiz_solved=true;
+                scope.show_notification='Thank you for your answer';
+            }
         }
+        else{
+          if(data.review)
+            scope.verdict= $translate("lectures.reviewed");
+          else
+            scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
+   
+          scope.$parent.show_notification=true;
+
+          if(data.msg!="Empty") // he chose sthg
+          {
+            // here need to update scope.$parent.$parent
+            var group_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups, data.done[1])
+            var lecture_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+            if(lecture_index!=-1 && group_index!=-1)
+              scope.$parent.$parent.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
+            scope.selected_quiz.is_quiz_solved=true;
+
+          }
+        }
+        
         var removeNotification = function(){
           scope.show_notification=false;
           window.onmousemove = null
+          reviewInclass()          
           scope.$apply()
+         
         }
 
         $interval(function(){
@@ -406,6 +454,13 @@ angular.module('scalearAngularApp')
         }, 600, 1);
 
       }
+
+      var reviewInclass =function(){
+        //if()
+        if(!scope.selected_quiz.reviewed)
+          scope.review_inclass= true 
+      }
+
     }
   }
 }])
@@ -419,7 +474,7 @@ angular.module('scalearAngularApp')
 		},
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
-							"<label class='q_label'>{{quiz.question}}:</label>"+
+							"<label >{{quiz.question}}:</label>"+
 							"<div class='answer_div'>"+
 								"<student-html-answer />"+
 							"</div>"+
@@ -434,6 +489,7 @@ angular.module('scalearAngularApp')
 	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' style='/*overflow:auto*/' >"+
 					"<div ng-switch-when='MCQ' ><student-html-mcq  ng-repeat='answer in quiz.online_answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><student-html-ocq  ng-repeat='answer in quiz.online_answers' /></div>"+	
+          "<div ng-switch-when='FREE TEXT QUESTION'><student-html-free /></div>"+
 					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='studentAnswers[quiz.id]'>"+
 						"<student-html-drag ng-repeat='answer in studentAnswers[quiz.id]' />"+
 					"</ul>"+
@@ -545,7 +601,17 @@ angular.module('scalearAngularApp')
 				"</li>"				 
 	}
 	
-})
+}).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
+        return{
+            restrict:'E',
+            template:"<ng-form name='aform'>"+
+                "<textarea ng-model='studentAnswers[quiz.id]' style='width:500px;height:100px;' required></textarea>"+
+                "<span class='errormessage' ng-show='submitted && aform.$error.required' translate='courses.required'></span><br/>"+
+                "</ng-form>"
+        }
+
+    }])
+
 .directive("studentAnswerVideo",['$log',function($log){
   return {
     restrict:"E",

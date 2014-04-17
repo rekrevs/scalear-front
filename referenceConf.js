@@ -44,7 +44,7 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/announcments.spec.js',
+        'test/e2e/spec/discussion.spec.js',
 
     ],
 
@@ -89,7 +89,13 @@ exports.config = {
     params: {
 
         frontend: 'http://localhost:9000/#/',
+        mail: 'mena.happy@yahoo.com',
+        password: 'password',
+        course_name: 'csc-303',
         // frontend: 'http://staging.scalable-learning.com/#/',
+        //====================================================
+        //                      sign in
+        //====================================================
         sign_in: function(ptor, email, password, feedback){
             ptor.get('http://localhost:9000/#/');
             ptor.sleep(1000);
@@ -106,6 +112,10 @@ exports.config = {
                 });
             });
         },
+
+        //====================================================
+        //                      log out
+        //====================================================
         log_out: function(ptor){
             ptor.sleep(3000);
             ptor.findElement(protractor.By.id('logout_link')).then(function(link) {
@@ -114,6 +124,10 @@ exports.config = {
                 });
             });
         },
+
+        //====================================================
+        //                      sign up
+        //====================================================
         sign_up: function(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, feedback){
             ptor.get('http://localhost:9000/#/users/student');
 
@@ -149,6 +163,10 @@ exports.config = {
                 });
             });
         },
+
+        //====================================================
+        //                 confirm account
+        //====================================================
         confirm_account: function(ptor, feedback){
             ptor.driver.get('https://www.guerrillamail.com/inbox');
                 ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
@@ -182,6 +200,10 @@ exports.config = {
                    })
                })
         },
+
+        //====================================================
+        //                    feedback
+        //====================================================
         feedback: function(ptor, message){
             ptor.wait(function() {
                 return ptor.findElement(protractor.By.id('error_container')).then(function(message) {
@@ -200,12 +222,56 @@ exports.config = {
                 expect(error.getText()).toContain(message);
             });
         },
+
+        //====================================================
+        //                 open main app menu
+        //====================================================
         open_tray: function(ptor){
             ptor.findElement(protractor.By.className('menu-icon')).then(function(toggler) {
                 toggler.click()
                 ptor.sleep(1000);
             });
         },
+
+        //====================================================
+        //          press course information button
+        //====================================================
+        open_info: function(ptor){
+            info_icon = ptor.findElement(protractor.By.id("info")).then(function(btn){
+                btn.click();
+                ptor.getCurrentUrl().then(function(url) {
+                    expect(url).toContain('course_information');
+                });
+            })
+        },
+
+        //====================================================
+        //               press calendar button
+        //====================================================
+        open_calendar: function(ptor){
+            info_icon = ptor.findElement(protractor.By.id("calendar")).then(function(btn){
+                btn.click();
+                ptor.getCurrentUrl().then(function(url) {
+                    expect(url).toContain('events');
+                });
+            })
+        },
+
+        //====================================================
+        //               press lectures button
+        //====================================================
+        open_lectures: function(ptor){
+            info_icon = ptor.findElement(protractor.By.id("lectures")).then(function(btn){
+                btn.click();
+                ptor.getCurrentUrl().then(function(url) {
+                    expect(url).toContain('courseware');
+                });
+            })
+        },
+
+        //====================================================
+        //                  delete account
+        //====================================================
         cancel_account: function(ptor , name ,password, feedback){
             ptor.findElement(protractor.By.id('settings_btn')).then(function(setting_btn){
                 ptor.sleep(500);
@@ -226,6 +292,9 @@ exports.config = {
             })
         },
 
+        //====================================================
+        //               clear guerilla mail
+        //====================================================
         clean_mail: function(ptor){
             ptor.driver.get('https://www.guerrillamail.com/inbox');
                 ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
@@ -257,28 +326,33 @@ exports.config = {
                })
         },
 
+        //====================================================
+        //               open the first course
+        //====================================================
         open_course: function(ptor){
             ptor.findElements(protractor.By.partialLinkText('|')).then(function(course){
             course[0].click();
          })
         },
 
+        //====================================================
+        //               open course by name
+        //====================================================
         open_course_by_name: function(ptor, course_name){
             ptor.findElement(protractor.By.partialLinkText(course_name)).then(function(course){
                 course.click();
             })
         },
 
-          wait_for_element: function(ptor, element){
+        //====================================================
+        //               wait for element
+        //====================================================
+        wait_ele: function(ptor, element){
           ptor.wait(function(){
-            return ptor.isElementPresent(element).then(function(value){
-                return value
-            });
-        })
-}
-
-    },
-
+            return ptor.isElementPresent(element)
+        });
+      }
+  },
     // ----- Options to be passed to minijasminenode -----
     //
     // See the full list at https://github.com/juliemr/minijasminenode

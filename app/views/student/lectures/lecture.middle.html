@@ -126,12 +126,12 @@
 			</div>
 			<div id="student-accordion">
 			    <tabset style="width:100%;">
-			        <tab active="tabs[0].active" heading="{{'lectures.video_events' | translate}}" style="cursor: pointer; text-align: center;" >
+			        <tab id="video_events" active="tabs[0].active" heading="{{'lectures.video_events' | translate}}" style="cursor: pointer; text-align: center;" >
 			        	<!-- <div style="margin-top: -10px;" > -->
 			            	<discussion></discussion>
 			            <!-- </div> -->
 			        </tab>
-			        <tab active="tabs[1].active" heading="{{'lectures.video_notes' | translate}}" style="cursor: pointer;">
+			        <tab id="video_notes" active="tabs[1].active" heading="{{'lectures.video_notes' | translate}}" style="cursor: pointer;">
 			            <notes></notes>
 			        </tab>
 			        <tab ng-show="lecture.description || (lecture.slides && lecture.slides != 'none')" id="lecture-details" active="tabs[2].active" heading="{{'lectures.lecture_details' | translate}}" style="cursor: pointer;">

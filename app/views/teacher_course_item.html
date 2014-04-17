@@ -52,11 +52,11 @@
 						</tr>
 					</table>
 				</td>
-				<td ng-if="teachers" style="border-left: 1px solid lightgrey; min-width: 30%; width: 30%; padding-left: 10px;">
+				<td ng-if="teachers" style="border-left: 1px solid lightgrey; min-width: 30%; width: 30%; padding-left: 10px; vertical-align: top;">
 	            	<span class="dropdown-header" style="float: left;"><b translate>courses.teachers</b><br /></span>
 	            	<table style="width: 100%;">
 	            		<tr ng-repeat="teacher in teachers">
-	            			<td style="color: black; text-align: center; padding-left: 10px;" style="text-align: center;">
+	            			<td style="color: black; text-align: center; padding-left: 10px; width: 50px;" style="text-align: center;">
 	                            <small>
 	                            	<a href="" ng-click="filterteacher(teacher.user.name, teacher.user.email)">
 	                                	<profile-image email="teacher.user.email" imagesize="40"> </profile-image> 

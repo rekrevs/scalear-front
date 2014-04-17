@@ -153,10 +153,9 @@ ul.highlight, li.highlight{
 }
 
 .time_estimate{
-	width:170px;
-	background: orange;
-	border: solid 2px;
-	border-color: chocolate;
+	width: 26%;
+	background: #222;
+	border: 2px solid rgb(0, 162, 86) !important;
 	color: white;
 	padding:5px;
 	text-align:center;
@@ -166,7 +165,11 @@ ul.highlight, li.highlight{
 }
 
 .time_estimate a{
-	color:white;
+	color:orange;
+	float:right;
+	cursor:pointer;
+	position: absolute;
+	right: 5px;
 }
 
 .main_content{
@@ -278,8 +281,9 @@ ul.highlight, li.highlight{
 
 @media (max-width: 1024px) {
 	.time_estimate{
+		width: 26%;
 		top: 45px;
-		left: 73%;
+		left: 67%;
 		position: absolute;
 	}
 	.whole-right-container{

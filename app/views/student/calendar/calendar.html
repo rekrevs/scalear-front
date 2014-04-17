@@ -1,6 +1,14 @@
 <!-- build:css(.tmp/styles) styles/student_announcements.css -->
 <link rel="stylesheet" href="styles/student/announcements.css"/>
 <!-- endbuild -->
+<!-- build:css(.tmp/styles) styles/teacher_announcements.css -->
+<link rel="stylesheet" href="styles/teacher/announcements.css"/>
+<!-- endbuild -->
+<style>
+	.announcement-box{
+		min-width: 45%;
+	}
+</style>
 <center ng-show="!eventSources.length" style="height: 80%;"><loading size="big" show="!eventSources.length" /></center>
 <div ng-show="eventSources.length" style="padding-bottom: 30px;">
 	<div style="width: 100%;">
@@ -8,17 +16,10 @@
 			<div class="announcements-container">
 					<h3 translate="head.announcements"></h3>
 					<div>
-						<table class="table-announce">
-					        <tr ng-repeat="a in announcements">
-					           <td class = "component">
-					            	<span ng-bind-html="a.announcement"></span>
-					            	<div class="well well-lg" style="color: lightslategrey;font-size: 12px;font-weight: bold;float: right;position: relative;top: 10px;padding: 10px;background: white;margin-bottom: 0;">{{ a.updated_at | date:'medium'}}<br>{{ a.user.name }}</div>
-					           </td>
-					        </tr>
-					    </table>
+						<student-announcement-item announcement="announcement" ng-repeat="announcement in announcements">
 				    </div>
 	     	</div>
-	     	<div style="margin-top:25px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container">
+	     	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container">
 		    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="width:100%; min-width: 420px; min-height: 420px;"></div>
 		        <div class="alert" style="text-align: left;">
 		         	<div style="font-size:14px;font-weight: bold;margin-bottom:5px" translate="events.deadline_msg"></div>

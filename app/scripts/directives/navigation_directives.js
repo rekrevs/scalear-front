@@ -51,7 +51,9 @@ angular.module('scalearAngularApp')
 				courses: "=",
 				//currentuser: '=',
 				iscollapsed: '=',
-				role: '='
+				role: '=',
+				arenotification: '=',
+				areshared: '='
 			},
 			templateUrl: '/views/user_navigation.html',
 			link: function(scope){

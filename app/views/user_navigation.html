@@ -63,8 +63,11 @@
                     <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
                 </ul>
             </span>
-            <span class="settings-menu-button" id="settings_btn" ng-click="show_settings = !show_settings" ng-class="{settingsopen: show_settings}">
-            </span>
+            <span class="settings-menu-button" id="settings_btn" ng-click="show_settings = !show_settings" ng-class="{settingsopen: show_settings}"></span>
+
+            <span class="shared-page-button" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}"></span>
+
+            <span class="notification-modal-button" id="notification_btn" ng-click="" ng-class="{notificationfull: arenotification}"></span>
         </tr>
     </table>
 </div>

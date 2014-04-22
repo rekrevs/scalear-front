@@ -72,8 +72,9 @@
                 <span ng-bind="current_user.name +' '+ current_user.last_name">    
                 </span>
             </a>
-            <a href="" ng-click="open()" style="right: 30%; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; " ng-show="are_notifications()" translate="navigation.notifications" style="float:left;color:red;cursor: pointer;" class="ng-scope ng-hide">Notifications</a>
-            <a ui-sref="show_shared" style="right: 20%; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; " ng-show="are_shared()" style="float:left;color:red;cursor: pointer;" class="ng-scope ng-hide">Shared</a>
+            <!-- <a href="" ng-click="open()" style="right: 30%; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; " ng-show="are_notifications()" translate="navigation.notifications" style="float:left;color:red;cursor: pointer;" class="ng-scope ng-hide">Notifications</a> -->
+
+            <!-- <a ui-sref="show_shared" style="right: 20%; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; " ng-show="are_shared()" style="float:left;color:red;cursor: pointer;" class="ng-scope ng-hide">Shared</a> -->
             <div class="state">
                 <big><span ng-bind="current | translate"></span></big>
             </div>
@@ -88,8 +89,8 @@
         </div>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">
-                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course')"/></span>
-                <span ui-view="navigation" iscollapsed="iscollapsed"></span>
+                <span><user-navigation  iscollapsed="iscollapsed" arenotification="are_notifications()" areshared="are_shared()" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course')"/></span>
+                <span ui-view="navigation" arenotification="are_notification()" areshared="are_shared()" iscollapsed="iscollapsed"></span>
                 <div class="row" style="width: auto; padding: 10px 15px 20px 70px; text-align: center; margin-bottom: 50px;">
                     <div ui-view=""></div>
                 </div>

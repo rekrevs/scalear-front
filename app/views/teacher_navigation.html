@@ -130,6 +130,12 @@
             </span>
             <span class="settings-menu-button" ng-click="show_settings = !show_settings; selected = 1;" ng-class="{settingsopen: show_settings}">
             </span>
+            {{arenotification}}
+            {{areshared}}
+            <span class="shared-page-button" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}"></span>
+
+            <span class="notification-modal-button" id="notification_btn" ng-click="" ng-class="{notificationfull: arenotification}"></span>
+
         </tr>
     </table>
 </div>

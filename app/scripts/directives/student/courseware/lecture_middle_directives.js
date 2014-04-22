@@ -427,7 +427,7 @@ angular.module('scalearAngularApp')
           else
             scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
    
-          scope.$parent.show_notification=true;
+          scope.show_notification=true;
 
           if(data.msg!="Empty") // he chose sthg
           {

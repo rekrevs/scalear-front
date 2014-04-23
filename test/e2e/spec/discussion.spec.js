@@ -2,22 +2,23 @@ var ptor = protractor.getInstance();
 var driver = ptor.driver;
 var functions = ptor.params;
 
-var youtube = require('./youtube');
-var locator = require('./locators');
+var youtube = require('./lib/youtube');
+var locator = require('./lib/locators');
+var o_c = require('./lib/openers_and_clickers');
 
 ptor.driver.manage().window().maximize();
 describe('', function(){
 	it('should login', function(){
-    	functions.sign_in(ptor, functions.mail, functions.password, functions.feedback);
+    	o_c.sign_in(ptor, functions.mail, functions.password, o_c.feedback);
   	})
 	it('should open the course to be tested', function(){
-	    functions.open_course_by_name(ptor, functions.course_name);
+	    o_c.open_course_whole(ptor);
 	})
 	it('should open the main app menu',function(){
-		functions.open_tray(ptor);
+		o_c.open_tray(ptor);
 	})
 	it('should press the lecture icon',function(){
-		functions.open_lectures(ptor);
+		o_c.open_lectures(ptor);
 	})
 	it('uncheck the quiz checkbox',function(){
 		uncheck_quiz(ptor);
@@ -160,4 +161,3 @@ function check_discussions_in_videonotes(ptor){
 		})
 	})
 }
-

@@ -1,11 +1,9 @@
 var ptor = protractor.getInstance();
 var driver = ptor.driver;
-var functions = ptor.params;
+var params = ptor.params;
 
-var mail = 'mena.happy@yahoo.com'
-var password = 'password';
-
-var course_name = 'csc-303';
+var locator = require('./lib/locators');
+var o_c = require('./lib/openers_and_clickers');
 
 var element = 'Module 1';
 var date;
@@ -29,13 +27,13 @@ month[11] = "December";
 
 describe('', function(){
 	it('should login', function(){
-    functions.sign_in(ptor, mail, password, functions.feedback);
+    o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
   })
   it('should open the course to be tested', function(){
-    functions.open_course_by_name(ptor, course_name);
+    o_c.open_course_whole(ptor);
   })
   it('should test if an element is in the right date', function(){
-    open_random_event(ptor);
+    is_current_month(ptor)
   })
 })
 
@@ -45,8 +43,8 @@ describe('', function(){
 ///////////////check element date///////////////////
 //====================================================
 function check_element_date(ptor, element, date){
-  functions.wait_ele(ptor, protractor.By.partialLinkText(element));
-  ptor.findElement(protractor.By.partialLinkText(element)).then(function(wanted_element){
+  params.wait_ele(ptor, protractor.By.partialLinkText(element));
+  locator.by_partial_text(ptor, element).then(function(wanted_element){
     wanted_element.click();
   });
 }
@@ -55,7 +53,7 @@ function check_element_date(ptor, element, date){
 //////////////////is on Calendar page///////////////
 //====================================================
 function is_calendar(ptor){
-  ptor.findElement(protractor.By.binding('current | translate')).then(function(promise){
+  locator.by_binding(ptor, 'current | translate').then(function(promise){
      expect(promise.getText()).toContain('Calendar');
   })
 }
@@ -65,7 +63,7 @@ function is_calendar(ptor){
 //====================================================
 function is_current_month(ptor)
 {
-  ptor.findElement(protractor.By.tagName('h2')).then(function(promise){
+  locator.by_tag(ptor, 'h2').then(function(promise){
     expect(promise.getText()).toEqual(month[current_date.getMonth()]+" "+current_date.getFullYear())
   });
 }
@@ -76,9 +74,9 @@ function is_current_month(ptor)
 function get_previous_month(ptor){
   var mon;
   var year;
-  ptor.findElement(protractor.By.className('fc-button-prev')).click().
+  locator.by_classname(ptor, 'fc-button-prev').click().
                 then(function(promise){
-                    ptor.findElement(protractor.By.tagName('h2')).
+                    locator.by_tag(ptor, 'h2').
                         then(function(promise){
                           if((current_date.getMonth()-1)<0){
                             mon = 11;
@@ -99,9 +97,9 @@ function get_previous_month(ptor){
 function get_next_month(ptor){
   var mon;
   var year;
-  ptor.findElement(protractor.By.className('fc-button-next')).click().
+  locator.by_classname(ptor,'fc-button-next').click().
                 then(function(promise){
-                    ptor.findElement(protractor.By.tagName('h2')).
+                    locator.by_tag(ptor, 'h2').
                         then(function(promise){
                           if((current_date.getMonth()+1)>11){
                             mon = 0;
@@ -121,11 +119,11 @@ function get_next_month(ptor){
 //====================================================
 
 function get_todays_month(){
-            ptor.findElement(protractor.By.className('fc-button-prev')).click();
-            ptor.findElement(protractor.By.className('fc-button-prev')).click();
-            ptor.findElement(protractor.By.className('fc-button-today')).click().
+            locator.by_classname(ptor,'fc-button-prev').click();
+            locator.by_classname(ptor,'fc-button-prev').click();
+            locator.by_classname(ptor,'fc-button-today').click().
                 then(function(promise){
-                    ptor.findElement(protractor.By.tagName('h2')).
+                    locator.by_tag(ptor, 'h2').
                         then(function(promise){
                             expect(promise.getText()).toEqual(month[current_date.getMonth()]+" "+current_date.getFullYear())
                         });
@@ -137,7 +135,7 @@ function get_todays_month(){
 //====================================================
 
 function all_events_specific_month(ptor, events_no){
-  ptor.findElements(protractor.By.className('fc-event-title')).then(function(events){
+  locator.s_by_classname(ptor, 'fc-event-title').then(function(events){
     expect(events.length).toEqual(events_no);
   })
 }
@@ -150,14 +148,14 @@ function open_random_event(ptor){
   var random_event_number;
   var text;
   var res;
-  ptor.findElement(protractor.By.className('fc-content')).findElements(protractor.By.tagName('a')).then(function(links){
+  locator.by_classname(ptor, 'fc-content').findElements(protractor.By.tagName('a')).then(function(links){
       ptor.sleep(5000);
-      ptor.findElement(protractor.By.className('fc-content')).findElements(protractor.By.tagName('a')).then(function(links){
+      locator.by_classname(ptor, 'fc-content').findElements(protractor.By.tagName('a')).then(function(links){
           random_event_number = Math.floor((Math.random()*links.length)+0);
           links[random_event_number].getText().then(function(textt){
             text = textt.split(" ");
             links[random_event_number].click().then(function(){
-              ptor.findElement(protractor.By.binding("modules_obj[lecture.group_id].name+': '+lecture.name")).then(function(title){
+              locator.by_binding(ptor, "modules_obj[lecture.group_id].name+': '+lecture.name").then(function(title){
                  expect(title.getText()).toContain(text[0]);
               })
             })

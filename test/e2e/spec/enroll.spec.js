@@ -1,7 +1,18 @@
+var key = '342524bade'
+var ptor = protractor.getInstance();
+
+var locator = require('./lib/locators');
+var o_c = require('./lib/openers_and_clickers');
+
+var params = ptor.params;
+
 describe('',function(){
+    it('should sign in', function(){
+        o_c.sign_in(ptor, params.mail, params.password, o_c.feedback)
+    })
     it('should join course', function(){
         joincourse(ptor,key);
-    })    
+    })
 })
 
 
@@ -10,15 +21,15 @@ describe('',function(){
 //=====================================
 function joincourse(ptor, key)
 {
-    ptor.findElement(protractor.By.id('join_course')).then(function(link)
+    locator.by_id(ptor,'join_course').then(function(link)
     {
         link.click();
     });
-    ptor.findElement(protractor.By.name('key')).then(function(input)
+    locator.by_name(ptor, 'key').then(function(input)
     {
         input.sendKeys(key);
     });
-    ptor.findElement(protractor.By.id('enroll_button')).then(function(button)
+    locator.by_xpath(ptor, '/html/body/div[5]/div[3]/button[1]').then(function(button)
     {
         button.click();
     });

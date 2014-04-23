@@ -93,23 +93,23 @@
                 </div>
             </td>
             <span style="float: right;">
-                <ul><a style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
+                <ul><a id="logout_link" style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
             </span>
             <span style="float: right;">
-                <a href="" >
+                <a id="help_link" href="" >
                     <ul ng-bind="'head.help' | translate">
                     </ul>
                 </a>
             </span>
             <span style="float: right; display: inline-table;">
                 <ul ng-show="$parent.current_lang=='en'" ng-cloak>
-                    <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                    <a id="lang_link_swed" style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
                 </ul>
                 <ul ng-show="$parent.current_lang=='sv'" ng-cloak>
-                    <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                    <a id="lang_link_uk" style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
                 </ul>
             </span>
-            <span class="settings-menu-button" ng-click="show_settings = !show_settings; selected = 1;" ng-class="{settingsopen: show_settings}">
+            <span id="settings-btn" class="settings-menu-button" ng-click="show_settings = !show_settings; selected = 1;" ng-class="{settingsopen: show_settings}">
             </span>
         </tr>
     </table>

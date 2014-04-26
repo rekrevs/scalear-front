@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
                 }
             }
         }
-    }).directive('item', function($translate) {
+    }).directive('item', ['$state', '$translate', function($state, $translate) {
         return {
             scope: {
                 name: '=',
@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
                 }
             }
         };
-    }).directive('buttonLink', function() {
+    }]).directive('buttonLink', function() {
         return {
             scope: {
                 title: "@",

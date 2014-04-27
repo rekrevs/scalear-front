@@ -6,6 +6,9 @@
 <!-- endbuild -->
 <!-- <span style="min-width: 1240px;"> -->
 <div class="span3" id="tree">
+	<div class="menu-toggler" ng-click="toggleMenu()">
+		<span class="menu-icon" style="margin-top: 8px;"></span>
+	</div>
 	<center><loading size="small" show="init_loading" ></loading></center>
 	<overlay ng-show="module_overlay" style="height:80%">
 		<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" ></loading>
@@ -24,20 +27,21 @@
 	            		</li>
 	            	</ul>
 		            <center class="item-buttons">
-		            	<button_link title="{{'courses.add_lecture'|translate}}" class="btn-mini adding" action="addLecture($index)" ></button_link>
-		            	<button_link title="{{'lectures.add_quiz'|translate}}"   class="btn-mini adding" action="addQuiz($index, 'quiz')"></button_link>
-		            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn-mini adding" action="addQuiz($index, 'survey')"></button_link>
+		            	<button_link title="{{'courses.add_lecture'|translate}}" class="btn-mini adding" style="background-image: initial;" action="addLecture($index)" ></button_link>
+		            	<button_link title="{{'lectures.add_quiz'|translate}}"   class="btn-mini adding" style="background-image: initial;" action="addQuiz($index, 'quiz')"></button_link>
+		            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn-mini adding" style="background-image: initial;" action="addQuiz($index, 'survey')"></button_link>
 	                </center>
+	                <br />
 	        	</div>
 	    	</div>
 		</li>
 	</ul>
-	<button_link ng-show="!module_loading" title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"></button_link>		
-
+	<button_link ng-show="!module_loading" title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link>		
 	<hr />
 </div>
 <!-- <div class="modern row" style="width:1230px; margin: 0 auto;"> -->
-	<div id="middle"  ui-view="middle"></div>
+	<div id="middle"  ui-view="middle">
+	</div>
 <!-- </div> -->
 <div class="span3" id="details" ui-view="details"></div>
 <!-- </span> -->

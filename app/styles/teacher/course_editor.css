@@ -209,10 +209,30 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 .delete{
 	position: absolute;
 }
+.menu-toggler{
+	display: none;
+	float: left;
+	margin-left: -30px;
+	width: 40px;
+	height: 40px;
+}
 
 @media (max-width: 1240px) {
 	#tree{
-		display: none;
+		/*display: none;*/
+		left: -238px;
+		position: absolute;
+		z-index: 3;
+	}
+	.menu-toggler{
+		background-color: white;
+		border-radius: 0px 3px 3px 0px;
+		box-shadow: 1px 1px 1px lightgrey;
+		float: right;
+		z-index: 2;
+		display: inline-block;
+		position: absolute;
+		left: 300px;
 	}
 
 

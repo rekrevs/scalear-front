@@ -1,8 +1,49 @@
-<center>
+<style>
+	.whole-middle{
+		text-align: left;
+		font-size: 15px;
+		font-weight: 200;
+		color: #2d2d2d;
+	}
+	.whole-middle>div{
+		margin-bottom: 5px;
+	}
+</style>
 <overlay ng-show="!module">
     <loading size="big" show="true" style="position:relative; top:40%;" />
 </overlay>
-	<h3>{{module.name}}</h3>
+<div class="whole-middle">
+	<div>
+		<b translate>
+			groups.module_name
+		</b>:
+		<details-text value="module.name" save="updateModule()" validate="validateModule" column="name"></details-text>
+    </div>
+	<div>
+		<b translate>
+			groups.appearance_date
+		</b>:
+		<details-date date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date>
+        <span  tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(module.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+        <br />
+        <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
+    </div>
+    <div>
+    	<b translate>
+			groups.due_date
+		</b>:
+    	<details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check><br />
+        <span ng-show="module.due_date_enabled">
+          <details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date>
+          <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>
+        </span>
+    </div>
+    <div>
+    	<b translate>
+			groups.description
+		</b>:
+    	<details-area value="module.description" save="updateModule()" validate="validateModule" column="description"></details-area>
+    </div>
 	<table class="table table-striped table-bordered" style="width:90%;font-size:12px;text-align: center">
 		<tr>
 			<td><span translate>groups.total_time</span>:</td><td>{{module.total_time}}</td>
@@ -40,6 +81,6 @@
 			</tr>
 		</table>
 		<loading size="small" show="document_loading" />
-		<button_link title="{{'groups.add_document'|translate}}" action="addDocument()" class="btn" />
+		<button_link title="{{'groups.add_document'|translate}}" action="addDocument()" class="btn"></button_link>
 	</div>
-</center>
+</div>

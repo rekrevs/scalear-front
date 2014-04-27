@@ -491,19 +491,23 @@ footer{
 .modern-menu-button:hover, .menuopen{
   background-color: rgba(0, 0, 0, 0.5);
 }
-.settings-menu-button{
+.settings-menu-button, .statistics-button{
   margin-top: 3px;
   float: right;
   cursor: pointer;
   opacity: 0.5;
+  margin-left: 10px;
 }
 .settings-menu-button:before{
   content: url("../images/settings-icon.png");
 }
-.settings-menu-button:hover,.settingsopen{
+.settings-menu-button:hover,.settingsopen, .statistics-button:hover{
   /*background-color: rgba(255, 255, 255, 0.5);*/
   /*content: url("../images/settings-icon.png");*/
   opacity: 1;
+}
+.statistics-button:before{
+  content: url("../images/statistics.png");
 }
 .tab-item:hover{
   background-color: green;

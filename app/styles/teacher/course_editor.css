@@ -78,9 +78,9 @@ ul.accordion ul {
 	padding:0;
 }
 
-.accordion:hover{
+/*.accordion:hover{
 	box-shadow: 0 0 3px rgb(0, 162, 86);
-}
+}*/
 
 .accordion-group{
 	border-radius: 0px;
@@ -213,8 +213,9 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	display: none;
 	float: left;
 	margin-left: -30px;
-	width: 40px;
-	height: 40px;
+	width: 30px;
+	height: 30px;
+	cursor: pointer;
 }
 
 @media (max-width: 1240px) {
@@ -225,14 +226,14 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 		z-index: 3;
 	}
 	.menu-toggler{
-		background-color: white;
+		background-color: #414141;
 		border-radius: 0px 3px 3px 0px;
 		box-shadow: 1px 1px 1px lightgrey;
 		float: right;
 		z-index: 2;
 		display: inline-block;
 		position: absolute;
-		left: 300px;
+		left: 295px;
 	}
 
 

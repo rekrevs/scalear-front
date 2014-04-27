@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal','Impersonate', '$cookieStore', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal,Impersonate, $cookieStore) {
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('head.content')
@@ -38,6 +38,24 @@ angular.module('scalearAngularApp')
  	{
  		return CourseEditor.capitalize(s)
  	}
+
+ 	$scope.impersonate = function(){
+        $cookieStore.put('old_user_id', $rootScope.current_user.id)
+        $cookieStore.put('course_id', $stateParams.course_id)
+        Impersonate.create({},{course_id: $stateParams.course_id},
+          function(data){
+            console.log(data)
+            console.log("good")
+            $rootScope.preview_as_student = true
+            $cookieStore.put('preview_as_student', true)            
+            $cookieStore.put('new_user_id', data.user.id)            
+            $state.go('course.lectures',{course_id: $stateParams.course_id})
+          },
+          function(){
+            console.log("bad")
+          }
+        )
+  	}
 
  	$scope.addModule=function(){
     	$log.debug("adding mod")

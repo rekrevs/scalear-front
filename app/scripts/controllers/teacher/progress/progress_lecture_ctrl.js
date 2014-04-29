@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout',function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum',function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum) {
 
     $scope.Math = window.Math;
   	$scope.highlight_index = -1
@@ -292,16 +292,14 @@ angular.module('scalearAngularApp')
       )
     }
 
-
-    // $scope.updateHideFreeTextOnlineQuiz=function(quiz_id,id, value){
-    //   OnlineQuiz.showInclass(
-    //     {quiz_id:quiz_id},
-    //     {
-    //       question:id,
-    //       show:value
-    //     }
-    //   )
-    // }
+  $scope.sendComment=function(question){
+     Forum.createComment(
+      {comment: {content: question.temp_response, post_id:question.id, lecture_id:question.lecture_id}}, 
+      function(response){
+        question.comments.push(response)
+      },function(){}
+    )
+  }
 
   $scope.sendFeedback=function(question){
     var survey_id = question.quiz_id,
@@ -316,6 +314,48 @@ angular.module('scalearAngularApp')
       },
       function(){
         question.response = question.temp_response
+      },
+      function(){}
+    )
+  }
+
+  $scope.deletePost=function(discussion){
+     Forum.deletePost(
+      {post_id: discussion.id}, 
+      function(response){
+        var index=$scope.timeline['lecture'][discussion.lecture_id].items.indexOf(discussion);
+        $scope.timeline['lecture'][discussion.lecture_id].items.splice(index, 1);
+      },
+      function(){}
+    )
+  }
+
+
+  $scope.deleteComment=function(comment, discussion){
+    Forum.deleteComment(
+      {comment_id: comment.comment.id, post_id: discussion.id}, 
+      function(response){
+        discussion.comments.splice(discussion.comments.indexOf(comment),1)
+      }, 
+      function(){}
+    )
+  }
+
+  $scope.removeFlag=function(discussion){
+    Forum.removeAllFlags(
+      {post_id:discussion.id},
+      function(){
+        discussion.flags_count = 0
+      },
+      function(){}
+    )
+  }
+
+  $scope.removeCommentFlag=function(comment, discussion){
+    Forum.removeAllCommentFlags(
+      {comment_id: comment.comment.id, post_id:discussion.id},
+      function(){
+        discussion.comments[discussion.comments.indexOf(comment)].comment.flags_count = 0
       },
       function(){}
     )
@@ -336,7 +376,7 @@ angular.module('scalearAngularApp')
     	$scope.progress_player.controls.seek_and_pause(time)
 	}
 
-  $scope.formatMouleChartData = function(data){
+  $scope.formatModuleChartData = function(data){
     var formated_data ={}
     formated_data.cols=
         [

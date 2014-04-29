@@ -221,12 +221,11 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	 background-color: white;
 	 padding-top: 5px;
 	 padding-bottom: 5px;
-	 margin-left: 0px;
-	 margin-right: 0px;
-	 width: 100%;
-	 box-shadow: 0 0 1px rgb(0, 162, 86);
+	 width: 90%;
+	 box-shadow: 0 0 1px lightgrey;
 	 text-align: left;
 	 padding: 10px;
+	 margin: 0 auto;
 }
 
 

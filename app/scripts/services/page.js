@@ -8,6 +8,7 @@ angular.module('scalearAngularApp')
      setTitle: function(newTitle) { 
      	title = $filter('translate')(newTitle)
      	$rootScope.current = newTitle 
+     	console.log($rootScope.current)
      }
    };
 }]);

@@ -1,12 +1,16 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal', '$timeout', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal, $timeout) {
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('head.content')
+ 	$scope.toggled = false; 
  	/***********************Functions*******************************/
  	var init = function(){
+ 		console.log($state.params['module_id'])
+ 		console.log($state.params['lecture_id'])
+ 		console.log($state.params['quiz_id'])
  		$scope.open_id="-1";
 	    $scope.open={};
 	    $scope.oneAtATime = true;
@@ -32,6 +36,32 @@ angular.module('scalearAngularApp')
 		    function(){
 		    }
 	    );
+ 	}
+
+ 	$scope.toggleMenu = function(){
+ 		// $scope.toggled = !$scope.toggled;
+ 		// console.log('toggling')
+ 		var menu = angular.element('#tree'), value;
+ 		if($scope.toggled == false){
+ 			
+ 				// $timeout(function(){
+ 					menu.css('left', '30px')	
+ 				// }, 100);
+ 			// }
+ 			console.log('first');
+ 			
+ 		}
+ 		else{
+ 			// for(var i=30; i>=-270; i--){
+ 				// $timeout(function(){
+ 					menu.css('left', '-238px')
+ 				// }, 100);
+ 			// }
+ 			console.log('second');
+ 		}
+ 		$scope.toggled = !$scope.toggled;
+
+ 		
  	}
  	
  	$scope.capitalize = function(s)

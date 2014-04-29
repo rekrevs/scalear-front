@@ -349,4 +349,20 @@ angular.module('scalearAngularApp')
                 }
             };
         }
-    ]);
+    ]).directive('documentItem', function(){
+        return{
+            templateUrl: '/views/document_item.html',
+            restrict: 'E',
+            scope: {
+                document: "=",
+                update: "=",
+                remove: "=",
+                nameval: "=",
+                urlval: "="
+
+            },
+            link: function(scope, element){
+
+            }
+        }
+    });

@@ -1,16 +1,18 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('teacherNavigation', ['ErrorHandler',function(ErrorHandler) {
+	.directive('teacherNavigation', ['ErrorHandler', '$rootScope', function(ErrorHandler, $rootScope) {
            return{
 			replace:true,
 			restrict: "E",
 			templateUrl: '/views/teacher_navigation.html',
 			link: function(scope){
+				scope.role = $rootScope.current_user.roles[0].id;
 				scope.settingsOpened = function(which){
 					scope.selected=which;
 					scope.$emit('settingsOpened', [which]);
 				}
+
 				scope.$on('mainMenuToggled', function(event, collapsed){
 					scope.show_settings = false;
 				})
@@ -51,7 +53,9 @@ angular.module('scalearAngularApp')
 				courses: "=",
 				//currentuser: '=',
 				iscollapsed: '=',
-				role: '='
+				role: '=',
+				arenotification: '=',
+				areshared: '='
 			},
 			templateUrl: '/views/user_navigation.html',
 			link: function(scope){

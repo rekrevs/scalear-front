@@ -491,19 +491,42 @@ footer{
 .modern-menu-button:hover, .menuopen{
   background-color: rgba(0, 0, 0, 0.5);
 }
-.settings-menu-button{
+.settings-menu-button, .shared-page-button, .notification-modal-button, .statistics-button{
   margin-top: 3px;
+  margin-left: 10px;
   float: right;
   cursor: pointer;
   opacity: 0.5;
+  margin-left: 10px;
+}
+.sharedfull, .notificationfull{
+  opacity: 1;
 }
 .settings-menu-button:before{
   content: url("../images/settings-icon.png");
 }
-.settings-menu-button:hover,.settingsopen{
+
+.shared-page-button:before{
+  content: url("../images/inbox-empty.png");
+}
+.sharedfull:before{
+  content: url("../images/inbox-full.png");
+}
+
+.notification-modal-button:before{
+  content: url("../images/bolt-empty.png");
+}
+.notificationfull{
+  content: url("../images/bolt-full.png");
+}
+
+.settings-menu-button:hover, .shared-page-button:hover, .notification-modal-button:hover, .settingsopen{
   /*background-color: rgba(255, 255, 255, 0.5);*/
   /*content: url("../images/settings-icon.png");*/
   opacity: 1;
+}
+.statistics-button:before{
+  content: url("../images/statistics.png");
 }
 .tab-item:hover{
   background-color: green;

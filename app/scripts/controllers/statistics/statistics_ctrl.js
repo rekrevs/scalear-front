@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
   .controller('statisticsCtrl',['$scope', 'Kpi','$translate','Page', function ($scope, Kpi,$translate, Page) {
 
     Page.setTitle('courses.statistics');
+    $scope.close_selector = false;
 
 	var init =function(){
 		$scope.loading_totals = true
@@ -123,6 +124,9 @@ angular.module('scalearAngularApp')
     }
 
 	$scope.getSeriesData=function(key){
+        if($scope.close_selector){
+            $scope.toggleSelector();
+        }
 		$scope.selected_series= key
 		var chart_data=[]
 		$scope.chartConfig.loading = true
@@ -135,10 +139,14 @@ angular.module('scalearAngularApp')
 				$scope.chartConfig.series[0].data= chart_data
 				$scope.chartConfig.title.text = $translate('statistics.'+key.toLowerCase())+" "+$translate('statistics.rate_from')+" "+series.start.split("T")[0]+" "+$translate('statistics.to')+" "+ series.stop.split("T")[0] 
 				$scope.chartConfig.loading = false
+                $scope.stats_title = 'statistics.'+$scope.selected_series.toLowerCase()
 			},
 			function(){}
 		)
 	}
+    $scope.toggleSelector = function(){
+        $scope.close_selector = !$scope.close_selector;
+    }
 
     init()
 

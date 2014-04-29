@@ -8,6 +8,9 @@ angular.module('scalearAngularApp')
  	$scope.toggled = false; 
  	/***********************Functions*******************************/
  	var init = function(){
+ 		console.log($state.params['module_id'])
+ 		console.log($state.params['lecture_id'])
+ 		console.log($state.params['quiz_id'])
  		$scope.open_id="-1";
 	    $scope.open={};
 	    $scope.oneAtATime = true;

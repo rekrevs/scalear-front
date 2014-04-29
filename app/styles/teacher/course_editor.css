@@ -217,6 +217,18 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	height: 30px;
 	cursor: pointer;
 }
+.document-item-box{
+	 background-color: white;
+	 padding-top: 5px;
+	 padding-bottom: 5px;
+	 margin-left: 0px;
+	 margin-right: 0px;
+	 width: 100%;
+	 box-shadow: 0 0 1px rgb(0, 162, 86);
+	 text-align: left;
+	 padding: 10px;
+}
+
 
 @media (max-width: 1240px) {
 	#tree{

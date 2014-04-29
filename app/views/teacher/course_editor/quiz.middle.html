@@ -14,7 +14,7 @@
 				<div ng-if="question.question_type=='header'" style="text-align:left" >
 					<img src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}" style="margin-top:2px"/>
 					<label class='q_label'><span translate>quizzes.header</span>:</label>
-					<delete_button  size='small' action='removeHeader($index)'></delete_button>
+					<delete_button  size='small' action='removeHeader($index)' style="float: right; margin-right: 20px;"></delete_button>
 					<div text-angular ng-model="question.content" ta-toolbar-button-class="btn btn-default btn-mini" style="width:95%;margin-left: 1%;"></div>
 				</div>
 			</div>

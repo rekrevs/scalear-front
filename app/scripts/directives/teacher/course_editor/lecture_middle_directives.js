@@ -427,7 +427,7 @@ angular.module('scalearAngularApp')
 					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
 					"<br ng-if='show()'/>"+
 					"<input ng-if='show()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' />"+
-					"<delete_button size='small' action='removeAnswer($index, quiz)' />"+
+					"<delete_button size='small' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;' />"+
 					"<br/>"+
 				"</ng-form>"
 	}
@@ -442,7 +442,7 @@ angular.module('scalearAngularApp')
 					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
 					"<br ng-if='show()'/>"+
 					"<input ng-if='show()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-					"<delete_button size='small' action='removeAnswer($index, quiz)' />"+
+					"<delete_button size='small' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+
 					"<br>"+
 				"</ng-form>",
 		link: function(scope)

@@ -10,7 +10,8 @@
     </document-item>
     <loading size="small" show="document_loading" />
     <br />
-    <button ng-click="addDocument()" class="btn btn-success add-teacher-button" style="background-image: initial;">
+    <button ng-click="addDocument()" ng-disabled="document_overlay" class="btn btn-success add-teacher-button" style="background-image: initial; float: right; margin-right: 15px;">
         <img src="../images/add_document.png" /> {{'groups.add_document' | translate}}
     </button>
+    <br />
   </div>

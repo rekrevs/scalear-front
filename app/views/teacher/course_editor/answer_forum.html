@@ -6,7 +6,7 @@
 	<br />
 	<label ng-if='show_question()' class='q_label'><span translate>groups.question_type</span>:</label>
 	<select ng-if='show_question()' ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'></select>
-	<delete_button ng-if='show_question()' size='small' action='removeQuestion(index)' />
+	<delete_button ng-if='show_question()' size='small' action='removeQuestion(index)' style="position: relative;" />
 	<br/>
 	<div ng-hide='hideAnswer()' class='answer_div'>
 		<htmlanswer />

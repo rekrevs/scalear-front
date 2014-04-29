@@ -1,10 +1,11 @@
 <span>
-	 <div class="alert alert-block alert-error notification fade in" ng-show="displayDeletePopup" style="padding: 3px;margin-bottom: 5px;min-width: 100px;text-align:center">
+	 <div class="fade in" ng-show="displayDeletePopup" style="padding: 3px;margin-bottom: 5px;text-align:center;min-width: 65px;">
 	        <span class="form-controls-alert" style="margin:auto" >
-	            <a ng-if="displayDeletePopup" class="btn btn-danger btn-mini" ng-click="action({event:$event});showDeletePopup(false)" translate>delete</a>
-	            <a ng-if="displayDeletePopup" class="btn btn-mini" ng-click="showDeletePopup(false)" translate>lectures.cancel</a>
+	            <a ng-if="displayDeletePopup" class="btn btn-danger btn-mini" style="background-image: initial;" ng-click="action({event:$event});showDeletePopup(false)"><div class="icon-ok"></div></a>
+	            <a ng-if="displayDeletePopup" class="btn btn-mini" style="background-image: initial;" ng-click="showDeletePopup(false)"><div class="icon-remove"></div></a>
 	        </span>
 	</div>
+
 	<a class="delete" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" title="{{'delete'|translate}}" ng-click="!hideConfirm?showDeletePopup(true):action({event:$event})">
 		<img alt="Trash" ng-src="{{size=='big' && 'images/trash_big.png' || 'images/trash_small.png'}}" >
 	</a>

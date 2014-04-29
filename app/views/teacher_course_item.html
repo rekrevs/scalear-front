@@ -1,15 +1,15 @@
-<a ui-sref="course.course_editor({ course_id: course.id })">	
-	<div class="whole-box" style="width: 95%;">
-		<style>
-			@media only screen and (max-width : 1024px) {
-				.course-image{
-					display: none;
-				}
+<div class="whole-box" style="width: 95%;">
+	<style>
+		@media only screen and (max-width : 1024px) {
+			.course-image{
+				display: none;
 			}
-		</style>
-		<div style="float: right; display: inline-block;">
-			<delete_button size="big" action="deletecourse(course)" />
-		</div>
+		}
+	</style>
+	<div style="float: right; display: inline-block;">
+		<delete_button size="big" action="deletecourse(course)" />
+	</div>
+	<a ui-sref="course.course_editor({ course_id: course.id })">
 		<table style="width: 91%;">
 			<tr>
 				<td class="course-image">
@@ -73,5 +73,5 @@
 	            </td>
 			</tr>
 		</table>
-	</div>
-</a>
+	</a>
+</div>

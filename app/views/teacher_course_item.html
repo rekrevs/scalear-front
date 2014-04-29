@@ -29,34 +29,34 @@
 						</tr>
 						<tr style="border-bottom: 1px solid lightgray;">
 							<td style="color: #2d2d2d; padding-top: 5px; width: 45%;" colspan="2">
-								<div style="font-size: 15px; margin: 0px;"><span class="calendar-icon"></span><span tooltip="{{'courses.start_date'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div> 
+								<div style="font-size: 15px; margin: 0px; display: inline-block; cursor: default;" tooltip="{{'courses.start_date'|translate}}" tooltip-placement="bottom"><span class="calendar-icon"></span><span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div> 
 							</td>
 							<td style="color: #2d2d2d; padding-top: 5px; border-left: 1px solid lightgray; width: 45%;" colspan="2">
-								<div style="font-size: 15px; margin: 0px;"><span class="duration-icon"></span><span tooltip="{{'courses.duration'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.duration}} <span translate="courses.weeks"></span></div>
+								<div style="font-size: 15px; margin: 0px; display: inline-block; cursor: default;" tooltip="{{'courses.duration'|translate}}" tooltip-placement="bottom"><span class="duration-icon"></span><span>{{course.duration}} <span translate="courses.weeks"></span></div>
 							</td>
 						</tr>
 						<tr>
 							<td style="color: #2d2d2d;">
-								<div style="font-size: 15px; margin: 0px;"><span class="students-icon"></span><span tooltip="#{{'courses.students'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.enrollments.length}}</span></div>
+								<div style="font-size: 15px; margin: 0px; display: inline-block; cursor: default;" tooltip="#{{'courses.students'|translate}}" tooltip-placement="bottom"><span class="students-icon"></span><span>{{course.enrollments.length}}</span></div>
 							</td>
 							<td style="color: #2d2d2d; border-left: 1px solid lightgray;">
-								<div style="font-size: 15px; margin: 0px;"><span class="lectures-icon"></span><span tooltip="#{{'head.lectures'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.lectures.length}}</span></div>
+								<div style="font-size: 15px; margin: 0px; display: inline-block; cursor: default;" tooltip="#{{'head.lectures'|translate}}" tooltip-placement="bottom"><span class="lectures-icon"></span><span>{{course.lectures.length}}</span></div>
 							</td>
 							<td style="color: #2d2d2d; border-left: 1px solid lightgray;">
-								<div ng-init="course.quiz = (course.quizzes|filter:{quiz_type:'quiz'})" style="font-size: 15px; margin: 0px;"><span class="quizzes-icon"></span><span tooltip="#{{'groups.quizzes'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.quiz.length}}</span></div>
+								<div ng-init="course.quiz = (course.quizzes|filter:{quiz_type:'quiz'})" style="font-size: 15px; margin: 0px; display: inline-block; cursor: default;" tooltip="#{{'groups.quizzes'|translate}}" tooltip-placement="bottom"><span class="quizzes-icon"></span><span>{{course.quiz.length}}</span></div>
 							</td>
 							<td style="color: #2d2d2d; border-left: 1px solid lightgray;">
-								<div ng-init="course.survey = (course.quizzes|filter:{quiz_type:'survey'})" style="font-size: 15px; margin: 0px;"><span class="surveys-icon"></span><span tooltip="#{{'courses.surveys'|translate}}" tooltip-placement="bottom" style="cursor: default;">{{course.survey.length}}</span></div>
+								<div ng-init="course.survey = (course.quizzes|filter:{quiz_type:'survey'})" style="font-size: 15px; margin: 0px; display: inline-block; cursor: default;" tooltip="#{{'courses.surveys'|translate}}" tooltip-placement="bottom"><span class="surveys-icon"></span><span>{{course.survey.length}}</span></div>
 							</td>
 
 						</tr>
 					</table>
 				</td>
-				<td ng-if="teachers" style="border-left: 1px solid lightgrey; min-width: 30%; width: 30%; padding-left: 10px;">
+				<td ng-if="teachers" style="border-left: 1px solid lightgrey; min-width: 30%; width: 30%; padding-left: 10px; vertical-align: top;">
 	            	<span class="dropdown-header" style="float: left;"><b translate>courses.teachers</b><br /></span>
 	            	<table style="width: 100%;">
 	            		<tr ng-repeat="teacher in teachers">
-	            			<td style="color: black; text-align: center; padding-left: 10px;" style="text-align: center;">
+	            			<td style="color: black; text-align: center; padding-left: 10px; width: 50px;" style="text-align: center;">
 	                            <small>
 	                            	<a href="" ng-click="filterteacher(teacher.user.name, teacher.user.email)">
 	                                	<profile-image email="teacher.user.email" imagesize="40"> </profile-image> 

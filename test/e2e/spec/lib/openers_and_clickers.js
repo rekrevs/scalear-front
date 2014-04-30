@@ -262,3 +262,49 @@ exports.clean_mail = function(ptor){
            })
        })
 }
+
+//====================================================
+//                  navigate home
+//====================================================
+
+exports.home = function(ptor){
+    locator.by_classname(ptor, 'modern-logo').then(function(home){
+        home.click().then(function(){
+            ptor.getCurrentUrl().then(function(url) {
+                expect(url).toContain('http://staging.scalable-learning.com/#/student_courses');
+            });
+        })
+    })
+}
+
+//====================================================
+//            open item by no from timeline
+//====================================================
+
+exports.open_item = function(ptor,item_no, total_item_no){
+    locator.s_by_classname(ptor, 'courseware-item-circle').then(function(item){
+        item[item_no-1].click();
+    })
+}
+
+//====================================================
+//                  select module
+//====================================================
+
+exports.open_module = function(ptor, module_no){
+    locator.by_xpath(ptor, "//table[@class='header-container']//button[.='Module 1']").then(function(mod_btn){
+        mod_btn.click();
+        expect(locator.by_classname(ptor,"multicol").isDisplayed()).toEqual(true);
+        locator.by_classname(ptor,"multicol").findElements(protractor.By.tagName('ul')).then(function(mod){
+            //expect(mod.length).toEqual(2);
+            // ptor.actions().mouseMove(mod[module_no-1]).perform();
+            // ptor.actions().mouseMove({x: 5, y: 5}).perform();
+            // ptor.actions().click(protractor.Button.RIGHT).perform();
+            // ptor.sleep(5000);
+            mod[module_no-1].click().then(function(){
+                expect(locator.by_xpath(ptor, "//table[@class='header-container']//button[.='Module "+module_no+"']").isDisplayed()).toEqual(true);
+            })
+            ptor.sleep(5000);
+        })
+    })
+}

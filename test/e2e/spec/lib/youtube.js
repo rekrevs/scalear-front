@@ -84,7 +84,8 @@ exports.seek = function(ptor, percent){
 					locator.by_classname(ptor, 'elapsed').then(function(progress_bar){
 						progress_bar.getSize().then(function(attr){
 							cw = attr.width;
-							expect(cw).toEqual(Math.ceil((percent*pw)/100));
+							expect(cw).toBeGreaterThan(Math.floor((percent*pw)/100)-2);
+							expect(cw).toBeLessThan(Math.ceil((percent*pw)/100)+2);
 						})
 					})
 				})

@@ -4,6 +4,7 @@
 <link rel="stylesheet" href="styles/teacher/course_editor.lecture.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="styles/controls.css" type="text/css" media="screen" />
 <!-- endbuild -->
+
 <!-- <span style="min-width: 1240px;"> -->
 <style>
 	.span3{
@@ -13,6 +14,8 @@
 <div class="span3" id="tree">
 	<div class="menu-toggler" ng-click="toggleMenu()">
 		<span class="menu-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
+
+<button ng-click="impersonate()">Preview</button>
 	</div>
 	<center><loading size="small" show="init_loading" ></loading></center>
 	<overlay ng-show="module_overlay" style="height:80%">

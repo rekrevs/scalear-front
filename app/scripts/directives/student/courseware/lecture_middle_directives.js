@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log','$translate', function($interval, Lecture, $stateParams, $window, $log, $translate) {
+.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log','$translate','util', function($interval, Lecture, $stateParams, $window, $log, $translate,util) {
   return {
     restrict:"E",
     templateUrl:"/views/student/lectures/controls.html",
@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
     	scope.questionBtn= function(){
     		scope.show_question=!scope.show_question;
             scope.$parent.current_question_time=scope.lecture_player.controls.getTime();
-            scope.safeApply();
+            util.safeApply();
     		if(scope.$parent.show_question==true)
             {
     			scope.lecture_player.controls.pause();

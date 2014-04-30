@@ -1,5 +1,5 @@
 angular.module('scalearAngularApp').factory('editor',
-    ['$state','$q', '$rootScope', '$log', '$timeout', 'doc','$stateParams','Lecture','$window','$interval', function ($state,$q, $rootScope, $log, $timeout, doc, $stateParams, Lecture, $window, $interval) {
+    ['$state','$q', '$rootScope', '$log', '$timeout', 'doc','$stateParams','Lecture','$window','$interval','util', function ($state,$q, $rootScope, $log, $timeout, doc, $stateParams, Lecture, $window, $interval, util) {
         return function() {
 
         //console.log("new editor");
@@ -399,7 +399,7 @@ angular.module('scalearAngularApp').factory('editor',
             session.on('change', function () {
                 //console.log("in change")
                 if (service.doc && service.doc.info) {
-                    $rootScope.safeApply(function () {
+                    util.safeApply(function () {
                         service.doc.info.content = session.getValue();
                         ///console.log("in change!!!!!!")
                         //console.log(service.doc.info);

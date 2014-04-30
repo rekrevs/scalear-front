@@ -1,7 +1,6 @@
-<div context-menu data-target="menu" opened='menu_status' class="disable_selection">
-	<img src="images/move2.png" class="handle" title={{"courses.drag_to_reorder"|translate}} />
+<div context-menu data-target="menu" opened='menu_status' class="disable_selection inner-item">
+	<img src="images/move3.png" class="handle" title={{"courses.drag_to_reorder"|translate}} />
 	<a class="trigger2" ui-sref="course.course_editor.{{(className=='lecture') && 'lecture.quizList' || className}}({ {{className}}_id: id })" >{{name}}</a>
-	<delete_button size="small" action="remove()" />
 	<div class="menu">
 	  <ul class="dropdown-menu" style="font-size:14px">
 	    <li >
@@ -11,4 +10,5 @@
 	    </li>	    
 	  </ul>
 	</div>
+	<delete_button style="vertical-align: top;" size="small" action="remove()"></delete_button>
 </div>

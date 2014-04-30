@@ -130,6 +130,13 @@
             </span>
             <span class="settings-menu-button" ng-click="show_settings = !show_settings; selected = 1;" ng-class="{settingsopen: show_settings}">
             </span>
+            
+            <span class="shared-page-button" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}"></span>
+
+            <span class="notification-modal-button" id="notification_btn" ng-click="" ng-class="{notificationfull: arenotification}"></span>
+
+            <span ng-show="role == 5" class="statistics-button" id="stats_btn" ui-sref="statistics">
+            </span>
         </tr>
     </table>
 </div>

@@ -1,0 +1,15 @@
+<div class="announcement-box" ng-if="announcement.announcement.trim()!=''">
+	<div class="announcement-body">
+		<span ng-bind-html='announcement.announcement'>
+		</span>
+	</div>
+
+	<div class="created-at">
+		<small>
+			<b>
+				{{'announcement_form.date_created' | translate}}:
+			</b>
+			{{announcement.created_at | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}
+		</small>
+	</div>
+</div>

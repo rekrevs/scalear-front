@@ -344,9 +344,8 @@ li.smallest_question{
 }
 
 .time_estimate{
-	width:250px;
-	border: solid 2px;
-	border-color: chocolate;
+	width:83%;
+	border: 2px solid rgb(0, 162, 86) !important;
 	color: black;
 	padding:5px;
 	text-align:center;
@@ -354,6 +353,10 @@ li.smallest_question{
 }
 .time_estimate a{
 	color:orange;
+	float:right;
+	cursor:pointer;
+	position: absolute;
+	margin-left: 10px;;
 }
 
 .popover.bottom .arrow{

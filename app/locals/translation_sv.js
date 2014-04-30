@@ -358,6 +358,7 @@ var translation_sv=function(){
               close: "Stäng",
               enter_enrollment: "Ange kursnyckel",
               get_enrollment_key: "Kontakta din instruktör om du inte fick en kursnyckel.",
+              enrollement_key_format: "Du bör få en enrollement nyckel på formen",
               enroll: "Skriva in",
               users: "Användare",
               username: "Användarnamn",

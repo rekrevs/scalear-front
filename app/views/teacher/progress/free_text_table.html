@@ -24,7 +24,7 @@
 		</td>
 		<td>{{related_answers[answer.user_id]}}</td>
 		<td style="border-left: 1px gray solid;">
-			<a ng-click="showFeedback(question.answers,$index)" style="cursor:pointer">
+			<a ng-click="showFeedback(question.answers, $index, lecture_id||graded )" style="cursor:pointer">
 				<p ng-if="survey_id">{{answer.answer}}</p>
                 <p ng-if="lecture_id">{{answer.online_answer}}</p>
 			</a>

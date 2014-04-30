@@ -20,14 +20,16 @@ angular.module('scalearAngularApp')
      // $scope.grade_display={0 : "Under Review", 1: "Wrong", 2:"Partial", 3:"Good"}
 
 
-    $scope.showFeedback = function(answers, index){
-    	answers.showGroups = true
-		for(var i in answers){
-    		answers[i].show_feedback = false
-    		answers[i].group_selected = false
-		}
-    	answers[index].show_feedback = true
-		answers[index].group_selected = true
+    $scope.showFeedback = function(answers, index, flag){
+    	if(!flag){
+        answers.showGroups = true
+  		  for(var i in answers){
+      		answers[i].show_feedback = false
+      		answers[i].group_selected = false
+  		  }
+      	answers[index].show_feedback = true
+  		  answers[index].group_selected = true
+      }
     }
 
     var hideFeedback= function(answers, index){

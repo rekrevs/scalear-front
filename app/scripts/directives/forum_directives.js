@@ -105,7 +105,7 @@ angular.module('scalearAngularApp')
             }
 
             scope.deleteAnswer = function(id,q_id, lecture_id, answer){
-                Forum.deleteComment({id: id, post_id: q_id}, function(response){
+                Forum.deleteComment({comment_id: id, post_id: q_id}, function(response){
                     //console.log("begin")
                     var index=scope.timeline['lecture'][lecture_id][q_id].items.indexOf(answer);
                     //console.log(index)

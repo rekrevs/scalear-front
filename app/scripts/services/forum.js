@@ -18,6 +18,7 @@ angular.module('scalearAngularApp')
           'flagComment':{method: 'POST', params: {action: 'flag_comment'}, headers: headers},
           'removeAllFlags':{method: 'DELETE', params: {action: 'remove_all_flags'}, headers: headers},
           'removeAllCommentFlags':{method: 'DELETE', params: {action: 'remove_all_comment_flags'}, headers: headers},
+          'hideDiscussion':{method: 'POST', params: {action: 'hide_post'}, headers: headers}
       });
 
 }]);

@@ -23,8 +23,9 @@ angular.module('scalearAngularApp')
     {
       "All":"",
       "Confused":"confused",
-      "Questions":"question",
+      // "Questions":"question",
       "Charts": "charts",
+      "Discussion": "discussion",
     }
 
     $scope.grade_options= [
@@ -186,7 +187,7 @@ angular.module('scalearAngularApp')
   	$scope.manageInnerHighlight=function(x){
   		var inner_ul= angular.element('ul.highlight').find('ul')
   		if(inner_ul.length){
-  			var inner_li = inner_ul.find('li')
+  			var inner_li = inner_ul.find('li').not('.no_highlight')
   			if(angular.element('li.highlight').length)
   				angular.element('li.highlight').removeClass('highlight')
   			$scope.inner_highlight_index = (($scope.inner_highlight_index+x)%inner_li.length);
@@ -258,6 +259,21 @@ angular.module('scalearAngularApp')
 		  )
   	}
 
+    $scope.updateHideDiscussion=function(id,value){
+      if(value)
+        $scope.review_question_count--
+      else
+        $scope.review_question_count++
+      Forum.hideDiscussion({},
+        {
+          post_id:id,
+          hide:value
+        },
+        function(){},
+        function(){}
+      )
+    }
+
     $scope.updateHideResponse = function(quiz_id, id, value){
       Quiz.hideResponses(
         {quiz_id: quiz_id},
@@ -292,11 +308,11 @@ angular.module('scalearAngularApp')
       )
     }
 
-  $scope.sendComment=function(question){
+  $scope.sendComment=function(discussion){
      Forum.createComment(
-      {comment: {content: question.temp_response, post_id:question.id, lecture_id:question.lecture_id}}, 
+      {comment: {content: discussion.temp_response, post_id:discussion.id, lecture_id:discussion.lecture_id}}, 
       function(response){
-        question.comments.push(response)
+        discussion.comments.push(response)
       },function(){}
     )
   }
@@ -319,12 +335,12 @@ angular.module('scalearAngularApp')
     )
   }
 
-  $scope.deletePost=function(discussion){
+  $scope.deletePost=function(items, index){    
+     var discussion = items[index]
      Forum.deletePost(
-      {post_id: discussion.id}, 
+      {post_id: discussion.post.id}, 
       function(response){
-        var index=$scope.timeline['lecture'][discussion.lecture_id].items.indexOf(discussion);
-        $scope.timeline['lecture'][discussion.lecture_id].items.splice(index, 1);
+        items.splice(index,1)
       },
       function(){}
     )
@@ -550,10 +566,14 @@ angular.module('scalearAngularApp')
 
   var setupShortcuts=function(){
     shortcut.add("r",function(){
-      if($scope.selected_item && $scope.selected_item.type == "Free Text Question") 
+      console.log($scope.inner_highlight_index)
+      if($scope.selected_item && ($scope.selected_item.type == "Free Text Question" || $scope.selected_item.type == "discussion")) 
           if($scope.inner_highlight_index >= 0){
-            $scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback = !$scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback
-            $scope.$apply()
+            if($scope.selected_item.data.answers)
+              $scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback = !$scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback
+            else{
+              $scope.selected_item.data[$scope.inner_highlight_index].post.show_feedback = !$scope.selected_item.data[$scope.inner_highlight_index].post.show_feedback
+            }$scope.$apply()
             angular.element('li.highlight').find('textarea').focus()
           }
     },{"disable_in_input" : true});

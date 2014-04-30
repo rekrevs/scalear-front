@@ -38,6 +38,8 @@ var translation_en=function(){
       or: "or",
       visible: "Visible",
       invisible: "Not currently visible to the students. Will be visible on this date.",
+      adding_teacher: "A teacher or TA must have a teacher account on",
+      create_account: "To create a teacher account visit",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",

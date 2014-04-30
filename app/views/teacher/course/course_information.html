@@ -126,7 +126,7 @@
                             <button ng-hide="new_teachers.length == 0" ng-click="saveTeachers()" ng-hide="in_delete" class="btn btn-success add-teacher-button" style="background-image: initial; float: left;" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0">
                                 <!-- <img src="../images/add_teacher.png" /> --> {{'save' | translate}}
                             </button>
-                            
+                            <p ng-hide="new_teachers.length == 0" style="margin-left: 10%;margin-top: 20px;float: left;font-size: 12px;font-style: italic;line-height: 15px;background:whitesmoke"><span translate>adding_teacher</span> scalable-learning.<br><span translate>create_account</span><span>: <a href="http://www.scalable-learning.com/#/users/teacher">http://www.scalable-learning.com/#/users/teacher</a></span></p>
                             <button ng-show="new_teachers.length == 0" ng-click="toggleDelete()" class="btn delete-teacher-button" ng-class="{'btn-danger': !in_delete, 'btn-info': in_delete}" style="background-image: initial; float: right;">
                                 <img ng-show="!in_delete" src="../images/delete_teacher.png" /> {{toggle_message | translate}}
                             </button>

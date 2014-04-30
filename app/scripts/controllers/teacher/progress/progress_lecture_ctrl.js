@@ -52,7 +52,6 @@ angular.module('scalearAngularApp')
           module_id: $stateParams.module_id
 	  		},
 	  		function(data){
-          console.log(data)
 	  			angular.extend($scope, data)
 	  	 		$scope.url = $scope.first_lecture
 	  	 		$scope.timeline['lecture'] = {}
@@ -65,7 +64,6 @@ angular.module('scalearAngularApp')
 			  	 			}
 	  	 			}	  	 			
 	  	 		}
-          console.log($scope.timeline['lecture'])
 	  	 		getModuleCharts()
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
@@ -77,7 +75,6 @@ angular.module('scalearAngularApp')
 	}
   var resizeContainer = function(){
     $scope.right_container.css('height', angular.element($window).height() - 200)
-    console.log('height should be '+angular.element($window).height())
   }
   angular.element($window).bind('resize', function () {
     resizeContainer();
@@ -104,7 +101,6 @@ angular.module('scalearAngularApp')
           module_id:$stateParams.module_id
       },
       function(data){
-        console.log(data)
         $scope.quizzes=angular.extend({}, data.quizzes, $scope.quizzes)
       	$scope.timeline['quiz'] ={}
   	 		for(var quiz_id in $scope.quizzes){
@@ -133,6 +129,7 @@ angular.module('scalearAngularApp')
             module_id:$stateParams.module_id
         },
         function(data){
+          console.log(data)
         	$scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
         	$scope.timeline["survey"]={}
         	for (var survey_id in $scope.quizzes ){
@@ -222,7 +219,6 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.updateHideQuiz = function(id, value) {
-      console.log("sgr")
   		if(value)
   			$scope.review_quizzes_count--
   		else
@@ -537,7 +533,6 @@ angular.module('scalearAngularApp')
     shortcut.add("Space",function(){
       
       if($scope.selected_item.time>0){
-        console.log($scope.selected_item)
 	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url, $scope.lectures[$scope.selected_item.lec_id].meta.id)
         $scope.$apply()
       }

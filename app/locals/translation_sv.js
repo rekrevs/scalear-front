@@ -37,6 +37,8 @@ var translation_sv=function(){
       or: "eller",
       visible: "Synlig",
       invisible: "Inte synliga för eleverna. Kommer att synas på detta datum.",
+      adding_teacher: "En lärare eller TA måste ha ett lärarkonto på",
+      create_account: "För att skapa ett lärarkonto besök",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",

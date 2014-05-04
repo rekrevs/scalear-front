@@ -24,11 +24,10 @@
 	<h5 class="muted" translate>courses.enroll_instruction</h5>
 </center>
 <br />
-<div ng-show="courses" class="courses-container">
+<div ng-show="courses" class="courses-container" ng-class="{containerwide: !events.length}">
 	<course-item ng-repeat="course in courses|orderBy:column:is_reverse" course='course' teachers='course.teacher_enrollments' ></course-item>
 </div>
-
-<div class="news-feed-container" ng-show="courses">
+<div class="news-feed-container" ng-show="courses && events.length">
 	<div>
 		<b class="dropdown-header">What's New?</b>
 	</div>

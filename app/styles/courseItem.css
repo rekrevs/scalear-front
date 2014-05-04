@@ -43,6 +43,10 @@
 	/*display: inline-block;*/
 	margin-right: 30px;
 }
+.containerwide{
+	width: 95% !important;
+	background-color: black;
+}
 .course-info-container{
 	font-weight: 200;
 	/*background-color: rgb(0, 150, 86);*/

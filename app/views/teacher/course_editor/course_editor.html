@@ -15,7 +15,7 @@
 	<div class="menu-toggler" ng-click="toggleMenu()">
 		<span class="menu-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
 
-<button ng-click="impersonate()">Preview</button>
+
 	</div>
 	<center><loading size="small" show="init_loading" ></loading></center>
 	<overlay ng-show="module_overlay" style="height:80%">
@@ -45,6 +45,8 @@
 		</li>
 	</ul>
 	<button_link ng-show="!module_loading" title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link>		
+	<button_link title="{{'Preview'|translate}}" action="impersonate()" class="preview" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link>
+	<!-- <button class="btn" ng-click="impersonate()">Preview</button> -->
 	<hr />
 </div>
 <!-- <div class="modern row" style="width:1230px; margin: 0 auto;"> -->

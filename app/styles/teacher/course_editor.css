@@ -179,7 +179,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	vertical-align: top;
 }
 .handle:hover{
-	cursor: cell;
+	cursor: move;
 	vertical-align: top;
 }
 .inner-item{

@@ -66,11 +66,11 @@
             <span class="settings-menu-button" id="settings_btn" ng-click="show_settings = !show_settings" ng-class="{settingsopen: show_settings}">
             </span>
 
-            <span ng-show="role != 2" class="shared-page-button" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}"></span>
+            <span ng-show="role != 2" class="shared-page-button" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}" tooltip="{{'sharing.with_you' | translate}}" tooltip-placement="bottom"></span>
 
-            <span ng-show="role != 2" class="notification-modal-button" id="notification_btn" ng-click="" ng-class="{notificationfull: arenotification}"></span>
+            <span ng-show="role != 2" class="notification-modal-button" id="notification_btn" ng-click="" ng-class="{notificationfull: arenotification}" tooltip="{{'navigation.notifications' | translate}}" tooltip-placement="bottom"></span>
 
-            <span ng-show="role == 5" class="statistics-button" id="stats_btn" ui-sref="statistics">
+            <span ng-show="role == 5" class="statistics-button" id="stats_btn" ui-sref="statistics" tooltip="{{'courses.statistics' | translate}}" tooltip-placement="bottom">
             </span>
         </tr>
     </table>

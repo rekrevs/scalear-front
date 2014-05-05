@@ -592,7 +592,8 @@ var translation_en=function(){
         charts: "Charts",
         total_statistics: "Total Statistics",
         enroll_instruction: "To enroll in a course click 'Join Course' below and enter the course enrollment key from your instructor.",
-        export_as: "Export course as"
+        export_as: "Export course as",
+        main_progress: "Main Progress"
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

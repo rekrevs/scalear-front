@@ -591,7 +591,8 @@ var translation_sv=function(){
               charts: "Diagram",
               total_statistics: "Total Statistik",
               enroll_instruction: "För att anmäla dig till en kurs klicka på 'Ansluta Kurs' nedan och ange kursens kursnyckel från din instruktör.",
-              export_as: "Exportera kurs som"
+              export_as: "Exportera kurs som",
+              main_progress: "Huvudsaklig Framsteg"
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

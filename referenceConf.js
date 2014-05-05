@@ -44,8 +44,24 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/normal_quiz.spec.js',
-
+        'test/e2e/spec/sign_up_teacher.spec.js'
+        //'test/e2e/spec/signup.spec.js',
+        //'test/e2e/spec/normal_quiz.spec.js',
+        //'test/e2e/spec/announcments.spec.js',
+        // 'test/e2e/spec/calendar.spec.js',
+        // 'test/e2e/spec/confused.spec.js',
+        // 'test/e2e/spec/course_info_student.spec.js',
+        // 'test/e2e/spec/discussion.spec.js',
+        // 'test/e2e/spec/drag_overvideo.spec.js',
+        // 'test/e2e/spec/drag_overvideo_text.spec.js',
+        // 'test/e2e/spec/mainmenu.spec.js',
+        // 'test/e2e/spec/mcq_overvideo.spec.js',
+        // 'test/e2e/spec/mcq_overvideo_text.spec.js',
+        // 'test/e2e/spec/ocq_overvideo.spec.js',
+        // 'test/e2e/spec/ocq_overvideo_text.spec.js',
+        // 'test/e2e/spec/normal_quiz.spec.js',
+        // 'test/e2e/spec/surveys_overvideo.spec.js',
+        // 'test/e2e/spec/test.spec.js'
     ],
 
     // ----- Capabilities to be passed to the webdriver instance ----

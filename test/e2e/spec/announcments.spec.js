@@ -5,13 +5,13 @@ var params = ptor.params;
 var locator = require('./lib/locators');
 var o_c = require('./lib/openers_and_clickers');
 
-var no_of_announcments = 0;
+var no_of_announcments = 3;
 var announcmenttext = 'kalam';
-var announcment_date = 'Apr 8, 2014 2:28:21 PM';
+var announcment_date = 'May 4th 2014';
 
 describe('', function(){
-  it('should login', function(){
-    o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
+  it('should go home', function(){
+    o_c.home(ptor);
   })
   it('should open course by name', function(){
     o_c.open_course_whole(ptor);

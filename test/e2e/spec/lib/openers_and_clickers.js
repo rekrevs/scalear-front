@@ -99,7 +99,6 @@ exports.sign_up = function(ptor, screen_name, fname, lname, studentmail, univer,
         });
     });
 }
-
 //====================================================
 //                 confirm account
 //====================================================
@@ -307,4 +306,107 @@ exports.open_module = function(ptor, module_no){
             ptor.sleep(5000);
         })
     })
+}
+
+//=====================================
+//        logout
+//=====================================
+exports.logout = function(ptor, driver) {
+    ptor.findElement(protractor.By.id('logout_link')).then(function(link) {
+        link.click();
+    })
+}
+//=====================================
+//        logout hidden
+//=====================================
+exports.logoutHidden = function(ptor) {
+        var hid = ptor.findElement(protractor.By.id('logout_link'));
+        driver.executeScript("arguments[0].click()", hid).then(function() {
+            feedback(ptor, 'Signed out successfully.');
+        });
+}
+
+//=====================================
+//        open profile
+//=====================================
+exports.openprofile = function(ptor)
+{
+    ptor.findElement(protractor.By.binding("current_user.name +' '+ current_user.last_name")).click();
+}
+
+
+//====================================================
+//                   sign up teacher
+//====================================================
+exports.sign_up_teacher = function(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, feedback){
+    ptor.get(params.frontend+'/users/teacher');
+
+    ptor.findElement(protractor.By.id('screen_name')).then(function(screenname) {
+            screenname.sendKeys(screen_name);
+        });
+    ptor.findElement(protractor.By.id('name')).then(function(name) {
+            name.sendKeys(fname);
+        });
+    ptor.findElement(protractor.By.id('last_name')).then(function(lastname) {
+            lastname.sendKeys(lname);
+        });
+    ptor.findElement(protractor.By.id('user_email')).then(function(email) {
+            email.sendKeys(studentmail);
+        });
+    ptor.findElement(protractor.By.id('university')).then(function(uni) {
+            uni.sendKeys(univer);
+        });
+    ptor.findElement(protractor.By.id('bio')).then(function(bio) {
+            bio.sendKeys(biog);
+        });
+    ptor.findElement(protractor.By.id('link')).then(function(website) {
+            website.sendKeys(webs);
+        });
+    ptor.findElements(protractor.By.id('user_passowrd')).then(function(pass) {
+            console.log("number of element with id = user_passowrd = "+pass.length);
+            pass[0].sendKeys(password);
+            pass[1].sendKeys(password);
+        });
+    ptor.findElement(protractor.By.id('signup_btn')).then(function(signup_btn){
+        signup_btn.click().then(function(){
+            feedback(ptor, 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.');
+        });
+    });
+}
+//====================================================
+//               confirm teacher account
+//====================================================
+exports.confirm_account_teacher = function(ptor, feedback){
+    ptor.driver.get('https://www.guerrillamail.com/inbox');
+        ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
+            inbox.click().then(function(){
+                ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
+                    mail.sendKeys('teacher2').then(function(){
+                        ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
+                            set_btn.click().then(function(){
+                                ptor.driver.findElement(protractor.By.id('use-alias')).then(function(check_scram){
+                                    check_scram.click().then(function(){
+                                        ptor.driver.sleep(11000);
+                                        ptor.driver.findElements(protractor.By.tagName('td')).then(function(emails){
+                                            console.log(emails.length);
+                                            emails[1].click();
+                                            ptor.driver.sleep(3000).then(function(){
+                                                ptor.driver.findElement(protractor.By.partialLinkText('confirmation?confirmation_token')).then(function(link){
+                                                    link.getAttribute('href').then(function(confirm_link){
+                                                        var final_link = params.frontend+confirm_link.split('.com/#')[1];
+                                                        ptor.driver.get(final_link).then(function(){
+                                                            feedback(ptor, 'Your account was successfully confirmed. You are now signed in.');
+                                                        })
+                                                    })
+                                                })
+                                            })
+                                        })
+                                    })
+                                })
+                            })
+                        })
+                    })
+                });
+           })
+       })
 }

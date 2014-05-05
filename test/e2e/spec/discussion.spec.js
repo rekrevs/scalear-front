@@ -31,6 +31,7 @@ describe('', function(){
 		//ask_private_question(ptor);
 		//ask_a_question(ptor, 'question ya zmeel');
 		check_discussions_in_videonotes(ptor);
+		ptor.sleep(10000);
 	})
 })
 

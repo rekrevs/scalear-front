@@ -300,7 +300,7 @@ var translation_sv=function(){
               server_slow:"Servern 'Youtube.com' tar lång tid att läsa in den här videon",
               try_reload:"Du kan fortsätta vänta, eller prova att uppdatera sidan",
               video_events: "Video Händelser",
-              video_notes: "Video Anmärkningar",
+              video_notes: "Anmärkningar",
               outline: "Disposition",
               confused: "Förvirrad",
               discussion: "Diskussion",

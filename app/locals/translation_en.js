@@ -300,7 +300,7 @@ var translation_en=function(){
         server_slow:"The server 'Youtube.com' is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
         video_events: "Video Events",
-        video_notes: "Video Notes",
+        video_notes: "Notes",
         outline: "Outline",
         confused: "Confused",
         discussion: "Discussion",

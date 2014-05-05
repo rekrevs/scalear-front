@@ -2,9 +2,9 @@
 <link rel="stylesheet" href="styles/courseItem.css"/>
 <!-- endbuild -->
 <center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
-<div ng-show="courses">
+<div>
 	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
-		<div style="float: left; display: inline-block;">
+		<div ng-show="courses.length" style="float: left; display: inline-block;">
 			<span class="dropdown" ><button class="dropdown-toggle btn" data-toggle="dropdown">Sort By <b class="caret"></b></button>
 		        <ul class="dropdown-menu" style="margin-top: 10px; border-radius: 0px;">
 		            <li><a href="" ng-click="order('short_name')" translate>courses.course_code</a></li>
@@ -26,7 +26,7 @@
 			</big>
 		</div>
 		<div style="display: inline-block; float: right;">
-	    	<button class="btn btn-success" style="background-image: initial; float: right; margin-right: 60px;" ng-hide="!courses" id="new_course" ui-sref="new_course" translate>courses.new_course</button>
+	    	<button class="btn btn-success" style="background-image: initial; float: right; margin-right: 60px;" id="new_course" ui-sref="new_course" translate>courses.new_course</button>
     	</div>
 	</div>
 	</br>
@@ -78,7 +78,7 @@
 	</table>	 -->
 	<br />
 	<br />
-	<input id="search" placeholder="{{'courses.search'|translate}}..." type="search" style="border: 2px rgb(0, 162, 86) solid;" name="search" ng-model="searchText"/>
+	<input id="search" placeholder="{{'courses.search'|translate}}..." type="search" style="border: 2px rgb(0, 162, 86) solid;" name="search" ng-model="searchText" ng-show="courses.length"/>
 	<span ng-show="filtered_teacher">
 		<br />
 		<a ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>

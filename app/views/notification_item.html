@@ -1,0 +1,17 @@
+<div style="border-bottom: 0.5px darkgrey solid; margin-top: 5px; margin-bottom: 5px; padding: 5px;">
+	<table style="width: 100%;">
+		<tr>
+			<td style="width: 75%;">
+				<span ng-show="!notification.shared_by_id" translate="notification.invited" translate-values='{ course: notification[0], user:notification[1], role:notification[2]}'></span>
+
+				<span ng-show="notification.sharer_email" translate="notification.shared" translate-values='{user:notification.sharer_email}'></span>
+			</td>
+			<td style="width: 10%;">
+				<button class="btn btn-mini btn-success" style="background-image: initial;" ng-click="accept(id)" translate="notification.accept"></button>
+			</td>
+			<td style="width: 10%;">
+				<button class="btn btn-mini btn-danger" style="background-image: initial;" ng-click="reject(id)" translate="notification.reject"></button>
+			</td>
+		</tr>
+	</table>
+</div>

@@ -259,4 +259,55 @@ angular.module('scalearAngularApp')
       });
     }
   }
+}]).directive('notificationItem', ['$rootScope', 'Home', 'SharedItem', function($rootScope, Home, SharedItem){
+  return{
+    restrict: 'E',
+    scope:{
+      id: '=',
+      notification: '=',
+      type: '='
+    },
+    templateUrl: '/views/notification_item.html',
+    link: function(scope, element){
+
+      scope.accept = function(){
+        if(scope.notification.shared_by_id){
+          SharedItem.accpetShared(
+            {shared_item_id: scope.notification.id},{},
+            function(data){
+              $rootScope.current_user.shared = data.shared_items
+              $state.go('show_shared')
+            },
+            function(){}
+          )
+        }
+        else{
+          Home.acceptCourse({},{invitation : scope.id},function(data){
+            $rootScope.current_user.invitations = data.invitations
+          }, function(response){
+          })
+        }
+      }
+
+      scope.reject = function(){
+        if(scope.notification.shared_by_id){
+          SharedItem.rejectShared(
+            {shared_item_id: scope.notification.id},{},
+            function(data){
+              $rootScope.current_user.shared = data.shared_items
+            },
+            function(){}
+          )
+        }
+        else{
+          Home.rejectCourse({},{invitation : scope.id},
+          function(data){
+            $rootScope.current_user.invitations = data.invitations  
+          }, 
+          function(response){
+          })
+        }
+      }
+    }
+  }
 }]);

@@ -26,7 +26,7 @@
                     <table>
                         <tr>
                             <td style="padding-left: 20px; padding-right: 5px; min-width: 150px;">
-                                <span class="dropdown-header" ng-hide="!show_settings"><b translate>account_edit.account_settings</b></span>
+                                <!-- <span class="dropdown-header" ng-hide="!show_settings"><b translate>account_edit.account_settings</b></span> -->
                                 <div ng-init="selected = 0" class="settings-tabs">
                                     <a href="" ng-click="selected = 0">
                                         <ul ng-class="{tabactive: selected == 0}" class="tab-pill" ng-bind='"account_edit.account_information" | translate'>
@@ -46,6 +46,16 @@
                         </span>
                 </div>
             </td>
+            <td ng-show="show_notifications">
+                <span class="dropdown-header" ><b translate>navigation.notifications</b></span>
+                        <span>
+                            <notification-item ng-repeat="invitation in invitations" notification="invitation" id="$index"></notification-item>
+
+                            <notification-item ng-repeat="item in shared_items" notification="item" id="$index"></notification-item>
+                            <!-- {{$parent.current_user}} -->
+                        </span>
+
+            </td>
             <span style="float: right;">
                 <ul><a id="logout-link" style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
             </span>
@@ -63,12 +73,12 @@
                     <a id="lang-link-uk" style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
                 </ul>
             </span>
-            <span class="settings-menu-button" id="settings_btn" ng-click="show_settings = !show_settings" ng-class="{settingsopen: show_settings}">
+            <span class="settings-menu-button" id="settings_btn" ng-click="toggleSettings()" ng-class="{settingsopen: show_settings}">
             </span>
 
             <span class="shared-page-button" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}"></span>
 
-            <span class="notification-modal-button" id="notification_btn" ng-click="" ng-class="{notificationfull: arenotification}"></span>
+            <span class="notification-modal-button" id="notification_btn" ng-click="toggleNotifications()" ng-class="{notificationfull: arenotification}"></span>
 
             <span ng-show="role == 5" class="statistics-button" id="stats_btn" ui-sref="statistics">
             </span>

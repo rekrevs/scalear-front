@@ -1,6 +1,12 @@
 
 <div style="min-width: 80%;">
 <style>
+    a.mini-link{
+        color: rgb(0, 162, 86);
+    }
+    a.mini-link:hover{
+        color: darkgreen;
+    }
     #user_information_container{
         min-width: 280px;
         display: inline-block;
@@ -40,9 +46,9 @@
                 <div class="headerdivider" style="display: table-column; padding-right: 20px;">
                 </div>
                 <span style="margin-left: 20px; display: inline-block;" ng-hide="!course_information || show_settings">
-                    <div style="word-wrap: normal; width: 450px;">
+                    <div style="word-wrap: normal; width: 100%;">
                         <span style="font-size: 16px; ">
-                        {{course_information.short_name}} | {{course_information.name}}
+                        <a ui-sref="home" class="mini-link">{{'courses.all_courses' | translate}}</a> > {{course_information.short_name}} | {{course_information.name}}
                         </span>
                     </div>
                     <table>
@@ -93,10 +99,10 @@
                 </div>
             </td>
             <span style="float: right;">
-                <ul><a id="logout_link" style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
+                <ul><a id="logout_link" class="mini-link" style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
             </span>
             <span style="float: right;">
-                <a id="help_link" href="" >
+                <a id="help_link" href="" class="mini-link" >
                     <ul ng-bind="'head.help' | translate">
                     </ul>
                 </a>

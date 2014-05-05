@@ -1,5 +1,11 @@
 <div style="min-width: 80%;">
 <style>
+    a.mini-link{
+        color: rgb(0, 162, 86);
+    }
+    a.mini-link:hover{
+        color: darkgreen;
+    }
     #user_information_container{
         min-width: 280px;
         display: inline-block;
@@ -21,14 +27,14 @@
         }
     }
 </style>
-    <table style="vertical-align: baseline;">
+    <table style="vertical-align: baseline;" id="navigation-table">
         <tr>
             <td style="vertical-align: initial;">
                 <a ui-sref="profile({user_id: $parent.current_user.id})" href="">
                     <profile-image email="$parent.current_user.email" imagesize="70" style="overflow: hidden; min-width: 70px;"></profile-image>
                 </a>
             </td>
-            <td id="user_information_container">
+            <!-- <td id="user_information_container">
                 <a href="" ui-sref="profile({user_id: $parent.current_user.id})" style="color: white;">
                     <ul>
                         <span style="color: rgb(0, 162, 86); font-size: 22px; font-weight: lighter;" ng-bind="$parent.current_user.screen_name"></span>
@@ -38,14 +44,17 @@
                     <ul style="font-size: 19px;" ng-bind="$parent.current_user.university">
                     </ul>
                 </a>
-            </td>
+            </td> -->
             <td ng-init="show_settings = false" style="display: inline-table; margin-left: 20px;">
                 <div class="headerdivider" style="display: table-column; padding-right: 20px;">
                 </div>
+                <!-- <span id="info" style="text-align: center; display: inline-block;">
+                    <a ui-sref="course.edit_course_information({ course_id: current_course_id })"><div><div>{{'head.information' | translate}}</div></div></a>
+                </span> -->
                 <span style="margin-left: 20px; display: inline-block;" ng-hide="!course_information || show_settings">
-                    <div style="word-wrap: normal; width: 450px;">
+                    <div style="word-wrap: normal; width: 100%;">
                         <span style="font-size: 16px; ">
-                        {{course_information.short_name}} | {{course_information.name}}
+                        <a ui-sref="home" class="mini-link">{{'courses.all_courses' | translate}}</a> > {{course_information.short_name}} | {{course_information.name}}
                         </span>
                     </div>
                     <table>
@@ -112,10 +121,10 @@
                     </div>
             </td>
             <span style="float: right;">
-                <ul><a style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
+                <ul><a style="cursor: pointer;" class="mini-link" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
             </span>
-            <span style="float: right;">
-                <a href="" >
+            <span style="float: right;" >
+                <a href="" class="mini-link">
                     <ul ng-bind="'head.help' | translate">
                     </ul>
                 </a>

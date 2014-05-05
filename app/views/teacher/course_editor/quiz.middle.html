@@ -1,4 +1,9 @@
-<div class="well" style="min-height:660px;background:white">
+<style>
+	.ui-state-default{
+		background: white;
+	}
+</style>
+<div class="well" style="min-height:660px;background:white; border-radius: 0px;">
 	<div  ng-show="!preview">
 		<overlay ng-show="!questions">
 		    <loading size="big" show="true" style="position:relative; top:40%;" />
@@ -9,7 +14,7 @@
 				<div ng-if="question.question_type=='header'" style="text-align:left" >
 					<img src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}" style="margin-top:2px"/>
 					<label class='q_label'><span translate>quizzes.header</span>:</label>
-					<delete_button  size='small' action='removeHeader($index)' />
+					<delete_button  size='small' action='removeHeader($index)' style="float: right; margin-right: 20px;"></delete_button>
 					<div text-angular ng-model="question.content" ta-toolbar-button-class="btn btn-default btn-mini" style="width:95%;margin-left: 1%;"></div>
 				</div>
 			</div>
@@ -19,17 +24,17 @@
 				<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 			</div>
 			
-			<button value="Add Question" class="btn" ng-click="addQuestion()" translate>groups.add_question</button>
-			<button value="Add Header" class="btn" ng-click="addHeader()" translate>groups.add_header</button>
-			<button value="Save" class="btn btn-primary" ng-click="saveAll()" translate>save</button>
-			<button value="Preview" class="btn btn-info" ng-click="openPreview()" translate>preview</button>
+			<button value="Add Question" class="btn" style="background-image: initial;" ng-click="addQuestion()" translate>groups.add_question</button>
+			<button value="Add Header" class="btn" style="background-image: initial;" ng-click="addHeader()" translate>groups.add_header</button>
+			<button value="Save" class="btn btn-primary"style="background-image: initial;"  ng-click="saveAll()" translate>save</button>
+			<button value="Preview" class="btn btn-info"style="background-image: initial;"  ng-click="openPreview()" translate>preview</button>
 		</center>
 	</div>
 	<div ng-show="preview" >
 		<student-quiz ng-if="preview" quiz='temp_quiz' student-answers="formatted_answers" ></student-quiz>
 		<center>
-			<button value="edit" class="btn btn-info" ng-click="closePreview()" translate>edit</button>
-			<button value="Save" class="btn btn-primary" ng-click="saveAll()" translate>save</button>
+			<button value="edit" class="btn btn-info"style="background-image: initial;"  ng-click="closePreview()" translate>edit</button>
+			<button value="Save" class="btn btn-primary"style="background-image: initial;"  ng-click="saveAll()" translate>save</button>
 		</center>
 	</div>
 </div>

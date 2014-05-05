@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout',function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout) {
+  .controller('progressLectureCtrl', ['$scope', '$stateParams','Timeline','Module','Quiz','OnlineQuiz','$log', '$window','$translate','$timeout','Forum',function ($scope, $stateParams, Timeline, Module,Quiz,OnlineQuiz,$log, $window, $translate,$timeout,Forum) {
 
     $scope.Math = window.Math;
   	$scope.highlight_index = -1
@@ -23,8 +23,9 @@ angular.module('scalearAngularApp')
     {
       "All":"",
       "Confused":"confused",
-      "Questions":"question",
+      // "Questions":"question",
       "Charts": "charts",
+      "Discussion": "discussion",
     }
 
     $scope.grade_options= [
@@ -52,7 +53,6 @@ angular.module('scalearAngularApp')
           module_id: $stateParams.module_id
 	  		},
 	  		function(data){
-          console.log(data)
 	  			angular.extend($scope, data)
 	  	 		$scope.url = $scope.first_lecture
 	  	 		$scope.timeline['lecture'] = {}
@@ -65,7 +65,6 @@ angular.module('scalearAngularApp')
 			  	 			}
 	  	 			}	  	 			
 	  	 		}
-          console.log($scope.timeline['lecture'])
 	  	 		getModuleCharts()
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
@@ -77,7 +76,6 @@ angular.module('scalearAngularApp')
 	}
   var resizeContainer = function(){
     $scope.right_container.css('height', angular.element($window).height() - 200)
-    console.log('height should be '+angular.element($window).height())
   }
   angular.element($window).bind('resize', function () {
     resizeContainer();
@@ -104,7 +102,6 @@ angular.module('scalearAngularApp')
           module_id:$stateParams.module_id
       },
       function(data){
-        console.log(data)
         $scope.quizzes=angular.extend({}, data.quizzes, $scope.quizzes)
       	$scope.timeline['quiz'] ={}
   	 		for(var quiz_id in $scope.quizzes){
@@ -133,6 +130,7 @@ angular.module('scalearAngularApp')
             module_id:$stateParams.module_id
         },
         function(data){
+          console.log(data)
         	$scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
         	$scope.timeline["survey"]={}
         	for (var survey_id in $scope.quizzes ){
@@ -186,7 +184,7 @@ angular.module('scalearAngularApp')
   	$scope.manageInnerHighlight=function(x){
   		var inner_ul= angular.element('ul.highlight').find('ul')
   		if(inner_ul.length){
-  			var inner_li = inner_ul.find('li')
+  			var inner_li = inner_ul.find('li').not('.no_highlight')
   			if(angular.element('li.highlight').length)
   				angular.element('li.highlight').removeClass('highlight')
   			$scope.inner_highlight_index = (($scope.inner_highlight_index+x)%inner_li.length);
@@ -222,7 +220,6 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.updateHideQuiz = function(id, value) {
-      console.log("sgr")
   		if(value)
   			$scope.review_quizzes_count--
   		else
@@ -258,6 +255,21 @@ angular.module('scalearAngularApp')
 		  )
   	}
 
+    $scope.updateHideDiscussion=function(id,value){
+      if(value)
+        $scope.review_question_count--
+      else
+        $scope.review_question_count++
+      Forum.hideDiscussion({},
+        {
+          post_id:id,
+          hide:value
+        },
+        function(){},
+        function(){}
+      )
+    }
+
     $scope.updateHideResponse = function(quiz_id, id, value){
       Quiz.hideResponses(
         {quiz_id: quiz_id},
@@ -292,16 +304,14 @@ angular.module('scalearAngularApp')
       )
     }
 
-
-    // $scope.updateHideFreeTextOnlineQuiz=function(quiz_id,id, value){
-    //   OnlineQuiz.showInclass(
-    //     {quiz_id:quiz_id},
-    //     {
-    //       question:id,
-    //       show:value
-    //     }
-    //   )
-    // }
+  $scope.sendComment=function(discussion){
+     Forum.createComment(
+      {comment: {content: discussion.temp_response, post_id:discussion.id, lecture_id:discussion.lecture_id}}, 
+      function(response){
+        discussion.comments.push(response)
+      },function(){}
+    )
+  }
 
   $scope.sendFeedback=function(question){
     var survey_id = question.quiz_id,
@@ -316,6 +326,48 @@ angular.module('scalearAngularApp')
       },
       function(){
         question.response = question.temp_response
+      },
+      function(){}
+    )
+  }
+
+  $scope.deletePost=function(items, index){    
+     var discussion = items[index]
+     Forum.deletePost(
+      {post_id: discussion.post.id}, 
+      function(response){
+        items.splice(index,1)
+      },
+      function(){}
+    )
+  }
+
+
+  $scope.deleteComment=function(comment, discussion){
+    Forum.deleteComment(
+      {comment_id: comment.comment.id, post_id: discussion.id}, 
+      function(response){
+        discussion.comments.splice(discussion.comments.indexOf(comment),1)
+      }, 
+      function(){}
+    )
+  }
+
+  $scope.removeFlag=function(discussion){
+    Forum.removeAllFlags(
+      {post_id:discussion.id},
+      function(){
+        discussion.flags_count = 0
+      },
+      function(){}
+    )
+  }
+
+  $scope.removeCommentFlag=function(comment, discussion){
+    Forum.removeAllCommentFlags(
+      {comment_id: comment.comment.id, post_id:discussion.id},
+      function(){
+        discussion.comments[discussion.comments.indexOf(comment)].comment.flags_count = 0
       },
       function(){}
     )
@@ -336,7 +388,7 @@ angular.module('scalearAngularApp')
     	$scope.progress_player.controls.seek_and_pause(time)
 	}
 
-  $scope.formatMouleChartData = function(data){
+  $scope.formatModuleChartData = function(data){
     var formated_data ={}
     formated_data.cols=
         [
@@ -510,10 +562,14 @@ angular.module('scalearAngularApp')
 
   var setupShortcuts=function(){
     shortcut.add("r",function(){
-      if($scope.selected_item && $scope.selected_item.type == "Free Text Question") 
+      console.log($scope.inner_highlight_index)
+      if($scope.selected_item && ($scope.selected_item.type == "Free Text Question" || $scope.selected_item.type == "discussion")) 
           if($scope.inner_highlight_index >= 0){
-            $scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback = !$scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback
-            $scope.$apply()
+            if($scope.selected_item.data.answers)
+              $scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback = !$scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback
+            else{
+              $scope.selected_item.data[$scope.inner_highlight_index].post.show_feedback = !$scope.selected_item.data[$scope.inner_highlight_index].post.show_feedback
+            }$scope.$apply()
             angular.element('li.highlight').find('textarea').focus()
           }
     },{"disable_in_input" : true});
@@ -537,7 +593,6 @@ angular.module('scalearAngularApp')
     shortcut.add("Space",function(){
       
       if($scope.selected_item.time>0){
-        console.log($scope.selected_item)
 	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url, $scope.lectures[$scope.selected_item.lec_id].meta.id)
         $scope.$apply()
       }

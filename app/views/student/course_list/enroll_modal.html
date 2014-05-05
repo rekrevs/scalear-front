@@ -8,6 +8,10 @@
     	<loading size="small" show="form.processing"></loading>
     	<span class='help-inline' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
     	<span class='errormessage' ng-if='form.server_error'>{{form.server_error}}</span>
+        {{'users.enrollement_key_format' | translate}} 
+        <br>
+        <b>ABCD-1234</b>
+        <br>
         {{'users.get_enrollment_key' | translate}}
     </center>
     </form>

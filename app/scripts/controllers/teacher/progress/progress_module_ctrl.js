@@ -67,7 +67,7 @@ angular.module('scalearAngularApp')
 
     }
 
-    var formatMouleChartData = function(data){
+    var formatModuleChartData = function(data){
         var formated_data ={}
         formated_data.cols=
             [
@@ -109,7 +109,7 @@ angular.module('scalearAngularApp')
                 "maxValue": student_count
             }
         };
-        chart.data = formatMouleChartData(chart_data)
+        chart.data = formatModuleChartData(chart_data)
         return chart
     }
 

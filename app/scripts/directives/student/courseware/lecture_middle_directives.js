@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log','$translate', function($interval, Lecture, $stateParams, $window, $log, $translate) {
+.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log','$translate','util', function($interval, Lecture, $stateParams, $window, $log, $translate,util) {
   return {
     restrict:"E",
     templateUrl:"/views/student/lectures/controls.html",
@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
     	scope.questionBtn= function(){
     		scope.show_question=!scope.show_question;
             scope.$parent.current_question_time=scope.lecture_player.controls.getTime();
-            scope.safeApply();
+            util.safeApply();
     		if(scope.$parent.show_question==true)
             {
     			scope.lecture_player.controls.pause();
@@ -214,34 +214,14 @@ angular.module('scalearAngularApp')
 .directive("notification", ['$translate', '$window', '$log','OnlineQuiz', function($translate, $window, $log, OnlineQuiz) {
   return {
     restrict:"E",
-    template:'<div class="well" style="font-size:12px;padding:5px;">'+
-                '<div ng-show="show_notification==true" style="vertical-align:middle">'+
-                  '<center>'+
-                    '<b ng-class="{\'green_notification\':verdict== correct_notify , \'red_notification\':verdict==incorrect_notify }">'+
-                      '<span>{{verdict}}</span>'+
-                    '</b><br/>'+
-                    '<p ng-hide="selected_quiz.quiz_type==\'html\' && (selected_quiz.question_type.toUpperCase()==\'DRAG\' || selected_quiz.question_type.toUpperCase()==\'FREE TEXT QUESTION\')" translate="lectures.hover_for_details" />'+
-                  '</center>'+
-                '</div>'+
-                '<div ng-show="show_notification!=true && show_notification!=false" style="vertical-align:middle">{{show_notification}}</div>'+
-                '<div ng-show="review_inclass" style="vertical-align:middle">'+
-                  '<center>'+
-                    '<b style="color:blue">'+
-                      '<span>Would you like this question to be reviewed In Class?</span>'+
-                    '</b><br/>'+
-                    '<button ng-click="voteForReview()" style="margin-right: 5px;border-radius: 5px;background: white;font-size: 10px;padding: 2px 10px;margin-top:5px">YES</button>'+
-                    '<button ng-click="closeReviewNotify()" style="margin-right: 5px;border-radius: 5px;background: white;font-size: 10px;padding: 2px 10px;margin-top:5px">NO</button>'+
-                    '<button ng-click="retryQuiz()" style="margin-right: 5px;border-radius: 5px;background: white;font-size: 10px;  padding: 2px 10px;margin-top:5px">Retry</button>'+
-                  '</center>'+
-                '</div>'+
-              '</div>',
+    templateUrl: '/views/student/lectures/notification.html',
 
     link: function(scope, element, attrs) {
       scope.correct_notify=$translate("lectures.correct")
       scope.incorrect_notify=$translate("lectures.incorrect")
 
       element.css("position", "relative");
-      element.css("top", "310px");
+      element.css("top", "305px");
       element.css("left","240px");
       element.css("padding","5px");
       element.css("font-size", "12px");
@@ -257,15 +237,15 @@ angular.module('scalearAngularApp')
       var setNotficationPosition=function(){
         $log.debug(scope.fullscreen)
         if(scope.fullscreen){
-          scope.pHeight=angular.element($window).height()- 205;
+          scope.pHeight=angular.element($window).height()- 210;
           element.css("z-index",10000);
         }
         else{
-          scope.pHeight= angular.element('#main-video-container').height()-90;
+          scope.pHeight= angular.element('#main-video-container').height()-95;
           element.css("z-index",1000);
         }
-          element.css("top", scope.pHeight+"px");
-          element.css("position", "absolute");
+        element.css("top", scope.pHeight+"px");
+        element.css("position", "absolute");
       }
 
       scope.voteForReview=function(){
@@ -427,7 +407,7 @@ angular.module('scalearAngularApp')
           else
             scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
    
-          scope.$parent.show_notification=true;
+          scope.show_notification=true;
 
           if(data.msg!="Empty") // he chose sthg
           {

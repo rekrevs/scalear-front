@@ -1,17 +1,17 @@
 'use strict';
 
-var EditorState = {
-    CLEAN: 0, // NO CHANGES
-    DIRTY: 1, // UNSAVED CHANGES
-    SAVE: 2, // SAVE IN PROGRESS
-    LOAD: 3, // LOADING
-    READONLY: 4
-};
+// var EditorState = {
+//     CLEAN: 0, // NO CHANGES
+//     DIRTY: 1, // UNSAVED CHANGES
+//     SAVE: 2, // SAVE IN PROGRESS
+//     LOAD: 3, // LOADING
+//     READONLY: 4
+// };
 
-var Actions = {
-    LOAD: "load",
-    CREATE: "create"
-};
+// var Actions = {
+//     LOAD: "load",
+//     CREATE: "create"
+// };
 
 if (!String.prototype.format) {
     String.prototype.format = function () {
@@ -36,6 +36,7 @@ angular.module('scalearAngularApp', [
     'ui.bootstrap.modal',
     'ui.bootstrap.tooltip',
     'ui.bootstrap.timepicker',
+    'ui.bootstrap.popover',
     'ui.sortable',
     'ui.calendar',
     'ngDragDrop',
@@ -58,17 +59,6 @@ angular.module('scalearAngularApp', [
         function($http, $rootScope, scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies) {
 
 
-            $rootScope.safeApply = function(fn) {
-                var phase = this.$root.$$phase;
-                if(phase == '$apply' || phase == '$digest') {
-                    if(fn && (typeof(fn) === 'function')) {
-                        fn();
-                    }
-                } else {
-                    this.$apply(fn);
-                }
-            };
-
             $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
             $rootScope.show_alert = "";
             editableOptions.theme = 'bs2';
@@ -89,16 +79,6 @@ angular.module('scalearAngularApp', [
                 }
             }
 
-            $rootScope.safeApply = function(fn) {
-                var phase = this.$root.$$phase;
-                if(phase == '$apply' || phase == '$digest') {
-                    if(fn && (typeof(fn) === 'function')) {
-                        fn();
-                    }
-                } else {
-                    this.$apply(fn);
-                }
-            };
 
             $log.debug("lang is " + $rootScope.current_lang);
             var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']
@@ -150,8 +130,8 @@ angular.module('scalearAngularApp', [
             $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
                 //$rootScope.start_loading=true;
                 $rootScope.iscollapsed = true;
-                if(from.url != '/'){
-                UserSession.getRole().then(function(result) {
+               if(from.url != '/'){
+               UserSession.getRole().then(function(result) {
                     var s = 1;
                     if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent)) {
                         $state.go("ie", {},{notify: false });
@@ -168,11 +148,13 @@ angular.module('scalearAngularApp', [
                     {
                         $state.go("student_courses", {},{notify: false });
                         s = 0;
-                    } else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
+                    } 
+                    else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
                     {
                         $state.go("course_list", {},{notify: false });
                         s = 0;
-                    } else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
+                    } 
+                    else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
                     {
                         $state.go("course_list", {},{notify: false });
                     } else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
@@ -193,8 +175,8 @@ angular.module('scalearAngularApp', [
                         }, 4000);
                     }
                     // success
-                })
-            }
+               })
+           }
 
         });
 

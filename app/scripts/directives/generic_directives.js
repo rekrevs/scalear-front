@@ -197,6 +197,17 @@ angular.module('scalearAngularApp')
       })
       }
   };
+}]).directive('studentAnnouncementItem', ['ErrorHandler',function(ErrorHandler) {
+  return{
+    replace:true,
+    restrict: "E",
+    scope:{
+      announcement: '='
+    },
+    templateUrl: '/views/student/calendar/announcementItem.html',
+    link: function(scope){
+      }
+  };
 }]).directive('screenfull', function(){
   return {
     restrict: 'A',

@@ -3,7 +3,6 @@
 angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','util','$translate','Timeline', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, util,$translate, Timeline) {
     $window.scrollTo(0, 0);
-    console.log('got in hereeeeee');
     $scope.inclass_player={}
     $scope.inclass_player.events={}   
 
@@ -63,7 +62,6 @@ angular.module('scalearAngularApp')
     }
 
     var init = function(){
-      console.log('got inhere')
       $scope.timeline = {}
       Module.getModuleInclass(
         {
@@ -77,7 +75,7 @@ angular.module('scalearAngularApp')
           for(var lec_id in $scope.lectures){
             $scope.timeline['lecture'][lec_id] = new Timeline()
             for(var type in $scope.lectures[lec_id]){
-              if(type== "question" || type == "charts")
+             // if(type== "question" || type == "charts")
                 for(var it in $scope.lectures[lec_id][type] ){
                   $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])  
                 }
@@ -98,6 +96,7 @@ angular.module('scalearAngularApp')
           module_id:$stateParams.module_id
         },
         function(data){
+          console.log(data)
           $scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
           $scope.timeline["survey"]={}
           for (var survey_id in $scope.quizzes ){
@@ -108,11 +107,34 @@ angular.module('scalearAngularApp')
               $scope.timeline['survey'][survey_id].add(0, type, $scope.quizzes[survey_id].answers[q_id])
             }
           }
-          $scope.inclass_ready = true
+
+          adjustModuleItems()
+          
+          if($scope.review_question_count || $scope.review_quizzes_count)
+            $scope.inclass_ready = true
 
         },
         function(){}
       )
+    }
+
+    var adjustModuleItems=function(){
+      var lec_id = util.getKeys($scope.lectures)
+      var survey_id = util.getKeys($scope.quizzes)
+      for(var i=0; i<$scope.module.items.length; i++){
+        if ($scope.module.items[i].class_name == 'lecture'){          
+          if(lec_id.indexOf($scope.module.items[i].id.toString()) == -1){  
+            $scope.module.items.splice(i,1)
+            i-=1
+          }
+        }
+        else{
+          if(survey_id.indexOf($scope.module.items[i].id.toString()) == -1){
+            $scope.module.items.splice(i,1)
+            i-=1
+          }
+        }
+      }
     }
 
 
@@ -275,7 +297,6 @@ angular.module('scalearAngularApp')
                   $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
                 }
                 else{
-
                   $scope.nextQuiz()
                   return
                 }
@@ -296,7 +317,7 @@ angular.module('scalearAngularApp')
                   $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData')
 
                 if(type == 'survey')
-                  $scope.timeline_itr=-1//$scope.timeline[type][$scope.selected_item.id].items.length
+                  $scope.timeline_itr=-1
               }
               else{
                 $scope.item_itr+=1
@@ -311,6 +332,9 @@ angular.module('scalearAngularApp')
             $scope.nextQuiz()
           }
         }
+        else
+          if($scope.selected_item.class_name == 'quiz')
+            $scope.item_itr = $scope.module.items.length-1
       }
 
       $timeout(function(){
@@ -646,7 +670,7 @@ angular.module('scalearAngularApp')
     //     $scope.question_class = 'smallest_question'
     // }
     //$scope.student_question_class = $scope.question_class.split('_')[0]+'_student_'+$scope.question_class.split('_')[1]
-    console.log($scope.student_question_class)
+    
     if($scope.chart)
       $scope.chart.options.height=question_block.height() - 10
   }

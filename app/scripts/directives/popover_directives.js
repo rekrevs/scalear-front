@@ -47,6 +47,7 @@ angular.module('scalearAngularApp')
 			          		if(pop.right + angular.element('.popover').width() + 15  >  win.width()){
 								pop.left = pop.left -((pop.right + angular.element('.popover').width()) - win.width()+20) 
 								angular.element('.popover').css('z-index', '10000')
+								angular.element('.popover').css('position', 'absolute')
 							}
 			          	}
 

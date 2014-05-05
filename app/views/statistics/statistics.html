@@ -1,57 +1,109 @@
 <!-- build:css(.tmp/styles) styles/statistics.css -->
 <link rel="stylesheet" href="styles/teacher/statistics.css"/>
+<link rel="stylesheet" href="styles/student/modules_selector.css"/>
 <!-- endbuild -->
+<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2;">
+	<table style="width: 95%; position: relative;">
+		<tr>
+			<td style="width: 32%; text-align: left;">
+				<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="toggleSelector()" ng-disabled="loading_totals" title="{{selected_module.name}}">{{stats_title || 'statistics.charts' | translate}}<span class="caret" style="margin-left: 5px;"></span></button>
+		    </td>
 
-<h2 translate>statistics.statistics_dashboard</h2>
-<center><loading  show="loading_totals"/></center>
-<div ng-show="!loading_totals" class="row" style="padding-top:20px;padding-left: 30px;margin-bottom: 0;">   
-	<div class="span3" style="margin-left:10px">
-		<div class="span3 total" style="margin:0 0 10px 0">
-			<h5 class="text-info total_title" ><span translate>statistics.total_students</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Students}}</b></h4>
-		</div>
-		<div class="span3 total" style="margin:0">
-			<h5 class="text-info total_title" ><span translate>statistics.total_teachers</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Teachers}}</b></h4>
-		</div>
-	</div>
-	<div class="span3 total" style="margin-bottom:10px">
-		<h5 class="text-info total_title" ><span translate>statistics.total_courses</span>: </h5>
-		<h4 class="text-info total_inner" style="padding:40px"><b>{{Total_Courses}}</b></h4>
-	</div>
-	<!-- <div class="span3 total" style="margin-bottom:10px">
-		<h5 class="text-info total_title" ><span translate>statistics.current_active_users</span>: </h5><h4 class="text-info total_inner" style="padding:40px"><b>{{Total_Active}}</b></h4>
-	</div> -->
-	<div class="span3" style="margin-left:10px">
-		<div class="span3 total" style="margin:0 0 10px 0">
-			<h5 class="text-info total_title" ><span translate>statistics.total_quizzes</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Quizzes}}</b></h4>
-		</div>
-		<div class="span3 total" style="margin:0">
-			<h5 class="text-info total_title" ><span translate>statistics.total_surveys</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Surveys}}</b></h4>
-		</div>
-	</div>
-	<div class="span3 total" style="margin-bottom:10px">
-		<h5 class="text-info total_title" ><span translate>statistics.total_lectures</span>: </h5><h4 class="text-info total_inner" style="padding:40px"><b>{{Total_Lectures}}</b></h4>
-	</div>
-	<div class="span3" style="margin-left:10px">
-		<div class="span3 total" style="margin:0 0 10px 0">
-			<h5 class="text-info total_title" ><span translate>statistics.questions_asked</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Questions_Asked}}</b></h4>
-		</div>
-		<div class="span3 total" style="margin:0">
-			<h5 class="text-info total_title" ><span translate>statistics.total_confused</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Confused}}</b></h4>
+		    <td id="second-td" style="width: 33.66%;">
+				<big>
+					<b ng-bind="stats_title | translate">
+					</b>
+				</big>
+			</td>
+			<td style="width: 33.33%; text-align: right;" id="third-td">
+		    	
+			</td>
+		</tr>
+	</table>
+</div>
+<div class="modules-selector-dropdown" collapse="!close_selector" style="z-index: 1; top: 90px; background-color: whitesmoke; border: none; width: 0; position: fixed;">
+	<div class="multicol" style="-webkit-column-count:2;-moz-column-count:2;column-count:2;">
+		<div ng-repeat="series in collection">
+			<a ng-click="getSeriesData(series)">
+				<ul style="float: left; margin: 0; color: #2d2d2d; cursor: pointer;" ng-class="{moduleactive: selected_series == series}">
+					{{'statistics.'+series.toLowerCase()|translate}}
+				</ul>
+			</a>
 		</div>
 	</div>
 </div>
 
-<hr>
-<div class="row">        
-	<div class="span3">
-	    <ul class="nav nav-list">          
-	        <li class="nav-header" translate>courses.charts</li>
-			<li ng-repeat="series in collection" style="cursor:pointer" ng-class="{active: selected_series == series}">
-			    <a ng-click="getSeriesData(series)" >{{'statistics.'+series.toLowerCase()|translate}}</a>
-			</li>
-	    </ul>                   
+<!-- <h2 translate>statistics.statistics_dashboard</h2> -->
+<center><loading  show="loading_totals"/></center>
+<br />
+<br />
+<br />
+<div ng-show="!loading_totals" class="row top-stats">   
+	<div class="top-total">
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_students</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Students}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_teachers</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Teachers}}</b></h4>
+		</div>
 	</div>
-	<div id='details' class="span11" >
+	<div class="top-total">
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_lectures</span>: </h5><h4 class="text-info total_inner"><b>{{Total_Lectures}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_courses</span>: </h5>
+			<h4 class="text-info total_inner"><b>{{Total_Courses}}</b></h4>
+		</div>
+	</div>
+	<div class="top-total">
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_quizzes</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Quizzes}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_surveys</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Surveys}}</b></h4>
+		</div>
+	</div>
+	<div class="top-total">
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.questions_asked</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Questions_Asked}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_confused</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Confused}}</b></h4>
+		</div>
+	</div>
+</div>
+<div class="row" style="text-align: center;"> 
+	<div class="span3 side-stats">
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_students</span></h5><h4 class="text-info total_inner" style="padding-top: 28px; padding-bottom: 45px;"><b>{{Total_Students}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_teachers</span></h5><h4 class="text-info total_inner" style="padding-top: 28px; padding-bottom: 45px;"><b>{{Total_Teachers}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_courses</span></h5>
+			<h4 class="text-info total_inner" style="padding-top: 28px; padding-bottom: 45px;"><b>{{Total_Courses}}</b></h4>
+		</div>
+	</div>       
+	<div id='details' class="statistics-middle">
 		<highchart id="chart1" config="chartConfig" class="span10"></highchart>
+	</div>
+	<div class="span3 side-stats">
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_quizzes</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{Total_Quizzes}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_surveys</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{Total_Surveys}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_lectures</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;"><b>{{Total_Lectures}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.questions_asked</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{Total_Questions_Asked}}</b></h4>
+		</div>
+		<div class="total">
+			<h5 class="text-info total_title" ><span translate>statistics.total_confused</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{Total_Confused}}</b></h4>
+		</div>
 	</div>
 </div>

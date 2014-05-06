@@ -68,8 +68,8 @@ angular.module('scalearAngularApp')
         $scope.play_pause_class = 'pause'
 		$scope.slow = false
 		var paused_time= $scope.lecture_player.controls.getTime()
-		if($scope.editing_mode)
-			$scope.lecture_player.controls.seek_and_pause(paused_time)
+			if($scope.editing_mode)
+				$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
 
     $scope.playBtn = function(){
@@ -107,11 +107,10 @@ angular.module('scalearAngularApp')
         $scope.slow = true
     }
 
-    $scope.lecture_player.events.waiting=function(){
-    	console.log("Wainting")
+    $scope.lecture_player.events.seeked=function(){
+    	console.log("seeking")
         if($scope.editing_mode && $scope.selected_quiz && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_quiz.time)){
-        	$scope.editing_mode = false;
-        	$scope.selected_quiz=null
+        	$scope.exitBtn()
     	}
     }
 
@@ -307,9 +306,7 @@ angular.module('scalearAngularApp')
 			function(data){
 				$log.debug(data)
 				$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
-				$scope.editing_mode = false;
-				$scope.selected_quiz={}
-				$scope.quiz_overlay = true
+				resetQuizVariables()
 			},
 			function(){}
 		);
@@ -420,14 +417,19 @@ angular.module('scalearAngularApp')
 			console.log($scope.selected_quiz)
 			$scope.deleteQuiz($scope.selected_quiz)
 		}
+		resetQuizVariables()
+		$log.debug("exiting")		
+	}
+
+	var resetQuizVariables=function(){
 		$scope.editing_mode = false;
 		$scope.hide_alerts = true;
 		$scope.submitted= false
 		$scope.quiz_deletable = false
 		$scope.selected_quiz={}
 		$scope.quiz_layer.backgroundColor= ""
-		$log.debug("exiting")		
 	}
+
 
 }]);
 

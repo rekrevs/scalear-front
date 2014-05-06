@@ -60,8 +60,9 @@ angular.module('scalearAngularApp')
 		$scope.createCourse = function(){
 			if($scope.form.$valid)
  			{
+ 				var modified_course = angular.copy($scope.course)
                 $scope.submitting=true;
- 				$scope.course.start_date.setMinutes($scope.course.start_date.getMinutes() + 120);
+ 				modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() + 120);
 
                 if($scope.import_from)
                 {
@@ -69,8 +70,8 @@ angular.module('scalearAngularApp')
                     $state.go("import_from",{"shared_item":$scope.import_from})
                 }
                 else{
-                	$scope.course.time_zone = $scope.course.time_zone.value;
-                Course.create({course:$scope.course, "import":$scope.import_from},
+                	modified_course.time_zone = modified_course.time_zone.value;
+                Course.create({course:modified_course, "import":$scope.import_from},
 			function(data){
                 $scope.submitting=false;
 				$scope.submitted=false;

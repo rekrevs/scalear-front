@@ -99,6 +99,7 @@
           <p translate>
             courses.time_zone
           </p>
+          {{course.time_zone}}
           <select name="timezone" ng-model="course.time_zone" ng-options="element.text for element in timezones" placeholder="*{{'courses.time_zone' | translate}}"></select>
           <span ng-show="form.timezone.$error.required && submitted" translate>courses.required</span>
           <span class="errormessage" ng-show="server_errors['time_zone']">{{server_errors['time_zone'].join()}}</span>

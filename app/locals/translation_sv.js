@@ -197,7 +197,8 @@ var translation_sv=function(){
               accept: "Acceptera",
               reject: "Avböj",
               import_new_course: "Import till ny kurs",
-              import_existing_course: "Import till befintlig kurs"
+              import_existing_course: "Import till befintlig kurs",
+              empty: "Du har inga anmälningar just nu."
           },
       privacy:{
               policy: "Sekretesspolicy",

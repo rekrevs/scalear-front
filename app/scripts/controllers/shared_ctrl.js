@@ -16,6 +16,9 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.addModule=function(shared_item_index, module_index,course_id){
+  		console.log(shared_item_index)
+  		console.log(module_index)
+  		console.log($scope.shared_items[shared_item_index].modules[module_index])
   		Module.moduleCopy(
 		{course_id: course_id},
 		{module_id: $scope.shared_items[shared_item_index].modules[module_index].id},

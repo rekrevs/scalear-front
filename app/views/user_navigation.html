@@ -18,6 +18,16 @@
                         </ul>
                     </a>
             </td>
+            <td ng-show="show_notifications" style="width: 100%;">
+                <span class="dropdown-header" ><b translate>navigation.notifications</b></span>
+                        <div style="width: 100%;">
+                            <div ng-show="$parent.current_user.invitations == 0 && $parent.current_user.shared == 0">{{'notification.empty' | translate}}</div>
+                            <notification-item ng-repeat="(id, invitation) in $parent.current_user.invitation_items" notification="invitation" id="id"></notification-item>
+
+                            <shared-item-notification ng-repeat="(id, item) in $parent.current_user.shared_items" notification="item" id="id"></shared-item-notification>
+                        </div>
+
+            </td>
             <td ng-init="show_settings = false" style="display: inline-table; margin-left: 20px;">
                 <div class="headerdivider" style="display: table-column; padding-right: 20px;">
                 </div>
@@ -45,16 +55,6 @@
                             <account-information>
                         </span>
                 </div>
-            </td>
-            <td ng-show="show_notifications">
-                <span class="dropdown-header" ><b translate>navigation.notifications</b></span>
-                        <span>
-                            <notification-item ng-repeat="invitation in invitations" notification="invitation" id="$index"></notification-item>
-
-                            <notification-item ng-repeat="item in shared_items" notification="item" id="$index"></notification-item>
-                            <!-- {{$parent.current_user}} -->
-                        </span>
-
             </td>
             <span style="float: right;">
                 <ul><a id="logout-link" style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>

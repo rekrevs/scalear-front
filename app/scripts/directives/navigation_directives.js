@@ -8,6 +8,18 @@ angular.module('scalearAngularApp')
 			templateUrl: '/views/teacher_navigation.html',
 			link: function(scope){
 				scope.role = $rootScope.current_user.roles[0].id;
+				$rootScope.$watch('current_user', function(){
+					scope.arenotification = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
+					scope.areshared = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;	
+				});
+				scope.toggleNotifications = function(){
+					scope.show_notifications = !scope.show_notifications;
+					scope.show_settings = false;
+				}
+				scope.toggleSettings = function(){
+					scope.show_notifications = false;
+					scope.show_settings = !scope.show_settings;
+				}
 				scope.settingsOpened = function(which){
 					scope.selected=which;
 					scope.$emit('settingsOpened', [which]);
@@ -60,10 +72,6 @@ angular.module('scalearAngularApp')
 				$rootScope.$watch('current_user', function(){
 					scope.arenotification = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
 					scope.areshared = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;	
-					Home.getNotifications({},function(response){
-				        scope.invitations=response.invitations
-				        scope.shared_items = JSON.parse(response.shared_items)
-				    })
 				});
 				scope.toggleNotifications = function(){
 					scope.show_notifications = !scope.show_notifications;
@@ -90,6 +98,7 @@ angular.module('scalearAngularApp')
 	            };
 	            scope.$on('mainMenuToggled', function(event, collapsed){
 					scope.show_settings = false;
+					scope.show_notifications = false;
 				})
 			}
 		};

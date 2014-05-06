@@ -259,7 +259,7 @@ angular.module('scalearAngularApp')
       });
     }
   }
-}]).directive('notificationItem', ['$rootScope', 'Home', 'SharedItem', function($rootScope, Home, SharedItem){
+}]).directive('notificationItem', ['$rootScope', 'Home', 'SharedItem', '$state', function($rootScope, Home, SharedItem, $state){
   return{
     restrict: 'E',
     scope:{
@@ -269,44 +269,60 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/notification_item.html',
     link: function(scope, element){
-
+      console.log($rootScope.current_user)
       scope.accept = function(){
-        if(scope.notification.shared_by_id){
-          SharedItem.accpetShared(
-            {shared_item_id: scope.notification.id},{},
-            function(data){
-              $rootScope.current_user.shared = data.shared_items
-              $state.go('show_shared')
-            },
-            function(){}
-          )
-        }
-        else{
-          Home.acceptCourse({},{invitation : scope.id},function(data){
-            $rootScope.current_user.invitations = data.invitations
-          }, function(response){
-          })
-        }
+        Home.acceptCourse({},{invitation : scope.id},function(data){
+          $rootScope.current_user.invitations = data.invitations
+          $state.go('course.course_editor', {course_id: scope.notification.course_id})
+          console.log($rootScope.current_user.invitations);
+        }, function(response){
+        })
       }
 
       scope.reject = function(){
-        if(scope.notification.shared_by_id){
-          SharedItem.rejectShared(
-            {shared_item_id: scope.notification.id},{},
-            function(data){
-              $rootScope.current_user.shared = data.shared_items
-            },
-            function(){}
-          )
-        }
-        else{
-          Home.rejectCourse({},{invitation : scope.id},
+        Home.rejectCourse({},{invitation : scope.id},
+        function(data){
+          $rootScope.current_user.invitations = data.invitations  
+          delete $rootScope.current_user.invitation_items[scope.id]
+          console.log($rootScope.current_user)
+        }, 
+        function(response){
+        })
+      }
+    }
+  }
+}]).directive('sharedItemNotification', ['$rootScope', 'Home', 'SharedItem', '$state', function($rootScope, Home, SharedItem, $state){
+  return{
+    restrict: 'E',
+    scope:{
+      id: '=',
+      notification: '=',
+      type: '='
+    },
+    templateUrl: '/views/shared_item_notification.html',
+    link: function(scope, element){
+      console.log($rootScope.current_user)
+      scope.accept = function(){
+        SharedItem.accpetShared(
+          {shared_item_id: scope.notification.id},{},
           function(data){
-            $rootScope.current_user.invitations = data.invitations  
-          }, 
-          function(response){
-          })
-        }
+            $rootScope.current_user.shared = data.shared_items
+            $state.go('show_shared')
+          },
+          function(){}
+        )
+      }
+
+      scope.reject = function(){
+        SharedItem.rejectShared(
+          {shared_item_id: scope.notification.id},{},
+          function(data){
+            $rootScope.current_user.shared = data.shared_items
+            delete $rootScope.current_user.shared_items[scope.id]
+            console.log($rootScope.current_user)
+          },
+          function(){}
+        )
       }
     }
   }

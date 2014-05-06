@@ -6,7 +6,7 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-describe("scen 1", function(){
+describe("scen 1 >> ", function(){
 	it('should sign in', function(){
         o_c.sign_in(ptor, params.mail, params.password, o_c.feedback)
     })
@@ -22,11 +22,11 @@ describe("scen 1", function(){
 	it('should open lecture',function(){
 	    o_c.open_lectures(ptor);
 	    o_c.open_module(ptor, 1);
-	    o_c.open_item(ptor, 1);
+	    o_c.open_item(ptor, 2);
 	})
 
-	it('should seek to 30%',function(){
-		youtube.seek(ptor, 30);
+	it('should seek to 50% ocq_quiz_text',function(){
+		youtube.seek(ptor, 50);
 		ptor.sleep(3000)
 	})
 
@@ -35,12 +35,11 @@ describe("scen 1", function(){
 	})
 
 	it('should check the number of choises',function(){
-		check_mcq_no(ptor, 3)
+		check_ocq_no(ptor, 4)
 	})
 
 	it('should answer correctly',function(){
-		check_answer_given_answer_order(ptor, 1);
-		check_answer_given_answer_order(ptor, 2);
+		check_answer_given_answer_order(ptor, 2)
 	})
 
 	it('should press answer button',function(){
@@ -50,13 +49,13 @@ describe("scen 1", function(){
 	it('should check if the answer is correct',function(){
 		check_answer_correct(ptor);
 	})
-	it('should check every choise popover', function(){
-		expect_popover_on_hover_correct(ptor, 1);
+
+	it('should check every choise correctness', function(){
 		expect_popover_on_hover_correct(ptor, 2);
 	})
-})
+});
 
-describe("scen 2", function(){
+describe("scen 2 >> ", function(){
 	it('should go home', function(){
         o_c.home(ptor);
     })
@@ -72,11 +71,11 @@ describe("scen 2", function(){
 	it('should open lecture',function(){
 	    o_c.open_lectures(ptor);
 	    o_c.open_module(ptor, 1);
-	    o_c.open_item(ptor, 1);
+	    o_c.open_item(ptor, 2);
 	})
 
-	it('should seek to 30%',function(){
-		youtube.seek(ptor, 30);
+	it('should seek to 50% ocq_quiz',function(){
+		youtube.seek(ptor, 50);
 		ptor.sleep(3000)
 	})
 
@@ -85,11 +84,11 @@ describe("scen 2", function(){
 	})
 
 	it('should check the number of choises',function(){
-		check_mcq_no(ptor, 3)
+		check_ocq_no(ptor, 4)
 	})
 
 	it('should answer incorrectly',function(){
-		check_answer_given_answer_order(ptor, 3)
+		check_answer_given_answer_order(ptor, 1)
 	})
 
 	it('should press answer button',function(){
@@ -100,16 +99,57 @@ describe("scen 2", function(){
 		check_answer_incorrect(ptor);
 	})
 
-	it('should check every choise popover', function(){
-		expect_popover_on_hover_incorrect(ptor, 3);
+	it('should check every choise correctness', function(){
+		expect_popover_on_hover_incorrect(ptor, 1);
 	})
-})
+});
 
+describe("scen 3 >> ", function(){
+	it('should go home', function(){
+       o_c.home(ptor);
+    })
+
+    it('should open course', function(){
+    	o_c.open_course_whole(ptor)
+    })
+
+    it('should open tray',function(){
+		o_c.open_tray(ptor);
+	})
+
+	it('should open lecture',function(){
+	    o_c.open_lectures(ptor);
+	    o_c.open_module(ptor, 1);
+	    o_c.open_item(ptor, 2);
+	})
+
+	it('should seek to 50% ocq_quiz',function(){
+		youtube.seek(ptor, 50);
+		ptor.sleep(3000)
+	})
+
+	it('should expect a quiz',function(){
+		expect_quiz(ptor);
+	})
+
+	it('should check the number of choises',function(){
+		check_ocq_no(ptor, 4)
+	})
+
+	it('should make sure only one answer is checkable',function(){
+		check_answer_given_answer_order(ptor, 2)
+		is_checked(ptor, 2);
+		is_not_checked(ptor, 3)
+		check_answer_given_answer_order(ptor, 3)
+		is_not_checked(ptor, 2);
+		is_checked(ptor, 3)
+	})
+});
 //====================================================
 //====================================================
 //====================================================
 
-function check_mcq_no(ptor, no){
+function check_ocq_no(ptor, no){
 	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
 		expect(check_boxes.length).toEqual(no);
 	})
@@ -142,6 +182,22 @@ function check_answer_correct(ptor){
 function check_answer_incorrect(ptor){
 	locator.by_classname(ptor,'popover-content').then(function(popover){
 		expect(popover.getText()).toContain('Incorrect');
+	})
+}
+
+function is_checked(ptor, no){
+	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+		check_boxes[no-1].getAttribute('checked').then(function(ch){
+			expect(ch).toEqual("true");
+		})
+	})
+}
+
+function is_not_checked(ptor, no){
+	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+		check_boxes[no-1].getAttribute('checked').then(function(ch){
+			expect(ch).toEqual(null);
+		})
 	})
 }
 

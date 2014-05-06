@@ -1,0 +1,89 @@
+.shared-item-header{
+	width: 101%;
+	margin; 0 auto;
+	background-color: white;
+	box-shadow: 0px 1px 3px lightgrey;
+	height: 30px;
+	padding-top: 5px;
+	padding-bottom: 5px;
+	text-align: left;
+	padding-right: 5px;
+	padding-left: 5px;
+	margin-left: -1%;
+	margin-top: -10px;
+	margin-bottom: 15px;
+}
+.shared-at{
+	float:right;
+	display: inline-block;
+	margin-right: 10px;
+	font-size: 11px;
+	margin-top: -5px;
+	color: #666;
+	text-align: right;
+}
+
+.shared-tree li {
+    margin: 0px 0;
+	
+	list-style-type: none;
+    position: relative;
+	padding: 20px 5px 0px 5px;
+}
+
+.shared-tree li::before{
+    content: '';
+	position: absolute; 
+    top: 0;
+	width: 1px; 
+    height: 100%;
+	right: auto; 
+    left: -20px;
+	border-left: 1px solid #ccc;
+    bottom: 50px;
+}
+.shared-tree li::after{
+    content: '';
+	position: absolute; 
+    top: 30px; 
+	width: 25px; 
+    height: 20px;
+	right: auto; 
+    left: -20px;
+	border-top: 1px solid #ccc;
+}
+.shared-tree li a{
+    display: inline-block;
+	border: 1px solid lightgrey;
+	padding: 5px;
+	text-decoration: none;
+	color: #666;
+	font-family: arial, verdana, tahoma;
+	/*font-size: 11px;*/
+    border-radius: 2px;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
+	max-width: 200px;
+}
+
+/*Remove connectors before root*/
+.shared-tree > ul > li::before, .shared-tree > ul > li::after{
+	border: 0;
+}
+/*Remove connectors after last child*/
+.shared-tree li:last-child::before{ 
+      height: 30px;
+}
+
+/*Time for some hover effects*/
+/*We will apply the hover effect the the lineage of the element also*/
+/*.shared-tree li a:hover, .shared-tree li a:hover+ul li a {
+	background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
+}*/
+/*Connector styles on hover*/
+.shared-tree li a:hover+ul li::after, 
+.shared-tree li a:hover+ul li::before, 
+.shared-tree li a:hover+ul::before, 
+.shared-tree li a:hover+ul ul::before{
+	border-color:  #94a0b4;
+}

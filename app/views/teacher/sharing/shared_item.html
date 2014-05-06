@@ -1,0 +1,29 @@
+<div class="whole-box" style="max-width: 95%; max-height: none;">
+	<div class="shared-item-header">
+		<b translate>sharing.shared_from</b>{{data[0].teacher.name}} | {{data[0].teacher.email}}
+		<profile-image email="data[0].teacher.email" imagesize="30" style="float: right; margin-left: 5px;"></profile-image>
+	</div>
+	<div class="shared-tree" style="text-align: left;">
+			<ul ng-repeat="item in data">
+				<div class="shared-at">
+				{{item.created_at | amDateFormat:'dddd, MMMM D YYYY'}}
+				</div>
+				<li ng-repeat="module in item.modules">
+					<a style="border: 2px solid rgb(0, 162, 86);"><b>{{'lectures.module' | translate}}:</b> {{module.name}}</a>
+					<ul>
+						<li ng-repeat="child in module.items">
+							<a ng-if="!child.quiz_type"><b>{{'groups.lecture' | translate}}:</b> {{child.name}}</a>
+							<a ng-if="child.quiz_type"><b>{{'groups.'+child.quiz_type | translate}}:</b> {{child.name}}</a>
+						</li>
+					</ul>
+				</li>
+				<li ng-repeat="lecture in item.lectures">
+					<a><b>{{'groups.lecture' | translate}}:</b> {{lecture.name}}</a>
+				</li>
+				<li ng-repeat="quiz in item.quizzes">
+					<a><b>{{'groups.'+quiz.quiz_type | translate}}:</b> {{quiz.name}}</a>
+				</li>
+				<center><hr style="width: 90%;" /></center>
+			</ul>	
+	</div>
+</div>

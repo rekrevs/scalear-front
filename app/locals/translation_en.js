@@ -93,7 +93,8 @@ var translation_en=function(){
         with_you:"Shared with you",
         add_to:"Add To",
         add: "Add",
-        view: "View Shared"
+        view: "View Shared",
+        shared_from: "Data shared from "
       },
       settings:{
         lectures: "Lectures Settings"

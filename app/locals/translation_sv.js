@@ -89,7 +89,8 @@ var translation_sv=function(){
             with_you:"Delat med dig",
             add_to:"Lägg till",
             add: "Lägg",
-            view: "Syn Delas"
+            view: "Syn Delas",
+            shared_from: "Data som delas av "
           },
           menu:{
             copy:"Kopiera",

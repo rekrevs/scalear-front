@@ -28,11 +28,11 @@ angular.module('scalearAngularApp')
                             var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
                             $http.jsonp(url).success(function(data) {
                                 if(data.entry.media$group.yt$duration.seconds<1)
-                                    d.reject("video may not exist or may still be uploading");
+                                    d.reject("video may not exist or may still uploading");
                                 else
                                     d.resolve()
                             }).error(function(){
-                                d.reject("video may not exist or may still be uploading");
+                                d.reject("video may not exist or may still uploading");
                             });                    
                         }
                         else
@@ -150,7 +150,7 @@ angular.module('scalearAngularApp')
             // }
 
             var invalid_url=function(url){
-                return (!isMP4(url) && !isYoutube(url))
+                return (!isMP4(url) && !isYoutube(url) && url.trim().length>0)
             }
 
             var isMP4= function(url)

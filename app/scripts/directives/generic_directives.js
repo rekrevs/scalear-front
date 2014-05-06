@@ -269,12 +269,11 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/notification_item.html',
     link: function(scope, element){
-      console.log($rootScope.current_user)
       scope.accept = function(){
         Home.acceptCourse({},{invitation : scope.id},function(data){
           $rootScope.current_user.invitations = data.invitations
-          $state.go('course.course_editor', {course_id: scope.notification.course_id})
-          console.log($rootScope.current_user.invitations);
+          delete $rootScope.current_user.invitation_items[scope.id]
+          $state.go('course.course_editor', {course_id: scope.notification.course_id});
         }, function(response){
         })
       }
@@ -284,7 +283,6 @@ angular.module('scalearAngularApp')
         function(data){
           $rootScope.current_user.invitations = data.invitations  
           delete $rootScope.current_user.invitation_items[scope.id]
-          console.log($rootScope.current_user)
         }, 
         function(response){
         })
@@ -301,13 +299,13 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/shared_item_notification.html',
     link: function(scope, element){
-      console.log($rootScope.current_user)
       scope.accept = function(){
         SharedItem.accpetShared(
           {shared_item_id: scope.notification.id},{},
           function(data){
             $rootScope.current_user.shared = data.shared_items
-            $state.go('show_shared')
+            delete $rootScope.current_user.shared_items[scope.id]
+            $state.transitionTo('show_shared')
           },
           function(){}
         )
@@ -319,7 +317,6 @@ angular.module('scalearAngularApp')
           function(data){
             $rootScope.current_user.shared = data.shared_items
             delete $rootScope.current_user.shared_items[scope.id]
-            console.log($rootScope.current_user)
           },
           function(){}
         )

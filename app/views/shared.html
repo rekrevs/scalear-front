@@ -4,55 +4,6 @@
 <!-- build:css(.tmp/styles) styles/shared_item.css -->
 <link rel="stylesheet" href="styles/sharedItem.css"/>
 <!-- endbuild -->
-<h3><span>{{'sharing.with_you' | translate}}</span>:</h3>
-<hr>
 <div ng-repeat="shared_item in shared_items" style="clear:left">
-	<shared-item data="shared_item"></shared-item>
-	<!-- <h4 style="margin: 5px 24px;margin-right: 10px;">{{shared_item.teacher.name}} ({{shared_item.teacher.email}})</h4>
-	<ul style="margin: 15px 25px;">
-		<li ng-repeat="module in shared_item.modules" style="list-style:none;font-weight: bold;clear:left">
-			<div>
-				<div style="float:left;width:35%;">
-					<div style="padding: 7px;background:lightsteelblue;font-size: 20px;"><span>{{'lectures.module' | translate}}</span>: {{module.name}}</div>
-					<ul style="font-size: 14px;font-weight: 300;border-top: 2px groove lightgray;margin:0;background:white;padding: 5px;">
-						<li ng-repeat="item in module.items" style="margin-left:10px;list-style:none;">
-							<span>{{item.name}}</span>
-						</li>
-					</ul>					
-				</div>
-				<div style="background:#e5eecc;width:60%;float:right;border-bottom: 2px groove lightgray;padding-top: 5px;">
-					<span style="margin: 15px;font-size: 20px;"><span>{{'sharing.add_to' | translate}}</span>:</span>
-					<select ng-model="selected_course" ng-options="course.name for course in courses" style="margin:4px;margin-top:0;height:25px"></select>
-					<button ng-click="addModule($parent.$index, $index,selected_course.id)" class="btn btn-info" style="padding: 2px 15px;margin: 0 0 5px 15px;">{{'sharing.add' | translate}}</button>
-				</div>
-			</div>
-		</li>
-		<li ng-repeat="lecture in shared_item.lecture" style="list-style:none;font-weight: bold;clear:left">
-			<div>
-				<div style="padding: 7px;background:lightcoral;font-size: 20px;border-bottom: 2px groove lightgray;width:35%;float:left;margin-bottom: 10px;">
-					<span><span>{{'groups.lecture' | translate}}</span>: {{lecture.name}}</span>
-				</div>
-				<div style="background:#e5eecc;width:60%;float:right;border-bottom: 2px groove lightgray;padding-top: 5px;">
-					<span style="margin: 15px;font-size: 20px;"><span>{{'sharing.add_to' | translate}}</span>:</span>
-					<select ng-model="selected_course" ng-options="course.name for course in courses" style="margin:4px;margin-top:0;height:25px"></select>
-					<select ng-model="selected_module" ng-options="module.name for module in selected_course.modules" style="margin:4px;margin-top:0;height:25px"></select>
-					<button ng-click="addLecture($parent.$index,$index,selected_course.id,selected_module.id)" class="btn btn-info" style="padding: 2px 15px;margin: 0 0 5px 8px;">{{'sharing.add' | translate}}</button>
-
-				</div>
-			</div>
-		</li>
-		<li ng-repeat="quiz in shared_item.quiz" style="list-style:none;font-weight: bold;clear:left">
-			<div>
-				<div style="padding: 7px;background:lightsalmon;font-size: 20px;border-bottom: 2px groove lightgray;width:35%;float:left;margin-bottom: 10px;">
-					<span>{{quiz.quiz_type[0].toUpperCase() + quiz.quiz_type.slice(1);}}: {{quiz.name}}</span>
-				</div>
-				<div style="background:#e5eecc;width:60%;float:right;border-bottom: 2px groove lightgray;padding-top: 5px;">
-					<span style="margin: 15px;font-size: 20px;"><span>{{'sharing.add_to' | translate}}</span>:</span>
-					<select ng-model="selected_course" ng-options="course.name for course in courses" style="margin:4px;margin-top:0;height:25px"></select>
-					<select ng-model="selected_module" ng-options="module.name for module in selected_course.modules" style="margin:4px;margin-top:0;height:25px"></select>
-					<button ng-click="addQuiz($parent.$index,$index,selected_course.id,selected_module.id)" class="btn btn-info" style="padding: 2px 15px;margin: 0 0 5px 8px;">{{'sharing.add' | translate}}</button>
-				</div>
-			</div>
-		</li>
-	</ul> -->	
+	<shared-item data="shared_item" courses="courses"></shared-item>	
 </div>

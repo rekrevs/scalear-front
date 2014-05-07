@@ -94,7 +94,8 @@ var translation_en=function(){
         add_to:"Add To",
         add: "Add",
         view: "View Shared",
-        shared_from: "Data shared from "
+        shared_from: "Data shared from ",
+        destination: "Destination"
       },
       settings:{
         lectures: "Lectures Settings"
@@ -502,6 +503,7 @@ var translation_en=function(){
         ta: "TA",
         student_grades: "Student Grades",
         grades: "Grades",
+        select_course: "Select a Course",
         select_module: "Select a Module",
         select_lecture: "Select a Lecture",
         select_quiz: "Select a Quiz",

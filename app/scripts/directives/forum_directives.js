@@ -65,6 +65,15 @@ angular.module('scalearAngularApp')
             scope.flagPost = function(id, lecture_id, discussion){
                 Forum.flagPost({post_id: id}, function(response){
                     discussion.data.user_flag=1-discussion.data.user_flag;
+                    discussion.data.flags_count++;
+                }, function(){
+                    console.log("failure");
+                })
+            }
+            scope.unflagPost = function(id, lecture_id, discussion){
+                Forum.flagPost({post_id: id}, function(response){
+                    discussion.data.user_flag = 0;
+                    discussion.data.flags_count--;
                 }, function(){
                     console.log("failure");
                 })
@@ -86,6 +95,15 @@ angular.module('scalearAngularApp')
             scope.flagComment = function(id,q_id, lecture_id, answer){
                 Forum.flagComment({comment_flag:{comment_id: id}}, function(response){
                     answer.data.user_flag=1-answer.data.user_flag;
+                    answer.data.flags_count++;
+                }, function(){
+                    console.log("failure");
+                })
+            }
+            scope.unflagComment = function(id,q_id, lecture_id, answer){
+                Forum.flagComment({comment_flag:{comment_id: id}}, function(response){
+                    answer.data.user_flag = 0;
+                    answer.data.flags_count--;
                 }, function(){
                     console.log("failure");
                 })

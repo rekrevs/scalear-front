@@ -39,34 +39,34 @@ angular.module('scalearAngularApp')
                 $scope.submitting=true;
  				modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() + 120);
 
-                if($scope.import_from)
-                {
+                if($scope.import_from){
                     console.log($scope.import_from);
                     $state.go("import_from",{"shared_item":$scope.import_from})
                 }
                 else{
-                	$scope.course.time_zone = $scope.course.time_zone.name;
-                Course.create({course:$scope.course, "import":$scope.import_from},
-			function(data){
-                $scope.submitting=false;
-				$scope.submitted=false;
-				if(data.importing==true){
-					//$(window).scrollTop(0);
-					$state.go("course_list")
-				}
-				else{
-					//$(window).scrollTop(0);
-					$state.go("course.course_editor",{"course_id":data.course.id})
-				}
-			},function(response){
-				//server error must handle.
-                $scope.submitting=false;
-				$scope.server_errors=response.data.errors
+              		modified_course.time_zone = modified_course.time_zone.name;
+            		Course.create({course:modified_course, "import":$scope.import_from},
+					function(data){
+		                $scope.submitting=false;
+						$scope.submitted=false;
+						if(data.importing==true){
+							//$(window).scrollTop(0);
+							$state.go("course_list")
+						}
+						else{
+							//$(window).scrollTop(0);
+							$state.go("course.course_editor",{"course_id":data.course.id})
+						}
+					},function(response){
+						//server error must handle.
+		                $scope.submitting=false;
+						$scope.server_errors=response.data.errors
+					}
+				)}
 			}
-		);}
-		}else{
-			$scope.submitted=true
-		}
+			else{
+				$scope.submitted=true
+			}
 		}
 
         $scope.$watch('current_lang', function(newval, oldval){

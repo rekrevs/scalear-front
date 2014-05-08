@@ -260,7 +260,7 @@ angular.module('scalearAngularApp')
         function($timeout, $filter) {
             return {
 
-                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-select="value" buttons="no" e-ng-options="s.text for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ short_timezone }}<i ng-class="overclass"></i></a> ',
+                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-select="value" buttons="no" e-ng-options="s.value for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ short_timezone }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -270,14 +270,14 @@ angular.module('scalearAngularApp')
                     column: "@"
                 },
                 link: function(scope) {
-                    scope.$watch('status', function(){
-                        if(scope.status){
-                            scope.short_timezone = shorten(scope.status, 20)
-                        }
-                    })
+                    // scope.$watch('status', function(){
+                    //     if(scope.status){
+                    //         scope.short_timezone = shorten(scope.status, 20)
+                    //     }
+                    // })
                     scope.showStatus = function() {
                         var selected = $filter('filter')(scope.options, scope.value);
-                        return selected.length ? selected[0].text : 'Not set';
+                        return selected.length ? selected[0].value : 'Not set';
                     };
                     scope.saveData = function() {
                         $timeout(function() {
@@ -313,8 +313,9 @@ angular.module('scalearAngularApp')
                     }
 
                     scope.$watch('value', function(newval) {
-                        if (scope.options)
-                            scope.status = scope.showStatus();
+                        if (scope.options){
+                            scope.short_timezone = shorten(scope.showStatus(), 20)
+                        }
                     });
 
                 }

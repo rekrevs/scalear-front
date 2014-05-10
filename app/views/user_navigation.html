@@ -1,4 +1,12 @@
 <ul class="app-menu" collapse="iscollapsed" style="display: block;">
+    <style>
+        a.mini-link{
+            color: rgb(0, 162, 86);
+        }
+        a.mini-link:hover{
+            color: darkgreen;
+        }
+    </style>
     <div>
     <table style="vertical-align: baseline;">
         <tr>
@@ -57,10 +65,10 @@
                 </div>
             </td>
             <span style="float: right;">
-                <ul><a id="logout-link" style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
+                <ul><a id="logout-link" class="mini-link" style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
             </span>
             <span style="float: right;">
-                <a id="help-link" href="" >
+                <a id="help-link" class="mini-link" href="" >
                     <ul ng-bind="'head.help' | translate">
                     </ul>
                 </a>

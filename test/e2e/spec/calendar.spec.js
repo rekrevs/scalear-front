@@ -26,14 +26,34 @@ month[11] = "December";
 
 
 describe('', function(){
-	it('should login', function(){
-    o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
+	it('should go home', function(){
+    o_c.home(ptor);
+  })
+  it('should open the course to be tested', function(){
+    o_c.open_course_whole(ptor);
+  })
+  it('should test if calendar', function(){
+    is_calendar(ptor)
+  })
+
+  it('should go home', function(){
+    o_c.home(ptor);
   })
   it('should open the course to be tested', function(){
     o_c.open_course_whole(ptor);
   })
   it('should test if an element is in the right date', function(){
     is_current_month(ptor)
+  })
+
+  it('should go home', function(){
+    o_c.home(ptor);
+  })
+  it('should open the course to be tested', function(){
+    o_c.open_course_whole(ptor);
+  })
+  it('should test if an element is in the right date', function(){
+    open_random_event(ptor);
   })
 })
 

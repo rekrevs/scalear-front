@@ -1,3 +1,21 @@
+#loading-bar-spinner .spinner-icon{
+  border-top-color:  black !important;
+  border-left-color: black !important;
+}
+#loading-bar .bar {
+  background: #000 !important;
+}
+#loading-bar-spinner {
+  top: 50px !important;
+  left: 10px !important;
+}
+#loading-bar .peg {
+  -moz-box-shadow: #000 1px 0 6px 1px !important;
+  -ms-box-shadow: #000 1px 0 6px 1px !important;
+  -webkit-box-shadow: #000 1px 0 6px 1px !important;
+  box-shadow: #000 1px 0 6px 1px !important;
+}
+
 body {
      background-color: #fff;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;

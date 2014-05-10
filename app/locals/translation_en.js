@@ -93,7 +93,9 @@ var translation_en=function(){
         with_you:"Shared with you",
         add_to:"Add To",
         add: "Add",
-        view: "View Shared"
+        view: "View Shared",
+        shared_from: "Data shared from ",
+        destination: "Destination"
       },
       settings:{
         lectures: "Lectures Settings"
@@ -191,12 +193,13 @@ var translation_en=function(){
         not_done_due: "Not done or due in less than 2 days",
       },
       notification:{
-        invited: "You have been invited to the course {{course}}, by {{user}}, as a {{role}},",
+        invited: "You have been invited to the course {{course}}, by {{user}}, as a {{role}}",
         shared: "{{user}} has shared course data with you",
         accept: "Accept",
         reject: "Reject",
         import_new_course: "Import into new course",
-        import_existing_course: "Import into existing course"
+        import_existing_course: "Import into existing course",
+        empty: "You don\'t have any notifications at the moment."
       },
       privacy:{
         policy: "Privacy Policy",
@@ -500,6 +503,7 @@ var translation_en=function(){
         ta: "TA",
         student_grades: "Student Grades",
         grades: "Grades",
+        select_course: "Select a Course",
         select_module: "Select a Module",
         select_lecture: "Select a Lecture",
         select_quiz: "Select a Quiz",

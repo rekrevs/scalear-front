@@ -89,7 +89,9 @@ var translation_sv=function(){
             with_you:"Delat med dig",
             add_to:"Lägg till",
             add: "Lägg",
-            view: "Syn Delas"
+            view: "Syn Delas",
+            shared_from: "Data som delas av ",
+            destination: "Bestämmelseort"
           },
           menu:{
             copy:"Kopiera",
@@ -197,7 +199,8 @@ var translation_sv=function(){
               accept: "Acceptera",
               reject: "Avböj",
               import_new_course: "Import till ny kurs",
-              import_existing_course: "Import till befintlig kurs"
+              import_existing_course: "Import till befintlig kurs",
+              empty: "Du har inga anmälningar just nu."
           },
       privacy:{
               policy: "Sekretesspolicy",
@@ -499,6 +502,7 @@ var translation_sv=function(){
               ta: "Lärarassistent",
               student_grades: "Studentbetyg",
               grades: "Betyg",
+              select_course: "Välj en kurs",
               select_module: "Välj en Modul",
               select_lecture: "Välj ett Föreläsning",
               select_quiz: "Välj en Quiz",

@@ -1,13 +1,18 @@
 <ng-form name='qform' style='overflow: auto;'><div style='text-align:left;'>
 	<img ng-show='sortable' src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}"  style='margin-top:10px;margin-right:4px'/>
 	<label class='q_label'><span translate>answer.question</span>:</label>
-	<input required name='qlabel' type='text' ng-model='quiz[column]' /><delete_button ng-if='show_question()' size='small' action='removeQuestion(index)' style="position: relative; float: right; margin-right: 20px;" />
+	<input required name='qlabel' type='text' ng-model='quiz[column]' /><delete_button ng-if='isNormalQuiz()' size='small' action='removeQuestion(index)' style="position: relative; float: right; margin-right: 20px;" />
 	<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'><span translate>courses.required</span>!</span>	
 	<br />
-	<label ng-if='show_question()' class='q_label'><span translate>groups.question_type</span>:</label>
-	<select ng-if='show_question()' ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'></select>
+	<select ng-if='isFreeText()' ng-model='quiz.match_type' required  ng-options='val for val in match_types' class='choices'></select>
+	{{quiz.match_type}}
+	<div ng-if="quiz.match_type == 'Match Text'">
+		<htmlanswer />
+	</div>
+	<label ng-if='isNormalQuiz()' class='q_label'><span translate>groups.question_type</span>:</label>
+	<select ng-if='isNormalQuiz()' ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'></select>
 	<br/>
-	<div ng-hide='hideAnswer()' class='answer_div'>
+	<div ng-if='!isFreeText()' class='answer_div'>
 		<htmlanswer />
 		<a class='add_multiple_answer' ng-click='addAnswer("",quiz)' href='' translate>groups.add_answer</a>
 		<br/>

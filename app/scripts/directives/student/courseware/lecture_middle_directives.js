@@ -394,19 +394,18 @@ angular.module('scalearAngularApp')
 
         // scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
         // scope.show_notification=true;
-
-        if(scope.selected_quiz.quiz_type == 'survey' || scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'){
+        console.log(data)
+        if(scope.selected_quiz.quiz_type == 'survey' || (scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review) ){
            if(data.msg!="Empty"){
                 scope.selected_quiz.is_quiz_solved=true;
                 scope.show_notification='Thank you for your answer';
             }
         }
         else{
-          if(data.review)
-            scope.verdict= $translate("lectures.reviewed");
-          else
-            scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
-   
+          // if(data.review)
+          //   scope.verdict= $translate("lectures.reviewed");
+          // else
+          scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
           scope.show_notification=true;
 
           if(data.msg!="Empty") // he chose sthg
@@ -436,7 +435,6 @@ angular.module('scalearAngularApp')
       }
 
       var reviewInclass =function(){
-        //if()
         if(!scope.selected_quiz.reviewed)
           scope.review_inclass= true 
       }

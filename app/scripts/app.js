@@ -48,7 +48,9 @@ angular.module('scalearAngularApp', [
     'angularMoment',
     'textAngular',
     'highcharts-ng',
-    'config'
+    'config',
+    'chieffancypants.loadingBar',
+    'ngAnimate'
 ])
     .constant('headers', {
         withCredentials: true,
@@ -183,8 +185,10 @@ angular.module('scalearAngularApp', [
     }
 ])
 
-.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider',
-    function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider',
+    function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider) {
+        // cfpLoadingBarProvider.color = 'red';
+        console.log(cfpLoadingBarProvider)
 
         $logProvider.debugEnabled(false)
 

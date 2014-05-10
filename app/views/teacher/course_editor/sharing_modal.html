@@ -1,3 +1,6 @@
+<!-- build:css(.tmp/styles) styles/course_editor_min.css -->
+<link rel="stylesheet" href="styles/teacher/course_editor.css"/>
+<!-- endbuild -->
 <div style="height:500px">
 	<h3><span translate>sharing.share_content</span>:</h3>
 	<span style="margin: 5px 24px;margin-right: 10px;" ><span translate>sharing.teacher_email</span>:</span>
@@ -6,14 +9,18 @@
 	<button ng-click="shareItem()" class="btn btn-info" translate>menu.share</button>
 	<div class="errormessage" style="margin-left: 135px;height:5%">{{errors}}</div>
 
-	<ul style="overflow:auto;height:72%;margin:0 25px;">
-		<li ng-click="collapse[module.id] =! collapse[module.id]" ng-repeat="module in modules" style="list-style:none;background: lightblue;font-size: 16px;font-weight: bold;padding-top: 5px;">
+	<ul style="overflow:auto;height:72%;margin:0 25px;" class="accordion">
+		<li ng-click="collapse[module.id] =! collapse[module.id]" style="cursor: pointer;" ng-repeat="module in modules" class='module accordion-group'>
 			<input type="checkbox" ng-model="module.selected" ng-click="selectAll(module,$event)"style="margin: 3px 8px 5px 15px;"><span>{{module.name}}</span>
-			<ul style="background: antiquewhite;font-size: 14px;font-weight: 300;border-top: 2px groove lightgray;" collapse="!collapse[module.id]">
-				<li ng-repeat="item in module.items" style="margin-left:10px;list-style:none;">
-					<input type="checkbox" ng-model="item.selected" ng-click="selectItem(module,item,$event)" style="margin: 5px 10px 5px 20px;">
-					<span>{{item.name}}</span>
-				</li>
+			<ul class="accordion-heading" collapse="!collapse[module.id]">
+				<div class="outer">
+					<div class="inner">
+						<li ng-repeat="item in module.items">
+							<input type="checkbox" ng-model="item.selected" ng-click="selectItem(module,item,$event)" style="margin: 5px 10px 5px 20px;">
+							<span style="color: white;">{{item.name}}</span>
+						</li>
+					</div>
+				</div>
 			</ul>
 		</li>
 	</ul>	

@@ -802,6 +802,15 @@ iframe{
   margin-top: 5px; 
   position: fixed; 
 }
+.modal{
+  border-radius: 0px !important;
+}
+.btn{
+  background-image: initial !important;
+}
+.modal-header{
+  text-align: center;
+}
 @media (max-width: 700px) {
   .state{
     display: none;

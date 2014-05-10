@@ -339,7 +339,7 @@ angular.module('scalearAngularApp')
 			if(scope.isFreeText){
 				if(!scope.quiz.match_type)
 					scope.quiz.match_type = scope.match_types[0]
-				 	}
+		 	}
 
 			if(!scope.isSurvey())
 				scope.cc.push('DRAG')

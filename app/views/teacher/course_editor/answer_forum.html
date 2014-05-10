@@ -4,14 +4,14 @@
 	<input required name='qlabel' type='text' ng-model='quiz[column]' /><delete_button ng-if='isNormalQuiz()' size='small' action='removeQuestion(index)' style="position: relative; float: right; margin-right: 20px;" />
 	<span class='help-inline' ng-show='submitted && qform.qlabel.$error.required'><span translate>courses.required</span>!</span>	
 	<br />
-	<select ng-if='isFreeText()' ng-model='quiz.match_type' required  ng-options='val for val in match_types' class='choices'></select>
-	{{quiz.match_type}}
-	<div ng-if="quiz.match_type == 'Match Text'">
-		<htmlanswer />
-	</div>
 	<label ng-if='isNormalQuiz()' class='q_label'><span translate>groups.question_type</span>:</label>
 	<select ng-if='isNormalQuiz()' ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'></select>
 	<br/>
+	<label ng-if='isFreeText()' class='q_label'><span >type</span>:</label>
+	<select ng-if='isFreeText()' ng-model='quiz.match_type' required  ng-options='val for val in match_types' class='choices'></select>
+	<div ng-if="isFreeText() && quiz.match_type == 'Match Text'" class='answer_div'>
+		<htmlanswer />
+	</div>
 	<div ng-if='!isFreeText()' class='answer_div'>
 		<htmlanswer />
 		<a class='add_multiple_answer' ng-click='addAnswer("",quiz)' href='' translate>groups.add_answer</a>

@@ -24,6 +24,7 @@ angular.module('scalearAngularApp')
  	var init = function(){
  		Quiz.getQuestions({course_id:$stateParams.course_id, quiz_id: $stateParams.quiz_id},
  			function(data){
+ 				console.log(data)
 	 			$log.debug("init data is");
 	 			$log.debug(data);
 		 		$scope.questions=data.questions
@@ -34,13 +35,14 @@ angular.module('scalearAngularApp')
 							$scope.addHtmlAnswer("", question)
 						else
 							question.answers= CourseEditor.expandDragAnswers(data.answers[index][0].id ,data.answers[index][0].content, "quiz", question.id)
-					}else if(question.question_type == 'Free Text Question'){
+					}
+					else if(question.question_type == 'Free Text Question' && question.match_type=='Free Text'){
 						question.answers=[];
 						$scope.addHtmlAnswer("",question)
 					}
 					else{
 						question.answers = data.answers[index]
-						if(!data.answers[index].length)
+						if(!data.answers[index].length && question.question_type != 'Free Text Question')
 							$scope.addHtmlAnswer("",question)				
 					}	
 			  	});
@@ -91,7 +93,6 @@ angular.module('scalearAngularApp')
 		var data=[]
 		for(var elem in $scope.questions)
 		{
-			
 			if($scope.questions[elem].question_type.toUpperCase() == 'DRAG'){
 				var obj = CourseEditor.mergeDragAnswers($scope.questions[elem].answers, "quiz", $scope.questions[elem].id)
 				$scope.questions[elem].answers.forEach(function(ans){
@@ -104,8 +105,9 @@ angular.module('scalearAngularApp')
 				y.answers=[obj]
 				data[elem]= y
 			}
-			else if($scope.questions[elem].question_type == 'Free Text Question')
+			else if($scope.questions[elem].question_type == 'Free Text Question' && $scope.questions[elem].match_type =='Free Text')
 			{
+				console.log("I enterd here removing answer")
 				var y=angular.copy($scope.questions[elem])
 				y.answers=[]
 				data[elem]= y

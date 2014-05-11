@@ -804,6 +804,7 @@ iframe{
 }
 .modal{
   border-radius: 0px !important;
+  border: 4px solid rgb(0, 162, 86);
 }
 .btn{
   background-image: initial !important;

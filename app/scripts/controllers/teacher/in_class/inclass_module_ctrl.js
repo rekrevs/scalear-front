@@ -41,14 +41,14 @@ angular.module('scalearAngularApp')
         $scope.mute_class = "icon-volume-up"
         $scope.loading_video=true
         $scope.lecture_url=""
-        $scope.question_title=""
-        $scope.quiz_id=""
-        $scope.questions=[]
-        $scope.lecture_list = []
-        $scope.display_data = {}
-        $scope.total_num_lectures = 0
-        $scope.total_num_quizzes  = 0
-        $scope.current_lecture = 0
+        // $scope.question_title=""
+        // $scope.quiz_id=""
+        // $scope.questions=[]
+        // $scope.lecture_list = []
+        // $scope.display_data = {}
+        // $scope.total_num_lectures = 0
+        // $scope.total_num_quizzes  = 0
+        // $scope.current_lecture = 0
         $scope.current_quiz = 0
         $scope.item_itr = 0
         $scope.timeline_itr= 0
@@ -58,7 +58,6 @@ angular.module('scalearAngularApp')
         $scope.fullscreen = false 
         $scope.selected_item=null
         $scope.selected_timeline_item=null
-
     }
 
     var init = function(){
@@ -295,6 +294,7 @@ angular.module('scalearAngularApp')
               if($scope.timeline_itr!=0 && $scope.timeline_itr < $scope.timeline[type][$scope.selected_item.id].items.length){
                 if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
                   $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
+                  $scope.lecture_name = $scope.module.items[$scope.item_itr].name
                 }
                 else{
                   $scope.nextQuiz()
@@ -359,6 +359,7 @@ angular.module('scalearAngularApp')
 
                 if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
                   $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
+                  $scope.lecture_name = $scope.module.items[$scope.item_itr].name
                 }
                 else{             
                   $scope.prevQuiz()
@@ -627,6 +628,9 @@ angular.module('scalearAngularApp')
     if($scope.question_class == 'original_question')
       $scope.video_class = $scope.hide_questions?'zoom_video' : 'original_video'
     $scope.blurButtons()
+    $timeout(function(){
+      $scope.adjustTextSize()
+    })
   }
 
   var showQuestions = function(){

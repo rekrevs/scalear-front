@@ -1,6 +1,6 @@
 <div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen">
     <center>
-        <b style="position: absolute;top: 95%;left: 48%;">Click or Press 'b' to return</b>
+        <b style="position: absolute;top: 95%;left: 40%;">Click or Press 'b' to return</b>
     </center>
 </div>
 <span ng-mousemove="lightUpButtons()" class="disable_selection" style="overflow:hidden" >
@@ -14,11 +14,16 @@
     </div>
     <div style="position: fixed;bottom: 35px;top: 34px;left:0;right:0;" >
         
-        <div ng-show="selected_item.class_name=='lecture'" class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;" screenfull active="fullscreen">
+        <div ng-show="selected_item.class_name=='lecture'" class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;background:black" screenfull active="fullscreen">
+            <div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen" >
+                <center>
+                    <b style="position: absolute;top: 95%;left: 40%;">Click or Press 'b' to return</b>
+                </center>
+            </div>
             <video_container class="inclass_sceen" ng-class="video_class"  >
                 <div class="ontop inclass_sceen" style="position:absolute"></div>
                 <youtube class="inclass_sceen" id="inclass_vid" url="lecture_url" player="inclass_player" />
-                <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:100%; left:0;position:absolute;z-index:-1"/>
+                <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/>
             </video_container>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'charts'" ng-class="question_block">
                 <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>

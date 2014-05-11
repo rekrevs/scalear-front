@@ -434,7 +434,6 @@ angular.module('scalearAngularApp')
 					"<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />"+
 					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
 					"<label>Insert an exact string or a regular expression to match</label>"+
-					"{{quiz.answers}}"+
 				"</ng-form>"
 	}
 	

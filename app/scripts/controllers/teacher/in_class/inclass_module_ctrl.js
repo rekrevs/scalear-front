@@ -199,7 +199,6 @@ angular.module('scalearAngularApp')
       $scope.unregister_back_event();
       $scope.unregister_state_event();
       $scope.removeShortcuts()
-      // init()
       resetVariables()
     }
 
@@ -303,8 +302,12 @@ angular.module('scalearAngularApp')
                              
                 if($scope.selected_item.url){
                   if($scope.lecture_url.indexOf($scope.selected_item.url) == -1){
-                    $scope.inclass_player.controls.setStartTime($scope.selected_timeline_item.time)
-                    $scope.lecture_url= $scope.selected_item.url
+                    //if($scope.inclass_player.controls.isYoutube($scope.selected_item.url))
+                      $scope.inclass_player.controls.setStartTime($scope.selected_timeline_item.time)
+                      $scope.lecture_url= $scope.selected_item.url
+                   // else if ($scope.inclass_player.controls.isMP4($scope.selected_item.url)){
+
+                   // }
                   }
                   else{
                     $timeout(function(){
@@ -484,12 +487,13 @@ angular.module('scalearAngularApp')
         if (data[ind][1] == "gray") {
             correct = 0
             incorrect = Math.floor((data[ind][0]/$scope.students_count)*100)
-            tooltip_text +="Incorrect: "
+            if(!isSurvey())
+              tooltip_text +="Incorrect: "
         } else {                
             correct = Math.floor((data[ind][0]/$scope.students_count)*100)
             incorrect = 0
-            tooltip_text +="Correct: "
-
+            if(!isSurvey())
+              tooltip_text +="Correct: "
         }
         text = data[ind][2]
         tooltip_text +=data[ind][0]+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
@@ -697,6 +701,10 @@ angular.module('scalearAngularApp')
 
   $scope.blurButtons=function(){
     angular.element('.btn').blur()
+  }
+
+  var isSurvey=function(){
+    return $scope.selected_timeline_item.data.type == 'Survey'
   }
 
   init();

@@ -18,7 +18,8 @@ angular.module('scalearAngularApp')
 								'<b><br>{{double_click_msg|translate}}</b>'+
 							'</div>'+
 							'<a class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="saveBtn()" translate>save</a>'+
-							'<a class="btn" id="done" style="margin-top:5px;" ng-click="exitBtn()" translate>groups.exit</a>'+
+							'<a class="btn" ng-show="!quiz_deletable" id="done" style="margin-top:5px;" ng-click="exitBtn()" translate>groups.exit</a>'+
+							'<a class="btn" ng-show="quiz_deletable" id="done" style="margin-top:5px;" ng-click="exitBtn()" >Cancel</a>'+
 						'</div>'+
 					'</div>',
 	};

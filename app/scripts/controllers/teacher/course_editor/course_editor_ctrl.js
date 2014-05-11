@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('head.content')
- 	$scope.toggled = false; 
+ 	$scope.tree_toggled = false, $scope.details_toggled = false; 
  	/***********************Functions*******************************/
  	var init = function(){
  		console.log($state.params['module_id'])
@@ -39,30 +39,29 @@ angular.module('scalearAngularApp')
 	    );
  	}
 
- 	$scope.toggleMenu = function(){
- 		// $scope.toggled = !$scope.toggled;
- 		// console.log('toggling')
+ 	$scope.toggleTree = function(){
  		var menu = angular.element('#tree'), value;
- 		if($scope.toggled == false){
- 			
- 				// $timeout(function(){
- 					menu.css('left', '30px')	
- 				// }, 100);
- 			// }
+ 		if($scope.tree_toggled == false){
+			menu.css('left', '30px')	
  			console.log('first');
- 			
  		}
  		else{
- 			// for(var i=30; i>=-270; i--){
- 				// $timeout(function(){
- 					menu.css('left', '-238px')
- 				// }, 100);
- 			// }
+			menu.css('left', '-238px')
  			console.log('second');
  		}
- 		$scope.toggled = !$scope.toggled;
+ 		$scope.tree_toggled = !$scope.tree_toggled;
 
- 		
+ 	}
+ 	$scope.toggleDetails = function(){
+ 		var menu = angular.element('#details-resp'), value;
+ 		if($scope.details_toggled == false){
+			menu.css('right', '0px')	
+ 		}
+ 		else{
+			menu.css('right', '-350px')
+ 		}
+ 		$scope.details_toggled = !$scope.details_toggled;
+
  	}
  	
  	$scope.capitalize = function(s)

@@ -12,10 +12,8 @@
 	}
 </style>
 <div class="span3" id="tree">
-	<div class="menu-toggler" ng-click="toggleMenu()">
-		<span class="menu-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
-
-
+	<div class="menu-toggler" ng-click="toggleTree()" tooltip-placement="right" tooltip="{{'head.content' | translate}}" tooltip-append-to-body="true">
+		<span class="tree-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
 	</div>
 	<center><loading size="small" show="init_loading" ></loading></center>
 	<overlay ng-show="module_overlay" style="height:80%">
@@ -54,4 +52,10 @@
 	</div>
 <!-- </div> -->
 <span class="span3" id="details" ui-view="details"></span>
+<span class="span3" id="details-resp">
+	<div class="details-toggler" ng-click="toggleDetails()" tooltip-placement="left" tooltip="{{'lectures.details' | translate}}" tooltip-append-to-body="true">
+		<span class="details-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
+	</div>
+	<div ui-view="details"></div>
+</span>
 <!-- </span> -->

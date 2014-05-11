@@ -5,7 +5,6 @@
 <link rel="stylesheet" href="styles/controls.css" type="text/css" media="screen" />
 <!-- endbuild -->
 
-<!-- <span style="min-width: 1240px;"> -->
 <style>
 	.span3{
 		background-color: white;
@@ -44,18 +43,17 @@
 	</ul>
 	<button_link ng-show="!module_loading" title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link>		
 	<button_link title="{{'Preview'|translate}}" action="impersonate()" class="preview" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link>
-	<!-- <button class="btn" ng-click="impersonate()">Preview</button> -->
 	<hr />
 </div>
-<!-- <div class="modern row" style="width:1230px; margin: 0 auto;"> -->
 	<div id="middle"  ui-view="middle">
 	</div>
-<!-- </div> -->
-<span class="span3" id="details" ui-view="details"></span>
-<span class="span3" id="details-resp">
-	<div class="details-toggler" ng-click="toggleDetails()" tooltip-placement="left" tooltip="{{'lectures.details' | translate}}" tooltip-append-to-body="true">
-		<span class="details-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
-	</div>
-	<div ui-view="details"></div>
+<span ng-show="not_module">
+	<span class="span3" id="details" ui-view="details"></span>
+	<span class="span3" id="details-resp">
+		<div class="details-toggler" ng-click="toggleDetails()" tooltip-placement="left" tooltip="{{'lectures.details' | translate}}" tooltip-append-to-body="true">
+			<span class="details-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
+		</div>
+		<div ui-view="details"></div>
+	</span>
 </span>
 <!-- </span> -->

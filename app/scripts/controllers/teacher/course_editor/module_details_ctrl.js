@@ -13,20 +13,20 @@ angular.module('scalearAngularApp')
 
             //**************************FUNCTIONS****************************************///
             var init = function(){
-            Module.getModules(
-                {
-                    course_id:$stateParams.course_id,
-                    module_id:$stateParams.module_id
-                },
-                function(data){
-                    $scope.$watch('module',function(){
-                        if($scope.module)
-                            angular.extend($scope.module, data)
-                    })                    
-                },
-                function(){}
-            )
-        }        
+                Module.getModules(
+                    {
+                        course_id:$stateParams.course_id,
+                        module_id:$stateParams.module_id
+                    },
+                    function(data){
+                        $scope.$watch('module',function(){
+                            if($scope.module)
+                                angular.extend($scope.module, data)
+                        })                    
+                    },
+                    function(){}
+                )
+            }        
 
         $scope.addDocument=function(){
             $log.debug($scope.module.id)

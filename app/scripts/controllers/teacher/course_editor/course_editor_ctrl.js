@@ -6,8 +6,16 @@ angular.module('scalearAngularApp')
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('head.content')
- 	$scope.tree_toggled = false, $scope.details_toggled = false; 
+ 	$scope.tree_toggled = false, $scope.details_toggled = false, $scope.not_module = false; 
  	/***********************Functions*******************************/
+ 	// $state.$watch('params', function(){
+ 		if($state.params.lecture_id || $state.params.quiz_id){
+			$scope.not_module = true;
+		}
+		else{
+			$scope.not_module = false;	
+		}
+ 	// })
  	var init = function(){
  		console.log($state.params['module_id'])
  		console.log($state.params['lecture_id'])

@@ -28,11 +28,11 @@ angular.module('scalearAngularApp')
                             var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
                             $http.jsonp(url).success(function(data) {
                                 if(data.entry.media$group.yt$duration.seconds<1)
-                                    d.reject("video may not exist or may still be uploading");
+                                    d.reject("video may not exist or may still uploading");
                                 else
                                     d.resolve()
                             }).error(function(){
-                                d.reject("video may not exist or may still be uploading");
+                                d.reject("video may not exist or may still uploading");
                             });                    
                         }
                         else
@@ -51,10 +51,10 @@ angular.module('scalearAngularApp')
             };
 
             $scope.$parent.updateLecture = function(data, type) {
-                if (data && data instanceof Date) {
-                    data.setMinutes(data.getMinutes() + 120);
-                    $scope.lecture[type] = data
-                }
+                // if (data && data instanceof Date) {
+                //     data.setMinutes(data.getMinutes() + 120);
+                //     $scope.lecture[type] = data
+                // }
                 var modified_lecture = angular.copy($scope.lecture);
                 delete modified_lecture.id;
                 delete modified_lecture.created_at;
@@ -62,6 +62,7 @@ angular.module('scalearAngularApp')
                 delete modified_lecture.class_name;
                 delete modified_lecture.className;
                 delete modified_lecture.detected_aspect_ratio;
+                delete modified_lecture.due_date_enabled
 
                 $log.debug(modified_lecture)
 
@@ -73,16 +74,16 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
-                        $scope.modules.forEach(function(module, i) {
-                            if (module.id == $scope.lecture.group_id) {
-                                if ($scope.lecture.appearance_time_module) {
-                                    $scope.lecture.appearance_time = module.appearance_time;
-                                }
-                                if ($scope.lecture.due_date_module) {
-                                    $scope.lecture.due_date = module.due_date;
-                                }
-                            }
-                        });
+                        // $scope.modules.forEach(function(module, i) {
+                        //     if (module.id == $scope.lecture.group_id) {
+                        //         if ($scope.lecture.appearance_time_module) {
+                        //             $scope.lecture.appearance_time = module.appearance_time;
+                        //         }
+                        //         if ($scope.lecture.due_date_module) {
+                        //             $scope.lecture.due_date = module.due_date;
+                        //         }
+                        //     }
+                        // });
                     },
                     function() {
                         
@@ -150,7 +151,7 @@ angular.module('scalearAngularApp')
             // }
 
             var invalid_url=function(url){
-                return (!isMP4(url) && !isYoutube(url))
+                return (!isMP4(url) && !isYoutube(url) && url.trim().length>0)
             }
 
             var isMP4= function(url)
@@ -215,6 +216,18 @@ angular.module('scalearAngularApp')
                         if(video_id)
                             getYoutubeDetails(video_id[1]);
                     }
+                    if($scope.lecture.due_date) 
+                        $scope.lecture.due_date_enabled =!isDueDateDisabled() 
+                              
+                    $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){                  
+                        if ($scope.lecture.appearance_time_module) { 
+                            $scope.lecture.appearance_time = $scope.module_obj[$scope.lecture.group_id].appearance_time; 
+                        } 
+                        if ($scope.lecture.due_date_module) { 
+                            $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date; 
+                            $scope.lecture.due_date_enabled = !isDueDateDisabled() 
+                        } 
+                    }) 
                 }
             })
 

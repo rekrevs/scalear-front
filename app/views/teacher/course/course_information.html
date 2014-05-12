@@ -26,16 +26,17 @@
                     </b>
                     
                     <hr />
-                    <ul style="font-size: 15px; margin: 0px;"><span class="key-icon" /></span>{{data.course.unique_identifier}}</ul>
+                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.course_enrollment_key' | translate}}" tooltip-placement="right"><span class="key-icon" /></span>{{data.course.unique_identifier}}</ul>
 
-                    <ul style="font-size: 15px; margin: 0px;"><span class="link-icon" ></span><details-link value="data.course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link></ul>
+                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.discussion_forum_link' | translate}}" tooltip-placement="right"><span class="link-icon" ></span><details-link value="data.course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link></ul>
 
-                    <ul style="font-size: 15px; margin: 0px;"><span class="calendar-icon" /></span><details-date date="data.course.start_date | amDateFormat:'dddd, MMMM D YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date></ul>
+                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.start_date' | translate}}" tooltip-placement="right"><span class="calendar-icon" /></span><details-date date="data.course.start_date | amDateFormat:'dddd, MMMM D YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date></ul>
 
-                    <ul style="font-size: 15px; margin: 0px;"><span class="duration-icon" /></span><details-text value="data.course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> <span translate="courses.weeks"></span></ul>
+                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.duration' | translate}}" tooltip-placement="right"><span class="duration-icon" /></span><details-text value="data.course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> <span translate="courses.weeks"></span></ul>
 
 
-                    <ul style="font-size: 15px; margin: 0px;"><span class="clock-icon" /></span><details-time-zone value="data.course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone></ul>
+                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.time_zone' | translate}}" tooltip-placement="right"><span class="clock-icon" /></span><details-time-zone value="data.course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone></ul>
+                    <br />
                     <br />
                     <button class="btn btn-info" style="float: right; margin-right: 10px; background-image: initial;" ng-click="exportCourse()" ><span translate>courses.export_as</span> CSV</button>
                 </td>

@@ -16,11 +16,11 @@
                     <br />
                     <b id="course_code_name">{{course.short_name +' | '+ course.name}}</b>
                     <hr />
-                    <ul style="font-size: 15px; margin: 0px;" ng-show="course.discussion_link"><span class="link-icon" ></span><a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a></ul>
+                    <ul style="font-size: 15px; margin: 0px;display: inline-block;" tooltip="{{'courses.discussion_forum_link' | translate}}" tooltip-placement="top" ng-show="course.discussion_link"><span class="link-icon" ></span><a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a></ul>
 
-                    <ul id="course_date" style="font-size: 15px; margin: 0px;"><span class="calendar-icon" /></span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</ul>
+                    <ul id="course_date" style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.start_date' | translate}}" tooltip-placement="top"><span class="calendar-icon" /></span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</ul>
 
-                    <ul id="course_duration" style="font-size: 15px; margin: 0px;"><span class="duration-icon" /></span>{{course.duration}} <span translate="courses.weeks"></span></ul>
+                    <ul id="course_duration" style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.duration' | translate}}" tooltip-placement="top"><span class="duration-icon" /></span>{{course.duration}} <span translate="courses.weeks"></span></ul>
                 </td>
 
             </tr>

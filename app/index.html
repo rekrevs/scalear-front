@@ -35,6 +35,8 @@
     <link rel="stylesheet" href="styles/jquery-ui.css" />    
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
+    <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
+    <link rel="stylesheet" href="bower_components/ngAnimate/css/ng-animation.css">
 
     <!-- endbuild -->
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
@@ -93,10 +95,12 @@
         </div>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">
-                <span><user-navigation  iscollapsed="iscollapsed" arenotification="are_notifications()" areshared="are_shared()" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course')" role="current_user.roles[0].id" /></span>
+
+                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course' && current != 'courses.statistics')" role="current_user.roles[0].id" /></span>
                 <span ui-view="navigation" arenotification="are_notification()" areshared="are_shared()" iscollapsed="iscollapsed"></span>
 
                 <div class="row" style="width: auto; padding: 10px 15px 20px 70px; text-align: center; margin-bottom: 50px;">
+                
                     <div ui-view=""></div>
                 </div>
                 <!-- <div style="height: 50px;"></div> -->
@@ -179,6 +183,10 @@
 
     <script src="bower_components/js-md5/js/md5.min.js"></script>
 
+    <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
+
+    <script src="bower_components/ngAnimate/js/angular-animate.min.js"></script>
+
 
     <!-- endbuild -->
 
@@ -201,6 +209,8 @@
     <script src="scripts/directives/popover_directives.js"></script>
     <script src="scripts/directives/navigation_directives.js"></script>
     <script src="scripts/directives/footer_directives.js"></script> 
+    <script src="scripts/directives/teacher/notification_directives.js"></script>
+    <script src="scripts/directives/teacher/sharing_directives.js"></script>
     <script src="scripts/directives/teacher/course_editor/course_editor_directives.js"></script>        
     <script src="scripts/directives/teacher/course_editor/lecture_middle_directives.js"></script>
     <script src="scripts/directives/teacher/course_editor/details_directives.js"></script>

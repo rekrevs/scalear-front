@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
   .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout',function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout) {
- 
+ 	$scope.$parent.not_module = true;
  	$scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
       if($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]){
         $scope.quiz=$scope.items_obj["quiz"][$stateParams.quiz_id]

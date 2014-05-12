@@ -23,6 +23,7 @@ var translation_sv=function(){
       sign_in_with: "Logga in med ",
       submit: "Framlägga",
       at: "vid",
+      on: "på",
       save: "Spara", 
       edit: "Redigera",
       preview: "Förhandsgranska",     
@@ -74,8 +75,8 @@ var translation_sv=function(){
             private_post: "Privat Inlägget",
             public_post: "Public Inlaägget",
             comment: "Kommentera",
-            like: "Behaga",
-            unlike: "Un-liknande",
+            like: "Rösta Upp",
+            unlike: "Rösta Ner",
             liked_this: "gillade detta",
             write_comment: "Lämna en kommentar...",
             flag_post: "Flagga detta Inlägg",
@@ -89,7 +90,9 @@ var translation_sv=function(){
             with_you:"Delat med dig",
             add_to:"Lägg till",
             add: "Lägg",
-            view: "Syn Delas"
+            view: "Syn Delas",
+            shared_from: "Data som delas av ",
+            destination: "Bestämmelseort"
           },
           menu:{
             copy:"Kopiera",
@@ -197,7 +200,8 @@ var translation_sv=function(){
               accept: "Acceptera",
               reject: "Avböj",
               import_new_course: "Import till ny kurs",
-              import_existing_course: "Import till befintlig kurs"
+              import_existing_course: "Import till befintlig kurs",
+              empty: "Du har inga anmälningar just nu."
           },
       privacy:{
               policy: "Sekretesspolicy",
@@ -300,7 +304,7 @@ var translation_sv=function(){
               server_slow:"Servern 'Youtube.com' tar lång tid att läsa in den här videon",
               try_reload:"Du kan fortsätta vänta, eller prova att uppdatera sidan",
               video_events: "Video Händelser",
-              video_notes: "Video Anmärkningar",
+              video_notes: "Anmärkningar",
               outline: "Disposition",
               confused: "Förvirrad",
               discussion: "Diskussion",
@@ -380,7 +384,7 @@ var translation_sv=function(){
               due_date: "Färdigdatum",
               description: "Beskrivning",
               save_module: "Spara modul",
-              external_document: "Länka till externa dokument",
+              external_document: "Externa Dokument",
               you_sure_delete_document: "Är du säker på att du vill radera dokumentet '{{doc}}'?",
               you_sure_delete_module: "Är du säker på att du vill radera modul '{{module}}'?",
               you_sure_delete_lecture: "Är du säker på att du vill radera föreläsnings '{{lecture}}'?",
@@ -499,6 +503,7 @@ var translation_sv=function(){
               ta: "Lärarassistent",
               student_grades: "Studentbetyg",
               grades: "Betyg",
+              select_course: "Välj en kurs",
               select_module: "Välj en Modul",
               select_lecture: "Välj ett Föreläsning",
               select_quiz: "Välj en Quiz",
@@ -591,7 +596,8 @@ var translation_sv=function(){
               charts: "Diagram",
               total_statistics: "Total Statistik",
               enroll_instruction: "För att anmäla dig till en kurs klicka på 'Ansluta Kurs' nedan och ange kursens kursnyckel från din instruktör.",
-              export_as: "Exportera kurs som"
+              export_as: "Exportera kurs som",
+              main_progress: "Huvudsaklig Framsteg"
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

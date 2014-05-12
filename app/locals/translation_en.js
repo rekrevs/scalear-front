@@ -22,7 +22,8 @@ var translation_en=function(){
       remember_me: "Remember me",
       sign_in_with: "Sign in with ",
       submit: "Submit",
-      at: "at",
+      at: " at ",
+      on: " on ",
       save: "Save",
       edit: "Edit",
       preview: "Preview",
@@ -73,8 +74,8 @@ var translation_en=function(){
         private_post: "Private Post",
         public_post: "Public Post",
         comment: "Comment",
-        like: "Like",
-        unlike: "Unlike",
+        like: "Vote Up",
+        unlike: "Vote Down",
         liked_this: "liked this",
         write_comment: "Leave a comment...",
         flag_post: "Flag this post",
@@ -93,7 +94,9 @@ var translation_en=function(){
         with_you:"Shared with you",
         add_to:"Add To",
         add: "Add",
-        view: "View Shared"
+        view: "View Shared",
+        shared_from: "Data shared from ",
+        destination: "Destination"
       },
       settings:{
         lectures: "Lectures Settings"
@@ -191,12 +194,13 @@ var translation_en=function(){
         not_done_due: "Not done or due in less than 2 days",
       },
       notification:{
-        invited: "You have been invited to the course {{course}}, by {{user}}, as a {{role}},",
+        invited: "You have been invited to the course {{course}}, by {{user}}, as a {{role}}",
         shared: "{{user}} has shared course data with you",
         accept: "Accept",
         reject: "Reject",
         import_new_course: "Import into new course",
-        import_existing_course: "Import into existing course"
+        import_existing_course: "Import into existing course",
+        empty: "You don\'t have any notifications at the moment."
       },
       privacy:{
         policy: "Privacy Policy",
@@ -300,7 +304,7 @@ var translation_en=function(){
         server_slow:"The server 'Youtube.com' is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
         video_events: "Video Events",
-        video_notes: "Video Notes",
+        video_notes: "Notes",
         outline: "Outline",
         confused: "Confused",
         discussion: "Discussion",
@@ -381,7 +385,7 @@ var translation_en=function(){
         due_date: "Due Date",
         description: "Description",
         save_module: "Save Module",
-        external_document: "Link to External Documents",
+        external_document: "External Documents",
         you_sure_delete_document: "Are you sure you want to delete document '{{doc}}'?",
         you_sure_delete_module: "Are you sure you want to delete module '{{module}}'?",
         you_sure_delete_lecture: "Are you sure you want to delete lecture '{{lecture}}'?",
@@ -500,6 +504,7 @@ var translation_en=function(){
         ta: "TA",
         student_grades: "Student Grades",
         grades: "Grades",
+        select_course: "Select a Course",
         select_module: "Select a Module",
         select_lecture: "Select a Lecture",
         select_quiz: "Select a Quiz",
@@ -592,7 +597,8 @@ var translation_en=function(){
         charts: "Charts",
         total_statistics: "Total Statistics",
         enroll_instruction: "To enroll in a course click 'Join Course' below and enter the course enrollment key from your instructor.",
-        export_as: "Export course as"
+        export_as: "Export course as",
+        main_progress: "Main Progress"
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

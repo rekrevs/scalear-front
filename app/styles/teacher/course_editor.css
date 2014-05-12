@@ -1,6 +1,6 @@
 /* --- Page Structure  --- */
 .row{
-	min-width: 1000px;
+	min-width: 400px;
 }
 #acc1{margin:0px; padding: 0px;}
 
@@ -162,6 +162,14 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	float: right;
 	margin-right: 10px;
 }
+#details-resp{
+	display: none;
+	position: absolute;
+	width: 350px;
+	background-color: whitesmoke;
+	position: absolute;
+	right: -350px;
+}
 
 .datepicker2{
 	
@@ -179,7 +187,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	vertical-align: top;
 }
 .handle:hover{
-	cursor: cell;
+	cursor: move;
 	vertical-align: top;
 }
 .inner-item{
@@ -217,6 +225,14 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	height: 30px;
 	cursor: pointer;
 }
+.details-toggler{
+	display: none;
+	float: right;
+	margin-left: -30px;
+	width: 27px;
+	height: 30px;
+	cursor: pointer;
+}
 .document-item-box{
 	 background-color: white;
 	 padding-top: 5px;
@@ -227,9 +243,34 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	 padding: 10px;
 	 margin: 0 auto;
 }
-
-
+.details-toggle-icon:before{
+  margin-top: 5px;
+  content: url("../../images/details-toggle.png");
+}
+.tree-toggle-icon:before{
+  margin-top: 5px;
+  content: url("../../images/tree-toggle.png");
+}
 @media (max-width: 1240px) {
+	#details{
+		display: none;
+	}
+	#details-resp{
+		display: inline-block;
+		right: -350px;
+	}
+	.details-toggler{
+		background-color: #414141;
+		border-radius: 3px 0px 0px 3px;
+		box-shadow: 1px 1px 1px lightgrey;
+		float: right;
+		z-index: 2;
+		display: inline-block;
+		position: absolute;
+		right: 350px;
+	}
+}
+@media (max-width: 1000px){
 	#tree{
 		/*display: none;*/
 		left: -238px;
@@ -246,9 +287,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 		position: absolute;
 		left: 295px;
 	}
-
-
-
-
-
+	#middle{
+		margin-left: -50px;
+	}
 }

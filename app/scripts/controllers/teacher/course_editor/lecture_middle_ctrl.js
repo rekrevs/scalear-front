@@ -349,7 +349,7 @@ angular.module('scalearAngularApp')
 		}
 	}
 
-	var updateAnswers=function(ans, title){
+	var updateAnswers=function(ans, quiz){
 		$log.debug("savingAll")
 		Lecture.updateAnswers(
 			{
@@ -357,7 +357,7 @@ angular.module('scalearAngularApp')
 				lecture_id:$scope.lecture.id,
 				online_quiz_id: $scope.selected_quiz.id
 			},
-			{answer: ans, quiz_title:title },
+			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type },
 			function(data){ //success
 				if($scope.selected_quiz.quiz_type =="invideo")
 					getQuizData();
@@ -413,7 +413,7 @@ angular.module('scalearAngularApp')
 
 
 			$scope.quiz_deletable = false
-			updateAnswers(data, $scope.selected_quiz.question);
+			updateAnswers(data, $scope.selected_quiz);
 		}
 		else{
 			if($scope.selected_quiz.quiz_type == 'html')

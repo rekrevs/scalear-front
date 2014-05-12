@@ -323,17 +323,24 @@ angular.module('scalearAngularApp')
 				else
 					return false
 			}
-			scope.hideAnswer = function()
+			scope.isFreeText = function()
 			{
 				return (scope.quiz.question_type=="Free Text Question")
 			}
 			
-			scope.show_question = function()
+			scope.isNormalQuiz = function()
 			{
 				return "content" in scope.quiz
 			}
 
 			scope.cc =['MCQ', 'OCQ','Free Text Question']
+			scope.match_types =['Free Text', 'Match Text']
+			console.log(scope.quiz)
+			if(scope.isFreeText){
+				if(!scope.quiz.match_type)
+					scope.quiz.match_type = scope.match_types[0]
+		 	}
+
 			if(!scope.isSurvey())
 				scope.cc.push('DRAG')
 			// else
@@ -349,17 +356,19 @@ angular.module('scalearAngularApp')
             });
 
 			shortcut.add("Enter",function(){
-				var all_inputs= element.find('input')
-				$log.debug(all_inputs.length)
-				all_inputs.each(function(ind,elem){
-					$log.debug(elem)
-					if(document.activeElement == elem)
-						scope.addAnswer("",scope.quiz)
-					return
-				})
-				scope.$apply()
-				if(element.find('input')[all_inputs.length])
-					element.find('input')[all_inputs.length].focus()
+				if(!scope.isFreeText){
+					var all_inputs= element.find('input')
+					$log.debug(all_inputs.length)
+					all_inputs.each(function(ind,elem){
+						$log.debug(elem)
+						if(document.activeElement == elem)
+							scope.addAnswer("",scope.quiz)
+						return
+					})
+					scope.$apply()
+					if(element.find('input')[all_inputs.length])
+						element.find('input')[all_inputs.length].focus()
+				}
 			},{"disable_in_input" : false, 'propagate':true});			
 			
 		}
@@ -368,6 +377,7 @@ angular.module('scalearAngularApp')
 	return {
 	 	restrict: 'E',
 	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()'>"+
+					"<div ng-switch-when='FREE TEXT QUESTION' ><html_freetext ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
 					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
@@ -417,7 +427,18 @@ angular.module('scalearAngularApp')
 			
 		}
 	};
-}]).directive('htmlMcq',function(){	
+}]).directive('htmlFreetext',function(){	
+	return{
+		restrict:'E',
+		template:"<ng-form name='aform'>"+
+					"<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />"+
+					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
+					"<label>Insert an exact string or a regular expression to match</label>"+
+					"{{quiz.answers}}"+
+				"</ng-form>"
+	}
+	
+}).directive('htmlMcq',function(){	
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform'>"+

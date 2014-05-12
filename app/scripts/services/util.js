@@ -27,7 +27,21 @@ angular.module('scalearAngularApp')
       } else {
           $rootScope.$apply(fn);
       }
+  },
+
+  hour12: function(hour){
+    //var hours = new Date().getHours();
+    var hours = hour%24; 
+    var mid='AM';
+    if(hours==0)
+      hours=12;    
+    else if(hours>12){
+      hours=hours%12;
+      mid='PM';
+    }
+    return hours+' '+mid
   }
+
 }
 
 }]);

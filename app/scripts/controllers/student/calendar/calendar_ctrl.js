@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', '$window','Page', function ($scope,$state, $stateParams, Course, $window,Page) {
+  .controller('studentCalendarCtrl', ['$scope','$state', '$stateParams', 'Course', '$window','Page', '$filter', function ($scope,$state, $stateParams, Course, $window,Page, $filter) {
      $window.scrollTo(0, 0);
      Page.setTitle('head.calendar');
     var change_lang = function(){
@@ -39,6 +39,9 @@ angular.module('scalearAngularApp')
 			  	})
 			  	$scope.calendar.events = $scope.filtered_events
 			   	for (var element in $scope.calendar.events){
+			   		console.log(new Date($scope.calendar.events[element].start))
+			   		$scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
+			   		$scope.calendar.events[element].title +=  ' @'+$filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
 			   		if($scope.calendar.events[element].quizId)
 			   			$scope.calendar.events[element].url= $state.href("course.lectures.module.quiz",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId ,quiz_id:$scope.calendar.events[element].quizId})
 			 		else if($scope.calendar.events[element].lectureId)
@@ -55,6 +58,7 @@ angular.module('scalearAngularApp')
 					}  
 				}
 				$scope.eventSources.push($scope.calendar); 
+				console.log($scope.eventSources)
 				$(window).resize()
 			},
 			function(){}

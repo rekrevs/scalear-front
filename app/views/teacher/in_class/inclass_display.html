@@ -1,6 +1,6 @@
 <div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen">
     <center>
-        <b style="position: absolute;top: 95%;left: 48%;">Click or Press 'b' to return</b>
+        <b style="position: absolute;top: 95%;left: 40%;">Click or Press 'b' to return</b>
     </center>
 </div>
 <span ng-mousemove="lightUpButtons()" class="disable_selection" style="overflow:hidden" >
@@ -14,11 +14,16 @@
     </div>
     <div style="position: fixed;bottom: 35px;top: 34px;left:0;right:0;" >
         
-        <div ng-show="selected_item.class_name=='lecture'" class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;" screenfull active="fullscreen">
+        <div ng-show="selected_item.class_name=='lecture'" class="drag_container" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;background:black" screenfull active="fullscreen">
+            <div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen" >
+                <center>
+                    <b style="position: absolute;top: 95%;left: 40%;">Click or Press 'b' to return</b>
+                </center>
+            </div>
             <video_container class="inclass_sceen" ng-class="video_class"  >
                 <div class="ontop inclass_sceen" style="position:absolute"></div>
                 <youtube class="inclass_sceen" id="inclass_vid" url="lecture_url" player="inclass_player" />
-                <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:100%; left:0;position:absolute;z-index:-1"/>
+                <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/>
             </video_container>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'charts'" ng-class="question_block">
                 <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
@@ -26,7 +31,7 @@
                     <div google-chart chart="chart" ></div>
                 </div>
             </div>
-            <div ng-show="!hide_questions && selected_timeline_item.type == 'question'" ng-class="question_block">
+            <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">
                 <ul style="padding-left:5px">
                     <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])" ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
                         {{question[0]}}
@@ -35,7 +40,12 @@
                 </ul>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'free_question'" ng-class="question_block">
-                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{'Free Text Question | '+ selected_timeline_item.data.title}}</div>
+                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
+                <ul ng-show="question_class =='zoom_question'" ng-class="question_class" >
+                    <li ng-repeat="answer in selected_timeline_item.data.answers" style="list-style-position:inside; padding:3px 15px;list-style:disc; line-height:25px">
+                        <p>{{answer.online_answer}}</p>
+                    </li>
+                </ul>     
             </div>
         </div>
 
@@ -59,22 +69,30 @@
     </div>
 
     <div style="position:fixed;padding-top:5px; text-align: center; bottom: 5px; width: 100%;">
-            <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()"  class="btn btn-default exit_btn">{{button_names[0]}}</button>
-
-            <button ng-class="button_class+' '+dark_buttons" ng-click="skip(-5)" class="btn btn-default" style="padding: 3px 10px;">
+        <div class="bottom-left">
+            <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()"  class="btn btn-default exit_btn" style="border: none;">{{button_names[0]}}</button>
+        </div>
+        <div class="bottom-middle">
+            <button ng-class="button_class+' '+dark_buttons" ng-click="skip(-5)" class="btn btn-default" style="padding: 3px 10px; border: none;">
                 <span>{{button_names[5]}} </span><i class="icon-step-backward" />
             </button>
-            <button ng-class="button_class" ng-click="prevQuiz()" class="btn btn-default" style=";margin-right:3%"><i class="icon-backward" /></button>
-            <button ng-class="button_class" ng-click="nextQuiz()" class="btn btn-default" ><i class="icon-forward" /></button>
-            <button ng-class="button_class+' '+dark_buttons" ng-click="adjustTextSize()" class="btn btn-default" style="padding: 3px 10px;">
+            <button ng-class="button_class" ng-click="prevQuiz()" class="btn btn-default" style="margin-right:3%; border: none;"><i class="icon-backward" /></button>
+            <button ng-class="button_class" ng-click="nextQuiz()" class="btn btn-default" style="border: none;" ><i class="icon-forward" /></button>
+            <button ng-class="button_class+' '+dark_buttons" ng-click="adjustTextSize()" class="btn btn-default" style="padding: 3px 10px; border: none;">
                 <i class="icon-step-forward" /><span> {{button_names[5]}}</span>
             </button>
-            
-            <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="btn btn-default" style="float:right; margin-right: 3%"><i class="icon-fullscreen" /></button>
-            <span ng-hide="selected_item.class_name=='quiz'">
-                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%"  class="btn btn-default">{{hide_text}}</button>           
-                <button ng-class="button_class+' '+dark_buttons" ng-click="setZoomClass()" ng-show="video_class=='original_video'" style="float:right; margin-right: 1%" class="btn btn-default"><i class="icon-zoom-in" /><span> {{button_names[1]}}</span></button>
-                <button ng-class="button_class+' '+dark_buttons" ng-click="setOriginalClass()" ng-show="video_class=='zoom_video'" style="float:right; margin-right: 1%" class="btn btn-default"><i class="icon-zoom-out" /><span> {{button_names[2]}}</span></button>
+        </div>
+        <div class="bottom-right">
+            <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="btn btn-default" style="float:right; margin-right: 3%; border: none;"><i class="icon-fullscreen" /></button>
+            <span ng-hide="selected_item.class_name=='quiz'" >
+                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%; border: none;"  class="btn btn-default">{{hide_text}}</button>           
+                <button ng-class="button_class+' '+dark_buttons" ng-click="setZoomClass()" ng-show="video_class=='original_video'" style="float:right; margin-right: 1%; border: none;" class="btn btn-default"><i class="icon-zoom-in" /><span> {{button_names[1]}}</span></button>
+                <button ng-class="button_class+' '+dark_buttons" ng-click="setOriginalClass()" ng-show="video_class=='zoom_video'" style="float:right; margin-right: 1%; border: none;" class="btn btn-default"><i class="icon-zoom-out" /><span> {{button_names[2]}}</span></button>
             </span>
+        </div>
+            
+            
+            
+
     </div>
 </span>

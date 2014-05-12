@@ -49,7 +49,6 @@ angular.module('scalearAngularApp')
 			},
             template:"<div></div>",
 			link: function(scope, element){
-				var win = angular.element($window)
 
                 scope.vq;
                 scope.start_time
@@ -78,9 +77,9 @@ angular.module('scalearAngularApp')
                     //var vimeo= scope.url.match(/vimeo/)  // improve this..
                     if(isYoutube(scope.url)){
                     	console.log("youtube")
-                    	scope.video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
-                    	player = Popcorn(scope.video,{});
-                    	scope.video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time)
+                    	var video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
+                    	player = Popcorn(video,{});
+                    	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time)
 						$timeout(function(){
 							if(player_controls.readyState() == 0)
 								scope.$emit('slow')
@@ -95,9 +94,11 @@ angular.module('scalearAngularApp')
                     }
                     else if(isMP4(scope.url)){
                     	console.log("mp4")
-                        player = Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
+                        var video = Popcorn.HTMLVideoElement('#'+scope.id)//Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
+                        player = Popcorn(video,{});
+                        video.src = scope.url
                         player.controls(scope.controls);
-                        player.autoplay(true);
+                        // player.autoplay(true);
                     }
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
@@ -112,8 +113,6 @@ angular.module('scalearAngularApp')
 					if(short_url){
 						base_url = 'http://www.youtube.com/watch'
 						query = '&v='+short_url[1]
-						console.log("adfgads")
-						console.log(query)
 					}
 					else{
 						var splitted_url= url.split('?')
@@ -127,6 +126,7 @@ angular.module('scalearAngularApp')
                     if(player)
                         player.destroy();
                     element.find('iframe').remove();
+                    element.find('video').remove()
                 }
                 player_controls.play=function(){
 					player.play();
@@ -168,9 +168,17 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
-						console.log(time)
-					player.currentTime(time);
+					if(player_controls.readyState() != 4){
+						player.on("loadeddata", 
+						function(){
+							player.currentTime(time);
+						});
+					}
+					else{
+						player.currentTime(time);
+					}
 					parent.focus()
+
 				}
 
 				player_controls.seek_and_pause=function(time){
@@ -314,21 +322,27 @@ angular.module('scalearAngularApp')
                 // }
 
                 var isYoutube= function(url){
-                    return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+            		var video_url = url || scope.url
+                    return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
                 }
 
-
                 var isShortYoutube= function(url){
-                    return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)?\.be\/([^\s&]{11})/);
+                	var video_url = url || scope.url
+                    return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)?\.be\/([^\s&]{11})/);
                 }
 
                 var isVimeo=function(url){
-                	return url.match(/vimeo/)
+                	var video_url = url || scope.url
+                	return video_url.match(/vimeo/)
                 }
 
               	var isMP4=function(url){
-                	return url.match(/(.*mp4$)/)
+              		var video_url = url || scope.url
+                	return video_url.match(/(.*mp4$)/)
                 }
+
+                player_controls.isYoutube = isYoutube
+                player_controls.isMP4 = isMP4
 
 
 				scope.$watch('url', function(){
@@ -354,6 +368,8 @@ angular.module('scalearAngularApp')
                     }
 
 				})
+
+
 
 		    }
 		};

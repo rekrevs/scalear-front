@@ -134,7 +134,9 @@ angular.module('scalearAngularApp')
 		if ($scope.selected_quiz && $scope.quiz_deletable){
 			var old_insert_time = $scope.selected_quiz.time
 			promise = $scope.deleteQuiz($scope.selected_quiz)
+			clearQuizVariables()
 		}
+
 		promise.then(function(){
 			var insert_time= $scope.lecture_player.controls.getTime()
 			var duration = $scope.lecture_player.controls.getDuration()
@@ -175,6 +177,10 @@ angular.module('scalearAngularApp')
 
 	$scope.showOnlineQuiz= function(quiz){
 		if($scope.selected_quiz != quiz){
+			if ($scope.quiz_deletable){
+				$scope.deleteQuiz($scope.selected_quiz)
+				clearQuizVariables()
+			}
 			$log.debug("SHOWONLINEQUIX")
 			$log.debug(quiz)
 			$scope.hide_alerts = true;
@@ -314,9 +320,11 @@ angular.module('scalearAngularApp')
 			{online_quizzes_id: quiz.id},{},
 			function(data){
 				$log.debug(data)
-				$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
-				resetQuizVariables()
+				$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)\
+				// resetQuizVariables()
 				deferred.resolve()
+				$scope.quiz_overlay = true
+				// $scope.editing_mode = false;
 			},
 			function(){}
 		);
@@ -429,19 +437,17 @@ angular.module('scalearAngularApp')
 			console.log($scope.selected_quiz)
 			$scope.deleteQuiz($scope.selected_quiz)
 		}
-		resetQuizVariables()
-		$log.debug("exiting")		
-	}
-
-	var resetQuizVariables=function(){
+		clearQuizVariables()
 		$scope.editing_mode = false;
 		$scope.hide_alerts = true;
 		$scope.submitted= false
-		$scope.quiz_deletable = false
-		$scope.selected_quiz={}
 		$scope.quiz_layer.backgroundColor= ""
 	}
 
+	var clearQuizVariables= function(){
+		$scope.selected_quiz={}		
+		$scope.quiz_deletable = false
+	}
 
 }]);
 

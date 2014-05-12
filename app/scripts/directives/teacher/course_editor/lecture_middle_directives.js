@@ -18,7 +18,8 @@ angular.module('scalearAngularApp')
 								'<b><br>{{double_click_msg|translate}}</b>'+
 							'</div>'+
 							'<a class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="saveBtn()" translate>save</a>'+
-							'<a class="btn" id="done" style="margin-top:5px;" ng-click="exitBtn()" translate>groups.exit</a>'+
+							'<a class="btn" ng-show="!quiz_deletable" id="done" style="margin-top:5px;" ng-click="exitBtn()" translate>groups.exit</a>'+
+							'<a class="btn" ng-show="quiz_deletable" id="done" style="margin-top:5px;" ng-click="exitBtn()" >Cancel</a>'+
 						'</div>'+
 					'</div>',
 	};
@@ -433,8 +434,7 @@ angular.module('scalearAngularApp')
 		template:"<ng-form name='aform'>"+
 					"<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />"+
 					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-					"<label>Insert an exact string or a regular expression to match</label>"+
-					"{{quiz.answers}}"+
+					"<label>Insert an exact string or a regular expression to match ex: '/[a-z]*/'</label>"+
 				"</ng-form>"
 	}
 	

@@ -113,8 +113,6 @@ angular.module('scalearAngularApp')
 					if(short_url){
 						base_url = 'http://www.youtube.com/watch'
 						query = '&v='+short_url[1]
-						console.log("adfgads")
-						console.log(query)
 					}
 					else{
 						var splitted_url= url.split('?')
@@ -170,9 +168,17 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
-						console.log(time)
-					player.currentTime(time);
+					if(player_controls.readyState() != 4){
+						player.on("loadeddata", 
+						function(){
+							player.currentTime(time);
+						});
+					}
+					else{
+						player.currentTime(time);
+					}
 					parent.focus()
+
 				}
 
 				player_controls.seek_and_pause=function(time){
@@ -316,8 +322,6 @@ angular.module('scalearAngularApp')
                 // }
 
                 var isYoutube= function(url){
-                	console.log(url)
-                	console.log(scope.url)
             		var video_url = url || scope.url
                     return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
                 }

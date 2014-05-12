@@ -302,12 +302,14 @@ angular.module('scalearAngularApp')
                              
                 if($scope.selected_item.url){
                   if($scope.lecture_url.indexOf($scope.selected_item.url) == -1){
-                    //if($scope.inclass_player.controls.isYoutube($scope.selected_item.url))
+                    if($scope.inclass_player.controls.isYoutube($scope.selected_item.url))
                       $scope.inclass_player.controls.setStartTime($scope.selected_timeline_item.time)
-                      $scope.lecture_url= $scope.selected_item.url
-                   // else if ($scope.inclass_player.controls.isMP4($scope.selected_item.url)){
-
-                   // }
+                    $scope.lecture_url= $scope.selected_item.url
+                    if ($scope.inclass_player.controls.isMP4($scope.selected_item.url)){
+                      $timeout(function(){
+                        $scope.seek($scope.selected_timeline_item.time)
+                      })
+                    }
                   }
                   else{
                     $timeout(function(){
@@ -623,6 +625,7 @@ angular.module('scalearAngularApp')
     // $scope.question_block={
     //   'overflowY':'visible'
     // }
+    adjustTextSize()
     $scope.blurButtons()
   }
 

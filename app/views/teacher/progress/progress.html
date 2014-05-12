@@ -13,7 +13,7 @@
 				    </div>
 				</td>
 				<td style="min-width: 15px;">
-					<a ui-sref="course.progress.main" ng-click="clearCurrent()" ng-show="selected_module" tooltip-placement="bottom" tooltip="Back to main progress page"><small translate>back</small></a>
+					<a ui-sref="course.progress.main" ng-click="clearCurrent()" ng-show="selected_module" tooltip-placement="bottom" tooltip="Back to main progress page"><small translate>courses.main_progress</small></a>
 				</td>
 				<td style="width: {{80/selected_module.items.length}}%;" ng-repeat="item in selected_module.items | orderBy:'position'">
 					<div style="text-align: left;">

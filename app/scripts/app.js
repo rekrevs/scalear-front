@@ -48,7 +48,9 @@ angular.module('scalearAngularApp', [
     'angularMoment',
     'textAngular',
     'highcharts-ng',
-    'config'
+    'config',
+    'chieffancypants.loadingBar',
+    'ngAnimate'
 ])
     .constant('headers', {
         withCredentials: true,
@@ -183,8 +185,10 @@ angular.module('scalearAngularApp', [
     }
 ])
 
-.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider',
-    function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider',
+    function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider) {
+        // cfpLoadingBarProvider.color = 'red';
+        console.log(cfpLoadingBarProvider)
 
         $logProvider.debugEnabled(false)
 
@@ -338,10 +342,10 @@ angular.module('scalearAngularApp', [
             .state('course.course_editor.module', {
                 url: '/modules/:module_id',
                 views: {
-                    'details': {
-                        templateUrl: '/views/teacher/course_editor/module.details.html',
-                        controller: 'moduleDetailsCtrl'
-                    },
+                    // 'details': {
+                    //     templateUrl: '/views/teacher/course_editor/module.details.html',
+                    //     controller: 'moduleDetailsCtrl'
+                    // },
                     'middle': {
                         templateUrl: '/views/teacher/course_editor/module.middle.html',
                         controller: 'moduleMiddleCtrl'

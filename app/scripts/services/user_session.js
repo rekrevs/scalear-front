@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('UserSession',['$rootScope','User','$q','$log','$translate', function ($rootScope, User, $q, $log ,$translate) {    
+.factory('UserSession',['$rootScope','User', 'Home', '$q', '$log', '$translate', function ($rootScope, User, Home, $q, $log ,$translate) {    
 
   
   var x={
@@ -20,6 +20,15 @@ angular.module('scalearAngularApp')
           $rootScope.current_user.invitations=data.invitations
    				$rootScope.current_user.shared=data.shared
           $rootScope.current_user.accepted_shared=data.accepted_shared
+
+
+          Home.getNotifications({},function(response){
+              $rootScope.current_user.invitation_items=response.invitations
+              $rootScope.current_user.shared_items = response.shared_items
+          })
+
+
+
    				if($rootScope.current_user.roles[0].id==2) //student
    					return deferred.resolve(2)
    				else if($rootScope.current_user.roles[0].id!=2)

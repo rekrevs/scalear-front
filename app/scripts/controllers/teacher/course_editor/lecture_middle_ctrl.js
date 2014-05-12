@@ -135,6 +135,7 @@ angular.module('scalearAngularApp')
 			var old_insert_time = $scope.selected_quiz.time
 			promise = $scope.deleteQuiz($scope.selected_quiz)
 			clearQuizVariables()
+			console.log("la22aaa")
 		}
 
 		promise.then(function(){
@@ -332,6 +333,8 @@ angular.module('scalearAngularApp')
 		return deferred.promise
 	}
 
+
+
 	$scope.addAnswer= function(ans,h,w,l,t){
 		$log.debug("adding answer")
   		$scope.new_answer=CourseEditor.newAnswer(ans,h,w,l,t,"lecture", $scope.selected_quiz.id)
@@ -447,6 +450,18 @@ angular.module('scalearAngularApp')
 	var clearQuizVariables= function(){
 		$scope.selected_quiz={}		
 		$scope.quiz_deletable = false
+	}
+
+	$scope.deleteQuizButton=function(quiz){
+		if($scope.selected_quiz == quiz){
+			$scope.editing_mode = false;
+			$scope.hide_alerts = true;
+			$scope.submitted= false
+			$scope.quiz_layer.backgroundColor= ""
+			clearQuizVariables()
+			console.log("dgd")
+		}
+		$scope.deleteQuiz(quiz)
 	}
 
 }]);

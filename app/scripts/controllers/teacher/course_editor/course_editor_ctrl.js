@@ -61,15 +61,7 @@ angular.module('scalearAngularApp')
 
  	}
  	$scope.toggleDetails = function(){
- 		var menu = angular.element('#details-resp'), value;
- 		if($scope.details_toggled == false){
-			menu.css('right', '0px')	
- 		}
- 		else{
-			menu.css('right', '-350px')
- 		}
  		$scope.details_toggled = !$scope.details_toggled;
-
  	}
  	
  	$scope.capitalize = function(s)

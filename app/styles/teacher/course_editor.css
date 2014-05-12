@@ -163,12 +163,12 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	margin-right: 10px;
 }
 #details-resp{
-	display: none;
 	position: absolute;
-	width: 350px;
 	background-color: whitesmoke;
 	position: absolute;
-	right: -350px;
+	/*right: -350px;*/
+	width: 0px;
+	right: 0px;
 }
 
 .datepicker2{
@@ -228,7 +228,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 .details-toggler{
 	display: none;
 	float: right;
-	margin-left: -30px;
+	margin-left: -27px;
 	width: 27px;
 	height: 30px;
 	cursor: pointer;
@@ -251,14 +251,21 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
   margin-top: 5px;
   content: url("/images/tree-toggle.png");
 }
+.nowidth{
+	width: 27px !important;
+}
 @media (max-width: 1240px) {
 	#details{
 		display: none;
 	}
-	#details-resp{
+	.displayed{
 		display: inline-block;
-		right: -350px;
+		width: 350px !important;
 	}
+	.putright{
+		right: 350px;	
+	}
+
 	.details-toggler{
 		background-color: #414141;
 		border-radius: 3px 0px 0px 3px;
@@ -267,7 +274,6 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 		z-index: 2;
 		display: inline-block;
 		position: absolute;
-		right: 350px;
 	}
 }
 @media (max-width: 1000px){

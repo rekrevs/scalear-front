@@ -49,11 +49,11 @@
 	</div>
 <span ng-show="not_module">
 	<span class="span3" id="details" ui-view="details"></span>
-	<span class="span3" id="details-resp">
-		<div class="details-toggler" ng-click="toggleDetails()" tooltip-placement="left" tooltip="{{'lectures.details' | translate}}" tooltip-append-to-body="true">
+	<span class="span3" id="details-resp" ng-class="{displayed: details_toggled}">
+		<div class="details-toggler" ng-class="{putright: details_toggled}" ng-click="toggleDetails()" tooltip-placement="left" tooltip="{{'lectures.details' | translate}}" tooltip-append-to-body="true">
 			<span class="details-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
 		</div>
-		<div ui-view="details"></div>
+		<div id="details-resp-inner" ng-show="details_toggled" ui-view="details"></div>
 	</span>
 </span>
 <!-- </span> -->

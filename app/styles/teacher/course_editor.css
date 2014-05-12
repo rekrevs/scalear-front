@@ -245,11 +245,11 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 }
 .details-toggle-icon:before{
   margin-top: 5px;
-  content: url("../../images/details-toggle.png");
+  content: url("/images/details-toggle.png");
 }
 .tree-toggle-icon:before{
   margin-top: 5px;
-  content: url("../../images/tree-toggle.png");
+  content: url("/images/tree-toggle.png");
 }
 @media (max-width: 1240px) {
 	#details{

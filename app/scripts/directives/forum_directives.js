@@ -203,7 +203,7 @@ angular.module('scalearAngularApp')
             down: '='
 
         },
-        templateUrl: 'views/forum/like_button.html',
+        templateUrl: '/views/forum/like_button.html',
         link: function(scope, element){
         }
     }

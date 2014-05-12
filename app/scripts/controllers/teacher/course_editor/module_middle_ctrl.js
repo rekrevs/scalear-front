@@ -51,7 +51,7 @@ angular.module('scalearAngularApp')
                 delete modified_module.total_quiz_questions;
                 delete modified_module.open;
                 delete modified_module.due_date_enabled;
-
+                
                 Module.update({
                         course_id: $stateParams.course_id,
                         module_id: $scope.module.id

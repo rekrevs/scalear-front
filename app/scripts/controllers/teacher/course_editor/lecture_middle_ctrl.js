@@ -320,7 +320,7 @@ angular.module('scalearAngularApp')
 			{online_quizzes_id: quiz.id},{},
 			function(data){
 				$log.debug(data)
-				$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)\
+				$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
 				// resetQuizVariables()
 				deferred.resolve()
 				$scope.quiz_overlay = true

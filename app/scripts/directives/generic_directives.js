@@ -259,4 +259,15 @@ angular.module('scalearAngularApp')
       });
     }
   }
-}]);
+}]).directive('noticeMessage',function(){
+  return{
+    restrict:'E',
+    scope:{
+      message:'=',
+      action:"&buttonAction",
+      button_title:"@buttonTitle"
+    },
+    template:'<span>{{message}}</span>'+
+             '<button ng-click="action()" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">{{button_title}}</button>'
+  }
+})

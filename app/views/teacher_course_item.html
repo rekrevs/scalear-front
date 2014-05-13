@@ -9,7 +9,7 @@
 	<div style="float: right; display: inline-block;">
 		<delete_button size="big" action="deletecourse(course)" />
 	</div>
-	<a ui-sref="course.course_editor({ course_id: course.id })">
+	<a ui-sref="course.course_editor({ course_id: course.id })" ng-if="!course.importing">
 		<table style="width: 91%;">
 			<tr>
 				<td class="course-image">
@@ -22,9 +22,9 @@
 					<table style="width: 100%;">
 						<tr>
 							<td colspan="4" style="border-bottom: 1px solid lightgrey; padding-bottom: 5px;">
-									<a ui-sref="course.course_editor({ course_id: course.id })">
-										{{course.short_name}} | {{course.name}}
-									</a>
+								<a ui-sref="course.course_editor({ course_id: course.id })">
+									{{course.short_name}} | {{course.name}}
+								</a>
 							</td>
 						</tr>
 						<tr style="border-bottom: 1px solid lightgray;">
@@ -71,6 +71,28 @@
 	            		</tr>
 	            	</table>
 	            </td>
+			</tr>
+		</table>
+	</a>
+	<a ng-if="course.importing">
+		<table style="width: 91%;">
+			<tr>
+				<td class="course-image">
+					<a>
+						<img ng-src="{{course.image_url || '../images/course.png'}}" style="height: 120px;" />						
+					</a>
+				</td>
+				<td class="course-info-container" colspan="1">
+					<table style="width: 100%;">
+						<tr>
+							<td colspan="4" style="border-bottom: 1px solid lightgrey; padding-bottom: 5px;">
+								<a>
+									{{course.short_name}} | {{course.name}} <i ng-if="course.importing" style="font-size: 12px;"> ( Importing Course... )</i>
+								</a>
+							</td>
+						</tr>
+					</table>
+				</td>
 			</tr>
 		</table>
 	</a>

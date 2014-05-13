@@ -45,8 +45,9 @@
     	<b translate>
 			groups.due_date
 		</b><br />
-    	<details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check>{{'on' | translate}}
+    	<details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check>
         <span ng-show="module.due_date_enabled">
+        	{{'on' | translate}}
           <details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date>
           {{'at' | translate}}
           <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>

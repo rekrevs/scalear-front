@@ -1,143 +1,100 @@
-<style>
-    .add-teacher-button, .delete-teacher-button{
-        margin-top: 20px;
-    }
-</style>
-<span ng-hide="data.course">
-            <br />
-            <center><loading size="big" show="true" style="position:relative;top:40%" /></loading></center>
-</span>
-<center ng-show="data.course" style="margin-bottom: 50px; text-align: left; display: flex; display: -webkit-flex; display: -moz-flex; display: -ms-flexbox; display: flexbox; position: relative;">
-    <!-- <div style="position: relative;"> -->
-        <table class="profile-table" style="width: 17%;">
-            <tr>
-                <td style="border-right: 1px solid lightgray; background-color: light">
-                    <div class="profile-image" style="background: url({{data.course.image_url || '../images/course_image.png'}}) no-repeat center; background-size: cover;">
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td style="width: 220px; border-right: 1px solid lightgray;">
-                    <br />
-                    <b>
-                        <details-text value="data.course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text>
-                        {{' | '}}
-                        <details-text value="data.course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
-                    </b>
-                    
-                    <hr />
-                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.course_enrollment_key' | translate}}" tooltip-placement="right"><span class="key-icon" /></span>{{data.course.unique_identifier}}</ul>
-
-                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.discussion_forum_link' | translate}}" tooltip-placement="right"><span class="link-icon" ></span><details-link value="data.course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link></ul>
-
-                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.start_date' | translate}}" tooltip-placement="right"><span class="calendar-icon" /></span><details-date date="data.course.start_date | amDateFormat:'dddd, MMMM D YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date></ul>
-
-                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.duration' | translate}}" tooltip-placement="right"><span class="duration-icon" /></span><details-text value="data.course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> <span translate="courses.weeks"></span></ul>
+<div class="course-left">
+    <center>
+        <div class="profile-image" style="background: url({{data.course.image_url || '../images/course_image.png'}}) no-repeat center; background-size: cover;">
+        </div>
+    </center>
+    <hr />
+    <details-text value="data.course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text> {{' | '}} <details-text value="data.course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
+    <hr />
+    <span style="text-align: left;">
+        <ul style="font-size: 15px; margin: 0px;" tooltip="{{'courses.course_enrollment_key' | translate}}" tooltip-placement="right"><span class="key-icon" /></span>{{data.course.unique_identifier}}</ul>
+        <ul style="font-size: 15px; margin: 0px;" tooltip="{{'courses.discussion_forum_link' | translate}}" tooltip-placement="right"><span class="link-icon" ></span><details-link value="data.course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link></ul>
+        <ul style="font-size: 15px; margin: 0px;" tooltip="{{'courses.start_date' | translate}}" tooltip-placement="right"><span class="calendar-icon" /></span><details-date date="data.course.start_date | amDateFormat:'dddd, MMMM D YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date></ul>
+        <ul style="font-size: 15px; margin: 0px;" tooltip="{{'courses.duration' | translate}}" tooltip-placement="right"><span class="duration-icon" /></span><details-text value="data.course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> <span translate="courses.weeks"></span></ul>
 
 
-                    <ul style="font-size: 15px; margin: 0px; display: inline-block;" tooltip="{{'courses.time_zone' | translate}}" tooltip-placement="right"><span class="clock-icon" /></span><details-time-zone value="data.course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone></ul>
-                    <br />
-                    <br />
-                    <button class="btn btn-info" style="float: right; margin-right: 10px; background-image: initial;" ng-click="exportCourse()" ><span translate>courses.export_as</span> CSV</button>
-                </td>
+        <ul style="font-size: 15px; margin: 0px;" tooltip="{{'courses.time_zone' | translate}}" tooltip-placement="right"><span class="clock-icon" /></span><details-time-zone value="data.course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone></ul>
+        <br />
+        <br />
+    </span>
+    <button class="btn btn-info" style="float: right; margin-right: 10px; background-image: initial;" ng-click="exportCourse()" ><span translate>courses.export_as</span> CSV</button>
 
-            </tr>
-        </table>
-    <!-- </div> -->
-    <div style="position: absolute; float: left; padding-right: 30px; min-width: 80%;">
-        <table style="min-width: 100%;">
-            <tr>
-                <td colspan="4" style="vertical-align: top; border-bottom: 1px solid lightgray; position: relative;">
-                        <span class="dropdown-header"><b translate>head.information</b></span>
-                        <br />
-                    <span style="padding-left: 30px;">
-                        <b translate="groups.description"></b>
-                        <p style="margin-left: 40px;">
-                            <big-area value="data.course.description" save="updateCourse()" validate="validateCourse" column="description"></big-area>
-                        </p>
-                    <span style="padding-left: 30px;">
-                        <b translate="courses.prerequisites"></b>
-                        <p style="margin-left: 40px;">
-                            <big-area value="data.course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
-                        </p>
-                    </span>
-                    <span style="padding-left: 30px;">
-                        <b translate="courses.course_image"></b>
-                        <p style="margin-left: 40px;">
-                            <details-link value="data.course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link>
-                        </p>
-                    </span>
 
-                </td>
-            </tr>
-            <tr>
-                <td colspan="4" style="vertical-align: top; height: 100px; overflow-x: auto;">
-                    <span class="dropdown-header"><b translate>courses.teachers</b></span>
-                    <div style="padding-left: 30px; padding-top: 10px; vertical-align: top;">
-                        <table>
-                            <tr>
-                                <td ng-repeat="teacher in teachers" style="text-align: center; padding-left: 10px;">
-                                    <a ui-sref="profile({ user_id: teacher.id })" ng-show="teacher.id">
-                                        <profile-image email="teacher.email" imagesize="70" style="margin-bottom: 5px;"></profile-image>
-                                        <br />
-                                        
-                                        {{teacher.name}}
-                                    </a>
-                                    <span ng-show="!teacher.id">
-                                        <profile-image email="teacher.email" imagesize="70" style="margin-bottom: 5px;"></profile-image>
-                                        <br />
-                                        {{teacher.email}}
-                                    </span>
-
-                                        <br />
-                                        <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
-                                        <br />
-                                        <div style="color: dimgrey; min-height: 18px;">{{teacher.status}}</div>
-                                </td>
-                                <!-- new teachers -->
-                                <td ng-repeat="new_teacher in new_teachers" style="text-align: center; padding-left: 10px; text-align: center;">
-                                        <!-- <profile-image email="new_teacher.email" imagesize="70" style="margin-bottom: 5px;"></profile-image> -->
-                                        <br />
-                                        <form name='email_form' novalidate>
-                                            <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'email'|translate}}" ng-model="new_teachers[$index].email" value="new_teacher.email" ng-change="$parent.check(new_teacher.email, $index)"/>
-                                            <br />
-                                            <span class='help-inline' ng-show='email_form.email.$dirty && email_form.email.$invalid'>{{'invalid_email'|translate}}</span>
-                                            
-                                            <span class="errormessage" ng-show="new_teachers[$index].error">{{new_teachers[$index].error}}</span>
-                                        </form>
-                                        <select id="new_role" ng-model="new_teachers[$index].role">
-                                            <option value="3" translate>
-                                                courses.professor
-                                            </option>
-                                            <option value="4" translate>
-                                                courses.ta
-                                            </option>
-                                        </select>
-                                        <div style="color: dimgrey; min-height: 18px;">{{new_teacher.status}}</div>
-                                        <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeColumn($index)" style="cursor: pointer;" hide-confirm="true">
-                                </td>
-                            </tr>
-                            <tr ng-show="in_delete">
-                                <td ng-repeat="teacher in teachers" style="text-align: center;">
-                                    <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeTeacher($index)" style="cursor: pointer;">
-                                </td>
-                            </tr>
-                        </table>
-                        <div class="teachers-controls">
-                            <button ng-hide="new_teachers.length == 0" ng-click="saveTeachers()" ng-hide="in_delete" class="btn btn-success add-teacher-button" style="background-image: initial; float: left;" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0">
-                                <!-- <img src="../images/add_teacher.png" /> --> {{'save' | translate}}
-                            </button>
-                            <p ng-hide="new_teachers.length == 0" style="margin-left: 10%;margin-top: 20px;float: left;font-size: 12px;font-style: italic;line-height: 15px;background:whitesmoke"><span translate>adding_teacher</span> scalable-learning.<br><span translate>create_account</span><span>: <a href="http://www.scalable-learning.com/#/users/teacher">http://www.scalable-learning.com/#/users/teacher</a></span></p>
-                            <button ng-show="new_teachers.length == 0" ng-click="toggleDelete()" class="btn delete-teacher-button" ng-class="{'btn-danger': !in_delete, 'btn-info': in_delete}" style="background-image: initial; float: right;">
-                                <img ng-show="!in_delete" src="../images/delete_teacher.png" /> {{toggle_message | translate}}
-                            </button>
-                            <button ng-click="addColumn(new_teachers.length-1)" ng-hide="in_delete" class="btn btn-success add-teacher-button" style="background-image: initial; float: right; margin-right: 15px;" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0">
-                                <img src="../images/add_teacher.png" /> {{'courses.add_teacher' | translate}}
-                            </button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>
+</div>
+<div class="course-right">
+    <div class="top">
+        <span class="dropdown-header"><b translate>head.information</b></span>
+        <br />
+        <span style="padding-left: 30px;">
+            <b translate="groups.description"></b>
+            <p style="margin-left: 40px;">
+                <big-area value="data.course.description" save="updateCourse()" validate="validateCourse" column="description"></big-area>
+            </p>
+        </span>
+        <span style="padding-left: 30px;">
+            <b translate="courses.prerequisites"></b>
+            <p style="margin-left: 40px;">
+                <big-area value="data.course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
+            </p>
+        </span>
+        <span style="padding-left: 30px;">
+            <b translate="courses.course_image"></b>
+            <p style="margin-left: 40px;">
+                <details-link value="data.course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link>
+            </p>
+        </span>
     </div>
-</center>
+    <div class="bottom">
+        <span class="dropdown-header"><b translate>courses.teachers</b></span>
+        <br />
+        <div class="teacher-item" ng-repeat="teacher in teachers">
+            <!-- <a ui-sref="profile({ user_id: teacher.id })" ng-show="teacher.id"> -->
+            <div ng-show="teacher.id">
+                <profile-image email="teacher.email" imagesize="70" style="margin-bottom: 5px;"></profile-image>
+                <div>
+                    {{teacher.name}}
+                </div>
+            </div>
+            <!-- </a> -->
+            <div ng-show="!teacher.id">
+                <profile-image email="teacher.email" imagesize="70" style="margin-bottom: 5px;"></profile-image>
+                <div>
+                    {{teacher.email}}
+                </div>
+            </div>
+            <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
+            <div style="color: dimgrey; min-height: 18px;">{{teacher.status}}</div>
+            <delete-button ng-show="in_delete" ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
+        </div>
+        <div class="teacher-item" ng-repeat="new_teacher in new_teachers">
+            <form name='email_form' novalidate>
+                <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'email'|translate}}" ng-model="new_teachers[$index].email" value="new_teacher.email" ng-change="$parent.check(new_teacher.email, $index)"/>
+                <br />
+                <span class='help-inline' ng-show='email_form.email.$dirty && email_form.email.$invalid'>{{'invalid_email'|translate}}</span>
+                
+                <span class="errormessage" ng-show="new_teachers[$index].error">{{new_teachers[$index].error}}</span>
+                <select id="new_role" ng-model="new_teachers[$index].role">
+                    <option value="3" translate>
+                        courses.professor
+                    </option>
+                    <option value="4" translate>
+                        courses.ta
+                    </option>
+                </select>
+                <div style="color: dimgrey; min-height: 18px;">{{new_teacher.status}}</div>
+                <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeColumn($index)" style="cursor: pointer;" hide-confirm="true">
+                </delete-button>
+            </form>
+        </div>
+    </div>
+    <div class="teacher-controls">
+        <button ng-hide="new_teachers.length == 0" ng-click="saveTeachers()" ng-hide="in_delete" class="btn btn-success add-teacher-button" style="background-image: initial; float: left;" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0">{{'save' | translate}}</button>
+        <p ng-hide="new_teachers.length == 0" style="margin-left: 10%;margin-top: 20px;float: left;font-size: 12px;font-style: italic;line-height: 15px;background:whitesmoke"><span translate>adding_teacher</span> scalable-learning.<br><span translate>create_account</span><span>: <a href="http://www.scalable-learning.com/#/users/teacher">http://www.scalable-learning.com/#/users/teacher</a></span></p>
+        <button ng-show="new_teachers.length == 0" ng-click="toggleDelete()" class="btn delete-teacher-button" ng-class="{'btn-danger': !in_delete, 'btn-info': in_delete}" style="background-image: initial; float: right;">
+            <img ng-show="!in_delete" src="../images/delete_teacher.png" /> {{toggle_message | translate}}
+        </button>
+        <button ng-click="addColumn(new_teachers.length-1)" ng-hide="in_delete" class="btn btn-success add-teacher-button" style="background-image: initial; float: right; margin-right: 15px;" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0">
+            <img src="../images/add_teacher.png" /> {{'courses.add_teacher' | translate}}
+        </button>
+    </div>
+</div>

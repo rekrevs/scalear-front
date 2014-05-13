@@ -176,7 +176,7 @@ angular.module('scalearAngularApp')
     .directive('bigArea', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="150" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate)  }}<i ng-class="overclass"></i></a> ',
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate)  }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",

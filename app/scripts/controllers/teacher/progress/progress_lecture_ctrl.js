@@ -179,6 +179,7 @@ angular.module('scalearAngularApp')
       divs[view_index].scrollIntoView()
       $timeout(function(){$window.scrollTo($window.ScrollX,150)})
 	    $scope.inner_highlight_index = -1
+      setupRemoveHightlightEvent()
 	    $scope.$apply()
   	}
 
@@ -209,6 +210,7 @@ angular.module('scalearAngularApp')
       $(".highlight").removeClass("highlight");
   		$scope.highlight_index = divs.index(ul)
   		angular.element(ul).addClass("highlight")
+      setupRemoveHightlightEvent()
       if($scope.selected_item == item)
         return
       $scope.selected_item =item
@@ -218,7 +220,22 @@ angular.module('scalearAngularApp')
         $scope.selected_item.lec_id = id[1]
       }
   		$scope.inner_highlight_index = -1	
+
+      
   	}
+
+   var setupRemoveHightlightEvent=function(){
+    console.log("adding")
+      $(document).click(function(e){
+        if(angular.element(e.target).find('.inner_content').length){
+          $(".highlight").removeClass("highlight");
+          $scope.highlight_index = -1
+          $scope.inner_highlight_index = -1
+          console.log("removing")
+          $(document).off('click');
+        }
+      })
+    }
 
   	$scope.updateHideQuiz = function(id, value) {
   		if(value)

@@ -176,7 +176,7 @@
 						<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData', item.data.quiz_type); color =Math.ceil(item.data.review/students_count*100) >= 30? 'red' : ''" class="li_inner green">
 							<inner_title ng-if="item.data.quiz_type =='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{item.data.quiz_type}}" title="{{item.data.title+' ('+item.data.type+')'}}" color="color" />
 							<inner_title ng-if="item.data.quiz_type !='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{item.data.quiz_type}}" title="{{item.data.title+' ('+item.data.type+') - '+Math.ceil(item.data.review/students_count*100)+'% of students voted for review'}}" color="color" />
-							<i ng-show="item.data.hide" class="icon-check" style="margin-top:8px;float:right"></i>
+							<!-- <i ng-show="item.data.hide" class="icon-check" style="margin-top:8px;float:right"></i> -->
 							<div google-chart chart="chart" class="progress_chart" ></div>
 							<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" style="margin-left:30px"/>
 						</li>

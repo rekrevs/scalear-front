@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassCtrl', ['$scope', '$filter', '$state', '$stateParams', '$location', 'Course','$log', '$window','Page', function ($scope, $filter, $state, $stateParams, $location, Course, $log, $window,Page) {
+  .controller('inclassCtrl', ['$scope', '$filter', '$state', '$stateParams', '$location', 'Course','$log', '$window','Page', '$rootScope', function ($scope, $filter, $state, $stateParams, $location, Course, $log, $window,Page, $rootScope) {
 
     // $window.scrollTo(0, 0);
     Page.setTitle('head.in_class')
@@ -56,5 +56,11 @@ angular.module('scalearAngularApp')
 		$scope.selected_module = $scope.getSelectedModule()
 		$scope.toggleSelector();
 	}
+	$scope.$on('mainMenuToggled', function(event, collapsed){
+		console.log(collapsed)
+		if(collapsed == true){
+			$scope.close_selector = false;
+		}
+	})
 
   }]);

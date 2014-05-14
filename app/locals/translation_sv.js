@@ -1,5 +1,6 @@
 var translation_sv=function(){
     return {
+      main: "Huvudsaklig",
       issue: "Problem är med",
       next: "Nästa",
       connected: "Ansluten",
@@ -80,7 +81,9 @@ var translation_sv=function(){
             liked_this: "gillade detta",
             write_comment: "Lämna en kommentar...",
             flag_post: "Flagga detta Inlägg",
-            unflag_post: "Un-flagga detta inlägg"
+            unflag_post: "Un-flagga detta inlägg",
+            flags: "Flaggor",
+            likes: "Röster"
           },
           sharing:{
             nothing_selected: "Ingenting är vald",

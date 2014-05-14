@@ -1,5 +1,6 @@
 var translation_en=function(){
     return {
+      main: "Main",
       issue: "Issue is with the",
       next: "Next",
       connected: "Connected",
@@ -79,7 +80,9 @@ var translation_en=function(){
         liked_this: "liked this",
         write_comment: "Leave a comment...",
         flag_post: "Flag this post",
-        unflag_post: "Unflag this post"
+        unflag_post: "Unflag this post",
+        flags: "Flags",
+        likes: "Likes"
       },
       menu:{
         copy:"Copy",

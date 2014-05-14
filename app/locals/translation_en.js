@@ -386,6 +386,7 @@ var translation_en=function(){
         description: "Description",
         save_module: "Save Module",
         external_document: "External Documents",
+        no_external_documents: "There are currently no external documents in this module...",
         you_sure_delete_document: "Are you sure you want to delete document '{{doc}}'?",
         you_sure_delete_module: "Are you sure you want to delete module '{{module}}'?",
         you_sure_delete_lecture: "Are you sure you want to delete lecture '{{lecture}}'?",
@@ -445,6 +446,7 @@ var translation_en=function(){
         type: "Type",
         student_progress: "Student Progress",
         out_of: "Out Of",
+        empty: "Empty Module"
       },
       courses:{
         image_not_found: "Image not found...",

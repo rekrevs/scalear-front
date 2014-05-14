@@ -30,7 +30,6 @@
 			<div ng-repeat="module in modules | orderBy:'position'">
 				<a ui-sref="course.progress.lecture({module_id:module.id})" ng-click="showModule($index)">
 					<ul style="float: left; margin: 0; color: #2d2d2d;" ng-class="{moduleactive: current_module.id == module.id}">
-						<!-- <module-progress-circle circlesize="12" innercolor="white" module="modules_obj[module.id]" ></module-progress-circle> -->
 						{{module.name}}
 					</ul>
 				</a>

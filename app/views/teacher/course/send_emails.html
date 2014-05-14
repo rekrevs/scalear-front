@@ -3,12 +3,12 @@
 <form method="post" style="text-align: left;">
     <table style="width: 100%;">
         <tr>
-            <td style="width: 70px;">
+            <td style="width: 70px; vertical-align: top;">
                 <b><span translate>courses.to</span>:</b>
             </td>
             <td>
                 <textarea id="to" name="emails" title="{{'courses.to'|translate}}" style="width: 80%; resize: none;" readonly="readonly" rows="2" >{{final_emails}}</textarea>
-                <input class="btn" id="send_emails" type="button" ng-click="sendBatchEmail(subject, message)" style="float: right; width: 10%" value="{{'courses.send'|translate}}" ng-disabled="!final_emails || !subject || !message" />
+                <input class="btn btn-success" id="send_emails" type="button" ng-click="sendBatchEmail(subject, message)" style="vertical-align: top; width: 10%;" value="{{'courses.send'|translate}}" ng-disabled="!final_emails || !subject || !message" />
             </td>
         </tr>
         <tr>
@@ -21,7 +21,7 @@
         </tr>
     </table>
     <br />
-    <div text-angular ng-model="message" ta-toolbar-button-class="btn btn-default btn-mini"></div>
+    <div text-angular style="width: 97%;" ng-model="message" ta-toolbar-button-class="btn btn-default btn-mini"></div>
     <br />
 </form>
 <!--</div>-->

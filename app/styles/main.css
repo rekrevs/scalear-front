@@ -859,6 +859,9 @@ iframe{
 .teacher-controls{
     vertical-align: bottom;
 }
+.dropdown-menu > li > a:hover{
+  background-image: linear-gradient(to bottom, #008a49, #008a49);
+}
 @media (max-width: 700px) {
   .state{
     display: none;

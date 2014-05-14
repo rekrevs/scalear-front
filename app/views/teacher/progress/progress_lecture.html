@@ -1,25 +1,27 @@
 <div style="text-align: left; bottom: 40px;">
-	<br />
-	<br />
-	<br />
+	<span ng-show="iscollapsed == true">
+		<br />
+		<br />
+		<br />
+	</div>
 	<div class="video-showroom">
 		<video_container class="video-container-styling">
 			<youtube id="progress_lec_video" url="url" player="progress_player" style="width: 100%; height: 100%;"/>
 		</video_container>
 	</div>
 	<!-- <div class="time_estimate"> -->
-		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/>
+		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count" style="z-index: 1;"></inclass_estimate>
 	<!-- </div> -->
-	<div class="filter-bar" ng-show="module.items">
-		<div ng-init="custom_filter=''">
-			<span>Filter:</span>
-			<span ng-repeat ="(key,val) in filters">
-				<input type="radio" name="filter" ng-model="$parent.custom_filter" style="margin-left:20px;margin-top:0" value="{{val}}"/>
-				<span>{{key}}</span>
-			</span>
-		</div>
-	</div>
 	<div id="right-container" class="whole-right-container">
+		<div class="filter-bar" ng-show="module.items">
+			<div ng-init="custom_filter=''">
+				<span>Filter:</span>
+				<span ng-repeat ="(key,val) in filters">
+					<input type="radio" name="filter" ng-model="$parent.custom_filter" style="margin-left:20px;margin-top:0" value="{{val}}"/>
+					<span>{{key}}</span>
+				</span>
+			</div>
+		</div>
 		<div class="main_content">
 			<div ng-if="timeline['module']" ng-init="module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatModuleChartData')">
 				<p class="title">Module Progress <span style="font-size:12px">(Based on in-video questions answered)</span><a ui-sref="course.progress.module({module_id:module.id})" style="font-size:12px;color: white;float: right;cursor: pointer;">View Details Progress...</a></p>

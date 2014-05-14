@@ -154,9 +154,13 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	width: 68%;
 	min-width: 650px;
 	display: inline-block;
-	position: fixed;
-	top: 135px;
+	/*position: fixed;*/
+	position: absolute;
+	/*top: 135px;*/
+	/*margin-top: 30px;*/
 	right: 10px;
+	/*z-index: -2;*/
+	text-align: left;
 }
 
 .time_estimate{
@@ -167,8 +171,9 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	padding:5px;
 	text-align:center;
 	position:fixed; 
-	top: 400px;
+	/*top: 400px;*/
 	left:30px;
+	margin-top: 310px;
 }
 
 .time_estimate a{
@@ -200,15 +205,18 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 }
 .filter-bar{
 	width: 68%; 
-	display: inline-block; 
-	margin-left:28%; 
-	position: fixed;
+	display: block; 
+	/*margin-left:28%; */
+	/*position: fixed;*/
+	text-align: left;
+	height: 30px;
 }
 
 @media (max-width: 1024px) {
 	.time_estimate{
 		width: 26%;
-		top: 45px;
+		/*top: 45px;*/
+		margin-top: 45px;
 		left: 67%;
 		position: absolute;
 	}

@@ -56,7 +56,7 @@ angular.module('scalearAngularApp')
         $scope.slow = false
     }
  	$scope.lecture_player.events.onReady= function(){
- 		$scope.hide_overlay = true
+ 		$scope.video_ready = true
         $scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  		$scope.lecture_player.controls.pause()
         $scope.lecture_player.controls.seek(0)
@@ -71,6 +71,15 @@ angular.module('scalearAngularApp')
 			if($scope.editing_mode)
 				$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
+
+    $scope.lecture_player.events.onPause= function(){
+        $scope.play_pause_class = "play"
+    }
+
+ 	$scope.lecture_player.events.onSlow=function(is_youtube){
+ 		$scope.is_youtube = is_youtube
+        $scope.slow = true
+    }
 
     $scope.playBtn = function(){
         console.log($scope.play_pause_class)
@@ -97,14 +106,6 @@ angular.module('scalearAngularApp')
         // console.log("in timeupdate")
         $scope.current_time = $scope.lecture_player.controls.getTime()
         $scope.elapsed_width = (($scope.current_time/$scope.lecture.duration)*100) + '%'
-    }
-
-    $scope.lecture_player.events.onPause= function(){
-        $scope.play_pause_class = "play"
-    }
-
- 	$scope.lecture_player.events.onSlow=function(){
-        $scope.slow = true
     }
 
     $scope.lecture_player.events.seeked=function(){
@@ -218,6 +219,7 @@ angular.module('scalearAngularApp')
 					$scope.allPos=mergeDragPos(data.answers)
 					$log.debug($scope.allPos)
 				}
+				$scope.disable_save_button = false
 			},
 			function(){}
 		);
@@ -240,7 +242,8 @@ angular.module('scalearAngularApp')
 					$scope.selected_quiz.answers= data.answers
 					if(!$scope.selected_quiz.answers.length)
 						$scope.addHtmlAnswer()				
-				}			
+				}
+				$scope.disable_save_button = false			
 			},
 			function(){}
 		);
@@ -362,6 +365,7 @@ angular.module('scalearAngularApp')
 
 	var updateAnswers=function(ans, quiz){
 		$log.debug("savingAll")
+		$scope.disable_save_button = true
 		Lecture.updateAnswers(
 			{
 				course_id:$stateParams.course_id,
@@ -374,6 +378,7 @@ angular.module('scalearAngularApp')
 					getQuizData();
 				else
 					getHTMLData();
+
 				
 			},
 			function(){}

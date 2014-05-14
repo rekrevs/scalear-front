@@ -49,6 +49,10 @@ angular.module('scalearAngularApp')
                     },
                     function(){
                       console.log("bad")
+                      $rootScope.preview_as_student = false
+                      $cookieStore.remove('preview_as_student')
+                      $cookieStore.remove('old_user_id')
+                      $cookieStore.remove('course_id')
                     }
                   )
                 }

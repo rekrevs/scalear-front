@@ -1,5 +1,7 @@
-<ul class="app-menu" collapse="iscollapsed" style="display: block;" ng-switch="current_user.roles[0].id">
-	<teacher_navigation ng-switch-when="1"></teacher_navigation>
-	<teacher_navigation ng-switch-when="5"></teacher_navigation>
-	<student_navigation ng-switch-when="2"></student_navigation>
+<ul class="app-menu" collapse="iscollapsed" style="display: block;">
+
+	<teacher_navigation ng-show="current_user.roles[0].id == 1"></teacher_navigation>
+	<teacher_navigation ng-show="current_user.roles[0].id == 5"></teacher_navigation>
+	<student_navigation ng-show="current_user.roles[0].id == 2"></student_navigation>
+	{{current_user.roles[0].id == 1}} {{current_user.roles[0].id == 5}} {{current_user.roles[0].id == 2}}
 </ul>

@@ -1,7 +1,9 @@
 <div class="course-left">
     <center>
-        <div class="profile-image" style="background: url({{course.image_url || '../images/course_image.png'}}) no-repeat center; background-size: cover;">
-        </div>
+        <!-- <div class="profile-image" style="background: url({{course.image_url || '../images/course_image.png'}}) no-repeat center; background-size: cover;">
+        </div> -->
+        <img style="margin: 0 auto; position: relative;" ng-show="!course.image_url" src="../images/course_image.png"/>
+        <img style="margin: 0 auto; position: relative;" ng-show="course.image_url" ng-src="{{course.image_url}}" />
     </center>
     <hr />
     <div id="course_code_name">

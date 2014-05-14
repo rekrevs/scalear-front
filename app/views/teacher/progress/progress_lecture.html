@@ -8,8 +8,7 @@
 		</video_container>
 	</div>
 	<!-- <div class="time_estimate"> -->
-		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count">
-		</inclass_estimate>
+		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/>
 	<!-- </div> -->
 	<div class="filter-bar" ng-show="module.items">
 		<div ng-init="custom_filter=''">
@@ -175,7 +174,7 @@
 							</ul>						
 						</li>
 						<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData'); color =Math.ceil(item.data.review/students_count*100) >= 30? 'red' : ''" class="li_inner green">
-							<inner_title ng-click="seek(item.time, lec.meta.url, lec.meta.id)" time="item.time" type="Quiz" title="{{item.data.title+' ('+item.data.type+') - '+Math.ceil(item.data.review/students_count*100)+'% of students voted for review'}}" color="color" />
+							<inner_title ng-click="seek(item.time, lec.meta.url, lec.meta.id)" time="item.time" type="{{item.data.quiz_type}}" title="{{item.data.title+' ('+item.data.type+') - '+Math.ceil(item.data.review/students_count*100)+'% of students voted for review'}}" color="color" />
 							<i ng-show="item.data.hide" class="icon-check" style="margin-top:8px;float:right"></i>
 							<div google-chart chart="chart" class="progress_chart" ></div>
 							<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" style="margin-left:30px"/>

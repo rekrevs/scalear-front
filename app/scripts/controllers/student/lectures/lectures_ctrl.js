@@ -27,6 +27,7 @@ angular.module('scalearAngularApp')
 	    		console.log(data)
 				$scope.course= JSON.parse(data.course);
 				$log.debug($scope.course);
+				console.log($scope.course)
 				$scope.today = data.today;	
 				$scope.last_viewed = data.last_viewed
 				if(!$state.params.lecture_id && $scope.last_viewed.module != -1 && !$state.params.quiz_id){
@@ -44,8 +45,10 @@ angular.module('scalearAngularApp')
 					$scope.showModuleContent($state.params.module_id)	
 				}
 				if($scope.last_viewed.module == -1){
-					$scope.current_item = $scope.current_module.lectures[0].id
-					$state.go('course.lectures.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})
+					if($scope.current_module.lectures.length){
+						$scope.current_item = $scope.current_module.lectures[0].id
+						$state.go('course.lectures.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})
+					}
 				}
 
 	    	});
@@ -168,28 +171,38 @@ angular.module('scalearAngularApp')
 
 		return (hours*3600)+(minutes*60)+seconds
 	}
-	$scope.shouldBeHidden = function(module_id){
-		// console.log($scope.modules_obj[module_id]);
-		var result = 0;
-		var module = $scope.modules_obj[module_id]
-		module.lectures.forEach(function(lecture){
-			if($scope.today >= lecture.appearance_time){
-				result++;
-			}
-		})
-		module.quizzes.forEach(function(quiz){
-			if($scope.today >= quiz.appearance_time){
-				result++;
-			}
-		})
+	// $scope.shouldBeHidden = function(module_id){
+	// 	// console.log($scope.modules_obj[module_id]);
+	// 	var result = 0;
+	// 	var module = $scope.modules_obj[module_id]
+	// 	console.log(module_id)
+	// 	console.log($scope.today)
+	// 	console.log(module.appearance_time)
+	// 	console.log($scope.today >= module.appearance_time)
+
+	// 	if($scope.today >= module.appearance_time)
+	// 		result++
+	// 	module.lectures.forEach(function(lecture){
+	// 		if($scope.today >= lecture.appearance_time){
+	// 			result++;
+	// 		}
+	// 	})
+	// 	module.quizzes.forEach(function(quiz){
+	// 		if($scope.today >= quiz.appearance_time){
+	// 			result++;
+	// 		}
+	// 	})
+	// 	console.log(result)
+	// 	console.log("-------")
+	// 	if(result <= 0){
+	// 		return true;
+	// 	}
+	// 	else if(result > 0){
+	// 		return false;
+	// 	}
+
 		
-		if(result <= 0){
-			return true;
-		}
-		else if(result > 0){
-			return false;
-		}
-	}
+	// }
 	init();
 
    //  $rootScope.$on("accordianReload", function(event, args) {

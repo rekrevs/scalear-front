@@ -1,3 +1,22 @@
+#loading-bar-spinner .spinner-icon{
+  border-top-color:  #004f2a !important;
+  border-left-color: #004f2a !important;
+}
+#loading-bar .bar {
+  background: #004f2a !important;
+}
+#loading-bar-spinner {
+  top: 10px !important;
+  right: 60px !important;
+  left: auto !important;
+}
+#loading-bar .peg {
+  -moz-box-shadow: #004f2a 1px 0 6px 1px !important;
+  -ms-box-shadow: #004f2a 1px 0 6px 1px !important;
+  -webkit-box-shadow: #004f2a 1px 0 6px 1px !important;
+  box-shadow: #004f2a 1px 0 6px 1px !important;
+}
+
 body {
      background-color: #fff;
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -782,6 +801,16 @@ iframe{
   vertical-align: -webkit-baseline-middle; 
   margin-top: 5px; 
   position: fixed; 
+}
+.modal{
+  border-radius: 0px !important;
+  border: 4px solid rgb(0, 162, 86);
+}
+.btn{
+  background-image: initial !important;
+}
+.modal-header{
+  text-align: center;
 }
 @media (max-width: 700px) {
   .state{

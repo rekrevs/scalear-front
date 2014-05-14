@@ -1,5 +1,11 @@
 <div style="min-width: 80%;">
 <style>
+    a.mini-link{
+        color: rgb(0, 162, 86);
+    }
+    a.mini-link:hover{
+        color: darkgreen;
+    }
     #user_information_container{
         min-width: 280px;
         display: inline-block;
@@ -21,14 +27,14 @@
         }
     }
 </style>
-    <table style="vertical-align: baseline;">
+    <table style="vertical-align: baseline;" id="navigation-table">
         <tr>
             <td style="vertical-align: initial;">
                 <a ui-sref="profile({user_id: $parent.current_user.id})" href="">
                     <profile-image email="$parent.current_user.email" imagesize="70" style="overflow: hidden; min-width: 70px;"></profile-image>
                 </a>
             </td>
-            <td id="user_information_container">
+            <!-- <td id="user_information_container">
                 <a href="" ui-sref="profile({user_id: $parent.current_user.id})" style="color: white;">
                     <ul>
                         <span style="color: rgb(0, 162, 86); font-size: 22px; font-weight: lighter;" ng-bind="$parent.current_user.screen_name"></span>
@@ -38,14 +44,24 @@
                     <ul style="font-size: 19px;" ng-bind="$parent.current_user.university">
                     </ul>
                 </a>
+            </td> -->
+            </td>
+            <td ng-show="show_notifications" style="width: 100%;">
+                <span class="dropdown-header" ><b translate>navigation.notifications</b></span>
+                <div style="width: 100%;">
+                    <div ng-show="$parent.current_user.invitations == 0 && $parent.current_user.shared == 0">{{'notification.empty' | translate}}</div>
+                    <notification-item ng-repeat="(id, invitation) in $parent.current_user.invitation_items" notification="invitation" id="id"></notification-item>
+
+                    <shared-item-notification ng-repeat="(id, item) in $parent.current_user.shared_items" notification="item" id="id"></shared-item-notification>
+                </div>
             </td>
             <td ng-init="show_settings = false" style="display: inline-table; margin-left: 20px;">
                 <div class="headerdivider" style="display: table-column; padding-right: 20px;">
                 </div>
-                <span style="margin-left: 20px; display: inline-block;" ng-hide="!course_information || show_settings">
+                <span style="margin-left: 20px; display: inline-block;" ng-hide="!course_information || show_settings || show_notifications">
                     <div style="word-wrap: normal; width: 450px;">
                         <span style="font-size: 16px; ">
-                        {{course_information.short_name}} | {{course_information.name}}
+                        <a ui-sref="home" class="mini-link">{{'courses.all_courses' | translate}}</a> > {{course_information.short_name}} | {{course_information.name}}
                         </span>
                     </div>
                     <table>
@@ -112,10 +128,10 @@
                     </div>
             </td>
             <span style="float: right;">
-                <ul><a style="cursor: pointer;" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
+                <ul><a style="cursor: pointer;" class="mini-link" ng-click="$parent.$parent.logout()" translate="navigation.logout"></a></ul>
             </span>
-            <span style="float: right;">
-                <a href="" >
+            <span style="float: right;" >
+                <a href="" class="mini-link">
                     <ul ng-bind="'head.help' | translate">
                     </ul>
                 </a>
@@ -128,14 +144,14 @@
                     <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
                 </ul>
             </span>
-            <span class="settings-menu-button" ng-click="show_settings = !show_settings; selected = 1;" ng-class="{settingsopen: show_settings}">
+            <span class="settings-menu-button" ng-click="toggleSettings();" ng-class="{settingsopen: show_settings}">
             </span>
             
-            <span class="shared-page-button" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}"></span>
+            <span class="shared-page-button" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}" tooltip="{{'sharing.with_you' | translate}}" tooltip-placement="bottom"></span>
 
-            <span class="notification-modal-button" id="notification_btn" ng-click="" ng-class="{notificationfull: arenotification}"></span>
+            <span class="notification-modal-button" id="notification_btn" ng-click="toggleNotifications()" ng-class="{notificationfull: arenotification}" tooltip="{{'navigation.notifications' | translate}}" tooltip-placement="bottom"></span>
 
-            <span ng-show="role == 5" class="statistics-button" id="stats_btn" ui-sref="statistics">
+            <span ng-show="role == 5" class="statistics-button" id="stats_btn" ui-sref="statistics" tooltip="{{'courses.statistics' | translate}}" tooltip-placement="bottom">
             </span>
         </tr>
     </table>

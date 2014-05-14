@@ -28,7 +28,9 @@
     "highcharts-ng": "~0.0.3",
     "highcharts": "~3.0.7",
     "js-md5": "~1.1.0",
-    "screenfull": "~1.1.1"
+    "screenfull": "~1.1.1",
+    "angular-loading-bar": "~0.4.1",
+    "ngAnimate": "*"
   },
   "devDependencies": {
     "angular-mocks": ">1.0.7",

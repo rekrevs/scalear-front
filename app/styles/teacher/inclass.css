@@ -1,3 +1,6 @@
+.modal{
+	border:none;
+}
 .btn-xlarge {
     padding: 28px 28px;
     font-size: 22px;
@@ -213,14 +216,14 @@
 .zoom_question{
 	background:beige;
 
-	max-width: 65%;
-    min-width: 65%;
+	max-width: 50%;
+    min-width: 25%;
     float: left;
     padding-top: 1%;
     padding-left: 3%;
-    font-size: 40px;
+    font-size: 25px;
     padding-bottom: 1%;
-    line-height: 40px;
+    line-height: 30px;
     list-style:none;
     /*overflow-y: hidden;*/
     /*background: whitesmoke;*/
@@ -373,5 +376,44 @@ li.smallest_question{
 		margin-left: 10px;	
 		float: right;
 		margin-right: 60px;	
+	}
+}
+.bottom-left{
+	display: inline-block;
+	width: 25%;
+	padding-left: 2%;
+	text-align: left;
+	vertical-align: bottom;
+}
+.bottom-middle{
+	display: inline-block;
+	width: 35%;
+}
+.bottom-right{
+	display: inline-block;
+	width: 25%;
+	padding-right: 2%;
+	text-align: right;
+	padding-top: 10px;
+	vertical-align: bottom;
+}
+@media (max-width: 1000px) {
+	.bottom-right{
+		width: 30%;
+	}
+}
+@media (max-width: 790px) {
+	.bottom-middle{
+		width: 43%;
+	}
+	.bottom-right{
+		width: 36%;
+		padding-right: 10px;
+	}
+	.bottom-left{
+		padding-top: 10px;
+		float: left;
+		width: 10%;
+		padding-left: 10px;
 	}
 }

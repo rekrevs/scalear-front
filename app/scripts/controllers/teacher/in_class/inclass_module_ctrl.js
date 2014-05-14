@@ -41,14 +41,14 @@ angular.module('scalearAngularApp')
         $scope.mute_class = "icon-volume-up"
         $scope.loading_video=true
         $scope.lecture_url=""
-        $scope.question_title=""
-        $scope.quiz_id=""
-        $scope.questions=[]
-        $scope.lecture_list = []
-        $scope.display_data = {}
-        $scope.total_num_lectures = 0
-        $scope.total_num_quizzes  = 0
-        $scope.current_lecture = 0
+        // $scope.question_title=""
+        // $scope.quiz_id=""
+        // $scope.questions=[]
+        // $scope.lecture_list = []
+        // $scope.display_data = {}
+        // $scope.total_num_lectures = 0
+        // $scope.total_num_quizzes  = 0
+        // $scope.current_lecture = 0
         $scope.current_quiz = 0
         $scope.item_itr = 0
         $scope.timeline_itr= 0
@@ -58,7 +58,6 @@ angular.module('scalearAngularApp')
         $scope.fullscreen = false 
         $scope.selected_item=null
         $scope.selected_timeline_item=null
-
     }
 
     var init = function(){
@@ -200,7 +199,6 @@ angular.module('scalearAngularApp')
       $scope.unregister_back_event();
       $scope.unregister_state_event();
       $scope.removeShortcuts()
-      // init()
       resetVariables()
     }
 
@@ -295,6 +293,7 @@ angular.module('scalearAngularApp')
               if($scope.timeline_itr!=0 && $scope.timeline_itr < $scope.timeline[type][$scope.selected_item.id].items.length){
                 if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
                   $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
+                  $scope.lecture_name = $scope.module.items[$scope.item_itr].name
                 }
                 else{
                   $scope.nextQuiz()
@@ -303,8 +302,14 @@ angular.module('scalearAngularApp')
                              
                 if($scope.selected_item.url){
                   if($scope.lecture_url.indexOf($scope.selected_item.url) == -1){
-                    $scope.inclass_player.controls.setStartTime($scope.selected_timeline_item.time)
+                    if($scope.inclass_player.controls.isYoutube($scope.selected_item.url))
+                      $scope.inclass_player.controls.setStartTime($scope.selected_timeline_item.time)
                     $scope.lecture_url= $scope.selected_item.url
+                    if ($scope.inclass_player.controls.isMP4($scope.selected_item.url)){
+                      $timeout(function(){
+                        $scope.seek($scope.selected_timeline_item.time)
+                      })
+                    }
                   }
                   else{
                     $timeout(function(){
@@ -359,6 +364,7 @@ angular.module('scalearAngularApp')
 
                 if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
                   $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
+                  $scope.lecture_name = $scope.module.items[$scope.item_itr].name
                 }
                 else{             
                   $scope.prevQuiz()
@@ -483,12 +489,13 @@ angular.module('scalearAngularApp')
         if (data[ind][1] == "gray") {
             correct = 0
             incorrect = Math.floor((data[ind][0]/$scope.students_count)*100)
-            tooltip_text +="Incorrect: "
+            if(!isSurvey())
+              tooltip_text +="Incorrect: "
         } else {                
             correct = Math.floor((data[ind][0]/$scope.students_count)*100)
             incorrect = 0
-            tooltip_text +="Correct: "
-
+            if(!isSurvey())
+              tooltip_text +="Correct: "
         }
         text = data[ind][2]
         tooltip_text +=data[ind][0]+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
@@ -618,6 +625,7 @@ angular.module('scalearAngularApp')
     // $scope.question_block={
     //   'overflowY':'visible'
     // }
+    adjustTextSize()
     $scope.blurButtons()
   }
 
@@ -627,6 +635,9 @@ angular.module('scalearAngularApp')
     if($scope.question_class == 'original_question')
       $scope.video_class = $scope.hide_questions?'zoom_video' : 'original_video'
     $scope.blurButtons()
+    $timeout(function(){
+      $scope.adjustTextSize()
+    })
   }
 
   var showQuestions = function(){
@@ -693,6 +704,10 @@ angular.module('scalearAngularApp')
 
   $scope.blurButtons=function(){
     angular.element('.btn').blur()
+  }
+
+  var isSurvey=function(){
+    return $scope.selected_timeline_item.data.type == 'Survey'
   }
 
   init();

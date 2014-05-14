@@ -8,6 +8,18 @@ angular.module('scalearAngularApp')
 			templateUrl: '/views/teacher_navigation.html',
 			link: function(scope){
 				scope.role = $rootScope.current_user.roles[0].id;
+				$rootScope.$watch('current_user', function(){
+					scope.arenotification = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
+					scope.areshared = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;	
+				});
+				scope.toggleNotifications = function(){
+					scope.show_notifications = !scope.show_notifications;
+					scope.show_settings = false;
+				}
+				scope.toggleSettings = function(){
+					scope.show_notifications = false;
+					scope.show_settings = !scope.show_settings;
+				}
 				scope.settingsOpened = function(which){
 					scope.selected=which;
 					scope.$emit('settingsOpened', [which]);
@@ -45,7 +57,7 @@ angular.module('scalearAngularApp')
  }]);
 
 angular.module('scalearAngularApp')
-	.directive('userNavigation', ['ErrorHandler','$rootScope', 'User',function(ErrorHandler,$rootScope, User) {
+	.directive('userNavigation', ['ErrorHandler','$rootScope', 'User', 'Home',function(ErrorHandler,$rootScope, User, Home) {
            return{
 			replace:true,
 			restrict: "E",
@@ -53,12 +65,22 @@ angular.module('scalearAngularApp')
 				courses: "=",
 				//currentuser: '=',
 				iscollapsed: '=',
-				role: '=',
-				arenotification: '=',
-				areshared: '='
+				role: '='
 			},
 			templateUrl: '/views/user_navigation.html',
 			link: function(scope){
+				$rootScope.$watch('current_user', function(){
+					scope.arenotification = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
+					scope.areshared = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;	
+				});
+				scope.toggleNotifications = function(){
+					scope.show_notifications = !scope.show_notifications;
+					scope.show_settings = false;
+				}
+				scope.toggleSettings = function(){
+					scope.show_notifications = false;
+					scope.show_settings = !scope.show_settings;
+				}
 				scope.update_account = function() {
 	                scope.sending = true;
 	                delete $rootScope.current_user.errors
@@ -76,6 +98,7 @@ angular.module('scalearAngularApp')
 	            };
 	            scope.$on('mainMenuToggled', function(event, collapsed){
 					scope.show_settings = false;
+					scope.show_notifications = false;
 				})
 			}
 		};

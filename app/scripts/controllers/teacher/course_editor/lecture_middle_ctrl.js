@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout','OnlineQuiz', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout, OnlineQuiz) {
-
-
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout','OnlineQuiz','$q', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout, OnlineQuiz,$q) {
+    $scope.$parent.not_module = true;
+    
     $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
         $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
@@ -68,8 +68,8 @@ angular.module('scalearAngularApp')
         $scope.play_pause_class = 'pause'
 		$scope.slow = false
 		var paused_time= $scope.lecture_player.controls.getTime()
-		if($scope.editing_mode)
-			$scope.lecture_player.controls.seek_and_pause(paused_time)
+			if($scope.editing_mode)
+				$scope.lecture_player.controls.seek_and_pause(paused_time)
  	}
 
     $scope.playBtn = function(){
@@ -107,11 +107,10 @@ angular.module('scalearAngularApp')
         $scope.slow = true
     }
 
-    $scope.lecture_player.events.waiting=function(){
-    	console.log("Wainting")
+    $scope.lecture_player.events.seeked=function(){
+    	console.log("seeking")
         if($scope.editing_mode && $scope.selected_quiz && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_quiz.time)){
-        	$scope.editing_mode = false;
-        	$scope.selected_quiz=null
+        	$scope.exitBtn()
     	}
     }
 
@@ -131,44 +130,57 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.insertQuiz=function(quiz_type, question_type){
+		var promise = $q.when(true)
 		if ($scope.selected_quiz && $scope.quiz_deletable){
-			$scope.deleteQuiz($scope.selected_quiz)
+			var old_insert_time = $scope.selected_quiz.time
+			promise = $scope.deleteQuiz($scope.selected_quiz)
+			clearQuizVariables()
 		}
-		
-		var insert_time= $scope.lecture_player.controls.getTime()
-		var duration = $scope.lecture_player.controls.getDuration()
 
-		if(insert_time < 1 )
-			insert_time = 1
-		else if (insert_time >= duration)
-			insert_time = duration - 1
+		promise.then(function(){
+			var insert_time= $scope.lecture_player.controls.getTime()
+			var duration = $scope.lecture_player.controls.getDuration()
 
-		insert_time = checkQuizTimeConflict(insert_time)
-		$scope.lecture_player.controls.seek_and_pause(insert_time)
+			if(insert_time < 1 )
+				insert_time = 1
+			else if (insert_time >= duration)
+				insert_time = duration - 1
 
-		$scope.quiz_loading = true;
-		Lecture.newQuiz({
-			course_id: $stateParams.course_id,
-			lecture_id: $scope.lecture.id,
-			time: Math.floor($scope.lecture_player.controls.getTime()), 
-			quiz_type: quiz_type, 
-			ques_type: question_type
-		},
-		function(data){ //success
-			$log.debug(data);
-			$scope.showOnlineQuiz(data.quiz)
-			$scope.quiz_list.push(data.quiz)
-			$scope.quiz_loading = false;
-			$scope.quiz_deletable = true
-		}, 
-		function(){ //error
-			$scope.quiz_loading = false;
+			if(old_insert_time)
+				insert_time = old_insert_time
+			else
+				insert_time = checkQuizTimeConflict(insert_time)
+			
+			$scope.lecture_player.controls.seek_and_pause(insert_time)
+
+			$scope.quiz_loading = true;
+			Lecture.newQuiz({
+				course_id: $stateParams.course_id,
+				lecture_id: $scope.lecture.id,
+				time: Math.floor($scope.lecture_player.controls.getTime()), 
+				quiz_type: quiz_type, 
+				ques_type: question_type
+			},
+			function(data){ //success
+				$log.debug(data);
+				// console.log(data)
+				$scope.showOnlineQuiz(data.quiz)
+				$scope.quiz_list.push(data.quiz)
+				$scope.quiz_loading = false;
+				$scope.quiz_deletable = true
+			}, 
+			function(){ //error
+				$scope.quiz_loading = false;
+			})
 		})
-
 	}
 
 	$scope.showOnlineQuiz= function(quiz){
 		if($scope.selected_quiz != quiz){
+			if ($scope.quiz_deletable){
+				$scope.deleteQuiz($scope.selected_quiz)
+				clearQuizVariables()
+			}
 			$log.debug("SHOWONLINEQUIX")
 			$log.debug(quiz)
 			$scope.hide_alerts = true;
@@ -214,6 +226,7 @@ angular.module('scalearAngularApp')
 		Lecture.getHtmlData(
 			{"course_id":$stateParams.course_id, "lecture_id":$scope.lecture.id ,"quiz":  $scope.selected_quiz.id},
 			function(data){ //success	
+				console.log($scope.selected_quiz.question_type)
 				if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
 					$log.debug(data)
 					$scope.selected_quiz.answers = []
@@ -301,18 +314,22 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.deleteQuiz=function(quiz){
+		var deferred = $q.defer();
 		$scope.quiz_overlay = false
 		OnlineQuiz.destroy(
 			{online_quizzes_id: quiz.id},{},
 			function(data){
 				$log.debug(data)
 				$scope.quiz_list.splice($scope.quiz_list.indexOf(quiz), 1)
-				$scope.editing_mode = false;
-				$scope.selected_quiz={}
+				// resetQuizVariables()
+				deferred.resolve()
 				$scope.quiz_overlay = true
+				// $scope.editing_mode = false;
 			},
 			function(){}
 		);
+
+		return deferred.promise
 	}
 
 	$scope.addAnswer= function(ans,h,w,l,t){
@@ -340,7 +357,7 @@ angular.module('scalearAngularApp')
 		}
 	}
 
-	var updateAnswers=function(ans, title){
+	var updateAnswers=function(ans, quiz){
 		$log.debug("savingAll")
 		Lecture.updateAnswers(
 			{
@@ -348,7 +365,7 @@ angular.module('scalearAngularApp')
 				lecture_id:$scope.lecture.id,
 				online_quiz_id: $scope.selected_quiz.id
 			},
-			{answer: ans, quiz_title:title },
+			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type },
 			function(data){ //success
 				if($scope.selected_quiz.quiz_type =="invideo")
 					getQuizData();
@@ -404,7 +421,7 @@ angular.module('scalearAngularApp')
 
 
 			$scope.quiz_deletable = false
-			updateAnswers(data, $scope.selected_quiz.question);
+			updateAnswers(data, $scope.selected_quiz);
 		}
 		else{
 			if($scope.selected_quiz.quiz_type == 'html')
@@ -420,13 +437,16 @@ angular.module('scalearAngularApp')
 			console.log($scope.selected_quiz)
 			$scope.deleteQuiz($scope.selected_quiz)
 		}
+		clearQuizVariables()
 		$scope.editing_mode = false;
 		$scope.hide_alerts = true;
 		$scope.submitted= false
-		$scope.quiz_deletable = false
-		$scope.selected_quiz={}
 		$scope.quiz_layer.backgroundColor= ""
-		$log.debug("exiting")		
+	}
+
+	var clearQuizVariables= function(){
+		$scope.selected_quiz={}		
+		$scope.quiz_deletable = false
 	}
 
 }]);

@@ -50,18 +50,6 @@ exports.sign_in = function(ptor, email, password, feedback){
 }
 
 //====================================================
-//                      log out
-//====================================================
-exports.log_out = function(ptor){
-    ptor.sleep(3000);
-    ptor.findElement(protractor.By.id('logout_link')).then(function(link) {
-        link.click().then(function() {
-
-        });
-    });
-}
-
-//====================================================
 //                      sign up
 //====================================================
 exports.sign_up = function(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, feedback){
@@ -144,7 +132,7 @@ exports.feedback = function(ptor, message){
     ptor.wait(function() {
         return ptor.findElement(protractor.By.id('error_container')).then(function(message) {
             return message.getText().then(function(text) {
-                console.log(text);
+                //console.log(text);
                 if (text.length > 2) {
                     return true;
                 } else {
@@ -173,11 +161,23 @@ exports.open_tray = function(ptor){
 //          press course information button
 //====================================================
 exports.open_info = function(ptor){
-    info_icon = ptor.findElement(protractor.By.id("info")).then(function(btn){
+    ptor.findElement(protractor.By.id("info")).then(function(btn){
         btn.click();
         ptor.getCurrentUrl().then(function(url) {
             expect(url).toContain('course_information');
         });
+    })
+}
+
+exports.open_info_teacher = function(ptor){
+    ptor.findElement(protractor.By.id("info")).then(function(btn){
+        btn.click();
+    })
+}
+
+exports.open_announcements_teacher = function(ptor){
+    ptor.findElement(protractor.By.id("announcements")).then(function(btn){
+        btn.click();
     })
 }
 
@@ -205,6 +205,14 @@ exports.open_lectures = function(ptor){
     })
 }
 
+exports.open_course_editor = function(ptor){
+    ptor.findElement(protractor.By.id("content")).then(function(btn){
+        btn.click();
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('course_editor');
+        });
+    })
+}
 //====================================================
 //                  delete account
 //====================================================
@@ -233,23 +241,22 @@ exports.cancel_account = function(ptor, password, feedback){
 //====================================================
 exports.clean_mail = function(ptor){
     ptor.driver.get('https://www.guerrillamail.com/inbox');
-        ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
-            inbox.click().then(function(){
-                ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
-                    mail.sendKeys('studenttest').then(function(){
-                        ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
-                            set_btn.click().then(function(){
-                                ptor.driver.findElement(protractor.By.id('use-alias')).then(function(check_scram){
-                                    check_scram.click().then(function(){
-                                        ptor.sleep(11000);
-                                        ptor.driver.findElements(protractor.By.tagName('td')).then(function(emails){
-                                            console.log(emails.length);
-                                            emails[0].click();
-                                            ptor.sleep(2000).then(function(){
-                                                ptor.driver.findElement(protractor.By.id('del_button')).then(function(del_button){
-                                                    del_button.click();
-                                                    ptor.sleep(3000);
-                                                })
+    ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
+        inbox.click().then(function(){
+            ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
+                mail.sendKeys('studenttest').then(function(){
+                    ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
+                        set_btn.click().then(function(){
+                            ptor.driver.findElement(protractor.By.id('use-alias')).then(function(check_scram){
+                                check_scram.click().then(function(){
+                                    ptor.sleep(11000);
+                                    ptor.driver.findElements(protractor.By.tagName('td')).then(function(emails){
+                                        console.log(emails.length);
+                                        emails[0].click();
+                                        ptor.sleep(2000).then(function(){
+                                            ptor.driver.findElement(protractor.By.id('del_button')).then(function(del_button){
+                                                del_button.click();
+                                                ptor.sleep(3000);
                                             })
                                         })
                                     })
@@ -257,9 +264,10 @@ exports.clean_mail = function(ptor){
                             })
                         })
                     })
-                });
-           })
+                })
+            });
        })
+   })
 }
 
 //====================================================
@@ -271,6 +279,16 @@ exports.home = function(ptor){
         home.click().then(function(){
             ptor.getCurrentUrl().then(function(url) {
                 expect(url).toContain('http://staging.scalable-learning.com/#/student_courses');
+            });
+        })
+    })
+}
+
+exports.home_teacher = function(ptor){
+    locator.by_classname(ptor, 'modern-logo').then(function(home){
+        home.click().then(function(){
+            ptor.getCurrentUrl().then(function(url) {
+                expect(url).toContain('http://staging.scalable-learning.com/#/courses');
             });
         })
     })
@@ -311,15 +329,17 @@ exports.open_module = function(ptor, module_no){
 //=====================================
 //        logout
 //=====================================
-exports.logout = function(ptor, driver) {
-    ptor.findElement(protractor.By.id('logout_link')).then(function(link) {
-        link.click();
+exports.logout = function(ptor, feedback) {
+    ptor.findElement(protractor.By.id('logout-link')).then(function(link) {
+        link.click().then(function() {
+            feedback(ptor, 'Signed out successfully');
+        });
     })
 }
 //=====================================
 //        logout hidden
 //=====================================
-exports.logoutHidden = function(ptor) {
+exports.logoutHidden = function(ptor, feedback) {
         var hid = ptor.findElement(protractor.By.id('logout_link'));
         driver.executeScript("arguments[0].click()", hid).then(function() {
             feedback(ptor, 'Signed out successfully.');
@@ -409,4 +429,24 @@ exports.confirm_account_teacher = function(ptor, feedback){
                 });
            })
        })
+}
+
+//=======================================================
+//          switch from student to teacher
+//=======================================================
+exports.to_teacher = function(ptor){
+    this.home(ptor);
+    this.open_tray(ptor);
+    this.logout(ptor, this.feedback);
+    this.sign_in(ptor, params.teacher_mail, params.password, this.feedback);
+}
+
+//=======================================================
+//          switch from teacher to student
+//=======================================================
+exports.to_student = function(ptor){
+    this.home_teacher(ptor);
+    this.open_tray(ptor);
+    this.logout(ptor, this.feedback);
+    this.sign_in(ptor, params.mail, params.password, this.feedback);   
 }

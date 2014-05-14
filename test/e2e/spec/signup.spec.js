@@ -20,15 +20,15 @@ describe('', function(){
   xit('should create user', function(){
    o_c.sign_up(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, o_c.feedback);
   })
-  xit('should confirm user',function(){
+  it('should confirm user',function(){
     o_c.confirm_account(ptor, o_c.feedback);
     ptor.sleep(3000);
   }) 
-  it('should sign_in account',function(){
+  xit('should sign_in account',function(){
     o_c.sign_in(ptor, studentmail, password, o_c.feedback);
     ptor.sleep(2000);
   })
-  it('should delete user',function(){
+  xit('should delete user',function(){
     o_c.open_tray(ptor);
     o_c.cancel_account(ptor, params.password, o_c.feedback)
   })  

@@ -19,8 +19,8 @@
 
 	<div class="created-at">
 		<span style="float: left;">
-			<input id="close_button" ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small" ng-click="hideannouncement(index)" ng-disabled="saving" style="background-image: initial;"/>
-			<input id="save_button" ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-success" ng-click="saveannouncement(index)" ng-disabled="saving" style="background-image: initial;"/>
+			<input id="close_button" ng-if="announcement.show" value="{{'close'|translate}}" type="button" class="btn btn-small btn-danger" ng-click="hideannouncement(index)" ng-disabled="saving"/>
+			<input id="save_button" ng-if="announcement.show" value="{{'save'|translate}}" type="button" class="btn btn-small btn-success" ng-click="saveannouncement(index)" ng-disabled="saving"/>
 		</span>
 		<small>
 			<b>

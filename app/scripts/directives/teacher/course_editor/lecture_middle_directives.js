@@ -33,8 +33,8 @@ angular.module('scalearAngularApp')
 		 },
 		 restrict: 'E',
 		 template: 	'<div class="btn-group">'+
-						'<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="" style="background-image: initial;">'+
-							'{{title}}'+
+						'<a class="btn btn-small btn-success dropdown-toggle" data-toggle="dropdown" href="" style="background-image: initial;">'+
+							'{{title}} '+
 							'<span class="caret"></span>'+
 						'</a>'+
 						'<ul class="dropdown-menu" style="left:-35%;font-size:12px">'+

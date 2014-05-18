@@ -85,13 +85,11 @@
                 </a>
             </div>
         </header>
-        <div ng-show="clipboard" style="width: 100%;background: rgba(34, 34, 34, 0.8);color: white;text-align: center;font-size: 15px;position: absolute;top: 37px;z-index:1031">
-            <span ng-bind="'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'"></span>
-            <button ng-click="emptyClipboard()" class="btn btn-mini btn-danger">Remove</button>
+        <div ng-show="clipboard" style="width: 100%;background: rgba(34, 34, 34, 0.8);color: white;padding-left: 53%;font-size: 15px;font-weight: bold;position: absolute;top: 37px;z-index:1031">
+            <notice-message message="'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'" button-action="emptyClipboard()" button-title="Remove" />
         </div>
-          <div ng-show="preview_as_student" style="width: 100%;background: rgba(34, 34, 34, 0.8);color: white;text-align: center;font-size: 15px;position: absolute;top: 37px;z-index:1031">
-            <span ng-bind="'Currently previewing as a student'"></span>
-            <button ng-click="disablePreview()" class="btn btn-mini btn-danger" >Return</button>
+          <div ng-show="preview_as_student" style="width: 100%;background: rgba(34, 34, 34, 0.8);color: white;padding-left: 53%;font-size: 15px;font-weight: bold;position: absolute;top: 37px;z-index:1031">
+             <notice-message message="'Currently previewing as a student'" button-action="disablePreview()" button-title="Return" />
         </div>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">

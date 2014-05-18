@@ -398,7 +398,7 @@ angular.module('scalearAngularApp')
         if(scope.selected_quiz.quiz_type == 'survey' || (scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review) ){
            if(data.msg!="Empty"){
                 scope.selected_quiz.is_quiz_solved=true;
-                scope.show_notification='Thank you for your answer';
+                scope.show_notification=$translate('thank_you_answer')//'Thank you for your answer';
             }
         }
         else{

@@ -1,5 +1,7 @@
 var translation_sv=function(){
     return {
+      yes: 'Ja',
+      no: 'Nej',
       main: "Huvudsaklig",
       issue: "Problem är med",
       next: "Nästa",
@@ -42,6 +44,13 @@ var translation_sv=function(){
       adding_teacher: "En lärare eller TA måste ha ett lärarkonto på",
       create_account: "För att skapa ett lärarkonto besök",
       all: "Alla",
+      more: "mer",
+      minutes: "minuter",
+      formula: "Formel",
+      thank_you_answer: "Tack för ditt svar",
+      whats_new: "Vad är nytt",
+      return: "Avkastning",
+      preview_as_student: "För närvarande förhandsgranska som student",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -82,11 +91,16 @@ var translation_sv=function(){
             liked_this: "gillade detta",
             write_comment: "Lämna en kommentar...",
             flag_post: "Flagga detta Inlägg",
+            flag: "Flagga",
             unflag_post: "Un-flagga detta inlägg",
             flags: "Flaggor",
-            likes: "Röster",
+            likes: "Gillar",
+            votes: "Röster",
+            remove_flags: "Ta bort flaggor",
             private_discussion: "Privat Diskussion (Sett från läraren endast)",
-            public_discussion: "Allmän Diskussion (Sett från alla)"
+            public_discussion: "Allmän Diskussion (Sett från alla)",
+            cannot_be_empty: "Kan inte vara tomt",
+            actions: "åtgärder"
           },
           sharing:{
             nothing_selected: "Ingenting är vald",
@@ -119,6 +133,8 @@ var translation_sv=function(){
               cancel: "Avbryt",
               instructions:"Använd detta formulär för att rapportera eventuella problem du har. Ju mer detaljerat du kan ge lättare är det för oss att åtgärda problemet!",
               problem_is:"Mitt problem är med",
+              provide_desciption: "Ge mer beskrivning",
+              provide_email_name: "Se till att du lämnat ditt namn och e-post"
           },
       enroll:{
         help_enroll_student:"Hjälp på inskrivning studenter",
@@ -207,7 +223,8 @@ var translation_sv=function(){
               reject: "Avböj",
               import_new_course: "Import till ny kurs",
               import_existing_course: "Import till befintlig kurs",
-              empty: "Du har inga anmälningar just nu."
+              empty: "Du har inga anmälningar just nu.",
+              reviewed_inclass: "Vill du ha den här frågan ska granskas I klass"
           },
       privacy:{
               policy: "Sekretesspolicy",
@@ -318,7 +335,12 @@ var translation_sv=function(){
               discussion: "Diskussion",
               provide_url:"vg ange en video URL",
               vidoe_not_exist: "Video kan inte eller kan fortfarande ladda upp",
-              incompatible_link: "Inkompatibla länk"
+              incompatible_link: "Inkompatibla länk",
+              replay: "Spela",
+              retry: "Försök igen",
+              related : "Relaterat",
+              reply: "Svara",
+              of_student_review: "av eleverna röstade för översyn"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",
@@ -335,8 +357,9 @@ var translation_sv=function(){
       questions:{
       	 	  you_sure_delete_question: "Är du säker på att du vill ta bort frågan '{{question}}'?",
       		  you_sure_delete_answer: "Är du säker på att du vill ta bort svaret '{{answer}}'?",
-              answers: "Svar",
-              questions: "Frågor",
+            answers: "Svar",
+            questions: "Frågor",
+            see_all: "Se Alla"
           },
       quizzes:{
               survey_results: "Enkätresultat",
@@ -403,6 +426,7 @@ var translation_sv=function(){
               you_sure_delete_survey: "Är du säker på att du vill radera enkät '{{quiz}}'?",
               must_answer_atleast: "Du måste markera minst ett svar som korrekt för varje flervalsfråga.",
               must_place_items: "Du måste placera alla objekt",
+              must_choose_answer: "Måste välja minst ett svar",
               answer_question: "Vänligen svara på frågan",
               add_document: "Lägg till Dokument",
               please_wait: "Var god vänta",
@@ -455,7 +479,10 @@ var translation_sv=function(){
               type: "Typ",
               student_progress: "studentframsteg",
               out_of: "ut ur",
-              empty: "Tom Modul"
+              empty: "Tom Modul",
+              blackscreen_close: "Klicka på eller Tryck på 'b' för att gå tillbaka",
+              go_to_class: "Gå till klass",
+              filter: "Filtrera"
           },
       courses:{
               image_not_found: "Image inte hittad...",
@@ -514,7 +541,8 @@ var translation_sv=function(){
               prof: "Lärare",
               ta: "Lärarassistent",
               student_grades: "Studentbetyg",
-              grades: "Betyg",
+              grades: "Kvaliteter",
+              grade: "Grade",
               select_course: "Välj en kurs",
               select_module: "Välj en Modul",
               select_lecture: "Välj ett Föreläsning",
@@ -613,7 +641,17 @@ var translation_sv=function(){
               under_review: "föremål för översyn",
               wrong:"fefelaktigl",
               partial:"Partiell",
-              good:"Bra"
+              good:"Bra",
+              insert_regex:"Sätt i en exakt sträng eller ett regular expression för att matcha",
+              time_estimate:"Tid Utrops",
+              time_per_quiz: "Tid per frågesport",
+              quizzes_for_review: "Frågesport för översyn",
+              time_per_question : "Tid per fråga",
+              questions_for_review: "Frågor för översyn",
+              sort_by: "Sortera efter",
+              click_to_select: "Klicka för att välja",
+              based_on_invideo: "Baserat på in-video frågor besvarade",
+              view_detailed_progress: "Visa detaljer framsteg"
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

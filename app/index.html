@@ -86,10 +86,10 @@
             </div>
         </header>
         <div ng-show="clipboard" style="width: 100%;background: rgba(34, 34, 34, 0.8);color: white;padding-left: 53%;font-size: 15px;font-weight: bold;position: absolute;top: 37px;z-index:1031">
-            <notice-message message="'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'" button-action="emptyClipboard()" button-title="Remove" />
+            <notice-message message="'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'" button-action="emptyClipboard()" button-title="{{'lectures.remove' | translate}}" />
         </div>
           <div ng-show="preview_as_student" style="width: 100%;background: rgba(34, 34, 34, 0.8);color: white;padding-left: 53%;font-size: 15px;font-weight: bold;position: absolute;top: 37px;z-index:1031">
-             <notice-message message="'Currently previewing as a student'" button-action="disablePreview()" button-title="Return" />
+             <notice-message message="{{'preview_as_student'| translate}}" button-action="disablePreview()" button-title="{{'return' | translate}}" />
         </div>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">

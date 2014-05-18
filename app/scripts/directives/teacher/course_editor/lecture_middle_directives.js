@@ -434,7 +434,7 @@ angular.module('scalearAngularApp')
 		template:"<ng-form name='aform'>"+
 					"<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />"+
 					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-					"<label>Insert an exact string or a regular expression to match ex: '/[a-z]*/'</label>"+
+					"<label><span translate>courses.insert_regex</span> ex: '/[a-z]*/'</label>"+
 				"</ng-form>"
 	}
 	

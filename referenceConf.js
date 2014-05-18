@@ -44,7 +44,9 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/quizzez-over-video.spec.js'
+        'test/e2e/spec/drag-quizzez-over-video.spec.js'
+        //'test/e2e/spec/ocq-quizzez-over-video.spec.js',
+        //'test/e2e/spec/mcq-quizzez-over-video.spec.js'
         //'test/e2e/spec/course_editor_basic.spec.js'
         //'test/e2e/spec/calendar-teacher-student.spec.js'
         //'test/e2e/spec/create-announcements.spec.js'
@@ -109,8 +111,10 @@ exports.config = {
     params: {
 
         frontend: 'http://staging.scalable-learning.com/#',
-        teacher_mail: 'teacher2@sharklasers.com',
-        mail: 'studenttest@sharklasers.com',
+        //teacher_mail: 'teacher2@sharklasers.com',
+        teacher_mail: 'teacher3@sharklasers.com',
+        mail: 'studenttest2@sharklasers.com',
+        //mail: 'studenttest@sharklasers.com',
         //mail: 'mena.happy@yahoo.com',
         password: 'password',
 

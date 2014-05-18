@@ -65,6 +65,7 @@ angular.module('scalearAngularApp')
 			  	 			}
 	  	 			}	  	 			
 	  	 		}
+          console.log($scope.timeline)
 	  	 		getModuleCharts()
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
@@ -178,6 +179,7 @@ angular.module('scalearAngularApp')
       divs[view_index].scrollIntoView()
       $timeout(function(){$window.scrollTo($window.ScrollX,150)})
 	    $scope.inner_highlight_index = -1
+      setupRemoveHightlightEvent()
 	    $scope.$apply()
   	}
 
@@ -208,6 +210,7 @@ angular.module('scalearAngularApp')
       $(".highlight").removeClass("highlight");
   		$scope.highlight_index = divs.index(ul)
   		angular.element(ul).addClass("highlight")
+      setupRemoveHightlightEvent()
       if($scope.selected_item == item)
         return
       $scope.selected_item =item
@@ -217,7 +220,22 @@ angular.module('scalearAngularApp')
         $scope.selected_item.lec_id = id[1]
       }
   		$scope.inner_highlight_index = -1	
+
+      
   	}
+
+   var setupRemoveHightlightEvent=function(){
+    console.log("adding")
+      $(document).click(function(e){
+        if(angular.element(e.target).find('.inner_content').length){
+          $(".highlight").removeClass("highlight");
+          $scope.highlight_index = -1
+          $scope.inner_highlight_index = -1
+          console.log("removing")
+          $(document).off('click');
+        }
+      })
+    }
 
   	$scope.updateHideQuiz = function(id, value) {
   		if(value)
@@ -380,12 +398,29 @@ angular.module('scalearAngularApp')
     )
   }
 
-	$scope.seek=function(time, url, item){
-    $scope.$parent.selected_item = item;
-		if ($scope.url.indexOf(url) == -1) 
-        $scope.url = url+'&start='+Math.round(time)
-    else
-    	$scope.progress_player.controls.seek_and_pause(time)
+	$scope.seek=function(time, url){
+  //   $scope.$parent.selected_item = item;
+		// if ($scope.url.indexOf(url) == -1) 
+  //       $scope.url = url+'&start='+Math.round(time)
+  //   else
+  //   	$scope.progress_player.controls.seek_and_pause(time)
+  console.log(url)
+  console.log($scope.url)
+    if($scope.url.indexOf(url) == -1){
+      if($scope.progress_player.controls.isYoutube(url))
+        $scope.progress_player.controls.setStartTime(time)
+      $scope.url= url
+      if($scope.progress_player.controls.isMP4(url)){
+        $timeout(function(){
+          $scope.progress_player.controls.seek_and_pause(time)
+        })
+      }
+    }
+    else{
+      $timeout(function(){
+        $scope.progress_player.controls.seek_and_pause(time)
+      })
+    }
 	}
 
   $scope.formatModuleChartData = function(data){
@@ -412,7 +447,7 @@ angular.module('scalearAngularApp')
   }
 
 
-  $scope.formatLectureChartData = function(data) {
+  $scope.formatLectureChartData = function(data, type) {
 		var formated_data = {}
 		formated_data.cols =
 	    [{
@@ -429,11 +464,15 @@ angular.module('scalearAngularApp')
 		for (var ind in data) {
 		    var text, correct, incorrect
 		    if (data[ind][1] == "gray") {
-		        text = data[ind][2] + " " + "(" + $translate('lectures.incorrect') + ")";
+		        text = data[ind][2]
+            if(type != 'Survey')
+              text+= " (" + $translate('lectures.incorrect') + ")";
 		        correct = 0
 		        incorrect = data[ind][0]
 		    } else {
-		        text = data[ind][2] + " " + "(" + $translate('lectures.correct') + ")";
+		        text = data[ind][2]
+            if(type != 'Survey')
+              text+= " (" + $translate('lectures.correct') + ")";
 		        correct = data[ind][0]
 		        incorrect = 0
 		    }
@@ -513,29 +552,29 @@ angular.module('scalearAngularApp')
     return formated_data
   }
 
-  $scope.formatSurveyLectureChartData = function(data) {
-    var formated_data = {}
-    formated_data.cols=
-        [
-            {"label": $translate('courses.students'),"type": "string"},
-            {"label": $translate('controller_msg.answered'),"type": "number"},
-        ]
-    formated_data.rows = []
-    for (var ind in data) {
-        var row = 
-        {"c": 
-            [
-              {"v": data[ind][2]}, 
-              {"v": data[ind][0]} 
-            ]
-        }
-        formated_data.rows.push(row)
-    }
-    return formated_data
-  }
+  // $scope.formatSurveyLectureChartData = function(data) {
+  //   var formated_data = {}
+  //   formated_data.cols=
+  //       [
+  //           {"label": $translate('courses.students'),"type": "string"},
+  //           {"label": $translate('controller_msg.answered'),"type": "number"},
+  //       ]
+  //   formated_data.rows = []
+  //   for (var ind in data) {
+  //       var row = 
+  //       {"c": 
+  //           [
+  //             {"v": data[ind][2]}, 
+  //             {"v": data[ind][0]} 
+  //           ]
+  //       }
+  //       formated_data.rows.push(row)
+  //   }
+  //   return formated_data
+  // }
 
 
-	$scope.createChart = function(data,student_count, options, formatter) {
+	$scope.createChart = function(data,student_count, options, formatter, type) {
 		var chart = {};
 		chart.type = "ColumnChart"
 		chart.options = {
@@ -556,7 +595,7 @@ angular.module('scalearAngularApp')
 		};
 		angular.extend(chart.options,options)
 
-		chart.data = $scope[formatter](data)
+		chart.data = $scope[formatter](data, type)
 		return chart
 	}
 
@@ -593,7 +632,7 @@ angular.module('scalearAngularApp')
     shortcut.add("Space",function(){
       
       if($scope.selected_item.time>0){
-	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url, $scope.lectures[$scope.selected_item.lec_id].meta.id)
+	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
         $scope.$apply()
       }
     },{"disable_in_input" : true});

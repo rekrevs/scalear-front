@@ -44,8 +44,9 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/quizzez-over-video.spec.js'
-        //'test/e2e/spec/course_editor_basic.spec.js'
+        'test/e2e/spec/normal-quiz.spec.js'
+        // 'test/e2e/spec/quizzez-over-video.spec.js'
+        // 'test/e2e/spec/course_editor_basic.spec.js'
         //'test/e2e/spec/calendar-teacher-student.spec.js'
         //'test/e2e/spec/create-announcements.spec.js'
         //'test/e2e/spec/create-course-check-info.spec.js'
@@ -121,6 +122,8 @@ exports.config = {
         image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
         course_description: 'too many words',
         prerequisites: '1- course 1 2- course 2 3- course 3',
+        width: 1366,
+        height: 768,
         
         // frontend: 'http://staging.scalable-learning.com/#/',
         //====================================================

@@ -25,7 +25,7 @@ describe("teacher", function(){
 		o_c.open_course_whole(ptor);
 		//teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
-		teacher.open_lecture(ptor, 1, 1);
+		teacher.open_item(ptor, 1, 1);
 		youtube.seek(ptor, 50);
 		//teacher.create_lecture(ptor, "mena", "https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
 		

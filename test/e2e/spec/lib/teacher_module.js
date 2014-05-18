@@ -141,6 +141,22 @@ exports.add_lecture = function(ptor, mo_no, feedback){
 }
 
 //====================================================
+//            		add quiz
+//====================================================
+
+exports.add_quiz = function(ptor, mo_no, feedback){
+	locator.by_repeater(ptor, 'module in modules').then(function(mods){
+		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
+			btns_frame.findElements(protractor.By.className('btn-mini')).then(function(btns){
+				btns[1].click().then(function(){
+					feedback(ptor, 'Quiz was successfully created.')
+				})
+			})
+		})
+	})
+}
+
+//====================================================
 //            	delete item from module
 //====================================================
 
@@ -174,13 +190,14 @@ exports.open_module = function(ptor, mo_no){
 //====================================================
 //            click on a module to edit
 //====================================================
-exports.open_lecture = function(ptor, mo_no, lec_no){
+exports.open_item = function(ptor, mo_no, item_no){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
-		mods[mo_no-1].findElements(protractor.By.repeater('item in module.items')).then(function(lecs){
-			lecs[lec_no-1].click();
+		mods[mo_no-1].findElements(protractor.By.repeater('item in module.items')).then(function(items){
+			items[item_no-1].click();
 		})
 	})
 }
+
 //====================================================
 //            		change time zone
 //====================================================
@@ -217,6 +234,23 @@ exports.change_module_name = function(ptor, name, feedback){
 	})
 }
 
+//====================================================
+//            		change module name
+//====================================================
+exports.change_quiz_name = function(ptor, name, feedback){
+	locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').then(function(quiz){
+		quiz.click().then(function(){
+			locator.by_classname(ptor, 'editable-input').then(function(quiz_name){
+				quiz_name.clear();
+				quiz_name.sendKeys(name);
+				locator.by_classname(ptor, 'icon-ok').click().then(function(){
+					feedback(ptor, 'Quiz was successfully updated');
+				})
+			})
+		})
+	})
+}
+
 //https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89
 exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
 	this.add_lecture(ptor, 1, o_c.feedback);
@@ -241,3 +275,67 @@ exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
 		})
 	})
 }
+
+
+
+
+//====================================================
+//            		add mcq question for normal quiz
+//====================================================
+exports.add_quiz_question_mcq = function(ptor, question, answer1, answer2, answer3, correct){
+	locator.by_classname(ptor, 'well').then(function(well){
+		well.findElement(protractor.By.tagName('button')).click().then(function(){
+			locator.by_name(ptor, 'qlabel').sendKeys(question).then(function(){
+				locator.s_by_name(ptor, 'answer').then(function(answers){
+					answers[answers.length-3].sendKeys(answer1)
+					answers[answers.length-2].sendKeys(answer2)
+					answers[answers.length-1].sendKeys(answer3)
+				})
+			})
+		});
+	})
+}
+
+//====================================================
+//            		add mcq question for normal quiz
+//====================================================
+exports.add_quiz_question_ocq = function(ptor, question, answer1, answer2, answer3, correct){
+	
+}
+
+//====================================================
+//            		add mcq question for normal quiz
+//====================================================
+exports.add_quiz_question_free = function(ptor, question){
+	
+}
+
+//====================================================
+//            		add mcq question for normal quiz
+//====================================================
+exports.add_quiz_question_drag = function(ptor, question, answer1, answer2, answer3){
+	
+}
+
+//====================================================
+//            		adds a quiz header
+//====================================================
+exports.add_quiz_header = function(ptor, header){
+	locator.by_name(ptor, 'add_header').click().then(function(){
+		locator.s_by_class_name(ptor, 'ta-text')[locator.s_by_class_name(ptor, 'ta-text').length-1].sendKeys(header);
+	})
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
  			{
  				var modified_course = angular.copy($scope.course)
                 $scope.submitting=true;
- 				modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() + 120);
+ 				modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - data.getTimezoneOffset());
 
                 // if($scope.import_from){
                 //     console.log($scope.import_from);

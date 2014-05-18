@@ -18,7 +18,7 @@
 				<span>Filter:</span>
 				<span ng-repeat ="(key,val) in filters">
 					<input type="radio" name="filter" ng-model="$parent.custom_filter" style="margin-left:20px;margin-top:0" value="{{val}}"/>
-					<span>{{key}}</span>
+					<span>{{key+''| translate}}</span>
 				</span>
 			</div>
 		</div>

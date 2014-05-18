@@ -21,11 +21,11 @@ angular.module('scalearAngularApp')
 
     $scope.filters=
     {
-      $translate("all"):"",
-      $translate("lecture.confused"):"confused",
+      "all":"",
+      "lectures.confused":"confused",
       // "Questions":"question",
-      $translate("courses.charts"): "charts",
-      $translate("lecture.discussion"): "discussion",
+      "courses.charts": "charts",
+      "lectures.discussion": "discussion",
     }
 
     $scope.grade_options= [{

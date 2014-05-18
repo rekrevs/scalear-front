@@ -28,7 +28,7 @@
         <tr>
             <td style="vertical-align: initial;">
                 <a ui-sref="profile({user_id: $parent.current_user.id})" href="">
-                    <profile-image email="$parent.current_user.email" imagesize="70" style="overflow: hidden; min-width: 70px;"></profile-image>
+                    <profile-image email="$parent.current_user.email" imagesize="70" background="white"></profile-image>
                 </a>
             </td>
             <td id="user_information_container">
@@ -109,10 +109,10 @@
             </span>
             <span style="float: right; display: inline-table;">
                 <ul ng-show="$parent.current_lang=='sv'" ng-cloak>
-                    <a id="lang_link_swed" style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                    <a id="lang_link_swed" style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
                 </ul>
                 <ul ng-show="$parent.current_lang=='en'" ng-cloak>
-                    <a id="lang_link_uk" style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                    <a id="lang_link_uk" style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
                 </ul>
             </span>
             <span id="settings-btn" class="settings-menu-button" ng-click="show_settings = !show_settings; selected = 1;" ng-class="{settingsopen: show_settings}">

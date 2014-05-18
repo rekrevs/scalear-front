@@ -27,17 +27,14 @@ angular.module('scalearAngularApp')
 				
 			}
 		);
-
-		/* <select name="DropDownTimezone" id="DropDownTimezone">
-      
-</select>*/
 		
 		$scope.createCourse = function(){
 			if($scope.form.$valid)
  			{
  				var modified_course = angular.copy($scope.course)
                 $scope.submitting=true;
- 				modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - data.getTimezoneOffset());
+                var d = new Date()
+ 				modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - d.getTimezoneOffset());
 
                 // if($scope.import_from){
                 //     console.log($scope.import_from);

@@ -458,3 +458,14 @@ exports.to_student = function(ptor){
 exports.scroll = function(ptor, value) {
     ptor.executeScript('window.scrollBy(0, ' + value + ')', '');
 }
+//=======================================================
+//                  scroll to element
+//=======================================================
+
+exports.scroll_element = function(ptor, element) {
+    element.getLocation().then(function(loc){
+        console.log('scrolling to '+loc.x +' AND '+loc.y)
+        ptor.executeScript('window.scrollTo(' + loc.x + ', ' + loc.y + ')', '');
+    })
+    
+}

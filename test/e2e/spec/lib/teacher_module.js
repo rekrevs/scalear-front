@@ -147,9 +147,15 @@ exports.add_lecture = function(ptor, mo_no, feedback){
 exports.add_quiz = function(ptor, mo_no, feedback){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
-			btns_frame.findElements(protractor.By.className('btn-mini')).then(function(btns){
-				btns[1].click().then(function(){
-					feedback(ptor, 'Quiz was successfully created.')
+			btns_frame.findElement(protractor.By.className('btn-success')).then(function(add_button){
+				add_button.click().then(function(){
+					locator.by_classname(ptor, 'add-menu-container').then(function(menu){
+						menu.findElements(protractor.By.className('add-item')).then(function(options){
+							options[1].click().then(function(){
+								feedback(ptor, 'Quiz was successfully created.')
+							});
+						})
+					})
 				})
 			})
 		})

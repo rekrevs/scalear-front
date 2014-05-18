@@ -13,17 +13,17 @@ ptor.driver.manage().window().setPosition(0, 0);
 
 describe("teacher", function(){
 
-	// it('should sign in as teacher', function(){
-	// 	o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-	// })
+	it('should sign in as teacher', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+	})
 
-	// it('should create_course', function(){
-	// 	teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
-	// })
+	it('should create_course', function(){
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+	})
 
-	// it('should get the enrollment key and enroll student', function(){
-	// 	teacher.get_key_and_enroll(ptor);
-	// })
+	it('should get the enrollment key and enroll student', function(){
+		teacher.get_key_and_enroll(ptor);
+	})
 	//test
 	it('should sign in', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -42,9 +42,9 @@ describe("teacher", function(){
 		teacher.open_item(ptor, 1, 1)
 	})
 
-	// it('should add a FIRST header', function(){
-	// 	teacher.add_quiz_header(ptor, 'first header')
-	// })
+	it('should add a FIRST header', function(){
+		teacher.add_quiz_header(ptor, 'first header')
+	})
 	// it('should add a MCQ question', function(){
 	// 	teacher.add_quiz_question_mcq(ptor, 'mcq question', 'mcq answer1', 'mcq answer2', 'mcq answer3', 1)
 	// })

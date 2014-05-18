@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
   }
 
   $scope.addColumn = function(index){
-    $scope.new_teachers.splice(index+1, 0, {email: null, role: null, status: "Pending"});
+    $scope.new_teachers.splice(index+1, 0, {email: null, role: null, status: $translate('controller_msg.pending')});
   }
 
   $scope.updateTeacher = function(index){

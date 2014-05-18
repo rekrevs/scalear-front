@@ -21,29 +21,25 @@ angular.module('scalearAngularApp')
 
     $scope.filters=
     {
-      "All":"",
-      "Confused":"confused",
+      $translate("all"):"",
+      $translate("lecture.confused"):"confused",
       // "Questions":"question",
-      "Charts": "charts",
-      "Discussion": "discussion",
+      $translate("courses.charts"): "charts",
+      $translate("lecture.discussion"): "discussion",
     }
 
-    $scope.grade_options= [
-    {
+    $scope.grade_options= [{
       value: 0, // not set
-      text: 'Under Review'
-    }, 
-    {
+      text: $translate('course.under_review')
+    }, {
       value: 1, // wrong
-      text: 'Wrong'
-    }, 
-    {
+      text: $translate('course.wrong')
+    }, {
       value: 2,
-      text: 'Partial'
-    }, 
-    {    
+      text: $translate('course.partial')
+    }, {
       value: 3,
-      text: 'Good'
+      text: $translate('course.good')
     }]
 
   	var init= function(){

@@ -610,8 +610,8 @@ var translation_en=function(){
         total_statistics: "Total Statistics",
         enroll_instruction: "To enroll in a course click 'Join Course' below and enter the course enrollment key from your instructor.",
         export_as: "Export course as",
-        main_progress: "Main Progress"
-        under_review"Under Review",
+        main_progress: "Main Progress",
+        under_review:"Under Review",
         wrong:"Wrong",
         partial:"Partial",
         good:"Good"

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCalendarCtrl', ['$scope','$state', '$stateParams','Course', '$log','$window','Page', function ($scope, $state, $stateParams, Course, $log, $window,Page) {
+  .controller('teacherCalendarCtrl', ['$scope','$state', '$stateParams','Course', '$log','$window','Page','util', function ($scope, $state, $stateParams, Course, $log, $window,Page, util) {
     $log.debug("in calendar ctrl")
 
 	$window.scrollTo(0, 0);
@@ -32,6 +32,8 @@ angular.module('scalearAngularApp')
 					}
 				};
 				for (var element in $scope.calendar.events){
+					$scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
+			   		$scope.calendar.events[element].title +=  ' @'+util.hour12($scope.calendar.events[element].start.getHours())
 					$scope.calendar.events[element].url=$state.href("course.progress.module", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId})
 				}
 				$scope.eventSources.push($scope.calendar)

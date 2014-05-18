@@ -103,13 +103,13 @@
     }
 </style>
 <div class="btn-group align-center" data-toggle="buttons">
-    <label id="quiz_checkbox" class="btn btn-warning btn-checkbox">
+    <label id="quiz_checkbox" class="btn btn-checkbox">
         <input type="checkbox" ng-model="checkModel.quiz"> {{'lectures.outline' | translate}}
     </label>
-    <label id="confused_checkbox"class="btn btn-warning btn-checkbox">
+    <label id="confused_checkbox"class="btn btn-checkbox">
         <input type="checkbox" ng-model="checkModel.confused"> {{'lectures.confused' | translate}}
     </label>
-    <label id="discussion_checkbox" class="btn btn-warning btn-checkbox">
+    <label id="discussion_checkbox" class="btn btn-checkbox">
         <input type="checkbox" ng-model="checkModel.discussion"> {{'lectures.discussion' | translate}}
     </label>
 </div>
@@ -261,7 +261,8 @@
                                 </div>
                                 <span>
                                     <br />
-                                    <textarea ng-model="current_reply[e.data.id]" style="width:80%;" placeholder="{{'discussion.write_comment' | translate}}"></textarea>
+                                    <textarea ng-init="height=40;width=80" ng-model="current_reply[e.data.id]" placeholder="{{'discussion.write_comment' | translate}}" ng-style="{height:height+'px', width:width+'%'}" ng-focus="height=90;width=90" ng-blur="height=40;width=80"></textarea>
+                                    <i ng-show="error_message" style="color:red; font-size:12px"><br>{{error_message}}<br></i>
                                     <input type="button" class="btn btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(e)" value={{"discussion.comment"|translate}} />
                                 </span>
                             </div>

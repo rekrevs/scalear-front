@@ -40,6 +40,9 @@ exports.by_tag = function(ptor, tag){
 exports.s_by_classname = function(ptor, classname){
   return ptor.findElements(protractor.By.className(classname))
 }
+exports.s_by_name = function(ptor, name){
+  return ptor.findElements(protractor.By.name(name))
+}
 
 exports.s_by_binding = function(ptor, bind){
   return ptor.findElements(protractor.By.binding(bind))

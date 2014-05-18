@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder" style="padding:0" ng-transclude></div>' //style="border:4px solid" 
+			template: '<div class="videoborder well widescreen" style="padding:0" ng-transclude></div>' //style="border:4px solid" 
 		};
 	})
 	.directive('youtube',['$rootScope','$log','$timeout','$window','popcornApiProxy',function($rootScope,$log,$timeout,$window, popcornApiProxy){
@@ -79,11 +79,7 @@ angular.module('scalearAngularApp')
                     	console.log("youtube")
                     	var video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
                     	player = Popcorn(video,{});
-                    	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time)
-						$timeout(function(){
-							if(player_controls.readyState() == 0)
-								scope.$emit('slow')
-						},15000)
+                    	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time)						
                         // player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1');
                     }
                     else if(isVimeo(scope.url)){
@@ -105,6 +101,11 @@ angular.module('scalearAngularApp')
 					setupEvents()
 
 					parent.focus()
+
+					$timeout(function(){
+						if(player_controls.readyState() == 0)
+							scope.$emit('slow', isYoutube(scope.url))
+					},15000)
 				}
 
 				var formatYoutubeURL=function(url,vq,time){
@@ -304,10 +305,10 @@ angular.module('scalearAngularApp')
 							scope.$apply();
 						}
 					})
-					scope.$on('slow',function(){
+					scope.$on('slow',function(ev,data){
 						parent.focus()
 						if(player_events.onSlow){
-							player_events.onSlow();
+							player_events.onSlow(data);
 							scope.$apply();
 						}
 					})

@@ -83,9 +83,13 @@ angular.module('scalearAngularApp')
 			}
 			else{
 				return null;
-			}
-			
+			}	
 		}
+		$scope.$on('mainMenuToggled', function(event, collapsed){
+			if(collapsed == true){
+				$scope.close_selector = false;
+			}
+		})
 			
   }]);
 	   	

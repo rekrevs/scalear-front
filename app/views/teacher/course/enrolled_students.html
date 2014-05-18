@@ -10,9 +10,9 @@
         <button class="btn btn-default" ng-click="toggleHelpEnrolling()" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px; margin-left: 50px;"><span translate>enroll.help_enroll_student</span></button>
     <!-- </div> -->
     <div style="float: right; display: inline-block; width: 300px; margin-right: 50px;">
-        <input class="btn" ng-show="!searchText" id="email_button" value="{{'email'|translate}}" style="background-image: initial; float: right; margin-right: 3%;" ng-disabled="(students | filter:{'checked':true}).length == 0" type="button" ng-click="emailForm()" />
-        <input class="btn btn-primary" value="{{'courses.select_all'|translate}}" type="button" style="background-image: initial; float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length"/>
+        <input class="btn btn-success" ng-show="!searchText" id="email_button" value="{{'email'|translate}}" style="float: right; margin-right: 3%;" ng-disabled="(students | filter:{'checked':true}).length == 0" type="button" ng-click="emailForm()" />
         <input class="btn btn-danger" value="{{'courses.deselect_all'|translate}}" type="button" style="background-image: initial; float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0"/>
+        <input class="btn btn-primary" value="{{'courses.select_all'|translate}}" type="button" style="background-image: initial; float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length"/>
     </div>
     
 </div>

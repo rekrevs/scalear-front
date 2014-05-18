@@ -278,7 +278,7 @@ exports.home = function(ptor){
     locator.by_classname(ptor, 'modern-logo').then(function(home){
         home.click().then(function(){
             ptor.getCurrentUrl().then(function(url) {
-                expect(url).toContain('http://staging.scalable-learning.com/#/student_courses');
+                expect(url).toContain(params.frontend+'/student_courses');
             });
         })
     })
@@ -288,7 +288,7 @@ exports.home_teacher = function(ptor){
     locator.by_classname(ptor, 'modern-logo').then(function(home){
         home.click().then(function(){
             ptor.getCurrentUrl().then(function(url) {
-                expect(url).toContain('http://staging.scalable-learning.com/#/courses');
+                expect(url).toContain(params.frontend+'/courses');
             });
         })
     })

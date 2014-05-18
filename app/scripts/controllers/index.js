@@ -49,6 +49,10 @@ angular.module('scalearAngularApp')
                     },
                     function(){
                       console.log("bad")
+                      $rootScope.preview_as_student = false
+                      $cookieStore.remove('preview_as_student')
+                      $cookieStore.remove('old_user_id')
+                      $cookieStore.remove('course_id')
                     }
                   )
                 }
@@ -61,8 +65,10 @@ angular.module('scalearAngularApp')
             }
             $scope.toggleCollapse = function(){
                 $window.scrollTo(0, 0);
+                $scope.$broadcast('mainMenuToggled', $rootScope.iscollapsed);
                 $rootScope.iscollapsed = !$rootScope.iscollapsed
-                $scope.$broadcast('mainMenuToggled', [$rootScope.iscollapsed]);
+                
+                console.log($rootScope.iscollapsed)
             }
 
             $scope.logout = function() {

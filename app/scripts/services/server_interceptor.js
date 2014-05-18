@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate',
-        function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate) { //server and also front end requests (requesting partials and so on..)
+    .factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate','$cookieStore',
+        function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate,$cookieStore) { //server and also front end requests (requesting partials and so on..)
             return {
                 // optional method
                 'request': function(config) {
@@ -152,6 +152,13 @@ angular.module('scalearAngularApp')
 
                         var $state = $injector.get('$state'); //test connection every 10 seconds.
                         $state.go("login")
+                        if($cookieStore.get('preview_as_student')){
+                            console.log("preview_as_student")
+                          $cookieStore.remove('preview_as_student')
+                          $cookieStore.remove('old_user_id')
+                          $cookieStore.remove('course_id')
+                          $rootScope.preview_as_student= false
+                        }
                         if (angular.isDefined($rootScope.stop)) {
                             $interval.cancel($rootScope.stop);
                             $rootScope.stop = undefined;

@@ -812,6 +812,56 @@ iframe{
 .modal-header{
   text-align: center;
 }
+
+.add-teacher-button, .delete-teacher-button{
+    margin-top: 20px;
+}
+.course-left{
+    left: 5%;
+    width: 20%;
+    display: inline-block;
+    position: fixed;
+    padding: 10px;
+    border-right: 1px solid lightgrey;
+    overflow-y: auto;
+    height: 100%;
+}
+.course-right{
+    margin-left: 25%;
+    width: 75%;
+    display: inline-block;
+    position: relative;
+    padding: 10px;
+    text-align: left;
+    vertical-align: top;
+}
+.course-right .top{
+    border-bottom: 1px solid lightgrey;
+}
+.course-right .bottom{
+    padding-top: 10px;
+    text-align: left;
+}
+.form-inline{
+    width: 100%;
+}
+.form-inline textarea{
+    width: 80% !important;
+}
+.teacher-item{
+    text-align: center;
+    display: inline-block;
+    margin: 10px;
+    min-width: 80px;
+    vertical-align: top;
+    /*float: left;*/
+}
+.teacher-controls{
+    vertical-align: bottom;
+}
+.dropdown-menu > li > a:hover{
+  background-image: linear-gradient(to bottom, #008a49, #008a49);
+}
 @media (max-width: 700px) {
   .state{
     display: none;

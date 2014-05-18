@@ -1,13 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive('discussion',["$timeout","$stateParams","Forum","Timeline","Lecture","editor", function($timeout, $stateParams, Forum, Timeline, Lecture,editor) {
+    .directive('discussion',["$timeout","$stateParams","Forum","Timeline","Lecture","editor","$translate", function($timeout, $stateParams, Forum, Timeline, Lecture,editor, $translate) {
     return {
         restrict:"E",
         templateUrl:'/views/forum/discussion.html',
-        link: function(scope, elem, attrs, ngModel) {
+        link: function(scope, element, attrs, ngModel) {
             console.log("here@!!!!")
-            scope.choices= [{text:'Private',value:0},{text:'Public', value:1}];
+            scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
             scope.privacy = scope.choices[0];
             scope.checkModel={quiz:true,confused:false, discussion:false};
 
@@ -56,6 +56,7 @@ angular.module('scalearAngularApp')
                     //scope.timeline['discussion'][lecture_id][id]={}
                     //console.log("hna")
                     scope.timeline['lecture'][lecture_id].items.splice(index, 1);
+                    scope.error_message = null
                     //console.log("hna2")
                 }, function(){
                     console.log("failure");
@@ -142,24 +143,33 @@ angular.module('scalearAngularApp')
                     //console.log("hna")
                     scope.timeline['lecture'][lecture_id][q_id].items.splice(index, 1);
                     //console.log("hna2")
+                    scope.error_message = null
                 }, function(){
                     console.log("failure");
                 })
             }
 
             scope.reply = function(discussion){
-                Forum.createComment({comment: {content: scope.current_reply[discussion.data.id], post_id:discussion.data.id, lecture_id:discussion.data.lecture_id}}, function(response){
-                    if(!scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id])
-                        scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id]= new Timeline();
+                if (scope.current_reply[discussion.data.id] && scope.current_reply[discussion.data.id].length && scope.current_reply[discussion.data.id].trim()!=""){
+                    Forum.createComment({comment: {content: scope.current_reply[discussion.data.id], post_id:discussion.data.id, lecture_id:discussion.data.lecture_id}}, function(response){
+                        if(!scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id])
+                            scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id]= new Timeline();
 
-                    console.log(response);
-                    scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id].add(discussion.data.time, "comment", response.comment);
-                    scope.show_reply[discussion.data.id]=false
-                    scope.current_reply[discussion.data.id]=""
-                    scope.lecture_player.controls.play();
-                }, function(){
-                    console.log("failure")
-                })
+                        console.log(response);
+                        scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id].add(discussion.data.time, "comment", response.comment);
+                        scope.show_reply[discussion.data.id]=false
+                        scope.current_reply[discussion.data.id]=""
+                        scope.lecture_player.controls.play();
+                        scope.error_message = null
+                    }, function(){
+                        console.log("failure")
+                    })
+                }
+                else{
+                    console.log("hello")
+                    scope.error_message = "Cannot be empty"
+                }
+                angular.element('.btn').blur()
             }
 
             scope.show_reply = function(discussion){

@@ -109,7 +109,8 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
 
-        frontend: 'http://staging.scalable-learning.com/#',
+        frontend: 'http://localhost:9000/#',
+        // frontend: 'http://staging.scalable-learning.com/#',
         teacher_mail: 'teacher2@sharklasers.com',
         mail: 'studenttest@sharklasers.com',
         //mail: 'mena.happy@yahoo.com',

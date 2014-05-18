@@ -50,6 +50,7 @@ angular.module('scalearAngularApp')
           SharedItem.create({},{data: selected, shared_with: $scope.selected_teacher}, 
           	function(){
                 $modalInstance.close();
+                // selectNone()
             },
             function(response){
               // console.log(data)
@@ -66,6 +67,7 @@ angular.module('scalearAngularApp')
       	})
       	event.stopPropagation()
       }
+
 
       $scope.selectItem=function(module, item, event){
       	event.stopPropagation()

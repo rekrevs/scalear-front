@@ -1,20 +1,20 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('freeTextTableCtrl', ['$scope', '$timeout', 'Quiz', '$log','Lecture','$stateParams', function ($scope, $timeout, Quiz, $log, Lecture, $stateParams) {
+  .controller('freeTextTableCtrl', ['$scope', '$timeout', 'Quiz', '$log','Lecture','$stateParams','$translate', function ($scope, $timeout, Quiz, $log, Lecture, $stateParams,$translate) {
     
     $scope.grade_options= [{
          value: 0, // not set
-         text: 'Under Review'
+         text: $translate('course.under_review')
      }, {
          value: 1, // wrong
-         text: 'Wrong'
+         text: $translate('course.wrong')
      }, {
          value: 2,
-         text: 'Partial'
+         text: $translate('course.partial')
      }, {
          value: 3,
-         text: 'Good'
+         text: $translate('course.good')
      }]
  
      // $scope.grade_display={0 : "Under Review", 1: "Wrong", 2:"Partial", 3:"Good"}

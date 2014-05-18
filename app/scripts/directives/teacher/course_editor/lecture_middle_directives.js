@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
 								'<span translate>online_quiz.editing_quiz</span> {{selected_quiz.question}} <span translate>at</span> {{selected_quiz.time|format}}'+
 								'<b><br>{{double_click_msg|translate}}</b>'+
 							'</div>'+
-							'<a class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="saveBtn()" translate>save</a>'+
+							'<button ng-disabled="disable_save_button" class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="saveBtn()" translate>save</button>'+
 							'<a class="btn" ng-show="!quiz_deletable" id="done" style="margin-top:5px;" ng-click="exitBtn()" translate>groups.exit</a>'+
 							'<a class="btn" ng-show="quiz_deletable" id="done" style="margin-top:5px;" ng-click="exitBtn()" >Cancel</a>'+
 						'</div>'+

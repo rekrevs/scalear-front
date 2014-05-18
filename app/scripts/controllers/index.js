@@ -61,8 +61,10 @@ angular.module('scalearAngularApp')
             }
             $scope.toggleCollapse = function(){
                 $window.scrollTo(0, 0);
+                $scope.$broadcast('mainMenuToggled', $rootScope.iscollapsed);
                 $rootScope.iscollapsed = !$rootScope.iscollapsed
-                $scope.$broadcast('mainMenuToggled', [$rootScope.iscollapsed]);
+                
+                console.log($rootScope.iscollapsed)
             }
 
             $scope.logout = function() {

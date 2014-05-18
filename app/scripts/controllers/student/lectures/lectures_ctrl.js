@@ -171,6 +171,11 @@ angular.module('scalearAngularApp')
 
 		return (hours*3600)+(minutes*60)+seconds
 	}
+	$scope.$on('mainMenuToggled', function(event, collapsed){
+		if(collapsed == true){
+			$scope.close_selector = true;
+		}
+	})
 	// $scope.shouldBeHidden = function(module_id){
 	// 	// console.log($scope.modules_obj[module_id]);
 	// 	var result = 0;

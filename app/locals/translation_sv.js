@@ -1,5 +1,6 @@
 var translation_sv=function(){
     return {
+      main: "Huvudsaklig",
       issue: "Problem är med",
       next: "Nästa",
       connected: "Ansluten",
@@ -80,7 +81,9 @@ var translation_sv=function(){
             liked_this: "gillade detta",
             write_comment: "Lämna en kommentar...",
             flag_post: "Flagga detta Inlägg",
-            unflag_post: "Un-flagga detta inlägg"
+            unflag_post: "Un-flagga detta inlägg",
+            flags: "Flaggor",
+            likes: "Röster"
           },
           sharing:{
             nothing_selected: "Ingenting är vald",
@@ -385,6 +388,7 @@ var translation_sv=function(){
               description: "Beskrivning",
               save_module: "Spara modul",
               external_document: "Externa Dokument",
+              no_external_documents: "Det finns för närvarande inga externa dokument i den här modulen...",
               you_sure_delete_document: "Är du säker på att du vill radera dokumentet '{{doc}}'?",
               you_sure_delete_module: "Är du säker på att du vill radera modul '{{module}}'?",
               you_sure_delete_lecture: "Är du säker på att du vill radera föreläsnings '{{lecture}}'?",
@@ -444,6 +448,7 @@ var translation_sv=function(){
               type: "Typ",
               student_progress: "studentframsteg",
               out_of: "ut ur",
+              empty: "Tom Modul"
           },
       courses:{
               image_not_found: "Image inte hittad...",

@@ -163,12 +163,12 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	margin-right: 10px;
 }
 #details-resp{
-	display: none;
 	position: absolute;
-	width: 350px;
 	background-color: whitesmoke;
 	position: absolute;
-	right: -350px;
+	/*right: -350px;*/
+	width: 0px;
+	right: 0px;
 }
 
 .datepicker2{
@@ -228,7 +228,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 .details-toggler{
 	display: none;
 	float: right;
-	margin-left: -30px;
+	margin-left: -27px;
 	width: 27px;
 	height: 30px;
 	cursor: pointer;
@@ -242,6 +242,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	 text-align: left;
 	 padding: 10px;
 	 margin: 0 auto;
+	 margin-top: 10px;
 }
 .details-toggle-icon:before{
   margin-top: 5px;
@@ -251,14 +252,48 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
   margin-top: 5px;
   content: url("/images/tree-toggle.png");
 }
+.nowidth{
+	width: 27px !important;
+}
+.add-item{
+	padding: 2px; 
+	cursor: pointer;
+	color: #2d2d2d;
+	height: 20px;
+}
+.add-item:hover{
+	background-color: #008a49;
+	color: white;
+	font-weight: normal;
+}
+.add-menu-container{
+	background-color: white;
+	width: 60%;
+	border-radius: 4px;
+	margin-top: 10px;
+	text-align: center;
+	right: -40px;
+	position: relative;
+	margin-bottom:  10px;
+	padding: 5px 0;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	box-shadow:0 5px 10px rgba(0, 0, 0, 0.2);
+	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+	font-size: 13px;
+	font-weight: 200;
+}
 @media (max-width: 1240px) {
 	#details{
 		display: none;
 	}
-	#details-resp{
+	.displayed{
 		display: inline-block;
-		right: -350px;
+		width: 350px !important;
 	}
+	.putright{
+		right: 350px;	
+	}
+
 	.details-toggler{
 		background-color: #414141;
 		border-radius: 3px 0px 0px 3px;
@@ -267,7 +302,6 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 		z-index: 2;
 		display: inline-block;
 		position: absolute;
-		right: 350px;
 	}
 }
 @media (max-width: 1000px){

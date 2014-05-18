@@ -55,17 +55,18 @@ angular.module('scalearAngularApp')
       restrict: "E",
       scope:{
         email: "=",
-        imagesize: "@"
+        imagesize: "@",
+        background: "@"
       },
       templateUrl: "/views/profile_image.html",
       link: function (scope, element) {
         scope.$watch('email', function(){
           if(scope.email){
-            scope.source_image = 'http://www.gravatar.com/avatar/'+md5(scope.email)+'?s='+scope.imagesize+'&r=pg';
+            scope.source_image = 'http://www.gravatar.com/avatar/'+md5(scope.email)+'?s='+scope.imagesize+'&r=pg&default=https%3A%2F%2Fs.gravatar.com%2Favatar%2F7b2c0c5390921bbccd4818d0cf4bcb71%3Fs%3D'+scope.imagesize+'%26r%3Dpg';
           }
           else{
-            element.css('height', scope.imagesize+'px');
-            element.css('width', scope.imagesize+'px');
+            // element.css('height', scope.imagesize+'px');
+            // element.css('width', scope.imagesize+'px');
             scope.source_image = null
           }
           // element.attr('src', scope.source_image)

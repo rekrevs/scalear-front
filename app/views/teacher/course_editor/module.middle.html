@@ -45,8 +45,9 @@
     	<b translate>
 			groups.due_date
 		</b><br />
-    	<details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check>{{'on' | translate}}
+    	<details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check>
         <span ng-show="module.due_date_enabled">
+          {{'on' | translate}}
           <details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date>
           {{'at' | translate}}
           <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>
@@ -75,10 +76,13 @@
 	<div>
     	<b translate>
 			groups.external_document
-		</b><br /><br />
+
+		</b>
+		<div style="color: #808080; margin-left: 20px;" ng-show="module.documents.length ==0">
+			{{'groups.no_external_documents' | translate}}
+		</div>
     	<document-item ng-repeat="doc in module.documents" document="doc" update="updateDocument" remove="removeDocument" nameval="validateName" urlval="validateURL">
     	</document-item>
-    	<br />
     	<button ng-click="addDocument()" ng-disabled="document_overlay" class="btn btn-success add-teacher-button">
 	        <img src="../images/add_document.png" /> {{'groups.add_document' | translate}}
 	    </button>

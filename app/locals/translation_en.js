@@ -41,6 +41,7 @@ var translation_en=function(){
       invisible: "Not currently visible to the students. Will be visible on this date.",
       adding_teacher: "A teacher or TA must have a teacher account on",
       create_account: "To create a teacher account visit",
+      all: "All",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -79,7 +80,9 @@ var translation_en=function(){
         liked_this: "liked this",
         write_comment: "Leave a comment...",
         flag_post: "Flag this post",
-        unflag_post: "Unflag this post"
+        unflag_post: "Unflag this post",
+        private_discussion: "Private Discussion (Viewed by teacher only)",
+        public_discussion: "Public Discussion (Viewed by all)"
       },
       menu:{
         copy:"Copy",
@@ -271,6 +274,7 @@ var translation_en=function(){
         insert_mcq: "MCQ - Multiple Correct Answers",
         insert_ocq: "OCQ - One Correct Answer",
         insert_drag: "Drag into Order",
+        insert_text_question: "Text Question",
         new_lecture: "New Lecture",
         choose_place_quiz: "Choose place to insert quiz and click button below",
         add_quiz: "Add Quiz",
@@ -308,7 +312,8 @@ var translation_en=function(){
         outline: "Outline",
         confused: "Confused",
         discussion: "Discussion",
-        provide_url:"Please Provide A Video URL"
+        provide_url:"Please Provide A Video URL",
+        vidoe_not_exist: "Video may not exist or may still uploading"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -599,6 +604,10 @@ var translation_en=function(){
         enroll_instruction: "To enroll in a course click 'Join Course' below and enter the course enrollment key from your instructor.",
         export_as: "Export course as",
         main_progress: "Main Progress"
+        under_review"Under Review",
+        wrong:"Wrong",
+        partial:"Partial",
+        good:"Good"
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",
@@ -625,7 +634,7 @@ var translation_en=function(){
         cant_delete_yourself: "You cannot delete yourself.",
         course_does_not_exist: "Course does not exist",
         already_enrolled: "You are already enrolled in this course.",
-        already_enrolled_in: "You are now enrolled in %{course},",
+        enrolled_in: "You are now enrolled in %{course},",
         online_quiz_successfully_created: "Online quiz was successfully created.",
         online_quiz_successfully_updated: "Online quiz was successfully updated.",
         quiz_successfully_created: "Quiz was successfully created.",

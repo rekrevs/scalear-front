@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', '$window','Page', 'NewsFeed',function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler, $window,Page, NewsFeed) {
+  .controller('studentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', '$window','Page', 'NewsFeed','$translate', function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler, $window,Page, NewsFeed, $translate) {
 
   	$window.scrollTo(0, 0);
     Page.setTitle('navigation.courses');
@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
 
     	modalInstance.result.then(function (enrollment_key) {
     		$rootScope.show_alert="success";	
-    		ErrorHandler.showMessage("Successfully Joined Course", 'errorMessage', 2000);
+    		ErrorHandler.showMessage($translate('controller_msg.enrolled_in', {course: $scope.course.name}), 'errorMessage', 2000);
     		$timeout(function(){
     			$rootScope.show_alert="";	
     		},5000);

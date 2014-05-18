@@ -28,11 +28,11 @@ angular.module('scalearAngularApp')
                             var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
                             $http.jsonp(url).success(function(data) {
                                 if(data.entry.media$group.yt$duration.seconds<1)
-                                    d.reject("video may not exist or may still uploading");
+                                    d.reject($translate(lectures.vidoe_not_exist));
                                 else
                                     d.resolve()
                             }).error(function(){
-                                d.reject("video may not exist or may still uploading");
+                                d.reject($translate(lectures.vidoe_not_exist));
                             });                    
                         }
                         else

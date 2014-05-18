@@ -42,30 +42,30 @@ describe("teacher", function(){
 		teacher.open_item(ptor, 1, 1)
 	})
 
-	it('should add a FIRST header', function(){
-		teacher.add_quiz_header(ptor, 'first header')
-	})
-	it('should add a MCQ question', function(){
-		teacher.add_quiz_question_mcq(ptor, 'mcq question', 'mcq answer1', 'mcq answer2', 'mcq answer3', 1)
-	})
-	it('should add a SECOND header', function(){
-		teacher.add_quiz_header(ptor, 'second header')
-	})
-	it('should add an OCQ question', function(){
-		teacher.add_quiz_question_ocq(ptor, 'ocq question', 'ocq answer1', 'ocq answer2', 'ocq answer3', 2)
-	})
-	it('should add a THIRD header', function(){
-		teacher.add_quiz_header(ptor, 'third header')
-	})
-	it('should add a FREE question', function(){
-		teacher.add_quiz_question_free(ptor, 'free question')
-	})
-	it('should add a FOURTH header', function(){
-		teacher.add_quiz_header(ptor, 'fourth header')
-	})
-	it('should add a DRAG question', function(){
-		teacher.add_quiz_question_drag(ptor, 'drag question', 'drag answer1', 'drag answer2', 'drag answer3')
-	})
+	// it('should add a FIRST header', function(){
+	// 	teacher.add_quiz_header(ptor, 'first header')
+	// })
+	// it('should add a MCQ question', function(){
+	// 	teacher.add_quiz_question_mcq(ptor, 'mcq question', 'mcq answer1', 'mcq answer2', 'mcq answer3', 1)
+	// })
+	// it('should add a SECOND header', function(){
+	// 	teacher.add_quiz_header(ptor, 'second header')
+	// })
+	// it('should add an OCQ question', function(){
+	// 	teacher.add_quiz_question_ocq(ptor, 'ocq question', 'ocq answer1', 'ocq answer2', 'ocq answer3', 2)
+	// })
+	// it('should add a THIRD header', function(){
+	// 	teacher.add_quiz_header(ptor, 'third header')
+	// })
+	// it('should add a FREE question', function(){
+	// 	teacher.add_quiz_question_free(ptor, 'free question')
+	// })
+	// it('should add a FOURTH header', function(){
+	// 	teacher.add_quiz_header(ptor, 'fourth header')
+	// })
+	// it('should add a DRAG question', function(){
+	// 	teacher.add_quiz_question_drag(ptor, 'drag question', 'drag answer1', 'drag answer2', 'drag answer3')
+	// })
 	
 
 	//end test

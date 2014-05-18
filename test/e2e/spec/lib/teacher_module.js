@@ -290,6 +290,10 @@ exports.add_quiz_question_mcq = function(ptor, question, answer1, answer2, answe
 					answers[answers.length-3].sendKeys(answer1)
 					answers[answers.length-2].sendKeys(answer2)
 					answers[answers.length-1].sendKeys(answer3)
+				}).then(function(){
+					locator.s_by_name(ptor, 'mcq').then(function(checkboxes){
+						checkboxes[correct-1].click();
+					})
 				})
 			})
 		});

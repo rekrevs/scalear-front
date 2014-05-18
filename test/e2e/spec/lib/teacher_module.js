@@ -56,7 +56,7 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 exports.get_key_and_enroll = function(ptor){
 	o_c.open_tray(ptor);
 	o_c.open_info_teacher(ptor);
-	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/ul[1]').then(function(element){
+	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/span/ul[1]').then(function(element){
 		element.getText().then(function(text){
 			o_c.home_teacher(ptor);
 			o_c.open_tray(ptor);

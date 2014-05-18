@@ -450,3 +450,11 @@ exports.to_student = function(ptor){
     this.logout(ptor, this.feedback);
     this.sign_in(ptor, params.mail, params.password, this.feedback);   
 }
+
+//=======================================================
+//                  scroll into view
+//=======================================================
+
+exports.scroll = function(ptor, value) {
+    ptor.executeScript('window.scrollBy(0, ' + value + ')', '');
+}

@@ -370,7 +370,26 @@ angular.module('scalearAngularApp')
 	        }
 	      }
 	    });
+
+	    modalInstance.result.then(function () {
+        	console.log("shared")
+        	selectNone()
+      	},function () {
+        	console.log("close")
+        	selectNone()
+      	});
   	};
+
+	var selectNone = function(){
+		$scope.modules.forEach(function(module){
+			module.selected = false
+			module.items.forEach(function(item){
+				item.selected = false
+			})
+		})
+	}
+
+      
 
     /*************************************************************************************/
     

@@ -65,10 +65,14 @@ angular.module('scalearAngularApp')
             scope.source_image = 'http://www.gravatar.com/avatar/'+md5(scope.email)+'?s='+scope.imagesize+'&r=pg&default=https%3A%2F%2Fs.gravatar.com%2Favatar%2F7b2c0c5390921bbccd4818d0cf4bcb71%3Fs%3D'+scope.imagesize+'%26r%3Dpg';
           }
           else{
+            scope.source_image = 'http://www.gravatar.com/avatar/000000000?s='+scope.imagesize+'&r=pg&default=https%3A%2F%2Fs.gravatar.com%2Favatar%2F7b2c0c5390921bbccd4818d0cf4bcb71%3Fs%3D'+scope.imagesize+'%26r%3Dpg';
+
+          }
+          //else{
             // element.css('height', scope.imagesize+'px');
             // element.css('width', scope.imagesize+'px');
-            scope.source_image = null
-          }
+            //scope.source_image = null
+          //}
           // element.attr('src', scope.source_image)
         });
       }
@@ -260,4 +264,15 @@ angular.module('scalearAngularApp')
       });
     }
   }
-}]);
+}]).directive('noticeMessage',function(){
+  return{
+    restrict:'E',
+    scope:{
+      message:'=',
+      action:"&buttonAction",
+      button_title:"@buttonTitle"
+    },
+    template:'<span>{{message}}</span>'+
+             '<button ng-click="action()" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">{{button_title}}</button>'
+  }
+})

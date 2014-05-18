@@ -1,5 +1,6 @@
 .videoborder{
-    background-color: black;
+    /*background-color: black;*/
+    
 }
 .selected{
 	background-color: rgb(252,248,227);
@@ -86,7 +87,7 @@
 .answer_img{
   width: 13px;
   height:13px;
-  z-index: 5; 
+  /*z-index: 5; */
 }
 
 .answer_drag{

@@ -41,6 +41,7 @@ var translation_sv=function(){
       invisible: "Inte synliga för eleverna. Kommer att synas på detta datum.",
       adding_teacher: "En lärare eller TA måste ha ett lärarkonto på",
       create_account: "För att skapa ett lärarkonto besök",
+      all: "Alla",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -83,7 +84,9 @@ var translation_sv=function(){
             flag_post: "Flagga detta Inlägg",
             unflag_post: "Un-flagga detta inlägg",
             flags: "Flaggor",
-            likes: "Röster"
+            likes: "Röster",
+            private_discussion: "Privat Diskussion (Sett från läraren endast)",
+            public_discussion: "Allmän Diskussion (Sett från alla)"
           },
           sharing:{
             nothing_selected: "Ingenting är vald",
@@ -274,6 +277,7 @@ var translation_sv=function(){
               insert_mcq: "Flervalsfråga - Flera korrekta svar",
               insert_ocq: "Flervalsfråga - Ett rätt svar",
               insert_drag: "Dra i rätt ordning",
+              insert_text_question: "Text Fråga",
               new_lecture: "Ny Föreläsning",
               choose_place_quiz: "Välj plats att infoga Quiz och klicka på knappen nedan",
               add_quiz: "Lägg till Quiz",
@@ -304,14 +308,17 @@ var translation_sv=function(){
               provide_url: "Skriv in webbadressen (länk) till din video i avsnittet Föreläsning Detaljer till höger",
               shown_in_graph: "*Visas i resultat diagram",
               shown_to_student: "*Visas i studenter",
-              server_slow:"Servern 'Youtube.com' tar lång tid att läsa in den här videon",
+              server: "Servern",
+              is_slow: " tar lång tid att läsa in den här videon",
               try_reload:"Du kan fortsätta vänta, eller prova att uppdatera sidan",
               video_events: "Video Händelser",
               video_notes: "Anmärkningar",
               outline: "Disposition",
               confused: "Förvirrad",
               discussion: "Diskussion",
-              provide_url:"vg ange en video URL"
+              provide_url:"vg ange en video URL",
+              vidoe_not_exist: "Video kan inte eller kan fortfarande ladda upp",
+              incompatible_link: "Inkompatibla länk"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",
@@ -602,7 +609,11 @@ var translation_sv=function(){
               total_statistics: "Total Statistik",
               enroll_instruction: "För att anmäla dig till en kurs klicka på 'Ansluta Kurs' nedan och ange kursens kursnyckel från din instruktör.",
               export_as: "Exportera kurs som",
-              main_progress: "Huvudsaklig Framsteg"
+              main_progress: "Huvudsaklig Framsteg",
+              under_review: "föremål för översyn",
+              wrong:"fefelaktigl",
+              partial:"Partiell",
+              good:"Bra"
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",
@@ -629,7 +640,7 @@ var translation_sv=function(){
               cant_delete_yourself: "Du kan inte ta bort dig själv.",
               course_does_not_exist: "Kurs existerar inte",
               already_enrolled: "Du är redan inskriven i den här kursen.",
-              already_enrolled_in: "Du är nu inskriven i %{course}",
+              enrolled_in: "Du är nu inskriven i %{course}",
               online_quiz_successfully_created: "Online-quiz har skapats.",
               online_quiz_successfully_updated: "Online-enkät har uppdaterats.",
               quiz_successfully_created: "Quiz har skapats.",

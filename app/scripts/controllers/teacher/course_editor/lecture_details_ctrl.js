@@ -23,20 +23,28 @@ angular.module('scalearAngularApp')
                     },
                     lecture,
                     function(data) {                        
-                        if(lecture.url && lecture.url.split("v=")[1]){
-                            var id = lecture.url.split("v=")[1].split("&")[0]
-                            var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
-                            $http.jsonp(url).success(function(data) {
-                                if(data.entry.media$group.yt$duration.seconds<1)
+                        if(lecture.url){
+                            var type = isYoutube(lecture.url)
+                            console.log(type)
+                            if(type) {
+                                var id = type[1]//lecture.url.split("v=")[1].split("&")[0]
+                                console.log(id)
+                                var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
+                                $http.jsonp(url).success(function(data) {
+                                    if(data.entry.media$group.yt$duration.seconds<1)
+                                        d.reject("video may not exist or may still uploading");
+                                    else
+                                        d.resolve()
+                                }).error(function(){
                                     d.reject("video may not exist or may still uploading");
-                                else
-                                    d.resolve()
-                            }).error(function(){
-                                d.reject("video may not exist or may still uploading");
-                            });                    
+                                }); 
+                            }
+                            else if(isMP4(lecture.url))
+                                d.resolve() 
+                            else 
+                                d.reject("Incompatible link")                  
                         }
-                        else
-                            d.resolve()
+                        
                     }, 
                     function(data) {
                         $log.debug(data.status);
@@ -126,8 +134,10 @@ angular.module('scalearAngularApp')
                 $scope.lecture.aspect_ratio = "widescreen"
                 if($scope.lecture.url){
                     var type = isYoutube($scope.lecture.url)
-                    if(type)                        
+                    if(type){                       
                         getYoutubeDetails(type[1]);
+                        $scope.lecture.url = "http://www.youtube.com/watch?v="+type[1];
+                    }
                 }
                 $scope.updateLecture();
             }

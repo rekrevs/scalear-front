@@ -84,7 +84,7 @@ var translation_sv=function(){
             flag_post: "Flagga detta Inlägg",
             unflag_post: "Un-flagga detta inlägg",
             flags: "Flaggor",
-            likes: "Röster",\
+            likes: "Röster",
             private_discussion: "Privat Diskussion (Sett från läraren endast)",
             public_discussion: "Allmän Diskussion (Sett från alla)"
           },
@@ -317,7 +317,7 @@ var translation_sv=function(){
               confused: "Förvirrad",
               discussion: "Diskussion",
               provide_url:"vg ange en video URL",
-              vidoe_not_exist: "Video kan inte eller kan fortfarande ladda upp"
+              vidoe_not_exist: "Video kan inte eller kan fortfarande ladda upp",
               incompatible_link: "Inkompatibla länk"
           },
       online_quiz:{
@@ -610,7 +610,7 @@ var translation_sv=function(){
               enroll_instruction: "För att anmäla dig till en kurs klicka på 'Ansluta Kurs' nedan och ange kursens kursnyckel från din instruktör.",
               export_as: "Exportera kurs som",
               main_progress: "Huvudsaklig Framsteg",
-              under_review"föremål för översyn",
+              under_review: "föremål för översyn",
               wrong:"fefelaktigl",
               partial:"Partiell",
               good:"Bra"

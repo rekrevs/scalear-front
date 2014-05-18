@@ -6,7 +6,7 @@
 	<br />
 	<!-- <h4 >courses.display_lecture_results</h4> -->
 	<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/>
-	<button_link title="Go To Class"   action="display('Quizzes',!inclass_ready)" class="btn-xlarge btn-success" ng-disabled="!inclass_ready" style="background-image: initial; min-width: 205px;"/>
+	<button_link title="{{'groups.go_to_class' | translate }}"   action="display('Quizzes',!inclass_ready)" class="btn-xlarge btn-success" ng-disabled="!inclass_ready" style="background-image: initial; min-width: 205px;"/>
 	
 	<!-- <button_link title="{{'courses.display_questions'|translate}}" action="display('Questions',!buttons.questions_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.questions_display_count"/>
 	<button_link title="{{'courses.display_surveys'|translate}}"   action="survey(!buttons.survey_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.survey_display_count"/>
@@ -36,7 +36,7 @@
 				<p class="title">{{lec.name}}</p>
 				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['lecture'][lec.id].items|filter:data:'!!'">
 					<li ng-if="item.type=='discussion'" class="li_inner coral">
-						<inner_title type="Discussion" />
+						<inner_title type="{{'lectures.discussion' | translate}}" />
 						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
 							<li ng-repeat="question in item.data" style="list-style-position:inside; padding:3px 20px">
 								<p style="width:600px">{{question[0]}}</p>
@@ -44,10 +44,10 @@
 						</ul>						
 					</li>
 					<li ng-if="item.type=='charts'" class="li_inner blue">
-						<inner_title type="{{item.data.type}}" title="{{item.data.title}}" />
+						<inner_title type="{{'courses.'+item.data.type.toLowerCase() | translate}}" title="{{item.data.title}}" />
 					</li>
 					<li ng-if="item.type=='free_question'" class="li_inner coral">
-						<inner_title  type="Free Text Question" title="{{item.data.title}}"/>
+						<inner_title  type="{{'groups.free_text_question' | translate}}" title="{{item.data.title}}"/>
 						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
 							<li ng-repeat="answer in item.data.answers" style="list-style-position:inside; padding:3px 20px">
 								<p style="width:600px">{{answer.online_answer}}</p>
@@ -60,8 +60,8 @@
 				<p class="title">{{quiz.name}}</p>
 				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['survey'][quiz.id].items|filter:data:'!!'">
 					<li class="li_inner coral">
-						<inner_title ng-if="item.type=='Free Text Question'" type="Free Text Question" title="{{item.data.title}}"/>
-						<inner_title ng-if="item.type=='charts'" type="Survey" title="{{item.data.title}}" />				
+						<inner_title ng-if="item.type=='Free Text Question'" type="{{'groups.free_text_question' | translate}}" title="{{item.data.title}}"/>
+						<inner_title ng-if="item.type=='charts'" type="{{'courses.survey' | translate}}" title="{{item.data.title}}" />				
 					</li>
 				</ul>
 			</div>

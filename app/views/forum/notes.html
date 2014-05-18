@@ -2,7 +2,7 @@
 <div ng-controller="EditorCtrl" >
     <!--<input type="text" ng-model="insert_at"/>-->
     <!--<input type="button" ng-click="insert()" value="Insert"/>-->
-    <input type="button" class="btn btn-primary" value="Save" ng-click="save()" ng-disabled="disableSave()"/>
+    <input type="button" class="btn btn-primary" value="{{save | translate}}" ng-click="save()" ng-disabled="disableSave()"/>
     <div style="overflow:auto;"> <!-- has all discussions -->
         <!-- <accordion close-others="true"> -->
             <div ng-repeat="l in module_lectures" class="dimmed" ng-class="{lectureopen: l.id == lecture.id}" id={{"notes_"+l.id}}>

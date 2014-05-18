@@ -23,8 +23,8 @@ angular.module('scalearAngularApp')
                     },
                     lecture,
                     function(data) {                        
-                        if(lecture.url){
-                            var type = isYoutube(lecture.url)
+                        if(column == 'url'){
+                            var type = isYoutube(data)
                             console.log(type)
                             if(type) {
                                 var id = type[1]//lecture.url.split("v=")[1].split("&")[0]
@@ -44,6 +44,7 @@ angular.module('scalearAngularApp')
                             else 
                                 d.reject("Incompatible link")                  
                         }
+                        d.resolve()
                         
                     }, 
                     function(data) {
@@ -63,6 +64,7 @@ angular.module('scalearAngularApp')
                 //     data.setMinutes(data.getMinutes() + 120);
                 //     $scope.lecture[type] = data
                 // }
+                console.log("SADfa")
                 var modified_lecture = angular.copy($scope.lecture);
                 delete modified_lecture.id;
                 delete modified_lecture.created_at;

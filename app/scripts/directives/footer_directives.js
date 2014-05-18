@@ -71,10 +71,10 @@ angular.module('scalearAngularApp')
                                 );
                             }
                             else
-                                scope.no_text = "Please provide more description"
+                                scope.no_text = $translate('feedback.pleave_provide_desciption')
                         }
                         else
-                            scope.no_text = "Please make sure that you provided your name and email address"                        
+                            scope.no_text = $translate('feedback.provide_email_name')
                     };
                 }
             };

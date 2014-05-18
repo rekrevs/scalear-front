@@ -309,12 +309,12 @@ textarea.ng-invalid{ border:1px solid red; }
 .popover{
 	z-index:20000;
   line-height:20px;
-  width: 330px;
-  max-width:330px;
+  width: 332px;
+  max-width:332px;
 }
 
 .popover-content{
-	width: 300px;
+	width: 304px;
 	word-wrap:break-word;
 	max-height:300px;
 	overflow-y:auto;

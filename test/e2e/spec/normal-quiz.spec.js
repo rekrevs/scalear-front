@@ -61,26 +61,32 @@ describe("teacher", function(){
 	it('should add an OCQ question', function(){
 		teacher.add_quiz_question_ocq(ptor, 'ocq question', 2, 1)
 	})
-	it('should add a THIRD header', function(){
-		teacher.add_quiz_header(ptor, 'third header')
-	})
 	it('should add a FREE question', function(){
 		teacher.add_quiz_question_free(ptor, 'free question', false)
 	})
-	it('should add a FOURTH header', function(){
-		ptor.sleep(20000)
-		teacher.add_quiz_header(ptor, 'fourth header')
-	})
+	
 	it('should add a FREE question', function(){
 		teacher.add_quiz_question_free(ptor, 'match question', true, 'match answer')
 	})
-	// it('should add a FIFTH header', function(){
-	// 	teacher.add_quiz_header(ptor, 'fifth header')
-	// })
-	// it('should add a DRAG question', function(){
-	// 	teacher.add_quiz_question_drag(ptor, 'drag question', 2)
-	// 	ptor.sleep(20000);
-	// })
+	it('should add a DRAG question', function(){
+		teacher.add_quiz_question_drag(ptor, 'drag question', 2)
+	})
+	it('should save the quiz', function(){
+		teacher.save_quiz(ptor, o_c.feedback)
+	})
+
+	it('should switch to student', function(){
+		o_c.to_student(ptor)
+	})
+
+	it('should open the first course', function(){
+		o_c.open_course(ptor)
+	})
+	it('should go to the courseware page', function(){
+		o_c.open_tray(ptor)
+		o_c.open_lectures(ptor)
+		ptor.sleep(10000)
+	})
 	
 
 	//end test

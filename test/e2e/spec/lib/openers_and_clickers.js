@@ -464,8 +464,8 @@ exports.scroll = function(ptor, value) {
 
 exports.scroll_element = function(ptor, element) {
     element.getLocation().then(function(loc){
-        console.log('scrolling to '+loc.x +' AND '+loc.y)
-        ptor.executeScript('window.scrollTo(' + loc.x + ', ' + loc.y + ')', '');
+        console.log(loc)
+        ptor.executeScript('window.scrollTo('+loc.x+','+loc.y+')', '');
     })
     
 }

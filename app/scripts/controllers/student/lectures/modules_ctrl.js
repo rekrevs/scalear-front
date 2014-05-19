@@ -12,9 +12,9 @@ angular.module('scalearAngularApp')
 
     var init = function()
     {
-    	$scope.open_id="-1";
-		$scope.open={};
-		$scope.oneAtATime = true;
+  //   	$scope.open_id="-1";
+		// $scope.open={};
+		// $scope.oneAtATime = true;
 	
 	    Module.getStudentModule(
 	    	{course_id: $stateParams.course_id, module_id:$stateParams.module_id}, function(data){

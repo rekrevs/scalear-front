@@ -15,7 +15,7 @@
 							toggleSelector(true)" title="{{current_module.name}}">{{short_name}}<span class="caret" style="margin-left: 5px;"></span></button>
 						</div>
 					</td>
-					<td style="width: {{80/current_module.quizzes.concat(current_module.lectures).length}}%; padding: 0px;" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
+					<td style="padding: 0px;" ng-style="{width:spacing+'%'}" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
 						<div style="text-align: left;">
 							<courseware-item name="item.name" id="item.id" circlesize="12" group_id="current_module.id" class_name="item.get_class_name" quiz_type="item.quiz_type" done="item.is_done" required="item.required"></courseware-item>
 						</div>
@@ -39,4 +39,4 @@
 			</div>
 		</div>
 </div>
-<div ng-show="course && !hide_all" class="middle-container" id="middle1" style="top:{{middle_top-1+'px;'}}"  ui-view="middle1"></div>
+<div ng-show="course && !hide_all" class="middle-container" id="middle1" style="top:{{middle_top-1+'px;'}}"  ui-view></div>

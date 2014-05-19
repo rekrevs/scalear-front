@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
  	init();
 
     $scope.go_to_next_item = function(){
-            var next_state = "course.lectures." + $scope.next_item.class_name
+            var next_state = "course.courseware." + $scope.next_item.class_name
             var s = $scope.next_item.class_name + "_id"
             var to = {}
             to[s] = $scope.next_item.id

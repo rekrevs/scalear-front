@@ -197,13 +197,13 @@ angular.module('scalearAngularApp')
              }
             scope.showItem= function(item_id)
 		 	{	
-		 		scope.$parent.$parent.close_selector = true;
-		 		scope.$parent.$parent.current_item = item_id
+		 		// scope.$parent.$parent.close_selector = true;
+		 		// scope.$parent.$parent.current_item = item_id
 		 		if(scope.className=="Document")
 		 			window.open(scope.url_with_protocol(scope.url),'_blank');
 		 		else
 		 		{	
-		 			var next_state="course.lectures.module."+scope.className.toLowerCase();
+		 			var next_state="course.courseware.module."+scope.className.toLowerCase();
 		 			var s= scope.className.toLowerCase()+"_id"
 		 			var to={}
 		 			to[s] = scope.id

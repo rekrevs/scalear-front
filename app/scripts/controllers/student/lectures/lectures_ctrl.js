@@ -3,25 +3,25 @@
 angular.module('scalearAngularApp')
   .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log','$window', '$state', 'Page', 'Lecture', '$timeout', 'Module', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $window, $state, Page, Lecture, $timeout, Module) {
 	Page.setTitle('head.lectures');
-	if($state.params.lecture_id){
-		$scope.current_item = $state.params.lecture_id
-	}
-	else if($state.params.quiz_id){
-		$scope.current_item = $state.params.quiz_id
-	}
-	else{
-		$scope.current_item = ''
-	}
-	
-
 	
     var init = function()
     {
 		$scope.modules_obj = {}
-		$scope.items_obj = {}
 
 		$scope.close_selector = false;
   		$scope.hide = true;
+
+  		$scope.current_item = $state.params.lecture_id || $state.params.quiz_id || ""
+
+		// if($state.params.lecture_id){
+			
+		// }
+		// else if($state.params.quiz_id){
+		// 	$scope.current_item = $state.params.quiz_id
+		// }
+		// else{
+		// 	$scope.current_item = ''
+		// }
 	    Course.getCourseware(
 	    	{course_id: $stateParams.course_id}, function(data){
 	    		console.log(data)
@@ -31,24 +31,27 @@ angular.module('scalearAngularApp')
 				$scope.today = data.today;	
 				$scope.last_viewed = data.last_viewed
 				if(!$state.params.lecture_id && $scope.last_viewed.module != -1 && !$state.params.quiz_id){
-
-			    	$state.go('course.lectures.module.lecture', {'module_id': $scope.last_viewed.module, 'lecture_id': $scope.last_viewed.lecture})
-			    	$scope.current_item = $scope.last_viewed.lecture
-			    	
+			    	$state.go('course.courseware.module.lecture', {'module_id': $scope.last_viewed.module, 'lecture_id': $scope.last_viewed.lecture})
+			    	$scope.current_item = $scope.last_viewed.lecture			    	
 			    }
 				$scope.initSelector();
-				if(!$state.params.module_id){
-					$scope.showModuleContent($scope.last_viewed.module)
-				}
-				else{
-					console.log('doing the right thing')
-					$scope.showModuleContent($state.params.module_id)	
-				}
+				$scope.showModuleContent($scope.last_viewed.module)
+
+				// if(!$state.params.module_id){
+				// }
+				// else{
+				// 	console.log('doing the right thing')
+				// 	$scope.showModuleContent($state.params.module_id)	
+				// }
 				if($scope.last_viewed.module == -1){
-					if($scope.current_module.lectures.length){
-						$scope.current_item = $scope.current_module.lectures[0].id
-						$state.go('course.lectures.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})
-					}
+					if($scope.current_module)
+						if($scope.current_module.lectures){
+							if($scope.current_module.lectures.length){
+								$scope.current_item = $scope.current_module.lectures[0].id
+								$state.go('course.courseware.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})
+							}
+						}
+
 				}
 
 	    	});
@@ -93,11 +96,11 @@ angular.module('scalearAngularApp')
 			// 	$scope.items_obj[item.class_name][item.id] = item;
 			// });
 		});
-		console.log($scope.modules_obj)
+		// console.log($scope.modules_obj)
 		if($state.params.module_id){
 			$scope.current_module = $scope.modules_obj[$state.params.module_id]
-			console.log('hena')
-			console.log($scope.current_module)
+			// console.log('hena')
+			// console.log($scope.current_module)
 		}
 		if($scope.course.groups.length > 10){
 	    	$scope.columns = Math.ceil(($scope.course.groups.length/10)+1)
@@ -123,31 +126,34 @@ angular.module('scalearAngularApp')
 		}
 		return name;
 	}
-	$scope.showModule = function(module_id){
-		$scope.current_module = $scope.modules_obj[module_id];
-		$scope.close_selector = true;
-		Module.getLastWatched(
-			{module_id: module_id}, function(data){
-				console.log('hereeeeeeeeeeeeeeee')
-				console.log(data)
-				if(data.last_watched != -1){
-					$state.go('course.lectures.module.lecture', {'module_id': module_id, 'lecture_id': data.last_watched})
-					$scope.current_item = data.last_watched
-				}
-			})
+
+
+	// $scope.showModule = function(module_id){
+	// 	$scope.current_module = $scope.modules_obj[module_id];
+	// 	$scope.close_selector = true;
+	// 	Module.getLastWatched(
+	// 		{module_id: module_id}, function(data){
+	// 			console.log('hereeeeeeeeeeeeeeee')
+	// 			console.log(data)
+	// 			if(data.last_watched != -1){
+	// 				$state.go('course.courseware.module.lecture', {'module_id': module_id, 'lecture_id': data.last_watched})
+	// 				$scope.current_item = data.last_watched
+	// 			}
+	// 		})
 		
-	}
+	// }
 
 
 	$scope.showModuleContent = function(module_id){
-		if(module_id == -1){
-			$scope.current_module = $scope.modules_obj[Object.keys($scope.modules_obj)[0]];
-			$scope.close_selector = true;
-		}
-		else{
-			$scope.current_module = $scope.modules_obj[module_id];
-			$scope.close_selector = true;
-		}
+		// if(module_id == -1){
+		$scope.current_module = module_id == -1? $scope.course.groups[0] : $scope.modules_obj[module_id];//$scope.modules_obj[Object.keys($scope.modules_obj)[0]];
+		
+		// }
+		// else{
+		// 	$scope.current_module = 
+		// }
+		// 	$scope.close_selector = true;
+
 		
 	}
 	$scope.$watch('current_module', function(){
@@ -158,19 +164,19 @@ angular.module('scalearAngularApp')
 			// })
 			$scope.spacing = 80/$scope.current_module.quizzes.concat($scope.current_module.lectures).length
 			// $scope.spacing = 4;
-			console.log($scope.current_module)
-			console.log($scope.convertToSeconds($scope.current_module.total_time))
-			$scope.total_module_time = $scope.convertToSeconds($scope.current_module.total_time)
+			// console.log($scope.current_module)
+			// console.log($scope.convertToSeconds($scope.current_module.total_time))
+			// $scope.total_module_time = $scope.convertToSeconds($scope.current_module.total_time)
 		}
 	})
-	$scope.convertToSeconds = function(time){
-		var timeArray = time.split(':')
-		var hours = parseInt(timeArray[0])
-		var minutes = parseInt(timeArray[2])
-		var seconds = parseInt(timeArray[2])
+	// $scope.convertToSeconds = function(time){
+	// 	var timeArray = time.split(':')
+	// 	var hours = parseInt(timeArray[0])
+	// 	var minutes = parseInt(timeArray[2])
+	// 	var seconds = parseInt(timeArray[2])
 
-		return (hours*3600)+(minutes*60)+seconds
-	}
+	// 	return (hours*3600)+(minutes*60)+seconds
+	// }
 	$scope.$on('mainMenuToggled', function(event, collapsed){
 		if(collapsed == true){
 			$scope.close_selector = true;

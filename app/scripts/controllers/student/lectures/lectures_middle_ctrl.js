@@ -268,7 +268,7 @@ angular.module('scalearAngularApp')
 
     $scope.nextItem=function(){
         if ($scope.next_item.id) {
-            var next_state = "course.lectures.module." + $scope.next_item.class_name
+            var next_state = "course.courseware.module." + $scope.next_item.class_name
             var s = $scope.next_item.class_name + "_id"
             var to = {}
             to[s] = $scope.next_item.id
@@ -290,7 +290,7 @@ angular.module('scalearAngularApp')
         }
         else{
 
-            $state.go("course.lectures.module.lecture", {"lecture_id":lecture_id, "time":time});
+            $state.go("course.courseware.module.lecture", {"lecture_id":lecture_id, "time":time});
 //            $state.go()
 //            Lecture.switchQuiz({course_id:$stateParams.course_id, lecture_id:lecture_id, time:time}, function(data){
 //                $scope.alert_messages = data.alert_messages;

@@ -6,7 +6,7 @@
 	
 	<form name="answer_form" novalidate style="margin:0;margin-top:10px">
 	<video_container ng-style="container_layer" >
-		<loading size='small' show="lecture.ul!='none' && !slow && !video_ready" style="color:#428bca; position:absolute;width: 100%;font-weight:300;font-size:12px;top: 34%;" />
+		<loading size='small' show="lecture.url!='none' && !slow && !video_ready" style="color:#428bca; position:absolute;width: 100%;font-weight:300;font-size:12px;top: 34%;" />
 		<div style='color:#428bca; position:absolute;width: 100%;font-weight:300;font-size:12px' ng-show="slow">
 			<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
 			<h3 style="position:relative;top:30px;font-weight:300;font-size:16px" translate>lectures.try_reload</h3>
@@ -20,7 +20,7 @@
 			</quiz>
 		</div>
 		<youtube ng-show="!slow && lecture.url && video_ready" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio"/>
-        <progress-bar play_pause_class="play_pause_class" view="teacher" ng-show="!slow && lecture.url && video_ready" elapsed_width="elapsed_width" active="fullscreen" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'lecture.duration' player="lecture_player"></progress-bar>
+        <progress-bar play_pause_class="play_pause_class" ng-show="!slow && lecture.url && video_ready" elapsed_width="elapsed_width" play_btn="playBtn()" update_progress="updateProgress($event)" current_time='current_time' total_duration= 'lecture.duration' player="lecture_player"></progress-bar>
     </video_container>
 
 	</form>

@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('coursewareCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log', '$state', 'Page', 'util', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $state, Page, util) {
+  .controller('coursewareCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log', '$state','Module', 'Page', 'util', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $state, Module, Page, util) {
 	Page.setTitle('head.lectures');
 	
     var init = function()
     {
 		// $scope.modules_obj = {}
 
-		$scope.close_selector = false;
-  		$scope.hide = true;
+		// $scope.close_selector = false;
+  // 		$scope.hide = true;
 
   		$scope.current_item = $state.params.lecture_id || $state.params.quiz_id || ""
 
@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
 						}
 			    }
 
-			    $scope.moduleMenuSetup();
+			    // $scope.moduleMenuSetup();
 
 			 //    $scope.course.groups.forEach(function(module){
 				// 	$scope.modules_obj[module.id] = module;
@@ -105,47 +105,46 @@ angular.module('scalearAngularApp')
 
 	})
 	
-	$scope.moduleMenuSetup = function(){
-		if($scope.course.groups.length > 10){
-	    	$scope.columns = Math.ceil(($scope.course.groups.length/10)+1)
-	    }
-	    else{
-	    	$scope.columns = 1
-	    }
-	    $scope.columns_style = 'column-count:'+$scope.columns+'; -webkit-column-count: '+$scope.columns+'; -moz-column-count: '+$scope.columns+'; -ms-column-count: '+$scope.columns+'; -o-column-count: '+$scope.columns+';';
+	// $scope.moduleMenuSetup = function(){
+	// 	if($scope.course.groups.length > 10){
+	//     	$scope.columns = Math.ceil(($scope.course.groups.length/10)+1)
+	//     }
+	//     else{
+	//     	$scope.columns = 1
+	//     }
+	//     $scope.columns_style = 'column-count:'+$scope.columns+'; -webkit-column-count: '+$scope.columns+'; -moz-column-count: '+$scope.columns+'; -ms-column-count: '+$scope.columns+'; -o-column-count: '+$scope.columns+';';
 	    
-		$scope.toggleSelector(false);
-		$scope.hide=true;
-	}
-
-	$scope.toggleSelector = function(should_unhide){
-		if(should_unhide && $scope.hide == true)
-			$scope.hide=false;
-		$scope.close_selector = !$scope.close_selector;
-	}
-
-	$scope.shortenModuleName = function(name){
-		if(name.length > 18) {
-		    name = name.substring(0,14)+"...";
-		}
-		return name;
-	}
-
-
-	// $scope.showModule = function(module_id){
-	// 	$scope.current_module = $scope.modules_obj[module_id];
-	// 	$scope.close_selector = true;
-	// 	Module.getLastWatched(
-	// 		{module_id: module_id}, function(data){
-	// 			console.log('hereeeeeeeeeeeeeeee')
-	// 			console.log(data)
-	// 			if(data.last_watched != -1){
-	// 				$state.go('course.courseware.module.lecture', {'module_id': module_id, 'lecture_id': data.last_watched})
-	// 				$scope.current_item = data.last_watched
-	// 			}
-	// 		})
-		
+	// 	$scope.toggleSelector(false);
+	// 	$scope.hide=true;
 	// }
+
+	// $scope.toggleSelector = function(should_unhide){
+	// 	if(should_unhide && $scope.hide == true)
+	// 		$scope.hide=false;
+	// 	$scope.close_selector = !$scope.close_selector;
+	// }
+
+	// $scope.shortenModuleName = function(name){
+	// 	if(name.length > 18) {
+	// 	    name = name.substring(0,14)+"...";
+	// 	}
+	// 	return name;
+	// }
+
+
+	$scope.showModule = function(module){
+		$scope.current_module = module//$scope.modules_obj[module_id];
+		// $scope.close_selector = true;
+		Module.getLastWatched(
+			{module_id: module.id}, function(data){
+				console.log('hereeeeeeeeeeeeeeee')
+				console.log(data)
+				if(data.last_watched != -1){
+					$state.go('course.courseware.module.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
+					$scope.current_item = data.last_watched
+				}
+			})		
+	}
 
 
 	// $scope.showModuleContent = function(module_id){
@@ -162,7 +161,7 @@ angular.module('scalearAngularApp')
 	// }
 	$scope.$watch('current_module', function(){
 		if($scope.current_module){
-			$scope.short_name = $scope.shortenModuleName($scope.current_module.name);
+			// $scope.short_name = $scope.shortenModuleName($scope.current_module.name);
 			// $scope.current_module.forEach(function(){
 
 			// })
@@ -181,11 +180,7 @@ angular.module('scalearAngularApp')
 
 	// 	return (hours*3600)+(minutes*60)+seconds
 	// }
-	$scope.$on('mainMenuToggled', function(event, collapsed){
-		if(collapsed == true){
-			$scope.close_selector = true;
-		}
-	})
+
 	// $scope.shouldBeHidden = function(module_id){
 	// 	// console.log($scope.modules_obj[module_id]);
 	// 	var result = 0;

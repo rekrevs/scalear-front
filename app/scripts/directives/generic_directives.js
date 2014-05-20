@@ -223,7 +223,7 @@ angular.module('scalearAngularApp')
       scope.$watch('active',function(){
         if (screenfull.enabled) {
           if(scope.active)
-            screenfull.request(angular.element(element).parent()[0]);
+            screenfull.request(angular.element(element)[0]);
           else
             screenfull.exit()
         }  

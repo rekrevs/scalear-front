@@ -9,10 +9,10 @@ angular.module('scalearAngularApp')
 //     $scope.container_layer = {}
 //     $scope.resize = {}
 //     $scope.youtube_video=false;
-//     $scope.lecture = {}
+   // $scope.lecture = {}
 //     $scope.lecture.aspect_ratio = ""
-//     $scope.$parent.lecture_player = {}
-//     $scope.$parent.lecture_player.events = {}
+    $scope.lecture_player = {}
+    $scope.lecture_player.events = {}
 //     $scope.display_mode = false
 //     $scope.studentAnswers = {}
 //     $scope.explanation = {}
@@ -22,9 +22,9 @@ angular.module('scalearAngularApp')
 //     $scope.pWidth = 0;
 //     $scope.show_notification = false;
 //     $scope.fullscreen = false
-//     $scope.play_pause_class = 'play'
-//     $scope.current_time = 0
-//     $scope.total_duration = 0
+    
+    $scope.current_time = 0
+    $scope.total_duration = 0
 //     $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
 //     $scope.editors={}
 //     $scope.progressEvents=[]
@@ -75,8 +75,8 @@ angular.module('scalearAngularApp')
 //     }
 
 //     $scope.load_player = function(time){
-//         $scope.lecture_player.events.onReady = function() {
-//             $scope.total_duration = $scope.lecture_player.controls.getDuration()
+        $scope.lecture_player.events.onReady = function() {
+            $scope.total_duration = $scope.lecture_player.controls.getDuration()
 //             // $scope.lecture_player.controls.pause()
 //             $scope.lecture_player.controls.seek(0)
 //             $scope.lecture_player.controls.volume(0.8);
@@ -125,7 +125,7 @@ angular.module('scalearAngularApp')
 //                 })
 //             })
 //         }
-//     }
+    }
 
      var init = function() {
 //         var factor = 16/9
@@ -147,15 +147,25 @@ angular.module('scalearAngularApp')
 //             $scope.resizeVideo();
 //         })
 //         $scope.loading_video = true;
-//         Lecture.getLectureStudent({
-//                 course_id: $stateParams.course_id,
-//                 lecture_id: $stateParams.lecture_id,
-//                 time: $stateParams.time
-//             },
-//             function(data) {
+            $scope.video_class = 'video_class'
+            $scope.play_pause_class = 'play'
+            document.addEventListener(screenfull.raw.fullscreenchange, function () {
+                // console.log('Am I fullscreen? ' + (screenfull.isFullscreen ? 'Yes' : 'No'));
+                if(!screenfull.isFullscreen){
+                    $scope.toggleFullscreen()
+                    $scope.$apply()
+                }
+            });
+            Lecture.getLectureStudent({
+                    course_id: $stateParams.course_id,
+                    lecture_id: $stateParams.lecture_id,
+                    // time: $stateParams.time
+                },
+                function(data) {
 //                 $scope.alert_messages = data.alert_messages;
-//                 $scope.lecture = JSON.parse(data.lecture);
-//                 console.log($scope.lecture)
+                    $scope.lecture = JSON.parse(data.lecture);
+                    console.log("this is the data ")
+                    console.log(data)
 //                 if($scope.lecture.aspect_ratio == 'smallscreen'){
 //                     factor = 4/3
 //                 }
@@ -212,8 +222,8 @@ angular.module('scalearAngularApp')
 //                             watcher2();
 //                         }, 500);
 
-//                     }
-//                 });
+                    // }
+                });
 
 //                 var watcher = $scope.$watch('course', function(newval) {
 //                     if ($scope.$parent.course) {
@@ -231,6 +241,11 @@ angular.module('scalearAngularApp')
 
 //             }
 //         );
+     }
+
+     $scope.toggleFullscreen=function(){
+        $scope.fullscreen = !$scope.fullscreen
+        $scope.video_class= $scope.fullscreen? 'video_class_full' : 'video_class'
      }
 
 //     $scope.resizeVideo = function(){
@@ -282,12 +297,12 @@ angular.module('scalearAngularApp')
 //         $scope.end_buttons = false
 //     }
 
-//     $scope.seek = function(time, lecture_id) {
+    $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
 //         $scope.selected_quiz = '';
 //         $scope.display_mode = false;
-//         if(lecture_id == $scope.lecture.id){ //if current lecture
-//             $scope.lecture_player.controls.seek_and_pause(parseInt(time))
-//         }
+        if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
+            $scope.lecture_player.controls.seek(parseInt(time))
+        }
 //         else{
 
 //             $state.go("course.courseware.module.lecture", {"lecture_id":lecture_id, "time":time});
@@ -312,15 +327,9 @@ angular.module('scalearAngularApp')
 // //                $scope.adjust_accordion();
 //             //});
 //         }
-//     }
+    }
 
-//     $scope.updateProgress=function(ev){
-//         var element = angular.element('.progressBar');
-//         var ratio = (ev.pageX-element.offset().left)/element.outerWidth();                
-//         $scope.elapsed_width = ratio*100+'%'
-//         // $scope.seek($scope.total_duration*ratio, $scope.lecture.id)
-//         $scope.seek($scope.total_duration*ratio, $stateParams.lecture_id)
-//     }
+
 
 //     $scope.playBtn = function(){
 //       if($scope.play_pause_class == "play"){
@@ -346,8 +355,8 @@ angular.module('scalearAngularApp')
 //         }, 2000, 1);
 //     }
 
-//     $scope.lecture_player.events.onPlay = function() {
-//         $scope.play_pause_class = 'pause'
+    $scope.lecture_player.events.onPlay = function() {
+        $scope.play_pause_class = 'pause'
 //         if ($scope.display_mode && !$scope.selected_quiz.is_quiz_solved) {
 //             if($scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
 //                 returnToQuiz($scope.selected_quiz.time)
@@ -359,19 +368,19 @@ angular.module('scalearAngularApp')
 //         else if($scope.display_mode && $scope.selected_quiz.is_quiz_solved){
 //             $scope.display_mode = false;
 //         }
-//     }
+    }
 
-//     $scope.lecture_player.events.onPause= function(){
+    $scope.lecture_player.events.onPause= function(){
 //         $log.debug("in here");
-//         $scope.play_pause_class = "play"
+        $scope.play_pause_class = "play"
 //         if($scope.display_mode!=true) //not a quiz
 //             $scope.submitPause();
-//     }
+    }
 
-//     $scope.lecture_player.events.timeUpdate = function(){
-//         $scope.current_time = $scope.lecture_player.controls.getTime()
-//         $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
-//     }
+    $scope.lecture_player.events.timeUpdate = function(){
+        $scope.current_time = $scope.lecture_player.controls.getTime()
+        $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
+    }
 
 //     $scope.lecture_player.events.onEnd= function() {
 //         if($scope.fullscreen)
@@ -391,7 +400,7 @@ angular.module('scalearAngularApp')
 //             return url;
 //     }
 
-//     init();
+    init();
 
 
 }]);

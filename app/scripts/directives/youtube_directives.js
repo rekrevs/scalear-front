@@ -71,7 +71,9 @@ angular.module('scalearAngularApp')
 					scope.kill_popcorn()
 
                     if(!scope.controls || scope.controls==undefined)
-                        scope.controls=0;                   
+                        scope.controls=0;   
+                    if(!scope.autoplay || scope.autoplay==undefined)
+                        scope.autoplay=0;                     
 
                     //var matches = 
                     //var vimeo= scope.url.match(/vimeo/)  // improve this..
@@ -86,7 +88,7 @@ angular.module('scalearAngularApp')
                     	console.log("vimeo")
                         player = Popcorn.smart( '#'+scope.id, scope.url+"?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0",{ width: '100%', height:'100%', controls: 0});
                         player.controls(scope.controls);
-                        player.autoplay(true);
+                        player.autoplay(scope.autoplay);
                     }
                     else if(isMP4(scope.url)){
                     	console.log("mp4")
@@ -94,7 +96,7 @@ angular.module('scalearAngularApp')
                         player = Popcorn(video,{});
                         video.src = scope.url
                         player.controls(scope.controls);
-                        // player.autoplay(true);
+                        player.autoplay(scope.autoplay);
                     }
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
@@ -120,7 +122,7 @@ angular.module('scalearAngularApp')
 						base_url = splitted_url[0]
 						query = '&'+splitted_url[1]	
 					}
-					return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls&origin=https://www.youtube.com"+query;
+					return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+scope.autoplay+"&controls&origin=https://www.youtube.com"+query;
 				}
 
                 scope.kill_popcorn = function(){
@@ -555,22 +557,24 @@ angular.module('scalearAngularApp')
 }])
 .directive('progressBar',['$rootScope','$log','$window',function($rootScope,$log, $window){
     return {
+    	transclude:true,
         restrict: 'E',
-        replace:true,
+        replace:false,
         scope:{
-            view:'@',
-            active:'=',
-            play_btn:'&playBtn',
+            // view:'@',
+            // active:'=',
+            // play_btn:'&playBtn',
             player:'=',
             play_pause_class:'=playPauseClass',
-            updateProgress:'&updateProgress',
+            // updateProgress:'&',
             elapsed_width: '=elapsedWidth',
             current_time: '=currentTime',
             total_duration: '=totalDuration',
-            confused_areas: '=confusedAreas',
-            progressEvents: '=',
+            seek: "&",
+            // confused_areas: '=confusedAreas',
+            // progressEvents: '=',
             timeline: '=',
-            lecture: '='
+            // lecture: '='
            // autoplay:'@'
         },
         templateUrl:"/views/progress_bar.html",
@@ -582,7 +586,14 @@ angular.module('scalearAngularApp')
             })
 
             scope.playBtn = function(){
-                scope.play_btn();
+                if(scope.play_pause_class == "play"){
+			        scope.player.controls.play()
+			        scope.play_pause_class = "pause"
+		      	}
+		      	else{
+			        scope.player.controls.pause()
+			        scope.play_pause_class = "play"
+		      	}
             }
 
             scope.mute_btn = function(type)
@@ -616,14 +627,18 @@ angular.module('scalearAngularApp')
             {
                 scope.player.controls.unmute();
                 scope.mute_unmute_class="mute";
-                scope.volume=0.5;
+                scope.volume=0.8;
             }
 
             scope.progress = function(event){
-                scope.updateProgress({$event:event});
+                // scope.updateProgress({$event:event});
+		        var element = angular.element('.progressBar');
+		        var ratio = (event.pageX-element.offset().left)/element.outerWidth();                
+		        scope.elapsed_width = ratio*100+'%'
+		        scope.seek()(scope.total_duration*ratio)    
             }
 
-            var setButtonsLocation=function(){
+            // var setButtonsLocation=function(){
                 // if(scope.active){
                 //     scope.pHeight=angular.element($window).height();
                 //     //element.css("z-index",1500);
@@ -643,7 +658,7 @@ angular.module('scalearAngularApp')
                 // else
                 //     element.css("top", scope.pHeight-30+"px");
                 // //element.css("left", scope.pWidth-350+"px");
-            }
+            // }
             // setButtonsLocation();
         }
     }

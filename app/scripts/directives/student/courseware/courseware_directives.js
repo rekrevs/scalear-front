@@ -30,53 +30,79 @@ angular.module('scalearAngularApp')
 	return {
 		restrict: "E",
 		scope: {
-			name:"=",
-			time:"=",
-			questions:"=",
-			id:'=',
-			open: "=",
-			modules: "="
+			// name:"=",
+			// time:"=",
+			// questions:"=",
+			// id:'=',
+			// open: "=",
+			// modules: "="
 		},
 		templateUrl: "/views/student/lectures/modules_selector.html",
 	  link: function(scope, element){
-	  		scope.collapse = false;
-	  		scope.hide = true;
-	  		scope.current_module_index = 0;
-	  		scope.$watch('modules', function(){
-	  			if(!scope.has_been_set && scope.modules){
+
+		$scope.moduleMenuSetup = function(){
+			if($scope.course.groups.length > 10){
+				$scope.columns = Math.ceil(($scope.course.groups.length/10)+1)
+			}
+			else{
+				$scope.columns = 1
+			}
+			$scope.columns_style = 'column-count:'+$scope.columns+'; -webkit-column-count: '+$scope.columns+'; -moz-column-count: '+$scope.columns+'; -ms-column-count: '+$scope.columns+'; -o-column-count: '+$scope.columns+';';
+
+			$scope.toggleSelector(false);
+			$scope.hide=true;
+		}
+
+		$scope.toggleSelector = function(should_unhide){
+			//if(should_unhide && $scope.hide == true)
+			$scope.hide != $scope.hide//false;
+			$scope.close_selector = !$scope.close_selector;
+		}
+
+		$scope.shortenModuleName = function(name){
+			if(name.length > 18) {
+				name = name.substring(0,14)+"...";
+			}
+			return name;
+		}
+	  // 		scope.collapse = false;
+	  // 		scope.hide = true;
+	  // 		scope.current_module_index = 0;
+	  // 		scope.$watch('modules', function(){
+	  // 			if(!scope.has_been_set && scope.modules){
 	  				
-	  				scope.has_been_set = true;
-	  			}
-	  		})
-	  		scope.toggleCollapse = function(should_unhide){
-	  			if(should_unhide && scope.hide == true)
-	  				scope.hide=false;
-	  			scope.collapse = !scope.collapse;
-	  		}
-			scope.$watch('modules', function(){
-				if(scope.modules){
-					scope.current_module = scope.shortenModuleName(scope.modules[0].name)
-					scope.columns = Math.ceil((scope.modules.length/10)+1)
-					scope.columns_style = 'column-count:'+scope.columns+'; -webkit-column-count: '+scope.columns+'; -moz-column-count: '+scope.columns+'; -ms-column-count: '+scope.columns+'; -o-column-count: '+scope.columns+';';
-					scope.toggleCollapse(false);
-					scope.hide=true;
-					console.log(scope.modules) 
-				}
-			})
-			scope.showModule = function(module_index){
-				scope.current_module = scope.shortenModuleName(scope.modules[module_index].name);
-				scope.current_module_index = module_index;
+	  // 				scope.has_been_set = true;
+	  // 			}
+	  // 		})
+	  // 		scope.toggleCollapse = function(should_unhide){
+	  // 			if(should_unhide && scope.hide == true)
+	  // 				scope.hide=false;
+	  // 			scope.collapse = !scope.collapse;
+	  // 		}
+			// scope.$watch('modules', function(){
+			// 	if(scope.modules){
+			// 		scope.current_module = scope.shortenModuleName(scope.modules[0].name)
+			// 		scope.columns = Math.ceil((scope.modules.length/10)+1)
+			// 		scope.columns_style = 'column-count:'+scope.columns+'; -webkit-column-count: '+scope.columns+'; -moz-column-count: '+scope.columns+'; -ms-column-count: '+scope.columns+'; -o-column-count: '+scope.columns+';';
+			// 		scope.toggleCollapse(false);
+			// 		scope.hide=true;
+			// 		console.log(scope.modules) 
+			// 	}
+			// })
+			// scope.showModule = function(module_index){
+			// 	scope.current_module = scope.shortenModuleName(scope.modules[module_index].name);
+			// 	scope.current_module_index = module_index;
 
-			}
-			scope.shortenModuleName = function(name){
-				if(name.length > 20) {
-				    name = name.substring(0,14)+"...";
-				}
-				return name;
-			}
-			scope.getModuleOfLecture = function(lecture_id){
+			// }
+			// scope.shortenModuleName = function(name){
+			// 	if(name.length > 20) {
+			// 	    name = name.substring(0,14)+"...";
+			// 	}
+			// 	return name;
+			// }
+			// scope.getModuleOfLecture = function(lecture_id){
 
-			}
+			// }
 
 		}
 	}

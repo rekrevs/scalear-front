@@ -304,8 +304,8 @@ angular.module('scalearAngularApp', [
             })
             .state('course.courseware', {
                 url: '/courseware',
-                templateUrl: '/views/student/lectures/lectures.html',
-                controller: 'studentLecturesCtrl'
+                templateUrl: '/views/student/lectures/courseware.html',
+                controller: 'coursewareCtrl'
             })
             .state('course.courseware.module',{
                 url:'/modules/:module_id',

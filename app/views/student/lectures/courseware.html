@@ -10,10 +10,11 @@
 			<table ng-show="course && !hide_all" style="width: 95%;">
 				<tr>
 					<td style="width: 170px;">
-						<div style="float: left; display: inline-block;">
+						<modules-selector /> 
+						<!-- <div style="float: left; display: inline-block;">
 							<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="
 							toggleSelector(true)" title="{{current_module.name}}">{{short_name}}<span class="caret" style="margin-left: 5px;"></span></button>
-						</div>
+						</div> -->
 					</td>
 					<td style="padding: 0px;" ng-style="{width:spacing+'%'}" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
 						<div style="text-align: left;">
@@ -26,7 +27,7 @@
 				</tr>
 			</table>
 		</div>
-		<div class="modules-selector-dropdown" collapse="close_selector" ng-hide="hide || hide_all" style="z-index: 1; top: 30px; background-color: whitesmoke; border: none; width: 0;">
+		<!-- <div class="modules-selector-dropdown" collapse="close_selector" ng-hide="hide || hide_all" style="z-index: 1; top: 30px; background-color: whitesmoke; border: none; width: 0;">
 			<div class="multicol" style="{{columns_style || '-webkit-column-count:2;-moz-column-count:2;column-count:2;'}}">
 				<div ng-repeat="module in course.groups | orderBy:'position'" >
 					<a href="" ng-click="showModule(module.id)">
@@ -37,6 +38,6 @@
 					</a>
 				</div>
 			</div>
-		</div>
+		</div> -->
 </div>
 <div ng-show="course && !hide_all" class="middle-container" id="middle1" style="top:{{middle_top-1+'px;'}}"  ui-view></div>

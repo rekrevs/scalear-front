@@ -3,9 +3,9 @@
 angular.module('scalearAngularApp')
   .controller('studentModulesCtrl', ['$scope','Course','$stateParams','$rootScope', '$log','$window','Module','Timeline','Lecture','editor','Page', function ($scope, Course, $stateParams, $rootScope, $log, $window, Module, Timeline, Lecture, editor,Page) {
 
-	$window.scrollTo(0, 0);
-    $scope.show_reply={}
-    $scope.current_reply={}
+	// $window.scrollTo(0, 0);
+    // $scope.show_reply={}
+    // $scope.current_reply={}
     $scope.notes={}
     $scope.tabs=[{"active":true},{"active":false}, {"active":false}]
 	Page.setTitle('head.lectures');
@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
                 $scope.lecture_ids = data.lecture_ids;
 
                 // arrange timeline
-                $scope.timeline = new Timeline()
+                $scope.timeline = {}//new Timeline()
                 $scope.timeline['lecture']={}
 
                 for(var l in $scope.module_lectures)

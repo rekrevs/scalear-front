@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentLecturesCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log','$window', '$state', 'Page', 'Lecture', '$timeout', 'Module', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $window, $state, Page, Lecture, $timeout, Module) {
+  .controller('coursewareCtrl', ['$scope','Course','$stateParams','$rootScope', '$interval','$log', '$state', 'Page', 'util', function ($scope, Course, $stateParams, $rootScope, $interval, $log, $state, Page, util) {
 	Page.setTitle('head.lectures');
 	
     var init = function()
     {
-		$scope.modules_obj = {}
+		// $scope.modules_obj = {}
 
 		$scope.close_selector = false;
   		$scope.hide = true;
@@ -30,12 +30,35 @@ angular.module('scalearAngularApp')
 				console.log($scope.course)
 				$scope.today = data.today;	
 				$scope.last_viewed = data.last_viewed
+				$scope.modules_obj = util.toObjectById($scope.course.groups)
+
 				if(!$state.params.lecture_id && $scope.last_viewed.module != -1 && !$state.params.quiz_id){
 			    	$state.go('course.courseware.module.lecture', {'module_id': $scope.last_viewed.module, 'lecture_id': $scope.last_viewed.lecture})
-			    	$scope.current_item = $scope.last_viewed.lecture			    	
+			    	$scope.current_item = $scope.last_viewed.lecture
+			    	$scope.current_module = $scope.modules_obj[$scope.last_viewed.module]		    	
 			    }
-				$scope.initSelector();
-				$scope.showModuleContent($scope.last_viewed.module)
+			    else{
+			    	$scope.current_module = $scope.course.groups[0] 
+			    	if($scope.current_module)
+						if($scope.current_module.lectures && $scope.current_module.lectures.length){
+							$scope.current_item = $scope.current_module.lectures[0].id
+							$state.go('course.courseware.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})
+						}
+			    }
+
+			    $scope.moduleMenuSetup();
+
+			 //    $scope.course.groups.forEach(function(module){
+				// 	$scope.modules_obj[module.id] = module;
+				// });
+
+				// if($state.params.module_id)
+				// 	$scope.current_module = 
+				
+				// 	: $scope.modules_obj[module_id];
+
+				
+				// $scope.showModuleContent($scope.last_viewed.module)
 
 				// if(!$state.params.module_id){
 				// }
@@ -43,16 +66,10 @@ angular.module('scalearAngularApp')
 				// 	console.log('doing the right thing')
 				// 	$scope.showModuleContent($state.params.module_id)	
 				// }
-				if($scope.last_viewed.module == -1){
-					if($scope.current_module)
-						if($scope.current_module.lectures){
-							if($scope.current_module.lectures.length){
-								$scope.current_item = $scope.current_module.lectures[0].id
-								$state.go('course.courseware.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})
-							}
-						}
+				// if($scope.last_viewed.module == -1){
+					
 
-				}
+				// }
 
 	    	});
 	}
@@ -88,20 +105,7 @@ angular.module('scalearAngularApp')
 
 	})
 	
-	$scope.initSelector = function(){
-		$scope.course.groups.forEach(function(module){
-			$scope.modules_obj[module.id] = module;
-			// console.log(module)
-			// module.items.forEach(function(item){
-			// 	$scope.items_obj[item.class_name][item.id] = item;
-			// });
-		});
-		// console.log($scope.modules_obj)
-		if($state.params.module_id){
-			$scope.current_module = $scope.modules_obj[$state.params.module_id]
-			// console.log('hena')
-			// console.log($scope.current_module)
-		}
+	$scope.moduleMenuSetup = function(){
 		if($scope.course.groups.length > 10){
 	    	$scope.columns = Math.ceil(($scope.course.groups.length/10)+1)
 	    }
@@ -112,8 +116,8 @@ angular.module('scalearAngularApp')
 	    
 		$scope.toggleSelector(false);
 		$scope.hide=true;
-
 	}
+
 	$scope.toggleSelector = function(should_unhide){
 		if(should_unhide && $scope.hide == true)
 			$scope.hide=false;
@@ -144,18 +148,18 @@ angular.module('scalearAngularApp')
 	// }
 
 
-	$scope.showModuleContent = function(module_id){
-		// if(module_id == -1){
-		$scope.current_module = module_id == -1? $scope.course.groups[0] : $scope.modules_obj[module_id];//$scope.modules_obj[Object.keys($scope.modules_obj)[0]];
+	// $scope.showModuleContent = function(module_id){
+	// 	// if(module_id == -1){
+	// 	//$scope.modules_obj[Object.keys($scope.modules_obj)[0]];
 		
-		// }
-		// else{
-		// 	$scope.current_module = 
-		// }
-		// 	$scope.close_selector = true;
+	// 	// }
+	// 	// else{
+	// 	// 	$scope.current_module = 
+	// 	// }
+	// 	// 	$scope.close_selector = true;
 
 		
-	}
+	// }
 	$scope.$watch('current_module', function(){
 		if($scope.current_module){
 			$scope.short_name = $scope.shortenModuleName($scope.current_module.name);

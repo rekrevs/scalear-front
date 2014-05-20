@@ -91,10 +91,10 @@
 	  }
 </style>
 
-<div ng-hide="!lecture" >
+<!-- <div ng-hide="!lecture" >
 	<h3 style="margin-bottom: 10px; line-height: 10px;" ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name"></h3>
 		<div style="width: 100%; height: 100%;">
-			<div id="main-video-container" class="video_container" ng-style="container_layer"><!-- style="" -->
+			<div id="main-video-container" class="video_container" ng-style="container_layer">
 				<form name="answer_form" novalidate style="margin:0" >
 					<center ng-show='slow' style='color:#428bca'>
 						<h3 style="position:relative;top:125px" translate>lectures.server_slow</h3>
@@ -105,7 +105,6 @@
 						<button type="button" ng-click="replay()" class="btn btn-primary" style="position:relative;top:330px;height:70px;width:180px;" translate>lectures.replay</button>
 				    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-primary" style="position:relative;top:330px;height:70px;width:180px;"><span translate>next</span> >> </button>
 					</div>
-					<!-- <video_container ng-style="video_layer" ng-class="videoborder" style="background-color:black;"> -->
 						<div ng-show="display_mode" style="position: absolute; top: 36px; bottom: 53px; left: 0px;z-index: 1;">
 							<quiz ng-style="quiz_layer" ng-show="display_mode">
 								 <div ng-if="selected_quiz.quiz_type == 'html'" ><student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/></div>
@@ -121,15 +120,12 @@
 						</controls>
 						
 						<notification ng-style="notify_position" ng-show='show_notification || review_inclass'></notification>
-					<!-- </video_container> -->
 				</form>
 			</div>
 			<div id="student-accordion">
 			    <tabset style="width:100%;">
 			        <tab id="video_events" active="tabs[0].active" heading="{{'lectures.video_events' | translate}}" style="cursor: pointer; text-align: center;" >
-			        	<!-- <div style="margin-top: -10px;" > -->
 			            	<discussion></discussion>
-			            <!-- </div> -->
 			        </tab>
 			        <tab id="video_notes" active="tabs[1].active" heading="{{'lectures.video_notes' | translate}}" style="cursor: pointer;">
 			            <notes></notes>
@@ -154,4 +150,4 @@
 			    </div>
 		    </div>
 	    </div>
-</div>
+</div> -->

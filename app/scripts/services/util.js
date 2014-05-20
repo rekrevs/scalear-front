@@ -40,7 +40,18 @@ angular.module('scalearAngularApp')
       mid='PM';
     }
     return hours+' '+mid
+  },
+
+  toObjectById:function(arr){ //convert array to objec with IDs as keys
+    var obj={}
+    if(arr instanceof Array){      
+      arr.forEach(function(item){
+          obj[item.id] = item;
+      });
+    }
+    return obj
   }
+
 
 }
 

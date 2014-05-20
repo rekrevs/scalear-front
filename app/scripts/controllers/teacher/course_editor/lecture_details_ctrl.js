@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
                         lecture_id: $scope.lecture.id
                     },
                     lecture,
-                    function(data) {                        
+                    function() {                        
                         if(column == 'url'){
                             var type = isYoutube(data)
                             console.log(type)

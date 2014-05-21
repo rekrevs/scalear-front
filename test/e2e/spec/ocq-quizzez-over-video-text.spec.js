@@ -8,21 +8,7 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-
-//equation 
-// 570 >> 169
-//(width*169)/570
-// questions coordinates
-var ocq_q1_x = 169; //175-6;
-var ocq_q1_y = 127; //133-6;
-
-var ocq_q2_x = 169; //175-6;
-var ocq_q2_y = 157; //133-6;
-
-var ocq_q3_x = 169; //175-6;
-var ocq_q3_y = 187; //133-6;
-
-//function testing
+//function testing ocq
 xdescribe("teacher", function(){
 	it('should', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -30,14 +16,14 @@ xdescribe("teacher", function(){
 		//teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
 		teacher.open_lecture(ptor, 1, 1);
-		create_mcq_quiz(ptor, o_c.feedback);
-		make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y, o_c.feedback);
+		create_ocq_quiz(ptor, o_c.feedback);
+		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
 		// o_c.open_tray(ptor);
 		// o_c.open_lectures(ptor);
 		//youtube.seek(ptor, 50);
 		//teacher.create_lecture(ptor, "mena", "https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
-		//create_mcq_quiz(ptor, o_c.feedback);
-		//check_mcq_questions_coord(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
+		//create_ocq_quiz(ptor, o_c.feedback);
+		//check_ocq_questions_coord(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y);
 		// check_answer_given_answer_order(ptor, 1);
 		// answer(ptor);
 		// check_answer_correct(ptor);
@@ -70,17 +56,17 @@ describe("1", function(){
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
 		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
+		make_ocq_questions(ptor, o_c.feedback);
 	})
 
-	it('should login a student and check for coordinates', function(){
+	it('should login a student and check for ocq_no', function(){
 		o_c.to_student(ptor);
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
 		youtube.seek(ptor, 50);
 		expect_quiz(ptor);
-		check_ocq_questions_coord(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y);
+		check_ocq_no(ptor, 3);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -126,7 +112,7 @@ describe("2", function(){
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
 		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
+		make_ocq_questions(ptor, o_c.feedback);
 	})
 
 	it('should login a student and check for no of ocqs ', function(){
@@ -198,7 +184,7 @@ describe("3", function(){
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
 		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
+		make_ocq_questions(ptor, o_c.feedback);
 	})
 
 	it('should login a student and check for no of ocqs ', function(){
@@ -219,7 +205,7 @@ describe("3", function(){
 		answer(ptor);
 	})
 
-	it('should check if the answer is correct',function(){
+	it('should check if the answer is incorrect',function(){
 		check_answer_incorrect(ptor);
 	})
 
@@ -363,35 +349,6 @@ function make_ocq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
 	})
 }
 
-
-function check_ocq_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
-	var w, h= 0;
-	//(width*169)/570
-	locator.by_id(ptor,'ontop').then(function(ontop){
-		ontop.getLocation().then(function(location){
-			ontop.getSize().then(function(size){
-				w = size.width;
-
-				ontop.findElements(protractor.By.tagName('input')).then(function(check_boxes){
-					check_boxes[0].getLocation().then(function(loc){
-						expect(loc.x-location.x).toEqual(Math.floor((w*q1_x)/570)-6);
-						expect(loc.y-location.y).toEqual(Math.floor((w*q1_y)/570)-6);
-					})
-					
-					check_boxes[1].getLocation().then(function(loc){
-						expect(loc.x-location.x).toEqual(Math.floor((w*q2_x)/570)-6);
-						expect(loc.y-location.y).toEqual(Math.floor((w*q2_y)/570)-6);
-					})
-
-					check_boxes[2].getLocation().then(function(loc){
-						expect(loc.x-location.x).toEqual(Math.floor((w*q3_x)/570)-6);
-						expect(loc.y-location.y).toEqual(Math.floor((w*q3_y)/570)-6);
-					})
-				})
-			})
-		})
-	})
-}
 
 function check_ocq_no(ptor, no){
 	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){

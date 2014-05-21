@@ -44,7 +44,8 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/normal-quiz.spec.js'
+        'test/e2e/spec/enrolled-students.spec.js'
+        //'test/e2e/spec/drag-quizzez-over-video.spec.js'
         // 'test/e2e/spec/quizzez-over-video.spec.js'
         // 'test/e2e/spec/course_editor_basic.spec.js'
         //'test/e2e/spec/calendar-teacher-student.spec.js'
@@ -109,10 +110,12 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
 
-        frontend: 'http://localhost:9000/#',
-        // frontend: 'http://staging.scalable-learning.com/#',
-        teacher_mail: 'teacher2@sharklasers.com',
-        mail: 'studenttest@sharklasers.com',
+        //frontend: 'http://localhost:9000/#',
+        frontend: 'http://staging.scalable-learning.com/#',
+        teacher_mail: 'teacher3@sharklasers.com',
+        mail: 'studenttest2@sharklasers.com',
+        // teacher_mail: 'teacher@sharklasers.com',
+        // mail: 'studenttest@sharklasers.com',
         //mail: 'mena.happy@yahoo.com',
         password: 'password',
 
@@ -143,12 +146,12 @@ exports.config = {
         // onComplete will be called just before the driver quits.
         onComplete: null,
         // If true, display spec names.
-        isVerbose: false,
+        isVerbose: true,
         // If true, print colors to the terminal.
         showColors: true,
         // If true, include stack traces in failures.
         includeStackTrace: true,
         // Default time to wait in ms before a test fails.
-        defaultTimeoutInterval: 60000
+        defaultTimeoutInterval: 100000
     }
 };

@@ -137,7 +137,8 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	overflow:auto;
 	margin-left:30%;*/
 	margin-left: -40px;
-	width:570px;
+	/*width:570px;*/
+	width: 50%;
 	margin: 0 auto;
 	position: relative;
 	display: inline-block;

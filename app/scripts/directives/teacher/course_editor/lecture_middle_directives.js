@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: 'E', 
-			template: '<div class="ontop" id="ontop" style="position: absolute; min-width:570px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
+			template: '<div class="ontop" id="ontop" style="position: absolute; width: 50vw; height: 28.25vw;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
 }).directive('editPanel',function(){
 	return {		
@@ -76,13 +76,15 @@ angular.module('scalearAngularApp')
 				var ontop=angular.element('.ontop');		
 				var w = scope.data.width * ontop.width();
 				var h = scope.data.height* (ontop.height());
-				var add_left= (w-13)/2.0
-				var add_top = (h-13)/2.0
-				scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
-				scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
+				// var add_left= (w-13)/2.0
+				// var add_top = (h-13)/2.0
+				// scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
+				// scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
+				scope.xcoor = scope.data.xcoor
+				scope.ycoor = scope.data.ycoor
 				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-				$log.debug(scope.xcoor+add_left)
-				$log.debug(scope.ycoor+add_top)
+				// $log.debug(scope.xcoor+add_left)
+				// $log.debug(scope.ycoor+add_top)
 			}	
 
 			scope.setAnswerColor=function(){
@@ -149,10 +151,10 @@ angular.module('scalearAngularApp')
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
 			})
-			$rootScope.$on("updatePosition",function(){
-				$log.debug("event emiited updated position")
-				setAnswerLocation()
-			})	
+			// $rootScope.$on("updatePosition",function(){
+			// 	$log.debug("event emiited updated position")
+			// 	setAnswerLocation()
+			// })	
 
 			scope.answerClass = "component dropped answer_img"	
 
@@ -189,7 +191,7 @@ angular.module('scalearAngularApp')
 				scope.updateValues();	
 			},true)
 
-            setAnswerLocation()
+            // setAnswerLocation()
 			scope.setAnswerColor()
 		}
 	};

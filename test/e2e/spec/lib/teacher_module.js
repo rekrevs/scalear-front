@@ -131,9 +131,15 @@ exports.delete_empty_module = function(ptor, mo_no, feedback){
 exports.add_lecture = function(ptor, mo_no, feedback){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
-			btns_frame.findElements(protractor.By.className('btn-mini')).then(function(btns){
-				btns[0].click().then(function(){
-					feedback(ptor, 'Lecture was successfully created.')
+			btns_frame.findElement(protractor.By.className('btn-success')).then(function(add_button){
+				add_button.click().then(function(){
+					locator.by_classname(ptor, 'add-menu-container').then(function(menu){
+						menu.findElements(protractor.By.className('add-item')).then(function(options){
+							options[0].click().then(function(){
+								feedback(ptor, 'Lecture was successfully created.')
+							});
+						})
+					})
 				})
 			})
 		})
@@ -261,15 +267,15 @@ exports.change_quiz_name = function(ptor, name, feedback){
 exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
 	this.add_lecture(ptor, 1, o_c.feedback);
 	locator.by_xpath(ptor, '//*[@id="modules"]/ul/li[1]').click().then(function(){
-		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
-			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/input').then(function(lec_nm){
-				lec_nm.clear();
-				lec_nm.sendKeys(lecture_name);
-				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-					feedback(ptor, 'Lecture was successfully updated.');
-				})
-			})
-		})
+		// locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
+		// 	locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/input').then(function(lec_nm){
+		// 		lec_nm.clear();
+		// 		lec_nm.sendKeys(lecture_name);
+		// 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
+		// 			feedback(ptor, 'Lecture was successfully updated.');
+		// 		})
+		// 	})
+		// })
 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/a').click().then(function(){
 			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/input').then(function(lec_url){
 				lec_url.clear();
@@ -278,10 +284,36 @@ exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
 					//feedback(ptor, 'Lecture was successfully updated.');
 				})
 			})
+			ptor.sleep(1000)
 		})
 	})
 }
 
+//https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89
+exports.create_lecture_in_module = function(ptor, lecture_name, lecture_url, mo_no, feedback){
+	this.add_lecture(ptor, mo_no, o_c.feedback);
+	locator.by_xpath(ptor, '//*[@id="modules"]/ul/li[1]').click().then(function(){
+		// locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
+		// 	locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/input').then(function(lec_nm){
+		// 		lec_nm.clear();
+		// 		lec_nm.sendKeys(lecture_name);
+		// 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
+		// 			feedback(ptor, 'Lecture was successfully updated.');
+		// 		})
+		// 	})
+		// })
+		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/a').click().then(function(){
+			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/input').then(function(lec_url){
+				lec_url.clear();
+				lec_url.sendKeys(lecture_url);
+				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
+					//feedback(ptor, 'Lecture was successfully updated.');
+				})
+			})
+			ptor.sleep(1000)
+		})
+	})
+}
 
 
 

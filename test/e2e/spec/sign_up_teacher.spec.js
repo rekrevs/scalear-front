@@ -20,7 +20,7 @@ describe('sign up teacher',function(){
 	})
 
 	it('should fill confirm account', function(){
-	    o_c.confirm_account_teacher(ptor, o_c.feedback);
+	    o_c.confirm_account_teacher(ptor, studentmail o_c.feedback);
 	    ptor.sleep(3000);
 	})	
 })

@@ -1,5 +1,6 @@
 var ptor = protractor.getInstance();
 var locator = require('./locators');
+var o_c = require('./openers_and_clickers');
 var params = ptor.params;
 
 //====================================================
@@ -25,8 +26,8 @@ exports.open_course_by_name = function(ptor, course_name){
 //====================================================
 exports.open_course_whole = function(ptor){
     locator.s_by_classname(ptor, 'whole-box').then(function(course){
-    course[0].click();
- })
+        course[0].click();
+    })
 }
 
 //====================================================
@@ -90,12 +91,12 @@ exports.sign_up = function(ptor, screen_name, fname, lname, studentmail, univer,
 //====================================================
 //                 confirm account
 //====================================================
-exports.confirm_account = function(ptor, feedback){
+exports.confirm_account = function(ptor, smail, feedback){
     ptor.driver.get('https://www.guerrillamail.com/inbox');
         ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
             inbox.click().then(function(){
                 ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
-                    mail.sendKeys('studenttest').then(function(){
+                    mail.sendKeys(smail.split('@')[0]).then(function(){
                         ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
                             set_btn.click().then(function(){
                                 ptor.driver.findElement(protractor.By.id('use-alias')).then(function(check_scram){
@@ -110,6 +111,8 @@ exports.confirm_account = function(ptor, feedback){
                                                         var final_link = params.frontend+confirm_link.split('.com/#')[1];
                                                         ptor.driver.get(final_link).then(function(){
                                                             feedback(ptor, 'Your account was successfully confirmed. You are now signed in.');
+                                                            ptor.driver.sleep(7000)
+                                                            ptor.navigate().refresh();
                                                         })
                                                     })
                                                 })
@@ -210,6 +213,18 @@ exports.open_course_editor = function(ptor){
         btn.click();
         ptor.getCurrentUrl().then(function(url) {
             expect(url).toContain('course_editor');
+        });
+    })
+}
+
+//====================================================
+//          open enrolled students page
+//====================================================
+exports.open_enrolled = function(ptor){
+    info_icon = ptor.findElement(protractor.By.id("students")).then(function(btn){
+        btn.click();
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('enrolled_students');
         });
     })
 }
@@ -396,7 +411,7 @@ exports.sign_up_teacher = function(ptor, screen_name, fname, lname, studentmail,
 //====================================================
 //               confirm teacher account
 //====================================================
-exports.confirm_account_teacher = function(ptor, feedback){
+exports.confirm_account_teacher = function(ptor, mail ,feedback){
     ptor.driver.get('https://www.guerrillamail.com/inbox');
         ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
             inbox.click().then(function(){

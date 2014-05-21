@@ -14,13 +14,13 @@ ptor.driver.manage().window().maximize();
 //(width*169)/570
 // questions coordinates
 var d_q1_x = 169; //175-6;
-var d_q1_y = 127; //133-6;
+var d_q1_y = 70; 
 
 var d_q2_x = 169; //175-6;
-var d_q2_y = 157; //133-6;
+var d_q2_y = 130;
 
 var d_q3_x = 169; //175-6;
-var d_q3_y = 187; //133-6;
+var d_q3_y = 190;
 
 //function testing
 xdescribe("teacher", function(){
@@ -29,9 +29,13 @@ xdescribe("teacher", function(){
 		o_c.open_course_whole(ptor);
 		//teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
-		teacher.open_lecture(ptor, 1, 1);
-		create_mcq_quiz(ptor, o_c.feedback);
-		make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y, o_c.feedback);
+		//teacher.create_lecture(ptor, "drag_quiz","http://www.youtube.com/watch?v=xGcG4cp2yzY", 1, o_c.feedback)
+		teacher.open_item(ptor, 1, 1);
+		youtube.seek(ptor, 50);
+		create_drag_quiz(ptor, o_c.feedback);
+		make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y, o_c.feedback);
+		//create_mcq_quiz(ptor, o_c.feedback);
+		//make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y, o_c.feedback);
 		// o_c.open_tray(ptor);
 		// o_c.open_lectures(ptor);
 		//youtube.seek(ptor, 50);
@@ -64,7 +68,7 @@ describe("1", function(){
 		o_c.open_course_whole(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "drag_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		teacher.create_lecture(ptor, "drag_quiz","http://www.youtube.com/watch?v=xGcG4cp2yzY", o_c.feedback);
 	})
 
 	it('should create quiz', function(){
@@ -102,7 +106,7 @@ describe("1", function(){
 	})
 })
 
-xdescribe("2", function(){
+describe("2", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -120,28 +124,27 @@ xdescribe("2", function(){
 		o_c.open_course_whole(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		teacher.create_lecture(ptor, "mcq_quiz","http://www.youtube.com/watch?v=xGcG4cp2yzY", o_c.feedback);
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
-		create_mcq_quiz(ptor, o_c.feedback);
-		make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y, o_c.feedback);
+		create_drag_quiz(ptor, o_c.feedback);
+		make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y, o_c.feedback);
 	})
 
-	it('should login a student and check for no of mcqs ', function(){
+	it('should login a student and check for no of drags ', function(){
 		o_c.to_student(ptor);
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
 		youtube.seek(ptor, 50);
 		expect_quiz(ptor);
-		check_mcq_no(ptor, 3);
+		check_drags_no(ptor, 3)
 	})
 
-	it('should answer mcq quiz correctly',function(){
-		check_answer_given_answer_order(ptor, 1);
-		check_answer_given_answer_order(ptor, 3);
+	it('should answer drag quiz correctly',function(){
+		answer_drag_correct(ptor)
 	})
 
 	it('should press answer button',function(){
@@ -153,8 +156,7 @@ xdescribe("2", function(){
 	})
 
 	it('should check every popovers', function(){
-		expect_popover_on_hover_correct(ptor, 1);
-		expect_popover_on_hover_correct(ptor, 3);
+		expect_popover_on_hover_correct(ptor);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -176,7 +178,7 @@ xdescribe("2", function(){
 	})
 })
 
-xdescribe("3", function(){
+describe("3", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -194,27 +196,27 @@ xdescribe("3", function(){
 		o_c.open_course_whole(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		teacher.create_lecture(ptor, "mcq_quiz","http://www.youtube.com/watch?v=xGcG4cp2yzY", o_c.feedback);
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
-		create_mcq_quiz(ptor, o_c.feedback);
-		make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y, o_c.feedback);
+		create_drag_quiz(ptor, o_c.feedback);
+		make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y, o_c.feedback);
 	})
 
-	it('should login a student and check for no of mcqs ', function(){
+	it('should login a student and check for no of drags ', function(){
 		o_c.to_student(ptor);
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
 		youtube.seek(ptor, 50);
 		expect_quiz(ptor);
-		check_mcq_no(ptor, 3);
+		check_drags_no(ptor, 3)
 	})
 
-	it('should answer mcq quiz correctly',function(){
-		check_answer_given_answer_order(ptor, 2);
+	it('should answer drag quiz correctly',function(){
+		answer_drag_incorrect(ptor);
 	})
 
 	it('should press answer button',function(){
@@ -226,7 +228,7 @@ xdescribe("3", function(){
 	})
 
 	it('should check every popovers', function(){
-		expect_popover_on_hover_incorrect(ptor, 2);
+		expect_popover_on_hover_incorrect(ptor);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -299,20 +301,23 @@ function check_drag_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ontop.getSize().then(function(size){
 				w = size.width;
 
-				ontop.findElements(protractor.By.tagName('input')).then(function(check_boxes){
+				ontop.findElements(protractor.By.className('ui-droppable')).then(function(check_boxes){
 					check_boxes[0].getLocation().then(function(loc){
-						expect(loc.x-location.x).toEqual(Math.floor((w*q1_x)/570)-6);
-						expect(loc.y-location.y).toEqual(Math.floor((w*q1_y)/570)-6);
+						expect(loc.x-location.x).toEqual(Math.floor((w*q1_x)/570)+20);
+						expect(loc.y-location.y).toBeGreaterThan(Math.floor((w*q1_y)/570)-8);
+						expect(loc.y-location.y).toBeLessThan(Math.floor((w*q1_y)/570)-4);
 					})
 					
 					check_boxes[1].getLocation().then(function(loc){
-						expect(loc.x-location.x).toEqual(Math.floor((w*q2_x)/570)-6);
-						expect(loc.y-location.y).toEqual(Math.floor((w*q2_y)/570)-6);
+						expect(loc.x-location.x).toEqual(Math.floor((w*q2_x)/570)+20);
+						expect(loc.y-location.y).toBeGreaterThan(Math.floor((w*q2_y)/570)-8);
+						expect(loc.y-location.y).toBeLessThan(Math.floor((w*q2_y)/570)-4);
 					})
 
 					check_boxes[2].getLocation().then(function(loc){
-						expect(loc.x-location.x).toEqual(Math.floor((w*q3_x)/570)-6);
-						expect(loc.y-location.y).toEqual(Math.floor((w*q3_y)/570)-6);
+						expect(loc.x-location.x).toEqual(Math.floor((w*q3_x)/570)+20);
+						expect(loc.y-location.y).toBeGreaterThan(Math.floor((w*q3_y)/570)-8);
+						expect(loc.y-location.y).toBeLessThan(Math.floor((w*q3_y)/570)-4);
 					})
 				})
 			})
@@ -339,13 +344,13 @@ function answer(ptor){
 }
 
 function check_answer_correct(ptor){
-	locator.by_classname(ptor,'popover-content').then(function(popover){
+	locator.by_tag(ptor,'notification').then(function(popover){
 		expect(popover.getText()).toContain('Correct');
 	})
 }
 
 function check_answer_incorrect(ptor){
-	locator.by_classname(ptor,'popover-content').then(function(popover){
+	locator.by_tag(ptor,'notification').then(function(popover){
 		expect(popover.getText()).toContain('Incorrect');
 	})
 }

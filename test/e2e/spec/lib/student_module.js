@@ -78,3 +78,90 @@ exports.open_module_number = function(ptor, mo_no){
         })
     })
 }
+
+
+//=====================================
+//    solves normal quiz MCQ question
+//=====================================
+exports.mcq_answer = function(ptor, question_no, choice_no){
+  locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
+    rep[question_no-1].findElements(protractor.By.tagName('input')).then(function(check_boxes){
+        check_boxes[choice_no-1].click();
+    })
+  })
+}
+
+//=====================================
+//    solves normal quiz OCQ question
+//=====================================
+
+exports.ocq_answer = function(ptor, question_no, choice_no){
+  locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
+    rep[question_no-1].findElements(protractor.By.tagName('input')).then(function(check_boxes){
+      check_boxes[choice_no-1].click();
+    })
+  })
+}
+
+//=====================================
+//    solves normal quiz DRAG question
+//=====================================
+
+exports.drag_answer = function(ptor, question_no){
+  for (var i = 0; i < 3; i++) {
+    locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
+      rep[question_no-1].findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
+        rep[question_no-1].findElements(protractor.By.tagName('li')).then(function(answer){
+          answer[0].getText().then(function (text){
+            if(text == 'answer2'){
+              ptor.actions().dragAndDrop(arrow[0], arrow[2]).perform();
+            }
+            else if(text == 'answer1'){
+              ptor.actions().dragAndDrop(arrow[0], arrow[1]).perform();
+            }
+          })
+          answer[1].getText().then(function (text){
+            if(text == 'answer0'){
+              ptor.actions().dragAndDrop(arrow[1], arrow[0]).perform();
+            }
+            else if(text == 'answer2'){
+              ptor.actions().dragAndDrop(arrow[1], arrow[2]).perform();
+            }
+          })
+          answer[2].getText().then(function (text){
+            if(text == 'answer0'){
+              ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
+            }
+            else if(text == 'answer1'){
+              ptor.actions().dragAndDrop(arrow[2], arrow[1]).perform();
+            }
+          })
+        })
+      })
+    })
+  };
+ptor.sleep(3000);
+}
+
+//======================================================
+//    solves normal quiz free or match string question
+//======================================================
+
+exports.free_match_answer = function(ptor, question_no, desired_text){
+    locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
+        rep[question_no-1].findElement(protractor.By.tagName('textarea')).then(function(text_area){
+          text_area.sendKeys(desired_text)
+        })
+    })
+}
+    
+//=====================================
+//    submits a normal quiz
+//=====================================
+
+exports.submit_normal_quiz = function(ptor){
+  locator.by_xpath(ptor, '//*[@id="middle"]/center/form/input[2]').then(function(btn){
+    btn.click();
+  })
+}
+

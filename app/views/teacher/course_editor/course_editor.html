@@ -34,19 +34,7 @@
 	            	</ul>
 		            <center class="item-buttons">
 		            	<hr style="width: 95%; margin: 0 auto; border-top: none !important; border-bottom: 1px solid darkgray !important; margin-bottom: 10px;" />
-		            	<button class="btn btn-success btn-mini" style="float: right; margin-right:10px; margin-bottom: 10px;" ng-click="toggleAdd();" tooltip-placement="right" tooltip="Add items" tooltip-append-to-body="true"><big>+ {{'sharing.add' | translate}}</big></button>
-		            	<br />
-		            	<div ng-show="!collapse_add" class="add-menu-container">
-		            		<div ng-click="addLecture($index)" class="add-item">
-		            			{{'courses.add_lecture'|translate}}
-		            		</div>
-		            		<div ng-click="addQuiz($index, 'quiz')" class="add-item">
-		            			{{'lectures.add_quiz'|translate}}
-		            		</div>
-		            		<div ng-click="addQuiz($index, 'survey')" class="add-item">
-		            			{{'courses.add_survey'|translate}}
-		            		</div>
-		            	</div>
+		            	<add-module-items index="$index" lecture="addLecture" quiz="addQuiz"></add-module-items>
 		            	<!-- <button_link title="{{'courses.add_lecture'|translate}}" class="btn btn-mini btn-success adding" style="background-image: initial;" action="addLecture($index)" ></button_link>
 		            	<button_link title="{{'lectures.add_quiz'|translate}}"   class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'quiz')"></button_link>
 		            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'survey')"></button_link> -->

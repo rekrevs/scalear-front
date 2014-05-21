@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('head.content')
- 	$scope.tree_toggled = false, $scope.details_toggled = false, $scope.not_module = false, $scope.collapse_add = true; 
+ 	$scope.tree_toggled = false, $scope.details_toggled = false, $scope.not_module = false; 
  	/***********************Functions*******************************/
  	// $state.$watch('params', function(){
  		if($state.params.lecture_id || $state.params.quiz_id){
@@ -442,9 +442,6 @@ angular.module('scalearAngularApp')
 				}
 			);
 		},
- 	}
- 	$scope.toggleAdd = function(){
- 		$scope.collapse_add = !$scope.collapse_add;
  	}
 
 	init();

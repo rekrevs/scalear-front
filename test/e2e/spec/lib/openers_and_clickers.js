@@ -473,13 +473,27 @@ exports.to_student = function(ptor){
 exports.scroll = function(ptor, value) {
     ptor.executeScript('window.scrollBy(0, ' + value + ')', '');
 }
+
+//=======================================================
+//                  scroll to top
+//=======================================================
+
+exports.scroll_to_top = function(ptor) {
+    ptor.executeScript('window.scrollBy(0, -20000)', '');
+}
+//=======================================================
+//                  scroll to bottom
+//=======================================================
+
+exports.scroll_to_bottom = function(ptor) {
+    ptor.executeScript('window.scrollBy(0, 20000)', '');
+}
 //=======================================================
 //                  scroll to element
 //=======================================================
 
 exports.scroll_element = function(ptor, element) {
     element.getLocation().then(function(loc){
-        console.log(loc)
         ptor.executeScript('window.scrollTo('+loc.x+','+loc.y+')', '');
     })
     

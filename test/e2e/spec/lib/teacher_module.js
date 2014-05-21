@@ -169,6 +169,28 @@ exports.add_quiz = function(ptor, mo_no, feedback){
 }
 
 //====================================================
+//            		add survey
+//====================================================
+
+exports.add_survey = function(ptor, mo_no, feedback){
+	locator.by_repeater(ptor, 'module in modules').then(function(mods){
+		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
+			btns_frame.findElement(protractor.By.className('btn-success')).then(function(add_button){
+				add_button.click().then(function(){
+					locator.by_classname(ptor, 'add-menu-container').then(function(menu){
+						menu.findElements(protractor.By.className('add-item')).then(function(options){
+							options[2].click().then(function(){
+								feedback(ptor, 'Survey was successfully created.')
+							});
+						})
+					})
+				})
+			})
+		})
+	})
+}
+
+//====================================================
 //            	delete item from module
 //====================================================
 
@@ -470,6 +492,96 @@ exports.add_quiz_question_drag = function(ptor, question, number_of_additional_a
 }
 
 //====================================================
+//            		add mcq question for normal survey
+//====================================================
+exports.add_survey_question_mcq = function(ptor, question, number_of_additional_answers){
+	locator.by_name(ptor, 'add_question').then(function(add_question){
+		add_question.click().then(function(){
+			locator.s_by_name(ptor, 'qlabel').then(function(labels){
+				labels[labels.length-1].sendKeys(question).then(function(){
+					locator.s_by_classname(ptor, 'answer_div').then(function(answers_div){
+							answers_div[answers_div.length-1].findElement(protractor.By.className('add_multiple_answer')).then(function(link){
+							locator.s_by_name(ptor, 'answer').then(function(answers){
+								answers[answers.length-1].sendKeys('answer0')
+							})
+							var j = 1;
+							for(var i=0; i< number_of_additional_answers; i++){
+								link.click().then(function(){
+									locator.s_by_name(ptor, 'answer').then(function(answers){
+										answers[answers.length-1].sendKeys('answer'+j)
+										j++;
+
+									})
+								})
+							}
+						})
+					})
+				})
+			})
+		});
+	})
+}
+
+//====================================================
+//            		add ocq question for normal survey
+//====================================================
+exports.add_survey_question_ocq = function(ptor, question, number_of_additional_answers){
+	locator.by_name(ptor, 'add_question').then(function(add_question){
+		o_c.scroll_element(ptor, add_question)
+		add_question.click().then(function(){
+			locator.s_by_name(ptor, 'qlabel').then(function(labels){
+				labels[labels.length-1].sendKeys(question).then(function(){
+					locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
+						dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
+							types[1].click();
+						})
+					}).then(function(){
+						locator.s_by_classname(ptor, 'answer_div').then(function(answers_divs){
+							answers_divs[answers_divs.length-1].findElement(protractor.By.className('add_multiple_answer')).then(function(link){
+								locator.s_by_name(ptor, 'answer').then(function(answers){
+									answers[answers.length-1].sendKeys('answer0')
+								})
+								var j = 1;
+								for(var i=0; i< number_of_additional_answers; i++){
+									o_c.scroll_element(ptor, link)
+									link.click().then(function(){
+										locator.s_by_name(ptor, 'answer').then(function(answers){
+											answers[answers.length-1].sendKeys('answer'+j)
+											j++;
+
+										})
+									})
+								}
+							})
+						})
+					})
+				})
+			})
+		});
+	})
+}
+
+//====================================================
+//            		add free question for normal survey
+//====================================================
+exports.add_survey_question_free = function(ptor, question){
+	locator.by_name(ptor, 'add_question').then(function(add_question){
+		o_c.scroll_element(ptor, add_question)
+		add_question.click().then(function(){
+			locator.s_by_name(ptor, 'qlabel').then(function(labels){
+				labels[labels.length-1].sendKeys(question).then(function(){
+					locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
+						dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
+							types[2].click();
+						})
+					})
+				})
+			})
+		});
+	})
+}
+
+//====================================================
 //            		adds a quiz header
 //====================================================
 exports.add_quiz_header = function(ptor, header){
@@ -492,6 +604,15 @@ exports.add_quiz_header = function(ptor, header){
 exports.save_quiz = function(ptor, feedback){
 	locator.by_name(ptor, 'save_quiz').click().then(function(){
 		feedback(ptor, 'Quiz was successfully saved');
+	})
+}
+
+//====================================================
+//            	save normal survey
+//====================================================
+exports.save_survey = function(ptor, feedback){
+	locator.by_name(ptor, 'save_quiz').click().then(function(){
+		feedback(ptor, 'Survey was successfully saved');
 	})
 }
 

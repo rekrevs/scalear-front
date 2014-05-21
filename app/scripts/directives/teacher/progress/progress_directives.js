@@ -72,8 +72,8 @@ angular.module('scalearAngularApp')
 	    	action:"&"
 	    },
 	    template:'<span>| '+
-					'<input type="checkbox" ng-model="value" ng-change="change()" />'+
-					'<span style="font-size:12px;color:black;font-weight:normal"> Show in-class</span>'+
+					'<input type="checkbox" ng-model="value" ng-change="change()" /> '+
+					'<span style="font-size:12px;color:black;font-weight:normal" translate>courses.show_in_class</span>'+
 				'</span>', 
 	    link:function(scope){
 	    	scope.change=function(){
@@ -107,9 +107,9 @@ angular.module('scalearAngularApp')
 	    	question_count:'=questionCount'
 	    },
 	    template:'<div class="time_estimate" style="z-index:1">'+
-					'<h4>Time Estimate</h4>'+
-					'<div style="display: inline-block;">In-class: <b>{{inclass_estimate || 0}} minutes</b></div>'+
-					'<a pop-over="popover_options">more...</a>'+
+					'<h4 translate>courses.time_estimate</h4>'+
+					'<div style="display: inline-block;">In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></div>'+
+					'<a pop-over="popover_options"><span pop-over="popover_options" translate>more</span>...</a>'+
 				'</div>', 
 	    link:function(scope){
 	    	scope.numbers = []
@@ -117,12 +117,12 @@ angular.module('scalearAngularApp')
 		        scope.numbers.push(i);
 		    }
   	 		var template = "<div style='color:black;font-size:12px'>"+
-  	 						"<span class='span2' style='margin-left:0'>Time per quiz:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_quiz' ng-options='i for i in numbers'></select></span>"+
-  	 						"<span class='span2' style='margin-top: 5px;margin-left: 15px;'>Quizzes for review: {{quiz_count}}</span><br><br>"+
-  	 						"<span class='span2' style='margin-left:0; width:160px'>Time per question:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_question' ng-options='i for i in numbers'></select></span>"+	  	 						
-  	 						"<span class='span2' style='margin-top: 5px;margin-left:0'>Questions for review: {{question_count}}</span><br><br>"+
-  	 						"<span>Formula:</span><br>"+
-  	 					    "<i style='text-align:center;'>( #Quizzes for review  * {{time_quiz}} ) + ( #Questions for review * {{time_question}} )</i>"+
+  	 						"<span class='span2' style='margin-left:0'><span translate>courses.time_per_quiz</span>:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_quiz' ng-options='i for i in numbers'></select></span>"+
+  	 						"<span class='span2' style='margin-top: 5px;margin-left: 15px;'><span translate>courses.quizzes_for_review</span>: {{quiz_count}}</span><br><br>"+
+  	 						"<span class='span2' style='margin-left:0; width:160px;clear:left'><span translate>courses.time_per_question</span>:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_question' ng-options='i for i in numbers'></select></span>"+	  	 						
+  	 						"<span class='span2' style='margin-top: 5px;margin-left:0'><span translate>courses.questions_for_review</span>: {{question_count}}</span><br><br>"+
+  	 						"<span translate>formula</span>:<br>"+
+  	 					    "<i style='text-align:center;'>( #<span translate>courses.quizzes_for_review</span>  * {{time_quiz}} ) + ( #<span translate>courses.questions_for_review</span> * {{time_question}} )</i>"+
   	 					   "</div>"
 
            	scope.popover_options={

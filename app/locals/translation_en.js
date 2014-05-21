@@ -1,5 +1,7 @@
 var translation_en=function(){
     return {
+      yes: 'Yes',
+      no: 'No',
       main: "Main",
       issue: "Issue is with the",
       next: "Next",
@@ -43,6 +45,13 @@ var translation_en=function(){
       adding_teacher: "A teacher or TA must have a teacher account on",
       create_account: "To create a teacher account visit",
       all: "All",
+      more: "more",
+      minutes: "minutes",
+      formula: "Formula",
+      thank_you_answer: "Thank you for your answer",
+      whats_new: "What's New",
+      return: "Return",
+      preview_as_student: "Currently previewing as a student",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -81,11 +90,16 @@ var translation_en=function(){
         liked_this: "liked this",
         write_comment: "Leave a comment...",
         flag_post: "Flag this post",
+        flag: "Flage",
         unflag_post: "Unflag this post",
         flags: "Flags",
         likes: "Likes",
+        votes: "Votes",
+        remove_flags: "Remove Flags",
         private_discussion: "Private Discussion (Viewed by teacher only)",
-        public_discussion: "Public Discussion (Viewed by all)"
+        public_discussion: "Public Discussion (Viewed by all)",
+        cannot_be_empty: "Cannot be empty",
+        actions: "Actions"
       },
       menu:{
         copy:"Copy",
@@ -118,6 +132,8 @@ var translation_en=function(){
         cancel: "Cancel",
         instructions:"Please use this form to report any problems you are having. The more detail you can provide easier it is for us to fix your problem!",
         problem_is:"My problem is with",
+        provide_desciption: "Please provide more description",
+        provide_email_name: "Please make sure that you provided your name and email address"
       },
       enroll:{
         help_enroll_student:"Help on enrolling students",
@@ -206,7 +222,8 @@ var translation_en=function(){
         reject: "Reject",
         import_new_course: "Import into new course",
         import_existing_course: "Import into existing course",
-        empty: "You don\'t have any notifications at the moment."
+        empty: "You don't have any notifications at the moment.",
+        reviewed_inclass: "Would you like this question to be reviewed In Class"
       },
       privacy:{
         policy: "Privacy Policy",
@@ -318,7 +335,12 @@ var translation_en=function(){
         discussion: "Discussion",
         provide_url:"Please Provide A Video URL",
         vidoe_not_exist: "Video may not exist or may still uploading",
-        incompatible_link: "Incompatible link"
+        incompatible_link: "Incompatible link",
+        replay: "Replay",
+        retry: "Retry",
+        related : "Related",
+        reply: "Reply",
+        of_student_review: "of students voted for review"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -337,6 +359,7 @@ var translation_en=function(){
       	you_sure_delete_answer: "Are you sure you want to delete answer '{{answer}}'?",
         answers: "Answers",
         questions: "Questions",
+        see_all: "See All"
       },
       quizzes:{
         survey_results: "Survey Results",
@@ -404,6 +427,7 @@ var translation_en=function(){
         you_sure_delete_survey: "Are you sure you want to delete survey '{{quiz}}'?",
         must_answer_atleast: "You must mark atleast one answer as correct for each multiple choice question.",
         must_place_items: "You must place all items",
+        must_choose_answer: "Must choose atleast one answer",
         add_document: "Add Document",
         please_wait: "Please Wait",
         lectures: "Lectures",
@@ -456,7 +480,10 @@ var translation_en=function(){
         type: "Type",
         student_progress: "Student Progress",
         out_of: "Out Of",
-        empty: "Empty Module"
+        empty: "Empty Module",
+        blackscreen_close: "Click or Press 'b' to return",
+        go_to_class: "Go to class",
+        filter: "Filter"
       },
       courses:{
         image_not_found: "Image not found...",
@@ -516,6 +543,7 @@ var translation_en=function(){
         ta: "TA",
         student_grades: "Student Grades",
         grades: "Grades",
+        grade: "Grade",
         select_course: "Select a Course",
         select_module: "Select a Module",
         select_lecture: "Select a Lecture",
@@ -614,7 +642,17 @@ var translation_en=function(){
         under_review:"Under Review",
         wrong:"Wrong",
         partial:"Partial",
-        good:"Good"
+        good:"Good",
+        insert_regex:"Insert an exact string or a regular expression to match",
+        time_estimate:"Time Estimate",
+        time_per_quiz: "Time per quiz",
+        quizzes_for_review: "Quizzes for review",
+        time_per_question : "Time per question",
+        questions_for_review: "Questions for review",
+        sort_by: "Sort By",
+        click_to_select: "Click to Select",
+        based_on_invideo: "Based on in-video questions answered",
+        view_detailed_progress: "View Details Progress"
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

@@ -1,13 +1,13 @@
 <table class="table">
-<tr><th>Email</th><th>Content</th><th>Votes</th><th colspan="3">Actions</th></tr>
+<tr><th translate>email</th><th translate>head.content</th><th translate>discussion.votes</th><th colspan="3" translate>discussion.actions</th></tr>
 <tr ng-repeat="comment in comments">
     <td>{{comment.post.email}}</td>
     <td>{{comment.post.content}}</td>
     <td>{{comment.post.votes_count}}</td>
-    <td><input type="button" value="Vote up" ng-click="vote(1, comment.post)" ng-class="{up_active:comment.post.user_vote==1}"></td>
-    <td><input type="button" value="Vote Down" ng-click="vote(-1, comment.post)" ng-class="{down_active:comment.post.user_vote==-1}"></td>
-    <td><input type="button" value="Flag" ng-click="flag(comment.post)" ng-class="{flag_active:comment.post.user_flag==1}"></td>
+    <td><input type="button" value="{{discussion.like | translate}}" ng-click="vote(1, comment.post)" ng-class="{up_active:comment.post.user_vote==1}"></td>
+    <td><input type="button" value="{{discussion.unlike | translate}}" ng-click="vote(-1, comment.post)" ng-class="{down_active:comment.post.user_vote==-1}"></td>
+    <td><input type="button" value="{{discussion.flag | translate}}" ng-click="flag(comment.post)" ng-class="{flag_active:comment.post.user_flag==1}"></td>
 </tr>
 </table>
 <input type="text" ng-model="comment"/>
-<input type="button" ng-click="createComment()" value="Create Comment" class="btn"/>
+<input type="button" ng-click="createComment()" value="{{discussion.comment | translate}}" class="btn"/>

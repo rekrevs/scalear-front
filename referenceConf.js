@@ -112,10 +112,10 @@ exports.config = {
 
         //frontend: 'http://localhost:9000/#',
         frontend: 'http://staging.scalable-learning.com/#',
-        // teacher_mail: 'teacher3@sharklasers.com',
-        // mail: 'studenttest2@sharklasers.com',
-        teacher_mail: 'teacher2@sharklasers.com',
-        mail: 'studenttest@sharklasers.com',
+        teacher_mail: 'teacher3@sharklasers.com',
+        mail: 'studenttest2@sharklasers.com',
+        // teacher_mail: 'teacher2@sharklasers.com',
+        // mail: 'studenttest@sharklasers.com',
         //mail: 'mena.happy@yahoo.com',
         password: 'password',
 

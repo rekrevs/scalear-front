@@ -254,8 +254,14 @@ function create_mcq_quiz(ptor, feedback){
 
 function make_mcq_questions(ptor, feedback){
 	locator.by_id(ptor,'ontop').then(function(ontop){
-		ontop.findElements(protractor.By.repeater('answer in quiz.answers'))
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[0].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("menaz");
+				ins[1].click();
+			})
+		})
 		locator.by_classname(ptor, 'must_save_check').click();
+		
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
 		locator.by_id(ptor, 'done').then(function(btn){

@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
 //     $scope.lecture.aspect_ratio = ""
     $scope.lecture_player = {}
     $scope.lecture_player.events = {}
+    $scope.tabs=[true,false,false]
 //     $scope.display_mode = false
 //     $scope.studentAnswers = {}
 //     $scope.explanation = {}
@@ -26,7 +27,7 @@ angular.module('scalearAngularApp')
     $scope.current_time = 0
     $scope.total_duration = 0
 //     $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
-//     $scope.editors={}
+    $scope.editors={}
 //     $scope.progressEvents=[]
 
 //     $scope.adjust_accordion= function(){
@@ -152,7 +153,8 @@ angular.module('scalearAngularApp')
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
                 // console.log('Am I fullscreen? ' + (screenfull.isFullscreen ? 'Yes' : 'No'));
                 if(!screenfull.isFullscreen){
-                    $scope.toggleFullscreen()
+                    $scope.fullscreen = false
+                    $scope.video_class= 'video_class'
                     $scope.$apply()
                 }
             });
@@ -165,7 +167,7 @@ angular.module('scalearAngularApp')
 //                 $scope.alert_messages = data.alert_messages;
                     $scope.lecture = JSON.parse(data.lecture);
                     console.log("this is the data ")
-                    console.log(data)
+                    console.log($scope)
 //                 if($scope.lecture.aspect_ratio == 'smallscreen'){
 //                     factor = 4/3
 //                 }
@@ -243,10 +245,6 @@ angular.module('scalearAngularApp')
 //         );
      }
 
-     $scope.toggleFullscreen=function(){
-        $scope.fullscreen = !$scope.fullscreen
-        $scope.video_class= $scope.fullscreen? 'video_class_full' : 'video_class'
-     }
 
 //     $scope.resizeVideo = function(){
 //         console.log('resizing the video')
@@ -392,13 +390,301 @@ angular.module('scalearAngularApp')
 //         $scope.slow = true
 //     }
     
-//     $scope.url_with_protocol = function(url)
-//     {
-//         if(url)
-//             return url.match(/^http/)? url: 'http://'+url;
-//         else
-//             return url;
-//     }
+    var switchToTab=function(tab){
+        for(var i in $scope.tabs)
+            $scope.tabs[i] = false
+        $scope.tabs[tab] = true
+    }
+
+    $scope.addConfused= function(){
+        console.log("caosdnsakn")
+        
+        var time=$scope.lecture_player.controls.getTime()
+        Lecture.confused(
+        {
+            course_id:$stateParams.course_id, 
+            lecture_id:$stateParams.lecture_id
+        },
+        {time:time}, 
+        function(data){
+            if(data.msg=="ask"){
+                $scope.show_notification=$translate("controller_msg.really_confused_use_question");
+                // $scope.notify_position={"left":($scope.pWidth - 180) + "px"}
+                $interval(function(){
+                    // $scope.notify_position={"left":"240px"};
+                    $scope.show_notification=false;
+                }, 6000, 1)
+            }
+            if(!data.flag) //first time confused in these 15 seconds
+            {
+                $scope.timeline['lecture'][$stateParams.lecture_id].add(time, "confused", data.item)
+            }
+
+            if(data.flag && data.msg!="ask") // confused before but not third time - very confused
+            {
+                var elem=$scope.timeline['lecture'][$stateParams.lecture_id].search_by_id(data.id, "confused");
+                $scope.timeline['lecture'][$stateParams.lecture_id].items[elem].data.very=true;            
+            }
+        });
+    }
+
+    $scope.toggleFullscreen=function(){
+        $scope.fullscreen = !$scope.fullscreen
+        $scope.video_class= $scope.fullscreen? 'video_class_full' : 'video_class'
+    }
+
+    $scope.toggleQuestionBlock= function(){
+        $scope.show_question_block=!$scope.show_question_block;        
+        if($scope.show_question_block){
+            $scope.current_question_time=$scope.lecture_player.controls.getTime();
+            $scope.lecture_player.controls.pause();
+            switchToTab(0);
+        }
+        // else
+        //     $scope.lecture_player.controls.play();
+    };
+
+    $scope.$on('video_back',function(ev, time){
+        console.log(time)
+        Lecture.back(
+            {
+                course_id:$stateParams.course_id, 
+                lecture_id:$stateParams.lecture_id
+            },
+            {time:time}, 
+            function(data){}
+        );
+    })
+
+    var showNotification=function(msg){
+        $scope.notification_message=$translate(msg);
+        $scope.notification_submessage=$translate(msg);
+        $interval(function(){
+            removeNotification()
+        }, 2000, 1);
+    }
+
+     var removeNotification = function(){
+        $scope.show_notification=null;
+        window.onmousemove = null
+        //reviewInclass()          
+        $scope.$apply()
+    }
+
+    $scope.checkAnswer = function(){            
+        $log.debug("check answer "+$scope.solution);
+        if($scope.selected_quiz.quiz_type=="html"){              
+            sendHtmlAnswers()
+        }
+        else{
+            sendAnswers()
+        };
+    }
+
+    var sendHtmlAnswers=function(){
+        if(!$scope.answer_form.$error.atleastone && !($scope.selected_quiz.question_type=='Free Text Question' && $scope.answer_form.$error.required)){
+            $log.debug("valid form")
+            $scope.submitted=false;
+            Lecture.saveHtml(
+            {
+                course_id: $stateParams.course_id, 
+                lecture_id:$stateParams.lecture_id
+            },
+            {
+                quiz:$scope.selected_quiz.id, 
+                answer:$scope.studentAnswers[$scope.selected_quiz.id]
+            }, 
+            function(data){
+                displayResult(data);
+            });
+        }
+        else{
+            $log.debug("invalid form")
+            $scope.submitted=true;
+        }
+    }
+
+    var sendAnswers=function(){
+        var selected_answers
+        if($scope.selected_quiz.question_type == "OCQ" || $scope.selected_quiz.question_type == "MCQ"){
+            selected_answers=[]
+            $scope.selected_quiz.online_answers.forEach(function(answer){
+                if(answer.selected)
+                    selected_answers.push(answer.id)
+            })
+            if(selected_answers.length == 0){
+                showNotification("groups.choose_correct_answer")
+                return      
+            }
+
+            if($scope.selected_quiz.question_type == "OCQ" && selected_answers.length==1)
+                selected_answers = selected_answers[0]
+        }
+        else //DRAG
+        {
+            selected_answers={}
+            selected_answers = $scope.studentAnswers[$scope.selected_quiz.id]
+            var count = 0
+            for (var el in selected_answers)
+                if(selected_answers[el])
+                    count++
+            if(count<$scope.selected_quiz.online_answers.length)
+            {
+                showNotification("groups.must_place_items")
+                return
+            }
+        }
+        Lecture.saveOnline(
+        {
+            course_id:$stateParams.course_id,
+            lecture_id:$stateParams.lecture_id
+        },
+        {
+            quiz: $scope.selected_quiz.id,
+            answer:selected_answers
+        },
+        function(data){
+            displayResult(data)
+        },
+        function(){}
+        )
+    }
+
+    var displayResult=function(data, done){
+        for(var el in data.detailed_exp)
+            $scope.explanation[el]= data.detailed_exp[el];
+
+        // $scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
+        // $scope.show_notification=true;
+        console.log(data)
+        if($scope.selected_quiz.quiz_type == 'survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review) ){
+            if(data.msg!="Empty"){
+                $scope.selected_quiz.is_quiz_solved=true;
+                showNotification('thank_you_answer')
+                // $scope.show_notification=$translate('thank_you_answer')//'Thank you for your answer';
+            }
+        }
+        else{
+        // if(data.review)
+        //   $scope.verdict= $translate("lectures.reviewed");
+        // else
+            var verdict=data.correct? "lectures.correct": "lectures.incorrect"
+            var sub_message = ''
+            if (!(selected_quiz.quiz_type=='html' && (selected_quiz.question_type.toUpperCase()=='DRAG' || selected_quiz.question_type.toUpperCase()=='FREE TEXT QUESTION')))
+                sub_message  = 'lectures.hover_for_details'
+            showNotification(verdict, sub_message)
+            // $scope.show_notification=true;
+
+            if(data.msg!="Empty") // he chose sthg
+            {
+            // here need to update $scope.$parent.$parent
+                
+            /*************************/
+                // var group_index= CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+                // var lecture_index= CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                // if(lecture_index!=-1 && group_index!=-1)
+                //     $scope.$parent.$parent.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
+            /*************************/
+
+                $scope.selected_quiz.is_quiz_solved=true;
+
+            }
+        }
+
+        $interval(function(){
+            window.onmousemove = removeNotification
+        }, 600, 1);
+
+    }
+
+    var reviewInclass =function(){
+        if(!$scope.selected_quiz.reviewed)
+            $scope.review_inclass= true 
+    }
+
+    $scope.voteForReview=function(){
+        OnlineQuiz.voteForReview(
+        {online_quizzes_id:$scope.selected_quiz.id},{},
+        function(res){
+            if(res.done)
+                $scope.closeReviewNotify()
+        })
+    }
+
+    $scope.closeReviewNotify=function(){
+        $scope.review_inclass= false 
+    }
+
+    $scope.retryQuiz=function(){
+        $scope.seek($scope.selected_quiz.time, $scope.selected_quiz.lecture_id)
+        $scope.closeReviewNotify()
+    }
+
+    $scope.saveNote = function(){
+        for(var e in $scope.editors){
+            if($scope.editors[e].doc.dirty)
+                $scope.editors[e].save();
+        }
+    }
+//
+    $scope.disableSaveNote= function(){
+        for(var e in $scope.editors){
+            if($scope.editors[e].doc.dirty)
+                return false;
+        }
+        return true;
+    }
+
+     $scope.saveQuestion = function(current_question, privacy_value){
+        Forum.createPost(
+            {post: 
+                {
+                    content: current_question, 
+                    time:$scope.current_question_time, 
+                    lecture_id:$stateParams.lecture_id, 
+                    privacy:privacy_value
+                }
+            }, 
+            function(response){
+                console.log("success");
+                $scope.timeline['lecture'][$stateParams.lecture_id].add($scope.current_question_time, "discussion",  response.post);
+                $scope.editors[$stateParams.lecture_id].insert($scope.current_question_time, current_question);
+                $scope.toggleQuestionBlock()
+                // $scope.lecture_player.controls.play();
+            }, 
+            function(){
+                console.log("failure")
+            }
+        )
+    }
+
+    // $scope.submitQuestion = function()
+    // {
+    //     $log.debug("will submit "+$scope.question_asked);
+    //     var time=$scope.lecture_player.controls.getTime()
+    //     if($scope.question_asked!=""){
+    //         Lecture.confusedQuestion(
+    //         {
+    //             course_id:$stateParams.course_id, 
+    //             lecture_id:$stateParams.lecture_id
+    //         },
+    //         {
+    //             time:time, 
+    //             ques: $scope.question_asked
+    //         }, 
+    //         function(data){
+    //             $scope.progressEvents.push([((time/$scope.total_duration)*100) + '%', 'yellow', 'courses.you_asked',data.id, $scope.question_asked ]);
+    //             $scope.question_asked="";
+    //             $scope.show_question=false;
+    //             $scope.lecture_player.controls.play(); 
+    //         });
+    //     }
+    //     else{
+    //         $scope.show_question=false;
+    //         $scope.lecture_player.controls.play(); 
+    //     }
+
+    // };
 
     init();
 

@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
             template:"<div></div>",
 			link: function(scope, element){
 
-                scope.vq;
+                scope.vq='hd720';
                 scope.start_time
 
                 scope.$on('$destroy', function() {
@@ -79,6 +79,7 @@ angular.module('scalearAngularApp')
                     //var vimeo= scope.url.match(/vimeo/)  // improve this..
                     if(isYoutube(scope.url)){
                     	console.log("youtube")
+                    	player_controls.youtube = true
                     	var video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
                     	player = Popcorn(video,{});
                     	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time)						
@@ -325,22 +326,22 @@ angular.module('scalearAngularApp')
                 // }
 
                 var isYoutube= function(url){
-            		var video_url = url || scope.url
+            		var video_url = url || scope.url || ""
                     return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
                 }
 
                 var isShortYoutube= function(url){
-                	var video_url = url || scope.url
+                	var video_url = url || scope.url || ""
                     return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)?\.be\/([^\s&]{11})/);
                 }
 
                 var isVimeo=function(url){
-                	var video_url = url || scope.url
+                	var video_url = url || scope.url || ""
                 	return video_url.match(/vimeo/)
                 }
 
               	var isMP4=function(url){
-              		var video_url = url || scope.url
+              		var video_url = url || scope.url || ""
                 	return video_url.match(/(.*mp4$)/)
                 }
 
@@ -580,13 +581,11 @@ angular.module('scalearAngularApp')
         templateUrl:"/views/progress_bar.html",
         link: function(scope, element, attrs){
             scope.mute_unmute_class="mute";
-
-            $rootScope.$on('updatePosition',function(){
-                setButtonsLocation()
-            })
+            scope.quality=false;
+      		scope.chosen_quality='hd720';
 
             scope.playBtn = function(){
-                if(scope.play_pause_class == "play"){
+                if(scope.player.controls.paused()){
 			        scope.player.controls.play()
 			        scope.play_pause_class = "pause"
 		      	}
@@ -631,35 +630,39 @@ angular.module('scalearAngularApp')
             }
 
             scope.progress = function(event){
-                // scope.updateProgress({$event:event});
 		        var element = angular.element('.progressBar');
 		        var ratio = (event.pageX-element.offset().left)/element.outerWidth();                
 		        scope.elapsed_width = ratio*100+'%'
 		        scope.seek()(scope.total_duration*ratio)    
             }
 
-            // var setButtonsLocation=function(){
-                // if(scope.active){
-                //     scope.pHeight=angular.element($window).height();
-                //     //element.css("z-index",1500);
-                // }
-                // else{
-                //     if(scope.view=="student")
-                //     {scope.pHeight=490;
-                //     }
-                //     else{
-                //         scope.pHeight=320;
-                //     }
-                //     //element.css("z-index",1000);
-                // }
+          	scope.showQuality = function(){
+          		scope.quality=!scope.quality
+	      	}
 
-                // if(scope.view=="student")
-                //     element.css("top", scope.pHeight-30+"px");
-                // else
-                //     element.css("top", scope.pHeight-30+"px");
-                // //element.css("left", scope.pWidth-350+"px");
-            // }
-            // setButtonsLocation();
+      		scope.setQuality = function(quality){
+	          var time = scope.player.controls.getTime()
+	          scope.player.controls.changeQuality(quality, time);
+	          scope.chosen_quality=quality;
+	          scope.quality=false;
+      		}
+
+            shortcut.add("Space",function(){
+            	scope.playBtn()				
+			},{"disable_in_input" : true});
+
+			shortcut.add("b",function(){
+              var t=scope.player.controls.getTime();
+              scope.player.controls.pause();
+              scope.player.controls.seek(t-10)
+              scope.player.controls.play();
+              scope.$emit('video_back', t-10)
+			},{"disable_in_input" : true});
+
+		   	scope.$on('$destroy', function(){
+	         	shortcut.remove("b");
+          		shortcut.remove("Space");
+	      	});
         }
     }
 }])

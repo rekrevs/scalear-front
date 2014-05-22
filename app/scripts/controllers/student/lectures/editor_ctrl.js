@@ -23,24 +23,7 @@ angular.module('scalearAngularApp')
 ////        editor.insert($scope.insert_at);
 ////    }
 //
-    $scope.save = function(){
-        //console.log("in save");
-        for(var e in $scope.editors)
-        {
-            if($scope.editors[e].doc.dirty)
-                $scope.editors[e].save();
-        }
-
-    }
-//
-    $scope.disableSave= function(){
-        for(var e in $scope.editors)
-        {
-            if($scope.editors[e].doc.dirty)
-                return false;
-        }
-        return true;
-    }
+  
 //
 //
 //    $scope.$on('loaded', $scope.init);

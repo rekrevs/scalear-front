@@ -1,53 +1,31 @@
 'use strict';
 
 angular.module('scalearAngularApp')
+    .directive('questionBlock',['$log','$translate','Forum',function($log,$translate,Forum){
+        return{
+            restrict:"E",
+            template:"/views/forum/question_block.html",
+            scope:{
+                time:'=',
+                action:'&'
+            },
+            link:function(scope,element,attrs){
+                scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
+                scope.privacy = scope.choices[0];
+            }
+        }
+    }])
     .directive('discussion',["$timeout","$stateParams","Forum","Timeline","Lecture","editor","$translate", function($timeout, $stateParams, Forum, Timeline, Lecture,editor, $translate) {
     return {
         restrict:"E",
+        replace:true,
+        scope:{
+            lecture_id:'=',
+            seek:'&',
+            item:'='
+        },
         templateUrl:'/views/forum/discussion.html',
         link: function(scope, element, attrs, ngModel) {
-            console.log("here@!!!!")
-            scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
-            scope.privacy = scope.choices[0];
-            scope.checkModel={quiz:true,confused:false, discussion:false};
-
-            scope.checkEmpty= function(item){
-
-                return  item.type!=''
-
-            }
-
-            scope.filterType= function(item){
-                var condition=false;
-                for(var e in scope.checkModel)
-                {
-                    if(scope.checkModel[e])
-                        condition = (condition || item.type==e)
-                }
-                var x = item.type!='' && condition
-
-                return x;
-
-            }
-
-            scope.saveQuestion = function(){
-
-                Forum.createPost({post: {content: scope.current_question, time:scope.current_question_time, lecture_id:$stateParams.lecture_id, privacy:scope.privacy.value}}, function(response){
-                    console.log("success");
-                    scope.timeline['lecture'][$stateParams.lecture_id].add(scope.current_question_time, "discussion",  response.post);
-                    // also add to notes.
-                    //console.log(scope.editors);
-                    scope.editors[$stateParams.lecture_id].insert(scope.current_question_time, scope.current_question);
-                    scope.show_question=false;
-                    scope.current_question="";
-                    scope.lecture_player.controls.play();
-                }, function(){
-                    console.log("failure")
-                })
-
-
-
-            }
             scope.deleteDiscussion = function(id, lecture_id, discussion){
                 Forum.deletePost({post_id: id}, function(response){
                     //console.log("begin")
@@ -183,25 +161,8 @@ angular.module('scalearAngularApp')
                     scope.lecture_player.controls.play();
                 }
             }
-
-            scope.deleteConfused = function(confused_id, lecture_id, c){
-                Lecture.deleteConfused({lecture_id: lecture_id, confused_id: confused_id}, function(response){
-                    console.log("deleted");
-                    // now want to remove from list (both l.confuseds and $scope.timeline..)
-                    var index=scope.timeline['lecture'][lecture_id].items.indexOf(c);
-                    scope.timeline['lecture'][lecture_id].items.splice(index, 1)
-                });
-            }
         }
     }
-}]).directive('notes',["$stateParams","editor", function( $stateParams, editor) {
-        return {
-            restrict:"E",
-            templateUrl:'/views/forum/notes.html',
-            link: function(scope, elem, attrs, ngModel) {
-
-            }
-        }
 }]).directive('votingButton', function(){
     return{
         restrict: 'E',

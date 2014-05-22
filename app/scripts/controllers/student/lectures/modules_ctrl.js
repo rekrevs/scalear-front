@@ -6,8 +6,8 @@ angular.module('scalearAngularApp')
 	// $window.scrollTo(0, 0);
     // $scope.show_reply={}
     // $scope.current_reply={}
-    $scope.notes={}
-    $scope.tabs=[{"active":true},{"active":false}, {"active":false}]
+    
+    
 	Page.setTitle('head.lectures');
 
     var init = function()
@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
   //   	$scope.open_id="-1";
 		// $scope.open={};
 		// $scope.oneAtATime = true;
-	
+        $scope.notes={}	
 	    Module.getStudentModule(
 	    	{course_id: $stateParams.course_id, module_id:$stateParams.module_id}, function(data){
                 $scope.module_lectures= JSON.parse(data.module_lectures);

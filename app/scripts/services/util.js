@@ -50,6 +50,14 @@ angular.module('scalearAngularApp')
       });
     }
     return obj
+  },
+
+  urlWithProtocol:function(url)
+  {
+    if(url)
+        return url.match(/^http/)? url: 'http://'+url;
+    else
+        return url;
   }
 
 

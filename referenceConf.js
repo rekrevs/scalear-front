@@ -44,7 +44,7 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        // 'test/e2e/spec/enrolled-students.spec.js'
+        'test/e2e/spec/enrolled-students.spec.js'
         //'test/e2e/spec/drag-quizzez-over-video.spec.js'
         // 'test/e2e/spec/quizzez-over-video.spec.js'
         // 'test/e2e/spec/course_editor_basic.spec.js'
@@ -53,7 +53,7 @@ exports.config = {
         //'test/e2e/spec/create-course-check-info.spec.js'
         //'test/e2e/spec/sign_up_teacher.spec.js'
         //'test/e2e/spec/signup.spec.js',
-        'test/e2e/spec/progress-page.spec.js',
+        //'test/e2e/spec/normal_quiz.spec.js',
         // 'test/e2e/spec/calendar.spec.js',
         // 'test/e2e/spec/confused.spec.js',
         // 'test/e2e/spec/course_info_student.spec.js',
@@ -110,12 +110,12 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
 
-        frontend: 'http://localhost:9000/#',
-        // frontend: 'http://staging.scalable-learning.com/#',
-        // teacher_mail: 'teacher3@sharklasers.com',
-        // mail: 'studenttest2@sharklasers.com',
-        teacher_mail: 'teacher2@sharklasers.com',
-        mail: 'studenttest@sharklasers.com',
+        //frontend: 'http://localhost:9000/#',
+        frontend: 'http://staging.scalable-learning.com/#',
+        teacher_mail: 'teacher3@sharklasers.com',
+        mail: 'studenttest2@sharklasers.com',
+        // teacher_mail: 'teacher2@sharklasers.com',
+        // mail: 'studenttest@sharklasers.com',
         //mail: 'mena.happy@yahoo.com',
         password: 'password',
 

@@ -44,7 +44,8 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/enrolled-students.spec.js'
+        'test/e2e/spec/mcq-quizzez-over-video-text.spec.js'
+        //'test/e2e/spec/enrolled-students.spec.js'
         //'test/e2e/spec/drag-quizzez-over-video.spec.js'
         // 'test/e2e/spec/quizzez-over-video.spec.js'
         // 'test/e2e/spec/course_editor_basic.spec.js'

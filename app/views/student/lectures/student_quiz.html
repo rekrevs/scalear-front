@@ -26,7 +26,7 @@
                <td><img src='images/spacer.gif' height='1px' width='1px' /></td>
                <td ng-if='question.question_type=="MCQ"' width='10px;'><input atleastone ng-model='studentAnswers[question.id][answer.id]' ng-checked='studentAnswers[question.id][answer.id]'  name='ocq_{{question.id}}' type='checkbox' ng-change='updateValues({{question.id}})'/></td>
                <td ng-if='question.question_type=="OCQ"' width='10px;'><input atleastone ng-model='studentAnswers[question.id]' value='{{answer.id}}'  name='ocq_{{question.id}}' type='radio' ng-change='updateValues({{question.id}})'/></td>
-               <td>{{answer.content}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'>Must choose atleast one answer!</span></td>
+               <td>{{answer.content}}<br/><span class='errormessage' ng-show='submitted && !valid(question.id)'translate>groups.must_choose_answer</span></td>
                <td ng-if='quiz.quiz_type=="quiz"'></td>
             </tr>
             <tr ng-if='question.question_type.toUpperCase()=="DRAG"'>

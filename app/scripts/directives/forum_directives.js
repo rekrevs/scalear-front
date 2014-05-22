@@ -167,7 +167,7 @@ angular.module('scalearAngularApp')
                 }
                 else{
                     console.log("hello")
-                    scope.error_message = "Cannot be empty"
+                    scope.error_message = $translate("discussion.cannot_be_empty")
                 }
                 angular.element('.btn').blur()
             }

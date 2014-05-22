@@ -5,7 +5,7 @@
 <div>
 	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
 		<div ng-show="courses.length" style="float: left; display: inline-block;">
-			<span class="dropdown" ><button class="dropdown-toggle btn" data-toggle="dropdown">Sort By <b class="caret"></b></button>
+			<span class="dropdown" ><button class="dropdown-toggle btn" data-toggle="dropdown"><span translate>courses.sort_by</span><b class="caret"></b></button>
 		        <ul class="dropdown-menu" style="margin-top: 10px; border-radius: 0px;">
 		            <li><a href="" ng-click="order('short_name')" translate>courses.course_code</a></li>
 					<li><a href="" ng-click="order('name')" translate>courses.course_name</a></li>

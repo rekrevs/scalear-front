@@ -268,7 +268,7 @@ angular.module('scalearAngularApp')
   return{
     restrict:'E',
     scope:{
-      message:'=',
+      message:'@',
       action:"&buttonAction",
       button_title:"@buttonTitle"
     },

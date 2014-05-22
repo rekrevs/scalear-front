@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
           
           if($scope.review_question_count || $scope.review_quizzes_count)
             $scope.inclass_ready = true
-
+          console.log($scope.timeline)
         },
         function(){}
       )

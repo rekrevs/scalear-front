@@ -252,38 +252,23 @@ exports.change_time_zone = function(ptor, value){
 
 
 //====================================================
-//            		change module name
+//            		change the name of an item
 //====================================================
-exports.change_module_name = function(ptor, name, feedback){
-	locator.by_xpath(ptor, '//*[@id="middle"]/div[2]/div[1]/details-text/a').then(function(mod){
-		mod.click().then(function(){
-			locator.by_xpath(ptor, '//*[@id="middle"]/div[2]/div[1]/details-text/form/div/input').then(function(mod_name){
-				mod_name.clear();
-				mod_name.sendKeys(name);
-				locator.by_xpath(ptor, '//*[@id="middle"]/div[2]/div[1]/details-text/form/div/span/button[1]').click().then(function(){
-					feedback(ptor, 'Module was successfully updated');
+exports.rename_item = function(ptor, name, feedback){
+	locator.by_tag(ptor, 'details-text').then(function(name_edit){
+		name_edit.click().then(function(){
+			locator.by_classname(ptor, 'editable-input').then(function(text_field){
+				text_field.sendKeys(name).then(function(){
+					locator.by_classname(ptor, 'icon-ok').click().then(function(){
+						feedback(ptor, 'successfully updated')
+					})
 				})
 			})
 		})
 	})
 }
 
-//====================================================
-//            		change module name
-//====================================================
-exports.change_quiz_name = function(ptor, name, feedback){
-	locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').then(function(quiz){
-		quiz.click().then(function(){
-			locator.by_classname(ptor, 'editable-input').then(function(quiz_name){
-				quiz_name.clear();
-				quiz_name.sendKeys(name);
-				locator.by_classname(ptor, 'icon-ok').click().then(function(){
-					feedback(ptor, 'Quiz was successfully updated');
-				})
-			})
-		})
-	})
-}
+
 
 //https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89
 exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
@@ -613,6 +598,24 @@ exports.save_quiz = function(ptor, feedback){
 exports.save_survey = function(ptor, feedback){
 	locator.by_name(ptor, 'save_quiz').click().then(function(){
 		feedback(ptor, 'Survey was successfully saved');
+	})
+}
+
+//====================================================
+//            	make the quiz required
+//====================================================
+exports.make_quiz_required = function(ptor, feedback){
+	locator.by_tag(ptor, 'details-check').click().then(function(){
+		locator.by_classname(ptor, 'editable-input').then(function(checkbox){
+			checkbox.click().then(function(){
+				locator.by_classname(ptor, 'icon-ok').then(function(confirm){
+					confirm.click().then(function(){
+						feedback(ptor, 'Quiz was successfully updated');
+					})
+				})
+			})
+		})
+		
 	})
 }
 

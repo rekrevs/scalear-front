@@ -188,4 +188,29 @@ angular.module('scalearAngularApp')
                 }
             }
         }
+    }).directive('addModuleItems', function(){
+        return{
+            scope:{
+                index: '=',
+                lecture: '=',
+                quiz: '='
+            },
+            replace: true,
+            restrict: 'E',
+            templateUrl: '/views/teacher/course_editor/add_module_items.html',
+            link: function(scope){
+                scope.collapse_add = true
+                scope.toggleAdd = function(){
+                    scope.collapse_add = !scope.collapse_add;
+                }
+                scope.addlecture = function(index){
+                    scope.lecture(index)
+                    scope.toggleAdd()
+                }
+                scope.addquiz = function(index, type){
+                    scope.quiz(index, type)
+                    scope.toggleAdd()
+                }
+            }
+        }
     });

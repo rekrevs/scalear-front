@@ -1,5 +1,6 @@
 var ptor = protractor.getInstance();
 var locator = require('./locators');
+var o_c = require('./openers_and_clickers');
 var params = ptor.params;
 
 //====================================================
@@ -25,8 +26,8 @@ exports.open_course_by_name = function(ptor, course_name){
 //====================================================
 exports.open_course_whole = function(ptor){
     locator.s_by_classname(ptor, 'whole-box').then(function(course){
-    course[0].click();
- })
+        course[0].click();
+    })
 }
 
 //====================================================
@@ -90,12 +91,12 @@ exports.sign_up = function(ptor, screen_name, fname, lname, studentmail, univer,
 //====================================================
 //                 confirm account
 //====================================================
-exports.confirm_account = function(ptor, feedback){
+exports.confirm_account = function(ptor, smail, feedback){
     ptor.driver.get('https://www.guerrillamail.com/inbox');
         ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
             inbox.click().then(function(){
                 ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
-                    mail.sendKeys('studenttest').then(function(){
+                    mail.sendKeys(smail.split('@')[0]).then(function(){
                         ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
                             set_btn.click().then(function(){
                                 ptor.driver.findElement(protractor.By.id('use-alias')).then(function(check_scram){
@@ -110,6 +111,8 @@ exports.confirm_account = function(ptor, feedback){
                                                         var final_link = params.frontend+confirm_link.split('.com/#')[1];
                                                         ptor.driver.get(final_link).then(function(){
                                                             feedback(ptor, 'Your account was successfully confirmed. You are now signed in.');
+                                                            ptor.driver.sleep(7000)
+                                                            ptor.navigate().refresh();
                                                         })
                                                     })
                                                 })
@@ -213,6 +216,18 @@ exports.open_course_editor = function(ptor){
         });
     })
 }
+
+//====================================================
+//          open enrolled students page
+//====================================================
+exports.open_enrolled = function(ptor){
+    info_icon = ptor.findElement(protractor.By.id("students")).then(function(btn){
+        btn.click();
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('enrolled_students');
+        });
+    })
+}
 //====================================================
 //                  delete account
 //====================================================
@@ -278,7 +293,7 @@ exports.home = function(ptor){
     locator.by_classname(ptor, 'modern-logo').then(function(home){
         home.click().then(function(){
             ptor.getCurrentUrl().then(function(url) {
-                expect(url).toContain('http://staging.scalable-learning.com/#/student_courses');
+                expect(url).toContain(params.frontend+'/student_courses');
             });
         })
     })
@@ -288,7 +303,7 @@ exports.home_teacher = function(ptor){
     locator.by_classname(ptor, 'modern-logo').then(function(home){
         home.click().then(function(){
             ptor.getCurrentUrl().then(function(url) {
-                expect(url).toContain('http://staging.scalable-learning.com/#/courses');
+                expect(url).toContain(params.frontend+'/courses');
             });
         })
     })
@@ -396,7 +411,7 @@ exports.sign_up_teacher = function(ptor, screen_name, fname, lname, studentmail,
 //====================================================
 //               confirm teacher account
 //====================================================
-exports.confirm_account_teacher = function(ptor, feedback){
+exports.confirm_account_teacher = function(ptor, mail ,feedback){
     ptor.driver.get('https://www.guerrillamail.com/inbox');
         ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
             inbox.click().then(function(){
@@ -449,4 +464,37 @@ exports.to_student = function(ptor){
     this.open_tray(ptor);
     this.logout(ptor, this.feedback);
     this.sign_in(ptor, params.mail, params.password, this.feedback);   
+}
+
+//=======================================================
+//                  scroll into view
+//=======================================================
+
+exports.scroll = function(ptor, value) {
+    ptor.executeScript('window.scrollBy(0, ' + value + ')', '');
+}
+
+//=======================================================
+//                  scroll to top
+//=======================================================
+
+exports.scroll_to_top = function(ptor) {
+    ptor.executeScript('window.scrollBy(0, -20000)', '');
+}
+//=======================================================
+//                  scroll to bottom
+//=======================================================
+
+exports.scroll_to_bottom = function(ptor) {
+    ptor.executeScript('window.scrollBy(0, 20000)', '');
+}
+//=======================================================
+//                  scroll to element
+//=======================================================
+
+exports.scroll_element = function(ptor, element) {
+    element.getLocation().then(function(loc){
+        ptor.executeScript('window.scrollTo('+loc.x+','+loc.y+')', '');
+    })
+    
 }

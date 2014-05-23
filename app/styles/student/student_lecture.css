@@ -114,9 +114,11 @@
     #main-video-container{
     }
 
-    .video_class{
+    .video_class, .widescreen{
         width: 55.9vw; height: 31.45vw;
     }
+
+    
 
     .video_class_full{
         width:100%;
@@ -131,6 +133,12 @@
         left: 95%;
         margin-top: 5px;
     }
+
+    .solved{
+    cursor: pointer;
+    color:#0088CC;
+
+}
     /*@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
       #main-video-container{
         clear:both;
@@ -142,7 +150,7 @@
       }
     }*/
     #student-accordion{
-        width: 41%;
+        width: 40%;
         float: right; 
         position: relative;
         right: 0px;

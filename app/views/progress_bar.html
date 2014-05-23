@@ -17,11 +17,11 @@
     </style>
     <div class="progressBar" ng-click="progress($event)">
         <div class="elapsed" ng-style="{width: elapsed_width}" >
-            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'discussion' } " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: black; z-index: 10000;'}}" tooltip="{{'answer.question'|translate}}"></div>
+            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'discussion' } " style="{{'left :'+(element['time']/total_duration)*100+'%; background-color: black; z-index: 10000;'}}" tooltip="{{'answer.question'|translate}}"></div>
 
-            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'confused', data.very: false} " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: orange; z-index: 10000;'}}" tooltip="{{'courses.confused' | translate}}"></div>
+            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'confused', data.very: false} " style="{{'left :'+(element['time']/total_duration)*100+'%; background-color: orange; z-index: 10000;'}}" tooltip="{{'courses.confused' | translate}}"></div>
 
-            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'confused', data.very: true} " style="{{'left :'+(element['time']/total_duration*100)+'%; background-color: red; z-index: 10000;'}}" tooltip="{{'courses.really_confused'|translate}}"></div>
+            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'confused', data.very: true} " style="{{'left :'+(element['time']/total_duration)*100+'%; background-color: red; z-index: 10000;'}}" tooltip="{{'courses.really_confused'|translate}}"></div>
         </div>
     </div>
     <div class="controlDiv" ng-class="play_pause_class" ng-click="playBtn()" style="float: left;margin: 2px 5px 0 5px;"></div>
@@ -34,10 +34,11 @@
 </div>
 <div ng-show="player.controls.youtube" class="qualityDiv" ng-click='showQuality()' title="{{'youtube.click_video_quality'|translate}}"></div>
 <div ng-show="quality" class="dropup">
-        <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:inline; left: 89.7%;top: -140px; border-radius: 0px; background-color: currentcolor; padding: 0px; bottom: auto; min-width: 0px;z-index: 10000;">
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:inline; left: 89.7%;top: -140px; border-radius: 0px; background-color: currentcolor; padding: 0px; bottom: auto; min-width: 0px;z-index: 10000;">
         <li ng-class="{active: chosen_quality=='small' }"><a tabindex="-1" ng-click="setQuality('small')" style="color: white;">240p</a></li>
         <li ng-class="{active: chosen_quality=='large'}"><a tabindex="-1" ng-click="setQuality('large')" style="color: white;">480p</a></li>
         <li ng-class="{active: chosen_quality=='hd720' }"><a tabindex="-1" ng-click="setQuality('hd720')" style="color: white;">720p (HD)</a></li>
     </ul>
+
 </div>
 <div ng-transclude></div>

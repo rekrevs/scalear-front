@@ -234,6 +234,7 @@ angular.module('scalearAngularApp')
 
 					player.on('playing',
 						function(){
+							console.log("youtue playing")
 							parent.focus()
 							if(player_events.onPlay){								
 								player_events.onPlay();
@@ -587,11 +588,11 @@ angular.module('scalearAngularApp')
             scope.playBtn = function(){
                 if(scope.player.controls.paused()){
 			        scope.player.controls.play()
-			        scope.play_pause_class = "pause"
+			        // scope.play_pause_class = "pause"
 		      	}
 		      	else{
 			        scope.player.controls.pause()
-			        scope.play_pause_class = "play"
+			        // scope.play_pause_class = "play"
 		      	}
             }
 
@@ -605,8 +606,7 @@ angular.module('scalearAngularApp')
 
             scope.$watch("volume",function()
             {
-                if(scope.volume)
-                {
+                if(scope.volume){
                     scope.player.controls.volume(scope.volume);
                     if(scope.volume!=0)
                         scope.mute_unmute_class="mute";
@@ -631,8 +631,10 @@ angular.module('scalearAngularApp')
 
             scope.progress = function(event){
 		        var element = angular.element('.progressBar');
+		        console.log(event)
+		        console.log(element.outerWidth())
 		        var ratio = (event.pageX-element.offset().left)/element.outerWidth();                
-		        scope.elapsed_width = ratio*100+'%'
+		        // scope.elapsed_width = ratio*100+'%'
 		        scope.seek()(scope.total_duration*ratio)    
             }
 

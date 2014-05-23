@@ -514,17 +514,18 @@ angular.module('scalearAngularApp')
           }, true);
       }
   };
-}]).directive('studentTimeline',["$timeout","$stateParams","Forum","Timeline","Lecture","editor","$translate", function($timeout, $stateParams, Forum, Timeline, Lecture,editor, $translate) {
+}]).directive('studentTimeline', function() {
   return {
     restrict:"E",
     scope:{
       timeline:'=',
       lectures:'=',
-      lecture:'=current'
+      lecture:'=current',
+      seek:'&'
     },
     templateUrl:'/views/student/lectures/student_timeline.html',
     link: function(scope, element, attrs) {
-      scope.checkModel={quiz:true,confused:false, discussion:false};
+      scope.checkModel={quiz:true,confused:true, discussion:true};
         scope.checkEmpty= function(item){
           return  item.type!=''
         }
@@ -540,75 +541,70 @@ angular.module('scalearAngularApp')
         }
     }
   }
-}]).directive('confusedTimeline',function(){
+}).directive('confusedTimeline',['Lecture', function(Lecture){
   return{
-    restrict:"E",
-    replace:true,
+    restrict:"A",
+    // replace:true,
     scope:{
-      lecture_id:'=',
       item:'=',
-      seek:'&',
-      delete:'&'
+      seek:'&'
     },
-    template: '<tr>'+
-                '<td class="timeline-icon-container">'+
-                  '<div ng-click="seek()(item.time, lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
-                    '<img src="../images/confused-timeline.png" />'+                  
-                  '</div>'+
-                '</td>'+
-                '<td>'+
-                '<p class="solved" ng-click="seek()(item.time, lecture_id)" translate>{{msg}}</p>'+
-                '</td>'+
-                '<td style="width:20px;">'+                 
-                   '<delete_button size="small" action="delete()(item.data.id, lecture_id, item)" />'+
-                '</td>'+
-              '</tr>',
+    template:'<td class="timeline-icon-container">'+
+              '<div ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
+                '<img src="../images/confused-timeline.png" />'+                  
+              '</div>'+
+              '</td>'+
+              '<td>'+
+              '<p class="solved" ng-click="seek()(item.time, item.data.lecture_id)" translate>{{msg}}</p>'+
+              '</td>'+
+              '<td style="width:20px;">'+                 
+                 '<delete_button size="small" action="deleteConfused(item)" />'+
+            '</td>',
     link:function(scope, element, attrs){
-      scope.$watch('item.data.very',function(){
+      var unwatch = scope.$watch('item.data.very',function(){
           scope.msg =scope.item.data.very? 'courses.really_confused': 'courses.confused'
       })
 
-      scope.deleteConfused = function(confused_id, lecture_id, c){
+      scope.deleteConfused = function(confused){
         Lecture.deleteConfused(
         {
-          lecture_id: lecture_id, 
-          confused_id: confused_id
+          lecture_id: confused.data.lecture_id, 
+          confused_id: confused.data.id
         }, 
         function(response){
           console.log("deleted");
+          unwatch()
+          // delete scope.item
+          scope.$emit('update_timeline', confused)
           // now want to remove from list (both l.confuseds and $scope.timeline..)
-          var index=scope.timeline['lecture'][lecture_id].items.indexOf(c);
-          scope.timeline['lecture'][lecture_id].items.splice(index, 1)
+          // var index=scope.timeline['lecture'][lecture_id].items.indexOf(confused);
+          // scope.timeline['lecture'][lecture_id].items.splice(index, 1)
         });
       }
 
     }
   }
-})
+}])
 .directive('quizTimeline',function(){
   return{
-    restrict:"E",
+    restrict:"A",
     // replace:true,
     scope:{
-      lecture_id:'=',
       item:'=',
       seek:'&',
     },
-    template:'<tr>'+
-                '<td class="timeline-icon-container">'+
-                '{{item}}'+
-                  '<div ng-show="item.data.is_quiz_solved"  ng-click="seek()(item.time, lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
-                      '<img src="../images/quiz-timeline.png" />'+
-                  '</div>'+
-                '</td>'+
-                '<td>'+
-                  '<p ng-show="item.data.is_quiz_solved" class="solved" ng-click="seek()(item.time, lecture_id)">{{item.data.question}}</p>'+
-                  '<p ng-show="!item.data.is_quiz_solved" >{{item.data.question}}</p>'+
-                '</td>'+
-                '<td style="width:20px;">'+                 
-                   '<img ng-show="item.data.is_quiz_solved" src="images/check7.png" />'+
-                '</td>'+
-              '</tr>',
+    template:'<td class="timeline-icon-container">'+
+                '<div ng-show="item.data.is_quiz_solved"  ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
+                    '<img src="../images/quiz-timeline.png" />'+
+                '</div>'+
+              '</td>'+
+              '<td>'+
+                '<p ng-show="item.data.is_quiz_solved" class="solved" ng-click="seek()(item.time, item.data.lecture_id)">{{item.data.question}}</p>'+
+                '<p ng-show="!item.data.is_quiz_solved" >{{item.data.question}}</p>'+
+              '</td>'+
+              '<td style="width:20px;">'+                 
+                 '<img ng-show="item.data.is_quiz_solved" src="images/check7.png" />'+
+            '</td>',
     link:function(scope, element, attrs){}
   }
 })

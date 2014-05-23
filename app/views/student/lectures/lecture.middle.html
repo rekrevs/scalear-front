@@ -16,29 +16,35 @@
 					<button type="button" ng-click="replay()" class="btn btn-primary" style="position:relative;top:330px;height:70px;width:180px;" translate>lectures.replay</button>
 			    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-primary" style="position:relative;top:330px;height:70px;width:180px;"><span translate>next</span> >> </button>
 				</div> -->
-					<!-- <div ng-show="display_mode" style="position: absolute; top: 36px; bottom: 53px; left: 0px;z-index: 1;">
-						<quiz ng-style="quiz_layer" ng-show="display_mode">
-							 <div ng-if="selected_quiz.quiz_type == 'html'" ><student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/></div>
-							 <div ng-if="selected_quiz.quiz_type != 'html'"><student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/></div>
-						</quiz>
-					</div> -->
+
 					<video_container  ng-class="video_class" ng-init="video_class='video_class'" screenfull active="fullscreen">
+						<div ng-show="quiz_mode" style="position: absolute; top: 36px; bottom: 53px; left: 0px;z-index: 1;">
+							<quiz ng-style="quiz_layer" ng-show="quiz_mode">
+								 <div ng-if="selected_quiz.quiz_type == 'html'" >
+								 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
+								 </div>
+								 <div ng-if="selected_quiz.quiz_type != 'html'">
+								 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
+								 </div>
+							</quiz>
+						</div>
 						<center><loading size='small' show="!lecture.url" style="color:#428bca; position:absolute;width: 100%;font-weight:300;font-size:12px;top: 50%;" /></center>
 						<youtube ng-show="lecture.url" ng-class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1' />			
-				    	<progress-bar play_pause_class="play_pause_class" ng-show="lecture.url" elapsed_width="elapsed_width" seek="seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
+				    	<progress-bar play_pause_class="play_pause_class" ng-show="lecture.url" elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
 				    		<controls id="controls-bar" class="controls" ng-show="lecture.url" confused="addConfused()" fullscreen="toggleFullscreen()" ask="toggleQuestionBlock()">
 							</controls>
 							<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
 							<notification message="notification_message" submessage="notification_submessage" ></notification> <!-- ng-style="notify_position"  --> <!-- ng-show='show_notification || review_inclass' -->
 				    	</progress-bar>
 				    </video_container>
+
 			</form>
 		</div>
 		<div id="student-accordion">
 			<question_block ng-show="show_question_block" time="current_question_time" action="saveQuestion" />
 		    <tabset style="width:100%;">
 		        <tab id="video_events" active="tabs[0]" heading="{{'lectures.video_events' | translate}}" style="cursor: pointer; text-align: center;" >
-		        		<student_timeline timeline="timeline['lecture']" lectures="module_lectures" current='lecture'/>
+		        		<student_timeline timeline="timeline['lecture']" lectures="module_lectures" current="lecture" seek="seek_and_pause" />
 		        </tab>
 		        <tab id="video_notes" active="tabs[1]" heading="{{'lectures.video_notes' | translate}}" style="cursor: pointer;">
 		            <div>

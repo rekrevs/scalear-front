@@ -319,12 +319,8 @@ angular.module('scalearAngularApp', [
             })
             .state('course.courseware.module.quiz', {
                 url: '/quizzes/:quiz_id',
-                views: {
-                    'middle': {
-                        templateUrl: '/views/student/lectures/quiz.middle.html',
-                        controller: 'studentQuizMiddleCtrl'
-                    }
-                }
+                templateUrl: '/views/student/lectures/quiz.middle.html',
+                controller: 'studentQuizMiddleCtrl'
             })
             .state('course.course_editor', {
                 url: '/course_editor',

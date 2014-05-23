@@ -10,17 +10,16 @@
     </label>
 </div>
 <br>
-<div style="height:500px">
+<div style="height:630px">
     <div style="overflow:auto;height:79%; position: absolute; width: 95%;"> <!-- has all discussions -->        
         <div ng-repeat="l in lectures" class='dimmed' style="min-width: 95%;" ng-class="{lectureopen: l.id == lecture.id}" id={{"outline_"+l.id}}>        
             <h3>{{l.name}}</h3>
             <table class="table table-striped" style="border-spacing: 0.2em;">
-                <div ng-repeat="item in timeline[l.id].items | filter:filterType">
-                        {{item}}
-                        <quiz_timeline ng-show="item.type=='quiz'" lecture_id='l.id' item='item' seek='seek' />
-                        <!-- <confused_timeline ng-show="item.type=='confused'" lecture_id='l.id' item='item' seek='seek' delete='deleteConfused' />
-                        <discussion_timeline ng-show="item.type=='discussion'" lecture_id='l.id' item='item' seek='seek' /> -->
-                </div>
+                <tbody ng-repeat="item in timeline[l.id].items | filter:filterType">
+                        <tr quiz_timeline ng-show="item.type=='quiz'" item='item' seek='seek()' />
+                        <tr confused_timeline ng-show="item.type=='confused'" item='item' seek='seek()'/>
+                        <tr discussion_timeline ng-show="item.type=='discussion'" item='item' seek='seek()' />
+                </tbody>
             </table>
             <hr>
         </div>

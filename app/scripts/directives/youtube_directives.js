@@ -168,17 +168,32 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek = function(time){
+					console.log("entering sekking ")
 					if(time<0)
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
 					if(player_controls.readyState() != 4){
-						player.on("loadeddata", 
-						function(){
-							player.currentTime(time);
-						});
+						scope.readyState = player_controls.readyState
+						var unwatch = scope.$watch('readyState()',function(){
+							console.log("ready state=")
+							console.log(scope.readyState())
+							if (scope.readyState() == 4){
+								console.log("chanign time hopefully")
+								player.currentTime(time);
+								unwatch()
+								scope.readyState = null
+							}
+						})
+						// console.log(player_controls.readyState())
+						// player.on("loadeddata", 
+						// function(){
+						// 	console.log("seek after load")
+						// 	player.currentTime(time);
+						// });
 					}
 					else{
+						console.log("seeking now")
 						player.currentTime(time);
 					}
 					parent.focus()
@@ -225,6 +240,8 @@ angular.module('scalearAngularApp')
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
+							console.log("ready video yaahhh")
+							
 							$log.debug("Video data loaded")	
 							if(player_events.onReady){
 								player_events.onReady();
@@ -235,6 +252,7 @@ angular.module('scalearAngularApp')
 					player.on('playing',
 						function(){
 							console.log("youtue playing")
+							
 							parent.focus()
 							if(player_events.onPlay){								
 								player_events.onPlay();
@@ -631,10 +649,7 @@ angular.module('scalearAngularApp')
 
             scope.progress = function(event){
 		        var element = angular.element('.progressBar');
-		        console.log(event)
-		        console.log(element.outerWidth())
-		        var ratio = (event.pageX-element.offset().left)/element.outerWidth();                
-		        // scope.elapsed_width = ratio*100+'%'
+		        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
 		        scope.seek()(scope.total_duration*ratio)    
             }
 

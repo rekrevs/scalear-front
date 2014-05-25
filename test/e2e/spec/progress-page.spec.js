@@ -312,6 +312,293 @@ describe("teacher", function(){
 		teacher.save_survey(ptor, o_c.feedback)
 	})
 
+
+
+	//-----------THE SECOND MODULE------------//
+	it('should scroll to the top', function(){
+		o_c.scroll_to_top(ptor)
+	})
+	it('should create a new module', function(){
+		teacher.add_module(ptor, o_c.feedback);
+	})
+	it('should open the created module', function(){
+		teacher.open_module(ptor, 2)
+	})
+	it('should rename the module created', function(){
+		teacher.rename_module(ptor, 'New Module 2')
+	})
+	
+	//-------------------
+	// it('should add a lecture', function(){
+	// 	teacher.add_lecture(ptor, 1, o_c.feedback)
+	// })
+	//-------------------
+	it('should add a lecture', function(){
+		teacher.add_lecture(ptor, 2, o_c.feedback);
+	})
+	it('should open the created lecture', function(){
+		teacher.open_item(ptor, 2, 1);
+	})
+	it('should set the url for the lecture', function(){
+		teacher.initialize_lecture(ptor, 'http://www.youtube.com/watch?v=xGcG4cp2yzY')
+	})
+	it('should seek the video', function(){
+		youtube.seek(ptor, 10)
+	})
+	it('should add an over video quiz MCQ', function(){
+		quiz_ov.create_mcq_quiz(ptor, o_c.feedback)
+		lecture_middle.rename_quiz(ptor, 1, 'MCQ QUIZ')
+		o_c.scroll_to_top(ptor)
+		quiz_ov.make_mcq_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback)
+		lecture_middle.exit_quiz(ptor, o_c.feedback)
+	})
+
+	it('should seek the video', function(){
+		youtube.seek(ptor, 20)
+	})
+	it('should add an over video quiz OCQ', function(){
+		quiz_ov.create_ocq_quiz(ptor, o_c.feedback)
+		lecture_middle.rename_quiz(ptor, 3, 'OCQ QUIZ')
+		o_c.scroll_to_top(ptor)
+		quiz_ov.make_ocq_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback)
+		lecture_middle.exit_quiz(ptor, o_c.feedback)
+	})
+
+	it('should seek the video', function(){
+		youtube.seek(ptor, 30)
+	})
+	it('should add an over video quiz DRAG', function(){
+		quiz_ov.create_drag_quiz(ptor, o_c.feedback)
+		lecture_middle.rename_quiz(ptor, 5, 'DRAG QUIZ')
+		o_c.scroll_to_top(ptor)
+		quiz_ov.make_drag_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback)
+		lecture_middle.exit_quiz(ptor, o_c.feedback)
+	})
+// -----------------------------------
+	it('should scroll to the top', function(){
+		o_c.scroll_to_top(ptor)
+	})
+	it('should add another lecture', function(){
+		teacher.add_lecture(ptor, 2, o_c.feedback);
+	})
+	it('should open the created lecture', function(){
+		teacher.open_item(ptor, 2, 2);
+	})
+	it('should rename the lecture', function(){
+		teacher.rename_item(ptor, 'New Lecture Text', o_c.feedback)
+	})
+	it('should set the url for the lecture', function(){
+		teacher.initialize_lecture(ptor, 'http://www.youtube.com/watch?v=xGcG4cp2yzY')
+	})
+	
+	it('should seek the video', function(){
+		youtube.seek(ptor, 10)
+	})
+	it('should add an over video TEXT quiz MCQ', function(){
+		o_c.scroll(ptor, 200)
+		quiz_ov_text.create_mcq_quiz(ptor, o_c.feedback)
+		o_c.scroll(ptor, -200)
+		lecture_middle.rename_quiz(ptor, 1, 'MCQ TEXT QUIZ')
+		o_c.scroll_to_top(ptor)
+		quiz_ov_text.make_mcq_questions(ptor, o_c.feedback)
+		lecture_middle.exit_quiz(ptor, o_c.feedback)
+	})
+
+	it('should seek the video', function(){
+		youtube.seek(ptor, 20)
+	})
+	it('should add an over video TEXT quiz OCQ', function(){
+		quiz_ov_text.create_ocq_quiz(ptor, o_c.feedback)
+		lecture_middle.rename_quiz(ptor, 3, 'OCQ TEXT QUIZ')
+		o_c.scroll_to_top(ptor)
+		quiz_ov_text.make_ocq_questions(ptor, o_c.feedback)
+		lecture_middle.exit_quiz(ptor, o_c.feedback)
+	})
+
+	it('should seek the video', function(){
+		youtube.seek(ptor, 30)
+	})
+	it('should add an over video TEXT quiz DRAG', function(){
+		quiz_ov_text.create_drag_quiz(ptor, o_c.feedback)
+		lecture_middle.rename_quiz(ptor, 5, 'DRAG TEXT QUIZ')
+		o_c.scroll_to_top(ptor)
+		quiz_ov_text.make_drag_questions(ptor, o_c.feedback)
+		lecture_middle.exit_quiz(ptor, o_c.feedback)
+	})
+
+	
+	// -----------------------------------
+	it('should scroll to the top', function(){
+		o_c.scroll_to_top(ptor)
+	})
+	it('should add another lecture', function(){
+		teacher.add_lecture(ptor, 2, o_c.feedback);
+	})
+	it('should open the created lecture', function(){
+		teacher.open_item(ptor, 2, 3);
+	})
+	it('should rename the lecture', function(){
+		teacher.rename_item(ptor, 'New Lecture Surveys', o_c.feedback)
+	})
+	it('should set the url for the lecture', function(){
+		teacher.initialize_lecture(ptor, 'http://www.youtube.com/watch?v=xGcG4cp2yzY')
+	})
+	
+	it('should seek the video', function(){
+		youtube.seek(ptor, 10)
+	})
+	it('should add an over video MCQ Survey', function(){
+		o_c.scroll(ptor, 200)
+		survey_ov.create_mcq_survey(ptor, o_c.feedback)
+		o_c.scroll(ptor, -200)
+		lecture_middle.rename_quiz(ptor, 1, 'MCQ SURVEY')
+		o_c.scroll_to_top(ptor)
+		survey_ov.make_mcq_survey_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback)
+		lecture_middle.exit_quiz(ptor, o_c.feedback)
+	})
+
+	it('should seek the video', function(){
+		youtube.seek(ptor, 20)
+	})
+	it('should add an over video OCQ Survey', function(){
+		survey_ov.create_ocq_survey(ptor, o_c.feedback)
+		lecture_middle.rename_quiz(ptor, 3, 'OCQ SURVEY')
+		o_c.scroll_to_top(ptor)
+		survey_ov.make_ocq_survey_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback)
+		lecture_middle.exit_quiz(ptor, o_c.feedback)
+	})
+	//-----------------
+
+
+
+
+
+
+	it('should scroll to top', function(){
+		o_c.scroll_to_top(ptor)
+	})
+	it('should add a normal quiz', function(){
+		teacher.add_quiz(ptor, 2, o_c.feedback);
+	})
+	//------
+	// it('should open the first module', function(){
+	// 	teacher.open_module(ptor, 1)
+	// })
+	//------
+	it('should open the quiz', function(){
+		teacher.open_item(ptor, 2, 4)
+	})
+
+	it('should add a FIRST header', function(){
+		teacher.add_quiz_header(ptor, 'first header')
+	})
+	it('should add a MCQ question', function(){
+		teacher.add_quiz_question_mcq(ptor, 'mcq question', 2, [1, 2])
+	})
+	it('should add a SECOND header', function(){
+		teacher.add_quiz_header(ptor, 'second header')
+	})
+	it('should add an OCQ question', function(){
+		teacher.add_quiz_question_ocq(ptor, 'ocq question', 2, 1)
+	})
+	it('should add a FREE question', function(){
+		teacher.add_quiz_question_free(ptor, 'free question', false)
+	})
+	
+	it('should add a MATCH question', function(){
+		teacher.add_quiz_question_free(ptor, 'match question', true, 'match answer')
+	})
+	it('should add a DRAG question', function(){
+		teacher.add_quiz_question_drag(ptor, 'drag question', 2)
+	})
+	it('should save the quiz', function(){
+		teacher.save_quiz(ptor, o_c.feedback)
+	})
+	it('should scroll to the top', function(){
+		o_c.scroll_to_top(ptor)
+	})
+
+
+
+	it('should add a normal REQUIRED quiz', function(){
+		teacher.add_quiz(ptor, 2, o_c.feedback);
+	})
+	//------
+	// it('should open the first module', function(){
+	// 	teacher.open_module(ptor, 1)
+	// })
+	//------
+	it('should open the quiz', function(){
+		teacher.open_item(ptor, 2, 5)
+	})
+	it('should rename the quiz', function(){
+		teacher.rename_item(ptor, 'New Required Quiz', o_c.feedback)
+	})
+	it('should make the quiz required', function(){
+		teacher.make_quiz_required(ptor, o_c.feedback)
+	})
+
+	it('should add a FIRST header', function(){
+		teacher.add_quiz_header(ptor, 'first header')
+	})
+	it('should add a MCQ question', function(){
+		teacher.add_quiz_question_mcq(ptor, 'mcq question', 2, [1, 2])
+	})
+	it('should add a SECOND header', function(){
+		teacher.add_quiz_header(ptor, 'second header')
+	})
+	it('should add an OCQ question', function(){
+		teacher.add_quiz_question_ocq(ptor, 'ocq question', 2, 1)
+	})
+	it('should add a FREE question', function(){
+		teacher.add_quiz_question_free(ptor, 'free question', false)
+	})
+	
+	it('should add a MATCH question', function(){
+		teacher.add_quiz_question_free(ptor, 'match question', true, 'match answer')
+	})
+	it('should add a DRAG question', function(){
+		teacher.add_quiz_question_drag(ptor, 'drag question', 2)
+	})
+	it('should save the quiz', function(){
+		teacher.save_quiz(ptor, o_c.feedback)
+	})
+
+
+
+	it('should scroll to the top', function(){
+		o_c.scroll_to_top(ptor)
+	})
+	it('should add a normal survey', function(){
+		teacher.add_survey(ptor, 2, o_c.feedback)
+	})
+
+	it('should open the survey', function(){
+		teacher.open_item(ptor, 2, 6)
+	})
+
+	it('should add a FIRST header', function(){
+		teacher.add_quiz_header(ptor, 'first header')
+	})
+	it('should add a MCQ question for the SURVEY', function(){
+		teacher.add_survey_question_mcq(ptor, 'mcq question', 2)
+	})
+	it('should add a SECOND header', function(){
+		teacher.add_quiz_header(ptor, 'second header')
+	})
+	it('should add an OCQ question for the SURVEY', function(){
+		teacher.add_survey_question_ocq(ptor, 'ocq question', 2)
+	})
+	it('should add a FREE question for the SURVEY', function(){
+		teacher.add_survey_question_free(ptor, 'free question')
+	})
+	it('should scroll to bottom', function(){
+		o_c.scroll_to_bottom(ptor)
+	})
+	it('should save the survey', function(){
+		teacher.save_survey(ptor, o_c.feedback)
+	})
+
 	it('should switch to student', function(){
 		o_c.to_student(ptor)
 	})
@@ -375,7 +662,7 @@ describe("teacher", function(){
 //				test specific functions
 /////////////////////////////////////////////////////////
 function create_lecture(lecture_name, lecture_url, module_no, item_no){
-	teacher.add_lecture(ptor, 1, o_c.feedback);
+	teacher.add_lecture(ptor, module_no, o_c.feedback);
 	teacher.open_item(ptor, module_no, item_no);
 	teacher.rename_item(ptor, lecture_name, o_c.feedback)
 	teacher.initialize_lecture(ptor,  lecture_name, lecture_url, o_c.feedback, true);

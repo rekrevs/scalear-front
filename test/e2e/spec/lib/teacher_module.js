@@ -133,8 +133,8 @@ exports.add_lecture = function(ptor, mo_no, feedback){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
 			btns_frame.findElement(protractor.By.className('btn-success')).then(function(add_button){
 				add_button.click().then(function(){
-					locator.by_classname(ptor, 'add-menu-container').then(function(menu){
-						menu.findElements(protractor.By.className('add-item')).then(function(options){
+					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
+						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
 							options[0].click().then(function(){
 								feedback(ptor, 'Lecture was successfully created.')
 							});
@@ -155,8 +155,8 @@ exports.add_quiz = function(ptor, mo_no, feedback){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
 			btns_frame.findElement(protractor.By.className('btn-success')).then(function(add_button){
 				add_button.click().then(function(){
-					locator.by_classname(ptor, 'add-menu-container').then(function(menu){
-						menu.findElements(protractor.By.className('add-item')).then(function(options){
+					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
+						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
 							options[1].click().then(function(){
 								feedback(ptor, 'Quiz was successfully created.')
 							});
@@ -177,8 +177,8 @@ exports.add_survey = function(ptor, mo_no, feedback){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
 			btns_frame.findElement(protractor.By.className('btn-success')).then(function(add_button){
 				add_button.click().then(function(){
-					locator.by_classname(ptor, 'add-menu-container').then(function(menu){
-						menu.findElements(protractor.By.className('add-item')).then(function(options){
+					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
+						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
 							options[2].click().then(function(){
 								feedback(ptor, 'Survey was successfully created.')
 							});
@@ -636,6 +636,27 @@ exports.initialize_lecture = function(ptor, lecture_url){
 		})
 	})
 }
+
+//====================================================
+//				rename a module
+//===================================================
+exports.rename_module = function(ptor, name){
+	locator.by_classname(ptor, 'whole-middle').then(function(details){
+		details.findElement(protractor.By.tagName('details-text')).click().then(function(){
+			locator.by_classname(ptor, 'editable-input').then(function(field){
+				field.sendKeys(name).then(function(){
+					locator.by_classname(ptor, 'icon-ok').then(function(confirm_button){
+						confirm_button.click().then(function(){
+							o_c.feedback(ptor, 'successfully updated')
+						})
+					})
+				})
+			})
+		})
+		
+	})
+}
+
 
 
 

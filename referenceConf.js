@@ -44,7 +44,12 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        // 'test/e2e/spec/enrolled-students.spec.js'
+        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js'
+        // 'test/e2e/spec/ocq-survey-over-video.spec.js'
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js'
+        //'test/e2e/spec/mcq-quizzez-over-video.spec.js'
+        //'test/e2e/spec/ocq-quizzez-over-video.spec.js'
+        //'test/e2e/spec/enrolled-students.spec.js'
         //'test/e2e/spec/drag-quizzez-over-video.spec.js'
         // 'test/e2e/spec/quizzez-over-video.spec.js'
         // 'test/e2e/spec/course_editor_basic.spec.js'
@@ -62,7 +67,9 @@ exports.config = {
         // 'test/e2e/spec/drag_overvideo_text.spec.js',
         // 'test/e2e/spec/mainmenu.spec.js',
         // 'test/e2e/spec/mcq_overvideo.spec.js',
-        // 'test/e2e/spec/mcq_overvideo_text.spec.js',
+        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',
+        //'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
+        //'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/ocq_overvideo.spec.js',
         // 'test/e2e/spec/ocq_overvideo_text.spec.js',
         // 'test/e2e/spec/normal_quiz.spec.js',
@@ -109,7 +116,6 @@ exports.config = {
     // This can be changed via the command line as:
     //   --params.login.user 'Joe'
     params: {
-
         frontend: 'http://localhost:9000/#',
         // frontend: 'http://staging.scalable-learning.com/#',
         // teacher_mail: 'teacher3@sharklasers.com',

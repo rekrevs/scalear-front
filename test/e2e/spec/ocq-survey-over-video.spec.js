@@ -8,43 +8,14 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
+var ocq_s_q1_x = 169; //175-6;
+var ocq_s_q1_y = 127; //133-6;
 
-//equation 
-// 570 >> 169
-//(width*169)/570
-// questions coordinates
-var ocq_q1_x = 169; //175-6;
-var ocq_q1_y = 127; //133-6;
+var ocq_s_q2_x = 169; //175-6;
+var ocq_s_q2_y = 157; //133-6;
 
-var ocq_q2_x = 169; //175-6;
-var ocq_q2_y = 157; //133-6;
-
-var ocq_q3_x = 169; //175-6;
-var ocq_q3_y = 187; //133-6;
-
-//function testing
-xdescribe("teacher", function(){
-	it('should', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-		o_c.open_course_whole(ptor);
-		//teacher.add_module(ptor, o_c.feedback);
-		teacher.open_module(ptor, 1);
-		teacher.open_lecture(ptor, 1, 1);
-		create_mcq_quiz(ptor, o_c.feedback);
-		make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y, o_c.feedback);
-		// o_c.open_tray(ptor);
-		// o_c.open_lectures(ptor);
-		//youtube.seek(ptor, 50);
-		//teacher.create_lecture(ptor, "mena", "https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
-		//create_mcq_quiz(ptor, o_c.feedback);
-		//check_mcq_questions_coord(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
-		// check_answer_given_answer_order(ptor, 1);
-		// answer(ptor);
-		// check_answer_correct(ptor);
-
-
-	})
-})'test/e2e/spec/mcq-quizzez-over-video.spec.js'
+var ocq_s_q3_x = 169; //175-6;
+var ocq_s_q3_y = 187; //133-6;
 
 describe("1", function(){
 
@@ -60,17 +31,17 @@ describe("1", function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 	//test
-	it('should add a module and lecture to create quizzes', function(){
+	it('should add a module and lecture to create surveys', function(){
 		o_c.open_course_whole(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "ocq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		teacher.create_lecture(ptor, "ocq_survey_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);	
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
+		create_ocq_survey(ptor, o_c.feedback);
+		make_ocq_survey_questions(ptor, ocq_s_q1_x, ocq_s_q1_y, ocq_s_q2_x, ocq_s_q2_y, ocq_s_q3_x, ocq_s_q3_y, o_c.feedback);
 	})
 
 	it('should login a student and check for coordinates', function(){
@@ -80,7 +51,7 @@ describe("1", function(){
 		o_c.open_lectures(ptor);
 		youtube.seek(ptor, 50);
 		expect_quiz(ptor);
-		check_ocq_questions_coord(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y);
+		check_ocq_survey_questions_coord(ptor, ocq_s_q1_x, ocq_s_q1_y, ocq_s_q2_x, ocq_s_q2_y, ocq_s_q3_x, ocq_s_q3_y);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -116,17 +87,17 @@ describe("2", function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 	//test
-	it('should add a module and lecture to create quizzes', function(){
+	it('should add a module and lecture to create surveys', function(){
 		o_c.open_course_whole(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "ocq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		teacher.create_lecture(ptor, "ocq_survey_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
+		create_ocq_survey(ptor, o_c.feedback);
+		make_ocq_survey_questions(ptor, ocq_s_q1_x, ocq_s_q1_y, ocq_s_q2_x, ocq_s_q2_y, ocq_s_q3_x, ocq_s_q3_y, o_c.feedback);
 	})
 
 	it('should login a student and check for no of ocqs ', function(){
@@ -140,7 +111,7 @@ describe("2", function(){
 	})
 
 	it('should answer ocq quiz correctly',function(){
-		check_answer_given_answer_order(ptor, 2);
+		check_answer_given_answer_order(ptor, 1);
 	})
 
 	it('should press answer button',function(){
@@ -148,11 +119,13 @@ describe("2", function(){
 	})
 
 	it('should check if the answer is correct',function(){
-		check_answer_correct(ptor);
+		check_answer(ptor);
 	})
 
 	it('should check every popovers', function(){
-		expect_popover_on_hover_correct(ptor, 2);
+		expect_no_popover(ptor, 1);
+		expect_no_popover(ptor, 2);
+		expect_no_popover(ptor, 3);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -197,8 +170,8 @@ describe("3", function(){
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
+		create_ocq_survey(ptor, o_c.feedback);
+		make_ocq_survey_questions(ptor, ocq_s_q1_x, ocq_s_q1_y, ocq_s_q2_x, ocq_s_q2_y, ocq_s_q3_x, ocq_s_q3_y, o_c.feedback);
 	})
 
 	it('should login a student and check for no of ocqs ', function(){
@@ -211,79 +184,7 @@ describe("3", function(){
 		check_ocq_no(ptor, 3);
 	})
 
-	it('should answer ocq quiz correctly',function(){
-		check_answer_given_answer_order(ptor, 1);
-	})
-
-	it('should press answer button',function(){
-		answer(ptor);
-	})
-
-	it('should check if the answer is correct',function(){
-		check_answer_incorrect(ptor);
-	})
-
-	it('should check every popovers', function(){
-		expect_popover_on_hover_incorrect(ptor, 1);
-	})
-
-	it('should clear the course for deletion', function(){
-		o_c.to_teacher(ptor);
-		o_c.open_course_whole(ptor);
-
-		teacher.open_module(ptor, 1);
-		teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-
-		teacher.delete_empty_module(ptor, 1, o_c.feedback);
-	})
-	//end test
-
-	it('should delete course', function(){
-		//should choose one of home() or home_teacher() 
-		//depending on the current state(student or teacher)
-		o_c.home_teacher(ptor);
-		teacher.delete_course(ptor, o_c.feedback);
-	})
-})
-
-describe("4", function(){
-
-	it('should sign in as teacher', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-	})
-
-	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
-	})
-	//test
-	it('should add a module and lecture to create quizzes', function(){
-		o_c.open_course_whole(ptor);
-		teacher.add_module(ptor, o_c.feedback);
-		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "ocq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
-	})
-
-	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
-	})
-
-	it('should login a student and check for no of ocqs ', function(){
-		o_c.to_student(ptor);
-		o_c.open_course_whole(ptor);
-		o_c.open_tray(ptor);
-		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
-		expect_quiz(ptor);
-		check_ocq_no(ptor, 3);
-	})
-
-	it('should answer ocq quiz correctly',function(){
+	it('should check ocq quiz',function(){
 		check_answer_given_answer_order(ptor, 2)
 		is_checked(ptor, 2);
 		is_not_checked(ptor, 3)
@@ -310,15 +211,16 @@ describe("4", function(){
 		teacher.delete_course(ptor, o_c.feedback);
 	})
 })
+
 /////////////////////////////////////////////////////////
 //				test specific functions
 /////////////////////////////////////////////////////////
 
-function create_ocq_quiz(ptor, feedback){
+function create_ocq_survey(ptor, feedback){
 	locator.s_by_classname(ptor, 'btn-group').then(function(btns){
-		btns[0].click().then(function(){
+		btns[2].click().then(function(){
 			o_c.scroll(ptor, 1000);
-			btns[0].findElements(protractor.By.repeater('item in list')).then(function(items){
+			btns[2].findElements(protractor.By.repeater('item in list')).then(function(items){
 				items[1].click().then(function(){
 				    feedback(ptor, "Quiz was successfully created");
 					expect(locator.by_id(ptor, 'editing').isDisplayed()).toEqual(true);
@@ -329,11 +231,12 @@ function create_ocq_quiz(ptor, feedback){
 	})
 }
 
-function make_ocq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
+function make_ocq_survey_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
 	locator.by_id(ptor,'ontop').then(function(ontop){
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: q1_x, y: q1_y}).perform();
 		ptor.actions().doubleClick().perform();
+		ptor.actions().click().perform();
 		
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
@@ -342,8 +245,6 @@ function make_ocq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: q2_x, y: q2_y}).perform();
 		ptor.actions().doubleClick().perform();
-		ptor.actions().click().perform();
-		locator.by_classname(ptor, 'must_save_check').click();
 
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
@@ -352,7 +253,8 @@ function make_ocq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: q3_x, y: q3_y}).perform();
 		ptor.actions().doubleClick().perform();
-
+		ptor.actions().click().perform();
+		
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
 		locator.by_id(ptor, 'done').then(function(btn){
@@ -364,7 +266,7 @@ function make_ocq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
 }
 
 
-function check_ocq_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
+function check_ocq_survey_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 	var w, h= 0;
 	//(width*169)/570
 	locator.by_id(ptor,'ontop').then(function(ontop){
@@ -417,15 +319,19 @@ function answer(ptor){
 	})
 }
 
-function check_answer_correct(ptor){
+function check_answer(ptor){
 	locator.by_tag(ptor,'notification').then(function(popover){
-		expect(popover.getText()).toContain('Correct');
+		expect(popover.getText()).toContain('Thank you for your answer');
 	})
 }
 
-function check_answer_incorrect(ptor){
-	locator.by_tag(ptor,'notification').then(function(popover){
-		expect(popover.getText()).toContain('Incorrect');
+function expect_no_popover(ptor, no){
+	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+		ptor.actions().mouseMove(check_boxes[no-1]).perform();
+		ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		ptor.isElementPresent(by.className('popover-title')).then(function(present){
+        	expect(present).toBe(false);
+    	})
 	})
 }
 
@@ -441,26 +347,6 @@ function is_not_checked(ptor, no){
 	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
 		check_boxes[no-1].getAttribute('checked').then(function(ch){
 			expect(ch).toEqual(null);
-		})
-	})
-}
-
-function expect_popover_on_hover_correct(ptor, no){
-	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
-		ptor.actions().mouseMove(check_boxes[no-1]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Correct");
-		})
-	})
-}
-
-function expect_popover_on_hover_incorrect(ptor, no){
-	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
-		ptor.actions().mouseMove(check_boxes[no-1]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Incorrect");
 		})
 	})
 }

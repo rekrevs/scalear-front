@@ -620,6 +620,24 @@ exports.make_quiz_required = function(ptor, feedback){
 }
 
 
+//====================================================
+//				initialize a lecture with a url
+//===================================================
+exports.initialize_lecture = function(ptor, lecture_url){
+	locator.by_id(ptor, 'details').then(function(details){
+		details.findElements(protractor.By.tagName('details-text')).then(function(links){
+			links[1].click().then(function(){
+				locator.by_classname(ptor, 'editable-input').then(function(field){
+					field.sendKeys(lecture_url).then(function(){
+						locator.by_classname(ptor, 'icon-ok').click();
+					})
+				})
+			})
+		})
+	})
+}
+
+
 
 
 

@@ -4,7 +4,7 @@ var o_c = require('./openers_and_clickers');
 var lecture_middle = require('./lecture_quizzes_management');
 var params = ptor.params;
 
-function create_mcq_quiz(ptor, feedback, wait_for){
+exports.create_mcq_quiz = function(ptor, feedback, wait_for){
 	locator.s_by_classname(ptor, 'btn-group').then(function(btns){
 		btns[1].click().then(function(){
 			btns[1].findElements(protractor.By.repeater('item in list')).then(function(items){
@@ -20,21 +20,46 @@ function create_mcq_quiz(ptor, feedback, wait_for){
 	})
 }
 
-function make_mcq_questions(ptor, feedback){
+exports.make_mcq_questions = function(ptor, feedback){
 	locator.by_id(ptor,'ontop').then(function(ontop){
-		ontop.findElements(protractor.By.repeater('answer in quiz.answers'))
-		locator.by_classname(ptor, 'must_save_check').click();
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[0].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 1");
+				ins[1].click();
+			})
+		})
+
+		locator.by_classname(ptor, 'add_multiple_answer').click();
+
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[1].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 2");
+			})
+		})
+
+		locator.by_classname(ptor, 'add_multiple_answer').click();
+
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[2].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 3");
+				ins[1].click();
+			})
+		})
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		lecture_middle.save_quiz(ptor, feedback)
+		locator.by_id(ptor, 'done').then(function(btn){
+			btn.click().then(function(){
+				feedback(ptor, 'Quiz was successfully saved');
+			})
+		})
 	})
 }
 
-function create_ocq_quiz(ptor, feedback, wait_for){
+exports.create_ocq_quiz = function(ptor, feedback, wait_for){
 	locator.s_by_classname(ptor, 'btn-group').then(function(btns){
-		btns[0].click().then(function(){
+		btns[1].click().then(function(){
 			o_c.scroll(ptor, 1000);
-			btns[0].findElements(protractor.By.repeater('item in list')).then(function(items){
+			btns[1].findElements(protractor.By.repeater('item in list')).then(function(items){
 				if(wait_for > 0){
 					ptor.sleep(wait_for)
 				}
@@ -48,33 +73,90 @@ function create_ocq_quiz(ptor, feedback, wait_for){
 	})
 }
 
-function make_ocq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
+exports.make_ocq_questions = function(ptor, feedback){
 	locator.by_id(ptor,'ontop').then(function(ontop){
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: q1_x, y: q1_y}).perform();
-		ptor.actions().doubleClick().perform();
-		
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		ptor.actions().click().perform();
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[0].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 1");
+				ins[1].click();
+			})
+		})
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: q2_x, y: q2_y}).perform();
-		ptor.actions().doubleClick().perform();
-		ptor.actions().click().perform();
-		locator.by_classname(ptor, 'must_save_check').click();
+		locator.by_classname(ptor, 'add_multiple_answer').click();
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		ptor.actions().click().perform();
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[1].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 2");
+			})
+		})
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: q3_x, y: q3_y}).perform();
-		ptor.actions().doubleClick().perform();
+		locator.by_classname(ptor, 'add_multiple_answer').click();
 
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[2].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 3");
+			})
+		})
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		lecture_middle.save_quiz(ptor, feedback)
+		locator.by_id(ptor, 'done').then(function(btn){
+			btn.click().then(function(){
+				feedback(ptor, 'Quiz was successfully saved');
+			})
+		})
+	})
+}
+
+
+exports.create_drag_quiz = function(ptor, feedback, wait_for){
+	locator.s_by_classname(ptor, 'btn-group').then(function(btns){
+		btns[1].click().then(function(){
+			o_c.scroll(ptor, 1000);
+			btns[1].findElements(protractor.By.repeater('item in list')).then(function(items){
+				if(wait_for > 0){
+					ptor.sleep(wait_for)
+				}
+				items[2].click().then(function(){
+				    feedback(ptor, "Quiz was successfully created");
+					expect(locator.by_id(ptor, 'editing').isDisplayed()).toEqual(true);
+				})
+			})
+			o_c.scroll(ptor, -1000);
+		})
+	})
+}
+
+
+exports.make_drag_questions = function(ptor, feedback){
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[0].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 1");
+			})
+		})
+
+		locator.by_classname(ptor, 'add_multiple_answer').click();
+
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[1].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 2");
+			})
+		})
+
+		locator.by_classname(ptor, 'add_multiple_answer').click();
+
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[2].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 3");
+			})
+		})
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		locator.by_id(ptor, 'done').then(function(btn){
+			btn.click().then(function(){
+				feedback(ptor, 'Quiz was successfully saved');
+			})
+		})
 	})
 }
 

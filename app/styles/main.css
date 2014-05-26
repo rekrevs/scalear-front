@@ -270,8 +270,8 @@ textarea.ng-invalid{ border:1px solid red; }
 .widescreen{
   /*width: 568px;*/
   /*height:321px;*/
-  width: 50vw; 
-  height: 28.25vw;
+  width: 49vw; 
+  height: 27.5625vw;
   /*height: 316px;*/
 }
 

@@ -138,7 +138,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	margin-left:30%;*/
 	margin-left: -40px;
 	/*width:570px;*/
-	width: 50%;
+	width: 49%;
 	margin: 0 auto;
 	position: relative;
 	display: inline-block;
@@ -159,9 +159,10 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	overflow:auto;
 	margin-left:75%;
 	margin-right:5%;*/
-	width:330px;
+	/*width:330px;*/
+	width: 28%;
 	float: right;
-	margin-right: 10px;
+	/*margin-right: 10px;*/
 }
 #details-resp{
 	position: absolute;
@@ -284,6 +285,13 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	font-weight: 200;
 }
 @media (max-width: 1240px) {
+	#middle{
+		width: 70%;
+	}
+	.widescreen{
+		width: 68vw !important;
+		height: 38.25vw !important;
+	}
 	#details{
 		display: none;
 	}
@@ -324,5 +332,10 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	}
 	#middle{
 		margin-left: -50px;
+		width: 95%;
+	}
+	.widescreen{
+		width: 89vw !important;
+		height: 50.0625vw !important;
 	}
 }

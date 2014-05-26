@@ -195,9 +195,9 @@
     }*/
     /*@media only screen and (max-width : 955px) {*/
     @media only screen and (max-width : 1024px) {
-      #main-video-container{
-        width: 80%; 
-        clear:both;
+      .video_class, .widescreen{
+        width: 95vw;
+        height: 53.4375vw;
       }
       #student-accordion{
         width: 100%;

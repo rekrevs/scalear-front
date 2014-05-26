@@ -10,8 +10,8 @@
     </label>
 </div>
 <br>
-<div style="height:630px">
-    <div style="overflow:auto;height:79%; position: absolute; width: 95%;"> <!-- has all discussions -->        
+<div>
+    <div style="overflow:auto; position: absolute; width: 95%;"> <!-- has all discussions -->        
         <div ng-repeat="l in lectures" class='dimmed' style="min-width: 95%;" ng-class="{lectureopen: l.id == lecture.id}" id={{"outline_"+l.id}}>        
             <h3>{{l.name}}</h3>
             <table class="table table-striped" style="border-spacing: 0.2em;">

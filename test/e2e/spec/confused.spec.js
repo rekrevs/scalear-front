@@ -21,9 +21,10 @@ describe('', function(){
 	it('should uncheck quiz',function(){
 		uncheck_quiz(ptor);
 		check_confused(ptor);
+		youtube.seek(ptor, 50);
 	})
 	it('should check confused ',function(){
-		check_confused_location(ptor);
+		press_confused_btn(ptor);
 		ptor.sleep(5000);
 	})
 })
@@ -70,7 +71,7 @@ function check_confused_no(ptor, con_no){
 //		check_confused_location
 //====================================================
 
-function check_confused_location(ptor){
+function check_confused_time(ptor){
 	var pw, ph;
 	var random_seek_point = 1;
 	var confused_time;
@@ -94,6 +95,20 @@ function check_confused_location(ptor){
 							})
 						})
 					})
+				})
+			})
+		})
+}
+
+function check_confused_location(ptor){
+	locator.by_classname(ptor, 'elapsed').then(function(progess_bar){
+		progress_bar.then(function(location){
+			press_confused_btn(ptor);
+
+			locator.by_repeater(ptor, 'element in timeline').then(function(elements){
+				elements[0].getLocation().then(function(loc){
+					expect(location.x).toEqual(loc.x);
+					expect(location.y).toEqual(loc.y);
 				})
 			})
 		})

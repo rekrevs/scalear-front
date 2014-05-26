@@ -291,10 +291,10 @@ angular.module('scalearAngularApp')
         var ontop=angular.element('.ontop');    
         var w = scope.data.width * ontop.width();
         var h = scope.data.height* (ontop.height());
-        var add_left= (w-13)/2.0
-        var add_top = (h-13)/2.0
-        scope.xcoor = parseFloat(scope.data.xcoor * ontop.width()) + add_left;       
-        scope.ycoor = parseFloat(scope.data.ycoor * (ontop.height())) + add_top;
+        var add_left= (w-13)/4.0
+        var add_top = (h-13)/4.0
+        scope.xcoor = parseFloat(scope.data.xcoor * ontop.width())// - add_left;       
+        scope.ycoor = parseFloat(scope.data.ycoor * (ontop.height())) //- add_top;
         scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
         $log.debug(scope.xcoor)
         $log.debug(scope.ycoor)

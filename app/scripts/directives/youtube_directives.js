@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder well widescreen" style="padding:0" ng-transclude></div>' //style="border:4px solid" 
+			template: '<div class="videoborder well widescreen" style="padding:0; border:none" ng-transclude></div>' //style="border:4px solid" 
 		};
 	})
 	.directive('youtube',['$rootScope','$log','$timeout','$window','popcornApiProxy',function($rootScope,$log,$timeout,$window, popcornApiProxy){
@@ -344,9 +344,9 @@ angular.module('scalearAngularApp')
 					player_controls.refreshVideo()
 				})
 
-                // var is_final_url= function(url){
-                //     return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
-                // }
+                var isFinalUrl= function(url){
+                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
+                }
 
                 var isYoutube= function(url){
             		var video_url = url || scope.url || ""
@@ -374,14 +374,13 @@ angular.module('scalearAngularApp')
 
 				scope.$watch('url', function(){
 
-                    if(scope.url && (isYoutube(scope.url) || isVimeo(scope.url) || isMP4(scope.url)) )
+                    if(scope.url && ((isYoutube(scope.url) &&  isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url)) )
                     {
 
                       //  var matches = is_final_url(scope.url)
-                        // if(matches)
-                         //{
+                        // if((isYoutube(scope.url) &&]){
                             player_controls.refreshVideo();
-                         //}
+                         // }
 
                     }
 				})

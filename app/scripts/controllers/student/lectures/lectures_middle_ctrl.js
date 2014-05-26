@@ -716,8 +716,10 @@ angular.module('scalearAngularApp')
             var next_time = getNextQuizTime($scope.selected_quiz.time)
             if(next_time)
                 time = (next_time-$scope.selected_quiz.time)/2
-            else if ($scope.total_duration - $scope.selected_quiz.time >= 10)
+            else if ($scope.total_duration - $scope.selected_quiz.time <= 10)
                 time = ($scope.total_duration - $scope.selected_quiz.time)/2
+
+            console.log(time)
             $timeout(function(){
                 $scope.review_inclass= true
                  $timeout(function(){

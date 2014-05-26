@@ -1,5 +1,5 @@
 <td style="text-align: left;">
     <a ng-click="showItem(id)" href="" style="margin-right: {{duration}}%" tooltip-placement="bottom" tooltip="{{isFinished(done)+isRequired(required)+className+': '+name}}" >
-    	<canvas name="canvas" class="courseware-item-circle" ng-class="{itemdone: done, itemrequired: required, currentitem: $parent.$parent.current_item == id}" width="{{circlesize}}" height="{{circlesize}}" ></canvas>
+    	<canvas name="canvas" class="courseware-item-circle" ng-class="{itemdone: done, itemrequired: required, currentitem: current == id}" width="{{circlesize}}" height="{{circlesize}}" ></canvas>
     </a>
 </td>

@@ -188,8 +188,8 @@
 							</ul>						
 						</li> -->
 
-						<li ng-if="item.type=='free_question'" class="li_inner coral">
-							<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'groups.free_text_question' | translate}}" title="{{item.data.title}}"/>
+						<li ng-if="item.type=='free_question'"  ng-init="color=Math.ceil(item.data.review/students_count*100) >= 30? 'red' : ''" class="li_inner coral">
+							<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'groups.free_text_question' | translate}}" title="{{item.data.title+' - '+Math.ceil(item.data.review/students_count*100)+'% '}}{{'lectures.of_student_review' | translate}}" color="color"/>
 							<show_box  value="item.data.show" action="updateHideQuiz(item.data.id,item.data.show)"/>
 							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
 								<li ng-repeat="answer in item.data.answers|filter:{user_id:lec.filtered_user}:lec.filter_strict" style="list-style-position:inside; padding:3px 15px">
@@ -202,7 +202,7 @@
 							</ul>						
 						</li>
 						<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData', item.data.quiz_type); color =Math.ceil(item.data.review/students_count*100) >= 30? 'red' : ''" class="li_inner green">
-							<inner_title ng-if="item.data.quiz_type =='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'courses.'+item.data.quiz_type.toLowerCase() | translate}}" title="{{item.data.title+' ('+item.data.type+')'}}" color="color" />
+							<inner_title ng-if="item.data.quiz_type =='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'courses.'+item.data.quiz_type.toLowerCase() | translate}}" title="{{item.data.title+' ('+item.data.type+')'}}"/>
 							<inner_title ng-if="item.data.quiz_type !='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'courses.'+item.data.quiz_type.toLowerCase() | translate}}" title="{{item.data.title+' ('+item.data.type+') - '+Math.ceil(item.data.review/students_count*100)+'% '}}{{'lectures.of_student_review' | translate}}" color="color" />
 							<!-- <i ng-show="item.data.hide" class="icon-check" style="margin-top:8px;float:right"></i> -->
 							<div google-chart chart="chart" class="progress_chart" ></div>

@@ -84,7 +84,7 @@ angular.module('scalearAngularApp', [
 
             $log.debug("lang is " + $rootScope.current_lang);
             var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']
-            var statesThatForStudents = ['student_courses', 'course.student_calendar', 'course.course_information', 'course.lectures']
+            var statesThatForStudents = ['student_courses', 'course.student_calendar', 'course.course_information', 'course.courseware']
             var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
 
@@ -302,37 +302,25 @@ angular.module('scalearAngularApp', [
                 },
                 abstract: true
             })
-            .state('course.lectures', {
+            .state('course.courseware', {
                 url: '/courseware',
-                templateUrl: '/views/student/lectures/lectures.html',
-                controller: 'studentLecturesCtrl'
+                templateUrl: '/views/student/lectures/courseware.html',
+                controller: 'coursewareCtrl'
             })
-            .state('course.lectures.module',{
+            .state('course.courseware.module',{
                 url:'/modules/:module_id',
-                views: {
-                    'middle1': {
-                        templateUrl: '/views/student/lectures/module.middle.html',
-                        controller: 'studentModulesCtrl'
-                    }
-                }
+                templateUrl: '/views/student/lectures/module.middle.html',
+                controller: 'studentModulesCtrl',
             })
-            .state('course.lectures.module.lecture', {
+            .state('course.courseware.module.lecture', {
                 url: '/lectures/:lecture_id?time',
-                views: {
-                    'middle': {
-                        templateUrl: '/views/student/lectures/lecture.middle.html',
-                        controller: 'studentLectureMiddleCtrl'
-                    }
-                }
+                templateUrl: '/views/student/lectures/lecture.middle.html',
+                controller: 'studentLectureMiddleCtrl'
             })
-            .state('course.lectures.module.quiz', {
+            .state('course.courseware.module.quiz', {
                 url: '/quizzes/:quiz_id',
-                views: {
-                    'middle': {
-                        templateUrl: '/views/student/lectures/quiz.middle.html',
-                        controller: 'studentQuizMiddleCtrl'
-                    }
-                }
+                templateUrl: '/views/student/lectures/quiz.middle.html',
+                controller: 'studentQuizMiddleCtrl'
             })
             .state('course.course_editor', {
                 url: '/course_editor',

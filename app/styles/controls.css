@@ -93,13 +93,12 @@
 }
 
 .qualityDiv{
-    position:absolute;
-    width:30px;
-    height:25px;
-    cursor:pointer;
-    margin-top:-50px;
-    right:140px;
-    bottom: 0px;
+    position: relative;
+    z-index: 1000;
+    top: -30px;
+    left: 95%;
+    width: 30px;
+    height: 27px;
     background:url('/images/quality.png') no-repeat center center;
     background-size:20px 20px;
 }

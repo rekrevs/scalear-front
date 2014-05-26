@@ -78,8 +78,8 @@ angular.module('scalearAngularApp')
             console.log("good")
             $rootScope.preview_as_student = true
             $cookieStore.put('preview_as_student', true)            
-            $cookieStore.put('new_user_id', data.user.id)            
-            $state.go('course.lectures',{course_id: $stateParams.course_id})
+            $cookieStore.put('new_user_id', data.user.id)   
+            $state.go('course.courseware',{course_id: $stateParams.course_id})
           },
           function(){
             console.log("bad")

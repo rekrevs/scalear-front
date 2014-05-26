@@ -78,7 +78,7 @@
 
             <!-- <a ui-sref="show_shared" style="right: 20%; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; " ng-show="are_shared()" style="float:left;color:red;cursor: pointer;" class="ng-scope ng-hide">Shared</a> -->
             <div class="state">
-                <big><span ng-bind="current | translate"></span></big>
+                <big><span ng-bind="Page.title()"></span></big>
             </div>
             <div class="modern-logo">
                 <a href="/#" class="brand"><img alt="Logo" src="images/logo.png" width="30px"> Scalable<span style="padding-left:0px; color:black;">Learning</span> <img alt="Beta_tag_small" class="brand" src="images/beta_tag_small.png" style="width:40px;padding-left:0px;padding-top:10px;">
@@ -296,7 +296,7 @@
     <script src="scripts/controllers/student/course/course_information.js"></script>
     <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script> 
 
-    <script src="scripts/controllers/student/lectures/lectures_ctrl.js"></script>
+    <script src="scripts/controllers/student/lectures/courseware_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/modules_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/lectures_middle_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/quizzes_middle_ctrl.js"></script>

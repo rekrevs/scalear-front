@@ -1,125 +1,41 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive("controls",['$interval','Lecture','$stateParams', '$window', '$log','$translate','util', function($interval, Lecture, $stateParams, $window, $log, $translate,util) {
+.directive("controls",['$interval', '$log', function($interval, $log) {
   return {
     restrict:"E",
     templateUrl:"/views/student/lectures/controls.html",
+    scope:{
+      confused:"&",
+      fullscreen:"&",
+      ask:"&"
+    },
     link: function(scope, element, attrs) {
 
-    // 	element.css("width", "200px");
-  		// element.css("height", "26px");
-  		// element.css("position", "absolute");
-  		// element.css("display", "inline-block");
-  		//element.css("z-index",10000);
-
-  		scope.$on('updatePosition',function(){
-  			setButtonsLocation()
-  		})
-
-        scope.$on('$destroy', function() {
-            //alert("In destroy of:" + scope);
-            shortcut.remove("c");
-            shortcut.remove("q");
-            shortcut.remove("b");
-            shortcut.remove("Space");
-            shortcut.remove("Enter");
-        });
+      scope.screenfull = screenfull
+      scope.$on('$destroy', function() {
+          shortcut.remove("c");
+          shortcut.remove("q");
+      });
     	
     	scope.show_message=false;
-    	scope.show_question=false;
-    	scope.show_shortcuts=false;
-      scope.quality=false;
-      scope.chosen_quality='hd720';
-      	
-    	var setButtonsLocation=function(){
-    		if(scope.fullscreen){
-	    		scope.pWidth=angular.element($window).width();
-	    		scope.pHeight=angular.element($window).height();
-          element.css("z-index",1500);
-    		}
-    		else{
-	    		scope.pHeight=490;
-	    		scope.pWidth= 800;//scope.lecture.aspect_ratio=='widescreen'? 800:600;
-           element.css("z-index",1000);
-    		}
-           // if(scope.ipad){
-             //   element.css("top", scope.pHeight-15+"px");
-               // element.css("left", scope.pWidth-200+"px");
-            //}
-            //else{
-    		// element.css("top", scope.pHeight-60+"px");
-    		// element.css("left", scope.pWidth-200+"px");
-//            }
-    	}
-    	
-    	scope.full = function(){   			
-    		scope.fullscreen? scope.resize.small() : scope.resize.big();
+    	scope.show_shortcuts=false;    	
+
+    	scope.fullBtn = function(){  
+        scope.fullscreen()
     	};
 
-    	scope.confusedBtn= function(){
-        console.log("caosdnsakn")
+      scope.confusedBtn=function(){
         scope.show_message=true;
-        var time=scope.lecture_player.controls.getTime()
-    		Lecture.confused(
-          {
-            course_id:$stateParams.course_id, 
-            lecture_id:$stateParams.lecture_id
-          },
-          {time:scope.lecture_player.controls.getTime()}, 
-          function(data){
-            $interval(function(){
-              scope.show_message=false;
-            }, 2000, 1);
+        scope.confused()
+        $interval(function(){
+          scope.show_message=false;
+        }, 2000, 1);
+      }
 
-         		$log.debug(data)
-         		if(data.msg=="ask"){
-           		scope.show_notification=$translate("controller_msg.really_confused_use_question");
-           		scope.notify_position={"left":(scope.pWidth - 180) + "px"}
-           		$interval(function(){
-           			scope.notify_position={"left":"240px"};
-           			scope.show_notification=false;
-           		}, 6000, 1)
-           	}
-            if(!data.flag) //first time confused in these 15 seconds
-            {
-                //scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'red', 'courses.confused',data.id ]);
-                scope.timeline['lecture'][$stateParams.lecture_id].add(time, "confused", data.item)
-            }
-
-            if(data.flag && data.msg!="ask") // confused before but not third time - very confused
-            {
-                var elem=scope.timeline['lecture'][$stateParams.lecture_id].search_by_id(data.id, "confused");
-                scope.timeline['lecture'][$stateParams.lecture_id].items[elem].data.very=true;
-                // for(var element in scope.timeline['lecture'])
-                // {
-                //     if(scope.timeline['lecture'][element]==data.id)
-                //     {
-                //         scope.progressEvents[element][2]='courses.really_confused'
-                //         scope.progressEvents[element][1]='purple'
-                //         return;
-                //     }
-                // }
-            }
-  		  });
-    	}
-    	scope.back= function()
-    	{
-    		Lecture.back({course_id:$stateParams.course_id, lecture_id:$stateParams.lecture_id},{time:scope.lecture_player.controls.getTime()}, function(data){
-  		});
-    	};
-    	scope.questionBtn= function(){
-    		scope.show_question=!scope.show_question;
-            scope.$parent.current_question_time=scope.lecture_player.controls.getTime();
-            util.safeApply();
-    		if(scope.$parent.show_question==true)
-            {
-    			scope.lecture_player.controls.pause();
-                scope.$parent.tabs[0].active = true;
-            }
-    		else
-    			scope.lecture_player.controls.play();
-    	};
+      scope.questionBtn=function(){
+        scope.ask()
+      }
 
       scope.showShortcuts=function(){
         scope.show_shortcuts=!scope.show_shortcuts;
@@ -131,315 +47,60 @@ angular.module('scalearAngularApp')
               $(document).off("click")
             }         
           });
-          else
-            $(document).off("click")        
+        else
+          $(document).off("click")        
       }
 
-    	scope.submitQuestion = function()
-    	{
-    		$log.debug("will submit "+scope.question_asked);
-        var time=scope.lecture_player.controls.getTime()
-        if(scope.question_asked!=""){
-  		    Lecture.confusedQuestion(
-            {
-              course_id:$stateParams.course_id, 
-              lecture_id:$stateParams.lecture_id
-            },
-            {
-              time:time, 
-              ques: scope.question_asked
-            }, 
-            function(data){
-              scope.progressEvents.push([((time/scope.total_duration)*100) + '%', 'yellow', 'courses.you_asked',data.id, scope.question_asked ]);
-              scope.question_asked="";
-	            scope.show_question=false;
-  			      scope.lecture_player.controls.play();	
-  		      }
-          );
-        }
-        else{
-          scope.show_question=false;
-          scope.lecture_player.controls.play(); 
-        }
-    		
-    	};
-
-        scope.showQuality = function(){
-            scope.quality=!scope.quality
-        }
-
-        scope.setQuality = function(quality){
-            var time = scope.lecture_player.controls.getTime()
-            scope.lecture_player.controls.changeQuality(quality, time);
-            scope.chosen_quality=quality;
-            scope.quality=false;
-        }
     	scope.setShortcuts = function()
   		{
-
-  				shortcut.add("c", scope.confusedBtn, {"disable_in_input" : true});
-  			
+  				shortcut.add("c", scope.confusedBtn, {"disable_in_input" : true});  			
   				shortcut.add("q", scope.questionBtn, {"disable_in_input" : true});
-  			
-  				shortcut.add("Space",function(){
-  					scope.lecture_player.controls.paused()? scope.lecture_player.controls.play(): scope.lecture_player.controls.pause();
-  				},{"disable_in_input" : true});
-  			
-  				shortcut.add("b",function(){
-              scope.back();
-              var t=scope.lecture_player.controls.getTime();
-              scope.lecture_player.controls.pause();
-              scope.lecture_player.controls.seek(t-10)
-              scope.lecture_player.controls.play();
-  				},{"disable_in_input" : true});
+  		}
 
-          shortcut.add("Enter",function(){
-            var elem_name=angular.element(document.activeElement).attr('name')
-            if(elem_name =='ask')
-              scope.submitQuestion()
-              scope.$apply()
-          },{"disable_in_input" : false, "disable_in_editable" :true});
-  		};
-
-  		setButtonsLocation()
-      scope.setShortcuts();
-
-   		scope.$watch('lecture.aspect_ratio', function(){
-   			setButtonsLocation()
-   		})
+      scope.setShortcuts()
 
     }
   };
+
 }])
-.directive("notification", ['$translate', '$window', '$log','OnlineQuiz', function($translate, $window, $log, OnlineQuiz) {
+.directive("notification", ['$translate', '$log', function($translate, $log) {
   return {
     restrict:"E",
+    scope:{
+      message:'=',
+      submessage:'='
+    },
     templateUrl: '/views/student/lectures/notification.html',
 
     link: function(scope, element, attrs) {
       scope.correct_notify=$translate("lectures.correct")
       scope.incorrect_notify=$translate("lectures.incorrect")
 
-      element.css("position", "relative");
-      element.css("top", "305px");
-      element.css("left","240px");
-      element.css("padding","5px");
-      element.css("font-size", "12px");
-      element.children().css("width", "150px");
-      element.css("z-index","10000");
-      element.css("display","block");
-      element.children().css("height","85px");
-      element.children().css("display","table-cell");
-      element.children().css("vertical-align","middle");
-      element.children().css("overflow","auto");
-      element.css("overflow","auto");
-
-      var setNotficationPosition=function(){
-        $log.debug(scope.fullscreen)
-        if(scope.fullscreen){
-          scope.pHeight=angular.element($window).height()- 210;
-          element.css("z-index",10000);
-        }
-        else{
-          scope.pHeight= angular.element('#main-video-container').height()-95;
-          element.css("z-index",1000);
-        }
-        element.css("top", scope.pHeight+"px");
-        element.css("position", "absolute");
-      }
-
-      scope.voteForReview=function(){
-        OnlineQuiz.voteForReview(
-          {online_quizzes_id:scope.selected_quiz.id},{},
-          function(res){
-            if(res.done)
-              scope.closeReviewNotify()
-          }
-        )
-      }
-
-      scope.closeReviewNotify=function(){
-        scope.review_inclass= false 
-      }
-
-      scope.retryQuiz=function(){
-        scope.seek(scope.selected_quiz.time, scope.selected_quiz.lecture_id)
-        scope.closeReviewNotify()
-      }
-
-      setNotficationPosition()
-
     }
   };
 }])
-
-.directive("check",['$interval', 'Lecture', '$stateParams','$translate', '$window', '$log','CourseEditor', function($interval, Lecture, $stateParams, $translate, $window, $log, CourseEditor) {
+.directive("reviewInclass", ['$translate', '$log', function($translate, $log) {
   return {
     restrict:"E",
-	template:'<input type="button" class="btn btn-success" value="{{\'youtube.check_answer\'|translate}}" ng-click="check_answer()" style="height: 25px; vertical-align: -webkit-baseline-middle; padding: 0px 10px; background-image: initial;" />',
-	link: function(scope, element, attrs) {
-
-    var setButtonsLocation=function(){
-      $log.debug(scope.fullscreen)
-      if(scope.fullscreen){
-        scope.pHeight=angular.element($window).height()- 68;
-        element.css("z-index",10000);
-      }
-      else{
-        scope.pHeight=423;
-        element.css("z-index",1000);
-      }
-     // if(scope.ipad)
-       // element.css("top", scope.pHeight+15+"px");
-      //else
-        // element.css("top", scope.pHeight+"px");
-
-    }		
-    	
-  	setButtonsLocation()
-
-		scope.check_answer = function(){			
-			$log.debug("check answer "+scope.solution);
-			if(scope.selected_quiz.quiz_type=="html"){			 	
-        $log.debug(scope.answer_form);
-        if((!scope.answer_form.$error.atleastone || scope.answer_form.$error.atleastone==false) && !(scope.selected_quiz.question_type=='Free Text Question' && scope.answer_form.$error.required)){
-          $log.debug("valid form")
-          scope.submitted=false;
-          Lecture.saveHtml(
-            {
-              course_id: $stateParams.course_id, 
-              lecture_id:$stateParams.lecture_id
-            },
-            {
-              quiz:scope.selected_quiz.id, 
-              answer:scope.studentAnswers[scope.selected_quiz.id]
-            }, 
-            function(data){
-              displayResult(data);
-            });
-        }
-        else{
-          $log.debug("invalid form")
-          scope.submitted=true;
-        }
-  		}
-      else{
-       sendAnswers()
-			};
-		}
-    	
-      var sendAnswers=function(){
-        var selected_answers
-        if(scope.selected_quiz.question_type == "OCQ" || scope.selected_quiz.question_type == "MCQ"){
-          selected_answers=[]
-          scope.selected_quiz.online_answers.forEach(function(answer){
-            if(answer.selected)
-              selected_answers.push(answer.id)
-          })
-
-          if(selected_answers.length == 0)
-          {
-          	$log.debug(scope.$parent);
-          	// notify
-          	scope.show_notification=$translate("groups.choose_correct_answer")//"You must choose atleast one answer";
-   				  $interval(function(){
-	             		 scope.show_notification=false;
-	         	}, 2000, 1);
-          	return		
-          }
-
-          if(scope.selected_quiz.question_type == "OCQ" && selected_answers.length==1)
-            selected_answers = selected_answers[0]
-           
-        }
-        else //DRAG
-        {
-          selected_answers={}
-          selected_answers = scope.studentAnswers[scope.selected_quiz.id]
-          var count = 0
-          for (var el in selected_answers)
-            if(selected_answers[el])
-              count++
-            
-          if(count<scope.selected_quiz.online_answers.length)
-          {
-          	scope.show_notification=$translate("groups.must_place_items");
-   				$interval(function(){
-	             		 scope.show_notification=false;
-	         	}, 2000, 1);
-            return
-           }
-        }
-        Lecture.saveOnline(
-          {
-            course_id:$stateParams.course_id,
-            lecture_id:$stateParams.lecture_id
-          },
-          {
-            quiz: scope.selected_quiz.id,
-            answer:selected_answers
-          },
-          function(data){
-              displayResult(data)
-          },
-          function(){}
-        )
-      }
-
-  		
-
-      var displayResult=function(data, done){
-        for(var el in data.detailed_exp)
-          scope.explanation[el]= data.detailed_exp[el];
-
-        // scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
-        // scope.show_notification=true;
-        console.log(data)
-        if(scope.selected_quiz.quiz_type == 'survey' || (scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review) ){
-           if(data.msg!="Empty"){
-                scope.selected_quiz.is_quiz_solved=true;
-                scope.show_notification=$translate('thank_you_answer')//'Thank you for your answer';
-            }
-        }
-        else{
-          // if(data.review)
-          //   scope.verdict= $translate("lectures.reviewed");
-          // else
-          scope.verdict=data.correct? $translate("lectures.correct"): $translate("lectures.incorrect")
-          scope.show_notification=true;
-
-          if(data.msg!="Empty") // he chose sthg
-          {
-            // here need to update scope.$parent.$parent
-            var group_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups, data.done[1])
-            var lecture_index= CourseEditor.get_index_by_id(scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
-            if(lecture_index!=-1 && group_index!=-1)
-              scope.$parent.$parent.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
-            scope.selected_quiz.is_quiz_solved=true;
-
-          }
-        }
-        
-        var removeNotification = function(){
-          scope.show_notification=false;
-          window.onmousemove = null
-          reviewInclass()          
-          scope.$apply()
-         
-        }
-
-        $interval(function(){
-          window.onmousemove = removeNotification
-        }, 600, 1);
-
-      }
-
-      var reviewInclass =function(){
-        if(!scope.selected_quiz.reviewed)
-          scope.review_inclass= true 
-      }
-
-    }
+    scope:{
+      vote:'&',
+      close:'&',
+      retry:'&'
+    },
+    templateUrl: '/views/student/lectures/review_inclass.html',
+    link: function(scope, element, attrs) {}
+  };
+}])
+.directive("checkAnswer",['$log', function($log) {
+  return {
+    restrict:"E",
+    scope:{
+      action:"&"
+    },
+  	template: '<div style="position: relative; display: inline-block; z-index: 1000; top: -56px; left: 47%; width: 0px;">'+
+                '<input type="button" class="btn btn-success" value="{{\'youtube.check_answer\'|translate}}" ng-click="action()" style="height: 25px; vertical-align: -webkit-baseline-middle; padding: 0px 10px; background-image: initial;" />'+
+              '</div>',
+  	link: function(scope, element, attrs) {}
   }
 }])
 .directive('studentAnswerForm', ['Lecture','$stateParams','CourseEditor','$log',function(Lecture, $stateParams, CourseEditor, $log){
@@ -813,56 +474,148 @@ angular.module('scalearAngularApp')
     }
   }
 }])
-.directive('aceEditor',
-    ['editor','$interval', function (editor, $interval) {
-        return {
-            restrict: 'A',
-            scope: {
-                sync: "=",
-                player: "=",
-                lecture: "=",
-                editors:"="
-            },
-            link: function (scope, element) {
+// .directive('notes',["$stateParams", function( $stateParams) {
+//   return {
+//     restrict:"E",
+//     scope:{
+//       lectures:"=",
+//       current_lecture:"=",
+//       player:"="
+//     },
+//     templateUrl:'/views/forum/notes.html',
+//     link: function(scope, elem, attrsß) {}
+//   }
+// }])
+.directive('aceEditor',['editor','$interval', function (editor, $interval) {
+  return {
+      restrict: 'A',
+      scope: {
+          sync: "=",
+          player: "=",
+          lecture:"=",
+          editors:"="
+      },
+      link: function (scope, element) {
+          scope.$on('$destroy', function() {
+              //editor.destroy();
+              $interval.cancel(scope.editor.autosave);
+              scope.editor.doc.dirty=false;
+              scope.editor.doc.lastSave = 0;
+              scope.editor.doc.info=null;
+              delete scope.editor;
+          });
 
-                scope.$on('$destroy', function() {
-                    //alert("In destroy of:" + scope);
-                    //editor.destroy();
-                    $interval.cancel(scope.editor.autosave);
+          scope.editor = new editor();
+          scope.editor.rebind(element[0]);
+          scope.editors[scope.lecture.id]=scope.editor;
+          //scope.editor.resize();
 
-                    scope.editor.doc.dirty=false;
-                    scope.editor.doc.lastSave = 0;
-                    scope.editor.doc.info=null;
-                    delete scope.editor;
-                    //console.log("killing editor");
+          scope.$watch("url", function(val){
+              if(scope.lecture){
+                  //editor.create(scope.url);
+                 scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note);
+              }
+          })
 
-                });
-                //console.log("elment issss ");
-                //console.log(element[0]);
+          scope.$watch('sync', function (newValue, oldValue) {
+              if (newValue !== oldValue) {
+                  var gutter = $(element).find('.ace_gutter');
+                  newValue ? gutter.removeClass('inactive') : gutter.addClass('inactive');
+              }
+          }, true);
+      }
+  };
+}]).directive('studentTimeline', function() {
+  return {
+    restrict:"E",
+    scope:{
+      timeline:'=',
+      lectures:'=',
+      lecture:'=current',
+      seek:'&'
+    },
+    templateUrl:'/views/student/lectures/student_timeline.html',
+    link: function(scope, element, attrs) {
+      scope.checkModel={quiz:true,confused:true, discussion:true};
+        scope.checkEmpty= function(item){
+          return  item.type!=''
+        }
 
-                scope.editor = new editor();
-                scope.editor.rebind(element[0]);
-                scope.editors[scope.lecture.id]=scope.editor;
-                //scope.editor.resize();
+        scope.filterType= function(item){
+          var condition=false;
+          for(var e in scope.checkModel){
+            if(scope.checkModel[e])
+              condition = (condition || item.type==e)
+          }
+          var x = item.type!='' && condition
+          return x;
+        }
+    }
+  }
+}).directive('confusedTimeline',['Lecture', function(Lecture){
+  return{
+    restrict:"A",
+    // replace:true,
+    scope:{
+      item:'=',
+      seek:'&'
+    },
+    template:'<td class="timeline-icon-container">'+
+              '<div ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
+                '<img src="../images/confused-timeline.png" />'+                  
+              '</div>'+
+              '</td>'+
+              '<td>'+
+              '<p class="solved" ng-click="seek()(item.time, item.data.lecture_id)" translate>{{msg}}</p>'+
+              '</td>'+
+              '<td style="width:20px;">'+                 
+                 '<delete_button size="small" action="deleteConfused(item)" />'+
+            '</td>',
+    link:function(scope, element, attrs){
+      var unwatch = scope.$watch('item.data.very',function(){
+          scope.msg =scope.item.data.very? 'courses.really_confused': 'courses.confused'
+      })
 
-                scope.$watch("url", function(val){
+      scope.deleteConfused = function(confused){
+        Lecture.deleteConfused(
+        {
+          lecture_id: confused.data.lecture_id, 
+          confused_id: confused.data.id
+        }, 
+        function(response){
+          console.log("deleted");
+          unwatch()
+          // delete scope.item
+          scope.$emit('update_timeline', confused)
+          // now want to remove from list (both l.confuseds and $scope.timeline..)
+          // var index=scope.timeline['lecture'][lecture_id].items.indexOf(confused);
+          // scope.timeline['lecture'][lecture_id].items.splice(index, 1)
+        });
+      }
 
-                    if(scope.lecture)
-                    {
-                        //console.log(scope.lecture);
-                        //editor.create(scope.url);
-                       scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note);
-                        //console.log(scope.player.controls.getUrl());
-                    }
-                })
-
-
-                scope.$watch('sync', function (newValue, oldValue) {
-                    if (newValue !== oldValue) {
-                        var gutter = $(element).find('.ace_gutter');
-                        newValue ? gutter.removeClass('inactive') : gutter.addClass('inactive');
-                    }
-                }, true);
-            }
-        };
-    }]);
+    }
+  }
+}])
+.directive('quizTimeline',function(){
+  return{
+    restrict:"A",
+    // replace:true,
+    scope:{
+      item:'=',
+      seek:'&',
+    },
+    template:'<td class="timeline-icon-container">'+
+                '<div ng-show="item.data.is_quiz_solved"  ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
+                    '<img src="../images/quiz-timeline.png" />'+
+                '</div>'+
+              '</td>'+
+              '<td>'+
+                '<p ng-show="item.data.is_quiz_solved" class="solved" ng-click="seek()(item.time, item.data.lecture_id)">{{item.data.question}}</p>'+
+                '<p ng-show="!item.data.is_quiz_solved" >{{item.data.question}}</p>'+
+              '</td>'+
+              '<td style="width:20px;">'+                 
+                 '<img ng-show="item.data.is_quiz_solved" src="images/check7.png" />'+
+            '</td>',
+    link:function(scope, element, attrs){}
+  }
+})

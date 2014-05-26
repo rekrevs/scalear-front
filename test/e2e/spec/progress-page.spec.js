@@ -19,7 +19,7 @@ ptor.driver.manage().window().setPosition(0, 0);
 
 
 
-describe("teacher", function(){
+xdescribe("teacher", function(){
 
 	// it('should sign in', function(){
 	// 	o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -605,58 +605,124 @@ describe("teacher", function(){
 
 })
 
-// describe('Student', function(){
-// 	it('should open the first course', function(){
-// 		o_c.open_course_whole(ptor)
-// 	})
-// 	it('should go to the courseware page', function(){
-// 		o_c.open_tray(ptor)
-// 		o_c.open_lectures(ptor)
-// 	})
+describe('Student', function(){
+	it('should sign in', function(){
+		o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
+	})
+	it('should open the first course', function(){
+		o_c.open_course_whole(ptor)
+	})
+	it('should go to the courseware page', function(){
+		o_c.open_tray(ptor)
+		o_c.open_lectures(ptor)
+	})
 
-// 	//SOLVE THE QUIZ
-// 	// it('should open the quiz',function(){
-// 	// 	o_c.open_item(ptor, 1);
-// 	// })
+	//WATCH THE FIRST LECTURE
+	it('should seek the video to 10%', function(){
+		youtube.seek(ptor, 10)
+	})
+	it('should expect MCQ quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		check_answer_given_answer_order(ptor, 1)
+		check_answer_given_answer_order(ptor, 3)
+		answer(ptor)
+		check_answer_correct(ptor)
+	})
+	it('move the mouse', function(){
+		ptor.actions().mouseMove({x: 250, y:250}).perform();
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 0)
+	})
+	it('should seek the video to 20%', function(){
+		youtube.seek(ptor, 20)
+	})
+	it('should expect an OCQ quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz incorrectly', function(){
+		check_answer_given_answer_order(ptor, 1)
+		answer(ptor)
+		check_answer_incorrect(ptor)
+	})
+	it('move the mouse', function(){
+		ptor.actions().mouseMove({x: 250, y:250}).perform();
+	})
+	it('should request that the question be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
+	it('should seek the video to 30%', function(){
+		youtube.seek(ptor, 30)
+	})
+	it('should expect a DRAG quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		answer_drag_correct_ov(ptor)
+		answer(ptor)
+		check_answer_correct(ptor)
+	})
+	it('move the mouse', function(){
+		ptor.actions().mouseMove({x: 250, y:250}).perform();
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 0)
+	})
+	//WATCH THE SECOND LECTURE
 
-// 	// it('should answer mcq incorrect', function(){
-// 	// 	student.mcq_answer(ptor, 2, 2);
-// 	// 	student.mcq_answer(ptor, 2, 3);
-// 	// })
+	//WATCH THE THIRD LECTURE
 
-// 	// it('should answer ocq correct', function(){
-// 	// 	student.ocq_answer(ptor, 4, 1);
-// 	// })
+	//SOLVE THE FIRST QUIZ
 
-// 	// it('should answer free question', function(){
-// 	// 	student.free_match_answer(ptor, 5, 'free answer')
-// 	// })
+	//SOLVE THE SECOND QUIZ
 
-// 	// it('should answer match question', function(){
-// 	// 	student.free_match_answer(ptor, 6, 'match answer')
-// 	// })	
+	//SOLVE THE SURVEY
 
-// 	// it('should answer drag correct', function(){
-// 	// 	ptor.sleep(3000);
-// 	// 	student.drag_answer(ptor, 7);
-// 	// 	ptor.sleep(3000);
-// 	// })
+	//SOLVE THE QUIZ
+	// it('should open the quiz',function(){
+	// 	o_c.open_item(ptor, 1);
+	// })
 
-// 	// it('should submit',function(){
-// 	// 	student.submit_normal_quiz(ptor);
-// 	// 	// ptor.sleep(10000)
-// 	// })
+	// it('should answer mcq incorrect', function(){
+	// 	student.mcq_answer(ptor, 2, 2);
+	// 	student.mcq_answer(ptor, 2, 3);
+	// })
+
+	// it('should answer ocq correct', function(){
+	// 	student.ocq_answer(ptor, 4, 1);
+	// })
+
+	// it('should answer free question', function(){
+	// 	student.free_match_answer(ptor, 5, 'free answer')
+	// })
+
+	// it('should answer match question', function(){
+	// 	student.free_match_answer(ptor, 6, 'match answer')
+	// })	
+
+	// it('should answer drag correct', function(){
+	// 	ptor.sleep(3000);
+	// 	student.drag_answer(ptor, 7);
+	// 	ptor.sleep(3000);
+	// })
+
+	// it('should submit',function(){
+	// 	student.submit_normal_quiz(ptor);
+	// 	// ptor.sleep(10000)
+	// })
 	
 
-// 	//end test
+	//end test
 
-// 	// it('should delete course', function(){
-// 	// 	//should choose one of home() or home_teacher() 
-// 	// 	//depending on the current state(student or teacher)
-// 	// 	o_c.home(ptor);
-// 	// 	teacher.delete_course(ptor, o_c.feedback);
-// 	// })
-// })
+	// it('should delete course', function(){
+	// 	//should choose one of home() or home_teacher() 
+	// 	//depending on the current state(student or teacher)
+	// 	o_c.home(ptor);
+	// 	teacher.delete_course(ptor, o_c.feedback);
+	// })
+})
 
 /////////////////////////////////////////////////////////
 //				test specific functions
@@ -668,6 +734,239 @@ function create_lecture(lecture_name, lecture_url, module_no, item_no){
 	teacher.initialize_lecture(ptor,  lecture_name, lecture_url, o_c.feedback, true);
 
 }
+
+
+function expect_quiz(ptor){
+	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
+		expect(check_answer_btn.isDisplayed()).toEqual(true);
+	})
+}
+
+function answer(ptor){
+	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(answer_btn){
+		answer_btn.click();
+	})
+}
+function check_answer_given_answer_order(ptor, choice_no){
+	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+		check_boxes[choice_no-1].click();
+	})
+}
+
+function check_answer_correct(ptor){
+	locator.by_tag(ptor,'notification').then(function(popover){
+		expect(popover.getText()).toContain('Correct');
+	})
+}
+
+function check_answer_incorrect(ptor){
+	locator.by_tag(ptor,'notification').then(function(popover){
+		expect(popover.getText()).toContain('Incorrect');
+	})
+}
+
+// function check_answer_correct(ptor){
+// 	locator.by_classname(ptor,'popover-content').then(function(popover){
+// 		expect(popover.getText()).toContain('Correct');
+// 	})
+// }
+
+// function check_answer_incorrect(ptor){
+// 	locator.by_classname(ptor,'popover-content').then(function(popover){
+// 		expect(popover.getText()).toContain('Incorrect');
+// 	})
+// }
+
+
+function answer_drag_correct(ptor){
+	for (var i = 0; i < 3; i++) {
+		locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
+			locator.by_classname(ptor,'drag-sort').findElements(protractor.By.tagName('li')).then(function(answer){
+				answer[0].getText().then(function (text){
+					if(text == 'answer 3'){
+					 	ptor.actions().dragAndDrop(arrow[0], arrow[2]).perform();
+					}
+					else if(text == 'answer 2'){
+					 	ptor.actions().dragAndDrop(arrow[0], arrow[1]).perform();
+					}
+				})
+				answer[1].getText().then(function (text){
+					if(text == 'answer 1'){
+						ptor.actions().dragAndDrop(arrow[1], arrow[0]).perform();
+					}
+					else if(text == 'answer 3'){
+					 	ptor.actions().dragAndDrop(arrow[1], arrow[2]).perform();
+					}
+				})
+				answer[2].getText().then(function (text){
+					if(text == 'answer 1'){
+					 	ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
+					}
+					else if(text == 'answer 2'){
+					 	ptor.actions().dragAndDrop(arrow[2], arrow[1]).perform();
+					}
+				})		
+			})
+		})
+	}
+	ptor.sleep(3000);
+}
+
+function answer_drag_incorrect(ptor){
+	locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
+		locator.by_classname(ptor,'drag-sort').findElements(protractor.By.tagName('li')).then(function(answer){
+			answer[0].getText().then(function (text){
+				if(text == 'answer 1'){
+				 	ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
+				}
+			})
+			answer[1].getText().then(function (text){
+				if(text == 'answer 1'){
+					ptor.actions().dragAndDrop(arrow[1], arrow[2]).perform();
+				}
+				else if(text == 'answer 3'){
+				 	ptor.actions().dragAndDrop(arrow[1], arrow[0]).perform();
+				}
+			})
+			answer[2].getText().then(function (text){
+				if(text == 'answer 3'){
+				 	ptor.actions().dragAndDrop(arrow[0], arrow[2]).perform();
+				}
+				if(text == 'answer 1'){
+				 	ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
+				}
+			})
+		})
+	})
+	ptor.sleep(3000);
+}
+
+
+function answer_drag_correct_ov(ptor){
+	//shuffle answers so all becomes clickable
+	locator.s_by_classname(ptor,'dragged').then(function(answer){
+			ptor.actions().mouseMove(answer[0]).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		 	ptor.actions().mouseDown().perform();
+		 	ptor.actions().mouseMove({x: 100, y: 0}).perform();
+		 	ptor.actions().mouseUp().perform();
+			
+			ptor.actions().mouseMove(answer[1]).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		 	ptor.actions().mouseDown().perform();
+		 	ptor.actions().mouseMove({x: 200, y: 0}).perform();
+		 	ptor.actions().mouseUp().perform();
+
+		 	ptor.actions().mouseMove(answer[2]).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		 	ptor.actions().mouseDown().perform();
+		 	ptor.actions().mouseMove({x: 300, y: 0}).perform();
+		 	ptor.actions().mouseUp().perform();
+		})
+	locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
+		locator.s_by_classname(ptor,'dragged').then(function(answer){
+			answer[0].getText().then(function (text){
+				ptor.actions().mouseMove(answer[0]).perform();
+				ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseDown().perform();
+			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseUp().perform();	
+			})
+
+			answer[1].getText().then(function (text){
+				ptor.actions().mouseMove(answer[1]).perform();
+				ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseDown().perform();
+			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseUp().perform();	
+			})
+
+			answer[2].getText().then(function (text){
+				ptor.actions().mouseMove(answer[2]).perform();
+				ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseDown().perform();
+			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseUp().perform();	
+			})
+		})
+	})
+		ptor.sleep(3000);
+}
+
+
+
+function answer_drag_incorrect_ov(ptor){
+	//shuffle answers so all becomes clickable
+	locator.s_by_classname(ptor,'dragged').then(function(answer){
+			ptor.actions().mouseMove(answer[0]).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		 	ptor.actions().mouseDown().perform();
+		 	ptor.actions().mouseMove({x: 100, y: 0}).perform();
+		 	ptor.actions().mouseUp().perform();
+			
+			ptor.actions().mouseMove(answer[1]).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		 	ptor.actions().mouseDown().perform();
+		 	ptor.actions().mouseMove({x: 200, y: 0}).perform();
+		 	ptor.actions().mouseUp().perform();
+
+		 	ptor.actions().mouseMove(answer[2]).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		 	ptor.actions().mouseDown().perform();
+		 	ptor.actions().mouseMove({x: 300, y: 0}).perform();
+		 	ptor.actions().mouseUp().perform();
+		})
+	locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
+		locator.s_by_classname(ptor,'dragged').then(function(answer){
+			answer[0].getText().then(function (text){
+				ptor.actions().mouseMove(answer[2]).perform();
+				ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseDown().perform();
+			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseUp().perform();	
+			})
+
+			answer[1].getText().then(function (text){
+				ptor.actions().mouseMove(answer[0]).perform();
+				ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseDown().perform();
+			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseUp().perform();	
+			})
+
+			answer[2].getText().then(function (text){
+				ptor.actions().mouseMove(answer[1]).perform();
+				ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseDown().perform();
+			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			 	ptor.actions().mouseUp().perform();	
+			})
+		})
+	})
+		ptor.sleep(3000);
+}
+
+function request_review_inclass(ptor, which){
+	locator.by_tag(ptor,'notification').then(function(popover){
+		if(which == 0){
+			popover.findElement(protractor.By.className('btn-danger')).then(function(no){
+				no.click();
+			})
+		}
+		else if(which == 1){
+			popover.findElement(protractor.By.className('btn-success')).then(function(yes){
+				yes.click();
+			})
+		}	
+	})
+}
+
 
 
 

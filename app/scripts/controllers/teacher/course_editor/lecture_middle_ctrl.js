@@ -215,6 +215,7 @@ angular.module('scalearAngularApp')
 			function(data){ //success
 				$log.debug(data)
 				$scope.selected_quiz.answers= data.answers
+				console.log($scope.selected_quiz.answers)
 				if($scope.selected_quiz.question_type.toLowerCase()=="drag"){
 					$scope.allPos=mergeDragPos(data.answers)
 					$log.debug($scope.allPos)

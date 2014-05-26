@@ -76,13 +76,15 @@ angular.module('scalearAngularApp')
 				var ontop=angular.element('.ontop');		
 				var w = scope.data.width * ontop.width();
 				var h = scope.data.height* (ontop.height());
-				var add_left= (w-13)/2.0
-				var add_top = (h-13)/2.0
-				scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
-				scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
+				// var add_left= (w-13)/2.0
+				// var add_top = (h-13)/2.0
+				// scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
+				// scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
+				scope.xcoor = scope.data.xcoor
+				scope.ycoor = scope.data.ycoor
 				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-				$log.debug(scope.xcoor+add_left)
-				$log.debug(scope.ycoor+add_top)
+				// $log.debug(scope.xcoor+add_left)
+				// $log.debug(scope.ycoor+add_top)
 			}	
 
 			scope.setAnswerColor=function(){
@@ -149,10 +151,10 @@ angular.module('scalearAngularApp')
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
 			})
-			$rootScope.$on("updatePosition",function(){
-				$log.debug("event emiited updated position")
-				setAnswerLocation()
-			})	
+			// $rootScope.$on("updatePosition",function(){
+			// 	$log.debug("event emiited updated position")
+			// 	setAnswerLocation()
+			// })	
 
 			scope.answerClass = "component dropped answer_img"	
 
@@ -189,7 +191,7 @@ angular.module('scalearAngularApp')
 				scope.updateValues();	
 			},true)
 
-            setAnswerLocation()
+            // setAnswerLocation()
 			scope.setAnswerColor()
 		}
 	};
@@ -337,7 +339,7 @@ angular.module('scalearAngularApp')
 			scope.cc =['MCQ', 'OCQ','Free Text Question']
 			scope.match_types =['Free Text', 'Match Text']
 			console.log(scope.quiz)
-			if(scope.isFreeText()){
+			if(scope.isFreeText){
 				if(!scope.quiz.match_type)
 					scope.quiz.match_type = scope.match_types[0]
 		 	}
@@ -356,17 +358,8 @@ angular.module('scalearAngularApp')
                 shortcut.remove("Enter");
             });
 
-            scope.$watch('quiz.question_type',function(){
-            	if(scope.quiz.question_type == 'Free Text Question'){
-            		scope.quiz.answers = []
-            		scope.addAnswer("",scope.quiz)
-            	}
-            })
-
 			shortcut.add("Enter",function(){
-				console.log(scope.quiz.question_type)
-				if(!scope.isFreeText()){
-
+				if(!scope.isFreeText){
 					var all_inputs= element.find('input')
 					$log.debug(all_inputs.length)
 					all_inputs.each(function(ind,elem){
@@ -443,7 +436,7 @@ angular.module('scalearAngularApp')
 		template:"<ng-form name='aform'>"+
 					"<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />"+
 					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-					"<label><span translate>courses.insert_regex</span> ex: '/[a-z]*/'</label>"+
+					"<label>Insert an exact string or a regular expression to match ex: '/[a-z]*/'</label>"+
 				"</ng-form>"
 	}
 	

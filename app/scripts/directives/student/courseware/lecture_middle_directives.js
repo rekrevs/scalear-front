@@ -560,17 +560,7 @@ angular.module('scalearAngularApp')
       item:'=',
       seek:'&'
     },
-    template:'<td class="timeline-icon-container">'+
-              '<div ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
-                '<img src="../images/confused-timeline.png" />'+                  
-              '</div>'+
-              '</td>'+
-              '<td>'+
-              '<p class="solved" ng-click="seek()(item.time, item.data.lecture_id)" translate>{{msg}}</p>'+
-              '</td>'+
-              '<td style="width:20px;">'+                 
-                 '<delete_button size="small" action="deleteConfused(item)" />'+
-            '</td>',
+    templateUrl:'/views/student/lectures/confused_timeline.html',
     link:function(scope, element, attrs){
       var unwatch = scope.$watch('item.data.very',function(){
           scope.msg =scope.item.data.very? 'courses.really_confused': 'courses.confused'
@@ -604,18 +594,7 @@ angular.module('scalearAngularApp')
       item:'=',
       seek:'&',
     },
-    template:'<td class="timeline-icon-container">'+
-                '<div ng-show="item.data.is_quiz_solved"  ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
-                    '<img src="../images/quiz-timeline.png" />'+
-                '</div>'+
-              '</td>'+
-              '<td>'+
-                '<p ng-show="item.data.is_quiz_solved" class="solved" ng-click="seek()(item.time, item.data.lecture_id)">{{item.data.question}}</p>'+
-                '<p ng-show="!item.data.is_quiz_solved" >{{item.data.question}}</p>'+
-              '</td>'+
-              '<td style="width:20px;">'+                 
-                 '<img ng-show="item.data.is_quiz_solved" src="images/check7.png" />'+
-            '</td>',
+    templateUrl: '/views/student/lectures/quiz_timeline.html',
     link:function(scope, element, attrs){}
   }
 })

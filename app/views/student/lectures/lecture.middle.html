@@ -23,7 +23,7 @@
 					    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position:relative;top:330px;height:70px;width:180px;"><span translate>next</span> >> </button>
 						</div>
 					</center>
-					<quiz ng-style="quiz_layer" ng-show="quiz_mode" resizable-video quiz-layer="quiz_layer" aspect=ratio="widescreen" active="fullscreen" resize="resize" max-width='0'>
+					<quiz ng-style="quiz_layer" ng-show="quiz_mode" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0'>
 						 <div ng-if="selected_quiz.quiz_type == 'html'" >
 						 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
 						 </div>

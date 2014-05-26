@@ -471,8 +471,10 @@ angular.module('scalearAngularApp')
                 // angular.extend($scope.ontop_layer, {"z-index":0})
 				
 				$timeout(function(){$scope.$emit("updatePosition")})
-				$scope.unregister_back_event()	
-				$scope.unregister_state_event()	
+				if($scope.unregister_back_event)
+					$scope.unregister_back_event()
+				if($scope.unregister_state_event)	
+					$scope.unregister_state_event()	
 			}
 
 			$scope.resize.big = function()

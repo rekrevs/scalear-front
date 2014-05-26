@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     console.log("lect mid ctlr")
 
-//     $scope.video_layer = {}
+    $scope.video_layer = {}
     $scope.quiz_layer = {}
     $scope.lecture_player={}
     $scope.lecture_player.controls={}
@@ -111,6 +111,7 @@ angular.module('scalearAngularApp')
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
                 // console.log('Am I fullscreen? ' + (screenfull.isFullscreen ? 'Yes' : 'No'));
                 if(!screenfull.isFullscreen){
+                    console.log("cool")
                     $scope.resize.small()
                     $scope.fullscreen = false
                     $scope.video_class= 'video_class'

@@ -146,7 +146,8 @@ angular.module('scalearAngularApp')
 		 	url:"=",
 		 	quizType:"=", 
 		 	done: "=",
-		 	required: "="
+		 	required: "=",
+		 	current:'='
 		 },
 		 restrict: 'E', 
 		 templateUrl: '/views/student/lectures/courseware_item.html',
@@ -157,9 +158,9 @@ angular.module('scalearAngularApp')
 				// console.log(element.children())
 				var bg = element.children()[0].children[0].children[0]
 				var ctx = ctx = bg.getContext('2d');
-		 		if(scope.done == true){
+		 		if(scope.done == true && scope.current!=scope.id){
 					ctx.clearRect(0, 0, bg.width, bg.height);
-					ctx.fillStyle = 'lightgreen';
+					// ctx.fillStyle = 'rgb(0, 162, 86)';
 					ctx.beginPath();
 					ctx.moveTo(bg.width/2,bg.height/2);
 					// console.log(scope.percentage)

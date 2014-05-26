@@ -63,7 +63,7 @@ angular.module('scalearAngularApp')
   };
 
 }])
-.directive("notification", ['$translate', '$window', '$log','OnlineQuiz', function($translate, $window, $log, OnlineQuiz) {
+.directive("notification", ['$translate', '$log', function($translate, $log) {
   return {
     restrict:"E",
     scope:{
@@ -79,7 +79,18 @@ angular.module('scalearAngularApp')
     }
   };
 }])
-
+.directive("reviewInclass", ['$translate', '$log', function($translate, $log) {
+  return {
+    restrict:"E",
+    scope:{
+      vote:'&',
+      close:'&',
+      retry:'&'
+    },
+    templateUrl: '/views/student/lectures/review_inclass.html',
+    link: function(scope, element, attrs) {}
+  };
+}])
 .directive("checkAnswer",['$log', function($log) {
   return {
     restrict:"E",

@@ -33,10 +33,27 @@ angular.module('scalearAngularApp')
 				$scope.modules_obj = util.toObjectById($scope.course.groups)
 				console.log("last_viewed")
 				console.log($scope.last_viewed)
+				var classname = 'lecture'
+				console.log("first option")
+					console.log($state.params.module_id)
+					console.log($state.params.lecture_id)
+					console.log($state.params.quiz_id)
+					console.log(!!($state.params.module_id && ($state.params.lecture_id || $state.params.quiz_id)))
 				if($state.params.module_id && ($state.params.lecture_id || $state.params.quiz_id)){
+					
 			    	$scope.current_module = $scope.modules_obj[$state.params.module_id]	
-			    	if($scope.current_module.lectures && $scope.current_module.lectures.length)
-			    		$scope.current_item = $state.params.lecture_id
+			    	console.log($scope.current_module)
+			    	if($scope.current_module.items && $scope.current_module.items.length){
+			    			console.log("i should see this")
+
+			    		if($state.params.lecture_id){
+			    			$scope.current_item = $state.params.lecture_id
+			    		}
+			    		else if($state.params.quiz_id){
+			    			$scope.current_item = $state.params.quiz_id
+			    			classname = 'quiz'
+			    		}
+			    	}
 				}
 				else if(!$state.params.lecture_id && !$state.params.quiz_id && $scope.last_viewed.module != -1 ){
 			    	$scope.current_module = $scope.modules_obj[$scope.last_viewed.module]	
@@ -46,11 +63,16 @@ angular.module('scalearAngularApp')
 			    }
 			    else{
 			    	$scope.current_module = $scope.course.groups[0] 
-			    	if($scope.current_module.lectures && $scope.current_module.lectures.length)
-						$scope.current_item = $scope.current_module.lectures[0].id
+			    	if($scope.current_module.items && $scope.current_module.items.length){
+						$scope.current_item = $scope.current_module.items[0].id
+			    		classname = $scope.current_module.items[0].class_name
+			    	}
 			    }
-			    if($scope.current_module && $scope.current_item)					
-					$state.go('course.courseware.module.lecture', {'module_id': $scope.current_module.id, 'lecture_id': $scope.current_item})
+			    if($scope.current_module && $scope.current_item){	
+			    	var params = {'module_id': $scope.current_module.id}	
+			    	params[classname+'_id'] = $scope.current_item
+					$state.go('course.courseware.module.'+classname, params)
+				}
 
 			    // $scope.moduleMenuSetup();
 
@@ -139,15 +161,21 @@ angular.module('scalearAngularApp')
 
 
 	$scope.showModule = function(module){
+		console.log(module)
 		$scope.current_module = module//$scope.modules_obj[module_id];
 		// $scope.close_selector = true;
 		Module.getLastWatched(
 			{module_id: module.id}, function(data){
 				console.log('hereeeeeeeeeeeeeeee')
 				console.log(data)
+				console.log(module)
 				if(data.last_watched != -1){
 					$state.go('course.courseware.module.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
 					$scope.current_item = data.last_watched
+				}
+				else{
+					$state.go('course.courseware.module.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
+					$scope.current_item = module.quizzes[0].id
 				}
 			})		
 	}

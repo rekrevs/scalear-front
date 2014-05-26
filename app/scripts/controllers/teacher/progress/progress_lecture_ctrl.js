@@ -98,9 +98,10 @@ angular.module('scalearAngularApp')
           course_id: $stateParams.course_id,
           module_id:$stateParams.module_id
       },
-      function(data){
-        $scope.quizzes=angular.extend({}, data.quizzes, $scope.quizzes)
+      function(resp){
+        $scope.quizzes=angular.extend({}, resp.quizzes, $scope.quizzes)
       	$scope.timeline['quiz'] ={}
+        console.log(resp)
   	 		for(var quiz_id in $scope.quizzes){
   	 			$scope.timeline['quiz'][quiz_id] = new Timeline()
   	 			for(var q_idx in $scope.quizzes[quiz_id].questions){
@@ -109,6 +110,7 @@ angular.module('scalearAngularApp')
             data.type = $scope.quizzes[quiz_id].questions[q_idx].type
             data.id = q_id  
             data.quiz_type='quiz'
+            data.title=$scope.quizzes[quiz_id].questions[q_idx].question
             var type = $scope.quizzes[quiz_id].questions[q_idx].type == "Free Text Question"? $scope.quizzes[quiz_id].questions[q_idx].type : 'charts'
   	 			  $scope.timeline['quiz'][quiz_id].add(0, type, data,'quiz')
           }
@@ -216,8 +218,6 @@ angular.module('scalearAngularApp')
         $scope.selected_item.lec_id = id[1]
       }
   		$scope.inner_highlight_index = -1	
-
-      
   	}
 
    var setupRemoveHightlightEvent=function(){

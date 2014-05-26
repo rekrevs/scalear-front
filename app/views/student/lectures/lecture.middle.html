@@ -10,7 +10,7 @@
 	<div style="width: 100%; height: 100%;">
 		<div id="main-video-container" ng-style="container_style">
 			<form name="answer_form" novalidate style="margin:0" >
-				<video_container  ng-class="video_class" ng-init="video_class='video_class'" screenfull active="fullscreen">
+				<video_container  ng-class="video_class" ng-init="video_class='video_class'" screenfull active="fullscreen" >
 					<center>
 						<loading size='small' show="!lecture.url || (!slow && !video_ready)" style="position:relative;color:#428bca;width: 100%;font-weight:300;font-size:12px;top: 150px;" />
 						<div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' ng-show="slow">
@@ -23,7 +23,7 @@
 					    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position:relative;top:330px;height:70px;width:180px;"><span translate>next</span> >> </button>
 						</div>
 					</center>
-					<quiz ng-style="quiz_layer" ng-show="quiz_mode">
+					<quiz ng-style="quiz_layer" ng-show="quiz_mode" resizable-video quiz-layer="quiz_layer" aspect=ratio="widescreen" active="fullscreen" resize="resize" max-width='0'>
 						 <div ng-if="selected_quiz.quiz_type == 'html'" >
 						 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
 						 </div>
@@ -36,7 +36,8 @@
 			    		<controls id="controls-bar" class="controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="toggleQuestionBlock()">
 						</controls>
 						<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
-						<notification message="notification_message" submessage="notification_submessage" ></notification> <!-- ng-style="notify_position"  --> <!-- ng-show='show_notification || review_inclass' -->
+						<notification message="notification_message" submessage="notification_submessage" /> <!-- ng-style="notify_position"  --> <!-- ng-show='show_notification || review_inclass' -->
+						<review_inclass ng-show="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" /> <!-- ng-style="notify_position"  --> <!-- ng-show='show_notification || review_inclass' -->
 			    	</progress-bar>
 			    </video_container>
 			</form>

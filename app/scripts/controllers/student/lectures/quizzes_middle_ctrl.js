@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
     
  	var init = function(){
         $scope.studentAnswers={};
-
+        $scope.$parent.$parent.current_item =$stateParams.quiz_id
  		Quiz.getQuestions({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},function(data){
             $scope.quiz= data.quiz
             Page.setTitle($scope.quiz.name)

@@ -229,6 +229,10 @@ angular.module('scalearAngularApp')
 
 				player_controls.cue=function(time, callback){
 					player.cue(time, callback)
+					return player_controls.getCueEvent()
+				}
+				player_controls.getCueEvent=function(){
+					return player.getTrackEvent(player.getLastTrackEventId());
 				}
 
 				player_controls.replay=function(){	
@@ -416,6 +420,10 @@ angular.module('scalearAngularApp')
 						$scope.resize.big();
                         $scope.$apply()
 					}
+					else{
+						$scope.resize.small();
+                        $scope.$apply()
+					}
 				}
 			)
 			$scope.resize.small = function()
@@ -453,9 +461,12 @@ angular.module('scalearAngularApp')
 					"z-index":2
 				}
 
-				angular.extend($scope.container, container)
-				angular.extend($scope.video_layer, video)
-				angular.extend($scope.quiz_layer, layer)
+				if($scope.container)
+					angular.extend($scope.container, container)
+				if($scope.video_layer)
+					angular.extend($scope.video_layer, video)
+				if($scope.quiz_layer)
+					angular.extend($scope.quiz_layer, layer)
                 // angular.extend($scope.ontop_layer, layer)
                 // angular.extend($scope.ontop_layer, {"z-index":0})
 				
@@ -500,6 +511,7 @@ angular.module('scalearAngularApp')
 				var layer={}
 				if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
 					$log.debug("width cutt offff")
+					console.log("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
 					var margin_top = ((win.height()-40) - (video_height))/2.0; //+30
 
@@ -515,6 +527,11 @@ angular.module('scalearAngularApp')
 					}		
 				}
 				else{		
+					console.log("height cutt offff")
+					console.log(win.width())
+					console.log(video_width)
+					console.log(((win.width()-$scope.max_width) - video_width)/2.0)
+					video_width = (win.height()-40)*factor
 					var margin_left= ((win.width()-$scope.max_width) - video_width)/2.0;
 					layer={
 						"position":"fixed",
@@ -527,9 +544,13 @@ angular.module('scalearAngularApp')
 						"z-index": 1531
 					}		
 				 }
-				angular.extend($scope.container, container)
-				angular.extend($scope.video_layer, video)
-				angular.extend($scope.quiz_layer, layer)
+
+				if($scope.container)
+					angular.extend($scope.container, container)
+				if($scope.video_layer)
+					angular.extend($scope.video_layer, video)
+				if($scope.quiz_layer)
+					angular.extend($scope.quiz_layer, layer)
                 // angular.extend($scope.ontop_layer, layer)
                 // angular.extend($scope.ontop_layer,{"z-index":1031});
 

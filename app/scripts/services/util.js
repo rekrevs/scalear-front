@@ -52,13 +52,24 @@ angular.module('scalearAngularApp')
     return obj
   },
 
-  urlWithProtocol:function(url)
-  {
+  urlWithProtocol:function(url){
     if(url)
         return url.match(/^http/)? url: 'http://'+url;
     else
         return url;
-  }
+  },
+
+  getIndexById:function(arr, id) {// returns index of an object in an array by searching for its id
+    for(var elem in arr){
+      if(arr[elem].id==id)
+        return elem
+    }
+    return -1
+  },
+
+  capitalize: function(s){
+    return s[0].toUpperCase() + s.slice(1);
+  },
 
 
 }

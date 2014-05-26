@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: 'E', 
-			template: '<div class="ontop" id="ontop" style="position: absolute; min-width:570px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
+			template: '<div class="ontop" id="ontop" style="position: absolute;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
 }).directive('editPanel',function(){
 	return {		
@@ -337,7 +337,7 @@ angular.module('scalearAngularApp')
 			scope.cc =['MCQ', 'OCQ','Free Text Question']
 			scope.match_types =['Free Text', 'Match Text']
 			console.log(scope.quiz)
-			if(scope.isFreeText){
+			if(scope.isFreeText()){
 				if(!scope.quiz.match_type)
 					scope.quiz.match_type = scope.match_types[0]
 		 	}
@@ -356,8 +356,17 @@ angular.module('scalearAngularApp')
                 shortcut.remove("Enter");
             });
 
+            scope.$watch('quiz.question_type',function(){
+            	if(scope.quiz.question_type == 'Free Text Question'){
+            		scope.quiz.answers = []
+            		scope.addAnswer("",scope.quiz)
+            	}
+            })
+
 			shortcut.add("Enter",function(){
-				if(!scope.isFreeText){
+				console.log(scope.quiz.question_type)
+				if(!scope.isFreeText()){
+
 					var all_inputs= element.find('input')
 					$log.debug(all_inputs.length)
 					all_inputs.each(function(ind,elem){

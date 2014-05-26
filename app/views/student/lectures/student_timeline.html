@@ -1,0 +1,27 @@
+<div class="btn-group align-center" data-toggle="buttons">
+    <label id="quiz_checkbox" class="btn btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.quiz"> {{'lectures.outline' | translate}}
+    </label>
+    <label id="confused_checkbox"class="btn btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.confused"> {{'lectures.confused' | translate}}
+    </label>
+    <label id="discussion_checkbox" class="btn btn-checkbox">
+        <input type="checkbox" ng-model="checkModel.discussion"> {{'lectures.discussion' | translate}}
+    </label>
+</div>
+<br>
+<div style="height:630px">
+    <div style="overflow:auto;height:79%; position: absolute; width: 95%;"> <!-- has all discussions -->        
+        <div ng-repeat="l in lectures" class='dimmed' style="min-width: 95%;" ng-class="{lectureopen: l.id == lecture.id}" id={{"outline_"+l.id}}>        
+            <h3>{{l.name}}</h3>
+            <table class="table table-striped" style="border-spacing: 0.2em;">
+                <tbody ng-repeat="item in timeline[l.id].items | filter:filterType">
+                    <tr quiz_timeline ng-show="item.type=='quiz'" item='item' seek='seek()' />
+                    <tr confused_timeline ng-show="item.type=='confused'" item='item' seek='seek()'/>
+                    <tr discussion_timeline ng-show="item.type=='discussion'" item='item' seek='seek()' />
+                </tbody>
+            </table>
+            <hr>
+        </div>
+    </div>
+</div>

@@ -1,212 +1,230 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive('discussion',["$timeout","$stateParams","Forum","Timeline","Lecture","editor","$translate", function($timeout, $stateParams, Forum, Timeline, Lecture,editor, $translate) {
-    return {
-        restrict:"E",
-        templateUrl:'/views/forum/discussion.html',
-        link: function(scope, element, attrs, ngModel) {
-            console.log("here@!!!!")
-            scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
-            scope.privacy = scope.choices[0];
-            scope.checkModel={quiz:true,confused:false, discussion:false};
-
-            scope.checkEmpty= function(item){
-
-                return  item.type!=''
-
-            }
-
-            scope.filterType= function(item){
-                var condition=false;
-                for(var e in scope.checkModel)
-                {
-                    if(scope.checkModel[e])
-                        condition = (condition || item.type==e)
+    .directive('questionBlock',['$log','$translate','Forum',function($log,$translate,Forum){
+        return{
+            restrict:"E",
+            templateUrl:"/views/forum/question_block.html",
+            scope:{
+                time:'=',
+                action:'&'
+            },
+            link:function(scope,element,attrs){
+                scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
+                scope.privacy = scope.choices[0];
+                scope.postQuestion=function(){
+                    if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
+                        scope.action()(scope.current_question, scope.privacy.value)
+                        scope.error_message=null
+                        scope.current_question = ''
+                    }
+                    else
+                        scope.error_message = $translate("discussion.cannot_be_empty")
                 }
-                var x = item.type!='' && condition
+            }
+        }
+    }])
+    .directive('discussionTimeline',["Forum","Timeline","$translate",'$rootScope', function(Forum, Timeline, $translate, $rootScope) {
+    return {
+        restrict:"A",
+        // replace:true,
+        scope:{
+            seek:'&',
+            item:'=',
+            delete:'&'
+        },
+        templateUrl:'/views/forum/discussion_timeline.html',
+        link: function(scope, element, attrs) {
+            scope.current_user = $rootScope.current_user
+            scope.deleteDiscussion = function(discussion){
+                Forum.deletePost(
+                    {post_id: discussion.data.id}, 
+                    function(response){
+                        //console.log("begin")
+                        // var index=scope.timeline['lecture'][lecture_id].items.indexOf(discussion);
+                        //console.log(index)
+                        //scope.timeline['discussion'][lecture_id][id]={}
+                        //console.log("hna")
+                        // scope.timeline['lecture'][lecture_id].items.splice(index, 1);
+                        // delete scope.item
+                        scope.error_message = null
+                        scope.$emit('update_timeline', discussion)
+                        //console.log("hna2")
+                    }, 
+                    function(){}
+                )
+            }
 
-                return x;
+            scope.flagPost = function(discussion){
+                Forum.flagPost(
+                    {post_id: discussion.data.id}, 
+                    function(response){
+                        discussion.data.user_flag=1;
+                        discussion.data.flags_count++;
+                    },
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+            scope.unflagPost = function(discussion){
+                Forum.flagPost(
+                    {post_id: discussion.data.id}, 
+                    function(response){
+                        discussion.data.user_flag = 0;
+                        discussion.data.flags_count--;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+
+            scope.upvotePost= function(discussion){
+                Forum.votePost(
+                    {
+                        vote: parseInt(discussion.data.user_vote)+1, 
+                        post_id:discussion.data.id
+                    }, 
+                    function(response){
+                        discussion.data.user_vote=1;
+                        discussion.data.votes_count++;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+
+            scope.downvotePost = function(discussion){
+                Forum.votePost(
+                    {
+                        vote: parseInt(discussion.data.user_vote)-1, 
+                        post_id:discussion.data.id
+                    }, 
+                    function(response){
+                        discussion.data.user_vote=0;    
+                        discussion.data.votes_count--;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+
+            scope.flagComment = function(comment){
+                Forum.flagComment(
+                    {comment_flag:{comment_id: comment.id}}, 
+                    function(response){
+                        comment.user_flag=1;
+                        comment.flags_count++;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+            scope.unflagComment = function(comment){
+                Forum.flagComment(
+                    {comment_flag:{comment_id: comment.id}}, 
+                    function(response){
+                        comment.user_flag = 0;
+                        comment.flags_count--;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+
+            scope.upvoteComment= function(comment){
+                Forum.voteComment(
+                    {comment_vote:{vote: parseInt(comment.user_vote)+1, comment_id:comment.id}}, 
+                    function(response){
+                        comment.user_vote=1;
+                        comment.votes_count++;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+
+            scope.downvoteComment= function(comment){
+                Forum.voteComment(
+                    {comment_vote:{vote: parseInt(comment.user_vote)-1, comment_id:comment.id}}, 
+                    function(response){
+                        comment.user_vote=0;
+                        comment.votes_count--;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
 
             }
 
-            scope.saveQuestion = function(){
-
-                Forum.createPost({post: {content: scope.current_question, time:scope.current_question_time, lecture_id:$stateParams.lecture_id, privacy:scope.privacy.value}}, function(response){
-                    console.log("success");
-                    scope.timeline['lecture'][$stateParams.lecture_id].add(scope.current_question_time, "discussion",  response.post);
-                    // also add to notes.
-                    //console.log(scope.editors);
-                    scope.editors[$stateParams.lecture_id].insert(scope.current_question_time, scope.current_question);
-                    scope.show_question=false;
-                    scope.current_question="";
-                    scope.lecture_player.controls.play();
-                }, function(){
-                    console.log("failure")
-                })
-
-
-
-            }
-            scope.deleteDiscussion = function(id, lecture_id, discussion){
-                Forum.deletePost({post_id: id}, function(response){
+            scope.deleteComment = function(comment, post_id){
+                Forum.deleteComment({comment_id: comment.comment.id, post_id: post_id}, function(response){
                     //console.log("begin")
-                    var index=scope.timeline['lecture'][lecture_id].items.indexOf(discussion);
+                    var index=scope.item.data.comments.indexOf(comment);
                     //console.log(index)
                     //scope.timeline['discussion'][lecture_id][id]={}
                     //console.log("hna")
-                    scope.timeline['lecture'][lecture_id].items.splice(index, 1);
-                    scope.error_message = null
+                    scope.item.data.comments.splice(index, 1);
                     //console.log("hna2")
-                }, function(){
-                    console.log("failure");
-                })
-            }
-
-            scope.flagPost = function(id, lecture_id, discussion){
-                Forum.flagPost({post_id: id}, function(response){
-                    discussion.data.user_flag=1-discussion.data.user_flag;
-                    discussion.data.flags_count++;
-                }, function(){
-                    console.log("failure");
-                })
-            }
-            scope.unflagPost = function(id, lecture_id, discussion){
-                Forum.flagPost({post_id: id}, function(response){
-                    discussion.data.user_flag = 0;
-                    discussion.data.flags_count--;
-                }, function(){
-                    console.log("failure");
-                })
-            }
-
-            scope.upvotePost= function(lecture_id, discussion){
-                Forum.votePost({vote: discussion.data.user_vote, post_id:discussion.data.id}, function(response){
-                    discussion.data.user_vote=1-discussion.data.user_vote;
-                    discussion.data.votes_count+=1;
-                }, function(){
-                    console.log("failure");
-                })
-
-            }
-            scope.downvotePost = function(lecture_id, discussion){
-                Forum.votePost({vote: discussion.data.user_vote, post_id:discussion.data.id}, function(response){
-                    discussion.data.user_vote=1-discussion.data.user_vote;    
-                    discussion.data.votes_count--;
-                }, function(){
-                    console.log("failure");
-                })
-            }
-
-            scope.flagComment = function(id,q_id, lecture_id, answer){
-                Forum.flagComment({comment_flag:{comment_id: id}}, function(response){
-                    answer.data.user_flag=1-answer.data.user_flag;
-                    answer.data.flags_count++;
-                }, function(){
-                    console.log("failure");
-                })
-            }
-            scope.unflagComment = function(id,q_id, lecture_id, answer){
-                Forum.flagComment({comment_flag:{comment_id: id}}, function(response){
-                    answer.data.user_flag = 0;
-                    answer.data.flags_count--;
-                }, function(){
-                    console.log("failure");
-                })
-            }
-
-            scope.upvoteComment= function(q_id, lecture_id, answer){
-                Forum.voteComment({comment_vote:{vote: answer.data.user_vote, comment_id:answer.data.id}}, function(response){
-                    answer.data.user_vote=1-answer.data.user_vote;
-                    answer.data.votes_count+=1;
-                }, function(){
-                    console.log("failure");
-                })
-
-            }
-            scope.downvoteComment= function(q_id, lecture_id, answer){
-                Forum.voteComment({comment_vote:{vote: answer.data.user_vote, comment_id:answer.data.id}}, function(response){
-                    answer.data.user_vote=1-answer.data.user_vote;
-                    answer.data.votes_count-=1;
-                }, function(){
-                    console.log("failure");
-                })
-
-            }
-
-            scope.deleteAnswer = function(id,q_id, lecture_id, answer){
-                Forum.deleteComment({comment_id: id, post_id: q_id}, function(response){
-                    //console.log("begin")
-                    var index=scope.timeline['lecture'][lecture_id][q_id].items.indexOf(answer);
-                    //console.log(index)
-                    //scope.timeline['discussion'][lecture_id][id]={}
-                    //console.log("hna")
-                    scope.timeline['lecture'][lecture_id][q_id].items.splice(index, 1);
-                    //console.log("hna2")
+                    // delete comment
                     scope.error_message = null
-                }, function(){
+                },
+                function(){
                     console.log("failure");
                 })
             }
 
-            scope.reply = function(discussion){
-                if (scope.current_reply[discussion.data.id] && scope.current_reply[discussion.data.id].length && scope.current_reply[discussion.data.id].trim()!=""){
-                    Forum.createComment({comment: {content: scope.current_reply[discussion.data.id], post_id:discussion.data.id, lecture_id:discussion.data.lecture_id}}, function(response){
-                        if(!scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id])
-                            scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id]= new Timeline();
+            scope.reply=function(discussion){
+                if (scope.current_reply && scope.current_reply.length && scope.current_reply.trim()!=""){
+                    scope.error_message = null
+                    console.log("discussion")
+                    console.log(discussion)
+                    Forum.createComment({comment: {content: scope.current_reply, post_id:discussion.data.id, lecture_id:discussion.data.lecture_id}}, function(response){
+                        // if(!scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id])
+                        //     scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id]= new Timeline();
 
                         console.log(response);
-                        scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id].add(discussion.data.time, "comment", response.comment);
-                        scope.show_reply[discussion.data.id]=false
-                        scope.current_reply[discussion.data.id]=""
-                        scope.lecture_player.controls.play();
-                        scope.error_message = null
-                    }, function(){
-                        console.log("failure")
-                    })
+                        // scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id].add(discussion.data.time, "comment", response.comment);
+                        // scope.show_reply[discussion.data.id]=false
+                        if(discussion.data.comments)
+                            discussion.data.comments.push(response)
+                        else
+                            discussion.data.comments=[response]
+                        scope.current_reply=""
+                        // scope.lecture_player.controls.play();
+                        
+                    }, function(){})
                 }
                 else{
-                    console.log("hello")
                     scope.error_message = $translate("discussion.cannot_be_empty")
                 }
                 angular.element('.btn').blur()
             }
 
-            scope.show_reply = function(discussion){
-                if(!scope.show_reply[discussion.data.id])
-                {
-                    scope.show_reply[discussion.data.id]=true
-                    scope.lecture_player.controls.pause();
-                }
-                else{
-                    scope.show_reply[discussion.data.id]=false
-                    scope.lecture_player.controls.play();
-                }
-            }
-
-            scope.deleteConfused = function(confused_id, lecture_id, c){
-                Lecture.deleteConfused({lecture_id: lecture_id, confused_id: confused_id}, function(response){
-                    console.log("deleted");
-                    // now want to remove from list (both l.confuseds and $scope.timeline..)
-                    var index=scope.timeline['lecture'][lecture_id].items.indexOf(c);
-                    scope.timeline['lecture'][lecture_id].items.splice(index, 1)
-                });
-            }
+            // scope.show_reply = function(discussion){
+            //     if(!scope.show_reply[discussion.data.id])
+            //     {
+            //         scope.show_reply[discussion.data.id]=true
+            //         scope.lecture_player.controls.pause();
+            //     }
+            //     else{
+            //         scope.show_reply[discussion.data.id]=false
+            //         scope.lecture_player.controls.play();
+            //     }
+            // }
         }
     }
-}]).directive('notes',["$stateParams","editor", function( $stateParams, editor) {
-        return {
-            restrict:"E",
-            templateUrl:'/views/forum/notes.html',
-            link: function(scope, elem, attrs, ngModel) {
-
-            }
-        }
 }]).directive('votingButton', function(){
     return{
         restrict: 'E',
-        scope:{
-            lectureid: '=',
+        scope:{            
             discussion: '=',
             comment: '=',
             up: '=',
@@ -214,7 +232,6 @@ angular.module('scalearAngularApp')
 
         },
         templateUrl: '/views/forum/like_button.html',
-        link: function(scope, element){
-        }
+        link: function(scope, element){}
     }
 });

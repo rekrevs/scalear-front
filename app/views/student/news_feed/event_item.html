@@ -11,7 +11,7 @@
 		<span ng-if="event.quiz_type == 'survey'" translate>
 			news.new_survey
 		</span>
-		"<a ui-sref="course.lectures.module.{{event.class_name}}({course_id: event.course_id, module_id: event.group_id, {{event.class_name}}_id: event.id})">{{event.name}}</a>"
+		"<a ui-sref="course.courseware.module.{{event.class_name}}({course_id: event.course_id, module_id: event.group_id, {{event.class_name}}_id: event.id})">{{event.name}}</a>"
 	</div>
 
 	<div ng-show="event.class_name == 'announcement'" class="news-body">

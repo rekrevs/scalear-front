@@ -1,0 +1,87 @@
+<td class="timeline-icon-container">
+    <div class="solved timeline-item" ng-click="seek()(item.time, item.data.lecture_id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="{{(item.time) | formattime:'hh:mm:ss'}}">
+        <img src="../images/discussion-timeline.png" />
+    </p>
+</td>
+<td colspan="2">
+    <div class="discussion-content" ng-class="{flagged: item.data.flags_count > 0}">
+        <table style="width: 100%;">
+            <tr>
+                <td>
+                    <div style="padding-right: 5px;">
+                        <b>{{item.data.screen_name}}</b>
+                        <div class="solved" ng-click="seek()(item.time, item.data.lecture_id)">
+                            <p>
+                                <div>
+                                    <img ng-show="item.data.privacy==0" src="/images/private.png" tooltip="{{'discussion.private_post' | translate}}"/>
+                                    <img ng-show="item.data.privacy==1" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}"/>
+                                    {{"q"|translate}} {{item.data.content}}
+                                </div>
+                            </p>
+                        </div>
+                    </div>
+                </td>
+                <td style="max-width: 30px; width: 30px;">
+                    <div class="flag">
+                        <div style="display: inline-block;">
+                            <img ng-show="item.data.user_id != current_user.id && item.data.user_flag==1" ng-src='{{item.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="unflagPost(item)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.unflag_post' | translate}}" tooltip-placement="right" tooltip-append-to-body="true"/>
+
+                            <img ng-show="item.data.user_id != current_user.id && item.data.user_flag!=1" ng-src='{{item.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(item)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.flag_post' | translate}}" tooltip-placement="right" tooltip-append-to-body="true"/>
+                            <delete_button ng-show="item.data.user_id == current_user.id" size="small" action="deleteDiscussion(item)" ></delete_button>
+                        </div>
+                        <div class="like-button">
+                            <voting-button ng-show="item.data.user_id != current_user.id" discussion="item" up="upvotePost" down="downvotePost"></voting-button>
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <div class="timestamp">
+            {{item.data.created_at | amDateFormat:'MMMM Do YYYY, h:mm a'}}
+        </div>
+    </div>
+    <div class="comments-table">
+        <div ng-repeat="comment_data in item.data.comments" class="discussion-comment" ng-class="{flagged: comment_data.comment.flags_count > 0}">
+            <div>
+                <table style="width: 100%;">
+                    <tr>
+                        <td>
+                            <div>
+                                <div class="screen-name">
+                                    <b>{{comment_data.comment.screen_name}}</b>
+                                </div>
+                                <div class="comment-body">
+                                    {{comment_data.comment.content}}
+                                </div>
+                            </div>
+                        </td>
+                        <td style="max-width: 30px; width: 30px;">
+                            <div class="flag">
+                                <div style="display: inline-block;">
+                                    <delete_button ng-show="comment_data.comment.user_id == current_user.id" size="small" action="deleteComment(comment_data,item.data.id)"></delete_button>
+                                    <img ng-show="comment_data.comment.user_id != current_user.id && comment_data.comment.user_flag==1" ng-src='{{comment_data.comment.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="unflagComment(comment_data.comment)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.unflag_post' | translate}}"/>
+
+                                    <img ng-show="comment_data.comment.user_id != current_user.id && comment_data.comment.user_flag!=1" ng-src='{{comment_data.comment.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(comment_data.comment)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.flag_post' | translate}}"/>
+                                </div>
+                                <div class="like-button">
+                                    <voting-button ng-show="comment_data.comment.user_id != current_user.id" comment="comment_data.comment" up="upvoteComment" down="downvoteComment"></voting-button>
+                                </div>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="timestamp">
+                    {{comment_data.comment.created_at | amDateFormat:'MMMM Do YYYY, h:mm a'}}
+                </div>
+            </div>
+        </div>
+        <span>
+            <br />
+            <textarea ng-init="height=40;width=80" ng-model="current_reply" placeholder="{{'discussion.write_comment' | translate}}" ng-style="{height:height+'px', width:width+'%'}" ng-focus="height=90;width=90" ng-blur="height=40;width=80"></textarea>
+            <i ng-show="error_message" style="color:red; font-size:12px"><br>{{error_message}}<br></i>
+            <input type="button" class="btn btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(item)" value={{"discussion.comment"|translate}} />
+        </span>
+    </div>
+</td>
+<!--<td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek()(e.time, item.data.lecture_id)" translate>{{"courses.really_confused"}}</p></td>-->

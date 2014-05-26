@@ -40,7 +40,37 @@ angular.module('scalearAngularApp')
       mid='PM';
     }
     return hours+' '+mid
-  }
+  },
+
+  toObjectById:function(arr){ //convert array to objec with IDs as keys
+    var obj={}
+    if(arr instanceof Array){      
+      arr.forEach(function(item){
+          obj[item.id] = item;
+      });
+    }
+    return obj
+  },
+
+  urlWithProtocol:function(url){
+    if(url)
+        return url.match(/^http/)? url: 'http://'+url;
+    else
+        return url;
+  },
+
+  getIndexById:function(arr, id) {// returns index of an object in an array by searching for its id
+    for(var elem in arr){
+      if(arr[elem].id==id)
+        return elem
+    }
+    return -1
+  },
+
+  capitalize: function(s){
+    return s[0].toUpperCase() + s.slice(1);
+  },
+
 
 }
 

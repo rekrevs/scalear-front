@@ -315,7 +315,7 @@ angular.module('scalearAngularApp').factory('editor',
                         }
                         else{
 
-                            $state.go("course.lectures.module.lecture", {"lecture_id":service.lecture_id, "time":timestamp});
+                            $state.go("course.courseware.module.lecture", {"lecture_id":service.lecture_id, "time":timestamp});
                             return;
                         }
                     }

@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
             template:"<div></div>",
 			link: function(scope, element){
 
-                scope.vq;
+                scope.vq='hd720';
                 scope.start_time
 
                 scope.$on('$destroy', function() {
@@ -71,12 +71,15 @@ angular.module('scalearAngularApp')
 					scope.kill_popcorn()
 
                     if(!scope.controls || scope.controls==undefined)
-                        scope.controls=0;                   
+                        scope.controls=0;   
+                    if(!scope.autoplay || scope.autoplay==undefined)
+                        scope.autoplay=0;                     
 
                     //var matches = 
                     //var vimeo= scope.url.match(/vimeo/)  // improve this..
                     if(isYoutube(scope.url)){
                     	console.log("youtube")
+                    	player_controls.youtube = true
                     	var video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
                     	player = Popcorn(video,{});
                     	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time)						
@@ -86,7 +89,7 @@ angular.module('scalearAngularApp')
                     	console.log("vimeo")
                         player = Popcorn.smart( '#'+scope.id, scope.url+"?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0",{ width: '100%', height:'100%', controls: 0});
                         player.controls(scope.controls);
-                        player.autoplay(true);
+                        player.autoplay(scope.autoplay);
                     }
                     else if(isMP4(scope.url)){
                     	console.log("mp4")
@@ -94,7 +97,7 @@ angular.module('scalearAngularApp')
                         player = Popcorn(video,{});
                         video.src = scope.url
                         player.controls(scope.controls);
-                        // player.autoplay(true);
+                        player.autoplay(scope.autoplay);
                     }
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
@@ -120,7 +123,7 @@ angular.module('scalearAngularApp')
 						base_url = splitted_url[0]
 						query = '&'+splitted_url[1]	
 					}
-					return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay=0&controls&origin=https://www.youtube.com"+query;
+					return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+scope.autoplay+"&controls&origin=https://www.youtube.com"+query;
 				}
 
                 scope.kill_popcorn = function(){
@@ -165,17 +168,32 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.seek = function(time){
+					console.log("entering sekking ")
 					if(time<0)
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
 					if(player_controls.readyState() != 4){
-						player.on("loadeddata", 
-						function(){
-							player.currentTime(time);
-						});
+						scope.readyState = player_controls.readyState
+						var unwatch = scope.$watch('readyState()',function(){
+							console.log("ready state=")
+							console.log(scope.readyState())
+							if (scope.readyState() == 4){
+								console.log("chanign time hopefully")
+								player.currentTime(time);
+								unwatch()
+								scope.readyState = null
+							}
+						})
+						// console.log(player_controls.readyState())
+						// player.on("loadeddata", 
+						// function(){
+						// 	console.log("seek after load")
+						// 	player.currentTime(time);
+						// });
 					}
 					else{
+						console.log("seeking now")
 						player.currentTime(time);
 					}
 					parent.focus()
@@ -211,6 +229,10 @@ angular.module('scalearAngularApp')
 
 				player_controls.cue=function(time, callback){
 					player.cue(time, callback)
+					return player_controls.getCueEvent()
+				}
+				player_controls.getCueEvent=function(){
+					return player.getTrackEvent(player.getLastTrackEventId());
 				}
 
 				player_controls.replay=function(){	
@@ -222,6 +244,8 @@ angular.module('scalearAngularApp')
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
+							console.log("ready video yaahhh")
+							
 							$log.debug("Video data loaded")	
 							if(player_events.onReady){
 								player_events.onReady();
@@ -231,6 +255,8 @@ angular.module('scalearAngularApp')
 
 					player.on('playing',
 						function(){
+							console.log("youtue playing")
+							
 							parent.focus()
 							if(player_events.onPlay){								
 								player_events.onPlay();
@@ -323,22 +349,22 @@ angular.module('scalearAngularApp')
                 // }
 
                 var isYoutube= function(url){
-            		var video_url = url || scope.url
+            		var video_url = url || scope.url || ""
                     return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
                 }
 
                 var isShortYoutube= function(url){
-                	var video_url = url || scope.url
+                	var video_url = url || scope.url || ""
                     return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)?\.be\/([^\s&]{11})/);
                 }
 
                 var isVimeo=function(url){
-                	var video_url = url || scope.url
+                	var video_url = url || scope.url || ""
                 	return video_url.match(/vimeo/)
                 }
 
               	var isMP4=function(url){
-              		var video_url = url || scope.url
+              		var video_url = url || scope.url || ""
                 	return video_url.match(/(.*mp4$)/)
                 }
 
@@ -394,6 +420,10 @@ angular.module('scalearAngularApp')
 						$scope.resize.big();
                         $scope.$apply()
 					}
+					else{
+						$scope.resize.small();
+                        $scope.$apply()
+					}
 				}
 			)
 			$scope.resize.small = function()
@@ -431,9 +461,12 @@ angular.module('scalearAngularApp')
 					"z-index":2
 				}
 
-				angular.extend($scope.container, container)
-				angular.extend($scope.video_layer, video)
-				angular.extend($scope.quiz_layer, layer)
+				if($scope.container)
+					angular.extend($scope.container, container)
+				if($scope.video_layer)
+					angular.extend($scope.video_layer, video)
+				if($scope.quiz_layer)
+					angular.extend($scope.quiz_layer, layer)
                 // angular.extend($scope.ontop_layer, layer)
                 // angular.extend($scope.ontop_layer, {"z-index":0})
 				
@@ -478,6 +511,7 @@ angular.module('scalearAngularApp')
 				var layer={}
 				if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
 					$log.debug("width cutt offff")
+					console.log("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
 					var margin_top = ((win.height()-40) - (video_height))/2.0; //+30
 
@@ -493,6 +527,11 @@ angular.module('scalearAngularApp')
 					}		
 				}
 				else{		
+					console.log("height cutt offff")
+					console.log(win.width())
+					console.log(video_width)
+					console.log(((win.width()-$scope.max_width) - video_width)/2.0)
+					video_width = (win.height()-40)*factor
 					var margin_left= ((win.width()-$scope.max_width) - video_width)/2.0;
 					layer={
 						"position":"fixed",
@@ -505,9 +544,13 @@ angular.module('scalearAngularApp')
 						"z-index": 1531
 					}		
 				 }
-				angular.extend($scope.container, container)
-				angular.extend($scope.video_layer, video)
-				angular.extend($scope.quiz_layer, layer)
+
+				if($scope.container)
+					angular.extend($scope.container, container)
+				if($scope.video_layer)
+					angular.extend($scope.video_layer, video)
+				if($scope.quiz_layer)
+					angular.extend($scope.quiz_layer, layer)
                 // angular.extend($scope.ontop_layer, layer)
                 // angular.extend($scope.ontop_layer,{"z-index":1031});
 
@@ -555,34 +598,41 @@ angular.module('scalearAngularApp')
 }])
 .directive('progressBar',['$rootScope','$log','$window',function($rootScope,$log, $window){
     return {
+    	transclude:true,
         restrict: 'E',
-        replace:true,
+        replace:false,
         scope:{
-            view:'@',
-            active:'=',
-            play_btn:'&playBtn',
+            // view:'@',
+            // active:'=',
+            // play_btn:'&playBtn',
             player:'=',
             play_pause_class:'=playPauseClass',
-            updateProgress:'&updateProgress',
+            // updateProgress:'&',
             elapsed_width: '=elapsedWidth',
             current_time: '=currentTime',
             total_duration: '=totalDuration',
-            confused_areas: '=confusedAreas',
-            progressEvents: '=',
+            seek: "&",
+            // confused_areas: '=confusedAreas',
+            // progressEvents: '=',
             timeline: '=',
-            lecture: '='
+            // lecture: '='
            // autoplay:'@'
         },
         templateUrl:"/views/progress_bar.html",
         link: function(scope, element, attrs){
             scope.mute_unmute_class="mute";
-
-            $rootScope.$on('updatePosition',function(){
-                setButtonsLocation()
-            })
+            scope.quality=false;
+      		scope.chosen_quality='hd720';
 
             scope.playBtn = function(){
-                scope.play_btn();
+                if(scope.player.controls.paused()){
+			        scope.player.controls.play()
+			        // scope.play_pause_class = "pause"
+		      	}
+		      	else{
+			        scope.player.controls.pause()
+			        // scope.play_pause_class = "play"
+		      	}
             }
 
             scope.mute_btn = function(type)
@@ -595,8 +645,7 @@ angular.module('scalearAngularApp')
 
             scope.$watch("volume",function()
             {
-                if(scope.volume)
-                {
+                if(scope.volume){
                     scope.player.controls.volume(scope.volume);
                     if(scope.volume!=0)
                         scope.mute_unmute_class="mute";
@@ -616,35 +665,42 @@ angular.module('scalearAngularApp')
             {
                 scope.player.controls.unmute();
                 scope.mute_unmute_class="mute";
-                scope.volume=0.5;
+                scope.volume=0.8;
             }
 
             scope.progress = function(event){
-                scope.updateProgress({$event:event});
+		        var element = angular.element('.progressBar');
+		        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
+		        scope.seek()(scope.total_duration*ratio)    
             }
 
-            var setButtonsLocation=function(){
-                // if(scope.active){
-                //     scope.pHeight=angular.element($window).height();
-                //     //element.css("z-index",1500);
-                // }
-                // else{
-                //     if(scope.view=="student")
-                //     {scope.pHeight=490;
-                //     }
-                //     else{
-                //         scope.pHeight=320;
-                //     }
-                //     //element.css("z-index",1000);
-                // }
+          	scope.showQuality = function(){
+          		scope.quality=!scope.quality
+	      	}
 
-                // if(scope.view=="student")
-                //     element.css("top", scope.pHeight-30+"px");
-                // else
-                //     element.css("top", scope.pHeight-30+"px");
-                // //element.css("left", scope.pWidth-350+"px");
-            }
-            // setButtonsLocation();
+      		scope.setQuality = function(quality){
+	          var time = scope.player.controls.getTime()
+	          scope.player.controls.changeQuality(quality, time);
+	          scope.chosen_quality=quality;
+	          scope.quality=false;
+      		}
+
+            shortcut.add("Space",function(){
+            	scope.playBtn()				
+			},{"disable_in_input" : true});
+
+			shortcut.add("b",function(){
+              var t=scope.player.controls.getTime();
+              scope.player.controls.pause();
+              scope.player.controls.seek(t-10)
+              scope.player.controls.play();
+              scope.$emit('video_back', t-10)
+			},{"disable_in_input" : true});
+
+		   	scope.$on('$destroy', function(){
+	         	shortcut.remove("b");
+          		shortcut.remove("Space");
+	      	});
         }
     }
 }])

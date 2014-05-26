@@ -51,23 +51,8 @@
                     {{teacher.email}}
                 </div>
             </div>
-            <span translate>({{'courses.'+teacher.role}})</span>
+            <span >({{'courses.'+teacher.role | translate}})</span>
             <!-- {{teacher.role | translate}} -->
-        </div>
-        <div class="teacher-item" ng-repeat="teacher in teachers">
-            <div ng-show="teacher.id">
-                <profile-image email="teacher.email" imagesize="70" style="margin-bottom: 5px;"></profile-image>
-                <div>
-                    {{teacher.name}}
-                </div>
-            </div>
-            <div ng-show="!teacher.id">
-                <profile-image email="teacher.email" imagesize="70" style="margin-bottom: 5px;"></profile-image>
-                <div>
-                    {{teacher.email}}
-                </div>
-            </div>
-            <span translate>({{'courses.'+teacher.role}})</span>
         </div>
     </div>
 </div>

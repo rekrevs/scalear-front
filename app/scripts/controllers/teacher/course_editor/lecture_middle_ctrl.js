@@ -29,8 +29,8 @@ angular.module('scalearAngularApp')
 		{type:'Free Text Question',text:"insert_text_question", only:"html"}
 	]
 	$scope.survey_types_list=[
-		{type:'MCQ', text:"MCQ - Multiple Choice Answers"},
-		{type:'OCQ', text:"OCQ - One Choice Answer"}, 
+		{type:'MCQ', text:"insert_mcq"},
+		{type:'OCQ', text:"insert_ocq"}, 
 	]
     $scope.play_pause_class = 'play'
     $scope.current_time = 0
@@ -95,12 +95,12 @@ angular.module('scalearAngularApp')
         $scope.lecture_player.controls.seek(time)
     }
 
-    $scope.updateProgress=function($event){
-        var element = angular.element('.progressBar');
-        var ratio = ($event.pageX-element.offset().left)/element.outerWidth();
-        $scope.elapsed_width = ratio*100+'%'
-        $scope.seek($scope.lecture.duration*ratio)
-    }
+    // $scope.updateProgress=function($event){
+    //     var element = angular.element('.progressBar');
+    //     var ratio = ($event.pageX-element.offset().left)/element.outerWidth();
+    //     $scope.elapsed_width = ratio*100+'%'
+    //     $scope.seek($scope.lecture.duration*ratio)
+    // }
 
     $scope.lecture_player.events.timeUpdate = function(){
         // console.log("in timeupdate")

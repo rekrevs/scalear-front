@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
             $scope.validateLecture = function(column, data) {
                 var d = $q.defer();
                 var lecture = {}
-
+                console.log(data)
                 lecture[column] = data;
                 if (column == 'url' && invalid_url(data)) {
                     $log.debug(data)

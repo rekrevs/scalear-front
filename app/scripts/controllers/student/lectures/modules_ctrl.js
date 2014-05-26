@@ -3,33 +3,35 @@
 angular.module('scalearAngularApp')
   .controller('studentModulesCtrl', ['$scope','Course','$stateParams','$rootScope', '$log','$window','Module','Timeline','Lecture','editor','Page', function ($scope, Course, $stateParams, $rootScope, $log, $window, Module, Timeline, Lecture, editor,Page) {
 
-	$window.scrollTo(0, 0);
-    $scope.show_reply={}
-    $scope.current_reply={}
-    $scope.notes={}
-    $scope.tabs=[{"active":true},{"active":false}, {"active":false}]
+	// $window.scrollTo(0, 0);
+    // $scope.show_reply={}
+    // $scope.current_reply={}
+    
+    
 	Page.setTitle('head.lectures');
-
+    console.log("module ctlr")
     var init = function()
     {
-    	$scope.open_id="-1";
-		$scope.open={};
-		$scope.oneAtATime = true;
-	
+  //   	$scope.open_id="-1";
+		// $scope.open={};
+		// $scope.oneAtATime = true;
+        $scope.notes={}	
 	    Module.getStudentModule(
-	    	{course_id: $stateParams.course_id, module_id:$stateParams.module_id}, function(data){
+	    	{course_id: $stateParams.course_id, module_id:$stateParams.module_id}, 
+            function(data){
                 $scope.module_lectures= JSON.parse(data.module_lectures);
                 console.log(data)
                 $scope.lecture_ids = data.lecture_ids;
 
                 // arrange timeline
-                $scope.timeline = new Timeline()
+                $scope.timeline = {}//new Timeline()
                 $scope.timeline['lecture']={}
-
+                console.log("timeline")
                 for(var l in $scope.module_lectures)
                 {
                     var lec= $scope.module_lectures[l]
                     $scope.timeline['lecture'][lec.id] = new Timeline()
+                    $scope.timeline['lecture'][lec.id].meta = lec
 
                     // remove quizzes with no answers - else - add it to timeline.
                     for(var element=lec.online_quizzes.length-1; element>=0; element--) // if no answers remove it
@@ -55,14 +57,20 @@ angular.module('scalearAngularApp')
                     // will be the same timeline later to be able to put in one and filter. (so both will be lecture, no discussion)
                     for(var type in lec.posts_public){
                         $scope.timeline['lecture'][lec.id].add(lec.posts_public[type].post.time, "discussion", lec.posts_public[type].post)
-                        if(!$scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id])
-                            $scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id]= new Timeline();
+                        // var items_length = $scope.timeline['lectures'][lec.id].items.length
+                        // console.log($scope.timeline['lectures'][lec.id].items[items_length-1])
+                        // $scope.timeline['lectures'][lec.id].items[items_length-1].data.comments = new Timeline()
+                        // if(!$scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id])
+                        //     $scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id]= new Timeline();
 
 
-                        for(var comment in lec.posts_public[type].post.comments)
-                        {
-                            $scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id].add(lec.posts_public[type].post.time, "comment", lec.posts_public[type].post.comments[comment].comment);
-                        }
+                        // for(var comment in lec.posts_public[type].post.comments)
+                        // {
+                        //     $scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id].add(lec.posts_public[type].post.time, "comment", lec.posts_public[type].post.comments[comment].comment);
+                        //     // $scope.timeline['lectures'][lec.id].items[items_length-1].comments.add(lec.posts_public[type].post.time, "comment", lec.posts_public[type].post.comments[comment].comment);
+                        // }
+                        // console.log("comem")
+                        // console.log($scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id])
                     }
 
                     $scope.notes[lec.id]= lec.note;

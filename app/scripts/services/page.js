@@ -5,8 +5,10 @@ angular.module('scalearAngularApp')
    var title = 'Home';
    return {
      title: function() { return title; },
-     setTitle: function(newTitle) { 
+     setTitle: function(newTitle, subtitle) { 
      	title = $filter('translate')(newTitle)
+     	if(subtitle)
+     		title+=subtitle
      	$rootScope.current = newTitle 
      	console.log($rootScope.current)
      }

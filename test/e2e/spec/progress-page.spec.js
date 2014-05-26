@@ -52,11 +52,18 @@ xdescribe("teacher", function(){
 	// 	teacher.add_lecture(ptor, 1, o_c.feedback)
 	// })
 	//-------------------
-	it('should create a lecture', function(){
-		teacher.create_lecture(ptor, null, 'http://www.youtube.com/watch?v=xGcG4cp2yzY', o_c.feedback);
+	it('should add a lecture', function(){
+		teacher.add_lecture(ptor, 1, o_c.feedback);
+	})
+	it('should open the created lecture', function(){
+		teacher.open_item(ptor, 1, 1);
+	})
+	it('should set the url for the lecture', function(){
+		teacher.initialize_lecture(ptor, 'http://www.youtube.com/watch?v=xGcG4cp2yzY')
 	})
 	it('should seek the video', function(){
 		youtube.seek(ptor, 10)
+		o_c.scroll(ptor, 200)
 	})
 	it('should add an over video quiz MCQ', function(){
 		quiz_ov.create_mcq_quiz(ptor, o_c.feedback)
@@ -68,6 +75,7 @@ xdescribe("teacher", function(){
 
 	it('should seek the video', function(){
 		youtube.seek(ptor, 20)
+		o_c.scroll(ptor, 200)
 	})
 	it('should add an over video quiz OCQ', function(){
 		quiz_ov.create_ocq_quiz(ptor, o_c.feedback)
@@ -172,9 +180,11 @@ xdescribe("teacher", function(){
 
 	it('should seek the video', function(){
 		youtube.seek(ptor, 20)
+		o_c.scroll(ptor, 300)
 	})
 	it('should add an over video OCQ Survey', function(){
 		survey_ov.create_ocq_survey(ptor, o_c.feedback)
+		o_c.scroll(ptor, 200)
 		lecture_middle.rename_quiz(ptor, 3, 'OCQ SURVEY')
 		o_c.scroll_to_top(ptor)
 		survey_ov.make_ocq_survey_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback)
@@ -344,6 +354,7 @@ xdescribe("teacher", function(){
 	})
 	it('should seek the video', function(){
 		youtube.seek(ptor, 10)
+		o_c.scroll(ptor, 200)
 	})
 	it('should add an over video quiz MCQ', function(){
 		quiz_ov.create_mcq_quiz(ptor, o_c.feedback)
@@ -355,6 +366,7 @@ xdescribe("teacher", function(){
 
 	it('should seek the video', function(){
 		youtube.seek(ptor, 20)
+		o_c.scroll(ptor, 200)
 	})
 	it('should add an over video quiz OCQ', function(){
 		quiz_ov.create_ocq_quiz(ptor, o_c.feedback)
@@ -366,6 +378,7 @@ xdescribe("teacher", function(){
 
 	it('should seek the video', function(){
 		youtube.seek(ptor, 30)
+		o_c.scroll(ptor, 200)
 	})
 	it('should add an over video quiz DRAG', function(){
 		quiz_ov.create_drag_quiz(ptor, o_c.feedback)
@@ -459,9 +472,11 @@ xdescribe("teacher", function(){
 
 	it('should seek the video', function(){
 		youtube.seek(ptor, 20)
+		o_c.scroll(ptor, 300)
 	})
 	it('should add an over video OCQ Survey', function(){
 		survey_ov.create_ocq_survey(ptor, o_c.feedback)
+		o_c.scroll(ptor, 200)
 		lecture_middle.rename_quiz(ptor, 3, 'OCQ SURVEY')
 		o_c.scroll_to_top(ptor)
 		survey_ov.make_ocq_survey_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback)

@@ -274,15 +274,15 @@ exports.rename_item = function(ptor, name, feedback){
 exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
 	this.add_lecture(ptor, 1, o_c.feedback);
 	locator.by_xpath(ptor, '//*[@id="modules"]/ul/li[1]').click().then(function(){
-		// locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
-		// 	locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/input').then(function(lec_nm){
-		// 		lec_nm.clear();
-		// 		lec_nm.sendKeys(lecture_name);
-		// 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-		// 			feedback(ptor, 'Lecture was successfully updated.');
-		// 		})
-		// 	})
-		// })
+		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
+			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/input').then(function(lec_nm){
+				lec_nm.clear();
+				lec_nm.sendKeys(lecture_name);
+				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
+					feedback(ptor, 'Lecture was successfully updated.');
+				})
+			})
+		})
 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/a').click().then(function(){
 			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/input').then(function(lec_url){
 				lec_url.clear();

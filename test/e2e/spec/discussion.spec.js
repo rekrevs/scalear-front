@@ -162,3 +162,17 @@ function check_discussions_in_videonotes(ptor){
 		})
 	})
 }
+
+function check_discussion_location(ptor){
+	locator.by_classname(ptor, 'elapsed').then(function(progess_bar){
+	progress_bar.then(function(location){
+		press_confused_btn(ptor);
+
+		locator.by_repeater(ptor, 'element in timeline').then(function(elements){
+			elements[0].getLocation().then(function(loc){
+				expect(location.x).toEqual(loc.x);
+				expect(location.y).toEqual(loc.y);
+			})
+		})
+	})
+}

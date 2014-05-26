@@ -44,8 +44,8 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/courses_outline.spec.js'
-       //'test/e2e/spec/teacher-managment.spec.js'
+        // 'test/e2e/spec/courses_outline.spec.js'
+        //'test/e2e/spec/teacher-managment.spec.js'
         // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js'
         // 'test/e2e/spec/ocq-survey-over-video.spec.js'
         // 'test/e2e/spec/mcq-survey-over-video.spec.js'
@@ -60,7 +60,7 @@ exports.config = {
         //'test/e2e/spec/create-course-check-info.spec.js'
         //'test/e2e/spec/sign_up_teacher.spec.js'
         //'test/e2e/spec/signup.spec.js',
-        //'test/e2e/spec/progress-page.spec.js',
+        'test/e2e/spec/progress-page.spec.js',
         // 'test/e2e/spec/calendar.spec.js',
         // 'test/e2e/spec/confused.spec.js',
         // 'test/e2e/spec/course_info_student.spec.js',

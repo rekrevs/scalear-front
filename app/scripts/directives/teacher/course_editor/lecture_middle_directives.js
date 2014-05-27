@@ -436,7 +436,15 @@ angular.module('scalearAngularApp')
 		template:"<ng-form name='aform'>"+
 					"<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />"+
 					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-					"<label>Insert an exact string or a regular expression to match ex: '/[a-z]*/'</label>"+
+					// "<label>Insert an exact string or a regular expression to match ex: '/[a-z]*/'</label>"+
+					"<div><br/><span translate>regex.enter_string</span><br /><br /><span translate>Examples</span>:</div>"+
+					//"<div></div>"+
+					"<ul>"+
+						"<li>Waterloo -> <span translate>regex.correct_if</span> 'Waterloo'</li>"+
+						"<li>/(Waterloo|waterloo)/ -> <span translate>regex.correct_for</span> 'Waterloo' , 'waterloo'</li>"+
+						"<li>/[0-9]/ -> <span translate>regex.correct_for</span> <span translate>regex.any_integer</span></li>"+
+						"<li>/(10|14|29)/ -> <span translate>regex.correct_for</span> <span translate>regex.numbers</span></li>"+
+					"</ul>"+
 				"</ng-form>"
 	}
 	

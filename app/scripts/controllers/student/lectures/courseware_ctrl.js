@@ -165,7 +165,7 @@ angular.module('scalearAngularApp')
 		$scope.current_module = module//$scope.modules_obj[module_id];
 		// $scope.close_selector = true;
 		Module.getLastWatched(
-			{module_id: module.id}, function(data){
+			{course_id: $stateParams.course_id, module_id: module.id}, function(data){
 				console.log('hereeeeeeeeeeeeeeee')
 				console.log(data)
 				console.log(module)

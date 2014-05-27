@@ -26,8 +26,8 @@
 					<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
 				</overlay>
 	        	<div class="inner" id="modules">
+	        		<small><ul ng-show="module.items.length == 0"><li style="color: white; text-align: left; margin-left: 10px; opacity: 0.6;" >{{'groups.empty' | translate}}...</li></ul></small>
           			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
-	            		<small><li style="color: white; text-align: left; margin-left: 10px; opacity: 0.6;" ng-show="module.items.length == 0">{{'groups.empty' | translate}}...</li></small>
 	            		<li class="last-child item" ng-repeat="item in module.items" >
              				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="copy(item)" paste="paste(module.id, $parent.$index)" share="openShareModal(item.id,item.class_name)" ></item>
 	            		</li>

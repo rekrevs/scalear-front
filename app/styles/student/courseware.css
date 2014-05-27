@@ -241,7 +241,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
   position: absolute;
 }
 
-.answer_div:before{
+.answer_div_before{
 	content: "Choices";
   position: absolute;
   top: -1px;

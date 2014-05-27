@@ -345,7 +345,7 @@ angular.module('scalearAngularApp')
 				})
 
                 var isFinalUrl= function(url){
-                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
+                    return url.match(/^(http|https):\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
                 }
 
                 var isYoutube= function(url){

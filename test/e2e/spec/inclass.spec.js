@@ -23,7 +23,7 @@ describe("teacher", function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 	//test
-	test goes here
+	
 	//end test
 
 	it('should delete course', function(){

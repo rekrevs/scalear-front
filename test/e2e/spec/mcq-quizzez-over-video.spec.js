@@ -65,7 +65,7 @@ describe("1", function(){
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
-		//ptor.navigate().refresh();
+		ptor.navigate().refresh();
 	})
 
 	it('should create quiz', function(){
@@ -93,7 +93,7 @@ describe("1", function(){
 	})
 })
 
-xdescribe("2", function(){
+describe("2", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -112,6 +112,7 @@ xdescribe("2", function(){
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		ptor.navigate().refresh();
 	})
 
 	it('should create quiz', function(){
@@ -167,7 +168,7 @@ xdescribe("2", function(){
 	})
 })
 
-xdescribe("3", function(){
+describe("3", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -186,6 +187,7 @@ xdescribe("3", function(){
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		ptor.navigate().refresh();
 	})
 
 	it('should create quiz', function(){
@@ -333,8 +335,44 @@ function make_mcq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, 
 }
 
 
-function check_mcq_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
-	
+function make_mcq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ontop.getSize().then(function(size){
+			ontop_w = size.width;
+			ontop_h = size.height;
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: q1_x, y: q1_y}).perform();
+			ptor.actions().doubleClick().perform();
+			ptor.actions().click().perform();
+			locator.by_classname(ptor, 'must_save_check').click();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			ptor.actions().click().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: q2_x, y: q2_y}).perform();
+			ptor.actions().doubleClick().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			ptor.actions().click().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: q3_x, y: q3_y}).perform();
+			ptor.actions().doubleClick().perform();
+			ptor.actions().click().perform();
+			locator.by_classname(ptor, 'must_save_check').click();
+			ptor.sleep(2000);
+			o_c.scroll(ptor, 1000);
+			locator.by_id(ptor, 'done').then(function(btn){
+				btn.click().then(function(){
+					feedback(ptor, 'Quiz was successfully saved');
+				})
+			})
+		})
+	})
 }
 
 function check_mcq_no(ptor, no){
@@ -356,7 +394,7 @@ function check_answer_given_answer_order(ptor, choice_no){
 }
 
 function answer(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(answer_btn){
+	locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(answer_btn){
 		answer_btn.click();
 	})
 }

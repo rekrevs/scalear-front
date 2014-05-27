@@ -113,6 +113,22 @@ function check_confused_location(ptor){
 			})
 		})
 }
+                                               
+    function check_confused_location(ptor){
+        locator.by_classname(ptor, 'elapsed').then(function(progress_bar){
+            progress_bar.getLocation().then(function(location){
+                press_confused_btn(ptor);
+                    progress_bar.getSize().then(function(size){
+                    locator.by_repeater(ptor, 'element in timeline').then(function(elements){
+                        elements[0].getLocation().then(function(loc){
+                            expect(location.x+size.width).toEqual(loc.x);
+                            expect(location.y).toEqual(loc.y);
+                        })
+                    })
+                })
+            })
+        })
+    }
 // var pw, ph;
 // 	var cw, ch;
 // 	locator.by_classname(ptor, 'progressBar').then(function(progress){

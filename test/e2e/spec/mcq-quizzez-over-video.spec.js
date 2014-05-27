@@ -65,23 +65,13 @@ describe("1", function(){
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
-		//ptor.navigate().refresh();
+		ptor.navigate().refresh();
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
 		create_mcq_quiz(ptor, o_c.feedback);
-		make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y, o_c.feedback);
-	})
-
-	it('should login a student and check for coordinates', function(){
-		o_c.to_student(ptor);
-		o_c.open_course_whole(ptor);
-		o_c.open_tray(ptor);
-		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
-		expect_quiz(ptor);
-		check_mcq_questions_coord(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
+		make_mcq_questions_and_check(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y, o_c.feedback);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -122,6 +112,7 @@ describe("2", function(){
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		ptor.navigate().refresh();
 	})
 
 	it('should create quiz', function(){
@@ -196,6 +187,7 @@ describe("3", function(){
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		ptor.navigate().refresh();
 	})
 
 	it('should create quiz', function(){
@@ -265,65 +257,118 @@ function create_mcq_quiz(ptor, feedback){
 	})
 }
 
-function make_mcq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
+function make_mcq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
+	var ontop_w = 0;
+	var ontop_h = 0;
 	locator.by_id(ptor,'ontop').then(function(ontop){
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: q1_x, y: q1_y}).perform();
-		ptor.actions().doubleClick().perform();
-		ptor.actions().click().perform();
-		locator.by_classname(ptor, 'must_save_check').click();
+		ontop.getSize().then(function(size){
+			ontop_w = size.width;
+			ontop_h = size.height;
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		ptor.actions().click().perform();
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: q1_x, y: q1_y}).perform();
+			ptor.actions().doubleClick().perform();
+			ptor.actions().click().perform();
+			locator.by_classname(ptor, 'must_save_check').click();
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: q2_x, y: q2_y}).perform();
-		ptor.actions().doubleClick().perform();
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			ptor.actions().click().perform();
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		ptor.actions().click().perform();
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: q2_x, y: q2_y}).perform();
+			ptor.actions().doubleClick().perform();
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: q3_x, y: q3_y}).perform();
-		ptor.actions().doubleClick().perform();
-		ptor.actions().click().perform();
-		locator.by_classname(ptor, 'must_save_check').click();
-		ptor.sleep(2000);
-		o_c.scroll(ptor, 1000);
-		locator.by_id(ptor, 'done').then(function(btn){
-			btn.click().then(function(){
-				feedback(ptor, 'Quiz was successfully saved');
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			ptor.actions().click().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: q3_x, y: q3_y}).perform();
+			ptor.actions().doubleClick().perform();
+			ptor.actions().click().perform();
+			locator.by_classname(ptor, 'must_save_check').click();
+			ptor.sleep(2000);
+			o_c.scroll(ptor, 1000);
+			locator.by_id(ptor, 'done').then(function(btn){
+				btn.click().then(function(){
+					feedback(ptor, 'Quiz was successfully saved');
+				})
 			})
 		})
 	})
-}
 
+	o_c.to_student(ptor);
+	o_c.open_course_whole(ptor);
+	o_c.open_tray(ptor);
+	o_c.open_lectures(ptor);
+	youtube.seek(ptor, 50);
+	expect_quiz(ptor);
 
-function check_mcq_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 	var w, h= 0;
 	//(width*169)/570
 	locator.by_id(ptor,'ontop').then(function(ontop){
 		ontop.getLocation().then(function(location){
 			ontop.getSize().then(function(size){
 				w = size.width;
+				h = size.height;
 
 				ontop.findElements(protractor.By.tagName('input')).then(function(check_boxes){
 					check_boxes[0].getLocation().then(function(loc){
-						expect(loc.x-location.x).toEqual(Math.floor((w*q1_x)/570)-6);
-						expect(loc.y-location.y).toEqual(Math.floor((w*q1_y)/570)-6);
+						expect(loc.x-location.x).toEqual(Math.floor((w*q1_x)/ontop_w)-6);
+						expect(loc.y-location.y).toEqual(Math.floor((h*q1_y)/ontop_h)-6);
 					})
 					
 					check_boxes[1].getLocation().then(function(loc){
-						expect(loc.x-location.x).toEqual(Math.floor((w*q2_x)/570)-6);
-						expect(loc.y-location.y).toEqual(Math.floor((w*q2_y)/570)-6);
+						expect(loc.x-location.x).toEqual(Math.floor((w*q2_x)/ontop_w)-6);
+						expect(loc.y-location.y).toEqual(Math.floor((h*q2_y)/ontop_h)-6);
 					})
 
 					check_boxes[2].getLocation().then(function(loc){
-						expect(loc.x-location.x).toEqual(Math.floor((w*q3_x)/570)-6);
-						expect(loc.y-location.y).toEqual(Math.floor((w*q3_y)/570)-6);
+						expect(loc.x-location.x).toEqual(Math.floor((w*q3_x)/ontop_w)-6);
+						expect(loc.y-location.y).toEqual(Math.floor((h*q3_y)/ontop_h)-6);
 					})
+				})
+			})
+		})
+	})
+}
+
+
+function make_mcq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ontop.getSize().then(function(size){
+			ontop_w = size.width;
+			ontop_h = size.height;
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: q1_x, y: q1_y}).perform();
+			ptor.actions().doubleClick().perform();
+			ptor.actions().click().perform();
+			locator.by_classname(ptor, 'must_save_check').click();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			ptor.actions().click().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: q2_x, y: q2_y}).perform();
+			ptor.actions().doubleClick().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			ptor.actions().click().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: q3_x, y: q3_y}).perform();
+			ptor.actions().doubleClick().perform();
+			ptor.actions().click().perform();
+			locator.by_classname(ptor, 'must_save_check').click();
+			ptor.sleep(2000);
+			o_c.scroll(ptor, 1000);
+			locator.by_id(ptor, 'done').then(function(btn){
+				btn.click().then(function(){
+					feedback(ptor, 'Quiz was successfully saved');
 				})
 			})
 		})
@@ -349,7 +394,7 @@ function check_answer_given_answer_order(ptor, choice_no){
 }
 
 function answer(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(answer_btn){
+	locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(answer_btn){
 		answer_btn.click();
 	})
 }

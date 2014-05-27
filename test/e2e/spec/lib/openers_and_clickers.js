@@ -236,6 +236,18 @@ exports.open_enrolled = function(ptor){
         });
     })
 }
+
+//====================================================
+//                  open inclass
+//====================================================
+exports.open_inclass = function(ptor){
+    info_icon = ptor.findElement(protractor.By.id("inclass")).then(function(btn){
+        btn.click();
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('inclass');
+        });
+    })
+}
 //====================================================
 //                  delete account
 //====================================================

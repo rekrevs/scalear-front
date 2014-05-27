@@ -1,6 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
+.directive('quizList',function(){
+		return {
+			// transclude: true,
+			// replace:true,
+			restrict: 'E', 
+			templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
+			controller: 'lectureQuizListCtrl'
+		};
+})
 .directive('quiz',function(){
 		return {
 			transclude: true,

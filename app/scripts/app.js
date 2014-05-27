@@ -136,35 +136,36 @@ angular.module('scalearAngularApp', [
                UserSession.getRole().then(function(result) {
                     var s = 1;
                     if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent)) {
-                        $state.go("ie", {},{notify: false });
+                        $state.go("ie");
                     }
                     if((to.name=='home' && result == 0))
                     {
-                        $state.go("login", {},{notify: false });
+                        $state.go("login");
                     }
                     if (!routeClean(to.name) && result == 0 ) // user not logged in trying to access a page that needs authentication.
                     {
-                        $state.go("login", {},{notify: false });
+                        $state.go("login");
                         s = 0;
                     } else if ((stateTeacher(to.name) && result == 2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
                     {
-                        $state.go("student_courses", {},{notify: false });
+                        $state.go("student_courses");
                         s = 0;
                     } 
                     else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
                     {
-                        $state.go("course_list", {},{notify: false });
+                        $state.go("course_list");
                         s = 0;
                     } 
                     else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
                     {
-                        $state.go("course_list", {},{notify: false });
+                        console.log("herefef coud")
+                        $state.go("course_list");
                     } else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
                     {
-                        $state.go("student_courses", {},{notify: false });
+                        $state.go("student_courses");
                     } else if (stateNoAuth(to.name)) {
                         if (result == 1 || result == 2) {
-                            $state.go("home", {},{notify: false });
+                            $state.go("home");
                             s = 0;
                         }
                     }
@@ -353,14 +354,15 @@ angular.module('scalearAngularApp', [
                     }
                 }
             })
-            .state('course.course_editor.lecture.quizList', {
-                views: {
-                    'quizList': {
-                        templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
-                        controller: 'lectureQuizListCtrl'
-                    }
-                }
-            })
+            // .state('course.course_editor.lecture.quizList', {
+            //     url: '/qy',
+            //     views: {
+            //         'quizList': {
+            //             templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
+            //             controller: 'lectureQuizListCtrl'
+            //         }
+            //     }
+            // })
             .state('course.course_editor.quiz', {
                 url: '/quizzes/:quiz_id',
                 views: {

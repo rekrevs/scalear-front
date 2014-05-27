@@ -721,8 +721,8 @@ angular.module('scalearAngularApp')
                 $scope.review_inclass= true
                  $interval(function(){
                     $scope.review_inclass= false
-                },5000)
-            },time*1000)
+                },5000, 1)
+            },time*1000, 1)
 
         }
     }

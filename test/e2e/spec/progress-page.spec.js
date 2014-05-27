@@ -602,7 +602,7 @@ xdescribe("teacher", function(){
 
 })
 
-describe('Student', function(){
+describe('First Student', function(){
 	it('should sign in', function(){
 		o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
 	})
@@ -616,7 +616,8 @@ describe('Student', function(){
 
 	//WATCH THE FIRST LECTURE
 	it('should seek the video to 10%', function(){
-		youtube.seek(ptor, 10)
+		youtube.seek(ptor, 9.5)
+		waitForOnTop(ptor)
 	})
 	it('should expect MCQ quiz', function(){
 		expect_quiz(ptor)
@@ -625,93 +626,330 @@ describe('Student', function(){
 		check_answer_given_answer_order(ptor, 1)
 		check_answer_given_answer_order(ptor, 3)
 		answer(ptor)
-		check_answer_correct(ptor)
 	})
 	it('wait for the voting question', function(){
 		waitForVoting(ptor)
 	})
 	it('should request that the question not be reviewed in class', function(){
-		// request_review_inclass(ptor, 0)
-		console.log('displayed')
+		request_review_inclass(ptor, 0)
 	})
-	// it('should seek the video to 20%', function(){
-	// 	youtube.seek(ptor, 20)
-	// })
-	// it('should expect an OCQ quiz', function(){
-	// 	expect_quiz(ptor)
-	// })
-	// it('should solve the quiz incorrectly', function(){
-	// 	check_answer_given_answer_order(ptor, 1)
-	// 	answer(ptor)
-	// 	check_answer_incorrect(ptor)
-	// })
-	// it('move the mouse', function(){
-	// 	ptor.actions().mouseMove({x: 250, y:250}).perform();
-	// })
-	// it('should request that the question be reviewed in class', function(){
-	// 	request_review_inclass(ptor, 1)
-	// })
-	// it('should seek the video to 30%', function(){
-	// 	youtube.seek(ptor, 30)
-	// })
-	// it('should expect a DRAG quiz', function(){
-	// 	expect_quiz(ptor)
-	// })
-	// it('should solve the quiz correctly', function(){
-	// 	answer_drag_correct_ov(ptor)
-	// 	answer(ptor)
-	// 	check_answer_correct(ptor)
-	// })
-	// it('move the mouse', function(){
-	// 	ptor.actions().mouseMove({x: 250, y:250}).perform();
-	// })
-	// it('should request that the question not be reviewed in class', function(){
-	// 	request_review_inclass(ptor, 0)
-	// })
+	it('should seek the video to 20%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 19.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect an OCQ quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz incorrectly', function(){
+		check_answer_given_answer_order(ptor, 1)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
+	it('should seek the video to 30%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 29.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect a DRAG quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		answer_drag_correct_ov(ptor)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 0)
+	})
+
+
 	//WATCH THE SECOND LECTURE
+	it('should go to the second lecture', function(){
+		o_c.open_item(ptor, 2)
+	})
+
+	it('should seek the video to 10%', function(){
+		youtube.seek(ptor, 9.5)
+		waitForOnTop(ptor)
+	})
+	it('should expect MCQ TEXT quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz incorrectly', function(){
+		check_answer_given_answer_order(ptor, 2)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
+	it('should seek the video to 20%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 19.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect an OCQ TEXT quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz incorrectly', function(){
+		check_answer_given_answer_order(ptor, 2)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
+	it('should seek the video to 30%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 29.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect a DRAG TEXT quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		answer_drag_incorrect(ptor)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
+	//WATCH THE THIRD LECTURE
+	it('should go to the third lecture', function(){
+		o_c.open_item(ptor, 3)
+	})
+
+	it('should seek the video to 10%', function(){
+		youtube.seek(ptor, 9.5)
+		waitForOnTop(ptor)
+	})
+	it('should expect MCQ SURVEY quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should select the first and second choices', function(){
+		check_answer_given_answer_order(ptor, 1)
+		check_answer_given_answer_order(ptor, 2)
+		answer(ptor)
+	})
+	it('should seek the video to 20%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 19.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect an OCQ SURVEY quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should select the third choice', function(){
+		check_answer_given_answer_order(ptor, 2)
+		answer(ptor)
+	})	
+	//SOLVE THE FIRST QUIZ
+	it('should open the quiz',function(){
+		o_c.open_item(ptor, 4);
+	})
+
+	it('should answer mcq incorrect', function(){
+		student.mcq_answer(ptor, 2, 2);
+		student.mcq_answer(ptor, 2, 3);
+	})
+
+	it('should answer ocq correct', function(){
+		student.ocq_answer(ptor, 4, 1);
+	})
+
+	it('should answer free question', function(){
+		student.free_match_answer(ptor, 5, 'free answer')
+	})
+
+	it('should answer match question', function(){
+		student.free_match_answer(ptor, 6, 'match answer')
+	})	
+
+	it('should answer drag correct', function(){
+		ptor.sleep(3000);
+		student.drag_answer(ptor, 7);
+		ptor.sleep(3000);
+	})
+
+	it('should submit',function(){
+		student.submit_normal_quiz(ptor);
+		// ptor.sleep(10000)
+	})
+	//SOLVE THE SECOND QUIZ
+	it('should open the quiz',function(){
+		o_c.open_item(ptor, 5);
+	})
+
+	it('should answer mcq correct', function(){
+		student.mcq_answer(ptor, 2, 1);
+		student.mcq_answer(ptor, 2, 2);
+	})
+
+	it('should answer ocq incorrect', function(){
+		student.ocq_answer(ptor, 4, 2);
+	})
+
+	it('should answer free question', function(){
+		student.free_match_answer(ptor, 5, 'second free answer')
+	})
+
+	it('should answer match question', function(){
+		student.free_match_answer(ptor, 6, 'shouldn\'t match answer')
+	})	
+
+	it('should answer drag correct', function(){
+		ptor.sleep(3000);
+		student.drag_answer(ptor, 7);
+		ptor.sleep(3000);
+	})
+
+	it('should submit',function(){
+		student.submit_normal_quiz(ptor);
+		// ptor.sleep(10000)
+	})
+	//SOLVE THE SURVEY
+	it('should open the survey',function(){
+		o_c.open_item(ptor, 6);
+	})
+
+	it('should select the second choice', function(){
+		student.mcq_answer(ptor, 2, 1);
+		student.mcq_answer(ptor, 2, 2);
+	})
+
+	it('should select the first choice', function(){
+		student.ocq_answer(ptor, 4, 2);
+	})
+
+	it('should answer free question', function(){
+		student.free_match_answer(ptor, 5, 'first student free answer')
+	})
+
+	it('should submit the survey',function(){
+		saveSurvey(ptor);
+		// ptor.sleep(10000)
+	})
+
+
+
+
+
+
+
+	it('should change to the second module', function(){
+		student.open_module_number(ptor, 2)
+	})
+	//WATCH THE FIRST LECTURE
+	it('should seek the video to 10%', function(){
+		youtube.seek(ptor, 9.5)
+		waitForOnTop(ptor)
+	})
+	it('should expect MCQ quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz incorrectly', function(){
+		check_answer_given_answer_order(ptor, 1)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 0)
+	})
+	it('should seek the video to 20%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 19.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect an OCQ quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz incorrectly', function(){
+		check_answer_given_answer_order(ptor, 1)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
+	it('should seek the video to 30%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 29.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect a DRAG quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		answer_drag_incorrect_ov(ptor)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
 
 	//WATCH THE THIRD LECTURE
+	it('should go to the third lecture', function(){
+		o_c.open_item(ptor, 3)
+	})
 
-	//SOLVE THE FIRST QUIZ
-
-	//SOLVE THE SECOND QUIZ
-
-	//SOLVE THE SURVEY
-
-	//SOLVE THE QUIZ
-	// it('should open the quiz',function(){
-	// 	o_c.open_item(ptor, 1);
-	// })
-
-	// it('should answer mcq incorrect', function(){
-	// 	student.mcq_answer(ptor, 2, 2);
-	// 	student.mcq_answer(ptor, 2, 3);
-	// })
-
-	// it('should answer ocq correct', function(){
-	// 	student.ocq_answer(ptor, 4, 1);
-	// })
-
-	// it('should answer free question', function(){
-	// 	student.free_match_answer(ptor, 5, 'free answer')
-	// })
-
-	// it('should answer match question', function(){
-	// 	student.free_match_answer(ptor, 6, 'match answer')
-	// })	
-
-	// it('should answer drag correct', function(){
-	// 	ptor.sleep(3000);
-	// 	student.drag_answer(ptor, 7);
-	// 	ptor.sleep(3000);
-	// })
-
-	// it('should submit',function(){
-	// 	student.submit_normal_quiz(ptor);
-	// 	// ptor.sleep(10000)
-	// })
-	
-
+	it('should seek the video to 10%', function(){
+		youtube.seek(ptor, 9.5)
+		waitForOnTop(ptor)
+	})
+	it('should expect MCQ SURVEY quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should select the first and second choices', function(){
+		check_answer_given_answer_order(ptor, 3)
+		answer(ptor)
+	})
+	it('should seek the video to 20%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 19.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect an OCQ SURVEY quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should select the third choice', function(){
+		check_answer_given_answer_order(ptor, 1)
+		answer(ptor)
+	})
+	it('should log out', function(){
+		o_c.home(ptor)
+		o_c.open_tray(ptor)
+		o_c.logout(ptor, o_c.feedback)
+	})
 	//end test
 
 	// it('should delete course', function(){
@@ -720,6 +958,190 @@ describe('Student', function(){
 	// 	o_c.home(ptor);
 	// 	teacher.delete_course(ptor, o_c.feedback);
 	// })
+})
+
+describe('Second Student', function(){
+	//SECOND STUDENT
+	it('should sign in', function(){
+		o_c.sign_in(ptor, params.student_mail_2, params.password, o_c.feedback)
+	})
+	it('should open the first course', function(){
+		o_c.open_course_whole(ptor)
+	})
+	it('should go to the courseware page', function(){
+		o_c.open_tray(ptor)
+		o_c.open_lectures(ptor)
+	})
+
+	//WATCH THE FIRST LECTURE
+	it('should seek the video to 10%', function(){
+		youtube.seek(ptor, 9.5)
+		waitForOnTop(ptor)
+	})
+	it('should expect MCQ quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		check_answer_given_answer_order(ptor, 1)
+		check_answer_given_answer_order(ptor, 3)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
+	it('should seek the video to 20%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 19.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect an OCQ quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		check_answer_given_answer_order(ptor, 2)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question be reviewed in class', function(){
+		request_review_inclass(ptor, 0)
+	})
+	it('should seek the video to 30%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 29.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect a DRAG quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		answer_drag_correct_ov(ptor)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
+
+
+	//WATCH THE SECOND LECTURE
+	it('should go to the second lecture', function(){
+		o_c.open_item(ptor, 2)
+	})
+
+	it('should seek the video to 10%', function(){
+		youtube.seek(ptor, 9.5)
+		waitForOnTop(ptor)
+	})
+	it('should expect MCQ TEXT quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		check_answer_given_answer_order(ptor, 1)
+		check_answer_given_answer_order(ptor, 3)
+		answer(ptor)
+	})
+	it('wait for the voting question', function(){
+		waitForVoting(ptor)
+	})
+	it('should request that the question not be reviewed in class', function(){
+		request_review_inclass(ptor, 1)
+	})
+	it('should seek the video to 20%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 19.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect an OCQ TEXT quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		check_answer_given_answer_order(ptor, 1)
+		answer(ptor)
+	})
+	it('should seek the video to 30%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 29.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect a DRAG TEXT quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should solve the quiz correctly', function(){
+		answer_drag_correct(ptor)
+		answer(ptor)
+	})
+	//WATCH THE THIRD LECTURE
+	it('should go to the third lecture', function(){
+		o_c.open_item(ptor, 3)
+	})
+
+	it('should seek the video to 10%', function(){
+		youtube.seek(ptor, 9.5)
+		waitForOnTop(ptor)
+	})
+	it('should expect MCQ SURVEY quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should select the first and second choices', function(){
+		check_answer_given_answer_order(ptor, 1)
+		answer(ptor)
+	})
+	it('should seek the video to 20%', function(){
+		youtube.press_play(ptor)
+		youtube.seek(ptor, 19.5)
+		// youtube.press_play(ptor)
+		waitForOnTop(ptor)
+	})
+	it('should expect an OCQ SURVEY quiz', function(){
+		expect_quiz(ptor)
+	})
+	it('should select the third choice', function(){
+		check_answer_given_answer_order(ptor, 2)
+		answer(ptor)
+	})
+	//SOLVE THE SECOND QUIZ
+	it('should open the quiz',function(){
+		o_c.open_item(ptor, 5);
+	})
+
+	it('should answer mcq correct', function(){
+		student.mcq_answer(ptor, 2, 1);
+		student.mcq_answer(ptor, 2, 2);
+	})
+
+	it('should answer ocq correct', function(){
+		student.ocq_answer(ptor, 4, 1);
+	})
+
+	it('should answer free question', function(){
+		student.free_match_answer(ptor, 5, 'second second free answer')
+	})
+
+	it('should answer match question', function(){
+		student.free_match_answer(ptor, 6, 'match answer')
+	})	
+
+	it('should answer drag correct', function(){
+		ptor.sleep(3000);
+		student.drag_answer(ptor, 7);
+		ptor.sleep(3000);
+	})
+
+	it('should submit',function(){
+		student.submit_normal_quiz(ptor);
+		// ptor.sleep(10000)
+	})
 })
 
 /////////////////////////////////////////////////////////
@@ -951,14 +1373,14 @@ function answer_drag_incorrect_ov(ptor){
 }
 
 function request_review_inclass(ptor, which){
-	locator.by_tag(ptor,'notification').then(function(popover){
+	locator.by_classname(ptor,'review_panel').then(function(popover){
 		if(which == 0){
-			popover.findElement(protractor.By.className('btn-danger')).then(function(no){
-				no.click();
+			popover.findElements(protractor.By.className('btn')).then(function(buttons){
+				buttons[1].click();
 			})
 		}
 		else if(which == 1){
-			popover.findElement(protractor.By.className('btn-success')).then(function(yes){
+			popover.findElement(protractor.By.className('btn')).then(function(yes){
 				yes.click();
 			})
 		}	
@@ -975,6 +1397,24 @@ function waitForVoting(ptor){
     });
 }
 
+
+function saveSurvey(ptor){
+	locator.by_xpath(ptor, '//*[@id="middle"]/center/form/input[1]').then(function(save_button){
+		save_button.click().then(function(){
+			o_c.feedback(ptor, 'successfully saved')
+		})
+	})
+}
+
+function waitForOnTop(ptor){
+	ptor.wait(function(){
+		return ptor.findElement(protractor.By.className('ontop')).then(function(ontop){
+			return ontop.isDisplayed().then(function(displayed){
+				return displayed
+			})
+		})
+	})
+}
 
 
 

@@ -125,6 +125,7 @@ exports.config = {
         teacher_mail: 'teacher2@sharklasers.com',
         mail: 'studenttest@sharklasers.com',
         // mail: 'mena.happy@yahoo.com',
+        student_mail_2: 'student_mail_2@sharklasers.com',
         password: 'password',
 
         short_name: "csc-test",

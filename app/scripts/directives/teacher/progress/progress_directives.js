@@ -109,7 +109,7 @@ angular.module('scalearAngularApp')
 	    template:'<div class="time_estimate" style="z-index:1">'+
 					'<h4 translate>courses.time_estimate</h4>'+
 					'<div style="display: inline-block;">In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></div>'+
-					'<a pop-over="popover_options"><span pop-over="popover_options" translate>more</span>...</a>'+
+					'<a pop-over="popover_options">{{"more" | translate}}...</a>'+
 				'</div>', 
 	    link:function(scope){
 	    	scope.numbers = []

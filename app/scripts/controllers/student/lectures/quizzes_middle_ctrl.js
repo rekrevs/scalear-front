@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state','Page', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state, Page) {
+  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state','Page','util', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state, Page, util) {
     $controller('surveysCtrl', {$scope: $scope});
     
  	var init = function(){
@@ -49,11 +49,11 @@ angular.module('scalearAngularApp')
                 $scope.next_item= data.next_item;
     			if(data.correct)
     				$scope.correct=data.correct; 
-				// here need to update scope.parent
-				var group_index= CourseEditor.get_index_by_id($scope.$parent.course.groups, data.done[1])
- 				var quiz_index= CourseEditor.get_index_by_id($scope.$parent.course.groups[group_index].quizzes, data.done[0])
- 				if(quiz_index!=-1 && group_index!=-1)
- 					$scope.$parent.course.groups[group_index].quizzes[quiz_index].is_done= data.done[2]
+				
+                var group_index= util.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+                var quiz_index= util.getIndexById($scope.course.groups[group_index].quizzes, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                if(quiz_index!=-1 && group_index!=-1)
+                    $scope.course.groups[group_index].lectures[quiz_index].is_done= data.done[2]
     		});
     	}
     	else{ // client validation error.

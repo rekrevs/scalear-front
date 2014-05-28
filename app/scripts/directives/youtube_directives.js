@@ -131,6 +131,8 @@ angular.module('scalearAngularApp')
                         player.destroy();
                     element.find('iframe').remove();
                     element.find('video').remove()
+                    if(scope.slow_off)
+                    	scope.slow_off()
                 }
                 player_controls.play=function(){
 					player.play();
@@ -292,6 +294,15 @@ angular.module('scalearAngularApp')
 							scope.$apply();
 						}
 					})
+
+					player.on('canplay',function(){
+						parent.focus()
+						if(player_events.canPlay){
+							player_events.canPlay();
+							scope.$apply();
+						}
+					})
+
 					player.on('canplaythrough',function(){
 						parent.focus()
 						if(player_events.canPlay){
@@ -331,7 +342,7 @@ angular.module('scalearAngularApp')
 							scope.$apply();
 						}
 					})
-					scope.$on('slow',function(ev,data){
+					scope.slow_off =scope.$on('slow',function(ev,data){
 						parent.focus()
 						if(player_events.onSlow){
 							player_events.onSlow(data);
@@ -345,7 +356,7 @@ angular.module('scalearAngularApp')
 				})
 
                 var isFinalUrl= function(url){
-                    return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
+                    return url.match(/^(http|https):\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
                 }
 
                 var isYoutube= function(url){

@@ -1,6 +1,6 @@
 <div context-menu data-target="menu" opened='menu_status' class="disable_selection inner-item">
 	<img src="images/move3.png" class="handle" title={{"courses.drag_to_reorder"|translate}} />
-	<a class="trigger2" ui-sref="course.course_editor.{{(className=='lecture') && 'lecture.quizList' || className}}({ {{className}}_id: id })" >{{name}}</a>
+	<a class="trigger2" ui-sref="course.course_editor.{{className}}({ {{className}}_id: id })" >{{name}}</a>
 	<div class="menu">
 	  <ul class="dropdown-menu" style="font-size:14px">
 	    <li >

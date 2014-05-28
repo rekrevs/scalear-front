@@ -114,18 +114,19 @@ angular.module('scalearAngularApp')
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
 							"<label >{{quiz.question}}:</label>"+
-							"<div class='answer_div'>"+
+							"<div class='answer_div'><div class='answer_div_before'>{{quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'? 'groups.answer' : 'groups.choices' | translate}}</div>"+
 								"<student-html-answer />"+
 							"</div>"+
 					"</div></ng-form>",
 		link: function(scope, iElm, iAttrs, controller) {
-			
+      // $('.answer_div:before').css("content", "hello")
+			// $('.answer_div:before').css("width", "10px")
 		}
 	};
 }]).directive('studentHtmlAnswer',['$log',function($log){
 	return {
 	 	restrict: 'E',
-	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' style='/*overflow:auto*/' >"+
+	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' >"+
 					"<div ng-switch-when='MCQ' ><student-html-mcq  ng-repeat='answer in quiz.online_answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><student-html-ocq  ng-repeat='answer in quiz.online_answers' /></div>"+	
           "<div ng-switch-when='FREE TEXT QUESTION'><student-html-free /></div>"+
@@ -493,7 +494,8 @@ angular.module('scalearAngularApp')
           sync: "=",
           player: "=",
           lecture:"=",
-          editors:"="
+          editors:"=",
+          seek:"&"
       },
       link: function (scope, element) {
           scope.$on('$destroy', function() {
@@ -510,10 +512,11 @@ angular.module('scalearAngularApp')
           scope.editors[scope.lecture.id]=scope.editor;
           //scope.editor.resize();
 
-          scope.$watch("url", function(val){
+          scope.$watch("lecture", function(val){
               if(scope.lecture){
                   //editor.create(scope.url);
-                 scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note);
+                  console.log(scope.lecture.name)
+                 scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note, scope.seek);
               }
           })
 

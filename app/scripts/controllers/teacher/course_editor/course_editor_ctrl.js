@@ -69,7 +69,7 @@ angular.module('scalearAngularApp')
  		return CourseEditor.capitalize(s)
  	}
 
- 	$scope.impersonate = function(){
+ 	$scope.impersonate = function(module_id){
         $cookieStore.put('old_user_id', $rootScope.current_user.id)
         $cookieStore.put('course_id', $stateParams.course_id)
         Impersonate.create({},{course_id: $stateParams.course_id},
@@ -79,7 +79,7 @@ angular.module('scalearAngularApp')
             $rootScope.preview_as_student = true
             $cookieStore.put('preview_as_student', true)            
             $cookieStore.put('new_user_id', data.user.id)   
-            $state.go('course.courseware',{course_id: $stateParams.course_id})
+            $state.go('course.courseware.module',{course_id: $stateParams.course_id, module_id: module_id })
           },
           function(){
             console.log("bad")

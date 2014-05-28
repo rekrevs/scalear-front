@@ -26,14 +26,15 @@
 					<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
 				</overlay>
 	        	<div class="inner" id="modules">
+	        		<small><ul ng-show="module.items.length == 0"><li style="color: white; text-align: left; margin-left: 10px; opacity: 0.6;" >{{'groups.empty' | translate}}...</li></ul></small>
           			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
-	            		<small><li style="color: white; text-align: left; margin-left: 10px; opacity: 0.6;" ng-show="module.items.length == 0">{{'groups.empty' | translate}}...</li></small>
 	            		<li class="last-child item" ng-repeat="item in module.items" >
              				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="copy(item)" paste="paste(module.id, $parent.$index)" share="openShareModal(item.id,item.class_name)" ></item>
 	            		</li>
 	            	</ul>
 		            <center class="item-buttons">
 		            	<hr style="width: 95%; margin: 0 auto; border-top: none !important; border-bottom: 1px solid darkgray !important; margin-bottom: 10px;" />
+		            	<button ng-show="module.items.length" title="{{'Preview'|translate}}" ng-click="impersonate(module.id)" class="btn btn-success btn-mini" style="float: right; margin-right:10px; margin-bottom: 10px;" tooltip-placement="top" tooltip="Preview as student" tooltip-append-to-body="true">{{'Preview'|translate}}</button>
 		            	<add-module-items index="$index" lecture="addLecture" quiz="addQuiz"></add-module-items>
 		            	<!-- <button_link title="{{'courses.add_lecture'|translate}}" class="btn btn-mini btn-success adding" style="background-image: initial;" action="addLecture($index)" ></button_link>
 		            	<button_link title="{{'lectures.add_quiz'|translate}}"   class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'quiz')"></button_link>
@@ -47,7 +48,7 @@
 	<button ng-show="!module_loading" ng-click="addModule();" class="btn btn-success adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;">
 	+ {{'courses.add_module'|translate}}
 	</button >
-	<button_link title="{{'Preview'|translate}}" action="impersonate()" class="preview" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link>
+	<!-- <button_link title="{{'Preview'|translate}}" action="impersonate()" class="preview" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link> -->
 	<hr />
 </div>
 	<div id="middle"  ui-view="middle">

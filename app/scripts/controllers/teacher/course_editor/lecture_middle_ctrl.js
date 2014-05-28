@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
     //$scope.lecture.duration = 0
     $scope.fullscreen = false
 	
-    $state.go('course.course_editor.lecture.quizList');
+    // $state.go('course.course_editor.lecture.quizList');
 
 
 //////////////////////////////////////FUNCTIONS/////////////////////////////////////////////

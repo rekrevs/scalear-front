@@ -245,6 +245,13 @@ var translation_sv=function(){
               policy_changes_details: "Den aktuella sekretesspolicyn kommer alltid att finnas på denna sida och vi uppmanar dig att besöka denna sida för att granska ändringar. Alla väsentliga förändringar i vår integritetspolicy kommer att skickas med e-post till alla aktiva konton. Ändringar av sekretesspolicyn börjar gälla när de postats här.",
               last_update: "Senast uppdaterad: 10-apr-2013",
           },
+       regex:{
+        enter_string:"Ange strängen för att matcha eller ett reguljärt uttryck",
+        correct_if: "kommer endast vara korrekt om studenten kommer in",
+        correct_for: "kommer att vara korrekt för",
+        any_integer: "varje heltal mellan 0 och 9",
+        numbers: "siffrorna 10, 14 och 29"
+      },
       lectures:{
               duration: "Tidsutsträckning",
               details: "Detaljer",
@@ -443,6 +450,7 @@ var translation_sv=function(){
               add_a_lecture: "Lägg till en föreläsning",
               groups: "Grupper",
               answer: "Svar",
+              choices: "Valen",
               multiple_choice_question: "Flervalsfråga",
               free_text_question: "Fri-text-fråga",
               remove_question: "Ta bort Fråga",
@@ -482,7 +490,9 @@ var translation_sv=function(){
               empty: "Tom Modul",
               blackscreen_close: "Klicka på eller Tryck på 'b' för att gå tillbaka",
               go_to_class: "Gå till klass",
-              filter: "Filtrera"
+              display_inclass: "Visning för I-klass recension",
+              filter: "Filtrera",
+              see_related: "Se relaterade svar på elev"
           },
       courses:{
               image_not_found: "Image inte hittad...",

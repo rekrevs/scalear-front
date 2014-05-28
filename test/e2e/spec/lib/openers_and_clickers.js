@@ -30,6 +30,13 @@ exports.open_course_whole = function(ptor){
     })
 }
 
+
+exports.open_course_by_no = function(ptor, no){
+    locator.s_by_classname(ptor, 'whole-box').then(function(course){
+        course[no-1].click();
+    })
+}
+
 //====================================================
 //                      sign in
 //====================================================
@@ -528,6 +535,18 @@ exports.open_notifications = function(ptor, no){
    locator.s_by_id(ptor, 'id').then(function(inv){
     inv[no-1].findElement(protractor.By.className('btn-success')).click().then(function(){
         o_c.feedback(ptor, 'ou have accepted the invitation to course')
+    })
+   })
+}
+
+exports.open_notification_shared = function(ptor, no){
+   locator.by_id(ptor, 'notification_btn').click();
+   locator.s_by_id(ptor, 'id').then(function(inv){
+    inv[no-1].findElement(protractor.By.className('btn-success')).click().then(function(){
+        o_c.feedback(ptor, 'ccepted shared Item')
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('show_shared');
+        });
     })
    })
 }

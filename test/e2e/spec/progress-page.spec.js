@@ -1144,79 +1144,79 @@ describe('Second Student', function(){
 	})
 })
 
-// describe('Second Student', function() {
-// 	it('should open the first module', function(){
+describe('Second Student', function() {
+	it('should open the first module', function(){
 
-// 	})
-// 	it('should open the first lecture', function(){
+	})
+	it('should open the first lecture', function(){
 
-// 	})
-// 	it('should seek to 40%', function(){
+	})
+	it('should seek to 40%', function(){
 
-// 	})
-// 	it('should add a private question', function(){
+	})
+	it('should add a private question', function(){
 
-// 	})
-// 	it('should seek to 45%', function(){
+	})
+	it('should seek to 45%', function(){
 
-// 	})
-// 	it('should add a confused', function(){
+	})
+	it('should add a confused', function(){
 
-// 	})
-// 	it('should move to the second lecture', function(){
+	})
+	it('should move to the second lecture', function(){
 
-// 	})
-// 	it('should seek to 5%', function(){
+	})
+	it('should seek to 25%', function(){
 
-// 	})
-// 	it('should add a confused', function(){
+	})
+	it('should add a confused', function(){
 
-// 	})
-// 	it('should seek to 40%', function(){
+	})
+	it('should seek to 40%', function(){
 
-// 	})
-// 	it('should add a public question', function(){
+	})
+	it('should add a public question', function(){
 			
-// 	})
-// 	it('should logout', function(){
+	})
+	it('should logout', function(){
 
-// 	})
-// });
-// describe('First Student', function(){
-// 	it('should login', function(){
+	})
+});
+describe('First Student', function(){
+	it('should login', function(){
 
-// 	})
-// 	it('should open the course', function(){
+	})
+	it('should open the course', function(){
 
-// 	})
-// 	it('should open teh lectures page', function(){
+	})
+	it('should open the lectures page', function(){
 
-// 	})
-// 	it('should open the first module', function(){
+	})
+	it('should open the first module', function(){
 
-// 	})
-// 	it('should open the second lecture', function(){
+	})
+	it('should open the second lecture', function(){
 
-// 	})
-// 	it('should upvote the question asked by the Second Student', function(){
+	})
+	it('should upvote the question asked by the Second Student', function(){
 
-// 	})
-// 	it('should add a comment on the question asked by the Second Student', function(){
+	})
+	it('should add a comment on the question asked by the Second Student', function(){
 			
-// 	})
-// 	it('should go to the third lecture', function(){
+	})
+	it('should go to the third lecture', function(){
 
-// 	})
-// 	it('should seek to 25%', function(){
+	})
+	it('should seek to 25%', function(){
 
-// 	})
-// 	it('should add a confused', function(){
-		
-// 	})
-// 	it('should logout', function(){
-		
-// 	})
-// })
+	})
+	it('should add a confused', function(){
+
+	})
+	it('should logout', function(){
+
+	})
+})
 
 /////////////////////////////////////////////////////////
 //				test specific functions

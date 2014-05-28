@@ -55,8 +55,8 @@ describe("1", function(){
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, o_c.feedback);
+		create_ocq_text_quiz(ptor, o_c.feedback);
+		make_ocq_text_questions(ptor, o_c.feedback);
 	})
 
 	it('should login a student and check for ocq_no', function(){
@@ -111,8 +111,8 @@ describe("2", function(){
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, o_c.feedback);
+		create_ocq_text_quiz(ptor, o_c.feedback);
+		make_ocq_text_questions(ptor, o_c.feedback);
 	})
 
 	it('should login a student and check for no of ocqs ', function(){
@@ -183,8 +183,8 @@ describe("3", function(){
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, o_c.feedback);
+		create_ocq_text_quiz(ptor, o_c.feedback);
+		make_ocq_text_questions(ptor, o_c.feedback);
 	})
 
 	it('should login a student and check for no of ocqs ', function(){
@@ -197,7 +197,7 @@ describe("3", function(){
 		check_ocq_no(ptor, 3);
 	})
 
-	it('should answer ocq quiz correctly',function(){
+	it('should answer ocq quiz incorrectly',function(){
 		check_answer_given_answer_order(ptor, 1);
 	})
 
@@ -255,8 +255,8 @@ describe("4", function(){
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 50);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
+		create_ocq_text_quiz(ptor, o_c.feedback);
+		make_ocq_text_questions(ptor, o_c.feedback);
 	})
 
 	it('should login a student and check for no of ocqs ', function(){
@@ -300,45 +300,43 @@ describe("4", function(){
 //				test specific functions
 /////////////////////////////////////////////////////////
 
-function create_ocq_quiz(ptor, feedback){
-	locator.s_by_classname(ptor, 'btn-group').then(function(btns){
-		btns[0].click().then(function(){
-			o_c.scroll(ptor, 1000);
-			btns[0].findElements(protractor.By.repeater('item in list')).then(function(items){
+function create_ocq_text_quiz(ptor, feedback){
+locator.s_by_classname(ptor, 'btn-group').then(function(btns){
+		btns[1].click().then(function(){
+			btns[1].findElements(protractor.By.repeater('item in list')).then(function(items){
 				items[1].click().then(function(){
 				    feedback(ptor, "Quiz was successfully created");
 					expect(locator.by_id(ptor, 'editing').isDisplayed()).toEqual(true);
 				})
 			})
-			o_c.scroll(ptor, -1000);
 		})
 	})
 }
 
-function make_ocq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
+function make_ocq_text_questions(ptor, feedback){
 	locator.by_id(ptor,'ontop').then(function(ontop){
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: q1_x, y: q1_y}).perform();
-		ptor.actions().doubleClick().perform();
-		
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		ptor.actions().click().perform();
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[0].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 1");
+			})
+		})
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: q2_x, y: q2_y}).perform();
-		ptor.actions().doubleClick().perform();
-		ptor.actions().click().perform();
-		locator.by_classname(ptor, 'must_save_check').click();
+		locator.by_classname(ptor, 'add_multiple_answer').click();
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		ptor.actions().click().perform();
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[1].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 2");
+				ins[1].click();
+			})
+		})
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove({x: q3_x, y: q3_y}).perform();
-		ptor.actions().doubleClick().perform();
+		locator.by_classname(ptor, 'add_multiple_answer').click();
 
+		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
+			ques[2].findElements(protractor.By.tagName('input')).then(function(ins){
+				ins[0].sendKeys("answer 3");
+			})
+		})
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
 		locator.by_id(ptor, 'done').then(function(btn){

@@ -13,7 +13,7 @@ describe("teacher", function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
 		o_c.open_course_whole(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.change_module_name(ptor, 'menazz', o_c.feedback);
+		teacher.rename_item(ptor, 'menazz', o_c.feedback);
 		// o_c.open_tray(ptor);
 		// o_c.open_lectures(ptor);
 		// student.check_module_number(ptor, 2);

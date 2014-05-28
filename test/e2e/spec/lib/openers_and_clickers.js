@@ -164,7 +164,7 @@ exports.open_tray = function(ptor){
 //          press course information button
 //====================================================
 exports.open_info = function(ptor){
-    ptor.findElement(protractor.By.id("info")).then(function(btn){
+    ptor.findElement(protractor.By.id("student_info")).then(function(btn){
         btn.click();
         ptor.getCurrentUrl().then(function(url) {
             expect(url).toContain('course_information');
@@ -173,7 +173,7 @@ exports.open_info = function(ptor){
 }
 
 exports.open_info_teacher = function(ptor){
-    ptor.findElement(protractor.By.id("info")).then(function(btn){
+    ptor.findElement(protractor.By.id("teacher_info")).then(function(btn){
         btn.click();
     })
 }
@@ -188,7 +188,7 @@ exports.open_announcements_teacher = function(ptor){
 //               press calendar button
 //====================================================
 exports.open_calendar = function(ptor){
-    info_icon = ptor.findElement(protractor.By.id("calendar")).then(function(btn){
+    info_icon = ptor.findElement(protractor.By.id("student_calendar")).then(function(btn){
         btn.click();
         ptor.getCurrentUrl().then(function(url) {
             expect(url).toContain('events');
@@ -196,6 +196,14 @@ exports.open_calendar = function(ptor){
     })
 }
 
+exports.open_calendar_teacher = function(ptor){
+    info_icon = ptor.findElement(protractor.By.id("teacher_calendar")).then(function(btn){
+        btn.click();
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('events');
+        });
+    })
+}
 //====================================================
 //               press lectures button
 //====================================================
@@ -225,6 +233,18 @@ exports.open_enrolled = function(ptor){
         btn.click();
         ptor.getCurrentUrl().then(function(url) {
             expect(url).toContain('enrolled_students');
+        });
+    })
+}
+
+//====================================================
+//                  open inclass
+//====================================================
+exports.open_inclass = function(ptor){
+    info_icon = ptor.findElement(protractor.By.id("inclass")).then(function(btn){
+        btn.click();
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('inclass');
         });
     })
 }
@@ -497,4 +517,17 @@ exports.scroll_element = function(ptor, element) {
         ptor.executeScript('window.scrollTo('+loc.x+','+loc.y+')', '');
     })
     
+}
+
+//
+//
+//
+
+exports.open_notifications = function(ptor, no){
+   locator.by_id(ptor, 'notification_btn').click();
+   locator.s_by_id(ptor, 'id').then(function(inv){
+    inv[no-1].findElement(protractor.By.className('btn-success')).click().then(function(){
+        o_c.feedback(ptor, 'ou have accepted the invitation to course')
+    })
+   })
 }

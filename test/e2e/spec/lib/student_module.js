@@ -70,11 +70,13 @@ exports.check_timeline_item_number = function(ptor, total_item_no){
 }
 
 exports.open_module_number = function(ptor, mo_no){
-    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/div[1]').findElement(protractor.By.tagName('button')).then(function(mod_btn){
+    locator.by_classname(ptor, 'modules-collapser').then(function(mod_btn){
         mod_btn.click();
         expect(locator.by_classname(ptor,"multicol").isDisplayed()).toEqual(true);
-        locator.by_xpath(ptor,'//*[@id="main"]/div/div/div/ui-view/div[1]/div[2]/div').findElements(protractor.By.tagName('ul')).then(function(mod){
-            mod[mo_no-1].click();
+        locator.by_repeater(ptor,'module in modules').then(function(modules){
+          modules[mo_no-1].findElement(protractor.By.tagName('ul')).then(function(module){
+            module.click();
+          })
         })
     })
 }

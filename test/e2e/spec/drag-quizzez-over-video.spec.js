@@ -124,7 +124,7 @@ describe("2", function(){
 		o_c.open_course_whole(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "mcq_quiz","http://www.youtube.com/watch?v=xGcG4cp2yzY", o_c.feedback);
+		teacher.create_lecture(ptor, "drag_quiz","http://www.youtube.com/watch?v=xGcG4cp2yzY", o_c.feedback);
 	})
 
 	it('should create quiz', function(){
@@ -196,7 +196,7 @@ describe("3", function(){
 		o_c.open_course_whole(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "mcq_quiz","http://www.youtube.com/watch?v=xGcG4cp2yzY", o_c.feedback);
+		teacher.create_lecture(ptor, "drag_quiz","http://www.youtube.com/watch?v=xGcG4cp2yzY", o_c.feedback);
 	})
 
 	it('should create quiz', function(){

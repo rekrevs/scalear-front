@@ -28,8 +28,8 @@ angular.module('scalearAngularApp')
 					SharedItem.destroy(
 						{shared_item_id: scope.data[shared_item_index].id},
 						function(){
-						scope.data.splice(shared_item_index,1)
-					})
+							scope.data.splice(shared_item_index,1)
+						},function(){console.log("sharing removal failed")})
 				}
 				else{
 					SharedItem.updateSharedData(

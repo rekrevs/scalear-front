@@ -298,10 +298,7 @@ angular.module('scalearAngularApp')
                 $scope.$apply()
             })
         })
-        if($scope.go_to_time){
-            $scope.seek($scope.go_to_time)
-            $scope.go_to_time = null
-        }
+        
 
 
         // $timeout(function(){
@@ -509,6 +506,14 @@ angular.module('scalearAngularApp')
         $scope.is_youtube = is_youtube
         $scope.slow = true
     }
+
+    $scope.lecture_player.events.canPlay=function(){
+        if($scope.go_to_time){
+            console.log("can play")
+            $scope.seek($scope.go_to_time)
+            $scope.go_to_time = null
+        }
+    }    
 
     var showNotification=function(msg, sub_msg){
         $scope.notification_message=$translate(msg);

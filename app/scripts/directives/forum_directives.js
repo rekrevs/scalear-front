@@ -36,6 +36,31 @@ angular.module('scalearAngularApp')
         templateUrl:'/views/forum/discussion_timeline.html',
         link: function(scope, element, attrs) {
             scope.current_user = $rootScope.current_user
+            
+            var initCommentSize=(function(){                
+                scope.height=40
+                scope.width=80
+            })
+
+            scope.onCommentFocus=function(){
+                scope.height=90
+                scope.width=90
+                $(document).off("click")
+                $(document).on("click", function (e) {
+                    console.log(e.target.className)
+                    if(e.target.className != 'btn btn-small' && !angular.element(e.target).is('textarea')){
+                        scope.error_message = null
+                        initCommentSize()
+                        scope.$apply()
+                        $(document).off("click")
+                    }         
+              });
+            }
+
+            scope.onCommentBlur=function(event){
+                console.log(event)
+               initCommentSize()
+            }
             scope.deleteDiscussion = function(discussion){
                 Forum.deletePost(
                     {post_id: discussion.data.id}, 
@@ -198,6 +223,7 @@ angular.module('scalearAngularApp')
                         else
                             discussion.data.comments=[response]
                         scope.current_reply=""
+                        initCommentSize()
                         // scope.lecture_player.controls.play();
                         
                     }, function(){})

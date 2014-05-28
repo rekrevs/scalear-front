@@ -114,18 +114,19 @@ angular.module('scalearAngularApp')
 		restrict: 'E',
 		template: "<ng-form name='qform'><div style='text-align:left;margin:10px;'>"+
 							"<label >{{quiz.question}}:</label>"+
-							"<div class='answer_div'>"+
+							"<div class='answer_div'><div class='answer_div_before'>{{quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION'? 'groups.answer' : 'groups.choices' | translate}}</div>"+
 								"<student-html-answer />"+
 							"</div>"+
 					"</div></ng-form>",
 		link: function(scope, iElm, iAttrs, controller) {
-			
+      // $('.answer_div:before').css("content", "hello")
+			// $('.answer_div:before').css("width", "10px")
 		}
 	};
 }]).directive('studentHtmlAnswer',['$log',function($log){
 	return {
 	 	restrict: 'E',
-	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' style='/*overflow:auto*/' >"+
+	 	template: "<div ng-switch on='quiz.question_type.toUpperCase()' >"+
 					"<div ng-switch-when='MCQ' ><student-html-mcq  ng-repeat='answer in quiz.online_answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><student-html-ocq  ng-repeat='answer in quiz.online_answers' /></div>"+	
           "<div ng-switch-when='FREE TEXT QUESTION'><student-html-free /></div>"+
@@ -291,10 +292,10 @@ angular.module('scalearAngularApp')
         var ontop=angular.element('.ontop');    
         var w = scope.data.width * ontop.width();
         var h = scope.data.height* (ontop.height());
-        var add_left= (w-13)/2.0
-        var add_top = (h-13)/2.0
-        scope.xcoor = parseFloat(scope.data.xcoor * ontop.width()) + add_left;       
-        scope.ycoor = parseFloat(scope.data.ycoor * (ontop.height())) + add_top;
+        var add_left= (w-13)/4.0
+        var add_top = (h-13)/4.0
+        scope.xcoor = parseFloat(scope.data.xcoor * ontop.width())// - add_left;       
+        scope.ycoor = parseFloat(scope.data.ycoor * (ontop.height())) //- add_top;
         scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
         $log.debug(scope.xcoor)
         $log.debug(scope.ycoor)
@@ -493,7 +494,8 @@ angular.module('scalearAngularApp')
           sync: "=",
           player: "=",
           lecture:"=",
-          editors:"="
+          editors:"=",
+          seek:"&"
       },
       link: function (scope, element) {
           scope.$on('$destroy', function() {
@@ -510,10 +512,11 @@ angular.module('scalearAngularApp')
           scope.editors[scope.lecture.id]=scope.editor;
           //scope.editor.resize();
 
-          scope.$watch("url", function(val){
+          scope.$watch("lecture", function(val){
               if(scope.lecture){
                   //editor.create(scope.url);
-                 scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note);
+                  console.log(scope.lecture.name)
+                 scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note, scope.seek);
               }
           })
 
@@ -560,17 +563,7 @@ angular.module('scalearAngularApp')
       item:'=',
       seek:'&'
     },
-    template:'<td class="timeline-icon-container">'+
-              '<div ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
-                '<img src="../images/confused-timeline.png" />'+                  
-              '</div>'+
-              '</td>'+
-              '<td>'+
-              '<p class="solved" ng-click="seek()(item.time, item.data.lecture_id)" translate>{{msg}}</p>'+
-              '</td>'+
-              '<td style="width:20px;">'+                 
-                 '<delete_button size="small" action="deleteConfused(item)" />'+
-            '</td>',
+    templateUrl:'/views/student/lectures/confused_timeline.html',
     link:function(scope, element, attrs){
       var unwatch = scope.$watch('item.data.very',function(){
           scope.msg =scope.item.data.very? 'courses.really_confused': 'courses.confused'
@@ -604,18 +597,7 @@ angular.module('scalearAngularApp')
       item:'=',
       seek:'&',
     },
-    template:'<td class="timeline-icon-container">'+
-                '<div ng-show="item.data.is_quiz_solved"  ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:\'hh:mm:ss\'}}" tooltip-append-to-body="true" >'+
-                    '<img src="../images/quiz-timeline.png" />'+
-                '</div>'+
-              '</td>'+
-              '<td>'+
-                '<p ng-show="item.data.is_quiz_solved" class="solved" ng-click="seek()(item.time, item.data.lecture_id)">{{item.data.question}}</p>'+
-                '<p ng-show="!item.data.is_quiz_solved" >{{item.data.question}}</p>'+
-              '</td>'+
-              '<td style="width:20px;">'+                 
-                 '<img ng-show="item.data.is_quiz_solved" src="images/check7.png" />'+
-            '</td>',
+    templateUrl: '/views/student/lectures/quiz_timeline.html',
     link:function(scope, element, attrs){}
   }
 })

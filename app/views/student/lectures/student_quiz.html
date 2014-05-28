@@ -12,7 +12,7 @@
                </th>
 
                <th ng-if='quiz.quiz_type=="quiz" && question.question_type=="Free Text Question"'>
-                  <p ng-if='correct[question.id]==0' class='gray' translate='lectures.under_review'></p>
+                  <p ng-if='correct[question.id]==0' class='gray' translate='courses.under_review'></p>
                   <p ng-if='correct[question.id]==1' class='red' translate='lectures.incorrect'></p>
                   <p ng-if='correct[question.id]==2' class='orange' translate='lectures.partial'></p>
                   <p ng-if='correct[question.id]==3' class='green' translate='lectures.correct'></p>

@@ -16,9 +16,9 @@
             <h3>{{l.name}}</h3>
             <table class="table table-striped" style="border-spacing: 0.2em;">
                 <tbody ng-repeat="item in timeline[l.id].items | filter:filterType">
-                    <tr quiz_timeline ng-show="item.type=='quiz'" item='item' seek='seek()' />
-                    <tr confused_timeline ng-show="item.type=='confused'" item='item' seek='seek()'/>
-                    <tr discussion_timeline ng-show="item.type=='discussion'" item='item' seek='seek()' />
+                    <tr name="quiz-timeline-item" quiz_timeline ng-if="item.type=='quiz'" item='item' seek='seek()' />
+                    <tr name="confused-timeline-item" confused_timeline ng-if="item.type=='confused'" item='item' seek='seek()'/>
+                    <tr name="discussion-timeline-item" discussion_timeline ng-if="item.type=='discussion'" item='item' seek='seek()' />
                 </tbody>
             </table>
             <hr>

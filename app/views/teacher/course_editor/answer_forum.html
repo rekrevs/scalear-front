@@ -13,7 +13,7 @@
 	<label ng-if='isNormalQuiz()' class='q_label'><span translate>groups.question_type</span>:</label>
 	<select ng-if='isNormalQuiz()' ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'></select>
 	<br/>
-	<label ng-if='isFreeText()' class='q_label'><span >type</span>:</label>
+	<label ng-if='isFreeText()' class='q_label'><span translate>groups.type</span>:</label>
 	<select ng-if='isFreeText()' ng-model='quiz.match_type' required  ng-options='val for val in match_types' class='choices'></select>
 	<div ng-if="isFreeText() && quiz.match_type == 'Match Text'" class='answer_div'>
 		<htmlanswer />

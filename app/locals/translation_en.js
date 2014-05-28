@@ -244,6 +244,13 @@ var translation_en=function(){
         policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Any significant changes in the privacy policy will be sent by email to all active accounts. Changes to the privacy policy take effect when posted here.",
         last_update: "Last update: 10-April-2013",
       },
+      regex:{
+        enter_string:"Enter the string to match or a regular expression",
+        correct_if: "will only be correct if the student enters",
+        correct_for: "will be correct for",
+        any_integer: "any integer number between 0 and 9",
+        numbers:"the numbers 10, 14 and 29"
+      },
       lectures:{
         duration: "Duration",
         details: "Details",
@@ -444,6 +451,7 @@ var translation_en=function(){
         add_a_lecture: "Add a Lecture",
         groups: "Groups",
         answer: "Answer",
+        choices: "Choices",
         multiple_choice_question: "Multiple Choice Question",
         free_text_question: "Free Text Question",
         remove_question: "Remove Question",
@@ -483,7 +491,9 @@ var translation_en=function(){
         empty: "Empty Module",
         blackscreen_close: "Click or Press 'b' to return",
         go_to_class: "Go to class",
-        filter: "Filter"
+        display_inclass: "Display For In-Class Review",
+        filter: "Filter",
+        see_related: "See related answer to student"
       },
       courses:{
         image_not_found: "Image not found...",

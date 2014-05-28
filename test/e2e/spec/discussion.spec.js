@@ -2,7 +2,8 @@
     var o_c = require('./lib/openers_and_clickers');
     var teacher = require('./lib/teacher_module');
     var student = require('./lib/student_module');
-    var youtube = require('./lib/youtube.js');
+    var youtube = require('./lib/youtube');
+    var discussions = require('./lib/discussion');
 
     var ptor = protractor.getInstance();
     var params = ptor.params
@@ -35,7 +36,7 @@
             o_c.open_course_whole(ptor);
             o_c.open_tray(ptor);
             o_c.open_lectures(ptor);
-            ask_public_question(ptor, "question 1");
+            discussions.ask_public_question(ptor, "question 1");
             check_discussion_no(ptor, 1);
         })
 
@@ -86,15 +87,15 @@
             o_c.open_tray(ptor);
             o_c.open_lectures(ptor);
             youtube.seek(ptor, 50);
-            ask_public_question(ptor, "question 1");
-            comment(ptor, 1, "comment 1");
-            comment(ptor, 1, "comment 2");
+            discussions.ask_public_question(ptor, "question 1");
+            discussions.comment(ptor, 1, "comment 1");
+            discussions.comment(ptor, 1, "comment 2");
             o_c.home(ptor);
             o_c.open_tray(ptor);
             o_c.logout(ptor, o_c.feedback);
             o_c.sign_in(ptor);
-            flag(ptor, 1);
-            flag_comment(ptor, 1, 2)
+            discussions.flag(ptor, 1);
+            discussions.flag_comment(ptor, 1, 2)
             ptor.sleep(15000);
             //check_discussion_location(ptor);
         })
@@ -137,33 +138,6 @@
             btn.click();
         })
     }
-    //============================================================
-    //ask private question and check the total number of question
-    //============================================================
-
-    function ask_private_question(ptor, text){
-        locator.by_classname(ptor, 'questionDiv').click();
-
-        locator.by_id(ptor, 'show_question').then(function(ele){
-            ele.findElement(protractor.By.tagName('textarea')).sendKeys(text);
-            ele.findElement(protractor.By.className('btn-primary')).click();
-        })
-    }
-
-
-    function ask_public_question(ptor, text){
-        locator.by_classname(ptor, 'questionDiv').click();
-
-        locator.by_id(ptor, 'show_question').then(function(ele){
-            ele.findElement(protractor.By.tagName('textarea')).sendKeys(text);
-            ele.findElement(protractor.By.tagName('select')).click().then(function(){
-                ele.findElements(protractor.By.tagName('option')).then(function(op){
-                    op[1].click();
-                })
-            })
-            ele.findElement(protractor.By.className('btn-primary')).click();
-        })
-    }
 
     //============================================================
     // checks the number of questions given a number as parameter
@@ -187,32 +161,6 @@
                         locator.by_xpath(ptor, "//*[@id='show_question']/table/tbody/tr[2]/td[2]/input").then(function(save){
                             save.click().then(function(){
                                     youtube.is_playing(ptor);
-                            })
-                        })
-                    })
-                })
-            })
-        })
-    }
-
-    //==========================================================
-    //		ask a question given the question context
-    //==========================================================
-
-    function ask_a_question(ptor, ques_string){
-        var questions_no = 0;
-        locator.by_repeater(ptor, 'element in timeline').then(function(questions){
-            questions_no = questions.length;
-        })
-        locator.by_classname(ptor, 'questionDiv').then(function(btn){
-            btn.click().then(function(){
-                locator.by_xpath(ptor, "//*[@id='show_question']/table/tbody/tr[1]/td/textarea").then(function(textarea){
-                    textarea.sendKeys(ques_string).then(function(){
-                        locator.by_xpath(ptor, "//*[@id='show_question']/table/tbody/tr[2]/td[2]/input").then(function(save){
-                            save.click().then(function(){
-                                locator.by_repeater(ptor, 'element in timeline').then(function(elements){
-                                    expect(elements.length).toEqual(questions_no+1);
-                                })
                             })
                         })
                     })
@@ -266,52 +214,4 @@
         })
     }
 
-    function comment(ptor, q_no, text){
-        locator.by_repeater(ptor, 'item in timeline').then(function(ques){
-            ques[q_no-1].findElement(protractor.By.tagName('textarea')).sendKeys(text);
-            ques[q_no-1].findElement(protractor.By.className('btn-small')).click();
-            ques[q_no-1].findElement(protractor.By.className('btn-small')).click();
-        })
-    }
-
-    function flag(ptor, q_no){
-        locator.by_repeater(ptor, 'item in timeline').then(function(ques){
-            ques[q_no-1].findElement(protractor.By.className('flag')).click();
-        })	
-    }
-
-    function flag_comment(ptor, q_no, co_no){
-        locator.by_repeater(ptor, 'item in timeline').then(function(ques){
-            ques[q_no-1].findElements(protractor.By.repeater('comment_data in item.data.comments')).then(function(comments){
-                comments[co_no-1].findElement(protractor.By.className('flag')).click();
-            })
-        })	
-    }
-
-    function vote_up(ptor, q_no){
-        locator.by_repeater(ptor, 'item in timeline').then(function(ques){
-                ques[q_no-1].findElement(protractor.By.className('icon-chevron-up')).click();
-        })
-    }
-
-    function vote_down(ptor, q_no){
-        locator.by_repeater(ptor, 'item in timeline').then(function(ques){
-                ques[q_no-1].findElement(protractor.By.className('icon-chevron-down')).click();
-        })
-    }
-
-    function vote_comment_up(ptor, q_no, co_no){
-        locator.by_repeater(ptor, 'item in timeline').then(function(ques){
-            ques[q_no-1].findElements(protractor.By.repeater('comment_data in item.data.comments')).then(function(comments){
-                comments[co_no-1].findElement(protractor.By.className('icon-chevron-up')).click();
-            })
-        })	
-    }
-
-    function vote_comment_down(ptor, q_no, co_no){
-        locator.by_repeater(ptor, 'item in timeline').then(function(ques){
-            ques[q_no-1].findElements(protractor.By.repeater('comment_data in item.data.comments')).then(function(comments){
-                comments[co_no-1].findElement(protractor.By.className('icon-chevron-down')).click();
-            })
-        })	
-    }
+        }

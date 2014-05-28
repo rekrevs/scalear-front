@@ -241,7 +241,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
   position: absolute;
 }
 
-.answer_div:before{
+.answer_div_before{
 	content: "Choices";
   position: absolute;
   top: -1px;
@@ -352,14 +352,17 @@ input[type="checkbox"], input[type="radio"] {
 
 .middle-container{
   /*background-color: aliceblue;*/
-  position: fixed;
-  bottom: 40px;
-  top: 100px;
-  right: 20px;
-  left: 20px;
-  padding-top: 0px; 
-  overflow-y: auto; 
+  /*position: fixed;*/
+  /*bottom: 40px;*/
+  /*top: 100px;*/
+  /*right: 20px;*/
+  /*left: 20px;*/
+  padding-top: 0px;
+  overflow-y: auto;
   text-align: left;
+  margin-top: 40px;
+  position: relative;
+  z-index: 1;
 }
 .currentitem{
       /*border: 2px solid lightslategray;*/

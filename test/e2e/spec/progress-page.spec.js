@@ -7,6 +7,7 @@ var lecture_middle = require('./lib/lecture_quizzes_management');
 var quiz_ov = require('./lib/quizzes_over_video');
 var survey_ov = require('./lib/surveys_over_video');
 var quiz_ov_text = require('./lib/quizzes_over_video_text');
+var discussions = require('./lib/discussion');
 
 
 
@@ -602,7 +603,7 @@ xdescribe("teacher", function(){
 
 })
 
-describe('First Student', function(){
+xdescribe('First Student', function(){
 	it('should sign in', function(){
 		o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
 	})
@@ -960,7 +961,7 @@ describe('First Student', function(){
 	// })
 })
 
-describe('Second Student', function(){
+xdescribe('Second Student', function(){
 	//SECOND STUDENT
 	it('should sign in', function(){
 		o_c.sign_in(ptor, params.student_mail_2, params.password, o_c.feedback)
@@ -1142,6 +1143,104 @@ describe('Second Student', function(){
 		student.submit_normal_quiz(ptor);
 		// ptor.sleep(10000)
 	})
+})
+
+xdescribe('Second Student', function() {
+	//-----
+	it('should sign in', function(){
+		o_c.sign_in(ptor, params.student_mail_2, params.password, o_c.feedback)
+	})
+	it('should open the first course', function(){
+		o_c.open_course_whole(ptor)
+	})
+	it('should go to the courseware page', function(){
+		o_c.open_tray(ptor)
+		o_c.open_lectures(ptor)
+	})
+	//-----
+	it('should open the first module', function(){
+		student.open_module_number(ptor, 1)
+	})
+	it('should open the first lecture', function(){
+		o_c.open_item(ptor, 1)
+	})
+	it('should seek to 40%', function(){
+		youtube.seek(ptor, 40)
+	})
+	it('should ask a private question', function(){
+		discussions.ask_private_question(ptor, 'private question by second student')
+	})
+	it('should seek to 45%', function(){
+		youtube.seek(ptor, 45)
+	})
+	it('should add a confused', function(){
+		press_confused_btn(ptor)
+	})
+	it('should move to the second lecture', function(){
+		o_c.open_item(ptor, 2)
+	})
+	it('should seek to 25%', function(){
+		youtube.seek(ptor, 25)
+	})
+	it('should add a confused', function(){
+		press_confused_btn(ptor)
+	})
+	it('should seek to 40%', function(){
+		youtube.seek(ptor, 40)
+	})
+	it('should add a public question', function(){
+		discussions.ask_public_question(ptor, 'public question by second student')
+	})
+	it('should logout', function(){
+		o_c.home(ptor)
+		o_c.open_tray(ptor)
+		o_c.logout(ptor, o_c.feedback)
+	})
+});
+
+xdescribe('First Student', function(){
+	it('should sign in', function(){
+		o_c.sign_in(ptor, params.mail, params.password, o_c.feedback)
+	})
+	it('should open the first course', function(){
+		o_c.open_course_whole(ptor)
+	})
+	it('should go to the courseware page', function(){
+		o_c.open_tray(ptor)
+		o_c.open_lectures(ptor)
+	})
+	it('should open the first module', function(){
+		student.open_module_number(ptor, 1)
+	})
+	it('should open the second lecture', function(){
+		o_c.open_item(ptor, 2)
+	})
+	it('should upvote the question asked by the Second Student', function(){
+		discussions.vote_up(ptor, 1)
+	})
+	it('should add a comment on the question asked by the Second Student', function(){
+		discussions.comment(ptor, 1, 'comment by first student')
+	})
+	it('should go to the third lecture', function(){
+		o_c.open_item(ptor, 3)
+	})
+	it('should seek to 25%', function(){
+		youtube.seek(ptor, 25)
+	})
+	it('should add a really confused', function(){
+		press_confused_btn(ptor)
+		ptor.sleep(1000)
+		press_confused_btn(ptor)
+	})
+	it('should logout', function(){
+		o_c.home(ptor)
+		o_c.open_tray(ptor)
+		o_c.logout(ptor, o_c.feedback)
+	})
+})
+
+describe('Teacher', function(){
+	
 })
 
 /////////////////////////////////////////////////////////
@@ -1411,6 +1510,16 @@ function waitForOnTop(ptor){
 		return ptor.findElement(protractor.By.className('ontop')).then(function(ontop){
 			return ontop.isDisplayed().then(function(displayed){
 				return displayed
+			})
+		})
+	})
+}
+
+function press_confused_btn(ptor){
+	locator.by_classname(ptor, 'confusedDiv').then(function(btn){
+		btn.click().then(function(){
+			locator.by_classname(ptor, 'alert-success').then(function(thanks){
+				expect(thanks.isDisplayed()).toBe(true)
 			})
 		})
 	})

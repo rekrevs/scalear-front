@@ -101,37 +101,37 @@ angular.module('scalearAngularApp')
 
 	    	});
 	}
-	$rootScope.$watch('iscollapsed', function(){
-		console.log($rootScope.iscollapsed);
-		if($rootScope.iscollapsed == true){
-			$scope.hide_all = false;
-			// $scope.middle_top = 243;
-			$interval(function() {
-	            // for(var value = 243; value >99; value--){
-	            	$scope.middle_top = 100;
-	            // }
-	        }, 90, 1);
-		}
-		else if($rootScope.iscollapsed == false){
-			// $scope.middle_top = 100;
-			$interval(function() {
-	            // for(var value = 100; value <244; value++){
-	            	$scope.middle_top = 243;
-	            // }
-	        }, 90, 1);
-		}
-	})
-	$rootScope.$on('settingsOpened', function(event, which){
-		console.log('received '+which)
-		if(which == 0){
-			$scope.hide_all = true;
-		}
-		else{
-			$scope.middle_top = 243;
-			$scope.hide_all = false;
-		}
+	// $rootScope.$watch('iscollapsed', function(){
+	// 	console.log($rootScope.iscollapsed);
+	// 	if($rootScope.iscollapsed == true){
+	// 		$scope.hide_all = false;
+	// 		// $scope.middle_top = 243;
+	// 		$interval(function() {
+	//             // for(var value = 243; value >99; value--){
+	//             	$scope.middle_top = 100;
+	//             // }
+	//         }, 90, 1);
+	// 	}
+	// 	else if($rootScope.iscollapsed == false){
+	// 		// $scope.middle_top = 100;
+	// 		$interval(function() {
+	//             // for(var value = 100; value <244; value++){
+	//             	$scope.middle_top = 243;
+	//             // }
+	//         }, 90, 1);
+	// 	}
+	// })
+	// $rootScope.$on('settingsOpened', function(event, which){
+	// 	console.log('received '+which)
+	// 	if(which == 0){
+	// 		$scope.hide_all = true;
+	// 	}
+	// 	else{
+	// 		$scope.middle_top = 243;
+	// 		$scope.hide_all = false;
+	// 	}
 
-	})
+	// })
 	
 	// $scope.moduleMenuSetup = function(){
 	// 	if($scope.course.groups.length > 10){

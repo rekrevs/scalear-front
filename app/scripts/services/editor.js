@@ -73,7 +73,7 @@ angular.module('scalearAngularApp').factory('editor',
             //console.log(data);
             return data;
         };
-        service.create = function (url, player,lecture_id,cumulative_duration,lecture_name,note, parentId) {
+        service.create = function (url, player,lecture_id,cumulative_duration,lecture_name,note, seek, parentId) {
             service.lecture_id=lecture_id
             service.lecture_name=lecture_name;
             service.cumulative_duration=cumulative_duration;
@@ -97,6 +97,7 @@ angular.module('scalearAngularApp').factory('editor',
             vs["videos"][url]={}
             service.url=url;
             service.video=player;
+            service.seek = seek()
             //service.loading = true;
             //doc.dirty = true;
             //$rootScope.$broadcast('loading');
@@ -107,9 +108,12 @@ angular.module('scalearAngularApp').factory('editor',
                 service.updateEditor(vs);
 
             if(service.doc.info.content.trim()==='')
-                service.insert(0,"Start of Lecture "+service.lecture_name, "note")
-                service.doc.initWatcher();
-                service.initTimeout();
+                // service.insert(0,"f", "note")
+            service.doc.initWatcher();
+            service.initTimeout();
+            editor.on("focus", function (e) {
+               service.seek(0, service.lecture_id)
+            });
 
 //            Lecture.loadNote({
 //                course_id: $stateParams.course_id,
@@ -309,15 +313,17 @@ angular.module('scalearAngularApp').factory('editor',
                         //});
                     }
                     else {
-                        if(service.lecture_id == $stateParams.lecture_id){ //if current lecture
-                            //$scope.lecture_player.controls.seek_and_pause(time)
-                            service.video.controls.seek(timestamp);
-                        }
-                        else{
-
-                            $state.go("course.courseware.module.lecture", {"lecture_id":service.lecture_id, "time":timestamp});
-                            return;
-                        }
+                        service.seek(timestamp, service.lecture_id)
+                        // if(service.lecture_id == $stateParams.lecture_id){ //if current lecture
+                        //     //$scope.lecture_player.controls.seek_and_pause(time)
+                        //     service.video.controls.seek(timestamp);
+                        // }
+                        // else{
+                        //     // console.log("switch to different")
+                        //     // $state.go("course.courseware.module.lecture", {"lecture_id":service.lecture_id, "tab":1});
+                        //     $state.go("course.courseware.module.lecture", {lecture_id:lecture_id}, {reload:false, notify:false});  
+                        //     return;
+                        // }
                     }
 
                     editor.gotoLine(line+1);
@@ -334,11 +340,12 @@ angular.module('scalearAngularApp').factory('editor',
 //            console.log(line);
 
             var position=-1;
-            if(!note)
-                var text= "YOU ASKED: "+question.toUpperCase();
-            else{
-                var text= question.toUpperCase();
-            }
+             var text= question.toUpperCase();
+            // if(!note)
+            //     var text= question.toUpperCase();
+            // else{
+            //     var text= question.toUpperCase();
+            // }
             //var time= 50;
             var currentSync= service.getCurrentSync();
             var element=-1;
@@ -361,9 +368,10 @@ angular.module('scalearAngularApp').factory('editor',
                 // if currentSync not empty, want to push time one row ta7t
 
                 //console.log("element is "+parseInt(element+1))
+                // console.log("hello")
                 session.insert({row:(element+1), column:0}, "\n");
                 service.doc.info.videos[service.doc.info.currentVideo][parseInt(element+1)]={time:parseInt(time)};
-                session.insert({row:(parseInt(element+1)), column:0}, text + "\n");
+                session.insert({row:(parseInt(element+1)), column:0},  " \n");
                 currentSyncLine = service.getCurrentSync(parseInt(element+1));
                 currentSyncLine.time=time;
                 //console.log(currentSyncLine);
@@ -372,6 +380,8 @@ angular.module('scalearAngularApp').factory('editor',
             }else{
 
                 // here need to move everything down one row first.
+                console.log("world")
+
                 position=parseInt(position);
                 session.insert({row:(position), column:0}, "\n");
                 service.doc.info.videos[service.doc.info.currentVideo][position]={time:parseInt(time)};

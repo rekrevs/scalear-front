@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder well widescreen" style="padding:0" ng-transclude></div>' //style="border:4px solid" 
+			template: '<div class="videoborder well widescreen" style="padding:0; border:none" ng-transclude></div>' //style="border:4px solid" 
 		};
 	})
 	.directive('youtube',['$rootScope','$log','$timeout','$window','popcornApiProxy',function($rootScope,$log,$timeout,$window, popcornApiProxy){
@@ -131,6 +131,8 @@ angular.module('scalearAngularApp')
                         player.destroy();
                     element.find('iframe').remove();
                     element.find('video').remove()
+                    if(scope.slow_off)
+                    	scope.slow_off()
                 }
                 player_controls.play=function(){
 					player.play();
@@ -292,6 +294,15 @@ angular.module('scalearAngularApp')
 							scope.$apply();
 						}
 					})
+
+					player.on('canplay',function(){
+						parent.focus()
+						if(player_events.canPlay){
+							player_events.canPlay();
+							scope.$apply();
+						}
+					})
+
 					player.on('canplaythrough',function(){
 						parent.focus()
 						if(player_events.canPlay){
@@ -331,7 +342,7 @@ angular.module('scalearAngularApp')
 							scope.$apply();
 						}
 					})
-					scope.$on('slow',function(ev,data){
+					scope.slow_off =scope.$on('slow',function(ev,data){
 						parent.focus()
 						if(player_events.onSlow){
 							player_events.onSlow(data);
@@ -344,9 +355,9 @@ angular.module('scalearAngularApp')
 					player_controls.refreshVideo()
 				})
 
-                // var is_final_url= function(url){
-                //     return url.match(/^http:\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
-                // }
+                var isFinalUrl= function(url){
+                    return url.match(/^(http|https):\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
+                }
 
                 var isYoutube= function(url){
             		var video_url = url || scope.url || ""
@@ -374,14 +385,13 @@ angular.module('scalearAngularApp')
 
 				scope.$watch('url', function(){
 
-                    if(scope.url && (isYoutube(scope.url) || isVimeo(scope.url) || isMP4(scope.url)) )
+                    if(scope.url && ((isYoutube(scope.url) &&  isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url)) )
                     {
 
                       //  var matches = is_final_url(scope.url)
-                        // if(matches)
-                         //{
+                        // if((isYoutube(scope.url) &&]){
                             player_controls.refreshVideo();
-                         //}
+                         // }
 
                     }
 				})
@@ -471,8 +481,10 @@ angular.module('scalearAngularApp')
                 // angular.extend($scope.ontop_layer, {"z-index":0})
 				
 				$timeout(function(){$scope.$emit("updatePosition")})
-				$scope.unregister_back_event()	
-				$scope.unregister_state_event()	
+				if($scope.unregister_back_event)
+					$scope.unregister_back_event()
+				if($scope.unregister_state_event)	
+					$scope.unregister_state_event()	
 			}
 
 			$scope.resize.big = function()

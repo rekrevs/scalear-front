@@ -30,16 +30,16 @@ angular.module('scalearAngularApp')
 
     $scope.grade_options= [{
       value: 0, // not set
-      text: $translate('course.under_review')
+      text: $translate('courses.under_review')
     }, {
       value: 1, // wrong
-      text: $translate('course.wrong')
+      text: $translate('courses.wrong')
     }, {
       value: 2,
-      text: $translate('course.partial')
+      text: $translate('courses.partial')
     }, {
       value: 3,
-      text: $translate('course.good')
+      text: $translate('courses.good')
     }]
 
   	var init= function(){
@@ -153,8 +153,13 @@ angular.module('scalearAngularApp')
   		var divs = angular.element('.ul_item')
 		  angular.element(divs[$scope.highlight_index]).removeClass('highlight')	
 		  angular.element('li.highlight').removeClass('highlight')	
-		  $scope.highlight_index = (($scope.highlight_index+x)%divs.length);
-    	$scope.highlight_index = $scope.highlight_index < 0 ? divs.length+$scope.highlight_index : $scope.highlight_index;	    
+      $scope.highlight_index = $scope.highlight_index+x
+      if($scope.highlight_index < 0)
+        $scope.highlight_index = 0
+      else if ($scope.highlight_index >divs.length-1)
+        $scope.highlight_index = divs.length-1
+		  // $scope.highlight_index = (($scope.highlight_index+x)%divs.length);
+    	// $scope.highlight_index = $scope.highlight_index < 0 ? divs.length+$scope.highlight_index : $scope.highlight_index;	    
 	    var ul = angular.element(divs[$scope.highlight_index])
 	    ul.addClass("highlight")	
 	    
@@ -187,8 +192,13 @@ angular.module('scalearAngularApp')
   			var inner_li = inner_ul.find('li').not('.no_highlight')
   			if(angular.element('li.highlight').length)
   				angular.element('li.highlight').removeClass('highlight')
-  			$scope.inner_highlight_index = (($scope.inner_highlight_index+x)%inner_li.length);
-    		$scope.inner_highlight_index = $scope.inner_highlight_index < 0 ? inner_li.length+$scope.inner_highlight_index : $scope.inner_highlight_index;	    
+        $scope.inner_highlight_index = $scope.inner_highlight_index+x
+        if($scope.inner_highlight_index < 0)
+          $scope.inner_highlight_index = 0
+        else if ($scope.inner_highlight_index >inner_li.length-1)
+          $scope.inner_highlight_index = inner_li.length-1
+  			// $scope.inner_highlight_index = (($scope.inner_highlight_index+x)%inner_li.length);
+    		// $scope.inner_highlight_index = $scope.inner_highlight_index < 0 ? inner_li.length+$scope.inner_highlight_index : $scope.inner_highlight_index;	    
 	    
   			angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
 
@@ -633,12 +643,13 @@ angular.module('scalearAngularApp')
       }
     },{"disable_in_input" : true});
 
-    shortcut.add("h",function(){
+    shortcut.add("m",function(){
+      console.log($scope.selected_item)
       if($scope.selected_item){        
-  			if ($scope.selected_item.type == "question"){
+  			if ($scope.selected_item.type == "discussion"){
   				var q_ind = $scope.inner_highlight_index <0 ? 0 : $scope.inner_highlight_index
-  				$scope.selected_item.data[q_ind][2] = !$scope.selected_item.data[q_ind][2]
-  				$scope.updateHideQuestion($scope.selected_item.data[q_ind][1],!$scope.selected_item.data[q_ind][2])
+  				$scope.selected_item.data[q_ind].post.hide = !$scope.selected_item.data[q_ind].post.hide
+  				$scope.updateHideDiscussion($scope.selected_item.data[q_ind].post.id,$scope.selected_item.data[q_ind].post.hide)
   			}
   			else if ($scope.selected_item.type == "charts"){
           if($scope.selected_item.data.hide != null){
@@ -681,7 +692,7 @@ angular.module('scalearAngularApp')
     shortcut.remove("Right");
     shortcut.remove("Left");
     shortcut.remove("Space");
-    shortcut.remove("h");
+    shortcut.remove("m");
   }
 
 	$scope.getKeys = function( obj ) {

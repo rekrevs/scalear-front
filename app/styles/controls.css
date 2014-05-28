@@ -94,7 +94,7 @@
 
 .qualityDiv{
     position: relative;
-    z-index: 1000;
+    /*z-index: 1000;*/
     top: -30px;
     left: 95%;
     width: 30px;

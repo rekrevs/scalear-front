@@ -45,7 +45,7 @@
 								
 								<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" style="list-style-position:inside; padding:8px 15px">
 									<show_box ng-show="module_item.quiz_type == 'survey'"  ng-init="answer.hide = !answer.hide" value="answer.hide" action="updateHideResponse(quiz.meta.id,answer.id,answer.hide)" style="float:right"/>
-								    <span ng-show="!quiz.filtered_user || quiz.filtered_user==''" style="float:right">|
+								    <span ng-show="!quiz.filtered_user || quiz.filtered_user==''" tooltip="{{'groups.see_related'|translate}}" tooltip-placement="right" style="float:right">|
 								    	<button_link title="{{'lectures.related' | translate}}" action="quiz.filtered_user = answer.user_id;quiz.filter_strict=true" class="btn-mini" style="margin:0 5px" />
 									</span>
 									<span ng-show="module_item.quiz_type == 'survey'" style="float:right">| 

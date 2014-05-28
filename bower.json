@@ -10,7 +10,7 @@
     "angular-resource": ">1.0.7",
     "angular-cookies": ">1.0.7",
     "angular-sanitize": "1.2.0",
-    "angular-ui-router": "0.2.8-bowratic-tedium",
+    "angular-ui-router": "0.2.10",
     "angular-ui-sortable": "~0.12.x",
     "angular-dragdrop": "~1.0.4",
     "angular-bindonce": "~0.2.1",

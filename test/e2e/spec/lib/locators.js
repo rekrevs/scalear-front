@@ -55,3 +55,7 @@ exports.s_by_id = function(ptor, idt){
 exports.s_by_xpath = function(ptor, path){
   return ptor.findElements(protractor.By.xpath(path))
 }
+
+exports.s_by_tag = function(ptor, tag){
+	return ptor.findElements(protractor.By.tagName(tag))
+}

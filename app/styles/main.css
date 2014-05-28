@@ -572,19 +572,19 @@ a:hover{
     height: 100px;
     margin: 0px 10px 0px 10px;
 }
-#info, #calendar, #lectures, #progress, #students, #inclass, #content, #announcements{
+#student_info, #teacher_info, #student_calendar, #teacher_calendar, #lectures, #progress, #students, #inclass, #content, #announcements{
   padding-top: 3px;
   padding: 0px 10px 0px 10px;
   color: white;
 }
-#info > a, #calendar > a, #lectures > a, #content > a, #students > a, #announcements > a, #inclass > a, #progress > a{
+#student_info > a, #teacher_info > a, #student_calendar > a, #teacher_calendar > a, #lectures > a, #content > a, #students > a, #announcements > a, #inclass > a, #progress > a{
   color: white;
 }
 
-#info > a > div:before{
+#student_info > a > div:before, #teacher_info > a > div:before{
   content: url("../images/course-info-icon.png");
 }
-#calendar > a > div:before{
+#student_calendar > a > div:before, #teacher_calendar > a > div:before{
   content: url("../images/calendar-icon.png");
 }
 #announcements > a > div:before{
@@ -606,7 +606,7 @@ a:hover{
 #lectures > a > div:before{
   content: url("../images/lectures-icon.png");
 }
-#info > a > div:hover, #calendar > a > div:hover, #lectures > a > div:hover, #announcements > a > div:hover, #students > a > div:hover, #progress > a > div:hover, #inclass > a > div:hover, #content > a > div:hover,.current{
+#student_info > a > div:hover, #teacher_info > a > div:hover, #student_calendar > a > div:hover, #teacher_calendar > a > div:hover, #lectures > a > div:hover, #announcements > a > div:hover, #students > a > div:hover, #progress > a > div:hover, #inclass > a > div:hover, #content > a > div:hover,.current{
   border-bottom: 4px solid rgb(0, 162, 86);
   margin-bottom: -4px;
 }

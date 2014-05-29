@@ -1,12 +1,12 @@
 .main-login-container{
 	height: 100%;
 	width: 100%;
-	background-color: transparent;
+	background-color: #2b2b2b;
 	position: fixed;
 	top: 0px;
 	left: 0px;
 	text-align: center;
-	color: #2d2d2d;
+	color: white;
 }
 footer{
 	/*background-color: transparent;*/
@@ -15,13 +15,13 @@ footer{
 	/*color: white;*/
 }
 a{
-	color: rgb(0, 162, 86);
+	color: orange;
 }
 a:hover{
-	color: darkgreen;
+	color: darkorange;
 }
 .modern-input{
-	border: 2px rgb(0, 162, 86) solid !important;
+	border: 2px orange solid;
 }
 .middle-ribbon{
 	position: fixed;
@@ -63,18 +63,7 @@ input[type="password"]:focus{
   outline: thin dotted \9;
   /* IE6-9 */
 
-  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px color: rgba(0, 162, 86, 0.6);;
-     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px color: rgba(0, 162, 86, 0.6);;
-          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px color: rgba(0, 162, 86, 0.6);;
-}
-#alternate-profile-image{
-	display: none;
-}
-@media (max-width: 1024px){
-	.profile-image-td{
-		display: none;
-	}
-	#alternate-profile-image{
-		display: table-row;
-	}
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 167, 29, 0.6);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 167, 29, 0.6);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(255, 167, 29, 0.6);
 }

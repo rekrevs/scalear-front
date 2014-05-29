@@ -196,8 +196,10 @@
     /*@media only screen and (max-width : 955px) {*/
     @media only screen and (max-width : 1024px) {
       .video_class, .widescreen{
-        width: 95vw;
-        height: 53.4375vw;
+        /*width: 95vw;
+        height: 53.4375vw;*/
+        width: 71vw;
+        height: 39.9375vw;
       }
       #student-accordion{
         width: 100%;

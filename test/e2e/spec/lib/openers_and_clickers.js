@@ -245,6 +245,17 @@ exports.open_course_editor = function(ptor){
         });
     })
 }
+//====================================================
+//               opens progress page
+//====================================================
+exports.open_progress_page = function(ptor){
+    ptor.findElement(protractor.By.id("progress")).then(function(btn){
+        btn.click();
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('progress');
+        });
+    })
+}
 
 //====================================================
 //          open enrolled students page
@@ -570,4 +581,10 @@ exports.open_statistics = function(ptor){
     ptor.getCurrentUrl().then(function(url) {
         expect(url).toContain('statistics');
     });
+}
+
+exports.select_progress_item = function(item_number){
+    ptor.findElements(protractor.By.tagName('progress-item')).then(function(bullets){
+        bullets[item_number-1].click();
+    })
 }

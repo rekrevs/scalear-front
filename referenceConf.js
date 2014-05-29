@@ -62,7 +62,9 @@ exports.config = {
         //'test/e2e/spec/create-course-check-info.spec.js'
         //'test/e2e/spec/sign_up_teacher.spec.js'
         //'test/e2e/spec/signup.spec.js',
-        //'test/e2e/spec/progress-page.spec.js',
+        // 'test/e2e/spec/init-progress-data.spec.js',
+        // 'test/e2e/spec/progress-main.spec.js',
+        'test/e2e/spec/progress-module.spec.js',
         // 'test/e2e/spec/calendar.spec.js',
         // 'test/e2e/spec/confused.spec.js',
         // 'test/e2e/spec/course_info_student.spec.js',

@@ -30,6 +30,13 @@ exports.open_course_whole = function(ptor){
     })
 }
 
+
+exports.open_course_by_no = function(ptor, no){
+    locator.s_by_classname(ptor, 'whole-box').then(function(course){
+        course[no-1].click();
+    })
+}
+
 //====================================================
 //                      sign in
 //====================================================
@@ -49,6 +56,20 @@ exports.sign_in = function(ptor, email, password, feedback){
         });
     });
 }
+
+exports.sign_in_admin = function(ptor){
+    ptor.get(params.frontend);
+    ptor.sleep(1000);
+    ptor.findElement(protractor.By.id('user_email')).then(function(email_field) {
+        email_field.sendKeys("admin@scalable-learning.com");
+    });
+    ptor.findElement(protractor.By.id('user_passowrd')).then(function(password_field) {
+        password_field.sendKeys("admin_account_password");
+    });
+
+    ptor.findElement(protractor.By.xpath('//*[@id="main"]/div/div[1]/div/div/center/div[3]/form/div/table/tbody/tr/td[3]/table/tbody/tr[3]/td/input')).click();
+}
+
 
 //====================================================
 //                      sign up
@@ -543,25 +564,27 @@ exports.open_notifications = function(ptor, no){
    })
 }
 
+exports.open_notification_shared = function(ptor, no){
+   locator.by_id(ptor, 'notification_btn').click();
+   locator.s_by_id(ptor, 'id').then(function(inv){
+    inv[no-1].findElement(protractor.By.className('btn-success')).click().then(function(){
+        o_c.feedback(ptor, 'ccepted shared Item')
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('show_shared');
+        });
+    })
+   })
+}
 
-
-
+exports.open_statistics = function(ptor){
+   locator.by_classname(ptor, 'statistics-button').click();
+    ptor.getCurrentUrl().then(function(url) {
+        expect(url).toContain('statistics');
+    });
+}
 
 exports.select_progress_item = function(item_number){
     ptor.findElements(protractor.By.tagName('progress-item')).then(function(bullets){
         bullets[item_number-1].click();
     })
 }
-
-
-
-
-
-
-
-
-
-
-
-
-

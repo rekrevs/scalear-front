@@ -135,7 +135,7 @@ angular.module('scalearAngularApp')
 			
 		}
 	}
- }).directive('coursewareItem',['CourseEditor','$state', function(CourseEditor, $state){
+ }).directive('coursewareItem',['CourseEditor','$state', '$anchorScroll', '$location', function(CourseEditor, $state, $anchorScroll, $location){
 	return {
 		 scope: {
 		 	circlesize: '@',

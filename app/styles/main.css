@@ -864,6 +864,12 @@ iframe{
 .dropdown-menu > li > a:hover{
   background-image: linear-gradient(to bottom, #008a49, #008a49);
 }
+.varticaldeletecontainer{
+  min-width: initial !important;
+}
+.varticaldeletebutton{
+  display: block;
+}
 @media (max-width: 700px) {
   .state{
     display: none;

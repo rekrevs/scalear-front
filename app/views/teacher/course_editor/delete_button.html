@@ -1,8 +1,8 @@
 <span>
-	 <div class="fade in" ng-show="displayDeletePopup" style="padding: 3px;margin-bottom: 5px;text-align:center;min-width: 65px;">
+	 <div class="fade in" ng-show="displayDeletePopup" ng-class="{varticaldeletecontainer: vertical}" style="padding: 3px;margin-bottom: 5px;text-align:center;min-width: 65px;">
 	        <span class="form-controls-alert" style="margin:auto" >
-	            <a ng-if="displayDeletePopup" class="btn btn-danger btn-mini" style="background-image: initial;" ng-click="action({event:$event});showDeletePopup(false)"><div class="icon-ok"></div></a>
-	            <a ng-if="displayDeletePopup" class="btn btn-mini" style="background-image: initial;" ng-click="showDeletePopup(false)"><div class="icon-remove"></div></a>
+	            <a ng-if="displayDeletePopup" ng-class="{varticaldeletebutton: vertical}" class="btn btn-danger btn-mini" style="background-image: initial;" ng-click="action({event:$event});showDeletePopup(false)"><div class="icon-ok"></div></a>
+	            <a ng-if="displayDeletePopup" ng-class="{varticaldeletebutton: vertical}" class="btn btn-mini" style="background-image: initial;" ng-click="showDeletePopup(false)"><div class="icon-remove"></div></a>
 	        </span>
 	</div>
 

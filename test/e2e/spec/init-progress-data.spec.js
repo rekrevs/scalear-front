@@ -1143,21 +1143,8 @@ xdescribe('Second Student', function(){
 		student.submit_normal_quiz(ptor);
 		// ptor.sleep(10000)
 	})
-})
 
-xdescribe('Second Student', function() {
-	//-----
-	it('should sign in', function(){
-		o_c.sign_in(ptor, params.student_mail_2, params.password, o_c.feedback)
-	})
-	it('should open the first course', function(){
-		o_c.open_course_whole(ptor)
-	})
-	it('should go to the courseware page', function(){
-		o_c.open_tray(ptor)
-		o_c.open_lectures(ptor)
-	})
-	//-----
+	//add discussions data and confused
 	it('should open the first module', function(){
 		student.open_module_number(ptor, 1)
 	})
@@ -1237,10 +1224,6 @@ xdescribe('First Student', function(){
 		o_c.open_tray(ptor)
 		o_c.logout(ptor, o_c.feedback)
 	})
-})
-
-describe('Teacher', function(){
-	
 })
 
 /////////////////////////////////////////////////////////

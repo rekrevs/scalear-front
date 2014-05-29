@@ -131,8 +131,8 @@ exports.delete_empty_module = function(ptor, mo_no, feedback){
 exports.add_lecture = function(ptor, mo_no, feedback){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
-			btns_frame.findElement(protractor.By.className('btn-success')).then(function(add_button){
-				add_button.click().then(function(){
+			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
+				add_button[1].click().then(function(){
 					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
 						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
 							options[0].click().then(function(){
@@ -153,8 +153,8 @@ exports.add_lecture = function(ptor, mo_no, feedback){
 exports.add_quiz = function(ptor, mo_no, feedback){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
-			btns_frame.findElement(protractor.By.className('btn-success')).then(function(add_button){
-				add_button.click().then(function(){
+			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
+				add_button[1].click().then(function(){
 					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
 						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
 							options[1].click().then(function(){
@@ -175,8 +175,8 @@ exports.add_quiz = function(ptor, mo_no, feedback){
 exports.add_survey = function(ptor, mo_no, feedback){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
-			btns_frame.findElement(protractor.By.className('btn-success')).then(function(add_button){
-				add_button.click().then(function(){
+			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
+				add_button[1].click().then(function(){
 					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
 						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
 							options[2].click().then(function(){
@@ -201,7 +201,7 @@ exports.delete_item_by_number = function(ptor, mo_no, item_no, feedback){
             	del_btn.click().then(function(){
             		items[item_no-1].findElement(protractor.By.className('btn-danger')).then(function(conf_btn){
             			conf_btn.click().then(function(){
-            				feedback(ptor, 'Lecture was successfully deleted');
+            				feedback(ptor, 'was successfully deleted');
             			})
             		})
             	})

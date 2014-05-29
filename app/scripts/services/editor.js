@@ -112,7 +112,7 @@ angular.module('scalearAngularApp').factory('editor',
             service.doc.initWatcher();
             service.initTimeout();
             editor.on("focus", function (e) {
-               service.seek(0, service.lecture_id)
+               service.seek(-1, service.lecture_id)
             });
 
 //            Lecture.loadNote({

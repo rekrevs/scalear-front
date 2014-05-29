@@ -15,21 +15,21 @@ angular.module('scalearAngularApp')
 //     $scope.youtube_video=false;
    // $scope.lecture = {}
 //     $scope.lecture.aspect_ratio = ""
-    $scope.lecture_player = {}
-    $scope.lecture_player.events = {}
+    // $scope.lecture_player = {}
+    // $scope.lecture_player.events = {}
     $scope.tabs=[true,false,false]
 //     $scope.quiz_mode = false
-    $scope.studentAnswers = {}
-    $scope.explanation = {}
-//     $scope.wHeight = 0;
-//     $scope.wWidth = 0;
-//     $scope.pHeight = 0;
-//     $scope.pWidth = 0;
-//     $scope.show_notification = false;
-    $scope.fullscreen = false
+//     $scope.studentAnswers = {}
+//     $scope.explanation = {}
+// //     $scope.wHeight = 0;
+// //     $scope.wWidth = 0;
+// //     $scope.pHeight = 0;
+// //     $scope.pWidth = 0;
+// //     $scope.show_notification = false;
+//     $scope.fullscreen = false
     
-    $scope.current_time = 0
-    $scope.total_duration = 0
+//     $scope.current_time = 0
+//     $scope.total_duration = 0
 //     $scope.ipad = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)
     $scope.editors={}
 //     $scope.progressEvents=[]
@@ -94,6 +94,16 @@ angular.module('scalearAngularApp')
         return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
     }
 
+    var initVariables=function(){
+        console.log("ionit variavle")
+        $scope.studentAnswers = {}
+        $scope.explanation = {}
+        $scope.fullscreen = false
+        $scope.current_time = 0
+        $scope.total_duration = 0
+        $scope.elapsed_width =0
+    }
+
      var init = function() {
 //         var factor = 16/9
 //         var win = angular.element($window)
@@ -115,7 +125,7 @@ angular.module('scalearAngularApp')
 //         })
 //         $scope.loading_video = true;
             
-
+            initVariables()
             $scope.video_class = 'video_class'
             $scope.play_pause_class = 'play'
             $scope.container_style={float: 'left'}
@@ -242,6 +252,7 @@ angular.module('scalearAngularApp')
             Page.setTitle('head.lectures',': '+$scope.lecture.name); 
             $scope.$parent.$parent.current_item= id
             $scope.slow = false
+            initVariables()
             clearQuiz()
             
             Lecture.getLectureStudent(
@@ -525,7 +536,8 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.canPlay=function(){
         if($scope.go_to_time){
             console.log("can play")
-            $scope.seek($scope.go_to_time)
+            if($scope.go_to_time >=0)
+                $scope.seek_and_pause($scope.go_to_time)
             $scope.go_to_time = null
         }
     }    

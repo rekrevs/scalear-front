@@ -5,6 +5,7 @@
 <!-- endbuild -->
 
 <div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2; min-width: 600px;">
+    <div><modules-selector modules="modules" current="selected_module" action="showModule" /></div>
     <div class="module-title">
 		<big>
 			<b>
@@ -12,7 +13,6 @@
 			</b>
 		</big>
 	</div>
-    <modules-selector modules="modules" current="selected_module" action="showModule" /> 
 
 </div>
 <div class="row">

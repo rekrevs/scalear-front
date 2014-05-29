@@ -57,6 +57,20 @@ exports.sign_in = function(ptor, email, password, feedback){
     });
 }
 
+exports.sign_in_admin = function(ptor){
+    ptor.get(params.frontend);
+    ptor.sleep(1000);
+    ptor.findElement(protractor.By.id('user_email')).then(function(email_field) {
+        email_field.sendKeys("admin@scalable-learning.com");
+    });
+    ptor.findElement(protractor.By.id('user_passowrd')).then(function(password_field) {
+        password_field.sendKeys("admin_account_password");
+    });
+
+    ptor.findElement(protractor.By.xpath('//*[@id="main"]/div/div[1]/div/div/center/div[3]/form/div/table/tbody/tr/td[3]/table/tbody/tr[3]/td/input')).click();
+}
+
+
 //====================================================
 //                      sign up
 //====================================================
@@ -549,4 +563,11 @@ exports.open_notification_shared = function(ptor, no){
         });
     })
    })
+}
+
+exports.open_statistics = function(ptor){
+   locator.by_classname(ptor, 'statistics-button').click();
+    ptor.getCurrentUrl().then(function(url) {
+        expect(url).toContain('statistics');
+    });
 }

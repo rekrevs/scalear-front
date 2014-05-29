@@ -18,10 +18,7 @@
 							<h3 style="position:relative;top:30px;font-weight:300;font-size:16px" translate>lectures.try_reload</h3>
 							<loading size='small' show='true' style="position:relative;top:30px;" />
 						</div>
-						<div ng-show="end_buttons" style="position: absolute;left: 15%;">
-							<button type="button" ng-click="replay()" class="btn btn-success" style="position:relative;top:330px;height:70px;width:180px;" translate>lectures.replay</button>
-					    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position:relative;top:330px;height:70px;width:180px;"><span translate>next</span> >> </button>
-						</div>
+						
 					</center>
 					<quiz ng-style="quiz_layer" ng-show="quiz_mode" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0'>
 						 <div ng-if="selected_quiz.quiz_type == 'html'" >
@@ -32,6 +29,10 @@
 						 </div>
 					</quiz>
 					<youtube ng-show="!slow && lecture.url && video_ready" ng-class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1' />			
+			    	<div ng-show="end_buttons">
+						<button type="button" ng-click="replay()" class="btn btn-success" style="position:relative;height:70px;width:180px;left:30%" translate>lectures.replay</button>
+				    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position:relative;height:70px;width:180px;;left:30%"><span translate>next</span> >> </button>
+					</div>
 			    	<progress-bar ng-show="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
 			    		<controls id="controls-bar" class="controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="toggleQuestionBlock()">
 						</controls>

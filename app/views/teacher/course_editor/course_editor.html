@@ -10,7 +10,7 @@
 		background-color: white;
 	}
 </style>
-<div class="span3" id="tree">
+<div class="span3" id="tree" style="z-index:100">
 	<div class="menu-toggler" ng-click="toggleTree()" tooltip-placement="right" tooltip="{{'head.content' | translate}}" tooltip-append-to-body="true">
 		<span class="tree-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
 	</div>
@@ -34,7 +34,7 @@
 	            	</ul>
 		            <center class="item-buttons">
 		            	<hr style="width: 95%; margin: 0 auto; border-top: none !important; border-bottom: 1px solid darkgray !important; margin-bottom: 10px;" />
-		            	<button ng-show="module.items.length" title="{{'Preview'|translate}}" ng-click="impersonate(module.id)" class="btn btn-success btn-mini" style="float: right; margin-right:10px; margin-bottom: 10px;" tooltip-placement="top" tooltip="Preview as student" tooltip-append-to-body="true">{{'Preview'|translate}}</button>
+		            	<button ng-show="module.items.length" title="{{'Preview'|translate}}" ng-click="impersonate(module.id)" class="btn btn-success btn-mini" style="float: right; margin-right:10px; margin-bottom: 10px;" tooltip-placement="top" tooltip="Preview as student" tooltip-append-to-body="true" ng-disabled="disable_preview">{{'Preview'|translate}}</button>
 		            	<add-module-items index="$index" lecture="addLecture" quiz="addQuiz"></add-module-items>
 		            	<!-- <button_link title="{{'courses.add_lecture'|translate}}" class="btn btn-mini btn-success adding" style="background-image: initial;" action="addLecture($index)" ></button_link>
 		            	<button_link title="{{'lectures.add_quiz'|translate}}"   class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'quiz')"></button_link>
@@ -54,8 +54,8 @@
 	<div id="middle"  ui-view="middle">
 	</div>
 <span ng-show="not_module">
-	<span class="span3" id="details" ui-view="details"></span>
-	<span class="span3" id="details-resp" ng-class="{displayed: details_toggled}">
+	<span class="span3" id="details" ui-view="details" ></span>
+	<span class="span3" id="details-resp" ng-class="{displayed: details_toggled}" style="z-index:100">
 		<div class="details-toggler" ng-class="{putright: details_toggled}" ng-click="toggleDetails()" tooltip-placement="left" tooltip="{{'lectures.details' | translate}}" tooltip-append-to-body="true">
 			<span class="details-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
 		</div>

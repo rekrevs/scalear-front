@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
     .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc','Page', '$filter','Forum','OnlineQuiz','util',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc,Page, $filter,Forum, OnlineQuiz, util) {
 
     console.log("lect mid ctlr")
-
+    $window.scrollTo(0, 0);
     $scope.video_layer = {}
     $scope.quiz_layer = {}
     $scope.lecture_player={}
@@ -148,8 +148,10 @@ angular.module('scalearAngularApp')
                 if($scope.timeline){
 
                     goToLecture($stateParams.lecture_id) 
-                    $scope.scrollIntoView('outline')
-                    $scope.scrollIntoView('notes')
+                    $timeout(function(){
+                        $scope.scrollIntoView('notes')
+                        $scope.scrollIntoView('outline')
+                    },100)
                     // $location.hash('outline_'+$scope.lecture.id);
                     // $anchorScroll();
                     // if($state.params.tab){
@@ -373,11 +375,11 @@ angular.module('scalearAngularApp')
 
     $scope.scrollIntoView=function(tab){
         if($scope.lecture && !isiPad()){
-            // $timeout(function(){angular.element('#'+tab+'_'+$scope.lecture.id)[0].scrollIntoView()})
-            $timeout(function(){
-                $location.hash(tab+'_'+$scope.lecture.id);
-                $anchorScroll();    
-            }, 1000)
+            $timeout(function(){angular.element('#'+tab+'_'+$scope.lecture.id)[0].scrollIntoView()})
+            // $timeout(function(){
+            //     $location.hash(tab+'_'+$scope.lecture.id);
+            //     $anchorScroll();    
+            // }, 1000)
         }
     }
 

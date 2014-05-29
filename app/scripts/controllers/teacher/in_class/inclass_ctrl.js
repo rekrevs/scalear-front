@@ -14,6 +14,8 @@ angular.module('scalearAngularApp')
 			$scope.modules.forEach(function(module, index){
 				$scope.modules_obj[module.id] = module;
 			})
+			if($state.params.module_id)
+				$scope.selected_module = $scope.modules_obj[$state.params.module_id]
 			// $scope.initSelector();
 			$log.debug($stateParams)
 		}, 

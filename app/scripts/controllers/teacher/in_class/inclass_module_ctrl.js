@@ -58,6 +58,7 @@ angular.module('scalearAngularApp')
         $scope.fullscreen = false 
         $scope.selected_item=null
         $scope.selected_timeline_item=null
+        $scope.quality_set ='blue_font'
     }
 
     var init = function(){
@@ -625,7 +626,7 @@ angular.module('scalearAngularApp')
     // $scope.question_block={
     //   'overflowY':'visible'
     // }
-    adjustTextSize()
+    $scope.adjustTextSize()
     $scope.blurButtons()
   }
 

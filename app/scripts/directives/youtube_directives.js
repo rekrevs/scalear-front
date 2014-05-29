@@ -188,24 +188,23 @@ angular.module('scalearAngularApp')
 						time = 0
 					if(time > player_controls.getDuration())
 						time = player_controls.getDuration()
-					if(player_controls.readyState() != 4){
-						scope.readyState = player_controls.readyState
-						var unwatch = scope.$watch('readyState()',function(){
-							console.log("ready state=")
-							console.log(scope.readyState())
-							if (scope.readyState() == 4){
-								console.log("chanign time hopefully")
-								player.currentTime(time);
-								unwatch()
-								scope.readyState = null
-							}
-						})
-						// console.log(player_controls.readyState())
-						// player.on("loadeddata", 
-						// function(){
-						// 	console.log("seek after load")
-						// 	player.currentTime(time);
-						// });
+					if(player_controls.readyState() == 0 && !(scope.start_time || scope.start_time == 0)){
+						// scope.readyState = player_controls.readyState
+						// var unwatch = scope.$watch('readyState()',function(){
+						// 	console.log("ready state=")
+						// 	console.log(scope.readyState())
+						// 	if (scope.readyState() == 4){
+						// 		console.log("chanign time hopefully")
+						// 		player.currentTime(time);
+						// 		unwatch()
+						// 		scope.readyState = null
+						// 	}
+						// })
+						player.on("loadeddata", 
+						function(){
+							console.log("seek after load")
+							player.currentTime(time);
+						});
 					}
 					else{
 						console.log("seeking now")
@@ -411,12 +410,10 @@ angular.module('scalearAngularApp')
 				scope.$watch('player', function(){
 					if(scope.player){
 						scope.player.controls=player_controls
+						if(scope.player.events)
+                        	player_events = scope.player.events
+                        scope.$emit("player ready")
 					}
-					if(scope.player && scope.player.events)
-                    {
-                        player_events = scope.player.events
-                    }
-
 				})
 
 

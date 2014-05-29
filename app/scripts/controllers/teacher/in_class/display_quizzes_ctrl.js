@@ -4,9 +4,22 @@ angular.module('scalearAngularApp')
   .controller('displayQuizzesCtrl', ['$scope','$stateParams','Module', '$translate', '$controller', '$log', '$window','$timeout', function ($scope,$stateParams, Module, $translate, $controller, $log, $window, $timeout) {
     
     $window.scrollTo(0, 0);
-    $timeout(function(){    	
-        $scope.nextQuiz()
-    },100)
+    $scope.$on('player ready',function(){
+    	console.log("player ready")
+    	console.log($scope.inclass_player)
+    	$scope.nextQuiz()
+    })
+    // $scope.$watch("inclass_player",function(){
+    // 	console.log("incla player changing")
+    // 	console.log($scope.inclass_player)
+    // 	if($scope.inclass_player.controls){
+    // 		console.log("defined")
+    // 		$scope.nextQuiz()
+    // 	}
+    // })
+    // $timeout(function(){    	
+    //     $scope.nextQuiz()
+    // },100)
     // $scope.nextQuiz()
  //  	var init = function(){
  //  		Module.displayQuizzes(

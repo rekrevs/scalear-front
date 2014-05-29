@@ -167,3 +167,16 @@ exports.submit_normal_quiz = function(ptor){
   })
 }
 
+//=====================================
+//          press confused btn
+//=====================================
+
+exports.press_confused_btn = function(ptor){
+  locator.by_classname(ptor, 'confusedDiv').then(function(btn){
+    btn.click().then(function(){
+      locator.by_repeater(ptor, 'element in timeline').then(function(elements){
+        expect(elements.length).toEqual(1);
+      })
+    })
+  })
+}

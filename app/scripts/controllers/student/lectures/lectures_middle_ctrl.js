@@ -124,11 +124,16 @@ angular.module('scalearAngularApp')
                 if($scope.timeline){
                     $scope.lecture = $scope.timeline['lecture'][$stateParams.lecture_id].meta
                     Page.setTitle('head.lectures',': '+$scope.lecture.name); 
+                    // $timeout(function(){
+                    //     console.log('scrolling')
+                    //     console.log(angular.element('#outline_'+$scope.lecture.id)[0])
+                    //     angular.element('#outline_'+$scope.lecture.id)[0].scrollIntoView()
+                    // },200)
                     $timeout(function(){
-                        angular.element('#outline_'+$scope.lecture.id)[0].scrollIntoView()
-                    },200)
-                    // $location.hash('outline_'+$scope.lecture.id);
-                    // $anchorScroll();    
+                        $location.hash('outline_'+$scope.lecture.id);
+                        $anchorScroll();    
+                    }, 1000)
+                    
                 }
             })
 

@@ -16,11 +16,11 @@
                     <td>
                     </td>
                     <td>
-                        <div ng-show="$parent.current_lang=='en'" ng-cloak>
-                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
-                        </div>
                         <div ng-show="$parent.current_lang=='sv'" ng-cloak>
-                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                        <div ng-show="$parent.current_lang=='en'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
                         </div>
                     </td>
                 </tr>
@@ -34,7 +34,7 @@
                 <input placeholder="*{{'email' | translate}}" type="email" ng-model="user.email" id="user_email" class="string email optional modern-input" style="border: 2px orange solid; width: 230px;" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" autocomplete="off"/>
                 <br/><span class="errormessage" ng-show="user.errors.email">{{user.errors.email.join()}}</span>
                 <br />
-                <input type="submit" ng-disabled="sending || !user.email" value="{{'password_edit.send_reset' | translate}}" class="btn btn-warning" style="background-image: initial;"/>
+                <input type="submit" ng-disabled="sending || !user.email" value="{{'password_edit.send_reset' | translate}}" class="btn btn-success" style="background-image: initial;"/>
                 <br />
                 <br />
             </form>

@@ -16,15 +16,16 @@ angular.module('scalearAngularApp')
 	    templateUrl:'/views/teacher/progress/progress_matrix.html', 
 	    link:function(scope){
 	    	if(scope.popover){
-	    		var template="<div style='font-size:14px'>"+
+	    		var template="<div style='font-size:14px; color: black;'>"+
     							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:4px'><span translate>courses.original</span>"+
     							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:4px' value='Finished on Time' translate><span translate>courses.on_time</span>"+
     							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:4px' value='Not Finished' translate><span translate>courses.not_done</span>"+
     						"</div>"
 		    	scope.popover_options={
 		        	content: template,
-		        	title: "<span translate>courses.change_status</span>",
-		        	html:true
+		        	title: "<span style='color: black;' translate>courses.change_status</span>",
+		        	html:true,
+		        	placement: 'left'
 		        }
 		    }
             scope.getImg = function(module)

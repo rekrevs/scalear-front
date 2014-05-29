@@ -398,7 +398,7 @@ angular.module('scalearAngularApp')
         console.log(lecture_id)
         $scope.closeReviewNotify()
         if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
-            if($scope.go_to_time >=0)
+            if(time >=0)
                 $scope.lecture_player.controls.seek(time)
         }
         else{

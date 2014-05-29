@@ -132,16 +132,26 @@ angular.module('scalearAngularApp')
 //                if ($scope.lecture.url)
 //                    getYoutubeDetails();
 //            }
+
+            var isFinalUrl= function(url){
+                return url.match(/^(http|https):\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
+            }
+
             $scope.updateLectureUrl= function(){                
                 $scope.lecture.aspect_ratio = "widescreen"
                 if($scope.lecture.url){
                     var type = isYoutube($scope.lecture.url)
-                    if(type){                       
-                        getYoutubeDetails(type[1]);
-                        $scope.lecture.url = "http://www.youtube.com/watch?v="+type[1];
+                    if(type){  
+                        if(!isFinalUrl($scope.lecture.url))
+                            $scope.lecture.url = "http://www.youtube.com/watch?v="+type[1];                                         
+                        getYoutubeDetails(type[1]).then(function(){
+                            $scope.updateLecture();
+                        })
                     }
+                    else
+                        $scope.updateLecture();
                 }
-                $scope.updateLecture();
+                
             }
 
             $scope.updateSlidesUrl = function() {
@@ -175,18 +185,16 @@ angular.module('scalearAngularApp')
             }
 
             var getYoutubeDetails= function(id){
-                //var id=$scope.lecture.url.split("v=")[1]
-
-                if(id){
-                    //id= id.split("&")[0]
-                    var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
-                    $http.jsonp(url)
+                var d = $q.defer()
+                var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
+                $http.jsonp(url)
                     .success(function (data) {
                         $log.debug(data.entry)
                         $scope.video.title = data.entry.title.$t;
                         $scope.video.author = data.entry.author[0].name.$t;
-                        var updateFlag = $scope.lecture.duration
         		        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
+                        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";  
+                        d.resolve()                   
                         //if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio == undefined)
                         //	$scope.lecture.detected_aspect_ratio="smallscreen";
                         //else
@@ -194,18 +202,8 @@ angular.module('scalearAngularApp')
 
                         //	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
                         //$scope.lecture.aspect_ratio = "widescreen"
-                        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";
-
-                        //why did i need this?
-                        //if(id != current_url){
-                        //	$scope.updateLecture()
-                        //		$log.debug("update flag is true")
-                        //}
                     });
-                }
-                else
-                $scope.lecture.aspect_ratio = "widescreen"
-
+                return d.promise;
             }
 
             // var getVideoDetails = function(){

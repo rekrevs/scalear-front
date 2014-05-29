@@ -402,6 +402,8 @@ angular.module('scalearAngularApp')
 
                       //  var matches = is_final_url(scope.url)
                         // if((isYoutube(scope.url) &&]){
+                        	console.log("FINAL URl")
+                        	console.log(scope.url)
                             player_controls.refreshVideo();
                          // }
 

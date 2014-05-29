@@ -21,13 +21,13 @@
                         </div>
                     </div>
                 </td>
-                <td style="max-width: 30px; width: 30px;">
+                <td style="max-width: 30px; min-width: 30px;">
                     <div class="flag">
                         <div style="display: inline-block;">
                             <img ng-show="item.data.user_id != current_user.id && item.data.user_flag==1" ng-src='{{item.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="unflagPost(item)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.unflag_post' | translate}}" tooltip-placement="right" tooltip-append-to-body="true"/>
 
                             <img ng-show="item.data.user_id != current_user.id && item.data.user_flag!=1" ng-src='{{item.data.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagPost(item)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.flag_post' | translate}}" tooltip-placement="right" tooltip-append-to-body="true"/>
-                            <delete_button ng-show="item.data.user_id == current_user.id" size="small" action="deleteDiscussion(item)" ></delete_button>
+                            <delete_button ng-show="item.data.user_id == current_user.id" size="small" action="deleteDiscussion(item)" vertical="true"></delete_button>
                         </div>
                         <div class="like-button">
                             <voting-button ng-show="item.data.user_id != current_user.id" discussion="item" up="upvotePost" down="downvotePost"></voting-button>
@@ -55,10 +55,10 @@
                                 </div>
                             </div>
                         </td>
-                        <td style="max-width: 30px; width: 30px;">
+                        <td style="max-width: 30px; min-width: 30px; width:30px;">
                             <div class="flag">
                                 <div style="display: inline-block;">
-                                    <delete_button ng-show="comment_data.comment.user_id == current_user.id" size="small" action="deleteComment(comment_data,item.data.id)"></delete_button>
+                                    <delete_button ng-show="comment_data.comment.user_id == current_user.id" size="small" action="deleteComment(comment_data,item.data.id)" vertical="true"></delete_button>
                                     <img ng-show="comment_data.comment.user_id != current_user.id && comment_data.comment.user_flag==1" ng-src='{{comment_data.comment.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="unflagComment(comment_data.comment)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.unflag_post' | translate}}"/>
 
                                     <img ng-show="comment_data.comment.user_id != current_user.id && comment_data.comment.user_flag!=1" ng-src='{{comment_data.comment.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(comment_data.comment)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.flag_post' | translate}}"/>

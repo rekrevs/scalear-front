@@ -146,6 +146,7 @@ angular.module('scalearAngularApp')
             
             $scope.$watch('timeline',function(){
                 if($scope.timeline){
+
                     goToLecture($stateParams.lecture_id) 
                     $scope.scrollIntoView('outline')
                     $scope.scrollIntoView('notes')
@@ -156,6 +157,7 @@ angular.module('scalearAngularApp')
                     //     console.log($state.params.tab)
                     //     switchToTab($state.params.tab)
                     // }
+
                 }
             })
 
@@ -370,8 +372,13 @@ angular.module('scalearAngularApp')
 //     }
 
     $scope.scrollIntoView=function(tab){
-        if($scope.lecture && !isiPad())
-            $timeout(function(){angular.element('#'+tab+'_'+$scope.lecture.id)[0].scrollIntoView()})
+        if($scope.lecture && !isiPad()){
+            // $timeout(function(){angular.element('#'+tab+'_'+$scope.lecture.id)[0].scrollIntoView()})
+            $timeout(function(){
+                $location.hash(tab+'_'+$scope.lecture.id);
+                $anchorScroll();    
+            }, 1000)
+        }
     }
 
     $scope.nextItem=function(){

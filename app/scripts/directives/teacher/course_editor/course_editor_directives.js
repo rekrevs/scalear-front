@@ -162,7 +162,8 @@ angular.module('scalearAngularApp')
                 size: "@",
                 action: "&",
                 hideConfirm: '=',
-                placement: '='
+                placement: '=',
+                vertical: '='
             },
             replace: true,
             restrict: 'E',

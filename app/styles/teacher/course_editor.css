@@ -69,7 +69,7 @@ ul.accordion ul {
 .accordion-heading{
 	background-color: white;
 }
-.accordion-heading:hover{
+.accordion-heading:hover, .moduleopen{
 	background-color: lightgrey;
 }
 .accordion-heading .accordion-toggle{padding:0;}

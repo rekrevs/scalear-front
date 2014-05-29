@@ -20,7 +20,7 @@
 	</overlay>
 	<ul ui-sortable="moduleSortableOptions" ng-model='modules' id="acc1" class="accordion">
 		<li ng-repeat="module in modules" class='module accordion-group' ng-init="module.open = false">
-			<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)"/>
+			<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" ng-class="{moduleopen: currentmodule == module.id}" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)"/>
 			<div class="outer" collapse="!(module.open || module.id==open_id)">
 				<overlay ng-show="item_overlay" style="height:100%">
 					<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
@@ -28,7 +28,7 @@
 	        	<div class="inner" id="modules">
 	        		<small><ul ng-show="module.items.length == 0"><li style="color: white; text-align: left; margin-left: 10px; opacity: 0.6;" >{{'groups.empty' | translate}}...</li></ul></small>
           			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
-	            		<li class="last-child item" ng-repeat="item in module.items" >
+	            		<li class="last-child item" ng-repeat="item in module.items" ng-class="{inneritemopen: currentitem == item.id}" >
              				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="copy(item)" paste="paste(module.id, $parent.$index)" share="openShareModal(item.id,item.class_name)" ></item>
 	            		</li>
 	            	</ul>

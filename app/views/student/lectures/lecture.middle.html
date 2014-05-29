@@ -36,8 +36,8 @@
 			    		<controls id="controls-bar" class="controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="toggleQuestionBlock()">
 						</controls>
 						<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
-						<notification message="notification_message" submessage="notification_submessage" /> <!-- ng-style="notify_position"  --> <!-- ng-show='show_notification || review_inclass' -->
-						<review_inclass ng-show="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" /> <!-- ng-style="notify_position"  --> <!-- ng-show='show_notification || review_inclass' -->
+						<notification message="notification_message" submessage="notification_submessage" /> 
+						<review_inclass ng-show="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" /> 
 			    	</progress-bar>
 			    </video_container>
 			</form>
@@ -74,9 +74,6 @@
 		            </li>
 		        </tab>
 		    </tabset>
-		    <!-- <div id="smaller-lecture-details">
-
-		    </div> -->
 	    </div>
     </div>
 </div>

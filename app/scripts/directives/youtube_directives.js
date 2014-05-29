@@ -54,6 +54,7 @@ angular.module('scalearAngularApp')
                 scope.start_time
 
                 scope.$on('$destroy', function() {
+                	
                     scope.kill_popcorn();
                     scope.player={};
                     scope.id="";
@@ -72,7 +73,7 @@ angular.module('scalearAngularApp')
 
                     if(!scope.controls || scope.controls==undefined)
                         scope.controls=0;   
-                    if(!scope.autoplay || scope.autoplay==undefined)
+                    if(!scope.autoplay || scope.autoplay==undefined || isiPad())
                         scope.autoplay=0;                     
 
                     //var matches = 
@@ -111,6 +112,17 @@ angular.module('scalearAngularApp')
 					},15000)
 				}
 
+			   	var isiPad=function(){
+			        var i = 0,
+			            iOS = false,
+			            iDevice = ['iPad', 'iPhone', 'iPod','Android'];
+
+			        for ( ; i < iDevice.length ; i++ ) {
+			            if( navigator.platform === iDevice[i] ){ iOS = true; break; }
+			        }
+			        return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
+			    }
+
 				var formatYoutubeURL=function(url,vq,time){
 					var short_url = isShortYoutube(url)
 					var base_url, query
@@ -127,8 +139,9 @@ angular.module('scalearAngularApp')
 				}
 
                 scope.kill_popcorn = function(){
-                    if(player)
-                        player.destroy();
+                    if(player){
+                         Popcorn.destroy( player );
+                     }
                     element.find('iframe').remove();
                     element.find('video').remove()
                     if(scope.slow_off)

@@ -32,7 +32,7 @@
 	                        		<tr>
 	                        			<td style="color: black; text-align: center; padding-left: 10px;" ng-repeat="teacher in teachers" style="text-align: center;">
 				                            <small>
-				                            	<a ui-sref="profile({ user_id: teacher.user.id })">
+				                            	<a>
 				                                	<profile-image email="teacher.user.email" imagesize="40" background="white"> </profile-image> {{teacher.user.name}} ({{teacher.role.name}})
 				                            	</a>
 				                        	</small>

@@ -97,7 +97,7 @@ angular.module('scalearAngularApp')
     scope:{
       action:"&"
     },
-  	template: '<div style="position: relative; display: inline-block; z-index: 1000; top: -56px; left: 47%; width: 0px;">'+
+  	template: '<div style="position: absolute;z-index: 1000;top: 9px;left: 47%;width: 0px;">'+
                 '<input type="button" class="btn btn-success" value="{{\'youtube.check_answer\'|translate}}" ng-click="action()" style="height: 25px; vertical-align: -webkit-baseline-middle; padding: 0px 10px; background-image: initial;" />'+
               '</div>',
   	link: function(scope, element, attrs) {}

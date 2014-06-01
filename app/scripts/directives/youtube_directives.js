@@ -480,7 +480,7 @@ angular.module('scalearAngularApp')
 					"height":"",//(500*1.0/factor)+ 'px',
 					"margin-left": "0px",
 					"margin-top": "0px",
-					"z-index":2
+					"z-index":1
 				}
 
 				if($scope.container)
@@ -547,7 +547,7 @@ angular.module('scalearAngularApp')
 						"height":video_height,
 						"margin-top": margin_top+"px",
 						"margin-left":"0px",
-						"z-index": 1531
+						// "z-index": 1531
 					}		
 				}
 				else{		
@@ -565,7 +565,7 @@ angular.module('scalearAngularApp')
 						"height":video_height,
 						"margin-left": margin_left+"px",
 						"margin-top":"0px",
-						"z-index": 1531
+						// "z-index": 1531
 					}		
 				 }
 

@@ -531,8 +531,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onEnd= function() {
-        // if($scope.fullscreen)
-        //     $scope.resize.small()
         $scope.end_buttons = true
     }
 
@@ -550,7 +548,7 @@ angular.module('scalearAngularApp')
                 $scope.seek_and_pause($scope.go_to_time)
             $scope.go_to_time = null
         }
-    }    
+    } 
 
     var showNotification=function(msg, sub_msg){
         $scope.notification_message=$translate(msg);

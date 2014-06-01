@@ -449,7 +449,7 @@
     function onSeeking() {
       // a seek in youtube fires a paused event.
       // we don't want to listen for this, so this state catches the event.
-      catchRoguePauseEvent = true;
+      // catchRoguePauseEvent = true;
       impl.seeking = true;
       self.dispatchEvent( "seeking" );
     }

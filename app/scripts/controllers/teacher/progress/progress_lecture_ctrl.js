@@ -329,12 +329,15 @@ angular.module('scalearAngularApp')
     }
 
   $scope.sendComment=function(discussion){
-     Forum.createComment(
-      {comment: {content: discussion.temp_response, post_id:discussion.id, lecture_id:discussion.lecture_id}}, 
-      function(response){
-        discussion.comments.push(response)
-      },function(){}
-    )
+    if(discussion.temp_response && discussion.temp_response.length && discussion.temp_response.trim()!=""){
+       Forum.createComment(
+        {comment: {content: discussion.temp_response, post_id:discussion.id, lecture_id:discussion.lecture_id}}, 
+        function(response){
+          discussion.comments.push(response)
+          discussion.temp_response = null
+        },function(){}
+      )
+    }
   }
 
   $scope.sendFeedback=function(question){

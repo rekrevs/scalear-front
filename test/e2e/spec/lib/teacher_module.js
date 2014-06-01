@@ -657,15 +657,22 @@ exports.rename_module = function(ptor, name){
 	})
 }
 
+//====================================================
+//              mark to be inclass
+//====================================================
 
+exports.check_inclass = function(ptor, no){
+    locator.by_repeater(ptor, "item in timeline['lecture'][lec.meta.id].items").then(function(items){
+        items[no-1].findElement(protractor.By.tagName('input')).then(function(ins){
+        	ins.click();
+        })
+    })
+}
 
-
-
-
-
-
-
-
-
-
-
+exports.check_inclass_in_item = function(ptor, no, item_no){
+    locator.by_repeater(ptor, "item in timeline['lecture'][lec.meta.id].items").then(function(items){
+        items[no-1].findElements(protractor.By.tagName('input')).then(function(ins){
+            ins[item_no-1].click();
+        })
+    })
+}

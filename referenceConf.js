@@ -44,7 +44,8 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/statistics.spec.js'
+        'test/e2e/spec/inclass.spec.js',
+        //'test/e2e/spec/statistics.spec.js'
         //'test/e2e/spec/discussion.spec.js'
         //'test/e2e/spec/courses_outline.spec.js'
        //'test/e2e/spec/teacher-managment.spec.js'
@@ -64,7 +65,7 @@ exports.config = {
         //'test/e2e/spec/signup.spec.js',
         // 'test/e2e/spec/init-progress-data.spec.js',
         // 'test/e2e/spec/progress-main.spec.js',
-        'test/e2e/spec/progress-module.spec.js',
+        //'test/e2e/spec/progress-module.spec.js',
         // 'test/e2e/spec/calendar.spec.js',
         // 'test/e2e/spec/confused.spec.js',
         // 'test/e2e/spec/course_info_student.spec.js',
@@ -122,8 +123,8 @@ exports.config = {
     // This can be changed via the command line as:
     //   --params.login.user 'Joe'
     params: {
-        //frontend: 'http://0.0.0.0:9000/#',
-        frontend: 'http://staging.scalable-learning.com/#',
+        frontend: 'http://0.0.0.0:9000/#',
+        //frontend: 'http://staging.scalable-learning.com/#',
         // teacher_mail: 'teacher3@sharklasers.com',
         // mail: 'studenttest2@sharklasers.com',
         teacher_mail: 'teacher2@sharklasers.com',

@@ -17,49 +17,49 @@ var biog = "kalam keteeer yege 140 char bs teacher";
 var webs = "www.website.com";
 var password = 'password';
 
-xdescribe("1", function(){
+describe("1", function(){
 
     it('should add a student then check for statistics', function(){
         add_student_then_check(ptor);
     }, 300000);
 })
     
-xdescribe("2", function(){
+describe("2", function(){
 
     it('should add a teacher then check for statistics', function(){
         add_teacher_then_check(ptor);
     }, 300000);
 })
   
-xdescribe("3", function(){
+describe("3", function(){
 
     it('should add a course then check for statistics', function(){
         add_course_then_check(ptor);
     }, 300000);
 })
 
-xdescribe("4", function(){
+describe("4", function(){
 
     it('should add a quiz then check for statistics', function(){
         add_quiz_then_check(ptor);
     }, 300000);
 })
 
-xdescribe("5", function(){
+describe("5", function(){
 
     it('should add a survey then check for statistics', function(){
         add_survey_then_check(ptor);
     }, 300000);
 })
 
-xdescribe("6", function(){
+describe("6", function(){
 
     it('should add a lecture then check for statistics', function(){
         add_lecture_then_check(ptor);
     }, 300000);
 })
 
-xdescribe("7", function(){
+describe("7", function(){
 
     it('should add a question then check for statistics', function(){
         add_question_then_check(ptor);
@@ -97,6 +97,10 @@ function add_student_then_check(ptor){
         students_no = parseInt(students_no)+1;
         expect(t[8].getText()).toEqual(String(students_no));
     })
+    
+    o_c.home_teacher(ptor);
+    o_c.open_tray(ptor);
+    o_c.logout(ptor, o_c.feedback);
 }
 
 function add_teacher_then_check(ptor){
@@ -123,6 +127,10 @@ function add_teacher_then_check(ptor){
         teachers_no = parseInt(teachers_no)+1;
         expect(t[9].getText()).toEqual(String(teachers_no));
     })
+    
+    o_c.home_teacher(ptor);
+    o_c.open_tray(ptor);
+    o_c.logout(ptor, o_c.feedback);
 }
 
 
@@ -168,6 +176,10 @@ function add_course_then_check(ptor){
         courses_no = parseInt(courses_no)-1;
         expect(t[10].getText()).toEqual(String(courses_no));
     })
+    
+    o_c.home_teacher(ptor);
+    o_c.open_tray(ptor);
+    o_c.logout(ptor, o_c.feedback);
 }
 
 
@@ -223,6 +235,10 @@ function add_quiz_then_check(ptor){
         quizzes_no = parseInt(quizzes_no)-1;
         expect(t[11].getText()).toEqual(String(quizzes_no));
     })
+    
+    o_c.home_teacher(ptor);
+    o_c.open_tray(ptor);
+    o_c.logout(ptor, o_c.feedback);
 }
 
 
@@ -278,6 +294,10 @@ function add_survey_then_check(ptor){
         surveys_no = parseInt(surveys_no)-1;
         expect(t[12].getText()).toEqual(String(surveys_no));
     })
+    
+    o_c.home_teacher(ptor);
+    o_c.open_tray(ptor);
+    o_c.logout(ptor, o_c.feedback);
 }
 
 function add_lecture_then_check(ptor){
@@ -332,6 +352,10 @@ function add_lecture_then_check(ptor){
         lecs_no = parseInt(lecs_no)-1;
         expect(t[13].getText()).toEqual(String(lecs_no));
     })
+    
+    o_c.home_teacher(ptor);
+    o_c.open_tray(ptor);
+    o_c.logout(ptor, o_c.feedback);
 }
 
 function add_question_then_check(ptor){
@@ -394,6 +418,10 @@ function add_question_then_check(ptor){
         question_no = parseInt(question_no)-1;
         expect(t[14].getText()).toEqual(String(question_no));
     })
+    
+    o_c.home_teacher(ptor);
+    o_c.open_tray(ptor);
+    o_c.logout(ptor, o_c.feedback);
 }
 
 function add_confused_then_check(ptor){
@@ -456,4 +484,8 @@ function add_confused_then_check(ptor){
         con_no = parseInt(con_no)-1;
         expect(t[15].getText()).toEqual(String(con_no));
     })
+    
+    o_c.home_teacher(ptor);
+    o_c.open_tray(ptor);
+    o_c.logout(ptor, o_c.feedback);
 }

@@ -72,6 +72,7 @@ exports.check_timeline_item_number = function(ptor, total_item_no){
 exports.open_module_number = function(ptor, mo_no){
     locator.by_classname(ptor, 'modules-collapser').then(function(mod_btn){
         mod_btn.click();
+        ptor.sleep(500)
         expect(locator.by_classname(ptor,"multicol").isDisplayed()).toEqual(true);
         locator.by_repeater(ptor,'module in modules').then(function(modules){
           modules[mo_no-1].findElement(protractor.By.tagName('ul')).then(function(module){

@@ -6,7 +6,7 @@
 	 <p ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message| date:'h:mma'}}</b></p>
 </div>
 <div  ng-hide="!lecture">
-	<h3 style="margin-bottom: 10px; line-height: 10px;" ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name"></h3>
+	<h3 style="margin-bottom: 10px; padding-top: 8px; line-height: 10px;" ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name"></h3>
 	<div style="width: 100%; height: 100%;">
 		<div id="main-video-container" ng-style="container_style">
 			<form name="answer_form" novalidate style="margin:0" >
@@ -42,7 +42,7 @@
 			    </video_container>
 			</form>
 		</div>
-		<div id="student-accordion" style="height: 35vw;">
+		<div id="student-accordion" style="height: 32vw; margin-top: 50px;">
 			<question_block ng-show="show_question_block" time="current_question_time" action="saveQuestion" />
 		    <tabset style="width:100%;">
 		        <tab id="video_events" active="tabs[0]" heading="{{'lectures.video_events' | translate}}" select="scrollIntoView('outline')" style="cursor: pointer; text-align: center;" >

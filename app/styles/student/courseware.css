@@ -358,7 +358,6 @@ input[type="checkbox"], input[type="radio"] {
   /*right: 20px;*/
   /*left: 20px;*/
   padding-top: 0px;
-  overflow-y: auto;
   text-align: left;
   margin-top: 40px;
   position: relative;
@@ -404,4 +403,23 @@ input[type="checkbox"], input[type="radio"] {
   background-color: black;
   height: 2px;
 }
+.timeline-filters{
+  position: fixed;
+  z-index: 1;
+  margin-top: -20px;
+  width: 40% !important;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  background: white;
+}
 
+@media (min-width: 1025px){
+  .nav-tabs{
+    margin-top: -70px;
+    background: white;
+    z-index: 1;
+    position: fixed;
+    width: 40%;
+  }
+
+}

@@ -284,6 +284,11 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	font-size: 13px;
 	font-weight: 200;
 }
+.empty-middle{
+	float: left;
+	position: fixed;
+	left: 300px;
+}
 @media (max-width: 1240px) {
 	#middle{
 		width: 70%;
@@ -337,5 +342,10 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	.widescreen{
 		width: 89vw !important;
 		height: 50.0625vw !important;
+	}
+	.empty-middle{
+		float: left;
+		position: relative;
+		left: 10px;
 	}
 }

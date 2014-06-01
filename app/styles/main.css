@@ -870,6 +870,17 @@ iframe{
 .varticaldeletebutton{
   display: block;
 }
+.top-ribbon{
+  width: 100%;
+  background: rgba(34, 34, 34, 0.8);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  position: absolute;
+  top: 37px;
+  z-index:1031;
+  text-align: center;
+}
 @media (max-width: 700px) {
   .state{
     display: none;

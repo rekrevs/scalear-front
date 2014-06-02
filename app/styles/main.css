@@ -268,11 +268,8 @@ select.ng-invalid{ border:1px solid red; }
 textarea.ng-invalid{ border:1px solid red; }
 
 .widescreen{
-  /*width: 568px;*/
-  /*height:321px;*/
   width: 47.2vw;
   height: 26.55vw;
-  /*height: 316px;*/
 }
 
 .smallscreen{
@@ -826,7 +823,7 @@ iframe{
     padding: 10px;
     border-right: 1px solid lightgrey;
     overflow-y: auto;
-    height: 100%;
+    height: 80%;
 }
 .course-right{
     margin-left: 25%;
@@ -869,6 +866,17 @@ iframe{
 }
 .varticaldeletebutton{
   display: block;
+}
+.top-ribbon{
+  width: 100%;
+  background: rgba(34, 34, 34, 0.8);
+  color: white;
+  font-size: 15px;
+  font-weight: bold;
+  position: fixed;
+  top: 37px;
+  z-index:1031;
+  text-align: center;
 }
 @media (max-width: 700px) {
   .state{

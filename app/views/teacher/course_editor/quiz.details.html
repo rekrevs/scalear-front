@@ -31,7 +31,10 @@
 					<br />
 					<div ng-hide="!quiz.appearance_time_module">
 						<!-- <span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
-						<input type='text' ng-model='quiz.appearance_time' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
+						<!-- <input type='text' ng-model='quiz.appearance_time' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
+						<div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; padding: 5px; margin-top: 10px; font-size: 12px; height: 15px; padding-top: 3px; color: #555; text-align: center;">
+								{{quiz.appearance_time | amDateFormat:'MMM Do YYYY, h:mm a'}}
+						</div>
 					</div>
   					<p ng-hide="quiz.appearance_time_module">
   						<span translate>lectures.set_date</span>:<br>
@@ -49,7 +52,10 @@
 					<div ng-show="quiz.due_date_enabled">
 						<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br />
 						<div ng-hide="!quiz.due_date_module">
-							<input type='text' ng-model='quiz.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" />
+							<!-- <input type='text' ng-model='quiz.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
+							<div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; padding: 5px; margin-top: 10px; font-size: 12px; height: 15px; padding-top: 3px; color: #555; text-align: center;">
+								{{quiz.due_date | amDateFormat:'MMM Do YYYY, h:mm a'}}
+							</div>
 						</div>
 	  					<p ng-hide="quiz.due_date_module">
 	  						<span translate>lectures.set_date</span>:<br>

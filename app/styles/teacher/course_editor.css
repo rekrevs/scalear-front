@@ -294,8 +294,8 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 		width: 70%;
 	}
 	.widescreen{
-		width: 68vw !important;
-		height: 38.25vw !important;
+		width: 68vw;
+		height: 38.25vw;
 	}
 	#details{
 		display: none;
@@ -340,8 +340,8 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 		width: 95%;
 	}
 	.widescreen{
-		width: 89vw !important;
-		height: 50.0625vw !important;
+		width: 89vw;
+		height: 50.0625vw;
 	}
 	.empty-middle{
 		float: left;

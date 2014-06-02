@@ -268,11 +268,8 @@ select.ng-invalid{ border:1px solid red; }
 textarea.ng-invalid{ border:1px solid red; }
 
 .widescreen{
-  /*width: 568px;*/
-  /*height:321px;*/
   width: 47.2vw;
   height: 26.55vw;
-  /*height: 316px;*/
 }
 
 .smallscreen{

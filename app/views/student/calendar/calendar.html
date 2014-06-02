@@ -13,13 +13,13 @@
 <div ng-show="eventSources.length" style="padding-bottom: 30px;">
 	<div style="width: 100%;">
 		<!-- <tr> -->
-			<div class="announcements-container">
+			<div class="announcements-container" ng-show="announcements">
 					<h3 translate="head.announcements"></h3>
 					<div>
 						<student-announcement-item announcement="announcement" ng-repeat="announcement in announcements">
 				    </div>
 	     	</div>
-	     	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container">
+	     	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}">
 		    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="width:100%; min-width: 420px; min-height: 420px;"></div>
 		        <div class="alert" style="text-align: left;">
 		         	<div style="font-size:14px;font-weight: bold;margin-bottom:5px" translate="events.deadline_msg"></div>

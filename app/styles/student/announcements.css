@@ -44,6 +44,11 @@
     float:left;
     font-size:12px;
 }
+.widecalendar{
+    width: 95%;
+    clear: both;
+    left: 0px;
+}
 
 @media only screen and (max-width : 1024px) {
     .announcements-container{

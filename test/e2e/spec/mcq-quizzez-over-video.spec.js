@@ -382,7 +382,7 @@ function check_mcq_no(ptor, no){
 }
 
 function expect_quiz(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
+    locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
 		expect(check_answer_btn.isDisplayed()).toEqual(true);
 	})
 }

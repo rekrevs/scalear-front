@@ -31,7 +31,7 @@ describe("1", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_drag_text_quiz(ptor, o_c.feedback);
 		make_drag_text_questions(ptor, o_c.feedback);
 	})
@@ -41,7 +41,7 @@ describe("1", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 		check_drag_no(ptor, 3);
 	})
@@ -87,7 +87,7 @@ describe("2", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_drag_text_quiz(ptor, o_c.feedback);
 		make_drag_text_questions(ptor, o_c.feedback);
 	})
@@ -97,7 +97,7 @@ describe("2", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 		check_drag_no(ptor, 3);
 	})
@@ -155,7 +155,7 @@ describe("3", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_drag_text_quiz(ptor, o_c.feedback);
 		make_drag_text_questions(ptor, o_c.feedback);
 	})
@@ -165,7 +165,7 @@ describe("3", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 		check_drag_no(ptor, 3);
 	})
@@ -260,15 +260,15 @@ function make_drag_text_questions(ptor, feedback){
 }
 
 function expect_quiz(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
+    locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
 		expect(check_answer_btn.isDisplayed()).toEqual(true);
 	})
 }
 
 function answer(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(answer_btn){
-		answer_btn.click();
-	})
+    locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(answer_btn){
+        answer_btn.click();
+    })
 }
 
 function check_answer_correct(ptor){

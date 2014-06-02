@@ -183,10 +183,10 @@ describe("2", function () {
     })
 
     it('should hide and un hide question block', function () {
-        press_hide(ptor);
+        press_hide_multi(ptor);
         press_forward(ptor);
         ptor.sleep(3000);
-        press_unhide(ptor);
+        press_unhide_multi(ptor);
         check_current_question(ptor, "q2");
     })
     
@@ -288,5 +288,17 @@ function press_under(ptor){
 function check_current_question(ptor, text){
     locator.s_by_classname(ptor, 'original_question').then(function(qu){
         expect(qu[1].getText()).toContain(text);
+    })
+}
+
+function press_hide_multi(ptor){
+    locator.s_by_classname(ptor, 'big_font_button').then(function(bf){
+        bf[9].click();
+    })
+}
+
+function press_unhide_multi(ptor){
+    locator.s_by_classname(ptor, 'big_font_button').then(function(bf){
+        bf[9].click();
     })
 }

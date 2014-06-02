@@ -9,7 +9,7 @@ ptor.driver.manage().window().maximize();
 
 
 
-xdescribe("1", function(){
+describe("1", function(){
 
     it('should sign in as teacher', function(){
         o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -67,16 +67,11 @@ xdescribe("1", function(){
     })
     
     it('should delete course', function(){
-        //should choose one of home() or home_teacher() 
-        //depending on the current state(student or teacher)
         o_c.home_teacher(ptor);
-        teacher.delete_course(ptor, o_c.feedback);
+        teacher.delete_course_edited(ptor);
     })
     
-    it('should sign in teacher 3', function(){
-        o_c.home_teacher(ptor);
-        o_c.open_tray(ptor);
-        o_c.logout(ptor, o_c.feedback);
+    it('should sign in teacher 2', function(){
         o_c.sign_in(ptor, "teacher2@sharklasers.com", params.password, o_c.feedback);
     })
     
@@ -142,7 +137,7 @@ describe("2", function(){
     })
     //end test
 
-    it('should clear the course for deletion', function(){
+    it('should clear the second course for deletion', function(){
         teacher.delete_empty_module(ptor, 1, o_c.feedback);
         teacher.open_module(ptor, 1);
         teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
@@ -151,11 +146,25 @@ describe("2", function(){
         teacher.delete_empty_module(ptor, 1, o_c.feedback);
     })
 
+    it('should clear the first course for deletion', function(){
+        o_c.home_teacher(ptor);
+        o_c.open_course_whole(ptor);
+        teacher.open_module(ptor, 1);
+        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
+        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
+
+        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+    })
+
+    
     it('should delete course', function(){
         //should choose one of home() or home_teacher() 
         //depending on the current state(student or teacher)
         o_c.home_teacher(ptor);
-        teacher.delete_course(ptor, o_c.feedback);
+        teacher.just_delete_course(ptor);
+        teacher.just_delete_course(ptor);
+        o_c.open_tray(ptor);
+        o_c.logout(ptor, o_c.feedback);
     })
 })
 

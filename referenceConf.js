@@ -44,44 +44,15 @@ exports.config = {
     //
     // Spec patterns are relative to the location of this config.
     specs: [
-        'test/e2e/spec/inclass.spec.js',
-        //'test/e2e/spec/statistics.spec.js'
-        //'test/e2e/spec/discussion.spec.js'
-        //'test/e2e/spec/courses_outline.spec.js'
-       //'test/e2e/spec/teacher-managment.spec.js'
-        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js'
-        // 'test/e2e/spec/ocq-survey-over-video.spec.js'
-        // 'test/e2e/spec/mcq-survey-over-video.spec.js'
-        //'test/e2e/spec/mcq-quizzez-over-video.spec.js'
-        //'test/e2e/spec/ocq-quizzez-over-video.spec.js'
-        //'test/e2e/spec/enrolled-students.spec.js'
-        //'test/e2e/spec/drag-quizzez-over-video.spec.js'
-        // 'test/e2e/spec/quizzez-over-video.spec.js'
-        // 'test/e2e/spec/course_editor_basic.spec.js'
-        //'test/e2e/spec/calendar-teacher-student.spec.js'
-        //'test/e2e/spec/create-announcements.spec.js'
-        //'test/e2e/spec/create-course-check-info.spec.js'
-        //'test/e2e/spec/sign_up_teacher.spec.js'
-        //'test/e2e/spec/signup.spec.js',
-        // 'test/e2e/spec/init-progress-data.spec.js',
-        // 'test/e2e/spec/progress-main.spec.js',
-        //'test/e2e/spec/progress-module.spec.js',
-        // 'test/e2e/spec/calendar.spec.js',
-        // 'test/e2e/spec/confused.spec.js',
-        // 'test/e2e/spec/course_info_student.spec.js',
-        // 'test/e2e/spec/discussion.spec.js',
-        // 'test/e2e/spec/drag_overvideo.spec.js',
-        // 'test/e2e/spec/drag_overvideo_text.spec.js',
-        // 'test/e2e/spec/mainmenu.spec.js',
-        // 'test/e2e/spec/mcq_overvideo.spec.js',
-        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',
-        //'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
+        //'test/e2e/spec/copying-sharing.spec.js',
+        //'test/e2e/spec/course-editor-basic.spec.js',
+        //'test/e2e/spec/create-announcements.spec.js',
+        //'test/e2e/spec/create-course-check-info.spec.js',
         //'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
-        // 'test/e2e/spec/ocq_overvideo.spec.js',
-        // 'test/e2e/spec/ocq_overvideo_text.spec.js',
-        // 'test/e2e/spec/normal_quiz.spec.js',
-        // 'test/e2e/spec/surveys_overvideo.spec.js',
-        // 'test/e2e/spec/test.spec.js'
+        //'test/e2e/spec/drag-quizzez-over-video.spec.js',
+        //'test/e2e/spec/enrolled-students.spec.js',
+        //test/e2e/spec/free-text-quizzez-over-video-text.spec.js',
+        //'test/e2e/spec/inclass.spec.js',
     ],
 
     // ----- Capabilities to be passed to the webdriver instance ----
@@ -123,8 +94,8 @@ exports.config = {
     // This can be changed via the command line as:
     //   --params.login.user 'Joe'
     params: {
-        frontend: 'http://0.0.0.0:9000/#',
-        //frontend: 'http://staging.scalable-learning.com/#',
+        //frontend: 'http://0.0.0.0:9000/#',
+        frontend: 'http://staging.scalable-learning.com/#',
         // teacher_mail: 'teacher3@sharklasers.com',
         // mail: 'studenttest2@sharklasers.com',
         teacher_mail: 'teacher2@sharklasers.com',

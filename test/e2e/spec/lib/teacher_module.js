@@ -92,6 +92,33 @@ exports.delete_course = function(ptor, feedback){
 	})
 }
 
+exports.delete_course_edited = function(ptor){
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
+        x_btn.click().then(function(){
+            locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
+                conf_del.click().then(function() {
+                    o_c.feedback(ptor, 'Course was successfully deleted.');
+                    o_c.open_tray(ptor);
+                    o_c.logout(ptor, o_c.feedback);
+                });
+            })
+        })
+    })
+}
+
+exports.just_delete_course = function(ptor){
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
+        x_btn.click().then(function(){
+            locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
+                conf_del.click().then(function() {
+                    o_c.feedback(ptor, 'Course was successfully deleted.');
+                });
+            })
+        })
+    })
+}
+
+
 ///////////////////////////////////////////////////////////////////////
 ////////////////////////course editor functions////////////////////////
 ///////////////////////////commonly used//////////////////////////////

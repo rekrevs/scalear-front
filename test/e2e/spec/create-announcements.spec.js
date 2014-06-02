@@ -15,7 +15,7 @@ var announcement_text3 = "announcement 3"
 //		need to check the date and confirm time zone changes
 //
 //
-describe("teacher", function(){
+describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -83,7 +83,7 @@ function create_new_announcement(ptor, ann_txt, feedback){
 
 function check_number_of_announcments(ptor, no_of_ann){
   locator.by_repeater(ptor, 'announcement in announcements').then(function(announcments) {
-            expect(announcments.length).toEqual(no_of_ann);
+      expect(announcments.length).toEqual(no_of_ann);
   });
   locator.s_by_binding(ptor, 'a.announcement').then(function(announcments) {
     announcments.reverse();

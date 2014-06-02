@@ -38,11 +38,11 @@ exports.check_course_info = function(ptor, course_code, course_name, description
     ptor.findElement(protractor.By.id('discussion_link')).then(function(disc_link){
         expect(disc_link.getText()).toContain(disscussion_link);
     })
-    ptor.findElement(protractor.By.id('course_date')).then(function(date){
-        date.getText().then(function(text){
-            expect(course_date).toContain(text.split(" ")[1]);
-        });
-    })
+//    ptor.findElement(protractor.By.id('course_date')).then(function(date){
+//        date.getText().then(function(text){
+//            expect(course_date).toContain(text.split(" ")[1]);
+//        });
+//    })
     ptor.findElement(protractor.By.id('course_duration')).then(function(duration){
         expect(duration.getText()).toContain(course_duration);
     })

@@ -871,6 +871,10 @@ var translation_sv=function(){
           new_survey: "Ny undersökning sattes ",
           added_to: " har lagts till ",
           announcement: "Meddelande"
+        },
+        announcements:
+        {
+          empty: 'Det finns för närvarande inga meddelanden för denna kurs. Börja med att lägga till ett nytt meddelande.'
         }
      
     }

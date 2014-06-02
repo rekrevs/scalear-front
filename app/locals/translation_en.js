@@ -865,6 +865,10 @@ var translation_en=function(){
       new_survey: "New survey added ",
       added_to: " has been added to ",
       announcement: "Announcement"
+    },
+    announcements:
+    {
+      empty: 'There are currently no announcements for this course. Begin by adding a new announcement.'
     }
 
 

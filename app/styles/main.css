@@ -826,7 +826,7 @@ iframe{
     padding: 10px;
     border-right: 1px solid lightgrey;
     overflow-y: auto;
-    height: 100%;
+    height: 80%;
 }
 .course-right{
     margin-left: 25%;

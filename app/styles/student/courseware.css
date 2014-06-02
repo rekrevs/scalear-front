@@ -415,11 +415,16 @@ input[type="checkbox"], input[type="radio"] {
 
 @media (min-width: 1025px){
   .nav-tabs{
-    margin-top: -70px;
+    margin-top: -90px;
     background: white;
     z-index: 1;
     position: fixed;
     width: 40%;
+  }
+  .filterbuttons{
+    position: fixed;
+    margin-top: -55px;
+    z-index: 1;
   }
 
 }

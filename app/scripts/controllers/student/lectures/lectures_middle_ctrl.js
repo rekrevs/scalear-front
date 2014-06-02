@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
     .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc','Page', '$filter','Forum','OnlineQuiz','util',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc,Page, $filter,Forum, OnlineQuiz, util) {
 
     console.log("lect mid ctlr")
-
+    $scope.checkModel={quiz:true,confused:true, discussion:true};
     $scope.video_layer = {}
     $scope.quiz_layer = {}
     $scope.lecture_player={}
@@ -93,6 +93,7 @@ angular.module('scalearAngularApp')
         }
         return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
     }
+
 
     var initVariables=function(){
         console.log("ionit variavle")

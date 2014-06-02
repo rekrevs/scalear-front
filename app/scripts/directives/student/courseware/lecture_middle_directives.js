@@ -539,15 +539,15 @@ angular.module('scalearAngularApp')
     },
     templateUrl:'/views/student/lectures/student_timeline.html',
     link: function(scope, element, attrs) {
-      scope.checkModel={quiz:true,confused:true, discussion:true};
+      // scope.checkModel={quiz:true,confused:true, discussion:true};
         scope.checkEmpty= function(item){
           return  item.type!=''
         }
 
         scope.filterType= function(item){
           var condition=false;
-          for(var e in scope.checkModel){
-            if(scope.checkModel[e])
+          for(var e in scope.$parent.checkModel){
+            if(scope.$parent.checkModel[e])
               condition = (condition || item.type==e)
           }
           var x = item.type!='' && condition

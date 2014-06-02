@@ -128,11 +128,11 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 
 .span3 {
   background-color: whitesmoke;
-  min-height:700px;
+  /*min-height:700px;*/
 }
 #middle{
 	/*background-color: whitesmoke;*/
-	min-height:700px;	
+	/*min-height:700px;	*/
 	/*position:absolute;
 	overflow:auto;
 	margin-left:30%;*/

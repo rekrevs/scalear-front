@@ -873,7 +873,7 @@ iframe{
   color: white;
   font-size: 15px;
   font-weight: bold;
-  position: absolute;
+  position: fixed;
   top: 37px;
   z-index:1031;
   text-align: center;

@@ -86,10 +86,12 @@
             </div>
         </header>
         <div ng-show="clipboard" class="top-ribbon">
-            <notice-message message="{{'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'}}" button-action="emptyClipboard()" button-title="{{'lectures.remove' | translate}}" />
+            <notice-message message="{{'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'}}" button-action="emptyClipboard()" button-title="{{'lectures.remove' | translate}}">
+            </notice-message>
         </div>
-          <div ng-show="preview_as_student" class="top-ribbon">
-             <notice-message message="{{'preview_as_student'| translate}}" button-action="disablePreview()" button-title="{{'return' | translate}}" />
+        <div ng-show="preview_as_student" class="top-ribbon">
+            <notice-message message="{{'preview_as_student'| translate}}" button-action="disablePreview()" button-title="{{'return' | translate}}">
+            </notice-message>
         </div>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">

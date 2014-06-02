@@ -48,7 +48,7 @@
 		        <tab id="video_events" active="tabs[0]" heading="{{'lectures.video_events' | translate}}" select="scrollIntoView('outline')" style="cursor: pointer; text-align: center;" >
 		        		<table>
 		        			<tr class="filterbuttons">
-		        				<td>
+		        				<td style="width: 40%;">
 		        					<div class="btn-group align-center" data-toggle="buttons">
 								        <label id="quiz_checkbox" class="btn btn-checkbox">
 								            <input type="checkbox" ng-model="checkModel.quiz"> {{'lectures.outline' | translate}}
@@ -60,6 +60,9 @@
 								            <input type="checkbox" ng-model="checkModel.discussion"> {{'lectures.discussion' | translate}}
 								        </label>
 								    </div>
+								    <button class="btn btn-success btn-mini" style="float: right; margin-right: 10px; height: 28px;" ng-click="scrollIntoView('outline', true)" translate>
+								    	lectures.current_lecture
+								    </button>
 		        				</td>
 		        			</tr>
 		        			<tr>

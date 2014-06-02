@@ -347,7 +347,8 @@ var translation_sv=function(){
               retry: "Försök igen",
               related : "Relaterat",
               reply: "Svara",
-              of_student_review: "av eleverna röstade för översyn"
+              of_student_review: "av eleverna röstade för översyn",
+              current_lecture: 'Nuvarande Lecture'
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

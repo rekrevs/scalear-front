@@ -347,7 +347,8 @@ var translation_en=function(){
         retry: "Retry",
         related : "Related",
         reply: "Reply",
-        of_student_review: "of students voted for review"
+        of_student_review: "of students voted for review",
+        current_lecture: 'Current Lecture'
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

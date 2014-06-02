@@ -212,7 +212,7 @@ exports.checkConfusedTitle=function(item_index,title_index, module_items){
 	})
 }
 
-exports.checkQuizTitle=function(item_index,title_index, module_items, percentage){
+exports.checkInvideoQuizTitle=function(item_index,title_index, module_items, percentage){
 	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
 		items[item_index].findElements(protractor.By.className('green')).then(function(titles){
 			var question = module_items[item_index].questions[title_index]
@@ -225,7 +225,7 @@ exports.checkDiscussionTitle=function(item_index,title_index, module_items){
 	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
 		items[item_index].findElements(protractor.By.className('coral')).then(function(titles){
 			var discussion = module_items[item_index].discussion[title_index]
-			expect(titles[title_index].$('.inner_title').getText()).toEqual('['+discussion.time+'] Discussion:')
+			expect(titles[title_index].findElement(protractor.By.className('inner_title'))).toEqual('['+discussion.time+'] Discussion:')
 		})
 	})
 }
@@ -250,59 +250,6 @@ exports.checkDiscussionContent=function(item_index,index, module_items){
 			}
 		})
 	})
-}
-
-exports.showVideoQuizInclass=function(item_index, index){
-	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
-		items[item_index].findElements(protractor.By.className('green')).then(function(quiz){
-			var checkbox = quiz[index].findElement(protractor.By.tagName('input'))
-			expect(checkbox.getAttribute('checked')).toBe(null)
-			checkbox.click(function(){
-				expect(checkbox.getAttribute('checked')).toBe("true")
-			})
-		})
-	})
-}
-
-exports.hideVideoQuizInclass=function(item_index, index){
-	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
-		items[item_index].findElements(protractor.By.className('green')).then(function(quiz){
-			var checkbox = quiz[index].findElement(protractor.By.tagName('input'))
-			expect(checkbox.getAttribute('checked')).toBe("true")
-			checkbox.click(function(){
-				expect(checkbox.getAttribute('checked')).toBe(null)
-			})
-		})
-	})
-}
-
-exports.showDiscussionInclass=function(item_index, index){
-	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
-		items[item_index].findElements(protractor.By.className('coral')).then(function(discussion){
-			var checkbox = discussion[index].findElement(protractor.By.tagName('input'))
-			expect(checkbox.getAttribute('checked')).toBe(null)
-			checkbox.click(function(){
-				expect(checkbox.getAttribute('checked')).toBe("true")
-			})
-		})
-	})
-}
-
-exports.hideDiscussionInclass=function(item_index, index){
-	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
-		items[item_index].findElements(protractor.By.className('coral')).then(function(discussion){
-			var checkbox = discussion[index].findElement(protractor.By.tagName('input'))
-			expect(checkbox.getAttribute('checked')).toBe("true")
-			checkbox.click(function(){
-				expect(checkbox.getAttribute('checked')).toBe(null)
-			})
-		})
-	})
-}
-
-
-exports.checkTimeEstimate=function(value){
-	expect(element(by.binding('inclass_estimate')).getText()).toEqual(value+' minutes')
 }
 
 exports.addReplyToDiscussion=function(item_index, index, msg){
@@ -349,16 +296,40 @@ exports.deleteDiscussionComment=function(item_index, discussion_index){
 	})
 }
 
+exports.showDiscussionInclass=function(item_index, index){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('coral')).then(function(discussion){
+			var checkbox = discussion[index].findElement(protractor.By.tagName('input'))
+			expect(checkbox.getAttribute('checked')).toBe(null)
+			checkbox.click(function(){
+				expect(checkbox.getAttribute('checked')).toBe("true")
+			})
+		})
+	})
+}
 
+exports.hideDiscussionInclass=function(item_index, index){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('coral')).then(function(discussion){
+			var checkbox = discussion[index].findElement(protractor.By.tagName('input'))
+			expect(checkbox.getAttribute('checked')).toBe("true")
+			checkbox.click(function(){
+				expect(checkbox.getAttribute('checked')).toBe(null)
+			})
+		})
+	})
+}
 
+exports.checkTimeEstimate=function(value){
+	expect(element(by.binding('inclass_estimate')).getText()).toEqual(value+' minutes')
+}
 
-
-
-
-
-
-
-
-
-
+exports.checkQuizFreeTextTitle=function(item_index,title_index, module_items){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('ul_item')).then(function(titles){
+			var free_text = module_items[item_index].questions[title_index]
+			expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('Free Text Question: '+free_text.title)
+		})
+	})
+}
 

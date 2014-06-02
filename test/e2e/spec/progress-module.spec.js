@@ -46,10 +46,15 @@ var modules_items = {
 					},
 					{
 					'name':'New Quiz', 
-					'questions': 5,
-					'discussion':0,
-					'confused':0,
-					'really_confused':0
+					'questions': [
+						{title: 'mcq question', type: 'MCQ'},
+						{title:'ocq question', type:'OCQ'},
+						{title:'free question', answers:[{title:'free answer', grade:'Under Review'}]},
+						{title:'match question', answers:[{title:'match answer', grade:'Good'}]},
+						{title:'drag question', type:'DRAG'}
+					],
+					'discussion':[],
+					'confused':[]
 					},
 					{
 					'name':'New Required Quiz', 
@@ -166,9 +171,9 @@ describe('Module Progress Page', function(){
 // 	// })
 	describe('First lecture',function(){
 		// it('should display correct quiz titles',function(){
-		// 	progress.checkQuizTitle(0,0,modules_items['New Module'], 50)
-		// 	progress.checkQuizTitle(0,1,modules_items['New Module'], 50)
-		// 	progress.checkQuizTitle(0,2,modules_items['New Module'], 0)
+		// 	progress.checkInvideoQuizTitle(0,0,modules_items['New Module'], 50)
+		// 	progress.checkInvideoQuizTitle(0,1,modules_items['New Module'], 50)
+		// 	progress.checkInvideoQuizTitle(0,2,modules_items['New Module'], 0)
 		// })
 		// it('should display quiz statistics correct',function(){
 		// 	progress.checkQuizChart(0,0,1,2)
@@ -225,16 +230,21 @@ describe('Module Progress Page', function(){
 		// 	progress.checkTimeEstimate(0)
 		// })
 
-		it('should be able to add a replay to discussion',function(){			
-			progress.addReplyToDiscussion(0,0,comment1.title)
-			progress.checkDiscussionComment(0,0,0,comment1)
-			progress.addReplyToDiscussion(0,0,comment2.title)
-			progress.checkDiscussionComment(0,0,1,comment2)
-		})
-		it('should be able to delete discussion', function(){
-			progress.deleteDiscussionComment(0,0,0)
-			progress.checkDiscussionComment(0,0,0,comment2)
-			progress.deleteDiscussionComment(0,0,0)
+		// it('should be able to add a replay to discussion',function(){			
+		// 	progress.addReplyToDiscussion(0,0,comment1.title)
+		// 	progress.checkDiscussionComment(0,0,0,comment1)
+		// 	progress.addReplyToDiscussion(0,0,comment2.title)
+		// 	progress.checkDiscussionComment(0,0,1,comment2)
+		// })
+		// it('should be able to delete discussion', function(){
+		// 	progress.deleteDiscussionComment(0,0,0)
+		// 	progress.checkDiscussionComment(0,0,0,comment2)
+		// 	progress.deleteDiscussionComment(0,0,0)
+		// })
+	})
+	describe('First Quiz',function(){
+		it('should have correct free text question title',function(){
+			progress.checkQuizFreeTextTitle(3,2, modules_items['New Module'])
 		})
 	})
 	

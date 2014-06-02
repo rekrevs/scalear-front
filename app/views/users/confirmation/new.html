@@ -16,11 +16,11 @@
                     <td>
                     </td>
                     <td>
-                        <div ng-show="$parent.current_lang=='en'" ng-cloak>
-                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
-                        </div>
                         <div ng-show="$parent.current_lang=='sv'" ng-cloak>
-                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                        </div>
+                        <div ng-show="$parent.current_lang=='en'" ng-cloak>
+                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
                         </div>
                     </td>
                 </tr>
@@ -36,7 +36,7 @@
                 
                 <span class="errormessage" ng-show="user.errors.confirmation_token">{{user.errors.confirmation_token.join()}}</span>
                 <br />
-                <input type="submit" ng-disabled="!user.email || sending" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-warning" style="background-image: initial;"/>
+                <input type="submit" ng-disabled="!user.email || sending" value="{{'devise.confirmations.resend_instructions' | translate}}" class="btn btn-success" style="background-image: initial;"/>
                 <br />
                 <br />
             </form>

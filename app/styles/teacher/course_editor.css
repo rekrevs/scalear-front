@@ -91,7 +91,7 @@ ul.accordion ul {
 .accordion a {...}
 */    
 
-a.trigger {display:inline-block !important; background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700; text-align: left; margin-left: 15px; color: #2d2d2d;}
+a.trigger {display:inline-block !important; background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700; text-align: left; margin-left: 15px; color: #2d2d2d; font-size: 13px;}
 
 
 
@@ -110,13 +110,13 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 .trigger{width:180px;}
 
 .trigger2{
-	padding-left: 5px;
+	padding-left: 14px;
 	font-size:12px;
 	font-weight:normal;
 	color:white;
+	display:inline-block;
+	width:165px;
 }
-
-.trigger2{display:inline-block; width:180px;}
 
 .trigger2:hover{cursor:pointer; color: white !important;}
 

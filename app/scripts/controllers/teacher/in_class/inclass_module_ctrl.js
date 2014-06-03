@@ -666,6 +666,7 @@ angular.module('scalearAngularApp')
   $scope.adjustTextSize=function(){
     var question_block = angular.element('.question_block').not('.ng-hide')
     $scope.fontsize =((question_block.height()-10)*23)/100 +'px'
+    $scope.sub_fontsize =(((question_block.height()-10)*23)/100) -5 +'px'
     // console.log(question_block)
     // if(question_block.get(0).scrollHeight > question_block.height()){
     //   if(question_block.get(0).scrollHeight - question_block.height() >=10)

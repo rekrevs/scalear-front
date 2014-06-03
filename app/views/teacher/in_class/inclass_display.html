@@ -41,8 +41,8 @@
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'free_question'" ng-class="question_block">
                 <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
-                <ul ng-show="question_class =='zoom_question'" ng-class="question_class" >
-                    <li ng-repeat="answer in selected_timeline_item.data.answers" style="list-style-position:inside; padding:3px 15px;list-style:disc; line-height:25px">
+                <ul  style="padding-left:50px" ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
+                    <li ng-repeat="answer in selected_timeline_item.data.answers" ng-style="{fontSize:sub_fontsize, lineHeight:sub_fontsize}" style="list-style-position:inside;list-style:disc;">
                         <p>{{answer.online_answer}}</p>
                     </li>
                 </ul>     

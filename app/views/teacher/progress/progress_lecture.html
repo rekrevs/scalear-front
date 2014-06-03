@@ -51,7 +51,7 @@
 			<div ng-repeat="module_item in module.items">
 				<div id="{{module_item.quiz_type+'_'+module_item.id}}" ng-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];">
 					<p class="title">{{quiz.meta.name}} <span style="font-size:12px">({{getKeys(quiz.questions).length}} <span translate>questions.questions</span>)<a ng-show="quiz.filtered_user" ng-click="quiz.filtered_user = '';quiz.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;"><span translate>questions.see_all</span></a></span></p>
-					<ul class="ul_item inner_content" ng-click="highlight($event,item)" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items|filter:{data:'!!',type:custom_filter}" >
+					<ul class="ul_item inner_content" ng-click="highlight($event,item)" index="{{timeline[module_item.quiz_type][quiz.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items|filter:{data:'!!',type:custom_filter}" >
 						<li ng-if="item.type=='charts'" ng-init="quiz_chart=createChart(item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData')" class="li_inner blue">
 							<inner_title type="{{'lectures.title' | translate}}" title="{{item.data.title+' ('+item.data.type+')'}}"/>
 							<div google-chart chart="quiz_chart" class="progress_chart" ></div>
@@ -93,7 +93,7 @@
 				</div>
 				<div id="lecture_{{module_item.id}}" ng-if="module_item.class_name=='lecture'" ng-init='lec=lectures[module_item.id]'>
 					<p class="title">{{lec.meta.name}} <span style="font-size:12px">({{lec.meta.duration|format}}, {{getKeys(lec.charts).length}} <span translate>questions.questions</span>)<a ng-show="lec.filtered_user" ng-click="lec.filtered_user = '';lec.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;"><span translate>questions.see_all</span></a></span></p>
-					<ul class="ul_item vline inner_content" ng-click="highlight($event, item)" ng-repeat="item in timeline['lecture'][lec.meta.id].items|filter:{data:'!!', type:custom_filter}">
+					<ul class="ul_item vline inner_content" ng-click="highlight($event, item)" index="{{timeline['lecture'][lec.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline['lecture'][lec.meta.id].items|filter:{data:'!!', type:custom_filter}">
 						<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner blue" >
 							<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{(item.type[0].toUpperCase()+item.type.slice(1)).split('_').join(' ')}}" />
 							<span class="inner_value"> {{item.data}}</span>

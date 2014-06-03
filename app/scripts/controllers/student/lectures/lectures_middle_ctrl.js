@@ -147,7 +147,7 @@ angular.module('scalearAngularApp')
             $scope.$watch('timeline',function(){
                 if($scope.timeline){
 
-                    goToLecture($stateParams.lecture_id) 
+                    goToLecture($state.params.lecture_id) 
                     $timeout(function(){
                         $scope.scrollIntoView('notes')
                         $scope.scrollIntoView('outline')
@@ -261,9 +261,9 @@ angular.module('scalearAngularApp')
             
             Lecture.getLectureStudent(
             {
-                course_id: $stateParams.course_id,
+                course_id: $state.params.course_id,
                 lecture_id: id,
-                // time: $stateParams.time
+                // time: $state.params.time
             },
             function(data) {
                 // $scope.lecture = JSON.parse(data.lecture)
@@ -420,7 +420,7 @@ angular.module('scalearAngularApp')
 
 //             $state.go("course.courseware.module.lecture", {"lecture_id":lecture_id, "time":time});
 // //            $state.go()
-// //            Lecture.switchQuiz({course_id:$stateParams.course_id, lecture_id:lecture_id, time:time}, function(data){
+// //            Lecture.switchQuiz({course_id:$state.params.course_id, lecture_id:lecture_id, time:time}, function(data){
 // //                $scope.alert_messages = data.alert_messages;
 // //                $scope.lecture = JSON.parse(data.lecture)
 // //                if($scope.ipad)
@@ -468,8 +468,8 @@ angular.module('scalearAngularApp')
     $scope.submitPause= function(){
         Lecture.pause(
             {
-                course_id:$stateParams.course_id, 
-                lecture_id:$stateParams.lecture_id
+                course_id:$state.params.course_id, 
+                lecture_id:$state.params.lecture_id
             },
             {time:$scope.lecture_player.controls.getTime()});
     }
@@ -575,12 +575,12 @@ angular.module('scalearAngularApp')
 
     $scope.addConfused= function(){
         console.log("caosdnsakn")
-        
+        console.log($state.params.lecture_id)
         var time=$scope.lecture_player.controls.getTime()
         Lecture.confused(
         {
-            course_id:$stateParams.course_id, 
-            lecture_id:$stateParams.lecture_id
+            course_id:$state.params.course_id, 
+            lecture_id:$state.params.lecture_id
         },
         {time:time}, 
         function(data){
@@ -596,13 +596,13 @@ angular.module('scalearAngularApp')
             }
             if(!data.flag) //first time confused in these 15 seconds
             {
-                $scope.timeline['lecture'][$stateParams.lecture_id].add(time, "confused", data.item)
+                $scope.timeline['lecture'][$state.params.lecture_id].add(time, "confused", data.item)
             }
 
             if(data.flag && data.msg!="ask") // confused before but not third time - very confused
             {
-                var elem=$scope.timeline['lecture'][$stateParams.lecture_id].search_by_id(data.id, "confused");
-                $scope.timeline['lecture'][$stateParams.lecture_id].items[elem].data.very=true;            
+                var elem=$scope.timeline['lecture'][$state.params.lecture_id].search_by_id(data.id, "confused");
+                $scope.timeline['lecture'][$state.params.lecture_id].items[elem].data.very=true;            
             }
         });
     }
@@ -646,8 +646,8 @@ angular.module('scalearAngularApp')
         console.log(time)
         Lecture.back(
             {
-                course_id:$stateParams.course_id, 
-                lecture_id:$stateParams.lecture_id
+                course_id:$state.params.course_id, 
+                lecture_id:$state.params.lecture_id
             },
             {time:time}, 
             function(data){}
@@ -670,8 +670,8 @@ angular.module('scalearAngularApp')
             $scope.submitted=false;
             Lecture.saveHtml(
             {
-                course_id: $stateParams.course_id, 
-                lecture_id:$stateParams.lecture_id
+                course_id: $state.params.course_id, 
+                lecture_id:$state.params.lecture_id
             },
             {
                 quiz:$scope.selected_quiz.id, 
@@ -719,8 +719,8 @@ angular.module('scalearAngularApp')
         }
         Lecture.saveOnline(
         {
-            course_id:$stateParams.course_id,
-            lecture_id:$stateParams.lecture_id
+            course_id:$state.params.course_id,
+            lecture_id:$state.params.lecture_id
         },
         {
             quiz: $scope.selected_quiz.id,
@@ -850,14 +850,14 @@ angular.module('scalearAngularApp')
                 {
                     content: current_question, 
                     time:$scope.current_question_time, 
-                    lecture_id:$stateParams.lecture_id, 
+                    lecture_id:$state.params.lecture_id, 
                     privacy:privacy_value
                 }
             }, 
             function(response){
                 console.log("success");
-                $scope.timeline['lecture'][$stateParams.lecture_id].add($scope.current_question_time, "discussion",  response.post);
-                // $scope.editors[$stateParams.lecture_id].insert($scope.current_question_time, current_question);
+                $scope.timeline['lecture'][$state.params.lecture_id].add($scope.current_question_time, "discussion",  response.post);
+                // $scope.editors[$state.params.lecture_id].insert($scope.current_question_time, current_question);
                 $scope.toggleQuestionBlock()
                 // $scope.lecture_player.controls.play();
             }, 

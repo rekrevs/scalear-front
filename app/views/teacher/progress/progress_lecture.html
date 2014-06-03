@@ -60,10 +60,8 @@
 						<li ng-if="item.type=='Free Text Question'" class="li_inner coral">
 							<inner_title type="{{'groups.free_text_question' | translate}}" title="{{item.data.title}}"/>
 							<show_box  ng-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideFreeText(quiz.meta.id,item.data.id,!item.data.show)"/>
-							<!-- <show_box ng-if="module_item.quiz_type == 'quiz'" value="item.data.show" action="updateHideFreeTextQuiz(quiz.meta.id,item.data.id,!item.data.show)"/> -->
 							</br>
-							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">
-								
+							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">								
 								<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" style="list-style-position:inside; padding:8px 15px">
 									<show_box ng-show="module_item.quiz_type == 'survey'"  ng-init="answer.hide = !answer.hide" value="answer.hide" action="updateHideResponse(quiz.meta.id,answer.id,answer.hide)" style="float:right"/>
 								    <span ng-show="!quiz.filtered_user || quiz.filtered_user==''" tooltip="{{'groups.see_related'|translate}}" tooltip-placement="top" style="float:right">|
@@ -71,20 +69,16 @@
 									</span>
 									<span ng-show="module_item.quiz_type == 'survey'" style="float:right">| 
 										<button_link ng-show="!answer.show_feedback" title="{{'lectures.reply'|translate}}" action="answer.show_feedback = true" class="btn btn-mini btn-success" style="margin:0 5px"/>
-										<button_link ng-show="answer.show_feedback" title="{{'lectures.cancel' | translate}}" action="answer.show_feedback = false" class="btn btn-mini btn-danger" style="margin:0 5px"/>
+										<button_link ng-show="answer.show_feedback" title="{{'lectures.cancel' | translate}}" action="answer.show_feedback = false;answer.temp_response=null" class="btn btn-mini btn-danger" style="margin:0 5px"/>
 									</span>	
 									<span ng-show="module_item.quiz_type == 'quiz'" style="float:right">
 							        	<details-select value="answer.grade" options="grade_options" save="updateGrade(answer)" style="float: right;margin: 1px 10px;"></details-select>
 							        </span>
-							     
-
-							        
-									<p style="width:600px;margin-bottom:0">{{answer.answer}}</p>
-									
+									<p style="width:600px;margin-bottom:0">{{answer.answer}}</p>									
 									<i ng-show="answer.response && !answer.show_feedback" style="padding-left: 30px;color: steelblue">{{answer.response}}</i>
 									<div ng-show="answer.show_feedback">
 										<textarea ng-model="answer.temp_response"  style="width: 65%;" />
-										<button_link title="{{'courses.send'|translate}}" class="btn-mini" action="sendFeedback(answer);answer.show_feedback = false" />
+										<button_link title="{{'courses.send'|translate}}" class="btn-mini send" action="sendFeedback(answer);answer.show_feedback = false" />
 									</div>
 								</li>
 							</ul>						

@@ -140,23 +140,26 @@ exports.verifyModuleTitlesAndCountOnTimeline = function(modules_items, filter){
 			items[i].findElements(protractor.By.className('ul_item')).then(function(sub_items){
 				var total = 0
 				if(filter == 'confused')
-					total = item.confused+item.really_confused
+					total = item.confused.length
 				else if(filter == 'charts')
-					total = item.questions
+					total = item.questions.length + item.free_text.length
 				else if(filter == 'discussion')
-					total = item.discussion
+					total = item.discussion.length
 				else
-					total = item.questions+item.discussion +item.confused+item.really_confused
+					total = item.questions.length+item.free_text.length+item.discussion.length+item.confused.length
 				
 				expect(sub_items.length).toBe(total)
 			})
 			items[i].findElement(protractor.By.className('title')).then(function(title){
 				expect(title.getText()).toContain(item.name)
 				title.findElement(protractor.By.tagName('span')).then(function(duration_questions){
+					var summary = "("
 					if(item.duration){
-						expect(duration_questions.getText()).toContain(item.duration)
+						summary+=item.duration+', '
+						// expect(duration_questions.getText()).toContain(item.duration)
 					}
-					expect(duration_questions.getText()).toContain(item.questions+' Questions')
+					summary+=(item.questions.length+item.free_text.length) +' Questions)'
+					expect(duration_questions.getText()).toContain(summary)
 				})
 			})
 		})
@@ -206,8 +209,8 @@ exports.checkConfusedTitle=function(item_index,title_index, module_items){
 	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
 		items[item_index].findElements(protractor.By.className('blue')).then(function(titles){
 			var confused = module_items[item_index].confused[title_index]
-			expect(titles[title_index].$('.inner_title').getText()).toEqual('['+confused.time+'] '+confused.title+':')
-			expect(titles[title_index].$('.inner_value').getText()).toEqual(confused.count.toString())
+			expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('['+confused.time+'] '+confused.title+':')
+			expect(titles[title_index].findElement(protractor.By.className('inner_value')).getText()).toEqual(confused.count.toString())
 		})
 	})
 }
@@ -216,7 +219,40 @@ exports.checkInvideoQuizTitle=function(item_index,title_index, module_items, per
 	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
 		items[item_index].findElements(protractor.By.className('green')).then(function(titles){
 			var question = module_items[item_index].questions[title_index]
-			expect(titles[title_index].$('.inner_title').getText()).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+percentage+'% of students voted for review')
+			expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+percentage+'% of students voted for review')
+		})
+	})
+}
+
+exports.checkInvideoSurveyTitle=function(item_index,title_index, module_items){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('green')).then(function(titles){
+			var question = module_items[item_index].questions[title_index]
+			expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('['+question.time+'] Survey: '+question.title+' ('+question.type+')')
+		})
+	})
+}
+
+exports.showVideoQuizInclass=function(item_index, index){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('green')).then(function(discussion){
+			var checkbox = discussion[index].findElement(protractor.By.tagName('input'))
+			expect(checkbox.getAttribute('checked')).toBe(null)
+			checkbox.click(function(){
+				expect(checkbox.getAttribute('checked')).toBe("true")
+			})
+		})
+	})
+}
+
+exports.hideVideoQuizInclass=function(item_index, index){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('green')).then(function(discussion){
+			var checkbox = discussion[index].findElement(protractor.By.tagName('input'))
+			expect(checkbox.getAttribute('checked')).toBe("true")
+			checkbox.click(function(){
+				expect(checkbox.getAttribute('checked')).toBe(null)
+			})
 		})
 	})
 }
@@ -225,7 +261,7 @@ exports.checkDiscussionTitle=function(item_index,title_index, module_items){
 	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
 		items[item_index].findElements(protractor.By.className('coral')).then(function(titles){
 			var discussion = module_items[item_index].discussion[title_index]
-			expect(titles[title_index].findElement(protractor.By.className('inner_title'))).toEqual('['+discussion.time+'] Discussion:')
+			expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('['+discussion.time+'] Discussion:')
 		})
 	})
 }
@@ -277,7 +313,7 @@ exports.checkDiscussionComment=function(item_index, discussion_index, comment_in
 	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
 		items[item_index].findElements(protractor.By.className('coral')).then(function(discussion){
 			var comment= discussion[discussion_index].findElement(protractor.By.repeater('comment in discussion.post.comments').row(comment_index))
-			expect(comment.findElement(protractor.By.binding('comment.comment.screen_name')).getText()).toEqual(content.screen_name+': ')
+			expect(comment.findElement(protractor.By.binding('comment.comment.screen_name')).getText()).toEqual(content.screen_name+':')
 			expect(comment.findElement(protractor.By.binding('comment.comment.content')).getText()).toEqual(content.title)
 			expect(comment.findElement(protractor.By.binding('comment.comment.flags_count')).getText()).toEqual(content.flags.toString())
 			expect(comment.findElement(protractor.By.binding('comment.comment.votes_count')).getText()).toEqual(content.likes.toString())
@@ -324,11 +360,97 @@ exports.checkTimeEstimate=function(value){
 	expect(element(by.binding('inclass_estimate')).getText()).toEqual(value+' minutes')
 }
 
+exports.checkQuizTitle=function(item_index,title_index, module_items){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('blue')).then(function(titles){
+			var question = module_items[item_index].questions[title_index]
+			expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('Title: '+question.title+' ('+question.type+')')
+		})
+	})
+}
+
+
 exports.checkQuizFreeTextTitle=function(item_index,title_index, module_items){
 	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
-		items[item_index].findElements(protractor.By.className('ul_item')).then(function(titles){
-			var free_text = module_items[item_index].questions[title_index]
+		items[item_index].findElements(protractor.By.className('coral')).then(function(titles){
+			var free_text = module_items[item_index].free_text[title_index]
 			expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('Free Text Question: '+free_text.title)
+		})
+	})
+}
+
+exports.checkQuizFreeTextAnswers=function(item_index, index, module_items){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('coral')).then(function(content){
+			var free_text = module_items[item_index].free_text[index]
+			content[index].findElements(protractor.By.binding('answer.answer')).then(function(answers){
+				answers.forEach(function(answer,i){
+					expect(answer.getText()).toEqual(free_text.answers[i].title)
+				})
+			})
+		})
+	})
+}
+
+exports.checkQuizFreeTextGrades=function(item_index, index, module_items){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('coral')).then(function(content){
+			var free_text = module_items[item_index].free_text[index]			
+			content[index].findElements(protractor.By.tagName('details-select')).then(function(grades){
+				grades.forEach(function(grade,i){
+					expect(grade.getText()).toEqual(free_text.answers[i].grade)
+				})
+			})
+		})
+	})
+}
+
+exports.ChangeQuizFreeTextGrade=function(item_index, index, key, value){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('coral')).then(function(content){
+			content[index].findElements(protractor.By.tagName('details-select')).then(function(grades){
+				grades.forEach(function(grade,i){
+					grade.click().then(function(){
+						grade.findElement(protractor.By.tagName('select')).then(function(){
+							grade.findElements(protractor.By.tagName('option')).then(function(options){
+								options[key].click().then(function(){
+									content[index].click()
+									expect(grade.getText()).toEqual(value)
+								});
+							})
+						})
+					})
+				})
+			})
+		})
+	})
+}
+
+exports.addReplyToFreeText=function(item_index, index, msg){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('coral')).then(function(discussion){
+			var reply_button = discussion[index].findElement(protractor.By.className('btn-success'))
+			var text_area = discussion[index].findElement(protractor.By.model('answer.temp_response'))
+			var cancel_button= discussion[index].findElement(protractor.By.className('btn-danger'))
+			reply_button.click().then(function(){
+				expect(reply_button.isDisplayed()).toBe(false)
+				expect(text_area.isDisplayed()).toBe(true)
+				expect(cancel_button.isDisplayed()).toBe(true)
+			})
+			text_area.sendKeys(msg)
+			discussion[index].findElement(protractor.By.className('send')).click().then(function(){
+				expect(reply_button.isDisplayed()).toBe(true)
+				expect(text_area.isDisplayed()).toBe(false)
+				expect(cancel_button.isDisplayed()).toBe(false)
+			})
+		})
+	})
+}
+
+exports.checkReplyToFreeText=function(item_index, index, msg){
+	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+		items[item_index].findElements(protractor.By.className('coral')).then(function(discussion){			
+			expect(discussion[index].findElement(protractor.By.binding('answer.response')).getText()).toEqual(msg)
 		})
 	})
 }

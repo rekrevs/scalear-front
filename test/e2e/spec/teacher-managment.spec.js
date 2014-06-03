@@ -9,7 +9,7 @@ ptor.driver.manage().window().maximize();
 
 
 
-xdescribe("1", function(){
+describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -105,7 +105,7 @@ function check_teachers_no(ptor, no){
 
 function press_add_teacher(ptor){
 	locator.s_by_classname(ptor, 'add-teacher-button').then(function(add_btn){
-		add_btn[1].click().then(function(){
+		add_btn[0].click().then(function(){
 			expect(locator.by_name(ptor, 'email_form').isDisplayed()).toEqual(true);
 		})
 	})
@@ -119,5 +119,7 @@ function fill_teacher_info(ptor, mail, type){
 			options[type].click();
 		})
 	})
-	locator.by_classname(ptor, 'add-teacher-button').click();
+	locator.s_by_classname(ptor, 'add-teacher-button').then(function(adds){
+        adds[1].click();
+    })
 }

@@ -8,29 +8,6 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-//function testing ocq
-xdescribe("teacher", function(){
-	it('should', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-		o_c.open_course_whole(ptor);
-		//teacher.add_module(ptor, o_c.feedback);
-		teacher.open_module(ptor, 1);
-		teacher.open_lecture(ptor, 1, 1);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
-		// o_c.open_tray(ptor);
-		// o_c.open_lectures(ptor);
-		//youtube.seek(ptor, 50);
-		//teacher.create_lecture(ptor, "mena", "https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
-		//create_ocq_quiz(ptor, o_c.feedback);
-		//check_ocq_questions_coord(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y);
-		// check_answer_given_answer_order(ptor, 1);
-		// answer(ptor);
-		// check_answer_correct(ptor);
-
-
-	})
-})
 
 describe("1", function(){
 
@@ -54,7 +31,7 @@ describe("1", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_ocq_text_quiz(ptor, o_c.feedback);
 		make_ocq_text_questions(ptor, o_c.feedback);
 	})
@@ -64,7 +41,7 @@ describe("1", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 		check_ocq_no(ptor, 3);
 	})
@@ -110,7 +87,7 @@ describe("2", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_ocq_text_quiz(ptor, o_c.feedback);
 		make_ocq_text_questions(ptor, o_c.feedback);
 	})
@@ -120,7 +97,7 @@ describe("2", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 		check_ocq_no(ptor, 3);
 	})
@@ -182,7 +159,7 @@ describe("3", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_ocq_text_quiz(ptor, o_c.feedback);
 		make_ocq_text_questions(ptor, o_c.feedback);
 	})
@@ -192,7 +169,7 @@ describe("3", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 		check_ocq_no(ptor, 3);
 	})
@@ -254,7 +231,7 @@ describe("4", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_ocq_text_quiz(ptor, o_c.feedback);
 		make_ocq_text_questions(ptor, o_c.feedback);
 	})
@@ -264,7 +241,7 @@ describe("4", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 		check_ocq_no(ptor, 3);
 	})
@@ -355,7 +332,7 @@ function check_ocq_no(ptor, no){
 }
 
 function expect_quiz(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
+	locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
 		expect(check_answer_btn.isDisplayed()).toEqual(true);
 	})
 }
@@ -367,7 +344,7 @@ function check_answer_given_answer_order(ptor, choice_no){
 }
 
 function answer(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(answer_btn){
+	locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(answer_btn){
 		answer_btn.click();
 	})
 }

@@ -14,6 +14,10 @@
         min-width: 70px;
         overflow: hidden;
     }
+    .aligntop{
+        vertical-align: top; 
+        padding-top: 0px;
+    }
     ul{
         margin-left: 5px !important;
         margin-right: 5px !important;
@@ -29,7 +33,7 @@
 </style>
     <table style="vertical-align: baseline;" id="navigation-table">
         <tr>
-            <td>
+            <td ng-class="{aligntop: show_settings}">
                 <a href="">
                     <profile-image email="$parent.current_user.email" imagesize="70" background="white"></profile-image>
                 </a>

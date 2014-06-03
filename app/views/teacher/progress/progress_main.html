@@ -7,7 +7,7 @@
 		<div infinite-scroll='getRemainingModuleProgress()' infinite-scroll-disabled='module_scroll_disable' infinite-scroll-immediate-check='false' style="overflow:auto" ng-if="module_status">
 			<progress_matrix column_names='module_names' students='module_students' status="module_status" action="updateStatus(student_id, module_id, module_status)" popover="true"/>
 		</div>
-		<center><loading size="small" show="loading_modules" /></center>
+		<center><loading size="big" show="loading_modules" /></center>
     </tab>
     <tab heading="{{'courses.module_chart'|translate}}" select="totalChartTab()" style="cursor:pointer">
         <center ><loading size="big" show="loading_total_charts" /></center>

@@ -1,4 +1,5 @@
-<div class="course-left">
+<center><loading size="big" show="!data.course" /></center>
+<div class="course-left" ng-show="data.course">
     <center>
         <img style="margin: 0 auto; position: relative;" ng-show="!data.course.image_url" src="../images/course_image.png"/>
         <img style="margin: 0 auto; position: relative;" ng-show="data.course.image_url" ng-src="{{data.course.image_url}}" />
@@ -21,7 +22,7 @@
 
 
 </div>
-<div class="course-right">
+<div class="course-right" ng-show="data.course">
     <div class="top">
         <span class="dropdown-header"><b translate>head.information</b></span>
         <br />

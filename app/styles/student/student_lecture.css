@@ -49,10 +49,15 @@
         background-color: transparent;
     }
     .lecture-heading{
-        background: -webkit-linear-gradient(right, darkgrey, lightgrey, transparent); /* For Safari 5.1 to 6.0 */
-        background: -o-linear-gradient(right, darkgrey, lightgrey, transparent); /* For Opera 11.1 to 12.0 */
-        background: -moz-linear-gradient(right, darkgrey, lightgrey, transparent); /* For Firefox 3.6 to 15 */
-        background: linear-gradient(to right, darkgrey, lightgrey, transparent); /* Standard syntax (must be last) */
+        /*background: -webkit-linear-gradient(right, darkgrey, lightgrey, transparent); 
+        background: -o-linear-gradient(right, darkgrey, lightgrey, transparent);
+        background: -moz-linear-gradient(right, darkgrey, lightgrey, transparent);
+        background: linear-gradient(to right, darkgrey, lightgrey, transparent);*/
+        background-color: lightgrey;
+        border-radius: 0px 4px 4px 0px;
+        height: 20px;
+        padding: 5px;
+        line-height: normal;
     }
     .table{
         border-collapse: separate;

@@ -20,6 +20,7 @@
 </div>
 	
 	<div style="text-align: left;padding: 15px;overflow:auto;margin-top: 50px;">
+		<center><loading size="big" show="!module.items" /></center>
 		<div ng-repeat="module_item in module.items">
 		<!-- 	<div  id="{{module_item.quiz_type+'_'+module_item.id}}" ng-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];">
 				<p class="title">{{quiz.meta.name}}</p>

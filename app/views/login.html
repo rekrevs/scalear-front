@@ -3,10 +3,6 @@
 <!-- endbuild -->
 <div class="main-login-container">
     <center>
-
-        <overlay ng-show="sending">
-                    <loading size="big" show="true" style="position:relative; top:40%;" />
-        </overlay>
         <div style="float: left; display: inline-table; margin: 20px;">
             <table>
                 <tr>
@@ -71,6 +67,7 @@
                             </td>
                         </tr>            
                     </table>
+                    <loading size="small" show="sending"/>
                 </div>
                 
             </form>

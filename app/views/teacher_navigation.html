@@ -14,6 +14,10 @@
         min-width: 70px;
         overflow: hidden;
     }
+    .aligntop{
+        vertical-align: top; 
+        padding-top: 0px;
+    }
     ul{
         margin-left: 5px !important;
         margin-right: 5px !important;
@@ -29,7 +33,7 @@
 </style>
     <table style="vertical-align: baseline;" id="navigation-table">
         <tr>
-            <td style="vertical-align: initial;">
+            <td ng-class="{aligntop: show_settings}">
                 <a href="">
                     <profile-image email="$parent.current_user.email" imagesize="70" background="white"></profile-image>
                 </a>
@@ -48,7 +52,7 @@
                 <div class="headerdivider" style="display: table-column; padding-right: 20px;">
                 </div>
                 <span style="margin-left: 20px; display: inline-block;" ng-hide="!course_information || show_settings || show_notifications">
-                    <div style="word-wrap: normal; width: 450px;">
+                    <div style="word-wrap: normal;">
                         <span style="font-size: 16px; ">
                         <a ui-sref="home" class="mini-link">{{'courses.all_courses' | translate}}</a> > {{course_information.short_name}} | {{course_information.name}}
                         </span>
@@ -136,9 +140,9 @@
             <span class="settings-menu-button" ng-click="toggleSettings();" ng-class="{settingsopen: show_settings}">
             </span>
             
-            <span class="shared-page-button" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}" tooltip="{{'sharing.with_you' | translate}}" tooltip-placement="bottom"></span>
+            <span class="shared-page-button" ng-show="role != 2 && areshared" id="shared_btn" ui-sref="show_shared" ng-class="{sharedfull: areshared}" tooltip="{{'sharing.with_you' | translate}}" tooltip-placement="bottom"></span>
 
-            <span class="notification-modal-button" id="notification_btn" ng-click="toggleNotifications()" ng-class="{notificationfull: arenotification}" tooltip="{{'navigation.notifications' | translate}}" tooltip-placement="bottom"></span>
+            <span class="notification-modal-button" ng-show="role != 2" id="notification_btn" ng-click="toggleNotifications()" ng-class="{notificationfull: arenotification}" tooltip="{{'navigation.notifications' | translate}}" tooltip-placement="bottom"></span>
 
             <span ng-show="role == 5" class="statistics-button" id="stats_btn" ui-sref="statistics" tooltip="{{'courses.statistics' | translate}}" tooltip-placement="bottom">
             </span>

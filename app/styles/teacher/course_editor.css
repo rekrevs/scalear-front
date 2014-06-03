@@ -45,7 +45,7 @@ a {
 /* --- Accordion --- */
 .js .accordion {visibility:hidden}
 
-.accordion {margin:0; padding:0; overflow: auto; box-shadow: 1px 1px 1px 1px lightgray;}
+.accordion {margin:0; padding:0; overflow: auto; box-shadow: 1px 1px 1px 1px lightgray; background-color: lightgrey;}
 
 .accordion li {list-style-type:none}
 
@@ -56,9 +56,12 @@ ul.accordion ul {
 	margin-left: 0px !important; 
 	margin-right: 0px !important;}
 
-.accordion .outer { background: #414141;}
+.accordion .outer { 
+	/*background: #414141;*/
+	background: white;
+}
 
-.accordion .inner {margin-bottom:0; position:relative; overflow:hidden}
+.accordion .inner {margin-bottom:0; position:relative; overflow:hidden; background: darkgrey;}
 
 .accordion .inner .inner {padding-bottom:0}
 
@@ -67,10 +70,14 @@ ul.accordion ul {
 .accordion p {margin:.5em 1px 1em}
 
 .accordion-heading{
-	background-color: white;
+	/*background-color: white;*/
+	/*background-color: #414141;*/
+	background-color: lightgrey;
 }
 .accordion-heading:hover, .moduleopen{
-	background-color: lightgrey;
+	/*background-color: lightgrey;*/
+	/*background-color: rgba(0,0,0, 0.5);*/
+	background-color: darkgrey;
 }
 .accordion-heading .accordion-toggle{padding:0;}
 
@@ -91,7 +98,17 @@ ul.accordion ul {
 .accordion a {...}
 */    
 
-a.trigger {display:inline-block !important; background-repeat: no-repeat; background-position: 1px 50%;  font-weight:700; text-align: left; margin-left: 15px; color: #2d2d2d; font-size: 13px;}
+a.trigger {
+	display:inline-block !important;
+	background-repeat: no-repeat;
+ 	background-position: 1px 50%;
+  	font-weight:700;
+ 	text-align: left;
+ 	margin-left: 15px;
+ 	color: #2d2d2d;
+ 	/*color: white;*/
+ 	font-size: 13px;
+}
 
 
 
@@ -102,7 +119,8 @@ a.trigger {display:inline-block !important; background-repeat: no-repeat; backgr
 	padding-left: 15px;
 }
 .h:hover, .last-child:hover, .inneritemopen {
-	background-color: rgba(0,0,0,0.5);
+	background-color: rgba(0,0,0,0.2);
+	/*background-color: lightgrey;*/
 }
 
 a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:#bcd}
@@ -114,6 +132,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	font-size:12px;
 	font-weight:normal;
 	color:white;
+	/*color: #2d2d2d;*/
 	display:inline-block;
 	width:165px;
 }
@@ -149,6 +168,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	overflow:auto;*/
 	/*width:auto*/
 	background-color: white;
+	/*background-color: #414141;*/
 	margin-left: -30px;
 	width:270px;
 	float: left;

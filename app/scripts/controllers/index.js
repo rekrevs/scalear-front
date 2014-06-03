@@ -44,6 +44,7 @@ angular.module('scalearAngularApp')
                       $rootScope.preview_as_student = false
                       $cookieStore.remove('preview_as_student')
                       $cookieStore.remove('old_user_id')
+                      $cookieStore.remove('new_user_id')
                       $cookieStore.remove('course_id')
                       $state.go('course.course_editor', {course_id: course_id})
                     },
@@ -52,6 +53,7 @@ angular.module('scalearAngularApp')
                       $rootScope.preview_as_student = false
                       $cookieStore.remove('preview_as_student')
                       $cookieStore.remove('old_user_id')
+                      $cookieStore.remove('new_user_id')
                       $cookieStore.remove('course_id')
                     }
                   )

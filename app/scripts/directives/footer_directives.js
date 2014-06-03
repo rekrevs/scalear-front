@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
                 
                 '&copy; ' + new Date().getFullYear() + ' <a ui-sref="home">ScalableLearning</a> | ' +
                 '<span translate="footer.about"></span> | ' +
-                '<a ui-sref="privacy" translate="footer.privacy"></a> ' +
+                '<a ui-sref="privacy" translate="footer.privacy"></a> | ' +
                 '<report_technical />' +
                 '<br><center><version /></center>' +
                 

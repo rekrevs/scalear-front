@@ -30,7 +30,7 @@ describe("1", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_free_text_quiz(ptor, o_c.feedback);
 		make_free_text_questions(ptor, o_c.feedback);
 	})
@@ -40,7 +40,7 @@ describe("1", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 	})
 
@@ -97,7 +97,7 @@ describe("2", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_free_text_quiz(ptor, o_c.feedback);
 		make_match_text_questions(ptor, "menaz", o_c.feedback);
 	})
@@ -107,7 +107,7 @@ describe("2", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 	})
 
@@ -164,7 +164,7 @@ describe("3", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_free_text_quiz(ptor, o_c.feedback);
 		make_match_text_questions(ptor, "menaz", o_c.feedback);
 	})
@@ -174,7 +174,7 @@ describe("3", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 	})
 
@@ -231,7 +231,7 @@ describe("4", function(){
 	})
 
 	it('should create quiz with regex', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_free_text_quiz(ptor, o_c.feedback);
 		make_match_text_questions(ptor, "/^[a-z0-9_-]{3,16}$/", o_c.feedback);
 	})
@@ -241,7 +241,7 @@ describe("4", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 	})
 
@@ -298,7 +298,7 @@ describe("5", function(){
 	})
 
 	it('should create quiz with regex', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_free_text_quiz(ptor, o_c.feedback);
 		make_match_text_questions(ptor, "/^[a-z0-9_-]{3,16}$/", o_c.feedback);
 	})
@@ -308,7 +308,7 @@ describe("5", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 	})
 
@@ -377,14 +377,19 @@ function make_free_text_questions(ptor, feedback){
 }
 
 function make_match_text_questions(ptor, text, feedback){
-		locator.by_id(ptor,'ontop').findElement(protractor.By.tagName('select')).click();
-		locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('option')).then(function(options){
-			options[1].click();
-		})
-		locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(ins){
-			ins[1].sendKeys(text);
-		})
-
+		locator.by_id(ptor,'ontop').findElement(protractor.By.tagName('select')).then(function(ontop){
+            ontop.click().then(function(){
+                ptor.sleep(2000);
+                locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('option')).then(function(options){
+                    options[1].click().then(function(){
+                        ptor.sleep(2000);
+                        locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(ins){
+                            ins[1].sendKeys(text);
+                        })
+                    })
+                })
+            })
+        })
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
 		locator.by_id(ptor, 'done').then(function(btn){
@@ -395,13 +400,13 @@ function make_match_text_questions(ptor, text, feedback){
 }
 
 function expect_quiz(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
+    locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
 		expect(check_answer_btn.isDisplayed()).toEqual(true);
 	})
 }
 
 function answer(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(answer_btn){
+    locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(answer_btn){
 		answer_btn.click();
 	})
 }

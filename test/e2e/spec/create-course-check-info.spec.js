@@ -22,7 +22,7 @@ var discussion_link_shrt_ch = 'www.discu';
 var course_date = new Date();
 var date = course_date.toString();
 
-xdescribe("teacher create course check info", function(){
+describe("teacher create course check info", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -46,7 +46,7 @@ xdescribe("teacher create course check info", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_info(ptor);
-		student.check_course_info(ptor, short_name, course_name, course_description, prerequisites, discussion_link_shrt, date, course_duration)
+        student.check_course_info(ptor, params.short_name, params.course_name, params.course_description, params.prerequisites, params.discussion_link, Date(), params.course_duration);
 	})
 	//end test
 	it('should delete course', function(){
@@ -100,80 +100,84 @@ describe("teacher check the ability to change course info", function(){
 	})
 })
 
+//======================================================
+//
+//======================================================
+
 
 function change_course_info(ptor, course_description, prerequisites, short_name, course_name, discussion_link, course_duration, feedback){
-	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/div/table/tbody/tr[1]/td/span[2]/p/big-area/a').then(function(desc){
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[2]/div[1]/span[2]/p/big-area/a').then(function(desc){
 		desc.click();
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/div/table/tbody/tr[1]/td/span[2]/p/big-area/form/div/textarea').then(function(txt_area){
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
 			txt_area.clear();
 			txt_area.sendKeys(course_description);
 		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/div/table/tbody/tr[1]/td/span[2]/p/big-area/form/div/span/button[1]').then(function(submit_btn){
+        locator.by_classname(ptor, 'icon-ok').then(function(submit_btn){
 			submit_btn.click().then(function(){
                 feedback(ptor,'Course was successfully updated');
             });
 		})
 	})
 
-	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/div/table/tbody/tr[1]/td/span[2]/span[1]/p/big-area/a').then(function(prereq){
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[2]/div[1]/span[3]/p/big-area/a').then(function(prereq){
 		prereq.click();
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/div/table/tbody/tr[1]/td/span[2]/span[1]/p/big-area/form/div/textarea').then(function(txt_area){
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
 			txt_area.clear();
 			txt_area.sendKeys(prerequisites);
 		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/div/table/tbody/tr[1]/td/span[2]/span[1]/p/big-area/form/div/span/button[1]').then(function(submit_btn){
+        locator.by_classname(ptor, 'icon-ok').then(function(submit_btn){
 			submit_btn.click().then(function(){
                 feedback(ptor,'Course was successfully updated');
             });
 		})
 	})
 
-	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/b/details-text[1]/a').then(function(shrt_nm){
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/details-text[1]/a').then(function(shrt_nm){
 		shrt_nm.click();
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/b/details-text[1]/form/div/input').then(function(txt_area){
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
 			txt_area.clear();
 			txt_area.sendKeys(short_name);
 		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/b/details-text[1]/form/div/span/button[1]').then(function(submit_btn){
+        locator.by_classname(ptor, 'icon-ok').then(function(submit_btn){
 			submit_btn.click().then(function(){
                 feedback(ptor,'Course was successfully updated');
             });
 		})
 	})
 
-	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/b/details-text[2]/a').then(function(crs_nm){
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/details-text[2]/a').then(function(crs_nm){
 		crs_nm.click();
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/b/details-text[2]/form/div/input').then(function(txt_area){
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
 			txt_area.clear();
 			txt_area.sendKeys(course_name);
 		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/b/details-text[2]/form/div/span/button[1]/span').then(function(submit_btn){
+        locator.by_classname(ptor, 'icon-ok').then(function(submit_btn){
 			submit_btn.click().then(function(){
                 feedback(ptor,'Course was successfully updated');
             });
 		})
 	})
-
-	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/ul[2]/details-link/a').then(function(disc_lnk){
+    
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/span/ul[2]/details-link/a').then(function(disc_lnk){
 		disc_lnk.click();
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/ul[2]/details-link/form/div/input').then(function(txt_area){
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
 			txt_area.clear();
 			txt_area.sendKeys(discussion_link);
 		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/ul[2]/details-link/form/div/span/button[1]').then(function(submit_btn){
+        locator.by_classname(ptor, 'icon-ok').then(function(submit_btn){
 			submit_btn.click().then(function(){
                 feedback(ptor,'Course was successfully updated');
             });
 		})
 	})
 
-	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/ul[4]/details-text/a').then(function(crs_dur){
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/span/ul[4]/details-text/a').then(function(crs_dur){
 		crs_dur.click();
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/ul[4]/details-text/form/div/input').then(function(txt_area){
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
 			txt_area.clear();
 			txt_area.sendKeys(course_duration);
 		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/center/table/tbody/tr[2]/td/ul[4]/details-text/form/div/span/button[1]').then(function(submit_btn){
+        locator.by_classname(ptor, 'icon-ok').then(function(submit_btn){
 			submit_btn.click().then(function(){
                 feedback(ptor,'Course was successfully updated');
             });

@@ -22,35 +22,7 @@ var d_q2_y = 130;
 var d_q3_x = 169; //175-6;
 var d_q3_y = 190;
 
-//function testing
-xdescribe("teacher", function(){
-	it('should', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-		o_c.open_course_whole(ptor);
-		//teacher.add_module(ptor, o_c.feedback);
-		teacher.open_module(ptor, 1);
-		//teacher.create_lecture(ptor, "drag_quiz","http://www.youtube.com/watch?v=xGcG4cp2yzY", 1, o_c.feedback)
-		teacher.open_item(ptor, 1, 1);
-		youtube.seek(ptor, 50);
-		create_drag_quiz(ptor, o_c.feedback);
-		make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y, o_c.feedback);
-		//create_mcq_quiz(ptor, o_c.feedback);
-		//make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y, o_c.feedback);
-		// o_c.open_tray(ptor);
-		// o_c.open_lectures(ptor);
-		//youtube.seek(ptor, 50);
-		//teacher.create_lecture(ptor, "mena", "https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
-		//create_mcq_quiz(ptor, o_c.feedback);
-		//check_mcq_questions_coord(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
-		// check_answer_given_answer_order(ptor, 1);
-		// answer(ptor);
-		// check_answer_correct(ptor);
-
-
-	})
-})
-
-describe("1", function(){
+xdescribe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -72,21 +44,11 @@ describe("1", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_drag_quiz(ptor, o_c.feedback);
-		make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y, o_c.feedback);
+        make_drag_questions_and_check(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y, o_c.feedback);
 	})
-
-	it('should login a student and check for coordinates', function(){
-		o_c.to_student(ptor);
-		o_c.open_course_whole(ptor);
-		o_c.open_tray(ptor);
-		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
-		expect_quiz(ptor);
-		check_drag_questions_coord(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y);
-	})
-
+    
 	it('should clear the course for deletion', function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_whole(ptor);
@@ -128,7 +90,7 @@ describe("2", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_drag_quiz(ptor, o_c.feedback);
 		make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y, o_c.feedback);
 	})
@@ -138,7 +100,7 @@ describe("2", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 		check_drags_no(ptor, 3)
 	})
@@ -200,7 +162,7 @@ describe("3", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		create_drag_quiz(ptor, o_c.feedback);
 		make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y, o_c.feedback);
 	})
@@ -210,7 +172,7 @@ describe("3", function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 50);
+		youtube.seek(ptor, 49);
 		expect_quiz(ptor);
 		check_drags_no(ptor, 3)
 	})
@@ -267,6 +229,73 @@ function create_drag_quiz(ptor, feedback){
 		})
 	})
 }
+
+function make_drag_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
+    var ontop_w = 0;
+    var ontop_h = 0;
+    locator.by_id(ptor,'ontop').then(function(ontop){
+        ontop.getSize().then(function(size){
+            ontop_w = size.width;
+            ontop_h = size.height;
+
+            ptor.actions().mouseMove(ontop).perform();
+            ptor.actions().mouseMove({x: q1_x, y: q1_y}).perform();
+            ptor.actions().doubleClick().perform();
+
+            ptor.actions().mouseMove(ontop).perform();
+            ptor.actions().mouseMove({x: q2_x, y: q2_y}).perform();
+            ptor.actions().doubleClick().perform();
+
+            ptor.actions().mouseMove(ontop).perform();
+            ptor.actions().mouseMove({x: q3_x, y: q3_y}).perform();
+            ptor.actions().doubleClick().perform();
+
+            ptor.sleep(2000);
+            o_c.scroll(ptor, 1000);
+            locator.by_id(ptor, 'done').then(function(btn){
+                btn.click().then(function(){
+                    feedback(ptor, 'Quiz was successfully saved');
+                })
+            })
+        })
+    })
+
+    o_c.to_student(ptor);
+    o_c.open_course_whole(ptor);
+    o_c.open_tray(ptor);
+    o_c.open_lectures(ptor);
+    youtube.seek(ptor, 49);
+    expect_quiz(ptor);
+
+    var w, h= 0;
+    //(width*169)/570
+    locator.by_id(ptor,'ontop').then(function(ontop){
+        ontop.getLocation().then(function(location){
+            ontop.getSize().then(function(size){
+                w = size.width;
+                h = size.height;
+
+                ontop.findElements(protractor.By.className('ui-droppable')).then(function(check_boxes){
+                    check_boxes[0].getLocation().then(function(loc){
+                        expect(loc.x-location.x).toEqual(Math.floor((w*q1_x)/ontop_w)+19);
+                        expect(loc.y-location.y).toBeLessThan(Math.floor((w*q1_y)/ontop_h)-4);
+                    })
+
+                    check_boxes[1].getLocation().then(function(loc){
+                        expect(loc.x-location.x).toEqual(Math.floor((w*q2_x)/ontop_w)+19);
+                        expect(loc.y-location.y).toBeLessThan(Math.floor((w*q2_y)/ontop_h)-4);
+                    })
+
+                    check_boxes[2].getLocation().then(function(loc){
+                        expect(loc.x-location.x).toEqual(Math.floor((w*q3_x)/ontop_w)+19);
+                        expect(loc.y-location.y).toBeLessThan(Math.floor((w*q3_y)/ontop_h)-4);
+                    })
+                })
+            })
+        })
+    })
+}
+
 
 function make_drag_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
 	locator.by_id(ptor,'ontop').then(function(ontop){
@@ -332,13 +361,13 @@ function check_drag_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 }
 
 function expect_quiz(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
+    locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
 		expect(check_answer_btn.isDisplayed()).toEqual(true);
 	})
 }
 
 function answer(ptor){
-	locator.by_tag(ptor,'check').findElement(protractor.By.tagName('input')).then(function(answer_btn){
+    locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(answer_btn){
 		answer_btn.click();
 	})
 }

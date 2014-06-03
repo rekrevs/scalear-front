@@ -494,7 +494,7 @@ var translation_en=function(){
         go_to_class: "Go to class",
         display_inclass: "Display For In-Class Review",
         filter: "Filter",
-        see_related: "See related answer to student"
+        see_related: "See related answers to student"
       },
       courses:{
         image_not_found: "Image not found...",

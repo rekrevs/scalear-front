@@ -96,6 +96,7 @@
 						<p ng-hide="lecture.due_date_module">
 							<span translate>lectures.set_date</span>:<br>
 							<details-date date="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-date>
+							<br>
 							<details-time class="timepicker" time="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-time>
 						</p> 
 					</div>

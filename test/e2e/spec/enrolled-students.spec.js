@@ -27,7 +27,7 @@ var password = 'password';
 ////////// searching
 ////////// emailing
 
-xdescribe("1", function(){
+describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -56,7 +56,7 @@ xdescribe("1", function(){
 	})
 })
 
-xdescribe("2", function(){
+describe("2", function(){
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
 	})

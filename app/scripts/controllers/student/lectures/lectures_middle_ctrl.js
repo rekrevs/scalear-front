@@ -149,8 +149,10 @@ angular.module('scalearAngularApp')
                 if($scope.timeline){
 
                     goToLecture($stateParams.lecture_id) 
-                    $scope.scrollIntoView('outline')
-                    $scope.scrollIntoView('notes')
+                    $timeout(function(){
+                        $scope.scrollIntoView('notes')
+                        $scope.scrollIntoView('outline')
+                    },100)
                     // $location.hash('outline_'+$scope.lecture.id);
                     // $anchorScroll();
                     // if($state.params.tab){
@@ -374,6 +376,7 @@ angular.module('scalearAngularApp')
 
     $scope.scrollIntoView=function(tab, fast){
         if($scope.lecture && !isiPad()){
+<<<<<<< HEAD
             // $timeout(function(){angular.element('#'+tab+'_'+$scope.lecture.id)[0].scrollIntoView()})
             if(fast){
                 $timeout(function(){
@@ -388,6 +391,13 @@ angular.module('scalearAngularApp')
                 }, 1000)
             }
             
+=======
+            $timeout(function(){angular.element('#'+tab+'_'+$scope.lecture.id)[0].scrollIntoView()})
+            // $timeout(function(){
+            //     $location.hash(tab+'_'+$scope.lecture.id);
+            //     $anchorScroll();    
+            // }, 1000)
+>>>>>>> 37e6539bc684edc12a495d6e96128570a2f71dd2
         }
     }
 
@@ -539,8 +549,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onEnd= function() {
-        // if($scope.fullscreen)
-        //     $scope.resize.small()
         $scope.end_buttons = true
     }
 
@@ -558,7 +566,7 @@ angular.module('scalearAngularApp')
                 $scope.seek_and_pause($scope.go_to_time)
             $scope.go_to_time = null
         }
-    }    
+    } 
 
     var showNotification=function(msg, sub_msg){
         $scope.notification_message=$translate(msg);

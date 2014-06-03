@@ -38,11 +38,11 @@ exports.check_course_info = function(ptor, course_code, course_name, description
     ptor.findElement(protractor.By.id('discussion_link')).then(function(disc_link){
         expect(disc_link.getText()).toContain(disscussion_link);
     })
-    ptor.findElement(protractor.By.id('course_date')).then(function(date){
-        date.getText().then(function(text){
-            expect(course_date).toContain(text.split(" ")[1]);
-        });
-    })
+//    ptor.findElement(protractor.By.id('course_date')).then(function(date){
+//        date.getText().then(function(text){
+//            expect(course_date).toContain(text.split(" ")[1]);
+//        });
+//    })
     ptor.findElement(protractor.By.id('course_duration')).then(function(duration){
         expect(duration.getText()).toContain(course_duration);
     })
@@ -72,6 +72,7 @@ exports.check_timeline_item_number = function(ptor, total_item_no){
 exports.open_module_number = function(ptor, mo_no){
     locator.by_classname(ptor, 'modules-collapser').then(function(mod_btn){
         mod_btn.click();
+        ptor.sleep(500)
         expect(locator.by_classname(ptor,"multicol").isDisplayed()).toEqual(true);
         locator.by_repeater(ptor,'module in modules').then(function(modules){
           modules[mo_no-1].findElement(protractor.By.tagName('ul')).then(function(module){
@@ -167,3 +168,16 @@ exports.submit_normal_quiz = function(ptor){
   })
 }
 
+//=====================================
+//          press confused btn
+//=====================================
+
+exports.press_confused_btn = function(ptor){
+  locator.by_classname(ptor, 'confusedDiv').then(function(btn){
+    btn.click().then(function(){
+      locator.by_repeater(ptor, 'element in timeline').then(function(elements){
+        expect(elements.length).toEqual(1);
+      })
+    })
+  })
+}

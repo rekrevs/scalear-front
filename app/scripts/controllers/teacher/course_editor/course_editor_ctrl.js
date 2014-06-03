@@ -20,6 +20,10 @@ angular.module('scalearAngularApp')
  		console.log($state.params['module_id'])
  		console.log($state.params['lecture_id'])
  		console.log($state.params['quiz_id'])
+ 		$cookieStore.remove('preview_as_student')
+      	$cookieStore.remove('old_user_id')
+      	$cookieStore.remove('new_user_id')
+      	$cookieStore.remove('course_id')
  		$scope.open_id="-1";
 	    $scope.open={};
 	    $scope.oneAtATime = true;
@@ -72,6 +76,7 @@ angular.module('scalearAngularApp')
  	$scope.impersonate = function(module_id){
         $cookieStore.put('old_user_id', $rootScope.current_user.id)
         $cookieStore.put('course_id', $stateParams.course_id)
+        $scope.disable_preview = true
         Impersonate.create({},{course_id: $stateParams.course_id},
           function(data){
             console.log(data)
@@ -82,7 +87,7 @@ angular.module('scalearAngularApp')
             $state.go('course.courseware.module',{course_id: $stateParams.course_id, module_id: module_id })
           },
           function(){
-            console.log("bad")
+            console.log("Failed")
           }
         )
   	}

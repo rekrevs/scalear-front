@@ -53,6 +53,15 @@ exports.config = {
         //'test/e2e/spec/enrolled-students.spec.js',
         //test/e2e/spec/free-text-quizzez-over-video-text.spec.js',
         //'test/e2e/spec/inclass.spec.js',
+        //'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',
+        //'test/e2e/spec/mcq-quizzez-over-video.spec.js',
+        //'test/e2e/spec/mcq-survey-over-video.spec.js',
+        //'test/e2e/spec/normal-quiz-survey.spec.js',
+        //'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
+        //'test/e2e/spec/ocq-quizzez-over-video.spec.js',
+        //'test/e2e/spec/ocq-survey-over-video.spec.js',
+        //'test/e2e/spec/statistics.spec.js',
+        //'test/e2e/spec/teacher-managment.spec.js',
     ],
 
     // ----- Capabilities to be passed to the webdriver instance ----

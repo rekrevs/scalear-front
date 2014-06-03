@@ -340,22 +340,26 @@ angular.module('scalearAngularApp')
     }
   }
 
+
   $scope.sendFeedback=function(question){
-    var survey_id = question.quiz_id,
-    answer_id = question.id,
-    response = question.temp_response    
-  
-    Quiz.sendFeedback(
+    if(question.temp_response && question.temp_response.length && question.temp_response.trim()!=""){
+      var survey_id = question.quiz_id,
+      answer_id = question.id,
+      response = question.temp_response    
+
+      Quiz.sendFeedback(
       {quiz_id: survey_id},
       {
         groups:[answer_id],
         response:response
       },
       function(){
-        question.response = question.temp_response
+        question.response = angular.copy(question.temp_response)
+        question.temp_response = null
       },
       function(){}
-    )
+      )
+    }
   }
 
   $scope.deletePost=function(items, index){    

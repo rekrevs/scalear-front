@@ -92,6 +92,33 @@ exports.delete_course = function(ptor, feedback){
 	})
 }
 
+exports.delete_course_edited = function(ptor){
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
+        x_btn.click().then(function(){
+            locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
+                conf_del.click().then(function() {
+                    o_c.feedback(ptor, 'Course was successfully deleted.');
+                    o_c.open_tray(ptor);
+                    o_c.logout(ptor, o_c.feedback);
+                });
+            })
+        })
+    })
+}
+
+exports.just_delete_course = function(ptor){
+    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
+        x_btn.click().then(function(){
+            locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
+                conf_del.click().then(function() {
+                    o_c.feedback(ptor, 'Course was successfully deleted.');
+                });
+            })
+        })
+    })
+}
+
+
 ///////////////////////////////////////////////////////////////////////
 ////////////////////////course editor functions////////////////////////
 ///////////////////////////commonly used//////////////////////////////
@@ -657,15 +684,22 @@ exports.rename_module = function(ptor, name){
 	})
 }
 
+//====================================================
+//              mark to be inclass
+//====================================================
 
+exports.check_inclass = function(ptor, no){
+    locator.by_repeater(ptor, "item in timeline['lecture'][lec.meta.id].items").then(function(items){
+        items[no-1].findElement(protractor.By.tagName('input')).then(function(ins){
+        	ins.click();
+        })
+    })
+}
 
-
-
-
-
-
-
-
-
-
-
+exports.check_inclass_in_item = function(ptor, no, item_no){
+    locator.by_repeater(ptor, "item in timeline['lecture'][lec.meta.id].items").then(function(items){
+        items[no-1].findElements(protractor.By.tagName('input')).then(function(ins){
+            ins[item_no-1].click();
+        })
+    })
+}

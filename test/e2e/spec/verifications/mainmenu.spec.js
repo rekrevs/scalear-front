@@ -11,16 +11,12 @@ var studentmail = 'studenttest@sharklasers.com';
 var biog = "kalam keteeer yege 140 char";
 var webs = "www.website.com";
 var password = 'password';
-var enrollment_key = '';
-var functions = ptor.params;
-
-var mail = 'mena.happy@yahoo.com'
 
 ptor.driver.manage().window().maximize();
 
 describe('basic functionality', function(){
 	it('should login', function(){
-		functions.sign_in(ptor, mail, password, functions.feedback)
+		functions.sign_in(ptor, params.mail, params.password, functions.feedback)
 	})
 	it('menu app should be closed',function(){
 		menu_should_be_closed(ptor);

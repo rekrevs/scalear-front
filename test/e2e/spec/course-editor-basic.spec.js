@@ -8,27 +8,7 @@ var params = ptor.params
 ptor.driver.manage().window().maximize();
 
 //function testing
-describe("teacher", function(){
-	it('should', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-		o_c.open_course_whole(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.rename_item(ptor, 'menazz', o_c.feedback);
-		// o_c.open_tray(ptor);
-		// o_c.open_lectures(ptor);
-		// student.check_module_number(ptor, 2);
-		// ptor.sleep(3000);
-		// student.check_timeline_item_number(ptor, 2);
-		// ptor.sleep(3000);
-		// student.open_module_number(ptor, 2);
-		// ptor.sleep(3000);
-		// student.check_timeline_item_number(ptor, 3);
-		
-		//teacher.open_module(ptor, 2);
-		//teacher.delete_item_by_number(ptor, 2, 1, o_c.feedback);
-		//teacher.delete_item_by_number(ptor, 2, 1, o_c.feedback);
-		//teacher.delete_item_by_number(ptor, 2, 2, o_c.feedback);
-	})
+xdescribe("teacher", function(){
 })
 
 xdescribe("1", function(){
@@ -96,7 +76,7 @@ xdescribe("1", function(){
 	})
 })
 
-xdescribe("2", function(){
+describe("2", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -134,7 +114,7 @@ xdescribe("2", function(){
 		student.check_module_number(ptor, 2);
 		student.check_timeline_item_number(ptor, 2);
 		student.open_module_number(ptor, 2);
-		student.check_timeline_item_number(ptor, 3);
+		student.check_timeline_item_number(ptor, 2);
 	})
 	it('should clear the course for deletion', function(){
 		o_c.to_teacher(ptor);
@@ -156,7 +136,7 @@ xdescribe("2", function(){
 	it('should delete course', function(){
 		//should choose one of home() or home_teacher() 
 		//depending on the current state(student or teacher)
-		o_c.home(ptor);
+		o_c.home_teacher(ptor);
 		teacher.delete_course(ptor, o_c.feedback);
 	})
 })

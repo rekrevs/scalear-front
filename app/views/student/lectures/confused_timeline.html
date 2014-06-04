@@ -1,11 +1,11 @@
-<td class="timeline-icon-container">
+<td style="padding: 0px;" class="timeline-icon-container">
   <div ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:'hh:mm:ss'}}" tooltip-append-to-body="true" >
     <img src="../images/confused-timeline.png" />                  
   </div>
 </td>
-<td>
+<td style="padding: 0px;">
   <p class="solved" ng-click="seek()(item.time, item.data.lecture_id)">{{msg | translate}}</p>
 </td>
-<td style="width:20px;">                 
+<td style="width:20px; padding: 0px; padding-right: 8px;">                 
   <delete_button size="small" action="deleteConfused(item)" style="float: right;"></delete_button>
 </td>

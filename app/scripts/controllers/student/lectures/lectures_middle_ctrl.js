@@ -376,7 +376,6 @@ angular.module('scalearAngularApp')
 
     $scope.scrollIntoView=function(tab, fast){
         if($scope.lecture && !isiPad()){
-<<<<<<< HEAD
             // $timeout(function(){angular.element('#'+tab+'_'+$scope.lecture.id)[0].scrollIntoView()})
             if(fast){
                 $timeout(function(){
@@ -390,14 +389,6 @@ angular.module('scalearAngularApp')
                     $anchorScroll();    
                 }, 1000)
             }
-            
-=======
-            $timeout(function(){angular.element('#'+tab+'_'+$scope.lecture.id)[0].scrollIntoView()})
-            // $timeout(function(){
-            //     $location.hash(tab+'_'+$scope.lecture.id);
-            //     $anchorScroll();    
-            // }, 1000)
->>>>>>> 37e6539bc684edc12a495d6e96128570a2f71dd2
         }
     }
 

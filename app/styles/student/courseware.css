@@ -425,7 +425,7 @@ input[type="checkbox"], input[type="radio"] {
   background: white;
 }
 
-@media (min-width: 1025px){
+/*@media (min-width: 1025px){
   .nav-tabs{
     margin-top: -90px;
     background: white;
@@ -439,4 +439,4 @@ input[type="checkbox"], input[type="radio"] {
     z-index: 1;
   }
 
-}
+}*/

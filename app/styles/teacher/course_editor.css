@@ -134,8 +134,8 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	padding-left: 14px;
 	font-size:12px;
 	font-weight:normal;
-	color:white;
-	/*color: #2d2d2d;*/
+	/*color:white;*/
+	color: #2d2d2d;
 	display:inline-block;
 	width:165px;
 }

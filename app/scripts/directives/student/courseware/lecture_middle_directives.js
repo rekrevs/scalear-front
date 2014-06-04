@@ -53,10 +53,16 @@ angular.module('scalearAngularApp')
 
     	scope.setShortcuts = function()
   		{
-  				shortcut.add("c", scope.confusedBtn, {"disable_in_input" : true});  			
-  				shortcut.add("q", scope.questionBtn, {"disable_in_input" : true});
-  		}
+  				shortcut.add("c", function(){
+            scope.confusedBtn()
+            scope.$apply()
+          }, {"disable_in_input" : true});  
 
+  				shortcut.add("q", function(){
+            scope.questionBtn()
+            scope.$apply()
+          }, {"disable_in_input" : true});
+  		}
       scope.setShortcuts()
 
     }

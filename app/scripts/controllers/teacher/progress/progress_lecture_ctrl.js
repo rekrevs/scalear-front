@@ -166,7 +166,9 @@ angular.module('scalearAngularApp')
 	    var parent_div = ul.closest('div')
       if(parent_div.attr('id')){
         var id=parent_div.attr('id').split('_')
-        $scope.selected_item = $scope.timeline[id[0]][id[1]].items[ul.index()]
+        console.log(ul.attr('item'))
+        $scope.selected_item = $scope.timeline[id[0]][id[1]].items[ul.attr('index')]
+        console.log($scope.selected_item)
         $scope.selected_item.lec_id = id[1]
       }
       else
@@ -177,7 +179,7 @@ angular.module('scalearAngularApp')
       else if ($scope.selected_item && $scope.selected_item.type=="Free Text Question")
         view_index = $scope.highlight_index
       else
-        view_index  =  $scope.highlight_index-2
+        view_index = $scope.highlight_index-2
 
       divs[view_index].scrollIntoView()
       $timeout(function(){$window.scrollTo($window.ScrollX,150)})

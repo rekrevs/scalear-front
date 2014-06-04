@@ -447,11 +447,8 @@ angular.module('scalearAngularApp')
 			console.log($scope.selected_quiz)
 			$scope.deleteQuiz($scope.selected_quiz)
 		}
+		closeQuizMode()
 		clearQuizVariables()
-		$scope.editing_mode = false;
-		$scope.hide_alerts = true;
-		$scope.submitted= false
-		$scope.quiz_layer.backgroundColor= ""
 	}
 
 	var clearQuizVariables= function(){
@@ -459,14 +456,17 @@ angular.module('scalearAngularApp')
 		$scope.quiz_deletable = false
 	}
 
+	var closeQuizMode=function(){
+		$scope.editing_mode = false;
+		$scope.hide_alerts = true;
+		$scope.submitted= false
+		$scope.quiz_layer.backgroundColor= ""
+	}
+
 	$scope.deleteQuizButton=function(quiz){
 		if($scope.selected_quiz == quiz){
-			$scope.editing_mode = false;
-			$scope.hide_alerts = true;
-			$scope.submitted= false
-			$scope.quiz_layer.backgroundColor= ""
+			closeQuizMode()
 			clearQuizVariables()
-			console.log("dgd")
 		}
 		$scope.deleteQuiz(quiz)
 	}

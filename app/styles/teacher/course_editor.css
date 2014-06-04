@@ -49,7 +49,10 @@ a {
 
 .accordion li {list-style-type:none}
 
-.accordion li.last-child {margin-left:0px;}
+.accordion li.last-child {
+	margin-left:0px;
+	border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
 
 ul.accordion ul {
 	margin-top:5px; 

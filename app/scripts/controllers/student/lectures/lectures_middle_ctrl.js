@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
     .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','editor','doc','Page', '$filter','Forum','OnlineQuiz','util',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,editor,doc,Page, $filter,Forum, OnlineQuiz, util) {
 
     console.log("lect mid ctlr")
-    $scope.checkModel={quiz:true,confused:true, discussion:true};
+    $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
     $scope.video_layer = {}
     $scope.quiz_layer = {}
     $scope.lecture_player={}
@@ -68,8 +68,9 @@ angular.module('scalearAngularApp')
 
         $scope.$on('update_timeline', function(ev, item){ // used for deleting items from directives like confused and discussions
             if($scope.timeline){
-                var index=$scope.timeline['lecture'][item.data.lecture_id].items.indexOf(item)
-                $scope.timeline['lecture'][item.data.lecture_id].items.splice(index, 1)
+                var lec_id = item.data? item.data.lecture_id : $state.params.lecture_id
+                var index=$scope.timeline['lecture'][lec_id].items.indexOf(item)
+                $scope.timeline['lecture'][lec_id].items.splice(index, 1)
             }
         })
     }
@@ -311,13 +312,10 @@ angular.module('scalearAngularApp')
             if(data.msg=="ask"){
                 showNotification("controller_msg.really_confused_use_question")
             }
-            if(!data.flag) //first time confused in these 15 seconds
-            {
+            if(!data.flag){ //first time confused in these 15 seconds            
                 $scope.timeline['lecture'][$state.params.lecture_id].add(time, "confused", data.item)
             }
-
-            if(data.flag && data.msg!="ask") // confused before but not third time - very confused
-            {
+            if(data.flag && data.msg!="ask"){ // confused before but not third time - very confused            
                 var elem=$scope.timeline['lecture'][$state.params.lecture_id].search_by_id(data.id, "confused");
                 $scope.timeline['lecture'][$state.params.lecture_id].items[elem].data.very=true;            
             }
@@ -343,14 +341,27 @@ angular.module('scalearAngularApp')
         }
     }
 
-    $scope.toggleQuestionBlock= function(){
-        $scope.show_question_block=!$scope.show_question_block;        
-        if($scope.show_question_block){
-            $scope.current_question_time=$scope.lecture_player.controls.getTime();
-            $scope.lecture_player.controls.pause();
-            $scope.fullscreen= false
-        }
+    $scope.addQuestionBlock= function(){
+        // $scope.show_question_block=!$scope.show_question_block;        
+        // if($scope.show_question_block){
+        //     $scope.current_question_time=$scope.lecture_player.controls.getTime();
+        //     $scope.lecture_player.controls.pause();
+        //     $scope.fullscreen= false
+        // }
+        var time=$scope.lecture_player.controls.getTime()
+        $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion",  null);
+        $scope.lecture_player.controls.pause();
+        $scope.fullscreen= false
+        // $scope.timeline['lecture'][$state.params.lecture_id].add(time, "question_block", {})
+
     };
+
+    $scope.addNote=function(){
+        var time=$scope.lecture_player.controls.getTime()
+        $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note",  null);
+        $scope.lecture_player.controls.pause();
+        $scope.fullscreen= false
+    }
 
     $scope.$on('video_back',function(ev, time){
         console.log(time)

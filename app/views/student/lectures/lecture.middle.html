@@ -34,7 +34,7 @@
 							<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
 					    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
 						</div>
-			    		<controls id="controls-bar" class="controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="toggleQuestionBlock()">
+			    		<controls id="controls-bar" class="controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()">
 						</controls>
 						<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
 						<notification message="notification_message" submessage="notification_submessage" /> 
@@ -44,7 +44,7 @@
 			</form>
 		</div>
 		<div id="student-accordion" style="height: 33vw;">
-			<question_block ng-show="show_question_block" time="current_question_time" action="saveQuestion" />
+			<!-- <question_block ng-show="show_question_block" time="current_question_time" action="saveQuestion" /> -->
 		    <tabset style="width:100%;">
 		        <tab id="video_events" active="tabs[0]" heading="{{'lectures.video_events' | translate}}" select="scrollIntoView('outline', true)" style="cursor: pointer; text-align: center;" >
 	        		<table>
@@ -60,6 +60,9 @@
 							        <label id="discussion_checkbox" class="btn btn-checkbox">
 							            <input type="checkbox" ng-model="checkModel.discussion"> {{'lectures.discussion' | translate}}
 							        </label>
+							         <label id="notes_checkbox" class="btn btn-checkbox">
+							            <input type="checkbox" ng-model="checkModel.note"> {{'lectures.video_notes' | translate}}
+							        </label>
 							    </div>
 							    <button class="btn btn-success btn-mini" style="float: right; margin-right: 10px; height: 28px;" ng-click="scrollIntoView('outline', true)" translate>
 							    	lectures.current_lecture
@@ -68,6 +71,7 @@
 	        			</tr>
 	        			<tr>
 	        				<td>
+	        					<button ng-click="addNote()" >Add Note</button>
 	        				<student_timeline timeline="timeline['lecture']" lectures="module_lectures" current="lecture" seek="seek_and_pause">
 	        				</student_timeline>
 	        				</td>

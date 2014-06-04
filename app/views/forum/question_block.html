@@ -8,11 +8,12 @@
         </tr>
         <tr>
             <td style="width:70%;">
-                <input type="text" disabled ng-model="time" format='hh:mm:ss' style="width: 96%;"/>
+                <input type="text" disabled ng-model="item.time" format='hh:mm:ss' style="width: 96%;"/>
                 <select ng-model='privacy' ng-options="f.text for f in choices" style="width: 100%;"></select>
             </td>
             <td>
-                <input type="button" class="btn btn-primary btn-small" ng-click="postQuestion()" value={{"youtube.ask"|translate}} style="width: 96%; height: 100%;"/>
+                <input type="button" class="btn btn-primary btn-small" ng-click="postQuestion(item)" value="{{'youtube.ask'|translate}}"style="width: 96%; height: 50%;margin-bottom:2px"/>
+                <input type="button" class="btn btn-danger btn-small" ng-click="cancelQuestion(item)" value="{{'lectures.cancel'|translate}}" style="width: 96%; height: 50%;"/>
             </td>
         </tr>
     </table>

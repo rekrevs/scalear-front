@@ -1,25 +1,46 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive('questionBlock',['$log','$translate','Forum',function($log,$translate,Forum){
+    .directive('questionBlock',['$log','$translate','Forum','$state',function($log,$translate,Forum,$state){
         return{
             restrict:"E",
             templateUrl:"/views/forum/question_block.html",
             scope:{
-                time:'=',
-                action:'&'
+                item:'='
             },
             link:function(scope,element,attrs){
                 scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
                 scope.privacy = scope.choices[0];
-                scope.postQuestion=function(){
+                scope.postQuestion=function(item){
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
-                        scope.action()(scope.current_question, scope.privacy.value)
-                        scope.error_message=null
-                        scope.current_question = ''
+                        //scope.action()(scope.current_question, scope.privacy.value)
+                        Forum.createPost(
+                            {post: 
+                                {
+                                    content: scope.current_question, 
+                                    time:item.time, 
+                                    lecture_id:$state.params.lecture_id, 
+                                    privacy:scope.privacy.value
+                                }
+                            }, 
+                            function(response){
+                                console.log("success");
+                                // $scope.timeline['lecture'][$state.params.lecture_id].add($scope.current_question_time, "discussion",  response.post);
+                                // $scope.toggleQuestionBlock() 
+                                item.data= response.post
+                                scope.error_message=null
+                                scope.current_question = ''
+                            }, 
+                            function(){
+                                console.log("failure")
+                            }
+                        )
                     }
                     else
                         scope.error_message = $translate("discussion.cannot_be_empty")
+                }
+                scope.cancelQuestion=function(question){
+                    scope.$emit('update_timeline', question)
                 }
             }
         }
@@ -206,12 +227,12 @@ angular.module('scalearAngularApp')
                 })
             }
 
-            scope.reply=function(discussion){
-                if (scope.current_reply && scope.current_reply.length && scope.current_reply.trim()!=""){
+            scope.reply=function(discussion, current_reply){
+                if (current_reply && current_reply.length && current_reply.trim()!=""){
                     scope.error_message = null
                     console.log("discussion")
                     console.log(discussion)
-                    Forum.createComment({comment: {content: scope.current_reply, post_id:discussion.data.id, lecture_id:discussion.data.lecture_id}}, function(response){
+                    Forum.createComment({comment: {content: current_reply, post_id:discussion.data.id, lecture_id:discussion.data.lecture_id}}, function(response){
                         // if(!scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id])
                         //     scope.timeline['lecture'][discussion.data.lecture_id][discussion.data.id]= new Timeline();
 
@@ -222,7 +243,7 @@ angular.module('scalearAngularApp')
                             discussion.data.comments.push(response)
                         else
                             discussion.data.comments=[response]
-                        scope.current_reply=""
+                        current_reply=""
                         initCommentSize()
                         // scope.lecture_player.controls.play();
                         

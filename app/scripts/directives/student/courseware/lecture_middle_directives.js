@@ -607,3 +607,16 @@ angular.module('scalearAngularApp')
     link:function(scope, element, attrs){}
   }
 })
+.directive('notesTimeline',['$log',function($log){
+  return{
+    restrict:"A",
+    scope:{
+      item:'=',
+      seek:'&'
+    },
+    templateUrl:"/views/student/lectures/notes_timeline.html",
+    link:function(scope,element,attrs){
+
+    }
+  }
+}])

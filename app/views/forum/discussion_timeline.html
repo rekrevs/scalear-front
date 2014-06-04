@@ -1,9 +1,9 @@
-<td class="timeline-icon-container">
+<td style="padding: 0px;" class="timeline-icon-container">
     <div class="solved timeline-item" ng-click="seek()(item.time, item.data.lecture_id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="{{(item.time) | formattime:'hh:mm:ss'}}">
         <img src="../images/discussion-timeline.png" />
     </p>
 </td>
-<td colspan="2">
+<td colspan="2" style="padding: 0px;padding-right: 8px;">
     <div class="discussion-content" ng-class="{flagged: item.data.flags_count > 0}">
         <table style="width: 100%;">
             <tr>

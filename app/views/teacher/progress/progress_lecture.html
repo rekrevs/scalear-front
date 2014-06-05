@@ -55,11 +55,11 @@
 						<li ng-if="item.type=='charts'" ng-init="quiz_chart=createChart(item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData')" class="li_inner blue">
 							<inner_title type="{{'lectures.title' | translate}}" title="{{item.data.title+' ('+item.data.type+')'}}"/>
 							<div google-chart chart="quiz_chart" class="progress_chart" ></div>
-							<show_box  ng-show="module_item.quiz_type == 'survey'" value="item.data.show" />
+							<show_box  ng-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show)" />
 						</li>
 						<li ng-if="item.type=='Free Text Question'" class="li_inner coral">
 							<inner_title type="{{'groups.free_text_question' | translate}}" title="{{item.data.title}}"/>
-							<show_box  ng-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideFreeText(quiz.meta.id,item.data.id,!item.data.show)"/>
+							<show_box  ng-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show)"/>
 							</br>
 							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">								
 								<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" style="list-style-position:inside; padding:8px 15px">

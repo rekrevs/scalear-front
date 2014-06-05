@@ -5,6 +5,9 @@
         min-width: 40%;
         margin-top: -30px;
     }*/
+    .form-inline textarea {
+        width: 95% !important;
+    }
 
     .accordion-heading{
         padding: 5px;
@@ -145,7 +148,7 @@
         height:98%;
     }
 
-    .controls{
+    .progress_controls{
         position: absolute;
         /*display: inline-block;*/
         z-index: 1000;

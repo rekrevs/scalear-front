@@ -80,6 +80,20 @@
     background-size:20px 20px;
 }
 
+.notesDiv{
+    position:absolute;
+    width:30px;
+    height:24px;
+    cursor:pointer;
+    /*top:50%;
+    left:50%;*/
+    margin-top:-50px;
+    right:140px;
+    bottom: 0px;
+    background:url('/images/note.png') no-repeat center center;
+    background-size:20px 20px;
+}
+
 .shortcutDiv{
     position:absolute;
     width:30px;

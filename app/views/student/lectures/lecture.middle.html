@@ -34,7 +34,7 @@
 							<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
 					    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
 						</div>
-			    		<controls id="controls-bar" class="controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()">
+			    		<controls id="controls-bar" class="progress_controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
 						</controls>
 						<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
 						<notification message="notification_message" submessage="notification_submessage" /> 
@@ -52,7 +52,7 @@
 	        				<td style="width: 40%;">
 	        					<div class="btn-group align-center" data-toggle="buttons">
 							        <label id="quiz_checkbox" class="btn btn-checkbox">
-							            <input type="checkbox" ng-model="checkModel.quiz"> {{'lectures.outline' | translate}}
+							            <input type="checkbox" ng-model="checkModel.quiz"> {{'quiz' | translate}}
 							        </label>
 							        <label id="confused_checkbox"class="btn btn-checkbox">
 							            <input type="checkbox" ng-model="checkModel.confused"> {{'lectures.confused' | translate}}
@@ -71,24 +71,25 @@
 	        			</tr>
 	        			<tr>
 	        				<td>
-	        					<button ng-click="addNote()" >Add Note</button>
+	        					<!-- <button ng-click="addNote()" >Add Note</button> -->
 	        				<student_timeline timeline="timeline['lecture']" lectures="module_lectures" current="lecture" seek="seek_and_pause">
 	        				</student_timeline>
 	        				</td>
 	        			</tr>
         			</table>
 		        </tab>
-		        <tab id="video_notes" active="tabs[1]" heading="{{'lectures.video_notes' | translate}}" select="scrollIntoView('notes',true)" style="cursor: pointer;">
+<!-- 		        <tab id="video_notes" active="tabs[1]" heading="{{'lectures.video_notes' | translate}}" select="scrollIntoView('notes',true)" style="cursor: pointer;">
 		            <div>
 					    <button class="btn btn-primary" ng-click="saveNote()" ng-disabled="disableSaveNote()" >{{'save' | translate}}</button>
 					    <div style="overflow:auto;"> 
 					        <div  ng-repeat="l in module_lectures" class="dimmed" ng-class="{lectureopen: l.id == lecture.id}" id={{"notes_"+l.id}}>
 					            <h3>{{l.name}}</h3>
+					            {{l}}
 					            <div  id="editor_{{l.id}}" style="width: 100%;" ace-editor sync="sync.enabled" player="lecture_player" lecture="l" editors="editors" seek="seek"></div>
 					        </div>
 					    </div>
 					</div>
-		        </tab>
+		        </tab> -->
 		        <tab ng-show="lecture.description || (lecture.slides && lecture.slides != 'none')" id="lecture-details" active="tabs[2]" heading="{{'lectures.lecture_details' | translate}}" style="cursor: pointer;">
 		            <li>
 		            {{'lectures.description' | translate}}

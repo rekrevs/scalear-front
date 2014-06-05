@@ -270,7 +270,7 @@ angular.module('scalearAngularApp')
   		Module.hideQuestion(
   			{
   				course_id:$stateParams.course_id,
-          		module_id:$stateParams.module_id
+          module_id:$stateParams.module_id
   			},
   			{
   				question:id,
@@ -298,7 +298,10 @@ angular.module('scalearAngularApp')
 
     $scope.updateHideResponse = function(quiz_id, id, value){
       Quiz.hideResponses(
-        {quiz_id: quiz_id},
+        {
+          course_id:$stateParams.course_id,
+          quiz_id: quiz_id
+        },
         {
             hide:{
               id:id, 
@@ -310,7 +313,10 @@ angular.module('scalearAngularApp')
 
    $scope.updateHideResponseOnlineQuiz = function(quiz_id, id, value){
       OnlineQuiz.hideResponses(
-        {online_quizzes_id: quiz_id},
+        {
+          course_id:$stateParams.course_id,
+          online_quizzes_id: quiz_id
+        },
         {
             hide:{
               id:id, 
@@ -320,9 +326,13 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideFreeText=function(quiz_id,id, value){
+    $scope.updateHideSurveyQuestion=function(quiz_id,id, value){
+      console.log("updaing")
       Quiz.showInclass(
-        {quiz_id:quiz_id},
+        {
+          course_id:$stateParams.course_id,
+          quiz_id:quiz_id
+        },
         {
           question:id,
           show:value

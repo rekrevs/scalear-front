@@ -73,7 +73,7 @@ angular.module('scalearAngularApp')
 	    	action:"&"
 	    },
 	    template:'<span>| '+
-					'<input type="checkbox" ng-model="value" ng-change="change()" /> '+
+					'<input type="checkbox" ng-model="value" ng-change="change()" style="margin:0"/> '+
 					'<span style="font-size:12px;color:black;font-weight:normal" translate>courses.show_in_class</span>'+
 				'</span>', 
 	    link:function(scope,element){

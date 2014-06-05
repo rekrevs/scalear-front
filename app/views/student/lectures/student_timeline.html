@@ -1,7 +1,7 @@
 <div>
     <div style="overflow:auto; position: absolute; width: 95%;height:79%"> <!-- has all discussions -->      
         <div ng-repeat="l in lectures" class='dimmed' style="min-width: 95%;" ng-class="{lectureopen: l.id == lecture.id}" id={{"outline_"+l.id}}>        
-            <h3 class="lecture-heading" ng-click="seek()(null, l.id)">{{l.name}}</h3>
+            <h3 class="lecture-heading" ng-click="seek()(null, l.id)" style="cursor:pointer">{{l.name}}</h3>
             <table class="table table-striped" style="border-spacing: 0.2em;">
                 <tbody ng-repeat="item in timeline[l.id].items | filter:filterType">
                     <tr name="quiz-timeline-item" quiz_timeline ng-if="item.type=='quiz'" item='item' seek='seek()' />

@@ -174,7 +174,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	position:fixed; 
 	/*top: 400px; remove this line*/
 	left:30px;
-	margin-top: 300px;
+	margin-top: 290px;
 }
 
 .time_estimate a{
@@ -217,10 +217,10 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	position: fixed;
 	border: 1px solid gray;
 	/*padding: 5px;*/
-	margin-top:380px;
+	margin-top:370px;
 	opacity: 0.7;
-	font-size: 12px;
-	width:27%
+	font-size: 10px;
+	width:27.4%
 }
 
 @media (max-width: 1024px) {

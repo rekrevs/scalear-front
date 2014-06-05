@@ -663,7 +663,8 @@ var translation_en=function(){
         sort_by: "Sort By",
         click_to_select: "Click to Select",
         based_on_invideo: "Based on in-video questions answered",
-        view_detailed_progress: "View Details Progress"
+        view_detailed_progress: "View Details Progress",
+        no_courses: "Currently, you don't have any courses you can access. You can start by adding one."
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

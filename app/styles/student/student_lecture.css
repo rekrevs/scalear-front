@@ -118,7 +118,9 @@
     }
     .timestamp{
         text-align: right;
-        font-size: x-small;
+        font-size: xx-small;
+        display: inline-block;
+        float: right;
     }
 
         .tab-content{
@@ -215,6 +217,9 @@
     }*/
     /*@media only screen and (max-width : 955px) {*/
     @media only screen and (max-width : 1024px) {
+        .timestamp{
+            font-size: x-small;
+        }
       .video_class, .widescreen{
         /*width: 95vw;
         height: 53.4375vw;*/
@@ -238,6 +243,7 @@
         display: none;
       }
      }
+
       
       .video_container{
         /*float: left;*/

@@ -73,7 +73,11 @@ angular.module('scalearAngularApp')
                         // console.log($scope.timeline['lecture'][lec.id][lec.posts_public[type].post.id])
                     }
 
-                    $scope.notes[lec.id]= lec.note;
+                    for(var i in lec.notes){
+                        $scope.timeline['lecture'][lec.id].add(lec.notes[i].time, "note", lec.notes[i])
+                    }
+
+                    // $scope.notes[lec.id]= lec.note;
                 }
 
             });

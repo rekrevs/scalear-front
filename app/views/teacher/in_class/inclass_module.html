@@ -38,8 +38,8 @@
 				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['lecture'][lec.id].items|filter:data:'!!'">
 					<li ng-if="item.type=='discussion'" class="li_inner coral">
 						<inner_title type="{{'lectures.discussion' | translate}}" />
-						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
-							<li ng-repeat="question in item.data" style="list-style-position:inside; padding:3px 20px">
+						<ul style="padding:5px;padding-left: 30px;color:black;font-weight:normal;font-size: 14px;">
+							<li ng-repeat="question in item.data" >
 								<p style="width:600px">{{question[0]}}</p>
 							</li>
 						</ul>						

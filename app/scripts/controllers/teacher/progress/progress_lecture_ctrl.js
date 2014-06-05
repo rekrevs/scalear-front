@@ -5,11 +5,11 @@ angular.module('scalearAngularApp')
 
     $scope.Math = window.Math;
   	$scope.highlight_index = -1
-  	$scope.inner_highlight_index = -1
+  	$scope.inner_highlight_index = 0
   	$scope.progress_player= {}
   	$scope.timeline = {}
     $scope.right_container = angular.element('#right-container')
-
+    $scope.highlight_level = 0
   	$scope.time_parameters={
   		quiz: 3,
   		question: 2
@@ -161,34 +161,34 @@ angular.module('scalearAngularApp')
 		  // $scope.highlight_index = (($scope.highlight_index+x)%divs.length);
     	// $scope.highlight_index = $scope.highlight_index < 0 ? divs.length+$scope.highlight_index : $scope.highlight_index;	    
 	    var ul = angular.element(divs[$scope.highlight_index])
-	    ul.addClass("highlight")	
-	    
+	    ul.addClass("highlight").css('opacity','1')
+      $scope.highlight_level = 1
+	    angular.element('.ul_item').not('.highlight').css('opacity','0.3')
 	    var parent_div = ul.closest('div')
       if(parent_div.attr('id')){
         var id=parent_div.attr('id').split('_')
-        console.log(ul.attr('item'))
         $scope.selected_item = $scope.timeline[id[0]][id[1]].items[ul.attr('index')]
-        console.log($scope.selected_item)
         $scope.selected_item.lec_id = id[1]
       }
       else
         $scope.selected_item =null
       var view_index
-      if($scope.highlight_index-2 < 0)
+      if($scope.highlight_index-1 < 0)
         view_index = 0
       else if ($scope.selected_item && $scope.selected_item.type=="Free Text Question")
         view_index = $scope.highlight_index
       else
-        view_index = $scope.highlight_index-2
+        view_index = $scope.highlight_index-1
 
       divs[view_index].scrollIntoView()
       $timeout(function(){$window.scrollTo($window.ScrollX,150)})
-	    $scope.inner_highlight_index = -1
+	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
 	    $scope.$apply()
   	}
 
   	$scope.manageInnerHighlight=function(x){
+      console.log("mangae inner higligh")
   		var inner_ul= angular.element('ul.highlight').find('ul')
   		if(inner_ul.length){
   			var inner_li = inner_ul.find('li').not('.no_highlight')
@@ -203,7 +203,7 @@ angular.module('scalearAngularApp')
     		// $scope.inner_highlight_index = $scope.inner_highlight_index < 0 ? inner_li.length+$scope.inner_highlight_index : $scope.inner_highlight_index;	    
 	    
   			angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
-
+        $scope.highlight_level = 2
         if ($scope.selected_item && $scope.selected_item.type=="Free Text Question"){
           var view_index = $scope.inner_highlight_index-3 < 0? 0: $scope.inner_highlight_index - 3
           inner_li[view_index].scrollIntoView()
@@ -219,7 +219,9 @@ angular.module('scalearAngularApp')
   		// angular.element(divs[$scope.highlight_index]).removeClass('highlight')
       $(".highlight").removeClass("highlight");
   		$scope.highlight_index = divs.index(ul)
-  		angular.element(ul).addClass("highlight")
+  		angular.element(ul).addClass("highlight").css('opacity','1')
+      angular.element('.ul_item').not('.highlight').css('opacity','0.3')
+      $scope.highlight_level = 1
       setupRemoveHightlightEvent()
       if($scope.selected_item == item)
         return
@@ -229,20 +231,26 @@ angular.module('scalearAngularApp')
         var id=parent_div.attr('id').split('_') 
         $scope.selected_item.lec_id = id[1]
       }
-  		$scope.inner_highlight_index = -1	
+  		$scope.inner_highlight_index = 0	
   	}
 
    var setupRemoveHightlightEvent=function(){
     console.log("adding")
       $(document).click(function(e){
         if(angular.element(e.target).find('.inner_content').length){
-          $(".highlight").removeClass("highlight");
-          $scope.highlight_index = -1
-          $scope.inner_highlight_index = -1
-          console.log("removing")
-          $(document).off('click');
+          removeHightlight()
+           $(document).off('click');
         }
       })
+    }
+
+    $scope.removeHightlight=function(){     
+      $(".highlight").removeClass("highlight");
+      angular.element('.ul_item').css('opacity', '1')
+      // $scope.highlight_index = -1
+      // $scope.inner_highlight_index = -1
+      $scope.highlight_level = 0
+      console.log("removing")
     }
 
   	$scope.updateHideQuiz = function(id, value) {
@@ -270,7 +278,7 @@ angular.module('scalearAngularApp')
   		Module.hideQuestion(
   			{
   				course_id:$stateParams.course_id,
-          		module_id:$stateParams.module_id
+          module_id:$stateParams.module_id
   			},
   			{
   				question:id,
@@ -298,31 +306,41 @@ angular.module('scalearAngularApp')
 
     $scope.updateHideResponse = function(quiz_id, id, value){
       Quiz.hideResponses(
-        {quiz_id: quiz_id},
         {
-            hide:{
-              id:id, 
-              hide: value
-            }                
+          course_id:$stateParams.course_id,
+          quiz_id: quiz_id
+        },
+        {
+          hide:{
+            id:id, 
+            hide: value
+          }                
         }
       )
     }
 
    $scope.updateHideResponseOnlineQuiz = function(quiz_id, id, value){
       OnlineQuiz.hideResponses(
-        {online_quizzes_id: quiz_id},
         {
-            hide:{
-              id:id, 
-              hide: value
-            }                
+          course_id:$stateParams.course_id,
+          online_quizzes_id: quiz_id
+        },
+        {
+          hide:{
+            id:id, 
+            hide: value
+          }                
         }
       )
     }
 
-    $scope.updateHideFreeText=function(quiz_id,id, value){
+    $scope.updateHideSurveyQuestion=function(quiz_id,id, value){
+      console.log("updaing")
       Quiz.showInclass(
-        {quiz_id:quiz_id},
+        {
+          course_id:$stateParams.course_id,
+          quiz_id:quiz_id
+        },
         {
           question:id,
           show:value
@@ -414,13 +432,8 @@ angular.module('scalearAngularApp')
   }
 
 	$scope.seek=function(time, url){
-  //   $scope.$parent.selected_item = item;
-		// if ($scope.url.indexOf(url) == -1) 
-  //       $scope.url = url+'&start='+Math.round(time)
-  //   else
-  //   	$scope.progress_player.controls.seek_and_pause(time)
-  console.log(url)
-  console.log($scope.url)
+    console.log(url)
+    console.log($scope.url)
     if($scope.url.indexOf(url) == -1){
       if($scope.progress_player.controls.isYoutube(url))
         $scope.progress_player.controls.setStartTime(time)
@@ -616,32 +629,43 @@ angular.module('scalearAngularApp')
 
   var setupShortcuts=function(){
     shortcut.add("r",function(){
-      console.log($scope.inner_highlight_index)
       if($scope.selected_item && ($scope.selected_item.type == "Free Text Question" || $scope.selected_item.type == "discussion")) 
           if($scope.inner_highlight_index >= 0){
             if($scope.selected_item.data.answers)
               $scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback = !$scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback
             else{
               $scope.selected_item.data[$scope.inner_highlight_index].post.show_feedback = !$scope.selected_item.data[$scope.inner_highlight_index].post.show_feedback
-            }$scope.$apply()
-            angular.element('li.highlight').find('textarea').focus()
+            }
+            $scope.$apply()
+            angular.element('textarea').focus()
           }
     },{"disable_in_input" : true});
 
 	  shortcut.add("Down",function(){
-		 $scope.manageHighlight(1)    				
+      if($scope.highlight_level <= 1)
+		    $scope.manageHighlight(1)
+      else
+        $scope.manageInnerHighlight(1)
     },{"disable_in_input" : true});
-
     shortcut.add("Up",function(){
-		 $scope.manageHighlight(-1)
+      if($scope.highlight_level <= 1)
+		    $scope.manageHighlight(-1)
+      else
+        $scope.manageInnerHighlight(-1)
     },{"disable_in_input" : true});
 
     shortcut.add("Right",function(){
-		 $scope.manageInnerHighlight(1)
+      if($scope.highlight_level == 0)
+        $scope.manageHighlight(0)
+      else
+		    $scope.manageInnerHighlight(0)
     },{"disable_in_input" : true});
 
     shortcut.add("Left",function(){
-		 $scope.manageInnerHighlight(-1)
+      if($scope.highlight_level <= 1)
+        $scope.removeHightlight()
+      else
+		    $scope.manageHighlight(0)
     },{"disable_in_input" : true});
 
     shortcut.add("Space",function(){

@@ -93,6 +93,16 @@ angular.module('scalearAngularApp')
             element.css('zIndex', 1)
             element.addClass('open');
             angular.element('body').css('overflow', 'hidden')
+            angular.element($window).bind('click', function(event) {
+              console.log(event)
+              if (scope.opened && event.which !=3) {
+                scope.$apply(function() {
+                  event.preventDefault();
+                  close(menuElement);
+                  angular.element($window).unbind('click')
+                });
+              }
+            });
           },
           close = function close(element) {
             scope.opened = false;
@@ -104,13 +114,13 @@ angular.module('scalearAngularApp')
       menuElement.css('cursor', 'pointer');
 
       scope.$watch('opened',function(){
-        if(scope.opened)
-          open(event, menuElement);
-        else
+        if(!scope.opened)
+        //   open(event, menuElement);
+        // else
           close(menuElement);
       })
 
-      element.bind('contextmenu', function(event) {          
+      element.bind('contextmenu', function(event) { 
         if (scope.opened) {
           scope.$apply(function() {
             event.preventDefault();
@@ -123,15 +133,7 @@ angular.module('scalearAngularApp')
             open(event, menuElement);
           });
         }
-      });
-      angular.element($window).bind('click', function(event) {
-        if (scope.opened) {
-          scope.$apply(function() {
-            event.preventDefault();
-            close(menuElement);
-          });
-        }
-      });
+      });      
     }
   };
 }]).directive('teacherCourseItem', ['ErrorHandler',function(ErrorHandler) {

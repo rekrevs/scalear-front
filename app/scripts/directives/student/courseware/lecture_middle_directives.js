@@ -8,7 +8,8 @@ angular.module('scalearAngularApp')
     scope:{
       confused:"&",
       fullscreen:"&",
-      ask:"&"
+      ask:"&",
+      note:"&"
     },
     link: function(scope, element, attrs) {
 
@@ -37,6 +38,10 @@ angular.module('scalearAngularApp')
         scope.ask()
       }
 
+      scope.notesBtn=function(){
+        scope.note()
+      }
+
       scope.showShortcuts=function(){
         scope.show_shortcuts=!scope.show_shortcuts;
         if(scope.show_shortcuts)
@@ -60,6 +65,10 @@ angular.module('scalearAngularApp')
 
   				shortcut.add("q", function(){
             scope.questionBtn()
+            scope.$apply()
+          }, {"disable_in_input" : true});
+          shortcut.add("n", function(){
+            scope.notesBtn()
             scope.$apply()
           }, {"disable_in_input" : true});
   		}
@@ -607,3 +616,66 @@ angular.module('scalearAngularApp')
     link:function(scope, element, attrs){}
   }
 })
+.directive('notesTimeline',['$log','Lecture','$state', function($log,Lecture,$state){
+  return{
+    restrict:"A",
+    scope:{
+      item:'=',
+      seek:'&'
+    },
+    templateUrl:"/views/student/lectures/notes_timeline.html",
+    link:function(scope,element,attrs){
+
+      scope.deleteNote=function(){
+        scope.$emit('update_timeline', scope.item)
+      }
+
+      scope.saveNote=function(data){
+        Lecture.saveNote(
+          {lecture_id:$state.params.lecture_id}, 
+          {
+            data: data,
+            time: scope.item.time
+          }, 
+          function(response){}, 
+          function(response){}
+        );
+      }
+
+    }
+  }
+}]).directive('notesArea', ['$timeout',
+    function($timeout) {
+        return {
+            template: '<div ng-mouseover="overclass = true" ng-mouseleave="overclass= false"  e-rows="8" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()">'+
+                        '<pre style="color: teal;">'+
+                          '{{ value || ("empty"|translate)  }}'+
+                          '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
+                        '</pre>'+
+                      '</div>',
+            restrict: 'E',
+            scope: {
+                value: "=",
+                save: "&",
+                delete:"&"
+            },
+            link: function(scope, element) {
+                scope.show=function(){
+                  scope.myform.$show()
+                }
+
+                if(!scope.value)
+                  scope.show()
+
+                scope.saveData = function() {
+                  if(!scope.value)
+                    scope.delete()
+                  else
+                    $timeout(function() {
+                        scope.save()(scope.value)
+                    })
+                }
+            }
+        };
+    }
+])

@@ -14,10 +14,10 @@ angular.module('scalearAngularApp')
   					if($scope.item)
 						module.items.forEach(function(item){
 							if(item == $scope.item)
-								$scope.selectItem(module, item, event)
+								$scope.selectItem(module, item)
 						})
 					else
-  						$scope.selectAll(module,event)
+  						$scope.selectAll(module)
   				}
 
   			})
@@ -65,12 +65,14 @@ angular.module('scalearAngularApp')
       	module.items.forEach(function(item){
       		item.selected=module.selected
       	})
-      	event.stopPropagation()
+        if(event)
+    	   event.stopPropagation()
       }
 
 
       $scope.selectItem=function(module, item, event){
-      	event.stopPropagation()
+        if(event)
+      	 event.stopPropagation()
       	item.selected = !item.selected
       	var count = 0
       	module.items.forEach(function(item){

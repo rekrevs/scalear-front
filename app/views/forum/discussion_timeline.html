@@ -3,7 +3,10 @@
         <img src="../images/discussion-timeline.png" />
     </p>
 </td>
-<td colspan="2" style="padding: 0px;padding-right: 8px;">
+<td ng-if="item.data==null">
+    <question_block item="item" />
+</td>
+<td ng-if="item.data" colspan="2" style="padding: 0px;padding-right: 8px;">
     <div class="discussion-content" ng-class="{flagged: item.data.flags_count > 0}">
         <table style="width: 100%;">
             <tr>
@@ -80,7 +83,7 @@
             <br />
             <textarea ng-init="" ng-model="current_reply" placeholder="{{'discussion.write_comment' | translate}}" ng-style="{height:height+'px', width:width+'%'}" ng-focus="onCommentFocus()"></textarea>
             <i ng-show="error_message" style="color:red; font-size:12px"><br>{{error_message}}<br></i>
-            <input type="button" class="btn btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(item)" value={{"discussion.comment"|translate}} />
+            <input type="button" class="btn btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(item, current_reply);current_reply=null" value={{"discussion.comment"|translate}} />
         </span>
     </div>
 </td>

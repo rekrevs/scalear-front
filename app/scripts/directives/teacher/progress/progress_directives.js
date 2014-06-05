@@ -76,9 +76,11 @@ angular.module('scalearAngularApp')
 					'<input type="checkbox" ng-model="value" ng-change="change()" /> '+
 					'<span style="font-size:12px;color:black;font-weight:normal" translate>courses.show_in_class</span>'+
 				'</span>', 
-	    link:function(scope){
+	    link:function(scope,element){
 	    	scope.change=function(){
+	    		console.log("changes here")
 	    	 	scope.action()
+	    	 	angular.element('input').blur()
 	    	}
 	    }
     };

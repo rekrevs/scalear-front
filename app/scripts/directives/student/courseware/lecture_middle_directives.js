@@ -67,6 +67,10 @@ angular.module('scalearAngularApp')
             scope.questionBtn()
             scope.$apply()
           }, {"disable_in_input" : true});
+          shortcut.add("n", function(){
+            scope.notesBtn()
+            scope.$apply()
+          }, {"disable_in_input" : true});
   		}
       scope.setShortcuts()
 

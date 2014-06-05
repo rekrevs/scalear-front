@@ -116,6 +116,7 @@ angular.module('scalearAngularApp')
                 $scope.closeReviewNotify()
                 $scope.studentAnswers[quiz.id] = {}
                 $scope.selected_quiz = quiz
+                $scope.last_quiz = quiz
                 
                 $scope.quiz_mode = true
                 $scope.lecture_player.controls.pause()
@@ -490,15 +491,17 @@ angular.module('scalearAngularApp')
     }
 
     var reviewInclass =function(){
+        var max_time = 5
         console.log($scope.selected_quiz)
-        if(!$scope.selected_quiz.reviewed && $scope.selected_quiz.quiz_type != 'survey' && !$scope.review_inclass && !$scope.review_inclass_inprogress){
+        // if(!$scope.selected_quiz.reviewed && $scope.selected_quiz.quiz_type != 'survey' && !$scope.review_inclass && !$scope.review_inclass_inprogress){
+        if($scope.selected_quiz.quiz_type != 'survey' && !$scope.review_inclass && !$scope.review_inclass_inprogress){
             console.log("review inclass")
             $scope.review_inclass_inprogress = true
-            var time = 10
-            var next_time = getNextQuizTime($scope.selected_quiz.time)
+            var time = max_time
+            var next_time = getNextQuizTime($scope.selected_quiz.time, max_time)
             if(next_time)
                 time = (next_time-$scope.selected_quiz.time)/2
-            else if ($scope.total_duration - $scope.selected_quiz.time <= 10)
+            else if ($scope.total_duration - $scope.selected_quiz.time <= max_time)
                 time = ($scope.total_duration - $scope.selected_quiz.time)/2
             $interval(function(){
                 $scope.review_inclass_inprogress = false
@@ -510,9 +513,9 @@ angular.module('scalearAngularApp')
         }
     }
 
-    var getNextQuizTime=function(time){
+    var getNextQuizTime=function(time,max_time){
         for (var i in $scope.lecture.online_quizzes){
-            if($scope.lecture.online_quizzes[i].time > time && $scope.lecture.online_quizzes[i].time <= time+10){
+            if($scope.lecture.online_quizzes[i].time > time && $scope.lecture.online_quizzes[i].time <= time+max_time){
                 return $scope.lecture.online_quizzes[i].time
             }
         }
@@ -520,10 +523,10 @@ angular.module('scalearAngularApp')
 
     $scope.voteForReview=function(){
         OnlineQuiz.voteForReview(
-        {online_quizzes_id:$scope.selected_quiz.id},{},
+        {online_quizzes_id:$scope.last_quiz.id},{},
         function(res){
             if(res.done){
-                $scope.selected_quiz.reviewed = true
+                $scope.last_quiz.reviewed = true
                 $scope.closeReviewNotify()
             }
         })
@@ -535,7 +538,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.retryQuiz=function(){
-        $scope.seek_and_pause($scope.selected_quiz.time)
+        $scope.seek_and_pause($scope.last_quiz.time)
         $scope.closeReviewNotify()
     }
 

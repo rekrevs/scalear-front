@@ -45,7 +45,7 @@
         border-left: 2px solid slategray;
         opacity: 1;
         /*min-height: 100%;*/
-        min-height: 35vw;
+        /*min-height: 35vw;*/
         background-color: transparent;
     }
     .lecture-heading{

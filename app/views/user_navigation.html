@@ -36,6 +36,14 @@
                         </div>
 
             </td>
+            <td ng-show="$parent.current != 'navigation.courses'" style="display: inline-table;">
+                <div class="headerdivider" style="display: table-column; padding-right: 20px;">
+                </div>
+                <!-- <a href="" ui-sref="home">
+                    <ul ng-class="tabactive" class="tab-pill ng-binding tabactive" ng-bind="'courses.back_to_courses' | translate"></ul>
+                </a> -->
+                <button ui-sref="home" class="btn btn-success" style="margin-left: 20px;">{{'courses.back_to_courses' | translate}}</button>
+            </td>
             <td ng-init="show_settings = false" style="display: inline-table; margin-left: 20px;">
                 <div class="headerdivider" style="display: table-column; padding-right: 20px;">
                 </div>

@@ -626,6 +626,7 @@ var translation_en=function(){
         teachers: "Teachers",
         teacher_email: "Teacher Email",
         all_courses: "All Courses",
+        back_to_courses: "Back to all courses",
         course_code: "Course Code",
         course_name: "Course Name",
         visit_link: "Visit Link",

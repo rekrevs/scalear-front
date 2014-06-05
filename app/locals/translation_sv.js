@@ -625,6 +625,7 @@ var translation_sv=function(){
               teachers: "Lärare",
               teacher_email: "Lärare Email",
               all_courses: "Alla kurser",
+              back_to_courses: "Tillbaka till alla kurser",
               course_code: "Kurs kod",
               course_name: "Kurs namn",
               visit_link: "Besök länk",

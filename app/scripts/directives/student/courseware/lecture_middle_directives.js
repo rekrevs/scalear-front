@@ -647,7 +647,7 @@ angular.module('scalearAngularApp')
 }]).directive('notesArea', ['$timeout',
     function($timeout) {
         return {
-            template: '<div ng-mouseover="overclass = true" ng-mouseleave="overclass= false"  e-rows="8" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()">'+
+            template: '<div onshow="moveCursorToEnd()" ng-mouseover="overclass = true" ng-mouseleave="overclass= false"  e-rows="8" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()">'+
                         '<pre style="color: teal;">'+
                           '{{ value || ("empty"|translate)  }}'+
                           '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
@@ -660,6 +660,16 @@ angular.module('scalearAngularApp')
                 delete:"&"
             },
             link: function(scope, element) {
+
+                scope.moveCursorToEnd=function(){
+                  $timeout(function() {
+                      // element.find('.editable-input').select();
+                      var SearchInput = $('.editable-input');
+                      var strLength= SearchInput.val().length;
+                      SearchInput.focus();
+                      SearchInput[0].setSelectionRange(strLength, strLength);
+                  });
+                }
                 scope.show=function(){
                   scope.myform.$show()
                 }

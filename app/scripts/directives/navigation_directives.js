@@ -9,8 +9,10 @@ angular.module('scalearAngularApp')
 			link: function(scope){
 				scope.role = $rootScope.current_user.roles[0].id;
 				$rootScope.$watch('current_user', function(){
-					scope.arenotification = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
-					scope.areshared = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;	
+					if($rootScope.current_user && $rootScope.current_user.roles){
+						scope.arenotification = $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
+						scope.areshared =  $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;
+					}	
 				});
 				scope.toggleNotifications = function(){
 					scope.show_notifications = !scope.show_notifications;
@@ -36,10 +38,7 @@ angular.module('scalearAngularApp')
 				};
 			}
 		};
- }]);
- 
-angular.module('scalearAngularApp')
-	.directive('studentNavigation', ['ErrorHandler',function(ErrorHandler) {
+ }]).directive('studentNavigation', ['ErrorHandler',function(ErrorHandler) {
            return{
 			replace:true,
 			restrict: "E",
@@ -54,10 +53,7 @@ angular.module('scalearAngularApp')
 				})
 			}
 		};
- }]);
-
-angular.module('scalearAngularApp')
-	.directive('userNavigation', ['ErrorHandler','$rootScope', 'User', 'Home',function(ErrorHandler,$rootScope, User, Home) {
+ }]).directive('userNavigation', ['ErrorHandler','$rootScope', 'User', 'Home',function(ErrorHandler,$rootScope, User, Home) {
            return{
 			replace:true,
 			restrict: "E",
@@ -70,8 +66,10 @@ angular.module('scalearAngularApp')
 			templateUrl: '/views/user_navigation.html',
 			link: function(scope){
 				$rootScope.$watch('current_user', function(){
-					scope.arenotification = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
-					scope.areshared = $rootScope.current_user && $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;	
+					if($rootScope.current_user && $rootScope.current_user.roles){
+						scope.arenotification = $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
+						scope.areshared = $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;	
+					}
 				});
 				scope.toggleNotifications = function(){
 					scope.show_notifications = !scope.show_notifications;

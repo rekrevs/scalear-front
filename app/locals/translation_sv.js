@@ -346,9 +346,15 @@ var translation_sv=function(){
               replay: "Spela",
               retry: "Försök igen",
               related : "Relaterat",
-              reply: "Svara",
               of_student_review: "av eleverna röstade för översyn",
-              current_lecture: 'Nuvarande Lecture'
+              current_lecture: 'Nuvarande Lecture',
+              go_next_item: "Gå till nästa objekt",
+              go_previous_item: "Gå till föregående objekt",
+              go_inside_item: "Gå in ett objekt",
+              go_outside_item:"Gå utanför ett objekt",
+              seek_to_location: "Sök på plats",
+              mark: "Markera",
+              reply: "Svara",
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

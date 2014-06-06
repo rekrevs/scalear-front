@@ -346,9 +346,15 @@ var translation_en=function(){
         replay: "Replay",
         retry: "Retry",
         related : "Related",
-        reply: "Reply",
         of_student_review: "of students voted for review",
-        current_lecture: 'Current Lecture'
+        current_lecture: 'Current Lecture',
+        go_next_item: "Go to next item",
+        go_previous_item: "Go to previous item",
+        go_inside_item: "Go inside an item",
+        go_outside_item:"Go outside an item",
+        seek_to_location: "Seek to location",
+        mark: "Mark",
+        reply: "Reply",
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

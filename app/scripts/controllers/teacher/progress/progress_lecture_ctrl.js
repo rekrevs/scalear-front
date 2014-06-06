@@ -42,6 +42,14 @@ angular.module('scalearAngularApp')
       text: $translate('courses.good')
     }]
 
+    $scope.hello=function(){
+      console.log("change with hello")
+    }
+
+    // $scope.watch('custom_filter',function(){
+    //   $scope.hello()
+    // })
+
   	var init= function(){
   		$scope.timeline = new Timeline()
   		Module.getModuleProgress({
@@ -244,13 +252,17 @@ angular.module('scalearAngularApp')
       })
     }
 
-    $scope.removeHightlight=function(){     
+    var removeHightlight=function(){     
       $(".highlight").removeClass("highlight");
       angular.element('.ul_item').css('opacity', '1')
-      // $scope.highlight_index = -1
-      // $scope.inner_highlight_index = -1
       $scope.highlight_level = 0
       console.log("removing")
+    }
+
+    $scope.resetHighlightVariables=function(){
+      removeHightlight()      
+      $scope.highlight_index = -1
+      $scope.inner_highlight_index = 0
     }
 
   	$scope.updateHideQuiz = function(id, value) {
@@ -663,7 +675,7 @@ angular.module('scalearAngularApp')
 
     shortcut.add("Left",function(){
       if($scope.highlight_level <= 1)
-        $scope.removeHightlight()
+        removeHightlight()
       else
 		    $scope.manageHighlight(0)
     },{"disable_in_input" : true});

@@ -275,6 +275,23 @@ angular.module('scalearAngularApp')
       button_title:"@buttonTitle"
     },
     template:'<span>{{message}}</span>'+
-             '<button ng-click="action()" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">{{button_title}}</button>'
+             '<button ng-click="buttonClick()" ng-disabled="disable_button" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">{{button_title}}</button>',
+   link:function(scope, element, attr){
+      scope.buttonClick=function(){
+        scope.disable_button=true
+        scope.action()
+      }
+   }
   }
-})
+}).directive('onFinishRenderFilters', ['$timeout',function ($timeout) {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attr) {
+      if (scope.$last === true) {
+        $timeout(function () {
+          scope.$emit('ngRepeatFinished');
+        });
+      }
+    }
+  }
+}]);

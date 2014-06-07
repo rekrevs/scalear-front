@@ -93,13 +93,13 @@ angular.module('scalearAngularApp')
             element.css('zIndex', 1)
             element.addClass('open');
             angular.element('body').css('overflow', 'hidden')
-            angular.element($window).bind('click', function(event) {
+            angular.element($window).on('click', function(event) {
               console.log(event)
               if (scope.opened && event.which !=3) {
                 scope.$apply(function() {
                   event.preventDefault();
-                  close(menuElement);
-                  angular.element($window).unbind('click')
+                  close(menuElement); 
+                  angular.element($window).off('click')
                 });
               }
             });
@@ -108,6 +108,7 @@ angular.module('scalearAngularApp')
             scope.opened = false;
             element.removeClass('open');
             angular.element('body').css('overflow', 'auto')
+            angular.element($window).off('click')
           };
 
       menuElement.css('position', 'fixed');
@@ -272,10 +273,12 @@ angular.module('scalearAngularApp')
     scope:{
       message:'@',
       action:"&buttonAction",
-      button_title:"@buttonTitle"
+      button_title:"@buttonTitle",
+      close:'='
     },
     template:'<span>{{message}}</span>'+
-             '<button ng-click="buttonClick()" ng-disabled="disable_button" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">{{button_title}}</button>',
+             '<button ng-show="!close" ng-click="buttonClick()" ng-disabled="disable_button" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">{{button_title}}</button>'+
+             '<img    ng-show="close"  ng-click="buttonClick()" src="images/trash_small.png" style="margin: 2px 40px;position: absolute;">',
    link:function(scope, element, attr){
       scope.buttonClick=function(){
         scope.disable_button=true

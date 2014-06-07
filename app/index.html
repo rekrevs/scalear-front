@@ -85,13 +85,11 @@
                 </a>
             </div>
         </header>
-        <div ng-show="clipboard" class="top-ribbon">
-            <notice-message message="{{'You Have '+clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' in you clipboard'}}" button-action="emptyClipboard()" button-title="{{'lectures.remove' | translate}}">
-            </notice-message>
+        <div ng-if="clipboard && clipboard.show_msg" class="top-ribbon">
+            <notice-message message="{{clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' has been copied. To paste it into another module, right-click on the module and choose Paste'}}" close="true" button-action="closeClipboard()" button-title="{{'lectures.remove' | translate}}" />
         </div>
-        <div ng-show="preview_as_student" class="top-ribbon">
-            <notice-message message="{{'preview_as_student'| translate}}" button-action="disablePreview()" button-title="{{'return' | translate}}">
-            </notice-message>
+        <div ng-if="preview_as_student" class="top-ribbon">
+            <notice-message message="{{'preview_as_student'| translate}}" button-action="disablePreview()" button-title="{{'return' | translate}}" />
         </div>
         <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
             <div class="container">

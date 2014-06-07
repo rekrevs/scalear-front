@@ -26,8 +26,8 @@ angular.module('scalearAngularApp')
             //     return $scope.current_user && $scope.current_user.roles[0].id!=2 && $scope.current_user.accepted_shared
             // }
 
-            $scope.emptyClipboard=function(){
-                $rootScope.clipboard = null
+            $scope.closeClipboard=function(){
+                $rootScope.clipboard.show_msg = false
             }
 
             $scope.disablePreview=function(){

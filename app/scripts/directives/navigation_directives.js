@@ -6,10 +6,10 @@ angular.module('scalearAngularApp')
 			replace:true,
 			restrict: "E",
 			templateUrl: '/views/teacher_navigation.html',
-			link: function(scope){
-				scope.role = $rootScope.current_user.roles[0].id;
+			link: function(scope){				
 				$rootScope.$watch('current_user', function(){
 					if($rootScope.current_user && $rootScope.current_user.roles){
+						scope.role = $rootScope.current_user.roles[0].id;
 						scope.arenotification = $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
 						scope.areshared =  $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;
 					}	

@@ -68,23 +68,23 @@ angular.module('scalearAngularApp')
  		$scope.details_toggled = !$scope.details_toggled;
  	}
  	
- 	$scope.capitalize = function(s)
- 	{
+ 	$scope.capitalize = function(s){
  		return CourseEditor.capitalize(s)
  	}
 
  	$scope.impersonate = function(module_id){
+ 		emptyClipboard()
         $cookieStore.put('old_user_id', $rootScope.current_user.id)
         $cookieStore.put('course_id', $stateParams.course_id)
         $scope.disable_preview = true
         Impersonate.create({},{course_id: $stateParams.course_id},
           function(data){
             console.log(data)
-            console.log("good")
-            $rootScope.preview_as_student = true
+            console.log("good")            
             $cookieStore.put('preview_as_student', true)            
             $cookieStore.put('new_user_id', data.user.id)   
             $state.go('course.courseware.module',{course_id: $stateParams.course_id, module_id: module_id })
+            $rootScope.preview_as_student = true
           },
           function(){
             console.log("Failed")
@@ -238,13 +238,17 @@ angular.module('scalearAngularApp')
     // }
 
     $scope.copy=function(item){
-    	$rootScope.clipboard = {id:item.id, name:item.name, type:item.class_name||'module'}
+    	$rootScope.clipboard = {id:item.id, name:item.name, type:item.class_name||'module', show_msg:true}
+    }
+
+    var emptyClipboard = function(){
+    	$rootScope.clipboard = null
     }
 
     $scope.paste=function(module_id, module_index){
     	console.log("Dsf")
     	var clipboard = $rootScope.clipboard
-    	$rootScope.clipboard = null
+    	// $rootScope.clipboard = null
 
     	if(clipboard.type == 'module')
 	 		pasteModule(clipboard)

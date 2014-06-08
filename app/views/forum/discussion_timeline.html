@@ -10,6 +10,9 @@
                 <td>
                     <div style="padding-right: 5px;">
                         <b>{{item.data.screen_name}}</b>
+                        <div class="timestamp">
+                            {{item.data.created_at | amDateFormat:'MMM Do YYYY, h:mm a'}}
+                        </div>
                         <div class="solved" ng-click="seek()(item.time, item.data.lecture_id)">
                             <p>
                                 <div>
@@ -36,9 +39,9 @@
                 </td>
             </tr>
         </table>
-        <div class="timestamp">
+        <!-- <div class="timestamp">
             {{item.data.created_at | amDateFormat:'MMMM Do YYYY, h:mm a'}}
-        </div>
+        </div> -->
     </div>
     <div class="comments-table">
         <div ng-repeat="comment_data in item.data.comments" class="discussion-comment" ng-class="{flagged: comment_data.comment.flags_count > 0}">
@@ -49,6 +52,9 @@
                             <div>
                                 <div class="screen-name">
                                     <b>{{comment_data.comment.screen_name}}</b>
+                                    <div class="timestamp">
+                                        {{comment_data.comment.created_at | amDateFormat:'MMM Do YYYY, h:mm a'}}
+                                    </div>
                                 </div>
                                 <div class="comment-body">
                                     {{comment_data.comment.content}}
@@ -71,9 +77,6 @@
                         </td>
                     </tr>
                 </table>
-                <div class="timestamp">
-                    {{comment_data.comment.created_at | amDateFormat:'MMMM Do YYYY, h:mm a'}}
-                </div>
             </div>
         </div>
         <span>

@@ -626,6 +626,7 @@ var translation_en=function(){
         teachers: "Teachers",
         teacher_email: "Teacher Email",
         all_courses: "All Courses",
+        back_to_courses: "Back to all courses",
         course_code: "Course Code",
         course_name: "Course Name",
         visit_link: "Visit Link",
@@ -663,7 +664,8 @@ var translation_en=function(){
         sort_by: "Sort By",
         click_to_select: "Click to Select",
         based_on_invideo: "Based on in-video questions answered",
-        view_detailed_progress: "View Details Progress"
+        view_detailed_progress: "View Details Progress",
+        no_courses: "Currently, you don't have any courses you can access. You can start by adding one."
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

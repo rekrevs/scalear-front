@@ -664,7 +664,8 @@ var translation_sv=function(){
               click_to_select: "Klicka för att välja",
               based_on_invideo: "Baserat på in-video frågor besvarade",
               view_detailed_progress: "Visa detaljer framsteg",
-              no_courses: "Just nu, har du inte några kurser som du kan komma åt. Du kan börja genom att lägga till en."
+              no_courses: "Just nu, har du inte några kurser som du kan komma åt. Du kan börja genom att lägga till en.",
+              invite: "Bjud in till Gå"
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

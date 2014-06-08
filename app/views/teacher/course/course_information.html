@@ -84,7 +84,9 @@
                     </option>
                 </select>
                 <div style="color: dimgrey; min-height: 18px;">{{new_teacher.status}}</div>
-                <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeColumn($index)" style="cursor: pointer;" hide-confirm="true" />
+                <button ng-hide="new_teachers.length == 0 || in_delete" ng-click="saveTeachers()" class="btn btn-success add-teacher-button" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0">{{'courses.invite' | translate}}</button>
+                <br />
+                <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeColumn($index)" style="cursor: pointer;" hide-confirm="true"></delete-button>
             </form>
         </div>
     </div>
@@ -97,6 +99,5 @@
         <button ng-click="addColumn(new_teachers.length-1)" ng-hide="new_teachers.length != 0 || in_delete" class="btn btn-success add-teacher-button" style="background-image: initial; float: right; margin-right: 15px;" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0">
             <img src="../images/add_teacher.png" /> {{'courses.add_teacher' | translate}}
         </button>
-        <button ng-hide="new_teachers.length == 0 || in_delete" ng-click="saveTeachers()" class="btn btn-success add-teacher-button" style="background-image: initial; float: right; margin-right: 15px;" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0">{{'save' | translate}}</button>
     </div>
 </div>

@@ -36,9 +36,9 @@
 			<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</div>
 		<div id="foo" class="btn-toolbar">
-			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="invideo" title="{{'lectures.insert_invideo_quiz'|translate}}" style="margin-right: 10px;"></dropdown_list>
-			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="html" title="{{'lectures.insert_html_quiz'|translate}}" style="margin-right: 10px;" /></dropdown_list>
-			<dropdown_list  list="survey_types_list" action="insertQuiz" quiztype="survey" title="Insert Survey (Over video)" /></dropdown_list>
+			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="invideo" title="{{'lectures.insert_invideo_quiz'|translate}}" style="margin-right: 10px; text-align: left;"></dropdown_list>
+			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="html" title="{{'lectures.insert_html_quiz'|translate}}" style="margin-right: 10px; text-align: left;" /></dropdown_list>
+			<dropdown_list  list="survey_types_list" action="insertQuiz" quiztype="survey" title="Insert Survey (Over video)" style="text-align: left;" /></dropdown_list>
 		</div>
 		<br />
 		<quiz_list />

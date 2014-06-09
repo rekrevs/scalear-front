@@ -10,7 +10,7 @@
 		<div ng-repeat="module in modules | orderBy:'position'" >
 			<a href="" ng-click="select(module)">
 				<ul style="float: left; margin: 0; color: #2d2d2d;" ng-class="{moduleactive: current_module.id == module.id}">
-					<module-progress-circle circlesize="10" innercolor="black" module="module" ng-if="module.length || module.quizzes" ></module-progress-circle>
+					<module-progress-circle circlesize="10" innercolor="black" module="module" ng-if="detailed" ></module-progress-circle>
 					{{module.name}}
 				</ul>
 			</a>

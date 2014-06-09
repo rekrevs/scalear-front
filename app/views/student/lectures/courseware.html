@@ -10,7 +10,7 @@
 		<table ng-show="course && !hide_all" style="width: 95%;">
 			<tr>
 				<td style="width: 170px;">
-					<modules-selector modules ="course.groups" current="current_module" action="showModule" /> 
+					<modules-selector modules ="course.groups" current="current_module" action="showModule" detailed="true" /> 
 				</td>
 				<td style="padding: 0px;" ng-style="{width:spacing+'%'}" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
 					<div style="text-align: left;">

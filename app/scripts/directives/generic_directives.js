@@ -276,9 +276,7 @@ angular.module('scalearAngularApp')
       button_title:"@buttonTitle",
       close:'='
     },
-    template:'<span>{{message}}</span>'+
-             '<button ng-show="!close" ng-click="buttonClick()" ng-disabled="disable_button" class="btn" style="font-size: 12px;padding: 0px 6px;margin: 1px 12px;background: lightgray;">{{button_title}}</button>'+
-             '<img    ng-show="close"  ng-click="buttonClick()" src="images/trash_small.png" style="margin: 2px 40px;position: absolute;">',
+    templateUrl:"/views/notice_message.html",
    link:function(scope, element, attr){
       scope.buttonClick=function(){
         scope.disable_button=true

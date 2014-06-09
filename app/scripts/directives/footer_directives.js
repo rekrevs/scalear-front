@@ -21,59 +21,19 @@ angular.module('scalearAngularApp')
                 '</div>'
         };
     })
-    .directive('reportTechnical', ['Home', '$location', '$log','$stateParams','$interval','$translate', '$rootScope',
-        function(Home, $location, $log, $stateParams,$interval,$translate, $rootScope) {
+    .directive('reportTechnical', ['Home', '$location', '$log','$stateParams','$interval','$translate', '$rootScope', '$modal',
+        function(Home, $location, $log, $stateParams,$interval,$translate, $rootScope, $modal) {
             return {
                 restrict: 'E',
-                scope:true,
-                templateUrl: '/views/report_technical.html',
+                template: '<a style="cursor:pointer;" ng-click="toggleTechnicalDisplay()" translate="feedback.report_technical"></a>',
                 link: function(scope, element) {
-                    scope.issue_types=[{value:"system", text:$translate('head.system')}, {value:"content", text:$translate('head.content')}]//"ScalableLearning Website", "Course Content"]
-                    scope.show_technical = false
                     scope.toggleTechnicalDisplay = function() {
-                        scope.show_technical = !scope.show_technical
-                        scope.selected_type=scope.issue_types[0];
-                        scope.sending_technical = false;
+                        angular.element('.btn').blur()
+                        var modalInstance = $modal.open({
+                            templateUrl: '/views/report_technical.html',
+                            controller: "ReportTechnicalCtrl",
+                        })
                     }
-                    scope.cancel=function(){
-                        scope.show_technical = false
-                        scope.selected_type=scope.issue_types[0];
-                        scope.technical_data =null
-                        scope.no_text=null
-                    }
-
-                    scope.send_technical = function() {
-                        $log.debug("in sending");
-                        if((scope.user_name && scope.user_email) || $rootScope.current_user){
-                            if(scope.technical_data && scope.technical_data.trim() !=""){
-                                scope.sending_technical = true;
-                                Home.technicalProblem({
-                                        name: scope.user_name,
-                                        email: scope.user_email,
-                                        issue_type: scope.selected_type.value,
-                                        course: $stateParams.course_id || -1,
-                                        module: $stateParams.module_id || -1,
-                                        lecture: $stateParams.lecture_id || -1,
-                                        quiz: $stateParams.quiz_id || -1,
-                                        url: $location.url(),
-                                        problem: scope.technical_data,
-                                        lang: scope.current_lang,
-                                        agent:navigator.userAgent
-                                    },
-                                    function(data) {
-                                        scope.technical_data = null;                                    
-                                        scope.toggleTechnicalDisplay()
-                                    }
-                                );
-                            }
-                            else
-                                scope.no_text = $translate('feedback.pleave_provide_desciption')
-                        }
-                        else
-                            scope.no_text = $translate('feedback.provide_email_name')
-                    }
-
-
                 }
             };
         }

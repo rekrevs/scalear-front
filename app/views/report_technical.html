@@ -1,22 +1,16 @@
-<a style="cursor:pointer;" ng-click="toggleTechnicalDisplay()" translate="feedback.report_technical"></a>
-<div class="well" style="width:500px;background:whitesmoke;padding:10px; margin: 0 auto; margin-top: 15px;" ng-show="show_technical">
-    <br>
-    <div style="width:82%;margin-bottom: 15px;color: brown;font-family: monospace;text-align: left;">
-        <span translate>
+<div class="modal-header">
+    <h3 translate="feedback.report_technical"></h3>
+</div>
+<div class="modal-body">
+    <center>
+        <div translate>
             feedback.instructions
-        </span>
-        <br>
-        <br>
-        <span ng-show="!current_user">
-            <b><span translate>name</span>: 
-                <input type="text" ng-model="report_name" id="report_name" class="string name optional" name="user[name]" size="50" autocomplete="off" />
-            <br />
-            <b><span translate>email</span>: 
-                <input type="email" ng-model="report_email" id="report_email" class="string email optional" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" autocomplete="off" />
-            </b>
-        </span>
-
-        <div style="color: #0088cc;">
+        </div>
+        <div ng-show="!current_user">
+            <b translate>name</b>: <input type="text" id="report_name" class="string name optional" name="user[name]" ng-model="user.name" size="50" autocomplete="off" /><br />
+            <b translate>email</b>: <input type="email" id="report_email" class="string email optional" ng-model="user.email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" autocomplete="off" />
+        </div>
+        <div>
             <b translate>
                 feedback.problem_is
             </b>: 
@@ -24,19 +18,16 @@
                 ...
             </select>
         </div>
-        </div>
         <div ng-show="no_text" class="alert-error" style="width:50%">
             {{no_text}}
         </div>
-        {{user_name}}
         <textarea rows="5" cols="12" style="width:400px;" ng-model="technical_data">
         </textarea>
-        <br />
-        <a style="cursor:pointer;" ng-click="send_technical()" translate="feedback.send">
-        </a> | 
-        <a style="cursor:pointer;" ng-click="cancel()" translate="feedback.cancel">
-        </a>
         <loading size="small" show="sending_technical">
         </loading>
-    </div>
+    </center>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-success" ng-click="send_technical(selected_type, technical_data, user)" translate="feedback.send"></button>
+    <button class="btn btn-danger" ng-click="cancel()" translate="lectures.cancel"></button>
 </div>

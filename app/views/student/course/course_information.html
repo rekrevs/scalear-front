@@ -1,17 +1,15 @@
 <center><loading size="big" show="!course" /></center>
 <div class="course-left" ng-show="course">
-    <center>
-        <!-- <div class="profile-image" style="background: url({{course.image_url || '../images/course_image.png'}}) no-repeat center; background-size: cover;">
-        </div> -->
+    <div class="course-image">
         <img style="margin: 0 auto; position: relative;" ng-show="!course.image_url" src="../images/course_image.png"/>
         <img style="margin: 0 auto; position: relative;" ng-show="course.image_url" ng-src="{{course.image_url}}" />
-    </center>
-    <hr />
-    <div id="course_code_name">
+    </div>
+    <hr class="first-line" />
+    <div id="course_code_name" class="course-names">
         {{course.short_name +' | '+ course.name}}
     </div>
     <hr />
-    <span style="text-align: left;">
+    <span class="course-details">
         <ul style="font-size: 15px; margin: 0px;" tooltip="{{'courses.discussion_forum_link' | translate}}" tooltip-placement="top" ng-show="course.discussion_link"><span class="link-icon" ></span><a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a></ul>
 
         <ul id="course_date" style="font-size: 15px; margin: 0px;" tooltip="{{'courses.start_date' | translate}}" tooltip-placement="top"><span class="calendar-icon" /></span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</ul>

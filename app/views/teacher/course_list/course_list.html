@@ -78,6 +78,9 @@
 	</table>	 -->
 	<br />
 	<br />
+	<center ng-show="courses && !courses.length" style="height:70px">
+		<h5 class="muted" translate>courses.no_courses</h5>
+	</center>
 	<input id="search" placeholder="{{'courses.search'|translate}}..." type="search" style="border: 2px rgb(0, 162, 86) solid;" name="search" ng-model="searchText" ng-show="courses.length"/>
 	<span ng-show="filtered_teacher">
 		<br />

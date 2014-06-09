@@ -66,9 +66,15 @@
 
     <!-- Add your site or application content here -->
         <header class="navbar-fixed-top modern-navbar" ng-show="current_user">
+            <!-- <span class="modern-menu-button" ng-show="current_user" ng-click="toggleCollapse()" ng-class="{menuopen: !iscollapsed}" tooltip="{{notificationsNumber()}} new notifications" tooltip-placement="left" tooltip-append-to-body="true"> -->
             <span class="modern-menu-button" ng-show="current_user" ng-click="toggleCollapse()" ng-class="{menuopen: !iscollapsed}">
+                <!-- <div class="notifications-number" ng-bind="notificationsNumber()" ng-show="notificationsNumber() != 0" tooltip="{{}}New Notifications">
+                </div> -->
+                <!-- <span class="menu-icon" ng-show="notificationsNumber() == 0" style="margin-top: 8px;">
+                </span> -->
                 <span class="menu-icon" style="margin-top: 8px;">
                 </span>
+
             </span>
             <a ng-show="current_user" class="pull-right current-user-name">
                 <span ng-bind="current_user.name +' '+ current_user.last_name">    
@@ -95,7 +101,7 @@
             <div class="container">
 
                 <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course' && current != 'courses.statistics')" role="current_user.roles[0].id" /></span>
-                <span ui-view="navigation" arenotification="are_notification()" areshared="are_shared()" iscollapsed="iscollapsed"></span>
+                <span ui-view="navigation" iscollapsed="iscollapsed"></span>
 
                 <div class="row" style="width: auto; padding: 10px 15px 20px 70px; text-align: center; margin-bottom: 50px;">
                 
@@ -253,6 +259,7 @@
     <script src="scripts/controllers/shared_ctrl.js"></script>
     <script src="scripts/controllers/forum/forum_ctrl.js"></script>
     <script src="scripts/controllers/student/lectures/editor_ctrl.js"></script>
+    <script src="scripts/controllers/report_technical_ctrl.js"></script>
 
     <script src="scripts/controllers/teacher/announcements/announcements_ctrl.js"></script>
     <script src="scripts/controllers/teacher/calendar/calendar_ctrl.js"></script>

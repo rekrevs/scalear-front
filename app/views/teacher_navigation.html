@@ -39,14 +39,18 @@
                 </a>
             </td>
             </td>
-            <td ng-show="show_notifications" style="width: 100%;">
-                <span class="dropdown-header" ><b translate>navigation.notifications</b></span>
-                <div style="width: 100%;">
-                    <div ng-show="$parent.current_user.invitations == 0 && $parent.current_user.shared == 0">{{'notification.empty' | translate}}</div>
-                    <notification-item ng-repeat="(id, invitation) in $parent.current_user.invitation_items" notification="invitation" id="id"></notification-item>
-
-                    <shared-item-notification ng-repeat="(id, item) in $parent.current_user.shared_items" notification="item" id="id"></shared-item-notification>
+            <td ng-show="show_notifications" style="width: 100%; display: inline-table; margin-left: 20px;">
+                <div class="headerdivider" style="display: table-column; padding-right: 20px;">
                 </div>
+                <span style="margin-left: 20px; display: inline-block;">
+                    <span class="dropdown-header" ><b translate>navigation.notifications</b></span>
+                    <div style="width: 100%;">
+                        <div ng-show="$parent.current_user.invitations == 0 && $parent.current_user.shared == 0">{{'notification.empty' | translate}}</div>
+                        <notification-item ng-repeat="(id, invitation) in $parent.current_user.invitation_items" notification="invitation" id="id"></notification-item>
+
+                        <shared-item-notification ng-repeat="(id, item) in $parent.current_user.shared_items" notification="item" id="id"></shared-item-notification>
+                    </div>
+                </span>
             </td>
             <td ng-init="show_settings = false" style="display: inline-table; margin-left: 20px;">
                 <div class="headerdivider" style="display: table-column; padding-right: 20px;">

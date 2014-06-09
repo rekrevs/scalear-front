@@ -45,7 +45,7 @@ a {
 /* --- Accordion --- */
 .js .accordion {visibility:hidden}
 
-.accordion {margin:0; padding:0; overflow: auto; box-shadow: 1px 1px 1px 1px lightgray; background-color: lightgrey;}
+.accordion {margin:0; padding:0; overflow: auto; box-shadow: 1px 1px 1px 1px lightgray; background-color: white;}
 
 .accordion li {list-style-type:none}
 
@@ -75,7 +75,7 @@ ul.accordion ul {
 .accordion-heading{
 	/*background-color: white;*/
 	/*background-color: #414141;*/
-	background-color: lightgrey;
+	background-color: white;
 }
 .accordion-heading:hover, .moduleopen{
 	/*background-color: lightgrey;*/

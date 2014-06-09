@@ -631,6 +631,7 @@ var translation_sv=function(){
               teachers: "Lärare",
               teacher_email: "Lärare Email",
               all_courses: "Alla kurser",
+              back_to_courses: "Tillbaka till alla kurser",
               course_code: "Kurs kod",
               course_name: "Kurs namn",
               visit_link: "Besök länk",
@@ -668,7 +669,9 @@ var translation_sv=function(){
               sort_by: "Sortera efter",
               click_to_select: "Klicka för att välja",
               based_on_invideo: "Baserat på in-video frågor besvarade",
-              view_detailed_progress: "Visa detaljer framsteg"
+              view_detailed_progress: "Visa detaljer framsteg",
+              no_courses: "Just nu, har du inte några kurser som du kan komma åt. Du kan börja genom att lägga till en.",
+              invite: "Bjud in till Gå"
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

@@ -106,7 +106,7 @@ angular.module('scalearAngularApp')
 
 					parent.focus()
 
-					$timeout(function(){
+					scope.timeout_promise = $timeout(function(){
 						if(player_controls.readyState() == 0)
 							scope.$emit('slow', isYoutube(scope.url))
 					},15000)
@@ -146,6 +146,8 @@ angular.module('scalearAngularApp')
                     element.find('video').remove()
                     if(scope.slow_off)
                     	scope.slow_off()
+                    if(scope.timeout_promise)
+                    	$timeout.cancel(scope.timeout_promise)
                 }
                 player_controls.play=function(){
 					player.play();

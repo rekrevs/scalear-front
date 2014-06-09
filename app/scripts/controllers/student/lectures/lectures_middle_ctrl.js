@@ -34,6 +34,7 @@ angular.module('scalearAngularApp')
         $scope.current_time = 0
         $scope.total_duration = 0
         $scope.elapsed_width =0
+        $scope.slow = false
     }
 
     var init = function() {            
@@ -59,9 +60,8 @@ angular.module('scalearAngularApp')
 
                 goToLecture($state.params.lecture_id) 
                 $timeout(function(){
-                    $scope.scrollIntoView('notes')
                     $scope.scrollIntoView('outline')
-                },100)
+                },500)
             }
         })
 
@@ -76,7 +76,6 @@ angular.module('scalearAngularApp')
     }
 
     var goToLecture=function(id){
-        $scope.slow = false
         if($scope.timeline){
             if(isiPad()){
                 angular.element('#lecture_video')[0].scrollIntoView()
@@ -88,8 +87,8 @@ angular.module('scalearAngularApp')
                 $scope.lecture = $scope.timeline['lecture'][id].meta
                 Page.setTitle('head.lectures',': '+$scope.lecture.name); 
             })
+            
             $scope.$parent.$parent.current_item= id
-            $scope.slow = false
             initVariables()
             clearQuiz()
             
@@ -144,18 +143,10 @@ angular.module('scalearAngularApp')
 
     $scope.scrollIntoView=function(tab, fast){
         if($scope.lecture && !isiPad()){
-            if(fast){
-                $timeout(function(){
-                    $location.hash(tab+'_'+$scope.lecture.id);
-                    $anchorScroll();    
-                }, 0)
-            }
-            else{
-                $timeout(function(){
-                    $location.hash(tab+'_'+$scope.lecture.id);
-                    $anchorScroll();    
-                }, 1000)
-            }
+            $timeout(function(){
+                $location.hash(tab+'_'+$scope.lecture.id);
+                $anchorScroll();    
+            })
         }
     }
 
@@ -505,9 +496,11 @@ angular.module('scalearAngularApp')
                 time = ($scope.total_duration - $scope.selected_quiz.time)/2
             $interval(function(){
                 $scope.review_inclass_inprogress = false
-                $scope.review_inclass= true
+                // $scope.review_inclass= true
+                $( "#review_inclass" ).fadeIn( "fast")
                  $interval(function(){
-                    $scope.review_inclass= false
+                    $( "#review_inclass" ).fadeOut( "fast" )
+                    // $scope.review_inclass= false
                 },5000,1)
             },time*1000,1)
         }
@@ -542,42 +535,46 @@ angular.module('scalearAngularApp')
         $scope.closeReviewNotify()
     }
 
-    $scope.saveNote = function(){
-        for(var e in $scope.editors){
-            if($scope.editors[e].doc.dirty)
-                $scope.editors[e].save();
-        }
-    }
+    // $scope.saveNote = function(){
+    //     for(var e in $scope.editors){
+    //         if($scope.editors[e].doc.dirty)
+    //             $scope.editors[e].save();
+    //     }
+    // }
 
-    $scope.disableSaveNote= function(){
-        for(var e in $scope.editors){
-            if($scope.editors[e].doc.dirty)
-                return false;
-        }
-        return true;
-    }
+    // $scope.disableSaveNote= function(){
+    //     for(var e in $scope.editors){
+    //         if($scope.editors[e].doc.dirty)
+    //             return false;
+    //     }
+    //     return true;
+    // }
 
-    $scope.saveQuestion = function(current_question, privacy_value){       
-        Forum.createPost(
-            {post: 
-                {
-                    content: current_question, 
-                    time:$scope.current_question_time, 
-                    lecture_id:$state.params.lecture_id, 
-                    privacy:privacy_value
-                }
-            }, 
-            function(response){
-                console.log("success");
-                $scope.timeline['lecture'][$state.params.lecture_id].add($scope.current_question_time, "discussion",  response.post);
-                $scope.toggleQuestionBlock()
-            }, 
-            function(){
-                console.log("failure")
-            }
-        )
-    }
+    // $scope.saveQuestion = function(current_question, privacy_value){       
+    //     Forum.createPost(
+    //         {post: 
+    //             {
+    //                 content: current_question, 
+    //                 time:$scope.current_question_time, 
+    //                 lecture_id:$state.params.lecture_id, 
+    //                 privacy:privacy_value
+    //             }
+    //         }, 
+    //         function(response){
+    //             console.log("success");
+    //             $scope.timeline['lecture'][$state.params.lecture_id].add($scope.current_question_time, "discussion",  response.post);
+    //             $scope.toggleQuestionBlock()
+    //         }, 
+    //         function(){
+    //             console.log("failure")
+    //         }
+    //     )
+    // }
 
+    $scope.$on('note_updated',function(){
+        if(!$scope.quiz_mode)
+            $scope.lecture_player.controls.play();
+    })
     init();
 
 }]);

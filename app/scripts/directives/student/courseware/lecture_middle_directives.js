@@ -627,17 +627,40 @@ angular.module('scalearAngularApp')
     link:function(scope,element,attrs){
 
       scope.deleteNote=function(){
-        scope.$emit('update_timeline', scope.item)
+        // console.log(scope.item)
+        if(scope.item.data && scope.item.data.id){
+          Lecture.deleteNote(
+            {
+              lecture_id:$state.params.lecture_id,
+              note_id: scope.item.data.id
+            },function(){
+                scope.$emit('update_timeline', scope.item)
+                scope.$emit("note_updated")
+            }
+          )
+        }
+        else{
+          scope.$emit('update_timeline', scope.item)
+          scope.$emit("note_updated")
+        }
       }
 
-      scope.saveNote=function(data){
+      scope.saveNote=function(note_text){
+        // console.log(scope.item)
         Lecture.saveNote(
-          {lecture_id:$state.params.lecture_id}, 
           {
-            data: data,
+            lecture_id:$state.params.lecture_id,
+            note_id: scope.item.data.id || null
+          }, 
+          {
+            data: note_text,
             time: scope.item.time
           }, 
-          function(response){}, 
+          function(response){
+            scope.$emit("note_updated")
+            scope.item.data = response.note
+            //console.log(response.note)
+          }, 
           function(response){}
         );
       }
@@ -647,8 +670,8 @@ angular.module('scalearAngularApp')
 }]).directive('notesArea', ['$timeout',
     function($timeout) {
         return {
-            template: '<div onshow="moveCursorToEnd()" ng-mouseover="overclass = true" ng-mouseleave="overclass= false"  e-rows="8" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()">'+
-                        '<pre style="color: teal;">'+
+            template: '<div onshow="moveCursorToEnd()" ng-mouseover="overclass = true" ng-mouseleave="overclass= false"  e-rows="3" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="font-family: Monaco, Menlo, Consolas, monospace;font-size: 13px;color: teal;">'+
+                        '<pre style="color: teal;word-break: break-word;">'+
                           '{{ value || ("empty"|translate)  }}'+
                           '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
                         '</pre>'+
@@ -663,15 +686,20 @@ angular.module('scalearAngularApp')
 
                 scope.moveCursorToEnd=function(){
                   $timeout(function() {
-                      // element.find('.editable-input').select();
-                      var SearchInput = $('.editable-input');
-                      var strLength= SearchInput.val().length;
-                      SearchInput.focus();
-                      SearchInput[0].setSelectionRange(strLength, strLength);
+                      var textarea = $('.editable-input');
+                      var strLength= textarea.val().length;
+                      textarea.focus();
+                      textarea[0].setSelectionRange(strLength, strLength);
                   });
+
+                  shortcut.add("enter", function(){
+                    $('form.editable-textarea').submit();
+                  }, {"disable_in_input" : false});
+
                 }
                 scope.show=function(){
                   scope.myform.$show()
+                  $('.editable-input').focus()
                 }
 
                 if(!scope.value)

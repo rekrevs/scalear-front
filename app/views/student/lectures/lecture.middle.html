@@ -38,7 +38,7 @@
 						</controls>
 						<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
 						<notification message="notification_message" submessage="notification_submessage" /> 
-						<review_inclass ng-show="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" /> 
+						<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none"/> 
 			    	</progress-bar>
 			    </video_container>
 			</form>
@@ -46,7 +46,7 @@
 		<div id="student-accordion" style="height: 33vw;">
 			<!-- <question_block ng-show="show_question_block" time="current_question_time" action="saveQuestion" /> -->
 		    <tabset style="width:100%;">
-		        <tab id="video_events" active="tabs[0]" heading="{{'lectures.video_events' | translate}}" select="scrollIntoView('outline', true)" style="cursor: pointer; text-align: center;" >
+		        <tab id="video_events" active="tabs[0]" heading="{{'lectures.video_events' | translate}}" select="scrollIntoView('outline')" style="cursor: pointer; text-align: center;" >
 	        		<table>
 	        			<tr class="filterbuttons">
 	        				<td style="width: 40%;">
@@ -64,7 +64,7 @@
 							            <input type="checkbox" ng-model="checkModel.note"> {{'lectures.video_notes' | translate}}
 							        </label>
 							    </div>
-							    <button class="btn btn-success btn-mini" style="float: right; margin-right: 4px; height: 28px;" ng-click="scrollIntoView('outline', true)" translate>
+							    <button class="btn btn-success btn-mini" style="float: right; margin-right: 4px; height: 28px;" ng-click="scrollIntoView('outline')" translate>
 							    	lectures.current_lecture
 							    </button>
 	        				</td>

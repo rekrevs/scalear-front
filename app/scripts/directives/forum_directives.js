@@ -11,6 +11,7 @@ angular.module('scalearAngularApp')
             link:function(scope,element,attrs){
                 scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
                 scope.privacy = scope.choices[0];
+                $('.text_block').focus()
                 scope.postQuestion=function(item){
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
                         //scope.action()(scope.current_question, scope.privacy.value)
@@ -42,6 +43,10 @@ angular.module('scalearAngularApp')
                 scope.cancelQuestion=function(question){
                     scope.$emit('update_timeline', question)
                 }
+
+                shortcut.add("enter", function(){
+                    scope.postQuestion(scope.item)
+                  }, {"disable_in_input" : false});
             }
         }
     }])

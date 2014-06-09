@@ -631,6 +631,7 @@ angular.module('scalearAngularApp')
         if(scope.item.data && scope.item.data.id){
           Lecture.deleteNote(
             {
+              course_id: $state.params.course_id,
               lecture_id:$state.params.lecture_id,
               note_id: scope.item.data.id
             },function(){

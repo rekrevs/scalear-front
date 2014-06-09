@@ -46,7 +46,11 @@ angular.module('scalearAngularApp')
 
                 shortcut.add("enter", function(){
                     scope.postQuestion(scope.item)
-                  }, {"disable_in_input" : false});
+                }, {"disable_in_input" : false});
+
+                scope.$on('$destroy', function() {
+                  shortcut.remove("enter");
+                });
             }
         }
     }])

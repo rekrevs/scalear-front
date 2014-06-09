@@ -649,6 +649,7 @@ angular.module('scalearAngularApp')
         // console.log(scope.item)
         Lecture.saveNote(
           {
+            course_id: $state.params.course_id,
             lecture_id:$state.params.lecture_id,
             note_id: scope.item.data.id || null
           }, 
@@ -683,6 +684,10 @@ angular.module('scalearAngularApp')
                 delete:"&"
             },
             link: function(scope, element) {
+
+                scope.$on('$destroy', function() {
+                  shortcut.remove("enter");
+                });
 
                 scope.moveCursorToEnd=function(){
                   $timeout(function() {

@@ -24,10 +24,10 @@
         <p><b><span translate>enroll.help_enroll</span>:</b></p>
         <p translate>enroll.instruction</p>
         <br>
-        <div  ng-click="this.select()" class="well well-lg" style="background: white;color: brown;" >
+        <div  ng-click="this.select()" class="well well-lg" style="background: white;" >
             <div id="kk" select-on-click>
                 <p ><span translate>enroll.dear_student</span>,</p>
-                <p >&emsp;<span translate>enroll.this_term_new_system</span> <b>{{course_information.unique_identifier}}</b>.</p>
+                <p >&emsp;<span translate>enroll.this_term_new_system</span><a href="http://www.scalable-learning.com/#/users/student"> http://www.scalable-learning.com/#/users/student </a><span translate>enroll.this_term_new_system_continue</span> <b>{{course_information.unique_identifier}}</b>.</p>
                 <p ><span translate>enroll.sincerely</span>,<br>{{current_user.name}}</p>
             </div>
             <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right;position: relative;top: -30px;" ><span translate>courses.click_to_select</span><br><span translate>menu.copy</span>: cmd+C or ctrl+C</div>

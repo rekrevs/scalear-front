@@ -140,7 +140,8 @@ var translation_en=function(){
         help_enroll:"Help on Enrollment",
         instruction:"Students enroll by first registering on the scalable learning website and then entering the Course Enrollment Key. To help your students do this, please send them an email with the following instructions.",
         dear_student:"Dear Student",
-        this_term_new_system:"This term we will be using an online system to make your learning experience more interactive. To use this system you will need to create an account and add this course. To do so, please visit: http://www.scalable-learning.com/#/users/student and create a student account with your university email address. You can then add the course by clicking on “Join Course” under “Courses” and entering the course Enrollment Key",
+        this_term_new_system:"This term we will be using an online system to make your learning experience more interactive. To use this system you will need to create an account and add this course. To do so, please visit:",
+        this_term_new_system_continue:"and create a student account with your university email address. You can then add the course by clicking on “Join Course” under “Courses” and entering the course Enrollment Key",
         sincerely:"Sincerely",
       },
       announcement_form:{

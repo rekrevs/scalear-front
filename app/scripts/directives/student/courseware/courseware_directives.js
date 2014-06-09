@@ -33,7 +33,8 @@ angular.module('scalearAngularApp')
 			close:"=",
 			current_module: "=current",
 		 	action:"&",
-	 		modules: "="
+	 		modules: "=",
+	 		detailed: "="
 		},
 		templateUrl: "/views/student/lectures/modules_selector.html",
   		link: function(scope, element){

@@ -87,7 +87,7 @@ angular.module('scalearAngularApp')
                 $scope.lecture = $scope.timeline['lecture'][id].meta
                 Page.setTitle('head.lectures',': '+$scope.lecture.name); 
             })
-            
+
             $scope.$parent.$parent.current_item= id
             initVariables()
             clearQuiz()
@@ -499,7 +499,8 @@ angular.module('scalearAngularApp')
                 // $scope.review_inclass= true
                 $( "#review_inclass" ).fadeIn( "fast")
                  $interval(function(){
-                    $( "#review_inclass" ).fadeOut( "fast" )
+                    $scope.closeReviewNotify()
+                    
                     // $scope.review_inclass= false
                 },5000,1)
             },time*1000,1)
@@ -527,7 +528,8 @@ angular.module('scalearAngularApp')
 
     $scope.closeReviewNotify=function(){
         console.log("close")
-        $scope.review_inclass= false 
+        // $scope.review_inclass= false 
+        $( "#review_inclass" ).fadeOut( "fast" )
     }
 
     $scope.retryQuiz=function(){

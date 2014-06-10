@@ -694,7 +694,7 @@ angular.module('scalearAngularApp')
   			if ($scope.selected_item.type == "discussion"){
   				var q_ind = $scope.inner_highlight_index <0 ? 0 : $scope.inner_highlight_index
   				$scope.selected_item.data[q_ind].post.hide = !$scope.selected_item.data[q_ind].post.hide
-  				$scope.updateHideDiscussion($scope.selected_item.data[q_ind].post.id,$scope.selected_item.data[q_ind].post.hide)
+  				$scope.updateHideDiscussion($scope.selected_item.data[q_ind].post.id,!$scope.selected_item.data[q_ind].post.hide)
   			}
   			else if ($scope.selected_item.type == "charts"){
           if($scope.selected_item.data.hide != null){

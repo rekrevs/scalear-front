@@ -344,6 +344,7 @@ angular.module('scalearAngularApp')
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion",  null);
         $scope.lecture_player.controls.pause();
         $scope.fullscreen= false
+        $scope.checkModel.discussion = true
         // $scope.timeline['lecture'][$state.params.lecture_id].add(time, "question_block", {})
 
     };
@@ -353,6 +354,8 @@ angular.module('scalearAngularApp')
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note",  null);
         $scope.lecture_player.controls.pause();
         $scope.fullscreen= false
+        $scope.checkModel.note = true
+
     }
 
     $scope.$on('video_back',function(ev, time){

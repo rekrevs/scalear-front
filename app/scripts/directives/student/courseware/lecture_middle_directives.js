@@ -545,6 +545,7 @@ angular.module('scalearAngularApp')
   };
 }]).directive('studentTimeline', function() {
   return {
+    replace: true,
     restrict:"E",
     scope:{
       timeline:'=',

@@ -167,6 +167,7 @@ angular.module('scalearAngularApp')
             })
         }
     }
+    $scope.moduleProgressTab()
 
 
   }]);

@@ -49,7 +49,8 @@ angular.module('scalearAngularApp', [
     'textAngular',
     'highcharts-ng',
     'config',
-    'chieffancypants.loadingBar'
+    'chieffancypants.loadingBar',
+    'anguFixedHeaderTable'
     // 'ngAnimate'
 ])
     .constant('headers', {

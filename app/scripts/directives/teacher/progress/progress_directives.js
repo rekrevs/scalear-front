@@ -11,7 +11,10 @@ angular.module('scalearAngularApp')
 	        solvedCount:"=",
 	        totalLecQuiz:"=",
 	        action:"&",
-	        show_popover:'=showPopover'
+	        show_popover:'=showPopover',
+	        remaining: "=",
+	        scrolldisabled: "=",
+	        modstatus: "="
 	    },
 	    templateUrl:'/views/teacher/progress/progress_matrix.html', 
 	    link:function(scope){

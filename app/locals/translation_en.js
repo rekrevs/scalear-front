@@ -92,6 +92,8 @@ var translation_en=function(){
         flag_post: "Flag this post",
         flag: "Flag",
         unflag: "Unflag",
+        flagged_post: "Flagged post",
+        flagged_comment: "Flagged comment",
         unflag_post: "Unflag this post",
         flags: "Flags",
         likes: "Likes",

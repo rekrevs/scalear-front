@@ -86,29 +86,32 @@
     }
     .discussion-content{
         background-color: white;
-        box-shadow: 0px 1px 1px darkgrey;
+        /*box-shadow: 0px 1px 1px darkgrey;*/
         position: relative;
         /*padding: 5px; */
     }
     .discussion-comment{
         background-color: white;
-        margin-bottom: 5px;*/
+        /*margin-bottom: 5px;*/
         /*padding-left: 10px;*/
         /*padding-bottom: 10px;*/
-        padding-right: 5px;
+        /*padding-right: 5px;*/
         /*border-left: 5px solid rgb(0, 162, 86);*/
     }
     .flagged{
         /*border-left: 5px solid red !important;*/
         /*border: 1px solid red !important;*/
-        box-shadow: 0px 0px 3px 1px lightcoral;
+        /*box-shadow: 0px 0px 3px 1px lightcoral;*/
+        background-color: rgba(255, 0,0, 0.1);
     }
     .comments-table{
         font-size: 13px;        
         /*margin: 10px;*/
-        background-color: whitesmoke;
-        padding: 5px;
+        /*background-color: whitesmoke;*/
+        padding-top: 5px;
         margin-top: 0px;
+        margin-left: 15px;
+        /*border-left: 1px rgba(0,0,0,0.1) solid;*/
     }
     textarea{
         width: 80%;
@@ -123,10 +126,14 @@
         /*border-left: 1px solid lightgrey;*/
         margin-left: 10px;
         color: #a1a1a1 !important;
-        margin-bottom: 10px;
+        margin-bottom: 3px;
+        /*font-size: 11px !important;*/
     }
 
     .like-button{
+        display: inline-block;
+    }
+    .screen-name{
         display: inline-block;
     }
     .timestamp{

@@ -11,11 +11,14 @@
         <table style="width: 100%;">
             <tr>
                 <td style="padding-bottom: 0px;">
-                    <div style="padding-right: 5px;">
+                    <div>
                         <b>{{item.data.screen_name}}</b>
                         <div class="timestamp">
                             <!-- {{item.data.created_at | amDateFormat:'MMM Do YYYY, h:mm a'}} -->
-                             . {{ item.data.created_at | timeAgo }}
+                             . {{ item.data.created_at | timeAgo }}<span ng-if="item.data.flags_count > 0" style="color: red;"><span style="color: #a1a1a1"> . </span>{{'discussion.flagged_post' | translate}}</span>
+                        </div>
+                        <div ng-show="item.data.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
+                            <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="false"></delete_button>
                         </div>
                         <div class="solved" ng-click="seek()(item.time, item.data.lecture_id)">
                             <!-- <p> -->
@@ -32,16 +35,13 @@
                 </td>
             </tr>
         </table>
-        <div class="post-controls">
-            <div ng-show="item.data.user_id == current_user.id">
-                <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="true"></delete_button>
-            </div>
+        <div class="post-controls" ng-if="item.data.user_id != current_user.id">
             <div class="like-button" ng-show="item.data.user_id != current_user.id">
                 <voting-button discussion="item" up="upvotePost" down="downvotePost" direction="horizontal"></voting-button>
                 .
             </div>
             <div style="display: inline-block;" ng-show="item.data.user_id != current_user.id">
-                <flag-button comment="item.data" flag="flagPost" unflag="unflagPost" type="text"></flag-button>
+                <flag-button comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
             </div>
             
         </div>
@@ -60,8 +60,11 @@
                                     <b>{{comment_data.comment.screen_name}}</b>
                                     <div class="timestamp">
                                         <!-- {{comment_data.comment.created_at | amDateFormat:'MMM Do YYYY, h:mm a'}} -->
-                                         . {{ comment_data.comment.created_at | timeAgo }}
+                                         . {{ comment_data.comment.created_at | timeAgo }}<span ng-if="comment_data.comment.flags_count > 0" style="color: red;"><span style="color: #a1a1a1"> . </span>{{'discussion.flagged_comment' | translate}}</span>
                                     </div>
+                                </div>
+                                <div ng-show="comment_data.comment.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
+                                    <delete_button size="small" action="deleteComment(comment_data,item.data.id)" vertical="false" text="false" style="display: inline-block; color: #a1a1a1;"></delete_button>
                                 </div>
                                 <div class="comment-body">
                                     {{comment_data.comment.content}}
@@ -70,16 +73,13 @@
                         </td>
                     </tr>
                 </table>
-                <div class="post-controls">
-                    <div style="display: inline-block;" ng-show="comment_data.comment.user_id == current_user.id">
-                        <delete_button size="small" action="deleteComment(comment_data,item.data.id)" vertical="false" text="true" style="display: inline-block; color: #a1a1a1;"></delete_button>
-                    </div>
+                <div class="post-controls" ng-if="comment_data.comment.user_id != current_user.id">
                     <div class="like-button" ng-show="comment_data.comment.user_id != current_user.id">
                         <voting-button comment="comment_data.comment" up="upvoteComment" down="downvoteComment" direction="horizontal"></voting-button>
                         .
                     </div>
                     <div style="display: inline-block;" ng-show="comment_data.comment.user_id != current_user.id">
-                        <flag-button comment="comment_data.comment" flag="flagComment" unflag="unflagComment" type="text"></flag-button>
+                        <flag-button comment="comment_data.comment" flag="flagComment" unflag="unflagComment" type="icon"></flag-button>
                     </div>
                     
                 </div>

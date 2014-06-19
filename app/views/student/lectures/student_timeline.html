@@ -11,12 +11,12 @@
             <li ng-if="l.slides && l.slides != 'none'">
                 <b>{{'lectures.slides' | translate}}</b>
                 <ul>
-                    <a href="{{l.slides | formatURL}}">{{l.slides | formatURL}}</a>
+                    <a href="{{l.slides | formatURL}}" style="word-wrap: break-word;">{{l.slides | formatURL}}</a>
                 </ul>
             </li>
         </div>
         
-        <table class="table table-striped" style="border-spacing: 0.2em;">
+        <table class="table table-striped" style="border-spacing: 0.1em;">
             <tbody ng-repeat="item in timeline[l.id].items | filter:filterType">
                 <tr name="quiz-timeline-item" quiz_timeline ng-if="item.type=='quiz'" item='item' seek='seek()' />
                 <tr name="confused-timeline-item" confused_timeline ng-if="item.type=='confused'" item='item' seek='seek()'/>
@@ -24,6 +24,5 @@
                 <tr name="notes-timeline-item" notes_timeline ng-if="item.type=='note'" item="item" seek='seek()' />
             </tbody>
         </table>
-        <hr>
     </div>
 </div>

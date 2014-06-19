@@ -1,11 +1,29 @@
-<div ng-show="discussion && !comment" style="text-align: center; display: inline-block;">
-	<div ng-show="discussion.data.user_vote == 0" class="icon icon-chevron-up" style="display: block; cursor: pointer; margin-bottom: -2px; margin: 0 auto;" tooltip="{{'discussion.like' | translate}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="up(discussion)"></div>
-	{{discussion.data.votes_count}}
-	<div ng-show="discussion.data.user_vote == 1" class="icon icon-chevron-down" style="display: block; cursor: pointer; margin-top: -3px; margin: 0 auto;" tooltip="{{'discussion.unlike' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="down(discussion)"></div>
-</div>
+<span ng-if="direction == 'horizontal'">	
+	<div ng-show="discussion && !comment" style="text-align: center; display: inline-block;">
+		{{discussion.data.votes_count}}
+		<div ng-show="discussion.data.user_vote == 0" class="icon icon-chevron-up" style="display: inline-block; cursor: pointer; margin-bottom: -2px; margin: 0 auto;" tooltip="{{'discussion.like' | translate}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="up(discussion)"></div>
+		<div ng-show="discussion.data.user_vote == 1" class="icon icon-chevron-down" style="display: inline-block; cursor: pointer; margin-top: -3px; margin: 0 auto;" tooltip="{{'discussion.unlike' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="down(discussion)"></div>
+	</div>
 
-<div ng-show="comment && !discussion" style="text-align: center; display: inline-block;">
-	<div ng-show="comment.user_vote == 0" class="icon icon-chevron-up" style="display: block; cursor: pointer; margin-bottom: -2px; margin: 0 auto;" tooltip="{{'discussion.like' | translate}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="up(comment)"></div>
-	{{comment.votes_count}}
-	<div ng-show="comment.user_vote == 1" class="icon icon-chevron-down" style="display: block; cursor: pointer; margin-top: -3px; margin: 0 auto;" tooltip="{{'discussion.unlike' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="down(comment)"></div>
-</div>
+	<div ng-show="comment && !discussion" style="text-align: center; display: inline-block;">
+		{{comment.votes_count}}
+		<div ng-show="comment.user_vote == 0" class="icon icon-chevron-up" style="display: inline-block; cursor: pointer; margin-bottom: -2px; margin: 0 auto;" tooltip="{{'discussion.like' | translate}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="up(comment)"></div>
+		<div ng-show="comment.user_vote == 1" class="icon icon-chevron-down" style="display: inline-block; cursor: pointer; margin-top: -3px; margin: 0 auto;" tooltip="{{'discussion.unlike' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="down(comment)"></div>
+	</div>
+</span>
+
+
+
+<span ng-if="direction == 'vertical'">
+	<div ng-show="discussion && !comment" style="text-align: center; display: inline-block;">
+		{{discussion.data.votes_count}}
+		<div ng-show="discussion.data.user_vote == 0" class="icon icon-chevron-up" style="display: block; cursor: pointer; margin-bottom: -2px; margin: 0 auto;" tooltip="{{'discussion.like' | translate}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="up(discussion)"></div>
+		<div ng-show="discussion.data.user_vote == 1" class="icon icon-chevron-down" style="display: block; cursor: pointer; margin-top: -3px; margin: 0 auto;" tooltip="{{'discussion.unlike' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="down(discussion)"></div>
+	</div>
+
+	<div ng-show="comment && !discussion" style="text-align: center; display: inline-block;">
+		{{comment.votes_count}}
+		<div ng-show="comment.user_vote == 0" class="icon icon-chevron-up" style="display: block; cursor: pointer; margin-bottom: -2px; margin: 0 auto;" tooltip="{{'discussion.like' | translate}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="up(comment)"></div>
+		<div ng-show="comment.user_vote == 1" class="icon icon-chevron-down" style="display: block; cursor: pointer; margin-top: -3px; margin: 0 auto;" tooltip="{{'discussion.unlike' | translate}}" tooltip-placement="bottom" tooltip-append-to-body="true" ng-click="down(comment)"></div>
+	</div>
+</span>

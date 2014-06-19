@@ -112,10 +112,10 @@ angular.module('scalearAngularApp')
 
             scope.flagPost = function(discussion){
                 Forum.flagPost(
-                    {post_id: discussion.data.id}, 
+                    {post_id: discussion.id}, 
                     function(response){
-                        discussion.data.user_flag=1;
-                        discussion.data.flags_count++;
+                        discussion.user_flag=1;
+                        discussion.flags_count++;
                     },
                     function(){
                         console.log("failure");
@@ -124,10 +124,10 @@ angular.module('scalearAngularApp')
             }
             scope.unflagPost = function(discussion){
                 Forum.flagPost(
-                    {post_id: discussion.data.id}, 
+                    {post_id: discussion.id}, 
                     function(response){
-                        discussion.data.user_flag = 0;
-                        discussion.data.flags_count--;
+                        discussion.user_flag = 0;
+                        discussion.flags_count--;
                     }, 
                     function(){
                         console.log("failure");
@@ -284,10 +284,63 @@ angular.module('scalearAngularApp')
             discussion: '=',
             comment: '=',
             up: '=',
-            down: '='
+            down: '=',
+            direction: '@',
 
         },
         templateUrl: '/views/forum/like_button.html',
         link: function(scope, element){}
     }
+}).directive('flagButton', function(){
+    return{
+        restrict: 'E',
+        scope:{            
+            discussion: '=',
+            comment: '=',
+            flag: '=',
+            unflag: '=',
+            type: '@',
+
+        },
+        templateUrl: '/views/forum/flag_button.html',
+        link: function(scope, element){}
+    }
+}).directive("timelineFilters",function(){
+    return{
+        restrict: "E",
+        scope: {
+            options:'='
+        },
+        templateUrl: '/views/forum/timeline_filters.html',
+        // template:'<div class="time_estimate" style="z-index:1">'+
+        //             '<h4 translate>courses.time_estimate</h4>'+
+        //             '<div style="display: inline-block;">In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></div>'+
+        //             '<a pop-over="popover_options">{{"more" | translate}}...</a>'+
+        //         '</div>', 
+        link:function(scope){
+            var template = "<div style='color:#6e6e6e;font-size:12px'>"+
+                            "<b>Filter Events: </b><br />"+
+                            // "<div class='btn-group align-center' data-toggle='buttons'>"+
+                                // "<label id='quiz_checkbox' class='btn btn-checkbox'>"+
+                                    "<input type='checkbox' ng-model='options.quiz'> {{'quiz' | translate}} | "+
+                                // "</label>"+
+                                // "<label id='confused_checkbox'class='btn btn-checkbox'>"+
+                                    "<input type='checkbox' ng-model='options.confused'> {{'lectures.confused' | translate}} | "+
+                                // "</label>"+
+                                // "<label id='discussion_checkbox' class='btn btn-checkbox'>"+
+                                    "<input type='checkbox' ng-model='options.discussion'> {{'lectures.discussion' | translate}} | "+
+                                // "</label>"+
+                                 // "<label id='notes_checkbox' class='btn btn-checkbox'>"+
+                                    "<input type='checkbox' ng-model='options.note'> {{'lectures.video_notes' | translate}}"+
+                                // "</label>"+
+                            // "</div>"+
+                           "</div>"
+
+            scope.popover_options={
+                content: template,
+                html:true,
+                placement:"left"
+            }
+        }
+    };
 });

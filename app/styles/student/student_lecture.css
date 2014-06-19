@@ -60,6 +60,7 @@
         border-radius: 0px 4px 4px 0px;
         height: 20px;
         padding: 5px;
+        margin-bottom: 5px;
         line-height: normal;
     }
     .table{
@@ -87,22 +88,24 @@
         background-color: white;
         box-shadow: 0px 1px 1px darkgrey;
         position: relative;
-        padding: 5px; 
+        /*padding: 5px; */
     }
     .discussion-comment{
         background-color: white;
-        margin-top: 10px;
-        padding-left: 10px;
-        padding-bottom: 10px;
+        margin-bottom: 5px;*/
+        /*padding-left: 10px;*/
+        /*padding-bottom: 10px;*/
         padding-right: 5px;
-        border-left: 5px solid rgb(0, 162, 86);
+        /*border-left: 5px solid rgb(0, 162, 86);*/
     }
     .flagged{
-        border-left: 5px solid red !important;
+        /*border-left: 5px solid red !important;*/
+        /*border: 1px solid red !important;*/
+        box-shadow: 0px 0px 3px 1px lightcoral;
     }
     .comments-table{
         font-size: 13px;        
-        margin: 10px;
+        /*margin: 10px;*/
         background-color: whitesmoke;
         padding: 5px;
         margin-top: 0px;
@@ -113,17 +116,24 @@
         overflow: visible;
         border-radius: 0px;
     }
-    .flag{
+    .post-controls{
+        /*border-top: 1px solid lightgrey;*/
         display: inline-block;
         vertical-align: top;
-        border-left: 1px solid lightgrey;
-        padding-left: 5px;
+        /*border-left: 1px solid lightgrey;*/
+        margin-left: 10px;
+        color: #a1a1a1 !important;
+        margin-bottom: 10px;
+    }
+
+    .like-button{
+        display: inline-block;
     }
     .timestamp{
-        text-align: right;
-        font-size: xx-small;
+        text-align: left;
+        font-size: 11px;
         display: inline-block;
-        float: right;
+        color: #a1a1a1;
     }
 
         .tab-content{
@@ -179,8 +189,33 @@
         float: right; 
         position: relative;
         right: 0px;
-        bottom: 6px;
+        /*bottom: 6px;*/
         overflow-y: auto; 
+    }
+    .row{
+        margin-bottom: 10px; 
+    }
+    .filterbuttons{
+        position: absolute;
+        z-index: 1;
+        border: 1px lightgrey;
+        box-shadow: 1px 1px 0px lightgrey;
+        padding: 3px;
+        width: 95%;
+        background-color: white;
+    }
+    .timeline-settings{
+        margin-top: 25px;
+        margin-right: 6px;
+        float: right;
+        cursor: pointer;
+        opacity: 0.5;
+    }
+    .timeline-settings:before{
+        content: url("/images/settings-icon-dark.png");
+    }
+    .timeline-settings:hover, .timelinesettingsopen{
+        opacity: 1 !important;
     }
     /*@media only screen and (max-width : 1312px) {
       #student-accordion{

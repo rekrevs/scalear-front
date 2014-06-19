@@ -92,6 +92,7 @@ var translation_sv=function(){
             write_comment: "Lämna en kommentar...",
             flag_post: "Flagga detta Inlägg",
             flag: "Flagga",
+            unflag: "Un-flagga",
             unflag_post: "Un-flagga detta inlägg",
             flags: "Flaggor",
             likes: "Gillar",

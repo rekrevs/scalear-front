@@ -3,9 +3,9 @@
  angular.module("config", [])
 
 .constant("scalear_api", {
-  "host": "",
-  "redirection_url": "",
-  "version": "2.13.4 (Tue, 10 Jun 2014 08:59:50 GMT)",
+  "host": "http://0.0.0.0:3000",
+  "redirection_url": "http://0.0.0.0:3000/#/",
+  "version": "2.13.4 (Sun, 22 Jun 2014 07:03:58 GMT)",
   "help_link": "http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf"
 })
 

@@ -7,7 +7,7 @@
     <question_block item="item" />
 </td>
 <td ng-if="item.data" colspan="2" style="padding: 0px;padding-right: 8px;">
-    <div class="discussion-content" ng-class="{flagged: item.data.flags_count > 0}">
+    <div class="discussion-content" ng-class="{ownpost: item.data.user_id == current_user.id, flagged: item.data.flags_count > 0}">
         <table style="width: 100%;">
             <tr>
                 <td style="padding-bottom: 0px;">
@@ -18,11 +18,19 @@
                              . {{ item.data.created_at | timeAgo }}<span ng-if="item.data.flags_count > 0" style="color: red;"><span style="color: #a1a1a1"> . </span>{{'discussion.flagged_post' | translate}}</span>
                         </div>
                         <div ng-show="item.data.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
-                            <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="false"></delete_button>
+                            <delete_button class="hiddendeletebutton" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
                         </div>
-                        <div class="solved" ng-click="seek()(item.time, item.data.lecture_id)">
+                        <div style="display: inline-block; float: right;" ng-show="item.data.user_id != current_user.id">
+                            <flag-button comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
+                        </div>
+
+                        <div class="like-button" ng-show="item.data.user_id != current_user.id">
+                            <voting-button discussion="item" up="upvotePost" down="downvotePost" direction="horizontal"></voting-button>
+                        </div>
+                        
+                        <div style="cursor: pointer;" ng-click="seek()(item.time, item.data.lecture_id)">
                             <!-- <p> -->
-                                <div>
+                                <div style="margin-bottom: 5px;">
                                     <span ng-show="item.data.user_id == current_user.id">
                                         <img ng-show="item.data.privacy==0" src="/images/private.png" tooltip="{{'discussion.private_post' | translate}}"/>
                                         <img ng-show="item.data.privacy==1" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}"/>
@@ -35,16 +43,16 @@
                 </td>
             </tr>
         </table>
-        <div class="post-controls" ng-if="item.data.user_id != current_user.id">
-            <div class="like-button" ng-show="item.data.user_id != current_user.id">
+        <!-- <div class="post-controls" ng-if="item.data.user_id != current_user.id"> -->
+            <!-- <div class="like-button" ng-show="item.data.user_id != current_user.id">
                 <voting-button discussion="item" up="upvotePost" down="downvotePost" direction="horizontal"></voting-button>
                 .
             </div>
             <div style="display: inline-block;" ng-show="item.data.user_id != current_user.id">
                 <flag-button comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
-            </div>
+            </div> -->
             
-        </div>
+        <!-- </div> -->
         <!-- <div class="timestamp">
             {{item.data.created_at | amDateFormat:'MMMM Do YYYY, h:mm a'}}
         </div> -->
@@ -64,7 +72,15 @@
                                     </div>
                                 </div>
                                 <div ng-show="comment_data.comment.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
-                                    <delete_button size="small" action="deleteComment(comment_data,item.data.id)" vertical="false" text="false" style="display: inline-block; color: #a1a1a1;"></delete_button>
+                                    <delete_button class="hiddendeletebutton" size="small" action="deleteComment(comment_data,item.data.id)" vertical="false" text="false" style="display: inline-block; color: #a1a1a1;" color="red"></delete_button>
+                                </div>
+                                <div style="display: inline-block; float: right;" ng-show="comment_data.comment.user_id != current_user.id">
+                                    <flag-button comment="comment_data.comment" flag="flagComment" unflag="unflagComment" type="icon"></flag-button>
+                                </div>
+
+                                <div class="like-button" ng-show="comment_data.comment.user_id != current_user.id">
+                                    <voting-button comment="comment_data.comment" up="upvoteComment" down="downvoteComment" direction="horizontal"></voting-button>
+                                    
                                 </div>
                                 <div class="comment-body">
                                     {{comment_data.comment.content}}
@@ -73,22 +89,24 @@
                         </td>
                     </tr>
                 </table>
-                <div class="post-controls" ng-if="comment_data.comment.user_id != current_user.id">
-                    <div class="like-button" ng-show="comment_data.comment.user_id != current_user.id">
+
+                <!-- <div class="post-controls" ng-if="comment_data.comment.user_id != current_user.id"> -->
+                    <!-- <div class="like-button" ng-show="comment_data.comment.user_id != current_user.id">
                         <voting-button comment="comment_data.comment" up="upvoteComment" down="downvoteComment" direction="horizontal"></voting-button>
-                        .
+                        
                     </div>
                     <div style="display: inline-block;" ng-show="comment_data.comment.user_id != current_user.id">
                         <flag-button comment="comment_data.comment" flag="flagComment" unflag="unflagComment" type="icon"></flag-button>
-                    </div>
+                    </div> -->
                     
-                </div>
+                <!-- </div> -->
             </div>
         </div>
         <span>
-            <textarea ng-model="current_reply" placeholder="{{'discussion.write_comment' | translate}}" ng-style="{height:height+'px', width:width+'%'}" ng-focus="onCommentFocus()"></textarea>
-            <i ng-show="error_message" style="color:red; font-size:12px"><br>{{error_message}}<br></i>
-            <input type="button" class="btn btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(item, current_reply);current_reply=null" value={{"discussion.comment"|translate}} />
+            <comment-box discussion="item" submit="reply"></comment-box>
+            <!-- <textarea ng-model="current_reply" placeholder="{{'discussion.write_comment' | translate}}" ng-style="{height:height+'px', width:width+'%'}" ng-focus="onCommentFocus()"></textarea> -->
+            <!-- <i ng-show="error_message" style="color:red; font-size:12px"><br>{{error_message}}<br></i> -->
+            <!-- <input type="button" class="btn btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(item, current_reply);current_reply=null" value={{"discussion.comment"|translate}} /> -->
         </span>
     </div>
 </td>

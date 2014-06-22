@@ -132,6 +132,7 @@
 
     .like-button{
         display: inline-block;
+        float: right;
     }
     .screen-name{
         display: inline-block;
@@ -223,6 +224,23 @@
     }
     .timeline-settings:hover, .timelinesettingsopen{
         opacity: 1 !important;
+    }
+    .hiddendeletebutton{
+      /*display: none !important;*/
+      opacity: 0;
+    }
+    .comment-body{
+        margin-bottom: 5px;
+    }
+    .discussion-comment:hover .hiddendeletebutton, .discussion-content:hover .hiddendeletebutton{
+      /*display: inline-block !important;*/
+      opacity: 1;
+      transition: opacity .25s ease-in;
+      -moz-transition: opacity .25s ease-in;
+      -webkit-transition: opacity .25s ease-in;
+    }
+    .ownpost{
+        background-color: #d9f2fc;
     }
     /*@media only screen and (max-width : 1312px) {
       #student-accordion{

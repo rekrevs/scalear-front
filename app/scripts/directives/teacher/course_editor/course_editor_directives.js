@@ -164,7 +164,8 @@ angular.module('scalearAngularApp')
                 hideConfirm: '=',
                 placement: '=',
                 vertical: '=',
-                text: '='
+                text: '=',
+                color: '@'
             },
             replace: true,
             restrict: 'E',

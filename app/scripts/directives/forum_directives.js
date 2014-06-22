@@ -343,4 +343,75 @@ angular.module('scalearAngularApp')
             }
         }
     };
+}).directive('commentBox', function(){
+    return{
+        restrict: 'E',
+        scope:{            
+            discussion: '=',
+            submit: '='
+
+        },
+        templateUrl: '/views/forum/comment_box.html',
+        link: function(scope, element){
+            scope.showfield = false;
+            scope.submitComment = function(){
+                scope.submit(scope.discussion, scope.comment);
+                scope.comment = null;
+                scope.hideField();
+                console.log(scope.showfield)
+            }
+            scope.toggleField = function(){
+                scope.showfield = !scope.showfield
+            }
+            scope.hideField = function(){
+                if(!scope.comment && scope.showfield == true){
+                    scope.toggleField();
+                }
+            }
+        }
+    }
+}).directive('ngAutoExpand', function() {
+        return {
+            restrict: 'A',
+            link: function( $scope, elem, attrs) {
+                elem.bind('keyup', function($event) {
+                    var element = $event.target;
+
+                    $(element).height(0);
+                    var height = $(element)[0].scrollHeight;
+
+                    // 8 is for the padding
+                    if (height < 20) {
+                        height = 28;
+                    }
+                    $(element).height(height-8);
+                });
+
+                // Expand the textarea as soon as it is added to the DOM
+                setTimeout( function() {
+                    var element = elem;
+
+                    $(element).height(0);
+                    var height = $(element)[0].scrollHeight;
+
+                    // 8 is for the padding
+                    if (height < 20) {
+                        height = 28;
+                    }
+                    $(element).height(height-8);
+                }, 0)
+            }
+        };
+    }).directive('ngEnter', function () {
+    return function (scope, element, attrs) {
+        element.bind("keydown keypress", function (event) {
+            if(event.which === 13 && event.shiftKey == false) {
+                scope.$apply(function (){
+                    scope.$eval(attrs.ngEnter);
+                });
+ 
+                event.preventDefault();
+            }
+        });
+    };
 });

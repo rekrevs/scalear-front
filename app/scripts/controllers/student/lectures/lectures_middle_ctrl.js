@@ -614,7 +614,7 @@ angular.module('scalearAngularApp')
           var baseurl = url.split('lectures')[0];
           console.log(baseurl);
 
-
+          
           var win = window.open('', '_blank');
           //win.document.open();
           if(win){ 
@@ -622,18 +622,22 @@ angular.module('scalearAngularApp')
           }
           else{
             //Broswer has blocked it
-            alert('Please allow popups for Scalable Learning');
+            alert('Please allow popups for ScalableLearning');
           }
-          win.document.write('<html><title>Your Notes</title><link rel="stylesheet" type="text/css" href="styles/" /></head><body>')
+          win.document.write('<html><title>ScalableLearning - Export Notes</title>'+
+                             '<style>body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}.table {width: 100%;margin-bottom: 20px; margin: 0 auto;background: white;border: 1px solid lightgrey;}.table td {padding: 8px;line-height: 20px;text-align: left;vertical-align: top;border-top: 1px solid #dddddd; border-right: 1px solid #dddddd;}'+
+                             '.table th {font-weight: bold;}.table thead th {vertical-align: bottom;} a{color: green; text-decoration: none;} a:hover{color: darkgreen;}</style>'+
+                             '</head><body>')
        
           for (var i = 0; i < all_module_notes.length; i++) {
-                win.document.write('<table border="1" style="width:90%">');
-                win.document.write("<h3>"+all_module_notes[i][0].lecture.name+"</h3>");
+                win.document.write('<table class="table" style="width:90%">');
+                win.document.write("<center><h3>"+all_module_notes[i][0].lecture.name+"</center></h3>");
+                win.document.write("<thead><th>Time in video</th><th>Note Body</th><th>Link</th></thead>");
                 for (var j = 0; j < all_module_notes[i].length; j++) {  
                     win.document.write("<tr>");
-                    win.document.write('<td>' + formatTime(all_module_notes[i][j].time) + '</td>');
+                    win.document.write('<td>' + $filter('formattime')(all_module_notes[i][j].time, 'hh:mm:ss') + '</td>');
                     win.document.write('<td>' + all_module_notes[i][j].data + '</td>');
-                    win.document.write('<td><a target="_blank" href="' + baseurl+ 'lectures/'+ all_module_notes[i][j].lecture.id+'?time='+all_module_notes[i][j].time+ '">'+  'go to video' +'</a></td>');
+                    win.document.write('<td><a target="_blank" href="' + baseurl+ 'lectures/'+ all_module_notes[i][j].lecture.id+'?time='+all_module_notes[i][j].time+ '">'+  'Link to video' +'</a></td>');
                     win.document.write("</tr>");
                 }
                 win.document.write("</table>");
@@ -653,13 +657,5 @@ angular.module('scalearAngularApp')
             $scope.lecture_player.controls.play();
     })
 
-    var formatTime = function(time){
-        var t;
-        var hours = parseInt( time / 3600 ) % 24;
-        var minutes = parseInt( time / 60 ) % 60;
-        var seconds = time % 60;
-        t = hours+":"+minutes+":"+seconds;
-        return t;
-    }
     init();
 }]);

@@ -14,6 +14,19 @@ angular.module('scalearAngularApp')
     $scope.tabs=[true,false,false]
     $scope.editors={}
 
+    $scope.$watch('checkModel.quiz', function(){
+        $scope.scrollIntoView('outline')
+    })
+    $scope.$watch('checkModel.confused', function(){
+        $scope.scrollIntoView('outline')
+    })
+    $scope.$watch('checkModel.discussion', function(){
+        $scope.scrollIntoView('outline')
+    })
+    $scope.$watch('checkModel.note', function(){
+        $scope.scrollIntoView('outline')
+    })
+
     var isiPad=function(){
         var i = 0,
             iOS = false,

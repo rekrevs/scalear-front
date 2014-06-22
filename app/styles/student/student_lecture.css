@@ -60,6 +60,7 @@
         border-radius: 0px 4px 4px 0px;
         height: 20px;
         padding: 5px;
+        margin-bottom: 5px;
         line-height: normal;
     }
     .table{
@@ -85,27 +86,32 @@
     }
     .discussion-content{
         background-color: white;
-        box-shadow: 0px 1px 1px darkgrey;
+        /*box-shadow: 0px 1px 1px darkgrey;*/
         position: relative;
-        padding: 5px; 
+        /*padding: 5px; */
     }
     .discussion-comment{
         background-color: white;
-        margin-top: 10px;
-        padding-left: 10px;
-        padding-bottom: 10px;
-        padding-right: 5px;
-        border-left: 5px solid rgb(0, 162, 86);
+        /*margin-bottom: 5px;*/
+        /*padding-left: 10px;*/
+        /*padding-bottom: 10px;*/
+        /*padding-right: 5px;*/
+        /*border-left: 5px solid rgb(0, 162, 86);*/
     }
     .flagged{
-        border-left: 5px solid red !important;
+        /*border-left: 5px solid red !important;*/
+        /*border: 1px solid red !important;*/
+        /*box-shadow: 0px 0px 3px 1px lightcoral;*/
+        background-color: rgba(255, 0,0, 0.1);
     }
     .comments-table{
         font-size: 13px;        
-        margin: 10px;
-        background-color: whitesmoke;
-        padding: 5px;
+        /*margin: 10px;*/
+        /*background-color: whitesmoke;*/
+        padding-top: 5px;
         margin-top: 0px;
+        margin-left: 15px;
+        /*border-left: 1px rgba(0,0,0,0.1) solid;*/
     }
     textarea{
         width: 80%;
@@ -113,17 +119,29 @@
         overflow: visible;
         border-radius: 0px;
     }
-    .flag{
+    .post-controls{
+        /*border-top: 1px solid lightgrey;*/
         display: inline-block;
         vertical-align: top;
-        border-left: 1px solid lightgrey;
-        padding-left: 5px;
+        /*border-left: 1px solid lightgrey;*/
+        margin-left: 10px;
+        color: #a1a1a1 !important;
+        margin-bottom: 3px;
+        /*font-size: 11px !important;*/
     }
-    .timestamp{
-        text-align: right;
-        font-size: xx-small;
+
+    .like-button{
         display: inline-block;
         float: right;
+    }
+    .screen-name{
+        display: inline-block;
+    }
+    .timestamp{
+        text-align: left;
+        font-size: 11px;
+        display: inline-block;
+        color: #a1a1a1;
     }
 
         .tab-content{
@@ -179,8 +197,50 @@
         float: right; 
         position: relative;
         right: 0px;
-        bottom: 6px;
+        /*bottom: 6px;*/
         overflow-y: auto; 
+    }
+    .row{
+        margin-bottom: 10px; 
+    }
+    .filterbuttons{
+        position: absolute;
+        z-index: 1;
+        border: 1px lightgrey;
+        box-shadow: 1px 1px 0px lightgrey;
+        padding: 3px;
+        width: 95%;
+        background-color: white;
+    }
+    .timeline-settings{
+        margin-top: 25px;
+        margin-right: 6px;
+        float: right;
+        cursor: pointer;
+        opacity: 0.5;
+    }
+    .timeline-settings:before{
+        content: url("/images/settings-icon-dark.png");
+    }
+    .timeline-settings:hover, .timelinesettingsopen{
+        opacity: 1 !important;
+    }
+    .hiddendeletebutton{
+      /*display: none !important;*/
+      opacity: 0;
+    }
+    .comment-body{
+        margin-bottom: 5px;
+    }
+    .discussion-comment:hover .hiddendeletebutton, .discussion-content:hover .hiddendeletebutton{
+      /*display: inline-block !important;*/
+      opacity: 1;
+      transition: opacity .25s ease-in;
+      -moz-transition: opacity .25s ease-in;
+      -webkit-transition: opacity .25s ease-in;
+    }
+    .ownpost{
+        background-color: #d9f2fc;
     }
     /*@media only screen and (max-width : 1312px) {
       #student-accordion{

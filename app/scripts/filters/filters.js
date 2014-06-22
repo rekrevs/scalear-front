@@ -52,8 +52,11 @@ angular.module('scalearAngularApp')
               return hr + ':' + min + ':' + sec;
           }
       }
-  })
-  .filter("inclass",function(){
+  }).filter('timeAgo', function() {
+    return function(dateString) {
+      return moment(dateString).fromNow()
+    }
+  }).filter("inclass",function(){
     return function(input, display){
       if(!display) return input
       var result = {};

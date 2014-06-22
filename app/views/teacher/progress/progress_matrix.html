@@ -1,4 +1,4 @@
-<div infinite-scroll='remaining()' infinite-scroll-disabled='scrolldisabled'>
+<div>
     <table class='table' style="font-size: 10px;" fixed-header>
         <thead>
             <tr>
@@ -20,7 +20,7 @@
                 <th ng-repeat="name in columnNames track by $index"><center><p bindonce bo-text="name" style="width:100%;padding-right:15px"></p></center></th>
             </tr>
         </thead>
-        <tbody>
+        <tbody when-scrolled='remaining()'>
             <tr bindonce ng-repeat="student in students" >
                 <td class="student" ><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right">{{student.full_name}}</span></td>
 

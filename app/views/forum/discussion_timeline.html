@@ -36,7 +36,7 @@
                             <delete_button ng-show="item.data.user_id == current_user.id" size="small" action="deleteDiscussion(item)" vertical="true"></delete_button>
                         </div>
                         <div class="like-button">
-                            <voting-button ng-show="item.data.user_id != current_user.id" discussion="item" up="upvotePost" down="downvotePost"></voting-button>
+                            <voting-button ng-show="item.data.user_id != current_user.id" votes-count="item.data.votes_count" voted="item.data.user_vote" up="upvotePost" down="downvotePost"></voting-button>
                         </div>
                     </div>
                 </td>
@@ -48,39 +48,7 @@
     </div>
     <div class="comments-table">
         <div ng-repeat="comment_data in item.data.comments" class="discussion-comment" ng-class="{flagged: comment_data.comment.flags_count > 0}">
-            <div>
-                <table style="width: 100%;">
-                    <tr>
-                        <td>
-                            <div>
-                                <div class="screen-name">
-                                    <b>{{comment_data.comment.screen_name}}</b>
-                                    <div class="timestamp">
-                                        {{comment_data.comment.created_at | amDateFormat:'MMM Do YYYY, h:mm a'}}
-                                    </div>
-                                </div>
-                                <div class="comment-body">
-                                    {{comment_data.comment.content}}
-                                </div>
-                            </div>
-                        </td>
-                        <td style="max-width: 30px; min-width: 30px; width:30px;">
-                            <div class="flag">
-                                <div style="display: inline-block;">
-                                    <delete_button ng-show="comment_data.comment.user_id == current_user.id" size="small" action="deleteComment(comment_data,item.data.id)" vertical="true"></delete_button>
-                                    <img ng-show="comment_data.comment.user_id != current_user.id && comment_data.comment.user_flag==1" ng-src='{{comment_data.comment.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="unflagComment(comment_data.comment)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.unflag_post' | translate}}"/>
-
-                                    <img ng-show="comment_data.comment.user_id != current_user.id && comment_data.comment.user_flag!=1" ng-src='{{comment_data.comment.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(comment_data.comment)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.flag_post' | translate}}"/>
-                                </div>
-                                <div class="like-button">
-                                    <voting-button ng-show="comment_data.comment.user_id != current_user.id" comment="comment_data.comment" up="upvoteComment" down="downvoteComment"></voting-button>
-                                </div>
-                                
-                            </div>
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <discussion-comment item="comment_data" delete="deleteComment"/>
         </div>
         <span>
             <br />

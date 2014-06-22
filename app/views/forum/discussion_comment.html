@@ -1,0 +1,34 @@
+<div>
+    <table style="width: 100%;">
+        <tr>
+            <td>
+                <div>
+                    <div class="screen-name">
+                        <b>{{item.comment.screen_name}}</b>
+                        <div class="timestamp">
+                            {{item.comment.created_at | amDateFormat:'MMM Do YYYY, h:mm a'}}
+                        </div>
+                    </div>
+                    <div class="comment-body">
+                        {{item.comment.content}}
+                    </div>
+                </div>
+            </td>
+            <td style="max-width: 30px; min-width: 30px; width:30px;">
+                <div class="flag">
+                    <div style="display: inline-block;">
+                        <delete_button ng-show="item.comment.user_id == current_user.id" size="small" action="delete()(item)" vertical="true"></delete_button>
+                        <img ng-show="item.comment.user_id != current_user.id && item.comment.user_flag==1" ng-src='{{item.comment.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="unflagComment(item.comment)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.unflag_post' | translate}}"/>
+
+                        <img ng-show="item.comment.user_id != current_user.id && item.comment.user_flag!=1" ng-src='{{item.comment.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flagComment(item.comment)" style="cursor: pointer; float: right; margin-top: 5px;" tooltip="{{'discussion.flag_post' | translate}}"/>
+                    </div>
+                    <div class="like-button">
+                        <!-- <voting-button ng-show="item.comment.user_id != current_user.id" comment="item.comment" up="upvoteComment" down="downvoteComment"></voting-button> -->
+                        <voting-button ng-show="item.comment.user_id != current_user.id" votes-count="item.comment.votes_count" voted="item.comment.user_vote" up="upvoteComment" down="downvoteComment"></voting-button>
+                    </div>
+                    
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>

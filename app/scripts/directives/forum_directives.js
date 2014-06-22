@@ -135,15 +135,15 @@ angular.module('scalearAngularApp')
                 )
             }
 
-            scope.upvotePost= function(discussion){
+            scope.upvotePost= function(){
                 Forum.votePost(
                     {
-                        vote: parseInt(discussion.data.user_vote)+1, 
-                        post_id:discussion.data.id
+                        vote: parseInt(scope.item.data.user_vote)+1, 
+                        post_id:scope.item.data.id
                     }, 
                     function(response){
-                        discussion.data.user_vote=1;
-                        discussion.data.votes_count++;
+                        scope.item.data.user_vote=1;
+                        scope.item.data.votes_count++;
                     }, 
                     function(){
                         console.log("failure");
@@ -151,15 +151,15 @@ angular.module('scalearAngularApp')
                 )
             }
 
-            scope.downvotePost = function(discussion){
+            scope.downvotePost = function(){
                 Forum.votePost(
                     {
-                        vote: parseInt(discussion.data.user_vote)-1, 
-                        post_id:discussion.data.id
+                        vote: parseInt(scope.item.data.user_vote)-1, 
+                        post_id:scope.item.data.id
                     }, 
                     function(response){
-                        discussion.data.user_vote=0;    
-                        discussion.data.votes_count--;
+                        scope.item.data.user_vote=0;    
+                        scope.item.data.votes_count--;
                     }, 
                     function(){
                         console.log("failure");
@@ -167,68 +167,62 @@ angular.module('scalearAngularApp')
                 )
             }
 
-            scope.flagComment = function(comment){
-                Forum.flagComment(
-                    {comment_flag:{comment_id: comment.id}}, 
-                    function(response){
-                        comment.user_flag=1;
-                        comment.flags_count++;
-                    }, 
-                    function(){
-                        console.log("failure");
-                    }
-                )
-            }
-            scope.unflagComment = function(comment){
-                Forum.flagComment(
-                    {comment_flag:{comment_id: comment.id}}, 
-                    function(response){
-                        comment.user_flag = 0;
-                        comment.flags_count--;
-                    }, 
-                    function(){
-                        console.log("failure");
-                    }
-                )
-            }
+            // scope.flagComment = function(comment){
+            //     Forum.flagComment(
+            //         {comment_flag:{comment_id: comment.id}}, 
+            //         function(response){
+            //             comment.user_flag=1;
+            //             comment.flags_count++;
+            //         }, 
+            //         function(){
+            //             console.log("failure");
+            //         }
+            //     )
+            // }
+            // scope.unflagComment = function(comment){
+            //     Forum.flagComment(
+            //         {comment_flag:{comment_id: comment.id}}, 
+            //         function(response){
+            //             comment.user_flag = 0;
+            //             comment.flags_count--;
+            //         }, 
+            //         function(){
+            //             console.log("failure");
+            //         }
+            //     )
+            // }
 
-            scope.upvoteComment= function(comment){
-                Forum.voteComment(
-                    {comment_vote:{vote: parseInt(comment.user_vote)+1, comment_id:comment.id}}, 
-                    function(response){
-                        comment.user_vote=1;
-                        comment.votes_count++;
-                    }, 
-                    function(){
-                        console.log("failure");
-                    }
-                )
-            }
+            // scope.upvoteComment= function(comment){
+            //     Forum.voteComment(
+            //         {comment_vote:{vote: parseInt(comment.user_vote)+1, comment_id:comment.id}}, 
+            //         function(response){
+            //             comment.user_vote=1;
+            //             comment.votes_count++;
+            //         }, 
+            //         function(){
+            //             console.log("failure");
+            //         }
+            //     )
+            // }
 
-            scope.downvoteComment= function(comment){
-                Forum.voteComment(
-                    {comment_vote:{vote: parseInt(comment.user_vote)-1, comment_id:comment.id}}, 
-                    function(response){
-                        comment.user_vote=0;
-                        comment.votes_count--;
-                    }, 
-                    function(){
-                        console.log("failure");
-                    }
-                )
+            // scope.downvoteComment= function(comment){
+            //     Forum.voteComment(
+            //         {comment_vote:{vote: parseInt(comment.user_vote)-1, comment_id:comment.id}}, 
+            //         function(response){
+            //             comment.user_vote=0;
+            //             comment.votes_count--;
+            //         }, 
+            //         function(){
+            //             console.log("failure");
+            //         }
+            //     )
 
-            }
+            // }
 
             scope.deleteComment = function(comment, post_id){
-                Forum.deleteComment({comment_id: comment.comment.id, post_id: post_id}, function(response){
-                    //console.log("begin")
+                Forum.deleteComment({comment_id: comment.comment.id, post_id: scope.item.data.id}, function(response){
                     var index=scope.item.data.comments.indexOf(comment);
-                    //console.log(index)
-                    //scope.timeline['discussion'][lecture_id][id]={}
-                    //console.log("hna")
                     scope.item.data.comments.splice(index, 1);
-                    //console.log("hna2")
-                    // delete comment
                     scope.error_message = null
                 },
                 function(){
@@ -277,12 +271,120 @@ angular.module('scalearAngularApp')
             // }
         }
     }
+}]).directive('discussionComment',["Forum","Timeline","$translate",'$rootScope', function(Forum, Timeline, $translate, $rootScope) {
+    return {
+        restrict:"E",
+        // replace:true,
+        scope:{
+            // seek:'&',
+            item:'=',
+            delete:'&'
+        },
+        templateUrl:'/views/forum/discussion_comment.html',
+        link: function(scope, element, attrs) {
+            scope.current_user = $rootScope.current_user
+            
+            // var initCommentSize=(function(){                
+            //     scope.height=40
+            //     scope.width=80
+            // })
+
+            // scope.onCommentFocus=function(){
+            //     scope.height=90
+            //     scope.width=90
+            //     $(document).off("click")
+            //     $(document).on("click", function (e) {
+            //         console.log(e.target.className)
+            //         if(e.target.className != 'btn btn-small' && !angular.element(e.target).is('textarea')){
+            //             scope.error_message = null
+            //             initCommentSize()
+            //             scope.$apply()
+            //             $(document).off("click")
+            //         }         
+            //   });
+            // }
+
+            // scope.onCommentBlur=function(event){
+            //     console.log(event)
+            //    initCommentSize()
+            // }
+
+            scope.flagComment = function(comment){
+                Forum.flagComment(
+                    {comment_flag:{comment_id: comment.id}}, 
+                    function(response){
+                        comment.user_flag=1;
+                        comment.flags_count++;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+            scope.unflagComment = function(comment){
+                Forum.flagComment(
+                    {comment_flag:{comment_id: comment.id}}, 
+                    function(response){
+                        comment.user_flag = 0;
+                        comment.flags_count--;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+
+            scope.upvoteComment= function(){
+                Forum.voteComment(
+                    {comment_vote:{vote: parseInt(scope.item.comment.user_vote)+1, comment_id:scope.item.comment.id}}, 
+                    function(response){
+                        scope.item.comment.user_vote=1;
+                        scope.item.comment.votes_count++;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+            }
+
+            scope.downvoteComment= function(){
+                Forum.voteComment(
+                    {comment_vote:{vote: parseInt(scope.item.comment.user_vote)-1, comment_id:scope.item.comment.id}}, 
+                    function(response){
+                        scope.item.comment.user_vote=0;
+                        scope.item.comment.votes_count--;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
+
+            }
+
+            // scope.deleteComment = function(comment, post_id){
+            //     Forum.deleteComment({comment_id: comment.comment.id, post_id: post_id}, function(response){
+            //         //console.log("begin")
+            //         var index=scope.item.data.comments.indexOf(comment);
+            //         //console.log(index)
+            //         //scope.timeline['discussion'][lecture_id][id]={}
+            //         //console.log("hna")
+            //         scope.item.data.comments.splice(index, 1);
+            //         //console.log("hna2")
+            //         // delete comment
+            //         scope.error_message = null
+            //     },
+            //     function(){
+            //         console.log("failure");
+            //     })
+            // }
+        }
+    }
 }]).directive('votingButton', function(){
     return{
         restrict: 'E',
         scope:{            
-            discussion: '=',
-            comment: '=',
+            votes_count: '=votesCount',
+            voted: '=',
             up: '=',
             down: '='
 

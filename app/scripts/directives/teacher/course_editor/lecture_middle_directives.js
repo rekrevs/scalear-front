@@ -467,7 +467,7 @@ angular.module('scalearAngularApp')
 					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
 					"<br ng-if='show()'/>"+
 					"<input ng-if='show()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' />"+
-					"<delete_button size='small' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;' />"+
+					"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;' />"+
 					"<br/>"+
 				"</ng-form>"
 	}
@@ -482,7 +482,7 @@ angular.module('scalearAngularApp')
 					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
 					"<br ng-if='show()'/>"+
 					"<input ng-if='show()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-					"<delete_button size='small' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+
+					"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+
 					"<br>"+
 				"</ng-form>",
 		link: function(scope)
@@ -507,7 +507,7 @@ angular.module('scalearAngularApp')
 						"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item' style='float:left'></span>"+
 						"<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
 						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required && !hide_valid' style='padding-top: 5px;position:absolute;float:right'>{{'courses.required'|translate}}!</span>"+
-						"<delete_button size='small' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' style='float:right; margin-right: 10px;'/>"+
+						"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' style='float:right; margin-right: 10px;'/>"+
 					"</ng-form>"+
 				"</li>"				 
 	}

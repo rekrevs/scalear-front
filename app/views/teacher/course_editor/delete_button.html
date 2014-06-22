@@ -5,7 +5,7 @@
 	            <a ng-if="displayDeletePopup" ng-class="{varticaldeletebutton: vertical}" class="btn btn-mini" style="background-image: initial;" ng-click="showDeletePopup(false)"><div class="icon-remove"></div></a>
 	        </span>
 	</div>
-	<span ng-if="text == false">
+	<span ng-if="text != true">
 		<a class="delete" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" title="{{'delete'|translate}}" ng-click="!hideConfirm?showDeletePopup(true):action({event:$event})">
 			<img alt="Trash" ng-if="size == 'big'" ng-src="{{color=='red' && 'images/red_trash_big.png' || 'images/trash_big.png'}}" >
 			<img alt="Trash" ng-if="size != 'big'" ng-src="{{color=='red' && 'images/red_trash_small.png' || 'images/trash_small.png'}}" >

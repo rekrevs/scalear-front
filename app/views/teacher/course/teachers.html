@@ -19,7 +19,7 @@
                         <span ng-show="teacher.status">{{"controller_msg."+teacher.status.toLowerCase()|translate}}</span>
                     </td>
                     <td>
-                        <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeRow($index)" style="cursor: pointer;">
+                        <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" color='dark' action="removeRow($index)" style="cursor: pointer;">
                     </td>
                 </tr>
                 <tr ng-repeat="new_teacher in new_teachers" id="new_teacher">
@@ -48,7 +48,7 @@
                         {{'controller_msg.'+new_teacher.status.toLowerCase()|translate}}
                     </td>
                     <td>
-                        <delete-button ng-if="!teacher.owner" id="delete_new_teacher" size="small" action="removeNewRow($index)" style="cursor: pointer;" hide-confirm="true">
+                        <delete-button ng-if="!teacher.owner" id="delete_new_teacher" size="small" color='dark' action="removeNewRow($index)" style="cursor: pointer;" hide-confirm="true">
                     </td>
                 </tr>
             </table>

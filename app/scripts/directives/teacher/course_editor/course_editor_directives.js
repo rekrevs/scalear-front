@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive("module", function() {
+    .directive("module", ['$timeout',function($timeout) {
         return {
             restrict: "E",
             scope: {
@@ -11,10 +11,11 @@ angular.module('scalearAngularApp')
                 open: "=",
                 copy:"&",
                 paste: "&",
-                share:"&"
+                share:"&",
+                link:"&"
             },
             templateUrl: '/views/teacher/course_editor/module.html',
-            link: function(scope) {
+            link: function(scope,element) {
                 scope.menu_status = false
                 scope.invertOpen = function() {
                     if (scope.open[scope.id])
@@ -42,9 +43,18 @@ angular.module('scalearAngularApp')
                     scope.menu_status = false
                     scope.share()
                 }
+
+                scope.createLink=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.link_url=scope.link()
+                    $timeout(function() {
+                        element.find('.module_link').select();
+                    });
+                }
             }
         }
-    }).directive('item', ['$state', '$translate', function($state, $translate) {
+    }]).directive('item', ['$translate','$timeout', function($translate, $timeout) {
         return {
             scope: {
                 name: '=',
@@ -53,11 +63,12 @@ angular.module('scalearAngularApp')
                 remove: '&',
                 copy:"&",
                 paste:"&",
-                share:"&"
+                share:"&",
+                link:"&"
             },
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/item.html',
-            link: function(scope) {
+            link: function(scope,element) {
                 scope.getDeleteMessage = function() {
                     var translation_value = {}
                     translation_value[scope.className] = scope.name
@@ -79,6 +90,15 @@ angular.module('scalearAngularApp')
                     event.stopPropagation() 
                     scope.menu_status = false
                     scope.share()
+                }
+
+                scope.createLink=function(event){
+                    event.stopPropagation() 
+                    scope.menu_status = false
+                    scope.link_url=scope.link()
+                    $timeout(function() {
+                        element.find('.item_link').select();
+                    });
                 }
             }
         };

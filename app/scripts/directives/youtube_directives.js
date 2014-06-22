@@ -1,31 +1,31 @@
-(function (document, window) {
+// (function (document, window) {
 'use strict';
 
-function loadScript(url, callback) {
-        var script = document.createElement('script');
-        script.src = url;
-        script.onload = callback;
-        script.onerror = function () {
-            throw Error('Error loading "' + url + '"');
-        };
+// function loadScript(url, callback) {
+//         var script = document.createElement('script');
+//         script.src = url;
+//         script.onload = callback;
+//         script.onerror = function () {
+//             throw Error('Error loading "' + url + '"');
+//         };
 
-        document.getElementsByTagName('head')[0].appendChild(script);
-    }
+//         document.getElementsByTagName('head')[0].appendChild(script);
+//     }
 
 angular.module('scalearAngularApp')
-	.factory('popcornApiProxy',['$rootScope','$q',function($rootScope,$q){
-		var apiReady = $q.defer()
-		var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals/':'http://popcornjs.org/code/dist/'
-		//loadScript(src+'popcorn-complete.min.js', function(){
-			//$rootScope.$apply(function () {
-                apiReady.resolve();
+	// .factory('popcornApiProxy',['$rootScope','$q',function($rootScope,$q){
+	// 	var apiReady = $q.defer()
+	// 	var src = navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i)? 'scripts/externals/':'http://popcornjs.org/code/dist/'
+	// 	//loadScript(src+'popcorn-complete.min.js', function(){
+	// 		//$rootScope.$apply(function () {
+ //                apiReady.resolve();
             
-		return function (callback, quality) {
-            apiReady.promise.then(function () {
-                callback(quality)
-            });
-        };	
-	}])
+	// 	return function (callback, quality) {
+ //            apiReady.promise.then(function () {
+ //                callback(quality)
+ //            });
+ //        };	
+	// }])
 	.directive("videoContainer",function(){
 		return{
 			transclude: true,
@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
 			template: '<div class="videoborder well widescreen" style="padding:0; border:none" ng-transclude></div>' //style="border:4px solid" 
 		};
 	})
-	.directive('youtube',['$rootScope','$log','$timeout','$window','popcornApiProxy',function($rootScope,$log,$timeout,$window, popcornApiProxy){
+	.directive('youtube',['$rootScope','$log','$timeout','$window',function($rootScope,$log,$timeout,$window){
 		return {
 			restrict: 'E',
 			replace:true,
@@ -730,4 +730,4 @@ angular.module('scalearAngularApp')
         }
     }
 }])
-})(document, window);
+// })(document, window);

@@ -531,4 +531,20 @@ angular.module('scalearAngularApp')
 			});
 		}
 	};
+}]).directive('controlsTeacher', ['$window','$timeout', function($window,$timeout) {
+  return {
+      restrict: "E",
+      scope:{
+        link:'&'
+      },
+      templateUrl: "/views/teacher/course_editor/controls_teacher.html",
+      link: function (scope, element) {
+  	 	scope.createLink=function(event){
+            scope.link_url=scope.link()
+            $timeout(function() {
+                element.find('.video_link').select();
+            });
+        }
+      }
+    };
 }])

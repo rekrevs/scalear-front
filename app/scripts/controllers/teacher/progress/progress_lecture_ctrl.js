@@ -758,12 +758,12 @@ angular.module('scalearAngularApp')
     //   win.print()
     // })
     var toPrint = document.getElementById('printarea');
-    var popupWin = window.open('', '_blank');
-    popupWin.document.open();
-    popupWin.document.write('<html><title>::Progress Report::</title><link rel="stylesheet" type="text/css" href="styles/teacher/progress_print.css" /></head><body onload="window.print()">')
-    popupWin.document.write(toPrint.innerHTML);
-    popupWin.document.write('</html>');
-    popupWin.document.close();
+    var win = window.open('', '_blank');
+    win.document.open();
+    win.document.write('<html><title>::Progress Report::</title><link rel="stylesheet" type="text/css" href="styles/teacher/progress_print.css" /></head><body onload="window.print()">')
+    win.document.write(toPrint.innerHTML);
+    win.document.write('</html>');
+    win.document.close();
   }
 
 	$scope.getKeys = function( obj ) {

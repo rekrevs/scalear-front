@@ -1,12 +1,14 @@
 <div context-menu data-target="menu" opened='menu_status' class="disable_selection inner-item">
 	<img src="images/move2.png" class="handle" title={{"courses.drag_to_reorder"|translate}} />
 	<a class="trigger2" ui-sref="course.course_editor.{{className}}({ {{className}}_id: id })" >{{name}}</a>
+	<input class="item_link" type="text" ng-show="link_url" ng-model="link_url" ng-blur="link_url=null" />
 	<div class="menu">
 	  <ul class="dropdown-menu" style="font-size:14px">
 	    <li >
 	      <a ng-click='copyItem($event)' translate>menu.copy</a>
 	       <a ng-show="$parent.$parent.clipboard" ng-click='doPaste($event)' translate>menu.paste</a>
 	      <a ng-click='shareItem($event)' translate>menu.share</a>
+	      <a ng-click='createLink($event)' >Create Link</a>
 	    </li>	    
 	  </ul>
 	</div>

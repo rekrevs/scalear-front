@@ -184,6 +184,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek_and_pause=function(time,lecture_id){
+        clearQuiz()
         $scope.seek(time,lecture_id)
         $scope.lecture_player.controls.pause()
         $scope.play_pause_class = "play"

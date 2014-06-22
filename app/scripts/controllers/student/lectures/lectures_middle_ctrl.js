@@ -624,23 +624,25 @@ angular.module('scalearAngularApp')
             //Broswer has blocked it
             alert('Please allow popups for Scalable Learning');
           }
-          win.document.write('<html><title>Your Notes</title><link rel="stylesheet" type="text/css" href="styles/" /></head><body>')
-       
+          var doc = '<html><title>Your Notes</title><link rel="stylesheet" type="text/css" href="styles/" /></head><body>';
+          
+          console.log(doc);
           for (var i = 0; i < all_module_notes.length; i++) {
-                win.document.write('<table border="1" style="width:90%">');
-                win.document.write("<h3>"+all_module_notes[i][0].lecture.name+"</h3>");
+                doc +=('<table border="1" style="width:90%">');
+                doc +=("<h3>"+all_module_notes[i][0].lecture.name+"</h3>");
                 for (var j = 0; j < all_module_notes[i].length; j++) {  
-                    win.document.write("<tr>");
-                    win.document.write('<td>' + formatTime(all_module_notes[i][j].time) + '</td>');
-                    win.document.write('<td>' + all_module_notes[i][j].data + '</td>');
-                    win.document.write('<td><a target="_blank" href="' + baseurl+ 'lectures/'+ all_module_notes[i][j].lecture.id+'?time='+all_module_notes[i][j].time+ '">'+  'go to video' +'</a></td>');
-                    win.document.write("</tr>");
+                    doc +=("<tr>");
+                    doc +=('<td>' + formatTime(all_module_notes[i][j].time) + '</td>');
+                    doc +=('<td>' + all_module_notes[i][j].data + '</td>');
+                    doc +=('<td><a target="_blank" href="' + baseurl+ 'lectures/'+ all_module_notes[i][j].lecture.id+'?time='+all_module_notes[i][j].time+ '">'+  'go to video' +'</a></td>');
+                    doc +=("</tr>");
                 }
-                win.document.write("</table>");
+                doc +=("</table>");
           };
 
-
-          win.document.write('</body></head></html>');
+          doc +=('<a href='+"'"+'data:Application/octet-stream,'+encodeURIComponent(doc)+"'"+ 'Download = "Notes.html">Download Notes</a>');
+          doc +=('</body></html>');
+          win.document.write(doc);
           win.document.close();
 
         },function(){
@@ -653,13 +655,5 @@ angular.module('scalearAngularApp')
             $scope.lecture_player.controls.play();
     })
 
-    var formatTime = function(time){
-        var t;
-        var hours = parseInt( time / 3600 ) % 24;
-        var minutes = parseInt( time / 60 ) % 60;
-        var seconds = time % 60;
-        t = hours+":"+minutes+":"+seconds;
-        return t;
-    }
     init();
 }]);

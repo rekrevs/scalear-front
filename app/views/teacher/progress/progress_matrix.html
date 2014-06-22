@@ -1,20 +1,16 @@
 <div>
-    <table class='table' style="font-size: 10px;" fixed-header>
-        <thead>
-            <tr>
-                <td colspan="{{columnNames.length}}">
-                    <div style="border:1px solid lightgray;float:right;padding: 5px;display:-webkit-inline-box;display:flex;margin-bottom:10px" ng-init="status_img={
+    <div style="border:1px solid lightgray;float:right;padding: 5px;display:-webkit-inline-box;display:flex;margin-bottom:10px" ng-init="status_img={
     finished_on_time:'images/Finished_on_Time.png',
     finished_not_on_time:'images/Finished_Not_on_time.png',
     not_finished:'images/Not_Finished.png'
 }">
-                    <div ng-repeat="(stat, img) in status_img">
-                        <img ng-src="{{img}}" style="width:12px">
-                        <span style="margin-right:10px;font-size:12px;display:inline">{{'courses.'+stat|translate}}</span>
-                    </div>
-                </div>
-                </td>
-            </tr>
+        <div ng-repeat="(stat, img) in status_img">
+            <img ng-src="{{img}}" style="width:12px">
+            <span style="margin-right:10px;font-size:12px;display:inline">{{'courses.'+stat|translate}}</span>
+        </div>
+    </div>
+    <table style="font-size: 10px;" fixed-header>
+        <thead>
             <tr>
                 <th ></th>
                 <th ng-repeat="name in columnNames track by $index"><center><p bindonce bo-text="name" style="width:100%;padding-right:15px"></p></center></th>

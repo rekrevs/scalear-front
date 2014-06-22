@@ -20,7 +20,8 @@ angular.module('scalearAngularApp')
 	    	{course_id: $stateParams.course_id, module_id:$stateParams.module_id}, 
             function(data){
                 $scope.module_lectures= JSON.parse(data.module_lectures);
-                console.log(data)
+                console.log("student data")
+                console.log($scope.module_lectures)
                 $scope.lecture_ids = data.lecture_ids;
 
                 // arrange timeline

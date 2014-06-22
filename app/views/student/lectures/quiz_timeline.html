@@ -7,6 +7,9 @@
   <p ng-show="item.data.is_quiz_solved" class="solved" ng-click="seek()(item.time, item.data.lecture_id)">{{item.data.question}}</p>
   <p ng-show="!item.data.is_quiz_solved" >{{item.data.question}}</p>
 </td>
-<td style="padding: 0px; padding-right: 8px;" style="width:20px;">                 
+<td >                 
   <img ng-show="item.data.is_quiz_solved" style="float: right;" src="images/check7.png" />
+</td>
+<td>
+ <voting-button votes-count="item.data.votes_count" voted="item.data.reviewed" up="upvoteComment" down="downvoteComment" direction="horizontal"></voting-button>
 </td>

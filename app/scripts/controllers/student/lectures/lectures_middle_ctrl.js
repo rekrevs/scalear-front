@@ -14,18 +14,9 @@ angular.module('scalearAngularApp')
     $scope.tabs=[true,false,false]
     $scope.editors={}
 
-    $scope.$watch('checkModel.quiz', function(){
+    $scope.$watch('checkModel', function(){
         $scope.scrollIntoView('outline')
-    })
-    $scope.$watch('checkModel.confused', function(){
-        $scope.scrollIntoView('outline')
-    })
-    $scope.$watch('checkModel.discussion', function(){
-        $scope.scrollIntoView('outline')
-    })
-    $scope.$watch('checkModel.note', function(){
-        $scope.scrollIntoView('outline')
-    })
+    },true)
 
     var isiPad=function(){
         var i = 0,
@@ -58,7 +49,6 @@ angular.module('scalearAngularApp')
         if(!isiPad()){
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
                 if(!screenfull.isFullscreen){
-                    console.log("cool")
                     $scope.resize.small()
                     $scope.fullscreen = false
                     $scope.video_class= 'video_class'
@@ -70,7 +60,6 @@ angular.module('scalearAngularApp')
 
         $scope.$watch('timeline',function(){
             if($scope.timeline){
-
                 goToLecture($state.params.lecture_id) 
                 $timeout(function(){
                     $scope.scrollIntoView('outline')
@@ -538,6 +527,7 @@ angular.module('scalearAngularApp')
         function(res){
             if(res.done){
                 $scope.last_quiz.reviewed = true
+                $scope.last_quiz.votes_count++
                 $scope.closeReviewNotify()
             }
         })

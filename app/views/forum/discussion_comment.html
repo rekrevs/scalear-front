@@ -7,7 +7,7 @@
                         <b>{{item.comment.screen_name}}</b>
                         <div class="timestamp">
                             <!-- {{item.comment.created_at | amDateFormat:'MMM Do YYYY, h:mm a'}} -->
-                             . {{ item.comment.created_at | timeAgo }}<span ng-if="item.comment.flags_count > 0" style="color: red;"><span style="color: #a1a1a1"> . </span>{{'discussion.flagged_comment' | translate}}</span>
+                              {{ item.comment.created_at | timeAgo }}<span ng-if="item.comment.flags_count > 0" style="color: red;"><span style="color: #a1a1a1">  </span>{{'discussion.flagged_comment' | translate}}</span>
                         </div>
                     </div>
                     <div ng-show="item.comment.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">

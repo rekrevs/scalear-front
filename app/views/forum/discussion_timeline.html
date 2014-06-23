@@ -15,7 +15,7 @@
                         <b>{{item.data.screen_name}}</b>
                         <div class="timestamp">
                             <!-- {{item.data.created_at | amDateFormat:'MMM Do YYYY, h:mm a'}} -->
-                             . {{ item.data.created_at | timeAgo }}<span ng-if="item.data.flags_count > 0" style="color: red;"><span style="color: #a1a1a1"> . </span>{{'discussion.flagged_post' | translate}}</span>
+                              {{ item.data.created_at | timeAgo }}<span ng-if="item.data.flags_count > 0" style="color: red;"><span style="color: #a1a1a1">  </span>{{'discussion.flagged_post' | translate}}</span>
                         </div>
                         <div ng-show="item.data.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
                             <delete_button class="hiddendeletebutton" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>

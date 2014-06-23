@@ -84,6 +84,15 @@ angular.module('scalearAngularApp')
             $scope.lecture = null
 
             $timeout(function(){
+                $scope.should_play = true
+                $scope.timeline['lecture'][id].meta.requirements.lectures.forEach(function(required_id){
+                    if(!$scope.timeline['lecture'][required_id].meta.is_done){
+                        $scope.should_play = false
+                        return
+                    }
+                })
+                console.log("should play")
+                console.log($scope.should_play)
                 $scope.lecture = $scope.timeline['lecture'][id].meta
                 Page.setTitle('head.lectures',': '+$scope.lecture.name); 
             })
@@ -451,7 +460,6 @@ angular.module('scalearAngularApp')
 
     var displayResult=function(data){
         if(data.msg!="Empty"){  // he chose sthg
-            console.log(data)
             if($scope.selected_quiz.quiz_type == 'survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review) ){                
                 $scope.selected_quiz.is_quiz_solved=true;
                 showNotification('thank_you_answer')
@@ -473,6 +481,7 @@ angular.module('scalearAngularApp')
             var lecture_index= util.getIndexById($scope.course.groups[group_index].lectures, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
             if(lecture_index!=-1 && group_index!=-1)
                 $scope.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
+            $scope.lecture.is_done = data.done[2]
         }
 
         $interval(function(){
@@ -539,42 +548,6 @@ angular.module('scalearAngularApp')
         $scope.seek_and_pause($scope.last_quiz.time)
         $scope.closeReviewNotify()
     }
-
-    // $scope.saveNote = function(){
-    //     for(var e in $scope.editors){
-    //         if($scope.editors[e].doc.dirty)
-    //             $scope.editors[e].save();
-    //     }
-    // }
-
-    // $scope.disableSaveNote= function(){
-    //     for(var e in $scope.editors){
-    //         if($scope.editors[e].doc.dirty)
-    //             return false;
-    //     }
-    //     return true;
-    // }
-
-    // $scope.saveQuestion = function(current_question, privacy_value){       
-    //     Forum.createPost(
-    //         {post: 
-    //             {
-    //                 content: current_question, 
-    //                 time:$scope.current_question_time, 
-    //                 lecture_id:$state.params.lecture_id, 
-    //                 privacy:privacy_value
-    //             }
-    //         }, 
-    //         function(response){
-    //             console.log("success");
-    //             $scope.timeline['lecture'][$state.params.lecture_id].add($scope.current_question_time, "discussion",  response.post);
-    //             $scope.toggleQuestionBlock()
-    //         }, 
-    //         function(){
-    //             console.log("failure")
-    //         }
-    //     )
-    // }
 
     $scope.$on('note_updated',function(){
         if(!$scope.quiz_mode)

@@ -328,6 +328,8 @@ var translation_en=function(){
         not_using_module_due:"Not Using Module's due Date",
         quiz_required:"This Quiz is Required",
         quiz_not_required:"This Quiz is Not Required",
+        lecture_required:"This Lecture is Required",
+        lecture_not_required:"This Lecture is Not Required",
         got_some_errors: "You've got some errors",
         provide_answer: "Please provide the answer text for each choice",
         provide_url: "Please enter the URL (link) for your video in the Lecture Details section to the right",
@@ -356,6 +358,7 @@ var translation_en=function(){
         seek_to_location: "Seek to location",
         mark: "Mark",
         reply: "Reply",
+        finish_before_proceeding:"Please finish previous required lectures before proceeding",
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

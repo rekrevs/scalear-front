@@ -327,6 +327,8 @@ var translation_sv=function(){
               not_using_module_due:"Inte genom att modulens färdigdatum",
               quiz_required:"Denna Quiz är Obligatoriska",
               quiz_not_required:"Denna Quiz krävs inte",
+              lecture_required:"Denna föreläsning är Obligatoriska",
+              lecture_not_required:"Denna föreläsning krävs inte",
               got_some_errors: "Du har några fel",
               provide_answer: "Ange svaret text för varje val",
               provide_url: "Skriv in webbadressen (länk) till din video i avsnittet Föreläsning Detaljer till höger",
@@ -355,6 +357,7 @@ var translation_sv=function(){
               seek_to_location: "Sök på plats",
               mark: "Markera",
               reply: "Svara",
+              finish_before_proceeding:"Vänligen avsluta tidigare krävs föreläsningar innan du fortsätter",
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

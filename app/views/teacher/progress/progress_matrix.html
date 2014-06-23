@@ -14,7 +14,7 @@
             <td ></td>
             <td ng-repeat="name in columnNames track by $index"><center><p bindonce bo-text="name" style="width:100%;padding-right:15px"></center></p></td>
         </tr>
-        <tr bindonce ng-repeat="student in students" >
+        <tr bindonce ng-repeat="student in students | orderBy:'last_name':false" >
             <td class="student" ><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right">{{student.full_name}}</span></td>
 
 

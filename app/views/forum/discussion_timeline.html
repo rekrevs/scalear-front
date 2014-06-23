@@ -56,7 +56,7 @@
         </div> -->
     </div>
     <div class="comments-table">
-        <div ng-repeat="comment_data in item.data.comments" class="discussion-comment" ng-class="{flagged: comment_data.comment.flags_count > 0}">
+        <div ng-repeat="comment_data in item.data.comments" class="discussion-comment" ng-class="{ownpost: comment_data.comment.user_id == current_user.id, flagged: comment_data.comment.flags_count > 0}">
             <discussion-comment item="comment_data" delete="deleteComment"/>
         </div>
         <span>

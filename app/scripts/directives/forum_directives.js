@@ -315,6 +315,9 @@ angular.module('scalearAngularApp')
             }
             scope.toggleField = function(){
                 scope.showfield = !scope.showfield
+                // var textarea = element.find('textarea')
+                // textarea[0].focus()
+                // console.log(textarea[0].focus())
             }
             scope.hideField = function(){
                 if(!scope.comment && scope.showfield == true){

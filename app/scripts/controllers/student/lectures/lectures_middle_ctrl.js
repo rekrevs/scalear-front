@@ -113,6 +113,8 @@ angular.module('scalearAngularApp')
         $scope.total_duration = $scope.lecture_player.controls.getDuration()
         $scope.cue_events={}
         $scope.lecture.online_quizzes.forEach(function(quiz) {
+            // quiz.vote = $scope.voteForReview
+            // quiz.unvote = $scope.unvoteForReview
             $scope.cue_events[quiz.id] = $scope.lecture_player.controls.cue(quiz.time, function() {
                 $scope.closeReviewNotify()
                 $scope.studentAnswers[quiz.id] = {}
@@ -228,7 +230,9 @@ angular.module('scalearAngularApp')
     }
 
     var returnToQuiz=function(time){
-        $scope.seek_and_pause(time)
+        $scope.seek(time)
+        $scope.lecture_player.controls.pause()
+        $scope.play_pause_class = "play"
         showNotification('groups.answer_question')
     }
 
@@ -522,16 +526,34 @@ angular.module('scalearAngularApp')
     }
 
     $scope.voteForReview=function(){
+        console.log("vote review")
         OnlineQuiz.voteForReview(
         {online_quizzes_id:$scope.last_quiz.id},{},
         function(res){
             if(res.done){
-                $scope.last_quiz.reviewed = true
-                $scope.last_quiz.votes_count++
+                if(!$scope.last_quiz.reviewed){
+                    $scope.last_quiz.reviewed = true
+                    $scope.last_quiz.votes_count++
+                }
                 $scope.closeReviewNotify()
             }
         })
     }
+
+    // $scope.unvoteForReview=function(){
+    //     console.log("unvote review")
+    //     OnlineQuiz.unvoteForReview(
+    //     {online_quizzes_id:$scope.last_quiz.id},{},
+    //     function(res){
+    //         if(res.done){
+    //             if($scope.last_quiz.reviewed){
+    //                 $scope.last_quiz.reviewed = false
+    //                 $scope.last_quiz.votes_count--
+    //             }
+    //             $scope.closeReviewNotify()
+    //         }
+    //     })
+    // }
 
     $scope.closeReviewNotify=function(){
         console.log("close")

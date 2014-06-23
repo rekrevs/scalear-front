@@ -272,7 +272,7 @@ angular.module('scalearAngularApp')
         //             '<a pop-over="popover_options">{{"more" | translate}}...</a>'+
         //         '</div>', 
         link:function(scope){
-            var template = "<div style='color:#6e6e6e;font-size:12px'>"+
+            var template =  "<div style='color:#6e6e6e;font-size:12px'>"+
                             "<b>Filter Events: </b><br />"+
                             // "<div class='btn-group align-center' data-toggle='buttons'>"+
                                 // "<label id='quiz_checkbox' class='btn btn-checkbox'>"+
@@ -288,7 +288,10 @@ angular.module('scalearAngularApp')
                                     "<input type='checkbox' ng-model='options.note'> {{'lectures.video_notes' | translate}}"+
                                 // "</label>"+
                             // "</div>"+
-                           "</div>"
+                            "<br /><b>Notes: </b><br />"+
+                            "<a href='' ng-click='$parent.exportNotes()'>{{'lectures.download_notes' | translate}}</a>"+
+                            "</div>"
+                           
 
             scope.popover_options={
                 content: template,

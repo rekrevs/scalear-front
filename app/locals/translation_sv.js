@@ -358,6 +358,7 @@ var translation_sv=function(){
               seek_to_location: "Sök på plats",
               mark: "Markera",
               reply: "Svara",
+              download_notes: "Nedladdning Anmärkningar"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

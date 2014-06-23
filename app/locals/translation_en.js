@@ -359,6 +359,7 @@ var translation_en=function(){
         seek_to_location: "Seek to location",
         mark: "Mark",
         reply: "Reply",
+        download_notes: "Download Notes"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

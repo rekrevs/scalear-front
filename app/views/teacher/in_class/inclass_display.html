@@ -85,9 +85,7 @@
         <div class="bottom-right">
             <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="btn btn-default" style="float:right; margin-right: 3%; border: none;"><i class="icon-fullscreen" /></button>
             <span ng-hide="selected_item.class_name=='quiz'" >
-                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%; border: none;"  class="btn btn-default">{{hide_text}}</button>           
-                <button ng-class="button_class+' '+dark_buttons" ng-click="setZoomClass()" ng-show="video_class=='original_video'" style="float:right; margin-right: 1%; border: none;" class="btn btn-default"><i class="icon-zoom-in" /><span> {{button_names[1]}}</span></button>
-                <button ng-class="button_class+' '+dark_buttons" ng-click="setOriginalClass()" ng-show="video_class=='zoom_video'" style="float:right; margin-right: 1%; border: none;" class="btn btn-default"><i class="icon-zoom-out" /><span> {{button_names[2]}}</span></button>
+                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%; border: none;"  class="btn btn-default">{{hide_text}}</button>
             </span>
         </div>
     </div>

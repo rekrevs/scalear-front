@@ -617,18 +617,18 @@ angular.module('scalearAngularApp')
     $scope.blurButtons()
   }
 
-  $scope.setZoomClass=function(){
-    $scope.video_class = 'zoom_video'
-    $scope.question_class = 'zoom_question'
-    $scope.chart_class = 'zoom_chart'
-    $scope.student_question_class = 'zoom_question'
-    $scope.question_block = 'zoom_question_block'
-    // $scope.question_block={
-    //   'overflowY':'visible'
-    // }
-    $scope.adjustTextSize()
-    $scope.blurButtons()
-  }
+  // $scope.setZoomClass=function(){
+  //   $scope.video_class = 'zoom_video'
+  //   $scope.question_class = 'zoom_question'
+  //   $scope.chart_class = 'zoom_chart'
+  //   $scope.student_question_class = 'zoom_question'
+  //   $scope.question_block = 'zoom_question_block'
+  //   // $scope.question_block={
+  //   //   'overflowY':'visible'
+  //   // }
+  //   $scope.adjustTextSize()
+  //   $scope.blurButtons()
+  // }
 
   $scope.toggleHideQuestions=function(){
     $scope.hide_questions = !$scope.hide_questions
@@ -658,7 +658,7 @@ angular.module('scalearAngularApp')
     }
     else{
       $scope.button_class = 'big_font_button' 
-      $scope.button_names=['Exit', 'Over', 'Under','Hide', 'Unhide', '5sec']
+      $scope.button_names=['Exit', '', '','Hide', 'Unhide', '5sec']
     }
     $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
   }

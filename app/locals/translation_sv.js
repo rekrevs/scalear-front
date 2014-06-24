@@ -92,6 +92,9 @@ var translation_sv=function(){
             write_comment: "Lämna en kommentar...",
             flag_post: "Flagga detta Inlägg",
             flag: "Flagga",
+            unflag: "Un-flagga",
+            flagged_post: "Flaggade inlägget",
+            flagged_comment: "Flaggade kommentar",
             unflag_post: "Un-flagga detta inlägg",
             flags: "Flaggor",
             likes: "Gillar",
@@ -355,6 +358,7 @@ var translation_sv=function(){
               seek_to_location: "Sök på plats",
               mark: "Markera",
               reply: "Svara",
+              download_notes: "Nedladdning Anmärkningar"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

@@ -38,6 +38,7 @@ angular.module('scalearAngularApp')
 		// "hideResponses":{method:'POST',params:{action:'hide_responses'},headers:headers},
 		// "sendFeedback":{method:'POST', params:{action:'create_or_update_survey_responses'},headers:headers},
 		// "deleteFeedback":{method:'DELETE',params:{action:'delete_response'},headers:headers}
+		"exportNotes":{method: 'GET', params:{action:'export_notes'}, headers:headers},
 	});
 
 }]) 

@@ -1,6 +1,6 @@
 <div class="announcement-box">
 	<div style="display: inline-block; float: right;">
-		<delete_button size="big" action="deleteannouncement(index)" ng-hide="announcement.show"/>
+		<delete_button size="big" color='dark' action="deleteannouncement(index)" ng-hide="announcement.show"/>
 		</delete_button>
 	</div>
 	<div class="announcement-body" ng-click="showannouncement(index)" ng-mouseover="announcement.overclass = 'icon-pencil'" ng-mouseleave="announcement.overclass= ''" ng-if="!announcement.show">

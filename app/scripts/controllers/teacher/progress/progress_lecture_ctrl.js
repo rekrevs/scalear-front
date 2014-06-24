@@ -681,18 +681,23 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : true});
 
     shortcut.add("Space",function(){
-      
-      if($scope.selected_item.time>0){
-	      $scope.seek($scope.selected_item.time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+      if($scope.selected_item && $scope.selected_item.time>0){ 
+        var time = $scope.selected_item.time             
+        if ($scope.selected_item.type == "discussion"){
+          var q_ind = $scope.inner_highlight_index
+          time = $scope.selected_item.data[q_ind].post.time
+          console.log(time)
+        }
+        $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
         $scope.$apply()
-      }
+    }
     },{"disable_in_input" : true});
 
     shortcut.add("m",function(){
       console.log($scope.selected_item)
       if($scope.selected_item){        
   			if ($scope.selected_item.type == "discussion"){
-  				var q_ind = $scope.inner_highlight_index <0 ? 0 : $scope.inner_highlight_index
+  				var q_ind = $scope.inner_highlight_index
   				$scope.selected_item.data[q_ind].post.hide = !$scope.selected_item.data[q_ind].post.hide
   				$scope.updateHideDiscussion($scope.selected_item.data[q_ind].post.id,!$scope.selected_item.data[q_ind].post.hide)
   			}
@@ -701,12 +706,18 @@ angular.module('scalearAngularApp')
     				$scope.selected_item.data.hide = !$scope.selected_item.data.hide
     				$scope.updateHideQuiz($scope.selected_item.data.id,!$scope.selected_item.data.hide )
           }
+          else if($scope.selected_item.data.show != null){
+            $scope.selected_item.data.show = !$scope.selected_item.data.show
+            // $scope.updateHideQuiz($scope.selected_item.data.id,!$scope.selected_item.data.show )
+            $scope.updateHideSurveyQuestion($scope.selected_item.lec_id,$scope.selected_item.data.id,$scope.selected_item.data.show)
+          }
   			}
         else if($scope.selected_item.type == "Free Text Question"){
           if($scope.selected_item.data.quiz_type == 'survey'){
-            if($scope.inner_highlight_index < 0){
+            console.log($scope.inner_highlight_index)
+            if($scope.highlight_level == 1){
               $scope.selected_item.data.show = !$scope.selected_item.data.show
-              $scope.updateHideFreeText($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show)
+              $scope.updateHideSurveyQuestion($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show)
             }
             else{
               var q_ind = $scope.inner_highlight_index
@@ -716,7 +727,7 @@ angular.module('scalearAngularApp')
           }
         }
         else if($scope.selected_item.type == "free_question"){
-          if($scope.inner_highlight_index < 0){
+          if($scope.highlight_level == 1){
             $scope.selected_item.data.show = !$scope.selected_item.data.show
             $scope.updateHideQuiz($scope.selected_item.data.id, !$scope.selected_item.data.show)
           }
@@ -738,6 +749,21 @@ angular.module('scalearAngularApp')
     shortcut.remove("Left");
     shortcut.remove("Space");
     shortcut.remove("m");
+  }
+
+  $scope.print=function(){
+    // var win = window.open('http://localhost:9000/#/courses/13/progress/lectures/34', '_blank');
+    // win.focus();
+    // $timeout(function(){
+    //   win.print()
+    // })
+    var toPrint = document.getElementById('printarea');
+    var win = window.open('', '_blank');
+    win.document.open();
+    win.document.write('<html><title>::Progress Report::</title><link rel="stylesheet" type="text/css" href="styles/teacher/progress_print.css" /></head><body onload="window.print()">')
+    win.document.write(toPrint.innerHTML);
+    win.document.write('</html>');
+    win.document.close();
   }
 
 	$scope.getKeys = function( obj ) {

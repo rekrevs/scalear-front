@@ -66,7 +66,7 @@
             </div>
             <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
             <div style="color: dimgrey; min-height: 18px;">{{teacher.status}}</div>
-            <delete-button ng-show="in_delete" ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
+            <delete-button ng-show="in_delete" ng-if="!teacher.owner" id="delete_teacher" size="small" color='dark' action="removeTeacher($index)" style="cursor: pointer;"></delete-button>
         </div>
         <div class="teacher-item" ng-repeat="new_teacher in new_teachers">
             <form name='email_form' novalidate>
@@ -86,7 +86,7 @@
                 <div style="color: dimgrey; min-height: 18px;">{{new_teacher.status}}</div>
                 <button ng-hide="new_teachers.length == 0 || in_delete" ng-click="saveTeachers()" class="btn btn-success add-teacher-button" ng-disabled="(new_teachers | filter:{role:'!'}).length != 0 || (new_teachers | filter:{email:'!'}).length != 0">{{'courses.invite' | translate}}</button>
                 <br />
-                <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" action="removeColumn($index)" style="cursor: pointer;" hide-confirm="true"></delete-button>
+                <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" color='dark' action="removeColumn($index)" style="cursor: pointer;" hide-confirm="true"></delete-button>
             </form>
         </div>
     </div>

@@ -1,10 +1,11 @@
 <!-- build:css(.tmp/styles) styles/courseware.css -->
-<link rel="stylesheet" href="styles/modules_selector.css"/>
+<!-- <link rel="stylesheet" href="styles/modules_selector.css"/> -->
+<link rel="stylesheet" href="styles/content_navigator.css"/>
 <link rel="stylesheet" href="styles/student/courseware.css"/>
 <link rel="stylesheet" href="styles/controls.css" type="text/css" media="screen" />
 <!-- endbuild -->
 
-<div class="row" style="width:100%; margin-right: -20px;">
+<!-- <div class="row" style="width:100%; margin-right: -20px;">
 <center ng-show="!course"><br/><br/><loading size="big" show="!course"/></center>
 	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2;">
 		<table ng-show="course && !hide_all" style="width: 95%;">
@@ -16,12 +17,11 @@
 					<div style="text-align: left;">
 						<courseware-item name="item.name" id="item.id" circlesize="12" group_id="current_module.id" class_name="item.get_class_name" quiz_type="item.quiz_type" done="item.is_done" required="item.required" current="current_item"></courseware-item>
 					</div>
-					<!-- <hr ng-class="{bardone: item.is_done == true}" style="width: 85%; margin: 0; position: relative; top: -9px; z-index: -1; float: right;" /> -->
 					<hr style="width: 100%; margin: 0; position: relative; top: -9px; z-index: -1; float: right;" />
-
 				</td>
 			</tr>
 		</table>
 	</div>
-</div>
+</div> -->
+<content-navigator modules="course.groups"></content-navigator>
 <div ng-show="course && !hide_all" class="middle-container" id="middle1" ui-view></div>

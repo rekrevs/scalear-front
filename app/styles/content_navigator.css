@@ -1,0 +1,111 @@
+.navigator-dropdown-button{
+  position: fixed;
+  top: 40px;
+  background-color: green;
+  width: 40px;
+  /*margin-left: 120px;*/
+  border-radius: 0 0 4px 4px;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.navigatoropen{
+  margin-left: 0px;
+  background-color: darkgreen;
+  width: 300px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.content-navigator-container{
+  width: 0px;
+  margin-top: 10px;
+  /*padding: 10px;*/
+  left: 0px;
+  position: fixed;
+  display: inline-block;
+  /*background-color: #222;*/
+  background-color: white;
+  box-shadow: 1px 1px 1px lightgrey;
+  height: 0%;
+  overflow-y: auto;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.containeropen{
+  height: 83%;
+  width: 300px;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+.accordion {
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+
+.accordion-group {
+  margin-bottom: 0px;
+  border: none;
+  background-color: white !important;
+  -webkit-border-radius: 0px;
+     -moz-border-radius: 0px;
+          border-radius: 0px;
+}
+
+.accordion-heading {
+  background-color: white;
+  text-align: left;
+  padding: 5px;
+  font-weight: bold;
+  /*border-bottom: 0;*/
+}
+.accordion-heading:hover, .currentmodule{
+  background-color: lightgrey;
+}
+
+.accordion-heading .accordion-toggle {
+  display: block;
+  padding: 8px 15px;
+}
+
+.accordion-toggle {
+  color: black;
+  cursor: pointer;
+}
+
+.accordion-inner {
+  background-color: lightgrey;
+  padding: 9px 15px;
+  border-top: 1px solid #e5e5e5;
+}
+.accordion-inner > ul{
+  font-size: 13px;
+  color: black;
+  text-align: left;
+  padding: 2px;
+  padding-left: 20px;
+  margin: 0px 0px 0px 0px !important;
+  cursor: pointer;
+  /*background-color: */
+}
+.accordion-inner > ul:hover, .currentitem{
+  background-color: darkgrey;
+}
+
+
+
+
+
+
+

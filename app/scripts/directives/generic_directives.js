@@ -295,4 +295,17 @@ angular.module('scalearAngularApp')
       }
     }
   }
-}]);
+}]).directive('contentNavigator',function(){
+  return{
+    restrict:'E',
+    scope:{
+      modules: '='
+    },
+    templateUrl:"/views/content_navigator.html",
+   link:function(scope, element, attr){
+      scope.toggleNavigator = function(){
+        scope.open_navigator = !scope.open_navigator
+      }
+   }
+  }
+});

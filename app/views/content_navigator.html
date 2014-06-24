@@ -1,0 +1,18 @@
+<div ng-init="open_navigator = false" class="content-navigator-container" ng-class="{containeropen: open_navigator}">
+	<div class="navigator-dropdown-button" ng-class="{navigatoropen: open_navigator}" ng-click="toggleNavigator()">
+		<div style="min-width: 40px;">
+			<div ng-show="open_navigator" class="icon icon-chevron-up"></div>
+			<div ng-hide="open_navigator" class="icon icon-chevron-down"></div>
+		</div>
+	</div>
+	<accordion>
+		<accordion-group ng-repeat="module in modules | orderBy: 'position'">
+			<accordion-heading>
+				{{module.name}}
+			</accordion-heading>
+				<ul ng-repeat="item in module.items | orderBy: 'position'">
+					{{item.name}}
+				</ul>
+		</accordion-group>
+	</accordion>
+</div>

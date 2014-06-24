@@ -1,20 +1,24 @@
 'use strict';
-
 angular.module('scalearAngularApp')
     .directive('questionBlock',['$log','$translate','Forum','$state',function($log,$translate,Forum,$state){
         return{
             restrict:"E",
             templateUrl:"/views/forum/question_block.html",
             scope:{
-                item:'='
+                item:'=',
+                pref: '='
             },
             link:function(scope,element,attrs){
+                setPref();
+                
                 scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
                 scope.privacy = scope.choices[0];
                 $('.text_block').focus()
                 scope.postQuestion=function(item){
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
                         //scope.action()(scope.current_question, scope.privacy.value)
+                        // scope.lastPref = scope.privacy.value;
+                        // console.log(scope.lastPref);
                         Forum.createPost(
                             {post: 
                                 {

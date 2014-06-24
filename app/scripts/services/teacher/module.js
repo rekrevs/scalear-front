@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
 	    'destroy': { method: 'DELETE', headers:headers },
 	    'show':{method: 'GET', headers:headers},
 	    'newModule':{method:'POST', params:{action:'new_module_angular'}, headers:headers},
-	    'newDocument':{method:'POST', params:{action:'new_document_angular'}, headers:headers},
+	    'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},
 	    'saveSort':{method:'POST', params:{action:'sort'}, headers:headers},
           'getModules':{method:'GET', params:{action:'get_group_angular'},headers:headers},
 	    'validateModule': {method: 'PUT', params: {action: 'validate_group_angular'},headers: headers},

@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
 
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal','Impersonate', '$cookieStore', '$timeout', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal,Impersonate, $cookieStore, $timeout) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink) {
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('head.content')
@@ -32,6 +32,7 @@ angular.module('scalearAngularApp')
  			{course_id:$stateParams.course_id},
  			function(data){
 		 		$scope.course=data.course
+		 		$scope.course.custom_links = data.links
 		 		$scope.modules=data.groups
 		 		$scope.module_obj ={}
 		 		$scope.items_obj ={}
@@ -45,6 +46,7 @@ angular.module('scalearAngularApp')
 		 		})
 
 		 		$scope.init_loading=false
+		 		console.log($scope.course)
 		    },
 		    function(){
 		    }
@@ -397,6 +399,50 @@ angular.module('scalearAngularApp')
 			})
 		})
 	}
+
+	$scope.addCustomLink=function(){
+        Course.newCustomLink({course_id:$stateParams.course_id},
+            {},
+            function(doc){
+                // $log.debug(doc)
+                console.log(doc)
+                doc.link.url = "http://"
+                // $scope.module.custom_links.push(doc.link)
+                $scope.course.custom_links.push(doc.link)
+            }, 
+            function(){}
+        );
+    }
+
+    $scope.removeCustomLink=function (elem) {
+        // $scope.link_overlay=true
+        CustomLink.destroy(
+            {link_id: elem.id},{},
+            function(){
+                $scope.course.custom_links.splice($scope.course.custom_links.indexOf(elem), 1)
+                // $scope.link_overlay=false
+            }, 
+            function(){}
+        );
+    }
+
+    $scope.updateCustomLink=function(elem){
+        elem.url = $filter("formatURL")(elem.url)
+        CustomLink.update(
+            {link_id: elem.id},
+            {"link":{
+                url: elem.url,
+                name: elem.name
+                }
+            },
+            function(resp){
+                elem.errors=""
+            },
+            function(resp){
+                elem.errors=resp.data.errors;
+            }
+        );
+    }
 
       
 

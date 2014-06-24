@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'Document', '$q', '$stateParams', '$log', '$filter',
-        function($scope, $state, Module, Document, $q, $stateParams, $log, $filter) {
+    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$q', '$stateParams', '$log', '$filter',
+        function($scope, $state, Module, CustomLink, $q, $stateParams, $log, $filter) {
 
             $scope.$watch('module_obj[' + $stateParams.module_id + ']', function() {
                 if ($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
@@ -28,29 +28,29 @@ angular.module('scalearAngularApp')
                 )
             }        
 
-        $scope.addDocument=function(){
+        $scope.addCustomLink=function(){
             $log.debug($scope.module.id)
-            $scope.document_overlay=true
-            Module.newDocument({course_id:$stateParams.course_id, module_id:$scope.module.id},
+            $scope.link_overlay=true
+            Module.newCustomLink({course_id:$stateParams.course_id, module_id:$scope.module.id},
                 {},
                 function(doc){
                     $log.debug(doc)
-                    doc.document.url = "http://"
-                    $scope.module.documents.push(doc.document)
-                    $scope.document_overlay=false
+                    doc.link.url = "http://"
+                    $scope.module.custom_links.push(doc.link)
+                    $scope.link_overlay=false
                 }, 
                 function(){}
             );
         }
 
 
-        $scope.removeDocument=function (elem) {
-            $scope.document_overlay=true
-            Document.destroy(
-                {document_id: elem.id},{},
+        $scope.removeCustomLink=function (elem) {
+            $scope.link_overlay=true
+            CustomLink.destroy(
+                {link_id: elem.id},{},
                 function(){
-                    $scope.module.documents.splice($scope.module.documents.indexOf(elem), 1)
-                    $scope.document_overlay=false
+                    $scope.module.custom_links.splice($scope.module.custom_links.indexOf(elem), 1)
+                    $scope.link_overlay=false
                 }, 
                 function(){}
             );
@@ -59,8 +59,8 @@ angular.module('scalearAngularApp')
             var d = $q.defer();
             var doc={}
             doc.name=data;
-            Document.validateName(
-                {document_id: elem.id},
+            CustomLink.validateName(
+                {link_id: elem.id},
                 doc,
                 function(data){
                     d.resolve()
@@ -80,8 +80,8 @@ angular.module('scalearAngularApp')
             var d = $q.defer();
             var doc={}
             doc.url=data;
-            Document.validateURL(
-                {document_id: elem.id},
+            CustomLink.validateURL(
+                {link_id: elem.id},
                 doc,
                 function(data){
                     d.resolve()
@@ -96,11 +96,11 @@ angular.module('scalearAngularApp')
             )
             return d.promise;
         }
-        $scope.updateDocument=function(elem){
+        $scope.updateCustomLink=function(elem){
             elem.url = $filter("formatURL")(elem.url)
-            Document.update(
-                {document_id: elem.id},
-                {"document":{
+            CustomLink.update(
+                {link_id: elem.id},
+                {"link":{
                     url: elem.url,
                     name: elem.name
                     }

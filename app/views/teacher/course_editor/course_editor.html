@@ -18,6 +18,16 @@
 	<overlay ng-show="module_overlay" style="height:80%">
 		<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" ></loading>
 	</overlay>
+	<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
+	<ul id="acc1" class="accordion">
+		<li ng-repeat="link in course.custom_links" class='module accordion-group'>
+			<!-- <module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" ng-class="{moduleopen: currentmodule == module.id}" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)"/> -->
+			<!-- {{link.name}}
+			{{link.url}} -->
+			<link-item link="link" update="updateCustomLink" remove="removeCustomLink" nameval="validateName" urlval="validateURL" small="true">
+		</li>
+	</ul>
+	<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>courses.modules</div>
 	<ul ui-sortable="moduleSortableOptions" ng-model='modules' id="acc1" class="accordion">
 		<li ng-repeat="module in modules" class='module accordion-group' ng-init="module.open = false">
 			<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" ng-class="{moduleopen: currentmodule == module.id}" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)"/>
@@ -47,6 +57,9 @@
 	</ul>
 	<button ng-show="!module_loading" ng-click="addModule();" class="btn btn-success adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;">
 	+ {{'courses.add_module'|translate}}
+	</button >
+	<button ng-show="!module_loading" ng-click="addCustomLink();" class="btn btn-success adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;">
+	+ Add Link
 	</button >
 	<!-- <button_link title="{{'Preview'|translate}}" action="impersonate()" class="preview" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link> -->
 	<hr />

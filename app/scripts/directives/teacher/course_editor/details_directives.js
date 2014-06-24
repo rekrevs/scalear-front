@@ -350,17 +350,16 @@ angular.module('scalearAngularApp')
                 }
             };
         }
-    ]).directive('documentItem', function(){
+    ]).directive('linkItem', function(){
         return{
-            templateUrl: '/views/document_item.html',
+            templateUrl: '/views/link_item.html',
             restrict: 'E',
             scope: {
-                document: "=",
+                link: "=",
                 update: "=",
                 remove: "=",
-                nameval: "=",
-                urlval: "="
-
+                validate: "=",
+                small:"="
             },
             link: function(scope, element){
 

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('scalearAngularApp')
-    .directive('questionBlock',['$log','$translate','Forum','$state',function($log,$translate,Forum,$state){
+    .directive('questionBlock',['$log','$translate','Forum','$state', '$rootScope','User',function($log,$translate,Forum,$state, $rootScope, User){
         return{
             restrict:"E",
             templateUrl:"/views/forum/question_block.html",
@@ -9,17 +9,30 @@ angular.module('scalearAngularApp')
                 pref: '='
             },
             link:function(scope,element,attrs){
-                setPref();
-                
+
+
                 scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
-                scope.privacy = scope.choices[0];
-                $('.text_block').focus()
+                
+                scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];
+    
+                $('.text_block').focus();
                 scope.postQuestion=function(item){
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
                         //scope.action()(scope.current_question, scope.privacy.value)
-                        // scope.lastPref = scope.privacy.value;
-                        // console.log(scope.lastPref);
-                        Forum.createPost(
+                            if(scope.privacy.value != $rootScope.current_user.discussion_pref){
+                                $rootScope.current_user.discussion_pref = scope.privacy.value;
+                                
+                                User.alterPref(), 
+                                function(current_pref){
+                                    console.log("success");
+                                    console.log(current_pref);
+                                }, 
+                                function(){
+                                    console.log("failure")
+                                }
+                            }
+
+                            Forum.createPost(
                             {post: 
                                 {
                                     content: scope.current_question, 

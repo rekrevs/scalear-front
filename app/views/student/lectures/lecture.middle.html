@@ -6,7 +6,7 @@
 	 <p ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message| date:'h:mma'}}</b></p>
 </div> -->
 <div  ng-hide="!lecture">
-	<h3 style="margin-bottom: 10px; padding-top: 8px; line-height: 10px; display: inline-block;" ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name"></h3>- 
+	<h3 style="margin-bottom: 10px; padding-top: 10px; line-height: 10px; display: inline-block;" ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name"></h3>- 
 	<div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" style="display: inline-block; font-size: 12px;">
 		 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
 		 <p ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message| date:'h:mma'}}</b></p>

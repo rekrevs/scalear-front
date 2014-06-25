@@ -317,9 +317,9 @@ angular.module('scalearAngularApp')
           // $scope.close_selector = true;
           Module.getLastWatched(
             {course_id: $stateParams.course_id, module_id: module.id}, function(data){
-              $timeout(function(){
-                scope.toggleNavigator();
-              })
+              // $timeout(function(){
+              //   scope.toggleNavigator();
+              // })
               if(data.last_watched != -1){
                 $state.go('course.courseware.module.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
                 scope.currentitem = data.last_watched
@@ -338,14 +338,14 @@ angular.module('scalearAngularApp')
         $timeout(function(){
           scope.toggleNavigator();
         })
-        var item_id = item.class_name+'_id';
-        if(item.class_name == 'lecture'){
-          $state.go('course.courseware.module.'+item.class_name, {'module_id': item.group_id, 'lecture_id': item.id})
+        // var item_id = item.get_class_name.toLowerCase()+'_id';
+        if(item.get_class_name.toLowerCase() == 'lecture'){
+          $state.go('course.courseware.module.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'lecture_id': item.id})
         }
-        else if(item.class_name == 'quiz'){
-          $state.go('course.courseware.module.'+item.class_name, {'module_id': item.group_id, 'quiz_id': item.id})
+        else if(item.get_class_name.toLowerCase() == 'quiz'){
+          $state.go('course.courseware.module.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'quiz_id': item.id})
         }
-        
+        console.log('course.courseware.module.'+item.get_class_name.toLowerCase()+' ahoo')
       }
 
       scope.showModuleInclass = function(module){

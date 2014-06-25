@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
 	  			// console.log()
 				var canvas;
 				var ctx;
-				var bg = element.children()[1]
+				var bg = element.children()[0]
 				var ctx = ctx = bg.getContext('2d');
 				ctx.clearRect(0, 0, bg.width, bg.height);
 				ctx.fillStyle = scope.innercolor;

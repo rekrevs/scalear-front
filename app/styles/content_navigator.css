@@ -108,6 +108,23 @@
   background-color: rgba(0,0,0,0.2);
 }
 
+.itemfinished{
+  border-right: 5px solid rgb(0, 162, 86);
+}
+.module-progress-bar{
+  width: 0%;
+  height: 3px;
+}
+.circle{
+  border: 2px solid black;
+  border-radius: 300px;
+  margin-top: 2px;
+  vertical-align: text-bottom;
+}
+/*.itemfinished{
+  border-left: rgb(0, 162, 86);
+  display: inline-block;
+}*/
 
 
 

@@ -20,14 +20,16 @@
 		<loading size="small" show="!modules"></loading>
 		<span ng-switch-when="courseware">
 			<accordion>
-				<accordion-group ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id || !closeAll}}">
+				<accordion-group ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 					<accordion-heading>
 						<div ng-click="showModuleCourseware(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
 							{{module.name}}
+							<module-progress-circle circlesize="10" innercolor="green" module="module" style="margin-right: 10px; float: right;"></module-progress-circle>
 						</div>
+						
 					</accordion-heading>
-					<ul ng-click="showItemCourseware(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items | orderBy: 'position'">
-						{{item.name}}
+					<ul ng-click="showItemCourseware(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id, itemfinished: item.is_done}" ng-repeat="item in module.quizzes.concat(module.lectures) | orderBy:'position'">
+						{{item.name}}<span style="float: right; margin-right: 10px; color: red;" ng-show="item.required" translate>courses.required</span>
 					</ul>
 				</accordion-group>
 			</accordion>

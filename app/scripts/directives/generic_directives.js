@@ -295,17 +295,66 @@ angular.module('scalearAngularApp')
       }
     }
   }
-}]).directive('contentNavigator',function(){
+}]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout', function(Module, $stateParams, $state, $timeout){
   return{
     restrict:'E',
+    replace: 'true',
     scope:{
-      modules: '='
+      modules: '=',
+      currentmodule: '=',
+      currentitem: '=',
+      mode: '@'
     },
     templateUrl:"/views/content_navigator.html",
    link:function(scope, element, attr){
       scope.toggleNavigator = function(){
         scope.open_navigator = !scope.open_navigator
       }
+      scope.showModuleCourseware = function(module){
+        if(module.id != scope.currentmodule.id){
+          scope.currentmodule = module//$scope.modules_obj[module_id];
+          // $scope.close_selector = true;
+          Module.getLastWatched(
+            {course_id: $stateParams.course_id, module_id: module.id}, function(data){
+              $timeout(function(){
+                scope.toggleNavigator();
+              })
+              if(data.last_watched != -1){
+                $state.go('course.courseware.module.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
+                scope.currentitem = data.last_watched
+              }
+              else{
+                $state.go('course.courseware.module.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
+                scope.currentitem = module.quizzes[0].id
+              }
+          }) 
+        }  
+      }
+
+
+      scope.showItemCourseware = function(item){
+        console.log(item)
+        $timeout(function(){
+          scope.toggleNavigator();
+        })
+        var item_id = item.class_name+'_id';
+        if(item.class_name == 'lecture'){
+          $state.go('course.courseware.module.'+item.class_name, {'module_id': item.group_id, 'lecture_id': item.id})
+        }
+        else if(item.class_name == 'quiz'){
+          $state.go('course.courseware.module.'+item.class_name, {'module_id': item.group_id, 'quiz_id': item.id})
+        }
+        
+      }
+
+      scope.showModuleInclass = function(module){
+        $timeout(function(){
+          scope.toggleNavigator();
+        })
+        scope.currentmodule = module//$scope.getSelectedModule()
+        $state.go('course.inclass.module',{module_id: module.id})
+        // $scope.toggleSelector();
+      }
    }
   }
-});
+}]);

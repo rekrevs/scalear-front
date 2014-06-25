@@ -1,18 +1,61 @@
-<div ng-init="open_navigator = false" class="content-navigator-container" ng-class="{containeropen: open_navigator}">
+<span ng-init="open_navigator = false">
 	<div class="navigator-dropdown-button" ng-class="{navigatoropen: open_navigator}" ng-click="toggleNavigator()">
 		<div style="min-width: 40px;">
 			<div ng-show="open_navigator" class="icon icon-chevron-up"></div>
 			<div ng-hide="open_navigator" class="icon icon-chevron-down"></div>
 		</div>
 	</div>
-	<accordion>
-		<accordion-group ng-repeat="module in modules | orderBy: 'position'">
-			<accordion-heading>
-				{{module.name}}
-			</accordion-heading>
-				<ul ng-repeat="item in module.items | orderBy: 'position'">
-					{{item.name}}
-				</ul>
-		</accordion-group>
-	</accordion>
-</div>
+	<div ng-switch="mode" class="content-navigator-container" ng-class="{containeropen: open_navigator}">
+		<loading size="small" show="!modules"></loading>
+		<span ng-switch-when="courseware">
+			<accordion>
+				<accordion-group ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
+					<accordion-heading>
+						<div ng-click="showModuleCourseware(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
+							{{module.name}}
+						</div>
+					</accordion-heading>
+					<ul ng-click="showItemCourseware(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items | orderBy: 'position'">
+						{{item.name}}
+					</ul>
+				</accordion-group>
+			</accordion>
+		</span>
+		<span ng-switch-when="inclass">
+			<accordion>
+				<accordion-group ng-repeat="module in modules | orderBy: 'position'">
+						<accordion-heading>
+							<div ng-click="showModuleInclass(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
+								{{module.name}}
+							</div>
+						</accordion-heading>
+				</accordion-group>
+			</accordion>
+		</span>
+		<span ng-switch-when="course_editor">
+			<accordion>
+				<accordion-group ng-repeat="module in modules | orderBy: 'position'">
+					<accordion-heading>
+						{{module.name}}
+					</accordion-heading>
+						<ul ng-show="module.items" ng-repeat="item in module.items | orderBy: 'position'">
+							{{item.name}}
+						</ul>
+				</accordion-group>
+			</accordion>
+		</span>
+		
+		<span ng-switch-when="progress">
+			<accordion>
+				<accordion-group ng-repeat="module in modules | orderBy: 'position'">
+					<accordion-heading>
+						{{module.name}}
+					</accordion-heading>
+						<ul ng-show="module.items" ng-repeat="item in module.items | orderBy: 'position'">
+							{{item.name}}
+						</ul>
+				</accordion-group>
+			</accordion>
+		</span>
+	</div>
+</span>

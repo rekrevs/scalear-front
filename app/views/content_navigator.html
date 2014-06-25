@@ -32,28 +32,17 @@
 				</accordion-group>
 			</accordion>
 		</span>
-		<span ng-switch-when="course_editor">
-			<accordion>
-				<accordion-group ng-repeat="module in modules | orderBy: 'position'">
-					<accordion-heading>
-						{{module.name}}
-					</accordion-heading>
-						<ul ng-show="module.items" ng-repeat="item in module.items | orderBy: 'position'">
-							{{item.name}}
-						</ul>
-				</accordion-group>
-			</accordion>
-		</span>
-		
 		<span ng-switch-when="progress">
 			<accordion>
-				<accordion-group ng-repeat="module in modules | orderBy: 'position'">
+				<accordion-group ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 					<accordion-heading>
-						{{module.name}}
+						<div ng-click="showModuleCourseware(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
+							{{module.name}}
+						</div>
 					</accordion-heading>
-						<ul ng-show="module.items" ng-repeat="item in module.items | orderBy: 'position'">
-							{{item.name}}
-						</ul>
+					<ul ng-click="showItemCourseware(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items | orderBy: 'position'">
+						{{item.name}}
+					</ul>
 				</accordion-group>
 			</accordion>
 		</span>

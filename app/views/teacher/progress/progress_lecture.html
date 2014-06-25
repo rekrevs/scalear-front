@@ -73,6 +73,7 @@
 							        </span>
 									<p style="width:600px;margin-bottom:0">{{answer.answer}}</p>									
 									<i ng-show="answer.response && !answer.show_feedback" style="padding-left: 30px;color: steelblue">{{answer.response}}</i>
+									<delete_button ng-show="answer.response && !answer.show_feedback" size='small' action='deleteFeedback(answer)'></delete_button>
 									<div ng-show="answer.show_feedback && module_item.quiz_type == 'survey'">
 										<textarea ng-model="answer.temp_response"  style="width: 65%;" />
 										<button_link title="{{'courses.send'|translate}}" class="btn-mini send" action="sendFeedback(answer);answer.show_feedback = false" />

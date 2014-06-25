@@ -303,6 +303,7 @@ angular.module('scalearAngularApp')
       modules: '=',
       currentmodule: '=',
       currentitem: '=',
+      scrollto: '=',
       mode: '@'
     },
     templateUrl:"/views/content_navigator.html",
@@ -354,6 +355,21 @@ angular.module('scalearAngularApp')
         scope.currentmodule = module//$scope.getSelectedModule()
         $state.go('course.inclass.module',{module_id: module.id})
         // $scope.toggleSelector();
+      }
+
+      scope.showModuleProgress = function(index){
+        scope.currentmodule = scope.modules[index]
+        scope.toggleNavigator();
+      }
+      scope.showItemProgress = function(item){
+        $timeout(function(){$state.go('course.progress.lecture', {module_id: item.group_id});});
+        scope.scrollto(item);
+      }
+
+      scope.clearCurrent = function(event){
+        event.stopPropagation();
+        scope.currentmodule = null;
+        scope.currentitem = null;
       }
    }
   }

@@ -1,15 +1,26 @@
-<span ng-init="open_navigator = false">
+<span ng-init="open_navigator = false" style="position: fixed; z-index: 2;">
 	<div class="navigator-dropdown-button" ng-class="{navigatoropen: open_navigator}" ng-click="toggleNavigator()">
-		<div style="min-width: 40px;">
+		<div style="display: inline-block; color: white; padding-left: 5px; padding-right: 5px;">
+			<span>
+				{{currentmodule.name || 'courses.select_module' | translate}}
+				<span ng-show="currentmodule && mode == 'progress'">
+				 | 
+				 <a ui-sref="course.progress.main" ng-click="clearCurrent($event)" style="color: white;" ng-show="currentmodule" tooltip-placement="bottom" tooltip="Back to main progress page"><span translate>main</span></a>
+			 	</span>
+			</span>
+		</div>
+		<div style="display: inline-block; padding-right: 5px;">
 			<div ng-show="open_navigator" class="icon icon-chevron-up"></div>
 			<div ng-hide="open_navigator" class="icon icon-chevron-down"></div>
 		</div>
+		
 	</div>
+	
 	<div ng-switch="mode" class="content-navigator-container" ng-class="{containeropen: open_navigator}">
 		<loading size="small" show="!modules"></loading>
 		<span ng-switch-when="courseware">
 			<accordion>
-				<accordion-group ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
+				<accordion-group ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id || !closeAll}}">
 					<accordion-heading>
 						<div ng-click="showModuleCourseware(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
 							{{module.name}}
@@ -36,11 +47,11 @@
 			<accordion>
 				<accordion-group ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 					<accordion-heading>
-						<div ng-click="showModuleCourseware(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
+						<div ui-sref="course.progress.lecture({module_id:module.id})" ng-click="showModuleProgress($index)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
 							{{module.name}}
 						</div>
 					</accordion-heading>
-					<ul ng-click="showItemCourseware(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items | orderBy: 'position'">
+					<ul ng-click="showItemProgress(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items | orderBy: 'position'">
 						{{item.name}}
 					</ul>
 				</accordion-group>

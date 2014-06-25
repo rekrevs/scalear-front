@@ -80,7 +80,7 @@ angular.module('scalearAngularApp')
 		)
 	}
   var resizeContainer = function(){
-    $scope.right_container.css('height', angular.element($window).height() - 200)
+    $scope.right_container.css('height', angular.element($window).height() - 130)
   }
   angular.element($window).bind('resize', function () {
     resizeContainer();

@@ -13,7 +13,16 @@
 </style>
 <span style="position: fixed; z-index: 100;">
 	<div class="navigator-dropdown-button" ng-class="{navigatoropen: tree_toggled}" ng-click="toggleTree()">
-		<div style="min-width: 40px;">
+		<div style="display: inline-block; color: white; padding-left: 5px; padding-right: 5px;" ng-hide="open_navigator">
+			<span>
+				{{module_obj[currentmodule].name || 'courses.select_module' | translate}}
+				<!-- <span ng-show="currentmodule">
+				 | 
+				 <a ui-sref="course.progress.main" ng-click="clearCurrent()" ng-show="selected_module" tooltip-placement="bottom" tooltip="Back to main progress page"><small translate>main</small></a>
+			 	</span> -->
+			</span>
+		</div>
+		<div style="display: inline-block; padding-right: 5px;">
 			<div ng-show="tree_toggled" class="icon icon-chevron-up"></div>
 			<div ng-hide="tree_toggled" class="icon icon-chevron-down"></div>
 		</div>

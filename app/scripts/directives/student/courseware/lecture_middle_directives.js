@@ -605,7 +605,7 @@ angular.module('scalearAngularApp')
     }
   }
 }])
-.directive('quizTimeline',function(){
+.directive('quizTimeline',['OnlineQuiz', function(OnlineQuiz){
   return{
     restrict:"A",
     // replace:true,
@@ -614,9 +614,38 @@ angular.module('scalearAngularApp')
       seek:'&',
     },
     templateUrl: '/views/student/lectures/quiz_timeline.html',
-    link:function(scope, element, attrs){}
+    link:function(scope, element, attrs){
+
+      scope.voteForReview=function(){
+        console.log("vote review")
+        OnlineQuiz.voteForReview(
+        {online_quizzes_id:scope.item.data.id},{},
+        function(res){
+          if(res.done){
+            if(!scope.item.data.reviewed){
+              scope.item.data.reviewed = true
+              scope.item.data.votes_count++
+            }
+          }
+        })
+      }
+
+      scope.unvoteForReview=function(){
+        console.log("unvote review")
+        OnlineQuiz.unvoteForReview(
+        {online_quizzes_id:scope.item.data.id},{},
+        function(res){
+          if(res.done){
+            if(scope.item.data.reviewed){
+                scope.item.data.reviewed = false
+                scope.item.data.votes_count--
+            }
+          }
+        })
+      }
+    }
   }
-})
+}])
 .directive('notesTimeline',['$log','Lecture','$state', function($log,Lecture,$state){
   return{
     restrict:"A",

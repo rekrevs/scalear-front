@@ -10,3 +10,6 @@
 <td style="padding: 0px; padding-right: 8px;width:20px;">                 
   <img ng-show="item.data.is_quiz_solved" style="float: right;" src="images/check7.png" />
 </td>
+<td>
+ <voting-button ng-show="item.data.is_quiz_solved" votes-count="item.data.votes_count" voted="item.data.reviewed" up="voteForReview" down="unvoteForReview" direction="horizontal"></voting-button>
+</td>

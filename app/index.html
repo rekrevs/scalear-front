@@ -6,7 +6,8 @@
   <head> 
     <script type="text/javascript">
 
-        if (navigator.appName == 'Microsoft Internet Explorer')
+    var ie11 = /rv:11.0/i.test(navigator.userAgent);
+        if (navigator.appName == 'Microsoft Internet Explorer' || ie11 == true)
         {
            if(self.location.href.split('/')[self.location.href.split('/').length-1].split('?')[0] == "confirmation"){
                 var confirmation_token = self.location.href.split('confirmation_token=')[1]

@@ -21,7 +21,8 @@ angular.module('scalearAngularApp')
           'show_confirmation':{method:'GET', headers:headers, params:{action: 'confirmation'}},
           'update_account':{method:'PUT', headers:headers},
           'delete_account':{method:'delete', headers:headers},
-          'get_user': {method: 'GET', headers: headers, params:{action: 'get_user_angular'}}
+          'get_user': {method: 'GET', headers: headers, params:{action: 'get_user_angular'}},
+          'alterPref':{method: 'GET', params:{action:'alter_pref'}, headers:headers},
 
       });
 

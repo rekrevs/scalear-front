@@ -1,6 +1,5 @@
 angular.module('scalearAngularApp')
   .controller('forumCtrl',['$scope', 'Kpi','$translate', 'Forum', function ($scope, Kpi,$translate, Forum) {
-
         $scope.getComments= function(){
             Forum.getComments({},function(response){
                 console.log(response);
@@ -54,6 +53,4 @@ angular.module('scalearAngularApp')
         }
 
         $scope.getComments();
-
-
   }]);

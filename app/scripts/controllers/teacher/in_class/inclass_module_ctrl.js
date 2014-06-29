@@ -5,13 +5,14 @@ angular.module('scalearAngularApp')
     $window.scrollTo(0, 0);
     $scope.inclass_player={}
     $scope.inclass_player.events={}   
-
+    // $scope.fullscreen_user_settings = false
+    // $scope.initial_display_done = false
     $scope.time_parameters={
       quiz: 3,
       question: 2
     } 
 
-  	$scope.display = function (type, disabled) {
+  	$scope.display = function (disabled) {
       if(!disabled){
         resetVariables()
         if($scope.current_quiz_lecture)
@@ -19,11 +20,18 @@ angular.module('scalearAngularApp')
         if($scope.chart_data)
           delete $scope.chart_data
 
-        openModal('display', type)
+        openModal()
         changeButtonsSize()
         $scope.hide_text = $scope.button_names[3]
         $scope.setOriginalClass()
         $scope.setQuizShortcuts()
+
+        $timeout(function(){
+          // $scope.fullscreen_user_settings  = true
+          $scope.fullscreen = true
+          $scope.blurButtons()
+        },100)
+
         angular.element($window).bind('resize',
           function(){
             changeButtonsSize()
@@ -32,9 +40,34 @@ angular.module('scalearAngularApp')
             })
             $scope.$apply()
         })
+
+        document.addEventListener(screenfull.raw.fullscreenchange, function () {
+            if(!screenfull.isFullscreen){
+                console.log("cool")
+                $scope.fullscreen = false
+                $scope.exitBtn()
+                $scope.$apply()
+            }
+        });
+
       }  
 
   	};
+
+    // $scope.initialDisplay = function(disabled,fullscreen){
+    //    $scope.fullscreen_user_settings  = fullscreen
+    //    $scope.initial_display_done = true
+    //    $scope.inclass_setting = false
+    //    $scope.display(disabled,fullscreen)
+    // }
+
+    // $scope.showInitialDisplay=function(){
+    //    if($scope.initial_display_done){
+    //      $scope.display(!$scope.inclass_ready,$scope.fullscreen_user_settings)
+    //   }
+    //   else
+    //     $scope.inclass_setting=!$scope.inclass_setting
+    // }
 
     var resetVariables=function(){
         $scope.play_pause_class = "icon-play"
@@ -138,21 +171,21 @@ angular.module('scalearAngularApp')
     }
 
 
-    var openModal=function(view, type){
+    var openModal=function(){
       $rootScope.changeError = true;
       angular.element("body").css("overflow","hidden");
       angular.element("#main").css("overflow","hidden");
       angular.element("html").css("overflow","hidden");
       var win = angular.element($window)
       win.scrollTop("0px")
-      var filename='inclass_'+view
-      if(view == "review")
-         filename+= "_"+type.toLowerCase()       
+      // var filename='inclass_display'+view
+      // if(view == "review")
+      //    filename+= "_"+type.toLowerCase()       
       
       $scope.modalInstance = $modal.open({
-        templateUrl: '/views/teacher/in_class/'+filename+'.html',
-        windowClass: 'whiteboard '+view,
-        controller: view+type+'Ctrl',
+        templateUrl: '/views/teacher/in_class/inclass_display.html',
+        windowClass: 'whiteboard display',
+        controller: 'inclassDisplayCtrl',
         scope: $scope
       });
 

@@ -1,4 +1,5 @@
 <!-- build:css(.tmp/styles) styles/course_editor.css -->
+<link rel="stylesheet" href="styles/content_navigator.css"/>
 <link rel="stylesheet" href="styles/teacher/course_editor.css"/>
 <link rel="stylesheet" href="styles/teacher/course_editor.details.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 <link rel="stylesheet" href="styles/teacher/course_editor.lecture.css" type="text/css" media="screen" />
@@ -10,7 +11,57 @@
 		background-color: white;
 	}
 </style>
-<div class="span3" id="tree" style="z-index:100">
+<span style="position: fixed; z-index: 100;">
+	<div class="navigator-dropdown-button" ng-class="{navigatoropen: tree_toggled}" ng-click="toggleTree()">
+		<div style="display: inline-block; color: white; padding-left: 5px; padding-right: 5px;" ng-hide="open_navigator">
+			<span>
+				{{module_obj[currentmodule].name || 'courses.select_module' | translate}}
+				<!-- <span ng-show="currentmodule">
+				 | 
+				 <a ui-sref="course.progress.main" ng-click="clearCurrent()" ng-show="selected_module" tooltip-placement="bottom" tooltip="Back to main progress page"><small translate>main</small></a>
+			 	</span> -->
+			</span>
+		</div>
+		<div style="display: inline-block; padding-right: 5px;">
+			<div ng-show="tree_toggled" class="icon icon-chevron-up"></div>
+			<div ng-hide="tree_toggled" class="icon icon-chevron-down"></div>
+		</div>
+	</div>
+	<div class="content-navigator-container" ng-class="{containeropen: tree_toggled}">
+		<ul ui-sortable="moduleSortableOptions" ng-model='modules' id="acc1" class="accordion" style="margin-left: 0px !important; margin-right: 0px !important; box-shadow: none;">
+			<li ng-repeat="module in modules" class='module accordion-group' ng-init="module.open = false">
+				<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" ng-class="{moduleopen: currentmodule == module.id}" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" link="createModuleLink(module.id)"/>
+				<div class="outer" collapse="!(module.open || module.id==open_id)">
+					<overlay ng-show="item_overlay" style="height:100%">
+						<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
+					</overlay>
+		        	<div class="inner" id="modules">
+		        		<small><ul ng-show="module.items.length == 0"><li style="color: white; text-align: left; margin-left: 10px; opacity: 0.6;" >{{'groups.empty' | translate}}...</li></ul></small>
+	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
+		            		<li class="last-child item" ng-repeat="item in module.items" ng-class="{inneritemopen: currentitem == item.id}" >
+	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="copy(item)" paste="paste(module.id, $parent.$index)" share="openShareModal(item.id,item.class_name)" link="createItemLink(item)"></item>
+		            		</li>
+		            	</ul>
+			            <center class="item-buttons">
+			            	<hr style="width: 95%; margin: 0 auto; border-top: none !important; border-bottom: 1px solid darkgray !important; margin-bottom: 10px;" />
+			            	<button ng-show="module.items.length" title="{{'Preview'|translate}}" ng-click="impersonate(module.id)" class="btn btn-warning btn-mini" style="float: right; margin-right:10px; margin-bottom: 10px;" tooltip-placement="top" tooltip="Preview as student" tooltip-append-to-body="true" ng-disabled="disable_preview">{{'Preview'|translate}}</button>
+			            	<add-module-items index="$index" lecture="addLecture" quiz="addQuiz"></add-module-items>
+			            	<!-- <button_link title="{{'courses.add_lecture'|translate}}" class="btn btn-mini btn-success adding" style="background-image: initial;" action="addLecture($index)" ></button_link>
+			            	<button_link title="{{'lectures.add_quiz'|translate}}"   class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'quiz')"></button_link>
+			            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'survey')"></button_link> -->
+		                </center>
+		                <br />
+		        	</div>
+		    	</div>
+			</li>
+		</ul>
+		<button ng-show="!module_loading" ng-click="addModule();" class="btn btn-success adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;">
+		+ {{'courses.add_module'|translate}}
+		</button >
+	</div>
+</span>
+
+<!-- <div class="span3" id="tree" style="z-index:100">
 	<div class="menu-toggler" ng-click="toggleTree()" tooltip-placement="right" tooltip="{{'head.content' | translate}}" tooltip-append-to-body="true">
 		<span class="tree-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
 	</div>
@@ -36,9 +87,6 @@
 		            	<hr style="width: 95%; margin: 0 auto; border-top: none !important; border-bottom: 1px solid darkgray !important; margin-bottom: 10px;" />
 		            	<button ng-show="module.items.length" title="{{'Preview'|translate}}" ng-click="impersonate(module.id)" class="btn btn-warning btn-mini" style="float: right; margin-right:10px; margin-bottom: 10px;" tooltip-placement="top" tooltip="Preview as student" tooltip-append-to-body="true" ng-disabled="disable_preview">{{'Preview'|translate}}</button>
 		            	<add-module-items index="$index" lecture="addLecture" quiz="addQuiz"></add-module-items>
-		            	<!-- <button_link title="{{'courses.add_lecture'|translate}}" class="btn btn-mini btn-success adding" style="background-image: initial;" action="addLecture($index)" ></button_link>
-		            	<button_link title="{{'lectures.add_quiz'|translate}}"   class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'quiz')"></button_link>
-		            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'survey')"></button_link> -->
 	                </center>
 	                <br />
 	        	</div>
@@ -48,9 +96,8 @@
 	<button ng-show="!module_loading" ng-click="addModule();" class="btn btn-success adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;">
 	+ {{'courses.add_module'|translate}}
 	</button >
-	<!-- <button_link title="{{'Preview'|translate}}" action="impersonate()" class="preview" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link> -->
 	<hr />
-</div>
+</div> -->
 	<div id="middle"  ui-view="middle">
 	</div>
 <span ng-show="not_module">

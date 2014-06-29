@@ -38,6 +38,10 @@ a {
 
 .item-buttons{border:0px solid #e0e0e0; color:#05b;list-style-type: none;}
 
+#acc1 a{
+	min-width: 77%;
+}
+
 #acc1 a:hover, #acc1 a:focus, #acc1 a:active {border-color:#bcd; text-decoration:none; outline:0 none}
 
 .last-child{list-style-type: none;}
@@ -64,7 +68,7 @@ ul.accordion ul {
 	background: white;
 }
 
-.accordion .inner {margin-bottom:0; position:relative; overflow:hidden; background: darkgrey;}
+.accordion .inner {margin-bottom:0; position:relative; overflow:hidden; background: lightgrey; border-top: 1px solid #e5e5e5;}
 
 .accordion .inner .inner {padding-bottom:0}
 
@@ -78,14 +82,15 @@ ul.accordion ul {
 	background-color: white;
 }
 .accordion-heading:hover, .moduleopen{
-	/*background-color: lightgrey;*/
+	background-color: lightgrey;
 	/*background-color: rgba(0,0,0, 0.5);*/
-	background-color: darkgrey;
+	/*background-color: darkgrey;*/
 }
 .accordion-heading .accordion-toggle{padding:0;}
 
 .accordion-inner{
 	padding:0;
+  	border-top: 1px solid #e5e5e5;
 }
 
 /*.accordion:hover{

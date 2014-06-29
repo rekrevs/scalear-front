@@ -36,10 +36,10 @@ angular.module('scalearAngularApp')
 				$scope.open[id] = true
 			}
 		}
-		$scope.showItem = function(item){
-			$timeout(function(){$state.go('course.progress.lecture', {module_id: item.group_id});});
-			$scope.scrollTo(item);
-		}
+		// $scope.showItem = function(item){
+		// 	$timeout(function(){$state.go('course.progress.lecture', {module_id: item.group_id});});
+		// 	$scope.scrollTo(item);
+		// }
 
 		$scope.scrollTo = function(item) {
 			$scope.selected_item = item.id 
@@ -54,9 +54,9 @@ angular.module('scalearAngularApp')
 	      $anchorScroll();
 	      $timeout(function(){$window.scrollTo($window.scrollX, $window.scrollY-44)})
 	   	}
-	   	$scope.clearCurrent = function(){
-	   		$scope.selected_module = null;
-	   	}
+	   	// $scope.clearCurrent = function(){
+	   	// 	$scope.selected_module = null;
+	   	// }
 
 	   	//modules selector functions
 	   	$scope.initSelector = function(){
@@ -68,12 +68,12 @@ angular.module('scalearAngularApp')
   			$window.scrollTo(0, 0);
 	   		$scope.close_selector = !$scope.close_selector;
 	   	}
-	   	$scope.showModule = function(index){
-	   		console.log('showing module')
-	   		$scope.selected_module = $scope.modules[index]
-	   		$scope.toggleSelector();
-	   		console.log($scope.selected_module)
-   		}
+	   	// $scope.showModule = function(index){
+	   	// 	console.log('showing module')
+	   	// 	$scope.selected_module = $scope.modules[index]
+	   	// 	$scope.toggleSelector();
+	   	// 	console.log($scope.selected_module)
+   		// }
    		$scope.shortenModuleName = function(name){
 			if(name){
 				if(name.length > 18) {

@@ -5,7 +5,7 @@
 .constant("scalear_api", {
   "host": "http://0.0.0.0:3000",
   "redirection_url": "http://0.0.0.0:3000/#/",
-  "version": "2.13.4 (Mon, 23 Jun 2014 20:54:02 GMT)",
+  "version": "2.13.4 (Wed, 25 Jun 2014 12:33:56 GMT)",
   "help_link": "http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf"
 })
 

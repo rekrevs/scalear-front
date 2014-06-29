@@ -47,15 +47,15 @@ angular.module('scalearAngularApp')
  	}
 
  	$scope.toggleTree = function(){
- 		var menu = angular.element('#tree'), value;
- 		if($scope.tree_toggled == false){
-			menu.css('left', '30px')	
- 			console.log('first');
- 		}
- 		else{
-			menu.css('left', '-238px')
- 			console.log('second');
- 		}
+ 		// var menu = angular.element('#tree'), value;
+ 		// if($scope.tree_toggled == false){
+			// menu.css('left', '30px')	
+ 		// 	console.log('first');
+ 		// }
+ 		// else{
+			// menu.css('left', '-238px')
+ 		// 	console.log('second');
+ 		// }
  		$scope.tree_toggled = !$scope.tree_toggled;
 
  	}

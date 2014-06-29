@@ -1,12 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('displayQuizzesCtrl', ['$scope','$stateParams','Module', '$translate', '$controller', '$log', '$window','$timeout', function ($scope,$stateParams, Module, $translate, $controller, $log, $window, $timeout) {
+  .controller('inclassDisplayCtrl', ['$scope','$stateParams','Module', '$translate', '$controller', '$log', '$window','$timeout', function ($scope,$stateParams, Module, $translate, $controller, $log, $window, $timeout) {
     
     $window.scrollTo(0, 0);
     $scope.$on('player ready',function(){
-    	console.log("player ready")
-    	console.log($scope.inclass_player)
+    	// $scope.toggleFullscreen()
     	$scope.nextQuiz()
     })
     // $scope.$watch("inclass_player",function(){

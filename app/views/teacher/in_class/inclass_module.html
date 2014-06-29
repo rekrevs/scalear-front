@@ -6,7 +6,11 @@
 	<br />
 	<!-- <h4 >courses.display_lecture_results</h4> -->
 	<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/>
-	<button_link title="{{'groups.display_inclass' | translate }}"   action="display('Quizzes',!inclass_ready)" class="btn-xlarge btn-success" ng-disabled="!inclass_ready" style="background-image: initial; min-width: 205px;max-width: 220px;"/>
+	<button_link title="{{'groups.display_inclass' | translate }}"   action="display(!inclass_ready)" class="btn-xlarge btn-success" ng-disabled="!inclass_ready" style="background-image: initial; min-width: 205px;max-width: 220px;"/>
+	<!-- <div ng-show="inclass_setting">
+		<button class="btn" ng-click="initialDisplay(!inclass_ready,true)">Fullscreen</button>
+		<button class="btn" ng-click="initialDisplay(!inclass_ready,false)">Windowed</button>
+	</div> -->
 	
 	<!-- <button_link title="{{'courses.display_questions'|translate}}" action="display('Questions',!buttons.questions_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.questions_display_count"/>
 	<button_link title="{{'courses.display_surveys'|translate}}"   action="survey(!buttons.survey_display_count)" class="btn-xlarge btn-primary" ng-disabled="!buttons.survey_display_count"/>

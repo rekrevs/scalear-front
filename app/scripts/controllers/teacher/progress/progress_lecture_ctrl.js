@@ -728,6 +728,25 @@ angular.module('scalearAngularApp')
         }
       }
     },{"disable_in_input" : true});
+
+    shortcut.add("ESC",function(){
+      console.log($scope.selected_item)
+      if($scope.selected_item.type == 'discussion'){
+        console.log("disc")
+        $scope.selected_item.data.forEach(function(discussion){
+          discussion.post.show_feedback = false; 
+          discussion.post.temp_response=null
+        })
+      }else if($scope.selected_item.type == "Free Text Question"){
+        console.log("free text")
+
+        $scope.selected_item.data.answers.forEach(function(answer){
+          answer.show_feedback = false;
+          answer.temp_response = null
+        })
+      }
+      $scope.$apply()
+    },{"disable_in_input" : false});
   }
 
   var removeShortcuts=function(){
@@ -738,6 +757,7 @@ angular.module('scalearAngularApp')
     shortcut.remove("Left");
     shortcut.remove("Space");
     shortcut.remove("m");
+    shortcut.remove("ESC");
   }
 
 	$scope.getKeys = function( obj ) {

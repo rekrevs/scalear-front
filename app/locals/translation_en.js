@@ -361,7 +361,7 @@ var translation_en=function(){
         seek_to_location: "Seek to location",
         mark: "Mark",
         reply: "Reply",
-        download_notes: "Download Notes"
+        download_notes: "Download Notes",
         finish_before_proceeding:"Please finish previous required lectures before proceeding",
       },
       online_quiz:{

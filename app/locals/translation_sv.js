@@ -360,7 +360,7 @@ var translation_sv=function(){
               seek_to_location: "Sök på plats",
               mark: "Markera",
               reply: "Svara",
-              download_notes: "Nedladdning Anmärkningar"
+              download_notes: "Nedladdning Anmärkningar",
               finish_before_proceeding:"Vänligen avsluta tidigare krävs föreläsningar innan du fortsätter",
           },
       online_quiz:{

@@ -194,7 +194,7 @@ angular.module('scalearAngularApp')
 		 	{	
 		 		// scope.$parent.$parent.close_selector = true;
 		 		// scope.$parent.$parent.current_item = item_id
-		 		if(scope.className=="Document")
+		 		if(scope.className=="CustomLink")
 		 			window.open(scope.url_with_protocol(scope.url),'_blank');
 		 		else
 		 		{	

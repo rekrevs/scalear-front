@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'Document', '$stateParams', '$translate','$q','$log', '$filter', function ($scope, $state, Module, Document, $stateParams, $translate, $q, $log, $filter) {      
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$stateParams', '$translate','$q','$log', '$filter', function ($scope, $state, Module, CustomLink, $stateParams, $translate, $q, $log, $filter) {      
         $scope.$parent.not_module = false;
         $scope.$parent.currentmodule = $state.params.module_id
         $scope.$parent.currentitem = -1
@@ -60,7 +60,7 @@ angular.module('scalearAngularApp')
                 var modified_module = angular.copy($scope.module);
                 delete modified_module.id;
                 delete modified_module.items;
-                delete modified_module.documents;
+                delete modified_module.custom_links;
                 delete modified_module.created_at;
                 delete modified_module.updated_at;
                 delete modified_module.total_time;
@@ -118,60 +118,60 @@ angular.module('scalearAngularApp')
                 }
             }
 
-            $scope.addDocument=function(){
+            $scope.addCustomLink=function(){
                 $log.debug($scope.module.id)
-                $scope.document_overlay=true
-                Module.newDocument({course_id:$stateParams.course_id, module_id:$scope.module.id},
+                $scope.link_overlay=true
+                Module.newCustomLink({course_id:$stateParams.course_id, module_id:$scope.module.id},
                     {},
                     function(doc){
                         $log.debug(doc)
-                        doc.document.url = "http://"
-                        $scope.module.documents.push(doc.document)
-                        $scope.document_overlay=false
+                        doc.link.url = "http://"
+                        $scope.module.custom_links.push(doc.link)
+                        $scope.link_overlay=false
                     }, 
                     function(){}
                 );
             }
 
 
-            $scope.removeDocument=function (elem) {
-                $scope.document_overlay=true
-                Document.destroy(
-                    {document_id: elem.id},{},
+            $scope.removeCustomLink=function (elem) {
+                $scope.link_overlay=true
+                CustomLink.destroy(
+                    {link_id: elem.id},{},
                     function(){
-                        $scope.module.documents.splice($scope.module.documents.indexOf(elem), 1)
-                        $scope.document_overlay=false
+                        $scope.module.custom_links.splice($scope.module.custom_links.indexOf(elem), 1)
+                        $scope.link_overlay=false
                     }, 
                     function(){}
                 );
             }
-            $scope.validateName= function(data, elem){
-                var d = $q.defer();
-                var doc={}
-                doc.name=data;
-                Document.validateName(
-                    {document_id: elem.id},
-                    doc,
-                    function(data){
-                        d.resolve()
-                    },function(data){
-                        $log.debug(data.status);
-                        $log.debug(data);
-                    if(data.status==422)
-                        d.resolve(data.data.errors.join());
-                    else
-                        d.reject('Server Error');
-                    }
-                )
-                return d.promise;
-            }
+            // $scope.validateName= function(data, elem){
+            //     var d = $q.defer();
+            //     var doc={}
+            //     doc.name=data;
+            //     CustomLink.validateName(
+            //         {link_id: elem.id},
+            //         doc,
+            //         function(data){
+            //             d.resolve()
+            //         },function(data){
+            //             $log.debug(data.status);
+            //             $log.debug(data);
+            //         if(data.status==422)
+            //             d.resolve(data.data.errors.join());
+            //         else
+            //             d.reject('Server Error');
+            //         }
+            //     )
+            //     return d.promise;
+            // }
                 
-            $scope.validateURL= function(data, elem){
+            $scope.validate= function(data, elem){
                 var d = $q.defer();
                 var doc={}
                 doc.url=data;
-                Document.validateURL(
-                    {document_id: elem.id},
+                CustomLink.validate(
+                    {link_id: elem.id},
                     doc,
                     function(data){
                         d.resolve()
@@ -186,11 +186,11 @@ angular.module('scalearAngularApp')
                 )
                 return d.promise;
             }
-            $scope.updateDocument=function(elem){
+            $scope.updateCustomLink=function(elem){
                 elem.url = $filter("formatURL")(elem.url)
-                Document.update(
-                    {document_id: elem.id},
-                    {"document":{
+                CustomLink.update(
+                    {link_id: elem.id},
+                    {"link":{
                         url: elem.url,
                         name: elem.name
                         }

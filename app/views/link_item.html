@@ -1,0 +1,22 @@
+<div class="link-item-box" ng-class="{'link-item-box-big':!small}">
+	<table style="width: 90%;">
+		<tr>
+			<td style="width: 48px;">
+				<img src="images/link_item.png" height="40px" style="vertical-align: top;" ng-class="{'link_img_small':small}"/>
+			</td>
+			<td>
+				<div>
+					<details-text value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
+				</div>
+				<div>
+					<details-link value="link.url" save="update(link)" validation="validate" elem="link"></details-link>
+				</div>
+			</td>
+			<td>
+				<div style="display: inline-block; position: relative; left: 60%; vertical-align: top;">
+					<delete_button size="small" color='dark' action="remove(link)"></delete_button>
+				</div>
+			</td>
+		</tr>
+	</table>	
+</div>

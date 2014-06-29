@@ -1,17 +1,17 @@
 <div>
-    <overlay ng-show="document_overlay">
+    <overlay ng-show="link_overlay">
       <loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
     </overlay>
     <br />
 
-    <big><b translate>groups.external_document</b></big>
+    <big><b translate>groups.external_link</b></big>
     <br /><br />
-    <document-item ng-repeat="doc in module.documents" document="doc" update="updateDocument" remove="removeDocument" nameval="validateName" urlval="validateURL">
-    </document-item>
-    <loading size="small" show="document_loading" />
+    <link-item ng-repeat="doc in module.custom_links" link="doc" update="updateCustomLink" remove="removeCustomLink" nameval="validateName" urlval="validateURL">
+    </link-item>
+    <loading size="small" show="link_loading" />
     <br />
-    <button ng-click="addDocument()" ng-disabled="document_overlay" class="btn btn-success add-teacher-button" style="background-image: initial; float: right; margin-right: 15px;">
-        <img src="../images/add_document.png" /> {{'groups.add_document' | translate}}
+    <button ng-click="addCustomLink()" ng-disabled="link_overlay" class="btn btn-success add-teacher-button" style="background-image: initial; float: right; margin-right: 15px;">
+        <img src="../images/add_link.png" /> {{'groups.add_link' | translate}}
     </button>
     <br />
   </div>

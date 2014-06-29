@@ -5,15 +5,15 @@
 </style>
 <br />
 <tabset>
-    <tab heading="{{'courses.module_progress'|translate}}" select="moduleProgressTab()" style="cursor:pointer">
-    	<h3 translate>courses.module_progress_charts</h3>
-		<div infinite-scroll='getRemainingModuleProgress()' infinite-scroll-disabled='module_scroll_disable' infinite-scroll-immediate-check='false' style="overflow:auto" ng-if="module_status">
-			<progress_matrix column_names='module_names' students='module_students' status="module_status" action="updateStatus(student_id, module_id, module_status)" show_popover="true"/>
+    <!-- <tab heading="{{'courses.module_progress'|translate}}" select="moduleProgressTab()" style="cursor:pointer"> -->
+    	<!-- <h3 translate>courses.module_progress_charts</h3> -->
+		<div style="overflow:auto" ng-if="module_status">
+			<progress_matrix column_names='module_names' students='module_students' status="module_status" action="updateStatus(student_id, module_id, module_status)" show_popover="true" remaining="getRemainingModuleProgress" scrolldisabled="module_scroll_disable" modstatus="module_status"></progress_matrix>
 		</div>
-		<center><loading size="big" show="loading_modules" /></center>
-    </tab>
-    <tab heading="{{'courses.module_chart'|translate}}" select="totalChartTab()" style="cursor:pointer">
+		<!-- <center><loading size="big" show="loading_modules" /></center> -->
+    <!-- </tab> -->
+    <!-- <tab heading="{{'courses.module_chart'|translate}}" select="totalChartTab()" style="cursor:pointer">
         <center ><loading size="big" show="loading_total_charts" /></center>
         <div  google-chart chart="total_chart" on-ready="loading_total_charts=false" style="overflow:hidden"></div>
-    </tab>
+    </tab> -->
 </tabset>

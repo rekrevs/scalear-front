@@ -11,7 +11,10 @@ angular.module('scalearAngularApp')
 	        solvedCount:"=",
 	        totalLecQuiz:"=",
 	        action:"&",
-	        show_popover:'=showPopover'
+	        show_popover:'=showPopover',
+	        remaining: "=",
+	        scrolldisabled: "=",
+	        modstatus: "="
 	    },
 	    templateUrl:'/views/teacher/progress/progress_matrix.html', 
 	    link:function(scope){
@@ -256,6 +259,17 @@ angular.module('scalearAngularApp')
 		 	}
 		 }
 	};
-}]);
+}]).directive('whenScrolled', function() {
+    return function(scope, elm, attr) {
+        var raw = elm[0];
+        
+        elm.bind('scroll', function() {
+        	console.log('scrolled')
+            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+                scope.$apply(attr.whenScrolled);
+            }
+        });
+    };
+});;
 
 

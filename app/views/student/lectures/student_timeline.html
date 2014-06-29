@@ -1,9 +1,10 @@
 <div>
+<input type="text" ng-model="searchText">
     <div style="overflow:auto; position: absolute; width: 95%;height:79%"> <!-- has all discussions -->      
         <div ng-repeat="l in lectures" class='dimmed' style="min-width: 95%;" ng-class="{lectureopen: l.id == lecture.id}" id={{"outline_"+l.id}}>        
             <h3 class="lecture-heading" ng-click="seek()(null, l.id)" style="cursor:pointer">{{l.name}}</h3>
             <table class="table table-striped" style="border-spacing: 0.2em;">
-                <tbody ng-repeat="item in timeline[l.id].items | filter:filterType">
+                <tbody ng-repeat="item in timeline[l.id].items | filter:filterType | filter:searchText">
                     <tr name="quiz-timeline-item" quiz_timeline ng-if="item.type=='quiz'" item='item' seek='seek()' />
                     <tr name="confused-timeline-item" confused_timeline ng-if="item.type=='confused'" item='item' seek='seek()'/>
                     <tr name="discussion-timeline-item" discussion_timeline ng-if="item.type=='discussion'" item='item' seek='seek()' />

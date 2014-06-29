@@ -377,10 +377,11 @@ angular.module('scalearAngularApp')
     if(question.temp_response && question.temp_response.length && question.temp_response.trim()!=""){
       var survey_id = question.quiz_id,
       answer_id = question.id,
-      response = question.temp_response    
+      response = question.temp_response,
+      course_id = $stateParams.course_id    
 
       Quiz.sendFeedback(
-      {quiz_id: survey_id},
+      {quiz_id: survey_id, course_id: course_id},
       {
         groups:[answer_id],
         response:response
@@ -393,6 +394,29 @@ angular.module('scalearAngularApp')
       )
     }
   }
+
+    $scope.deleteFeedback=function(question){
+    // if(question.temp_response && question.temp_response.length && question.temp_response.trim()!=""){
+      var survey_id = question.quiz_id,
+      answer_id = question.id,
+      response = question.temp_response,
+      course_id = $stateParams.course_id    
+
+      Quiz.sendFeedback(
+      {quiz_id: survey_id, course_id: course_id},
+      {
+        groups:[answer_id],
+        response:response
+      },
+      function(){
+        question.response = angular.copy(question.temp_response)
+        question.temp_response = null
+      },
+      function(){}
+      )
+    // }
+  }
+
 
   $scope.deletePost=function(items, index){    
      var discussion = items[index]

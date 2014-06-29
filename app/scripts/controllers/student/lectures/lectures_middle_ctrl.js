@@ -14,6 +14,19 @@ angular.module('scalearAngularApp')
     $scope.tabs=[true,false,false]
     $scope.editors={}
 
+    $scope.$watch('checkModel.quiz', function(){
+        $scope.scrollIntoView('outline')
+    })
+    $scope.$watch('checkModel.confused', function(){
+        $scope.scrollIntoView('outline')
+    })
+    $scope.$watch('checkModel.discussion', function(){
+        $scope.scrollIntoView('outline')
+    })
+    $scope.$watch('checkModel.note', function(){
+        $scope.scrollIntoView('outline')
+    })
+
     var isiPad=function(){
         var i = 0,
             iOS = false,
@@ -197,6 +210,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek_and_pause=function(time,lecture_id){
+        clearQuiz()
         $scope.seek(time,lecture_id)
         $scope.lecture_player.controls.pause()
         $scope.play_pause_class = "play"
@@ -624,15 +638,18 @@ angular.module('scalearAngularApp')
             //Broswer has blocked it
             alert('Please allow popups for Scalable Learning');
           }
-          var doc = '<html><title>Your Notes</title><link rel="stylesheet" type="text/css" href="styles/" /></head><body>';
+          var doc = '<html><head><title>ScalableLearning - Export Notes</title>'+
+                    '<style>body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}.table {width: 100%;margin-bottom: 20px; margin: 0 auto;background: white;border: 1px solid lightgrey;}.table td {padding: 8px;line-height: 20px;text-align: left;vertical-align: top;border-top: 1px solid #dddddd; border-right: 1px solid #dddddd;}'+
+                    '.table th {font-weight: bold;}.table thead th {vertical-align: bottom;} a{color: green; text-decoration: none;} a:hover{color: darkgreen;}</style>'+
+                    '</head><body>';
           
           console.log(doc);
           for (var i = 0; i < all_module_notes.length; i++) {
-                doc +=('<table border="1" style="width:90%">');
+                doc +=('<table class="table" style="width:90%">');
                 doc +=("<h3>"+all_module_notes[i][0].lecture.name+"</h3>");
                 for (var j = 0; j < all_module_notes[i].length; j++) {  
                     doc +=("<tr>");
-                    doc +=('<td>' + formatTime(all_module_notes[i][j].time) + '</td>');
+                    doc +=('<td>' + $filter('formattime')(all_module_notes[i][j].time, 'hh:mm:ss') + '</td>');
                     doc +=('<td>' + all_module_notes[i][j].data + '</td>');
                     doc +=('<td><a target="_blank" href="' + baseurl+ 'lectures/'+ all_module_notes[i][j].lecture.id+'?time='+all_module_notes[i][j].time+ '">'+  'go to video' +'</a></td>');
                     doc +=("</tr>");
@@ -640,7 +657,7 @@ angular.module('scalearAngularApp')
                 doc +=("</table>");
           };
 
-          doc +=('<a href='+"'"+'data:Application/octet-stream,'+encodeURIComponent(doc)+"'"+ 'Download = "Notes.html">Download Notes</a>');
+          doc +=('<br /><a href='+"'"+'data:Application/octet-stream,'+encodeURIComponent(doc)+"'"+ 'Download = "Notes.html">Download Notes</a>');
           doc +=('</body></html>');
           win.document.write(doc);
           win.document.close();

@@ -40,14 +40,22 @@
 				</span>
 			</div>
 		</div>
-		<div class="main_content">
+		<button class="btn" ng-click="print()" style="float: right;margin-right: 20px;height: 29px;opacity:0.7"><i class="icon-print"></i></button>
+		<div class="main_content" id="printarea">
 			<div ng-if="timeline['module']" ng-init="module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatModuleChartData')">
 				<p class="title"><span translate>courses.module_progress</span> <span style="font-size:12px">(<span translate>courses.based_on_invideo</span>)</span><a ui-sref="course.progress.module({module_id:module.id})" style="font-size:12px;color: white;float: right;cursor: pointer;"><span translate>courses.view_detailed_progress</span>...</a></p>
 				<div google-chart chart="module_chart" class="progress_chart" ></div>
 			</div>
-			<div ng-repeat="module_item in module.items">
+			<div ng-repeat="module_item in module.items" >
 				<div id="{{module_item.quiz_type+'_'+module_item.id}}" ng-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];">
-					<p class="title">{{quiz.meta.name}} <span style="font-size:12px">({{getKeys(quiz.questions).length}} <span translate>questions.questions</span>)<a ng-show="quiz.filtered_user" ng-click="quiz.filtered_user = '';quiz.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;"><span translate>questions.see_all</span></a></span></p>
+					<p class="title">{{quiz.meta.name}} 
+						<span style="font-size:12px">({{getKeys(quiz.questions).length}} 
+							<span translate>questions.questions</span>)
+							<a class="see_all" ng-show="quiz.filtered_user" ng-click="quiz.filtered_user = '';quiz.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;">
+								<span  translate>questions.see_all</span>
+							</a>							
+						</span>
+					</p>
 					<ul class="ul_item inner_content" ng-click="highlight($event,item)" index="{{timeline[module_item.quiz_type][quiz.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items|filter:{data:'!!',type:custom_filter}" >
 						<li ng-if="item.type=='charts'" ng-init="quiz_chart=createChart(item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData')" class="li_inner blue">
 							<inner_title type="{{'lectures.title' | translate}}" title="{{item.data.title+' ('+item.data.type+')'}}"/>
@@ -60,21 +68,23 @@
 							</br>
 							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">								
 								<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" style="padding:8px 10px">
-									<show_box ng-show="module_item.quiz_type == 'survey'"  ng-init="answer.hide = !answer.hide" value="answer.hide" action="updateHideResponse(quiz.meta.id,answer.id,answer.hide)" style="float:right"/>
-								    <span ng-show="!quiz.filtered_user || quiz.filtered_user==''" tooltip="{{'groups.see_related'|translate}}" tooltip-placement="top" style="float:right">|
-								    	<button_link title="{{'lectures.related' | translate}}" action="quiz.filtered_user = answer.user_id;quiz.filter_strict=true" class="btn-mini" style="margin:0 5px" />
-									</span>
-									<span ng-show="module_item.quiz_type == 'survey'" style="float:right">| 
-										<button_link ng-show="!answer.show_feedback" title="{{'lectures.reply'|translate}}" action="answer.show_feedback = true" class="btn btn-mini btn-success" style="margin:0 5px"/>
-										<button_link ng-show="answer.show_feedback" title="{{'lectures.cancel' | translate}}" action="answer.show_feedback = false;answer.temp_response=null" class="btn btn-mini btn-danger" style="margin:0 5px"/>
-									</span>	
-									<span ng-show="module_item.quiz_type == 'quiz'" style="float:right">
-							        	<details-select value="answer.grade" options="grade_options" save="updateGrade(answer)" style="float: right;margin: 1px 10px;"></details-select>
-							        </span>
+									<span class="controls" >
+										<show_box ng-show="module_item.quiz_type == 'survey'"  ng-init="answer.hide = !answer.hide" value="answer.hide" action="updateHideResponse(quiz.meta.id,answer.id,answer.hide)" style="float:right"/>
+									    <span ng-show="!quiz.filtered_user || quiz.filtered_user==''" tooltip="{{'groups.see_related'|translate}}" tooltip-placement="top" style="float:right">|
+									    	<button_link title="{{'lectures.related' | translate}}" action="quiz.filtered_user = answer.user_id;quiz.filter_strict=true" class="btn-mini" style="margin:0 5px" />
+										</span>
+										<span ng-show="module_item.quiz_type == 'survey'" style="float:right">| 
+											<button_link ng-show="!answer.show_feedback" title="{{'lectures.reply'|translate}}" action="answer.show_feedback = true" class="btn btn-mini btn-success" style="margin:0 5px"/>
+											<button_link ng-show="answer.show_feedback" title="{{'lectures.cancel' | translate}}" action="answer.show_feedback = false;answer.temp_response=null" class="btn btn-mini btn-danger" style="margin:0 5px"/>
+										</span>	
+										<span ng-show="module_item.quiz_type == 'quiz'" style="float:right">
+								        	<details-select value="answer.grade" options="grade_options" save="updateGrade(answer)" style="float: right;margin: 1px 10px;"></details-select>
+								        </span>
+								    </span>
 									<p style="width:600px;margin-bottom:0">{{answer.answer}}</p>									
 									<i ng-show="answer.response && !answer.show_feedback" style="padding-left: 30px;color: steelblue">{{answer.response}}</i>
 									<delete_button ng-show="answer.response && !answer.show_feedback" size='small' action='deleteFeedback(answer)'></delete_button>
-									<div ng-show="answer.show_feedback && module_item.quiz_type == 'survey'">
+									<div class="feedback" ng-show="answer.show_feedback && module_item.quiz_type == 'survey'">
 										<textarea ng-model="answer.temp_response"  style="width: 65%;" />
 										<button_link title="{{'courses.send'|translate}}" class="btn-mini send" action="sendFeedback(answer);answer.show_feedback = false" />
 									</div>
@@ -84,7 +94,14 @@
 					</ul>
 				</div>
 				<div id="lecture_{{module_item.id}}" ng-if="module_item.class_name=='lecture'" ng-init='lec=lectures[module_item.id]'>
-					<p class="title">{{lec.meta.name}} <span style="font-size:12px">({{lec.meta.duration|format}}, {{getKeys(lec.charts).length}} <span translate>questions.questions</span>)<a ng-show="lec.filtered_user" ng-click="lec.filtered_user = '';lec.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;"><span translate>questions.see_all</span></a></span></p>
+					<p class="title">{{lec.meta.name}} 
+						<span style="font-size:12px">({{lec.meta.duration|format}}, {{getKeys(lec.charts).length}} 
+							<span translate>questions.questions</span>)
+							<a ng-show="lec.filtered_user" ng-click="lec.filtered_user = '';lec.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;">
+								<span class="see_all" translate>questions.see_all</span>
+							</a>
+						</span>
+					</p>
 					<ul class="ul_item vline inner_content" ng-click="highlight($event, item)" index="{{timeline['lecture'][lec.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline['lecture'][lec.meta.id].items|filter:{data:'!!', type:custom_filter}">
 						<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner blue" >
 							<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{(item.type[0].toUpperCase()+item.type.slice(1)).split('_').join(' ')}}" />
@@ -94,15 +111,17 @@
 							<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'lectures.discussion' | translate}}" />
 							<ul style="padding:5px;padding-left: 40px;color:black;font-weight:normal;font-size: 14px;">
 								<li ng-repeat="discussion in item.data" style="padding:3px 10px">
-									<show_box ng-init="discussion.post.hide = !discussion.post.hide" value="discussion.post.hide" action="updateHideDiscussion(discussion.post.id,discussion.post.hide)" style="float:right"/>
-									<span style="float:right">|
-										<button_link ng-show="!discussion.post.show_feedback" title="{{'lectures.reply'|translate}}" action="discussion.post.show_feedback = true" class="btn-mini btn-success" style="margin:0 5px"/>
-										<button_link ng-show="discussion.post.show_feedback" title="{{'lectures.cancel' | translate}}" action="discussion.post.show_feedback = false; discussion.post.temp_response=null" class="btn btn-mini btn-danger" style="margin:0 5px"/>
+									<span class="controls" >
+										<show_box ng-init="discussion.post.hide = !discussion.post.hide" value="discussion.post.hide" action="updateHideDiscussion(discussion.post.id,discussion.post.hide)" style="float:right"/>
+										<span style="float:right">|
+											<button_link ng-show="!discussion.post.show_feedback" title="{{'lectures.reply'|translate}}" action="discussion.post.show_feedback = true" class="btn-mini btn-success" style="margin:0 5px"/>
+											<button_link ng-show="discussion.post.show_feedback" title="{{'lectures.cancel' | translate}}" action="discussion.post.show_feedback = false; discussion.post.temp_response=null" class="btn btn-mini btn-danger" style="margin:0 5px"/>
+										</span>
+										<span ng-show="discussion.post.flags_count > 0" style="float:right">| 
+											<button_link title="{{'discussion.remove_flags' | translate}}" action="removeFlag(discussion.post)" class="btn btn-mini" style="margin:0 5px"/>|
+											<button_link title="{{'delete' | translate}}" action="deletePost(item.data, $index)" class="btn btn-mini btn-danger" style="margin:0 5px"/>
+										</span>	
 									</span>
-									<span ng-show="discussion.post.flags_count > 0" style="float:right">| 
-										<button_link title="{{'discussion.remove_flags' | translate}}" action="removeFlag(discussion.post)" class="btn btn-mini" style="margin:0 5px"/>|
-										<button_link title="{{'delete' | translate}}" action="deletePost(item.data, $index)" class="btn btn-mini btn-danger" style="margin:0 5px"/>
-									</span>	
 									<p style="width: 79%;">
 										<b>
 											<img ng-show="discussion.post.privacy==1" class="public_img" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}"/>
@@ -123,10 +142,12 @@
 									
 									<ul>
 										<li ng-repeat="comment in discussion.post.comments" style="padding-left: 30px;color: #616161" class="no_highlight">
-											<span ng-show="comment.comment.flags_count > 0" style="float:right">| 
-												<button_link title="Remove Flag" action="removeCommentFlag(comment, discussion.post)" class="btn-mini" style="margin:0 5px"/>|
-												<button_link title="Delete" action="deleteComment(comment, discussion.post)" class="btn btn-mini btn-danger" style="margin:0 5px"/>
-											</span>											
+											<span class="controls">
+												<span ng-show="comment.comment.flags_count > 0" style="float:right">| 
+													<button_link title="Remove Flag" action="removeCommentFlag(comment, discussion.post)" class="btn-mini" style="margin:0 5px"/>|
+													<button_link title="Delete" action="deleteComment(comment, discussion.post)" class="btn btn-mini btn-danger" style="margin:0 5px"/>
+												</span>	
+											</span>										
 											<p>
 												<b>{{comment.comment.screen_name}}:</b>
 												 <span>{{comment.comment.content}}</span>
@@ -139,14 +160,14 @@
 													{{comment.comment.votes_count}}
 												</span>		
 											 	<span ng-show="comment.comment.user_id == current_user.id">|
-													<delete_button  size="small" action="deleteComment(comment, discussion.post)"></delete_button>
+													<delete_button  size="small" color='dark' action="deleteComment(comment, discussion.post)"></delete_button>
 												</span>										
 										 	</p>
 
 											
 										</li>
 									</ul>
-									<div ng-show="discussion.post.show_feedback">
+									<div class="feedback" ng-show="discussion.post.show_feedback">
 										<br>
 										<textarea ng-model="discussion.post.temp_response" placeholder="{{'discussion.write_comment' | translate}}"  style="width: 65%;height:80px; border-radius: 0px;"></textarea>
 										<br />
@@ -162,9 +183,11 @@
 							<show_box  value="item.data.show" action="updateHideQuiz(item.data.id,item.data.show)"/>
 							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
 								<li ng-repeat="answer in item.data.answers|filter:{user_id:lec.filtered_user}:lec.filter_strict" style="padding:3px 10px">
-									<show_box ng-init="answer.hide = !answer.hide" value="answer.hide" action="updateHideResponseOnlineQuiz(answer.online_quiz_id,answer.id,answer.hide)" style="float:right"/>
-									<span ng-show="!lec.filtered_user || lec.filtered_user==''" style="float:right">|
-										<button_link title="{{'lectures.related' | translate}}" action="lec.filtered_user = answer.user_id;lec.filter_strict=true" class="btn-mini" style="margin:0 5px" />
+									<span class="controls">
+										<show_box ng-init="answer.hide = !answer.hide" value="answer.hide" action="updateHideResponseOnlineQuiz(answer.online_quiz_id,answer.id,answer.hide)" style="float:right"/>
+										<span ng-show="!lec.filtered_user || lec.filtered_user==''" style="float:right">|
+											<button_link title="{{'lectures.related' | translate}}" action="lec.filtered_user = answer.user_id;lec.filter_strict=true" class="btn-mini" style="margin:0 5px" />
+										</span>
 									</span>
 									<p style="width:600px">{{answer.online_answer}}</p>
 								</li>

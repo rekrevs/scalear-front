@@ -6,20 +6,15 @@ angular.module('scalearAngularApp')
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('head.content')
- 	$scope.tree_toggled = false, $scope.details_toggled = false, $scope.not_module = false, $scope.currentmodule, $scope.currentitem; 
+ 	$scope.tree_toggled = false 
+ 	$scope.details_toggled = false
+    $scope.not_module = $state.params.lecture_id || $state.params.quiz_id;
+ 	$scope.currentmodule 
+ 	$scope.currentitem; 
+
  	/***********************Functions*******************************/
- 	// $state.$watch('params', function(){
- 		if($state.params.lecture_id || $state.params.quiz_id){
-			$scope.not_module = true;
-		}
-		else{
-			$scope.not_module = false;	
-		}
- 	// })
+
  	var init = function(){
- 		console.log($state.params['module_id'])
- 		console.log($state.params['lecture_id'])
- 		console.log($state.params['quiz_id'])
  		$cookieStore.remove('preview_as_student')
       	$cookieStore.remove('old_user_id')
       	$cookieStore.remove('new_user_id')
@@ -217,25 +212,15 @@ angular.module('scalearAngularApp')
     	$scope.open_id = null
     }
 
-    // $scope.moduleCopy=function(module_id){
-    // 	$scope.module_overlay = true 
-    // 	Module.moduleCopy(
-    // 		{
-    // 			course_id: $stateParams.course_id, 
-    // 		 	module_id: module_id
-    // 		},{},
-    // 		function(data){
-    // 			console.log(data)
-	   //  		$scope.modules.push(data.group)
-	   //  		$scope.module_obj[data.group.id] = data.group
-	   //  		$scope.module_obj[data.group.id].items.forEach(function(item){
-	   //  			$scope.items_obj[item.class_name][item.id] = item
-	   //  		})
-    // 			$scope.module_overlay=false
-    // 		},
-    // 		function(){}
-    // 		)
-    // }
+    $scope.createModuleLink=function(id){
+    	return $state.href('course.courseware.module', {module_id: id}, {absolute: true})
+    }
+
+    $scope.createItemLink=function(item){
+    	var params = {module_id: item.group_id}
+    	params[item.class_name+'_id'] = item.id
+    	return $state.href('course.courseware.module.'+item.class_name, params, {absolute: true})
+    }
 
     $scope.copy=function(item){
     	$rootScope.clipboard = {id:item.id, name:item.name, type:item.class_name||'module', show_msg:true}
@@ -248,7 +233,6 @@ angular.module('scalearAngularApp')
     $scope.paste=function(module_id, module_index){
     	console.log("Dsf")
     	var clipboard = $rootScope.clipboard
-    	// $rootScope.clipboard = null
 
     	if(clipboard.type == 'module')
 	 		pasteModule(clipboard)
@@ -258,7 +242,7 @@ angular.module('scalearAngularApp')
 	 		pasteQuiz(clipboard, module_id, module_index)
     }
 
-   var pasteModule=function(module){
+    var pasteModule=function(module){
    		$scope.module_overlay = true 
     	Module.moduleCopy(
 		{course_id: $stateParams.course_id	},
@@ -313,33 +297,6 @@ angular.module('scalearAngularApp')
     		function(){}
 		)
     }
-
-    // $scope.itemCopy=function(item_id,class_name, module_index){
-    // 	console.log(item_id)    	
-    // 	if(class_name == 'lecture')
-    // 		lectureCopy(item_id,module_index)
-    // 	else
-    // 		quizCopy(item_id, module_index)
-
-    // }
-
-  //   var lectureCopy=function(lecture_id,module_index){
-  //   	$scope.item_overlay = true  
-  //   	Lecture.lectureCopy(
-  //   		{
-  //   			course_id: $stateParams.course_id, 
-  //   			lecture_id: lecture_id
-  //   		},{},
-  //   		function(data){
-  //   			console.log(data)
-  //   			$scope.item_overlay = false 
-  //   			data.lecture.class_name='lecture'
-  //   			$scope.modules[module_index].items.push(data.lecture)
-  //               $scope.items_obj["lecture"][data.lecture.id] = data.lecture
-  //   		}, 
-  //   		function(){}
-		// )
-  //   }
 
     var quizCopy=function(quiz_id,module_index){
     	console.log("quiz copy")

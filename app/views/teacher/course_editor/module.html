@@ -1,13 +1,15 @@
 <div context-menu data-target="menu" opened='menu_status' ng-click='invertOpen()' class="disable_selection" style="font-size: 12px;margin-top: 1px;margin: 1px 0;line-height: 20px;padding: 3px 0;" >
 	<img src='images/move3.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}" />
 	<a class='trigger' ui-sref="course.course_editor.module({ module_id: id })">{{name}}</a>
-	<delete_button size='small' action='remove({event:event})' />
+	<input class="module_link" type="text" ng-show="link_url" ng-model="link_url" ng-blur="link_url=null" />
+	<delete_button size='small' color='dark' action='remove({event:event})' />
 	<div class="menu">
 	  <ul class="dropdown-menu" style="font-size:14px">
 	    <li >
 	      <a ng-click='copyModule($event)' translate>menu.copy</a>
 	      <a ng-show="$parent.$parent.clipboard" ng-click='doPaste($event)' translate>menu.paste</a>
 	      <a ng-click='shareModule($event)' translate>menu.share</a>
+	      <a ng-click='createLink($event)' >Create Link</a>
 	    </li>	    
 	  </ul>
 	</div>

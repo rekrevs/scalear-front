@@ -90,7 +90,10 @@ var translation_en=function(){
         liked_this: "liked this",
         write_comment: "Leave a comment...",
         flag_post: "Flag this post",
-        flag: "Flage",
+        flag: "Flag",
+        unflag: "Unflag",
+        flagged_post: "Flagged post",
+        flagged_comment: "Flagged comment",
         unflag_post: "Unflag this post",
         flags: "Flags",
         likes: "Likes",
@@ -356,6 +359,7 @@ var translation_en=function(){
         seek_to_location: "Seek to location",
         mark: "Mark",
         reply: "Reply",
+        download_notes: "Download Notes"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

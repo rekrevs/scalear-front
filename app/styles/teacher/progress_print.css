@@ -1,19 +1,34 @@
+.feedback{
+	display:none;
+}
+
+show_box{
+	display: none;
+}
+
+ .ng-hide{
+	display: none;
+ }
+
+.controls{
+	display: none;
+}
+
+.btn{
+	display: none;
+}
+
+.delete{
+	display: none;
+}
+
 .chart{
    padding-top:10px;
    padding-bottom:10px;
 }
 
-#labels {
-	width: 25px;
-	display: inline-block;
-	height: 400px;
-	position: relative;
-	top: 20px;
-	bottom: 0px;
-	background-color: rgb(242,242,242);
-	margin-top: 20px;
-	vertical-align: top;
-	float:left;
+.see_all{
+	display: none
 }
 
 .inverted {
@@ -24,39 +39,6 @@
 	transform: rotate(-90deg);
 	color: #0088CC;
 	font-size: 10px;
-}
-
-#first_label {
-	margin-bottom: 120px;
-	width: 100px;
-	right: 38px;
-	position: relative;
-	bottom: -40px;
-	}
-
-#second_label {
-	margin-bottom: 120px;
-	bottom: 0px;
-	position: relative;
-	width: 100px;
-	right: 38px;
-}
-
-#third_label {
-	width: 100px;
-	display: inline-block;
-	margin-bottom: 120px;
-	position: relative;
-	margin-right: 10px;
-	right: 38px;
-	bottom: 40px;
-}
-
-#fourth_label {
-	bottom: 80px;
-	width: 150px;
-	right: 63px;
-	position: relative;
 }
 
 ul {margin:0;}
@@ -163,100 +145,10 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	text-align: left;
 }
 
-.time_estimate{
-	width: 26.4%;
-	/*background: #222;*/
-	border: 2px solid rgb(0, 162, 86) !important;
-	/*color: white;*/
-	color: black;
-	padding:5px;
-	text-align:center;
-	position:fixed; 
-	/*top: 400px; remove this line*/
-	left:30px;
-	margin-top: 290px;
-}
-
-.time_estimate a{
-	color:orange;
-	float:right;
-	cursor:pointer;
-	position: absolute;
-	right: 5px;
-}
-
 .main_content{
 	overflow-y:auto; 
 	height:100%; 
 	width:100%;
 	/*margin-left:20px;*/
 	background:white
-}
-.video-showroom{
-	/*min-width: 300px;*/
-	width: 27%;
-	position: fixed;
-	left: 30px;
-	display: inline-block;
-	float: left;
-}
-.video-container-styling{
-	width: 100%;
-	height: 282px;
-}
-.filter-bar{
-	width: 68%; 
-	display: block; 
-	/*margin-left:28%; */
-	/*position: fixed;*/
-	text-align: left;
-	height: 30px;
-	float: left;
-}
-.shortcuts{
-	text-align: left;
-	position: fixed;
-	border: 1px solid gray;
-	/*padding: 5px;*/
-	margin-top:370px;
-	opacity: 0.7;
-	font-size: 10px;
-	width:27.4%
-}
-
-@media (max-width: 1024px) {
-	.shortcuts{
-		display:none;
-	}
-	.time_estimate{
-		width: 26%;
-		/*top: 45px;*/
-		margin-top: 45px;
-		left: 67%;
-		position: absolute;
-		background:white;
-	}
-	.whole-right-container{
-		width: 97%;
-		clear: both;
-		display: block;
-		margin-left: 0px;
-		position: relative;
-		top: 20px;
-
-	}
-	.video-showroom{
-		width: 90%;
-		clear: both;
-		position: relative;
-		display: block;
-	}
-	.video-container-styling{
-		height: auto;
-	}
-	.filter-bar{
-		width: 90%; 
-		display: inline-block; 
-		position: relative;
-	}
 }

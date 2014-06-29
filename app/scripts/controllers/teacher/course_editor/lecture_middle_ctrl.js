@@ -9,9 +9,9 @@ angular.module('scalearAngularApp')
         $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
         $scope.$emit('accordianUpdate',$scope.lecture.group_id);
     	$scope.$parent.currentmodule = $scope.lecture.group_id
-
       }
     })	
+
     $scope.resize={}
     $scope.container_layer={}
     $scope.quiz_layer={}
@@ -469,6 +469,10 @@ angular.module('scalearAngularApp')
 			clearQuizVariables()
 		}
 		$scope.deleteQuiz(quiz)
+	}
+
+	$scope.createVideoLink=function(){
+		return $state.href('course.courseware.module.lecture', {module_id:$scope.lecture.group_id, lecture_id: $scope.lecture.id, time:$scope.lecture_player.controls.getTime()}, {absolute: true})
 	}
 
 }]);

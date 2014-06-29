@@ -1,12 +1,16 @@
 <!-- build:css(.tmp/styles) styles/student_lecture.css -->
 <link rel="stylesheet" href="styles/student/student_lecture.css"/>
 <!-- endbuild -->
-<div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="alert">
+<!-- <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="alert">
 	 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
 	 <p ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message| date:'h:mma'}}</b></p>
-</div>
+</div> -->
 <div  ng-hide="!lecture">
-	<h3 style="margin-bottom: 10px; padding-top: 8px; line-height: 10px;" ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name"></h3>
+	<h3 style="margin-bottom: 10px; padding-top: 8px; line-height: 10px; display: inline-block;" ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name"></h3>- 
+	<div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" style="display: inline-block; font-size: 12px;">
+		 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
+		 <p ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message| date:'h:mma'}}</b></p>
+	</div>
 	<div style="width: 100%; height: 100%;">
 		<div id="main-video-container" ng-style="container_style">
 			<form name="answer_form" novalidate style="margin:0" >
@@ -43,58 +47,21 @@
 			    </video_container>
 			</form>
 		</div>
-		<div id="student-accordion" style="height: 33vw;">
+		<div id="student-accordion" style="position: absolute;">
 			<!-- <question_block ng-show="show_question_block" time="current_question_time" action="saveQuestion" /> -->
-		    <tabset style="width:100%;">
-		        <tab id="video_events" active="tabs[0]" heading="{{'lectures.video_events' | translate}}" select="scrollIntoView('outline')" style="cursor: pointer; text-align: center;" >
-	        		<table>
-	        			<tr class="filterbuttons">
-	        				<td style="width: 40%;">
-	        					<div class="btn-group align-center" data-toggle="buttons">
-							        <label id="quiz_checkbox" class="btn btn-checkbox">
-							            <input type="checkbox" ng-model="checkModel.quiz"> {{'quiz' | translate}}
-							        </label>
-							        <label id="confused_checkbox"class="btn btn-checkbox">
-							            <input type="checkbox" ng-model="checkModel.confused"> {{'lectures.confused' | translate}}
-							        </label>
-							        <label id="discussion_checkbox" class="btn btn-checkbox">
-							            <input type="checkbox" ng-model="checkModel.discussion"> {{'lectures.discussion' | translate}}
-							        </label>
-							         <label id="notes_checkbox" class="btn btn-checkbox">
-							            <input type="checkbox" ng-model="checkModel.note"> {{'lectures.video_notes' | translate}}
-							        </label>
-							    </div>
-							    <button class="btn btn-success btn-mini" style="float: right; margin-right: 4px; height: 28px;" ng-click="scrollIntoView('outline')" translate>
-							    	lectures.current_lecture
-							    </button>
-							    <!-- <a class="btn btn-primary" target="_blank" ng-href="{{url}}" ng-mousedown="exportNotes()"> Download Notes </a> -->
-							    <!-- <button class="btn btn-success" ui-sref="course.courseware.module.export_notes" target="_blank"> Download Notes </button> -->
-							    <button class="btn btn-success" ng-click="exportNotes()"> Download Notes </button>
-
-	        				</td>
-	        			</tr>
-	        			<tr>
-	        				<td>
+		    <!-- <tabset style="width:100%;"> -->
+		        <!-- <tab id="video_events" active="tabs[0]" heading="{{'lectures.video_events' | translate}}" select="scrollIntoView('outline')" style="cursor: pointer; text-align: center;" > -->
+		        <div style="width: 100%;">
+	        		<!-- <table> -->
+	        				<!-- <td> -->
 	        					<!-- <button ng-click="addNote()" >Add Note</button> -->
 	        				<student_timeline timeline="timeline['lecture']" lectures="module_lectures" current="lecture" seek="seek_and_pause">
 	        				</student_timeline>
-	        				</td>
-	        			</tr>
-        			</table>
-		        </tab>
-<!-- 		        <tab id="video_notes" active="tabs[1]" heading="{{'lectures.video_notes' | translate}}" select="scrollIntoView('notes',true)" style="cursor: pointer;">
-		            <div>
-					    <button class="btn btn-primary" ng-click="saveNote()" ng-disabled="disableSaveNote()" >{{'save' | translate}}</button>
-					    <div style="overflow:auto;"> 
-					        <div  ng-repeat="l in module_lectures" class="dimmed" ng-class="{lectureopen: l.id == lecture.id}" id={{"notes_"+l.id}}>
-					            <h3>{{l.name}}</h3>
-					            {{l}}
-					            <div  id="editor_{{l.id}}" style="width: 100%;" ace-editor sync="sync.enabled" player="lecture_player" lecture="l" editors="editors" seek="seek"></div>
-					        </div>
-					    </div>
-					</div>
-		        </tab> -->
-		        <tab ng-show="lecture.description || (lecture.slides && lecture.slides != 'none')" id="lecture-details" active="tabs[2]" heading="{{'lectures.lecture_details' | translate}}" style="cursor: pointer;">
+	        				<timeline-filters options="checkModel"></timeline-filters>
+	        				<!-- </td> -->
+        			<!-- </table> -->
+		        <!-- </tab> -->
+		        <!-- <tab ng-show="lecture.description || (lecture.slides && lecture.slides != 'none')" id="lecture-details" active="tabs[2]" heading="{{'lectures.lecture_details' | translate}}" style="cursor: pointer;">
 		            <li>
 		            {{'lectures.description' | translate}}
 		            	<ul>
@@ -107,8 +74,9 @@
 		            		<a href="{{lecture.slides | formatURL}}">{{lecture.slides | formatURL}}</a>
 		            	</ul>
 		            </li>
-		        </tab>
-		    </tabset>
+		        </tab> -->
+		        </div>
+		    <!-- </tabset> -->
 	    </div>
     </div>
 </div>

@@ -26,6 +26,7 @@ angular.module('scalearAngularApp')
     }
 
 
+
     var initVariables=function(){
         console.log("ionit variavle")
         $scope.studentAnswers = {}
@@ -42,6 +43,9 @@ angular.module('scalearAngularApp')
         $scope.video_class = 'video_class'
         $scope.play_pause_class = 'play'
         $scope.container_style={float: 'left'}
+        
+
+        
         if(!isiPad()){
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
                 if(!screenfull.isFullscreen){
@@ -139,6 +143,15 @@ angular.module('scalearAngularApp')
         })
 
         $scope.video_ready=true
+        var time = $location.search();
+        
+        if(time){
+            console.log('time aho');
+            console.log(time);
+            //goToLecture(lecture_id)
+            $scope.seek(parseInt(time.time));
+        }
+
     }
 
     $scope.scrollIntoView=function(tab, fast){
@@ -576,10 +589,71 @@ angular.module('scalearAngularApp')
     //     )
     // }
 
+    $scope.exportNotes = function(){
+        Lecture.exportNotes({ lecture_id:$state.params.lecture_id},function(n){
+          var notes = angular.fromJson(n);
+          var temp;
+          var all_module_notes= [];
+          //console.log(notes);
+          for (var i = 0; i < notes.notes.length; i++) {
+            if(notes.notes[i].length>2)
+            {
+                // console.log(i);
+                // console.log(angular.fromJson(notes.notes[i]));
+                temp = angular.fromJson(notes.notes[i])
+                // for (var j = 0; j < temp.length; j++) {
+                //     console.log(temp.length);
+                // }
+                all_module_notes.push(temp);
+            }
+          }
+          console.log(all_module_notes);
+          $scope.Notes = all_module_notes;
+
+          var url = document.URL;
+          var baseurl = url.split('lectures')[0];
+          console.log(baseurl);
+
+
+          var win = window.open('', '_blank');
+          //win.document.open();
+          if(win){ 
+            win.focus();
+          }
+          else{
+            //Broswer has blocked it
+            alert('Please allow popups for Scalable Learning');
+          }
+          var doc = '<html><title>Your Notes</title><link rel="stylesheet" type="text/css" href="styles/" /></head><body>';
+          
+          console.log(doc);
+          for (var i = 0; i < all_module_notes.length; i++) {
+                doc +=('<table border="1" style="width:90%">');
+                doc +=("<h3>"+all_module_notes[i][0].lecture.name+"</h3>");
+                for (var j = 0; j < all_module_notes[i].length; j++) {  
+                    doc +=("<tr>");
+                    doc +=('<td>' + formatTime(all_module_notes[i][j].time) + '</td>');
+                    doc +=('<td>' + all_module_notes[i][j].data + '</td>');
+                    doc +=('<td><a target="_blank" href="' + baseurl+ 'lectures/'+ all_module_notes[i][j].lecture.id+'?time='+all_module_notes[i][j].time+ '">'+  'go to video' +'</a></td>');
+                    doc +=("</tr>");
+                }
+                doc +=("</table>");
+          };
+
+          doc +=('<a href='+"'"+'data:Application/octet-stream,'+encodeURIComponent(doc)+"'"+ 'Download = "Notes.html">Download Notes</a>');
+          doc +=('</body></html>');
+          win.document.write(doc);
+          win.document.close();
+
+        },function(){
+
+        })
+    }
+
     $scope.$on('note_updated',function(){
         if(!$scope.quiz_mode)
             $scope.lecture_player.controls.play();
     })
-    init();
 
+    init();
 }]);

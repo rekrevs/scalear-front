@@ -50,7 +50,22 @@ angular.module('scalearAngularApp', [
     'highcharts-ng',
     'config',
     'chieffancypants.loadingBar',
-    'anguFixedHeaderTable'
+    'anguFixedHeaderTable',
+    'mm.foundation.accordion',
+    'mm.foundation.alert',
+    'mm.foundation.bindHtml',
+    'mm.foundation.buttons',
+    'mm.foundation.dropdownToggle',
+    'mm.foundation.modal',
+    'mm.foundation.offcanvas',
+    'mm.foundation.popover',
+    'mm.foundation.position',
+    'mm.foundation.progressbar',
+    'mm.foundation.tabs',
+    'mm.foundation.tooltip',
+    'mm.foundation.tour',
+    'mm.foundation.transition',
+    'mm.foundation.typeahead'
     // 'ngAnimate'
 ])
     .constant('headers', {

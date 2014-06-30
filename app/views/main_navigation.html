@@ -4,7 +4,7 @@
 	      <li class="name">
 	        <h1>
 				<a href="/#">
-					Scalable<span style="padding-left:0px; color:black;">Learning</span>
+					Scalable<span style="padding-left:0px; color:orange;">Learning</span>
 				</a>
 			</h1>
 	      </li>
@@ -54,11 +54,9 @@
 				<li has-dropdown>
 					<a href="">Notifications</a>
 					<ul top-bar-dropdown>
-						<li><label>New Courses</label></li>
-						<li ><a href="">Added to course</a></li>
-						<li class="divider"></li>
-						<li><label>Shared Items</label></li>
-						<li><a ui-sref="new_course">Shared some data</a></li>
+						<li><label>Notifications</label></li>
+						<li ng-show="user.invitations == 0 && user.shared == 0" class="disabled"><a>{{'notification.empty' | translate}}</a></li>
+                        <notification-item ng-repeat="(id, invitation) in user.invitation_items" notification="invitation" id="id"></notification-item>
 					</ul>
 				</li>
 				<li class="divider"></li>

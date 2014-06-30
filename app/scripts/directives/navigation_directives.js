@@ -1,6 +1,27 @@
 'use strict';
 
 angular.module('scalearAngularApp')
+	.directive('mainNavigation', ['Course', function(Course){
+		return {
+			replace: true,
+			restrict: "E",
+			transclude: "true",
+			scope:{
+			  user: '=',
+			  logout: '='
+			},
+			templateUrl: "/views/main_navigation.html",
+			link: function (scope, element) {
+			  Course.index({},
+			    function(data){
+			      scope.courses = data
+			      console.log(scope.courses)
+			    },
+			    function(){}
+			  )
+			}
+		};
+	 }])
 	.directive('teacherNavigation', ['ErrorHandler', '$rootScope', function(ErrorHandler, $rootScope) {
            return{
 			replace:true,

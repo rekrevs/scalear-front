@@ -1,0 +1,148 @@
+<div class="fixed">
+	<top-bar>
+	    <ul class="title-area">
+	      <li class="name">
+	        <h1>
+				<a href="/#">
+					Scalable<span style="padding-left:0px; color:black;">Learning</span>
+				</a>
+			</h1>
+	      </li>
+	      <li toggle-top-bar class="menu-icon"><a href="">Menu</a></li>
+	    </ul>
+	    <top-bar-section ng-switch="user.roles[0].id">
+	      <!-- Right Nav Section -->
+	      	<!-- STUDENT -->
+	      	<ul ng-switch-when="2" class="right">
+				<li class="divider"></li>
+				<li><a href="#">Dashboard</a></li>
+				<li class="divider"></li>
+				<li has-dropdown>
+					<a href="">Courses</a>
+					<ul top-bar-dropdown>
+						<li><label>Current Courses</label></li>
+						<li ng-repeat="course in courses"><a href="">{{course.short_name+' | '+course.name}}</a></li>
+						<li class="divider"></li>
+						<li><label>Other</label></li>
+						<li><a ng-click="open()">Join a Course</a></li>
+						<li><a href="">See all &rarr;</a></li>
+					</ul>
+				</li>
+				<li class="divider"></li>
+				<li has-dropdown>
+					<a href="">Account</a>
+					<ul top-bar-dropdown>
+						<li><a href="">Settings</a></li>
+						<li><a ng-click="logout()">Logout {{user.name}}</a></li>
+					</ul>
+				</li>
+				<li has-dropdown>
+					<a href="">Help</a>
+					<ul top-bar-dropdown>
+						<li><a href="">Getting Started</a></li>
+						<li class="divider"></li>
+						<li><a href="">Privacy</a></li>
+						<li><a href="">Feedback</a></li>
+					</ul>
+				</li>
+			</ul>
+			<!-- TEACHER -->
+			<ul ng-switch-when="1" class="right">
+				<li class="divider"></li>
+				<li><a href="#">Dashboard</a></li>
+				<li class="divider"></li>
+				<li has-dropdown>
+					<a href="">Notifications</a>
+					<ul top-bar-dropdown>
+						<li><label>New Courses</label></li>
+						<li ><a href="">Added to course</a></li>
+						<li class="divider"></li>
+						<li><label>Shared Items</label></li>
+						<li><a ui-sref="new_course">Shared some data</a></li>
+					</ul>
+				</li>
+				<li class="divider"></li>
+				<li has-dropdown>
+					<a href="">Courses</a>
+					<ul top-bar-dropdown>
+						<li><label>Current Courses</label></li>
+						<li ng-repeat="course in courses"><a href="">{{course.short_name+' | '+course.name}}</a></li>
+						<li class="divider"></li>
+						<li><label>Other</label></li>
+						<li><a ui-sref="new_course">Create a New Course</a></li>
+						<li><a href="">See all &rarr;</a></li>
+					</ul>
+				</li>
+				<li class="divider"></li>
+				<li has-dropdown>
+					<a href="">Account</a>
+					<ul top-bar-dropdown>
+						<li><a href="">Settings</a></li>
+						<li><a ng-click="logout()">Logout {{user.name}}</a></li>
+					</ul>
+				</li>
+				<li has-dropdown>
+					<a href="">Help</a>
+					<ul top-bar-dropdown>
+						<li><a href="">Getting Started</a></li>
+						<li><a href="">Teacher Forum</a></li>
+						<li><a href="">Instruction Manual</a></li>
+						<li class="divider"></li>
+						<li><a href="">Privacy</a></li>
+						<li><a href="">Feedback</a></li>
+					</ul>
+				</li>
+			</ul>
+			<!-- ADMIN -->
+			<ul ng-switch-when="5" class="right">
+				<li class="divider"></li>
+				<li><a ui-sref="statistics">Statistics</a></li>
+				<li class="divider"></li>
+				<li has-dropdown>
+					<a href="">Notifications</a>
+					<ul top-bar-dropdown>
+						<li><label>Current Courses</label></li>
+						<li ng-repeat="course in courses"><a href="">{{course.short_name+' | '+course.name}}</a></li>
+						<li class="divider"></li>
+						<li><label>Other</label></li>
+						<li><a ui-sref="new_course">Create a New Course</a></li>
+						<li><a href="">See all &rarr;</a></li>
+					</ul>
+				</li>
+				<li class="divider"></li>
+				<li><a href="">Dashboard</a></li>
+				<li class="divider"></li>
+				<li has-dropdown>
+					<a href="">Courses</a>
+					<ul top-bar-dropdown>
+						<li><label>Current Courses</label></li>
+						<li ng-repeat="course in courses"><a href="">{{course.short_name+' | '+course.name}}</a></li>
+						<li class="divider"></li>
+						<li><label>Other</label></li>
+						<li><a ui-sref="new_course">Create a New Course</a></li>
+						<li><a href="">See all &rarr;</a></li>
+					</ul>
+				</li>
+				<li class="divider"></li>
+				<li has-dropdown>
+					<a href="">Account</a>
+					<ul top-bar-dropdown>
+						<li><a href="">Settings</a></li>
+						<li><a ng-click="logout()">Logout {{user.name}}</a></li>
+					</ul>
+				</li>
+				<li has-dropdown>
+					<a href="">Help</a>
+					<ul top-bar-dropdown>
+						<li><a href="">Getting Started</a></li>
+						<li><a href="">Teacher Forum</a></li>
+						<li><a href="">Instruction Manual</a></li>
+						<li class="divider"></li>
+						<li><a href="">Privacy</a></li>
+						<li><a href="">Feedback</a></li>
+					</ul>
+				</li>
+			</ul>
+	    </top-bar-section>
+	</top-bar>
+</div>

@@ -65,7 +65,8 @@ angular.module('scalearAngularApp', [
     'mm.foundation.tooltip',
     'mm.foundation.tour',
     'mm.foundation.transition',
-    'mm.foundation.typeahead'
+    'mm.foundation.typeahead',
+    'mm.foundation.topbar'
     // 'ngAnimate'
 ])
     .constant('headers', {

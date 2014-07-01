@@ -21,8 +21,9 @@
 					<a href="">Courses</a>
 					<ul top-bar-dropdown>
 						<li><label>Current Courses</label></li>
-						<li ng-repeat="course in courses">
+						<li ng-repeat="course in courses | filter:{ended: false}">
 							<a class="has-description" href="" ui-sref="course.student_calendar({ course_id: course.id })">
+								
 								{{course.short_name}}
 								<h5 class="description"><small>{{course.name}}</small></h5>
 							</a>
@@ -80,18 +81,33 @@
 					<a href="">Courses</a>
 					<ul top-bar-dropdown>
 						<li><label>Current Courses</label></li>
-						<li ng-repeat="course in courses"><a href="">{{course.short_name+' | '+course.name}}</a></li>
+						<li ng-repeat="course in courses | filter:{ended: false}">
+							<a class="has-description" ui-sref="course.edit_course_information({ course_id: course.id })">
+								{{course.short_name}}
+								<h5 class="description"><small>{{course.name}}</small></h5>
+							</a>
+						</li>
 						<li class="divider"></li>
 						<li><label>Other</label></li>
 						<li><a ui-sref="new_course">Create a New Course</a></li>
-						<li><a href="">See all &rarr;</a></li>
+						<li>
+							<a class="has-description" ui-sref="course_list">
+								See all &rarr;
+								<h5 class="description"><small>View your whole course list</small></h5>
+							</a>
+						</li>
 					</ul>
 				</li>
 				<li class="divider"></li>
 				<li has-dropdown>
 					<a href="">Account</a>
 					<ul top-bar-dropdown>
-						<li><a href="">Settings</a></li>
+						<li>
+							<a class="has-description" href="" ui-sref="edit_account">
+								Settings
+								<h5 class="description"><small>Modify your account information/settings</small></h5>
+							</a>
+						</li>
 						<li><a ng-click="logout()">Logout {{user.name}}</a></li>
 					</ul>
 				</li>
@@ -116,7 +132,7 @@
 					<a href="">Notifications</a>
 					<ul top-bar-dropdown>
 						<li><label>Current Courses</label></li>
-						<li ng-repeat="course in courses"><a href="">{{course.short_name+' | '+course.name}}</a></li>
+						<li ng-repeat="course in courses  | filter:{ended: false}"><a href="">{{course.short_name+' | '+course.name}}</a></li>
 						<li class="divider"></li>
 						<li><label>Other</label></li>
 						<li><a ui-sref="new_course">Create a New Course</a></li>
@@ -141,7 +157,12 @@
 				<li has-dropdown>
 					<a href="">Account</a>
 					<ul top-bar-dropdown>
-						<li><a href="">Settings</a></li>
+						<li>
+							<a class="has-description" href="" ui-sref="edit_account">
+								Settings
+								<h5 class="description"><small>Modify your account information/settings</small></h5>
+							</a>
+						</li>
 						<li><a ng-click="logout()">Logout {{user.name}}</a></li>
 					</ul>
 				</li>

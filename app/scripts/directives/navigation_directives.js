@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['Course', function(Course){
+	.directive('mainNavigation', ['Course', '$filter', function(Course, $filter){
 		return {
 			replace: true,
 			restrict: "E",
@@ -12,13 +12,18 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: "/views/main_navigation.html",
 			link: function (scope, element) {
-			  Course.index({},
-			    function(data){
-			      scope.courses = data
-			      console.log(scope.courses)
-			    },
-			    function(){}
-			  )
+				scope.today = new Date();
+				Course.index({},
+					function(data){
+						scope.courses = data
+				  		console.log(scope.courses)
+					},
+					function(){}
+				);
+
+				scope.getEndDate = function(start_date, duration){
+					return start_date.setDate(start_date.getDate()+(duration * 7));
+				}
 			}
 		};
 	 }])
@@ -31,7 +36,7 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: "/views/sub_navigation.html",
 			link: function(scope, element){
-				
+
 			}
 		}
 	})
@@ -39,52 +44,17 @@ angular.module('scalearAngularApp')
            return{
 			replace:true,
 			restrict: "E",
-			templateUrl: '/views/teacher_navigation.html',
+			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){				
-				$rootScope.$watch('current_user', function(){
-					if($rootScope.current_user && $rootScope.current_user.roles){
-						scope.role = $rootScope.current_user.roles[0].id;
-						scope.arenotification = $rootScope.current_user.roles[0].id!=2 && ($rootScope.current_user.invitations || $rootScope.current_user.shared);
-						scope.areshared =  $rootScope.current_user.roles[0].id!=2 && $rootScope.current_user.accepted_shared;
-					}	
-				});
-				scope.toggleNotifications = function(){
-					scope.show_notifications = !scope.show_notifications;
-					scope.show_settings = false;
-				}
-				scope.toggleSettings = function(){
-					scope.show_notifications = false;
-					scope.show_settings = !scope.show_settings;
-				}
-				scope.settingsOpened = function(which){
-					scope.selected=which;
-					scope.$emit('settingsOpened', [which]);
-				}
-
-				scope.$on('mainMenuToggled', function(event, collapsed){
-					scope.show_settings = false;
-				})
-				scope.course_information_state=function(){
-					return scope.current_state.includes('course.edit_course_information') ||
-					scope.current_state.includes('course.enrolled_students') ||
-					scope.current_state.includes('course.teachers') ||
-					scope.current_state.includes('course.send_emails');
-				};
 			}
 		};
  }]).directive('studentNavigation', ['ErrorHandler',function(ErrorHandler) {
            return{
 			replace:true,
 			restrict: "E",
-			templateUrl: '/views/student_navigation.html',
+			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){
-				scope.settingsOpened = function(which){
-					scope.selected=which;
-					scope.$emit('settingsOpened', [which]);
-				}
-				scope.$on('mainMenuToggled', function(event, collapsed){
-					scope.show_settings = false;
-				})
+				
 			}
 		};
  }]).directive('userNavigation', ['ErrorHandler','$rootScope', 'User', 'Home',function(ErrorHandler,$rootScope, User, Home) {

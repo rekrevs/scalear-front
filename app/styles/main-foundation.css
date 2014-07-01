@@ -23,7 +23,7 @@
 }
 .has-description{
 	height: 45px !important; 
-	/*line-height: 45px !important; */
+	line-height: 30px !important; 
 }
 .sub-header-component:hover{
 	background-color: #207d99 !important;

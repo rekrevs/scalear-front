@@ -1,7 +1,10 @@
 <li>
 	<a>
-		<span translate="notification.invited" translate-values='{ course: notification.course_name, user:notification.user_name, role:notification.role}'></span> 
-		<button class="tiny success" style="background-image: initial;" ng-click="accept()" translate="notification.accept"></button>
-		<button class="tiny alert" style="background-image: initial;" ng-click="reject()" translate="notification.reject"></button>
+		<div style="width: 100%;" translate="notification.invited" translate-values='{ course: notification.course_name, user:notification.user_name, role:notification.role}'></div> 
+		<div style="text-align: right;">
+			<button class="tiny success" ng-click="accept()" translate="notification.accept"></button>
+			<button class="tiny alert" ng-click="reject()" translate="notification.reject"></button>
+		</div>
 	</a>
 </li>
+<li class="divider"></li>

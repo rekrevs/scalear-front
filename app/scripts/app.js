@@ -467,6 +467,11 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/in_class/display_quizzes.html',
                 controller: 'displayQuizzesCtrl'
             })
+            .state('/Dashboard', {
+                url: '/dashboard',
+                templateUrl: 'views/Dashboard.html',
+                controller: 'DashboardCtrl'
+            })
             .state('student_courses', {
                 url: '/student_courses',
                 templateUrl: '/views/student/course_list/course_list.html',

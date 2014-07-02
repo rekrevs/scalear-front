@@ -51,6 +51,7 @@ angular.module('scalearAngularApp')
  }]).directive('studentNavigation', ['ErrorHandler',function(ErrorHandler) {
            return{
 			replace:true,
+			transclude: true,
 			restrict: "E",
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){

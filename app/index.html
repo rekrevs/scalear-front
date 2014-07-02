@@ -104,7 +104,7 @@
                 <!-- <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course' && current != 'courses.statistics')" role="current_user.roles[0].id" /></span> -->
                 <!-- <span ui-view="navigation" iscollapsed="iscollapsed"></span> -->
                 <!-- <sub-navigation></sub-navigation> -->
-                <teacher-navigation ng-if="current_user.roles[0].id == 1"></teacher-navigation>
+                <teacher-navigation ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5"></teacher-navigation>
                 <student-navigation ng-if="current_user.roles[0].id == 2"></student-navigation>
                 <div class="row">
                     <div ui-view=""></div>
@@ -170,7 +170,7 @@
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
 
-    <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
+    <!-- <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/accordion/accordion.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/collapse/collapse.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/transition/transition.js"></script>
@@ -181,7 +181,7 @@
     <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
-    <script src="bower_components/angular-ui-bootstrap/src/popover/popover.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/popover/popover.js"></script> -->
 
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>

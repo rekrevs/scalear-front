@@ -38,9 +38,9 @@
 			<accordion>
 				<accordion-group ng-repeat="module in modules | orderBy: 'position'">
 						<accordion-heading>
-							<div ng-click="showModuleInclass(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
+							<a ng-click="showModuleInclass(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
 								{{module.name}}
-							</div>
+							</a>
 						</accordion-heading>
 				</accordion-group>
 			</accordion>
@@ -49,12 +49,12 @@
 			<accordion>
 				<accordion-group ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 					<accordion-heading>
-						<div ui-sref="course.progress.lecture({module_id:module.id})" ng-click="showModuleProgress($index)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
+						<a ui-sref="course.progress.lecture({module_id:module.id})" ng-click="showModuleProgress($index)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
 							{{module.name}}
-						</div>
+						</a>
 					</accordion-heading>
 					<ul ng-click="showItemProgress(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items | orderBy: 'position'">
-						{{item.name}}
+						<a>{{item.name}}</a>
 					</ul>
 				</accordion-group>
 			</accordion>

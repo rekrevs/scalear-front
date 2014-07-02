@@ -1,22 +1,27 @@
-<div class="top-bar sub-header">
-    <ul class="title-area">
-        <li class="name">
-          <h1><a class="sub-header-component active">Content Navigator</a></h1>
-        </li>
-         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-    </ul>
-
-      <section class="top-bar-section">
-        <!-- Right Nav Section -->
-        <ul class="right">
-          <li class="has-dropdown">
-            <a class="sub-header-component active" href="">Settings</a>
-            <ul class="dropdown">
-              <li><a class="sub-header-component" href="">Show Notes</a></li>
-              <li><a class="sub-header-component" href="">Show Questions</a></li>
-              <li><a class="sub-header-component" href="">Show Quizzes</a></li>
-            </ul>
+<div>
+  <top-bar class="sub-header">
+  <!-- <div class="top-bar sub-header"> -->
+      <ul class="title-area">
+          <li class="name">
+            <h1><a class="sub-header-component active">Content Navigator</a></h1>
           </li>
-        </ul>
-      </section>
+           <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
+           <li toggle-top-bar class="menu-icon"><a href="">SUB-MENU</a></li>
+      </ul>
+
+        <top-bar-section>
+          <!-- Right Nav Section -->
+          <ul class="right">
+            <li has-dropdown>
+              <a class="sub-header-component active" href="">Settings</a>
+              <ul top-bar-dropdown>
+                <li><a class="sub-header-component" href="">Show Notes</a></li>
+                <li><a class="sub-header-component" href="">Show Questions</a></li>
+                <li><a class="sub-header-component" href="">Show Quizzes</a></li>
+              </ul>
+            </li>
+          </ul>
+        </top-bar-section>
+  <!-- </div> -->
+  </top-bar>
 </div>

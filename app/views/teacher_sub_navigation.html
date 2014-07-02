@@ -1,17 +1,20 @@
-<div class="top-bar sub-header">
-    <ul class="title-area">
+<div>
+  <top-bar class="sub-header">
+<!-- <div class="top-bar sub-header"> -->
+    <!-- <ul class="title-area">
         <li class="name">
           <h1><a class="sub-header-component active">Content Navigator</a></h1>
         </li>
-         <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
-    </ul>
+         <li toggle-top-bar class="menu-icon"><a href="">SUB-MENU</a></li>
+    </ul> -->
 
-      <section class="top-bar-section">
+        <top-bar-section>
+      <!-- <section class="top-bar-section"> -->
         <!-- Right Nav Section -->
         <ul class="right">
-          <li class="has-dropdown">
+          <li has-dropdown>
             <a class="sub-header-component active" href="">Settings</a>
-            <ul class="dropdown">
+            <ul top-bar-dropdown>
               <li><a class="sub-header-component" href="">First link in dropdown</a></li>
             </ul>
           </li>
@@ -19,9 +22,9 @@
 
         <!-- Left Nav Section -->
         <ul class="left">
-            <li class="has-dropdown">
-                <a class="sub-header-component green">Progress</a>
-                <ul class="dropdown">
+            <li has-dropdown>
+                <a class="sub-header-component green">Content Navigator</a>
+                <ul top-bar-dropdown>
                     <li>
                         <a class="sub-header-component has-description green" ui-sref="course.progress.main">
                             Review Module Progress
@@ -32,10 +35,23 @@
                     <li><a class="sub-header-component green" ui-sref="course.progress.main">All Students Progress</a></li>
                 </ul>
             </li>
-            <li><a class="sub-header-component green" href="#">In-Class</a></li>
-            <li class="has-dropdown">
-                <a class="sub-header-component green" href="#">Content</a>
-                <ul class="dropdown">
+            <li has-dropdown>
+                <a class="sub-header-component green">Progress</a>
+                <ul top-bar-dropdown>
+                    <li>
+                        <a class="sub-header-component has-description green" ui-sref="course.progress.main">
+                            Review Module Progress
+                            <h5 class="description"><small>Choose in-class Review Material</small></h5>
+                        </a>
+                        
+                    </li>
+                    <li><a class="sub-header-component green" ui-sref="course.progress.main">All Students Progress</a></li>
+                </ul>
+            </li>
+            <li><a class="sub-header-component green" ui-sref="course.inclass">In-Class</a></li>
+            <li has-dropdown>
+                <a class="sub-header-component green" ui-sref="course.course_editor">Content</a>
+                <ul top-bar-dropdown>
                     <li>
                         <a class="sub-header-component has-description green" href="">
                             New Module
@@ -72,5 +88,8 @@
                 </ul>
             </li>
         </ul>
-      </section>
+      <!-- </section> -->
+      </top-bar-section>
+<!-- </div> -->
+</top-bar>
 </div>

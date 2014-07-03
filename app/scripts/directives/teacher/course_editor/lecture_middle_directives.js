@@ -208,11 +208,14 @@ angular.module('scalearAngularApp')
 	return {
 		 replace:true,
 		 restrict: 'E',
-		 template: "<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
-		 				"<div class='input-prepend'>"+
-		 					"<span class='add-on'>{{data.pos}}</span>"+
-		 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required  tooltip='{{!data.answer?require_translated:\"\"}}'/>"+
+		 template: "<div>"+
+		 				"<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
+		 					"<div class='input-prepend'>"+
+			 					"<span class='add-on'>{{data.pos}}</span>"+
+			 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required  tooltip='{{!data.answer?require_translated:\"\"}}'/>"+
+		 					"</div>"+
 	 					"</div>"+
+	 					"<b class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >{{data.answer}}</b>"+
  					"</div>",
 
 		link: function(scope, element, attrs) {
@@ -227,6 +230,8 @@ angular.module('scalearAngularApp')
 				scope.height = scope.data.height* (ontop.height());
 				scope.xcoor = (scope.data.xcoor * ontop.width())
 				scope.ycoor = (scope.data.ycoor * (ontop.height()))
+				scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
+				scope.sub_ycoor = (scope.data.sub_ycoor * (ontop.height()))
 				scope.area_width= scope.width - 50
 				scope.area_height= scope.height - 20
 				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
@@ -234,14 +239,20 @@ angular.module('scalearAngularApp')
 
 			scope.calculatePosition=function(){
 				var ontop=angular.element('.ontop');
-				scope.data.xcoor= parseFloat(element.position().left)/ontop.width();
-				scope.data.ycoor= parseFloat(element.position().top)/(ontop.height() );
+				var main = angular.element(element.children()[0])
+				var sub = angular.element(element.children()[1])
+				scope.data.xcoor= parseFloat(main.position().left)/ontop.width();
+				scope.data.ycoor= parseFloat(main.position().top)/ ontop.height();
+				scope.data.sub_xcoor= parseFloat(sub.position().left)/ontop.width();
+				scope.data.sub_ycoor= parseFloat(sub.position().top)/ ontop.height();
+				console.log(scope.data)
 				scope.calculateSize()
 			}
 			scope.calculateSize=function(){
 				var ontop=angular.element('.ontop');
-				scope.data.width= element.width()/ontop.width();
-				scope.data.height= element.height()/(ontop.height());
+				var main = angular.element(element.children()[0])
+				scope.data.width= main.width()/ontop.width();
+				scope.data.height= main.height()/(ontop.height());
 			}			
 			//==========//	
 			

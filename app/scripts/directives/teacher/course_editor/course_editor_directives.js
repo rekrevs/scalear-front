@@ -236,4 +236,74 @@ angular.module('scalearAngularApp')
                 }
             }
         }
-    });
+    }).directive('onlineModal', ['$modal', function($modal){
+        return{
+            restrict: 'A',
+            replace: true,
+            link: function(scope, element){
+                scope.openOnlineContentModal = function () {
+                    console.log('hello')
+                    // angular.element('.btn').blur()
+                    var modalInstance = $modal.open({
+                        templateUrl: '/views/teacher/course_editor/online_content_modal.html',
+                        controller: "courseEditorCtrl",
+                    })
+
+                    modalInstance.result.then(function (content_type) {
+                    //   console.log($scope.course)
+                      // $rootScope.show_alert="success"; 
+                      // ErrorHandler.showMessage($translate('controller_msg.enrolled_in', {course: $scope.course.name}), 'errorMessage', 2000);
+                      // $timeout(function(){
+                      //  $rootScope.show_alert=""; 
+                      // },5000);
+                        
+                      // init();
+                      console.log(content_type)
+
+                    },
+                    function () {
+                        
+                    })
+                }
+                scope.dismissModal = function(){
+                    console.log('closing')
+                    $modal.close();
+                }
+            }
+        }
+    }]).directive('questionsModal', ['$modal', function($modal){
+        return{
+            restrict: 'A',
+            replace: true,
+            link: function(scope, element){
+                scope.openQuestionsModal = function () {
+                    console.log('hello')
+                    // angular.element('.btn').blur()
+                    var modalInstance = $modal.open({
+                        templateUrl: '/views/teacher/course_editor/question_types_modal.html',
+                        controller: "courseEditorCtrl",
+                    })
+
+                    modalInstance.result.then(function (content_type) {
+                    //   console.log($scope.course)
+                      // $rootScope.show_alert="success"; 
+                      // ErrorHandler.showMessage($translate('controller_msg.enrolled_in', {course: $scope.course.name}), 'errorMessage', 2000);
+                      // $timeout(function(){
+                      //  $rootScope.show_alert=""; 
+                      // },5000);
+                        
+                      // init();
+                      console.log(content_type)
+
+                    },
+                    function () {
+                        
+                    })
+                }
+                scope.dismissModal = function(){
+                    console.log('closing')
+                    $modal.close();
+                }
+            }
+        }
+    }]);

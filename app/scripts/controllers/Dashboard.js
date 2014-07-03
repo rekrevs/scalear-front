@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-        .controller('DashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', '$window', 'Page', '$filter', '$timeout', function($scope, $state, $stateParams, Dashboard, $window, Page, $filter, $timeout) {
+        .controller('DashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout) {
                 $window.scrollTo(0, 0);
                 Page.setTitle('head.calendar');
                 var change_lang = function() {
@@ -30,14 +30,12 @@ angular.module('scalearAngularApp')
                             }
                         };
                         $scope.calendar = data;
-                        console.log(data);
 
-                        var allAnnouncements = [];
-                        allAnnouncements = allAnnouncements.concat.apply(allAnnouncements, JSON.parse(data.announcements));
+                        // var allAnnouncements = [];
+                        // allAnnouncements = allAnnouncements.concat.apply(allAnnouncements, JSON.parse(data.announcements));
+                        //$scope.announcements = JSON.parse(data.announcements);
+                        //console.log($scope.announcements);
 
-                        $scope.announcements = allAnnouncements;
-
-                        console.log($scope.announcements);
                         data.events.forEach(function(event) {
                             if (event.firstItem) {
                                 $scope.filtered_events.push(event)
@@ -47,7 +45,10 @@ angular.module('scalearAngularApp')
                         for (var element in $scope.calendar.events) {
                             //console.log(new Date($scope.calendar.events[element].start))
                             $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
-                            $scope.calendar.events[element].title += $scope.calendar.events[element].courseName + ' @' + $filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
+                            $scope.calendar.events[element].title += ' @' + $filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
+                            var fullTitle = $scope.calendar.events[element].courseName.name + $scope.calendar.events[element].title ;
+                            $scope.calendar.events[element].title = fullTitle;
+                            
                             if ($scope.calendar.events[element].quizId)
                                 $scope.calendar.events[element].url = $state.href("course.courseware.module.quiz", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId, quiz_id: $scope.calendar.events[element].quizId})
                             else if ($scope.calendar.events[element].lectureId)
@@ -70,11 +71,32 @@ angular.module('scalearAngularApp')
                         })
                     },
                             function() {
-                            }
-                    )
+                            })
+                }
+
+                var getFeed = function(){
+                    NewsFeed.index({}, function(data){
+                    $scope.events = []
+                    $scope.latest_events = data.latest_events
+                    $scope.latest_announcements = data.latest_announcements
+                    $scope.latest_events.forEach(function(event){
+                      event.timestamp = event.appearance_time;
+                      $scope.events.push(event);
+                    })
+                    $scope.latest_announcements.forEach(function(announcement){
+                      announcement.timestamp = announcement.updated_at;
+                      $scope.events.push(announcement);
+                    })
+                    // $scope.coming_up = data.coming_up
+                    console.log('got these')
+                    console.log($scope.events)
+                  }, function(){
+                    console.log('Couldn\'t get the data');
+                  })
                 }
 
                 $scope.$watch("current_lang", change_lang);
-                init()
+                getFeed();
+                init();
 
             }]);

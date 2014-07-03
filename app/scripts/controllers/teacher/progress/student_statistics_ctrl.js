@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentStatisticsCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log', function ($scope, $stateParams, $timeout, Module, $translate, $log){
+  .controller('studentStatisticsCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log','$window', function ($scope, $stateParams, $timeout, Module, $translate, $log, $window){
   		
 		$scope.statistics_player={}
 		$scope.statistics_player.events={}
@@ -22,9 +22,23 @@ angular.module('scalearAngularApp')
 	            },
 	    		function(data){
 	    			$log.debug(data)
+	    			console.log("student statistics")
+	    			console.log(data)
 	    			$scope.statistics = data
     			 	$scope.lecture_url =($scope.statistics.lecture_url == "none") ? "" : $scope.statistics.lecture_url
 	    			$scope.loading_statistics_chart=false
+	    			var win = angular.element($window)
+					$scope.win_width = (90.5*win.width())/100
+					console.log(win.width())
+	    			console.log($scope.win_width)
+	    			console.log($scope.statistics.width)
+	    			var scale = $scope.win_width/$scope.statistics.width
+	    			$scope.statistics.lecture_names.forEach(function(name){
+	    				console.log(name[0])
+			    		name[0] = (name[0]* scale)
+	    				console.log(name[0])
+	    				console.log("-------")
+			    	})
 	    			$scope.$watch("current_lang", redrawChart);
 	    		},
 	    		function(){}
@@ -36,7 +50,7 @@ angular.module('scalearAngularApp')
 	    }
 
 	    var getChartWidth=function(){
-	    	return $scope.statistics.width+85
+	    	return $scope.win_width//$scope.statistics.width+85
 	    	// var width = 0
 	    	// $scope.statistics.lecture_names.forEach(function(name){
 	    	// 	width+= name[0]
@@ -78,7 +92,7 @@ angular.module('scalearAngularApp')
 	            "isStacked": "true",
 	            "fill": 20,
 	            "height": 100,
-	            "width": getChartWidth(),
+	            // "width": getChartWidth(),
 	            "displayExactValues": true,
 	            "fontSize" : 12,
 	           // "chartArea":{"width":"95%"},

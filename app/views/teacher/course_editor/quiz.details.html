@@ -12,7 +12,7 @@
 					<details-text value="quiz.name" save="updateQuiz()" validate="validateQuiz" column="name"></details-text>
   				</td>
 			</tr>
-			<tr ng-if="quiz.quiz_type=='quiz'">
+			<tr >
 				<td style="border-right: 1px solid lightgrey;"><span translate>courses.required</span>:</td>
 				<td>
 					<details-check checked="quiz.required" save="updateQuiz()" yes="{{'lectures.quiz_required'|translate}}" no="{{'lectures.quiz_not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="required"></details-check> <br />

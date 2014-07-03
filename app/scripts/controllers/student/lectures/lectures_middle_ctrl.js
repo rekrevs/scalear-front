@@ -86,19 +86,26 @@ angular.module('scalearAngularApp')
             if(isiPad()){
                 angular.element('#lecture_video')[0].scrollIntoView()
             }
-
+            $scope.should_play = true
             $scope.lecture = null
 
             $timeout(function(){
-                $scope.should_play = true
-                $scope.timeline['lecture'][id].meta.requirements.lectures.forEach(function(required_id){
-                    if(!$scope.timeline['lecture'][required_id].meta.is_done){
-                        $scope.should_play = false
-                        return
-                    }
-                })
-                console.log("should play")
-                console.log($scope.should_play)
+                // $scope.should_play = true
+                // for(var item in $scope.timeline['lecture'][id].meta.requirements){
+                //     for(var id in $scope.timeline['lecture'][id].meta.requirements[item]){
+                //         var group_index= util.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+                //         var item_index= util.getIndexById($scope.course.groups[group_index][item], $scope.timeline['lecture'][id].meta.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                //         if(item_index!=-1 && group_index!=-1)
+                //             if(!$scope.course.groups[group_index][item][item_index].is_done)
+                //                 $scope.should_play = false
+                //     }
+                // }
+                // $scope.timeline['lecture'][id].meta.requirements.lectures.forEach(function(required_id){
+                //     if(!$scope.timeline['lecture'][required_id].meta.is_done){
+                //         $scope.should_play = false
+                //         return
+                //     }
+                // })
                 $scope.lecture = $scope.timeline['lecture'][id].meta
                 Page.setTitle('head.lectures',': '+$scope.lecture.name); 
             })
@@ -117,6 +124,17 @@ angular.module('scalearAngularApp')
                 console.log(data)
                 $scope.alert_messages = data.alert_messages;
                 $scope.next_item = data.next_item
+                var lec = data.lecture
+                
+                for(var item in lec.requirements){
+                    for(var id in lec.requirements[item]){
+                        var group_index= util.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+                        var item_index= util.getIndexById($scope.course.groups[group_index][item], lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                        if(item_index!=-1 && group_index!=-1)
+                            if(!$scope.course.groups[group_index][item][item_index].is_done)
+                                $scope.should_play = false
+                    }
+                }
             })
         }
     }

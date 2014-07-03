@@ -8,7 +8,8 @@ angular.module('scalearAngularApp')
 			transclude: "true",
 			scope:{
 			  user: '=',
-			  logout: '='
+			  logout: '=',
+			  changelanguage: '='
 			},
 			templateUrl: "/views/main_navigation.html",
 			link: function (scope, element) {

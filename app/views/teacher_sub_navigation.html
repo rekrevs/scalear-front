@@ -13,7 +13,7 @@
         <!-- Right Nav Section -->
         <ul class="right">
           <li has-dropdown>
-            <a class="sub-header-component active" href="">Settings</a>
+            <a class="sub-header-component active" href="" translate>settings.settings</a>
             <ul top-bar-dropdown>
               <li><a class="sub-header-component" href="">First link in dropdown</a></li>
             </ul>
@@ -23,31 +23,31 @@
         <!-- Left Nav Section -->
         <ul class="left">
             <li has-dropdown>
-                <a class="sub-header-component green">Progress</a>
+                <a class="sub-header-component green" translate>head.progress</a>
                 <ul top-bar-dropdown>
                     <li>
                         <a class="sub-header-component has-description green" ui-sref="course.progress.main">
-                            Review Module Progress
-                            <h5 class="description"><small>Choose in-class Review Material</small></h5>
+                            {{'review_module_progress' | translate}}
+                            <h5 class="description"><small translate>choose_inclass_material</small></h5>
                         </a>
                         
                     </li>
-                    <li><a class="sub-header-component green" ui-sref="course.progress.main">All Students Progress</a></li>
+                    <li><a class="sub-header-component green" ui-sref="course.progress.main" translate>all_students_progress</a></li>
                 </ul>
             </li>
-            <li><a class="sub-header-component green" ui-sref="course.inclass">In-Class</a></li>
+            <li><a class="sub-header-component green" ui-sref="course.inclass" translate>head.in_class</a></li>
             <li has-dropdown>
-                <a class="sub-header-component green" ui-sref="course.course_editor">Content</a>
+                <a class="sub-header-component green" ui-sref="course.course_editor" translate>head.content</a>
                 <ul top-bar-dropdown>
                     <li>
                         <a class="sub-header-component has-description green" href="">
-                            New Module
-                            <h5 class="description"><small>Modules group items together</small></h5>
+                            {{'groups.new_module' | translate}}
+                            <h5 class="description"><small translate>modules_group_items</small></h5>
                         </a>
                     </li>
                     <li>
                         <a online-modal ng-click="openOnlineContentModal()" class="sub-header-component has-description green" href="">
-                            New Online Content
+                            {{'new_online_content' | translate}}
                             <h5 class="description"><small>Video lecture, Quiz...</small></h5>
                         </a>
                     </li>
@@ -60,22 +60,22 @@
                     <li class="divider"></li>
                     <li>
                         <a class="sub-header-component has-description green" href="">
-                            Copy
-                            <h5 class="description"><small>Copies the selected item</small></h5>
+                            {{'menu.copy' | translate}}
+                            <h5 class="description"><small translate>copy_describtion</small></h5>
                         </a>
                     </li>
-                    <li><a class="sub-header-component green" href="">Paste</a></li>
+                    <li><a class="sub-header-component green" href="" translate>menu.paste</a></li>
                     <li>
                         <a class="sub-header-component has-description green" href="">
-                            Share Copy
-                            <h5 class="description"><small>Share a copy with a teacher</small></h5>
+                            {{'menu.share_copy' | translate}}
+                            <h5 class="description"><small translate>share_describtion</small></h5>
                         </a>
                     </li>
                     <li class="divider"></li>
                     <li>
                         <a class="sub-header-component has-description green" href="">
-                            Preview as Student
-                            <h5 class="description"><small>Preview a module as a student</small></h5>
+                            {{'preview_student' | translate}}
+                            <h5 class="description"><small translate>preview_describtion</small></h5>
                         </a>
                     </li>
                 </ul>

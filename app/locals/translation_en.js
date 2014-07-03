@@ -51,6 +51,8 @@ var translation_en=function(){
       thank_you_answer: "Thank you for your answer",
       whats_new: "What's New",
       return: "Return",
+      preview_student: "Preview as Student",
+      preview_describtion: "Preview a module as a student",
       preview_as_student: "Currently previewing as a student",
       menu: 'Menu',
       dashboard: "Dashboard",
@@ -58,6 +60,11 @@ var translation_en=function(){
       account: "Account",
       settings_describtion: "Modify your account information/settings",
       view_whole_courselist: "View your whole course list",
+      review_module_progress: "Review Module Progress",
+      choose_inclass_material: "Choose in-class Review Material",
+      all_students_progress: "All Students Progress",
+      modules_group_items: "Modules group items together",
+      new_online_content: "New Online Content",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -115,6 +122,9 @@ var translation_en=function(){
         copy:"Copy",
         paste: "Paste",
         share: "Share",
+        share_copy: "Share a Copy",
+        copy_describtion: "Copies the selected item",
+        share_describtion: "Share a copy with a teacher"
       },
       sharing:{
         nothing_selected: "Nothing is selected",
@@ -901,6 +911,11 @@ var translation_en=function(){
       feedback: "Feedback",
       teacher_forum: "Teacher Forum",
       instruction_manual: "Instruction Manual"
+    },
+    course_settings:{
+      show_notes: "Show Notes",
+      show_questions: "Show Questions",
+      show_quizzes: "Show Quizzes"
     }
 
 

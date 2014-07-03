@@ -50,6 +50,8 @@ var translation_sv=function(){
       thank_you_answer: "Tack för ditt svar",
       whats_new: "Vad är nytt",
       return: "Avkastning",
+      preview_student: "Preview som Student",
+      preview_describtion: "Förhandsgranska en modul som student",
       preview_as_student: "För närvarande förhandsgranska som student",
       menu: "meny",
       dashboard: "Instrumentbräda",
@@ -57,6 +59,11 @@ var translation_sv=function(){
       account: "Account",
       settings_describtion: "Ändra dina konto information/inställningar",
       view_whole_courselist: "Se hela din kurslista",
+      review_module_progress: "Översyn av modul Progress",
+      choose_inclass_material: "Välj in-class Recension Material",
+      all_students_progress: "Alla studenter Progress",
+      modules_group_items: "Moduler gruppera objekt tillsammans",
+      new_online_content: "Ny Online Innehåll",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -127,7 +134,10 @@ var translation_sv=function(){
           menu:{
             copy:"Kopiera",
             paste: "Klistra in",
-            share: "Dela"
+            share: "Dela",
+            share_copy: "Dela en Kopia",
+            copy_describtion: "Kopierar det markerade objektet",
+            share_describtion: "Dela en kopia med en lärare"
           },
           settings:{
             settings: "Inställningar",
@@ -524,7 +534,7 @@ var translation_sv=function(){
               back: "Tillbaka",
               pauses: "Pauser",
               questions: "Frågor",
-              statistics: "statistik",
+              statistics: "Statistik",
               lecture_quizzes: "Föreläsnings-Quiz-frågor",
               lecture_statistics: "Föreläsningsstatistik",
               surveys: "Enkäter",
@@ -906,6 +916,11 @@ var translation_sv=function(){
           feedback: "Respons",
           teacher_forum: "Lärar Forum",
           instruction_manual: "Bruksanvisning"
+        },
+        course_settings:{
+          show_notes: "Visa Anteckningar",
+          show_questions: "Visa Frågor",
+          show_quizzes: "Visa Språktest"
         }
      
     }

@@ -51,6 +51,12 @@ var translation_sv=function(){
       whats_new: "Vad är nytt",
       return: "Avkastning",
       preview_as_student: "För närvarande förhandsgranska som student",
+      menu: "meny",
+      dashboard: "Instrumentbräda",
+      other: "Annat",
+      account: "Account",
+      settings_describtion: "Ändra dina konto information/inställningar",
+      view_whole_courselist: "Se hela din kurslista",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -64,6 +70,7 @@ var translation_sv=function(){
               notifications: "Anmälningar",
               notification: "Anmälan",
               admin: "Admin",
+              current_courses: "Aktuella kurser"
           },
       head:{
               progress: "Framsteg",
@@ -123,6 +130,7 @@ var translation_sv=function(){
             share: "Dela"
           },
           settings:{
+            settings: "Inställningar",
             lectures: "Föredrag Inställningar"
           },
       footer:{
@@ -892,6 +900,12 @@ var translation_sv=function(){
         announcements:
         {
           empty: 'Det finns för närvarande inga meddelanden för denna kurs. Börja med att lägga till ett nytt meddelande.'
+        },
+        help:{
+          getting_started: "Komma igång",
+          feedback: "Respons",
+          teacher_forum: "Lärar Forum",
+          instruction_manual: "Bruksanvisning"
         }
      
     }

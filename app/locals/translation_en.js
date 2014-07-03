@@ -52,6 +52,12 @@ var translation_en=function(){
       whats_new: "What's New",
       return: "Return",
       preview_as_student: "Currently previewing as a student",
+      menu: 'Menu',
+      dashboard: "Dashboard",
+      other: "Other",
+      account: "Account",
+      settings_describtion: "Modify your account information/settings",
+      view_whole_courselist: "View your whole course list",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -65,6 +71,7 @@ var translation_en=function(){
         notifications: "Notifications",
         notification: "Notification",
         admin: "Admin",
+        current_courses: "Current Courses"
       },
       head:{
         progress: "Progress",
@@ -122,6 +129,7 @@ var translation_en=function(){
         destination: "Destination"
       },
       settings:{
+        settings: "Settings",
         lectures: "Lectures Settings"
       },
       footer:{
@@ -887,6 +895,12 @@ var translation_en=function(){
     announcements:
     {
       empty: 'There are currently no announcements for this course. Begin by adding a new announcement.'
+    },
+    help:{
+      getting_started: "Getting Started",
+      feedback: "Feedback",
+      teacher_forum: "Teacher Forum",
+      instruction_manual: "Instruction Manual"
     }
 
 

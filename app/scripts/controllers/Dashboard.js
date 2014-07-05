@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
                     }
                 }
 
+                var cal_ics_obj;
                 var init = function() {
                     $scope.eventSources = [];
                     $scope.filtered_events = []
@@ -30,7 +31,6 @@ angular.module('scalearAngularApp')
                             }
                         };
                         $scope.calendar = data;
-
                         // var allAnnouncements = [];
                         // allAnnouncements = allAnnouncements.concat.apply(allAnnouncements, JSON.parse(data.announcements));
                         //$scope.announcements = JSON.parse(data.announcements);
@@ -41,12 +41,13 @@ angular.module('scalearAngularApp')
                                 $scope.filtered_events.push(event)
                             }
                         })
-                        $scope.calendar.events = $scope.filtered_events
+                        $scope.calendar.events = $scope.filtered_events;
+                        cal_ics_obj = $scope.filtered_events;
                         for (var element in $scope.calendar.events) {
                             //console.log(new Date($scope.calendar.events[element].start))
                             $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
                             $scope.calendar.events[element].title += ' @' + $filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
-                            var fullTitle = $scope.calendar.events[element].courseName.name + $scope.calendar.events[element].title ;
+                            var fullTitle = $scope.calendar.events[element].courseName.name +" : "+ $scope.calendar.events[element].title ;
                             $scope.calendar.events[element].title = fullTitle;
                             
                             if ($scope.calendar.events[element].quizId)
@@ -95,8 +96,67 @@ angular.module('scalearAngularApp')
                   })
                 }
 
+            $scope.cal_export = function() {
+                var ics_file = "BEGIN:VCALENDAR\n";
+                ics_file += "VERSION:2.0\n";
+
+                console.log(cal_ics_obj);
+
+
+                for (var element in cal_ics_obj) {
+                    ics_file += "BEGIN:VEVENT\n";
+                    ics_file += "CLASS:PUBLIC\n";
+
+                    var fullTitle = cal_ics_obj[element].title ;
+                    fullTitle = fullTitle.split('due')[0];
+                    ics_file += "DESCRIPTION:"+"Scalable Learning => "+fullTitle+"\n";
+
+                    var d = new Date(cal_ics_obj[element].start);
+                    var str = $.datepicker.formatDate('yymmdd'+"T", d);
+                    ics_file += "DTSTART:"+ str+"T"+"000000"+"\n";
+                    
+                    // ics_file += "Due:"+str+"000000\n"
+                    
+                    ics_file += "SUMMARY;LANGUAGE=en-us:"+fullTitle+"\n"
+                    
+                    ics_file += "TRANSP:TRANSPARENT\n"
+                    ics_file += "END:VEVENT\n"
+                }
+
+                ics_file += "END:VCALENDAR";
+
+                var win = window.open('', '_blank');
+                //win.document.open();
+                if(win){ 
+                  win.focus();
+                }
+                else{
+                //Broswer has blocked it
+                  alert('Please allow popups for Scalable Learning');
+                }
+                var doc = '<script>';
+                doc +=  "function fireEvent(obj,evt){\n";
+                doc +=  "var fireOnThis = obj;\n";
+                doc +=  "if( document.createEvent ) {\n";
+                doc +=  "var evObj = document.createEvent('MouseEvents');\n";
+                doc +=  "evObj.initEvent( evt, true, false );\n";
+                doc +=  "fireOnThis.dispatchEvent(evObj);\n";
+                doc +=  "} else if( document.createEventObject ) {\n";
+                doc +=  "fireOnThis.fireEvent('on'+evt);\n";
+                doc +=  "}\n}";
+                doc += '</script>'
+
+                doc +=('<a id="download" href='+"'"+'data:Application/ics,'+encodeURIComponent(ics_file)+"'"+ 'Download = "calendar.ics">download</a>');
+                
+                doc += "<script> fireEvent(document.getElementById('download'),'click')</script>";
+                win.document.write(doc);
+                win.document.close();
+                win.close();
+            }
+
                 $scope.$watch("current_lang", change_lang);
                 getFeed();
                 init();
+                // prepare_cal_export();
 
             }]);

@@ -27,16 +27,16 @@ angular.module('scalearAngularApp', [
     'ngResource',
     'ngSanitize',
     'ui.router',
-    'ui.bootstrap.accordion',
-    'ui.bootstrap.tabs',
-    'ui.bootstrap.collapse',
-    'ui.bootstrap.transition',
-    'ui.bootstrap.datepicker',
-    'ui.bootstrap.alert',
-    'ui.bootstrap.modal',
-    'ui.bootstrap.tooltip',
-    'ui.bootstrap.timepicker',
-    'ui.bootstrap.popover',
+    // 'ui.bootstrap.accordion',
+    // 'ui.bootstrap.tabs',
+    // 'ui.bootstrap.collapse',
+    // 'ui.bootstrap.transition',
+    // 'ui.bootstrap.datepicker',
+    // 'ui.bootstrap.alert',
+    // 'ui.bootstrap.modal',
+    // 'ui.bootstrap.tooltip',
+    // 'ui.bootstrap.timepicker',
+    // 'ui.bootstrap.popover',
     'ui.sortable',
     'ui.calendar',
     'ngDragDrop',
@@ -65,7 +65,8 @@ angular.module('scalearAngularApp', [
     'mm.foundation.tooltip',
     'mm.foundation.tour',
     'mm.foundation.transition',
-    'mm.foundation.typeahead'
+    'mm.foundation.typeahead',
+    'mm.foundation.topbar'
     // 'ngAnimate'
 ])
     .constant('headers', {

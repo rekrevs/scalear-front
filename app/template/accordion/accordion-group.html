@@ -1,5 +1,4 @@
-<div class="accordion-group">
-  <div class="accordion-heading" ><a class="accordion-toggle" ng-click="isOpen = !isOpen" accordion-transclude="heading">{{heading}}</a></div>
-  <div class="accordion-body" collapse="!isOpen">
-    <div class="accordion-inner" ng-transclude></div>  </div>
-</div>
+<dd>
+  <a ng-click="isOpen = !isOpen" accordion-transclude="heading">{{heading}}</a>
+  <div class="content" ng-style="isOpen ? {display: 'block'} : {}" ng-transclude></div>
+</dd>

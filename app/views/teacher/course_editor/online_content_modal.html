@@ -1,0 +1,34 @@
+<h3>Choose Content Type...</h3>
+<h4>Interactive Content <small>(optional interactive questions and grading)</small></h4>
+<div class="modal-body">
+<br />
+    <center>
+    	<div class="button-group" style="display: inline-block;">
+            <ul class="small-block-grid-3 medium-block-grid-3 large-block-grid-3">
+                <li>
+                    <a type="button" class="th blue" ng-class="{thumbactive: content_type == 'Video'}" ng-model="content_type" btn-radio="'Video'" >
+                        <img style="margin: 10%; width: 80%; height: 80%;" src="/images/video_symbol.png">
+                    </a>
+                    <b><h3>Video</h3></b>
+                </li>
+                <li>
+                    <a type="button" class="th green" ng-class="{thumbactive: content_type == 'Quiz'}" ng-model="content_type" btn-radio="'Quiz'" >
+                        <img style="margin: 10%; width: 80%; height: 80%;" src="/images/quiz_symbol.png">
+                    </a>
+                    <b><h3>Quiz</h3></b>
+                </li>
+                <li>
+                    <a type="button" class="th red" ng-class="{thumbactive: content_type == 'Survey'}" ng-model="content_type" btn-radio="'Survey'" >
+                        <img style="margin: 10%; width: 80%; height: 80%;" src="/images/survey_symbol.png">
+                    </a>
+                    <b><h3>Survey</h3></b>
+                </li>
+            </ul> 
+        </div>
+    </center>
+    
+</div>
+<div class="right modal-footer">
+    <button class="success" ng-disabled="!content_type" ng-click="ok()">{{'sharing.add' | translate}} {{content_type}}</button>
+    <!-- <button class="alert" ng-click="dismissModal()" translate="lectures.cancel"></button> -->
+</div>

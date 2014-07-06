@@ -192,6 +192,16 @@ angular.module('scalearAngularApp')
         $scope.lecture_player.controls.play()
     }
 
+     $scope.refreshVideo=function(){
+        // $scope.lecture_player.controls.refreshVideo()
+        $scope.slow=false
+        var temp_url = $scope.lecture.url
+        $scope.lecture.url =""
+        $timeout(function(){
+            $scope.lecture.url = temp_url
+        })
+    }
+
     $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
         console.log("sseekgggg")
         console.log(time)

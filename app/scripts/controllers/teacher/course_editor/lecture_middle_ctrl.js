@@ -82,6 +82,16 @@ angular.module('scalearAngularApp')
         $scope.slow = true
     }
 
+    $scope.refreshVideo=function(){
+    	// $scope.lecture_player.controls.refreshVideo()
+    	$scope.slow=false
+    	var temp_url = $scope.lecture.url
+    	$scope.lecture.url =""
+    	$timeout(function(){
+    		$scope.lecture.url = temp_url
+    	})
+    }
+
     $scope.playBtn = function(){
         console.log($scope.play_pause_class)
         if($scope.play_pause_class == "play"){

@@ -2,21 +2,25 @@
 	<h3 style="position:absolute;top:20%;left:32%;z-index: 1;" translate>lectures.provide_url</h3>
 </overlay>
 <center><h3>{{lecture.name}}</h3></center>
-<center resizable-video container='container_layer' quiz-layer='quiz_layer' video-layer="video_layer" active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' ><a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>
+<center resizable-video container='container_layer' quiz-layer='quiz_layer' video-layer="video_layer" active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' >{{slow}} {{lecture.url}} {{video_ready}}<a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>
 	
 	<form name="answer_form" novalidate style="margin:0;margin-top:10px">
 	<video_container ng-style="container_layer" >
 		<loading size='small' show="lecture.url!='none' && !slow && !video_ready" style="color:#428bca; position:absolute;width: 100%;font-weight:300;font-size:12px;top: 34%;" />
-		<div style='color:#428bca; position:absolute;width: 100%;font-weight:300;font-size:12px' ng-show="slow">
-			<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
-			<h3 style="position:relative;top:30px;font-weight:300;font-size:16px" translate>lectures.try_reload</h3>
+		<div style='color:#428bca; position:absolute;width: 100%;font-weight:300;font-size:12px;z-index: 6' ng-show="slow">
+			<div>
+				<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
+				<h3 style="position:relative;top:30px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="icon-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>				
+			</div>
+			<div>
+				
+			</div>
 			<loading size='small' show='true' style="position:relative;top:30px;" />
 		</div>
 		<div>
 			<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
 				<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
 				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
-
 			</quiz>
 		</div>
 		<youtube ng-show="!slow && lecture.url && video_ready" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio"/>

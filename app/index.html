@@ -30,17 +30,18 @@
     <link rel="shortcut icon" type="image/x-icon" href="/logo.ico">
 
     <!-- build:css(.tmp/styles) styles/main.css -->
-    <link rel="stylesheet" href="styles/bootstrap.css"/>
-    <link rel="stylesheet" href="styles/foundation.css"/>
+    <!-- <link rel="stylesheet" href="styles/bootstrap.css"/> -->
+    <link rel="stylesheet" href="bower_components/foundation/css/foundation.css"/>
     <link rel="stylesheet" href="styles/normalize.css"/>
     <link rel="stylesheet" href="styles/foundation-icons.css"/>
-    <link rel="stylesheet" href="styles/main.css">
+    <!-- <link rel="stylesheet" href="styles/main.css"> -->
+    <link rel="stylesheet" href="styles/main-foundation.css">
     <link rel="stylesheet" href="styles/toggle-switch.css">
     <link rel="stylesheet" href="styles/jquery-ui.css" />    
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
-    <link rel="stylesheet" href="bower_components/ngAnimate/css/ng-animation.css">
+    <!-- <link rel="stylesheet" href="bower_components/ngAnimate/css/ng-animation.css"> -->
 
     <!-- endbuild -->
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
@@ -69,24 +70,15 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-        <header class="navbar-fixed-top modern-navbar" ng-show="current_user">
-            <!-- <span class="modern-menu-button" ng-show="current_user" ng-click="toggleCollapse()" ng-class="{menuopen: !iscollapsed}" tooltip="{{notificationsNumber()}} new notifications" tooltip-placement="left" tooltip-append-to-body="true"> -->
+       <!--  <header class="navbar-fixed-top modern-navbar" ng-show="current_user">
             <span class="modern-menu-button" ng-show="current_user" ng-click="toggleCollapse()" ng-class="{menuopen: !iscollapsed}">
-                <!-- <div class="notifications-number" ng-bind="notificationsNumber()" ng-show="notificationsNumber() != 0" tooltip="{{}}New Notifications">
-                </div> -->
-                <!-- <span class="menu-icon" ng-show="notificationsNumber() == 0" style="margin-top: 8px;">
-                </span> -->
                 <span class="menu-icon" style="margin-top: 8px;">
                 </span>
-
             </span>
             <a ng-show="current_user" class="pull-right current-user-name">
                 <span ng-bind="current_user.name +' '+ current_user.last_name">    
                 </span>
             </a>
-            <!-- <a href="" ng-click="open()" style="right: 30%; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; " ng-show="are_notifications()" translate="navigation.notifications" style="float:left;color:red;cursor: pointer;" class="ng-scope ng-hide">Notifications</a> -->
-
-            <!-- <a ui-sref="show_shared" style="right: 20%; vertical-align: -webkit-baseline-middle; margin-top: 5px; position: fixed; " ng-show="are_shared()" style="float:left;color:red;cursor: pointer;" class="ng-scope ng-hide">Shared</a> -->
             <div class="state">
                 <big><span ng-bind="Page.title()"></span></big>
             </div>
@@ -94,6 +86,11 @@
                 <a href="/#" class="brand"><img alt="Logo" src="images/logo.png" width="30px"> Scalable<span style="padding-left:0px; color:black;">Learning</span> <img alt="Beta_tag_small" class="brand" src="images/beta_tag_small.png" style="width:40px;padding-left:0px;padding-top:10px;">
                 </a>
             </div>
+        </header> -->
+        <header>
+            <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage"></main-navigation>
+        <header>
+            
         </header>
         <div ng-if="clipboard && clipboard.show_msg" class="top-ribbon">
             <notice-message message="{{clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' has been copied. To paste it into another module, right-click on the module and choose Paste'}}" close="true" button-action="closeClipboard()" button-title="{{'lectures.remove' | translate}}" />
@@ -101,18 +98,19 @@
         <div ng-if="preview_as_student" class="top-ribbon">
             <notice-message message="{{'preview_as_student'| translate}}" button-action="disablePreview()" button-title="{{'return' | translate}}" />
         </div>
-        <div id="main" role="main" ng-class="{pushdown: !iscollapsed}">
+        <div id="main" role="main">
             <div class="container">
 
-                <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course' && current != 'courses.statistics')" role="current_user.roles[0].id" /></span>
-                <span ui-view="navigation" iscollapsed="iscollapsed"></span>
-
-                <div class="row" style="width: auto; padding: 0px 15px 20px 70px; text-align: center; margin-bottom: 50px; margin-top: 10px;">
-                
+                <!-- <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course' && current != 'courses.statistics')" role="current_user.roles[0].id" /></span> -->
+                <!-- <span ui-view="navigation" iscollapsed="iscollapsed"></span> -->
+                <!-- <sub-navigation></sub-navigation> -->
+                <teacher-navigation ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5"></teacher-navigation>
+                <student-navigation ng-if="current_user.roles[0].id == 2"></student-navigation>
+                <div class="row">
                     <div ui-view=""></div>
                 </div>
                 <!-- <div style="height: 50px;"></div> -->
-                <footer style="bottom: 0px; z-index: 1000;">
+                <footer>
                     <scalear_footer />
                 </footer>
             </div> 
@@ -172,7 +170,7 @@
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
     <script src="bower_components/angular-bindonce/bindonce.js"></script>
 
-    <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
+    <!-- <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/accordion/accordion.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/collapse/collapse.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/transition/transition.js"></script>
@@ -183,7 +181,7 @@
     <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/timepicker/timepicker.js"></script>
-    <script src="bower_components/angular-ui-bootstrap/src/popover/popover.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/popover/popover.js"></script> -->
 
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
@@ -193,7 +191,7 @@
 
     <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
 
-    <script src="bower_components/ngAnimate/js/angular-animate.min.js"></script>
+    <!-- <script src="bower_components/ngAnimate/js/angular-animate.min.js"></script> -->
 
     <script src="bower_components/angu-fixed-header-table/angu-fixed-header-table.js"></script>
 
@@ -201,6 +199,10 @@
 
 
     <!-- FOUNDATION -->
+    <script src="bower_components/foundation/js/foundation.min.js"></script>
+    <!--<script src="bower_components/foundation/js/foundation/foundation.topbar.js"></script>-->
+
+
     <script src="bower_components/angular-foundation/src/accordion/accordion.js"></script>
     <script src="bower_components/angular-foundation/src/alert/alert.js"></script>
     <script src="bower_components/angular-foundation/src/bindHtml/bindHtml.js"></script>
@@ -216,6 +218,7 @@
     <script src="bower_components/angular-foundation/src/tour/tour.js"></script>
     <script src="bower_components/angular-foundation/src/transition/transition.js"></script>
     <script src="bower_components/angular-foundation/src/typeahead/typeahead.js"></script>
+    <script src="bower_components/angular-foundation/src/topbar/topbar.js"></script>
 
 
     <!-- endbuild -->
@@ -275,6 +278,7 @@
     <script src="scripts/services/page.js"></script>
     <script src="scripts/services/util.js"></script>
     <script src="scripts/services/impersonate.js"></script>
+    <script src="scripts/services/dashboard.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>
@@ -348,6 +352,7 @@
     <script src="scripts/controllers/users/profile.js"></script>
     <script src="scripts/services/student/news_feed.js"></script>
     <script src="scripts/directives/student/news_feed/news_feed_directives.js"></script>
+    <script src="scripts/controllers/Dashboard.js"></script>
     <!-- endbuild -->
 </body>
 </html>

@@ -10,6 +10,7 @@ angular.module('scalearAngularApp')
             
             $scope.changeLanguage = function(key) {
                 $log.debug("in change language " + key);
+                console.log('changhing language')
                 $translate.uses(key);
                 $rootScope.current_lang = key;
                 $window.moment.lang(key);

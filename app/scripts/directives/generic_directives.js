@@ -295,10 +295,42 @@ angular.module('scalearAngularApp')
       }
     }
   }
+}]).directive('enrollmentModal', ['$modal', function($modal){
+  return{
+    restrict: 'A',
+    replace: true,
+    link: function(scope, element){
+      scope.open = function () {
+        angular.element('.btn').blur()
+        var modalInstance = $modal.open({
+            templateUrl: '/views/student/course_list/enroll_modal.html',
+            controller: "StudentEnrollModalCtrl",
+        })
+
+        modalInstance.result.then(function (enrollment_key) {
+        //   console.log($scope.course)
+          // $rootScope.show_alert="success"; 
+          // ErrorHandler.showMessage($translate('controller_msg.enrolled_in', {course: $scope.course.name}), 'errorMessage', 2000);
+          // $timeout(function(){
+          //  $rootScope.show_alert=""; 
+          // },5000);
+            
+          init();
+
+        },
+        function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        })
+      }
+
+    }
+  }
+
 }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout', function(Module, $stateParams, $state, $timeout){
   return{
     restrict:'E',
-    replace: 'true',
+    // replace: true,
+    transclude: true,
     scope:{
       modules: '=',
       currentmodule: '=',

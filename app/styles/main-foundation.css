@@ -1,0 +1,110 @@
+.row{
+	margin-top: 50px;
+	max-width: 82.5rem !important;
+}
+.description{
+	margin-top: -15px !important;
+	color: rgba(255, 255, 255, 0.5) !important;
+}
+.description > small{
+	color: rgba(255, 255, 255, 0.5) !important;	
+}
+.sub-header{
+	background-color: #cfcfcf !important; 
+	width: 100%; 
+	top: 45px !important; 
+	/*height: 30px !important;*/
+	position:fixed !important;
+	z-index: 1 !important; 
+}
+.sub-header-component{
+	background-color: #2ba6cb !important;
+	/*height: 30px !important;*/
+	/*height: 45px !important;*/
+	/*line-height: 45px !important;*/
+
+}
+.has-description{
+	height: 45px !important; 
+	line-height: 30px !important; 
+	padding: 0px 15px !important;
+}
+.sub-header-component:hover{
+	background-color: #207d99 !important;
+}
+.sub-header-component:after{
+	top: 50% !important;
+}
+
+/*MODAL*/
+.reveal-modal{
+	position: absolute !important;
+}
+.thumbactive{
+	-webkit-box-shadow: 0 0 6px 1px rgba(0, 140, 186, 0.5);
+	box-shadow: 0 0 6px 1px rgba(0, 140, 186, 0.5);
+}
+
+/*COLORING*/
+.blue{
+	background-color: #2ba6cb !important;
+}
+.blue:hover{
+	background-color: #207d99 !important;
+}
+.green{
+	background-color: #5da423 !important;
+}
+.green:hover{
+	background-color: #3f7018 !important;
+}
+.red{
+	background-color: #c60f13 !important;
+}
+.red:hover{
+	background-color: #940c0e !important;
+}
+.grey{
+	background-color: #a3a3a3 !important;
+}
+.grey:hover{
+	background-color: #707070 !important;
+}
+.dark-text{
+	color: #222222 !important;
+}
+
+/*Animations*/
+
+.fade {
+  opacity: 0;
+  -webkit-transition: opacity .15s linear;
+          transition: opacity .15s linear;
+}
+.fade.in {
+  opacity: 1;
+}
+
+.reveal-modal.fade {
+  -webkit-transition: -webkit-transform .3s ease-out;
+     -moz-transition:    -moz-transform .3s ease-out;
+       -o-transition:      -o-transform .3s ease-out;
+          transition:         transform .3s ease-out;
+  -webkit-transform: translate(0, -25%);
+      -ms-transform: translate(0, -25%);
+          transform: translate(0, -25%);
+}
+.reveal-modal.in {
+  -webkit-transform: translate(0, 0);
+      -ms-transform: translate(0, 0);
+          transform: translate(0, 0);
+}
+
+.reveal-modal-bg.fade {
+  filter: alpha(opacity=0);
+  opacity: 0;
+}
+.reveal-modal-bg.in {
+  filter: alpha(opacity=50);
+  opacity: .5;
+}

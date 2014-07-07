@@ -80,6 +80,15 @@ angular.module('scalearAngularApp')
       return result;
     }
   })
+  .filter("currentCourse", function(){
+    var now = new Date();
+    return function(course){
+        var end_date = start_date.setDate(start_date.getDate()+(duration * 7));
+        if (now > end_date){
+            return course
+        }
+    }
+  })
   .filter("formatURL", function(){
     return function(url){
       if(url)

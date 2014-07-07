@@ -50,6 +50,12 @@
 					<details-check checked="lecture.required" save="updateLecture()" yes="{{'lectures.lecture_required'|translate}}" no="{{'lectures.lecture_not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateLecture" column="required"></details-check> <br />
   				</td>
 			</tr>
+			<tr>
+				<td style="border-right: 1px solid lightgrey;"><span translate>courses.graded</span>:</td>
+				<td>
+					<details-check checked="lecture.graded" save="updateLecture()" yes="{{'lectures.lecture_graded'|translate}}" no="{{'lectures.lecture_not_graded'|translate}}" title="{{'courses.graded'|translate}}?" validate="validateLecture" column="graded"></details-check> <br />
+  				</td>
+			</tr>
 
 			<!-- <tr>
 				<td><span translate>lectures.detected_aspect_ratio</span>:</td>

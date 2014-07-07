@@ -333,6 +333,10 @@ var translation_en=function(){
         quiz_not_required:"This Quiz is Not Required",
         lecture_required:"This Lecture is Required",
         lecture_not_required:"This Lecture is Not Required",
+        quiz_graded:"This Quiz is Graded",
+        quiz_not_graded:"This Quiz is Not Graded",
+        lecture_graded:"This Lecture is Graded",
+        lecture_not_graded:"This Lecture is Not Graded",
         got_some_errors: "You've got some errors",
         provide_answer: "Please provide the answer text for each choice",
         provide_url: "Please enter the URL (link) for your video in the Lecture Details section to the right",
@@ -680,7 +684,8 @@ var translation_en=function(){
         based_on_invideo: "Based on in-video questions answered",
         view_detailed_progress: "View Details Progress",
         no_courses: "Currently, you don't have any courses you can access. You can start by adding one.",
-        invite: "Invite to Join"
+        invite: "Invite to Join",
+        graded: "Graded"
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

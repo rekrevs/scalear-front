@@ -332,6 +332,10 @@ var translation_sv=function(){
               quiz_not_required:"Denna Quiz krävs inte",
               lecture_required:"Denna föreläsning är Obligatoriska",
               lecture_not_required:"Denna föreläsning krävs inte",
+              quiz_required:"Denna Quiz är Graderad",
+              quiz_not_required:"Denna Quiz är inte Graderad",
+              lecture_required:"Denna föreläsning är Graderad",
+              lecture_not_required:"Denna föreläsning är inte Graderad",
               got_some_errors: "Du har några fel",
               provide_answer: "Ange svaret text för varje val",
               provide_url: "Skriv in webbadressen (länk) till din video i avsnittet Föreläsning Detaljer till höger",
@@ -678,7 +682,8 @@ var translation_sv=function(){
               based_on_invideo: "Baserat på in-video frågor besvarade",
               view_detailed_progress: "Visa detaljer framsteg",
               no_courses: "Just nu, har du inte några kurser som du kan komma åt. Du kan börja genom att lägga till en.",
-              invite: "Bjud in till Gå"
+              invite: "Bjud in till Gå",
+              graded: "Graderad"
             },
       controller_msg:{
               announcement_successfully_created: "Meddelande har skapats.",

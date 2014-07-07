@@ -2,7 +2,7 @@
 	<h3 style="position:absolute;top:20%;left:32%;z-index: 1;" translate>lectures.provide_url</h3>
 </overlay>
 <center><h3>{{lecture.name}}</h3></center>
-<center resizable-video container='container_layer' quiz-layer='quiz_layer' video-layer="video_layer" active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' >{{slow}} {{lecture.url}} {{video_ready}}<a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>
+<center resizable-video container='container_layer' quiz-layer='quiz_layer' video-layer="video_layer" active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' ><a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>
 	
 	<form name="answer_form" novalidate style="margin:0;margin-top:10px">
 	<video_container ng-style="container_layer" >

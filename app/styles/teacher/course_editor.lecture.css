@@ -196,7 +196,23 @@
     z-index:3;
 }
 
-
-
-
-
+.dragged{
+  float: left;
+  /*width: 58px;
+  height: 78px;*/
+  z-index:6000 !important;
+  padding: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border: 2px solid #333;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 10px;
+  background: #fff;
+  position:absolute;
+  top:10px;
+  left:10px;
+  margin-top:0px;
+  cursor:move;
+}

@@ -7,21 +7,33 @@ angular.module('scalearAngularApp')
  	var init = function(){
         $scope.studentAnswers={};
         $scope.$parent.$parent.current_item =$stateParams.quiz_id
+        $scope.can_solve = true
  		Quiz.getQuestions({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},function(data){
             $scope.quiz= data.quiz
+            console.log($scope.quiz)
             Page.setTitle($scope.quiz.name)
+           
+            for(var item in $scope.quiz.requirements){
+                for(var id in $scope.quiz.requirements[item]){
+                    var group_index= util.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+                    var item_index= util.getIndexById($scope.course.groups[group_index][item], $scope.quiz.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                    if(item_index!=-1 && group_index!=-1)
+                        if(!$scope.course.groups[group_index][item][item_index].is_done)
+                            $scope.can_solve = false
+                }
+            }
+
 	 		$scope.quiz.questions=data.questions
 	 		$scope.studentAnswers=data.quiz_grades;
 	 		$scope.status=data.status;
 	 		$scope.correct=data.correct;
             $scope.next_item= data.next_item;
-
+            // $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
 	 		$scope.alert_messages= data.alert_messages
-            $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
 		  	$scope.quiz.questions.forEach(function(question,index){
-					question.answers = data.answers[index]
-					 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]==null) // if drag was not solved, put student answer from shuffled answers.
-						 $scope.studentAnswers[question.id]=question.answers[0].content
+				question.answers = data.answers[index]
+				 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]==null) // if drag was not solved, put student answer from shuffled answers.
+					 $scope.studentAnswers[question.id]=question.answers[0].content
 			});
             if($scope.quiz.quiz_type=='survey')
                 $scope.getSurveyCharts("display_only", $scope.quiz.group_id, $scope.quiz.id)
@@ -31,7 +43,7 @@ angular.module('scalearAngularApp')
  	init();
 
     $scope.go_to_next_item = function(){
-            var next_state = "course.courseware." + $scope.next_item.class_name
+            var next_state = "course.courseware.module." + $scope.next_item.class_name
             var s = $scope.next_item.class_name + "_id"
             var to = {}
             to[s] = $scope.next_item.id
@@ -53,7 +65,7 @@ angular.module('scalearAngularApp')
                 var group_index= util.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
                 var quiz_index= util.getIndexById($scope.course.groups[group_index].quizzes, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                 if(quiz_index!=-1 && group_index!=-1)
-                    $scope.course.groups[group_index].lectures[quiz_index].is_done= data.done[2]
+                    $scope.course.groups[group_index].quizzes[quiz_index].is_done= data.done[2]
     		});
     	}
     	else{ // client validation error.

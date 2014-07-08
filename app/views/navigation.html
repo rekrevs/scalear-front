@@ -1,0 +1,4 @@
+<link rel="stylesheet" href="styles/content_navigator.css"/>
+
+<teacher-navigation ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="modules">
+<student-navigation ng-if="current_user.roles[0].id == 2" />

@@ -5,9 +5,9 @@
 </style>
 <div class="well" style="min-height:660px;background:white; border-radius: 0px;">
 	<div  ng-show="!preview">
-		<overlay ng-show="!questions">
+		<!-- <overlay ng-show="!questions">
 		    <loading size="big" show="true" style="position:relative; top:40%;" />
-		</overlay>
+		</overlay> -->
 		<form name='tform' novalidate ui-sortable="quizSortableOptions" ng-model='questions' style="overflow:auto">
 			<div ng-repeat="question in questions" class="quiz_sort">
 				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index" sortable="true"/>

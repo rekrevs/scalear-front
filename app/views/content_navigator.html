@@ -1,4 +1,4 @@
-<span ng-init="open_navigator = false" style="position: fixed; z-index: 2;">
+<span style="position: fixed; z-index: 2;">
 	<!-- <div class="navigator-dropdown-button" ng-class="{navigatoropen: open_navigator}" ng-click="toggleNavigator()">
 		<div style="display: inline-block; color: white; padding-left: 5px; padding-right: 5px;">
 			<span>
@@ -34,7 +34,7 @@
 				</accordion-group>
 			</accordion>
 		</span>
-		<span ng-switch-when="inclass">
+<!-- 		<span ng-switch-when="inclass">
 			<accordion class="accordion">
 				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'">
 						<accordion-heading class="accordion-heading">
@@ -44,12 +44,12 @@
 						</accordion-heading>
 				</accordion-group>
 			</accordion>
-		</span>
+		</span> -->
 		<span ng-switch-when="progress">
 			<accordion  class="accordion">
 				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 					<accordion-heading class="accordion-heading">
-						<ul ui-sref="course.progress.lecture({module_id:module.id})" ng-click="showModuleProgress($index)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
+						<ul ng-click="selectModule(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
 							{{module.name}}
 						</ul>
 					</accordion-heading>

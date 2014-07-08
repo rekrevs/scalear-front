@@ -55,10 +55,10 @@
   -ms-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-/*.accordion {
+.accordion {
   margin-bottom: 20px;
   margin-top: 20px;
-}*/
+}
 
 .accordion-group > a {
   /*margin-bottom: 0px !important;

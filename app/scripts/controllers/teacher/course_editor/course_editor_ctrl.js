@@ -456,7 +456,7 @@ angular.module('scalearAngularApp')
 		},
  	}
 
-	init();
+	// init();
 
 
 

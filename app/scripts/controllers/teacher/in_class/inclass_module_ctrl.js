@@ -3,6 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','util','$translate','Timeline', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, util,$translate, Timeline) {
     $window.scrollTo(0, 0);
+    Page.setTitle('head.in_class')
     $scope.inclass_player={}
     $scope.inclass_player.events={}   
     // $scope.fullscreen_user_settings = false
@@ -43,7 +44,6 @@ angular.module('scalearAngularApp')
 
         document.addEventListener(screenfull.raw.fullscreenchange, function () {
             if(!screenfull.isFullscreen){
-                console.log("cool")
                 $scope.fullscreen = false
                 $scope.exitBtn()
                 $scope.$apply()

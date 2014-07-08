@@ -3,9 +3,10 @@
 <!-- <div class="top-bar sub-header"> -->
     <ul class="title-area">
         <li class="name">
-          <h1><a class="sub-header-component active">Content Navigator</a></h1>
+          <h1><a class="sub-header-component active" ng-click="open_navigator=!open_navigator">Content Navigator</a></h1>
         </li>
          <li toggle-top-bar class="menu-icon"><a href="">SUB-MENU</a></li>
+         <li ><content-navigator modules="modules" currentmodule="selected_module" mode="progress" open="open_navigator" style="z-index: 1;" /></li>
     </ul>
 
         <top-bar-section>
@@ -26,18 +27,18 @@
                 <a class="sub-header-component green" translate>head.progress</a>
                 <ul top-bar-dropdown>
                     <li>
-                        <a class="sub-header-component has-description green" ui-sref="course.progress.main">
+                        <a class="sub-header-component has-description green" ui-sref="course.module.progress">
                             {{'review_module_progress' | translate}}
                             <h5 class="description"><small translate>choose_inclass_material</small></h5>
                         </a>
                         
                     </li>
-                    <li><a class="sub-header-component green" ui-sref="course.progress.main" translate>all_students_progress</a></li>
+                    <li><a class="sub-header-component green" ui-sref="course.progress" translate>all_students_progress</a></li>
                 </ul>
             </li>
-            <li><a class="sub-header-component green" ui-sref="course.inclass" translate>head.in_class</a></li>
+            <li><a class="sub-header-component green" ui-sref="course.module.inclass" translate>head.in_class</a></li>
             <li has-dropdown>
-                <a class="sub-header-component green" ui-sref="course.course_editor" translate>head.content</a>
+                <a class="sub-header-component green" ui-sref="course.module.course_editor" translate>head.content</a>
                 <ul top-bar-dropdown>
                     <li>
                         <a class="sub-header-component has-description green" href="">

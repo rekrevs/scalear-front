@@ -14,8 +14,7 @@ angular.module('scalearAngularApp')
                 
                 '&copy; ' + new Date().getFullYear() + ' <a ui-sref="home">ScalableLearning</a> | ' +
                 '<span translate="footer.about"></span> | ' +
-                '<a ui-sref="privacy" translate="footer.privacy"></a> | ' +
-                '<report_technical />' +
+                '<a ui-sref="privacy" translate="footer.privacy"></a>'+
                 '<br><center><version /></center>' +
                 
                 '</div>'
@@ -24,8 +23,8 @@ angular.module('scalearAngularApp')
     .directive('reportTechnical', ['Home', '$location', '$log','$stateParams','$interval','$translate', '$rootScope', '$modal',
         function(Home, $location, $log, $stateParams,$interval,$translate, $rootScope, $modal) {
             return {
-                restrict: 'E',
-                template: '<a style="cursor:pointer;" ng-click="toggleTechnicalDisplay()" translate="feedback.report_technical"></a>',
+                restrict: 'A',
+                // template: '<a style="cursor:pointer;" ng-click="toggleTechnicalDisplay()" translate="feedback.report_technical"></a>',
                 link: function(scope, element) {
                     scope.toggleTechnicalDisplay = function() {
                         angular.element('.btn').blur()

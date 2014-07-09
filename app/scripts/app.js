@@ -66,7 +66,9 @@ angular.module('scalearAngularApp', [
     'mm.foundation.tour',
     'mm.foundation.transition',
     'mm.foundation.typeahead',
-    'mm.foundation.topbar'
+    'mm.foundation.topbar',
+    'ngScrollSpy',
+    'sticky'
     // 'ngAnimate'
 ])
     .constant('headers', {
@@ -487,6 +489,11 @@ angular.module('scalearAngularApp', [
               url: '/show_shared',
               templateUrl: '/views/shared.html',
               controller: 'sharedCtrl'
+            })
+            .state('getting_started', {
+              url: '/help/getting_started',
+              templateUrl: '/views/help/getting_started.html',
+              controller: 'GettingStartedCtrl'
             })
     }
 ])

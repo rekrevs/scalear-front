@@ -1,70 +1,26 @@
-	<div class="whole-box">
-<!-- <a ui-sref="course.student_calendar({ course_id: course.id })"> -->
-
- 		<div class="small-12 medium-3 large-2 columns" style="padding-left: 0px;">
- 			<img class="course-image" style="height: 100%; width: 100%;" ng-src="{{course.image_url || '../images/course_image.png'}}" />
- 			<button type="button" class="button tiny course-button">Go to course</button>
-		</div>
-	  	<div class="small-12 medium-5 large-5 columns" style="padding-top: 10px; padding-bottom: 10px;">
-			<h5 class="title" title="{{course.name}}">{{course.short_name}} | {{course.name}}</h5>
-			<p class="describtion">
-				{{course.description}}
-			</p>
-			<div class="divider"></div>
-			<i class="step .fi-calendar size-36"></i> {{course.start_date}}
-
-	  	</div>
-
-	  	<div class="small-12 medium-3 large-3 columns">
-	  		Hello 2
-	  	</div>
-		<!-- <table>
-			<tr>
-				<td class="course-image">
-					<a ui-sref="course.student_calendar({ course_id: course.id })">
-						<img ng-src="{{course.image_url || '../images/course.png'}}" style="height: 120px;" />
-						
-					</a>
-				</td>
-				<td class="course-info-container" colspan="1">
-					<table>
-						<tr>
-							<td colspan="2">
-									<a ui-sref="course.student_calendar({ course_id: course.id })">
-										{{course.short_name}} | {{course.name}}
-									</a>
-							</td>
-						</tr>
-						<tr>
-							<td style="color: #2d2d2d;">
-								<div style="font-size: 15px; margin: 0px;"><span class="calendar-icon"></span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div> 
-							</td>
-							<td style="color: #2d2d2d;">
-								<div style="font-size: 15px; margin: 0px;"><span class="duration-icon"></span>{{course.duration}} <span translate="courses.weeks"></span></div>
-							</td>
-						</tr>
-						<tr>
-	                        <td colspan="2">
-	                        	<span ng-if="teachers" class="dropdown-header" style="margin-left: -10px;"><b translate>courses.teachers</b><br /></span>
-	                        	<table>
-	                        		<tr>
-	                        			<td style="color: black; text-align: center; padding-left: 10px;" ng-repeat="teacher in teachers" style="text-align: center;">
-				                            <small>
-				                            	<a>
-				                                	<profile-image email="teacher.user.email" imagesize="40" background="white"> </profile-image> {{teacher.user.name}} ({{teacher.role.name}})
-				                            	</a>
-				                        	</small>
-				                        </td>
-	                        		</tr>
-	                        	</table>
-	                        </td>
-						</tr>
-						
-						
-					</table>
-				</td>
-			</tr>
-		</table> -->
-<!-- </a> -->
-
+<div class="whole-box light-grey">
+	<div class="course-button hide-for-small-only">
+		<button type="button" class="button uppercase" ui-sref="course.student_calendar({ course_id: course.id })">Go to course</button>
 	</div>
+		<div class="course-image right hide-for-small-only" style="padding-left: 0px;">
+			<img ng-class="{centerimage: course.image_url}" ng-src="{{course.image_url || '../images/course_image.png'}}" />
+	</div>
+  	<div class="small-12 medium-8 large-9 columns" style="padding-top: 10px; padding-bottom: 10px; display: inline-block;">
+		<h5 ui-sref="course.student_calendar({ course_id: course.id })" class="title looks-like-a-link truncate" title="{{course.name}}">{{course.short_name}} | {{course.name}}</h5>
+		<h6 class="color-blue" title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.user.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
+		<p class="describtion">
+			{{course.description}}
+		</p>
+		<div class="bottom-bar">
+			<div class="small-4 columns" ng-class="{'small-6': !course.ended}">
+				<i class="fi-calendar size-21"></i> <small class="truncate" title="{{course.start_date | amDateFormat:'MMMM Do YYYY'}}">{{course.start_date | amDateFormat:'MMMM Do YYYY'}}</small>
+			</div>
+			<div class="small-4 columns" ng-class="{'small-6': !course.ended}">
+				<i class="fi-clock size-21"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
+			</div>
+			<div class="small-4 columns" ng-if="course.ended">
+				<i class="fi-check size-21"></i> <small class="truncate" title="{{'finished' | translate}}">{{'finished' | translate}}</small>
+			</div>
+		</div>
+  	</div>
+</div>

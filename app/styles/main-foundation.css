@@ -1,5 +1,6 @@
 .row{
-	margin-top: 50px;
+	/*margin-top: 50px;*/
+	/*padding-top: 10px;*/
 	max-width: 82.5rem !important;
 }
 .description{
@@ -70,16 +71,93 @@
 .grey:hover{
 	background-color: #707070 !important;
 }
+
+.light-grey{
+	background-color: #ececea !important;
+}
+
+
+.color-white{
+	color: #ffffff !important;
+}
+
+.color-blue{
+	color: #2ba6cb !important;
+}
+.color-green{
+	color: #5da423 !important;
+}
+.color-red{
+	color: #c60f13 !important;
+}
+.color-grey{
+	color: #a3a3a3 !important;
+}
 .dark-text{
 	color: #222222 !important;
 }
 
-
-
+.left-navigation{
+	/*width: 200px;*/
+	display: inline-block;
+	height: 500px;
+}
+.right-content{
+	display: inline-block;
+	width: 75%;
+	float: right;
+}
 
 /*FIELDS*/
 input{
 	height: 1.0rem !important;
+}
+
+/*@media only screen and (max-width:40.063em) {
+	.left-navigation{
+		display: none;
+	}
+}*/
+
+
+/*CASE ALTERING*/
+.uppercase{
+	text-transform: uppercase;
+}
+
+/*SIZES*/
+.size-12 { font-size: 12px; }
+      
+.size-14 { font-size: 14px; }
+
+.size-16 { font-size: 16px; }
+
+.size-18 { font-size: 18px; }
+
+.size-21 { font-size: 21px; }
+
+.size-24 { font-size: 24px; }
+
+.size-36 { font-size: 36px; }
+
+.size-48 { font-size: 48px; }
+
+.size-60 { font-size: 60px; }
+
+.size-72 { font-size: 72px; }
+
+/*TEXT*/
+.truncate{
+	width: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+
+/*OTHERS*/
+.looks-like-a-link{
+	cursor: pointer;
 }
 
 /*Animations*/

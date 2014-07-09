@@ -1,6 +1,24 @@
-<a ui-sref="course.student_calendar({ course_id: course.id })">
 	<div class="whole-box">
-		<table>
+<!-- <a ui-sref="course.student_calendar({ course_id: course.id })"> -->
+
+ 		<div class="small-12 medium-3 large-2 columns" style="padding-left: 0px;">
+ 			<img class="course-image" style="height: 100%; width: 100%;" ng-src="{{course.image_url || '../images/course_image.png'}}" />
+ 			<button type="button" class="button tiny course-button">Go to course</button>
+		</div>
+	  	<div class="small-12 medium-5 large-5 columns" style="padding-top: 10px; padding-bottom: 10px;">
+			<h5 class="title" title="{{course.name}}">{{course.short_name}} | {{course.name}}</h5>
+			<p class="describtion">
+				{{course.description}}
+			</p>
+			<div class="divider"></div>
+			<i class="step .fi-calendar size-36"></i> {{course.start_date}}
+
+	  	</div>
+
+	  	<div class="small-12 medium-3 large-3 columns">
+	  		Hello 2
+	  	</div>
+		<!-- <table>
 			<tr>
 				<td class="course-image">
 					<a ui-sref="course.student_calendar({ course_id: course.id })">
@@ -45,9 +63,8 @@
 						
 					</table>
 				</td>
-				<!-- <td ng-if="course.lectures">
-				</td> -->
 			</tr>
-		</table>	
+		</table> -->
+<!-- </a> -->
+
 	</div>
-</a>

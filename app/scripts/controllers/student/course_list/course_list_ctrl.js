@@ -11,28 +11,29 @@ angular.module('scalearAngularApp')
   			function(data){
   				$log.debug(data)
   				$scope.courses = data
+          console.log($scope.courses)
   			},
   			function(){}
       )
 
-      NewsFeed.index({}, function(data){
-        $scope.events = []
-        $scope.latest_events = data.latest_events
-        $scope.latest_announcements = data.latest_announcements
-        $scope.latest_events.forEach(function(event){
-          event.timestamp = event.appearance_time;
-          $scope.events.push(event);
-        })
-        $scope.latest_announcements.forEach(function(announcement){
-          announcement.timestamp = announcement.updated_at;
-          $scope.events.push(announcement);
-        })
-        // $scope.coming_up = data.coming_up
-        console.log('got these')
-        console.log($scope.events)
-      }, function(){
-        console.log('Couldn\'t get the data');
-      })
+      // NewsFeed.index({}, function(data){
+      //   $scope.events = []
+      //   $scope.latest_events = data.latest_events
+      //   $scope.latest_announcements = data.latest_announcements
+      //   $scope.latest_events.forEach(function(event){
+      //     event.timestamp = event.appearance_time;
+      //     $scope.events.push(event);
+      //   })
+      //   $scope.latest_announcements.forEach(function(announcement){
+      //     announcement.timestamp = announcement.updated_at;
+      //     $scope.events.push(announcement);
+      //   })
+      //   // $scope.coming_up = data.coming_up
+      //   console.log('got these')
+      //   console.log($scope.events)
+      // }, function(){
+      //   console.log('Couldn\'t get the data');
+      // })
 		}
 
 		$scope.order=function(column_name){

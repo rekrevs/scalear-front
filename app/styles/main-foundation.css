@@ -74,6 +74,14 @@
 	color: #222222 !important;
 }
 
+
+
+
+/*FIELDS*/
+input{
+	height: 1.0rem !important;
+}
+
 /*Animations*/
 
 .fade {

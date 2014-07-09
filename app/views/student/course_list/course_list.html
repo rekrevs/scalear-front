@@ -1,7 +1,3 @@
-<!-- build:css(.tmp/styles) styles/news_feed.css -->
-<link rel="stylesheet" href="styles/student/news_feed.css"/>
-<!-- endbuild -->
-
 <!-- build:css(.tmp/styles) styles/course_item.css -->
 <link rel="stylesheet" href="styles/courseItem.css"/>
 <!-- endbuild -->
@@ -18,23 +14,28 @@
     </div>
     <button class="btn btn-success" style="background-image: initial; float: right; margin-right: 60px;" id="join_course" ng-click="open()" translate>courses.join_course</button>
 </div> -->
-<button id="join_course" enrollment-modal ng-click="open()" translate>courses.join_course</button>
+<div class="small-8 large-8 columns">
+	<div class="button-group">
+	    <button type="button" class="button tiny" ng-model="filterCourses" btn-radio="'All'">All</button>
+	    <button type="button" class="button tiny" ng-model="filterCourses" btn-radio="'Current'">Current</button>
+	    <button type="button" class="button tiny" ng-model="filterCourses" btn-radio="'Finished'">Finished</button>
+	</div>
+</div>
+<div class="small-4 large-4 columns">
+
+	<input class="tiny" type="search" ng-model="searchCourses" placeholder="{{'courses.search' | translate}}" />
+	<!-- <button style="display: inline-block;" id="join_course" enrollment-modal ng-click="open()" translate>courses.join_course</button> -->
+</div>
+  
+
+
 <center ng-show="courses && !courses.length" style="height:70px">
 	<br>
 	<br>
 	<h5 class="muted" translate>courses.enroll_instruction</h5>
 </center>
 <br />
-<div ng-show="courses" class="courses-container" ng-class="{containerwide: !events.length}">
+<!-- <div ng-show="courses"> -->
 	<course-item ng-repeat="course in courses|orderBy:column:is_reverse" course='course' teachers='course.teacher_enrollments' ></course-item>
-</div>
-<div class="news-feed-container" ng-show="courses && events.length">
-	<div>
-		<b class="dropdown-header"><span translate>whats_new</span>?</b>
-	</div>
-	<div style="overflow-y: auto; height: 100%;">
-		<news-feed events="events"></news-feed>
-	</div>
-	<!-- <event-item ng-repeat="event in latest_events | orderBy:'appearance_time':reverse" event="event"></event-item> -->
-</div>
+<!-- </div> -->
 

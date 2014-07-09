@@ -139,7 +139,7 @@ angular.module('scalearAngularApp')
   };
 }]).directive('teacherCourseItem', ['ErrorHandler',function(ErrorHandler) {
   return{
-    replace:true,
+    // replace:true,
     restrict: "E",
     scope:{
       course: '=',

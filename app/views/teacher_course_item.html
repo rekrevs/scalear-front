@@ -1,4 +1,31 @@
-<div class="whole-box" style="width: 95%;">
+<div class="row whole-box">
+	<div class="large-1 columns course-image">
+		<a><!-- ui-sref="course.course_editor({ course_id: course.id })" -->
+			<img ng-src="{{course.image_url || '../images/course.png'}}" style="height: 120px;" />
+		</a>
+	</div>
+	<div class="large-8 columns course-info-container">
+		<div class="row" style="border-bottom: 1px solid lightgrey; padding-bottom: 5px;">{{course.short_name}} | {{course.name}}</div>
+		<div class="row" style="border-bottom: 1px solid lightgray;">
+			<div class="large-8 columns" style="color: #2d2d2d; padding-top: 5px">
+				<div style="font-size: 15px; margin: 0px;" >
+					<span class="calendar-icon"></span>
+					<span>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</span>
+				</div>
+			</div> 
+			<div class="large-4 columns">
+				<div style="color: #2d2d2d; padding-top: 5px; border-left: 1px solid lightgray;" colspan="2">
+					<div style="font-size: 15px; margin: 0px;" >
+						<span class="duration-icon"></span>
+						<span>{{course.duration}}<span translate>courses.weeks</span></span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="large-3 columns">{{course.short_name}} | {{course.name}}</div>
+</div>
+<!-- <div class="whole-box" style="width: 95%;">
 	<style>
 		@media only screen and (max-width : 1024px) {
 			.course-image{
@@ -23,7 +50,7 @@
 						<tr>
 							<td colspan="4" style="border-bottom: 1px solid lightgrey; padding-bottom: 5px;">
 								<a ui-sref="course.course_editor({ course_id: course.id })">
-									{{course.short_name}} | {{course.name}}
+									
 								</a>
 							</td>
 						</tr>
@@ -97,3 +124,4 @@
 		</table>
 	</a>
 </div>
+ -->

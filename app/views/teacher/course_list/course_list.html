@@ -84,7 +84,7 @@
 		<br />
 		<a ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
 	</span>
-	<teacher-course-item ng-repeat="course in courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher" ></course-item>
+	<teacher-course-item ng-repeat="course in courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher" />
 	<br />
 </div>
 

@@ -26,6 +26,12 @@
 	border-top: 1px solid darkgrey;
 	vertical-align: bottom;
 }
+.row.bottom-bar{
+	height: auto;
+	padding: 10px 0 ;
+	border-top: 1px solid darkgrey;
+	vertical-align: bottom;
+}
 .describtion{
 	overflow: hidden;
 	max-height: 78px;
@@ -53,7 +59,8 @@
     max-width: 200%;
 }
 .centerimage{
-    margin-left:-50%;
+    margin-left: -25%;
+	margin-top: -25%;
 }
 .containerwide{
 	width: 95% !important;

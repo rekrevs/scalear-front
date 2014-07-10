@@ -18,13 +18,14 @@ angular.module('scalearAngularApp')
 	 	// else if($rootScope.current_user.roles[0].id == 2){
 	 	// 	getStudentData()
 	 	// }
-	 	$rootScope.$watch('current_user', function(){
+	 	var unwatch = $rootScope.$watch('current_user', function(){
 			if($rootScope.current_user && $rootScope.current_user.roles){
 				if($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5)
 			 		getTeacherData()
 			 	else if($rootScope.current_user.roles[0].id == 2){
 			 		getStudentData()
 			 	}
+			 	unwatch()
 			}
 		});
 	}

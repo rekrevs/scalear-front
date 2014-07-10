@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
 
 	$scope.$watch('module_obj['+$state.params.module_id+']', function(){
         if($scope.module_obj && $scope.module_obj[$state.params.module_id]){
-            $scope.selected_module=$scope.module_obj[$state.params.module_id]
+            $scope.$parent.selected_module=$scope.module_obj[$state.params.module_id]
             console.log("Main Selected Module")
             console.log($scope.selected_module)
         }

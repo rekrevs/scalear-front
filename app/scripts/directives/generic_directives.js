@@ -86,12 +86,13 @@ angular.module('scalearAngularApp')
     link: function(scope, element, attrs) {
          var menuElement = angular.element(element.find('.'+attrs.target)),
           open = function open(event, element) {
-            angular.element('.open').removeClass('open')
+            angular.element('.open').removeClass('open').css('display', 'none')
             scope.opened = true;
             element.css('top', event.clientY + 'px');
             element.css('left', event.clientX + 'px');
             element.css('zIndex', 1)
             element.addClass('open');
+            element.css('display', 'block')
             angular.element('body').css('overflow', 'hidden')
             angular.element($window).on('click', function(event) {
               console.log(event)
@@ -107,6 +108,7 @@ angular.module('scalearAngularApp')
           close = function close(element) {
             scope.opened = false;
             element.removeClass('open');
+            element.css('display', 'none')
             angular.element('body').css('overflow', 'auto')
             angular.element($window).off('click')
           };

@@ -329,8 +329,10 @@ angular.module('scalearAngularApp', [
             })
             .state('course.module.course_editor', {
                 url: '/course_editor',
-                templateUrl: '/views/teacher/course_editor/course_editor.html',
-                controller: 'courseEditorCtrl'
+                templateUrl: '/views/teacher/course_editor/module.middle.html',
+                controller: 'moduleMiddleCtrl'
+                // templateUrl: '/views/teacher/course_editor/course_editor.html',
+                // controller: 'courseEditorCtrl'
             })
             .state('course.module.course_editor.overview', {
                 url: '/overview',

@@ -1,7 +1,7 @@
 /* --- Page Structure  --- */
-.row{
+/*.row{
 	min-width: 400px;
-}
+}*/
 #acc1{margin:0px; padding: 0px;}
 
 /*p {margin: 0 10px 1em}*/
@@ -122,10 +122,10 @@ a.trigger {
 
 .last-child a.trigger{padding-left:1px; background-image:none; font-weight:normal}
 
-.h, .last-child {
+/*.h, .last-child {
 	text-align: left;
 	padding-left: 15px;
-}
+}*/
 .h:hover, .last-child:hover, .inneritemopen {
 	background-color: rgba(0,0,0,0.2);
 	/*background-color: lightgrey;*/
@@ -213,15 +213,15 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	color:red;
 	font-style: italic;
 }
-.handle{
+/*.handle{
 	vertical-align: top;
 }
 .handle:hover{
 	cursor: move;
 	vertical-align: top;
-}
+}*/
 .inner-item{
-	margin-left: 15px;
+	/*margin-left: 15px;*/
 	padding-top: 5px;
 	padding-bottom: 5px;
 }
@@ -263,7 +263,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	height: 30px;
 	cursor: pointer;
 }
-.link-item-box-big{
+/*.link-item-box-big{
 	padding-top: 5px;
 	padding-bottom: 5px;
 	box-shadow: 0 0 1px lightgrey;
@@ -280,7 +280,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 
 .link_img_small{
 	width: 30px;
-}
+}*/
 
 .details-toggle-icon:before{
   margin-top: 5px;
@@ -293,14 +293,14 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 .nowidth{
 	width: 27px !important;
 }
-.add-item{
+/*.add-item{
 	padding: 2px; 
 	cursor: pointer;
 	color: #2d2d2d;
 	height: 20px;
 }
 .add-item:hover{
-	background-color: #008a49;
+	background-color: #008cba;
 	color: white;
 	font-weight: normal;
 }
@@ -319,7 +319,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 	font-size: 13px;
 	font-weight: 200;
-}
+}*/
 .empty-middle{
 	float: left;
 	position: fixed;

@@ -11,15 +11,11 @@
 		background-color: white;
 	}
 </style>
-<span style="position: fixed; z-index: 100;">
+<!-- <span style="position: fixed; z-index: 100;">
 	<div class="navigator-dropdown-button" ng-class="{navigatoropen: tree_toggled}" ng-click="toggleTree()">
 		<div style="display: inline-block; color: white; padding-left: 5px; padding-right: 5px;" ng-hide="open_navigator">
 			<span>
 				{{module_obj[currentmodule].name || 'courses.select_module' | translate}}
-				<!-- <span ng-show="currentmodule">
-				 | 
-				 <a ui-sref="course.progress.main" ng-click="clearCurrent()" ng-show="selected_module" tooltip-placement="bottom" tooltip="Back to main progress page"><small translate>main</small></a>
-			 	</span> -->
 			</span>
 		</div>
 		<div style="display: inline-block; padding-right: 5px;">
@@ -31,9 +27,6 @@
 		<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
 		<ul id="acc1" class="accordion">
 			<li ng-repeat="link in course.custom_links" class='module accordion-group'>
-				<!-- <module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" ng-class="{moduleopen: currentmodule == module.id}" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)"/> -->
-				<!-- {{link.name}}
-				{{link.url}} -->
 				<link-item link="link" update="updateCustomLink" remove="removeCustomLink" nameval="validateName" urlval="validateURL" small="true">
 			</li>
 		</ul>
@@ -55,10 +48,6 @@
 			            <center class="item-buttons">
 			            	<hr style="width: 95%; margin: 0 auto; border-top: none !important; border-bottom: 1px solid darkgray !important; margin-bottom: 10px;" />
 			            	<button ng-show="module.items.length" title="{{'Preview'|translate}}" ng-click="impersonate(module.id)" class="btn btn-warning btn-mini" style="float: right; margin-right:10px; margin-bottom: 10px;" tooltip-placement="top" tooltip="Preview as student" tooltip-append-to-body="true" ng-disabled="disable_preview">{{'Preview'|translate}}</button>
-			            	<add-module-items index="$index" lecture="addLecture" quiz="addQuiz"></add-module-items>
-			            	<!-- <button_link title="{{'courses.add_lecture'|translate}}" class="btn btn-mini btn-success adding" style="background-image: initial;" action="addLecture($index)" ></button_link>
-			            	<button_link title="{{'lectures.add_quiz'|translate}}"   class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'quiz')"></button_link>
-			            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn btn-mini btn-success adding" style="background-image: initial;" action="addQuiz($index, 'survey')"></button_link> -->
 		                </center>
 		                <br />
 		        	</div>
@@ -72,7 +61,7 @@
 		</button>
 	</div>
 </span>
-
+ -->
 <!-- <div class="span3" id="tree" style="z-index:100">
 	<div class="menu-toggler" ng-click="toggleTree()" tooltip-placement="right" tooltip="{{'head.content' | translate}}" tooltip-append-to-body="true">
 		<span class="tree-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>

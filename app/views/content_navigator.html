@@ -45,19 +45,79 @@
 				</accordion-group>
 			</accordion>
 		</span> -->
-		<span ng-switch-when="progress">
+
+		<span ng-switch-when="editor">
+			<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
+			<ul class="accordion">
+				<li ng-repeat="link in course.custom_links" class='module accordion-group'>
+					<link-item link="link" update="updateCustomLink" remove="removeCustomLink" nameval="validateName" urlval="validateURL" small="true">
+				</li>
+			</ul>
+			<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>courses.modules</div>
 			<accordion  class="accordion">
 				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 					<accordion-heading class="accordion-heading">
-						<ul ng-click="selectModule(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
+						<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" ng-class="{currentmodule: currentmodule.id == module.id}" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" link="createModuleLink(module.id)"/>
+						<!-- <ul ng-click="selectModule(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
 							{{module.name}}
-						</ul>
+						</ul> -->
 					</accordion-heading>
-					<ul ng-click="showItemProgress(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items | orderBy: 'position'">
+					<!-- <ul ng-click="showItemProgress(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items | orderBy: 'position'">
 						{{item.name}}
-					</ul>
+					</ul> -->
+					<!-- <small><ul ng-show="module.items.length == 0"><li style="color: white; text-align: left; margin-left: 10px; opacity: 0.6;" >{{'groups.empty' | translate}}...</li></ul></small> -->
+          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
+	            		<li class="last-child item" ng-repeat="item in module.items" ng-class="{currentitem: currentitem == item.id}" >
+             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="copy(item)" paste="paste(module.id, $parent.$index)" share="openShareModal(item.id,item.class_name)" link="createItemLink(item)"></item>
+	            		</li>
+	            	</ul>
+	            	<center class="item-buttons">
+		            	<hr style="width: 95%; margin: 0 auto; border-top: none !important; border-bottom: 1px solid darkgray !important; margin-bottom: 10px;" />
+		            	<a ng-show="module.items.length" title="{{'Preview'|translate}}" ng-click="impersonate(module.id)" class="button orange small" style="float: right; margin-right:10px; margin-bottom: 10px;" tooltip-placement="top" tooltip="Preview as student" tooltip-append-to-body="true" ng-disabled="disable_preview">{{'Preview'|translate}}</a>
+		            	<add-module-items index="$index" lecture="addLecture" quiz="addQuiz"></add-module-items>
+	                </center>
+	                <br />
 				</accordion-group>
 			</accordion>
+			<a ng-show="!module_loading" ng-click="addCustomLink();" class="button success">+ Add Link</a>
+			<a ng-show="!module_loading" ng-click="addModule();" class="button success" >+ {{'courses.add_module'|translate}}</a >
+			<br>
+			<br>
+<!-- 			<div class="content-navigator-container" ng-class="{containeropen: open_navigator}">
+				<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
+				<ul class="accordion">
+					<li ng-repeat="link in course.custom_links" class='module accordion-group'>
+						<link-item link="link" update="updateCustomLink" remove="removeCustomLink" nameval="validateName" urlval="validateURL" small="true">
+					</li>
+				</ul>
+				<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>courses.modules</div>
+				<ul ui-sortable="moduleSortableOptions" ng-model='modules' class="accordion">
+					<li ng-repeat="module in modules" class='accordion-group' ng-init="module.open = false">
+						<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" ng-class="{currentmodule: currentmodule.id == module.id}" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" link="createModuleLink(module.id)"/>
+						<div class="outer" collapse="!(module.open || currentmodule.id == module.id})">
+				        	<div class="inner" id="modules">
+				        		<small><ul ng-show="module.items.length == 0"><li style="color: white; text-align: left; margin-left: 10px; opacity: 0.6;" >{{'groups.empty' | translate}}...</li></ul></small>
+			          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
+				            		<li class="last-child item" ng-repeat="item in module.items" ng-class="{currentitem: currentitem == item.id}" >
+			             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="copy(item)" paste="paste(module.id, $parent.$index)" share="openShareModal(item.id,item.class_name)" link="createItemLink(item)"></item>
+				            		</li>
+				            	</ul>
+					            <center class="item-buttons">
+					            	<hr style="width: 95%; margin: 0 auto; border-top: none !important; border-bottom: 1px solid darkgray !important; margin-bottom: 10px;" />
+					            	<button ng-show="module.items.length" title="{{'Preview'|translate}}" ng-click="impersonate(module.id)" class="btn btn-warning btn-mini" style="float: right; margin-right:10px; margin-bottom: 10px;" tooltip-placement="top" tooltip="Preview as student" tooltip-append-to-body="true" ng-disabled="disable_preview">{{'Preview'|translate}}</button>
+					            	<add-module-items index="$index" lecture="addLecture" quiz="addQuiz"></add-module-items>
+				                </center>
+				                <br />
+				        	</div>
+				    	</div>
+					</li>
+				</ul>
+				<button ng-show="!module_loading" ng-click="addModule();" class="btn btn-success adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;">
+				+ {{'courses.add_module'|translate}}
+				</button >
+				<button ng-show="!module_loading" ng-click="addCustomLink();" class="btn btn-success adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;">+ Add Link
+				</button>
+			</div> -->
 		</span>
 	</div>
 </span>

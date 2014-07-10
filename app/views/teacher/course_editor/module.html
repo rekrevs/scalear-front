@@ -1,16 +1,20 @@
-<div context-menu data-target="menu" opened='menu_status' ng-click='invertOpen()' class="disable_selection" style="font-size: 12px;line-height: 20px;padding: 3px 0;" >
-	<img src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}" />
-	<a class='trigger' ui-sref="course.course_editor.module({ module_id: id })">{{name}}</a>
-	<input class="module_link" type="text" ng-show="link_url" ng-model="link_url" ng-blur="link_url=null" />
-	<delete_button size='small' color='dark' action='remove({event:event})' />
-	<div class="menu">
-	  <ul class="dropdown-menu" style="font-size:14px">
-	    <li >
-	      <a ng-click='copyModule($event)' translate>menu.copy</a>
-	      <a ng-show="$parent.$parent.clipboard" ng-click='doPaste($event)' translate>menu.paste</a>
-	      <a ng-click='shareModule($event)' translate>menu.share</a>
-	      <a ng-click='createLink($event)' >Create Link</a>
-	    </li>	    
+<div context-menu data-target="menu" opened='menu_status' ng-click='invertOpen()' class="row disable_selection" style="font-size: 12px;line-height: 20px;padding: 3px 0;" >
+	<div class="small-2 columns">
+		<img src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}" />
+	</div>
+	<div class="small-8 columns left" style="padding:0">
+		<ul class="size-14" style="padding: 0;margin:0" ui-sref="course.module.course_editor({ module_id: id })">{{name}}</ul>
+		<input class="module_link" type="text" ng-show="link_url" ng-model="link_url" ng-blur="link_url=null" />
+	</div>
+	<div class="small-2 columns" >
+		<delete_button size='small' color='dark' action='remove({event:event})' />
+	</div>
+	<div>
+	  <ul class="menu f-dropdown" style="font-size:14px">
+	    <li ><a ng-click='copyModule($event)' translate>menu.copy</a></li>
+	    <li><a ng-show="$parent.$parent.clipboard" ng-click='doPaste($event)' translate>menu.paste</a></li>
+	    <li><a ng-click='shareModule($event)' translate>menu.share</a></li>
+	    <li><a ng-click='createLink($event)' >Create Link</a></li>
 	  </ul>
 	</div>
 </div>

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page',
-        function($scope, $stateParams, Course, $window, Page) {
+    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page', '$filter', '$state', '$timeout',
+        function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout) {
 
             Page.setTitle('head.information');
             $window.scrollTo(0, 0);
@@ -53,8 +53,60 @@ angular.module('scalearAngularApp')
                 if(reverse){ return short_s.split("").reverse().join(""); }
                 return short_s;
             }
+            $scope.init_calendar_announcements=function(){
+                $scope.eventSources = [];
+                $scope.filtered_events = []
+                Course.getCalendarEvents(
+                    {course_id: $stateParams.course_id},
+                    function(data){
+                        $scope.uiConfig = {
+                          calendar:{
+                                editable: false,
+                                header:{
+                                  right: 'today prev,next',
+                                  left: 'title'
+                                },
+                                eventDrop: $scope.alertOnDrop,
+                                eventResize: $scope.alertOnResize,
+                            }
+                        };
+                        $scope.calendar = data;
+                        $scope.announcements= JSON.parse(data.announcements);
+                        data.events.forEach(function(event){
+                            if(event.firstItem){
+                                $scope.filtered_events.push(event)
+                            }
+                        })
+                        $scope.calendar.events = $scope.filtered_events
+                        for (var element in $scope.calendar.events){
+                            console.log(new Date($scope.calendar.events[element].start))
+                            $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
+                            $scope.calendar.events[element].title +=  ' @'+$filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
+                            if($scope.calendar.events[element].quizId)
+                                $scope.calendar.events[element].url= $state.href("course.courseware.module.quiz",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId ,quiz_id:$scope.calendar.events[element].quizId})
+                            else if($scope.calendar.events[element].lectureId)
+                                $scope.calendar.events[element].url= $state.href("course.courseware.module.lecture",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId, lecture_id:$scope.calendar.events[element].lectureId})
+                            else{
+                                if(!$scope.calendar.events[element].firstItem)
+                                    $scope.calendar.events[element].url= $state.href("course.courseware",{course_id: $scope.calendar.events[element].courseId})
+                                else{
+                                    if($scope.calendar.events[element].firstItemType=="Lecture")
+                                        $scope.calendar.events[element].url= $state.href("course.courseware.module.lecture",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId, lecture_id:$scope.calendar.events[element].firstItem.id})
+                                    else
+                                        $scope.calendar.events[element].url= $state.href("course.courseware.module.quiz",{course_id: $scope.calendar.events[element].courseId,module_id:$scope.calendar.events[element].groupId, quiz_id:$scope.calendar.events[element].firstItem.id})
+                                }
+                            }  
+                        }
+                        $scope.eventSources.push($scope.calendar); 
+                        console.log($scope.eventSources)
+                        $timeout(function(){$(window).resize()})
+                    },
+                    function(){}
+                )
+            }
 
             $scope.init();
+            $scope.init_calendar_announcements();
 
         }
     ]);

@@ -22,7 +22,7 @@
 					<ul top-bar-dropdown>
 						<li><label translate>navigation.current_courses</label></li>
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="has-description" href="" ui-sref="course.student_calendar({ course_id: course.id })">
+							<a class="has-description" href="" ui-sref="course.course_information({ course_id: course.id })">
 								
 								{{course.short_name}}
 								<h5 class="description"><small>{{course.name}}</small></h5>

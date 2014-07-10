@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', '$window','Page', 'NewsFeed','$translate', function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler, $window,Page, NewsFeed, $translate) {
+  .controller('studentCourseListCtrl',['$scope','Course', '$modal', '$log','$rootScope','$timeout','ErrorHandler', '$window','Page', 'NewsFeed','$translate', '$filter', function ($scope, Course, $modal, $log,$rootScope,$timeout, ErrorHandler, $window,Page, NewsFeed, $translate, $filter) {
 
   	$window.scrollTo(0, 0);
     Page.setTitle('navigation.courses');
@@ -10,7 +10,8 @@ angular.module('scalearAngularApp')
 			Course.index({},
   			function(data){
   				$log.debug(data)
-  				$scope.courses = data
+  				$scope.all_courses = data
+          $scope.courses = $scope.all_courses
           console.log($scope.courses)
   			},
   			function(){}
@@ -35,6 +36,21 @@ angular.module('scalearAngularApp')
       //   console.log('Couldn\'t get the data');
       // })
 		}
+
+    $scope.filterCourses = function(which){
+      if(which == 'all'){
+        $scope.courses = $scope.all_courses
+      }
+      else if(which == 'current'){
+        $scope.courses = $filter('filter')($scope.all_courses, {'ended': false})
+      }
+      else if(which == 'finished'){
+        $scope.courses = $filter('filter')($scope.all_courses, {'ended': true})
+      }
+    }
+    $scope.$watch('filterChoice', function(){
+      $scope.filterCourses($scope.filterChoice)
+    })
 
 		$scope.order=function(column_name){
   			$scope.column = column_name

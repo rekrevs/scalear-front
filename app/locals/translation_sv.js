@@ -1,5 +1,6 @@
 var translation_sv=function(){
     return {
+      finished: 'Kom',
       yes: 'Ja',
       no: 'Nej',
       main: "Huvudsaklig",
@@ -148,11 +149,12 @@ var translation_sv=function(){
               privacy: "Sekretessregler",
           },
       feedback:{
+              what_you_think: "Låt oss veta vad du tycker",
               report_technical: "Rapportera ett tekniskt problem",
               send: "Skicka",
               close: "Stänga",
               cancel: "Avbryt",
-              instructions:"Använd detta formulär för att rapportera eventuella problem du har. Ju mer detaljerat du kan ge lättare är det för oss att åtgärda problemet!",
+              instructions:"Det bästa sättet för oss att göra ScalableLearning bättre är genom feedback från våra användare. Skicka gärna kommentarer eller frågor eller problem som du kan ha och vi ska göra vårt bästa för att komma tillbaka till dig så snart som möjligt.",
               problem_is:"Mitt problem är med",
               provide_desciption: "Ge mer beskrivning",
               provide_email_name: "Se till att du lämnat ditt namn och e-post"

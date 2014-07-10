@@ -195,6 +195,69 @@ button.active{
 	word-break: break-word;
 }
 
+/* OUR OWN SPINNER */
+#scalable-spinner{
+  display: block;
+  pointer-events: none;
+  -webkit-pointer-events: none;
+  -webkit-transition: 350ms linear all;
+  -moz-transition: 350ms linear all;
+  -o-transition: 350ms linear all;
+  transition: 350ms linear all;
+}
+#scalable-spinner .spinner-icon-big {
+  /*width: 14px;
+  height: 14px;*/
+  width: 50px;
+  height: 50px;
+
+  border:  solid 3px transparent;
+  border-top-color:  rgb(0, 162, 86);
+  border-left-color: rgb(0, 162, 86);
+  border-radius: 50px;
+
+  -webkit-animation: scalable-spinner 700ms linear infinite;
+  -moz-animation:    scalable-spinner 700ms linear infinite;
+  -ms-animation:     scalable-spinner 700ms linear infinite;
+  -o-animation:      scalable-spinner 700ms linear infinite;
+  animation:         scalable-spinner 700ms linear infinite;
+}
+#scalable-spinner .spinner-icon {
+  width: 14px;
+  height: 14px;
+
+  border:  solid 2px transparent;
+  border-top-color:  rgb(0, 162, 86);
+  border-left-color: rgb(0, 162, 86);
+  border-radius: 10px;
+
+  -webkit-animation: scalable-spinner 700ms linear infinite;
+  -moz-animation:    scalable-spinner 700ms linear infinite;
+  -ms-animation:     scalable-spinner 700ms linear infinite;
+  -o-animation:      scalable-spinner 700ms linear infinite;
+  animation:         scalable-spinner 700ms linear infinite;
+}
+@-webkit-keyframes scalable-spinner {
+  0%   { -webkit-transform: rotate(0deg);   transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-moz-keyframes scalable-spinner {
+  0%   { -moz-transform: rotate(0deg);   transform: rotate(0deg); }
+  100% { -moz-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-o-keyframes scalable-spinner {
+  0%   { -o-transform: rotate(0deg);   transform: rotate(0deg); }
+  100% { -o-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@-ms-keyframes scalable-spinner {
+  0%   { -ms-transform: rotate(0deg);   transform: rotate(0deg); }
+  100% { -ms-transform: rotate(360deg); transform: rotate(360deg); }
+}
+@keyframes scalable-spinner {
+  0%   { transform: rotate(0deg);   transform: rotate(0deg); }
+  100% { transform: rotate(360deg); transform: rotate(360deg); }
+}
+
 /*Animations*/
 
 .fade {

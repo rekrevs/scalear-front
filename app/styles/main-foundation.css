@@ -173,6 +173,34 @@ input{
 	text-overflow: ellipsis;
 }
 
+/*PADDING & MARGINS*/
+.no-padding{
+	padding: 0px !important; 
+}
+.no-margin{
+	margin: 0px !important;
+}
+.with-padding{
+	padding: 1.25rem !important;
+}
+.with-tiny-padding{
+	padding: 0.25rem !important;
+}
+
+.with-margin-bottom{
+	margin-bottom: 1.25rem !important;
+}
+.with-margin-right{
+	margin-right: 1.25rem !important;
+}
+
+
+/*CUSTOM ELEMENTS*/
+.time-label{
+	padding: 5px;
+	display: inline-block;
+}
+
 
 /*STATES*/
 button.active{
@@ -194,8 +222,12 @@ button.active{
 .break-text{
 	word-break: break-word;
 }
+.show-inline{
+	display: inline-block;
+}
 
-/* OUR OWN SPINNER */
+
+/* OUR OWN LOADING SPINNER */
 #scalable-spinner{
   display: block;
   pointer-events: none;

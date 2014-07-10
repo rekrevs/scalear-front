@@ -1,37 +1,66 @@
-<div class="course-image left hide-for-small-only hide-for-medium-only large-2" style="padding-left: 0px;">
-    <img ng-class="{centerimage: course.image_url}" ng-src="{{course.image_url || '../images/course_image.png'}}" />
-</div>
+<center><loading size="big" show="!course"></loading></center>
+<span ng-show="course">
+    <div style="large-3">
+        <div class="course-image left hide-for-small-only hide-for-medium-only">
+            <img ng-class="{centerimage: course.image_url}" ng-src="{{course.image_url || '../images/course_image.png'}}" />
+        </div>
+        <div style="position: absolute; margin-top: 220px;" class="hide-for-small-only hide-for-medium-only">
+            <button type="button" class="button tiny uppercase" calendar-modal ng-click="openCalendar()">View Course Calendar</button>
+            <div class="large-12 column with-margin-bottom">
+                <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
+            </div>
+            <div class="large-12 column with-margin-bottom">
+                <i class="fi-clock size-24"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
+            </div>
+            <div class="large-12 column with-margin-bottom">
+                <i class="fi-link size-24"></i> <a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
+            </div>
+        </div>
+    </div>
+    <div class="small-12 medium-8 large-7 columns">
+        <h2 class="title color-green" title="{{course.name}}">{{course.short_name}} | {{course.name}}</h2>
+        <h6 class="color-blue show-for-small-only" title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
+        <div class="hide-for-large-only with-padding-bottom">
+            <div>
+                <button type="button" class="button tiny uppercase right">View Course Calendar</button>
+            </div>
+            <div class="with-margin-bottom">
+                <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
+            </div>
+            <div class="with-margin-bottom">
+                <i class="fi-clock size-24"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
+            </div>
+            <div class="with-margin-bottom">
+                <i class="fi-link size-24"></i> <a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
+            </div>
+            <hr />
+        </div>
+        <h5 translate class="subheader">groups.description</h5>
+        <p style="font-weight: 200;">
+            {{course.description}}
+        </p>
+        <h5 translate class="subheader">courses.prerequisites</h5>
+        <p style="font-weight: 200;">
+            {{course.prerequisites}}
+        </p>
+        
+        <h5 translate class="subheader">head.announcements</h5>
+        <p style="font-weight: 200;">
+            <student-announcement-item announcement="announcement" ng-repeat="announcement in announcements"></student-announcement-item>
+        </p>
+    </div>
+    <div class="teachers-column hide-for-small-only light-grey">
+        <h6 title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span></h6>
+        <ul class="vcard under-the-other" ng-repeat="teacher in teachers">
+          <profile-image email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
+          <li class="fn truncate" title="{{teacher.name+' '+teacher.last_name}}">{{teacher.name+' '+teacher.last_name}}</li>
+          <li class="locality">{{'courses.'+teacher.role | translate}}</li>
+          <li class="email break-text"><a href="">{{teacher.email}}</a></li>
+        </ul>
+    </div>
+</span>
 
-<div class="small-12 medium-8 large-7 columns">
-    <h2 class="title color-green" title="{{course.name}}">{{course.short_name}} | {{course.name}}</h2>
-    <h6 class="color-blue show-for-small-only" title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
-    <h5 translate class="subheader">groups.description</h5>
-    <p style="font-weight: 200;">
-        {{course.description}}
-    </p>
-    <h5 translate class="subheader">courses.prerequisites</h5>
-    <p style="font-weight: 200;">
-        {{course.prerequisites}}
-    </p>
-    <div class="medium-4 column">
-        <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
-    </div>
-    <div class="medium-4 column">
-        <i class="fi-clock size-24"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
-    </div>
-    <div class="medium-4 column">
-        <i class="fi-link size-24"></i> <a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
-    </div>
-</div>
-<div class="teachers-column hide-for-small-only light-grey">
-    <h6 title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span></h6>
-    <ul class="vcard under-the-other" ng-repeat="teacher in teachers">
-      <profile-image email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
-      <li class="fn truncate" title="{{teacher.name+' '+teacher.last_name}}">{{teacher.name+' '+teacher.last_name}}</li>
-      <li class="locality">{{'courses.'+teacher.role | translate}}</li>
-      <li class="email break-text"><a href="">{{teacher.email}}</a></li>
-    </ul>
-</div>
+
 
 
 

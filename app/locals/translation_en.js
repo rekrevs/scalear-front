@@ -1,5 +1,6 @@
 var translation_en=function(){
     return {
+      finished: 'Finished',
       yes: 'Yes',
       no: 'No',
       main: "Main",
@@ -147,11 +148,12 @@ var translation_en=function(){
         privacy: "Privacy",
       },
       feedback:{
+        what_you_think: "Let us know what you think",
         report_technical: "Report a technical problem",
         send: "Send",
         close: "Close",
         cancel: "Cancel",
-        instructions:"Please use this form to report any problems you are having. The more detail you can provide easier it is for us to fix your problem!",
+        instructions:"The best way for us to make ScalableLearning better is through feedback from our users. Please send us any comments or questions or problems you may have and we’ll do our best to get back to you as soon as possible.",
         problem_is:"My problem is with",
         provide_desciption: "Please provide more description",
         provide_email_name: "Please make sure that you provided your name and email address"

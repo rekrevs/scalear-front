@@ -53,7 +53,7 @@ angular.module('scalearAngularApp')
 
 		 		// $scope.init_loading=false
 		 		console.log("course ctrl")
-		 		console.log($scope)
+		 		console.log($scope.course)
 		    },
 		    function(){
 		    }

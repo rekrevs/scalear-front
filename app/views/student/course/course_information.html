@@ -1,10 +1,10 @@
 <center><loading size="big" show="!course"></loading></center>
 <span ng-show="course">
     <div style="large-3">
-        <div class="course-image left hide-for-small-only hide-for-medium-only">
+        <div class="course-image left show-for-large-up">
             <img ng-class="{centerimage: course.image_url}" ng-src="{{course.image_url || '../images/course_image.png'}}" />
         </div>
-        <div style="position: absolute; margin-top: 220px;" class="hide-for-small-only hide-for-medium-only">
+        <div style="position: absolute; margin-top: 220px;" class="show-for-large-up">
             <button type="button" class="button tiny uppercase" calendar-modal ng-click="openCalendar()">View Course Calendar</button>
             <div class="large-12 column with-margin-bottom">
                 <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}

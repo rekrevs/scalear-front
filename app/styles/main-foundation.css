@@ -328,3 +328,7 @@ button.active{
   filter: alpha(opacity=50);
   opacity: .5;
 }
+
+h2 .editable-click{
+	color: #5da423 !important;
+}

@@ -9,16 +9,17 @@ angular.module('scalearAngularApp')
   $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
   $scope.role_names = {'3': 'courses.professor', '4': 'courses.ta'};
   Page.setTitle('head.information')
-  Course.show({course_id:$stateParams.course_id},function(response){
-  	$scope.data=response
-    console.log($scope.data)
-  	$scope.timezones=response.timezones;
+  Course.show({course_id:$stateParams.course_id},
+    function(response){
+    	// $scope.course_data=response.course
+      // console.log($scope.course_data)
+    	$scope.timezones=response.timezones;
 
-    $scope.timezones.forEach(function(zone){
-      if(zone.name == $scope.data.course.time_zone){
-        $scope.data.course.time_zone = zone
-        return
-      }
+      $scope.timezones.forEach(function(zone){
+        if(zone.name == $scope.course_data.time_zone){
+          $scope.course_data.time_zone = zone
+          return
+        }
     })
   });
   
@@ -26,9 +27,9 @@ angular.module('scalearAngularApp')
   $scope.updateCourse = function(data,type){
     if(data && data instanceof Date){ 
           data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
-          $scope.data.course[type] = data
+          $scope.course_data[type] = data
     }
-    var modified_course=angular.copy($scope.data.course);
+    var modified_course=angular.copy($scope.course_data);
     delete modified_course.id;
     delete modified_course.created_at;
     delete modified_course.updated_at;
@@ -40,8 +41,8 @@ angular.module('scalearAngularApp')
       {course_id:$stateParams.course_id},
       {course:modified_course},
       function(response){
-        $scope.data=response;
-        $scope.data.course.time_zone = timezone
+        $scope.course_data=response.course;
+        $scope.course_data.time_zone = timezone
         console.log(timezone)
       }
     );
@@ -66,9 +67,12 @@ angular.module('scalearAngularApp')
 	};
 
   $scope.exportCourse = function(course){;
-    Course.exportCsv({course_id: $stateParams.course_id}, function(){
-      console.log("success");
-    })
+    Course.exportCsv(
+      {course_id: $stateParams.course_id}, 
+      function(){
+        console.log("success");
+      }
+    )
   }
 
   $scope.url_with_protocol = function(url)
@@ -84,7 +88,7 @@ angular.module('scalearAngularApp')
     Course.getTeachers({course_id:$stateParams.course_id},
       function(value){
            $scope.teachers = value.data;
-           $scope.new_teachers = [];
+           $scope.new_teacher = null;
        },
        function(value){}
     )
@@ -92,33 +96,48 @@ angular.module('scalearAngularApp')
 
   $scope.toggleDelete = function(){
     $scope.in_delete = !$scope.in_delete
-    if($scope.in_delete == false){
-      $scope.toggle_message = 'courses.remove_teacher'
-    }
-    else{
-      $scope.toggle_message = 'events.done'
-    }
+    $scope.toggle_message = $scope.in_delete? 'events.done':'courses.remove_teacher'
+
+    // if($scope.in_delete == false){
+    // }
+    // else{
+    //   $scope.toggle_message = 'events.done'
+    // }
   }
 
-  $scope.addColumn = function(index){
-    $scope.new_teachers.splice(index+1, 0, {email: null, role: null, status: $translate('controller_msg.pending')});
+  $scope.addNewTeacher= function(){
+    $scope.teacher_forum = true
+    // $scope.new_teachers.splice(index+1, 0, {email: null, role: null, status: $translate('controller_msg.pending')});
   }
 
-  $scope.updateTeacher = function(index){
-    Course.updateTeacher({course_id:$stateParams.course_id},{email:$scope.teachers[index].email, role_id:$scope.teachers[index].role});
+  $scope.updateTeacher = function(){
+    Course.updateTeacher(
+      {course_id:$stateParams.course_id},
+      {
+        email:$scope.teachers[index].email, 
+        role_id:$scope.teachers[index].role
+      }
+    );
   }
 
-  $scope.removeColumn = function(index){
-    $scope.new_teachers.splice(index, 1);
+  $scope.removeNewTeacher = function(){
+    $scope.new_teacher = null
+    $scope.teacher_forum = false
   }
 
   $scope.removeTeacher = function(index){
     //var answer = confirm($translate('courses.you_sure_remove_teacher', {teacher: $scope.teachers[index].email}));
     //if(answer){
-    Course.deleteTeacher({course_id:$stateParams.course_id, email:$scope.teachers[index].email}, {},
-        function(value) {$scope.teachers.splice(index, 1);},
-        //handle the server error
-        function(value) {}
+    Course.deleteTeacher(
+      {
+        course_id:$stateParams.course_id, 
+        email:$scope.teachers[index].email
+      }, {},
+      function(value) 
+      {
+        $scope.teachers.splice(index, 1);
+      },
+      function(value) {}
     )
 
     $log.debug($scope.teachers);
@@ -126,37 +145,40 @@ angular.module('scalearAngularApp')
   }
 
   $scope.saveTeachers = function(){
-    Course.saveTeachers({course_id:$stateParams.course_id},{new_teachers:$scope.new_teachers},
+    Course.saveTeachers({course_id:$stateParams.course_id},{new_teacher:$scope.new_teacher},
         function(value) {
             $scope.error = $scope.getTeachers();
+            $scope.teacher_forum = false
         },
         //handle error
         function(value) {
-          $scope.errors=value.data.errors
-          for(var element in $scope.new_teachers)
-          {
-            $scope.new_teachers[element].error=$scope.errors[$scope.new_teachers[element].email]
-          }
+          $scope.errors=
+          $scope.new_teacher.error=value.data.errors.email
+
+          // for(var element in $scope.new_teachers)
+          // {
+          // }
           $log.debug($scope.errors);
           //$scope.error = $scope.getTeachers();
         }
     )
   }
   
-  $scope.check = function(value, index){
-    if(value ==''){
-        $scope.new_teachers[index].email = null;
-    }
-  }
+  // $scope.check = function(value, index){
+  //   if(value ==''){
+  //       $scope.new_teachers[index].email = null;
+  //   }
+  // }
 
   $scope.getTeachers();
-  $scope.$watch('current_lang', function(newval, oldval){
-    if(newval!=oldval)
-        for(var elem in $scope.new_teachers)
-        {
-            delete $scope.new_teachers[elem].error
-        }
-  });
+  // $scope.$watch('current_lang', function(newval, oldval){
+  //   if(newval!=oldval)
+  //     delete $scope.new_teacher.error
+  //       // for(var elem in $scope.new_teachers)
+  //       // {
+  //       //     delete $scope.new_teachers[elem].error
+  //       // }
+  // });
   // $scope.validateDuration=function(type,value){
       // if (value<1 || value >=1000)
             // return $translate('courses.duration_invalid')

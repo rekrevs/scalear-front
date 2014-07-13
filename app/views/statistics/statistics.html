@@ -2,108 +2,47 @@
 <link rel="stylesheet" href="styles/teacher/statistics.css"/>
 <link rel="stylesheet" href="styles/modules_selector.css"/>
 <!-- endbuild -->
-<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2;">
-	<table style="width: 95%; position: relative;">
-		<tr>
-			<td style="width: 32%; text-align: left;">
-				<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="toggleSelector()" ng-disabled="loading_totals" title="{{selected_module.name}}">{{stats_title || 'statistics.charts' | translate}}<span class="caret" style="margin-left: 5px;"></span></button>
-		    </td>
-
-		    <td id="second-td" style="width: 33.66%;">
-				<big>
-					<b ng-bind="stats_title | translate">
-					</b>
-				</big>
-			</td>
-			<td style="width: 33.33%; text-align: right;" id="third-td">
-		    	
-			</td>
-		</tr>
-	</table>
-</div>
-<div class="modules-selector-dropdown" collapse="!close_selector" style="z-index: 1; top: 90px; background-color: whitesmoke; border: none; width: 0; position: fixed;">
-	<div class="multicol" style="-webkit-column-count:2;-moz-column-count:2;column-count:2;">
-		<div ng-repeat="series in collection">
-			<a ng-click="getSeriesData(series)">
-				<ul style="float: left; margin: 0; color: #2d2d2d; cursor: pointer;" ng-class="{moduleactive: selected_series == series}">
-					{{'statistics.'+series.toLowerCase()|translate}}
-				</ul>
-			</a>
-		</div>
-	</div>
-</div>
-
+<h3 class="show-inline"><i class="fi-graph-bar size-36"></i> {{'statistics.statistics_dashboard' | translate}}</h3>
 <!-- <h2 translate>statistics.statistics_dashboard</h2> -->
-<center><loading  show="loading_totals"/></center>
-<br />
-<br />
-<br />
-<div ng-show="!loading_totals" class="row top-stats">   
-	<div class="top-total">
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_students</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Students}}</b></h4>
+<center>
+	<loading size="big" show="loading_totals || chartConfig.loading"/>
+	<div ng-show="!loading_totals && !chartConfig.loading" class="small-12 medium-6 large-6 columns with-margin-bottom">
+		<button class="tiny button dropdown under-the-other left" dropdown-toggle="#charts_dropdown_list">{{'statistics.'+selected_series.toLowerCase() || 'courses.charts' | translate}}</button>
+		<ul id="charts_dropdown_list" class="f-dropdown">
+			<li ng-repeat="series in collection">
+		  		<a ng-click="getSeriesData(series)">{{'statistics.'+series.toLowerCase()|translate}}</a>
+			</li>
+		</ul>
+		<highchart id="chart1" config="chartConfig"></highchart>
+	</div>
+	<div ng-show="!loading_totals && !chartConfig.loading" class="small-12 medium-6 large-6 columns with-margin-bottom">
+		<div class="panel small-12 medium-12 large-6 columns">
+			<h5><span translate>statistics.total_students</span>: </h5><h4><b>{{Total_Students}}</b></h4>
 		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_teachers</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Teachers}}</b></h4>
+		<div class="panel small-12 medium-12 large-6 columns">
+			<h5><span translate>statistics.total_teachers</span>: </h5><h4><b>{{Total_Teachers}}</b></h4>
+		</div>
+		<div class="panel small-12 medium-12 large-6 columns">
+			<h5><span translate>statistics.total_courses</span>: </h5>
+			<h4><b>{{Total_Courses}}</b></h4>
+		</div>
+		<div class="panel small-12 medium-12 large-6 columns">
+			<h5><span translate>statistics.total_lectures</span>: </h5><h4><b>{{Total_Lectures}}</b></h4>
+		</div>
+		<div class="panel small-12 medium-12 large-6 columns">
+			<h5><span translate>statistics.total_quizzes</span>: </h5><h4><b>{{Total_Quizzes}}</b></h4>
+		</div>
+		<div class="panel small-12 medium-12 large-6 columns">
+			<h5><span translate>statistics.total_surveys</span>: </h5><h4><b>{{Total_Surveys}}</b></h4>
+		</div>
+		<div class="panel small-12 medium-12 large-6 columns">
+			<h5><span translate>statistics.questions_asked</span>: </h5><h4><b>{{Total_Questions_Asked}}</b></h4>
+		</div>
+		<div class="panel small-12 medium-12 large-6 columns">
+			<h5><span translate>statistics.total_confused</span>: </h5><h4><b>{{Total_Confused}}</b></h4>
 		</div>
 	</div>
-	<div class="top-total">
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_lectures</span>: </h5><h4 class="text-info total_inner"><b>{{Total_Lectures}}</b></h4>
-		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_courses</span>: </h5>
-			<h4 class="text-info total_inner"><b>{{Total_Courses}}</b></h4>
-		</div>
-	</div>
-	<div class="top-total">
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_quizzes</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Quizzes}}</b></h4>
-		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_surveys</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Surveys}}</b></h4>
-		</div>
-	</div>
-	<div class="top-total">
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.questions_asked</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Questions_Asked}}</b></h4>
-		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_confused</span>: </h5><h4 class="text-info total_inner" ><b>{{Total_Confused}}</b></h4>
-		</div>
-	</div>
-</div>
-<div class="row" style="text-align: center;"> 
-	<div class="span3 side-stats">
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_students</span></h5><h4 class="text-info total_inner" style="padding-top: 28px; padding-bottom: 45px;"><b>{{Total_Students}}</b></h4>
-		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_teachers</span></h5><h4 class="text-info total_inner" style="padding-top: 28px; padding-bottom: 45px;"><b>{{Total_Teachers}}</b></h4>
-		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_courses</span></h5>
-			<h4 class="text-info total_inner" style="padding-top: 28px; padding-bottom: 45px;"><b>{{Total_Courses}}</b></h4>
-		</div>
-	</div>       
-	<div id='details' class="statistics-middle">
-		<highchart id="chart1" config="chartConfig" class="span10"></highchart>
-	</div>
-	<div class="span3 side-stats">
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_quizzes</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{Total_Quizzes}}</b></h4>
-		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_surveys</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{Total_Surveys}}</b></h4>
-		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_lectures</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;"><b>{{Total_Lectures}}</b></h4>
-		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.questions_asked</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{Total_Questions_Asked}}</b></h4>
-		</div>
-		<div class="total">
-			<h5 class="text-info total_title" ><span translate>statistics.total_confused</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{Total_Confused}}</b></h4>
-		</div>
-	</div>
-</div>
+	
+	
+
+</center>

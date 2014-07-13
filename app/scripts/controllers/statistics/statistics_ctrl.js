@@ -124,9 +124,6 @@ angular.module('scalearAngularApp')
     }
 
 	$scope.getSeriesData=function(key){
-        if($scope.close_selector){
-            $scope.toggleSelector();
-        }
 		$scope.selected_series= key
 		var chart_data=[]
 		$scope.chartConfig.loading = true

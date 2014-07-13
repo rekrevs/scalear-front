@@ -61,8 +61,9 @@
 
 .hidden_shortcuts{
     position:absolute;
-    top: -207px;
-    left: -180px;
+    top: -240px;
+    left: -250px;
+    min-width: 200px;
     z-index:3;
 }
 

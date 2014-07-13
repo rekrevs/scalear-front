@@ -922,7 +922,8 @@ var translation_en=function(){
     course_settings:{
       show_notes: "Show Notes",
       show_questions: "Show Questions",
-      show_quizzes: "Show Quizzes"
+      show_quizzes: "Show Quizzes",
+      show_confused: "Show Confused"
     }
 
 

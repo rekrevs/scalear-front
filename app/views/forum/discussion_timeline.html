@@ -1,4 +1,4 @@
-<td style="padding: 0px;" class="timeline-icon-container">
+<td style="padding: 0px;" class="timeline-icon-container valign-top">
     <div class="solved timeline-item" ng-click="seek()(item.time, item.data.lecture_id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="{{(item.time) | formattime:'hh:mm:ss'}}">
         <img src="../images/discussion-timeline.png" />
     </p>
@@ -8,7 +8,7 @@
 </td>
 <td ng-if="item.data" colspan="2" style="padding: 0px;padding-right: 8px;">
     <div class="discussion-content" ng-class="{ownpost: item.data.user_id == current_user.id, flagged: item.data.flags_count > 0}">
-        <table style="width: 100%;">
+        <table style="width: 100%;" class="transparent no-border no-margin">
             <tr>
                 <td style="padding-bottom: 0px;">
                     <div>
@@ -18,7 +18,8 @@
                               {{ item.data.created_at | timeAgo }}<span ng-if="item.data.flags_count > 0" style="color: red;"><span style="color: #a1a1a1">  </span>{{'discussion.flagged_post' | translate}}</span>
                         </div>
                         <div ng-show="item.data.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
-                            <delete_button class="hiddendeletebutton" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
+                            <delete_button class="show-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
+                            <delete_button class="hiddendeletebutton hide-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
                         </div>
                         <div style="display: inline-block; float: right;" ng-show="item.data.user_id != current_user.id">
                             <flag-button comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>

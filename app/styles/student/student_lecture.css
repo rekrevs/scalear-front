@@ -76,17 +76,9 @@
     }
     .discussion-comment{
         background-color: white;
-        /*margin-bottom: 5px;*/
-        /*padding-left: 10px;*/
-        /*padding-bottom: 10px;*/
-        /*padding-right: 5px;*/
-        /*border-left: 5px solid rgb(0, 162, 86);*/
     }
     .flagged{
-        /*border-left: 5px solid red !important;*/
-        /*border: 1px solid red !important;*/
-        /*box-shadow: 0px 0px 3px 1px lightcoral;*/
-        background-color: rgba(255, 0,0, 0.1);
+        background-color: rgba(255, 0,0, 0.1) !important;
     }
     .comments-table{
         font-size: 13px;        
@@ -138,8 +130,8 @@
         margin-left: 0px;
         list-style: none;
     }
-    #main-video-container{
-    }
+    /*#main-video-container{
+    }*/
 
     .video_class, .widescreen{
         width: 55.9vw; height: 31.444vw;
@@ -166,28 +158,13 @@
     color:#0088CC;
 
 }
-    /*@media only screen and (min-device-width: 768px) and (max-device-width: 1024px) and (orientation: landscape) {
-      #main-video-container{
-        clear:both;
-      }
-      #student-accordion{
-        float: left;
-        margin-top: 50px;
-        width: 500px;
-      }
-    }*/
     #student-accordion{
         width: 40%;
         float: right; 
         right: 0px;
         position: relative;
-        /*bottom: 6px;*/
         overflow-y: auto; 
-        height: 110%;  
-        margin-top: -40px;
-    }
-    .row{
-        margin-bottom: 10px; 
+        min-height: 85%;  
     }
     .filterbuttons{
         position: absolute;
@@ -226,7 +203,7 @@
       -webkit-transition: opacity .25s ease-in;
     }
     .ownpost{
-        background-color: #d9f2fc;
+        background-color: #d9f2fc !important;
     }
     /*@media only screen and (max-width : 1312px) {
       #student-accordion{
@@ -264,38 +241,34 @@
         overflow-y: auto;
       }
     }*/
-    /*@media only screen and (max-width : 955px) {*/
+
+
+
     @media only screen and (max-width : 1024px) {
         .timestamp{
             font-size: x-small;
         }
-        .hiddendeletebutton{
-          /*display: none !important;*/
-          opacity: 1;
-        }
         .video_class, .widescreen{
-            /*width: 95vw;
-            height: 53.4375vw;*/
             width: 71vw;
             height: 39.9375vw;
         }
-      .videoborder{
-        margin: 0 auto;
-      }
-      #main-video-container{
-        float: none !important;
-      }
-      #student-accordion{
-        width: 100%;
-        float: left;
-        margin-top: 50px;
-        clear: both;
-        overflow-y: visible;
-        position: absolute;
-      }
-      #user_information_container{
-        display: none;
-      }
+        .videoborder{
+            margin: 0 auto;
+        }
+        #main-video-container{
+            float: none !important;
+        }
+        #student-accordion{
+            width: 100%;
+            float: left;
+            margin-top: 50px;
+            clear: both;
+            overflow-y: visible;
+            position: absolute;
+        }
+        #user_information_container{
+            display: none;
+        }
      }
 
       

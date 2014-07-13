@@ -927,7 +927,8 @@ var translation_sv=function(){
         course_settings:{
           show_notes: "Visa Anteckningar",
           show_questions: "Visa Frågor",
-          show_quizzes: "Visa Språktest"
+          show_quizzes: "Visa Språktest",
+          show_confused: "Visa Förvirrad"
         }
      
     }

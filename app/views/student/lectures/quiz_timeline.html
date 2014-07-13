@@ -1,4 +1,4 @@
-<td style="padding: 0px;" class="timeline-icon-container">
+<td style="padding: 0px;" class="timeline-icon-container valign-top">
   <div ng-show="item.data.is_quiz_solved"  ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{(item.time) | formattime:'hh:mm:ss'}}" tooltip-append-to-body="true" >
     <img src="../images/quiz-timeline.png" />
   </div>
@@ -7,9 +7,9 @@
   <p ng-show="item.data.is_quiz_solved" class="solved" ng-click="seek()(item.time, item.data.lecture_id)">{{item.data.question}}</p>
   <p ng-show="!item.data.is_quiz_solved" >{{item.data.question}}</p>
 </td>
-<td style="padding: 0px; padding-right: 8px;width:20px;">                 
+<td style="padding: 0px; padding-right: 8px;width:30px;" class="valign-top">                 
   <img ng-show="item.data.is_quiz_solved" style="float: right;" src="images/check7.png" />
 </td>
-<td>
+<td class="valign-top no-padding">
  <voting-button ng-show="item.data.is_quiz_solved" votes-count="item.data.votes_count" voted="item.data.reviewed" up="voteForReview" down="unvoteForReview" direction="horizontal"></voting-button>
 </td>

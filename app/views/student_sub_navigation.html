@@ -1,5 +1,5 @@
 <div>
-  <div style="height: 60px;"></div>
+  <div style="height: 50px;"></div>
   <top-bar class="sub-header">
   <!-- <div class="top-bar sub-header"> -->
       <ul class="title-area">
@@ -16,9 +16,44 @@
             <li has-dropdown>
               <a class="sub-header-component active" href="" translate>settings.settings</a>
               <ul top-bar-dropdown>
-                <li><a class="sub-header-component" href="" translate>course_settings.show_notes</a></li>
-                <li><a class="sub-header-component" href="" translate>course_settings.show_questions</a></li>
-                <li><a class="sub-header-component" href="" translate>course_settings.show_quizzes</a></li>
+                <li class="blue with-padding" style="min-width: 200px;">
+                  <div class="switch tiny show-inline show-inline">
+                    <input id="showNotesCheckbox" type="checkbox" />
+                    <label class="color-white show-for-large-only" for="showNotesCheckbox" translate>course_settings.show_notes</label>
+                    <label class="color-white hide-for-large-only" for="showNotesCheckbox"></label>
+                  </div> 
+                  <small><small class="uppercase valign-top color-white hide-for-large-only show-inline" translate> course_settings.show_notes</small></small>
+                </li>
+                <li class="blue with-padding" style="min-width: 200px;">
+                  <div class="switch tiny show-inline show-inline">
+                      <input id="showQuestionsCheckbox" type="checkbox" />
+                      <label class="color-white show-for-large-only" for="showQuestionsCheckbox" translate>course_settings.show_questions</label>
+                      <label class="color-white hide-for-large-only" for="showQuestionsCheckbox"></label>
+                  </div> 
+                  <small><small class="uppercase valign-top color-white hide-for-large-only show-inline" translate> course_settings.show_questions</small></small>
+                </li>
+                <li class="blue with-padding" style="min-width: 200px;">
+                  <div class="switch tiny show-inline show-inline">
+                      <input id="showQuizzesCheckbox" type="checkbox" />
+                      <label class="color-white show-for-large-only" for="showQuizzesCheckbox" translate>course_settings.show_quizzes</label>
+                      <label class="color-white hide-for-large-only" for="showQuizzesCheckbox"></label>
+                  </div> 
+                  <small><small class="uppercase valign-top color-white hide-for-large-only show-inline" translate> course_settings.show_quizzes</small></small>
+                </li>
+                <li class="blue with-padding" style="min-width: 200px;">
+                  <div class="switch tiny show-inline show-inline">
+                      <input id="showConfusedCheckbox" type="checkbox" />
+                      <label class="color-white show-for-large-only" for="showConfusedCheckbox" translate>course_settings.show_confused</label>
+                      <label class="color-white hide-for-large-only" for="showConfusedCheckbox"></label>
+                  </div> 
+                  <small><small class="uppercase valign-top color-white hide-for-large-only show-inline" translate> course_settings.show_confused</small></small>
+                </li>
+                <li>
+                    <a class="sub-header-component blue">
+                        {{'lectures.download_notes' | translate}}
+                    </a>
+                </li>
+                
               </ul>
             </li>
           </ul>

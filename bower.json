@@ -33,7 +33,7 @@
     "angu-fixed-header-table": "*",
     "ngInfiniteScroll": "~1.1.2",
     "angular-foundation": "git://github.com/madmimi/angular-foundation#master",
-    "foundation": "zurb/bower-foundation#~5.0.2",
+    "foundation": "zurb/bower-foundation#~5.3.0",
     "angular-sticky": "git://github.com/d-oliveros/angular-sticky#master",
     "ng-ScrollSpy.js": "*"
   },

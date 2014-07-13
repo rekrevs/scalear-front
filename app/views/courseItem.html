@@ -1,6 +1,6 @@
 <div class="whole-box light-grey">
 	<div class="course-button hide-for-small-only">
-		<button type="button" class="button uppercase" ui-sref="course..course_information({ course_id: course.id })">Go to course</button>
+		<button type="button" class="button uppercase" ui-sref="course.course_information({ course_id: course.id })">Go to course</button>
 	</div>
 	<div class="course-image right hide-for-small-only" style="padding-left: 0px;">
 		<img ng-class="{centerimage: course.image_url}" ng-src="{{course.image_url || '../images/course_image.png'}}" />

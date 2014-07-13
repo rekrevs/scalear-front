@@ -1,91 +1,60 @@
-<!-- build:css(.tmp/styles) styles/student_lecture.css -->
-<!-- <link rel="stylesheet" href="styles/student/student_lecture.css"/> -->
-<!-- endbuild -->
-<!-- <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="alert">
-	 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
-	 <p ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message| date:'h:mma'}}</b></p>
-</div> -->
 <div  ng-hide="!lecture">
-	<h3 style="margin-bottom: 10px; padding-top: 10px; line-height: 10px; display: inline-block;" ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name"></h3>- 
-	<div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" style="display: inline-block; font-size: 12px;">
-		 <p ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
-		 <p ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message| date:'h:mma'}}</b></p>
+	<div id="main-video-container" ng-style="container_style"> 
+		<h3 ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h3>
+		<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius">
+			 <span ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</span>
+			 <span ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <span>{{alert_message| date:'h:mma'}}</span></span>
+		</span>
+		<form name="answer_form" novalidate >
+			<video_container  ng-class="video_class" ng-init="video_class='video_class'" screenfull active="fullscreen" >
+				<span ng-if="!should_play">
+					<center>
+						<div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' >
+							<h2 style="position:relative;top:90px;font-weight:300;font-size:18px" ><span translate>lectures.finish_before_proceeding</span></h2>
+						</div>						
+					</center>
+				</span>
+				<span ng-if="should_play" >
+					<center>
+						<loading size='small' show="!lecture.url || (!slow && !video_ready)" style="position:relative;color:#428bca;width: 100%;font-weight:300;font-size:12px;top: 150px;" />
+						<div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' ng-show="slow">
+							<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
+							<h3 style="position:relative;top:30px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="icon-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
+							<loading size='small' show='true' style="position:relative;top:30px;" />
+						</div>						
+					</center>
+					
+					<quiz ng-style="quiz_layer" ng-show="quiz_mode" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0'>
+						 <div ng-if="selected_quiz.quiz_type == 'html'" >
+						 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
+						 </div>
+						 <div ng-if="selected_quiz.quiz_type != 'html'">
+						 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
+						 </div>
+					</quiz>
+					<youtube ng-show="!slow && lecture.url && video_ready" ng-class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1' />
+					<progress-bar ng-show="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
+						<div ng-show="end_buttons" style="position: absolute;z-index: 1000;top: -71px;left: 47%;width: 0px;">
+							<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
+					    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
+						</div>
+			    		<controls id="controls-bar" class="progress_controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
+						</controls>
+						<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
+						<notification message="notification_message" submessage="notification_submessage" /> 
+						<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none"/> 
+			    	</progress-bar>
+			    </span>
+		    </video_container>
+		</form>
 	</div>
-	<div style="width: 100%; height: 100%;">
-		<div id="main-video-container" ng-style="container_style">
-			<form name="answer_form" novalidate style="margin:0" >
-				<video_container  ng-class="video_class" ng-init="video_class='video_class'" screenfull active="fullscreen" >
-					<span ng-if="!should_play">
-						<center>
-							<div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' >
-								<h2 style="position:relative;top:90px;font-weight:300;font-size:18px" ><span translate>lectures.finish_before_proceeding</span></h2>
-							</div>						
-						</center>
-					</span>
-					<span ng-if="should_play" >
-						<center>
-							<loading size='small' show="!lecture.url || (!slow && !video_ready)" style="position:relative;color:#428bca;width: 100%;font-weight:300;font-size:12px;top: 150px;" />
-							<div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' ng-show="slow">
-								<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
-								<h3 style="position:relative;top:30px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="icon-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
-								<loading size='small' show='true' style="position:relative;top:30px;" />
-							</div>						
-						</center>
-						
-						<quiz ng-style="quiz_layer" ng-show="quiz_mode" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0'>
-							 <div ng-if="selected_quiz.quiz_type == 'html'" >
-							 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
-							 </div>
-							 <div ng-if="selected_quiz.quiz_type != 'html'">
-							 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
-							 </div>
-						</quiz>
-						<youtube ng-show="!slow && lecture.url && video_ready" ng-class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1' />
-						<progress-bar ng-show="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
-							<div ng-show="end_buttons" style="position: absolute;z-index: 1000;top: -71px;left: 47%;width: 0px;">
-								<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
-						    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
-							</div>
-				    		<controls id="controls-bar" class="progress_controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
-							</controls>
-							<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
-							<notification message="notification_message" submessage="notification_submessage" /> 
-							<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none"/> 
-				    	</progress-bar>
-				    </span>
-			    </video_container>
-			</form>
-		</div>
-		<div id="student-accordion" style="position: absolute;">
-			<!-- <question_block ng-show="show_question_block" time="current_question_time" action="saveQuestion" /> -->
-		    <!-- <tabset style="width:100%;"> -->
-		        <!-- <tab id="video_events" active="tabs[0]" heading="{{'lectures.video_events' | translate}}" select="scrollIntoView('outline')" style="cursor: pointer; text-align: center;" > -->
-		        <div style="width: 100%;">
-	        		<!-- <table> -->
-	        				<!-- <td> -->
-	        					<!-- <button ng-click="addNote()" >Add Note</button> -->
-	        				<student_timeline timeline="timeline['lecture']" lectures="module_lectures" current="lecture" seek="seek_and_pause">
-	        				</student_timeline>
-	        				<timeline-filters options="checkModel"></timeline-filters>
-	        				<!-- </td> -->
-        			<!-- </table> -->
-		        <!-- </tab> -->
-		        <!-- <tab ng-show="lecture.description || (lecture.slides && lecture.slides != 'none')" id="lecture-details" active="tabs[2]" heading="{{'lectures.lecture_details' | translate}}" style="cursor: pointer;">
-		            <li>
-		            {{'lectures.description' | translate}}
-		            	<ul>
-		            		{{lecture.description}}
-		            	</ul>
-		            </li>
-		            <li ng-show="lecture.slides && lecture.slides != 'none'">
-		            {{'lectures.slides' | translate}}
-		            	<ul>
-		            		<a href="{{lecture.slides | formatURL}}">{{lecture.slides | formatURL}}</a>
-		            	</ul>
-		            </li>
-		        </tab> -->
-		        </div>
-		    <!-- </tabset> -->
-	    </div>
+
+		
+	<div id="student-accordion" style="position: absolute;">
+        <div style="width: 100%;">
+			<student_timeline timeline="timeline['lecture']" lectures="module_lectures" current="lecture" seek="seek_and_pause">
+			</student_timeline>
+			<!-- <timeline-filters options="checkModel"></timeline-filters> -->
+        </div>
     </div>
-</div>
+    </div>

@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
     		data: "="
     	},
     	replace:true,
-    	template: "<div ng-if='error' class='errormessage'>{{error}}</div>",
+    	template: "<div ng-if='error' class='errormessage valign-super'>{{error}}</div>",
         link: function(scope, element, attrs) {
         	$log.debug("in error directive")
         	scope.$watch(function(){

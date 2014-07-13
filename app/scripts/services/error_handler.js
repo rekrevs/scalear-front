@@ -14,6 +14,7 @@ angular.module('scalearAngularApp')
      		angular.element('.message').remove();
             $('<div/>')
                 .addClass('message')
+                .addClass('valign-super')
                 .addClass(cl)
                 .hide()
                 .fadeIn('fast')

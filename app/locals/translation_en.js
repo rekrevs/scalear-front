@@ -229,7 +229,8 @@ var translation_en=function(){
         screen_name: "Screen Name",
         university: "University",
         link: "Website",
-        bio: "Biography"
+        bio: "Biography",
+        security: "Security"
       },
       events:{
         deadline_msg: "All deadlines are at midnight on the day specified",

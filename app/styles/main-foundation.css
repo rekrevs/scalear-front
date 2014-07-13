@@ -203,6 +203,9 @@ input[type="search"]{
 .with-margin-bottom{
 	margin-bottom: 1.25rem !important;
 }
+.with-margin-top{
+	margin-top: 1.25rem !important;
+}
 .with-margin-right{
 	margin-right: 1.25rem !important;
 }

@@ -8,13 +8,11 @@ angular.module('scalearAngularApp')
 
             $scope.$watch('current_user', function(val) {
                 if (val)
-                    $scope.user = {
-                        name: $rootScope.current_user.name,
-                        email: $rootScope.current_user.email
-                    }
+                    $scope.user = $rootScope.current_user
             })
 
             $scope.update_account = function() {
+                console.log('updating information')
                 $scope.sending = true;
                 delete $scope.user.errors
                 User.update_account({}, {

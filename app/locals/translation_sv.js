@@ -229,7 +229,8 @@ var translation_sv=function(){
               screen_name: "Skärmnamn",
               university: "Universitet",
               link: "Hemsida",
-              bio: "Biografi"
+              bio: "Biografi",
+              security: "Säkerhet"
           },
       events:{
               deadline_msg: "Alla deadlines är vid midnatt den angivna dagen",

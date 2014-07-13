@@ -8,24 +8,23 @@ angular.module('scalearAngularApp')
 
             $scope.$watch('current_user', function(val) {
                 if (val)
-                    $scope.user = {
-                        name: $rootScope.current_user.name,
-                        email: $rootScope.current_user.email
-                    }
+                    $scope.user = $rootScope.current_user
             })
 
             $scope.update_account = function() {
+                console.log('updating information')
+                console.log
                 $scope.sending = true;
-                delete $scope.user.errors
+                delete $rootScope.current_user.errors
                 User.update_account({}, {
-                    user: $scope.user
+                    user: $rootScope.current_user
                 }, function() {
                     $scope.sending = false;
                     //console.log("signed up");
                     $state.go("home");
                 }, function(response) {
                     $scope.sending = false;
-                    $scope.user.errors = response.data.errors
+                    $rootScope.current_user.errors = response.data.errors
                     //console.log("sign up failed")
                 })
             }

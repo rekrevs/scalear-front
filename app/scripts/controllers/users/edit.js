@@ -12,31 +12,21 @@ angular.module('scalearAngularApp')
             })
 
             $scope.update_account = function() {
-                // console.log('updating information')
-                // $scope.sending = true;
-                // delete $scope.user.errors
-                // User.update_account({}, {
-                //     user: $scope.user
-                // }, function() {
-                //     $scope.sending = false;
-                //     //console.log("signed up");
-                //     $state.go("home");
-                // }, function(response) {
-                //     $scope.sending = false;
-                //     $scope.user.errors = response.data.errors
-                //     //console.log("sign up failed")
-                // })
+                console.log('updating information')
+                console.log
                 $scope.sending = true;
-                    delete $rootScope.current_user.errors
-                    $scope.user = angular.copy($rootScope.current_user)
-                    User.update_account({}, {
-                        user: $scope.user
-                    }, function() {
-                        $scope.sending = false;
-                    }, function(response) {
-                        $scope.sending = false;
-                        $rootScope.current_user.errors = response.data.errors
-                    })
+                delete $rootScope.current_user.errors
+                User.update_account({}, {
+                    user: $rootScope.current_user
+                }, function() {
+                    $scope.sending = false;
+                    //console.log("signed up");
+                    $state.go("home");
+                }, function(response) {
+                    $scope.sending = false;
+                    $rootScope.current_user.errors = response.data.errors
+                    //console.log("sign up failed")
+                })
             }
 
 

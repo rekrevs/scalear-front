@@ -3,13 +3,15 @@
 angular.module('scalearAngularApp')
         .controller('DashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout) {
                 $window.scrollTo(0, 0);
-                Page.setTitle('head.calendar');
+                Page.setTitle('dashboard');
                 var change_lang = function() {
                     if ($scope.eventSources) {
-                        angular.element($scope.myCalendar.children()).remove();
-                        var obj = ($scope.current_lang == "en") ? full_calendar_en() : full_calendar_sv();
-                        obj.eventSources = $scope.eventSources;
-                        $scope.myCalendar.fullCalendar(obj);
+                        if($scope.myCalendar){
+                            angular.element($scope.myCalendar.children()).remove();
+                            var obj = ($scope.current_lang == "en") ? full_calendar_en() : full_calendar_sv();
+                            obj.eventSources = $scope.eventSources;
+                            $scope.myCalendar.fullCalendar(obj);
+                        }
                     }
                 }
 

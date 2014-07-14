@@ -47,6 +47,10 @@
 }
 
 /*COLORING*/
+.white{
+	background-color: #ffffff !important;
+}
+
 .blue{
 	background-color: #2ba6cb !important;
 }
@@ -160,6 +164,8 @@ input[type="search"]{
 
 .size-24 { font-size: 24px; }
 
+.size-30 { font-size: 30px; }
+
 .size-36 { font-size: 36px; }
 
 .size-48 { font-size: 48px; }
@@ -188,6 +194,9 @@ input[type="search"]{
 }
 .with-tiny-padding{
 	padding: 0.25rem !important;
+}
+.with-small-padding{
+	padding: 0.50rem !important;
 }
 .with-tiny-padding-right{
 	padding-right: 0.25rem !important;

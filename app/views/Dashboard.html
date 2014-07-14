@@ -1,41 +1,41 @@
-<!-- build:css(.tmp/styles) styles/news_feed.css -->
-<link rel="stylesheet" href="styles/student/news_feed.css"/>
-<!-- endbuild -->
-<center ng-show="!eventSources.length" style="height: 80%;"><loading size="big" show="!eventSources.length" /></center>
+<style>
+	.fc-event-inner{
+		width: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
+<center><loading size="big" show="!eventSources.length"></loading></center>
 <style>
 	table{
 		border: none !important; 
 	}
 </style>
-<div class="news-feed-container large-6 columns" ng-show="events.length">
-	<div>
-		<b><span translate>whats_new</span>?</b>
+<span ng-show="eventSources.length && events.length">
+	<div class="small-12 large-8 columns" ng-show="events.length">
+		<h3 ng-show="events.length"><i class="fi-loop size-30"></i> {{'whats_new' | translate}}</h3>
+		<!-- <news-feed events="events"></news-feed> -->
+		<event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event"></event-item>
 	</div>
-	<div>
-		<news-feed events="events"></news-feed>
+	<div class="large-4 columns hide-for-medium-down" ng-show="eventSources.length" style="position: fixed; right: 1rem;">
+	 	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}">
+			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="width:100%;"></div>
+	        <span class="success alert-box label radius" translate="events.done"></span>
+			<span class="warning alert-box label radius" translate="events.not_done"></span>
+			<span class="alert alert-box label radius" translate="events.not_done_due"></span>
+	 	</div>
+	 	<button class="tiny button secondary uppercase" ng-click="cal_export()">Export Calendar as ICS</button>
+	 	<button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button>
 	</div>
-	<!-- <event-item ng-repeat="event in latest_events | orderBy:'appearance_time':reverse" event="event"></event-item> -->
-</div>
-<div class="large-4 columns" ng-show="eventSources.length" style="position: fixed; right: 40px;">
- 	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}">
-    	<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="width:100%; min-width: 420px; min-height: 420px;"></div>
-        <div class="alert" style="text-align: left;">
-         	<div style="font-size:14px;font-weight: bold;margin-bottom:5px" translate="events.deadline_msg"></div>
-         	<div class="span2" style="margin-right: 5px;margin-left:0px">
-	         		<div style="width:45%;float:left">
-	         		<div style="width: 20px; height: 20px; background-color: green;float:left;margin-right: 5px;border-radius: 1em;opacity: 0.8;"></div>
-	         		<div translate="events.done"></div>
-	         	</div>
-	         	<div >
-	         		<div style="width: 20px; height: 20px; background-color: orange;float:left;margin-right: 5px;border-radius: 1em;opacity: 0.8;"></div>
-	     			<div translate="events.not_done"></div>
-	     		</div>
-	     	</div>
-         	<div >
-         		<div style="width: 20px; height: 20px; background-color: red;float:left;margin-right: 5px;border-radius: 1em;opacity: 0.8;"></div>
-     			<div translate="events.not_done_due"></div>
-     		</div>
-         </div>
- 	</div>
- 	<a href="" ng-click="cal_export()">Export Calendar as ICS </a>
-</div>
+	<div class="small-12 columns show-for-medium-down" ng-show="eventSources.length">
+	 	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}">
+			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="mySecondCalendar" style="width:100%;"></div>
+	        <span class="success alert-box label radius" translate="events.done"></span>
+			<span class="warning alert-box label radius" translate="events.not_done"></span>
+			<span class="alert alert-box label radius" translate="events.not_done_due"></span>
+	 	</div>
+	 	<button class="tiny button secondary uppercase" ng-click="cal_export()">Export Calendar as ICS</button>
+	 	<button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button>
+	</div>
+</span>

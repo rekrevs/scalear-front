@@ -1,31 +1,35 @@
-<div class="event-box">
-	<div ng-show="event.class_name == 'lecture' || event.class_name == 'quiz'" class="news-body">
-		<img ng-if="event.class_name == 'lecture'" ng-src="../images/news-lecture.png" />
-		<img ng-if="event.class_name == 'quiz' && event.quiz_type != 'survey'" ng-src="../images/news-quiz.png" />
-		<img ng-if="event.quiz_type == 'survey'" src="../images/news-survey.png" />
-
-	
-		<span ng-if="event.quiz_type != 'survey'" translate>
-			news.new_{{event.class_name}}
-		</span>
-		<span ng-if="event.quiz_type == 'survey'" translate>
-			news.new_survey
-		</span>
-		"<a ui-sref="course.courseware.module.{{event.class_name}}({course_id: event.course_id, module_id: event.group_id, {{event.class_name}}_id: event.id})">{{event.name}}</a>"
+<div class="panel no-padding">
+	<div class="time-label uppercase blue color-white">
+			<i ng-if="event.class_name == 'lecture'" class="fi-play-video size-21" ></i>
+			<i ng-if="event.class_name == 'quiz' && event.quiz_type != 'survey'" class="fi-clipboard-pencil size-21" ></i>
+			<i ng-if="event.quiz_type == 'survey'" class="fi-clipboard-notes size-21" ></i> 
+			<i ng-if="event.class_name == 'announcement'" class="fi-megaphone size-21"/>
+			<small>{{event.timestamp | timeAgo}}</small>
 	</div>
+	<div class="with-padding">
+		<div ng-show="event.class_name == 'lecture' || event.class_name == 'quiz'" class="truncate">
+			
 
-	<div ng-show="event.class_name == 'announcement'" class="news-body">
-		<img style="vertical-align: top;" src="../images/news-announcement.png"/>
-		<div style="display: inline-block;" ng-bind-html="announcement_body">
-		<!-- {{announcement_body}} -->
+		
+			<span ng-if="event.quiz_type != 'survey'" translate>
+				news.new_{{event.class_name}}
+			</span>
+			<span ng-if="event.quiz_type == 'survey'" translate>
+				news.new_survey
+			</span>
+			"<a ui-sref="course.courseware.module.{{event.class_name}}({course_id: event.course_id, module_id: event.group_id, {{event.class_name}}_id: event.id})">{{event.name}}</a>"
+			<h4 class=" under-the-other"><i class="fi-book size-18"></i> 
+				<small><a class="dark-text" ui-sref="course.course_information({course_id: event.course_id})">{{event.course_name}}</a></small>
+			</h4>
 		</div>
-		<!-- <small><small><a ng-if="announcement_body.length < announcement.announcement.length" ui-sref="course.student_calendar({course_id: announcement.course_id})">View</a></small></small> -->
-	</div>
 
-	<div class="news-course">
-		<a ui-sref="course.student_calendar({course_id: event.course_id})">{{event.course_name}}</a>
-	</div>
-	<div class="news-timestamp">
-		<small><small>{{event.timestamp | amDateFormat:'MMMM Do YYYY, h:mm:ss a'}}</small></small>
+		<div ng-show="event.class_name == 'announcement'">
+			<blockquote class="announcement-body dark-text with-padding truncate">
+				<span ng-bind-html='event.announcement'>
+				</span>
+				<cite><a ui-sref="course.course_information({course_id: event.course_id})">{{event.course_name}}</a></cite>
+			</blockquote>
+			<!-- <small><small><a ng-if="announcement_body.length < announcement.announcement.length" ui-sref="course.student_calendar({course_id: announcement.course_id})">View</a></small></small> -->
+		</div>
 	</div>
 </div>

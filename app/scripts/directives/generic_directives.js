@@ -421,4 +421,20 @@ angular.module('scalearAngularApp')
     }
   }
 
+}]).directive('dashboardCalendarModal', ['$modal', function($modal){
+  return{
+    restrict: 'A',
+    replace: true,
+    link: function(scope, element){
+      scope.openCalendar = function () {
+        angular.element('.btn').blur()
+        var modalInstance = $modal.open({
+            templateUrl: '/views/student/calendar/calendar.html',
+            controller: "DashboardCtrl",
+        })
+      }
+
+    }
+  }
+
 }]);

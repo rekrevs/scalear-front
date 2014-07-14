@@ -47,6 +47,10 @@
 }
 
 /*COLORING*/
+.white{
+	background-color: #ffffff !important;
+}
+
 .blue{
 	background-color: #2ba6cb !important;
 }
@@ -159,6 +163,8 @@ input[type="search"]{
 .size-21 { font-size: 21px; }
 
 .size-24 { font-size: 24px; }
+
+.size-30 { font-size: 30px; }
 
 .size-36 { font-size: 36px; }
 

@@ -41,12 +41,12 @@ angular.module('scalearAngularApp')
       				var tmp = html.replace(/(<([^>]+)>)/ig," ");
         			return tmp.replace(/\n/g, "")
       			}
-      			scope.$watch('event', function(){
-      				if(scope.event.class_name == 'announcement' && scope.event.announcement){
-      					scope.announcement_body = scope.shorten(scope.strip(scope.event.announcement));
-      				}	
+      			// scope.$watch('event', function(){
+      			// 	if(scope.event.class_name == 'announcement' && scope.event.announcement){
+      			// 		scope.announcement_body = scope.shorten(scope.strip(scope.event.announcement));
+      			// 	}	
 	      			
-      			})
+      			// })
       		}
     	};
   	});

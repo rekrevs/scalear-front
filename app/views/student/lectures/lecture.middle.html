@@ -1,5 +1,5 @@
 <div  ng-hide="!lecture">
-	<div id="main-video-container" ng-style="container_style"> 
+	<div id="main-video-container" ng-style="container_style" class="small-12 medium-12 large-6 columns"> 
 		<h3 ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h3>
 		<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius">
 			 <span ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</span>
@@ -50,7 +50,7 @@
 	</div>
 
 		
-	<div id="student-accordion" style="position: absolute;">
+	<div id="student-accordion" style="position: absolute;" class="small-12 medium-12 large-5 columns">
         <div style="width: 100%;">
 			<student_timeline timeline="timeline['lecture']" lectures="module_lectures" current="lecture" seek="seek_and_pause">
 			</student_timeline>

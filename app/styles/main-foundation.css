@@ -195,6 +195,9 @@ input[type="search"]{
 .with-tiny-padding{
 	padding: 0.25rem !important;
 }
+.with-small-padding{
+	padding: 0.50rem !important;
+}
 .with-tiny-padding-right{
 	padding-right: 0.25rem !important;
 }

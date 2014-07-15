@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('$destroy', function() {
-            shortcut.remove("Enter");
+        shortcut.remove("Enter");
     });
 
 

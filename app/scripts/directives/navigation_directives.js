@@ -179,13 +179,13 @@ angular.module('scalearAngularApp')
         scope.currentmodule = null;
         scope.currentitem = null;
       }
-      scope.selectModule=function(module){
-      	if($state.includes("*.progress.*"))
-      		$state.go('course.progress.lecture',{module_id: module.id})
-      	else if($state.includes("*.inclass.*"))
-      		$state.go('course.inclass.module',{module_id: module.id})
-      	else
-      		$state.go('course.module',{module_id: module.id})
+      scope.setCurrentModule=function(module){
+      	// if($state.includes("*.progress.*"))
+      	// 	$state.go('course.progress.lecture',{module_id: module.id})
+      	// else if($state.includes("*.inclass.*"))
+      	// 	$state.go('course.inclass.module',{module_id: module.id})
+      	// else
+      	// 	$state.go('course.module.course_editor.overview',{module_id: module.id})
       	scope.currentmodule = module
       }
    }

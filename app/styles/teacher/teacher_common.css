@@ -38,7 +38,7 @@ ul.highlight, li.highlight{
 .inner_content{
 	font-size:22px;
 	background-color:white !important; 
-	padding:0 20px;
+	/*padding:0 20px;*/
 	list-style:none
 }
 

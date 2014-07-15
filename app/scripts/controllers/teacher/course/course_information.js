@@ -11,13 +11,13 @@ angular.module('scalearAngularApp')
   Page.setTitle('head.information')
   Course.show({course_id:$stateParams.course_id},
     function(response){
-    	// $scope.course_data=response.course
-      // console.log($scope.course_data)
+    	// $scope.course=response.course
+      // console.log($scope.course)
     	$scope.timezones=response.timezones;
 
       $scope.timezones.forEach(function(zone){
-        if(zone.name == $scope.course_data.time_zone){
-          $scope.course_data.time_zone = zone
+        if(zone.name == $scope.course.time_zone){
+          $scope.course.time_zone = zone
           return
         }
     })
@@ -27,9 +27,9 @@ angular.module('scalearAngularApp')
   $scope.updateCourse = function(data,type){
     if(data && data instanceof Date){ 
           data.setMinutes(data.getMinutes() - data.getTimezoneOffset());
-          $scope.course_data[type] = data
+          $scope.course[type] = data
     }
-    var modified_course=angular.copy($scope.course_data);
+    var modified_course=angular.copy($scope.course);
     delete modified_course.id;
     delete modified_course.created_at;
     delete modified_course.updated_at;
@@ -41,8 +41,8 @@ angular.module('scalearAngularApp')
       {course_id:$stateParams.course_id},
       {course:modified_course},
       function(response){
-        $scope.course_data=response.course;
-        $scope.course_data.time_zone = timezone
+        $scope.course=response.course;
+        $scope.course.time_zone = timezone
         console.log(timezone)
       }
     );

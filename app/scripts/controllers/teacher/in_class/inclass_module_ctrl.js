@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','util','$translate','Timeline', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, util,$translate, Timeline) {
+  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','util','$translate','Timeline','Page', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, util,$translate, Timeline,Page) {
     $window.scrollTo(0, 0);
     Page.setTitle('head.in_class')
     $scope.inclass_player={}

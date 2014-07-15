@@ -90,11 +90,11 @@ angular.module('scalearAngularApp', [
                     ['html', 'insertLink', 'unlink', 'insertImage']
                 ],
                 classes: {
-                    focussed: "focussed",
-                    toolbar: "btn-toolbar",
-                    toolbarGroup: "btn-group",
-                    toolbarButton: "btn btn-default",
-                    toolbarButtonActive: "active",
+                    // focussed: "focussed",
+                    // toolbar: "btn-toolbar",
+                    toolbarGroup: "button-group tiny custom_button_group",
+                    toolbarButton: "button tiny secondary",
+                    // toolbarButtonActive: "active",
                     textEditor: 'form-control',
                     htmlEditor: 'form-control'
                 }
@@ -329,13 +329,14 @@ angular.module('scalearAngularApp', [
             })
             .state('course.module.course_editor', {
                 url: '/course_editor',
-                templateUrl: '/views/teacher/course_editor/module.middle.html',
-                controller: 'moduleMiddleCtrl'
-                // templateUrl: '/views/teacher/course_editor/course_editor.html',
-                // controller: 'courseEditorCtrl'
+                // templateUrl: '/views/teacher/course_editor/module.middle.html',
+                // controller: 'moduleMiddleCtrl'
+                templateUrl: '/views/teacher/course_editor/course_editor.html',
+                controller: 'courseEditorCtrl',
+                abstract:true
             })
             .state('course.module.course_editor.overview', {
-                url: '/overview',
+                url: '',
                 views: {
                     // 'details': {
                     //     templateUrl: '/views/teacher/course_editor/module.details.html',

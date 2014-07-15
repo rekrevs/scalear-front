@@ -57,7 +57,7 @@
 			<accordion  class="accordion">
 				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 					<accordion-heading class="accordion-heading">
-						<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" ng-class="{currentmodule: currentmodule.id == module.id}" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" link="createModuleLink(module.id)"/>
+						<module name="module.name" id="module.id" remove="removeModule(event, $index)" ng-click="setCurrentModule(module)" class="accordion-heading" ng-class="{currentmodule: currentmodule.id == module.id}" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" link="createModuleLink(module.id)"/>
 						<!-- <ul ng-click="selectModule(module)" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;">
 							{{module.name}}
 						</ul> -->

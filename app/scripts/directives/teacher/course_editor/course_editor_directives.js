@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive("module", ['$timeout',function($timeout) {
+    .directive("module", ['$timeout','$state',function($timeout,$state) {
         return {
             restrict: "E",
             scope: {
                 name: "=",
                 id: '=',
                 remove: "&",
-                open: "=",
+                // open: "=",
                 copy:"&",
                 paste: "&",
                 share:"&",
@@ -17,14 +17,23 @@ angular.module('scalearAngularApp')
             templateUrl: '/views/teacher/course_editor/module.html',
             link: function(scope,element) {
                 scope.menu_status = false
-                scope.invertOpen = function() {
-                    if (scope.open[scope.id])
-                        scope.open[scope.id] = false
-                    else {
-                        for (var i in scope.open)
-                            scope.open[i] = false;
-                        scope.open[scope.id] = true
-                    }
+                // scope.invertOpen = function() {
+                //     if (scope.open[scope.id])
+                //         scope.open[scope.id] = false
+                //     else {
+                //         for (var i in scope.open)
+                //             scope.open[i] = false;
+                //         scope.open[scope.id] = true
+                //     }
+                // }
+                scope.selectModule=function(){
+                    if($state.includes("*.progress.*"))
+                        $state.go('course.progress.lecture',{module_id: scope.id})
+                    else if($state.includes("*.inclass.*"))
+                        $state.go('course.inclass.module',{module_id: scope.id})
+                    else
+                        $state.go('course.module.course_editor.overview',{module_id: scope.id})
+                    // scope.currentmodule = module
                 }
                 scope.copyModule=function(event){
                     event.stopPropagation() 

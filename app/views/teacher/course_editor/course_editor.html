@@ -1,16 +1,12 @@
 <!-- build:css(.tmp/styles) styles/course_editor.css -->
-<link rel="stylesheet" href="styles/content_navigator.css"/>
+
 <link rel="stylesheet" href="styles/teacher/course_editor.css"/>
 <link rel="stylesheet" href="styles/teacher/course_editor.details.css" type="text/css" media="screen" title="no title" charset="utf-8" />
 <link rel="stylesheet" href="styles/teacher/course_editor.lecture.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="styles/controls.css" type="text/css" media="screen" />
 <!-- endbuild -->
 
-<style>
-	.span3{
-		background-color: white;
-	}
-</style>
+
 <!-- <span style="position: fixed; z-index: 100;">
 	<div class="navigator-dropdown-button" ng-class="{navigatoropen: tree_toggled}" ng-click="toggleTree()">
 		<div style="display: inline-block; color: white; padding-left: 5px; padding-right: 5px;" ng-hide="open_navigator">
@@ -104,13 +100,14 @@
 	 <button_link title="{{'Preview'|translate}}" action="impersonate()" class="preview" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px; background-image: initial;"></button_link> 
 	<hr />
 </div> -->
-<div id="middle"  ui-view="middle" />
-<span ng-show="not_module">
-	<span class="span3" id="details" ui-view="details" ></span>
+<div id="middle"  class="large-9 columns" ui-view="middle" />
+<div id="details" class="large-3 columns" ui-view="details"/>
+<!-- <span ng-show="not_module">
+	
 	<span class="span3" id="details-resp" ng-class="{displayed: details_toggled}" style="z-index:100">
 		<div class="details-toggler" ng-class="{putright: details_toggled}" ng-click="toggleDetails()" tooltip-placement="left" tooltip="{{'lectures.details' | translate}}" tooltip-append-to-body="true">
 			<span class="details-toggle-icon" style="margin-top: 6px; left: 8px; position: absolute;"></span>
 		</div>
 		<div id="details-resp-inner" ng-show="details_toggled" ui-view="details"></div>
 	</span>
-</span>
+</span> -->

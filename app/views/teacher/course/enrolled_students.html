@@ -1,53 +1,33 @@
-<!-- build:css(.tmp/styles) styles/user_item.css -->
-<link rel="stylesheet" href="styles/user_item.css"/>
-<!-- endbuild -->
+<style>
+    .row{
+        max-width: 62.5rem !important;
+    }
+    .vcard{
+        width: 200px;
+        max-width: 200px;
+    }
+</style>
+<h3><i class="fi-torsos-all size-30"></i> {{'head.enrolled_students' | translate}} <span class="info alert-box label looks-like-a-link" enroll-help-modal ng-click="openHelpModal()">{{'enroll.help_enroll_student' | translate}}</span></h3>
 <center>
-<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 5;">
-    <div style="float: left;">
-        <input id="search" placeholder="{{'courses.search'|translate}}..." type="search" name="search" ng-model="searchText"/>
-    </div>
-    <!-- <div> -->
-        <button class="btn btn-default" ng-click="toggleHelpEnrolling()" style="color: #0088cc;background-color: #f5f5f5;background-image: initial;padding: 5px 15px; margin-left: 50px;"><span translate>enroll.help_enroll_student</span></button>
-    <!-- </div> -->
-    <div style="float: right; display: inline-block; width: 300px; margin-right: 50px;">
-        <input class="btn btn-success" ng-show="!searchText" id="email_button" value="{{'email'|translate}}" style="float: right; margin-right: 3%;" ng-disabled="(students | filter:{'checked':true}).length == 0" type="button" ng-click="emailForm()" />
-        <input class="btn btn-danger" value="{{'courses.deselect_all'|translate}}" type="button" style="background-image: initial; float: right; margin-right: 10px;" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0"/>
-        <input class="btn btn-primary" value="{{'courses.select_all'|translate}}" type="button" style="background-image: initial; float: right; margin-right: 10px;" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length"/>
-    </div>
-    
-</div>
-
-<div collapse="!isCollapsed" style="position: initial;">
-    <br />
-    <br />
-    <div class="well well-lg" style="text-align: left;">
-        <p><b><span translate>enroll.help_enroll</span>:</b></p>
-        <p translate>enroll.instruction</p>
-        <br>
-        <div  ng-click="this.select()" class="well well-lg" style="background: white;" >
-            <div id="kk" select-on-click>
-                <p ><span translate>enroll.dear_student</span>,</p>
-                <p >&emsp;<span translate>enroll.this_term_new_system</span><a href="http://www.scalable-learning.com/#/users/student"> http://www.scalable-learning.com/#/users/student </a><span translate>enroll.this_term_new_system_continue</span> <b>{{course_information.unique_identifier}}</b>.</p>
-                <p ><span translate>enroll.sincerely</span>,<br>{{current_user.name}}</p>
+    <div ng-show="students" id="invited_students">
+        <form name="email_form">
+            <div class="large-12 column">
+                <div class="small-12 medium-6 large-4 columns with-margin">
+                    <input id="search" type="search" placeholder="{{'courses.search'|translate}}..." name="search" ng-model="searchText"/>
+                </div>
+                <div class="small-12 medium-6 large-4 columns with-margin-left">
+                    <div class="button-group" ng-init="filterChoice = 'all'">
+                        <button type="button" class="button tiny" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length">{{'courses.select_all'|translate}}</button>
+                        <button type="button" class="button tiny alert" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0">{{'courses.deselect_all' | translate}}</button>
+                        <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0" ng-click="emailForm()">{{'email'|translate}}</button>
+                    </div>
+                </div>
             </div>
-            <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right;position: relative;top: -30px;" ><span translate>courses.click_to_select</span><br><span translate>menu.copy</span>: cmd+C or ctrl+C</div>
-        </div>
-    </div> 
-</div>
-
-<div ng-show="students" id="invited_students">
-
-    <form name="email_form">
-        <br />
-        <br />
-        <br />
-        <user-item ng-repeat="student in students | filter: searchText" user="student" select="toggleSelect" emailsingle="emailSingle" removestudent="removeStudent"></user-item>
-    </form>
-
-</div>
-<br />
-<br />
-<loading size="big" show="loading_students" />
-
-</loading>
+            <div class="large-12 column">
+                <user-item ng-repeat="student in students | filter: searchText" user="student" select="toggleSelect" emailsingle="emailSingle" removestudent="removeStudent"></user-item>
+            </div>
+        </form>
+    </div>
+    <loading size="big" show="loading_students">
+    </loading>
 </center>

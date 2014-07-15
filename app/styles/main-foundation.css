@@ -39,7 +39,11 @@
 
 /*MODAL*/
 .reveal-modal{
-	position: absolute !important;
+	/*position: absolute !important;*/
+	height: 70%;
+	/*top: 4.25rem;*/
+	overflow-y: auto; 
+
 }
 .thumbactive{
 	-webkit-box-shadow: 0 0 6px 1px rgba(0, 140, 186, 0.5);
@@ -103,6 +107,47 @@
 .dark-text{
 	color: #222222 !important;
 }
+
+/*Border Colors*/
+.border-white{
+	border-color: #ffffff !important;
+}
+
+.border-blue{
+	border-color: #2ba6cb !important;
+}
+.border-blue:hover{
+	border-color: #207d99 !important;
+}
+.border-green{
+	border-color: #5da423 !important;
+}
+.border-green:hover{
+	border-color: #3f7018 !important;
+}
+.border-red{
+	border-color: #c60f13 !important;
+}
+.border-red:hover{
+	border-color: #940c0e !important;
+}
+.border-grey{
+	border-color: #a3a3a3 !important;
+}
+.border-grey:hover{
+	border-color: #707070 !important;
+}
+
+.border-light-grey{
+	border-color: #ececea !important;
+}
+.border-transparent{
+	border: transparent !important;
+}
+
+
+
+
 
 .left-navigation{
 	/*width: 200px;*/
@@ -217,6 +262,38 @@ input[type="search"]{
 }
 .with-margin-right{
 	margin-right: 1.25rem !important;
+}
+
+/*OVERFLOW*/
+.overflow-auto{
+	overflow: auto !important;
+}
+.overflow-visible{
+	overflow: visible !important;
+}
+.overflow-scroll{
+	overflow: scroll !important;
+}
+.overflow-hidden{
+	overflow: hidden !important;
+}
+.overflow-y-auto{
+	overflow-y: auto !important; 
+}
+.overflow-x-auto{
+	overflow-x: auto !important; 
+}
+.overflow-y-hidden{
+	overflow-y: hidden !important; 
+}
+.overflow-x-hidden{
+	overflow-x: hidden !important; 
+}
+.overflow-y-visible{
+	overflow-y: visible !important; 
+}
+.overflow-x-visible{
+	overflow-x: visible !important; 
 }
 
 

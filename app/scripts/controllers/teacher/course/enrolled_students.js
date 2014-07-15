@@ -2,7 +2,7 @@
 
 var app = angular.module('scalearAngularApp')
 
-  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', '$filter', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page, $filter) {
+  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', '$filter', '$modal', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page, $filter, $modal) {
  
         $log.debug("in enrolled students");
         Page.setTitle('head.enrolled_students')
@@ -45,14 +45,17 @@ var app = angular.module('scalearAngularApp')
           $scope.toggleSelect(student)
           $scope.emailForm()
         }
-
         $scope.emailForm = function(){
             var selected_students = $filter('filter')($scope.students, {'checked': true}, true)
+            $scope.emails = [];
             selected_students.forEach(function(student){
               $scope.emails.push(student.email);
             })
-            console.log($scope.emails.length)
-            $state.go('course.send_emails');
+            batchEmailService.setEmails($scope.emails)
+            var modalInstance = $modal.open({
+                templateUrl: '/views/teacher/course/send_emails.html',
+                controller: 'sendEmailsCtrl'
+            })
         }
         $scope.selected = []
         $scope.toggleSelect = function(student){

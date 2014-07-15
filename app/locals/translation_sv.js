@@ -65,6 +65,7 @@ var translation_sv=function(){
       all_students_progress: "Alla studenter Progress",
       modules_group_items: "Moduler gruppera objekt tillsammans",
       new_online_content: "Ny Online Innehåll",
+      send_email: "Skicka ett Mail",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -637,7 +638,7 @@ var translation_sv=function(){
               confused_at: "var förvirrad vid tidpunkten",
               question_student_asked: "Frågor ställda av studenter",
               at_time: "vid tidpunkten",
-              to: "TILL",
+              to: "Till",
               send: "Skicka",
               subject: "Ämne",
               all_students_in: "Alla studenter i",

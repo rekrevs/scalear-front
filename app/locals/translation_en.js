@@ -66,6 +66,7 @@ var translation_en=function(){
       all_students_progress: "All Students Progress",
       modules_group_items: "Modules group items together",
       new_online_content: "New Online Content",
+      send_email: "Send an Email", 
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -639,7 +640,7 @@ var translation_en=function(){
         confused_at: "was confused at time",
         question_student_asked: "Questions students asked",
         at_time: "at time",
-        to: "TO",
+        to: "To",
         send: "Send",
         subject: "Subject",
         all_students_in: "All Students in",

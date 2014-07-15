@@ -28,19 +28,6 @@ angular.module('scalearAngularApp')
 			}
 		};
 	 }])
-	.directive('subNavigation', function(){
-		return {
-			replace: true,
-			restrict: "E",
-			scope:{
-
-			},
-			templateUrl: "/views/sub_navigation.html",
-			link: function(scope, element){
-
-			}
-		}
-	})
 	.directive('teacherNavigation', ['ErrorHandler', '$rootScope', function(ErrorHandler, $rootScope) {
            return{
 			replace:true,

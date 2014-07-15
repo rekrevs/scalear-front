@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder well widescreen" style="padding:0; border:none" ng-transclude></div>' //style="border:4px solid" 
+			template: '<div class="videoborder panel widescreen" style="padding:0; border:none" ng-transclude></div>' //style="border:4px solid" 
 		};
 	})
 	.directive('youtube',['$rootScope','$log','$timeout','$window',function($rootScope,$log,$timeout,$window){

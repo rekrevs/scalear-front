@@ -1,8 +1,8 @@
 <!-- build:css(.tmp/styles) styles/course_item.css -->
 <link rel="stylesheet" href="styles/courseItem.css"/>
 <!-- endbuild -->
-<center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
-<div>
+
+<!-- <div> -->
 	<!-- <div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
 		<div ng-show="courses.length" style="float: left; display: inline-block;">
 			<span class="dropdown" ><button class="dropdown-toggle btn" data-toggle="dropdown"><span translate>courses.sort_by</span><b class="caret"></b></button>
@@ -76,16 +76,42 @@
 			</tr>
 		</tbody>
 	</table>	 -->
-	<center ng-show="courses && !courses.length" style="height:70px">
-		<h5 class="muted" translate>courses.no_courses</h5>
-	</center>
-	<input id="search" placeholder="{{'courses.search'|translate}}..." type="search" style="border: 2px rgb(0, 162, 86) solid;" name="search" ng-model="searchText" ng-show="courses.length"/>
+
+<center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
+</br>
+
+<div class="small-8 large-8 columns">
+	<a ng-show="courses.length" class="button dropdown" dropdown-toggle="#sort_list"><span translate>courses.sort_by</span></a>
+  	<ul id="sort_list" class="f-dropdown">
+    	<li><a href="" ng-click="order('short_name')" translate>courses.course_code</a></li>
+		<li><a href="" ng-click="order('name')" translate>courses.course_name</a></li>
+		<li><a href="" ng-click="order('enrollments')" >#<span translate>courses.students</span></a></li>
+		<li><a href="" ng-click="order('lectures')" >#<span translate>groups.lectures</span></a></li>
+		<li><a href="" ng-click="order('quiz')" >#<span translate>groups.quizzes</span></a></li>
+		<li><a href="" ng-click="order('survey')" >#<span translate>courses.surveys</span></a></li>
+  	</ul>
+<a class="button" ng-hide="!courses" ui-sref="new_course" translate>courses.new_course</a><br />
+  		
+</div>
+<div class="small-4 large-4 columns right" ng-show="courses.length">
+	<input class="tiny" type="search" ng-model="searchText" placeholder="{{'courses.search' | translate}}" />
 	<span ng-show="filtered_teacher">
 		<br />
 		<a ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
 	</span>
-	<teacher-course-item ng-repeat="course in courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher" ></course-item>
-	<br />
 </div>
 
-<!-- <a ng-hide="!courses" ui-sref="new_course" translate>courses.new_course</a><br /> -->
+<center ng-show="courses && !courses.length" style="height:70px">
+	<h5 class="muted" translate>courses.no_courses</h5>
+</center>
+<!-- <input id="search" placeholder="{{'courses.search'|translate}}..." type="search" style="border: 2px rgb(0, 162, 86) solid;" name="search" ng-model="searchText" ng-show="courses.length"/>
+<span ng-show="filtered_teacher">
+	<br />
+	<a ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
+</span> -->
+<br />
+
+<teacher-course-item ng-repeat="course in courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher" />
+	
+<!-- </div> -->
+

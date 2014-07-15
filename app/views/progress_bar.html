@@ -28,19 +28,16 @@
     </div>
     <div class="controlDiv" ng-class="play_pause_class" ng-click="playBtn()" style="float: left;margin: 2px 5px 0 5px;"></div>
     <div id="volume" class="volumeDiv" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)" style="float: left;margin-right: 4px;margin-top: 2px;"></div>
-     <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('/images/volume_bar.png');float: left;margin-right: 15px;margin-top: 14px;"/> <!-- position: absolute;left: 65px;top: 12px; -webkit-appearance:none;-moz-appearance:none;outline:0; -->
-    <div class="timer" style="margin-top:6px;text-align: left;">
+     <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('/images/volume_bar.png');float: left;margin-right: 15px;margin-top: 10px;"/> <!-- position: absolute;left: 65px;top: 12px; -webkit-appearance:none;-moz-appearance:none;outline:0; -->
+    <div class="timer color-grey" style="margin-top:10px;text-align: left;">
         <span style="float:left;">{{current_time|format}}</span><!-- style='float:left;margin-left:140px;left:50px;line-height:30px;cscope.player.controls.youtubeolor:gray;font-size:small;' -->
         <span > / {{total_duration|format}}</span><!-- style='float:left;margin-left:0px;line-height:30px;color:gray;font-size:small;' -->
     </div>
 </div>
 <div ng-transclude></div>
-<div ng-show="player.controls.youtube" class="qualityDiv" ng-click='showQuality()' title="{{'youtube.click_video_quality'|translate}}"></div>
-<div ng-show="quality" class="dropup">
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu" style="display:inline; left: 89.7%;top: -140px; border-radius: 0px; background-color: currentcolor; padding: 0px; bottom: auto; min-width: 0px;">
-        <li ng-class="{active: chosen_quality=='small' }"><a tabindex="-1" ng-click="setQuality('small')" style="color: white;">240p</a></li>
-        <li ng-class="{active: chosen_quality=='large'}"><a tabindex="-1" ng-click="setQuality('large')" style="color: white;">480p</a></li>
-        <li ng-class="{active: chosen_quality=='hd720' }"><a tabindex="-1" ng-click="setQuality('hd720')" style="color: white;">720p (HD)</a></li>
-    </ul>
-
-</div>
+<div ng-show="player.controls.youtube" class="qualityDiv dropdown" dropdown-toggle="#quality_list" ng-click='showQuality()' title="{{'youtube.click_video_quality'|translate}}"></div>
+<ul id="quality_list" class="f-dropdown" style="display:inline; left: 89.7%;top: -140px; border-radius: 0px; background-color: currentcolor; padding: 0px; bottom: auto; min-width: 0px;">
+    <li ng-class="{'blue': chosen_quality=='small' }"><a tabindex="-1" ng-click="setQuality('small')" style="color: white;">240p</a></li>
+    <li ng-class="{'blue': chosen_quality=='large'}"><a tabindex="-1" ng-click="setQuality('large')" style="color: white;">480p</a></li>
+    <li ng-class="{'blue': chosen_quality=='hd720' }"><a tabindex="-1" ng-click="setQuality('hd720')" style="color: white;">720p (HD)</a></li>
+</ul>

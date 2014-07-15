@@ -83,6 +83,14 @@
 	background: transparent !important;
 }
 
+.orange{
+	background-color: #faa732 !important;
+}
+
+.wheat{
+	background-color: rgb(252,248,227) !important;
+}
+
 
 .color-white{
 	color: #ffffff !important;
@@ -99,6 +107,12 @@
 }
 .color-grey{
 	color: #a3a3a3 !important;
+}
+.color-maroon{	
+	color: maroon;
+}
+.color-coral{
+	color: #2d2d2d;
 }
 .dark-text{
 	color: #222222 !important;
@@ -118,6 +132,9 @@
 /*FIELDS*/
 input[type="search"]{
 	height: 1.0rem !important;
+}
+select{
+	margin: 0 0 1rem 0;
 }
 
 /*@media only screen and (max-width:40.063em) {
@@ -152,6 +169,8 @@ input[type="search"]{
 }
 
 /*SIZES*/
+.size-10 { font-size: 10px; }
+
 .size-12 { font-size: 12px; }
       
 .size-14 { font-size: 14px; }
@@ -219,6 +238,11 @@ input[type="search"]{
 	margin-right: 1.25rem !important;
 }
 
+/*Table*/
+td.right-border{
+	border-right: 1px solid lightgrey;
+}
+
 
 /*CUSTOM ELEMENTS*/
 .time-label{
@@ -250,6 +274,9 @@ button.active{
 }
 .looks-like-a-link{
 	cursor: pointer;
+}
+label{
+	cursor: text;
 }
 .teachers-column{
 	padding: 10px; 
@@ -418,4 +445,45 @@ button.active{
 .reveal-modal-bg.in {
   filter: alpha(opacity=50);
   opacity: .5;
+}
+
+h2 .editable-click{
+	color: #5da423 !important;
+}
+
+/*Video styles*/
+.flex-video.widescreen{
+	padding-bottom: 53.7%;
+}
+
+/*forum elements*/
+.form-control{
+	height: 150px;
+	border: 1px solid grey;
+	background: white;
+	margin-top: 8px;
+	box-shadow: 1px 1px 3px grey;
+	clear:both;
+}
+
+/*custom attributes over default*/
+.custom_button_group{
+	float:left;
+}
+.custom_button_group > *:first-child {
+	padding:10px;
+	margin-bottom: 5px;
+}
+.button.really-tiny{
+	padding: 5px 10px;
+	font-size: 0.6875rem;
+}
+
+/*borders*/
+.soft-border{
+	border: 1px solid #ddd;
+	-webkit-border-radius: 4px;
+ 	-moz-border-radius: 4px;
+  	border-radius: 4px;
+  	padding: 20px 0;
 }

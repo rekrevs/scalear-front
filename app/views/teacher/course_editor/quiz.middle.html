@@ -1,34 +1,42 @@
-<style>
+<!--<style>
 	.ui-state-default{
 		background: white;
 	}
-</style>
-<div class="well" style="min-height:660px;background:white; border-radius: 0px;">
-	<div  ng-show="!preview">
-		<overlay ng-show="!questions">
+</style>-->
+<div class="row">
+	<div class="large-4 columns">
+		<h3 >{{quiz.name}}</h3>
+	</div>
+</div>
+<div class="panel" style="padding: 0 15px;">
+	<div ng-show="!preview">
+		<!-- <overlay ng-show="!questions">
 		    <loading size="big" show="true" style="position:relative; top:40%;" />
-		</overlay>
-		<form name='tform' novalidate ui-sortable="quizSortableOptions" ng-model='questions' style="overflow:auto">
+		</overlay> -->
+		<form name='tform' novalidate ui-sortable="quizSortableOptions" ng-model='questions'>
 			<div ng-repeat="question in questions" class="quiz_sort">
 				<answerform ng-if="question.question_type!='header'" submitted="submitted" subtype="quiz.quiz_type" quiz="question" column="content" columna="content" add="addHtmlAnswer" remove="removeHtmlAnswer" removeq="removeQuestion" index="$index" sortable="true"/>
 				<div ng-if="question.question_type=='header'" style="text-align:left" >
 					<img src='images/move2.png' class='handle' title="{{'courses.drag_to_reorder'|translate}}" style="margin-top:2px"/>
 					<label class='q_label'><span translate>quizzes.header</span>:</label>
 					<delete_button  size='small' color='dark' action='removeHeader($index)' style="float: right; margin-right: 20px;"></delete_button>
-					<div text-angular ng-model="question.content" ta-toolbar-button-class="btn btn-default btn-mini" style="width:95%;margin-left: 1%;"></div>
+					<div text-angular ng-model="question.content" ta-toolbar-button-class="button secondary tiny" ></div>
 				</div>
 			</div>
 		</form>
-		<center>
-			<div ng-show="submitted && !hide_alerts">
-				<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
-			</div>
-			
-			<button class="btn" name="add_question" ng-click="addQuestion()">+ {{'groups.add_question' | translate}}</button>
-			<button class="btn" name="add_header" ng-click="addHeader()">+ {{'groups.add_header' | translate}}</button>
-			<button class="btn btn-success" name="save_quiz" ng-click="saveAll()" translate>save</button>
-			<button class="btn" name="preview_quiz" ng-click="openPreview()" translate>preview</button>
-		</center>
+		<div class="row" style="margin-top:10px">
+			<center>
+				<div class="row" ng-show="submitted && !hide_alerts">
+					<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
+				</div>
+				<div class="large-block-grid-4">		
+				<button class="button small" name="add_question" ng-click="addQuestion()">+ {{'groups.add_question' | translate}}</button>
+				<button class="button small" name="add_header" ng-click="addHeader()">+ {{'groups.add_header' | translate}}</button>
+				<button class="button small success" name="save_quiz" ng-click="saveAll()" translate>save</button>
+				<button class="button small secondary" name="preview_quiz" ng-click="openPreview()" translate>preview</button>
+				</div>	
+			</center>
+		</div>
 	</div>
 	<div ng-show="preview" >
 		<student-quiz ng-if="preview" quiz='temp_quiz' student-answers="formatted_answers" ></student-quiz>

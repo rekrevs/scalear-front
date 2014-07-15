@@ -2,18 +2,22 @@
 
 angular.module('scalearAngularApp')
     .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$stateParams', '$translate','$q','$log', '$filter', function ($scope, $state, Module, CustomLink, $stateParams, $translate, $q, $log, $filter) {      
-        $scope.$parent.not_module = false;
-        $scope.$parent.currentmodule = $state.params.module_id
-        $scope.$parent.currentitem = -1
-        $scope.$watch('module_obj['+$stateParams.module_id+']', function(){
-            if($scope.module_obj && $scope.module_obj[$stateParams.module_id]){
-                $scope.module=$scope.module_obj[$stateParams.module_id]
+        // $scope.$parent.not_module = false;
+        // $scope.$parent.currentmodule = $state.params.module_id
+        // $scope.$parent.currentitem = -1
+        $scope.$watch('selected_module', function(){
+            if($scope.selected_module){
+                $scope.module=$scope.selected_module
                 if($scope.module.due_date)
                         $scope.module.due_date_enabled =!isDueDateDisabled()
             }
             init();
         })
         var init = function(){
+            // console.log($scope.selected_module)
+            // $scope.module = $scope.selected_module
+            // if($scope.module.due_date)
+            //     $scope.module.due_date_enabled =!isDueDateDisabled()
             Module.getModules(
                 {
                     course_id:$stateParams.course_id,
@@ -111,11 +115,12 @@ angular.module('scalearAngularApp')
             }
 
             $scope.visible = function(appearance_time) {
-                if (new Date(appearance_time) <= new Date()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return new Date(appearance_time) <= new Date()
+                // if ()) {
+                //     return true;
+                // } else {
+                //     return false;
+                // }
             }
 
             $scope.addCustomLink=function(){
@@ -132,7 +137,6 @@ angular.module('scalearAngularApp')
                     function(){}
                 );
             }
-
 
             $scope.removeCustomLink=function (elem) {
                 $scope.link_overlay=true
@@ -203,4 +207,6 @@ angular.module('scalearAngularApp')
                     }
                 );
             }
+
+            // init();
     }]);

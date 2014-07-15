@@ -75,10 +75,11 @@ angular.module('scalearAngularApp')
 	    	value:"=",
 	    	action:"&"
 	    },
-	    template:'<span>| '+
-					'<input type="checkbox" ng-model="value" ng-change="change()" style="margin:0"/> '+
-					'<span style="font-size:12px;color:black;font-weight:normal" translate>courses.show_in_class</span>'+
-				'</span>', 
+	    template:'<div>'+
+	    			'<div class="small-1 columns no-padding">| </div>'+
+					'<div class="small-1 columns no-padding" style="margin-right: 5px"><input  type="checkbox" ng-model="value" ng-change="change()" /></div>'+
+					'<div class="small-7 columns size-12 no-padding left" style="color:black;font-weight:normal" translate>courses.show_in_class</div>'+
+				'</div>', 
 	    link:function(scope,element){
 	    	scope.change=function(){
 	    		console.log("changes here")
@@ -112,10 +113,14 @@ angular.module('scalearAngularApp')
 	    	quiz_count:'=quizCount',
 	    	question_count:'=questionCount'
 	    },
-	    template:'<div class="time_estimate" style="z-index:1">'+
-					'<h4 translate>courses.time_estimate</h4>'+
-					'<div style="display: inline-block;">In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></div>'+
-					'<a pop-over="popover_options">{{"more" | translate}}...</a>'+
+	    template:'<div class="row time_estimate">'+
+					'<div>'+
+						'<h5 translate>courses.time_estimate</h5>'+
+					'</div>'+
+					'<div class="small-10 small-push-1 columns">'+
+						'<div>In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></div>'+
+					'</div>'+
+					'<div class="small-1 inline right columns"><a pop-over="popover_options">{{"more" | translate}}...</a></div>'+
 				'</div>', 
 	    link:function(scope){
 	    	scope.numbers = []

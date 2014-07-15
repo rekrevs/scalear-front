@@ -1,12 +1,21 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('indexController', ['scalear_api', '$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', '$http', 'Page','Impersonate','$cookieStore',
-        function(scalear_api, $scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, $http, Page, Impersonate,$cookieStore) {
+    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course',
+        function($scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate,$cookieStore,Course) {
 
 
             $scope.Page = Page;
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
+
+            var getAllCourses=function(){
+                Course.index({},
+                    function(data){
+                        $scope.courses = data
+                    },
+                    function(){}
+                );
+            }
             
             $scope.changeLanguage = function(key) {
                 $log.debug("in change language " + key);
@@ -68,13 +77,13 @@ angular.module('scalearAngularApp')
                 //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
                 $state.go("login");
             }
-            $scope.toggleCollapse = function(){
-                $window.scrollTo(0, 0);
-                $scope.$broadcast('mainMenuToggled', $rootScope.iscollapsed);
-                $rootScope.iscollapsed = !$rootScope.iscollapsed
+            // $scope.toggleCollapse = function(){
+            //     $window.scrollTo(0, 0);
+            //     $scope.$broadcast('mainMenuToggled', $rootScope.iscollapsed);
+            //     $rootScope.iscollapsed = !$rootScope.iscollapsed
                 
-                console.log($rootScope.iscollapsed)
-            }
+            //     console.log($rootScope.iscollapsed)
+            // }
 
             $scope.logout = function() {
                 $rootScope.logging_out = true;
@@ -99,7 +108,6 @@ angular.module('scalearAngularApp')
             }
 
             $scope.open = function() {
-
                 var modalInstance = $modal.open({
                     templateUrl: '/views/invitation.html',
                     controller: "InvitationModalCtrl",
@@ -120,6 +128,7 @@ angular.module('scalearAngularApp')
                 });
             };
 
+            getAllCourses()
 
         }
     ]);

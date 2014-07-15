@@ -2,7 +2,7 @@
 <!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
 <!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" ng-app="scalearAngularApp" ng-controller="indexController"> <!--<![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" ng-app="scalearAngularApp" ng-controller="indexCtrl"> <!--<![endif]-->
   <head> 
     <script type="text/javascript">
 
@@ -90,7 +90,7 @@
             </div>
         </header> -->
         <header>
-            <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage"></main-navigation>
+            <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage" courses="courses"></main-navigation>
         <header>
             
         </header>
@@ -106,8 +106,7 @@
                 <!-- <span><user-navigation  iscollapsed="iscollapsed" ng-hide="!current_user || (current != 'navigation.courses' && current != 'account_edit.edit_account' && current != 'privacy.policy' && current != 'profile.profile' && current != 'sharing.view' && current != 'courses.new_course' && current != 'courses.statistics')" role="current_user.roles[0].id" /></span> -->
                 <!-- <span ui-view="navigation" iscollapsed="iscollapsed"></span> -->
                 <!-- <sub-navigation></sub-navigation> -->
-                <teacher-navigation ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5"></teacher-navigation>
-                <student-navigation ng-if="current_user.roles[0].id == 2"></student-navigation>
+                <div ui-view="navigation"></div>
                 <div class="row">
                     <div ui-view=""></div>
                 </div>
@@ -291,8 +290,10 @@
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>
     <script src="scripts/controllers/login.js"></script>
-    <script src="scripts/controllers/navigation.js"></script>
+    <!--<script src="scripts/controllers/navigation.js"></script>-->
     <script src="scripts/controllers/privacy.js"></script>
+    <script src="scripts/controllers/course_ctrl.js"></script>
+    <script src="scripts/controllers/module_ctrl.js"></script>
     <script src="scripts/controllers/invitation_modal_ctrl.js"></script>
     <script src="scripts/controllers/shared_ctrl.js"></script>
     <script src="scripts/controllers/forum/forum_ctrl.js"></script>

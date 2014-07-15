@@ -86,12 +86,13 @@ angular.module('scalearAngularApp')
     link: function(scope, element, attrs) {
          var menuElement = angular.element(element.find('.'+attrs.target)),
           open = function open(event, element) {
-            angular.element('.open').removeClass('open')
+            angular.element('.open').removeClass('open').css('display', 'none')
             scope.opened = true;
             element.css('top', event.clientY + 'px');
             element.css('left', event.clientX + 'px');
             element.css('zIndex', 1)
             element.addClass('open');
+            element.css('display', 'block')
             angular.element('body').css('overflow', 'hidden')
             angular.element($window).on('click', function(event) {
               console.log(event)
@@ -107,6 +108,7 @@ angular.module('scalearAngularApp')
           close = function close(element) {
             scope.opened = false;
             element.removeClass('open');
+            element.css('display', 'none')
             angular.element('body').css('overflow', 'auto')
             angular.element($window).off('click')
           };
@@ -139,7 +141,7 @@ angular.module('scalearAngularApp')
   };
 }]).directive('teacherCourseItem', ['ErrorHandler',function(ErrorHandler) {
   return{
-    replace:true,
+    // replace:true,
     restrict: "E",
     scope:{
       course: '=',
@@ -326,85 +328,6 @@ angular.module('scalearAngularApp')
     }
   }
 
-}]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout', function(Module, $stateParams, $state, $timeout){
-  return{
-    restrict:'E',
-    // replace: true,
-    transclude: true,
-    scope:{
-      modules: '=',
-      currentmodule: '=',
-      currentitem: '=',
-      scrollto: '=',
-      mode: '@'
-    },
-    templateUrl:"/views/content_navigator.html",
-   link:function(scope, element, attr){
-      scope.toggleNavigator = function(){
-        scope.open_navigator = !scope.open_navigator
-      }
-      scope.showModuleCourseware = function(module){
-        if(module.id != scope.currentmodule.id){
-          scope.currentmodule = module//$scope.modules_obj[module_id];
-          // $scope.close_selector = true;
-          Module.getLastWatched(
-            {course_id: $stateParams.course_id, module_id: module.id}, function(data){
-              // $timeout(function(){
-              //   scope.toggleNavigator();
-              // })
-              if(data.last_watched != -1){
-                $state.go('course.courseware.module.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
-                scope.currentitem = data.last_watched
-              }
-              else{
-                $state.go('course.courseware.module.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
-                scope.currentitem = module.quizzes[0].id
-              }
-          }) 
-        }  
-      }
-
-
-      scope.showItemCourseware = function(item){
-        console.log(item)
-        $timeout(function(){
-          scope.toggleNavigator();
-        })
-        // var item_id = item.get_class_name.toLowerCase()+'_id';
-        if(item.get_class_name.toLowerCase() == 'lecture'){
-          $state.go('course.courseware.module.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'lecture_id': item.id})
-        }
-        else if(item.get_class_name.toLowerCase() == 'quiz'){
-          $state.go('course.courseware.module.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'quiz_id': item.id})
-        }
-        console.log('course.courseware.module.'+item.get_class_name.toLowerCase()+' ahoo')
-      }
-
-      scope.showModuleInclass = function(module){
-        $timeout(function(){
-          scope.toggleNavigator();
-        })
-        scope.currentmodule = module//$scope.getSelectedModule()
-        $state.go('course.inclass.module',{module_id: module.id})
-        // $scope.toggleSelector();
-      }
-
-      scope.showModuleProgress = function(index){
-        scope.currentmodule = scope.modules[index]
-        scope.toggleNavigator();
-      }
-      scope.showItemProgress = function(item){
-        $timeout(function(){$state.go('course.progress.lecture', {module_id: item.group_id});});
-        scope.scrollto(item);
-      }
-
-      scope.clearCurrent = function(event){
-        event.stopPropagation();
-        scope.currentmodule = null;
-        scope.currentitem = null;
-      }
-   }
-  }
 }]).directive('calendarModal', ['$modal', function($modal){
   return{
     restrict: 'A',

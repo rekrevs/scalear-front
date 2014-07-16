@@ -38,7 +38,8 @@ angular.module('scalearAngularApp')
 			replace:true,
 			restrict: "E",
 			scope:{
-				modules:"="
+				modules:"=",
+				links:"="
 			},
 			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){				
@@ -47,11 +48,13 @@ angular.module('scalearAngularApp')
  }]).directive('studentNavigation', ['ErrorHandler',function(ErrorHandler) {
            return{
 			replace:true,
-			transclude: true,
 			restrict: "E",
+			scope:{
+				modules:"=",
+				links:"="
+			},
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){
-				
 			}
 		};
  }]).directive('userNavigation', ['ErrorHandler','$rootScope', 'User', 'Home',function(ErrorHandler,$rootScope, User, Home) {
@@ -107,20 +110,24 @@ angular.module('scalearAngularApp')
     // replace: true,
     transclude: true,
     scope:{
+      links:'=',
       modules: '=',
-      currentmodule: '=',
-      currentitem: '=',
-      scrollto: '=',
+      // currentmodule: '=',
+      // currentitem: '=',
+      // scrollto: '=',
       mode: '@',
       open_navigator:'=open'
     },
     templateUrl:"/views/content_navigator.html",
    link:function(scope, element, attr){
+   	  scope.currentmodule = {id: $stateParams.module_id}
+
       scope.toggleNavigator = function(){
         scope.open_navigator = !scope.open_navigator
       }
+
       scope.showModuleCourseware = function(module){
-        if(module.id != scope.currentmodule.id){
+        if(!scope.currentmodule || module.id != scope.currentmodule.id || module.id != $stateParams.module_id){
           scope.currentmodule = module//$scope.modules_obj[module_id];
           // $scope.close_selector = true;
           Module.getLastWatched(
@@ -129,31 +136,35 @@ angular.module('scalearAngularApp')
               //   scope.toggleNavigator();
               // })
               if(data.last_watched != -1){
-                $state.go('course.courseware.module.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
+                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
                 scope.currentitem = data.last_watched
               }
               else{
-                $state.go('course.courseware.module.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
+                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
                 scope.currentitem = module.quizzes[0].id
               }
           }) 
         }  
       }
 
-
+      // $scope.goToContent=function(){
+               
       scope.showItemCourseware = function(item){
-        console.log(item)
-        $timeout(function(){
-          scope.toggleNavigator();
-        })
-        // var item_id = item.get_class_name.toLowerCase()+'_id';
-        if(item.get_class_name.toLowerCase() == 'lecture'){
-          $state.go('course.courseware.module.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'lecture_id': item.id})
-        }
-        else if(item.get_class_name.toLowerCase() == 'quiz'){
-          $state.go('course.courseware.module.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'quiz_id': item.id})
-        }
-        console.log('course.courseware.module.'+item.get_class_name.toLowerCase()+' ahoo')
+  	 	var params = {'module_id': scope.currentmodule.id}    
+        params[item.class_name+'_id'] = item.id
+        $state.go('course.module.courseware.'+ item.class_name, params)
+        // console.log(item)
+        // // $timeout(function(){
+        // //   scope.toggleNavigator();
+        // // })
+        // // var item_id = item.get_class_name.toLowerCase()+'_id';
+        // if(item.get_class_name.toLowerCase() == 'lecture'){
+        //   $state.go('course.module.courseware.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'lecture_id': item.id})
+        // }
+        // else if(item.get_class_name.toLowerCase() == 'quiz'){
+        //   $state.go('course.module.courseware.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'quiz_id': item.id})
+        // }
+        // console.log('course.module.courseware.'+item.get_class_name.toLowerCase()+' ahoo')
       }
 
       scope.showModuleInclass = function(module){

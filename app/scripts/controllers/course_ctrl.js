@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
 
-.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink) {
+.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$location', '$translate','$log','$window','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink','util', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $location, $translate, $log, $window, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink, util) {
  	
  	var init = function(){
  		// $cookieStore.remove('preview_as_student')
@@ -39,12 +39,10 @@ angular.module('scalearAngularApp')
  				$scope = $scope.$parent
 		 		$scope.course=data.course
 		 		$scope.course.custom_links = data.links
-		 		$scope.modules=data.groups
+		 		$scope.course.modules=data.groups
 		 		$scope.module_obj ={}
-		 		$scope.items_obj ={}
-                $scope.items_obj["lecture"]={}
-                $scope.items_obj["quiz"]={}
-		 		$scope.modules.forEach(function(module){
+		 		$scope.items_obj ={lecture:{}, quiz:{}}
+		 		$scope.course.modules.forEach(function(module){
 		 			$scope.module_obj[module.id] = module
 		 			module.items.forEach(function(item){
 		 				$scope.items_obj[item.class_name][item.id] = item
@@ -63,39 +61,61 @@ angular.module('scalearAngularApp')
  	var getStudentData=function(){
  		Course.getCourseware(
 	    	{course_id: $stateParams.course_id}, function(data){
+	    		$scope = $scope.$parent
 				$scope.course= JSON.parse(data.course);
-				$log.debug($scope.course);
+				$scope.course.custom_links = data.links
 				$scope.today = data.today;	
 				$scope.last_viewed = data.last_viewed
 				$scope.modules_obj = util.toObjectById($scope.course.groups)
-				var classname = 'lecture'
+				// console.log("last viiew")
+				// console.log($scope.last_viewed)
+				// if($scope.last_viewed.module == -1)
+				// 	$scope.last_viewed.module= $scope.course.groups[0]
+				// $scope.selected_module = $scope.last_viewed.module != -1? $scope.modules_obj[$scope.last_viewed.module] : $scope.course.groups[0]		 		
+		 	// 	if($scope.selected_module.items && $scope.selected_module.items.length){
+ 			// 		$scope.selected_item = $scope.last_viewed.lecture? $scope.last_viewed.lecture : $scope.selected_module.items[0]
+		 	// 	}
+				// var classname = 'lecture'
 
-			 	if($state.params.module_id)
-			 		$scope.current_module = $scope.modules_obj[$state.params.module_id]	
-			 	else if($scope.last_viewed.module != -1)
-			 		$scope.current_module = $scope.modules_obj[$scope.last_viewed.module]	
-			 	else
-			 		$scope.current_module = $scope.course.groups[0] 
+			 	// if($state.params.module_id)
+			 	// 	$scope.current_module = $scope.modules_obj[$state.params.module_id]	
+			 	// if($scope.last_viewed.module != -1)
+			 	// else
+			 	// 	$scope.current_module = 
+			 	// if($scope.last_viewed.module != -1){
+		 		// 	$scope.current_module = $scope.last_viewed.module
+		 		// // 	if($scope.current_module.items && $scope.current_module.items.length){
+					// // 	$scope.current_item = $scope.last_viewed.lecture
+					// // }
+		 		// }
+		 		// else{
+ 			  	
+			 	// if($scope.current_module.items && $scope.current_module.items.length){
+			 	// 	if($scope.last_viewed.lecture){
+					// 	$scope.current_item = $scope.last_viewed.lecture
+					// 	classname = 'lecture'
+					// }
+					// else{
+					// 	$scope.current_item = $scope.current_module.items[0].id
+			  //   		classname = $scope.current_module.items[0].class_name
+					// }
 
-			 	if($scope.current_module.items && $scope.current_module.items.length){
-	    			if($state.params.lecture_id)
-						$scope.current_item = $state.params.lecture_id
-	    			else if($state.params.quiz_id){
-	    				$scope.current_item = $state.params.quiz_id
-		    			classname = 'quiz'
-		    		}
-					else if($scope.last_viewed.lecture)
-						$scope.current_item = $scope.last_viewed.lecture
-					else{
-						$scope.current_item = $scope.current_module.items[0].id
-			    		classname = $scope.current_module.items[0].class_name
-					}
-			 	}
-			    if($scope.current_module && $scope.current_item){	
-			    	var params = {'module_id': $scope.current_module.id}	
-			    	params[classname+'_id'] = $scope.current_item
-					$state.go('course.courseware.module.'+classname, params)
-				}
+	    			//if($state.params.lecture_id)
+						// $scope.current_item = $state.params.lecture_id
+	    			// if($state.params.quiz_id){
+	    			// 	$scope.current_item = $state.params.quiz_id
+		    		// 	classname = 'quiz'
+		    		// }
+			 	// }
+
+			 	// console.log(classname)
+			 	// console.log($scope.current_module)
+			 	// console.log($scope.current_item)
+			 //    if($scope.current_module && $scope.current_item){	
+			 //    	var params = {'module_id': $scope.current_module.id}	
+			 //    	params[classname+'_id'] = $scope.current_item
+				// 	$state.go('course.module.courseware.'+classname, params)
+				// }
 	    	}
     	);
  	}

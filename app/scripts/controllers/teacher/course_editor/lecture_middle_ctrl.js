@@ -482,7 +482,7 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.createVideoLink=function(){
-		return $state.href('course.courseware.module.lecture', {module_id:$scope.lecture.group_id, lecture_id: $scope.lecture.id, time:$scope.lecture_player.controls.getTime()}, {absolute: true})
+		return $state.href('course.module.courseware.lecture', {module_id:$scope.lecture.group_id, lecture_id: $scope.lecture.id, time:$scope.lecture_player.controls.getTime()}, {absolute: true})
 	}
 
 }]);

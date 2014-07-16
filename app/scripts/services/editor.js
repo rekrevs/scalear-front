@@ -320,8 +320,8 @@ angular.module('scalearAngularApp').factory('editor',
                         // }
                         // else{
                         //     // console.log("switch to different")
-                        //     // $state.go("course.courseware.module.lecture", {"lecture_id":service.lecture_id, "tab":1});
-                        //     $state.go("course.courseware.module.lecture", {lecture_id:lecture_id}, {reload:false, notify:false});  
+                        //     // $state.go("course.module.courseware.lecture", {"lecture_id":service.lecture_id, "tab":1});
+                        //     $state.go("course.module.courseware.lecture", {lecture_id:lecture_id}, {reload:false, notify:false});  
                         //     return;
                         // }
                     }

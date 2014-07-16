@@ -1,8 +1,8 @@
 <!-- build:css(.tmp/styles) styles/statistics.css -->
 <link rel="stylesheet" href="styles/teacher/statistics.css"/>
-<link rel="stylesheet" href="styles/modules_selector.css"/>
-
+<!-- <link rel="stylesheet" href="styles/modules_selector.css"/> -->
 <!-- endbuild -->
+
 <!--<style>
 	.whole-middle{
 		text-align: left;
@@ -24,7 +24,7 @@
 	}
 </style>-->
 <div class="row" style="margin-bottom:10px">
-	<div class="large-9 large-offset-3 columns">
+	<div class="small-10 small-offset-2 columns">
 		<b translate>
 			groups.module_name
 		</b><br />
@@ -32,7 +32,7 @@
     </div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="large-9 large-offset-3 columns">
+	<div class="small-10 small-offset-2 columns">
 		<b translate>
 			groups.appearance_date
 		</b><br />
@@ -44,7 +44,7 @@
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="large-9 large-offset-3 columns">
+	<div class="small-10 small-offset-2 columns">
 		<b translate>
 			groups.due_date
 		</b><br />
@@ -58,7 +58,7 @@
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="large-9 large-offset-3 columns">
+	<div class="small-10 small-offset-2 columns">
 		<b translate>
 			groups.description
 		</b><br />
@@ -68,7 +68,7 @@
 <br />
 <br />
 <div class="row">
-	<div class="large-9 large-offset-3">
+	<div class="small-10 small-offset-2">
 		<ul class="small-block-grid-1 medium-block-grid-3 large-block-grid-4">
 			<li class="total">
 				<h5 class="text-info total_title" >
@@ -99,12 +99,12 @@
 </div>
 <br />
 <div class="row">
-	<div class="large-9 large-offset-3"><b translate>groups.external_link</b></div>
+	<div class="small-10 small-offset-2"><b translate>groups.external_link</b></div>
 </div>
 <div class="row">
-	<div class="large-9 large-offset-3" style="color: #808080;" ng-show="module.custom_links.length ==0">{{'groups.no_external_links' | translate}}</div>
+	<div class="small-10 small-offset-2" style="color: #808080;" ng-show="module.custom_links.length ==0">{{'groups.no_external_links' | translate}}</div>
 </div>
-<div class="large-7 large-offset-3">
+<div class="small-7 small-offset-3">
 	<link-item ng-repeat="doc in module.custom_links" link="doc" update="updateCustomLink" remove="removeCustomLink" validate="validate" />
 	<a ng-click="addCustomLink()" ng-disabled="link_overlay" class="button small add-teacher-button">
 	    <img src="../images/add_link.png" /> {{'groups.add_link' | translate}}

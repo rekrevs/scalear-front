@@ -294,7 +294,7 @@ angular.module('scalearAngularApp')
 
     link: function(scope, element, attrs, controller) {
       $log.debug("student answer link")
-      element.css('z-index', 5)
+      // element.css('z-index', 5)
       //==FUNCTIONS==//
       var setup=function(){
         scope.explanation_pop ={}

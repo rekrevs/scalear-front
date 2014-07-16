@@ -42,14 +42,6 @@ angular.module('scalearAngularApp')
       text: $translate('courses.good')
     }]
 
-    $scope.hello=function(){
-      console.log("change with hello")
-    }
-
-    // $scope.watch('custom_filter',function(){
-    //   $scope.hello()
-    // })
-
   	var init= function(){
   		$scope.timeline = new Timeline()
   		Module.getModuleProgress({
@@ -74,17 +66,18 @@ angular.module('scalearAngularApp')
 	  	 		getQuizCharts()
 	  	 		getSurveyCharts()
 				  setupShortcuts()
-          resizeContainer()
+          // resizeContainer()
 	  		},	
 	  		function(){}
 		)
 	}
-  var resizeContainer = function(){
-    $scope.right_container.css('height', angular.element($window).height() - 130)
-  }
-  angular.element($window).bind('resize', function () {
-    resizeContainer();
-  });
+  // var resizeContainer = function(){
+  //   $scope.right_container.css('height', angular.element($window).height() - 130)
+  // }
+  // angular.element($window).bind('resize', function () {
+  //   resizeContainer();
+  // });
+
  	var getModuleCharts = function(){
     Module.getModuleCharts(
         {             

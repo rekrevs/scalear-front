@@ -213,6 +213,11 @@ ul.accordion ul {
 	color:red;
 	font-style: italic;
 }*/
+
+.prefix{
+	z-index: 0;
+}
+
 .handle{
 	vertical-align: top;
 }

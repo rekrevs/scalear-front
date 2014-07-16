@@ -198,7 +198,7 @@ angular.module('scalearAngularApp')
 		 			window.open(scope.url_with_protocol(scope.url),'_blank');
 		 		else
 		 		{	
-		 			var next_state="course.courseware.module."+scope.className.toLowerCase();
+		 			var next_state="course.module.courseware."+scope.className.toLowerCase();
 		 			var s= scope.className.toLowerCase()+"_id"
 		 			var to={}
 		 			to[s] = scope.id

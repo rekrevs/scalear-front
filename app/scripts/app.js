@@ -313,11 +313,12 @@ angular.module('scalearAngularApp', [
                 url: '/courses/:course_id',
                 views: {
                     'navigation': {
-                        templateUrl: '/views/navigation.html',
-                        controller: 'courseCtrl'
+                        templateUrl: '/views/navigation.html'
+                        
                     },
                     '': {
-                        template: '<ui-view/>'
+                        template: '<ui-view/>',
+                        controller: 'courseCtrl'
                     }
                 },
                 abstract: true
@@ -342,7 +343,7 @@ angular.module('scalearAngularApp', [
                     //     templateUrl: '/views/teacher/course_editor/module.details.html',
                     //     controller: 'moduleDetailsCtrl'
                     // },
-                    'middle': {
+                    'module': {
                         templateUrl: '/views/teacher/course_editor/module.middle.html',
                         controller: 'moduleMiddleCtrl'
                     }
@@ -406,9 +407,9 @@ angular.module('scalearAngularApp', [
             .state('course.module.courseware', {
                 url: '/courseware',
                 templateUrl: '/views/student/lectures/courseware.html',
-                controller: 'studentModulesCtrl'
+                controller: 'coursewareCtrl'
             })
-            // .state('course.courseware.module',{
+            // .state('course.module.courseware',{
             //     url:'/modules/:module_id',
             //     templateUrl: '/views/empty_view.html',
             //     controller: 'studentModulesCtrl',

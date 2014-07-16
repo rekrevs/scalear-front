@@ -8,6 +8,7 @@ angular.module('scalearAngularApp')
                 name: "=",
                 id: '=',
                 remove: "&",
+                click:"&",
                 // open: "=",
                 copy:"&",
                 paste: "&",
@@ -28,12 +29,11 @@ angular.module('scalearAngularApp')
                 // }
                 scope.selectModule=function(){
                     if($state.includes("*.progress.*"))
-                        $state.go('course.progress.lecture',{module_id: scope.id})
+                        $state.go('course.module.progress',{module_id: scope.id})
                     else if($state.includes("*.inclass.*"))
-                        $state.go('course.inclass.module',{module_id: scope.id})
+                        $state.go('course.module.inclass',{module_id: scope.id})
                     else
                         $state.go('course.module.course_editor.overview',{module_id: scope.id})
-                    // scope.currentmodule = module
                 }
                 scope.copyModule=function(event){
                     event.stopPropagation() 
@@ -63,12 +63,13 @@ angular.module('scalearAngularApp')
                 }
             }
         }
-    }]).directive('item', ['$translate','$timeout', function($translate, $timeout) {
+    }]).directive('item', ['$translate','$timeout','$anchorScroll','$location','$state', function($translate, $timeout, $anchorScroll,$location,$state) {
         return {
             scope: {
-                name: '=',
-                id: '=',
-                className: '=',
+                // name: '=',
+                // id: '=',
+                // className: '=',
+                item:'=data',
                 remove: '&',
                 copy:"&",
                 paste:"&",
@@ -78,11 +79,31 @@ angular.module('scalearAngularApp')
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/item.html',
             link: function(scope,element) {
-                scope.getDeleteMessage = function() {
-                    var translation_value = {}
-                    translation_value[scope.className] = scope.name
-                    return $translate('groups.you_sure_delete_' + scope.className, translation_value)
+
+                scope.selectItem=function(){
+                    if($state.includes("**.progress.**")){
+                        var class_name = scope.item.class_name== 'quiz'? scope.item.quiz_type : scope.item.class_name
+                        $location.hash(class_name+'_'+scope.item.id);
+                        $anchorScroll();    
+                    }
+                        // $state.go('course.module.progress',{module_id: scope.id})
+                    else if($state.includes("*.inclass.*"))
+                        return
+                        // $state.go('course.module.inclass',{module_id: scope.id})
+                    else{
+                        var params = {}    
+                        params[scope.item.class_name+'_id'] = scope.item.id
+                        // $state.go('course.module.courseware.'+$scope.last_viewed.item.class_name, params)
+                        $state.go('course.module.course_editor.'+scope.item.class_name,params)
+                    }
                 }
+
+                // scope.getDeleteMessage = function() {
+                //     var translation_value = {}
+                //     translation_value[scope.className] = scope.name
+                //     return $translate('groups.you_sure_delete_' + scope.className, translation_value)
+                // }
+
                 scope.copyItem=function(event){
                     event.stopPropagation() 
                     scope.menu_status = false
@@ -251,7 +272,6 @@ angular.module('scalearAngularApp')
             replace: true,
             link: function(scope, element){
                 scope.openOnlineContentModal = function () {
-                    console.log('hello')
                     // angular.element('.btn').blur()
                     var modalInstance = $modal.open({
                         templateUrl: '/views/teacher/course_editor/online_content_modal.html',
@@ -286,7 +306,6 @@ angular.module('scalearAngularApp')
             replace: true,
             link: function(scope, element){
                 scope.openQuestionsModal = function () {
-                    console.log('hello')
                     // angular.element('.btn').blur()
                     var modalInstance = $modal.open({
                         templateUrl: '/views/teacher/course_editor/question_types_modal.html',

@@ -303,7 +303,7 @@ angular.module('scalearAngularApp')
     replace: true,
     link: function(scope, element){
       scope.open = function () {
-        angular.element('.btn').blur()
+        angular.element('.button').blur()
         var modalInstance = $modal.open({
             templateUrl: '/views/student/course_list/enroll_modal.html',
             controller: "StudentEnrollModalCtrl",
@@ -334,7 +334,7 @@ angular.module('scalearAngularApp')
     replace: true,
     link: function(scope, element){
       scope.openCalendar = function () {
-        angular.element('.btn').blur()
+        angular.element('.button').blur()
         var modalInstance = $modal.open({
             templateUrl: '/views/student/calendar/calendar.html',
             controller: "studentCourseInformationCtrl",
@@ -350,7 +350,7 @@ angular.module('scalearAngularApp')
     replace: true,
     link: function(scope, element){
       scope.openCalendar = function () {
-        angular.element('.btn').blur()
+        angular.element('.button').blur()
         var modalInstance = $modal.open({
             templateUrl: '/views/student/calendar/calendar.html',
             controller: "DashboardCtrl",

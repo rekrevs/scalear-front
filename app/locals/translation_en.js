@@ -125,7 +125,8 @@ var translation_en=function(){
         share: "Share",
         share_copy: "Share a Copy",
         copy_describtion: "Copies the selected item",
-        share_describtion: "Share a copy with a teacher"
+        share_describtion: "Share a copy with a teacher",
+        create_link: "Create Link"
       },
       sharing:{
         nothing_selected: "Nothing is selected",

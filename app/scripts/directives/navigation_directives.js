@@ -39,6 +39,7 @@ angular.module('scalearAngularApp')
            return{
 			replace:true,
 			restrict: "E",
+      transclude: true,
 			scope:{
 				modules:"=",
 				links:"=",
@@ -113,7 +114,6 @@ angular.module('scalearAngularApp')
     templateUrl:"/views/content_navigator.html",
    link:function(scope, element, attr){
    	  scope.currentmodule = {id: $stateParams.module_id}
-
       scope.toggleNavigator = function(){
         scope.open_navigator = !scope.open_navigator
       }
@@ -190,6 +190,8 @@ angular.module('scalearAngularApp')
       	// else
       	// 	$state.go('course.module.course_editor.overview',{module_id: module.id})
       	scope.currentmodule = module
+        console.log('mahmoud menshawi')
+        console.log(scope.currentmodule)
       }
    }
   }

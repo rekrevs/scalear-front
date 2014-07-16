@@ -38,7 +38,10 @@
 							
 						</accordion-heading>
 						<ul ng-click="showItemCourseware(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id, itemfinished: item.is_done}" ng-repeat="item in module.items">
-							{{item.name}}<span style="float: right; margin-right: 10px; color: red;" ng-show="item.required" translate>courses.required</span>
+							{{item.name}}
+							<span class="label round alert with-tiny-padding right" ng-show="item.required" translate>courses.required</span>
+							<span class="label round success with-tiny-padding right" ng-show="item.graded" translate>courses.graded</span>
+
 						</ul>
 						<ul ng-show="module.custom_links" ng-repeat="link in module.custom_links">
 							<a href="{{link.url}}" target="_blank">{{link.name}}</a>

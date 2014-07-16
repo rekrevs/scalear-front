@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
                     course_id: $stateParams.course_id
                     },
                     function(data) {
-                        // $scope.course = data.course;
+                        $scope.course = data.course;
                         $scope.teachers = data.teachers;
                         $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
                     },

@@ -66,7 +66,7 @@ angular.module('scalearAngularApp')
 				$scope.course.custom_links = data.links
 				$scope.today = data.today;	
 				$scope.last_viewed = data.last_viewed
-				$scope.modules_obj = util.toObjectById($scope.course.groups)
+				$scope.module_obj = util.toObjectById($scope.course.groups)
 				// console.log("last viiew")
 				// console.log($scope.last_viewed)
 				// if($scope.last_viewed.module == -1)

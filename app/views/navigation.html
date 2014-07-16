@@ -1,5 +1,9 @@
 <!--build:css(.tmp/styles) styles/navigation.css -->
 <link rel="stylesheet" href="styles/content_navigator.css"/>
 <!-- endbuild -->
-<div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5"><teacher-navigation modules="course.modules" links="course.custom_links" /></div>
-<div ng-if="current_user.roles[0].id == 2"><student-navigation modules="course.groups" links="course.custom_links" /></div>
+<div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
+	<teacher-navigation modules="course.modules" links="course.custom_links" selectedmodule="selected_module" shortname="course.short_name"></teacher-navigation>
+</div>
+<div ng-if="current_user.roles[0].id == 2">
+	<student-navigation modules="course.groups" links="course.custom_links" selectedmodule="selected_module" shortname="course.short_name"></student-navigation>
+</div>

@@ -702,3 +702,108 @@ exports.check_inclass_in_item = function(ptor, no, item_no){
         })
     })
 }
+
+//=====================================================
+//				new nav_bar functions
+//=====================================================
+exports.open_progress_review_module = function(ptor){
+    locator.by_id(ptor, 'progress').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'review_module_progress').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_progress_all_students = function(ptor){
+    locator.by_id(ptor, 'progress').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'all_student_progress').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_inclass = function(ptor){
+    locator.by_id(ptor, 'inclass').then(function(btn){
+        btn.click();
+    })
+}
+
+exports.open_content_new_module = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'new_module').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_content_new_online_content = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'new_online_content').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_content_new_in_video_ques = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'new_in_video_ques').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_content_copy = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'copy').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_content_paste = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'paste').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_content_share_copy = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'share_copy').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_content_preview = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'preview_as_student').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.check_for_teacher_nav_bar = function(ptor){
+    locator.by_id(ptor, 'teacher_left_nav').then(function(nav){
+    	expect(nav.isDisplayed()).toEqual(true);    
+  	})
+}

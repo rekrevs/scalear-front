@@ -6,7 +6,7 @@
         </div>
         <div style="position: absolute; margin-top: 220px;" >
             <div class="large-12 column">
-                <a class="button tiny uppercase" calendar-modal ng-click="openCalendar()">View Course Calendar</a>
+                <a id="calendar_btn" class="button tiny uppercase" calendar-modal ng-click="openCalendar()">View Course Calendar</a>
             </div>
             <div class="large-12 column">
                 <a class="button tiny success" ng-click="exportCourse()" ><span translate>courses.export_as</span> CSV</a>
@@ -45,7 +45,7 @@
         <h6 class="color-blue show-for-small-only" title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
         <div class="hide-for-large-up with-padding-bottom">
             <div >
-                <a class="button tiny uppercase" calendar-modal ng-click="openCalendar()">View Course Calendar</a>
+                <a id="calendar_btn" class="button tiny uppercase" calendar-modal ng-click="openCalendar()">View Course Calendar</a>
             </div>
             <div >
                 <a class="button tiny success" ng-click="exportCourse()" ><span translate>courses.export_as</span> CSV</a>

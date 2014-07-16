@@ -139,7 +139,8 @@ var translation_sv=function(){
             share: "Dela",
             share_copy: "Dela en Kopia",
             copy_describtion: "Kopierar det markerade objektet",
-            share_describtion: "Dela en kopia med en lärare"
+            share_describtion: "Dela en kopia med en lärare",
+            create_link: "Skapa länk"
           },
           settings:{
             settings: "Inställningar",

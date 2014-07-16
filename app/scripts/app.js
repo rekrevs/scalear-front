@@ -90,11 +90,11 @@ angular.module('scalearAngularApp', [
                     ['html', 'insertLink', 'unlink', 'insertImage']
                 ],
                 classes: {
-                    focussed: "focussed",
-                    toolbar: "btn-toolbar",
-                    toolbarGroup: "btn-group",
-                    toolbarButton: "btn btn-default",
-                    toolbarButtonActive: "active",
+                    // focussed: "focussed",
+                    // toolbar: "btn-toolbar",
+                    toolbarGroup: "button-group tiny custom_button_group",
+                    toolbarButton: "button tiny secondary",
+                    // toolbarButtonActive: "active",
                     textEditor: 'form-control',
                     htmlEditor: 'form-control'
                 }
@@ -313,54 +313,43 @@ angular.module('scalearAngularApp', [
                 url: '/courses/:course_id',
                 views: {
                     'navigation': {
-                        templateUrl: '/views/navigation.html',
-                        controller: 'navigationCtrl'
+                        templateUrl: '/views/navigation.html'
+                        
                     },
                     '': {
-                        template: '<ui-view/>'
+                        template: '<ui-view/>',
+                        controller: 'courseCtrl'
                     }
                 },
                 abstract: true
-            })
-            .state('course.courseware', {
-                url: '/courseware',
-                templateUrl: '/views/student/lectures/courseware.html',
-                controller: 'coursewareCtrl'
-            })
-            .state('course.courseware.module',{
+            })           
+            .state('course.module',{
                 url:'/modules/:module_id',
-                templateUrl: '/views/student/lectures/module.middle.html',
-                controller: 'studentModulesCtrl',
+                templateUrl: '/views/empty_view.html',
+                controller: 'moduleCtrl'
             })
-            .state('course.courseware.module.lecture', {
-                url: '/lectures/:lecture_id?external',
-                templateUrl: '/views/student/lectures/lecture.middle.html',
-                controller: 'studentLectureMiddleCtrl'
-            })
-            .state('course.courseware.module.quiz', {
-                url: '/quizzes/:quiz_id',
-                templateUrl: '/views/student/lectures/quiz.middle.html',
-                controller: 'studentQuizMiddleCtrl'
-            })
-            .state('course.course_editor', {
+            .state('course.module.course_editor', {
                 url: '/course_editor',
+                // templateUrl: '/views/teacher/course_editor/module.middle.html',
+                // controller: 'moduleMiddleCtrl'
                 templateUrl: '/views/teacher/course_editor/course_editor.html',
-                controller: 'courseEditorCtrl'
+                controller: 'courseEditorCtrl',
+                abstract:true
             })
-            .state('course.course_editor.module', {
-                url: '/modules/:module_id',
+            .state('course.module.course_editor.overview', {
+                url: '',
                 views: {
                     // 'details': {
                     //     templateUrl: '/views/teacher/course_editor/module.details.html',
                     //     controller: 'moduleDetailsCtrl'
                     // },
-                    'middle': {
+                    'module': {
                         templateUrl: '/views/teacher/course_editor/module.middle.html',
                         controller: 'moduleMiddleCtrl'
                     }
                 }
             })
-            .state('course.course_editor.lecture', {
+            .state('course.module.course_editor.lecture', {
                 url: '/lectures/:lecture_id',
                 views: {
                     'details': {
@@ -382,7 +371,7 @@ angular.module('scalearAngularApp', [
             //         }
             //     }
             // })
-            .state('course.course_editor.quiz', {
+            .state('course.module.course_editor.quiz', {
                 url: '/quizzes/:quiz_id',
                 views: {
                     'details': {
@@ -397,23 +386,43 @@ angular.module('scalearAngularApp', [
             })
             .state('course.progress', {
                 url: '/progress',
-                templateUrl: '/views/teacher/progress/progress.html',
-                controller: 'progressCtrl'
-            })
-            .state('course.progress.main', {
-                url: "/main",
                 templateUrl: '/views/teacher/progress/progress_main.html',
                 controller: 'progressMainCtrl'
             })
-            .state('course.progress.module', {
-                url: "/modules/:module_id",
+            // .state('course.progress.main', {
+            //     url: "/main",
+            //     templateUrl: '/views/teacher/progress/progress_main.html',
+            //     controller: 'progressMainCtrl'
+            // })
+            .state('course.module.progress', {
+                url: "/progress",
+                templateUrl: '/views/teacher/progress/progress_lecture.html',
+                controller: 'progressLectureCtrl'
+            })
+            .state('course.module.progress.details', {
+                url: "/details",
                 templateUrl: '/views/teacher/progress/progress_module.html',
                 controller: 'progressModuleCtrl'
             })
-            .state('course.progress.lecture', {
-                url: "/lectures/:module_id",
-                templateUrl: '/views/teacher/progress/progress_lecture.html',
-                controller: 'progressLectureCtrl'
+            .state('course.module.courseware', {
+                url: '/courseware',
+                templateUrl: '/views/student/lectures/courseware.html',
+                controller: 'coursewareCtrl'
+            })
+            // .state('course.module.courseware',{
+            //     url:'/modules/:module_id',
+            //     templateUrl: '/views/empty_view.html',
+            //     controller: 'studentModulesCtrl',
+            // })
+            .state('course.module.courseware.lecture', {
+                url: '/lectures/:lecture_id?external',
+                templateUrl: '/views/student/lectures/lecture.middle.html',
+                controller: 'studentLectureMiddleCtrl'
+            })
+            .state('course.module.courseware.quiz', {
+                url: '/quizzes/:quiz_id',
+                templateUrl: '/views/student/lectures/quiz.middle.html',
+                controller: 'studentQuizMiddleCtrl'
             })
             .state('course.calendar', {
                 url: '/events',
@@ -455,17 +464,17 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/course/teachers.html',
                 controller: 'courseTeachersCtrl'
             })
-            .state('course.inclass', {
-                url: '/inclass',
-                templateUrl: '/views/teacher/in_class/inclass.html',
-                controller: 'inclassCtrl'
-            })
-            .state('course.inclass.module', {
-                url: "/modules/:module_id",
+            // .state('course.inclass', {
+            //     url: '/inclass',
+            //     templateUrl: '/views/teacher/in_class/inclass.html',
+            //     controller: 'inclassCtrl'
+            // })
+            .state('course.module.inclass', {
+                url: "/inclass",
                 templateUrl: '/views/teacher/in_class/inclass_module.html',
                 controller: 'inclassModuleCtrl'
             })
-            .state('course.inclass.display_quizzes', {
+            .state('course.module.inclass.display_quizzes', {
                 url: '/display_quizzes',
                 templateUrl: '/views/teacher/in_class/display_quizzes.html',
                 controller: 'displayQuizzesCtrl'

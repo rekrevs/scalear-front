@@ -1,6 +1,6 @@
 <div  ng-hide="!lecture">
 	<div id="main-video-container" ng-style="container_style" class="small-12 medium-12 large-6 columns"> 
-		<h3 ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h3>
+		<h4 ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4>
 		<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius">
 			 <span ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</span>
 			 <span ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <span>{{alert_message| date:'h:mma'}}</span></span>

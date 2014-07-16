@@ -80,7 +80,7 @@ angular.module('scalearAngularApp')
             console.log("good")            
             $cookieStore.put('preview_as_student', true)            
             $cookieStore.put('new_user_id', data.user.id)   
-            $state.go('course.courseware.module',{course_id: $stateParams.course_id, module_id: module_id })
+            $state.go('course.module.courseware',{course_id: $stateParams.course_id, module_id: module_id })
             $rootScope.preview_as_student = true
           },
           function(){
@@ -215,13 +215,13 @@ angular.module('scalearAngularApp')
     }
 
     $scope.createModuleLink=function(id){
-    	return $state.href('course.courseware.module', {module_id: id}, {absolute: true})
+    	return $state.href('course.module.courseware', {module_id: id}, {absolute: true})
     }
 
     $scope.createItemLink=function(item){
     	var params = {module_id: item.group_id}
     	params[item.class_name+'_id'] = item.id
-    	return $state.href('course.courseware.module.'+item.class_name, params, {absolute: true})
+    	return $state.href('course.module.courseware.'+item.class_name, params, {absolute: true})
     }
 
     $scope.copy=function(item){
@@ -456,7 +456,7 @@ angular.module('scalearAngularApp')
 		},
  	}
 
-	init();
+	// init();
 
 
 

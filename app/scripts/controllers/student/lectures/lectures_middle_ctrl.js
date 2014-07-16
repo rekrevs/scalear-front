@@ -48,8 +48,6 @@ angular.module('scalearAngularApp')
         $scope.play_pause_class = 'play'
         $scope.container_style={float: 'left'}
         
-
-        
         if(!isiPad()){
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
                 if(!screenfull.isFullscreen){
@@ -196,7 +194,7 @@ angular.module('scalearAngularApp')
 
     $scope.nextItem=function(){
         if ($scope.next_item.id) {
-            var next_state = "course.courseware.module." + $scope.next_item.class_name
+            var next_state = "course.module.courseware." + $scope.next_item.class_name
             var s = $scope.next_item.class_name + "_id"
             var to = {}
             to[s] = $scope.next_item.id
@@ -230,7 +228,7 @@ angular.module('scalearAngularApp')
                 $scope.lecture_player.controls.seek(time)
         }
         else{
-            $state.go("course.courseware.module.lecture", {lecture_id:lecture_id}, {reload:false, notify:false});  
+            $state.go("course.module.courseware.lecture", {lecture_id:lecture_id}, {reload:false, notify:false});  
             goToLecture(lecture_id)
             $scope.go_to_time =time
         }

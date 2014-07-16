@@ -1,16 +1,21 @@
-<div context-menu data-target="menu" opened='menu_status' class="disable_selection inner-item">
-	<img src="images/move2.png" class="handle" title={{"courses.drag_to_reorder"|translate}} />
-	<a class="trigger2" ui-sref="course.course_editor.{{className}}({ {{className}}_id: id })" >{{name}}</a>
-	<input class="item_link" type="text" ng-show="link_url" ng-model="link_url" ng-blur="link_url=null" />
-	<div class="menu">
-	  <ul class="dropdown-menu" style="font-size:14px">
-	    <li >
-	      <a ng-click='copyItem($event)' translate>menu.copy</a>
-	       <a ng-show="$parent.$parent.clipboard" ng-click='doPaste($event)' translate>menu.paste</a>
-	      <a ng-click='shareItem($event)' translate>menu.share</a>
-	      <a ng-click='createLink($event)' >Create Link</a>
-	    </li>	    
+<div context-menu data-target="menu" opened='menu_status' class="row disable_selection inner-item">
+	<div class="small-2 columns">
+		<img src="images/move2.png" class="handle" title='{{"courses.drag_to_reorder"|translate}}' />
+	</div>
+	<div class="small-8 columns left" style="padding:0">
+		<a style="padding: 0;margin:0" ng-click="selectItem()" >{{item.name}}</a>
+		<input class="item_link" type="text" ng-show="link_url" ng-model="link_url" ng-blur="link_url=null" />
+	</div>
+	<div class="small-2 columns" >
+		<delete_button style="vertical-align: top;" size="small" color='dark' action="remove()"></delete_button>
+	</div>
+	<div>
+	  <ul class="menu f-dropdown" style="font-size:14px">
+	    <li ><a ng-click='copyItem($event)' translate>menu.copy</a></li>
+	    <li><a ng-show="$parent.$parent.clipboard" ng-click='doPaste($event)' translate>menu.paste</a></li>
+      	<li><a ng-click='shareItem($event)' translate>menu.share</a></li>
+  	    <li><a ng-click='createLink($event)' translate>menu.create_link</a></li>
 	  </ul>
 	</div>
-	<delete_button style="vertical-align: top;" size="small" color='dark' action="remove()"></delete_button>
+	
 </div>

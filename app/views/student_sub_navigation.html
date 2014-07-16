@@ -4,10 +4,11 @@
   <!-- <div class="top-bar sub-header"> -->
       <ul class="title-area">
           <li class="name">
-            <h1><a class="sub-header-component active">Content Navigator</a></h1>
+            <h1><a class="sub-header-component active" ng-click="open_navigator=!open_navigator" >Content Navigator</a></h1>
           </li>
            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
            <li toggle-top-bar class="menu-icon"><a href="">SUB-MENU</a></li>
+           <li ><content-navigator modules="modules" mode="courseware" links="links" open="open_navigator" style="z-index: 1;" /></li>
       </ul>
 
         <top-bar-section>

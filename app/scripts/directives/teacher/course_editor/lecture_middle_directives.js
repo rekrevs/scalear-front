@@ -20,15 +20,21 @@ angular.module('scalearAngularApp')
 }).directive('editPanel',function(){
 	return {		
 		 restrict: 'E',
-		 template: '<div id="editing">'+
-						'<div class="alert" >'+
-							'<div>'+
-								'<span translate>online_quiz.editing_quiz</span> {{selected_quiz.question}} <span translate>at</span> {{selected_quiz.time|format}}'+
-								'<b><br>{{double_click_msg|translate}}</b>'+
+		 template: '<div class="row" id="editing">'+
+						'<div class="wheat large-6 large-centered columns" >'+
+							'<div class="row" style="padding: 15px 15px 0px 15px;">'+
+								'<h4><span translate>online_quiz.editing_quiz</span> {{selected_quiz.question}} <span translate>at</span> {{selected_quiz.time|format}}'+
+								'<b><br>{{double_click_msg|translate}}</b></h4>'+
 							'</div>'+
-							'<button ng-disabled="disable_save_button" class="btn btn-primary" id="done" style="margin-top:5px;" ng-click="saveBtn()" translate>save</button>'+
-							'<a class="btn" ng-show="!quiz_deletable" id="done" style="margin-top:5px;" ng-click="exitBtn()" translate>groups.exit</a>'+
-							'<a class="btn" ng-show="quiz_deletable" id="done" style="margin-top:5px;" ng-click="exitBtn()" >Cancel</a>'+
+							'<div class="row">'+
+								'<div class="large-4 large-centered columns">'+
+									'<div class="large-6 columns"><button ng-disabled="disable_save_button" class="button tiny" style="margin-top:5px;" ng-click="saveBtn()" translate>save</button></div>'+
+									'<div class="large-6 columns">'+
+										'<a ng-show="!quiz_deletable" class="button secondary tiny" style="margin-top:5px;" ng-click="exitBtn()" translate>groups.exit</a>'+
+										'<a ng-show=" quiz_deletable" class="button secondary tiny" style="margin-top:5px;" ng-click="exitBtn()" translate>lectures.cancel</a>'+
+									'</div>'+
+								'</div>'+
+							'</div>'+
 						'</div>'+
 					'</div>',
 	};
@@ -41,18 +47,18 @@ angular.module('scalearAngularApp')
 		 	action:"&"
 		 },
 		 restrict: 'E',
-		 template: 	'<div class="btn-group">'+
-						'<a class="btn btn-small btn-success dropdown-toggle" data-toggle="dropdown" href="" style="background-image: initial;">'+
+		 template: 	//'<div>'+
+						'<a class="button tiny secondary dropdown" dropdown-toggle="#{{quiztype}}_list" href="" style="background-image: initial;">'+
 							'{{title}} '+
-							'<span class="caret"></span>'+
+							// '<span class="caret"></span>'+
 						'</a>'+
-						'<ul class="dropdown-menu" style="left:-35%;font-size:12px">'+
+						'<ul id="{{quiztype}}_list" class="f-dropdown" >'+
 				              '<li ng-repeat="item in list">'+
 				              		// '<a href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{"lectures."+item.text|translate}}</a>'+
-				              		'<a ng-hide="quiztype==\'invideo\' && item.only==\'html\'" href="" class="insertQuiz" ng-click="action()(quiztype,item.type)">{{"lectures."+item.text|translate}}</a>'+
+				              		'<a ng-hide="quiztype==\'invideo\' && item.only==\'html\'" href="" class="size-12 insertQuiz" ng-click="action()(quiztype,item.type)">{{"lectures."+item.text|translate}}</a>'+
 				              '</li>'+ 
-						'</ul>'+
-				  	'</div>'
+						'</ul>'//+
+				  	//'</div>'
 	};
 }).directive('answervideo', ['$compile',function($compile){
 	return {
@@ -359,10 +365,10 @@ angular.module('scalearAngularApp')
 			scope.cc =['MCQ', 'OCQ','Free Text Question']
 			scope.match_types =['Free Text', 'Match Text']
 			console.log(scope.quiz)
-			if(scope.isFreeText){
+			// if(scope.isFreeText()){
 				if(!scope.quiz.match_type)
 					scope.quiz.match_type = scope.match_types[0]
-		 	}
+		 	// }
 
 			if(!scope.isSurvey())
 				scope.cc.push('DRAG')
@@ -379,7 +385,7 @@ angular.module('scalearAngularApp')
             });
 
 			shortcut.add("Enter",function(){
-				if(!scope.isFreeText){
+				if(!scope.isFreeText()){
 					var all_inputs= element.find('input')
 					$log.debug(all_inputs.length)
 					all_inputs.each(function(ind,elem){
@@ -403,7 +409,7 @@ angular.module('scalearAngularApp')
 					"<div ng-switch-when='FREE TEXT QUESTION' ><html_freetext ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
-					"<ul  ng-switch-when='DRAG' class='drag-sort sortable' ui-sortable ng-model='quiz.answers' >"+
+					"<ul  ng-switch-when='DRAG' ui-sortable ng-model='quiz.answers' >"+
 						"<html_drag ng-repeat='answer in quiz.answers' />"+
 					"</ul>"+
 				"</div>",
@@ -413,20 +419,10 @@ angular.module('scalearAngularApp')
 			
 			scope.updateValues= function()
 			{
-				$log.debug("in value update")
-				$log.debug(scope.quiz);
-				$log.debug(scope.quiz.answers);
 				scope.values=0
 				for(var element in scope.quiz.answers)
-				{
-					$log.debug(scope.quiz.answers[element].correct)
-					if(scope.quiz.answers[element].correct==true)
-					{
-						$log.debug("in true");
+					if(scope.quiz.answers[element].correct)
 						scope.values+=1
-					}
-				}
-				$log.debug(scope.values)
 			}
 			
 			
@@ -441,7 +437,7 @@ angular.module('scalearAngularApp')
 			
 			scope.show = function()
 			{
-				 return !("content" in scope.quiz)
+				 return ("content" in scope.quiz)
 			}
 			
 			scope.$watch('quiz.answers', function(){
@@ -454,17 +450,21 @@ angular.module('scalearAngularApp')
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
-					"<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />"+
-					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-					// "<label>Insert an exact string or a regular expression to match ex: '/[a-z]*/'</label>"+
-					"<div><br/><span translate>regex.enter_string</span><br /><br /><span translate>Examples</span>:</div>"+
-					//"<div></div>"+
-					"<ul>"+
-						"<li>Waterloo -> <span translate>regex.correct_if</span> 'Waterloo'</li>"+
-						"<li>/(Waterloo|waterloo)/ -> <span translate>regex.correct_for</span> 'Waterloo' , 'waterloo'</li>"+
-						"<li>/[0-9]/ -> <span translate>regex.correct_for</span> <span translate>regex.any_integer</span></li>"+
-						"<li>/(10|14|29)/ -> <span translate>regex.correct_for</span> <span translate>regex.numbers</span></li>"+
-					"</ul>"+
+					"<div class='row'>"+
+						"<div class='small-10 columns'>"+
+							"<input required name='answer' type='text' placeholder='String to match' ng-model='answer[columna]' style='margin-bottom: 0;' />"+
+							"<small class='error' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</small>"+
+						"</div>"+
+					"</div>"+
+					"<div class='text-left size-12'>"+
+						"<div><br/><span translate>regex.enter_string</span><br /><br /><span translate>Examples</span>:</div>"+
+						"<ul class='size-12'>"+
+							"<li>Waterloo -> <span translate>regex.correct_if</span> 'Waterloo'</li>"+
+							"<li>/(Waterloo|waterloo)/ -> <span translate>regex.correct_for</span> 'Waterloo' , 'waterloo'</li>"+
+							"<li>/[0-9]/ -> <span translate>regex.correct_for</span> <span translate>regex.any_integer</span></li>"+
+							"<li>/(10|14|29)/ -> <span translate>regex.correct_for</span> <span translate>regex.numbers</span></li>"+
+						"</ul>"+
+					"</div>"+
 				"</ng-form>"
 	}
 	
@@ -472,14 +472,21 @@ angular.module('scalearAngularApp')
 	return{
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
-					"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
-					"<input ng-if='!isSurvey()' ng-change='updateValues()' atleastone type='checkbox' name='mcq' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-checked='answer.correct' />"+
-					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
-					"<br ng-if='show()'/>"+
-					"<input ng-if='show()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' />"+
-					"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;' />"+
-					"<br/>"+
+					"<div class='row'>"+
+						"<div class='small-10 columns'>"+
+							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
+							"<small class='error' ng-show='submitted && aform.answer.$error.required'>{{'courses.required'|translate}}!</small>"+
+							"<input ng-if='show() && !isSurvey()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' />"+
+
+						"</div>"+
+						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
+							"<input ng-change='updateValues()' atleastone type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+
+							"<small class='error' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
+						"</div>"+
+						"<div class='small-1 columns'>"+
+							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
+						"</div>"+
+					"</div>"+
 				"</ng-form>"
 	}
 	
@@ -487,14 +494,20 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
-					"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
-					"<input ng-if='!isSurvey()' id='radio_correct' atleastone type='radio' style='margin:5px 10px 15px;' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
-					"<span class='help-inline' ng-show='submitted && aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-					"<span ng-if='!isSurvey()' class='help-inline' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
-					"<br ng-if='show()'/>"+
-					"<input ng-if='show()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
-					"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+
-					"<br>"+
+					"<div class='row'>"+
+						"<div class='small-10 columns'>"+
+							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
+							"<small class='error' ng-show='submitted && aform.answer.$error.required' >{{'courses.required'|translate}}!</small>"+
+							"<input ng-if='show() && !isSurvey()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
+						"</div>"+
+						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
+							"<input id='radio_correct' atleastone type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
+							"<small class='error' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
+						"</div>"+
+						"<div class='small-1 columns'>"+
+							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+
+						"</div>"+
+					"</div>"+
 				"</ng-form>",
 		link: function(scope)
 		{
@@ -513,14 +526,23 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		replace:true,
-		template:"<li class='ui-state-default'>"+
-					"<ng-form name='aform'>"+
-						"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item' style='float:left'></span>"+
-						"<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
-						"<span class='help-inline' ng-show='submitted && aform.answer.$error.required && !hide_valid' style='padding-top: 5px;position:absolute;float:right'>{{'courses.required'|translate}}!</span>"+
-						"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' style='float:right; margin-right: 10px;'/>"+
+		template:"<li class='ui-state-default'>"+	
+					"<ng-form name='aform'>"+					
+						"<div class='row' style='padding: 5px;'>"+
+							"<div class='small-1 columns'>"+
+								"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item' ></span>"+
+							"</div>"+
+							"<div class='small-10 columns'>"+
+								"<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' style='margin-bottom:0'/>"+
+								"<small class='error' ng-show='submitted && aform.answer.$error.required && !hide_valid' >{{'courses.required'|translate}}!</small>"+
+							"</div>"+
+							"<div class='small-1 columns'>"+
+								"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' />"+
+							"</div>"+
+						"</div>"+
 					"</ng-form>"+
-				"</li>"				 
+				"</li>"
+
 	}
 	
 }).directive('atleastone', ['$log', function($log) {

@@ -11,13 +11,18 @@ angular.module('scalearAngularApp')
                     course_id: $stateParams.course_id
                     },
                     function(data) {
-                        $scope.course = data.course;
+                        // $scope.course = data.course;
                         $scope.teachers = data.teachers;
-                        console.log($scope.teachers)
                         $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
                     },
                     function() {}
                 )
+            }
+
+            $scope.goToContent=function(){
+                var params = {'module_id': $scope.last_viewed.module}    
+                params[$scope.last_viewed.item.class_name+'_id'] = $scope.last_viewed.item.id
+                $state.go('course.module.courseware.'+$scope.last_viewed.item.class_name, params)
             }
 
             $scope.url_with_protocol = function(url) {
@@ -83,17 +88,17 @@ angular.module('scalearAngularApp')
                             $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
                             $scope.calendar.events[element].title +=  ' @'+$filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
                             if($scope.calendar.events[element].quizId)
-                                $scope.calendar.events[element].url= $state.href("course.courseware.module.quiz",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId ,quiz_id:$scope.calendar.events[element].quizId})
+                                $scope.calendar.events[element].url= $state.href("course.module.courseware.quiz",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId ,quiz_id:$scope.calendar.events[element].quizId})
                             else if($scope.calendar.events[element].lectureId)
-                                $scope.calendar.events[element].url= $state.href("course.courseware.module.lecture",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId, lecture_id:$scope.calendar.events[element].lectureId})
+                                $scope.calendar.events[element].url= $state.href("course.module.courseware.lecture",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId, lecture_id:$scope.calendar.events[element].lectureId})
                             else{
                                 if(!$scope.calendar.events[element].firstItem)
                                     $scope.calendar.events[element].url= $state.href("course.courseware",{course_id: $scope.calendar.events[element].courseId})
                                 else{
                                     if($scope.calendar.events[element].firstItemType=="Lecture")
-                                        $scope.calendar.events[element].url= $state.href("course.courseware.module.lecture",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId, lecture_id:$scope.calendar.events[element].firstItem.id})
+                                        $scope.calendar.events[element].url= $state.href("course.module.courseware.lecture",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId, lecture_id:$scope.calendar.events[element].firstItem.id})
                                     else
-                                        $scope.calendar.events[element].url= $state.href("course.courseware.module.quiz",{course_id: $scope.calendar.events[element].courseId,module_id:$scope.calendar.events[element].groupId, quiz_id:$scope.calendar.events[element].firstItem.id})
+                                        $scope.calendar.events[element].url= $state.href("course.module.courseware.quiz",{course_id: $scope.calendar.events[element].courseId,module_id:$scope.calendar.events[element].groupId, quiz_id:$scope.calendar.events[element].firstItem.id})
                                 }
                             }  
                         }

@@ -1,4 +1,4 @@
-<div class="link-item-box" ng-class="{'link-item-box-big':!small}">
+<!-- <div class="" ng-class="{'link-item-box-big':!small}">
 	<table style="width: 90%;">
 		<tr>
 			<td style="width: 48px;">
@@ -19,4 +19,18 @@
 			</td>
 		</tr>
 	</table>	
+</div> -->
+<div class="row" style="box-shadow: 0 0 1px lightgrey;padding:10px;margin:10px 0;">
+	<div class="small-1 columns"><img src="images/link_item.png" height="40px" style="vertical-align: top;" ng-class="{'link_img_small':small}"/></div>
+	<div class="small-10 columns">
+		<div class="row" style="margin-bottom:5px">
+			<details-text value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
+		</div>
+		<div class="row">
+			<details-link value="link.url" save="update(link)" validation="validate" elem="link"></details-link>
+		</div>
+	</div>
+	<div class="small-1 columns left" style="padding:0">
+		<delete_button size="small" color='dark' action="remove(link)"></delete_button>
+	</div>
 </div>

@@ -1,26 +1,17 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('sharingModalCtrl', ['$scope','$rootScope','$timeout','$window','$log','Module','$stateParams','Course','selected_item','selected_module','modules','SharedItem','$modalInstance','$translate', function ($scope, $rootScope, $timeout,$window, $log, Module, $stateParams, courses,selected_item,selected_module,modules,SharedItem,$modalInstance, $translate) {
+  .controller('sharingModalCtrl', ['$scope','$rootScope','$timeout','$window','$log','Module','$stateParams','Course','SharedItem','$modalInstance','$translate', function ($scope, $rootScope, $timeout,$window, $log, Module, $stateParams, courses,SharedItem,$modalInstance, $translate) {
     
   		var init =function(){  	
-  			$scope.item= selected_item
-  			$scope.selected_module= selected_module
+  			// $scope.item= selected_item
+  			$scope.selected_module= $scope.selectedmodule
+        console.log('hello theereerewrwerwer')
+        console.log($scope)
   			$scope.collapse={}
   			$scope.collapse[$scope.selected_module.id]='true'
-  			$scope.modules = modules
-  			$scope.modules.forEach(function(module){
-  				if(module == $scope.selected_module){
-  					if($scope.item)
-						module.items.forEach(function(item){
-							if(item == $scope.item)
-								$scope.selectItem(module, item)
-						})
-					else
-  						$scope.selectAll(module)
-  				}
-
-  			})
+  			// $scope.modules = modules
+				$scope.selectAll($scope.selected_module)
   			// courses.getAllTeachers({course_id:null}, function(response){
      //        // $scope.courses=JSON.parse(response.courses);
      //        	console.log(response)
@@ -31,15 +22,15 @@ angular.module('scalearAngularApp')
 
   		$scope.shareItem= function(){
   			var selected = {modules:[], lecture:[], quiz:[]}
-  			$scope.modules.forEach(function(module){
-  				if(module.selected)
-  					selected.modules.push(module.id)
+  			// $scope.modules.forEach(function(module){
+  				if($scope.selected_module.selected)
+  					selected.modules.push($scope.selected_module.id)
   				else
-  					module.items.forEach(function(item){
+  					$scope.selected_module.items.forEach(function(item){
   						if(item.selected)
   							selected[item.class_name].push(item.id)
   					})
-  			})
+  			// })
 
         if(!selected.modules.length && !selected.lecture.length && !selected.quiz.length){
           $scope.errors = $translate('sharing.nothing_selected')

@@ -282,6 +282,9 @@ select{
 .with-margin-right{
 	margin-right: 1.25rem !important;
 }
+.with-left-right{
+	margin-right: 1.25rem !important;
+}
 
 
 /*OVERFLOW*/

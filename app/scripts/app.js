@@ -330,7 +330,8 @@ angular.module('scalearAngularApp', [
                 url: '/courses/:course_id',
                 views: {
                     'navigation': {
-                        templateUrl: '/views/navigation.html'
+                        templateUrl: '/views/navigation.html',
+                        controller: 'navigationCtrl'
                         
                     },
                     '': {

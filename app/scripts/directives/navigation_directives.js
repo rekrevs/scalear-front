@@ -27,7 +27,9 @@ angular.module('scalearAngularApp')
 			restrict: "E",
 			scope:{
 				modules:"=",
-				links:"="
+				links:"=",
+        selectedmodule: "=",
+        shortname: "="
 			},
 			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){				
@@ -39,7 +41,9 @@ angular.module('scalearAngularApp')
 			restrict: "E",
 			scope:{
 				modules:"=",
-				links:"="
+				links:"=",
+        selectedmodule: "=",
+        shortname: "="
 			},
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){

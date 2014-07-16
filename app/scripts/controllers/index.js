@@ -128,7 +128,9 @@ angular.module('scalearAngularApp')
                 });
             };
 
-            getAllCourses()
+            if($rootScope.current_user){
+                getAllCourses()
+            }
 
         }
     ]);

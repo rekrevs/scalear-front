@@ -19,7 +19,8 @@ angular.module('scalearAngularApp')
                 }, function() {
                     $scope.sending = false;
                     //console.log("signed up");
-                    $state.go("home");
+                    // $state.go("home");
+                    $state.go('thanks_for_registering');
                 }, function(response) {
                     $scope.user.errors = response.data.errors
                     $scope.sending = false;

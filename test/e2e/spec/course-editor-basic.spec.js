@@ -4,11 +4,18 @@ var teacher = require('./lib/teacher_module');
 var student = require('./lib/student_module')
 
 var ptor = protractor.getInstance();
-var params = ptor.params
+var params = ptor.params;
 ptor.driver.manage().window().maximize();
 
 //function testing
-xdescribe("teacher", function(){
+describe("3", function(){
+	it('should', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.open_course_whole(ptor,0);
+		o_c.press_content_navigator(ptor);
+		teacher.add_lecture(ptor, 1);
+		ptor.sleep(5000);
+	})
 })
 
 xdescribe("1", function(){
@@ -21,11 +28,11 @@ xdescribe("1", function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
 	})
 
-	it('should get the enrollment key and enroll student', function(){
+	xit('should get the enrollment key and enroll student', function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 	//test
-	it('should add a couple of module and lectures', function(){
+	xit('should add a couple of module and lectures', function(){
 		o_c.open_course_whole(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.add_module(ptor, o_c.feedback);
@@ -40,7 +47,7 @@ xdescribe("1", function(){
 		
 	})
 
-	it('should check for number of modules and lectures student-side', function(){
+	xit('should check for number of modules and lectures student-side', function(){
 		o_c.to_student(ptor);
 
 		o_c.open_course_whole(ptor);
@@ -51,7 +58,8 @@ xdescribe("1", function(){
 		student.open_module_number(ptor, 2);
 		student.check_timeline_item_number(ptor, 2);
 	})
-	it('should clear the course for deletion', function(){
+
+	xit('should clear the course for deletion', function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_whole(ptor);
 
@@ -68,7 +76,7 @@ xdescribe("1", function(){
 	})
 	//end test
 
-	it('should delete course', function(){
+	xit('should delete course', function(){
 		//should choose one of home() or home_teacher() 
 		//depending on the current state(student or teacher)
 		o_c.home_teacher(ptor);
@@ -76,7 +84,7 @@ xdescribe("1", function(){
 	})
 })
 
-describe("2", function(){
+xdescribe("2", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);

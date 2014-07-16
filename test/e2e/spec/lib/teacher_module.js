@@ -7,7 +7,7 @@ var params = ptor.params;
 //====================================================
 //               add new course
 //====================================================
-exports.create_course = function(ptor, short_name, course_name, course_duration, discussion_link, image_link, course_description, prerequisites, feedback){
+exports.create_course = function(ptor, short_name, course_name, course_duration, discussion_link, image_link, course_description, prerequisites){
     locator.by_id(ptor, 'new_course').then(function(new_crs_btn){
     	new_crs_btn.click().then(function(){
     	
@@ -43,7 +43,7 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
     		ptor.executeScript('window.scrollBy(0, 1000)', '');
     		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[8]/input').then(function(crt_crs_btn){
     			crt_crs_btn.click().then(function() {
-		            feedback(ptor, 'Course was successfully created.');
+		            o_c.feedback(ptor, 'Course was successfully created.');
 		        });
     		})
     	})
@@ -74,7 +74,7 @@ exports.get_key_and_enroll = function(ptor){
 //====================================================
 //            		delete course
 //====================================================
-exports.delete_course = function(ptor, feedback){
+exports.delete_course = function(ptor){
 	o_c.open_tray(ptor);
 	o_c.logout(ptor, o_c.feedback);
 	o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -82,7 +82,7 @@ exports.delete_course = function(ptor, feedback){
 		x_btn.click().then(function(){
 			locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
 				conf_del.click().then(function() {
-		            feedback(ptor, 'Course was successfully deleted.');
+		            o_c.feedback(ptor, 'Course was successfully deleted.');
 		            o_c.home_teacher(ptor);
 					o_c.open_tray(ptor);
 					o_c.logout(ptor, o_c.feedback);
@@ -128,21 +128,21 @@ exports.just_delete_course = function(ptor){
 //            		add / delete module
 //====================================================
 
-exports.add_module = function(ptor, feedback){
-	locator.by_classname(ptor, 'adding_module').then(function(add_mod){
+exports.add_module = function(ptor){
+	locator.by_partial_text(ptor, '+ Add Module').then(function(add_mod){
         add_mod.click().then(function() {
-            feedback(ptor, 'Module was successfully created');
+            o_c.feedback(ptor, 'Module was successfully created');
         })
     })
 }
 
-exports.delete_empty_module = function(ptor, mo_no, feedback){
+exports.delete_empty_module = function(ptor, mo_no){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
         mods[mo_no-1].findElement(protractor.By.className('delete')).then(function(del_btn){
             del_btn.click().then(function(){
             	mods[mo_no-1].findElement(protractor.By.className('btn-danger')).then(function(conf_btn){
             		conf_btn.click().then(function(){
-            			feedback(ptor, 'Module was successfully deleted');
+            			o_c.feedback(ptor, 'Module was successfully deleted');
             		})
             	})
             })
@@ -155,17 +155,16 @@ exports.delete_empty_module = function(ptor, mo_no, feedback){
 //            		add lecture
 //====================================================
 
-exports.add_lecture = function(ptor, mo_no, feedback){
+exports.add_lecture = function(ptor, mo_no){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
-		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
-			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
-				add_button[1].click().then(function(){
-					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
-						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
-							options[0].click().then(function(){
-								feedback(ptor, 'Lecture was successfully created.')
-							});
-						})
+		mods[mo_no-1].click();
+		mods[mo_no-1].findElement(protractor.By.partialLinkText("+ Add")).then(function(add_button){
+			add_button.click().then(function(){
+				locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
+					menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
+						options[0].click().then(function(){
+							o_c.feedback(ptor, 'Lecture was successfully created.')
+						});
 					})
 				})
 			})
@@ -177,7 +176,7 @@ exports.add_lecture = function(ptor, mo_no, feedback){
 //            		add quiz
 //====================================================
 
-exports.add_quiz = function(ptor, mo_no, feedback){
+exports.add_quiz = function(ptor, mo_no){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
 			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
@@ -185,7 +184,7 @@ exports.add_quiz = function(ptor, mo_no, feedback){
 					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
 						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
 							options[1].click().then(function(){
-								feedback(ptor, 'Quiz was successfully created.')
+								o_c.feedback(ptor, 'Quiz was successfully created.')
 							});
 						})
 					})
@@ -199,7 +198,7 @@ exports.add_quiz = function(ptor, mo_no, feedback){
 //            		add survey
 //====================================================
 
-exports.add_survey = function(ptor, mo_no, feedback){
+exports.add_survey = function(ptor, mo_no){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
 			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
@@ -207,7 +206,7 @@ exports.add_survey = function(ptor, mo_no, feedback){
 					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
 						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
 							options[2].click().then(function(){
-								feedback(ptor, 'Survey was successfully created.')
+								o_c.feedback(ptor, 'Survey was successfully created.')
 							});
 						})
 					})
@@ -221,14 +220,14 @@ exports.add_survey = function(ptor, mo_no, feedback){
 //            	delete item from module
 //====================================================
 
-exports.delete_item_by_number = function(ptor, mo_no, item_no, feedback){
+exports.delete_item_by_number = function(ptor, mo_no, item_no){
 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
 		mods[mo_no-1].findElements(protractor.By.repeater('item in module.items')).then(function(items){
 			items[item_no-1].findElement(protractor.By.className('delete')).then(function(del_btn){
             	del_btn.click().then(function(){
             		items[item_no-1].findElement(protractor.By.className('btn-danger')).then(function(conf_btn){
             			conf_btn.click().then(function(){
-            				feedback(ptor, 'was successfully deleted');
+            				o_c.feedback(ptor, 'was successfully deleted');
             			})
             		})
             	})
@@ -281,13 +280,13 @@ exports.change_time_zone = function(ptor, value){
 //====================================================
 //            		change the name of an item
 //====================================================
-exports.rename_item = function(ptor, name, feedback){
+exports.rename_item = function(ptor, name){
 	locator.by_tag(ptor, 'details-text').then(function(name_edit){
 		name_edit.click().then(function(){
 			locator.by_classname(ptor, 'editable-input').then(function(text_field){
 				text_field.sendKeys(name).then(function(){
 					locator.by_classname(ptor, 'icon-ok').click().then(function(){
-						feedback(ptor, 'successfully updated')
+						o_c.feedback(ptor, 'successfully updated')
 					})
 				})
 			})
@@ -298,7 +297,7 @@ exports.rename_item = function(ptor, name, feedback){
 
 
 //https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89
-exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
+exports.create_lecture = function(ptor, lecture_name, lecture_url){
 	this.add_lecture(ptor, 1, o_c.feedback);
 	locator.by_xpath(ptor, '//*[@id="modules"]/ul/li[1]').click().then(function(){
 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
@@ -306,7 +305,7 @@ exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
 				lec_nm.clear();
 				lec_nm.sendKeys(lecture_name);
 				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-					feedback(ptor, 'Lecture was successfully updated.');
+					o_c.feedback(ptor, 'Lecture was successfully updated.');
 				})
 			})
 		})
@@ -315,7 +314,7 @@ exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
 				lec_url.clear();
 				lec_url.sendKeys(lecture_url);
 				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-					//feedback(ptor, 'Lecture was successfully updated.');
+					//o_c.feedback(ptor, 'Lecture was successfully updated.');
 				})
 			})
 			ptor.sleep(1000)
@@ -324,7 +323,7 @@ exports.create_lecture = function(ptor, lecture_name, lecture_url, feedback){
 }
 
 //https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89
-exports.create_lecture_in_module = function(ptor, lecture_name, lecture_url, mo_no, feedback){
+exports.create_lecture_in_module = function(ptor, lecture_name, lecture_url, mo_no){
 	this.add_lecture(ptor, mo_no, o_c.feedback);
 	locator.by_xpath(ptor, '//*[@id="modules"]/ul/li[1]').click().then(function(){
 		// locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
@@ -332,7 +331,7 @@ exports.create_lecture_in_module = function(ptor, lecture_name, lecture_url, mo_
 		// 		lec_nm.clear();
 		// 		lec_nm.sendKeys(lecture_name);
 		// 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-		// 			feedback(ptor, 'Lecture was successfully updated.');
+		// 			o_c.feedback(ptor, 'Lecture was successfully updated.');
 		// 		})
 		// 	})
 		// })
@@ -341,7 +340,7 @@ exports.create_lecture_in_module = function(ptor, lecture_name, lecture_url, mo_
 				lec_url.clear();
 				lec_url.sendKeys(lecture_url);
 				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-					//feedback(ptor, 'Lecture was successfully updated.');
+					//o_c.feedback(ptor, 'Lecture was successfully updated.');
 				})
 			})
 			ptor.sleep(1000)
@@ -613,31 +612,31 @@ exports.add_quiz_header = function(ptor, header){
 //====================================================
 //            	save normal quiz or survey
 //====================================================
-exports.save_quiz = function(ptor, feedback){
+exports.save_quiz = function(ptor){
 	locator.by_name(ptor, 'save_quiz').click().then(function(){
-		feedback(ptor, 'Quiz was successfully saved');
+		o_c.feedback(ptor, 'Quiz was successfully saved');
 	})
 }
 
 //====================================================
 //            	save normal survey
 //====================================================
-exports.save_survey = function(ptor, feedback){
+exports.save_survey = function(ptor){
 	locator.by_name(ptor, 'save_quiz').click().then(function(){
-		feedback(ptor, 'Survey was successfully saved');
+		o_c.feedback(ptor, 'Survey was successfully saved');
 	})
 }
 
 //====================================================
 //            	make the quiz required
 //====================================================
-exports.make_quiz_required = function(ptor, feedback){
+exports.make_quiz_required = function(ptor){
 	locator.by_tag(ptor, 'details-check').click().then(function(){
 		locator.by_classname(ptor, 'editable-input').then(function(checkbox){
 			checkbox.click().then(function(){
 				locator.by_classname(ptor, 'icon-ok').then(function(confirm){
 					confirm.click().then(function(){
-						feedback(ptor, 'Quiz was successfully updated');
+						o_c.feedback(ptor, 'Quiz was successfully updated');
 					})
 				})
 			})

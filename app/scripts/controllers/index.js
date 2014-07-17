@@ -33,11 +33,6 @@ angular.module('scalearAngularApp')
                     return $scope.current_user.shared + $scope.current_user.invitations
                 }
             }
-
-            // $scope.are_shared=function(){
-            //     return $scope.current_user && $scope.current_user.roles[0].id!=2 && $scope.current_user.accepted_shared
-            // }
-
             $scope.closeClipboard=function(){
                 $rootScope.clipboard.show_msg = false
             }

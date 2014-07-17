@@ -1,9 +1,7 @@
 <!-- build:css(.tmp/styles) styles/course_item.css -->
-<link rel="stylesheet" href="styles/courseItem.css"/>
+<!-- <link rel="stylesheet" href="styles/courseItem.css"/> -->
 <!-- endbuild -->
 <!-- build:css(.tmp/styles) styles/shared_item.css -->
 <link rel="stylesheet" href="styles/sharedItem.css"/>
 <!-- endbuild -->
-<div ng-repeat="shared_item in shared_items" style="clear:left">
-	<shared-item data="shared_item" courses="courses"></shared-item>	
-</div>
+<shared-item ng-repeat="shared_item in shared_items" data="shared_item" courses="courses"></shared-item>	

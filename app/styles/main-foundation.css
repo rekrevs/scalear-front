@@ -259,6 +259,9 @@ select{
 .with-padding{
 	padding: 1.25rem !important;
 }
+.with-margin{
+	margin: 1.25rem !important;
+}
 .with-tiny-padding{
 	padding: 0.25rem !important;
 }

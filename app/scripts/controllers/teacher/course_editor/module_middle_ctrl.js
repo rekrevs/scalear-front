@@ -6,16 +6,16 @@ angular.module('scalearAngularApp')
         // $scope.$parent.currentmodule = $state.params.module_id
         // $scope.$parent.currentitem = -1
         $scope.$watch('selected_module', function(){
-            if($scope.selected_module){
-                $scope.module=$scope.selected_module
+            if($scope.course.selected_module){
+                $scope.module=$scope.course.selected_module
                 if($scope.module.due_date)
                         $scope.module.due_date_enabled =!isDueDateDisabled()
             }
             init();
         })
         var init = function(){
-            // console.log($scope.selected_module)
-            // $scope.module = $scope.selected_module
+            // console.log($scope.course.selected_module)
+            // $scope.module = $scope.course.selected_module
             // if($scope.module.due_date)
             //     $scope.module.due_date_enabled =!isDueDateDisabled()
             Module.getModules(

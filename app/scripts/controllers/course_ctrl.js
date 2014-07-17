@@ -18,6 +18,7 @@ angular.module('scalearAngularApp')
 	 	// else if($rootScope.current_user.roles[0].id == 2){
 	 	// 	getStudentData()
 	 	// }
+	 	// $scope.course = null;
 	 	var unwatch = $rootScope.$watch('current_user', function(){
 			if($rootScope.current_user && $rootScope.current_user.roles){
 				if($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5)
@@ -33,6 +34,8 @@ angular.module('scalearAngularApp')
  	init();
 
  	var getTeacherData=function(){
+ 		$scope = $scope.$parent
+ 		$scope.course = null
  		$cookieStore.remove('preview_as_student')
       	$cookieStore.remove('old_user_id')
       	$cookieStore.remove('new_user_id')
@@ -40,7 +43,7 @@ angular.module('scalearAngularApp')
  		Course.getCourseEditor(
  			{course_id:$stateParams.course_id},
  			function(data){
- 				$scope = $scope.$parent
+ 				
 		 		$scope.course=data.course
 		 		$scope.course.custom_links = data.links
 		 		$scope.course.modules=data.groups

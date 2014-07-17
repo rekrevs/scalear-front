@@ -92,7 +92,7 @@
     border-radius: 2px;
 	-webkit-border-radius: 2px;
 	-moz-border-radius: 2px;
-	max-width: 200px;
+	/*max-width: 200px;*/
 }
 
 /*Remove connectors before root*/

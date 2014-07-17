@@ -107,4 +107,27 @@ angular.module('scalearAngularApp')
 	  	}
     }
   }
+}]).directive('sharingModal', ['$modal', '$rootScope', function($modal, $rootScope){
+  return{
+    restrict: 'A',
+    replace: true,
+    link: function(scope, element){
+  	scope.openShareModal = function () {
+	    var modalInstance = $modal.open({
+	      templateUrl: '/views/teacher/course_editor/sharing_modal.html',
+	      controller: "sharingModalCtrl"
+	    });
+
+	    modalInstance.result.then(function () {
+        	console.log("shared")
+        	// selectNone()
+      	},function () {
+        	console.log("close")
+        	// selectNone()
+      	});
+  	}
+
+    }
+  }
+
 }]);

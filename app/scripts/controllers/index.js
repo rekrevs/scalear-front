@@ -37,36 +37,6 @@ angular.module('scalearAngularApp')
                 $rootScope.clipboard.show_msg = false
             }
 
-            $scope.disablePreview=function(){
-                if($cookieStore.get('preview_as_student')){
-                  Impersonate.destroy(
-                    {
-                        old_user_id:$cookieStore.get('old_user_id'),
-                        new_user_id:$cookieStore.get('new_user_id')
-                    },
-                    function(d){
-                      console.log(d)
-                      console.log("good")
-                      var course_id = $cookieStore.get('course_id')
-                      $rootScope.preview_as_student = false
-                      $cookieStore.remove('preview_as_student')
-                      $cookieStore.remove('old_user_id')
-                      $cookieStore.remove('new_user_id')
-                      $cookieStore.remove('course_id')
-                      $state.go('course.course_editor', {course_id: course_id})
-                    },
-                    function(){
-                      console.log("bad")
-                      $rootScope.preview_as_student = false
-                      $cookieStore.remove('preview_as_student')
-                      $cookieStore.remove('old_user_id')
-                      $cookieStore.remove('new_user_id')
-                      $cookieStore.remove('course_id')
-                    }
-                  )
-                }
-            }
-
             $scope.login = function() {
                 //$log.debug("in login");
                 //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/

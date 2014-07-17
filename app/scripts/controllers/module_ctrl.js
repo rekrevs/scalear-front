@@ -11,6 +11,5 @@ angular.module('scalearAngularApp')
             console.log($scope.course.selected_module)
         }
     })
-	
 	// $state.go('course.module.course_editor.lecture',{module_id:55, lecture_id:232})
 }])

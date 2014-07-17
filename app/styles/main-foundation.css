@@ -379,6 +379,9 @@ label{
 	word-break: break-word;
 }
 .show-inline{
+	display: inline-block;
+}
+.must-show-inline{
 	display: inline-block !important;
 }
 

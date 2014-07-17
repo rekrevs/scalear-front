@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive("module", ['$timeout','$state',function($timeout,$state) {
+    .directive("module", ['$rootScope','$timeout','$state',function($rootScope, $timeout,$state) {
         return {
             restrict: "E",
             scope: {
-                name: "=",
-                id: '=',
-                remove: "&",
+                module:"=data",
+                // name: "=",
+                // id: '=',
+                // remove: "&",
                 click:"&",
                 // open: "=",
                 copy:"&",
@@ -17,7 +18,7 @@ angular.module('scalearAngularApp')
             },
             templateUrl: '/views/teacher/course_editor/module.html',
             link: function(scope,element) {
-                scope.menu_status = false
+                // scope.menu_status = false
                 // scope.invertOpen = function() {
                 //     if (scope.open[scope.id])
                 //         scope.open[scope.id] = false
@@ -29,11 +30,11 @@ angular.module('scalearAngularApp')
                 // }
                 scope.selectModule=function(){
                     if($state.includes("*.progress.*"))
-                        $state.go('course.module.progress',{module_id: scope.id})
+                        $state.go('course.module.progress',{module_id: scope.module.id})
                     else if($state.includes("*.inclass.*"))
-                        $state.go('course.module.inclass',{module_id: scope.id})
+                        $state.go('course.module.inclass',{module_id: scope.module.id})
                     else
-                        $state.go('course.module.course_editor.overview',{module_id: scope.id})
+                        $state.go('course.module.course_editor.overview',{module_id: scope.module.id})
                 }
                 scope.copyModule=function(event){
                     event.stopPropagation() 
@@ -61,9 +62,15 @@ angular.module('scalearAngularApp')
                         element.find('.module_link').select();
                     });
                 }
+
+                scope.remove=function(event){
+                    event.preventDefault();
+                    event.stopPropagation();  
+                    $rootScope.$broadcast("delete_module", scope.module)
+                }
             }
         }
-    }]).directive('item', ['$translate','$timeout','$anchorScroll','$location','$state', function($translate, $timeout, $anchorScroll,$location,$state) {
+    }]).directive('item', ['$rootScope','$timeout','$anchorScroll','$location','$state', function($rootScope, $timeout, $anchorScroll,$location,$state) {
         return {
             scope: {
                 // name: '=',
@@ -130,6 +137,9 @@ angular.module('scalearAngularApp')
                         element.find('.item_link').select();
                     });
                 }
+                scope.remove=function(){
+                    $rootScope.$broadcast("delete_item", scope.item)
+                }
             }
         };
     }]).directive('buttonLink', function() {
@@ -173,29 +183,32 @@ angular.module('scalearAngularApp')
             };
         }
     ])
-    .directive('overlay', function() {
+    .directive('overlay', ['$timeout', function($timeout) {
         return {
             transclude: true,
             restrict: 'E',
             replace: true,
             template: '<div class="overlay well" ng-transclude></div>',
             link: function(scope, element) {
-                var parent = element.parent();
-                scope.getWidth = function() {
-                    return parent.width()
-                };
+                var parent = element.parent().parent();
+                // console.log(element.parent())
+                // scope.getWidth = function() {
+                //     return element.parent().width()
+                // };
                 scope.getHeight = function() {
                     return parent.height()
                 };
-                scope.$watch(scope.getWidth, function(newValue, oldValue) {
-                    element.css("width", newValue)
-                });
-                scope.$watch(scope.getHeight, function(newValue, oldValue) {
-                    element.css("height", newValue)
-                });
+                // scope.$watch(scope.getWidth, function(newValue, oldValue) {
+                //     angular.element(element.children()[0]).css("width", newValue)
+                // });
+                $timeout(function(){
+                    scope.$watch(scope.getHeight, function(newValue, oldValue) {
+                        element.css("height", newValue)
+                    })
+                },1000);
             }
         }
-    })
+    }])
     .directive('loading', function() {
         return {
             scope: {
@@ -272,66 +285,38 @@ angular.module('scalearAngularApp')
             replace: true,
             link: function(scope, element){
                 scope.openOnlineContentModal = function () {
-                    // angular.element('.btn').blur()
                     var modalInstance = $modal.open({
                         templateUrl: '/views/teacher/course_editor/online_content_modal.html',
-                        controller: "courseEditorCtrl",
-                    })
-
-                    modalInstance.result.then(function (content_type) {
-                    //   console.log($scope.course)
-                      // $rootScope.show_alert="success"; 
-                      // ErrorHandler.showMessage($translate('controller_msg.enrolled_in', {course: $scope.course.name}), 'errorMessage', 2000);
-                      // $timeout(function(){
-                      //  $rootScope.show_alert=""; 
-                      // },5000);
-                        
-                      // init();
-                      console.log(content_type)
-
-                    },
-                    function () {
-                        
+                        controller: ModalInstanceCtrl,
                     })
                 }
-                scope.dismissModal = function(){
-                    console.log('closing')
-                    $modal.close();
-                }
+                var ModalInstanceCtrl = ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance, $rootScope) {
+                    $scope.addItem=function(type){
+                        $rootScope.$broadcast("add_item", type)
+                        $modalInstance.close()
+                    }
+                  $scope.cancel = $modalInstance.dismiss
+                }]
             }
         }
-    }]).directive('questionsModal', ['$modal', function($modal){
+    }]).directive('questionsModal', ['$modal',function($modal){
         return{
             restrict: 'A',
             replace: true,
             link: function(scope, element){
                 scope.openQuestionsModal = function () {
-                    // angular.element('.btn').blur()
                     var modalInstance = $modal.open({
                         templateUrl: '/views/teacher/course_editor/question_types_modal.html',
-                        controller: "courseEditorCtrl",
-                    })
-
-                    modalInstance.result.then(function (content_type) {
-                    //   console.log($scope.course)
-                      // $rootScope.show_alert="success"; 
-                      // ErrorHandler.showMessage($translate('controller_msg.enrolled_in', {course: $scope.course.name}), 'errorMessage', 2000);
-                      // $timeout(function(){
-                      //  $rootScope.show_alert=""; 
-                      // },5000);
-                        
-                      // init();
-                      console.log(content_type)
-
-                    },
-                    function () {
-                        
+                        controller: ModalInstanceCtrl,
                     })
                 }
-                scope.dismissModal = function(){
-                    console.log('closing')
-                    $modal.close();
-                }
+                var ModalInstanceCtrl = ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance, $rootScope) {
+                    $scope.addQuiz=function(quiz_type, question_type){
+                        $rootScope.$broadcast("add_online_quiz", quiz_type, question_type)
+                        $modalInstance.close()
+                    }
+                  $scope.cancel = $modalInstance.dismiss
+                }]
             }
         }
     }]);

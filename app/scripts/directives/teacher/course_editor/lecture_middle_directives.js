@@ -21,17 +21,17 @@ angular.module('scalearAngularApp')
 	return {		
 		 restrict: 'E',
 		 template: '<div class="row" id="editing">'+
-						'<div class="wheat large-6 large-centered columns" >'+
-							'<div class="row" style="padding: 15px 15px 0px 15px;">'+
-								'<h4><span translate>online_quiz.editing_quiz</span> {{selected_quiz.question}} <span translate>at</span> {{selected_quiz.time|format}}'+
-								'<b><br>{{double_click_msg|translate}}</b></h4>'+
+						'<div class="wheat small-6 small-centered columns" >'+
+							'<div class="row">'+
+								'<h5 class="no-margin color-wheat"><span translate>online_quiz.editing_quiz</span> {{selected_quiz.question}} <span translate>at</span> {{selected_quiz.time|format}}'+
+								'<b><br>{{double_click_msg|translate}}</b></h5>'+
 							'</div>'+
 							'<div class="row">'+
-								'<div class="large-4 large-centered columns">'+
-									'<div class="large-6 columns"><button ng-disabled="disable_save_button" class="button tiny" style="margin-top:5px;" ng-click="saveBtn()" translate>save</button></div>'+
-									'<div class="large-6 columns">'+
-										'<a ng-show="!quiz_deletable" class="button secondary tiny" style="margin-top:5px;" ng-click="exitBtn()" translate>groups.exit</a>'+
-										'<a ng-show=" quiz_deletable" class="button secondary tiny" style="margin-top:5px;" ng-click="exitBtn()" translate>lectures.cancel</a>'+
+								'<div class="small-3 small-centered columns">'+
+									'<div class="small-6 columns"><button ng-disabled="disable_save_button" class="button tiny" style="margin:5px 0" ng-click="saveBtn()" translate>save</button></div>'+
+									'<div class="small-6 columns">'+
+										'<a ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</a>'+
+										'<a ng-show=" quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>lectures.cancel</a>'+
 									'</div>'+
 								'</div>'+
 							'</div>'+
@@ -218,7 +218,7 @@ angular.module('scalearAngularApp')
 		 				"<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 					"<div class='input-prepend'>"+
 			 					"<span class='add-on'>{{data.pos}}</span>"+
-			 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required  tooltip='{{!data.answer?require_translated:\"\"}}'/>"+
+			 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;font-size: 14px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required  tooltip='{{!data.answer?require_translated:\"\"}}'/>"+
 		 					"</div>"+
 	 					"</div>"+
 	 					"<b class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >{{data.answer}}</b>"+
@@ -315,8 +315,9 @@ angular.module('scalearAngularApp')
             	html: true,
             	fullscreen:false
             }
+            console.log(element)
 
-            element.resizable({
+            angular.element(element.children()[0]).resizable({
             	containment: ".videoborder",  
             	alsoResize: element.find('.area'), 
             	minHeight:40, 

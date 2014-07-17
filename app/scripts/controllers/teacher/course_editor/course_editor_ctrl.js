@@ -6,64 +6,90 @@ angular.module('scalearAngularApp')
 
  	$window.scrollTo(0, 0);
  	Page.setTitle('head.content')
- 	$scope.tree_toggled = false 
- 	$scope.details_toggled = false
-    $scope.not_module = $state.params.lecture_id || $state.params.quiz_id;
- 	$scope.currentmodule 
- 	$scope.currentitem; 
+
+    $scope.$on('add_item', function(event, type){
+        if(type=='video')
+             $scope.addLecture($stateParams.module_id)
+        else
+            $scope.addQuiz($stateParams.module_id, type)
+    })
+
+     $scope.$on('add_module', function(event){
+         $scope.addModule()
+    })
+
+     $scope.$on('activate_preview',function(){
+        $scope.impersonate($stateParams.module_id)
+     })
+
+     $scope.$on('delete_module',function(event, module){
+        $scope.removeModule(module)
+     })
+
+     $scope.$on('delete_item',function(event, item){
+        if(item.class_name == 'lecture')
+            $scope.removeLecture(item)
+        else
+            $scope.removeQuiz(item)
+     })
+ 	// $scope.tree_toggled = false 
+ 	// $scope.details_toggled = false
+  //   $scope.not_module = $state.params.lecture_id || $state.params.quiz_id;
+ 	// $scope.currentmodule 
+ 	// $scope.currentitem; 
 
  	/***********************Functions*******************************/
 
- 	var init = function(){
- 		$cookieStore.remove('preview_as_student')
-      	$cookieStore.remove('old_user_id')
-      	$cookieStore.remove('new_user_id')
-      	$cookieStore.remove('course_id')
- 		$scope.open_id="-1";
-	    $scope.open={};
-	    $scope.oneAtATime = true;
-	    $scope.init_loading=true
- 		Course.getCourseEditor(
- 			{course_id:$stateParams.course_id},
- 			function(data){
-		 		$scope.course=data.course
-		 		$scope.course.custom_links = data.links
-		 		$scope.modules=data.groups
-		 		$scope.module_obj ={}
-		 		$scope.items_obj ={}
-                $scope.items_obj["lecture"]={}
-                $scope.items_obj["quiz"]={}
-		 		$scope.modules.forEach(function(module){
-		 			$scope.module_obj[module.id] = module
-		 			module.items.forEach(function(item){
-		 				$scope.items_obj[item.class_name][item.id] = item
-		 			})
-		 		})
+ 	// var init = function(){
+ 	// 	$cookieStore.remove('preview_as_student')
+  //     	$cookieStore.remove('old_user_id')
+  //     	$cookieStore.remove('new_user_id')
+  //     	$cookieStore.remove('course_id')
+ 	// 	$scope.open_id="-1";
+	 //    $scope.open={};
+	 //    $scope.oneAtATime = true;
+	 //    $scope.init_loading=true
+ 	// 	Course.getCourseEditor(
+ 	// 		{course_id:$stateParams.course_id},
+ 	// 		function(data){
+		//  		$scope.course=data.course
+		//  		$scope.course.custom_links = data.links
+		//  		$scope.modules=data.groups
+		//  		$scope.module_obj ={}
+		//  		$scope.items_obj ={}
+  //               $scope.items_obj["lecture"]={}
+  //               $scope.items_obj["quiz"]={}
+		//  		$scope.modules.forEach(function(module){
+		//  			$scope.module_obj[module.id] = module
+		//  			module.items.forEach(function(item){
+		//  				$scope.items_obj[item.class_name][item.id] = item
+		//  			})
+		//  		})
 
-		 		$scope.init_loading=false
-		 		console.log($scope.course)
-		    },
-		    function(){
-		    }
-	    );
- 	}
+		//  		$scope.init_loading=false
+		//  		console.log($scope.course)
+		//     },
+		//     function(){
+		//     }
+	 //    );
+ 	// }
 
- 	$scope.toggleTree = function(){
- 		// var menu = angular.element('#tree'), value;
- 		// if($scope.tree_toggled == false){
-			// menu.css('left', '30px')	
- 		// 	console.log('first');
- 		// }
- 		// else{
-			// menu.css('left', '-238px')
- 		// 	console.log('second');
- 		// }
- 		$scope.tree_toggled = !$scope.tree_toggled;
+ 	// $scope.toggleTree = function(){
+ 	// 	// var menu = angular.element('#tree'), value;
+ 	// 	// if($scope.tree_toggled == false){
+		// 	// menu.css('left', '30px')	
+ 	// 	// 	console.log('first');
+ 	// 	// }
+ 	// 	// else{
+		// 	// menu.css('left', '-238px')
+ 	// 	// 	console.log('second');
+ 	// 	// }
+ 	// 	$scope.tree_toggled = !$scope.tree_toggled;
 
- 	}
- 	$scope.toggleDetails = function(){
- 		$scope.details_toggled = !$scope.details_toggled;
- 	}
+ 	// }
+ 	// $scope.toggleDetails = function(){
+ 	// 	$scope.details_toggled = !$scope.details_toggled;
+ 	// }
  	
  	$scope.capitalize = function(s){
  		return CourseEditor.capitalize(s)
@@ -71,22 +97,27 @@ angular.module('scalearAngularApp')
 
  	$scope.impersonate = function(module_id){
  		emptyClipboard()
-        $cookieStore.put('old_user_id', $rootScope.current_user.id)
-        $cookieStore.put('course_id', $stateParams.course_id)
-        $scope.disable_preview = true
-        Impersonate.create({},{course_id: $stateParams.course_id},
-          function(data){
-            console.log(data)
-            console.log("good")            
-            $cookieStore.put('preview_as_student', true)            
-            $cookieStore.put('new_user_id', data.user.id)   
-            $state.go('course.module.courseware',{course_id: $stateParams.course_id, module_id: module_id })
-            $rootScope.preview_as_student = true
-          },
-          function(){
-            console.log("Failed")
-          }
-        )
+        if($scope.module_obj[module_id].items.length){
+            $cookieStore.put('old_user_id', $rootScope.current_user.id)
+            $cookieStore.put('course_id', $stateParams.course_id)
+            $scope.disable_preview = true
+            var item = $scope.module_obj[module_id].items[0]
+            Impersonate.create({},{course_id: $stateParams.course_id},
+              function(data){
+                console.log(data)
+                console.log("good")            
+                $cookieStore.put('preview_as_student', true)            
+                $cookieStore.put('new_user_id', data.user.id) 
+                var params={course_id: $stateParams.course_id, module_id: module_id}
+                params[item.class_name+'_id'] = item.id
+                $state.go('course.module.courseware.'+item.class_name,params)
+                $rootScope.preview_as_student = true
+              },
+              function(){
+                console.log("Failed")
+              }
+            )
+        }
   	}
 
  	$scope.addModule=function(){
@@ -97,122 +128,105 @@ angular.module('scalearAngularApp')
 	    	function(module){
 	    		$log.debug(module)
 	    		module.group.items=[]
-	    		$scope.modules.push(module.group)
-	    		$scope.module_obj[module.group.id] = module.group
+	    		$scope.course.modules.push(module.group)
+	    		$scope.module_obj[module.group.id] = $scope.course.modules[$scope.course.modules.length-1]
     			$scope.module_loading=false
+                $state.go('course.module.course_editor.overview', {module_id: module.group.id})
 	    	}, 
 	    	function(){}
 		);
     }
 
-    $scope.removeModule=function(event, index){
-    	$log.debug("remove mod")
-    	event.preventDefault();
-  		event.stopPropagation();  
-  		var m_id= $scope.modules[index].id;
-	    	Module.destroy(
-	    		{
-	    			course_id: $stateParams.course_id,
-	    			module_id: m_id
-	    		},{},
-	    		function(response){
-	    			$log.debug(response)
-	    				var module = $scope.modules.splice(index, 1)
-	    				delete $scope.module_obj[module.id]
-	    			 	var str = $location.path();
-					 	var res = str.match(/.*\/modules\/(\d+)/);
-					 	if(res && res[1]==m_id)
-	    			 		$state.go('course.course_editor')
-	    			
-	    		},
-	    		function(){}
-			);
+    $scope.removeModule=function(module){
+    	Module.destroy(
+    		{
+    			course_id: $stateParams.course_id,
+    			module_id: module.id
+    		},{},
+    		function(response){
+				$scope.course.modules.splice($scope.course.modules.indexOf(module), 1)
+				delete $scope.module_obj[module.id]
+			 	if($stateParams.module_id == module.id)
+			 		$state.go('course.course_editor')
+    		},
+    		function(){}
+		);
     }
 
-    $scope.addLecture=function(module_index){
-    	$log.debug("adding lec "+ module_index)
+    $scope.addLecture=function(module_id){
+    	$log.debug("adding lec "+ module_id)
     	$log.debug($scope.modules)
     	$scope.item_loading=true
-    	Lecture.newLecture({course_id: $stateParams.course_id, group: $scope.modules[module_index].id},
+    	Lecture.newLecture({course_id: $stateParams.course_id, group: module_id},
 	    	function(data){
 	    		$log.debug(data)
 	    		data.lecture.class_name='lecture'
-	    	    $scope.modules[module_index].items.push(data.lecture)
-	    	    $scope.items_obj["lecture"][data.lecture.id] = data.lecture
+	    	    $scope.module_obj[module_id].items.push(data.lecture)
+	    	    $scope.items_obj["lecture"][data.lecture.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
     			$scope.item_loading=false
+                $state.go('course.module.course_editor.lecture', {lecture_id: data.lecture.id})
 	    	}, 
 	    	function(){}
 		);
     }
 
-    $scope.removeLecture=function(module_index, item_index){
-    	$log.debug("remove lec " + module_index + " " + item_index) 
-    	var l_id=$scope.modules[module_index].items[item_index].id
-	    	Lecture.destroy(
-	    		{
-	    			course_id: $stateParams.course_id, 
-	    			lecture_id: $scope.modules[module_index].items[item_index].id
-	    		},
-	    		{},
-	    		function(response){
-	    			 $log.debug(response)
-	    			 var item = $scope.modules[module_index].items.splice(item_index, 1)
-	    			 delete $scope.items_obj["lecture"][item.id]
-
-	    			 var str = $location.path();
-					 var res = str.match(/.*\/lectures\/(\d+)/);
-					 if(res && res[1]==l_id)
-	    			 	$state.go('course.course_editor')
-	    		},
-	    		function(){}
-			);
+    $scope.removeLecture=function(item){
+    	Lecture.destroy(
+    		{
+    			course_id: $stateParams.course_id, 
+    			lecture_id: item.id
+    		},
+    		{},
+    		function(response){
+                $scope.module_obj[item.group_id].items.splice($scope.module_obj[item.group_id].items.indexOf(item),1)
+                delete $scope.items_obj["lecture"][item.id];
+				if($state.params.lecture_id == item.id)
+                    $state.go('course.module.course_editor.overview')
+    		},
+    		function(){}
+		);
     }
     
-    $scope.addQuiz=function(module_index, type){
-    	$log.debug("adding quiz "+ module_index)
-    	$log.debug($scope.modules)
+    $scope.addQuiz=function(module_id, type){
     	$scope.item_loading=true
-    	Quiz.newQuiz({course_id: $stateParams.course_id, group: $scope.modules[module_index].id, type:type},
-    	{},
-
-	    	function(data){
-	    		$log.debug(data)
-	    		data.quiz.class_name='quiz'
-	    	    $scope.modules[module_index].items.push(data.quiz)
-	    	    $scope.items_obj["quiz"][data.quiz.id] = data.quiz
+    	Quiz.newQuiz(
+            {course_id: $stateParams.course_id, group: module_id, type:type},
+        	{},
+        	function(data){
+        		$log.debug(data)
+        		data.quiz.class_name='quiz'
+        	    $scope.module_obj[module_id].items.push(data.quiz)
+        	    $scope.items_obj["quiz"][data.quiz.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
     			$scope.item_loading=false
-	    	}, 
-	    	function(){}
+                $state.go('course.module.course_editor.quiz', {quiz_id: data.quiz.id})
+        	}, 
+        	function(){}
 		);
     }
     
-    $scope.removeQuiz=function(module_index, item_index){
-    	$log.debug("remove quiz " + module_index + " " + item_index) 
-    	var q_id=$scope.modules[module_index].items[item_index].id;
+    $scope.removeQuiz=function(item){
 	    	Quiz.destroy(
 	    		{course_id: $stateParams.course_id,
-	    		 quiz_id: q_id},
+	    		 quiz_id: item.id},
 	    		{},
 	    		function(response){
-	    			 var quiz = $scope.modules[module_index].items.splice(item_index, 1)
-	    			 delete $scope.items_obj["quiz"][quiz.id]
-	    			 var str = $location.path();
-					 var res = str.match(/.*\/quizzes\/(\d+)/);
-					 if(res && res[1]==q_id)
-	    			 	$state.go('course.course_editor')
+                    $scope.module_obj[item.group_id].items.splice($scope.module_obj[item.group_id].items.indexOf(item),1)
+                    delete $scope.items_obj["quiz"][item.id];
+                    if($state.params.quiz_id == item.id)
+                        $state.go('course.module.course_editor.overview')
 	    		},
 	    		function(){}
 			);
     }
 
-    $scope.closeAll=function(index){
-    	for(var i in $scope.modules)
-    		if(i != index)
-    			$scope.modules[i].open = false
+    // $scope.closeAll=function(index){
+    // 	for(var i in $scope.modules)
+    // 		if(i != index)
+    // 			$scope.modules[i].open = false
 
-    	$scope.modules[index].open=! $scope.modules[index].open
-    	$scope.open_id = null
-    }
+    // 	$scope.modules[index].open=! $scope.modules[index].open
+    // 	$scope.open_id = null
+    // }
 
     $scope.createModuleLink=function(id){
     	return $state.href('course.module.courseware', {module_id: id}, {absolute: true})
@@ -233,7 +247,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.paste=function(module_id, module_index){
-    	console.log("Dsf")
     	var clipboard = $rootScope.clipboard
 
     	if(clipboard.type == 'module')
@@ -405,10 +418,10 @@ angular.module('scalearAngularApp')
 
     /*************************************************************************************/
     
-	$rootScope.$on('accordianUpdate', function(event, message) {
-		$scope.open_id=message;
-		$scope.open[message]= true;
-	});
+	// $rootScope.$on('accordianUpdate', function(event, message) {
+	// 	$scope.open_id=message;
+	// 	$scope.open[message]= true;
+	// });
 
  	$scope.moduleSortableOptions={
  		axis: 'y',
@@ -456,11 +469,5 @@ angular.module('scalearAngularApp')
 		},
  	}
 
-	// init();
-
-
 
 }]);
-
-
-

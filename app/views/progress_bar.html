@@ -28,8 +28,8 @@
     </div>
     <div class="controlDiv" ng-class="play_pause_class" ng-click="playBtn()" style="float: left;margin: 2px 5px 0 5px;"></div>
     <div id="volume" class="volumeDiv" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)" style="float: left;margin-right: 4px;margin-top: 2px;"></div>
-     <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('/images/volume_bar.png');float: left;margin-right: 15px;margin-top: 10px;"/> <!-- position: absolute;left: 65px;top: 12px; -webkit-appearance:none;-moz-appearance:none;outline:0; -->
-    <div class="timer color-grey" style="margin-top:10px;text-align: left;">
+     <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('/images/volume_bar.png');float: left;margin-right: 15px;margin-top: 15px;"/> <!-- position: absolute;left: 65px;top: 12px; -webkit-appearance:none;-moz-appearance:none;outline:0; -->
+    <div class="timer color-grey size-14" style="margin-top:10px;text-align: left">
         <span style="float:left;">{{current_time|format}}</span><!-- style='float:left;margin-left:140px;left:50px;line-height:30px;cscope.player.controls.youtubeolor:gray;font-size:small;' -->
         <span > / {{total_duration|format}}</span><!-- style='float:left;margin-left:0px;line-height:30px;color:gray;font-size:small;' -->
     </div>

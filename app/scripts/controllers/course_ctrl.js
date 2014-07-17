@@ -36,6 +36,10 @@ angular.module('scalearAngularApp')
  	var getTeacherData=function(){
  		$scope = $scope.$parent
  		$scope.course = null
+ 		$cookieStore.remove('preview_as_student')
+      	$cookieStore.remove('old_user_id')
+      	$cookieStore.remove('new_user_id')
+      	$cookieStore.remove('course_id')
  		Course.getCourseEditor(
  			{course_id:$stateParams.course_id},
  			function(data){
@@ -51,10 +55,6 @@ angular.module('scalearAngularApp')
 		 				$scope.items_obj[item.class_name][item.id] = item
 		 			})
 		 		})
-
-		 		// $scope.init_loading=false
-		 		console.log("course ctrl")
-		 		console.log($scope.course)
 		    },
 		    function(){
 		    }

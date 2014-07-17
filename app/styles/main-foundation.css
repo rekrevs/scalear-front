@@ -92,7 +92,7 @@
 }
 
 .wheat{
-	background-color: rgb(252,248,227) !important;
+	background-color: #fcf8e3 !important;
 }
 
 
@@ -113,10 +113,13 @@
 	color: #a3a3a3 !important;
 }
 .color-maroon{	
-	color: maroon;
+	color: maroon !important;
 }
 .color-coral{
-	color: #2d2d2d;
+	color: #2d2d2d !important;
+}
+.color-wheat{
+	color: #c09853 !important;
 }
 .dark-text{
 	color: #222222 !important;
@@ -374,6 +377,10 @@ label{
 }
 .show-inline{
 	display: inline-block;
+}
+
+.top-bar{
+	z-index: 10 !important;
 }
 
 

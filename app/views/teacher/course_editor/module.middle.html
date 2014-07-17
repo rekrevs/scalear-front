@@ -68,7 +68,7 @@
 <br />
 <br />
 <div class="row">
-	<div class="small-10 small-offset-2">
+	<div class="small-10 small-offset-2 columns">
 		<ul class="small-block-grid-1 medium-block-grid-3 large-block-grid-4">
 			<li class="total">
 				<h5 class="text-info total_title" >
@@ -99,13 +99,15 @@
 </div>
 <br />
 <div class="row">
-	<div class="small-10 small-offset-2"><b translate>groups.external_link</b></div>
+	<div class="small-10 small-offset-2 columns"><b translate>groups.external_link</b></div>
 </div>
-<div class="row">
-	<div class="small-10 small-offset-2" style="color: #808080;" ng-show="module.custom_links.length ==0">{{'groups.no_external_links' | translate}}</div>
+<div class="row" ng-show="module.custom_links.length ==0">
+	<br/>
+	<div class="small-10 small-offset-2 columns" style="color: #808080;" >{{'groups.no_external_links' | translate}}</div>
 </div>
-<div class="small-7 small-offset-3">
-	<link-item ng-repeat="doc in module.custom_links" link="doc" update="updateCustomLink" remove="removeCustomLink" validate="validate" />
+<div class="small-8 small-offset-2 columns left">
+	<div><link-item ng-repeat="doc in module.custom_links" link="doc" update="updateCustomLink" remove="removeCustomLink" validate="validate" /></div>
+	<br/>
 	<a ng-click="addCustomLink()" ng-disabled="link_overlay" class="button small add-teacher-button">
 	    <img src="../images/add_link.png" /> {{'groups.add_link' | translate}}
 	</a>

@@ -352,6 +352,9 @@ button.active{
 }
 
 /*OTHERS*/
+.valign-middle{
+	vertical-align: middle !important;
+}
 .valign-top{
 	vertical-align: top !important;
 }
@@ -372,14 +375,11 @@ label{
 .under-the-other{
 	display: block !important;
 }
-.show-inline{
-	display: inline-block;
-}
 .break-text{
 	word-break: break-word;
 }
 .show-inline{
-	display: inline-block;
+	display: inline-block !important;
 }
 
 .top-bar{

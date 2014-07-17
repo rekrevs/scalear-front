@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['Course', '$filter', function(Course, $filter){
+	.directive('mainNavigation', ['Course', '$filter', '$rootScope', function(Course, $filter, $rootScope){
 		return {
 			replace: true,
 			restrict: "E",
@@ -15,6 +15,12 @@ angular.module('scalearAngularApp')
 			templateUrl: "/views/main_navigation.html",
 			link: function (scope, element) {
 				scope.today = new Date();
+				// $rootScope.$watch('are_shared', function(){
+				// 	scope.are_shared = $rootScope.are_shared
+				// })
+				scope.are_shared = function(){
+					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared
+				}
 				scope.getEndDate = function(start_date, duration){
 					return start_date.setDate(start_date.getDate()+(duration * 7));
 				}
@@ -40,6 +46,7 @@ angular.module('scalearAngularApp')
 					$rootScope.$broadcast('activate_preview')
 				}
 				scope.goToContentEditor=function(){
+					console.log($state.includes("**.course_editor.**"))
 					if(!$state.includes("**.course_editor.**"))
 						$state.go("course.module.course_editor.overview")
 				}

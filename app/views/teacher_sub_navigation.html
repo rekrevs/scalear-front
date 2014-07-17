@@ -17,7 +17,7 @@
           <li has-dropdown>
             <a class="sub-header-component active" href="" translate>settings.settings</a>
             <ul top-bar-dropdown>
-              <li><a class="sub-header-component" href="">First link in dropdown</a></li>
+              <li><a class="sub-header-component" ui-sref="course.edit_course_information">Course Information</a></li>
             </ul>
           </li>
         </ul>
@@ -25,7 +25,7 @@
         <!-- Left Nav Section -->
         <ul class="left" ng-show="'*.module.**' | includedByState">
             <li has-dropdown>
-                <a class="sub-header-component green" translate>head.progress</a>
+                <a class="sub-header-component green" ng-click="goToProgress()" translate>head.progress</a>
                 <ul top-bar-dropdown>
                     <li>
                         <a class="sub-header-component has-description green" ui-sref="course.module.progress">
@@ -39,10 +39,10 @@
             </li>
             <li><a class="sub-header-component green" ui-sref="course.module.inclass" translate>head.in_class</a></li>
             <li has-dropdown>
-                <a class="sub-header-component green" ui-sref="course.module.course_editor.overview" translate>head.content</a>
-                <ul top-bar-dropdown>
+                <a class="sub-header-component green" ng-click="goToContentEditor()" translate>head.content</a>
+                <ul top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
                     <li>
-                        <a class="sub-header-component has-description green" href="">
+                        <a class="sub-header-component has-description green" ng-click="addModule()">
                             {{'groups.new_module' | translate}}
                             <h5 class="description"><small translate>modules_group_items</small></h5>
                         </a>
@@ -53,7 +53,7 @@
                             <h5 class="description"><small>Video lecture, Quiz...</small></h5>
                         </a>
                     </li>
-                    <li>
+                    <li ng-show="'**.lecture.**' | includedByState">
                         <a questions-modal ng-click="openQuestionsModal()" class="sub-header-component has-description green" href="">
                             New In-Video Question
                             <h5 class="description"><small>MCQ, OCQ, Drag...</small></h5>
@@ -75,7 +75,7 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a class="sub-header-component has-description green" href="">
+                        <a class="sub-header-component has-description green" ng-click="preview()" href="">
                             {{'preview_student' | translate}}
                             <h5 class="description"><small translate>preview_describtion</small></h5>
                         </a>

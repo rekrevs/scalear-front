@@ -145,9 +145,10 @@ cursor: pointer;
 
 .video_link{
     position: relative;
-    top: -25px;
+    top: -30px;
     left: 30%;
     width: 53% !important;
+    height: 30px !important;
     float: left;
 }
 

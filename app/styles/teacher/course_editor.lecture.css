@@ -15,10 +15,10 @@
 }
 
 .ontop{
-  position:absolute;
+  /*position:absolute;*/
   /*width:500px;*/
   /*height:282px;*/
-  z-index:5;
+  /*z-index:5;*/
 }
 
 .wall{
@@ -201,7 +201,7 @@
   float: left;
   /*width: 58px;
   height: 78px;*/
-  z-index:6000 !important;
+  /*z-index:6000 !important;*/
   padding: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -217,3 +217,33 @@
   margin-top:0px;
   cursor:move;
 }
+
+.input-prepend {
+display: inline-block;
+margin-bottom: 10px;
+font-size: 0;
+white-space: nowrap;
+vertical-align: middle;
+}
+
+.input-prepend .add-on {
+  border-radius: 4px 0 0 4px;
+  vertical-align: top;
+  /*border-radius: 0;*/
+  margin-right: -1px;
+  display: inline-block;
+  width: auto;
+  height: 26px;
+  min-width: 16px;
+  padding: 4px 5px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+  text-shadow: 0 1px 0 #fff;
+  background-color: #eee;
+  border: 1px solid #ccc;
+  float:left;
+
+}
+

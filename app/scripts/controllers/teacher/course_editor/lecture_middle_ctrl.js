@@ -47,6 +47,10 @@ angular.module('scalearAngularApp')
  		$scope.hide_alerts=true;
  	}
 
+ 	$scope.$on("add_online_quiz",function(event, quiz_type, question_type){
+ 		$scope.insertQuiz(quiz_type, question_type)
+ 	})
+
     $scope.lecture_player.events.onMeta= function(){
         // update duration for all video types.
         if(Math.ceil($scope.lecture.duration) != Math.ceil($scope.lecture_player.controls.getDuration()))
@@ -147,7 +151,6 @@ angular.module('scalearAngularApp')
 			var old_insert_time = $scope.selected_quiz.time
 			promise = $scope.deleteQuiz($scope.selected_quiz)
 			clearQuizVariables()
-			console.log("la22aaa")
 		}
 
 		promise.then(function(){

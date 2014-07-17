@@ -1,38 +1,57 @@
 <!-- <div class="row">
-	<div class="large-12 columns">
+	<div class="small-12 columns">
 		<div class="left"><h3>{{lecture.name}}</h3></div>
 		<div class="right" resizable-video container='container_layer' quiz-layer='quiz_layer' video-layer="video_layer" active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400'> 
 			<a ng-click="resize.big()" class ="button small secondary fullscreenLink" translate>groups.edit_fullscreen</a>
 		</div>
 	</div>
 </div> -->
+<overlay ng-hide="video_ready || lecture.url!='none'" style="height:90%">
+	<h3 style="position:absolute;top:20%;left:32%;z-index: 1;" translate>lectures.provide_url</h3>
+</overlay>
 <div class="row">
-	<div class="large-12 columns">
+	<div class="small-12 small-centered columns">
 		<form name="answer_form" novalidate >
-			<video_container ng-style="container_layer">
-				<div>
-					<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
-						<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
-						<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
-					</quiz>
-				</div>
-				<youtube id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" class="flex-video widescreen" style="margin-bottom: 0;"/>
-		        <progress-bar ng-show="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="seek" current_time='current_time' total_duration='lecture.duration' player="lecture_player">
-		        	<controls-teacher link="createVideoLink()" />
-		    	</progress-bar>
-			</video_container>
+			<center>
+				<video_container ng-style="container_layer">
+					<div class="row">
+						<loading class="small-12 columns color-blue" size='small' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
+					</div>
+					<div ng-show="slow">
+						<div class="row">
+							<h3 class="small-12 columns" style="top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
+							<h3 class="small-12 columns" style="top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>	
+							<loading class="small-12 columns" size='small' show='true' style="font-size:12px;top:70px;" />
+
+						</div>
+					</div>
+					<div>
+						<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
+							<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
+							<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
+						</quiz>
+					</div>
+					<youtube id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" class="widescreen" style="margin-bottom: 0;"/>
+			        <progress-bar ng-show="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="seek" current_time='current_time' total_duration='lecture.duration' player="lecture_player" class="text-left">
+			        	<controls-teacher link="createVideoLink()" />
+			    	</progress-bar>
+				</video_container>
+			</center>
 		</form>
 	</div>
 </div>
 <div class="row quiz_list">
-	<div class="large-12 large-centered columns">
+	<overlay ng-hide="video_ready || lecture.url=='none'">
+		<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
+	</overlay>
+	<div class="small-12 small-centered columns">
 		<!-- <center ng-show="fullscreen"><a class='button small secondary fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center> -->
 		<center style="margin-bottom:10px">
 			<edit_panel ng-show="editing_mode" />		
 			<alert ng-show="submitted && !hide_alerts" type="alert.type" close="closeAlerts()">bazinga{{alert.msg| translate}}</alert>
 		</center>
 		<!-- <div class="row">
-			<div class="large-8 large-centered columns">
+			<div class="small-8 small-centered columns">
 				<center>
 					<dropdown_list list="quiz_types_list" action="insertQuiz" quiztype="invideo" title="{{'lectures.insert_invideo_quiz'|translate}}" style="text-align: left;"></dropdown_list>
 					<dropdown_list list="quiz_types_list" action="insertQuiz" quiztype="html" title="{{'lectures.insert_html_quiz'|translate}}" style="text-align: left;" /></dropdown_list>

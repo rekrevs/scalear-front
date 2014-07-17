@@ -57,7 +57,6 @@ angular.module('scalearAngularApp')
 	},
 	
 	newAnswer: function(ans, h, w,l, t, type, question_id){
-		
 		if(type!="quiz")
 		{
 			var y={
@@ -70,7 +69,7 @@ angular.module('scalearAngularApp')
 				xcoor:l  || 0,
 				ycoor:t  || 0,
 				sub_xcoor:l  || 0,
-				sub_ycoor:t  || 0
+				sub_ycoor:(t-0.052)  || 0
 			}
 		}
 		else{

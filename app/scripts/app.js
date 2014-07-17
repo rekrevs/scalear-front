@@ -326,7 +326,8 @@ angular.module('scalearAngularApp', [
             .state('course.module',{
                 url:'/modules/:module_id',
                 templateUrl: '/views/empty_view.html',
-                controller: 'moduleCtrl'
+                controller: 'moduleCtrl',
+                abstract:true
             })
             .state('course.module.course_editor', {
                 url: '/course_editor',
@@ -383,6 +384,13 @@ angular.module('scalearAngularApp', [
                         controller: 'quizMiddleCtrl'
                     }
                 }
+            })
+            .state('course.course_editor', {
+                url: '/course_editor',
+                // templateUrl: '/views/teacher/course_editor/module.middle.html',
+                // controller: 'moduleMiddleCtrl'
+                templateUrl: '/views/teacher/course_editor/course_editor.html',
+                controller: 'courseEditorCtrl',
             })
             .state('course.progress', {
                 url: '/progress',

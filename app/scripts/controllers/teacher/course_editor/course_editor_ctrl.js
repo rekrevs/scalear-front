@@ -423,51 +423,51 @@ angular.module('scalearAngularApp')
 	// 	$scope.open[message]= true;
 	// });
 
- 	$scope.moduleSortableOptions={
- 		axis: 'y',
-		dropOnEmpty: false,
-		handle: '.handle',
-		cursor: 'crosshair',
-		items: '.module',
-		opacity: 0.4,
-		scroll: true,
-		update: function(e, ui) {
-			Module.saveSort({course_id:$stateParams.course_id},
-				{group: $scope.modules},
-				function(response){
-					$log.debug(response)
-				},
-				function(){
-					$log.debug('Error')
-				}
-			);
-		},
- 	}
+ 	// $scope.moduleSortableOptions={
+ 	// 	axis: 'y',
+		// dropOnEmpty: false,
+		// handle: '.handle',
+		// cursor: 'crosshair',
+		// items: '.module',
+		// opacity: 0.4,
+		// scroll: true,
+		// update: function(e, ui) {
+		// 	Module.saveSort({course_id:$stateParams.course_id},
+		// 		{group: $scope.modules},
+		// 		function(response){
+		// 			$log.debug(response)
+		// 		},
+		// 		function(){
+		// 			$log.debug('Error')
+		// 		}
+		// 	);
+		// },
+ 	// }
 
- 	$scope.itemSortableOptions={
-		axis: 'y',
-		dropOnEmpty: false,
-		handle: '.handle',
-		cursor: 'crosshair',
-		items: '.item',
-		opacity: 0.4,
-		scroll: true,
-		update: function(e, ui) {
-			var group_id=ui.item.scope().item.group_id
-			var group_position=ui.item.scope().$parent.module.position -1
-			Lecture.saveSort(
-				{course_id:$stateParams.course_id, 
-				 group: ui.item.scope().item.group_id},
-				{items: $scope.modules[group_position].items},
-				function(response){
-					$log.debug(response)
-				},
-				function(){
-					$log.debug('error')
-				}
-			);
-		},
- 	}
+ 	// $scope.itemSortableOptions={
+		// axis: 'y',
+		// dropOnEmpty: false,
+		// handle: '.handle',
+		// cursor: 'crosshair',
+		// items: '.item',
+		// opacity: 0.4,
+		// scroll: true,
+		// update: function(e, ui) {
+		// 	var group_id=ui.item.scope().item.group_id
+		// 	var group_position=ui.item.scope().$parent.module.position -1
+		// 	Lecture.saveSort(
+		// 		{course_id:$stateParams.course_id, 
+		// 		 group: ui.item.scope().item.group_id},
+		// 		{items: $scope.modules[group_position].items},
+		// 		function(response){
+		// 			$log.debug(response)
+		// 		},
+		// 		function(){
+		// 			$log.debug('error')
+		// 		}
+		// 	);
+		// },
+ 	// }
 
 
 }]);

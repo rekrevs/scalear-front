@@ -40,6 +40,7 @@ angular.module('scalearAngularApp')
 					$rootScope.$broadcast('activate_preview')
 				}
 				scope.goToContentEditor=function(){
+					console.log(state.includes("**.course_editor.**"))
 					if(!$state.includes("**.course_editor.**"))
 						$state.go("course.module.course_editor.overview")
 				}

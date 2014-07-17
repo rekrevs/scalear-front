@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
             $scope.course.selected_module=$scope.module_obj[$state.params.module_id]
             // $rootScope.selected_module=$scope.module_obj[$state.params.module_id]
             console.log("Main Selected Module")
-            console.log($scope.selected_module)
+            console.log($scope.course.selected_module)
         }
     })
 	

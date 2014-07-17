@@ -1,17 +1,18 @@
-<!-- build:css(.tmp/styles) styles/teacher_announcements.css -->
-<link rel="stylesheet" href="styles/teacher/announcements.css"/>
-<!-- endbuild -->
-<div>
-	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey;">
-		<input id="new_announcement" ng-show="show_button" type="button" value="{{'announcement_form.create_announcement'|translate}}" class="btn btn-success" style="background-image: initial; float: right; margin-right: 60px;" ng-disabled="disable_new" ng-click="createAnnouncement()"/>
-		<input id="search_announcement" ng-model="searchAnnouncement" placeholder="{{'courses.search' | translate}}" type="search" style="float: left; margin-right: 60px;" ng-disabled="!announcements.length" />
-    </div>
-    <br />
-    <br />
-    <div style="color: #808080; margin-left: 20px; margin-top: 20px;" ng-show="!announcements.length" class="ng-binding" translate>
-		announcements.empty
-	</div>
-	<announcement-item ng-repeat="announcement in announcements | filter:{announcement: searchAnnouncement}" announcement="announcement" saveannouncement="saveAnnouncement" showannouncement="showAnnouncement" hideannouncement="hideAnnouncement" deleteannouncement="deleteAnnouncement" saving="saving" index="$index"></announcement-item>
+<div class="left small-11 medium-6 large-6 columns">
+	<input id="search_announcement" ng-model="searchAnnouncement" placeholder="{{'courses.search' | translate}}" type="search" ng-disabled="!announcements.length" />
 </div>
-<br><br>
-<center ng-show="!announcements" ><loading size="big" show="!announcements" ></center>
+
+<div class="right small-12 medium-4 large-4 columns">
+	<button id="new_announcement" class="button tiny right" ng-show="show_button" type="button" ng-disabled="disable_new" ng-click="createAnnouncement()">{{'announcement_form.create_announcement'|translate}}</button>
+</div>
+
+<div class="small-12 small-centerd large-centerd columns">
+	<center ng-show="!announcements.length" class="" translate>
+		<br>
+		announcements.empty
+	</center>
+
+	<announcement-item ng-repeat="announcement in announcements | filter:{announcement: searchAnnouncement}" announcement="announcement" saveannouncement="saveAnnouncement" showannouncement="showAnnouncement" hideannouncement="hideAnnouncement" deleteannouncement="deleteAnnouncement" saving="saving" index="$index"></announcement-item>
+
+	<center><loading size="big" show="!announcements" ></center>
+</div>

@@ -358,6 +358,9 @@ button.active{
 .valign-top{
 	vertical-align: top !important;
 }
+.valign-bottom{
+	vertical-align: bottom !important;
+}
 .valign-super{
 	vertical-align: super !important;
 }

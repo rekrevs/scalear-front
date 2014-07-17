@@ -1,51 +1,34 @@
-<!-- build:css(.tmp/styles) styles/authentication.css -->
-<link href="styles/authentication.css" rel="stylesheet">
-<!-- endbuild -->
-<div class="main-login-container">
-    <center>
-
-        <overlay ng-show="sending">
-                    <loading size="big" show="true" style="position:relative; top:40%;" />
-        </overlay>
-        <div style="float: left; display: inline-table; margin: 20px; position: relative; z-index: 5;">
-            <table>
-                <tr>
-                    <td>
-                        {{'language' | translate}}
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                        <div ng-show="$parent.current_lang=='en'" ng-cloak>
-                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
-                        </div>
-                        <div ng-show="$parent.current_lang=='sv'" ng-cloak>
-                            <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
-                        </div>
-                    </td>
-                </tr>
-            </table>
+<div class="small-12 column">
+    <form ng-submit="change_password()" novalidate>
+        <div class="with-margin">
+            <div class="right">
+                <!-- <span calss="show-for-large-only">{{'language' | translate}}</span> -->
+                <div class="show-inline" ng-show="$parent.current_lang=='sv'" ng-cloak>
+                    <a style="cursor:pointer;" ng-click="$parent.changeLanguage('en')"><img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                </div>
+                <div class="show-inline" ng-show="$parent.current_lang=='en'" ng-cloak>
+                    <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                </div>
+            </div>
+            <h3 class="show-inline" translate>password_edit.forgot_password</h3>
         </div>
-        <div class="middle-ribbon">
-            <form ng-submit="change_password()">
-                <h2 translate="password_edit.change_password"></h2>
-                <br />
-                <!-- <p >* <span translate="password_edit.new_password"></span></p> -->
-                <input placeholder="*{{'password_edit.new_password' | translate}}" type="password" ng-model="user.password" id="user_passowrd" class="password optional" style="border: 2px orange solid; width: 230px;" name="user[password]" size="50" auto-fill-sync/>
-                <br/><span class="errormessage" ng-show="user.errors.password">{{user.errors.password.join()}}</span>
-                <br />
-                <!-- <p >* <span translate="password_edit.new_password_confirmation"></span></p> -->
-                <input placeholder="*{{'password_edit.new_password_confirmation' | translate}}" type="password" ng-model="user.password_confirmation" id="user_passowrd" class="password_confirmation optional" style="border: 2px orange solid; width: 230px;" name="user[password_confirmation]" size="50" />
-                <br/><span class="errormessage" ng-show="user.errors.password_confirmation">{{user.errors.password_confirmation.join()}}</span>
-                <br />
-                <input type="submit" ng-disabled="sending || !user.password && !user.password_confirmation || !user.password" value="{{'password_edit.change_password2' | translate}}" class="btn btn-warning" style="background-image: initial;"/>
-                <br />
-                <br/><span class="errormessage" ng-show="user.errors.reset_password_token">Reset Password Token {{user.errors.reset_password_token.join()}}</span>
-            </form>
+        <div class="small-12 medium-12 large-6 columns">  
+            <fieldset class="with-margin-bottom">
+                <legend><i class="fi-lock size-21"></i> {{'account_edit.security' | translate}}</legend>
+                <div class="large-6 columns">
+                    <label>{{'password' | translate}}
+                        <input ng-disabled="sending" type="password" id="setting_user_password" ng-model="user.password" ng-class="{error: user.errors.password}" autocomplete="off" placeholder="Password" />
+                        <small ng-show="user.errors.password" class="error with-tiny-padding">{{user.errors.password.join()}}</small>
+                    </label>
+                </div>
+                <div class="large-6 columns">
+                    <label>{{'password_confirmation' | translate}}
+                        <input ng-disabled="sending" type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" placeholder="Password confirmation"/>
+                        <small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
+                    </label>
+                </div>
+            </fieldset>
         </div>
-    </center>
+        <button type="submit" ng-disabled="sending" class="button valign-bottom">{{'password_edit.change_password2' | translate}}</button>
+    </form>
 </div>
-
-
-
-

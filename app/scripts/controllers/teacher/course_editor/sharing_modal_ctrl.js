@@ -1,17 +1,22 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('sharingModalCtrl', ['$scope','$rootScope','$timeout','$window','$log','Module','$stateParams','Course','SharedItem','$modalInstance','$translate', function ($scope, $rootScope, $timeout,$window, $log, Module, $stateParams, courses,SharedItem,$modalInstance, $translate) {
+  .controller('sharingModalCtrl', ['$scope','$rootScope','$timeout','$window','$log','Module','$stateParams','Course','SharedItem','$modalInstance','$translate', 'selected_module', 'selected_item', function ($scope, $rootScope, $timeout,$window, $log, Module, $stateParams, courses,SharedItem,$modalInstance, $translate, selected_module, selected_item) {
     
   		var init =function(){  	
   			// $scope.item= selected_item
-  			$scope.selected_module= $scope.selectedmodule
+        console.log(selected_module)
+        $scope.selected_module= selected_module
+        $scope.selected_item= selected_item
+        $scope.deSelectAll($scope.selected_module)
         console.log('hello theereerewrwerwer')
-        console.log($scope)
-  			$scope.collapse={}
-  			$scope.collapse[$scope.selected_module.id]='true'
-  			// $scope.modules = modules
-				$scope.selectAll($scope.selected_module)
+        console.log($scope.selected_item)
+        if($scope.selected_item){
+          $scope.selectItem($scope.selected_module, $scope.selected_item, null);
+        }
+        else{
+          $scope.selectAll($scope.selected_module)
+        }
   			// courses.getAllTeachers({course_id:null}, function(response){
      //        // $scope.courses=JSON.parse(response.courses);
      //        	console.log(response)
@@ -58,6 +63,12 @@ angular.module('scalearAngularApp')
       	})
         if(event)
     	   event.stopPropagation()
+      }
+      $scope.deSelectAll=function(module){
+        module.selected = false
+        module.items.forEach(function(item){
+          item.selected=module.selected
+        })
       }
 
 

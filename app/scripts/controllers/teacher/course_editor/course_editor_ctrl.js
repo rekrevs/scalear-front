@@ -13,6 +13,33 @@ angular.module('scalearAngularApp')
         else
             $scope.addQuiz($stateParams.module_id, type)
     })
+    $scope.$on('share_copy', function(event, data){
+        console.log(data)
+        console.log('caught sharing modal event')
+        console.log($scope.course.selected_module)
+        var modalInstance = $modal.open({
+          templateUrl: '/views/teacher/course_editor/sharing_modal.html',
+          controller: "sharingModalCtrl",
+          resolve: {
+            selected_module: function(){
+                return $scope.course.selected_module
+            },
+            selected_item: function(){
+                if(data.selected_item){
+                    return $scope.items_obj[data.selected_item.class_name][data.selected_item.id]
+                }
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+            console.log("shared")
+            // selectNone()
+        },function () {
+            console.log("close")
+            // selectNone()
+        });
+    })
 
      $scope.$on('add_module', function(event){
          $scope.addModule()

@@ -5,7 +5,8 @@ angular.module('scalearAngularApp')
         // $scope.$parent.not_module = false;
         // $scope.$parent.currentmodule = $state.params.module_id
         // $scope.$parent.currentitem = -1
-        $scope.$watch('selected_module', function(){
+        console.log($scope)
+        $scope.$watch('course.selected_module', function(){
             if($scope.course.selected_module){
                 $scope.module=$scope.course.selected_module
                 if($scope.module.due_date)

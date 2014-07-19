@@ -7,9 +7,9 @@
     <div style="min-height: 34px;position: fixed;width: 100%;top: 0;left:0">
         <span style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray">{{lecture_name}}</span>
         <div ng-hide="selected_item.class_name=='quiz'" style="float:right; margin-right: 50px;padding-top:0px" >
-            <button ng-class="button_class+' '+dark_buttons" ng-click="playBtn()" class="btn btn-default"><i ng-class="play_pause_class" /></button>
-            <button ng-class="button_class+' '+dark_buttons" ng-click="muteBtn()" class="btn btn-default"><i ng-class="mute_class" /></button>
-            <button ng-class="button_class+' '+dark_buttons+' '+quality_set" ng-click="qualityBtn()" class="btn btn-default" style="font-weight:bolder">HD</button>
+            <button ng-class="button_class+' '+dark_buttons" ng-click="playBtn()" class="button reall-tiny secondary"><i ng-class="play_pause_class" /></button>
+            <button ng-class="button_class+' '+dark_buttons" ng-click="muteBtn()" class="button reall-tiny secondary"><i ng-class="mute_class" /></button>
+            <button ng-class="button_class+' '+dark_buttons+' '+quality_set" ng-click="qualityBtn()" class="button reall-tiny secondary" style="font-weight:bolder">HD</button>
         </div>
     </div>
     <div style="position: fixed;bottom: 35px;top: 34px;left:0;right:0;" >
@@ -70,22 +70,22 @@
 
     <div style="position:fixed;padding-top:5px; text-align: center; bottom: 5px; width: 100%;left:0">
         <div class="bottom-left">
-            <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()"  class="btn btn-default exit_btn" style="border: none;">{{button_names[0]}}</button>
+            <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()"  class="button reall-tiny secondary exit_btn">{{button_names[0]}}</button>
         </div>
         <div class="bottom-middle">
-            <button ng-class="button_class+' '+dark_buttons" ng-click="skip(-5)" class="btn btn-default" style="padding: 3px 10px; border: none;">
-                <span>{{button_names[5]}} </span><i class="icon-step-backward" />
+            <button ng-class="button_class+' '+dark_buttons" ng-click="skip(-5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
+                <span>{{button_names[5]}} </span><i class="fi-rewind" />
             </button>
-            <button ng-class="button_class" ng-click="prevQuiz()" class="btn btn-default" style="margin-right:3%; border: none;"><i class="icon-backward" /></button>
-            <button ng-class="button_class" ng-click="nextQuiz()" class="btn btn-default" style="border: none;" ><i class="icon-forward" /></button>
-            <button ng-class="button_class+' '+dark_buttons" ng-click="skip(5)" class="btn btn-default" style="padding: 3px 10px; border: none;">
-                <i class="icon-step-forward" /><span> {{button_names[5]}}</span>
+            <button ng-class="button_class" ng-click="prevQuiz()" class="button reall-tiny secondary" style="margin-right:3%;"><i class="fi-previous" /></button>
+            <button ng-class="button_class" ng-click="nextQuiz()" class="button reall-tiny secondary" ><i class="fi-next" /></button>
+            <button ng-class="button_class+' '+dark_buttons" ng-click="skip(5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
+                <i class="fi-fast-forward" /><span> {{button_names[5]}}</span>
             </button>
         </div>
         <div class="bottom-right">
-            <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="btn btn-default" style="float:right; margin-right: 3%; border: none;"><i class="icon-fullscreen" /></button>
+            <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="button reall-tiny secondary" style="float:right; margin-right: 3%;"><i class="fi-arrows-out" /></button>
             <span ng-hide="selected_item.class_name=='quiz'" >
-                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%; border: none;"  class="btn btn-default">{{hide_text}}</button>
+                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%;"  class="button reall-tiny secondary">{{hide_text}}</button>
             </span>
         </div>
     </div>

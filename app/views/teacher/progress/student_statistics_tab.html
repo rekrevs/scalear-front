@@ -1,14 +1,18 @@
 <div ng-if="statistics.lecture_names.length" ng-show="lecture_url">
-	<center >
-			<video_container class="largescreen">
-				<youtube  id="statistics_video" url="lecture_url" controls="1" player="statistics_player" class="largescreen"/>
-			</video_container>
-	</center>
-	<div>
+	<div class="row">
+		<div class="small-6 small-centered columns">
+			<center >
+				<video_container >
+					<youtube  id="statistics_video" url="lecture_url" controls="1" player="statistics_player" class="flex-video widescreen"/>
+				</video_container>
+			</center>
+		</div>
+	</div>
+	<div class="row">
 		<div id="labels">
-			<div id="first_label" class="inverted">#<span translate>courses.confused</span></div>
+			<div id="first_label"  class="inverted">#<span translate>courses.confused</span></div>
 			<div id="second_label" class="inverted">#<span translate>courses.back</span></div>
-			<div id="third_label" class="inverted">#<span translate>courses.pauses</span></div>
+			<div id="third_label"  class="inverted">#<span translate>courses.pauses</span></div>
 			<div id="fourth_label" class="inverted">#<span translate>courses.questions</span></div>
 		</div>
 		<div style="overflow-x:auto; overflow-y:hidden;" >
@@ -21,8 +25,9 @@
 		</div>
 	</div>
 </div>
-<center>
-	<br><br>
-	<loading size="small" show="loading_statistics_chart" />
-	<div ng-show="(!statistics.lecture_names.length || !lecture_url) && !loading_statistics_chart" translate>courses.no_lectures</div>
-</center>
+<div class="row">
+	<center>
+		<loading size="small" show="loading_statistics_chart" />
+		<div ng-show="(!statistics.lecture_names.length || !lecture_url) && !loading_statistics_chart" translate>courses.no_lectures</div>
+	</center>
+</div>

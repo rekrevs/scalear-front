@@ -372,7 +372,7 @@ angular.module('scalearAngularApp')
 		 	// }
 
 			if(!scope.isSurvey())
-				scope.cc.push('DRAG')
+				scope.cc.push('drag')
 			// else
 			// 	scope.cc.push('Free Text Question')
 			$log.debug("QUIZZ is ");
@@ -477,12 +477,12 @@ angular.module('scalearAngularApp')
 						"<div class='small-10 columns'>"+
 							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
 							"<small class='error' ng-show='submitted && aform.answer.$error.required'>{{'courses.required'|translate}}!</small>"+
+							"<small class='error' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<input ng-if='show() && !isSurvey()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' />"+
 
 						"</div>"+
 						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
 							"<input ng-change='updateValues()' atleastone type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+
-							"<small class='error' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 						"</div>"+
 						"<div class='small-1 columns'>"+
 							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
@@ -499,11 +499,11 @@ angular.module('scalearAngularApp')
 						"<div class='small-10 columns'>"+
 							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
 							"<small class='error' ng-show='submitted && aform.answer.$error.required' >{{'courses.required'|translate}}!</small>"+
+							"<small class='error' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<input ng-if='show() && !isSurvey()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
 						"</div>"+
 						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
 							"<input id='radio_correct' atleastone type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
-							"<small class='error' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 						"</div>"+
 						"<div class='small-1 columns'>"+
 							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+

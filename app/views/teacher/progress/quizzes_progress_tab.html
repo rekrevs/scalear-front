@@ -1,5 +1,7 @@
-<h3 translate>courses.quiz_progress_chart</h3>
-<div infinite-scroll='getRemainingQuizzesProgress()' infinite-scroll-disabled='quiz_scroll_disable' infinite-scroll-immediate-check='false' style="overflow:auto" ng-if="quizzes_status">
-	<progress_matrix column_names='quizzes_names' students='quizzes_students' status="quizzes_status" late_count="late_quizzes"/>
+<!-- <h3 translate>courses.quiz_progress_chart</h3> -->
+<div class="row" ng-if="quizzes_status">
+	<progress_matrix column_names='quizzes_names' students='quizzes_students' status="quizzes_status" late_count="late_quizzes" remaining="getRemainingQuizzesProgress()" scrolldisabled="quiz_scroll_disable"/>
 </div>
+<div class="row">
 <center><loading size="small" show="loading_quizzes" /></center>
+</div>

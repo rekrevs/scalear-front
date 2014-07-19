@@ -1,34 +1,38 @@
-<div ng-if="lecture_data.question_ids" infinite-scroll='getRemainingLectureCharts()' infinite-scroll-disabled='chart_scroll_disable' infinite-scroll-immediate-check='false' >
-	<center style="overflow:hidden" >
-		<video_container class="largescreen">
-			<youtube ng-show="url" id="lec_quiz_video" url="url" controls="1" player="lecture_player" class="largescreen" />
-		</video_container>
-	</center>
-
-<!-- 	<div ng-repeat="id in sub_question_ids" class="chart" style='min-width: 300px; height: 260px;' ng-init="chart=createLectureChart(lecture_data.charts,id, student_count)"> 
-	    <div class="seeker" ng-click="seek(id)" style="cursor:pointer"><a><span translate>answer.question</span> {{$index+1}}</a><br> {{getLectureTitle(id)}} </div>
-	    <div google-chart chart="chart" ></div>
-	    <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" >
-	</div>	 -->
-		<div ng-repeat="id in sub_question_ids">
-        	<div ng-if="lecture_data.questions[id][2]!='Free Text Question'" class="chart" style='min-width: 300px; height: 260px;' ng-init="chart=createLectureChart(lecture_data.charts,id, student_count)">
-            	<div class="seeker" ng-click="seek(id)" style="cursor:pointer">
-            		<a>
-            			<span translate>answer.question</span> {{$index+1}}
-            		</a>
-            		<br> {{getLectureTitle(id)}} 
-            	</div>
-            <div google-chart chart="chart" ></div>
-            <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" />
+<div ng-if="lecture_data.question_ids">
+    <div class="row">
+        <div class="small-6 small-centered columns">
+            <center>
+                <video_container>
+                    <youtube ng-show="url" id="lec_quiz_video" url="url" controls="1" player="lecture_player" class="flex-video widescreen" />
+                </video_container>
+            </center>
         </div>
+    </div>
+    <div class="row" infinite-scroll='getRemainingLectureCharts()' infinite-scroll-disabled='chart_scroll_disable' infinite-scroll-immediate-check='false' >
+    	<div class="row" ng-repeat="id in sub_question_ids">
+        	<div ng-if="lecture_data.questions[id][2]!='Free Text Question'" class="small-12 columns chart" style='height: 260px;' ng-init="chart=createLectureChart(lecture_data.charts,id, student_count)">
+            	<div class="small-12 columns" ng-click="seek(id)" style="cursor:pointer">
+            		<a><span translate>answer.question</span> {{$index+1}}: {{getLectureTitle(id)}}</a>
+                    <a class="button really-tiny secondary" ng-click="saveAsImg($event)">{{'groups.export_chart'|translate}}</a>
+            	</div>
+                <div class="small-12 columns" google-chart chart="chart" ></div>
+                <!-- <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" /> -->
+            </div>
 
-   <!-- lectures_data.lectures feeha el lectures -->
-        <!-- Over here, give lecture_id and then over there check if invideo quiz, then free_online_quiz_grades.online_answer instead of answer -->
-        <free-text-table ng-if="lecture_data.questions[id][2]=='Free Text Question'" question="online_quiz_free[id]" lecture_id="online_quiz_free[id]['lecture_id']" related-answers="related_answers" />
+       <!-- lectures_data.lectures feeha el lectures -->
+            <!-- Over here, give lecture_id and then over there check if invideo quiz, then free_online_quiz_grades.online_answer instead of answer -->
+            <div class="small-12 columns" ng-if="lecture_data.questions[id][2]=='Free Text Question'">
+                <div class="small-12 columns" ng-click="seek(id)" style="cursor:pointer">
+                    <a><span translate>answer.question</span> {{$index+1}}: {{getLectureTitle(id)}}</a>
+                </div>
+                <free-text-table question="online_quiz_free[id]" lecture_id="online_quiz_free[id]['lecture_id']" related-answers="related_answers" />
+            </div>
+        </div>
     </div>
 </div>
-<center>
-	<br><br>
-	<loading size="small" show="loading_lectures_chart" />
-	<div ng-if="!lecture_data.question_ids.length && !loading_lectures_chart" translate>courses.no_lecture_quizzes</div>
-</center>
+<div class="row">
+    <center>
+        <loading size="small" show="loading_lectures_chart" />
+        <div ng-if="!lecture_data.question_ids.length && !loading_lectures_chart" translate>courses.no_lecture_quizzes</div>
+    </center>
+</div>  

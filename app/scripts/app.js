@@ -425,8 +425,8 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/progress/progress_lecture.html',
                 controller: 'progressLectureCtrl'
             })
-            .state('course.module.progress.details', {
-                url: "/details",
+            .state('course.module.progress_details', {
+                url: "/progress/details",
                 templateUrl: '/views/teacher/progress/progress_module.html',
                 controller: 'progressModuleCtrl'
             })

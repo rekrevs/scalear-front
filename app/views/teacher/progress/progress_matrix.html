@@ -9,24 +9,25 @@
             <span style="margin-right:10px;font-size:12px;display:inline">{{'courses.'+stat|translate}}</span>
         </div>
     </div>
-    <table style="font-size: 10px;" fixed-header>
+    <table fixed-header style="width:100%"> <!-- fixed-header -->
         <thead>
             <tr>
-                <th ></th>
-                <th ng-repeat="name in columnNames track by $index"><center><p bindonce bo-text="name" style="width:100%;padding-right:15px"></p></center></th>
+                <th style="min-width: 99px"></th>
+                <th ng-repeat="name in columnNames track by $index" style="min-width: 82px">
+                    <center><span bindonce bo-text="name"></span></center>
+                </th>
             </tr>
         </thead>
         <tbody when-scrolled='remaining()'>
             <tr bindonce ng-repeat="student in students | orderBy:'last_name':false" >
-                <td class="student" ><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right">{{student.full_name}}</span></td>
-
-
+                <td class="student" style="min-width: 99px" ><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right">{{student.full_name}}</span></td>
                 <td class="state" bindonce ng-repeat='module in status[student.id] track by $index' data-title="{{module[2]}}/{{module[3]}} quizzes solved">
                    <center>
-                    <img class="marker"
-                    ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}"
-                    style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
-                    <div ng-if="module[1]>0 && !student.status[module[0]]" >{{'('+module[1]+' '+('controller_msg.days'|translate)+')'}}</div></center>
+                        <img class="marker"
+                        ng-src="{{status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]}}"
+                        style="width:15px; cursor: pointer;" pop-over='popover_options' unique='true'>
+                        <div ng-if="module[1]>0 && !student.status[module[0]]" >{{'('+module[1]+' '+('controller_msg.days'|translate)+')'}}</div>
+                    </center>
                 </td>
             </tr>
         </tbody>

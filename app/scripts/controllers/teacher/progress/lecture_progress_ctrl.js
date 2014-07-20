@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
                 obj.lecture_status= $scope.lecture_status|| {}
                 obj.late_lectures = $scope.late_lectures || {}
 
-                obj.lecture_students = obj.lecture_students.concat(data.students);
+                obj.lecture_students = obj.lecture_students.concat(JSON.parse(data.students));
                 angular.extend(obj.solved_count,  data.solved_count)
                 angular.extend(obj.lecture_status,data.lecture_status)
                 angular.extend(obj.late_lectures, data.late_lectures)

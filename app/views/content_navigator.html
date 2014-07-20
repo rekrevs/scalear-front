@@ -63,9 +63,9 @@
 
 			<span ng-switch-when="editor">
 				<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
-				<ul class="accordion">
+				<ul class="no-margin">
 					<li ng-repeat="link in links" class='module accordion-group'>
-						<link-item link="link" update="updateCustomLink" remove="removeCustomLink" nameval="validateName" urlval="validateURL" small="true">
+						<link-item link="link" small="true">
 					</li>
 				</ul>
 				<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>courses.modules</div>

@@ -1,47 +1,53 @@
-<center>
-	<h3 ng-show="question" translate>groups.free_text_question</h3>
-</center >
-<table style="background-color:white" class="table" >
-	<tr>
-		<td colspan="5">
-			<b><span translate>answer.question</span>: {{question.title}}</b>
-		</td>
-	</tr>
-	<tr>
-		<td ng-hide="display_only" style="border-right: 1px gray solid;;width:50px;"><b translate>answer.show</b></td>
-		<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;;width:50px;"><b translate>groups.groups</b></td>
-		<td style="width:50px;"></td>
-		<td style="border-left: 1px gray solid;"></td>
-		<td ng-show="graded" style="border-left: 1px gray solid;"><p translate>courses.grade</p></td>
-	</tr>
-	<tr ng-repeat="answer in question.answers|survey:display_only">
-		<td style="border-right: 1px gray solid;">
-			<input type="checkbox" ng-if="!display_only && survey_id" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHideSurvey(answer.id, !answer.hide)" />
-			<input type="checkbox" ng-if="!display_only && lecture_id" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHideQuiz(answer.id, !answer.hide)" />
-		</td>
-		<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;">
-			<input type="checkbox" ng-model="answer.group_selected" />
-		</td>
-		<td>{{related_answers[answer.user_id]}}</td>
-		<td style="border-left: 1px gray solid;">
-			<a ng-click="showFeedback(question.answers, $index, lecture_id||graded )" style="cursor:pointer">
-				<p ng-if="survey_id">{{answer.answer}}</p>
-                <p ng-if="lecture_id">{{answer.online_answer}}</p>
-			</a>
-			<div ng-show="answer.response">
-				<p style="font-style: italic;display:inline;">{{answer.response}}</p>
-				<button_link ng-show="!display_only" title="{{'delete'|translate}}" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							
-			</div>
-			<div ng-show="answer.show_feedback && !display_only">
-				<textarea ng-model="answer.response" />
-				<button_link title="{{'courses.send'|translate}}" class="btn-mini" action="sendFeedback(question.answers,$index)" />
-			</div>
-		</td>
-
-       <!-- finish this here!!!!! still not right, and only show it with quizzes.. -->
-        <td ng-show="!display_only" style="width:150px;">
-        	<details-select ng-show="graded && !display_only" value="answer.grade" options="grade_options" save="updateGrade(answer)" ></details-select>
-        </td>
-        <td ng-show="display_only" style="width:150px;">{{grade_display[answer.grade]}}</td>
-	</tr>
-</table>
+<!-- <div class="small-12 columns"><h4 ng-show="question" translate>groups.free_text_question</h4></div> -->
+<div class="small-12 columns">
+	<table style="width:100%">
+		<!-- <tr>
+			<td colspan="5">
+				<b><span translate>answer.question</span>: {{question.title}}</b>
+			</td>
+		</tr> -->
+		<thead>
+			<tr>
+				<th ng-show="!display_only" style="border-right: 1px gray solid;"><b translate>answer.show</b></th>
+				<th ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;"><b translate>groups.groups</b></th>
+				<th>related</th>
+				<th style="width: 79%;border-left: 1px gray solid;">Answer</th>
+				<th ng-show="graded" style="border-left: 1px gray solid;">
+					<p translate>courses.grade</p>
+				</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr ng-repeat="answer in question.answers|survey:display_only">
+				<td style="border-right: 1px gray solid;">
+					<input type="checkbox" ng-if="!display_only && survey_id" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHideSurvey(answer.id, !answer.hide)" />
+					<input type="checkbox" ng-if="!display_only && lecture_id" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHideQuiz(answer.id, !answer.hide)" />
+				</td>
+				<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;">
+					<input type="checkbox" ng-model="answer.group_selected" />
+				</td>
+				<td>{{related_answers[answer.user_id]}}</td>
+				<td style="border-left: 1px gray solid;">
+					<a ng-click="showFeedback(question.answers, $index, lecture_id||graded )" style="cursor:pointer">
+						<p ng-if="survey_id">{{answer.answer}}</p>
+		                <p ng-if="lecture_id">{{answer.online_answer}}</p>
+					</a>
+					<div ng-show="answer.response">
+						<p style="font-style: italic;display:inline;">{{answer.response}}</p>
+						<a ng-show="!display_only" ng-click="deleteFeedback(question.answers,$index)" class="button really-tiny secondary">{{'delete'|translate}}</a>
+						<!-- <button_link  title="{{'delete'|translate}}" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							 -->
+					</div>
+					<div ng-show="answer.show_feedback && !display_only">
+						<textarea ng-model="answer.response" />
+						<a ng-click="sendFeedback(question.answers,$index)" class="button success really-tiny">{{'courses.send'|translate}}</a>
+						<!-- <button_link title="{{'courses.send'|translate}}" class="btn-mini" action="sendFeedback(question.answers,$index)" /> -->
+					</div>
+				</td>
+		        <td ng-show="!display_only && graded" style="border-left: 1px gray solid;">
+		        	<details-select value="answer.grade" options="grade_options" save="updateGrade(answer)" ></details-select>
+		        </td>
+		        <td ng-show="display_only && graded" style="border-left: 1px gray solid;">{{grade_display[answer.grade]}}</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

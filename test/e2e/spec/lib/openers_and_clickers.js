@@ -11,15 +11,15 @@ var params = ptor.params;
 exports.sign_in = function(ptor, email, password){
     ptor.get(params.frontend);
     ptor.sleep(1000);
-    ptor.findElement(protractor.By.id('user_email')).then(function(email_field) {
+    locator.by_id(ptor,'user_email').then(function(email_field) {
         email_field.sendKeys(email);
     });
-    ptor.findElement(protractor.By.id('user_passowrd')).then(function(password_field) {
+    locator.by_id(ptor,'user_passowrd').then(function(password_field) {
         password_field.sendKeys(password);
     });
 
-    ptor.findElement(protractor.By.xpath('//*[@id="main"]/div/div[2]/div/div/center/div[2]/form/div/table/tbody/tr[2]/td[3]/table/tbody/tr[3]/td/input')).then(function(fields){
-        fields.click().then(function() {
+    locator.by_id(ptor, "login_btn").then(function(btn){
+        btn.click().then(function() {
             o_c.feedback(ptor, 'Signed in successfully');
         });
     });

@@ -10,45 +10,37 @@ ptor.driver.manage().window().maximize();
 var announcement_text1 = "announcement 1"
 var announcement_text2 = "announcement 2"
 var announcement_text3 = "announcement 3"
-//
-//
-//		need to check the date and confirm time zone changes
-//
-//
+
 describe("1", function(){
 
 	it('should sign in as teacher', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		// teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		o_c.open_course_whole(ptor,0);
 	})
 
-	it('should get the enrollment key and enroll student', function(){
+	xit('should get the enrollment key and enroll student', function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 
 	//test
 	it('should go to announcements page and make an announcement', function(){
-		o_c.open_course_whole(ptor);
-		o_c.open_tray(ptor);
-		o_c.open_announcements_teacher(ptor);
-		create_new_announcement(ptor, announcement_text1, o_c.feedback);
-		create_new_announcement(ptor, announcement_text2, o_c.feedback);
-		create_new_announcement(ptor, announcement_text3, o_c.feedback);
+		teacher.open_settings_announcements(ptor);
+		create_new_announcement(ptor, announcement_text1);
+		create_new_announcement(ptor, announcement_text2);
+		create_new_announcement(ptor, announcement_text3);
 	})
 
 	it('should log out from teacher then login as a student', function(){
-		o_c.home_teacher(ptor);
-		o_c.open_tray(ptor);
-		o_c.logout(ptor, o_c.feedback);
-		o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
+		o_c.logout(ptor);
 	})
 
 	it('should check number of announcements', function(){
-		o_c.open_tray(ptor);
-		o_c.open_course_whole(ptor);
+		o_c.sign_in(ptor, params.mail, params.password);
+		o_c.open_course_whole(ptor, 0);
 		check_number_of_announcments(ptor, 3);
 	})
 	//end test
@@ -57,7 +49,7 @@ describe("1", function(){
 		//should choose one of home() or home_teacher() 
 		//depending on the current state(student or teacher)
 		o_c.home(ptor);
-		teacher.delete_course(ptor, o_c.feedback);
+		//teacher.delete_course(ptor, o_c.feedback);
 	})
 })
 
@@ -65,7 +57,7 @@ describe("1", function(){
 //				test specific functions
 /////////////////////////////////////////////////////////
 
-function create_new_announcement(ptor, ann_txt, feedback){
+function create_new_announcement(ptor, ann_txt){
 	locator.by_id(ptor, 'new_announcement').then(function(new_ann_btn){
 		new_ann_btn.click();
 	})
@@ -76,7 +68,7 @@ function create_new_announcement(ptor, ann_txt, feedback){
 
 	locator.by_id(ptor, 'save_button').then(function(save_btn){
 		save_btn.click().then(function(){
-	        feedback(ptor,'Announcement was successfully created.');
+	        o_c.feedback(ptor,'Announcement was successfully created.');
 	    });
 	})
 }

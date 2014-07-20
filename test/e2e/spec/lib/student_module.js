@@ -2,6 +2,23 @@ var ptor = protractor.getInstance();
 var locator = require('./locators');
 var params = ptor.params;
 
+
+
+//=====================================
+//        new layout testing
+//=====================================
+exports.check_module_number = function(ptor, no_of_mo){
+  locator.by_repeater(ptor, 'module in modules').then(function(mods){
+    expect(mods.length).toEqual(no_of_mo);
+  })
+}
+
+exports.check_item_number = function(ptor, total_item_no){
+    locator.by_repeater(ptor, 'item in module.items').then(function(items){
+        expect(items.length).toEqual(total_item_no);
+    })
+}
+
 //=====================================
 //        join course by key
 //=====================================
@@ -47,41 +64,6 @@ exports.check_course_info = function(ptor, course_code, course_name, description
         expect(duration.getText()).toContain(course_duration);
     })
 }
-
-
-//=====================================
-//    check number of modules/items
-//=====================================
-exports.check_module_number = function(ptor, no_of_mo){
-    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/div[1]').findElement(protractor.By.tagName('button')).then(function(mod_btn){
-        mod_btn.click();
-        expect(locator.by_classname(ptor,"multicol").isDisplayed()).toEqual(true);
-        locator.by_classname(ptor,"multicol").findElements(protractor.By.tagName('ul')).then(function(mod){
-            expect(mod.length).toEqual(no_of_mo);
-        })
-        mod_btn.click();
-    })
-}
-
-exports.check_timeline_item_number = function(ptor, total_item_no){
-    locator.s_by_classname(ptor, 'courseware-item-circle').then(function(items){
-        expect(items.length).toEqual(total_item_no);
-    })
-}
-
-exports.open_module_number = function(ptor, mo_no){
-    locator.by_classname(ptor, 'modules-collapser').then(function(mod_btn){
-        mod_btn.click();
-        ptor.sleep(500)
-        expect(locator.by_classname(ptor,"multicol").isDisplayed()).toEqual(true);
-        locator.by_repeater(ptor,'module in modules').then(function(modules){
-          modules[mo_no-1].findElement(protractor.By.tagName('ul')).then(function(module){
-            module.click();
-          })
-        })
-    })
-}
-
 
 //=====================================
 //    solves normal quiz MCQ question

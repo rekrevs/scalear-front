@@ -150,72 +150,6 @@ exports.delete_empty_module = function(ptor, mo_no){
     })
 }
 
-
-//====================================================
-//            		add lecture
-//====================================================
-
-exports.add_lecture = function(ptor, mo_no){
-	locator.by_repeater(ptor, 'module in modules').then(function(mods){
-		mods[mo_no-1].click();
-		mods[mo_no-1].findElement(protractor.By.partialLinkText("+ Add")).then(function(add_button){
-			add_button.click().then(function(){
-				locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
-					menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
-						options[0].click().then(function(){
-							o_c.feedback(ptor, 'Lecture was successfully created.')
-						});
-					})
-				})
-			})
-		})
-	})
-}
-
-//====================================================
-//            		add quiz
-//====================================================
-
-exports.add_quiz = function(ptor, mo_no){
-	locator.by_repeater(ptor, 'module in modules').then(function(mods){
-		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
-			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
-				add_button[1].click().then(function(){
-					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
-						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
-							options[1].click().then(function(){
-								o_c.feedback(ptor, 'Quiz was successfully created.')
-							});
-						})
-					})
-				})
-			})
-		})
-	})
-}
-
-//====================================================
-//            		add survey
-//====================================================
-
-exports.add_survey = function(ptor, mo_no){
-	locator.by_repeater(ptor, 'module in modules').then(function(mods){
-		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
-			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
-				add_button[1].click().then(function(){
-					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
-						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
-							options[2].click().then(function(){
-								o_c.feedback(ptor, 'Survey was successfully created.')
-							});
-						})
-					})
-				})
-			})
-		})
-	})
-}
-
 //====================================================
 //            	delete item from module
 //====================================================
@@ -297,58 +231,30 @@ exports.rename_item = function(ptor, name){
 
 
 //https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89
-exports.create_lecture = function(ptor, lecture_name, lecture_url){
-	this.add_lecture(ptor, 1, o_c.feedback);
-	locator.by_xpath(ptor, '//*[@id="modules"]/ul/li[1]').click().then(function(){
-		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
-			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/input').then(function(lec_nm){
-				lec_nm.clear();
-				lec_nm.sendKeys(lecture_name);
-				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-					o_c.feedback(ptor, 'Lecture was successfully updated.');
-				})
-			})
-		})
-		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/a').click().then(function(){
-			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/input').then(function(lec_url){
-				lec_url.clear();
-				lec_url.sendKeys(lecture_url);
-				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-					//o_c.feedback(ptor, 'Lecture was successfully updated.');
-				})
-			})
-			ptor.sleep(1000)
-		})
-	})
-}
-
-//https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89
-exports.create_lecture_in_module = function(ptor, lecture_name, lecture_url, mo_no){
-	this.add_lecture(ptor, mo_no, o_c.feedback);
-	locator.by_xpath(ptor, '//*[@id="modules"]/ul/li[1]').click().then(function(){
-		// locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
-		// 	locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/input').then(function(lec_nm){
-		// 		lec_nm.clear();
-		// 		lec_nm.sendKeys(lecture_name);
-		// 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-		// 			o_c.feedback(ptor, 'Lecture was successfully updated.');
-		// 		})
-		// 	})
-		// })
-		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/a').click().then(function(){
-			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/input').then(function(lec_url){
-				lec_url.clear();
-				lec_url.sendKeys(lecture_url);
-				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
-					//o_c.feedback(ptor, 'Lecture was successfully updated.');
-				})
-			})
-			ptor.sleep(1000)
-		})
-	})
-}
-
-
+// exports.create_lecture = function(ptor, lecture_name, lecture_url){
+// 	this.add_lecture(ptor, 1, o_c.feedback);
+// 	locator.by_xpath(ptor, '//*[@id="modules"]/ul/li[1]').click().then(function(){
+// 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/a').click().then(function(){
+// 			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/input').then(function(lec_nm){
+// 				lec_nm.clear();
+// 				lec_nm.sendKeys(lecture_name);
+// 				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[1]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
+// 					o_c.feedback(ptor, 'Lecture was successfully updated.');
+// 				})
+// 			})
+// 		})
+// 		locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/a').click().then(function(){
+// 			locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/input').then(function(lec_url){
+// 				lec_url.clear();
+// 				lec_url.sendKeys(lecture_url);
+// 				locator.by_xpath(ptor, '//*[@id="details"]/center/span[2]/table/tbody/tr[2]/td[2]/details-text/form/div/span/button[1]').click().then(function(){
+// 					//o_c.feedback(ptor, 'Lecture was successfully updated.');
+// 				})
+// 			})
+// 			ptor.sleep(1000)
+// 		})
+// 	})
+// }
 
 //====================================================
 //            		add mcq question for normal quiz
@@ -649,18 +555,22 @@ exports.make_quiz_required = function(ptor){
 //====================================================
 //				initialize a lecture with a url
 //===================================================
-exports.initialize_lecture = function(ptor, lecture_url){
+exports.initialize_lecture = function(ptor, lec_name, lec_url){
 	locator.by_id(ptor, 'details').then(function(details){
-		details.findElements(protractor.By.tagName('details-text')).then(function(links){
-			links[1].click().then(function(){
-				locator.by_classname(ptor, 'editable-input').then(function(field){
-					field.sendKeys(lecture_url).then(function(){
-						locator.by_classname(ptor, 'icon-ok').click();
+		details.findElements(protractor.By.tagName("td")).then(function(td){
+			td[1].click().then(function(){
+			locator.by_classname(ptor, 'editable-input').then(function(field){
+				field.sendKeys(lec_name).then(function(){
+					locator.by_classname(ptor, 'icon-ok').then(function(confirm_button){
+						confirm_button.click().then(function(){
+							o_c.feedback(ptor, 'successfully updated')
+						})
 					})
 				})
 			})
 		})
 	})
+})
 }
 
 //====================================================
@@ -679,7 +589,6 @@ exports.rename_module = function(ptor, name){
 				})
 			})
 		})
-		
 	})
 }
 
@@ -736,22 +645,90 @@ exports.open_content_new_module = function(ptor){
     locator.by_id(ptor, 'content').then(function(btn){
         btn.click().then(function(){
         	locator.by_id(ptor, 'new_module').then(function(btn2){
-        		btn2.click();
+        		btn2.click().then(function(){
+			        o_c.feedback(ptor, 'Module was successfully created')
+				})
         	})
         })
     })
 }
 
+/////////////////////////////////////////////////////////////////////
+//			online content creation => lecs quizzes etc
+/////////////////////////////////////////////////////////////////////
 exports.open_content_new_online_content = function(ptor){
     locator.by_id(ptor, 'content').then(function(btn){
         btn.click().then(function(){
         	locator.by_id(ptor, 'new_online_content').then(function(btn2){
-        		btn2.click();
+        		btn2.click().then(function(){
+        			locator.by_classname(ptor, 'modal-body').then(function(modal){
+    					expect(modal.isDisplayed()).toEqual(true);    
+  					})
+        		})
         	})
         })
     })
 }
 
+//https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89
+
+exports.create_lecture = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'new_online_content').then(function(btn2){
+        		btn2.click().then(function(){
+        			locator.by_classname(ptor,'button-group').then(function(modal){
+						modal.findElements(protractor.By.tagName("li")).then(function(btns){
+							btns[0].click().then(function(){
+								o_c.feedback(ptor,"Lecture was successfully created");
+							})
+						})
+  					})
+        		})
+        	})
+        })
+    })
+}
+
+exports.create_quiz = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'new_online_content').then(function(btn2){
+        		btn2.click().then(function(){
+        			locator.by_classname(ptor,'button-group').then(function(modal){
+						modal.findElements(protractor.By.tagName("li")).then(function(btns){
+							btns[1].click().then(function(){
+								o_c.feedback(ptor,"Lecture was successfully created");
+							})
+						})
+  					})
+        		})
+        	})
+        })
+    })
+}
+
+exports.create_survey = function(ptor){
+    locator.by_id(ptor, 'content').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'new_online_content').then(function(btn2){
+        		btn2.click().then(function(){
+        			locator.by_classname(ptor,'button-group').then(function(modal){
+						modal.findElements(protractor.By.tagName("li")).then(function(btns){
+							btns[2].click().then(function(){
+								o_c.feedback(ptor,"Lecture was successfully created");
+							})
+						})
+  					})
+        		})
+        	})
+        })
+    })
+}
+
+/////////////////////////////////////////////////////////////////////
+//						in video questions
+//////////////////////////////////////////////////////////////////////
 exports.open_content_new_in_video_ques = function(ptor){
     locator.by_id(ptor, 'content').then(function(btn){
         btn.click().then(function(){
@@ -762,6 +739,7 @@ exports.open_content_new_in_video_ques = function(ptor){
     })
 }
 
+/////////////////////////////////////////////////////////////////////////
 exports.open_content_copy = function(ptor){
     locator.by_id(ptor, 'content').then(function(btn){
         btn.click().then(function(){
@@ -807,3 +785,103 @@ exports.check_for_teacher_nav_bar = function(ptor){
     	expect(nav.isDisplayed()).toEqual(true);    
   	})
 }
+
+//=====================================================
+//			new nav_bar settings functions
+//=====================================================
+
+exports.open_settings_course_info = function(ptor){
+    locator.by_id(ptor, 'settings').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'course_info').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_settings_announcements = function(ptor){
+    locator.by_id(ptor, 'settings').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'announcements').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+exports.open_settings_enrolled = function(ptor){
+    locator.by_id(ptor, 'settings').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'enrolled_students').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
+////////////////old//////////////////////////////
+// //====================================================
+// //            		add lecture
+// //====================================================
+
+// exports.add_lecture = function(ptor, mo_no){
+// 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
+// 		mods[mo_no-1].click();
+// 		mods[mo_no-1].findElement(protractor.By.partialLinkText("+ Add")).then(function(add_button){
+// 			add_button.click().then(function(){
+// 				locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
+// 					menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
+// 						options[0].click().then(function(){
+// 							o_c.feedback(ptor, 'Lecture was successfully created.')
+// 						});
+// 					})
+// 				})
+// 			})
+// 		})
+// 	})
+// }
+
+// //====================================================
+// //            		add quiz
+// //====================================================
+
+// exports.add_quiz = function(ptor, mo_no){
+// 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
+// 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
+// 			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
+// 				add_button[1].click().then(function(){
+// 					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
+// 						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
+// 							options[1].click().then(function(){
+// 								o_c.feedback(ptor, 'Quiz was successfully created.')
+// 							});
+// 						})
+// 					})
+// 				})
+// 			})
+// 		})
+// 	})
+// }
+
+// //====================================================
+// //            		add survey
+// //====================================================
+
+// exports.add_survey = function(ptor, mo_no){
+// 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
+// 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
+// 			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
+// 				add_button[1].click().then(function(){
+// 					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
+// 						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
+// 							options[2].click().then(function(){
+// 								o_c.feedback(ptor, 'Survey was successfully created.')
+// 							});
+// 						})
+// 					})
+// 				})
+// 			})
+// 		})
+// 	})
+// }

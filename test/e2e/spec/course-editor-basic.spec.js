@@ -11,9 +11,12 @@ ptor.driver.manage().window().maximize();
 describe("3", function(){
 	it('should', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_whole(ptor,0);
+		o_c.open_course_whole(ptor,1);
 		o_c.press_content_navigator(ptor);
-		teacher.add_lecture(ptor, 1);
+		teacher.open_module(ptor, 1);
+		// teacher.open_content_new_module(ptor);
+		teacher.create_lecture(ptor);
+		teacher.initialize_lecture(ptor, "menaz")
 		ptor.sleep(5000);
 	})
 })

@@ -35,14 +35,6 @@
 .destination-management table{
 	float: right;
 }
-.shared-row{
-	padding-right: 10px;
-}
-.shared-row:hover{
-	border-right: 10px solid rgb(0, 162, 86);
-	padding-right: 0px;
-}
-
 
 .shared-tree li {
     margin: 0px 0;

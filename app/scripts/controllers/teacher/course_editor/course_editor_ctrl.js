@@ -13,6 +13,33 @@ angular.module('scalearAngularApp')
         else
             $scope.addQuiz($stateParams.module_id, type)
     })
+    $scope.$on('share_copy', function(event, data){
+        console.log(data)
+        console.log('caught sharing modal event')
+        console.log($scope.course.selected_module)
+        var modalInstance = $modal.open({
+          templateUrl: '/views/teacher/course_editor/sharing_modal.html',
+          controller: "sharingModalCtrl",
+          resolve: {
+            selected_module: function(){
+                return $scope.course.selected_module
+            },
+            selected_item: function(){
+                if(data.selected_item){
+                    return $scope.items_obj[data.selected_item.class_name][data.selected_item.id]
+                }
+            }
+          }
+        });
+
+        modalInstance.result.then(function () {
+            console.log("shared")
+            // selectNone()
+        },function () {
+            console.log("close")
+            // selectNone()
+        });
+    })
 
      $scope.$on('add_module', function(event){
          $scope.addModule()
@@ -43,6 +70,24 @@ angular.module('scalearAngularApp')
 
     $scope.$on('update_link',function(event, link){
         $scope.updateCustomLink(link)
+    })
+
+    $scope.$on('copy_item', function(event, item){
+        console.log('caught copy')
+        console.log(item)
+        if(item){
+            $scope.copy($scope.items_obj[item.class_name][item.id])
+        }
+        else{
+            $scope.copy($scope.course.selected_module)
+        }
+        console.log($rootScope.clipboard)
+     })
+    
+     $scope.$on('paste_item', function(event, current_item){
+        console.log('pasting')
+        $scope.paste($scope.course.selected_module.id)
+        console.log($rootScope.clipboard)
      })
  	// $scope.tree_toggled = false 
  	// $scope.details_toggled = false
@@ -258,15 +303,15 @@ angular.module('scalearAngularApp')
     	$rootScope.clipboard = null
     }
 
-    $scope.paste=function(module_id, module_index){
+    $scope.paste=function(module_id){
     	var clipboard = $rootScope.clipboard
 
     	if(clipboard.type == 'module')
 	 		pasteModule(clipboard)
 	 	else if(clipboard.type == 'lecture')
-	 		pasteLecture(clipboard, module_id,module_index)
+	 		pasteLecture(clipboard, module_id)
 	 	else if(clipboard.type == 'quiz')
-	 		pasteQuiz(clipboard, module_id, module_index)
+	 		pasteQuiz(clipboard, module_id)
     }
 
     var pasteModule=function(module){
@@ -276,7 +321,7 @@ angular.module('scalearAngularApp')
 		{module_id: module.id},
 		function(data){
 			console.log(data)
-    		$scope.modules.push(data.group)
+            $scope.course.modules.push(data.group)
     		$scope.module_obj[data.group.id] = data.group
     		$scope.module_obj[data.group.id].items.forEach(function(item){
     			$scope.items_obj[item.class_name][item.id] = item
@@ -287,7 +332,7 @@ angular.module('scalearAngularApp')
 		)
     }
 
-    var pasteLecture=function(item, module_id, module_index){
+    var pasteLecture=function(item, module_id){
     	$scope.item_overlay = true  
     	Lecture.lectureCopy(
     		{course_id: $stateParams.course_id},
@@ -299,14 +344,14 @@ angular.module('scalearAngularApp')
     			console.log(data)
     			$scope.item_overlay = false 
     			data.lecture.class_name='lecture'
-    			$scope.modules[module_index].items.push(data.lecture)
+    			$scope.module_obj[module_id].items.push(data.lecture)
                 $scope.items_obj["lecture"][data.lecture.id] = data.lecture
     		}, 
     		function(){}
 		)
     }
 
-    var pasteQuiz=function(item, module_id, module_index){
+    var pasteQuiz=function(item, module_id){
     	$scope.item_overlay = true  
     	Quiz.quizCopy(
     		{course_id: $stateParams.course_id},
@@ -318,7 +363,7 @@ angular.module('scalearAngularApp')
     			console.log(data)
     			$scope.item_overlay = false 
     			data.quiz.class_name='quiz'
-    			$scope.modules[module_index].items.push(data.quiz)
+    			$scope.module_obj[module_id].items.push(data.quiz)
                 $scope.items_obj["quiz"][data.quiz.id] = data.quiz
     		}, 
     		function(){}
@@ -344,34 +389,34 @@ angular.module('scalearAngularApp')
 		)
     }
 
-    $scope.openShareModal = function (id, class_name) {
-	    var modalInstance = $modal.open({
-	      templateUrl: '/views/teacher/course_editor/sharing_modal.html',
-	      controller: "sharingModalCtrl",	      
-	      resolve: {
-	        selected_item: function () {
-	        	if(class_name)
-	        		return $scope.items_obj[class_name][id]	
-	        },
-	        selected_module:function(){
-	        	if(class_name)
-	        		return $scope.module_obj[$scope.items_obj[class_name][id].group_id]
-	        	return $scope.module_obj[id]
-	        },
-	        modules: function(){
-	        	return $scope.modules
-	        }
-	      }
-	    });
+   //  $scope.openShareModal = function (id, class_name) {
+	  //   var modalInstance = $modal.open({
+	  //     templateUrl: '/views/teacher/course_editor/sharing_modal.html',
+	  //     controller: "sharingModalCtrl",	      
+	  //     resolve: {
+	  //       selected_item: function () {
+	  //       	if(class_name)
+	  //       		return $scope.items_obj[class_name][id]	
+	  //       },
+	  //       selected_module:function(){
+	  //       	if(class_name)
+	  //       		return $scope.module_obj[$scope.items_obj[class_name][id].group_id]
+	  //       	return $scope.module_obj[id]
+	  //       },
+	  //       modules: function(){
+	  //       	return $scope.modules
+	  //       }
+	  //     }
+	  //   });
 
-	    modalInstance.result.then(function () {
-        	console.log("shared")
-        	selectNone()
-      	},function () {
-        	console.log("close")
-        	selectNone()
-      	});
-  	};
+	  //   modalInstance.result.then(function () {
+   //      	console.log("shared")
+   //      	selectNone()
+   //    	},function () {
+   //      	console.log("close")
+   //      	selectNone()
+   //    	});
+  	// };
 
 	var selectNone = function(){
 		$scope.modules.forEach(function(module){

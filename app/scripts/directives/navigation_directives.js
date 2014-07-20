@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['Course', '$filter', function(Course, $filter){
+	.directive('mainNavigation', ['Course', '$filter', '$rootScope', function(Course, $filter, $rootScope){
 		return {
 			replace: true,
 			restrict: "E",
@@ -15,6 +15,12 @@ angular.module('scalearAngularApp')
 			templateUrl: "/views/main_navigation.html",
 			link: function (scope, element) {
 				scope.today = new Date();
+				// $rootScope.$watch('are_shared', function(){
+				// 	scope.are_shared = $rootScope.are_shared
+				// })
+				scope.are_shared = function(){
+					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared
+				}
 				scope.getEndDate = function(start_date, duration){
 					return start_date.setDate(start_date.getDate()+(duration * 7));
 				}
@@ -33,6 +39,9 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){
+				$rootScope.$watch('clipboard', function(){
+					scope.clipboard = $rootScope.clipboard
+				})
 				scope.addModule=function(){
 					$rootScope.$broadcast('add_module')
 				}	
@@ -50,10 +59,22 @@ angular.module('scalearAngularApp')
 				scope.goToProgress=function(){
 					if(!$state.includes("**.progress.**")){}
 						$state.go("course.module.progress")
+				}
+				scope.copyItem = function(){
+					if($state.params.lecture_id){
+						var item = {class_name: 'lecture', id: $state.params.lecture_id}
+					}
+					else if($state.params.quiz_id){
+						var item = {class_name: 'quiz', id: $state.params.quiz_id}
+					}
+					$rootScope.$broadcast('copy_item', item)
+				}
+				scope.pasteItem = function(){
+					$rootScope.$broadcast('paste_item')
 				}			
 			}
 		};
- }]).directive('studentNavigation', ['ErrorHandler',function(ErrorHandler) {
+ }]).directive('studentNavigation', ['ErrorHandler', '$cookieStore', '$rootScope', '$state', 'Impersonate', function(ErrorHandler, $cookieStore, $rootScope, $state, Impersonate) {
            return{
 			replace:true,
 			restrict: "E",
@@ -66,6 +87,38 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){
+				$rootScope.$watch('preview_as_student', function(){
+					scope.preview_as_student = $rootScope.preview_as_student
+				})
+				scope.disablePreview=function(){
+	                if($cookieStore.get('preview_as_student')){
+	                  Impersonate.destroy(
+	                    {
+	                        old_user_id:$cookieStore.get('old_user_id'),
+	                        new_user_id:$cookieStore.get('new_user_id')
+	                    },
+	                    function(d){
+	                      console.log(d)
+	                      console.log("good")
+	                      var course_id = $cookieStore.get('course_id')
+	                      $rootScope.preview_as_student = false
+	                      $cookieStore.remove('preview_as_student')
+	                      $cookieStore.remove('old_user_id')
+	                      $cookieStore.remove('new_user_id')
+	                      $cookieStore.remove('course_id')
+	                      $state.go('course.edit_course_information', {course_id: course_id})
+	                    },
+	                    function(){
+	                      console.log("bad")
+	                      $rootScope.preview_as_student = false
+	                      $cookieStore.remove('preview_as_student')
+	                      $cookieStore.remove('old_user_id')
+	                      $cookieStore.remove('new_user_id')
+	                      $cookieStore.remove('course_id')
+	                    }
+	                  )
+	                }
+	            }
 			}
 		};
  }]).directive('userNavigation', ['ErrorHandler','$rootScope', 'User', 'Home',function(ErrorHandler,$rootScope, User, Home) {

@@ -1,4 +1,9 @@
 <!-- <div class="small-12 columns"><h4 ng-show="question" translate>groups.free_text_question</h4></div> -->
+<style>
+td{
+	padding:0 10px !important;
+}
+</style>
 <div class="small-12 columns">
 	<table style="width:100%">
 		<!-- <tr>
@@ -12,9 +17,7 @@
 				<th ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;"><b translate>groups.groups</b></th>
 				<th>related</th>
 				<th style="width: 79%;border-left: 1px gray solid;">Answer</th>
-				<th ng-show="graded" style="border-left: 1px gray solid;">
-					<p translate>courses.grade</p>
-				</th>
+				<th ng-show="graded" style="border-left: 1px gray solid;" translate>courses.grade</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -29,11 +32,11 @@
 				<td>{{related_answers[answer.user_id]}}</td>
 				<td style="border-left: 1px gray solid;">
 					<a ng-click="showFeedback(question.answers, $index, lecture_id||graded )" style="cursor:pointer">
-						<p ng-if="survey_id">{{answer.answer}}</p>
-		                <p ng-if="lecture_id">{{answer.online_answer}}</p>
+						<div class="size-14" ng-if="survey_id">{{answer.answer}}</div>
+		                <div class="size-14" ng-if="lecture_id">{{answer.online_answer}}</div>
 					</a>
 					<div ng-show="answer.response">
-						<p style="font-style: italic;display:inline;">{{answer.response}}</p>
+						<div class="size-14" style="font-style: italic;display:inline;">{{answer.response}}</div>
 						<a ng-show="!display_only" ng-click="deleteFeedback(question.answers,$index)" class="button really-tiny secondary">{{'delete'|translate}}</a>
 						<!-- <button_link  title="{{'delete'|translate}}" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							 -->
 					</div>

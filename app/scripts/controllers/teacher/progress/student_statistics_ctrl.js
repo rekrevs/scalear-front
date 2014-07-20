@@ -92,7 +92,7 @@ angular.module('scalearAngularApp')
 	            "isStacked": "true",
 	            "fill": 20,
 	            "height": 100,
-	            // "width": getChartWidth(),
+	            "width": getChartWidth()+100,
 	            "displayExactValues": true,
 	            "fontSize" : 12,
 	           // "chartArea":{"width":"95%"},
@@ -103,7 +103,7 @@ angular.module('scalearAngularApp')
                     }
 	            },
 	            "legend": 'none',
-	            chartArea:{left: 35, width:getChartWidth()},   
+	            chartArea:{left: 35, width:getChartWidth() },   
 	            // "vAxis": {
 	            //     "title": "#"+$translate('courses.'+type),
 	            // },

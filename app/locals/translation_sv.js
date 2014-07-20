@@ -64,6 +64,7 @@ var translation_sv=function(){
       choose_inclass_material: "Välj in-class Recension Material",
       all_students_progress: "Alla studenter Progress",
       modules_group_items: "Moduler gruppera objekt tillsammans",
+      links_external_system: "Länkar till externa system",
       new_online_content: "Ny Online Innehåll",
       send_email: "Skicka ett Mail",
       errors_messages:{
@@ -477,6 +478,7 @@ var translation_sv=function(){
               must_choose_answer: "Måste välja minst ett svar",
               answer_question: "Vänligen svara på frågan",
               add_link: "Lägg till Länka",
+              new_link: "Ny länk",
               please_wait: "Var god vänta",
               lectures: "Föreläsningar",
               quizzes: "Quiz-frågor",

@@ -48,8 +48,10 @@ angular.module('scalearAngularApp')
 				scope.preview=function(){
 					$rootScope.$broadcast('activate_preview')
 				}
+				scope.addLink=function(){
+					$rootScope.$broadcast('add_link')
+				}
 				scope.goToContentEditor=function(){
-					console.log($state.includes("**.course_editor.**"))
 					if(!$state.includes("**.course_editor.**"))
 						$state.go("course.module.course_editor.overview")
 				}
@@ -305,8 +307,6 @@ angular.module('scalearAngularApp')
       	// else
       	// 	$state.go('course.module.course_editor.overview',{module_id: module.id})
       	scope.currentmodule = module
-        console.log('mahmoud menshawi')
-        console.log(scope.currentmodule)
       }
    }
   }

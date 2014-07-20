@@ -59,7 +59,20 @@ angular.module('scalearAngularApp')
         else
             $scope.removeQuiz(item)
      })
-     $scope.$on('copy_item', function(event, item){
+
+     $scope.$on('add_link',function(){
+        $scope.addCustomLink()
+     })
+
+    $scope.$on('remove_link',function(event, link){
+        $scope.removeCustomLink(link)
+     })
+
+    $scope.$on('update_link',function(event, link){
+        $scope.updateCustomLink(link)
+    })
+
+    $scope.$on('copy_item', function(event, item){
         console.log('caught copy')
         console.log(item)
         if(item){
@@ -70,6 +83,7 @@ angular.module('scalearAngularApp')
         }
         console.log($rootScope.clipboard)
      })
+    
      $scope.$on('paste_item', function(event, current_item){
         console.log('pasting')
         $scope.paste($scope.course.selected_module.id)
@@ -271,15 +285,15 @@ angular.module('scalearAngularApp')
     // 	$scope.open_id = null
     // }
 
-    $scope.createModuleLink=function(id){
-    	return $state.href('course.module.courseware', {module_id: id}, {absolute: true})
-    }
+    // $scope.createModuleLink=function(id){
+    // 	return $state.href('course.module.courseware', {module_id: id}, {absolute: true})
+    // }
 
-    $scope.createItemLink=function(item){
-    	var params = {module_id: item.group_id}
-    	params[item.class_name+'_id'] = item.id
-    	return $state.href('course.module.courseware.'+item.class_name, params, {absolute: true})
-    }
+    // $scope.createItemLink=function(item){
+    // 	var params = {module_id: item.group_id}
+    // 	params[item.class_name+'_id'] = item.id
+    // 	return $state.href('course.module.courseware.'+item.class_name, params, {absolute: true})
+    // }
 
     $scope.copy=function(item){
     	$rootScope.clipboard = {id:item.id, name:item.name, type:item.class_name||'module', show_msg:true}

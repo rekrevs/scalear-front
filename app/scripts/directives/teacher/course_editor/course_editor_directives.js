@@ -29,9 +29,9 @@ angular.module('scalearAngularApp')
                 //     }
                 // }
                 scope.selectModule=function(){
-                    if($state.includes("*.progress.*"))
+                    if($state.includes("**.progress.**"))
                         $state.go('course.module.progress',{module_id: scope.module.id})
-                    else if($state.includes("*.inclass.*"))
+                    else if($state.includes("**.inclass.**"))
                         $state.go('course.module.inclass',{module_id: scope.module.id})
                     else
                         $state.go('course.module.course_editor.overview',{module_id: scope.module.id})
@@ -55,9 +55,10 @@ angular.module('scalearAngularApp')
                 }
 
                 scope.createLink=function(event){
+                    console.log("sfghjgfds")
                     event.stopPropagation() 
-                    scope.menu_status = false
-                    scope.link_url=scope.link()
+                    // scope.menu_status = false
+                    scope.link_url=$state.href('course.module.courseware', {module_id: scope.module.id}, {absolute: true})
                     $timeout(function() {
                         element.find('.module_link').select();
                     });
@@ -94,7 +95,7 @@ angular.module('scalearAngularApp')
                         $anchorScroll();    
                     }
                         // $state.go('course.module.progress',{module_id: scope.id})
-                    else if($state.includes("*.inclass.*"))
+                    else if($state.includes("**.inclass.**"))
                         return
                         // $state.go('course.module.inclass',{module_id: scope.id})
                     else{
@@ -130,14 +131,18 @@ angular.module('scalearAngularApp')
                 }
 
                 scope.createLink=function(event){
-                    event.stopPropagation() 
-                    scope.menu_status = false
-                    scope.link_url=scope.link()
+                    event.stopPropagation()
+                    event.preventDefault() 
+                    var params = {module_id: scope.item.group_id}
+                    params[scope.item.class_name+'_id'] = scope.item.id
+                    scope.link_url=$state.href('course.module.courseware.'+scope.item.class_name, params, {absolute: true})
                     $timeout(function() {
                         element.find('.item_link').select();
                     });
                 }
-                scope.remove=function(){
+                scope.remove=function(event){
+                    event.stopPropagation()
+                    event.preventDefault() 
                     $rootScope.$broadcast("delete_item", scope.item)
                 }
             }

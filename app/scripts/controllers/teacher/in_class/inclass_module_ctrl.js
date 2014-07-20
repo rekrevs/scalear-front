@@ -70,8 +70,8 @@ angular.module('scalearAngularApp')
     // }
 
     var resetVariables=function(){
-        $scope.play_pause_class = "icon-play"
-        $scope.mute_class = "icon-volume-up"
+        $scope.play_pause_class = "fi-play"
+        $scope.mute_class = "fi-volume"
         $scope.loading_video=true
         $scope.lecture_url=""
         // $scope.question_title=""
@@ -237,9 +237,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.playBtn = function(){
-      if($scope.play_pause_class == "icon-play"){
+      if($scope.play_pause_class == "fi-play"){
         $scope.inclass_player.controls.play()
-        $scope.play_pause_class = "icon-pause"
+        $scope.play_pause_class = "fi-pause"
       }
       else{
         $scope.inclass_player.controls.pause()
@@ -248,13 +248,13 @@ angular.module('scalearAngularApp')
     }
 
     $scope.muteBtn= function(){
-      if($scope.mute_class == "icon-volume-off"){
-        $scope.mute_class = "icon-volume-up"
+      if($scope.mute_class == "fi-volume-strike"){
+        $scope.mute_class = "fi-volume"
         $scope.inclass_player.controls.unmute()
         $scope.inclass_player.controls.volume(1)
       }
       else{
-        $scope.mute_class = "icon-volume-off"
+        $scope.mute_class = "fi-volume-strike"
         $scope.inclass_player.controls.mute()
       }
       $scope.blurButtons()
@@ -293,11 +293,11 @@ angular.module('scalearAngularApp')
     }
 
     $scope.inclass_player.events.onPlay=function(){
-       $scope.play_pause_class = "icon-pause"
+       $scope.play_pause_class = "fi-pause"
     }
 
     $scope.inclass_player.events.onPause=function(){
-       $scope.play_pause_class = "icon-play"
+       $scope.play_pause_class = "fi-play"
     }
 
     $scope.inclass_player.events.onReady=function(){
@@ -308,7 +308,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.inclass_player.events.onMeta=function(){
-      $scope.play_pause_class = "icon-play"
+      $scope.play_pause_class = "fi-play"
       $scope.loading_video=false
     }
     $scope.inclass_player.events.seeked=function(){

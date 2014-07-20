@@ -59,6 +59,27 @@
 	position: relative;
 }
 
+.arrow{
+    top: initial !important;
+}
+
+.button{
+	margin:0;
+}
+
+.tabs dd > a{
+	padding:0.7rem;
+	cursor:pointer
+}
+
+.content{
+	float:none !important;
+}
+
+.row{
+	max-width: 74.5rem !important;
+}
+
 /*ul {margin:0;}*/
 
 /*.h, .last-child{border:1px solid #f0f0f0; color:#05b}*/
@@ -233,7 +254,7 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	margin-top: 10px;
 }
 
-@media (max-width: 1024px) {
+/*@media (max-width: 1024px) {*/
 	/*.shortcuts{
 		display:none;
 	}*/
@@ -268,4 +289,4 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 		display: inline-block; 
 		position: relative;
 	}*/
-}
+/*}*/

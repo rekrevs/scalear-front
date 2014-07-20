@@ -7,7 +7,7 @@
           <h1><a class="sub-header-component active" ng-click="open_navigator=!open_navigator">Content Navigator</a></h1>
         </li>
          <li toggle-top-bar class="menu-icon"><a href="">SUB-MENU</a></li>
-         <li ><content-navigator modules="modules" mode="editor" open="open_navigator" style="z-index: 1;" /></li>
+         <li ><content-navigator modules="modules" links="links" mode="editor" open="open_navigator" style="z-index: 1;" /></li>
     </ul>
 
         <top-bar-section>
@@ -62,7 +62,14 @@
                     </li>
                     <li class="divider"></li>
                     <li>
-                        <a class="sub-header-component has-description green" ng-click="copyItem()">
+                        <a class="sub-header-component has-description green" ng-click="addLink()">
+                            {{'groups.new_link' | translate}}
+                            <h5 class="description"><small translate>links_external_system</small></h5>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a class="sub-header-component has-description green"ng-click="copyItem()">
                             {{'menu.copy' | translate}}
                             <h5 class="description"><small translate>menu.copy_describtion</small></h5>
                         </a>

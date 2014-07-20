@@ -339,6 +339,11 @@ angular.module('scalearAngularApp', [
                         controller: 'courseCtrl'
                     }
                 },
+                resolve:{
+                    course_data:function(courseResolver, $stateParams){
+                        return courseResolver.init($stateParams.course_id)
+                    }
+                },
                 abstract: true
             })           
             .state('course.module',{
@@ -425,8 +430,8 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/progress/progress_lecture.html',
                 controller: 'progressLectureCtrl'
             })
-            .state('course.module.progress.details', {
-                url: "/details",
+            .state('course.module.progress_details', {
+                url: "/progress/details",
                 templateUrl: '/views/teacher/progress/progress_module.html',
                 controller: 'progressModuleCtrl'
             })

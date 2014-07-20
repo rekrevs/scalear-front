@@ -170,7 +170,7 @@ angular.module('scalearAngularApp', [
                     }
                     if((to.name=='home' && result == 0))
                     {
-                        $state.go("login");
+                        // $state.go("login");
                     }
                     if (!routeClean(to.name) && result == 0 ) // user not logged in trying to access a page that needs authentication.
                     {

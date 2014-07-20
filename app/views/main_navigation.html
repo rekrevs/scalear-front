@@ -272,6 +272,11 @@
 					</ul>
 				</li>
 			</ul>
+			<!-- NOT LOGGED IN -->
+			<ul ng-switch-when="undefined" class="right">
+				<li class="divider"></li>
+				<li><a ui-sref="login" translate>navigation.login</a></li>
+			</ul>
 	    </top-bar-section>
 	</top-bar>
 </div>

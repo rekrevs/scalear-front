@@ -1,34 +1,54 @@
-<div class="left-navigation hide-for-small-only" sticky offset="80">
+<div class="left-navigation hide-for-small-only left medium-3 large-3 columns" sticky offset="50">
 	<ul class="side-nav">
 	  <h3><i class="fi-page-multiple size-24"></i> {{'help.getting_started' | translate}}</h3>
-	  <li data-scrollspy-listen="link1"><a ng-click="$parent.scrollTo('link1')">Link 1</a></li>
-	  <li data-scrollspy-listen="link2"><a ng-click="$parent.scrollTo('link2')">Link 2</a></li>
-	  <li data-scrollspy-listen="link3"><a ng-click="$parent.scrollTo('link3')">Link 3</a></li>
-	  <li data-scrollspy-listen="link4"><a ng-click="$parent.scrollTo('link4')">Link 4</a></li>
+	  <li data-scrollspy-listen="enroll"><a ng-click="$parent.scrollTo('enroll')">Joining a Class</a></li>
+	  <li data-scrollspy-listen="due"><a ng-click="$parent.scrollTo('due')">What is Due Next?</a></li>
+	  <li data-scrollspy-listen="interaction"><a ng-click="$parent.scrollTo('interaction')">Questions, Notes, and Confused</a></li>
+	  <li data-scrollspy-listen="progress"><a ng-click="$parent.scrollTo('progress')">Reviewing My Progress</a></li>
+	  <li data-scrollspy-listen="support"><a ng-click="$parent.scrollTo('support')">Contacting My Teacher</a></li>
+	  <li data-scrollspy-listen="feedback"><a ng-click="$parent.scrollTo('feedback')">Technical Problems or Feedback</a></li>
+	  <li data-scrollspy-listen="privacy"><a ng-click="$parent.scrollTo('privacy')">Privacy</a></li>
 	</ul>
 </div>
-{{hello}}
-<div class="right-content">
-	<div id="link1" data-scrollspy-broadcast>
-		<iframe width="560" height="315" src="//www.youtube.com/embed/cgStGEDLFB4" frameborder="0" allowfullscreen></iframe>
+<div class="with-margin-top small-12 medium-9 large-9 columns">
+	<center>
+		<div id="intro_video" class="small-10">
+			<div class="flex-video">
+	        	<iframe width="560" height="315" src="//www.youtube.com/embed/9u8U2NoXC7c?title=0" frameborder="0" allowfullscreen></iframe>
+        	</div>
+		</div>
+	</center>
+	<div id="enroll" data-scrollspy-broadcast>
 		<p>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet mattis nibh, nec porta turpis vestibulum eu. Morbi laoreet felis in facilisis rutrum. Sed elementum arcu vel luctus pretium. Cras posuere eget urna eget tempor. Curabitur bibendum viverra enim, in hendrerit orci lacinia sed. Vivamus vel sapien vitae nibh porta sagittis at id mi. Mauris justo quam, vestibulum eu dolor nec, blandit egestas magna. Morbi sit amet nisi mauris. Sed dignissim mauris quis lacinia tempor. Quisque sit amet adipiscing nisi. Sed vestibulum tempus porta. Aenean eros lacus, hendrerit vel accumsan viverra, aliquam id erat. Proin faucibus, felis non tincidunt venenatis, enim massa auctor lacus, et fermentum neque dui sit amet ante. Suspendisse gravida lacus et lorem tincidunt, id sodales nulla commodo. Praesent faucibus sem est, at pulvinar urna tincidunt mollis.
 		</p>
 	</div>
-	<div id="link2" data-scrollspy-broadcast>
-		<iframe width="560" height="315" src="//www.youtube.com/embed/cgStGEDLFB4" frameborder="0" allowfullscreen></iframe>
+	<div id="due" data-scrollspy-broadcast>
 		<p>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet mattis nibh, nec porta turpis vestibulum eu. Morbi laoreet felis in facilisis rutrum. Sed elementum arcu vel luctus pretium. Cras posuere eget urna eget tempor. Curabitur bibendum viverra enim, in hendrerit orci lacinia sed. Vivamus vel sapien vitae nibh porta sagittis at id mi. Mauris justo quam, vestibulum eu dolor nec, blandit egestas magna. Morbi sit amet nisi mauris. Sed dignissim mauris quis lacinia tempor. Quisque sit amet adipiscing nisi. Sed vestibulum tempus porta. Aenean eros lacus, hendrerit vel accumsan viverra, aliquam id erat. Proin faucibus, felis non tincidunt venenatis, enim massa auctor lacus, et fermentum neque dui sit amet ante. Suspendisse gravida lacus et lorem tincidunt, id sodales nulla commodo. Praesent faucibus sem est, at pulvinar urna tincidunt mollis.
 		</p>
 	</div>
-	<div id="link3" data-scrollspy-broadcast>
-		<iframe width="560" height="315" src="//www.youtube.com/embed/cgStGEDLFB4" frameborder="0" allowfullscreen></iframe>
+	<div id="interaction" data-scrollspy-broadcast>
 		<p>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet mattis nibh, nec porta turpis vestibulum eu. Morbi laoreet felis in facilisis rutrum. Sed elementum arcu vel luctus pretium. Cras posuere eget urna eget tempor. Curabitur bibendum viverra enim, in hendrerit orci lacinia sed. Vivamus vel sapien vitae nibh porta sagittis at id mi. Mauris justo quam, vestibulum eu dolor nec, blandit egestas magna. Morbi sit amet nisi mauris. Sed dignissim mauris quis lacinia tempor. Quisque sit amet adipiscing nisi. Sed vestibulum tempus porta. Aenean eros lacus, hendrerit vel accumsan viverra, aliquam id erat. Proin faucibus, felis non tincidunt venenatis, enim massa auctor lacus, et fermentum neque dui sit amet ante. Suspendisse gravida lacus et lorem tincidunt, id sodales nulla commodo. Praesent faucibus sem est, at pulvinar urna tincidunt mollis.
 		</p>
 	</div>
-	<div id="link4" data-scrollspy-broadcast>
-		<iframe width="560" height="315" src="//www.youtube.com/embed/cgStGEDLFB4" frameborder="0" allowfullscreen></iframe>
+	<div id="progress" data-scrollspy-broadcast>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet mattis nibh, nec porta turpis vestibulum eu. Morbi laoreet felis in facilisis rutrum. Sed elementum arcu vel luctus pretium. Cras posuere eget urna eget tempor. Curabitur bibendum viverra enim, in hendrerit orci lacinia sed. Vivamus vel sapien vitae nibh porta sagittis at id mi. Mauris justo quam, vestibulum eu dolor nec, blandit egestas magna. Morbi sit amet nisi mauris. Sed dignissim mauris quis lacinia tempor. Quisque sit amet adipiscing nisi. Sed vestibulum tempus porta. Aenean eros lacus, hendrerit vel accumsan viverra, aliquam id erat. Proin faucibus, felis non tincidunt venenatis, enim massa auctor lacus, et fermentum neque dui sit amet ante. Suspendisse gravida lacus et lorem tincidunt, id sodales nulla commodo. Praesent faucibus sem est, at pulvinar urna tincidunt mollis.
+		</p>
+	</div>
+	<div id="support" data-scrollspy-broadcast>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet mattis nibh, nec porta turpis vestibulum eu. Morbi laoreet felis in facilisis rutrum. Sed elementum arcu vel luctus pretium. Cras posuere eget urna eget tempor. Curabitur bibendum viverra enim, in hendrerit orci lacinia sed. Vivamus vel sapien vitae nibh porta sagittis at id mi. Mauris justo quam, vestibulum eu dolor nec, blandit egestas magna. Morbi sit amet nisi mauris. Sed dignissim mauris quis lacinia tempor. Quisque sit amet adipiscing nisi. Sed vestibulum tempus porta. Aenean eros lacus, hendrerit vel accumsan viverra, aliquam id erat. Proin faucibus, felis non tincidunt venenatis, enim massa auctor lacus, et fermentum neque dui sit amet ante. Suspendisse gravida lacus et lorem tincidunt, id sodales nulla commodo. Praesent faucibus sem est, at pulvinar urna tincidunt mollis.
+		</p>
+	</div>
+	<div id="feedback" data-scrollspy-broadcast>
+		<p>
+			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet mattis nibh, nec porta turpis vestibulum eu. Morbi laoreet felis in facilisis rutrum. Sed elementum arcu vel luctus pretium. Cras posuere eget urna eget tempor. Curabitur bibendum viverra enim, in hendrerit orci lacinia sed. Vivamus vel sapien vitae nibh porta sagittis at id mi. Mauris justo quam, vestibulum eu dolor nec, blandit egestas magna. Morbi sit amet nisi mauris. Sed dignissim mauris quis lacinia tempor. Quisque sit amet adipiscing nisi. Sed vestibulum tempus porta. Aenean eros lacus, hendrerit vel accumsan viverra, aliquam id erat. Proin faucibus, felis non tincidunt venenatis, enim massa auctor lacus, et fermentum neque dui sit amet ante. Suspendisse gravida lacus et lorem tincidunt, id sodales nulla commodo. Praesent faucibus sem est, at pulvinar urna tincidunt mollis.
+		</p>
+	</div>
+	<div id="privacy" data-scrollspy-broadcast>
 		<p>
 			Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas imperdiet mattis nibh, nec porta turpis vestibulum eu. Morbi laoreet felis in facilisis rutrum. Sed elementum arcu vel luctus pretium. Cras posuere eget urna eget tempor. Curabitur bibendum viverra enim, in hendrerit orci lacinia sed. Vivamus vel sapien vitae nibh porta sagittis at id mi. Mauris justo quam, vestibulum eu dolor nec, blandit egestas magna. Morbi sit amet nisi mauris. Sed dignissim mauris quis lacinia tempor. Quisque sit amet adipiscing nisi. Sed vestibulum tempus porta. Aenean eros lacus, hendrerit vel accumsan viverra, aliquam id erat. Proin faucibus, felis non tincidunt venenatis, enim massa auctor lacus, et fermentum neque dui sit amet ante. Suspendisse gravida lacus et lorem tincidunt, id sodales nulla commodo. Praesent faucibus sem est, at pulvinar urna tincidunt mollis.
 		</p>

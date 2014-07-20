@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
                 $timeout(function(){
                    //$state.go("login",{},{reload:true})
                    $scope.sending=false;
-                   $rootScope.$emit('$stateChangeStart', {name:'home'},{},{url:''})
+                   $rootScope.$emit('$stateChangeStart', {name:'confirmed'},{},{name:'show_confirmation'})
 
                 },2500)
                 //console.log("success confirmation token");

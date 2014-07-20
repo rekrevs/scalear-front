@@ -172,6 +172,16 @@ angular.module('scalearAngularApp', [
                     {
                         // $state.go("login");
                     }
+                    if(to.name == 'confirmed'){
+                        if(from.name == 'show_confirmation'){
+                            $state.go("confirmed")
+                        }
+                        else{
+                            $state.go("home");
+                            s = 0;
+                        }
+                    }
+                    
                     if (!routeClean(to.name) && result == 0 ) // user not logged in trying to access a page that needs authentication.
                     {
                         console.log(to.name)
@@ -272,6 +282,11 @@ angular.module('scalearAngularApp', [
                 url: '/users/thanks',
                 templateUrl: '/views/users/thanks.html',
                 controller: 'ThanksForRegisteringCtrl'
+            })
+            .state('confirmed', {
+                url: '/users/confirmed',
+                templateUrl: 'views/users/confirmed.html',
+                controller: 'UsersConfirmedCtrl'
             })
             .state('edit_account', {
                 url: '/users/edit',

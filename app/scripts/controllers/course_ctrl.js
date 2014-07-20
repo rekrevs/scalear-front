@@ -61,7 +61,6 @@ angular.module('scalearAngularApp')
 	 		Course.getCourseware(
 		    	{course_id: id},
 		    	function(data){
-		    		$scope = $scope.$parent
 					$scope.course= JSON.parse(data.course);
 					$scope.course.custom_links = data.links
 					$scope.today = data.today;	

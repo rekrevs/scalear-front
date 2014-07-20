@@ -17,6 +17,16 @@
             <li has-dropdown>
               <a class="sub-header-component active" href="" translate>settings.settings</a>
               <ul top-bar-dropdown>
+                <li ng-show="preview_as_student">
+                    <a class="sub-header-component has-description grey" ng-click="disablePreview()">
+                        {{'preview_as_student'| translate}}
+                        <h5 class="description">
+                            <small>
+                                Click to exit Preview Mode    
+                            </small>
+                        </h5>
+                    </a>
+                </li>
                 <li class="blue with-padding" style="min-width: 200px;">
                   <div class="switch tiny show-inline show-inline">
                     <input id="showNotesCheckbox" type="checkbox" />

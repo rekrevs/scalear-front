@@ -32,14 +32,16 @@ ul.highlight, li.highlight{
 
 .progress_chart{
 	height:135px;
-	margin-left:30px
+	margin-left:30px;
+	width: 92%;
 }
 
 .inner_content{
 	font-size:22px;
 	background-color:white !important; 
 	/*padding:0 20px;*/
-	list-style:none
+	list-style:none;
+	padding-right:0;
 }
 
 .inner_title{
@@ -54,6 +56,7 @@ ul.highlight, li.highlight{
 
 .li_inner{
 	padding:5px 0px;
+	padding-left: 10px;
 	font-size:14px;
 	font-weight:bold
 }

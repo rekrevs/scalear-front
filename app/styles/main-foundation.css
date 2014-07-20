@@ -259,6 +259,9 @@ select{
 .with-padding{
 	padding: 1.25rem !important;
 }
+.with-margin{
+	margin: 1.25rem !important;
+}
 .with-tiny-padding{
 	padding: 0.25rem !important;
 }
@@ -349,8 +352,14 @@ button.active{
 }
 
 /*OTHERS*/
+.valign-middle{
+	vertical-align: middle !important;
+}
 .valign-top{
 	vertical-align: top !important;
+}
+.valign-bottom{
+	vertical-align: bottom !important;
 }
 .valign-super{
 	vertical-align: super !important;
@@ -369,14 +378,14 @@ label{
 .under-the-other{
 	display: block !important;
 }
-.show-inline{
-	display: inline-block;
-}
 .break-text{
 	word-break: break-word;
 }
 .show-inline{
 	display: inline-block;
+}
+.must-show-inline{
+	display: inline-block !important;
 }
 
 .top-bar{

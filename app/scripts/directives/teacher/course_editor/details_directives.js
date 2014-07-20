@@ -350,19 +350,46 @@ angular.module('scalearAngularApp')
                 }
             };
         }
-    ]).directive('linkItem', function(){
+    ]).directive('linkItem', ['$q','$rootScope',function($q, $rootScope){
         return{
             templateUrl: '/views/link_item.html',
             restrict: 'E',
             scope: {
                 link: "=",
-                update: "=",
-                remove: "=",
-                validate: "=",
+                // update: "=",
+                // remove: "=",
+                // validate: "=",
                 small:"="
             },
             link: function(scope, element){
+                scope.validate= function(data, elem){
+                    var d = $q.defer();
+                    var doc={}
+                    doc.url=data;
+                    CustomLink.validate(
+                        {link_id: elem.id},
+                        doc,
+                        function(data){
+                            d.resolve()
+                        },function(data){
+                            $log.debug(data.status);
+                            $log.debug(data);
+                        if(data.status==422)
+                            d.resolve(data.data.errors.join());
+                        else
+                            d.reject('Server Error');
+                        }
+                    )
+                    return d.promise;
+                }
 
+                scope.remove=function(){
+                    $rootScope.$broadcast('remove_link', scope.link)
+                }
+
+                scope.update=function(){
+                    $rootScope.$broadcast('update_link', scope.link)
+                }
             }
         }
-    });
+    }]);

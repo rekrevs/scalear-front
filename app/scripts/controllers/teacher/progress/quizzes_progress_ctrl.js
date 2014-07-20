@@ -33,7 +33,7 @@ angular.module('scalearAngularApp')
                 obj.quizzes_status= $scope.quizzes_status|| {}
                 obj.late_quizzes = $scope.late_quizzes || {}
 
-                obj.quizzes_students = obj.quizzes_students.concat(data.students);
+                obj.quizzes_students = obj.quizzes_students.concat(JSON.parse(data.students));
                 angular.extend(obj.quizzes_status,data.quizzes_status)
                 angular.extend(obj.late_quizzes, data.late_quizzes)
 

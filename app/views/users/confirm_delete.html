@@ -8,12 +8,12 @@
         <input type="password" id="del_con_pwd" ng-model="enrollment.key" name="key" placeholder="{{'current_password'|translate}}" required/><br>
         <span class='help-inline' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
         <span class='errormessage' ng-if='form.server_error'>{{form.server_error}}</span>
-        <label style="font-size: 10px;" translate>{{"account_edit.need_password"}}</label>
+        <div class="alert-box secondary" translate>{{"account_edit.need_password"}}</div>
         <loading size="small" show="form.processing"></loading>
     </center>
     </form>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-danger" id="del_ok_btn" style="background-image: initial;" ng-click="ok()" translate="account_edit.cancel_account"></button>
-    <button class="btn btn-primary" style="background-image: initial;" ng-click="cancel()" translate="close"></button>
+    <button class="button alert right" id="del_ok_btn" ng-click="ok()" translate="account_edit.cancel_account"></button>
+    <button class="button right with-margin-right" ng-click="cancel()" translate="close"></button>
 </div>

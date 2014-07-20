@@ -94,12 +94,12 @@
         <header>
             
         </header>
-        <div ng-if="clipboard && clipboard.show_msg" class="top-ribbon">
+        <!-- <div ng-if="clipboard && clipboard.show_msg" class="top-ribbon">
             <notice-message message="{{clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' has been copied. To paste it into another module, right-click on the module and choose Paste'}}" close="true" button-action="closeClipboard()" button-title="{{'lectures.remove' | translate}}" />
-        </div>
-        <div ng-if="preview_as_student" class="top-ribbon">
+        </div> -->
+        <!-- <div ng-if="preview_as_student" class="top-ribbon">
             <notice-message message="{{'preview_as_student'| translate}}" button-action="disablePreview()" button-title="{{'return' | translate}}" />
-        </div>
+        </div> -->
         <div id="main" role="main">
             <div class="container">
                 <div ui-view="navigation"></div>

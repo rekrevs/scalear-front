@@ -1,105 +1,64 @@
-<div ng-show="data.length>0" class="whole-box" style="max-width: 95%; max-height: none;">
-	<div class="shared-item-header">
-		<b translate>sharing.shared_from</b>{{data[0].teacher.name}} | {{data[0].teacher.email}}
-		<profile-image email="data[0].teacher.email" imagesize="30" style="float: right; margin-left: 5px;"></profile-image>
-	</div>
-	<div class="shared-tree" style="text-align: left;">
-			<ul ng-repeat="item in data" class="shared-row">
-				<div class="shared-at">
-				{{item.created_at | amDateFormat:'dddd, MMMM D YYYY, h:mm a'}}
+<div ng-show="data.length>0" class="panel large-12 column">
+	<!-- <div class="shared-item-header"> -->
+	<h5 ><i class="fi-social-skillshare"></i> {{'sharing.shared_from' | translate}}</b>{{data[0].teacher.name}}</h5>
+		
+	<!-- </div> -->
+	<div class="shared-tree">
+		<ul ng-repeat="item in data" class="shared-row">
+			<div class="time-label blue color-white uppercase shared-at">
+				{{item.created_at | timeAgo}}
+			</div>
+			<li ng-repeat="module in item.modules">
+				<a class="alert-box color-white no-margin"><b>{{'lectures.module' | translate}}:</b> {{module.name}}</a>
+				<ul>
+					<li ng-repeat="child in module.items">
+						<a ng-if="!child.quiz_type"><b>{{'groups.lecture' | translate}}:</b> {{child.name}}</a>
+						<a ng-if="child.quiz_type"><b>{{'groups.'+child.quiz_type | translate}}:</b> {{child.name}}</a>
+					</li>
+				</ul>
+				
+				<div class="alert-box secondary with-margin">
+				<h5 class="subheader" translate>sharing.destination</h5>
+					<label>{{'groups.course' | translate}}
+						<select ng-model="selected_course" ng-options="course.name for course in courses">
+						</select>
+					</label>
+					<button ng-click="addModule($parent.$index, $index,selected_course.id)" ng-disabled="!selected_course" class="btn btn-success">{{'sharing.add' | translate}}</button>
 				</div>
-				<li ng-repeat="module in item.modules">
-					<a style="border: 2px solid rgb(0, 162, 86);"><b>{{'lectures.module' | translate}}:</b> {{module.name}}</a>
-					<div class="destination-management">
-						<div>
-							<b translate>sharing.destination</b>
-						</div>
-						<table>
-							<tr>
-								<td>
-									<select ng-model="selected_course" ng-options="course.name for course in courses" style="margin:4px;margin-top:0;height:25px">
-										<option value="" disabled translate>courses.select_course</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<button ng-click="addModule($parent.$index, $index,selected_course.id)" ng-disabled="!selected_course" class="btn btn-success">{{'sharing.add' | translate}}</button>
-								</td>
-							</tr>
-						</table>
-						
-						
-					</div>
-					<ul>
-						<li ng-repeat="child in module.items">
-							<a ng-if="!child.quiz_type"><b>{{'groups.lecture' | translate}}:</b> {{child.name}}</a>
-							<a ng-if="child.quiz_type"><b>{{'groups.'+child.quiz_type | translate}}:</b> {{child.name}}</a>
-						</li>
-					</ul>
-					<center><hr style="width: 60%; margin-top: 10px;" /></center>
-				</li>
-				<li ng-repeat="lecture in item.lectures">
-					<a style="border: 2px solid rgb(0, 162, 86);"><b>{{'groups.lecture' | translate}}:</b> {{lecture.name}}</a>
-					<div class="destination-management">
-						<div>
-							<b translate>sharing.destination</b>
-						</div>
-						<table>
-							<tr>
-								<td>
-									<select ng-model="selected_course" default="Course" ng-options="course.name for course in courses">
-										<option value="" disabled translate>courses.select_course</option>
-									</select>
-								</td>
-							</tr>
-							<tr ng-show="selected_course">
-								<td>
-									<select ng-model="selected_module" ng-options="module.name for module in selected_course.modules">
-										<option value="" disabled translate>courses.select_module</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<button ng-click="addLecture($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="btn btn-success">{{'sharing.add' | translate}}</button>
-								</td>
-							</tr>
-							
-						</table>
-					</div>
-					<center><hr style="width: 60%; margin-top: 10px;" /></center>
-				</li>
-				<li ng-repeat="quiz in item.quizzes">
-					<a style="border: 2px solid rgb(0, 162, 86);"><b>{{'groups.'+quiz.quiz_type | translate}}:</b> {{quiz.name}}</a>
-					<div class="destination-management">
-						<div>
-							<b translate>sharing.destination</b>
-						</div>
-						<table>
-							<tr>
-								<td>
-									<select ng-model="selected_course" ng-options="course.name for course in courses">
-										<option value="" disabled translate>courses.select_course</option>
-									</select>
-								</td>
-							</tr>
-							<tr ng-show="selected_course">
-								<td>
-									<select ng-model="selected_module" ng-options="module.name for module in selected_course.modules">
-										<option value="" disabled translate>courses.select_module</option>
-									</select>
-								</td>
-							</tr>
-							<tr>
-								<td>
-									<button ng-click="addQuiz($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="btn btn-success">{{'sharing.add' | translate}}</button>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<center><hr style="width: 60%; margin-top: 10px;" /></center>
-				</li>
-			</ul>	
+				<hr />
+			</li>
+			<li ng-repeat="lecture in item.lectures">
+				<a class="alert-box color-white no-margin"><b>{{'groups.lecture' | translate}}:</b> {{lecture.name}}</a>
+				<div class="alert-box secondary with-margin">
+					<h5 class="subheader" translate>sharing.destination</h5>
+					<label>{{'groups.course' | translate}}
+						<select ng-model="selected_course" default="Course" ng-options="course.name for course in courses">
+						</select>
+					</label>
+					<label ng-show="selected_course">{{'lectures.module' | translate}}
+						<select ng-model="selected_module" ng-options="module.name for module in selected_course.modules">
+						</select>
+					</label>
+					<button ng-click="addLecture($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="btn btn-success">{{'sharing.add' | translate}}</button>
+				</div>
+				<hr />
+			</li>
+			<li ng-repeat="quiz in item.quizzes">
+				<a class="alert-box color-white no-margin"><b>{{'groups.'+quiz.quiz_type | translate}}:</b> {{quiz.name}}</a>
+				<div class="alert-box secondary with-margin">
+					<h5 class="subheader" translate>sharing.destination</h5>
+					<label>{{'groups.course' | translate}}
+						<select ng-model="selected_course" ng-options="course.name for course in courses">
+						</select>
+					</label>
+					<label ng-show="selected_course">{{'lectures.module' | translate}}
+						<select ng-model="selected_module" ng-options="module.name for module in selected_course.modules">
+						</select>
+					</label>
+					<button ng-click="addQuiz($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="btn btn-success">{{'sharing.add' | translate}}</button>
+				</div>
+				<hr />
+			</li>
+		</ul>	
 	</div>
 </div>

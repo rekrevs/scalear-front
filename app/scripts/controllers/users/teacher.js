@@ -8,6 +8,7 @@ angular.module('scalearAngularApp')
                 "role_ids": "1"
             }
             $scope.sign_up = function() {
+                console.log('came here')
                 $scope.sending = true;
                 $scope.final_user = angular.copy($scope.user)
                 if(!$scope.final_user.password_confirmation){

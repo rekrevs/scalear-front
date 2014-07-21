@@ -4,13 +4,15 @@
 <div class="modal-body">
     <p>{{"devise.registrations.confirm_destroy_note"|translate}}</p>
 	<form name="form.key">
-    <center>
-        <input type="password" id="del_con_pwd" ng-model="enrollment.key" name="key" placeholder="{{'current_password'|translate}}" required/><br>
-        <span class='help-inline' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
-        <span class='errormessage' ng-if='form.server_error'>{{form.server_error}}</span>
-        <div class="alert-box secondary" translate>{{"account_edit.need_password"}}</div>
-        <loading size="small" show="form.processing"></loading>
-    </center>
+        <center class="large-6 column">
+            <label>{{'password' | translate}}
+                <input type="password" id="del_con_pwd" class="no-margin" ng-model="enrollment.key" name="key" placeholder="{{'current_password'|translate}}" ng-class="{error: form.server_error}" required/>
+                <small class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></small>
+                <small class='error' ng-if='form.server_error'>{{form.server_error}}</small>
+            </label>
+            <div class="alert-box secondary" translate>{{"account_edit.need_password"}}</div>
+            <loading size="small" show="form.processing"></loading>
+        </center>
     </form>
 </div>
 <div class="modal-footer">

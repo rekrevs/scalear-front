@@ -348,9 +348,9 @@ angular.module('scalearAngularApp', [
                     }
                 },
                 resolve:{
-                    course_data:function(courseResolver, $stateParams){
+                    course_data:['courseResolver','$stateParams',function(courseResolver, $stateParams){
                         return courseResolver.init($stateParams.course_id)
-                    }
+                    }]
                 },
                 abstract: true
             })           
@@ -520,8 +520,8 @@ angular.module('scalearAngularApp', [
             })
             .state('dashboard', {
                 url: '/dashboard',
-                templateUrl: 'views/dashboard.html',
-                controller: 'DashboardCtrl'
+                templateUrl: '/views/dashboard.html',
+                controller: 'dashboardCtrl'
             })
             .state('student_courses', {
                 url: '/student_courses',

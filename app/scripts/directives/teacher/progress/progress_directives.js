@@ -77,14 +77,16 @@ angular.module('scalearAngularApp')
 	    },
 	    template:'<div>'+
 	    			'<div class="left no-padding">| </div>'+
-					'<div class="left no-padding" style="margin-right:3px;margin-left:2px"><input  type="checkbox" ng-model="value" ng-change="change()" /></div>'+
+					'<div class="left no-padding" style="margin-right:3px;margin-left:2px">'+
+						'<input class="show_inclass" type="checkbox" ng-model="value" ng-change="change()" />'+
+					'</div>'+
 					'<div class="left size-12 no-padding" style="color:black;font-weight:normal;margin-top: 3px;" translate>courses.show_in_class</div>'+
 				'</div>', 
 	    link:function(scope,element){
 	    	scope.change=function(){
-	    		console.log("changes here")
+	    		// console.log("changes here")
 	    	 	scope.action()
-	    	 	angular.element('input').blur()
+	    	 	angular.element('input.show_inclass').blur()
 	    	}
 	    }
     };

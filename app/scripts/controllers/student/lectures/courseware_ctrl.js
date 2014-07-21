@@ -59,13 +59,13 @@ angular.module('scalearAngularApp')
 	// 			$log.debug($scope.course);
 	// 			$scope.today = data.today;	
 	// 			$scope.last_viewed = data.last_viewed
-	// 			$scope.modules_obj = util.toObjectById($scope.course.groups)
+	// 			$scope.module_obj = util.toObjectById($scope.course.groups)
 	// 			var classname = 'lecture'
 
 	// 		 	if($state.params.module_id)
-	// 		 		$scope.current_module = $scope.modules_obj[$state.params.module_id]	
+	// 		 		$scope.current_module = $scope.module_obj[$state.params.module_id]	
 	// 		 	else if($scope.last_viewed.module != -1)
-	// 		 		$scope.current_module = $scope.modules_obj[$scope.last_viewed.module]	
+	// 		 		$scope.current_module = $scope.module_obj[$scope.last_viewed.module]	
 	// 		 	else
 	// 		 		$scope.current_module = $scope.course.groups[0] 
 

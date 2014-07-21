@@ -6,16 +6,16 @@ angular.module('scalearAngularApp')
     // $window.scrollTo(0, 0);
     Page.setTitle('head.in_class')
     // $scope.close_selector = false;
-    $scope.modules_obj = {}
+    $scope.module_obj = {}
     Course.getCourse(
     	{course_id:$stateParams.course_id},
 		function(data){
 			$scope.modules = data.groups
 			$scope.modules.forEach(function(module, index){
-				$scope.modules_obj[module.id] = module;
+				$scope.module_obj[module.id] = module;
 			})
 			if($state.params.module_id)
-				$scope.selected_module = $scope.modules_obj[$state.params.module_id]
+				$scope.selected_module = $scope.module_obj[$state.params.module_id]
 			// $scope.initSelector();
 			$log.debug($stateParams)
 		}, 

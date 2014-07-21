@@ -119,6 +119,10 @@ angular.module('scalearAngularApp')
 	                  )
 	                }
 	            }
+
+	            scope.exportNotes=function(){
+	            	$rootScope.$broadcast("export_notes")
+	            }
 			}
 		};
  }]).directive('userNavigation', ['ErrorHandler','$rootScope', 'User', 'Home',function(ErrorHandler,$rootScope, User, Home) {
@@ -237,7 +241,7 @@ angular.module('scalearAngularApp')
 
       scope.showModuleCourseware = function(module){
         if(!scope.currentmodule || module.id != scope.currentmodule.id || module.id != $stateParams.module_id){
-          scope.currentmodule = module//$scope.modules_obj[module_id];
+          scope.currentmodule = module//$scope.module_obj[module_id];
           // $scope.close_selector = true;
           Module.getLastWatched(
             {course_id: $stateParams.course_id, module_id: module.id}, function(data){

@@ -25,6 +25,7 @@ angular.module('scalearAngularApp')
   			},
   			function(data){
   				$log.debug(data)
+          $scope.current_survey = data.survey
           $scope.ordered_survey= data.ordered_survey
           $scope.survey_chart_data = data.chart_data
           $scope.survey_chart_questions = data.chart_questions
@@ -32,7 +33,7 @@ angular.module('scalearAngularApp')
           $scope.related_answers = data.related
           $scope.student_count = data.students_count
           if(!$scope.selected_survey){
-      		$scope.all_surveys = data.all_surveys                
+      		  $scope.all_surveys = data.all_surveys                
           	$scope.selected_survey = $scope.all_surveys? $scope.all_surveys[0] : ""
           }
           $scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"

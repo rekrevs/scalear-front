@@ -152,16 +152,16 @@ angular.module('scalearAngularApp')
                     "title": getQuizType(id) + getQuizTitle(id),
                     "isStacked": "true",
                     "fill": 20,
-                    "height": 170,
+                    "height": 135,
+                    "legend": {"position":"none"},
                     "displayExactValues": true,
-                    "legend": {"position": 'none'},
-                    "fontSize": 12,
+                    "fontSize": 10,
                     "vAxis": {
-                        "title": $translate(data.vtitle || "quizzes.number_of_students") + " (" + $translate("groups.out_of") + " " + student_count + ")",
+                        // "title": $translate(data.vtitle || "quizzes.number_of_students") + " (" + $translate("groups.out_of") + " " + student_count + ")",
                         "gridlines": {
-                            "count": 9
+                            "count": 7
                         },
-                        "maxValue": student_count
+                        "viewWindow":{"max":student_count}
                     }
 
 

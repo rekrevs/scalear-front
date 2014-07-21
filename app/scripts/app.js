@@ -197,11 +197,11 @@ angular.module('scalearAngularApp', [
                         $state.go("course_list");
                         s = 0;
                     } 
-                    else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
+                    else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
                     {
                         console.log("herefef coud")
                         $state.go("course_list");
-                    } else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
+                    } else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
                     {
                         $state.go("student_courses");
                     } else if (stateNoAuth(to.name)) {

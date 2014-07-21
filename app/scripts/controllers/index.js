@@ -93,9 +93,9 @@ angular.module('scalearAngularApp')
                 });
             };
 
-            if($rootScope.current_user){
+            // if($rootScope.current_user){
                 getAllCourses()
-            }
+            // }
 
         }
     ]);

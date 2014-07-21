@@ -52,8 +52,12 @@ angular.module('scalearAngularApp')
 					$rootScope.$broadcast('add_link')
 				}
 				scope.goToContentEditor=function(){
-					if(!$state.includes("**.course_editor.**"))
-						$state.go("course.module.course_editor.overview")
+					if(!$state.includes("**.course_editor.**")){
+						if($state.params.module_id)
+							$state.go("course.module.course_editor.overview")
+						else
+							$state.go("course.course_editor")
+					}
 				}
 
 				scope.goToProgress=function(){

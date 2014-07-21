@@ -9,6 +9,7 @@ angular.module('scalearAngularApp')
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
 
             var getAllCourses=function(){
+                $scope.courses=null
                 var unwatch = $rootScope.$watch('current_user', function(){
                     if($rootScope.current_user && $rootScope.current_user.roles){
                         Course.index({},

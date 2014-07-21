@@ -43,13 +43,13 @@ angular.module('scalearAngularApp')
  	init();
 
     $scope.go_to_next_item = function(){
-            var next_state = "course.module.courseware." + $scope.next_item.class_name
-            var s = $scope.next_item.class_name + "_id"
-            var to = {}
-            to[s] = $scope.next_item.id
-            to["module_id"]=$scope.next_item.group_id
-            console.log(next_state)
-            $state.go(next_state, to);
+        var next_state = "course.module.courseware." + $scope.next_item.class_name
+        var s = $scope.next_item.class_name + "_id"
+        var to = {}
+        to[s] = $scope.next_item.id
+        to["module_id"]=$scope.next_item.group_id
+        console.log(next_state)
+        $state.go(next_state, to);
     }
 
     $scope.saveQuiz = function(action){

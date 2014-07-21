@@ -171,7 +171,9 @@ angular.module('scalearAngularApp')
                 doc += "<script> fireEvent(document.getElementById('download'),'click')</script>";
                 win.document.write(doc);
                 win.document.close();
-                win.close();
+               $timeout(function(){
+                 win.close();
+             },100)
             }
 
                 $scope.$watch("current_lang", change_lang);

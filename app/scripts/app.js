@@ -31,7 +31,7 @@ angular.module('scalearAngularApp', [
     // 'ui.bootstrap.tabs',
     // 'ui.bootstrap.collapse',
     // 'ui.bootstrap.transition',
-    // 'ui.bootstrap.datepicker',
+    'ui.bootstrap.datepicker',
     // 'ui.bootstrap.alert',
     // 'ui.bootstrap.modal',
     // 'ui.bootstrap.tooltip',
@@ -68,7 +68,8 @@ angular.module('scalearAngularApp', [
     'mm.foundation.typeahead',
     'mm.foundation.topbar',
     'ngScrollSpy',
-    'sticky'
+    'sticky',
+    'datePicker'
     // 'ngAnimate'
 ])
     .constant('headers', {
@@ -76,13 +77,16 @@ angular.module('scalearAngularApp', [
         'X-Requested-With': 'XMLHttpRequest'
     })
    // .value('$anchorScroll', angular.noop)
-    .run(['$http', '$rootScope', 'scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies',
-        function($http, $rootScope, scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies) {
+    .run(['$http', '$rootScope', 'scalear_api', 'editableOptions', 'editableThemes', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies',
+        function($http, $rootScope, scalear_api, editableOptions, editableThemes, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies) {
 
 
             $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
             $rootScope.show_alert = "";
-            editableOptions.theme = 'bs2';
+            editableOptions.theme = 'default';
+            editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left success" type="submit"><i class="fi-check size-21"></i></button>';
+            editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left alert" type="button" ng-click="$form.$cancel()"><i class="fi-x size-21"></i></button>';
+            console.log(editableThemes['default'])
             $rootScope.textAngularOpts = {
                 toolbar: [
                     ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],

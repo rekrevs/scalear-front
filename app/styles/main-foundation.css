@@ -269,6 +269,12 @@ select{
 .with-small-padding{
 	padding: 0.50rem !important;
 }
+.with-medium-padding-right{
+	padding-right: 0.625rem !important
+}
+.with-medium-padding-left{
+	padding-left: 0.625rem !important
+}
 .with-tiny-padding-right{
 	padding-right: 0.25rem !important;
 }
@@ -576,6 +582,10 @@ h2 .editable-click{
 	padding: 5px 10px;
 	font-size: 0.6875rem;
 }
+.editable-buttons{
+	position: relative;
+	z-index: 2;
+}
 
 /*borders*/
 .soft-border{
@@ -584,4 +594,11 @@ h2 .editable-click{
  	-moz-border-radius: 4px;
   	border-radius: 4px;
   	padding: 20px 0;
+}
+
+
+/*DATEPICKER STYLING*/
+.no-specific-width{
+  width: auto !important;
+  max-width: none !important; 
 }

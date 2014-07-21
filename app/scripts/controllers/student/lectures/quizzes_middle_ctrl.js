@@ -48,6 +48,7 @@ angular.module('scalearAngularApp')
             var to = {}
             to[s] = $scope.next_item.id
             to["module_id"]=$scope.next_item.group_id
+            console.log(next_state)
             $state.go(next_state, to);
     }
 
@@ -58,7 +59,7 @@ angular.module('scalearAngularApp')
     		Quiz.saveStudentQuiz({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},{student_quiz: $scope.studentAnswers, commit: action}, function(data){
     			$scope.status=data.status;
     			$scope.alert_messages= data.alert_messages;
-                $scope.next_item= data.next_item;
+                // $scope.next_item= data.next_item;
     			if(data.correct)
     				$scope.correct=data.correct; 
 				

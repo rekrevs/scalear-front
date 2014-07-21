@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
       'remove_student' : { method: 'POST', params: {action: 'remove_student'}, headers:headers},
       'destroy': { method: 'DELETE' , headers:headers},
       'show':{method: 'GET', headers:headers},
-      'saveTeachers':{ method: 'POST', params: {action: 'save_teachers'}, headers:headers},
+      'saveTeacher':{ method: 'POST', params: {action: 'save_teachers'}, headers:headers},
       'updateTeacher':{ method: 'POST', params: {action: 'update_teacher'}, headers:headers},
       'deleteTeacher':{ method: 'DELETE', params: {action: 'delete_teacher'}, headers:headers},
       'getCalendarEvents':{ method: 'GET', params: {action: 'events'}, headers:headers},

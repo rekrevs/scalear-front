@@ -94,7 +94,11 @@ angular.module('scalearAngularApp')
             };
 
             // if($rootScope.current_user){
-                getAllCourses()
+            $rootScope.$watch('current_user', function(){
+                if($rootScope.current_user){
+                    getAllCourses()                
+                }
+            })
             // }
 
         }

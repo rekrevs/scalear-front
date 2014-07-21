@@ -106,17 +106,6 @@ angular.module('scalearAngularApp', [
             var statesThatForStudents = ['student_courses', 'course.student_calendar', 'course.course_information', 'course.courseware']
             var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
-            var statesThatAreShownOnlyOnce = []
-
-            //check if route show show only once
-            var stateOnlyOnce = function(state) {
-                for (var element in statesThatAreShownOnlyOnce) {
-                    var input = statesThatAreShownOnlyOnce[element];
-                    if (state.substring(0, input.length) == input)
-                        return true;
-                }
-                return false;
-            }
 
             //check if route requires no auth
             var stateNoAuth = function(state) {

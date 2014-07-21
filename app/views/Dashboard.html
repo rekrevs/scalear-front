@@ -12,20 +12,20 @@
 		border: none !important; 
 	}
 </style>
-<span ng-show="eventSources.length && events.length">
+<span ng-show="eventSources.length">
 	<div class="small-12 large-8 columns" ng-show="events.length">
 		<h3 ng-show="events.length"><i class="fi-loop size-30"></i> {{'whats_new' | translate}}</h3>
 		<!-- <news-feed events="events"></news-feed> -->
 		<event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event"></event-item>
 	</div>
 	<div class="large-4 columns hide-for-medium-down" ng-show="eventSources.length" style="position: fixed; right: 1rem;">
-	 	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}">
+	 	<div class="calendar-container with-margin-top with-margin-bottom" ng-class="{widecalendar: !announcements.length}">
 			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="width:100%;"></div>
-	        <span class="success alert-box label radius" translate="events.done"></span>
-			<span class="warning alert-box label radius" translate="events.not_done"></span>
-			<span class="alert alert-box label radius" translate="events.not_done_due"></span>
+	        <span ng-show="current_user.roles[0].id == 2" class="success alert-box label radius" translate="events.done"></span>
+			<span ng-show="current_user.roles[0].id == 2" class="warning alert-box label radius" translate="events.not_done"></span>
+			<span ng-show="current_user.roles[0].id == 2" class="alert alert-box label radius" translate="events.not_done_due"></span>
 	 	</div>
-	 	<button class="tiny button secondary uppercase" ng-click="cal_export()">Export Calendar as ICS</button>
+	 	<button class="tiny button grey uppercase" ng-click="cal_export()">Export Calendar as ICS</button>
 	 	<button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button>
 	</div>
 	<div class="small-12 columns show-for-medium-down" ng-show="eventSources.length">

@@ -93,6 +93,10 @@
         <div ng-show="teacher_forum">
             <form name='email_form' novalidate>
                 <!-- <input name='email' type="email" id="new_email" placeholder="{{'email'|translate}}" ng-model="new_teacher.email" required/>   -->
+                <div style="font-size: 12px;font-style: italic;line-height: 15px;">
+                    <span translate>adding_teacher</span> scalable-learning.<br>
+                    <span translate>create_account</span><span>: <a href="http://www.scalable-learning.com/#/users/teacher">http://www.scalable-learning.com/#/users/teacher</a></span>
+                </div>
                 <div class="row">
                     <div class="large-12 columns">
                         <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'email'|translate}}" ng-model="new_teacher.email" style="height: 34px !important;margin-bottom: 5px;"/>                

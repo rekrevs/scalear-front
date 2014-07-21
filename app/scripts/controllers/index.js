@@ -9,12 +9,17 @@ angular.module('scalearAngularApp')
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
 
             var getAllCourses=function(){
-                Course.index({},
-                    function(data){
-                        $scope.courses = data
-                    },
-                    function(){}
-                );
+                var unwatch = $rootScope.$watch('current_user', function(){
+                    if($rootScope.current_user && $rootScope.current_user.roles){
+                        Course.index({},
+                            function(data){
+                                $scope.courses = data
+                                console.log($scope.courses)
+                                unwatch()
+                            }
+                        );
+                    }
+                });                
             }
             
             $scope.changeLanguage = function(key) {
@@ -92,6 +97,8 @@ angular.module('scalearAngularApp')
                     $log.info('Modal dismissed at: ' + new Date());
                 });
             };
+
+
 
             getAllCourses()
 

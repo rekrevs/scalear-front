@@ -167,8 +167,7 @@
 
 
 .left-navigation{
-	/*width: 200px;*/
-	display: inline-block;
+	/*width: 250px;*/
 	height: 500px;
 }
 .right-content{
@@ -554,7 +553,8 @@ h2 .editable-click{
 
 /*forum elements*/
 .form-control{
-	height: 150px;
+	padding: 10px;
+	min-height: 150px;
 	border: 1px solid grey;
 	background: white;
 	margin-top: 8px;

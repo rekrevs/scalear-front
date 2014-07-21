@@ -208,10 +208,12 @@
 							</ul>						
 						</li>
 						<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData', item.data.quiz_type); color =Math.ceil(item.data.review/students_count*100) >= 30? 'red' : ''" class="li_inner color-green">
-							<div class="row"><inner_title ng-if="item.data.quiz_type =='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'courses.'+item.data.quiz_type.toLowerCase() | translate}}" title="{{item.data.title+' ('+item.data.type+')'}}" class="left small-10 columns" style="margin-right:5px"/>
-							<inner_title ng-if="item.data.quiz_type !='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'courses.'+item.data.quiz_type.toLowerCase() | translate}}" title="{{item.data.title+' ('+item.data.type+') - '+Math.ceil(item.data.review/students_count*100)+'% '}}{{'lectures.of_student_review' | translate}}" color="color" class="small-10 columns left" style="margin-right:5px"/>
-							<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" class="left"/>
-							<br/></div>
+							<div class="row">
+								<inner_title ng-if="item.data.quiz_type =='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'courses.'+item.data.quiz_type.toLowerCase() | translate}}" title="{{item.data.title+' ('+item.data.type+')'}}" class="left small-10 columns" style="margin-right:5px"/>
+								<inner_title ng-if="item.data.quiz_type !='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{'courses.'+item.data.quiz_type.toLowerCase() | translate}}" title="{{item.data.title+' ('+item.data.type+') - '+Math.ceil(item.data.review/students_count*100)+'% '}}{{'lectures.of_student_review' | translate}}" color="color" class="small-10 columns left" style="margin-right:5px"/>
+								<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" class="left"/>
+								<br/>
+							</div>
 							<div class="row"><div google-chart chart="chart" class="progress_chart small-12 columns" ></div></div>
 						</li>
 					</ul>

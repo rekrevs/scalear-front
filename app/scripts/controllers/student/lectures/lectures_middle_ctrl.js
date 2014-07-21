@@ -18,6 +18,10 @@ angular.module('scalearAngularApp')
         $scope.scrollIntoView('outline')
     },true)
 
+    $scope.$on("export_notes",function(){
+        $scope.exportNotes()
+    })
+
     var isiPad=function(){
         var i = 0,
             iOS = false,

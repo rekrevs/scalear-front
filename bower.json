@@ -35,7 +35,8 @@
     "angular-foundation": "git://github.com/madmimi/angular-foundation#master",
     "foundation": "zurb/bower-foundation#~5.0.2",
     "angular-sticky": "git://github.com/d-oliveros/angular-sticky#master",
-    "ng-ScrollSpy.js": "*"
+    "ng-ScrollSpy.js": "*",
+    "angular-datepicker": "~1.0.3"
   },
   "devDependencies": {
     "angular-mocks": ">1.0.7",

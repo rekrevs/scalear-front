@@ -26,12 +26,13 @@ angular.module('scalearAngularApp')
         $scope.hide_text = $scope.button_names[3]
         $scope.setOriginalClass()
         $scope.setQuizShortcuts()
-
-        $timeout(function(){
-          // $scope.fullscreen_user_settings  = true
-          $scope.fullscreen = true
-          $scope.blurButtons()
-        },100)
+        screenfull.request();
+        $scope.fullscreen = true
+        $scope.blurButtons()
+        // $timeout(function(){
+        //   // $scope.fullscreen_user_settings  = true
+          
+        // })
 
         angular.element($window).bind('resize',
           function(){
@@ -43,8 +44,8 @@ angular.module('scalearAngularApp')
         })
 
         document.addEventListener(screenfull.raw.fullscreenchange, function () {
-            if(!screenfull.isFullscreen){
-                $scope.fullscreen = false
+            if(!screenfull.isFullscreen){  
+                $scope.fullscreen = false              
                 $scope.exitBtn()
                 $scope.$apply()
             }
@@ -221,6 +222,7 @@ angular.module('scalearAngularApp')
     // }
 
     $scope.exitBtn = function () {
+      screenfull.exit()
       $scope.modalInstance.dismiss();
       cleanUp()
     };
@@ -732,13 +734,13 @@ angular.module('scalearAngularApp')
     },5000)
   }
 
-  $scope.toggleFullscreen=function(){
-    $scope.fullscreen = !$scope.fullscreen
-    $scope.blurButtons()
-  }
+  // $scope.toggleFullscreen=function(){
+  //   $scope.fullscreen = !$scope.fullscreen
+  //   $scope.blurButtons()
+  // }
 
   $scope.blurButtons=function(){
-    angular.element('.btn').blur()
+    angular.element('.button').blur()
   }
 
   var isSurvey=function(){

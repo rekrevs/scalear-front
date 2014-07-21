@@ -39,10 +39,11 @@
 		</div>
 	</div>
 	<div ng-show="preview" >
+		<br/>
 		<student-quiz ng-if="preview" quiz='temp_quiz' student-answers="formatted_answers" ></student-quiz>
 		<center>
-			<button class="btn btn-warning" name="edit_quiz" ng-click="closePreview()" translate>edit</button>
-			<button class="btn btn-success" name="save_quiz" ng-click="saveAll()" translate>save</button>
+			<button class="button small" name="edit_quiz" ng-click="closePreview()" translate>edit</button>
+			<button class="button small success" name="save_quiz" ng-click="saveAll()" translate>save</button>
 		</center>
 	</div>
 </div>

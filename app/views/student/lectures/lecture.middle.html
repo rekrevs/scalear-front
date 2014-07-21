@@ -1,6 +1,6 @@
 <div  ng-hide="!lecture">
 	<div id="main-video-container" ng-style="container_style" class="small-12 medium-12 large-6 columns"> 
-		<h4 ng-bind="modules_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4>
+		<h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4>
 		<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius">
 			 <span ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</span>
 			 <span ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <span>{{alert_message| date:'h:mma'}}</span></span>
@@ -19,8 +19,8 @@
 						<loading size='small' show="!lecture.url || (!slow && !video_ready)" style="position:relative;color:#428bca;width: 100%;font-weight:300;font-size:12px;top: 150px;" />
 						<div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' ng-show="slow">
 							<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
-							<h3 style="position:relative;top:30px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="icon-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
-							<loading size='small' show='true' style="position:relative;top:30px;" />
+							<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
+							<loading size='small' show='true' style="position:relative;top:70px;" />
 						</div>						
 					</center>
 					

@@ -83,7 +83,7 @@
             </button>
         </div>
         <div class="bottom-right">
-            <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="button reall-tiny secondary" style="float:right; margin-right: 3%;"><i class="fi-arrows-out" /></button>
+            <!-- <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="button reall-tiny secondary" style="float:right; margin-right: 3%;"><i class="fi-arrows-out" ng-show="!fullscreen" /><i class="fi-arrows-in" ng-show="fullscreen"/></button> -->
             <span ng-hide="selected_item.class_name=='quiz'" >
                 <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%;"  class="button reall-tiny secondary">{{hide_text}}</button>
             </span>

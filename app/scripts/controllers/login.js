@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
           $scope.sending = false;
             //console.log("signed_in");
             $rootScope.iscollapsed = true;
-            $state.go("home");
+            $state.go("dashboard");
         },function(){
           $scope.sending = false;
             //console.log("failed")

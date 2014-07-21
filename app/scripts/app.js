@@ -106,17 +106,6 @@ angular.module('scalearAngularApp', [
             var statesThatForStudents = ['student_courses', 'course.student_calendar', 'course.course_information', 'course.courseware']
             var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
-            var statesThatAreShownOnlyOnce = []
-
-            //check if route show show only once
-            var stateOnlyOnce = function(state) {
-                for (var element in statesThatAreShownOnlyOnce) {
-                    var input = statesThatAreShownOnlyOnce[element];
-                    if (state.substring(0, input.length) == input)
-                        return true;
-                }
-                return false;
-            }
 
             //check if route requires no auth
             var stateNoAuth = function(state) {
@@ -172,6 +161,16 @@ angular.module('scalearAngularApp', [
                     {
                         // $state.go("login");
                     }
+                    if(to.name == 'confirmed'){
+                        if(from.name == 'show_confirmation'){
+                            $state.go("confirmed")
+                        }
+                        else{
+                            $state.go("home");
+                            s = 0;
+                        }
+                    }
+                    
                     if (!routeClean(to.name) && result == 0 ) // user not logged in trying to access a page that needs authentication.
                     {
                         console.log(to.name)
@@ -187,11 +186,11 @@ angular.module('scalearAngularApp', [
                         $state.go("course_list");
                         s = 0;
                     } 
-                    else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
+                    else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
                     {
                         console.log("herefef coud")
                         $state.go("course_list");
-                    } else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
+                    } else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
                     {
                         $state.go("student_courses");
                     } else if (stateNoAuth(to.name)) {
@@ -272,6 +271,11 @@ angular.module('scalearAngularApp', [
                 url: '/users/thanks',
                 templateUrl: '/views/users/thanks.html',
                 controller: 'ThanksForRegisteringCtrl'
+            })
+            .state('confirmed', {
+                url: '/users/confirmed',
+                templateUrl: 'views/users/confirmed.html',
+                controller: 'UsersConfirmedCtrl'
             })
             .state('edit_account', {
                 url: '/users/edit',

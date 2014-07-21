@@ -91,7 +91,7 @@
 			<!-- TEACHER -->
 			<ul ng-switch-when="1" class="right">
 				<li class="divider"></li>
-				<li><a href="#" translate>dashboard</a></li>
+				<li><a ui-sref="dashboard" translate>dashboard</a></li>
 				<li class="divider"></li>
 				<li ng-show="are_shared()">
 					<a ui-sref="show_shared" translate>sharing.view</a>
@@ -198,7 +198,7 @@
 					</ul>
 				</li>
 				<li class="divider"></li>
-				<li><a href="" translate>dashboard</a></li>
+				<li><a ui-sref="dashboard" translate>dashboard</a></li>
 				<li class="divider"></li>
 				<li has-dropdown>
 					<a href="" translate>navigation.courses</a>

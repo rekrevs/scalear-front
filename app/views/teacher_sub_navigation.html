@@ -19,14 +19,14 @@
             <ul top-bar-dropdown>
                 <li><a id="course_info" class="sub-header-component" ui-sref="course.edit_course_information" translate>head.course_information</a></li>
                 <li><a id="announcements" class="sub-header-component" ui-sref="course.announcements" translate>head.announcements</a></li>
-                <li><a id="enrolled_students" class="sub-header-component" ui-sref="course.enrolled_students" translate>head.enrolled_students</a></li> 
+                <li><a id="enrolled_students" class="sub-header-component" ui-sref="course.enrolled_students" translate>head.enrolled_students</a></li>
             </ul>
           </li>
         </ul>
 
         <!-- Left Nav Section -->
-        <ul id="teacher_left_nav" class="left" ng-show="'*.module.**' | includedByState">
-            <li has-dropdown>
+        <ul class="left" id="teacher_left_nav">
+            <li has-dropdown ng-show="'*.module.**' | includedByState">
                 <a id="progress" class="sub-header-component green" ng-click="goToProgress()" translate>head.progress</a>
                 <ul top-bar-dropdown>
                     <li>
@@ -36,11 +36,16 @@
                         </a>
                         
                     </li>
-                    <li><a id="all_student_progress" class="sub-header-component green" ui-sref="course.progress" translate>all_students_progress</a></li>
+                    <li>
+                        <div class="divider"></div>
+                        <a id="all_student_progress" class="sub-header-component green" ui-sref="course.progress" translate>all_students_progress</a>
+                    </li>
                 </ul>
             </li>
-            <li><a id="inclass" class="sub-header-component green" ui-sref="course.module.inclass" translate>head.in_class</a></li>
-            <li has-dropdown>
+            <li ng-show="'*.module.**' | includedByState">
+                <a id="inclass" class="sub-header-component green" ui-sref="course.module.inclass" translate>head.in_class</a>
+            </li>
+            <li has-dropdown ng-show="('*.module.**' | includedByState) || ('**.course_editor.**' | includedByState)">
                 <a id="content" class="sub-header-component green" ng-click="goToContentEditor()" translate>head.content</a>
                 <ul top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
                     <li>
@@ -49,7 +54,7 @@
                             <h5 class="description"><small translate>modules_group_items</small></h5>
                         </a>
                     </li>
-                    <li>
+                    <li ng-show="'*.module.**' | includedByState">
                         <a id="new_online_content" online-modal ng-click="openOnlineContentModal()" class="sub-header-component has-description green" href="">
                             {{'new_online_content' | translate}}
                             <h5 class="description"><small>Video lecture, Quiz...</small></h5>
@@ -60,22 +65,22 @@
                             New In-Video Question
                             <h5 class="description"><small>MCQ, OCQ, Drag...</small></h5>
                         </a>
-                    </li>
-                    <li class="divider"></li>
+                    </li>                    
                     <li>
+                        <div class="divider"></div>
                         <a class="sub-header-component has-description green" ng-click="addLink()">
                             {{'groups.new_link' | translate}}
                             <h5 class="description"><small translate>links_external_system</small></h5>
                         </a>
-                    </li>
-                    <li class="divider"></li>
-                    <li>
+                    </li>                    
+                    <li ng-show="'*.module.**' | includedByState">
+                        <div class="divider"></div>
                         <a id="copy" class="sub-header-component has-description green"ng-click="copyItem()">
                             {{'menu.copy' | translate}}
                             <h5 class="description"><small translate>menu.copy_describtion</small></h5>
                         </a>
                     </li>
-                    <li ng-show="clipboard">
+                    <li ng-show="clipboard && ('*.module.**' | includedByState)">
                         <a class="sub-header-component has-description green" ng-click="pasteItem()">
                             {{'menu.paste' | translate}}
                             <h5 class="description">
@@ -85,14 +90,14 @@
                             </h5>
                         </a>
                     </li>
-                    <li>
+                    <li ng-show="'*.module.**' | includedByState">
                         <a id="share_copy" class="sub-header-component has-description green" href="" sharing-modal ng-click="openSharingModal()">
                             {{'menu.share_copy' | translate}}
                             <h5 class="description"><small translate>menu.share_describtion</small></h5>
                         </a>
                     </li>
-                    <li class="divider"></li>
-                    <li>
+                    <li ng-show="'*.module.**' | includedByState">
+                        <div class="divider"></div>
                         <a id="preview_as_student" class="sub-header-component has-description green" ng-click="preview()" href="">
                             {{'preview_student' | translate}}
                             <h5 class="description"><small translate>preview_describtion</small></h5>

@@ -1,8 +1,7 @@
 <!-- build:css(.tmp/styles) styles/course_item.css -->
 <link rel="stylesheet" href="styles/courseItem.css"/>
 <!-- endbuild -->
-<center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
-</br>
+
 <!-- <div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 1;">
 	<div style="float: left;">
 		<span class="dropdown" ><button class="dropdown-toggle btn" ng-show="courses.length > 1" data-toggle="dropdown" ><span translate>courses.sort_by</span><b class="caret"></b></button>
@@ -14,15 +13,18 @@
     </div>
     <button class="btn btn-success" style="background-image: initial; float: right; margin-right: 60px;" id="join_course" ng-click="open()" translate>courses.join_course</button>
 </div> -->
+
+<center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
+<div ng-show="courses">
+<br />
 <div class="small-8 large-8 columns">
-	<div class="button-group" ng-init="filterChoice = 'all'">
-	    <button type="button" class="button tiny" ng-class="{active: filterChoice == 'all'}" ng-model="filterChoice" btn-radio="'all'">All</button>
-	    <button type="button" class="button tiny" ng-class="{active: filterChoice == 'current'}" ng-model="filterChoice" btn-radio="'current'">Current</button>
-	    <button type="button" class="button tiny" ng-class="{active: filterChoice == 'finished'}" ng-model="filterChoice" btn-radio="'finished'">Finished</button>
+	<div class="button-group" ng-init="filterChoice='!!'">
+	    <button type="button" class="button tiny" ng-class="{active: filterChoice == '!!'}" ng-model="filterChoice" btn-radio="'!!'">All</button>
+	    <button type="button" class="button tiny" ng-class="{active: filterChoice == false}" ng-model="filterChoice" btn-radio="false">Current</button>
+	    <button type="button" class="button tiny" ng-class="{active: filterChoice == true}" ng-model="filterChoice" btn-radio="true">Finished</button>
 	</div>
 </div>
 <div class="small-4 large-4 columns">
-
 	<input class="tiny" type="search" ng-model="searchCourses" placeholder="{{'courses.search' | translate}}" />
 	<!-- <button style="display: inline-block;" id="join_course" enrollment-modal ng-click="open()" translate>courses.join_course</button> -->
 </div>
@@ -36,5 +38,6 @@
 </center>
 <br />
 <!-- <div ng-show="courses"> -->
-	<course-item ng-repeat="course in courses | filter:searchCourses" course='course' teachers='course.teacher_enrollments' ></course-item>
+	<course-item ng-repeat="course in courses | filter:{ended:filterChoice}| filter:searchCourses" course='course' teachers='course.teacher_enrollments' ></course-item>
 <!-- </div> -->
+</div>

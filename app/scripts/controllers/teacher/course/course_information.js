@@ -34,6 +34,10 @@ angular.module('scalearAngularApp')
     delete modified_course.created_at;
     delete modified_course.updated_at;
     delete modified_course.unique_identifier;
+    delete modified_course.custom_links;
+    delete modified_course.modules;
+    delete modified_course.selected_module;
+
     $log.debug(modified_course);
     var timezone = angular.copy(modified_course.time_zone)
     modified_course.time_zone = timezone.name
@@ -144,8 +148,10 @@ angular.module('scalearAngularApp')
     // }
   }
 
-  $scope.saveTeachers = function(){
-    Course.saveTeachers({course_id:$stateParams.course_id},{new_teacher:$scope.new_teacher},
+  $scope.saveTeacher = function(){
+    Course.saveTeacher(
+      {course_id:$stateParams.course_id},
+      {new_teacher:$scope.new_teacher},
         function(value) {
             $scope.error = $scope.getTeachers();
             $scope.teacher_forum = false

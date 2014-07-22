@@ -39,15 +39,18 @@
     	</form>
 
 
-        <div ng-repeat="element in ordered_survey">
+        <div ng-if="current_survey.visible" ng-repeat="element in ordered_survey">            
             <div ng-show="survey_chart_data && survey_chart_data[element[0]].show" style="padding:10px 40px" >
+                <center><h4>Survey Results:</h4></center>
                 <div ng-if="element[1]!='Free Text Question'" class="chart" style='min-width:300px; height:205px;' ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index)">
                     <center ng-init="loading=true" style="position:relative;top:50%"><loading size="small" show="loading" /></center>
                     <div google-chart on-ready="loading=false" chart="chart" ></div>
-                </div>
+                </div>               
             </div>
-            <div ng-if="element[1]=='Free Text Question' && survey_free[element[0]].show" style="margin-top:60px">
-                <free-text-table ng-if="survey_free[element[0]].answers" question="survey_free[element[0]]" related-answers="related_answers" display-only="true"/>
+
+             <div ng-if="element[1]=='Free Text Question' && survey_free[element[0]].show" style="margin-top:60px"> 
+                <div style="margin:10px 15px">Free Text Question | {{survey_free[element[0]].title}}</div>
+                <free-text-table ng-if="survey_free[element[0]].answers" survey-id="1" question="survey_free[element[0]]" related-answers="related_answers" display-only="true"/>
             </div>
         </div>
 

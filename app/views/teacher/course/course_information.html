@@ -107,14 +107,14 @@
                 <!-- <span class='help-inline' ng-show='email_form.email.$dirty && email_form.email.$invalid'><br/>{{'invalid_email'|translate}}</span>                 -->
                 <div class="row">
                     <div class="large-12 columns">
-                        <select id="new_role" ng-model="new_teacher.role" style="height: 28px;margin-bottom: 5px;">
+                        <select id="new_role" ng-model="new_teacher.role" style="height: 34px;margin-bottom: 5px;">
                             <option value="3" translate>courses.professor</option>
                             <option value="4" translate>courses.ta</option>
                         </select>
                     </div>
                 </div>
                 <!-- <div style="color: dimgrey; min-height: 18px;">{{new_teacher.status}}</div> -->
-                <a ng-click="saveTeachers()" class="button success tiny" style="margin-bottom:2px">{{'courses.invite' | translate}}</a>
+                <a ng-click="saveTeacher()" class="button success tiny" style="margin-bottom:2px">{{'courses.invite' | translate}}</a>
                 <br />
                 <a class="button alert tiny" ng-click="removeNewTeacher()">Cancel</a> 
                 <!-- <delete-button ng-if="!teacher.owner" id="delete_teacher" size="small" color='dark' action="removeColumn($index)" style="cursor: pointer;" hide-confirm="true"></delete-button> -->

@@ -6,14 +6,14 @@ angular.module('scalearAngularApp')
   	$log.debug("in course list")
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.courses')
-  		Course.index({},
-			function(data){
-				$log.debug(data)
-				$scope.courses = data
-			},
-			function(){
-				//alert("Could not get courses, please check your internet connection")
-			})
+  	// 	Course.index({},
+			// function(data){
+			// 	$log.debug(data)
+			// 	$scope.courses = data
+			// },
+			// function(){
+			// 	//alert("Could not get courses, please check your internet connection")
+			// })
 
   		$scope.column='name'
 

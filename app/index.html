@@ -29,23 +29,22 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" type="image/x-icon" href="/logo.ico">
 
-    <!-- build:css(.tmp/styles) styles/main.css -->
     <!-- <link rel="stylesheet" href="styles/bootstrap.css"/> -->
+    <!-- <link rel="stylesheet" href="styles/main.css"> -->
+    <!-- <link rel="stylesheet" href="styles/toggle-switch.css"> -->
+    <!-- <link rel="stylesheet" href="bower_components/ngAnimate/css/ng-animation.css"> -->
+
+    <!-- build:css(.tmp/styles) styles/main.css -->
     <link rel="stylesheet" href="bower_components/foundation/css/foundation.css"/>
     <link rel="stylesheet" href="styles/normalize.css"/>
-    <!-- <link rel="stylesheet" href="styles/main.css"> -->
     <link rel="stylesheet" href="styles/main-foundation.css">
-    <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
-    <!-- <link rel="stylesheet" href="styles/toggle-switch.css"> -->
     <link rel="stylesheet" href="styles/jquery-ui.css" />    
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
-
-
-    <!-- <link rel="stylesheet" href="bower_components/ngAnimate/css/ng-animation.css"> -->
-
     <!-- endbuild -->
+    <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
+    
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
   </head>
 
@@ -170,10 +169,11 @@
     <!-- <script src="bower_components/angular-ui-bootstrap/src/tabs/tabs.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/accordion/accordion.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/collapse/collapse.js"></script>
-    <script src="bower_components/angular-ui-bootstrap/src/transition/transition.js"></script>
-    <script src="bower_components/angular-ui-bootstrap/src/position/position.js"></script>
+    <script src="bower_components/angular-ui-bootstrap/src/transition/transition.js"></script>-->
+    <script src="bower_components/angular-ui-bootstrap/src/position/position.js"></script> 
     <script src="bower_components/angular-ui-bootstrap/src/datepicker/datepicker.js"></script>
-    <script src="bower_components/angular-ui-bootstrap/src/alert/alert.js"></script>
+
+    <!--<script src="bower_components/angular-ui-bootstrap/src/alert/alert.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/modal/modal.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/bindHtml/bindHtml.js"></script>
     <script src="bower_components/angular-ui-bootstrap/src/tooltip/tooltip.js"></script>
@@ -216,6 +216,9 @@
     <script src="bower_components/angular-foundation/src/transition/transition.js"></script>
     <script src="bower_components/angular-foundation/src/typeahead/typeahead.js"></script>
     <script src="bower_components/angular-foundation/src/topbar/topbar.js"></script>
+
+
+    <script src="bower_components/angular-datepicker/dist/index.js"></script>
 
 
 
@@ -357,9 +360,10 @@
     <script src="scripts/controllers/users/profile.js"></script>
     <script src="scripts/services/student/news_feed.js"></script>
     <script src="scripts/directives/student/news_feed/news_feed_directives.js"></script>
-    <script src="scripts/controllers/Dashboard.js"></script>
+    <script src="scripts/controllers/student/dashboard_ctrl.js"></script>
     <script src="scripts/controllers/help/getting_started_ctrl.js"></script>
     <script src="scripts/controllers/users/thanks_for_registering_ctrl.js"></script>
+    <script src="scripts/controllers/users/confirmed.js"></script>
     <!-- endbuild -->
 </body>
 </html>

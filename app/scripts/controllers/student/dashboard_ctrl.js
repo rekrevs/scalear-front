@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-        .controller('DashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout) {
+        .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', '$rootScope', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout, $rootScope) {
                 $window.scrollTo(0, 0);
                 Page.setTitle('dashboard');
                 var change_lang = function() {
@@ -21,6 +21,7 @@ angular.module('scalearAngularApp')
                     $scope.filtered_events = []
                     Dashboard.getDashboard({},
                     function(data) {
+                        console.log(data)
                         $scope.uiConfig = {
                             calendar: {
                                 editable: false,
@@ -45,27 +46,42 @@ angular.module('scalearAngularApp')
                         })
                         $scope.calendar.events = $scope.filtered_events;
                         cal_ics_obj = $scope.filtered_events;
-                        for (var element in $scope.calendar.events) {
+                        if($rootScope.current_user.roles[0].id == 2){
+                            for (var element in $scope.calendar.events) {
                             //console.log(new Date($scope.calendar.events[element].start))
-                            $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
-                            $scope.calendar.events[element].title += ' @' + $filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
-                            var fullTitle = $scope.calendar.events[element].courseName.name +" : "+ $scope.calendar.events[element].title ;
-                            $scope.calendar.events[element].title = fullTitle;
-                            
-                            if ($scope.calendar.events[element].quizId)
-                                $scope.calendar.events[element].url = $state.href("course.module.courseware.quiz", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId, quiz_id: $scope.calendar.events[element].quizId})
-                            else if ($scope.calendar.events[element].lectureId)
-                                $scope.calendar.events[element].url = $state.href("course.module.courseware.lecture", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId, lecture_id: $scope.calendar.events[element].lectureId})
-                            else {
-                                if (!$scope.calendar.events[element].firstItem)
-                                    $scope.calendar.events[element].url = $state.href("course.courseware", {course_id: $scope.calendar.events[element].courseId})
+                                $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
+                                $scope.calendar.events[element].title += ' @' + $filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
+                                var fullTitle = $scope.calendar.events[element].courseName.name +" : "+ $scope.calendar.events[element].title ;
+                                $scope.calendar.events[element].title = fullTitle;
+                                
+                                if ($scope.calendar.events[element].quizId)
+                                    $scope.calendar.events[element].url = $state.href("course.module.courseware.quiz", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId, quiz_id: $scope.calendar.events[element].quizId})
+                                else if ($scope.calendar.events[element].lectureId)
+                                    $scope.calendar.events[element].url = $state.href("course.module.courseware.lecture", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId, lecture_id: $scope.calendar.events[element].lectureId})
                                 else {
-                                    if ($scope.calendar.events[element].firstItemType == "Lecture")
-                                        $scope.calendar.events[element].url = $state.href("course.module.courseware.lecture", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId, lecture_id: $scope.calendar.events[element].firstItem.id})
-                                    else
-                                        $scope.calendar.events[element].url = $state.href("course.module.courseware.quiz", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId, quiz_id: $scope.calendar.events[element].firstItem.id})
+                                    if (!$scope.calendar.events[element].firstItem)
+                                        $scope.calendar.events[element].url = $state.href("course.courseware", {course_id: $scope.calendar.events[element].courseId})
+                                    else {
+                                        if ($scope.calendar.events[element].firstItemType == "Lecture")
+                                            $scope.calendar.events[element].url = $state.href("course.module.courseware.lecture", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId, lecture_id: $scope.calendar.events[element].firstItem.id})
+                                        else
+                                            $scope.calendar.events[element].url = $state.href("course.module.courseware.quiz", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId, quiz_id: $scope.calendar.events[element].firstItem.id})
+                                    }
                                 }
                             }
+                        }
+                        else{
+                            console.log('this is the teacher side')
+                            console.log($scope.calendar.events)
+                            for (var element in $scope.calendar.events) {
+                            //console.log(new Date($scope.calendar.events[element].start))
+                                $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
+                                $scope.calendar.events[element].title += ' @' + $filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
+                                var fullTitle = $scope.calendar.events[element].courseName.name +" : "+ $scope.calendar.events[element].title ;
+                                $scope.calendar.events[element].title = fullTitle;
+                                $scope.calendar.events[element].url=$state.href("course.progress.module", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId})
+                            }
+
                         }
                         $scope.eventSources.push($scope.calendar);
                         console.log($scope.eventSources)
@@ -79,6 +95,8 @@ angular.module('scalearAngularApp')
 
                 var getFeed = function(){
                     NewsFeed.index({}, function(data){
+                    console.log('here is the data')
+                    console.log(data)
                     $scope.events = []
                     $scope.latest_events = data.latest_events
                     $scope.latest_announcements = data.latest_announcements
@@ -153,7 +171,9 @@ angular.module('scalearAngularApp')
                 doc += "<script> fireEvent(document.getElementById('download'),'click')</script>";
                 win.document.write(doc);
                 win.document.close();
-                win.close();
+               $timeout(function(){
+                 win.close();
+             },100)
             }
 
                 $scope.$watch("current_lang", change_lang);

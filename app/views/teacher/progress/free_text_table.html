@@ -1,7 +1,7 @@
 <!-- <div class="small-12 columns"><h4 ng-show="question" translate>groups.free_text_question</h4></div> -->
 <style>
 td{
-	padding:0 10px !important;
+	padding:4px 10px !important;
 }
 </style>
 <div class="small-12 columns">
@@ -16,13 +16,13 @@ td{
 				<th ng-show="!display_only" style="border-right: 1px gray solid;"><b translate>answer.show</b></th>
 				<th ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;"><b translate>groups.groups</b></th>
 				<th>related</th>
-				<th style="width: 79%;border-left: 1px gray solid;">Answer</th>
+				<th style="width: 100%;border-left: 1px gray solid;">Answer</th>
 				<th ng-show="graded" style="border-left: 1px gray solid;" translate>courses.grade</th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="answer in question.answers|survey:display_only">
-				<td style="border-right: 1px gray solid;">
+				<td ng-show="!display_only" style="border-right: 1px gray solid;">
 					<input type="checkbox" ng-if="!display_only && survey_id" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHideSurvey(answer.id, !answer.hide)" />
 					<input type="checkbox" ng-if="!display_only && lecture_id" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHideQuiz(answer.id, !answer.hide)" />
 				</td>
@@ -35,7 +35,7 @@ td{
 						<div class="size-14" ng-if="survey_id">{{answer.answer}}</div>
 		                <div class="size-14" ng-if="lecture_id">{{answer.online_answer}}</div>
 					</a>
-					<div ng-show="answer.response">
+					<div ng-show="answer.response" style="padding-left:10px">
 						<div class="size-14" style="font-style: italic;display:inline;">{{answer.response}}</div>
 						<a ng-show="!display_only" ng-click="deleteFeedback(question.answers,$index)" class="button really-tiny secondary">{{'delete'|translate}}</a>
 						<!-- <button_link  title="{{'delete'|translate}}" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							 -->

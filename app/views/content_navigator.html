@@ -18,7 +18,8 @@
 	
 	<div ng-switch="mode" class="content-navigator-container" ng-class="{containeropen: open_navigator}">
 		<center><loading size="small" show="!modules"></loading></center>
-		<div ng-show="modules">
+		<i ng-show="!modules.length && !links.length" class="muted" style="padding:20px 10px">{{'groups.empty' | translate}}...</i>
+		<div ng-show="modules.length || links.length">
 			<span ng-switch-when="courseware">
 				<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
 				<ul class="accordion">

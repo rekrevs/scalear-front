@@ -6,16 +6,16 @@ angular.module('scalearAngularApp')
   	$window.scrollTo(0, 0);
     Page.setTitle('navigation.courses');
     
-		var init= function(){
-			Course.index({},
-  			function(data){
-  				$log.debug(data)
-  				$scope.all_courses = data
-          $scope.courses = $scope.all_courses
-          console.log($scope.courses)
-  			},
-  			function(){}
-      )
+		// var init= function(){
+			// Course.index({},
+  	// 		function(data){
+  	// 			$log.debug(data)
+  	// 			$scope.all_courses = data
+   //        $scope.courses = $scope.all_courses
+   //        console.log($scope.courses)
+  	// 		},
+  	// 		function(){}
+   //    )
 
       // NewsFeed.index({}, function(data){
       //   $scope.events = []
@@ -35,27 +35,28 @@ angular.module('scalearAngularApp')
       // }, function(){
       //   console.log('Couldn\'t get the data');
       // })
-		}
+		// }
+    // $scope.all_courses = $scope.courses
 
-    $scope.filterCourses = function(which){
-      if(which == 'all'){
-        $scope.courses = $scope.all_courses
-      }
-      else if(which == 'current'){
-        $scope.courses = $filter('filter')($scope.all_courses, {'ended': false})
-      }
-      else if(which == 'finished'){
-        $scope.courses = $filter('filter')($scope.all_courses, {'ended': true})
-      }
-    }
-    $scope.$watch('filterChoice', function(){
-      $scope.filterCourses($scope.filterChoice)
-    })
+  //   $scope.filterCourses = function(which){
+  //     if(which == 'all'){
+  //       $scope.courses = $scope.all_courses
+  //     }
+  //     else if(which == 'current'){
+  //       $scope.courses = $filter('filter')($scope.all_courses, {'ended': false})
+  //     }
+  //     else if(which == 'finished'){
+  //       $scope.courses = $filter('filter')($scope.all_courses, {'ended': true})
+  //     }
+  //   }
+  //   $scope.$watch('filterChoice', function(){
+  //     $scope.filterCourses($scope.filterChoice)
+  //   })
 
-		$scope.order=function(column_name){
-  			$scope.column = column_name
-  			$scope.is_reverse = !$scope.is_reverse
-		}  		
+		// $scope.order=function(column_name){
+  // 			$scope.column = column_name
+  // 			$scope.is_reverse = !$scope.is_reverse
+		// }  		
 
   	// $scope.open = function () {
    //    angular.element('.btn').blur()
@@ -80,9 +81,9 @@ angular.module('scalearAngularApp')
    //  	})
   	// }
 
-    $log.debug("in student course list")
-    init();
-    $scope.column="name";
+    // $log.debug("in student course list")
+    // init();
+    // $scope.column="name";
 
 
 

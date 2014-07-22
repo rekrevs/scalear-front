@@ -68,8 +68,7 @@ angular.module('scalearAngularApp', [
     'mm.foundation.typeahead',
     'mm.foundation.topbar',
     'ngScrollSpy',
-    'sticky',
-    'datePicker'
+    'sticky'
     // 'ngAnimate'
 ])
     .constant('headers', {

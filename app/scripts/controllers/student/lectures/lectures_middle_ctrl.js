@@ -153,6 +153,7 @@ angular.module('scalearAngularApp')
                 $scope.studentAnswers[quiz.id] = {}
                 $scope.selected_quiz = quiz
                 $scope.last_quiz = quiz
+                $scope.backup_quiz = angular.copy(quiz)
                 
                 $scope.quiz_mode = true
                 $scope.lecture_player.controls.pause()
@@ -209,7 +210,10 @@ angular.module('scalearAngularApp')
 
     $scope.replay=function(){
         $scope.seek(0)
-        $scope.lecture_player.controls.play()
+        $timeout(function(){
+            $scope.lecture_player.controls.play()
+            $scope.play_pause_class = "pause"
+        },500)
     }
 
      $scope.refreshVideo=function(){
@@ -240,7 +244,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek_and_pause=function(time,lecture_id){
-        clearQuiz()
+        if($scope.lecture_player.controls.getTime() != time)
+            clearQuiz()
+        console.log(time)
         $scope.seek(time,lecture_id)
         $scope.lecture_player.controls.pause()
         $scope.play_pause_class = "play"
@@ -614,7 +620,11 @@ angular.module('scalearAngularApp')
     }
 
     $scope.retryQuiz=function(){
-        $scope.seek_and_pause($scope.last_quiz.time)
+        // console.log($scope.selected_quiz)
+        // console.log($scope.backup_quiz)
+        $scope.explanation={}
+        $scope.selected_quiz = angular.copy($scope.backup_quiz)
+        // $scope.seek_and_pause($scope.backup_quiz.time)
         $scope.closeReviewNotify()
     }
     

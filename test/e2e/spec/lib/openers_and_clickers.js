@@ -5,12 +5,22 @@ var params = ptor.params;
 
 //////////////////////////////begin new_layout test mods /////////////////////////////////////////
 
+exports.press_login = function(ptor){
+    ptor.get(params.frontend);
+    ptor.sleep(1000);
+    
+    locator.by_id(ptor, "login").then(function(l){
+        l.click().then(function(){
+            expect(locator.by_id(ptor,"user_email").isDisplayed()).toEqual(true);
+            expect(locator.by_id(ptor,"user_passowrd").isDisplayed()).toEqual(true);
+            expect(locator.by_id(ptor,"login_btn").isDisplayed()).toEqual(true);
+        })
+    })
+}
 //====================================================
 //                      sign in
 //====================================================
 exports.sign_in = function(ptor, email, password){
-    ptor.get(params.frontend);
-    ptor.sleep(1000);
     locator.by_id(ptor,'user_email').then(function(email_field) {
         email_field.sendKeys(email);
     });

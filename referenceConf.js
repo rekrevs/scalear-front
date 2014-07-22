@@ -45,11 +45,7 @@ exports.config = {
     // Spec patterns are relative to the location of this config.
     specs: [
 
-        // 'test/e2e/spec/calendar-teacher-student.spec.js',
-        'test/e2e/spec/course-editor-basic.spec.js',
-        // 'test/e2e/spec/copying-sharing.spec.js',
-        // 'test/e2e/spec/create-announcements.spec.js',
-
+        'test/e2e/spec/create-course-check-info.spec.js',
         
     ],
 
@@ -67,8 +63,8 @@ exports.config = {
     //
     // A base URL for your application under test. Calls to protractor.get()
     // with relative paths will be prepended with this.
-    baseUrl: 'http://staging.scalable-learning.com/#',
-    // baseUrl: 'http://staging.scalable-learning.com/#/',
+    // baseUrl: 'http://staging.scalable-learning.com/#',
+    baseUrl: 'http://0.0.0.0:9000/#',
 
 
     // Selector for the element housing the angular app - this defaults to
@@ -97,7 +93,7 @@ exports.config = {
         // teacher_mail: 'teacher3@sharklasers.com',
         // mail: 'studenttest2@sharklasers.com',
         // teacher_mail: 'teacher2@sharklasers.com',
-        teacher_mail: 'anyteacher@email.com',
+        teacher_mail: 'teacher15@sharklasers.com',
 
         // mail: 'studenttest@sharklasers.com',
         mail: 'mena.happy@yahoo.com',

@@ -8,46 +8,43 @@ var params = ptor.params;
 //               add new course
 //====================================================
 exports.create_course = function(ptor, short_name, course_name, course_duration, discussion_link, image_link, course_description, prerequisites){
-    locator.by_id(ptor, 'new_course').then(function(new_crs_btn){
-    	new_crs_btn.click().then(function(){
-    	
-    		locator.by_name(ptor, 'short').then(function(shrt_nm){
-    			shrt_nm.sendKeys(short_name);
-    		})
-    		locator.by_name(ptor, 'name').then(function(crs_nm){
-    			crs_nm.sendKeys(course_name);
-    		})
-    		// locator.by_name(ptor, 'date').then(function(date){
-    		// 	date.click().then(function(){
-    		// 		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[3]/div[1]/ul/li[1]/li/table/tbody').then(function(dates){
+    	o_c.open_new_course(ptor);
 
-    		// 		})
-    		// 	})
-    		// })
-    		locator.by_name(ptor, 'duration').then(function(crs_dur){
-    			crs_dur.sendKeys(course_duration);
-    		})
-    		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[4]/div[1]/input').then(function(dis_lnk){
-    			dis_lnk.sendKeys(discussion_link);
-    		})
-    		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[4]/div[2]/input').then(function(img_lnk){
-    			img_lnk.sendKeys(image_link);
-    		})
-    		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[5]/textarea').then(function(crs_desc){
-    			crs_desc.sendKeys(course_description);
-    		})
-    		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[6]/textarea').then(function(pre_req){
-    			pre_req.sendKeys(prerequisites);
-    		})
+		locator.by_name(ptor, 'short').then(function(shrt_nm){
+			shrt_nm.sendKeys(short_name);
+		})
+		locator.by_name(ptor, 'name').then(function(crs_nm){
+			crs_nm.sendKeys(course_name);
+		})
+		// locator.by_name(ptor, 'date').then(function(date){
+		// 	date.click().then(function(){
+		// 		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[3]/div[1]/ul/li[1]/li/table/tbody').then(function(dates){
 
-    		ptor.executeScript('window.scrollBy(0, 1000)', '');
-    		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[8]/input').then(function(crt_crs_btn){
-    			crt_crs_btn.click().then(function() {
-		            o_c.feedback(ptor, 'Course was successfully created.');
-		        });
-    		})
-    	})
-    })
+		// 		})
+		// 	})
+		// })
+		locator.by_name(ptor, 'duration').then(function(crs_dur){
+			crs_dur.sendKeys(course_duration);
+		})
+		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[4]/div[1]/input').then(function(dis_lnk){
+			dis_lnk.sendKeys(discussion_link);
+		})
+		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[4]/div[2]/input').then(function(img_lnk){
+			img_lnk.sendKeys(image_link);
+		})
+		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[5]/textarea').then(function(crs_desc){
+			crs_desc.sendKeys(course_description);
+		})
+		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[6]/textarea').then(function(pre_req){
+			pre_req.sendKeys(prerequisites);
+		})
+
+		ptor.executeScript('window.scrollBy(0, 1000)', '');
+		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[8]/input').then(function(crt_crs_btn){
+			crt_crs_btn.click().then(function() {
+	            o_c.feedback(ptor, 'Course was successfully created.');
+	        });
+		})
 }
 
 //====================================================

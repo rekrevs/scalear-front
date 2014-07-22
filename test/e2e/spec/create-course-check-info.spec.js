@@ -25,31 +25,33 @@ var date = course_date.toString();
 describe("teacher create course check info", function(){
 
 	it('should sign in as teacher', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+		o_c.press_login(ptor);
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create_course', function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		ptor.sleep(5000);	
 	})
 
-	it('should get the enrollment key and enroll student', function(){
+	xit('should get the enrollment key and enroll student', function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 	//test
-	it('should log out from teacher then login as a student', function(){
+	xit('should log out from teacher then login as a student', function(){
 		o_c.open_tray(ptor);
 		o_c.logout(ptor, o_c.feedback);
 		o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
 	})
 
-	it('should open info and test course information', function(){
+	xit('should open info and test course information', function(){
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
 		o_c.open_info(ptor);
         student.check_course_info(ptor, params.short_name, params.course_name, params.course_description, params.prerequisites, params.discussion_link, Date(), params.course_duration);
 	})
 	//end test
-	it('should delete course', function(){
+	xit('should delete course', function(){
 		//should choose one of home() or home_teacher() 
 		//depending on the current state(student or teacher)
 		o_c.home(ptor);
@@ -57,7 +59,7 @@ describe("teacher create course check info", function(){
 	})
 })
 
-describe("teacher check the ability to change course info", function(){
+xdescribe("teacher check the ability to change course info", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);

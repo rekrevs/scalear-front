@@ -297,11 +297,11 @@ module.exports = function(grunt) {
                         'bower_components/**/*',
                         //'scripts/externals/shortcut.js',
                         'images/{,*/}*.{gif,webp}',
-                        'styles/fonts/*',
+                        'styles/externals/**/*',
                         'template/**/*',
                         '*.html',
                         'views/**/*.html',
-                        'scripts/externals/popcorn-complete.min.js'
+                        // 'scripts/externals/popcorn-complete.min.js'
                     ]
                 }, {
                     expand: true,
@@ -316,7 +316,7 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: '<%= yeoman.app %>',
                 dest: '.tmp/styles/',
-                src: ['styles/**/*.css', 'bower_components/**/*.css']
+                src: ['styles/**/*', 'bower_components/**/*.css']
             }
         },
         concurrent: {
@@ -549,7 +549,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '2.13.5 (' + new Date().toUTCString() + ')',
+                        version: '3.0 (' + new Date().toUTCString() + ')',
                         help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
                     },
 
@@ -563,7 +563,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '2.13.5 (' + new Date().toUTCString() + ')',
+                        version: '3.0 (' + new Date().toUTCString() + ')',
                         help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
                     }
 

@@ -198,6 +198,11 @@ select{
 	text-transform: uppercase;
 }
 
+/*POSITIONS*/
+.position-absolute{
+	position: absolute !important;
+}
+
 /*IMAGES*/
 .course-image{
 	/*border-radius: 3px 0px 0px 0px;*/

@@ -257,12 +257,23 @@ select{
 	text-overflow: ellipsis;
 }
 
+/*LAYERING*/
+.z-zero{
+	z-index: 0 !important;
+}
+.z-one{
+	z-index: 1 !important;
+}
+
 /*PADDING & MARGINS*/
 .no-padding{
 	padding: 0px !important; 
 }
 .no-margin{
 	margin: 0px !important;
+}
+.no-margin-bottom{
+	margin-bottom: 0px !important;
 }
 .with-padding{
 	padding: 1.25rem !important;
@@ -593,6 +604,12 @@ h2 .editable-click{
 	position: relative;
 	z-index: 2;
 	vertical-align: sub !important;
+}
+.editable-controls > label{
+	display: inline-block !important;
+}
+.editable-input{
+	width: 70% !important;
 }
 
 /*borders*/

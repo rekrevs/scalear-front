@@ -26,10 +26,10 @@ describe("1", function(){
 	//test
 	it('should check number of teachers intially', function(){
 		o_c.to_student(ptor);
-		o_c.open_course_whole(ptor);
-		o_c.open_tray(ptor);
-		ptor.sleep(5000);
-		o_c.open_info(ptor);
+		o_c.open_course_whole(ptor, 0);
+		// o_c.open_tray(ptor);
+		// ptor.sleep(5000);
+		o_c.open_course_info(ptor);
 		ptor.sleep(5000);
 		check_teachers_no(ptor, 1);
 	})
@@ -38,12 +38,12 @@ describe("1", function(){
 	it('should delete course', function(){
 		//should choose one of home() or home_teacher() 
 		//depending on the current state(student or teacher)
-		o_c.home(ptor);
-		teacher.delete_course(ptor, o_c.feedback);
+		o_c.open_course_list(ptor);
+		teacher.delete_course_edited(ptor, o_c.feedback);
 	})
 })
 
-describe("2", function(){
+xdescribe("2", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);

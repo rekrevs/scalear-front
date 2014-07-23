@@ -1,7 +1,7 @@
 var ptor = protractor.getInstance();
 var locator = require('./locators');
 var params = ptor.params;
-
+var o_c = require('./openers_and_clickers');
 
 
 //=====================================
@@ -23,7 +23,8 @@ exports.check_item_number = function(ptor, total_item_no){
 //        join course by key
 //=====================================
 exports.join_course = function(ptor, key, feedback)
-{
+{ 
+    o_c.open_courses(ptor);
     locator.by_id(ptor,'join_course').then(function(link)
     {
         link.click();
@@ -32,7 +33,7 @@ exports.join_course = function(ptor, key, feedback)
     {
         input.sendKeys(key);
     });
-    locator.by_xpath(ptor, '/html/body/div[6]/div[3]/button[1]').then(function(button)
+    element(by.buttonText("Enroll ")).then(function(button)
     {
         button.click();
     });

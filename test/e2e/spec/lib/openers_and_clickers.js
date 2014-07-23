@@ -77,7 +77,7 @@ exports.home = function(ptor){
     locator.by_id(ptor, 'home').then(function(home){
         home.click().then(function(){
             ptor.getCurrentUrl().then(function(url) {
-                expect(url).toContain(params.frontend+'/courses');
+                expect(url).toContain(params.frontend+'/student_courses');
             });
         })
     })
@@ -125,6 +125,12 @@ exports.open_account = function(ptor){
 
 exports.open_help = function(ptor){
     locator.by_id(ptor, 'help').then(function(btn){
+        ptor.actions().mouseMove(btn).perform();
+    })
+}
+
+exports.open_settings = function(ptor){
+    locator.by_id(ptor, 'settings').then(function(btn){
         ptor.actions().mouseMove(btn).perform();
     })
 }
@@ -190,6 +196,24 @@ exports.press_content_navigator = function(ptor){
     locator.by_id(ptor, 'content_navigator').then(function(btn){
         btn.click();
     })
+}
+// //====================================================
+// //          press course information button
+// //====================================================
+
+exports.open_course_info = function(ptor){
+    this.open_settings(ptor);
+    locator.by_id(ptor, 'course_info').then(function(btn){
+        btn.click();
+    })
+}
+
+//=======================================================
+//          switch from teacher to student
+//=======================================================
+exports.to_student = function(ptor){
+    this.logout(ptor, this.feedback);
+    this.sign_in(ptor, params.mail, params.password, this.feedback);   
 }
 //////////////////////////////end new_layout test mods /////////////////////////////////////////
 

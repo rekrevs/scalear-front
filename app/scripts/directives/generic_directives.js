@@ -199,13 +199,7 @@ angular.module('scalearAngularApp')
       index: '='
     },
     templateUrl: '/views/announcementItem.html',
-    link: function(scope){
-      scope.$watch('announcement', function(val, val2){
-        if(val != val2){
-          console.log(scope.announcement)
-        }
-      })
-      }
+    link: function(scope){}
   };
 }]).directive('studentAnnouncementItem', ['ErrorHandler',function(ErrorHandler) {
   return{

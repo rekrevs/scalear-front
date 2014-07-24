@@ -35,7 +35,7 @@ angular.module('scalearAngularApp', [
     // 'ui.bootstrap.alert',
     // 'ui.bootstrap.modal',
     // 'ui.bootstrap.tooltip',
-    // 'ui.bootstrap.timepicker',
+    'ui.bootstrap.timepicker',
     // 'ui.bootstrap.popover',
     'ui.sortable',
     'ui.calendar',
@@ -68,8 +68,7 @@ angular.module('scalearAngularApp', [
     'mm.foundation.typeahead',
     'mm.foundation.topbar',
     'ngScrollSpy',
-    'sticky',
-    'datePicker'
+    'sticky'
     // 'ngAnimate'
 ])
     .constant('headers', {
@@ -84,8 +83,9 @@ angular.module('scalearAngularApp', [
             $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
             $rootScope.show_alert = "";
             editableOptions.theme = 'default';
-            editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left success" type="submit"><i class="fi-check size-21"></i></button>';
-            editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left alert" type="button" ng-click="$form.$cancel()"><i class="fi-x size-21"></i></button>';
+            editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 success" type="submit"><i class="fi-check"></i></button>';
+            editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert" type="button" ng-click="$form.$cancel()"><i class="fi-x"></i></button>';
+            editableThemes['default'].errorTpl = '<small class="error position-absolute z-one with-tiny-padding" ng-show="$error" ng-bind="$error"></small>'
             console.log(editableThemes['default'])
             $rootScope.textAngularOpts = {
                 toolbar: [

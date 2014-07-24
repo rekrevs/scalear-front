@@ -1,126 +1,93 @@
-<form novalidate class="form-horizontal" name="form">
-  <style>
-    .field{
-      display: inline-block;
-      margin:10px; 
-      max-width: 45%;
-      vertical-align: top;
-    }
-    .fields-row{
-      width: 100%;
-      /*margin-top: 20px;*/
-      clear: both;
-    }
-    .main-fields-container{
-      width: 500px;
-    }
-    input{
-      margin-bottom: 0 !important
-    }
-  </style>
-  <center>
-    <div class="main-fields-container">
-      <div class="fields-row" style="max-width: 250px; min-height: 200px;margin-top: 20px; margin-bottom: 20px;">
-        <smart-image defaultimage="'../images/course_image.png'" desiredimage="course.image_url" notfound="image_not_found" style="height: 200px;">
-        </smart-image>
-      </div>
-      <div class="fields-row">
-        <div class="field">
-          <p translate>
-            courses.short_name
-          </p>
-          <input name="short" type="text" ng-model="course.short_name" placeholder="*{{'courses.required' | translate}}"/>
-          <span ng-show="form.short.$error.required && submitted" translate>courses.required</span>
-          <span class="error" ng-show="server_errors['short_name']">{{server_errors['short_name'].join()}}</span>
-        </div>
-        <div class="field">
-          <p translate>
-            courses.course_name
-          </p>
-          <input name="name" type="text" ng-model="course.name" placeholder="*{{'courses.required' | translate}}" />
-          <span ng-show="form.name.$error.required && submitted" translate>courses.required</span>
-          <span class="error"  ng-show="server_errors['name']">{{server_errors['name'].join()}}</span>
-        </div>
-      </div>
-      <div class="fields-row">
-        <div class="field">
-          <p translate>
-            courses.start_date
-          </p>
-          <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.start_date" is-open="opened"  ng-required="true" placeholder="*{{'courses.start_date' | translate}}"/>
-          <span ng-show="form.date.$error.required && submitted" translate>courses.required</span>
-          <span class="error" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</span>
-        </div>
-        <div class="field">
-          <p translate>
-            courses.duration
-          </p>
-          <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.weeks' | translate}}"/>
-          <span ng-show="form.duration.$error.required && submitted" translate>courses.required</span>
-          <span ng-show="form.duration.$error.min && submitted" translate>courses.invalid_input</span>
-          <span class="error" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</span>
-        </div>
-      </div>
-      <div class="fields-row">
-        <div class="field">
-          <p translate>
-            courses.discussion_forum_link
-          </p>
-          <input type="text" ng-model="course.discussion_link" placeholder="{{'courses.discussion_forum_link' | translate}}" />
-          <span class="error" ng-show="server_errors['discussion_link']">{{server_errors['discussion_link'].join()}}</span>
-        </div>
-        <div class="field">
-          <p translate>
-            courses.course_image
-          </p>
-          <input type="text" ng-model="course.image_url" placeholder="{{'courses.course_image' | translate}}"/>
-          <br />
-          <span class="error" ng-show="image_not_found">{{image_not_found | translate}}</span>
-          <span class="error" ng-show="server_errors['image_url']">{{server_errors['image_url'].join()}}</span>
-        </div>
-      </div>
-      <div class="fields-row">
-        <!-- <div class="field" style="width: 35%;"> -->
-          <p translate>
-            courses.course_description
-          </p>
-          <textarea rows="3" ng-model="course.description" style="width: 90%; margin: 10px;" placeholder="{{'courses.course_description' | translate}}"></textarea>
-          <span class="error" ng-show="server_errors['description']">{{server_errors['description'].join()}}</span>
-        <!-- </div> -->
-      </div>
-      <div class="fields-row">
-        <!-- <div class="field"> -->
-          <p translate>
-            courses.prerequisites
-          </p>
-          <textarea rows="3" ng-model="course.prerequisites" style="width: 90%; margin: 10px;" placeholder="{{'courses.prerequisites' | translate}}"></textarea>
-          <span class="error" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</span>
-        <!-- </div> -->
-      </div>
-      <div class="fields-row">
-        <div class="field">
-          <p translate>
-            courses.time_zone
-          </p>
-          <select name="timezone" ng-model="course.time_zone" ng-options="element.value for element in timezones" placeholder="*{{'courses.time_zone' | translate}}"></select>
-          <span class="error" ng-show="form.timezone.$error.required && submitted" translate>courses.required</span>
-          <span class="error" ng-show="server_errors['time_zone']">{{server_errors['time_zone'].join()}}</span>
-        </div>
-        <div class="field">
-          <p translate>
-            courses.import_data
-          </p>
-          <select ng-model="import_from" ng-options="element.id as element.name for element in importing">
-          </select>
-        </div>
-      </div>
-
-      
-    
-      <div class="form-actions" style="background-color: transparent;">
-        <input ng-disabled="submitting || image_not_found" type="button" style="background-image: initial;" value="{{'courses.create_course'|translate}}" class="button success" ng-click="createCourse()"/>
-      </div>
+<form novalidate class="form-horizontal" name="form" ng-submit="createCourse()">
+    <h3><i class="fi-book"></i> {{'courses.new_course' | translate}}</h3>
+    <div class="medium-2 large-2 columns hide-for-small-only">
+        <smart-image defaultimage="'../images/course_image.png'" desiredimage="course.image_url" notfound="image_not_found" style="height: 36px;"></smart-image>
+        <label>{{'courses.course_image' | translate}}
+            <input type="text" ng-model="course.image_url" ng-class="{error: image_not_found || server_errors['image_url']}"/>
+            <small class="error with-tiny-padding" ng-show="image_not_found">{{image_not_found | translate}}</small>
+            <small class="error with-tiny-padding" ng-show="server_errors['image_url']">{{server_errors['image_url'].join()}}</small>
+        </label>
     </div>
-  </center>
+    
+    <center class="large-12 with-margin-bottom with-margin-top">
+        <smart-image class="show-for-small-only" defaultimage="'../images/course_image.png'" desiredimage="course.image_url" notfound="image_not_found"></smart-image>
+        <label class="show-for-small-only with-margin">{{'courses.course_image' | translate}}
+            <input type="text" ng-model="course.image_url"/>
+            <small class="error with-tiny-padding" ng-show="image_not_found">{{image_not_found | translate}}</small>
+            <small class="error with-tiny-padding" ng-show="server_errors['image_url']">{{server_errors['image_url'].join()}}</small>
+        </label>
+    </center>
+
+<div class="small-12 medium-10 large-10 columns">
+    <fieldset class="with-margin-bottom">
+        <legend>{{'lectures.title' | translate}}</legend>
+        <div class="small-12 medium-5 large-5 columns">
+            <label>{{'courses.short_name' | translate}}
+                <input name="short" type="text" ng-model="course.short_name" ng-class="{error: server_errors['short_name']}" />
+                <small class="error with-tiny-padding" ng-show="server_errors['short_name']">{{server_errors['short_name'].join()}}</small>
+            </label>
+        </div>
+        <div class="small-12 medium-5 large-5 columns">
+            <label>{{'courses.course_name' | translate}}
+                <input name="name" type="text" ng-model="course.name" ng-class="{error: server_errors['name']}" />
+                <small class="error with-tiny-padding" ng-show="server_errors['name']">{{server_errors['name'].join()}}</small>
+            </label>
+        </div>
+    </fieldset>
+</div>
+<div class="small-12 medium-10 large-10 columns right">
+    <fieldset class="with-margin-bottom">
+        <legend>{{'courses.duration' | translate}}</legend>
+        <div class="small-12 medium-5 large-5 columns">
+            <label>{{'courses.start_date' | translate}}
+                <input name="date" type="text" datepicker-popup="dd-MMMM-yyyy" ng-model="course.start_date" is-open="opened"  ng-required="true" ng-class="{error: server_errors['start_date']}"/>
+                <small class="error with-tiny-padding" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</small>
+            </label>
+        </div>
+        <div class="small-12 medium-5 large-5 columns">
+            <label>{{'courses.duration' | translate}}
+                <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
+                <small class="error with-tiny-padding" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</small>
+            </label>
+        </div>
+    </fieldset>
+</div>
+<div class="small-12 medium-10 large-10 columns right">
+    <fieldset class="with-margin-bottom">
+        <legend>{{'head.course_information' | translate}}</legend>
+        <div class="small-12 medium-12 large-12 column">
+            <div class="small-12 medium-5 large-5 columns">
+                <label>{{'courses.course_description' | translate}}
+                    <textarea rows="3" ng-model="course.description" ng-class="{error: server_errors['description']}"></textarea>
+                    <small class="error with-tiny-padding" ng-show="server_errors['description']">{{server_errors['description'].join()}}</small>
+                </label>
+            </div>
+            <div class="small-12 medium-5 large-5 columns">
+                <label>{{'courses.prerequisites' | translate}}
+                    <textarea rows="3" ng-model="course.prerequisites" ng-class="{error: server_errors['prerequisites']}"></textarea>
+                    <small class="error with-tiny-padding" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</small>
+                </label>
+            </div>
+        </div>
+        <div class="small-12 medium-12 large-12 column">
+            <div class="small-12 medium-5 large-5 columns">
+                <label>{{'courses.time_zone' | translate}}
+                    <select name="timezone" ng-model="course.time_zone" ng-options="element.value for element in timezones" ng-class="{error: server_errors['time_zone']}"></select>
+                    <small class="error with-tiny-padding" ng-show="server_errors['time_zone']">{{server_errors['time_zone'].join()}}</small>
+                </label>
+            </div>
+        </div>
+    </fieldset>
+</div>
+<div class="small-12 medium-10 large-10 columns right">
+    <fieldset class="with-margin-bottom">
+        <legend>{{'controller_msg.importing_data' | translate}}</legend>
+        <div class="small-12 medium-5 large-5 columns">
+            <label>{{'courses.import_data' | translate}}
+                <select ng-model="import_from" ng-options="element.id as element.name for element in importing"></select>
+            </label>
+        </div>
+    </fieldset>
+    <button ng-disabled="submitting || image_not_found" type="submit" class="button success right">{{'courses.create_course'|translate}}</button>
+</div>
 </form>
-<br/><br/>

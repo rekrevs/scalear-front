@@ -99,7 +99,8 @@
 								    </div>
 									<div style="width: 70%;">{{answer.answer}}</div>									
 									<i ng-show="answer.response && !answer.show_feedback" style="padding-left: 30px;color: steelblue">{{answer.response}}</i>
-									<delete_button ng-show="answer.response && !answer.show_feedback" size='small' action='deleteFeedback(answer)'></delete_button>
+									<span ng-show="answer.response && !answer.show_feedback" >|<a ng-click="deleteFeedback(answer)" class="button really-tiny alert" style="margin:0 5px">{{'delete' | translate}}</a></span>
+									<!-- <delete_button ng-show="answer.response && !answer.show_feedback" size='small' action='deleteFeedback(answer)'></delete_button> -->
 									<div class="feedback" ng-show="answer.show_feedback && module_item.quiz_type == 'survey'">
 										<textarea ng-model="answer.temp_response"  style="width: 65%;" />
 										<a ng-click="sendFeedback(answer);answer.show_feedback = false" class="button tiny success">{{'courses.send'|translate}}</a>
@@ -158,10 +159,9 @@
 									<ul>
 										<li ng-repeat="comment in discussion.post.comments" style="padding-left: 30px;color: #616161;font-size:14px" class="no_highlight">
 											<span class="controls">
-												<span ng-show="comment.comment.flags_count > 0" style="float:right">|
-													<a ng-click="removeCommentFlag(comment, discussion.post)" class="button really-tiny" style="margin:0 5px">{{'discussion.remove_flags' | translate}}</a> 
-													|
-													<a ng-click="deleteComment(comment, discussion.post)" class="button really-tiny alert" style="margin:0 5px">{{'delete' | translate}}</a>
+												<span style="float:right">
+													<span ng-show="comment.comment.flags_count > 0">|<a ng-click="removeCommentFlag(comment, discussion.post)" class="button really-tiny" style="margin:0 5px">{{'discussion.remove_flags' | translate}}</a></span>
+													<span ng-show="comment.comment.flags_count > 0 || comment.comment.user_id == current_user.id" >|<a ng-click="deleteComment(comment, discussion.post)" class="button really-tiny alert" style="margin:0 5px">{{'delete' | translate}}</a></span>
 												</span>	
 											</span>										
 											<div>
@@ -175,9 +175,9 @@
 													<img src='../images/likes.png'/>
 													{{comment.comment.votes_count}}
 												</span>		
-											 	<span ng-show="comment.comment.user_id == current_user.id">|
+											 	<!-- <span ng-show="comment.comment.user_id == current_user.id">|
 													<delete_button  size="small" color='dark' action="deleteComment(comment, discussion.post)"></delete_button>
-												</span>										
+												</span>	 -->									
 										 	</div>
 										</li>
 									</ul>

@@ -95,6 +95,7 @@ exports.config = {
         // mail: 'studenttest2@sharklasers.com',
         // teacher_mail: 'teacher2@sharklasers.com',
         teacher_mail: 'teacher1@sharklasers.com',
+        teacher2_mail: 'teacher3@sharklasers.com',
 
         // mail: 'studenttest@sharklasers.com',
         mail: 'studenttest@sharklasers.com',

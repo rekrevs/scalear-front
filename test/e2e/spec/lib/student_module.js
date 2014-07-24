@@ -33,7 +33,7 @@ exports.join_course = function(ptor, key, feedback)
     {
         input.sendKeys(key);
     });
-    element(by.buttonText("Enroll ")).then(function(button)
+    element(by.buttonText("Enroll")).then(function(button)
     {
         button.click();
     });

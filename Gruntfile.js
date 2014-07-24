@@ -347,6 +347,7 @@ module.exports = function(grunt) {
                 configFile: "node_modules/protractor/referenceConf.js", // Default config file
                 keepAlive: true, // If false, the grunt process stops when the test fails.
                 noColor: false, // If true, protractor will not use colors in its output.
+                debug:false,
                 args: {
                     // Arguments passed to the command
                 }

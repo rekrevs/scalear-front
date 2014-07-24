@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl',['$scope','Course','$state','$window', '$log','Page', function ($scope, Course,$state, $window, $log,Page) {
+  .controller('newCourseCtrl',['$rootScope','$scope','Course','$state','$window', '$log','Page', function ($rootScope,$scope, Course,$state, $window, $log,Page) {
 		$window.scrollTo(0, 0);
 		Page.setTitle('courses.new_course')
 		$scope.submitting=false;
@@ -54,6 +54,7 @@ angular.module('scalearAngularApp')
 							//$(window).scrollTop(0);
 							$state.go("course.course_editor",{"course_id":data.course.id})
 						}
+						$rootScope.$broadcast('get_all_courses')
 					},function(response){
 						//server error must handle.
 		                $scope.submitting=false;

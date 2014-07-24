@@ -135,6 +135,12 @@ exports.open_settings = function(ptor){
     })
 }
 
+exports.hide_dropmenu = function(ptor){
+    element(by.id('main')).click()
+    // ptor.actions().mouseMove({x: 0, y: 0}).perform();
+    
+}
+
 //====================================================
 //               new sub-menu openers
 //====================================================
@@ -166,6 +172,16 @@ exports.open_course_list = function(ptor){
     })
 }
 
+exports.open_course_list_student = function(ptor){
+    this.open_courses(ptor);
+    locator.by_id(ptor, 'course_list').then(function(btn){
+        btn.click();
+        ptor.getCurrentUrl().then(function(url) {
+            expect(url).toContain('student_courses');
+        });
+    })
+}
+
 
 ///////////////////////////////////////////////////////////////
 //                          course openers
@@ -183,11 +199,18 @@ exports.open_course_from_sub_menu = function(ptor, co_no){
 //              open course by no whole-box
 //====================================================
 exports.open_course_whole = function(ptor, co_no){
+    browser.debugger()
     locator.s_by_classname(ptor, 'whole-box').then(function(course){
         course[co_no].findElement(protractor.By.className("looks-like-a-link")).click();
     })
 }
 
+//====================================================
+//              open course by index
+//====================================================
+exports.open_course = function(ptor, co_no){
+    element(by.repeater('course in courses').row(co_no)).element(by.className("button")).click();
+}
 
 ///////////////////////////////////////////////////////
 //                  content_navigator
@@ -214,6 +237,34 @@ exports.open_course_info = function(ptor){
 exports.to_student = function(ptor){
     this.logout(ptor, this.feedback);
     this.sign_in(ptor, params.mail, params.password, this.feedback);   
+}
+
+//=======================================================
+//          switch from student to teacher
+//=======================================================
+exports.to_teacher = function(ptor){
+    this.logout(ptor, this.feedback);
+    this.sign_in(ptor, params.teacher_mail, params.password, this.feedback);
+}
+
+///////////////////////////////////////////////////////
+//                  notification controls
+///////////////////////////////////////////////////////
+
+exports.accept_notification = function(ptor,inv_no){
+    browser.debugger()
+    element(by.repeater('(id, invitation) in user.invitation_items').row(inv_no)).element(by.className('success')).click()
+    // locator.by_id(ptor, 'notifications').then(function(btn){
+    //     ptor.actions().mouseMove(btn).perform();
+    // })
+}
+
+exports.reject_notification = function(ptor,inv_no){
+    element(by.repeater('(id, invitation) in user.invitation_items').row(inv_no)).element(by.className('alert')).click()
+
+    // locator.by_id(ptor, 'notifications').then(function(btn){
+    //     ptor.actions().mouseMove(btn).perform();
+    // })
 }
 //////////////////////////////end new_layout test mods /////////////////////////////////////////
 

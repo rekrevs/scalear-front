@@ -26,25 +26,31 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 		locator.by_name(ptor, 'duration').then(function(crs_dur){
 			crs_dur.sendKeys(course_duration);
 		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[4]/div[1]/input').then(function(dis_lnk){
-			dis_lnk.sendKeys(discussion_link);
-		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[4]/div[2]/input').then(function(img_lnk){
-			img_lnk.sendKeys(image_link);
-		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[5]/textarea').then(function(crs_desc){
-			crs_desc.sendKeys(course_description);
-		})
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[6]/textarea').then(function(pre_req){
-			pre_req.sendKeys(prerequisites);
-		})
-
+		// locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[4]/div[1]/input').then(function(dis_lnk){
+		// 	dis_lnk.sendKeys(discussion_link);
+		// })
+		element(by.model("course.image_url")).sendKeys(image_link)
+		element(by.model("course.description")).sendKeys(course_description)
+		element(by.model("course.prerequisites")).sendKeys(prerequisites)
 		ptor.executeScript('window.scrollBy(0, 1000)', '');
-		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[8]/input').then(function(crt_crs_btn){
-			crt_crs_btn.click().then(function() {
-	            o_c.feedback(ptor, 'Course was successfully created.');
-	        });
+		// browser.debugger()
+		element(by.buttonText("Create Course")).click().then(function(){
+			 o_c.feedback(ptor, 'Course was successfully created.');
 		})
+		// locator.s_by_model(ptor, 'course.image_url')[0].
+		// locator.s_by_model(ptor, 'course.description')[0].then(function(crs_desc){
+		// 	crs_desc.sendKeys(course_description);
+		// })
+		// locator.s_by_model(ptor, 'course.prerequisites')[0].then(function(pre_req){
+		// 	pre_req.sendKeys(prerequisites);
+		// })
+
+		// ptor.executeScript('window.scrollBy(0, 1000)', '');
+		// locator.by_classname(ptor, 'button').then(function(crt_crs_btn){
+		// 	crt_crs_btn.click().then(function() {
+	 //            o_c.feedback(ptor, 'Course was successfully created.');
+	 //        });
+		// })
 }
 
 //====================================================
@@ -53,8 +59,7 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 exports.get_key_and_enroll = function(ptor){
 	// o_c.open_tray(ptor);
 	o_c.open_course_info(ptor);
-	locator.by_classname(ptor, 'fi-key').then(function(element){
-		element.getText().then(function(text){
+	element(by.binding('course.unique_identifier')).getText().then(function(text){
 			// o_c.home_teacher(ptor);
 			// o_c.open_tray(ptor);
 			o_c.logout(ptor, o_c.feedback);
@@ -65,68 +70,57 @@ exports.get_key_and_enroll = function(ptor){
 			o_c.logout(ptor, o_c.feedback);
 			o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
 		})
-	})
+	// })
 }
 
 //====================================================
 //            		delete course
 //====================================================
-exports.delete_course = function(ptor){
-	o_c.open_tray(ptor);
-	o_c.logout(ptor, o_c.feedback);
-	o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
-		x_btn.click().then(function(){
-			locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
-				conf_del.click().then(function() {
-		            o_c.feedback(ptor, 'Course was successfully deleted.');
-		            o_c.home_teacher(ptor);
-					o_c.open_tray(ptor);
-					o_c.logout(ptor, o_c.feedback);
-		        });
-			})
-		})
+exports.delete_course = function(ptor,co_no){
+	var course = element(by.repeater('course in courses').row(co_no))
+	course.element(by.className('delete')).click()
+	course.element(by.className('fi-check')).click().then(function(){
+		o_c.feedback(ptor, 'Course was successfully deleted.');
+		o_c.logout(ptor, o_c.feedback);
 	})
+	// o_c.open_tray(ptor);
+	// o_c.logout(ptor, o_c.feedback);
+	// o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+	// locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
+	// 	x_btn.click().then(function(){
+	// 		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
+	// 			conf_del.click().then(function() {
+	// 	            o_c.feedback(ptor, 'Course was successfully deleted.');
+	// 	            o_c.home_teacher(ptor);
+	// 				o_c.open_tray(ptor);
+	// 				o_c.logout(ptor, o_c.feedback);
+	// 	        });
+	// 		})
+	// 	})
+	// })
+
 }
 
-exports.delete_course_edited = function(ptor){
-	locator.s_by_classname(ptor, 'whole-box').then(function(course){
-        course[co_no].findElement(protractor.By.className("delete")).click().then(function(delete_btn){
-        	delete_btn.findElement(protractor.By.className("fi-check")).click().then(function(){
-        		o_c.feedback(ptor, 'Course was successfully deleted.');
-                // o_c.open_tray(ptor);
-                o_c.logout(ptor, o_c.feedback);
-        	})
-        	// locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').click().then(function(){
-                    
-         //        });
-         //    })
-        });
-    })
-    // locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
-    //     x_btn.click().then(function(){
-    //         locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
-    //             conf_del.click().then(function() {
-    //                 o_c.feedback(ptor, 'Course was successfully deleted.');
-    //                 o_c.open_tray(ptor);
-    //                 o_c.logout(ptor, o_c.feedback);
-    //             });
-    //         })
-    //     })
-    // })
-}
+// exports.delete_course_edited = function(ptor, co_no){
+// 	var course = element(by.repeater('course in courses').row(co_no))
+// 	course.element(by.className('delete')).click()
+// 	course.element(by.className('fi-check')).click().then(function(){
+// 		o_c.feedback(ptor, 'Course was successfully deleted.');
+// 		o_c.logout(ptor, o_c.feedback);
+// 	})
+// }
 
-exports.just_delete_course = function(ptor){
-    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
-        x_btn.click().then(function(){
-            locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
-                conf_del.click().then(function() {
-                    o_c.feedback(ptor, 'Course was successfully deleted.');
-                });
-            })
-        })
-    })
-}
+// exports.just_delete_course = function(ptor){
+//     locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/a/img').then(function(x_btn){
+//         x_btn.click().then(function(){
+//             locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/div/div[2]/div/span/div/span/a[1]/div').then(function(conf_del){
+//                 conf_del.click().then(function() {
+//                     o_c.feedback(ptor, 'Course was successfully deleted.');
+//                 });
+//             })
+//         })
+//     })
+// }
 
 
 ///////////////////////////////////////////////////////////////////////

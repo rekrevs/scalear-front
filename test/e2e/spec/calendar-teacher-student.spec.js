@@ -26,8 +26,38 @@ month[9] = "October";
 month[10] = "November";
 month[11] = "December";
 
+describe("should check calendar functionality", function(){
+  it('should login as student', function(){
+    o_c.sign_in(ptor, params.teacher_mail, params.password);
+  })
+  it('should open a course', function(){
+    o_c.open_course_whole(ptor, 0);
+  })
+  it('should open calendar', function(){
+    open_calendar(ptor);
+  })
 
-describe("teacher teacher calendar", function(){
+  it('should check if the calendar is visible', function(){
+    is_calendar(ptor);
+  })
+
+  it('should check if the calendar is showing the current month', function(){
+    is_current_month(ptor);  
+  })
+
+  it('should check calendar btns ', function(){
+    get_previous_month(ptor);
+    ptor.navigate().refresh();
+    open_calendar(ptor);
+    get_next_month(ptor);
+    ptor.navigate().refresh();
+    open_calendar(ptor);
+    get_todays_month(ptor);
+  })
+
+})
+
+xdescribe("teacher teacher calendar", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -56,7 +86,7 @@ describe("teacher teacher calendar", function(){
   it('should log in as student check for modules due date', function(){
     o_c.to_student(ptor);
     o_c.open_course_whole(ptor);
-    check_element_date(ptor, 'Module', )
+    // check_element_date(ptor, 'Module', )
   })
 	//end test
 
@@ -98,24 +128,14 @@ xdescribe("teacher student calendar", function(){
 
 /////////////////////////////////////////////////////////
 //				test specific functions
-/////////////////////////////////////////////////////////
-
-//====================================================
-///////////////check element date///////////////////
-//====================================================
-function check_element_date(ptor, element, date){
-  params.wait_ele(ptor, protractor.By.partialLinkText(element));
-  locator.by_partial_text(ptor, element).then(function(wanted_element){
-    wanted_element.click();
-  });
-}
+////////////////begin new_layout mods//////////////////
 
 //====================================================
 //////////////////is on Calendar page///////////////
 //====================================================
 function is_calendar(ptor){
-  locator.by_binding(ptor, 'current | translate').then(function(promise){
-     expect(promise.getText()).toContain('Calendar');
+  locator.by_id(ptor, "studentCalendar").then(function(cal){
+    expect(cal.isDisplayed()).toEqual(true);    
   })
 }
 
@@ -124,9 +144,20 @@ function is_calendar(ptor){
 //====================================================
 function is_current_month(ptor)
 {
-  locator.by_tag(ptor, 'h2').then(function(promise){
+  locator.by_classname(ptor, 'fc-header-title').then(function(promise){
     expect(promise.getText()).toEqual(month[current_date.getMonth()]+" "+current_date.getFullYear())
   });
+}
+
+
+//====================================================
+//                  press calendar btn
+//====================================================
+
+function open_calendar(ptor){
+  locator.by_id(ptor, "calendar_btn").then(function(btn){
+    btn.click();
+  })
 }
 
 //====================================================
@@ -137,7 +168,7 @@ function get_previous_month(ptor){
   var year;
   locator.by_classname(ptor, 'fc-button-prev').click().
                 then(function(promise){
-                    locator.by_tag(ptor, 'h2').
+                    locator.by_classname(ptor, 'fc-header-title').
                         then(function(promise){
                           if((current_date.getMonth()-1)<0){
                             mon = 11;
@@ -160,7 +191,7 @@ function get_next_month(ptor){
   var year;
   locator.by_classname(ptor,'fc-button-next').click().
                 then(function(promise){
-                    locator.by_tag(ptor, 'h2').
+                    locator.by_classname(ptor, 'fc-header-title').
                         then(function(promise){
                           if((current_date.getMonth()+1)>11){
                             mon = 0;
@@ -184,7 +215,7 @@ function get_todays_month(){
             locator.by_classname(ptor,'fc-button-prev').click();
             locator.by_classname(ptor,'fc-button-today').click().
                 then(function(promise){
-                    locator.by_tag(ptor, 'h2').
+                    locator.by_classname(ptor, 'fc-header-title').
                         then(function(promise){
                             expect(promise.getText()).toEqual(month[current_date.getMonth()]+" "+current_date.getFullYear())
                         });
@@ -222,5 +253,15 @@ function open_random_event(ptor){
             })
           })
       })
+  });
+}
+
+//====================================================
+///////////////check element date///////////////////
+//====================================================
+function check_element_date(ptor, element, date){
+  params.wait_ele(ptor, protractor.By.partialLinkText(element));
+  locator.by_partial_text(ptor, element).then(function(wanted_element){
+    wanted_element.click();
   });
 }

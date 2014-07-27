@@ -1,12 +1,30 @@
 var ptor = protractor.getInstance();
 var locator = require('./locators');
 var params = ptor.params;
+var o_c = require('./openers_and_clickers');
+
+
+//=====================================
+//        new layout testing
+//=====================================
+exports.check_module_number = function(ptor, no_of_mo){
+  locator.by_repeater(ptor, 'module in modules').then(function(mods){
+    expect(mods.length).toEqual(no_of_mo);
+  })
+}
+
+exports.check_item_number = function(ptor, total_item_no){
+    locator.by_repeater(ptor, 'item in module.items').then(function(items){
+        expect(items.length).toEqual(total_item_no);
+    })
+}
 
 //=====================================
 //        join course by key
 //=====================================
 exports.join_course = function(ptor, key, feedback)
-{
+{ 
+    o_c.open_courses(ptor);
     locator.by_id(ptor,'join_course').then(function(link)
     {
         link.click();
@@ -15,7 +33,7 @@ exports.join_course = function(ptor, key, feedback)
     {
         input.sendKeys(key);
     });
-    locator.by_xpath(ptor, '/html/body/div[6]/div[3]/button[1]').then(function(button)
+    element(by.buttonText("Enroll")).then(function(button)
     {
         button.click();
     });
@@ -47,41 +65,6 @@ exports.check_course_info = function(ptor, course_code, course_name, description
         expect(duration.getText()).toContain(course_duration);
     })
 }
-
-
-//=====================================
-//    check number of modules/items
-//=====================================
-exports.check_module_number = function(ptor, no_of_mo){
-    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/div[1]').findElement(protractor.By.tagName('button')).then(function(mod_btn){
-        mod_btn.click();
-        expect(locator.by_classname(ptor,"multicol").isDisplayed()).toEqual(true);
-        locator.by_classname(ptor,"multicol").findElements(protractor.By.tagName('ul')).then(function(mod){
-            expect(mod.length).toEqual(no_of_mo);
-        })
-        mod_btn.click();
-    })
-}
-
-exports.check_timeline_item_number = function(ptor, total_item_no){
-    locator.s_by_classname(ptor, 'courseware-item-circle').then(function(items){
-        expect(items.length).toEqual(total_item_no);
-    })
-}
-
-exports.open_module_number = function(ptor, mo_no){
-    locator.by_classname(ptor, 'modules-collapser').then(function(mod_btn){
-        mod_btn.click();
-        ptor.sleep(500)
-        expect(locator.by_classname(ptor,"multicol").isDisplayed()).toEqual(true);
-        locator.by_repeater(ptor,'module in modules').then(function(modules){
-          modules[mo_no-1].findElement(protractor.By.tagName('ul')).then(function(module){
-            module.click();
-          })
-        })
-    })
-}
-
 
 //=====================================
 //    solves normal quiz MCQ question
@@ -173,11 +156,11 @@ exports.submit_normal_quiz = function(ptor){
 //=====================================
 
 exports.press_confused_btn = function(ptor){
-  locator.by_classname(ptor, 'confusedDiv').then(function(btn){
-    btn.click().then(function(){
-      locator.by_repeater(ptor, 'element in timeline').then(function(elements){
-        expect(elements.length).toEqual(1);
-      })
-    })
+  var confused_no = 0;
+  element.all(by.name('confused-timeline-item')).then(function(items){
+    confused_no = items.length
+  })
+  element(by.className('confusedDiv')).click().then(function(){
+    expect(element.all(by.name('confused-timeline-item')).count()).toEqual(confused_no+1)
   })
 }

@@ -3,7 +3,7 @@
 	    <ul class="title-area">
 	      <li class="name">
 	        <h1>
-				<a href="/#">
+				<a id="home" href="/#">
 					Scalable<span style="padding-left:0px; color:#2ba6cb;">Learning</span>
 				</a>
 			</h1>
@@ -15,10 +15,10 @@
 	      	<!-- STUDENT -->
 	      	<ul ng-switch-when="2" class="right">
 				<li class="divider"></li>
-				<li><a ui-sref="dashboard" translate>dashboard</a></li>
+				<li><a id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
 				<li class="divider"></li>
 				<li has-dropdown>
-					<a href="" translate>navigation.courses</a>
+					<a id="all_courses" href="" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
 						<li><label translate>navigation.current_courses</label></li>
 						<li ng-repeat="course in courses | filter:{ended: false}">
@@ -30,9 +30,9 @@
 						</li>
 						<li class="divider"></li>
 						<li><label translate>other</label></li>
-						<li><a enrollment-modal ng-click="open()">{{'courses.join_course' | translate}}</a></li>
+						<li><a id="join_course" enrollment-modal ng-click="open()">{{'courses.join_course' | translate}}</a></li>
 						<li>
-							<a class="has-description" ui-sref="student_courses">
+							<a id="course_list" class="has-description" ui-sref="student_courses">
 								{{'questions.see_all' | translate}} &rarr;
 								<h5 class="description"><small translate>view_whole_courselist</small></h5>
 							</a>
@@ -41,7 +41,7 @@
 				</li>
 				<li class="divider"></li>
 				<li has-dropdown>
-					<a href="" translate>account</a>
+					<a id="account" href="" translate>account</a>
 					<ul top-bar-dropdown>
 						<li has-dropdown>
 							<a class="has-description" href="">
@@ -75,11 +75,11 @@
 								</li>
 							</ul>
 						</li>
-						<li><a ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
+						<li><a id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a href="" translate>head.help</a>
+					<a id="help" href="" translate>head.help</a>
 					<ul top-bar-dropdown>
 						<li><a ui-sref="getting_started" translate>help.getting_started</a></li>
 						<li class="divider"></li>
@@ -91,14 +91,14 @@
 			<!-- TEACHER -->
 			<ul ng-switch-when="1" class="right">
 				<li class="divider"></li>
-				<li><a ui-sref="dashboard" translate>dashboard</a></li>
+				<li><a id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
 				<li class="divider"></li>
 				<li ng-show="are_shared()">
 					<a ui-sref="show_shared" translate>sharing.view</a>
 				</li>
 				<li class="divider"></li>
 				<li has-dropdown>
-					<a href="" translate>navigation.notifications</a>
+					<a id="notifications" href="" translate>navigation.notifications</a>
 					<ul top-bar-dropdown>
 						<li><label translate>navigation.notifications</label></li>
 						<li ng-show="user.invitations == 0 && user.shared == 0"><a>{{'notification.empty' | translate}}</a></li>
@@ -108,7 +108,7 @@
 				</li>
 				<li class="divider"></li>
 				<li has-dropdown>
-					<a href="" translate>navigation.courses</a>
+					<a id="all_courses" href="" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
 						<li><label translate>navigation.current_courses</label></li>
 						<li ng-repeat="course in courses | filter:{ended: false}">
@@ -119,9 +119,9 @@
 						</li>
 						<li class="divider"></li>
 						<li><label translate>other</label></li>
-						<li><a ui-sref="new_course" translate>courses.create_course</a></li>
+						<li><a id="new_course_sub" ui-sref="new_course" translate>courses.create_course</a></li>
 						<li>
-							<a class="has-description" ui-sref="course_list">
+							<a id="course_list" class="has-description" ui-sref="course_list">
 								{{'questions.see_all' | translate}} &rarr;
 								<h5 class="description"><small translate>view_whole_courselist</small></h5>
 							</a>
@@ -130,7 +130,7 @@
 				</li>
 				<li class="divider"></li>
 				<li has-dropdown>
-					<a href="" translate>account</a>
+					<a id="account" href="" translate>account</a>
 					<ul top-bar-dropdown>
 						<li has-dropdown>
 							<a class="has-description" href="">
@@ -164,11 +164,11 @@
 								</li>
 							</ul>
 						</li>
-						<li><a ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
+						<li><a id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a href="" translate>head.help</a>
+					<a id="help" href="" translate>head.help</a>
 					<ul top-bar-dropdown>
 						<li><a ui-sref="getting_started" translate>help.getting_started</a></li>
 						<li><a href="" translate>help.teacher_forum</a></li>
@@ -182,14 +182,14 @@
 			<!-- ADMIN -->
 			<ul ng-switch-when="5" class="right">
 				<li class="divider"></li>
-				<li><a ui-sref="statistics" translate>courses.statistics</a></li>
+				<li><a id="statistics" ui-sref="statistics" translate>courses.statistics</a></li>
 				<li class="divider"></li>
 				<li ng-show="are_shared()">
 					<a ui-sref="show_shared" translate>sharing.view</a>
 				</li>
 				<li class="divider"></li>
 				<li has-dropdown>
-					<a href="" translate>navigation.notifications</a>
+					<a id="notifications" href="" translate>navigation.notifications</a>
 					<ul top-bar-dropdown>
 						<li><label translate>navigation.notifications</label></li>
 						<li ng-show="user.invitations == 0 && user.shared == 0"><a>{{'notification.empty' | translate}}</a></li>
@@ -198,10 +198,10 @@
 					</ul>
 				</li>
 				<li class="divider"></li>
-				<li><a ui-sref="dashboard" translate>dashboard</a></li>
+				<li><a id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
 				<li class="divider"></li>
 				<li has-dropdown>
-					<a href="" translate>navigation.courses</a>
+					<a id="all_courses" href="" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
 						<li><label translate>navigation.current_courses</label></li>
 						<li ng-repeat="course in courses | filter:{ended: false}">
@@ -223,7 +223,7 @@
 				</li>
 				<li class="divider"></li>
 				<li has-dropdown>
-					<a href="" translate>account</a>
+					<a id="account" href="" translate>account</a>
 					<ul top-bar-dropdown>
 						<li has-dropdown>
 							<a class="has-description" href="">
@@ -257,11 +257,11 @@
 								</li>
 							</ul>
 						</li>
-						<li><a ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
+						<li><a id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a href="" translate>head.help</a>
+					<a id="help" href="" translate>head.help</a>
 					<ul top-bar-dropdown>
 						<li><a ui-sref="getting_started" translate>help.getting_started</a></li>
 						<li><a href="" translate>help.teacher_forum</a></li>
@@ -275,7 +275,7 @@
 			<!-- NOT LOGGED IN -->
 			<ul ng-switch-when="undefined" class="right">
 				<li class="divider"></li>
-				<li><a ui-sref="login" translate>navigation.login</a></li>
+				<li><a id="login" ui-sref="login" translate>navigation.login</a></li>
 			</ul>
 	    </top-bar-section>
 	</top-bar>

@@ -7,12 +7,35 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-
-
 describe("1", function(){
+    it('should sign in as teacher', function(){
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
+    })
+
+    it('should add a module and lectures', function(){
+        o_c.open_course_whole(ptor, 0);
+    })
+
+    it('should open content navigator', function(){
+        o_c.press_content_navigator(ptor);
+    })
+
+    it('should press the first module', function(){
+        teacher.open_module(ptor, 1);
+    })
+
+    it('should check for teacher menu appearance', function(){
+        teacher.check_for_teacher_nav_bar(ptor);
+        teacher.open_content_copy(ptor);
+    })
+
+
+})
+
+xdescribe("1", function(){
 
     it('should sign in as teacher', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
     it('should create_course', function(){
@@ -93,7 +116,7 @@ describe("1", function(){
     })
 })
 
-describe("2", function(){
+xdescribe("2", function(){
 
     it('should sign in as teacher', function(){
         o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);

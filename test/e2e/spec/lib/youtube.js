@@ -75,20 +75,22 @@ exports.get_progress_bar_position = function(ptor, callback){
 exports.seek = function(ptor, percent){
 	var pw, ph;
 	var cw, ch;
-	locator.by_classname(ptor, 'progressBar').then(function(progress){
-			progress.getSize().then(function(size){
-				pw = size.width;
-				ph = size.height;
-				ptor.actions().mouseMove(progress).perform();
-				ptor.actions().mouseMove({x: (percent*pw)/100, y: 4}).click().perform().then(function(){
-					locator.by_classname(ptor, 'elapsed').then(function(progress_bar){
-						progress_bar.getSize().then(function(attr){
-							cw = attr.width;
-							expect(cw).toBeGreaterThan(Math.floor((percent*pw)/100)-2);
-							expect(cw).toBeLessThan(Math.ceil((percent*pw)/100)+2);
-						})
-					})
-				})
+	progress = element(by.className('progressBar'))
+	ptor.wait(function() {
+        return progress.isDisplayed().then(function(disp) {
+            return disp;
+        });
+    });
+	progress.getSize().then(function(size){
+		pw = size.width;
+		ph = size.height;
+		ptor.actions().mouseMove(progress,{x: (percent*pw)/100, y: 4}).click().perform().then(function(){
+			element(by.className('elapsed')).getSize().then(function(attr){
+				cw = attr.width;
+				expect(cw).toBeGreaterThan(Math.floor((percent*pw)/100)-2);
+				expect(cw).toBeLessThan(Math.ceil((percent*pw)/100)+2);
+				
 			})
+		})
 	})
 }

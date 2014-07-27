@@ -45,7 +45,7 @@
             <li ng-show="'*.module.**' | includedByState">
                 <a id="inclass" class="sub-header-component green" ui-sref="course.module.inclass" translate>head.in_class</a>
             </li>
-            <li has-dropdown ng-show="('*.module.**' | includedByState) || ('**.course_editor.**' | includedByState)">
+            <li has-dropdown ng-show="('**.course.**' | includedByState)">
                 <a id="content" class="sub-header-component green" ng-click="goToContentEditor()" translate>head.content</a>
                 <ul top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
                     <li>

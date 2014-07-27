@@ -46,7 +46,8 @@ exports.config = {
     specs: [
 
         // 'test/e2e/spec/create-course-check-info.spec.js',
-        'test/e2e/spec/teacher-managment.spec.js',
+        // 'test/e2e/spec/teacher-managment.spec.js',
+        'test/e2e/spec/statistics.spec.js',
         
     ],
 
@@ -89,18 +90,28 @@ exports.config = {
     // This can be changed via the command line as:
     //   --params.login.user 'Joe'
     params: {
+        //local
         frontend: 'http://0.0.0.0:9000/#',
-        // frontend: 'http://staging.scalable-learning.com/#',
-        // teacher_mail: 'teacher3@sharklasers.com',
-        // mail: 'studenttest2@sharklasers.com',
-        // teacher_mail: 'teacher2@sharklasers.com',
+        admin_mail: 'admin@scalear.com',
         teacher_mail: 'teacher1@sharklasers.com',
         teacher2_mail: 'teacher3@sharklasers.com',
-
-        // mail: 'studenttest@sharklasers.com',
-        mail: 'studenttest@sharklasers.com',
-        student_mail_2: 'student_mail_2@sharklasers.com',
+        student_mail: 'studenttest@sharklasers.com',
+        student2_mail: 'studenttest2@sharklasers.com',
+        student3_mail: 'student_mail_2@sharklasers.com',
         password: 'password',
+        admin_password:"password",
+
+        //staging
+        // frontend: 'http://staging.scalable-learning.com/#',
+        // admin_email: 'admin@scalable-learning.com',       
+        // teacher_mail: 'teacher1@sharklasers.com',
+        // teacher2_mail: 'teacher2@sharklasers.com',
+        // teacher3_mail: 'teacher3@sharklasers.com',
+        // student_mail: 'studenttest@sharklasers.com',
+        // student2_mail:'studenttest2@sharklasers.com',
+        // student3_mail: 'student_mail_2@sharklasers.com',
+        // password: 'password',
+        // admin_password:"admin_account_password",
 
         short_name: "csc-test",
         course_name: "testing course 100",
@@ -135,6 +146,6 @@ exports.config = {
         // If true, include stack traces in failures.
         includeStackTrace: true,
         // Default time to wait in ms before a test fails.
-        defaultTimeoutInterval: 100000
+        defaultTimeoutInterval: 300000
     }
 };

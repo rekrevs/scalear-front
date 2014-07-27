@@ -8,8 +8,8 @@
 	<table class="table" >
 		<tr>
 			<td class="right-border"><span translate>lectures.title</span>:</td>
-			<td>
-    			<details-text value="lecture.name" save="updateLecture()" validate="validateLecture" column="name"></details-text>
+			<td >
+    			<details-text id="name" value="lecture.name" save="updateLecture()" validate="validateLecture" column="name"></details-text>
 			</td>
 		</tr>
 		<tr>
@@ -18,7 +18,7 @@
 				<i class='fi-info' tooltip='{{"youtube.info"|translate}}'></i>
 			</td>
 			<td class="break-text">
-    			<details-text value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"></details-text> 
+    			<details-text id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"></details-text> 
 			</td>
 		</tr>
 

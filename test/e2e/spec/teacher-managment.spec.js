@@ -36,6 +36,7 @@ describe("1", function(){
 		o_c.to_teacher(ptor)
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
+		o_c.logout(ptor, o_c.feedback);
 	})
 })
 
@@ -83,6 +84,7 @@ describe("2", function(){
 		o_c.to_teacher(ptor)
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
+		o_c.logout(ptor, o_c.feedback);
 	})
 })
 

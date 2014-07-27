@@ -63,7 +63,7 @@ exports.get_key_and_enroll = function(ptor){
 			// o_c.home_teacher(ptor);
 			// o_c.open_tray(ptor);
 			o_c.logout(ptor, o_c.feedback);
-			o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
+			o_c.sign_in(ptor, params.student_mail, params.password, o_c.feedback);
 			student.join_course(ptor, text, o_c.feedback);
 			// o_c.home(ptor);
 			// o_c.open_tray(ptor);
@@ -81,7 +81,7 @@ exports.delete_course = function(ptor,co_no){
 	course.element(by.className('delete')).click()
 	course.element(by.className('fi-check')).click().then(function(){
 		o_c.feedback(ptor, 'Course was successfully deleted.');
-		o_c.logout(ptor, o_c.feedback);
+		// o_c.logout(ptor, o_c.feedback);
 	})
 	// o_c.open_tray(ptor);
 	// o_c.logout(ptor, o_c.feedback);
@@ -133,25 +133,37 @@ exports.delete_course = function(ptor,co_no){
 //====================================================
 
 exports.add_module = function(ptor){
-	locator.by_partial_text(ptor, '+ Add Module').then(function(add_mod){
-        add_mod.click().then(function() {
-            o_c.feedback(ptor, 'Module was successfully created');
-        })
-    })
+	o_c.open_content(ptor)
+	element(by.id('new_module')).click().then(function(){
+	 	o_c.feedback(ptor, 'Module was successfully created');	 	
+	})
+	o_c.hide_dropmenu(ptor)
+	// locator.by_partial_text(ptor, '+ Add Module').then(function(add_mod){
+ //        add_mod.click().then(function() {
+ //           
+ //        })
+ //    })
 }
 
 exports.delete_empty_module = function(ptor, mo_no){
-	locator.by_repeater(ptor, 'module in modules').then(function(mods){
-        mods[mo_no-1].findElement(protractor.By.className('delete')).then(function(del_btn){
-            del_btn.click().then(function(){
-            	mods[mo_no-1].findElement(protractor.By.className('btn-danger')).then(function(conf_btn){
-            		conf_btn.click().then(function(){
-            			o_c.feedback(ptor, 'Module was successfully deleted');
-            		})
-            	})
-            })
-        })
-    })
+	element(by.repeater('module in modules').row(mo_no-1))
+	.then(function(item){
+		item.element(by.className('delete')).click()
+		item.element(by.className('fi-check')).click().then(function(){
+			o_c.feedback(ptor, 'was successfully deleted');
+		})
+	})
+	// locator.by_repeater(ptor, 'module in modules').then(function(mods){
+ //        mods[mo_no-1].findElement(protractor.By.className('delete')).then(function(del_btn){
+ //            del_btn.click().then(function(){
+ //            	mods[mo_no-1].findElement(protractor.By.className('fi-check')).then(function(conf_btn){
+ //            		conf_btn.click().then(function(){
+ //            			o_c.feedback(ptor, 'Module was successfully deleted');
+ //            		})
+ //            	})
+ //            })
+ //        })
+ //    })
 }
 
 //====================================================
@@ -159,19 +171,28 @@ exports.delete_empty_module = function(ptor, mo_no){
 //====================================================
 
 exports.delete_item_by_number = function(ptor, mo_no, item_no){
-	locator.by_repeater(ptor, 'module in modules').then(function(mods){
-		mods[mo_no-1].findElements(protractor.By.repeater('item in module.items')).then(function(items){
-			items[item_no-1].findElement(protractor.By.className('delete')).then(function(del_btn){
-            	del_btn.click().then(function(){
-            		items[item_no-1].findElement(protractor.By.className('btn-danger')).then(function(conf_btn){
-            			conf_btn.click().then(function(){
-            				o_c.feedback(ptor, 'was successfully deleted');
-            			})
-            		})
-            	})
-            })
+	element(by.repeater('module in modules').row(mo_no-1))
+	.element(by.repeater('item in module.items').row(item_no-1)).then(function(item){
+		item.element(by.className('delete')).click()
+		item.element(by.className('fi-check')).click().then(function(){
+			o_c.feedback(ptor, 'was successfully deleted');
 		})
 	})
+	// locator.by_repeater(ptor, 'module in modules').then(function(mods){
+	// 	console.log("mods.length")
+	// 	console.log(mods.length)
+	// 	mods[mo_no-1].findElements(protractor.By.repeater('item in module.items')).then(function(items){
+	// 		items[item_no-1].findElement(protractor.By.className('delete')).then(function(del_btn){
+ //            	del_btn.click().then(function(){
+ //            		items[item_no-1].findElement(protractor.By.className('fi-check')).then(function(conf_btn){
+ //            			conf_btn.click().then(function(){
+ //            				o_c.feedback(ptor, 'was successfully deleted');
+ //            			})
+ //            		})
+ //            	})
+ //            })
+	// 	})
+	// })
 	ptor.sleep(1000);
 }
 
@@ -559,22 +580,47 @@ exports.make_quiz_required = function(ptor){
 //====================================================
 //				initialize a lecture with a url
 //===================================================
-exports.initialize_lecture = function(ptor, lec_name, lec_url){
-	locator.by_id(ptor, 'details').then(function(details){
-		details.findElements(protractor.By.tagName("td")).then(function(td){
-			td[1].click().then(function(){
-			locator.by_classname(ptor, 'editable-input').then(function(field){
-				field.sendKeys(lec_name).then(function(){
-					locator.by_classname(ptor, 'icon-ok').then(function(confirm_button){
-						confirm_button.click().then(function(){
-							o_c.feedback(ptor, 'successfully updated')
-						})
-					})
-				})
+exports.initialize_lecture = function(ptor, lec_name, lec_url){	
+	element(by.id('name')).click()
+	.then(function(){
+		element(by.className('editable-input')).sendKeys(lec_name)
+		element(by.className('check')).click().then(function(){
+			// o_c.feedback(ptor, 'successfully updated')			
+			element(by.id('url')).click()
+			.then(function(){
+				element(by.className('editable-input')).sendKeys(lec_url)
+				element(by.className('check')).click()
+				element(by.className('check')).click()
 			})
-		})
+		})	
 	})
-})
+
+	// locator.by_id(ptor, 'details').then(function(details){
+	// 	details.findElements(protractor.By.tagName("td")).then(function(td){
+	// 		td[1].click().then(function(){
+	// 			locator.by_classname(ptor, 'editable-input').then(function(field){
+	// 				field.sendKeys(lec_name).then(function(){
+	// 					locator.by_classname(ptor, 'fi-check').then(function(confirm_button){
+	// 						confirm_button.click().then(function(){
+	// 							o_c.feedback(ptor, 'successfully updated')
+	// 						})
+	// 					})
+	// 				})
+	// 			})
+	// 		})
+	// 		td[4].click().then(function(){
+	// 			locator.by_classname(ptor, 'editable-input').then(function(field){
+	// 				field.sendKeys(lec_url).then(function(){
+	// 					locator.by_classname(ptor, 'fi-check').then(function(confirm_button){
+	// 						confirm_button.click().then(function(){
+	// 							o_c.feedback(ptor, 'successfully updated')
+	// 						})
+	// 					})
+	// 				})
+	// 			})		
+	// 		})
+	// 	})
+	// })
 }
 
 //====================================================
@@ -824,10 +870,18 @@ exports.open_settings_enrolled = function(ptor){
     })
 }
 
-////////////////old//////////////////////////////
 // //====================================================
 // //            		add lecture
 // //====================================================
+
+exports.add_lecture = function(ptor){
+	o_c.open_content(ptor)
+	o_c.open_online_content(ptor)
+	element(by.id('video_item')).click().then(function(){
+		o_c.feedback(ptor, 'Lecture was successfully created.')
+	})
+	o_c.hide_dropmenu(ptor)
+}
 
 // exports.add_lecture = function(ptor, mo_no){
 // 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
@@ -850,28 +904,27 @@ exports.open_settings_enrolled = function(ptor){
 // //            		add quiz
 // //====================================================
 
-// exports.add_quiz = function(ptor, mo_no){
-// 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
-// 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){
-// 			btns_frame.findElements(protractor.By.className('btn-success')).then(function(add_button){
-// 				add_button[1].click().then(function(){
-// 					locator.s_by_classname(ptor, 'add-menu-container').then(function(menus){
-// 						menus[mo_no-1].findElements(protractor.By.className('add-item')).then(function(options){
-// 							options[1].click().then(function(){
-// 								o_c.feedback(ptor, 'Quiz was successfully created.')
-// 							});
-// 						})
-// 					})
-// 				})
-// 			})
-// 		})
-// 	})
-// }
+exports.add_quiz = function(ptor){
+	o_c.open_content(ptor)
+	o_c.open_online_content(ptor)
+	element(by.id('quiz_item')).click().then(function(){
+		o_c.feedback(ptor, 'Quiz was successfully created.')
+	})
+	o_c.hide_dropmenu(ptor)
+}
 
 // //====================================================
 // //            		add survey
 // //====================================================
 
+exports.add_survey = function(ptor){
+	o_c.open_content(ptor)
+	o_c.open_online_content(ptor)
+	element(by.id('survey_item')).click().then(function(){
+		o_c.feedback(ptor, 'Survey was successfully created.')
+	})
+	o_c.hide_dropmenu(ptor)
+}
 // exports.add_survey = function(ptor, mo_no){
 // 	locator.by_repeater(ptor, 'module in modules').then(function(mods){
 // 		mods[mo_no-1].findElement(protractor.By.className('item-buttons')).then(function(btns_frame){

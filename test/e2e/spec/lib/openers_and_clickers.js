@@ -21,18 +21,29 @@ exports.press_login = function(ptor){
 //                      sign in
 //====================================================
 exports.sign_in = function(ptor, email, password){
-    locator.by_id(ptor,'user_email').then(function(email_field) {
-        email_field.sendKeys(email);
+    element(by.id('user_email')).sendKeys(email);
+    element(by.id('user_passowrd')).sendKeys(password);
+    element(by.id('login_btn')).click().then(function(){
+        o_c.feedback(ptor, 'Signed in successfully');
     });
-    locator.by_id(ptor,'user_passowrd').then(function(password_field) {
-        password_field.sendKeys(password);
-    });
+    // locator.by_id(ptor,'user_email').then(function(email_field) {
+    //     email_field.sendKeys(email);
+    // });
+    // locator.by_id(ptor,'user_passowrd').then(function(password_field) {
+    //     password_field.sendKeys(password);
+    // });
 
-    locator.by_id(ptor, "login_btn").then(function(btn){
-        btn.click().then(function() {
-            o_c.feedback(ptor, 'Signed in successfully');
-        });
-    });
+    // locator.by_id(ptor, "login_btn").then(function(btn){
+    //     btn.click().then(function() {
+    //         o_c.feedback(ptor, 'Signed in successfully');
+    //     });
+    // });
+}
+
+exports.sign_in_admin = function(ptor){
+    element(by.id('user_email')).sendKeys(params.admin_mail);
+    element(by.id('user_passowrd')).sendKeys(params.admin_password);
+    element(by.id('login_btn')).click()
 }
 
 //=====================================
@@ -44,6 +55,33 @@ exports.logout = function(ptor) {
         link.click().then(function() {
             o_c.feedback(ptor, 'Signed out successfully');
         });
+    })
+}
+
+//====================================================
+//                      sign up
+//====================================================
+exports.sign_up_student = function(ptor, screen_name, fname, lname, mail, univer, biog, webs, password){
+    ptor.get(params.frontend+'/users/student');
+    o_c.fill_sign_up_forum(ptor, screen_name, fname, lname, mail, univer, biog, webs, password)
+}
+exports.sign_up_teacher = function(ptor, screen_name, fname, lname, mail, univer, biog, webs, password){
+    ptor.get(params.frontend+'/users/teacher');
+    o_c.fill_sign_up_forum(ptor, screen_name, fname, lname, mail, univer, biog, webs, password)
+}
+
+exports.fill_sign_up_forum=function(ptor, screen_name, fname, lname, mail, univer, biog, webs, password){
+    element(by.model('user.name')).sendKeys(fname)
+    element(by.model('user.last_name')).sendKeys(lname)
+    element(by.model('user.email')).sendKeys(mail)
+    element(by.model('user.university')).sendKeys(univer)
+    element(by.model('user.link')).sendKeys(webs)
+    element(by.model('user.bio')).sendKeys(biog)
+    element(by.model('user.screen_name')).sendKeys(screen_name)
+    element(by.model('user.password')).sendKeys(password)
+    element(by.model('user.password_confirmation')).sendKeys(password)
+    element(by.buttonText('Sign up')).click().then(function(){
+        o_c.feedback(ptor, 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.');
     })
 }
 
@@ -135,9 +173,25 @@ exports.open_settings = function(ptor){
     })
 }
 
+exports.open_statistics = function(ptor){
+   element(by.id('statistics')).click()
+}
+
+exports.open_content = function(ptor){
+   element(by.id('content')).then(function(btn){
+        ptor.actions().mouseMove(btn).perform();
+    })
+}
+
+exports.open_online_content = function(ptor){
+   element(by.id('new_online_content')).click()
+}
+
 exports.hide_dropmenu = function(ptor){
-    element(by.id('main')).click()
-    // ptor.actions().mouseMove({x: 0, y: 0}).perform();
+    // element(by.id('main')).click()
+    element(by.id('content_navigator')).then(function(btn){
+        ptor.actions().mouseMove(btn).perform();
+    })
     
 }
 
@@ -236,7 +290,7 @@ exports.open_course_info = function(ptor){
 //=======================================================
 exports.to_student = function(ptor){
     this.logout(ptor, this.feedback);
-    this.sign_in(ptor, params.mail, params.password, this.feedback);   
+    this.sign_in(ptor, params.student_mail, params.password, this.feedback);   
 }
 
 //=======================================================
@@ -266,6 +320,19 @@ exports.reject_notification = function(ptor,inv_no){
     //     ptor.actions().mouseMove(btn).perform();
     // })
 }
+
+// //====================================================
+// //               press lectures button
+// //====================================================
+exports.open_lectures = function(ptor){ 
+    element(by.id('course_content')).click()   
+    // info_icon = ptor.findElement(protractor.By.id("lectures")).then(function(btn){
+    //     btn.click();
+    //     ptor.getCurrentUrl().then(function(url) {
+    //         expect(url).toContain('courseware');
+    //     });
+    // })
+}
 //////////////////////////////end new_layout test mods /////////////////////////////////////////
 
 
@@ -286,45 +353,6 @@ exports.reject_notification = function(ptor,inv_no){
 //     ptor.findElement(protractor.By.xpath('//*[@id="main"]/div/div[1]/div/div/center/div[3]/form/div/table/tbody/tr/td[3]/table/tbody/tr[3]/td/input')).click();
 // }
 
-
-// //====================================================
-// //                      sign up
-// //====================================================
-// exports.sign_up = function(ptor, screen_name, fname, lname, studentmail, univer, biog, webs, password, feedback){
-//     ptor.get(params.frontend+'/users/student');
-
-//     ptor.findElement(protractor.By.id('screen_name')).then(function(screenname) {
-//             screenname.sendKeys(screen_name);
-//         });
-//     ptor.findElement(protractor.By.id('name')).then(function(name) {
-//             name.sendKeys(fname);
-//         });
-//     ptor.findElement(protractor.By.id('last_name')).then(function(lastname) {
-//             lastname.sendKeys(lname);
-//         });
-//     ptor.findElement(protractor.By.id('user_email')).then(function(email) {
-//             email.sendKeys(studentmail);
-//         });
-//     ptor.findElement(protractor.By.id('university')).then(function(uni) {
-//             uni.sendKeys(univer);
-//         });
-//     ptor.findElement(protractor.By.id('bio')).then(function(bio) {
-//             bio.sendKeys(biog);
-//         });
-//     ptor.findElement(protractor.By.id('link')).then(function(website) {
-//             website.sendKeys(webs);
-//         });
-//     ptor.findElements(protractor.By.id('user_passowrd')).then(function(pass) {
-//             console.log("number of element with id = user_passowrd = "+pass.length);
-//             pass[0].sendKeys(password);
-//             pass[1].sendKeys(password);
-//         });
-//     ptor.findElement(protractor.By.id('signup_btn')).then(function(signup_btn){
-//         signup_btn.click().then(function(){
-//             feedback(ptor, 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.');
-//         });
-//     });
-// }
 // //====================================================
 // //                 confirm account
 // //====================================================

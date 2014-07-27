@@ -156,11 +156,11 @@ exports.submit_normal_quiz = function(ptor){
 //=====================================
 
 exports.press_confused_btn = function(ptor){
-  locator.by_classname(ptor, 'confusedDiv').then(function(btn){
-    btn.click().then(function(){
-      locator.by_repeater(ptor, 'element in timeline').then(function(elements){
-        expect(elements.length).toEqual(1);
-      })
-    })
+  var confused_no = 0;
+  element.all(by.name('confused-timeline-item')).then(function(items){
+    confused_no = items.length
+  })
+  element(by.className('confusedDiv')).click().then(function(){
+    expect(element.all(by.name('confused-timeline-item')).count()).toEqual(confused_no+1)
   })
 }

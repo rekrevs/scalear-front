@@ -6,7 +6,7 @@
         </div>
         <div style="position: absolute; margin-top: 220px;" class="show-for-large-up">
             <button type="button" class="button tiny uppercase" ng-click="openCalendar()">View Course Calendar</button>
-            <button type="button" class="button tiny uppercase under-the-other success" calendar-modal ng-click="goToContent()" ng-disabled="!course.groups.length">View Course Content</button>
+            <button id="course_content" type="button" class="button tiny uppercase under-the-other success" ng-click="goToContent()" ng-disabled="!course.groups.length">View Course Content</button>
             <div class="large-12 column with-margin-bottom">
                 <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
             </div>
@@ -24,7 +24,7 @@
         <div class="hide-for-large-up with-padding-bottom">
             <div>
                 <button id="calendar_btn" type="button" class="button tiny uppercase right">View Course Calendar</button>
-                <button type="button" class="button tiny uppercase success" calendar-modal ui-sref="course.courseware">View Course Content</button>
+                <button id="course_content" type="button" class="button tiny uppercase success" ng-click="goToContent()" ng-disabled="!course.groups.length">View Course Content</button>
             </div>
             <div class="with-margin-bottom">
                 <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}

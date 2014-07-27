@@ -107,8 +107,8 @@ angular.module('scalearAngularApp', [
 
             $log.debug("lang is " + $rootScope.current_lang);
             var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']
-            var statesThatForStudents = ['student_courses', 'course.student_calendar', 'course.course_information', 'course.courseware']
-            var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
+            var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
+            var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
 
             //check if route requires no auth
@@ -182,7 +182,7 @@ angular.module('scalearAngularApp', [
                         s = 0;
                     } else if ((stateTeacher(to.name) && result == 2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
                     {
-                        $state.go("student_courses");
+                        $state.go("course_list");
                         s = 0;
                     } 
                     else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
@@ -196,7 +196,7 @@ angular.module('scalearAngularApp', [
                         $state.go("course_list");
                     } else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
                     {
-                        $state.go("student_courses");
+                        $state.go("course_list");
                     } else if (stateNoAuth(to.name)) {
                         if (result == 1 || result == 2) {
                             $state.go("home");
@@ -326,7 +326,7 @@ angular.module('scalearAngularApp', [
             })
             .state('course_list', {
                 url: '/courses',
-                templateUrl: '/views/teacher/course_list/course_list.html',
+                templateUrl: '/views/course_list.html',
                 controller: 'courseListCtrl'
             })
             .state('new_course', {
@@ -523,11 +523,11 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/dashboard.html',
                 controller: 'dashboardCtrl'
             })
-            .state('student_courses', {
-                url: '/student_courses',
-                templateUrl: '/views/student/course_list/course_list.html',
-                controller: 'studentCourseListCtrl'
-            })
+            // .state('student_courses', {
+            //     url: '/student_courses',
+            //     templateUrl: '/views/student/course_list/course_list.html',
+            //     controller: 'studentCourseListCtrl'
+            // })
             .state('statistics', {
               url: '/statistics',
               templateUrl: '/views/statistics/statistics.html',

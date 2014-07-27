@@ -106,9 +106,7 @@ angular.module('scalearAngularApp')
                         $log.debug("rootscope is ");
                         $log.debug($rootScope);
                         var $state = $injector.get('$state'); //test connection every 10 seconds.
-                        if ($rootScope.current_user.roles[0].id == 2) // student
-                            $state.go("student_courses") //check
-                        else if ($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5) // teacher
+                        if ($rootScope.current_user) 
                             $state.go("course_list") //check
                         else
                             $state.go("login") //check
@@ -127,9 +125,7 @@ angular.module('scalearAngularApp')
 
                     if (rejection.status == 403 && rejection.config.url.search(re) != -1) {
                         var $state = $injector.get('$state'); //test connection every 10 seconds.
-                        if ($rootScope.current_user.roles[0].id == 2) // student
-                            $state.go("student_courses") //check
-                        else if ($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5) // teacher
+                        if ($rootScope.current_user)
                             $state.go("course_list") //check
                         else
                             $state.go("login") //check

@@ -193,54 +193,54 @@ describe('Student', function() {
     });
     login(ptor, driver, 'anystudent@email.com', 'password', 'anystudent', findByName);
     it('should test the link \'courses\'', function() {
-        testLink(ptor, '/#/courses', 'student_courses');
+        testLink(ptor, '/#/courses', 'course_list');
     });
     it('should test the link \'course information\'', function() {
-        testLink(ptor, '/#/courses/' + course_id, 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id, 'course_list');
     });
     it('should test the link \'enrolled students\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/enrolled_students', 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/enrolled_students', 'course_list');
     });
     it('should test the link \'teachers\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/teachers', 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/teachers', 'course_list');
     });
     it('should test the link \'course editor\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/course_editor', 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/course_editor', 'course_list');
     });
     it('should test the link \'course editor modules\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/course_editor/modules/' + module_id, 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/course_editor/modules/' + module_id, 'course_list');
     });
     it('should test the link \'course editor lectures\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/course_editor/lectures/' + lecture_id, 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/course_editor/lectures/' + lecture_id, 'course_list');
     });
     it('should test the link \'course editor quizzes\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/course_editor/quizzes/' + quiz_id, 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/course_editor/quizzes/' + quiz_id, 'course_list');
     });
     it('should test the link \'announcements\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/announcements', 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/announcements', 'course_list');
     });
     it('should test the link \'events\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/events', 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/events', 'course_list');
     });
     it('should test the link \'in class\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/inclass/', 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/inclass/', 'course_list');
     });
     it('should test the link \'inclass modules\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/inclass/modules/' + module_id, 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/inclass/modules/' + module_id, 'course_list');
     });
     it('should test the link \'progress main\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/progress/main/', 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/progress/main/', 'course_list');
     });
     it('should test the link \'progress modules\'', function() {
-        testLink(ptor, '/#/courses/' + course_id + '/progress/modules/' + module_id, 'student_courses');
+        testLink(ptor, '/#/courses/' + course_id + '/progress/modules/' + module_id, 'course_list');
     });
     logout(ptor, driver);
 });
 
 describe('Teacher', function() {
     login(ptor, driver, 'anyteacher@email.com', 'password', 'anyteacher', findByName);
-    it('should test the link \'/#/student_courses\'', function() {
-        testLink(ptor, '/#/student_courses', 'courses');
+    it('should test the link \'/#/course_list\'', function() {
+        testLink(ptor, '/#/course_list', 'courses');
     });
     it('should test the link \'student events\'', function() {
         testLink(ptor, '/#/courses/' + course_id + '/student/events', 'courses');

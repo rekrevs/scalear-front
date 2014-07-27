@@ -47,7 +47,9 @@ exports.config = {
 
         // 'test/e2e/spec/create-course-check-info.spec.js',
         // 'test/e2e/spec/teacher-managment.spec.js',
-        'test/e2e/spec/statistics.spec.js',
+        // 'test/e2e/spec/statistics.spec.js',
+        // 'test/e2e/spec/enrolled-students.spec.js',
+        'test/e2e/spec/create-announcements.spec.js',
         
     ],
 

@@ -5,9 +5,10 @@
 	<form name="form.key">
     <center>
     	<input type="text" ng-model="enrollment.key" name="key" required/><br>
-    	<loading size="small" show="form.processing"></loading>
-    	<span class='help-inline' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
-    	<div class='errormessage' ng-if='form.server_error'>{{form.server_error}}</div>
+    	<span class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
+    	<div class='error' ng-if='form.server_error'>{{form.server_error}}</div>
+        <loading size="small" show="form.processing"></loading>
+        
         {{'users.enrollement_key_format' | translate}} 
         <br>
         <b>ABCDE-12345</b>

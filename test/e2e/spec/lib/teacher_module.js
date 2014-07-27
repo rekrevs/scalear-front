@@ -56,14 +56,16 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 //====================================================
 //            get key and save in a holder
 //====================================================
-exports.get_key_and_enroll = function(ptor){
+exports.get_key_and_enroll = function(ptor, mail){
 	// o_c.open_tray(ptor);
+	var email = mail || params.student_mail
+	var password =  params.password
 	o_c.open_course_info(ptor);
 	element(by.binding('course.unique_identifier')).getText().then(function(text){
 			// o_c.home_teacher(ptor);
 			// o_c.open_tray(ptor);
 			o_c.logout(ptor, o_c.feedback);
-			o_c.sign_in(ptor, params.student_mail, params.password, o_c.feedback);
+			o_c.sign_in(ptor, email, password, o_c.feedback);
 			student.join_course(ptor, text, o_c.feedback);
 			// o_c.home(ptor);
 			// o_c.open_tray(ptor);

@@ -27,9 +27,10 @@ var password = 'password';
 ////////// searching
 ////////// emailing
 
-describe("1", function(){
+xdescribe("1", function(){
 
 	it('should sign in as teacher', function(){
+		o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
 	})
 
@@ -42,22 +43,22 @@ describe("1", function(){
 	})
 	//test
 	it('should', function(){
-		o_c.open_course_whole(ptor);
-		o_c.open_tray(ptor);
+ 		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
 		o_c.open_enrolled(ptor);
 		check_enrolled_no(ptor, 1);
 	})
 	//end test
 	it('should delete course', function(){
-		//should choose one of home() or home_teacher() 
-		//depending on the current state(student or teacher)
-		o_c.home_teacher(ptor);
-		teacher.delete_course(ptor, o_c.feedback);
+		o_c.open_course_list(ptor);
+		teacher.delete_course(ptor, 1);
+		o_c.logout(ptor, o_c.feedback);
 	})
 })
 
-describe("2", function(){
+xdescribe("2", function(){
 	it('should sign in as teacher', function(){
+		o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
 	})
 
@@ -68,64 +69,72 @@ describe("2", function(){
 	it('should get the enrollment key and enroll student', function(){
 		teacher.get_key_and_enroll(ptor);
 	})
+
 	//test
 	it('should enroll student1', function(){
-		o_c.open_course_whole(ptor);
-		get_key_and_enroll(ptor, studentmail1);
+		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
+		teacher.get_key_and_enroll(ptor, studentmail1);
 	})
 	it('should enroll student2', function(){	
-		o_c.open_course_whole(ptor);
-		get_key_and_enroll(ptor, studentmail2);
+		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
+		teacher.get_key_and_enroll(ptor, studentmail2);
 	})
 	it('should enroll student3', function(){
-		o_c.open_course_whole(ptor);
-		get_key_and_enroll(ptor, studentmail3);
+		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
+		teacher.get_key_and_enroll(ptor, studentmail3);
 	})
 	it('should enroll student4', function(){
-		o_c.open_course_whole(ptor);
-		get_key_and_enroll(ptor, studentmail4);
+		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
+		teacher.get_key_and_enroll(ptor, studentmail4);
 	})
 	it('should enroll student5', function(){
-		o_c.open_course_whole(ptor);
-		get_key_and_enroll(ptor, studentmail5);
+		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
+		teacher.get_key_and_enroll(ptor, studentmail5);
 	})
 	it('check for enrolled students', function(){
-		o_c.open_course_whole(ptor);
-		o_c.open_tray(ptor);
+		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
 		o_c.open_enrolled(ptor);
 		check_enrolled_no(ptor, 6);
 	})
-
 	//end test
+
 	it('should delete course', function(){
-		//should choose one of home() or home_teacher() 
-		//depending on the current state(student or teacher)
-		o_c.home_teacher(ptor);
-		teacher.delete_course(ptor, o_c.feedback);
+		o_c.open_course_list(ptor);
+		teacher.delete_course(ptor, 1);
+		o_c.logout(ptor, o_c.feedback);
 	})
 })
 
-describe("3", function(){
+xdescribe("3", function(){
 	it('should sign in as teacher', function(){
+		o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
 	})
 
-	it('should create_course', function(){
+	it('should create course', function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
 		teacher.get_key_and_enroll(ptor);
 	})
+
 	//test
 	it('should enroll student1', function(){
-		o_c.open_course_whole(ptor);
-		get_key_and_enroll(ptor, studentmail1);
+		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
+		teacher.get_key_and_enroll(ptor, studentmail1);
 	})
 
 	it('check for enrolled students', function(){
-		o_c.open_course_whole(ptor);
-		o_c.open_tray(ptor);
+		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
 		o_c.open_enrolled(ptor);
 		check_enrolled_no(ptor, 2);
 	})
@@ -133,22 +142,21 @@ describe("3", function(){
 	it('should delete student', function(){
 		delete_enrolled_student(ptor, 1, o_c.feedback);
 		check_enrolled_no(ptor, 1);
-		o_c.home_teacher(ptor);
-		o_c.open_tray(ptor);
 		o_c.logout(ptor, o_c.feedback);
 	})
 
 	it('should check if student is still enrolled', function(){
 		o_c.sign_in(ptor, studentmail1, params.password, o_c.feedback);
+		o_c.open_course_list(ptor);
 		check_if_courses(ptor);
 	})
-
 	//end test
+
 	it('should delete course', function(){
-		//should choose one of home() or home_teacher() 
-		//depending on the current state(student or teacher)
-		o_c.home(ptor);
-		teacher.delete_course(ptor, o_c.feedback);
+		o_c.to_teacher(ptor)
+		o_c.open_course_list(ptor);
+		teacher.delete_course(ptor, 1);
+		o_c.logout(ptor, o_c.feedback);
 	})
 })
 
@@ -229,24 +237,24 @@ xdescribe("", function(){
 //====================================================
 //            enroll student by mail
 //====================================================
-function get_key_and_enroll(ptor, mail){
+// function get_key_and_enroll(ptor, mail){
 	
-	o_c.open_tray(ptor);
-	o_c.open_info_teacher(ptor);
-	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/span/ul[1]').then(function(element){
-		element.getText().then(function(text){
-			o_c.home_teacher(ptor);
-			o_c.open_tray(ptor);
-			o_c.logout(ptor, o_c.feedback);
-			o_c.sign_in(ptor, mail, params.password, o_c.feedback);
-			student.join_course(ptor, text, o_c.feedback);
-			o_c.home(ptor);
-			o_c.open_tray(ptor);
-			o_c.logout(ptor, o_c.feedback);
-			o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-		})
-	})
-}
+// 	o_c.open_tray(ptor);
+// 	o_c.open_info_teacher(ptor);
+// 	locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/span/ul[1]').then(function(element){
+// 		element.getText().then(function(text){
+// 			o_c.home_teacher(ptor);
+// 			o_c.open_tray(ptor);
+// 			o_c.logout(ptor, o_c.feedback);
+// 			o_c.sign_in(ptor, mail, params.password, o_c.feedback);
+// 			student.join_course(ptor, text, o_c.feedback);
+// 			o_c.home(ptor);
+// 			o_c.open_tray(ptor);
+// 			o_c.logout(ptor, o_c.feedback);
+// 			o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+// 		})
+// 	})
+// }
 
 //====================================================
 //         check number of enrolled students

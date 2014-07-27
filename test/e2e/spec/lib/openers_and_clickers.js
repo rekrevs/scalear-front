@@ -115,7 +115,7 @@ exports.home = function(ptor){
     locator.by_id(ptor, 'home').then(function(home){
         home.click().then(function(){
             ptor.getCurrentUrl().then(function(url) {
-                expect(url).toContain(params.frontend+'/student_courses');
+                expect(url).toContain(params.frontend+'/course_list');
             });
         })
     })
@@ -231,7 +231,7 @@ exports.open_course_list_student = function(ptor){
     locator.by_id(ptor, 'course_list').then(function(btn){
         btn.click();
         ptor.getCurrentUrl().then(function(url) {
-            expect(url).toContain('student_courses');
+            expect(url).toContain('course_list');
         });
     })
 }
@@ -253,7 +253,6 @@ exports.open_course_from_sub_menu = function(ptor, co_no){
 //              open course by no whole-box
 //====================================================
 exports.open_course_whole = function(ptor, co_no){
-    browser.debugger()
     locator.s_by_classname(ptor, 'whole-box').then(function(course){
         course[co_no].findElement(protractor.By.className("looks-like-a-link")).click();
     })
@@ -280,10 +279,25 @@ exports.press_content_navigator = function(ptor){
 
 exports.open_course_info = function(ptor){
     this.open_settings(ptor);
-    locator.by_id(ptor, 'course_info').then(function(btn){
-        btn.click();
-    })
+    element(by.id('course_info')).click()
 }
+
+// //====================================================
+// //          open enrolled students page
+// //====================================================
+exports.open_enrolled = function(ptor){
+    this.open_settings(ptor);
+    element(by.id('enrolled_students')).click()
+}
+
+// //====================================================
+// //          open enrolled students page
+// //====================================================
+exports.open_announcements = function(ptor){
+    this.open_settings(ptor);
+    element(by.id('announcements')).click()
+}
+
 
 //=======================================================
 //          switch from teacher to student

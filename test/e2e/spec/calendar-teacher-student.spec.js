@@ -27,9 +27,11 @@ month[10] = "November";
 month[11] = "December";
 
 describe("should check calendar functionality", function(){
-  it('should login as student', function(){
+  it('should sign in as teacher', function(){
+    o_c.press_login(ptor);
     o_c.sign_in(ptor, params.teacher_mail, params.password);
   })
+  
   it('should open a course', function(){
     o_c.open_course_whole(ptor, 0);
   })

@@ -24,15 +24,13 @@ exports.check_item_number = function(ptor, total_item_no){
 //=====================================
 exports.join_course = function(ptor, key, feedback)
 {
-    locator.by_id(ptor,'join_course').then(function(link)
-    {
-        link.click();
-    });
+    o_c.open_join_course(ptor);
+    
     locator.by_name(ptor, 'key').then(function(input)
     {
         input.sendKeys(key);
     });
-    locator.by_xpath(ptor, '/html/body/div[6]/div[3]/button[1]').then(function(button)
+    locator.by_xpath(ptor, '/html/body/div[4]/div/div[2]/button[1]').then(function(button)
     {
         button.click();
     });

@@ -12,7 +12,8 @@ ptor.driver.manage().window().maximize();
 describe("1", function(){
 
 	it('should sign in as teacher', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+		o_c.press_login(ptor);
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create_course', function(){
@@ -23,20 +24,20 @@ describe("1", function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 	//test
-	it('should add a module and lecture to create quizzes', function(){
+	xit('should add a module and lecture to create quizzes', function(){
 		o_c.open_course_whole(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor, "drag_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
 	})
 
-	it('should create quiz', function(){
+	xit('should create quiz', function(){
 		youtube.seek(ptor, 49);
 		create_drag_text_quiz(ptor, o_c.feedback);
 		make_drag_text_questions(ptor, o_c.feedback);
 	})
 
-	it('should login a student and check for drag no', function(){
+	xit('should login a student and check for drag no', function(){
 		o_c.to_student(ptor);
 		o_c.open_course_whole(ptor);
 		o_c.open_tray(ptor);
@@ -46,7 +47,7 @@ describe("1", function(){
 		check_drag_no(ptor, 3);
 	})
 
-	it('should clear the course for deletion', function(){
+	xit('should clear the course for deletion', function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_whole(ptor);
 
@@ -57,7 +58,7 @@ describe("1", function(){
 	})
 	//end test
 
-	it('should delete course', function(){
+	xit('should delete course', function(){
 		//should choose one of home() or home_teacher() 
 		//depending on the current state(student or teacher)
 		o_c.home_teacher(ptor);
@@ -65,7 +66,7 @@ describe("1", function(){
 	})
 })
 
-describe("2", function(){
+xdescribe("2", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -133,7 +134,7 @@ describe("2", function(){
 	})
 })
 
-describe("3", function(){
+xdescribe("3", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);

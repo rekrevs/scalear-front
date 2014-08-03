@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
 								'<b><br>{{double_click_msg|translate}}</b></h5>'+
 							'</div>'+
 							'<div class="row">'+
-								'<div class="small-3 small-centered columns">'+
+								'<div class="small-4 small-centered columns">'+
 									'<div class="small-6 columns"><button ng-disabled="disable_save_button" class="button tiny" style="margin:5px 0" ng-click="saveBtn()" translate>save</button></div>'+
 									'<div class="small-6 columns">'+
 										'<a ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</a>'+
@@ -176,24 +176,26 @@ angular.module('scalearAngularApp')
 			var template =""
 			if(scope.quiz.quiz_type == 'survey')
 				template = "<form name='aform'>"+								
-								"<p style='margin: 4px 0 0 0;'>{{'groups.answer'|translate}}:</p><small class='muted' style='font-size:9px' translate>lectures.shown_in_graph</small>"+ 
-								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' required/>"+
-								"<span class='help-inline' ng-show='aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-								"<br>"+
-								"<input type='button' ng-click='remove()' class='btn btn-danger remove_button' value={{'lectures.remove'|translate}} />"+
+								"<label>{{'groups.answer'|translate}}<h6><small translate>lectures.shown_in_graph</small></h6>"+ 
+								"<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' required></textarea>"+
+								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</small>"+
+								"</label>"+
+								"<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button'>{{'lectures.remove'|translate}}</button>"+
 							"</form>"
 			else
 				template = "<form name='aform'>"+
-								"<span translate>lectures.correct</span>:"+
-								"<input class='must_save_check' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/>"+
-								"<span class='help-inline' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</span>"+
-								"<p style='margin: 4px 0 0 0;'>{{'groups.answer'|translate}}:</p><small class='muted' style='font-size:9px' translate>lectures.shown_in_graph</small>"+ 
-								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' required/>"+
-								"<span class='help-inline' ng-show='aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</span>"+
-								"<p style='margin: 4px 0 0 0;'>{{'lectures.explanation'|translate}}:</p><small class='muted' style='font-size:9px' translate>lectures.shown_to_student</small>"+
-								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}} />"+
-								"<br>"+
-								"<input type='button' ng-click='remove()' class='btn btn-danger remove_button' value={{'lectures.remove'|translate}} />"+
+								"<label>{{'lectures.correct' | translate}}"+
+								"<input class='must_save_check' ng-class='{error: aform.mcq.$error.atleastone}' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/>"+
+								"<small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
+								"</label><label>{{'groups.answer'|translate}}"+
+								"<h6 class='subheader'><small translate>lectures.shown_in_graph</small></h6>"+ 
+								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
+								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'>{{'courses.required'|translate}}!</small>"+
+								"</label><label>{{'lectures.explanation'|translate}}"+
+								"<h6 class='subheader'><small translate>lectures.shown_to_student</small></h6>"+
+								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>"+
+								"</label>"+
+								"<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button'>{{'lectures.remove'|translate}}</button>"+
 							"</form>"
 
            	scope.popover_options={

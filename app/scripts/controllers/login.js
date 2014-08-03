@@ -10,6 +10,7 @@ angular.module('scalearAngularApp')
           $scope.sending = false;
             //console.log("signed_in");
             $rootScope.iscollapsed = true;
+            $rootScope.$broadcast("get_all_courses")
             $state.go("dashboard");
         },function(){
           $scope.sending = false;

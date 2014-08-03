@@ -1,4 +1,4 @@
-<div class="row soft-border">
+<div class="row soft-border" ng-class="{'no-margin': !isNormalQuiz()}">
 	<ng-form name='qform' style='overflow: auto;'>
 	<center>
 		<div class="row collapse">			
@@ -16,7 +16,7 @@
 				<delete_button ng-if='isNormalQuiz()' size='small' color='dark' action='removeQuestion(index)' />
 			</div>		
 	  	</div>
-	  	<div  class="row collapse">
+	  	<div  class="row collapse" ng-if="isNormalQuiz()">
 	  		<div class="small-8 small-push-1 columns">
 		  		<div class="small-1 columns">
 			      <span class="prefix"><span translate>groups.type</span>:</span>
@@ -24,7 +24,7 @@
 			    <div class="small-11 columns">
 			    	<select ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'></select>
 			    </div>
-			    <div class="small-11 columns" ng-if='isFreeText()'>
+			    <div class="small-11 columns" ng-if='isFreeText() && !isSurvey()'>
 			    	<select ng-model='quiz.match_type' required  ng-options='val for val in match_types' class='choices'></select>
 			    </div>
 			</div>

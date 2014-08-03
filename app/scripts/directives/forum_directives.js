@@ -20,17 +20,9 @@ angular.module('scalearAngularApp')
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
 
                         //scope.action()(scope.current_question, scope.privacy.value)
-                            if(scope.privacy.value != $rootScope.current_user.discussion_pref){
-                                $rootScope.current_user.discussion_pref = scope.privacy.value;
-                                
-                                User.alterPref(), 
-                                function(current_pref){
-                                    console.log("success");
-                                    console.log(current_pref);
-                                }, 
-                                function(){
-                                    console.log("failure")
-                                }
+                            if($rootScope.current_user.discussion_pref != scope.privacy.value){
+                                $rootScope.current_user.discussion_pref = scope.privacy.value;                                
+                                User.alterPref({},{privacy: scope.privacy.value})
                             }
 
                             Forum.createPost(

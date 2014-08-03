@@ -199,13 +199,7 @@ angular.module('scalearAngularApp')
       index: '='
     },
     templateUrl: '/views/announcementItem.html',
-    link: function(scope){
-      scope.$watch('announcement', function(val, val2){
-        if(val != val2){
-          console.log(scope.announcement)
-        }
-      })
-      }
+    link: function(scope){}
   };
 }]).directive('studentAnnouncementItem', ['ErrorHandler',function(ErrorHandler) {
   return{
@@ -309,7 +303,7 @@ angular.module('scalearAngularApp')
             controller: "StudentEnrollModalCtrl",
         })
 
-        modalInstance.result.then(function (enrollment_key) {
+        // modalInstance.result.then(function (enrollment_key) {
         //   console.log($scope.course)
           // $rootScope.show_alert="success"; 
           // ErrorHandler.showMessage($translate('controller_msg.enrolled_in', {course: $scope.course.name}), 'errorMessage', 2000);
@@ -317,12 +311,13 @@ angular.module('scalearAngularApp')
           //  $rootScope.show_alert=""; 
           // },5000);
             
-          init();
+          // init();
 
-        },
-        function () {
-            $log.info('Modal dismissed at: ' + new Date());
-        })
+        // }
+        // ,
+        // function () {
+        //     $log.info('Modal dismissed at: ' + new Date());
+        // })
       }
 
     }

@@ -35,7 +35,7 @@ angular.module('scalearAngularApp', [
     // 'ui.bootstrap.alert',
     // 'ui.bootstrap.modal',
     // 'ui.bootstrap.tooltip',
-    // 'ui.bootstrap.timepicker',
+    'ui.bootstrap.timepicker',
     // 'ui.bootstrap.popover',
     'ui.sortable',
     'ui.calendar',
@@ -51,25 +51,25 @@ angular.module('scalearAngularApp', [
     'config',
     'chieffancypants.loadingBar',
     'anguFixedHeaderTable',
-    'mm.foundation.accordion',
-    'mm.foundation.alert',
-    'mm.foundation.bindHtml',
-    'mm.foundation.buttons',
-    'mm.foundation.dropdownToggle',
-    'mm.foundation.modal',
-    'mm.foundation.offcanvas',
-    'mm.foundation.popover',
-    'mm.foundation.position',
-    'mm.foundation.progressbar',
-    'mm.foundation.tabs',
-    'mm.foundation.tooltip',
-    'mm.foundation.tour',
-    'mm.foundation.transition',
-    'mm.foundation.typeahead',
-    'mm.foundation.topbar',
+    'mm.foundation',
+    // 'mm.foundation.accordion',
+    // 'mm.foundation.alert',
+    // 'mm.foundation.bindHtml',
+    // 'mm.foundation.buttons',
+    // 'mm.foundation.dropdownToggle',
+    // 'mm.foundation.modal',
+    // 'mm.foundation.offcanvas',
+    // 'mm.foundation.popover',
+    // 'mm.foundation.position',
+    // 'mm.foundation.progressbar',
+    // 'mm.foundation.tabs',
+    // 'mm.foundation.tooltip',
+    // 'mm.foundation.tour',
+    // 'mm.foundation.transition',
+    // 'mm.foundation.typeahead',
+    // 'mm.foundation.topbar',
     'ngScrollSpy',
-    'sticky',
-    'datePicker'
+    'sticky'
     // 'ngAnimate'
 ])
     .constant('headers', {
@@ -84,8 +84,9 @@ angular.module('scalearAngularApp', [
             $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
             $rootScope.show_alert = "";
             editableOptions.theme = 'default';
-            editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left success" type="submit"><i class="fi-check size-21"></i></button>';
-            editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left alert" type="button" ng-click="$form.$cancel()"><i class="fi-x size-21"></i></button>';
+            editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 success check" type="submit"><i class="fi-check"></i></button>';
+            editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert cancel" type="button" ng-click="$form.$cancel()"><i class="fi-x"></i></button>';
+            editableThemes['default'].errorTpl = '<small class="error position-absolute z-one with-tiny-padding" ng-show="$error" ng-bind="$error"></small>'
             console.log(editableThemes['default'])
             $rootScope.textAngularOpts = {
                 toolbar: [
@@ -107,8 +108,8 @@ angular.module('scalearAngularApp', [
 
             $log.debug("lang is " + $rootScope.current_lang);
             var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']
-            var statesThatForStudents = ['student_courses', 'course.student_calendar', 'course.course_information', 'course.courseware']
-            var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
+            var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
+            var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
 
             //check if route requires no auth
@@ -182,7 +183,7 @@ angular.module('scalearAngularApp', [
                         s = 0;
                     } else if ((stateTeacher(to.name) && result == 2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
                     {
-                        $state.go("student_courses");
+                        $state.go("course_list");
                         s = 0;
                     } 
                     else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
@@ -196,7 +197,7 @@ angular.module('scalearAngularApp', [
                         $state.go("course_list");
                     } else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
                     {
-                        $state.go("student_courses");
+                        $state.go("course_list");
                     } else if (stateNoAuth(to.name)) {
                         if (result == 1 || result == 2) {
                             $state.go("home");
@@ -326,7 +327,7 @@ angular.module('scalearAngularApp', [
             })
             .state('course_list', {
                 url: '/courses',
-                templateUrl: '/views/teacher/course_list/course_list.html',
+                templateUrl: '/views/course_list.html',
                 controller: 'courseListCtrl'
             })
             .state('new_course', {
@@ -454,7 +455,7 @@ angular.module('scalearAngularApp', [
             //     controller: 'studentModulesCtrl',
             // })
             .state('course.module.courseware.lecture', {
-                url: '/lectures/:lecture_id?external',
+                url: '/lectures/:lecture_id?time',
                 templateUrl: '/views/student/lectures/lecture.middle.html',
                 controller: 'studentLectureMiddleCtrl'
             })
@@ -523,11 +524,11 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/dashboard.html',
                 controller: 'dashboardCtrl'
             })
-            .state('student_courses', {
-                url: '/student_courses',
-                templateUrl: '/views/student/course_list/course_list.html',
-                controller: 'studentCourseListCtrl'
-            })
+            // .state('student_courses', {
+            //     url: '/student_courses',
+            //     templateUrl: '/views/student/course_list/course_list.html',
+            //     controller: 'studentCourseListCtrl'
+            // })
             .state('statistics', {
               url: '/statistics',
               templateUrl: '/views/statistics/statistics.html',

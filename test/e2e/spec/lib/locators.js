@@ -33,6 +33,10 @@ exports.by_tag = function(ptor, tag){
 	return ptor.findElement(protractor.By.tagName(tag))
 }
 
+exports.by_model = function(ptor, model){
+	return ptor.findElement(protractor.By.model(model))
+}
+
 //======================================================
 //                  elementsss locators
 //======================================================
@@ -58,4 +62,8 @@ exports.s_by_xpath = function(ptor, path){
 
 exports.s_by_tag = function(ptor, tag){
 	return ptor.findElements(protractor.By.tagName(tag))
+}
+
+exports.s_by_model = function(ptor, model){
+	return ptor.findElements(protractor.By.model(model))
 }

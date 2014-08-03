@@ -3,52 +3,34 @@ var locator = require('./locators');
 var params = ptor.params;
 
 exports.ask_private_question = function(ptor, text){
-    locator.by_classname(ptor, 'questionDiv').click();
-
-    locator.by_id(ptor, 'show_question').then(function(ele){
-        ele.findElement(protractor.By.tagName('textarea')).sendKeys(text);
-        ele.findElement(protractor.By.className('btn-primary')).click();
-    })
+    this.ask_a_question(ptor, text, 0)
 }
 
 
 exports.ask_public_question = function(ptor, text){
-    locator.by_classname(ptor, 'questionDiv').click();
-
-    locator.by_id(ptor, 'show_question').then(function(ele){
-        ele.findElement(protractor.By.tagName('textarea')).sendKeys(text);
-        ele.findElement(protractor.By.tagName('select')).click().then(function(){
-            ele.findElements(protractor.By.tagName('option')).then(function(op){
-                op[1].click();
-            })
-        })
-        ele.findElement(protractor.By.className('btn-primary')).click();
-    })
+    this.ask_a_question(ptor, text, 1)
 }
 
 //==========================================================
 //      ask a question given the question context
 //==========================================================
 
-exports.ask_a_question = function(ptor, ques_string){
-    var questions_no = 0;
-    locator.by_repeater(ptor, 'element in timeline').then(function(questions){
-        questions_no = questions.length;
+exports.ask_a_question = function(ptor, ques_string, type){
+     var questions_no = 0;
+    element.all(by.name('discussion-timeline-item')).then(function(items){
+        questions_no = items.length
     })
-    locator.by_classname(ptor, 'questionDiv').then(function(btn){
-        btn.click().then(function(){
-            locator.by_xpath(ptor, "//*[@id='show_question']/table/tbody/tr[1]/td/textarea").then(function(textarea){
-                textarea.sendKeys(ques_string).then(function(){
-                    locator.by_xpath(ptor, "//*[@id='show_question']/table/tbody/tr[2]/td[2]/input").then(function(save){
-                        save.click().then(function(){
-                            locator.by_repeater(ptor, 'element in timeline').then(function(elements){
-                                expect(elements.length).toEqual(questions_no+1);
-                            })
-                        })
-                    })
-                })
-            })
+    element(by.className('questionDiv')).click();
+    var question = element(by.id('show_question'))
+
+    question.element(by.tagName('textarea')).sendKeys(ques_string);
+    question.element(by.tagName('select')).click().then(function(){
+        question.all(by.tagName('option')).then(function(options){
+            options[type].click()
         })
+    })
+    element(by.buttonText('Ask')).click().then(function(){
+        expect(element.all(by.name('discussion-timeline-item')).count()).toEqual(questions_no+1)
     })
 }
 

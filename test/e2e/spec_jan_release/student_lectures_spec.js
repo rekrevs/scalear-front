@@ -1499,7 +1499,7 @@ function signUp(ptor, driver, name, email, password, role){
                                                                                 driver.findElement(protractor.By.className('btn-primary')).then(function(start){
                                                                                     start.click().then(function(){
                                                                                         ptor.getCurrentUrl().then(function(url){
-                                                                                            expect(url).toContain('student_courses');
+                                                                                            expect(url).toContain('course_list');
                                                                                         })
                                                                                     });
                                                                                 });

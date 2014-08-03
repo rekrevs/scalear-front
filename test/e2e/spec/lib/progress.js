@@ -8,70 +8,102 @@ var params = ptor.params
 
 
 exports.selectTabInMainProgress = function(which_tab){
-	locator.by_classname(ptor, 'nav-tabs').then(function(tabs_container){
-		tabs_container.findElements(protractor.By.tagName('li')).then(function(tabs){
-			tabs[which_tab-1].click();
-		})
-	})
+	element(by.className('tabs')).all(by.tagName('li')).get(which_tab-1).click()
+	// locator.by_classname(ptor, 'nav-tabs').then(function(tabs_container){
+	// 	tabs_container.findElements(protractor.By.tagName('li')).then(function(tabs){
+	// 		tabs[which_tab-1].click();
+	// 	})
+	// })
 }
 exports.verifyModuleProgressTable = function(students, modules, checkmarks){
-	locator.by_xpath(ptor, '//*[@id="details"]/ui-view/div/div/div[1]/div/progress_matrix/div[2]/table').then(function(table){
-		table.findElements(protractor.By.tagName('tr')).then(function(table_rows){
-			table_rows[0].findElements(protractor.By.repeater('name in columnNames')).then(function(module_names){
-				expect(modules.length).toBe(module_names.length)
-				module_names.forEach(function(name, i){
-					expect(name.getText()).toBe(modules[i])
-				})
-			})
-			students.forEach(function(student, i){
-				table_rows[i+1].findElements(protractor.By.tagName('td')).then(function(fields){
-					expect(fields[0].getText()).toBe(student)
-					checkmarks[student].forEach(function(checkmark, j){
-						fields[j+1].findElement(protractor.By.tagName('img')).then(function(status){
-							status.getAttribute('src').then(function(src){
-								expect(src.toLowerCase()).toContain(checkmarks[student][j])
-							})
-						})
-					})
-				})
-			})	
+	var rows=element(by.tagName('table')).all(by.tagName('tr'))
+	rows.get(0).all(by.repeater('name in columnNames')).then(function(module_names){
+		expect(modules.length).toBe(module_names.length)
+		module_names.forEach(function(name, i){
+			expect(name.getText()).toBe(modules[i])
 		})
 	})
+	students.forEach(function(student, i){
+		var fields = rows.get(i+1).all(by.tagName('td'))
+		expect(fields.get(0).getText()).toBe(student)
+		checkmarks[student].forEach(function(checkmark, j){
+			fields.get(j+1).element(by.tagName('img')).getAttribute('src').then(function(src){
+				expect(src.toLowerCase()).toContain(checkmark)
+			})
+		})
+	})
+	// locator.by_xpath(ptor, '//*[@id="details"]/ui-view/div/div/div[1]/div/progress_matrix/div[2]/table').then(function(table){
+	// 	table.findElements(protractor.By.tagName('tr')).then(function(table_rows){
+	// 		table_rows[0].findElements(protractor.By.repeater('name in columnNames')).then(function(module_names){
+	// 			expect(modules.length).toBe(module_names.length)
+	// 			module_names.forEach(function(name, i){
+	// 				expect(name.getText()).toBe(modules[i])
+	// 			})
+	// 		})
+	// 		students.forEach(function(student, i){
+	// 			table_rows[i+1].findElements(protractor.By.tagName('td')).then(function(fields){
+	// 				expect(fields[0].getText()).toBe(student)
+	// 				checkmarks[student].forEach(function(checkmark, j){
+	// 					fields[j+1].findElement(protractor.By.tagName('img')).then(function(status){
+	// 						status.getAttribute('src').then(function(src){
+	// 							expect(src.toLowerCase()).toContain(checkmarks[student][j])
+	// 						})
+	// 					})
+	// 				})
+	// 			})
+	// 		})	
+	// 	})
+	// })
 }
 
 exports.overrideStatus = function(student_no, module_no, desired_status){
-	locator.by_xpath(ptor, '//*[@id="details"]/ui-view/div/div/div[1]/div/progress_matrix/div[2]/table').then(function(table){
-		table.findElements(protractor.By.tagName('tr')).then(function(students){
-			students[student_no].findElements(protractor.By.tagName('td')).then(function(modules){
-				modules[module_no].findElement(protractor.By.tagName('img')).then(function(status){
-					status.click().then(function(){
-						locator.by_classname(ptor, 'popover').then(function(popover){
-							popover.findElements(protractor.By.tagName('input')).then(function(choices){
-								choices[desired_status-1].click().then(function(){
-									o_c.feedback(ptor, 'successfully changed')
-								})
-							})
-						})
-					})
-				})
-			})
-		})
+	element(by.tagName('table')).all(by.tagName('tr')).get(student_no)
+	.all(by.tagName('td')).get(module_no).element(by.tagName('img')).click()
+	
+	element(by.className('popover')).all(by.tagName('input'))
+	.get(desired_status-1).click().then(function(){
+		o_c.feedback(ptor, 'successfully changed')
 	})
+
+	element(by.tagName('table')).all(by.tagName('tr')).get(student_no)
+	.all(by.tagName('td')).get(module_no).element(by.tagName('img')).click()
+	// locator.by_xpath(ptor, '//*[@id="details"]/ui-view/div/div/div[1]/div/progress_matrix/div[2]/table').then(function(table){
+	// 	table.findElements(protractor.By.tagName('tr')).then(function(students){
+	// 		students[student_no].findElements(protractor.By.tagName('td')).then(function(modules){
+	// 			modules[module_no].findElement(protractor.By.tagName('img')).then(function(status){
+	// 				status.click().then(function(){
+	// 					locator.by_classname(ptor, 'popover').then(function(popover){
+	// 						popover.findElements(protractor.By.tagName('input')).then(function(choices){
+	// 							choices[desired_status-1].click().then(function(){
+	// 								o_c.feedback(ptor, 'successfully changed')
+	// 							})
+	// 						})
+	// 					})
+	// 				})
+	// 			})
+	// 		})
+	// 	})
+	// })
 }
 
 
 exports.checkStatusImage = function(student_no, module_no, should_be){
-	locator.by_xpath(ptor, '//*[@id="details"]/ui-view/div/div/div[1]/div/progress_matrix/div[2]/table').then(function(table){
-		table.findElements(protractor.By.tagName('tr')).then(function(students){
-			students[student_no].findElements(protractor.By.tagName('td')).then(function(modules){
-				modules[module_no].findElement(protractor.By.tagName('img')).then(function(status){
-					status.getAttribute('src').then(function(src){
-						expect(src.toLowerCase()).toContain(should_be)
-					})
-				})
-			})
-		})
+	element(by.tagName('table')).all(by.tagName('tr')).get(student_no)
+	.all(by.tagName('td')).get(module_no).element(by.tagName('img'))
+	.getAttribute('src').then(function(src){
+		expect(src.toLowerCase()).toContain(should_be)
 	})
+	// locator.by_xpath(ptor, '//*[@id="details"]/ui-view/div/div/div[1]/div/progress_matrix/div[2]/table').then(function(table){
+	// 	table.findElements(protractor.By.tagName('tr')).then(function(students){
+	// 		students[student_no].findElements(protractor.By.tagName('td')).then(function(modules){
+	// 			modules[module_no].findElement(protractor.By.tagName('img')).then(function(status){
+	// 				status.getAttribute('src').then(function(src){
+	// 					expect(src.toLowerCase()).toContain(should_be)
+	// 				})
+	// 			})
+	// 		})
+	// 	})
+	// })
 }
 
 exports.wholeProgressBar = function(student_no, which_bar, student_name, percentage){

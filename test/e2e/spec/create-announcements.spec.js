@@ -14,42 +14,45 @@ var announcement_text3 = "announcement 3"
 describe("1", function(){
 
 	it('should sign in as teacher', function(){
+		o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create_course', function(){
-		// teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
-		o_c.open_course_whole(ptor,0);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
 	})
 
-	xit('should get the enrollment key and enroll student', function(){
+	it('should get the enrollment key and enroll student', function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 
 	//test
 	it('should go to announcements page and make an announcement', function(){
-		teacher.open_settings_announcements(ptor);
+		o_c.open_course_list(ptor);
+		o_c.open_course(ptor, 1);
+		o_c.open_announcements(ptor);
 		create_new_announcement(ptor, announcement_text1);
 		create_new_announcement(ptor, announcement_text2);
 		create_new_announcement(ptor, announcement_text3);
 	})
 
 	it('should log out from teacher then login as a student', function(){
-		o_c.logout(ptor);
+		o_c.to_student(ptor);
 	})
 
 	it('should check number of announcements', function(){
-		o_c.sign_in(ptor, params.mail, params.password);
-		o_c.open_course_whole(ptor, 0);
+		// o_c.sign_in(ptor, params.mail, params.password);
+		o_c.open_course_list_student(ptor)
+		o_c.open_course(ptor, 1);
 		check_number_of_announcments(ptor, 3);
 	})
 	//end test
 	
 	it('should delete course', function(){
-		//should choose one of home() or home_teacher() 
-		//depending on the current state(student or teacher)
-		o_c.home(ptor);
-		//teacher.delete_course(ptor, o_c.feedback);
+		o_c.to_teacher(ptor)
+		o_c.open_course_list(ptor);
+		teacher.delete_course(ptor, 1);
+		o_c.logout(ptor, o_c.feedback);
 	})
 })
 
@@ -58,18 +61,10 @@ describe("1", function(){
 /////////////////////////////////////////////////////////
 
 function create_new_announcement(ptor, ann_txt){
-	locator.by_id(ptor, 'new_announcement').then(function(new_ann_btn){
-		new_ann_btn.click();
-	})
-
-	locator.s_by_classname(ptor, 'ta-editor').then(function(txt_area){
-		txt_area[0].sendKeys(ann_txt);
-	})
-
-	locator.by_id(ptor, 'save_button').then(function(save_btn){
-		save_btn.click().then(function(){
-	        o_c.feedback(ptor,'Announcement was successfully created.');
-	    });
+	element(by.id('new_announcement')).click()
+	element(by.className('ta-editor')).sendKeys(ann_txt)
+	element(by.id('save_button')).click().then(function(){
+		o_c.feedback(ptor,'Announcement was successfully created.');
 	})
 }
 

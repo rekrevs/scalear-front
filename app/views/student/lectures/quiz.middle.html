@@ -5,18 +5,22 @@
     	 <p class="no-margin" ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message| date:'h:mma'}}</b></p>
     </div>
 
-    <h3><i ng-if="quiz.quiz_type=='quiz'" class="fi-clipboard-notes"></i><i ng-if="quiz.quiz_type=='survey'" class="fi-clipboard-pencil"></i> {{quiz.name}}</h3>
+    <h3>
+        <i ng-if="quiz.quiz_type=='quiz'" class="fi-clipboard-notes"></i>
+        <i ng-if="quiz.quiz_type=='survey'" class="fi-clipboard-pencil"></i> 
+        {{quiz.name}}
+    </h3>
     <h5 class="subheader">{{quiz.instructions}}</5>
     <div ng-if="quiz.quiz_type=='quiz'">
-    	<p ng-if="status==null || status==''">
-    		<span translate="quizzes.attempt_number"></span>: 0/{{quiz.retries+1}}
+    	<p ng-if="status.attempts<quiz.retries+1">
+    		<span translate="quizzes.attempt_number"></span>: {{status.attempts || 0}}/{{quiz.retries+1}}
     	</p>
-    	<p ng-if="status!=null && status.attempts==quiz.retries+1">
+    	<p ng-if="status.attempts==quiz.retries+1">
     		<span translate="quizzes.used_up_all"></span> {{quiz.retries+1}} <span translate="quizzes.attempts"></span>.
     	</p>
-    	<p ng-if="status!=null && status.attempts<quiz.retries+1">
+    	<!-- <p ng-if="status!=null && status.attempts<quiz.retries+1">
     		<span translate="quizzes.attempt_number"></span>: {{status.attempts}}/{{quiz.retries+1}}
-    	</p>
+    	</p> -->
     </div>
     <hr>
     <center ng-show="!can_solve">

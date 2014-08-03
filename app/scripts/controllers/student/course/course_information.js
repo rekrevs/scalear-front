@@ -11,7 +11,6 @@ angular.module('scalearAngularApp')
                     course_id: $stateParams.course_id
                     },
                     function(data) {
-                        $scope.course = data.course;
                         $scope.teachers = data.teachers;
                         $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
                     },
@@ -20,9 +19,11 @@ angular.module('scalearAngularApp')
             }
 
             $scope.goToContent=function(){
-                var params = {'module_id': $scope.last_viewed.module}    
-                params[$scope.last_viewed.item.class_name+'_id'] = $scope.last_viewed.item.id
-                $state.go('course.module.courseware.'+$scope.last_viewed.item.class_name, params)
+                if($scope.last_viewed.module != -1){
+                    var params = {'module_id': $scope.last_viewed.module}    
+                    params[$scope.last_viewed.item.class_name+'_id'] = $scope.last_viewed.item.id
+                    $state.go('course.module.courseware.'+$scope.last_viewed.item.class_name, params)
+                }
             }
 
             $scope.url_with_protocol = function(url) {

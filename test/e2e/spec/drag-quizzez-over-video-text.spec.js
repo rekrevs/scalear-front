@@ -16,25 +16,45 @@ describe("1", function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
-	it('should create_course', function(){
+	xit('should create_course', function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
 	})
 
-	it('should get the enrollment key and enroll student', function(){
+	xit('should get the enrollment key and enroll student', function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 	//test
-	xit('should add a module and lecture to create quizzes', function(){
+	it('should add a module and lecture to create quizzes', function(){
 		o_c.open_course_list(ptor);
-		teacher.add_module(ptor, o_c.feedback);
+		o_c.open_course_whole(ptor, 0);
+		teacher.add_module(ptor);
+		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "drag_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		teacher.create_lecture(ptor);
+		o_c.press_content_navigator(ptor);
+		teacher.init_lecture(ptor, "drag_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
+		o_c.scroll(ptor, 100);
+		youtube.seek(ptor, 50);
+		create_drag_text_quiz(ptor);
+		make_drag_text_questions(ptor);
+
+	})
+
+	xit('should' , function(){
+		o_c.open_course_list(ptor);
+		o_c.open_course_whole(ptor, 0);
+		o_c.press_content_navigator(ptor);
+		teacher.open_module(ptor, 1);
+		teacher.open_item(ptor, 1, 1);
+		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000);
 	})
 
 	xit('should create quiz', function(){
+		o_c.scroll(ptor, 100);
 		youtube.seek(ptor, 49);
-		create_drag_text_quiz(ptor, o_c.feedback);
-		make_drag_text_questions(ptor, o_c.feedback);
+		create_drag_text_quiz(ptor);
+		make_drag_text_questions(ptor);
 	})
 
 	xit('should login a student and check for drag no', function(){
@@ -207,21 +227,18 @@ xdescribe("3", function(){
 //====================================================
 //====================================================
 
-function create_drag_text_quiz(ptor, feedback){
-	locator.s_by_classname(ptor, 'btn-group').then(function(btns){
-		btns[1].click().then(function(){
-			btns[1].findElements(protractor.By.repeater('item in list')).then(function(items){
-				items[2].click().then(function(){
-				    feedback(ptor, "Quiz was successfully created");
-					expect(locator.by_id(ptor, 'editing').isDisplayed()).toEqual(true);
-				})
-			})
+function create_drag_text_quiz(ptor){
+	teacher.open_content_new_in_video_ques(ptor);
+	locator.by_id(ptor, "drag_text").then(function(link){
+		link.click().then(function(){
+			o_c.feedback(ptor, "Quiz was successfully created");
+			expect(locator.by_id(ptor, 'editing').isDisplayed()).toEqual(true);
 		})
 	})
 }
 
 
-function make_drag_text_questions(ptor, feedback){
+function make_drag_text_questions(ptor){
 	locator.by_id(ptor,'ontop').then(function(ontop){
 		ontop.findElements(protractor.By.repeater('answer in quiz.answers')).then(function(ques){
 			ques[0].findElements(protractor.By.tagName('input')).then(function(ins){
@@ -248,7 +265,7 @@ function make_drag_text_questions(ptor, feedback){
 		o_c.scroll(ptor, 1000);
 		locator.by_id(ptor, 'done').then(function(btn){
 			btn.click().then(function(){
-				feedback(ptor, 'Quiz was successfully saved');
+				o_c.feedback(ptor, 'Quiz was successfully saved');
 			})
 		})
 	})

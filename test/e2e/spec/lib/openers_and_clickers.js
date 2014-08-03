@@ -599,29 +599,6 @@ exports.open_lectures = function(ptor){
 //     })
 // }
 
-// //====================================================
-// //                  select module
-// //====================================================
-
-// exports.open_module = function(ptor, module_no){
-//     locator.by_xpath(ptor, "//table[@class='header-container']//button[.='Module 1']").then(function(mod_btn){
-//         mod_btn.click();
-//         expect(locator.by_classname(ptor,"multicol").isDisplayed()).toEqual(true);
-//         locator.by_classname(ptor,"multicol").findElements(protractor.By.tagName('ul')).then(function(mod){
-//             //expect(mod.length).toEqual(2);
-//             // ptor.actions().mouseMove(mod[module_no-1]).perform();
-//             // ptor.actions().mouseMove({x: 5, y: 5}).perform();
-//             // ptor.actions().click(protractor.Button.RIGHT).perform();
-//             // ptor.sleep(5000);
-//             mod[module_no-1].click().then(function(){
-//                 expect(locator.by_xpath(ptor, "//table[@class='header-container']//button[.='Module "+module_no+"']").isDisplayed()).toEqual(true);
-//             })
-//             ptor.sleep(5000);
-//         })
-//     })
-// }
-
-
 // //=====================================
 // //        open profile
 // //=====================================
@@ -727,13 +704,13 @@ exports.open_lectures = function(ptor){
 //     this.sign_in(ptor, params.mail, params.password, this.feedback);   
 // }
 
-// //=======================================================
-// //                  scroll into view
-// //=======================================================
+//=======================================================
+//                  scroll into view
+//=======================================================
 
-// exports.scroll = function(ptor, value) {
-//     ptor.executeScript('window.scrollBy(0, ' + value + ')', '');
-// }
+exports.scroll = function(ptor, value) {
+    ptor.executeScript('window.scrollBy(0, ' + value + ')', '');
+}
 
 // //=======================================================
 // //                  scroll to top

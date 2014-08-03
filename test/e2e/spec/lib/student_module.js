@@ -22,7 +22,7 @@ exports.check_item_number = function(ptor, total_item_no){
 //=====================================
 //        join course by key
 //=====================================
-exports.join_course = function(ptor, key, feedback)
+exports.join_course = function(ptor, key)
 {
     o_c.open_join_course(ptor);
     

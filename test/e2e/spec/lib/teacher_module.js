@@ -51,12 +51,12 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 //            get key and save in a holder
 //====================================================
 exports.get_key_and_enroll = function(ptor){
-	this.open_settings_announcements(ptor);
+	this.open_settings_course_info(ptor);
 	locator.by_id(ptor, 'enrollment_key').then(function(element){
 		element.getText().then(function(text){
 			o_c.logout(ptor);
 			o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
-			student.join_course(ptor, text, o_c.feedback);
+			student.join_course(ptor, text);
 			o_c.logout(ptor);
 			o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
 		})

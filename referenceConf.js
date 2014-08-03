@@ -90,8 +90,8 @@ exports.config = {
     // This can be changed via the command line as:
     //   --params.login.user 'Joe'
     params: {
-        // frontend: 'http://0.0.0.0:9000/#',
-        frontend: 'http://staging.scalable-learning.com/#',
+        frontend: 'http://0.0.0.0:9000/#',
+        // frontend: 'http://staging.scalable-learning.com/#',
         // teacher_mail: 'teacher3@sharklasers.com',
         // mail: 'studenttest2@sharklasers.com',
         teacher_mail: 'teacher2@sharklasers.com',

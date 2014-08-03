@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
 								'<b><br>{{double_click_msg|translate}}</b></h5>'+
 							'</div>'+
 							'<div class="row">'+
-								'<div class="small-3 small-centered columns">'+
+								'<div class="small-4 small-centered columns">'+
 									'<div class="small-6 columns"><button ng-disabled="disable_save_button" class="button tiny" style="margin:5px 0" ng-click="saveBtn()" translate>save</button></div>'+
 									'<div class="small-6 columns">'+
 										'<a ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</a>'+

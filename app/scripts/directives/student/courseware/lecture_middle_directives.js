@@ -112,7 +112,7 @@ angular.module('scalearAngularApp')
     scope:{
       action:"&"
     },
-  	template: '<div style="position: absolute;z-index: 1000;top: 10px; left: 47%;">'+
+  	template: '<div style="position: absolute;top: 10px; left: 47%;">'+
                 '<button type="button" class="tiny success button with-small-padding" ng-click="action()">{{\'youtube.check_answer\'|translate}}</button'+
               '</div>',
   	link: function(scope, element, attrs) {}

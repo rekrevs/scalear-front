@@ -26,18 +26,17 @@
 
         <!-- Left Nav Section -->
         <ul class="left" id="teacher_left_nav">
-            <li has-dropdown ng-show="'*.module.**' | includedByState">
+            <li has-dropdown ng-show="('**.course.**' | includedByState)">
                 <a id="progress" class="sub-header-component green" ng-click="goToProgress()" translate>head.progress</a>
                 <ul top-bar-dropdown>
-                    <li>
+                    <li ng-show="'*.module.**' | includedByState">
                         <a id="review_module_progress" class="sub-header-component has-description green" ui-sref="course.module.progress">
                             {{'review_module_progress' | translate}}
                             <h5 class="description"><small translate>choose_inclass_material</small></h5>
                         </a>
-                        
-                    </li>
-                    <li>
                         <div class="divider"></div>
+                    </li>
+                    <li>                        
                         <a id="all_student_progress" class="sub-header-component green" ui-sref="course.progress" translate>all_students_progress</a>
                     </li>
                 </ul>

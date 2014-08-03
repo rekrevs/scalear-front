@@ -1,22 +1,20 @@
 <style>
 .notification_panel{
-  position: absolute;
-  top: -80px;
-  /*width: 150px;*/
-  left: 44%;
-  z-index: 10000;
-  /*font-size:12px;
-  padding:5px;
-  background-color: white;
-  border: solid 1px rgb(0, 162, 86);
-  box-shadow: 0px 0px 1px rgb(0, 162, 86);*/
+position: absolute;
+top: -64px;
+width: 150px; 
+left: 40%;
+/* z-index: 10000; */
+height: 64px;
+margin: 0;
+padding: 10px;
 }
 
 </style>
 
 <div ng-show="message" class="alert-box notification_panel color-white" ng-class="{success: message==correct_notify, alert: message==incorrect_notify}">
   <center>
-    <b><h5 class="color-white">{{message}}</h5></b>
+    <b><h6 class="color-white">{{message}}</h6></b>
     <medium>{{submessage}}</medium>
   </center>
 </div>

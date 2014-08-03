@@ -42,7 +42,7 @@ describe("1", function(){
 
 	it('should check number of announcements', function(){
 		// o_c.sign_in(ptor, params.mail, params.password);
-		o_c.open_course_list_student(ptor)
+		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
 		check_number_of_announcments(ptor, 3);
 	})

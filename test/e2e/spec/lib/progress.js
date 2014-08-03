@@ -8,7 +8,7 @@ var params = ptor.params
 
 
 exports.selectTabInMainProgress = function(which_tab){
-	element(by.className('tabs')).all(by.tagName('li')).get(which_tab-1).click()
+	element(by.className('tabs')).all(by.tagName('dd')).get(which_tab-1).click()
 	// locator.by_classname(ptor, 'nav-tabs').then(function(tabs_container){
 	// 	tabs_container.findElements(protractor.By.tagName('li')).then(function(tabs){
 	// 		tabs[which_tab-1].click();
@@ -248,12 +248,17 @@ exports.checkConfusedTitle=function(item_index,title_index, module_items){
 }
 
 exports.checkInvideoQuizTitle=function(item_index,title_index, module_items, percentage){
-	locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
-		items[item_index].findElements(protractor.By.className('green')).then(function(titles){
-			var question = module_items[item_index].questions[title_index]
-			expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+percentage+'% of students voted for review')
-		})
-	})
+	var question = module_items[item_index].questions[title_index]	
+	title = element(by.repeater('module_item in module.items').row(item_index)).all(by.className('color-green')).get(title_index).element(by.className('inner_title'))
+	expect(title.getText()).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+percentage+'% of students voted for review')
+	// 		expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+percentage+'% of students voted for review')
+	// })
+	// locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
+	// 	items[item_index].findElements(protractor.By.className('green')).then(function(titles){
+	// 		var question = module_items[item_index].questions[title_index]
+	// 		expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+percentage+'% of students voted for review')
+	// 	})
+	// })
 }
 
 exports.checkInvideoSurveyTitle=function(item_index,title_index, module_items){

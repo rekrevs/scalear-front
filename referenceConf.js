@@ -52,7 +52,8 @@ exports.config = {
         // 'test/e2e/spec/create-announcements.spec.js',
         // 'test/e2e/spec/normal-quiz.spec.js',
         // 'test/e2e/spec/normal-survey.spec.js',
-        'test/e2e/spec/progress-main.spec.js',
+        // 'test/e2e/spec/progress-main.spec.js',
+        'test/e2e/spec/progress-module.spec.js',
 
         
     ],

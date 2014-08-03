@@ -193,6 +193,10 @@ exports.open_all_progress = function(ptor){
     element(by.id('all_student_progress')).click()
 }
 
+exports.open_module_progress = function(ptor){
+    element(by.id('review_module_progress')).click()
+}
+
 exports.open_content_editor = function(ptor){
    element(by.id('content')).click()
 }
@@ -238,15 +242,15 @@ exports.open_course_list = function(ptor){
     })
 }
 
-exports.open_course_list_student = function(ptor){
-    this.open_courses(ptor);
-    locator.by_id(ptor, 'course_list').then(function(btn){
-        btn.click();
-        ptor.getCurrentUrl().then(function(url) {
-            expect(url).toContain('courses');
-        });
-    })
-}
+// exports.open_course_list_student = function(ptor){
+//     this.open_courses(ptor);
+//     locator.by_id(ptor, 'course_list').then(function(btn){
+//         btn.click();
+//         ptor.getCurrentUrl().then(function(url) {
+//             expect(url).toContain('courses');
+//         });
+//     })
+// }
 
 
 ///////////////////////////////////////////////////////////////

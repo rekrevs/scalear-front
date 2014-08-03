@@ -314,7 +314,7 @@ function add_question_then_check(ptor){
     teacher.initialize_lecture(ptor, "lec", "https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
     teacher.get_key_and_enroll(ptor);
     o_c.to_student(ptor);
-    o_c.open_course_list_student(ptor)
+    o_c.open_course_list(ptor)
     o_c.open_course(ptor, 1);
     o_c.open_lectures(ptor);
     youtube.seek(ptor, 50);
@@ -366,7 +366,7 @@ function add_confused_then_check(ptor){
     teacher.initialize_lecture(ptor, "lec", "https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
     teacher.get_key_and_enroll(ptor);
     o_c.to_student(ptor);
-    o_c.open_course_list_student(ptor)
+    o_c.open_course_list(ptor)
     o_c.open_course(ptor, 1);
     o_c.open_lectures(ptor);
     youtube.seek(ptor, 50);

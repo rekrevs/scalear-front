@@ -111,7 +111,7 @@ xdescribe("2", function(){
 	})
 })
 
-xdescribe("3", function(){
+describe("3", function(){
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
@@ -145,10 +145,10 @@ xdescribe("3", function(){
 		o_c.logout(ptor, o_c.feedback);
 	})
 
-	it('should check if student is still enrolled', function(){
-		o_c.sign_in(ptor, studentmail1, params.password, o_c.feedback);
-		o_c.open_course_list(ptor);
-		check_if_courses(ptor);
+	it('should check if student is not enrolled', function(){
+		o_c.sign_in(ptor, params.student_mail, params.password, o_c.feedback);
+		o_c.open_course_list(ptor)
+		check_if_courses_exist(ptor);
 	})
 	//end test
 
@@ -269,25 +269,34 @@ function check_enrolled_no(ptor, no){
 //         			delete student
 //====================================================
 function delete_enrolled_student(ptor, no, feedback){
-	locator.by_repeater(ptor, "student in students").then(function(students){
-		students[no-1].findElement(protractor.By.className('delete')).then(function(del_btn){
-            del_btn.click().then(function(){
-            	students[no-1].findElement(protractor.By.className('btn-danger')).then(function(conf_btn){
-            		conf_btn.click().then(function(){
-            			feedback(ptor, 'was removed from Course');
-            		})
-            	})
-            })
-        })
+	var student = element(by.repeater("student in students").row(no-1))
+	student.element(by.className('delete')).click()
+	student.element(by.className('fi-check')).click().then(function(){
+		o_c.feedback(ptor, 'was removed from Course');
+		// o_c.logout(ptor, o_c.feedback);
 	})
+	// element.all(by.repeater("student in students")).get(no-1).element(by.className('delete')).click()
+
+	// locator.by_repeater(ptor, "student in students").then(function(students){
+	// 	students[no-1].findElement(protractor.By.className('delete')).then(function(del_btn){
+ //            del_btn.click().then(function(){
+ //            	students[no-1].findElement(protractor.By.className('btn-danger')).then(function(conf_btn){
+ //            		conf_btn.click().then(function(){
+ //            			feedback(ptor, 'was removed from Course');
+ //            		})
+ //            	})
+ //            })
+ //        })
+	// })
 }
 
 //
 //
 //
 
-function check_if_courses(ptor){
-	ptor.driver.isElementPresent(by.className('whole')).then(function(present){
-    	expect(present).toBe(false);
-	})
+function check_if_courses_exist(ptor){
+	expect(element.all(by.repeater('course in courses')).count()).toEqual(0)
+	// ptor.driver.isElementPresent(by.className('whole')).then(function(present){
+ //    	expect(present).toBe(false);
+	// })
 }

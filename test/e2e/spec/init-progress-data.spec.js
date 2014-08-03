@@ -815,7 +815,7 @@ xdescribe('First Student', function(){
 	})
 
 	it('should answer match question', function(){
-		student.free_match_answer(ptor, 6, 'shouldn\'t match answer')
+		student.free_match_answer(ptor, 6, "shouldn't match answer")
 	})	
 
 	it('should answer drag correct', function(){

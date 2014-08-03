@@ -26,7 +26,7 @@ describe("1", function(){
 	// test
 	it('should check number of teachers intially', function(){
 		o_c.to_student(ptor);
-		o_c.open_course_list_student(ptor)
+		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
 		check_teachers_no(ptor, 1);
 	})
@@ -74,7 +74,7 @@ describe("2", function(){
 
 	it('should login as student and check for teachers', function(){
 		o_c.to_student(ptor);
-		o_c.open_course_list_student(ptor)
+		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
 		check_teachers_no(ptor, 2);
 	})

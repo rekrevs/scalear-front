@@ -578,6 +578,9 @@ h2 .editable-click{
 .flex-video.widescreen{
 	padding-bottom: 53.7%;
 }
+.fit-inside{
+  max-width: 100%;
+}
 
 /*forum elements*/
 .form-control{

@@ -230,7 +230,7 @@ angular.module('scalearAngularApp')
     .directive('detailsSelect', ['$timeout', '$filter',
         function($timeout, $filter) {
             return {
-                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-select="value" buttons="no" e-ng-options="s.value as (s.text|translate) for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;height:25px">{{ showStatus() }}<i ng-class="overclass"></i></a> ',
+                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-select="value" buttons="no" e-ng-options="s.value as (s.text|translate) for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px !important;height:34px">{{ showStatus() }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",

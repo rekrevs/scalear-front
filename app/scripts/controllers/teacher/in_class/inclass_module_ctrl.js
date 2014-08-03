@@ -229,7 +229,7 @@ angular.module('scalearAngularApp')
 
     var cleanUp=function(){
       $rootScope.changeError = false;
-      angular.element("body").css("overflow","auto");
+      angular.element("body").css("overflow","");
       angular.element("#main").css("overflow","");
       angular.element("html").css("overflow","");
       $scope.unregister_back_event();

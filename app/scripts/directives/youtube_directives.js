@@ -458,7 +458,7 @@ angular.module('scalearAngularApp')
 
 
                 angular.element(".sidebar").removeClass('sidebar').addClass('quiz_list')//.children().appendTo(".quiz_list");
-				angular.element("body").css("overflow","auto");
+				angular.element("body").css("overflow","");
 				angular.element("body").css("position","");
 
 

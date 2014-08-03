@@ -284,16 +284,17 @@ angular.module('scalearAngularApp', [
             })
             .state('edit_account', {
                 url: '/users/edit',
-                views:{
-                    'user_navigation':{
-                        templateUrl: '/views/user_navigation.html',
-                        controller: 'navigationCtrl'
-                    },
-                    '':{
-                        templateUrl: '/views/users/edit.html',
-                        controller: 'UsersEditCtrl'
-                    }
-                }
+                templateUrl: '/views/users/edit.html',
+                controller: 'UsersEditCtrl'
+                // views:{
+                //     // 'user_navigation':{
+                //     //     templateUrl: '/views/user_navigation.html',
+                //     //     controller: 'navigationCtrl'
+                //     // },
+                //     '':{
+                        
+                //     }
+                // }
             })
             .state('profile', {
                 url: '/users/profile/:user_id',

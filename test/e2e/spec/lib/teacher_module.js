@@ -55,10 +55,10 @@ exports.get_key_and_enroll = function(ptor){
 	locator.by_id(ptor, 'enrollment_key').then(function(element){
 		element.getText().then(function(text){
 			o_c.logout(ptor);
-			o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
+			o_c.sign_in(ptor, params.mail, params.password);
 			student.join_course(ptor, text);
 			o_c.logout(ptor);
-			o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+			o_c.sign_in(ptor, params.teacher_mail, params.password);
 		})
 	})
 }

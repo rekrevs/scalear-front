@@ -2,14 +2,16 @@
 	<div class="small-2 columns" >
 		<img src="images/move2.png" ng-show="'**.course_editor.**' | includedByState" class="handle" title='{{"courses.drag_to_reorder"|translate}}' />
 	</div>
-	<div class="small-7 columns left" style="padding:0" ng-class="{'small-push-1':!('**.course_editor.**' | includedByState)}"> 
+	<div class="small-8 columns left" style="padding:0" ng-class="{'small-push-1':!('**.course_editor.**' | includedByState)}"> 
 		<a style="padding: 0;margin:0" ng-click="selectItem()" >{{item.name}}</a>
 	</div>
 	<!-- <div class="small-2 columns" ng-show="'**.course_editor.**' | includedByState">
 		<delete_button style="vertical-align: top;" size="small" color='dark' action="remove()"></delete_button>
 	</div> -->
-	<div class="small-3 columns" ng-show="'**.course_editor.**' | includedByState" >
+	<div class="with-tiny-margin show-inline" ng-show="'**.course_editor.**' | includedByState" >
 		<div class="small-4 columns fi-link no-padding" ng-click="createLink($event)"></div>
+	</div>
+	<div class="with-small-margin-left show-inline right with-tiny-margin-right">
 		<delete_button style="vertical-align: top;" size="small" color='dark' action="remove(event)"></delete_button>
 	</div>
 	<!-- <div>

@@ -305,6 +305,12 @@ select{
 .with-tiny-margin-bottom{
 	margin-bottom: 0.25rem !important;
 }
+.with-tiny-margin-left{
+  margin-left: 0.25rem !important;
+}
+.with-tiny-margin-right{
+  margin-right: 0.25rem !important;
+}
 
 .with-margin-bottom{
 	margin-bottom: 1.25rem !important;

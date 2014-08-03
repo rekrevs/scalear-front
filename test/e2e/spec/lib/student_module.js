@@ -22,14 +22,9 @@ exports.check_item_number = function(ptor, total_item_no){
 //=====================================
 //        join course by key
 //=====================================
-<<<<<<< HEAD
 exports.join_course = function(ptor, key)
 {
     o_c.open_join_course(ptor);
-    locator.by_id(ptor,'join_course').then(function(link)
-    {
-        link.click();
-    });
     locator.by_name(ptor, 'key').then(function(input)
     {
         input.sendKeys(key);

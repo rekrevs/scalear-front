@@ -24,7 +24,7 @@ describe("1", function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 	//test
-	it('should add a module and lecture to create quizzes', function(){
+	xit('should add a module and lecture to create quizzes', function(){
 		o_c.open_course_list(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);

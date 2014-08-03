@@ -67,6 +67,7 @@ exports.get_key_and_enroll = function(ptor){
 			o_c.logout(ptor);
 			o_c.sign_in(ptor, params.teacher_mail, params.password);
 		})
+	})
 }
 
 //====================================================
@@ -94,7 +95,6 @@ exports.delete_course = function(ptor,co_no){
 	// 		})
 	// 	})
 	// })
-
 }
 
 // exports.delete_course_edited = function(ptor, co_no){

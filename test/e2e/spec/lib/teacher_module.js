@@ -45,6 +45,7 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 	            o_c.feedback(ptor, 'Course was successfully created.');
 	        });
 		})
+		ptor.sleep(5000);
 }
 
 //====================================================

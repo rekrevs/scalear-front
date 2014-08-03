@@ -24,8 +24,8 @@ describe("1", function(){
 		teacher.get_key_and_enroll(ptor);
 	})
 	//test
-	xit('should add a module and lecture to create quizzes', function(){
-		o_c.open_course_whole(ptor);
+	it('should add a module and lecture to create quizzes', function(){
+		o_c.open_course_list(ptor);
 		teacher.add_module(ptor, o_c.feedback);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor, "drag_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);

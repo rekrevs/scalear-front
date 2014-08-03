@@ -8,10 +8,17 @@
 	color: rgba(255, 255, 255, 0.5) !important;
 }
 .description > small{
-	color: rgba(255, 255, 255, 0.5) !important;	
+  color: rgba(255, 255, 255, 0.5) !important; 
+}
+.dark-description{
+  margin-top: -15px !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+.dark-description > small{
+  color: rgba(0, 0, 0, 0.5) !important; 
 }
 .sub-header{
-	background-color: #cfcfcf !important; 
+	background-color: transparent !important; 
 	width: 100%; 
 	top: 45px !important; 
 	/*height: 30px !important;*/
@@ -76,12 +83,21 @@
 .grey{
 	background-color: #a3a3a3 !important;
 }
-.grey:hover{
+.grey:hover, .dark-grey{
 	background-color: #707070 !important;
 }
+.medium-grey{
+  background-color: #bdbdbd !important;
+}
+.medium-grey:hover{
+  background-color: #a3a3a3 !important;
+}
 
-.light-grey{
+.light-grey, .light-grey-hover{
 	background-color: #ececea !important;
+}
+.light-grey-hover:hover{
+  background-color: #d4d4d2 !important;
 }
 .transparent{
 	background: transparent !important;
@@ -103,8 +119,11 @@
 .color-blue{
 	color: #2ba6cb !important;
 }
-.color-green{
+.color-green, .color-green-hover{
 	color: #5da423 !important;
+}
+.color-green-hover:hover{
+  color: #4e8a1d !important;
 }
 .color-red{
 	color: #c60f13 !important;
@@ -231,7 +250,7 @@ select{
       
 .size-14 { font-size: 14px; }
 
-.size-16 { font-size: 16px; }
+.size-16 { font-size: 16px !important; }
 
 .size-18 { font-size: 18px; }
 

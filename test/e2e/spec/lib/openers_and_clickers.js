@@ -315,16 +315,16 @@ exports.open_announcements = function(ptor){
 //          switch from teacher to student
 //=======================================================
 exports.to_student = function(ptor){
-    this.logout(ptor, this.feedback);
-    this.sign_in(ptor, params.student_mail, params.password, this.feedback);   
+    this.logout(ptor);
+    this.sign_in(ptor, params.mail, params.password);
 }
 
 //=======================================================
 //          switch from student to teacher
 //=======================================================
 exports.to_teacher = function(ptor){
-    this.logout(ptor, this.feedback);
-    this.sign_in(ptor, params.teacher_mail, params.password, this.feedback);
+    this.logout(ptor);
+    this.sign_in(ptor, params.teacher_mail, params.password);
 }
 
 ///////////////////////////////////////////////////////

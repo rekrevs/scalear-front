@@ -11,7 +11,8 @@ ptor.driver.manage().window().maximize();
 describe("1", function(){
 
 	it('should sign in as teacher', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+		o_c.press_login(ptor);
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create_course', function(){
@@ -23,16 +24,21 @@ describe("1", function(){
 	})
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		o_c.open_course_whole(ptor);
-		teacher.add_module(ptor, o_c.feedback);
+		o_c.open_course_list(ptor);
+		o_c.open_course_whole(ptor, 0);
+		teacher.add_module(ptor);
+		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor, "free-text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg", o_c.feedback);
+		teacher.create_lecture(ptor);			
+		o_c.press_content_navigator(ptor);
+		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
+		
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 49);
-		create_free_text_quiz(ptor, o_c.feedback);
-		make_free_text_questions(ptor, o_c.feedback);
+		youtube.seek(ptor, 21);
+		create_drag_text_quiz(ptor);
+		make_drag_text_questions(ptor);	
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -352,16 +358,11 @@ describe("5", function(){
 //====================================================
 
 function create_free_text_quiz(ptor, feedback){
-	locator.s_by_classname(ptor, 'btn-group').then(function(btns){
-		btns[1].click().then(function(){
-			o_c.scroll(ptor, 1000);
-			btns[1].findElements(protractor.By.repeater('item in list')).then(function(items){
-				items[3].click().then(function(){
-				    feedback(ptor, "Quiz was successfully created");
-					expect(locator.by_id(ptor, 'editing').isDisplayed()).toEqual(true);
-				})
-			})
-			o_c.scroll(ptor, -1000);
+	teacher.open_content_new_in_video_ques(ptor);
+	locator.by_id(ptor, "free_text").then(function(link){
+		link.click().then(function(){
+			o_c.feedback(ptor, "Quiz was successfully created");
+			expect(locator.by_id(ptor, 'editing').isDisplayed()).toEqual(true);
 		})
 	})
 }
@@ -371,7 +372,7 @@ function make_free_text_questions(ptor, feedback){
 		o_c.scroll(ptor, 1000);
 		locator.by_id(ptor, 'done').then(function(btn){
 			btn.click().then(function(){
-				feedback(ptor, 'Quiz was successfully saved');
+				o_c.feedback(ptor, 'Quiz was successfully saved');
 			})
 		})
 }

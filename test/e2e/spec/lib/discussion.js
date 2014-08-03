@@ -26,7 +26,7 @@ exports.ask_a_question = function(ptor, ques_string, type){
     question.element(by.tagName('textarea')).sendKeys(ques_string);
     question.element(by.tagName('select')).click().then(function(){
         question.all(by.tagName('option')).then(function(options){
-            options[type].click().click()
+            options[type].click()
         })
     })
     element(by.buttonText('Ask')).click().then(function(){

@@ -183,16 +183,28 @@ exports.open_content = function(ptor){
     })
 }
 
+exports.open_progress = function(ptor){
+    element(by.id('progress')).then(function(btn){
+        ptor.actions().mouseMove(btn).perform();
+    })
+}
+
+exports.open_all_progress = function(ptor){
+    element(by.id('all_student_progress')).click()
+}
+
+exports.open_content_editor = function(ptor){
+   element(by.id('content')).click()
+}
+
 exports.open_online_content = function(ptor){
    element(by.id('new_online_content')).click()
 }
 
 exports.hide_dropmenu = function(ptor){
-    // element(by.id('main')).click()
     element(by.id('content_navigator')).then(function(btn){
         ptor.actions().mouseMove(btn).perform();
-    })
-    
+    })    
 }
 
 //====================================================
@@ -231,7 +243,7 @@ exports.open_course_list_student = function(ptor){
     locator.by_id(ptor, 'course_list').then(function(btn){
         btn.click();
         ptor.getCurrentUrl().then(function(url) {
-            expect(url).toContain('course_list');
+            expect(url).toContain('courses');
         });
     })
 }

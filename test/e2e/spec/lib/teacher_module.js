@@ -242,16 +242,13 @@ exports.change_time_zone = function(ptor, value){
 //            		change the name of an item
 //====================================================
 exports.rename_item = function(ptor, name){
-	locator.by_tag(ptor, 'details-text').then(function(name_edit){
-		name_edit.click().then(function(){
-			locator.by_classname(ptor, 'editable-input').then(function(text_field){
-				text_field.sendKeys(name).then(function(){
-					locator.by_classname(ptor, 'icon-ok').click().then(function(){
-						o_c.feedback(ptor, 'successfully updated')
-					})
-				})
-			})
-		})
+	element(by.id('name')).click()
+	.then(function(){
+		element(by.className('editable-input')).sendKeys(name)
+		element(by.className('check')).click().then(function(){
+			o_c.feedback(ptor, 'successfully updated')			
+			
+		})	
 	})
 }
 
@@ -287,36 +284,20 @@ exports.rename_item = function(ptor, name){
 //            		add mcq question for normal quiz
 //====================================================
 exports.add_quiz_question_mcq = function(ptor, question, number_of_additional_answers, correct){
-	locator.by_name(ptor, 'add_question').then(function(add_question){
-		add_question.click().then(function(){
-			locator.s_by_name(ptor, 'qlabel').then(function(labels){
-				labels[labels.length-1].sendKeys(question).then(function(){
-					locator.s_by_classname(ptor, 'answer_div').then(function(answers_div){
-							answers_div[answers_div.length-1].findElement(protractor.By.className('add_multiple_answer')).then(function(link){
-							locator.s_by_name(ptor, 'answer').then(function(answers){
-								answers[answers.length-1].sendKeys('answer0')
-							})
-							var j = 1;
-							for(var i=0; i< number_of_additional_answers; i++){
-								link.click().then(function(){
-									locator.s_by_name(ptor, 'answer').then(function(answers){
-										answers[answers.length-1].sendKeys('answer'+j)
-										j++;
-
-									})
-								})
-							}
-						}).then(function(){
-							locator.s_by_name(ptor, 'mcq').then(function(checkboxes){
-								correct.forEach(function(correct){
-									checkboxes[correct-1].click();
-								})
-							})
-						})
-					})
-				})
-			})
-		});
+	element(by.name('add_question')).click()
+	var this_question = element.all(by.repeater('question in questions')).last()
+	var add_button = this_question.element(by.className('add_multiple_answer'))
+	var answer = this_question.all(by.repeater('answer in quiz.answers')).last().element(by.name('answer'))
+	this_question.element(by.name('qlabel')).sendKeys(question)
+	answer.sendKeys('answer0')
+	for(var i=1; i<= number_of_additional_answers; i++){
+		add_button.click()
+		answer.sendKeys('answer'+i)
+	}
+	this_question.all(by.name('mcq')).then(function(checkboxes){
+		correct.forEach(function(correct){
+			checkboxes[correct-1].click();
+		})
 	})
 }
 
@@ -324,229 +305,204 @@ exports.add_quiz_question_mcq = function(ptor, question, number_of_additional_an
 //            		add ocq question for normal quiz
 //====================================================
 exports.add_quiz_question_ocq = function(ptor, question, number_of_additional_answers, correct){
-	locator.by_name(ptor, 'add_question').then(function(add_question){
-		o_c.scroll_element(ptor, add_question)
-		add_question.click().then(function(){
-			locator.s_by_name(ptor, 'qlabel').then(function(labels){
-				labels[labels.length-1].sendKeys(question).then(function(){
-					locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
-						dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
-							types[1].click();
-						})
-					}).then(function(){
-						locator.s_by_classname(ptor, 'answer_div').then(function(answers_divs){
-							answers_divs[answers_divs.length-1].findElement(protractor.By.className('add_multiple_answer')).then(function(link){
-								locator.s_by_name(ptor, 'answer').then(function(answers){
-									answers[answers.length-1].sendKeys('answer0')
-								})
-								var j = 1;
-								for(var i=0; i< number_of_additional_answers; i++){
-									o_c.scroll_element(ptor, link)
-									link.click().then(function(){
-										locator.s_by_name(ptor, 'answer').then(function(answers){
-											answers[answers.length-1].sendKeys('answer'+j)
-											j++;
-
-										})
-									})
-								}
-							}).then(function(){
-								locator.s_by_id(ptor, 'radio_correct').then(function(checkboxes){
-									checkboxes[correct-1].click();
-								})
-							})
-						})
-					})
-				})
-			})
-		});
-	})
+	element(by.name('add_question')).click()
+	var this_question = element.all(by.repeater('question in questions')).last()
+	var add_button = this_question.element(by.className('add_multiple_answer'))
+	var answer = this_question.all(by.repeater('answer in quiz.answers')).last().element(by.name('answer'))
+	this_question.element(by.name('qlabel')).sendKeys(question)
+	this_question.element(by.className('choices')).all(by.tagName('option')).get(1).click()
+	answer.sendKeys('answer0')
+	for(var i=1; i<= number_of_additional_answers; i++){
+		add_button.click()
+		answer.sendKeys('answer'+i)
+	}
+	this_question.all(by.id('radio_correct')).get(correct-1).click()
 }
 
 //====================================================
 //            		add free question for normal quiz
 //====================================================
-exports.add_quiz_question_free = function(ptor, question, match, match_string){
-	locator.by_name(ptor, 'add_question').then(function(add_question){
-		o_c.scroll_element(ptor, add_question)
-		add_question.click().then(function(){
-			locator.s_by_name(ptor, 'qlabel').then(function(labels){
-				labels[labels.length-1].sendKeys(question).then(function(){
-					locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
-						dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
-							types[2].click();
-						})
-					}).then(function(){
-						if(match == true){
-							locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
-								dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
-									types[1].click();
-								})
-							})
-							locator.s_by_classname(ptor, 'answer_div').then(function(answers_divs){
-								locator.s_by_name(ptor, 'answer').then(function(answers){
-									answers[answers.length-1].sendKeys(match_string)
-								})
-							})
-						}
-					})
-				})
-			})
-		});
-	})
+exports.add_quiz_question_free = function(ptor, question, match_string){
+	element(by.name('add_question')).click()
+	var this_question = element.all(by.repeater('question in questions')).last()
+	this_question.element(by.name('qlabel')).sendKeys(question)
+	this_question.element(by.className('choices')).all(by.tagName('option')).get(2).click()
+	if(match_string){
+		this_question.element(by.model('quiz.match_type')).all(by.tagName('option')).get(1).click()
+		this_question.element(by.name('answer')).sendKeys(match_string)
+	}
 }
 
 //====================================================
 //            		add drag question for normal quiz
 //====================================================
 exports.add_quiz_question_drag = function(ptor, question, number_of_additional_answers){
-	locator.by_name(ptor, 'add_question').then(function(add_question){
-		o_c.scroll_element(ptor, add_question)
-		add_question.click().then(function(){
-			locator.s_by_name(ptor, 'qlabel').then(function(labels){
-				labels[labels.length-1].sendKeys(question).then(function(){
-					locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
-						dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
-							types[3].click();
-						})
-					}).then(function(){
-						locator.s_by_classname(ptor, 'answer_div').then(function(answers_divs){
-							answers_divs[answers_divs.length-1].findElement(protractor.By.className('add_multiple_answer')).then(function(link){
-								locator.s_by_name(ptor, 'answer').then(function(answers){
-									answers[answers.length-1].sendKeys('answer0')
-								})
-								var j = 1;
-								for(var i=0; i< number_of_additional_answers; i++){
-									o_c.scroll_element(ptor, link)
-									link.click().then(function(){
-										locator.s_by_name(ptor, 'answer').then(function(answers){
-											answers[answers.length-1].sendKeys('answer'+j)
-											j++;
-
-										})
-									})
-								}
-							})
-						})
-					})
-				})
-			})
-		});
-	})
+	element(by.name('add_question')).click()
+	var this_question = element.all(by.repeater('question in questions')).last()
+	var add_button = this_question.element(by.className('add_multiple_answer'))
+	var answer = this_question.all(by.repeater('answer in quiz.answers')).last().element(by.name('answer'))
+	this_question.element(by.name('qlabel')).sendKeys(question)
+	this_question.element(by.className('choices')).all(by.tagName('option')).get(3).click()
+	answer.sendKeys('answer0')
+	for(var i=1; i<= number_of_additional_answers; i++){
+		add_button.click()
+		answer.sendKeys('answer'+i)
+	}
 }
 
 //====================================================
 //            		add mcq question for normal survey
 //====================================================
 exports.add_survey_question_mcq = function(ptor, question, number_of_additional_answers){
-	locator.by_name(ptor, 'add_question').then(function(add_question){
-		add_question.click().then(function(){
-			locator.s_by_name(ptor, 'qlabel').then(function(labels){
-				labels[labels.length-1].sendKeys(question).then(function(){
-					locator.s_by_classname(ptor, 'answer_div').then(function(answers_div){
-							answers_div[answers_div.length-1].findElement(protractor.By.className('add_multiple_answer')).then(function(link){
-							locator.s_by_name(ptor, 'answer').then(function(answers){
-								answers[answers.length-1].sendKeys('answer0')
-							})
-							var j = 1;
-							for(var i=0; i< number_of_additional_answers; i++){
-								link.click().then(function(){
-									locator.s_by_name(ptor, 'answer').then(function(answers){
-										answers[answers.length-1].sendKeys('answer'+j)
-										j++;
+	element(by.name('add_question')).click()
+	var this_question = element.all(by.repeater('question in questions')).last()
+	var add_button = this_question.element(by.className('add_multiple_answer'))
+	var answer = this_question.all(by.repeater('answer in quiz.answers')).last().element(by.name('answer'))
+	this_question.element(by.name('qlabel')).sendKeys(question)
+	answer.sendKeys('answer0')
+	for(var i=1; i<= number_of_additional_answers; i++){
+		add_button.click()
+		answer.sendKeys('answer'+i)
+	}
+	// locator.by_name(ptor, 'add_question').then(function(add_question){
+	// 	add_question.click().then(function(){
+	// 		locator.s_by_name(ptor, 'qlabel').then(function(labels){
+	// 			labels[labels.length-1].sendKeys(question).then(function(){
+	// 				locator.s_by_classname(ptor, 'answer_div').then(function(answers_div){
+	// 						answers_div[answers_div.length-1].findElement(protractor.By.className('add_multiple_answer')).then(function(link){
+	// 						locator.s_by_name(ptor, 'answer').then(function(answers){
+	// 							answers[answers.length-1].sendKeys('answer0')
+	// 						})
+	// 						var j = 1;
+	// 						for(var i=0; i< number_of_additional_answers; i++){
+	// 							link.click().then(function(){
+	// 								locator.s_by_name(ptor, 'answer').then(function(answers){
+	// 									answers[answers.length-1].sendKeys('answer'+j)
+	// 									j++;
 
-									})
-								})
-							}
-						})
-					})
-				})
-			})
-		});
-	})
+	// 								})
+	// 							})
+	// 						}
+	// 					})
+	// 				})
+	// 			})
+	// 		})
+	// 	});
+	// })
 }
 
 //====================================================
 //            		add ocq question for normal survey
 //====================================================
 exports.add_survey_question_ocq = function(ptor, question, number_of_additional_answers){
-	locator.by_name(ptor, 'add_question').then(function(add_question){
-		o_c.scroll_element(ptor, add_question)
-		add_question.click().then(function(){
-			locator.s_by_name(ptor, 'qlabel').then(function(labels){
-				labels[labels.length-1].sendKeys(question).then(function(){
-					locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
-						dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
-							types[1].click();
-						})
-					}).then(function(){
-						locator.s_by_classname(ptor, 'answer_div').then(function(answers_divs){
-							answers_divs[answers_divs.length-1].findElement(protractor.By.className('add_multiple_answer')).then(function(link){
-								locator.s_by_name(ptor, 'answer').then(function(answers){
-									answers[answers.length-1].sendKeys('answer0')
-								})
-								var j = 1;
-								for(var i=0; i< number_of_additional_answers; i++){
-									o_c.scroll_element(ptor, link)
-									link.click().then(function(){
-										locator.s_by_name(ptor, 'answer').then(function(answers){
-											answers[answers.length-1].sendKeys('answer'+j)
-											j++;
+	element(by.name('add_question')).click()
+	var this_question = element.all(by.repeater('question in questions')).last()
+	var add_button = this_question.element(by.className('add_multiple_answer'))
+	var answer = this_question.all(by.repeater('answer in quiz.answers')).last().element(by.name('answer'))
+	this_question.element(by.name('qlabel')).sendKeys(question)
+	this_question.element(by.className('choices')).all(by.tagName('option')).get(1).click()
+	answer.sendKeys('answer0')
+	for(var i=1; i<= number_of_additional_answers; i++){
+		add_button.click()
+		answer.sendKeys('answer'+i)
+	}
+	// locator.by_name(ptor, 'add_question').then(function(add_question){
+	// 	o_c.scroll_element(ptor, add_question)
+	// 	add_question.click().then(function(){
+	// 		locator.s_by_name(ptor, 'qlabel').then(function(labels){
+	// 			labels[labels.length-1].sendKeys(question).then(function(){
+	// 				locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
+	// 					dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
+	// 						types[1].click();
+	// 					})
+	// 				}).then(function(){
+	// 					locator.s_by_classname(ptor, 'answer_div').then(function(answers_divs){
+	// 						answers_divs[answers_divs.length-1].findElement(protractor.By.className('add_multiple_answer')).then(function(link){
+	// 							locator.s_by_name(ptor, 'answer').then(function(answers){
+	// 								answers[answers.length-1].sendKeys('answer0')
+	// 							})
+	// 							var j = 1;
+	// 							for(var i=0; i< number_of_additional_answers; i++){
+	// 								o_c.scroll_element(ptor, link)
+	// 								link.click().then(function(){
+	// 									locator.s_by_name(ptor, 'answer').then(function(answers){
+	// 										answers[answers.length-1].sendKeys('answer'+j)
+	// 										j++;
 
-										})
-									})
-								}
-							})
-						})
-					})
-				})
-			})
-		});
-	})
+	// 									})
+	// 								})
+	// 							}
+	// 						})
+	// 					})
+	// 				})
+	// 			})
+	// 		})
+	// 	});
+	// })
 }
 
 //====================================================
 //            		add free question for normal survey
 //====================================================
 exports.add_survey_question_free = function(ptor, question){
-	locator.by_name(ptor, 'add_question').then(function(add_question){
-		o_c.scroll_element(ptor, add_question)
-		add_question.click().then(function(){
-			locator.s_by_name(ptor, 'qlabel').then(function(labels){
-				labels[labels.length-1].sendKeys(question).then(function(){
-					locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
-						dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
-							types[2].click();
-						})
-					})
-				})
-			})
-		});
-	})
+	element(by.name('add_question')).click()
+	var this_question = element.all(by.repeater('question in questions')).last()
+	this_question.element(by.name('qlabel')).sendKeys(question)
+	this_question.element(by.className('choices')).all(by.tagName('option')).get(2).click()
+	// locator.by_name(ptor, 'add_question').then(function(add_question){
+	// 	o_c.scroll_element(ptor, add_question)
+	// 	add_question.click().then(function(){
+	// 		locator.s_by_name(ptor, 'qlabel').then(function(labels){
+	// 			labels[labels.length-1].sendKeys(question).then(function(){
+	// 				locator.s_by_classname(ptor, 'choices').then(function(dropdowns){
+	// 					dropdowns[dropdowns.length-1].findElements(protractor.By.tagName('option')).then(function(types){
+	// 						types[2].click();
+	// 					})
+	// 				})
+	// 			})
+	// 		})
+	// 	});
+	// })
 }
 
 //====================================================
 //            		adds a quiz header
 //====================================================
 exports.add_quiz_header = function(ptor, header){
-	locator.by_name(ptor, 'add_header').then(function(add_header){
-		// o_c.scroll_element(ptor, add_header)
-		add_header.click().then(function(){
-			// console.log(locator.s_by_classname(ptor, 'ta-text'))
-			locator.s_by_classname(ptor, 'ta-text').then(function(fields){
-				fields[fields.length-1].sendKeys(header);
-			})
-		})
+	element(by.name('add_header')).click()
+	element.all(by.className('ta-text')).last().sendKeys(header)
+	// locator.by_name(ptor, 'add_header').then(function(add_header){
+	// 	// o_c.scroll_element(ptor, add_header)
+	// 	add_header.click().then(function(){
+	// 		// console.log(locator.s_by_classname(ptor, 'ta-text'))
+	// 		locator.s_by_classname(ptor, 'ta-text').then(function(fields){
+	// 			fields[fields.length-1].sendKeys(header);
+	// 		})
+	// 	})
 		
-	})
-	
+	// })
+}
+
+exports.add_survey_header = function(ptor, header){
+	element(by.name('add_header')).click()
+	element.all(by.className('ta-text')).last().sendKeys(header)
+	// locator.by_name(ptor, 'add_header').then(function(add_header){
+	// 	// o_c.scroll_element(ptor, add_header)
+	// 	add_header.click().then(function(){
+	// 		// console.log(locator.s_by_classname(ptor, 'ta-text'))
+	// 		locator.s_by_classname(ptor, 'ta-text').then(function(fields){
+	// 			fields[fields.length-1].sendKeys(header);
+	// 		})
+	// 	})
+		
+	// })
 }
 
 //====================================================
 //            	save normal quiz or survey
 //====================================================
 exports.save_quiz = function(ptor){
-	locator.by_name(ptor, 'save_quiz').click().then(function(){
+	element(by.name('save_quiz')).click().then(function(){
 		o_c.feedback(ptor, 'Quiz was successfully saved');
 	})
 }
@@ -564,20 +520,44 @@ exports.save_survey = function(ptor){
 //            	make the quiz required
 //====================================================
 exports.make_quiz_required = function(ptor){
-	locator.by_tag(ptor, 'details-check').click().then(function(){
-		locator.by_classname(ptor, 'editable-input').then(function(checkbox){
-			checkbox.click().then(function(){
-				locator.by_classname(ptor, 'icon-ok').then(function(confirm){
-					confirm.click().then(function(){
-						o_c.feedback(ptor, 'Quiz was successfully updated');
-					})
-				})
-			})
-		})
-		
+	element(by.tagName('details-check')).click()
+	element(by.className('editable-input')).click()
+	element(by.className('check')).click().then(function(){
+		o_c.feedback(ptor, 'Quiz was successfully updated');
 	})
+	// locator.by_tag(ptor, 'details-check').click().then(function(){
+	// 	locator.by_classname(ptor, 'editable-input').then(function(checkbox){
+	// 		checkbox.click().then(function(){
+	// 			locator.by_classname(ptor, 'icon-ok').then(function(confirm){
+	// 				confirm.click().then(function(){
+	// 					o_c.feedback(ptor, 'Quiz was successfully updated');
+	// 				})
+	// 			})
+	// 		})
+	// 	})
+		
+	// })
 }
 
+exports.make_survey_required = function(ptor){
+	element(by.tagName('details-check')).click()
+	element(by.className('editable-input')).click()
+	element(by.className('check')).click().then(function(){
+		o_c.feedback(ptor, 'Survey was successfully updated');
+	})
+	// locator.by_tag(ptor, 'details-check').click().then(function(){
+	// 	locator.by_classname(ptor, 'editable-input').then(function(checkbox){
+	// 		checkbox.click().then(function(){
+	// 			locator.by_classname(ptor, 'icon-ok').then(function(confirm){
+	// 				confirm.click().then(function(){
+	// 					o_c.feedback(ptor, 'Quiz was successfully updated');
+	// 				})
+	// 			})
+	// 		})
+	// 	})
+		
+	// })
+}
 
 //====================================================
 //				initialize a lecture with a url

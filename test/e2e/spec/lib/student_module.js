@@ -67,66 +67,47 @@ exports.check_course_info = function(ptor, course_code, course_name, description
 }
 
 //=====================================
-//    solves normal quiz MCQ question
+//    solves normal quiz MCQ or OCQ question
 //=====================================
 exports.mcq_answer = function(ptor, question_no, choice_no){
-  locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
-    rep[question_no-1].findElements(protractor.By.tagName('input')).then(function(check_boxes){
-        check_boxes[choice_no-1].click();
-    })
-  })
+  this.solve_quiz_question(ptor, question_no, choice_no)
 }
-
-//=====================================
-//    solves normal quiz OCQ question
-//=====================================
 
 exports.ocq_answer = function(ptor, question_no, choice_no){
-  locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
-    rep[question_no-1].findElements(protractor.By.tagName('input')).then(function(check_boxes){
-      check_boxes[choice_no-1].click();
-    })
-  })
+  this.solve_quiz_question(ptor, question_no, choice_no)
 }
 
+exports.solve_quiz_question=function(ptor, question_no, choice_no){
+  element(by.repeater('question in quiz.questions').row(question_no-1)).all(by.tagName('input')).get(choice_no-1).click()
+}
 //=====================================
 //    solves normal quiz DRAG question
 //=====================================
 
 exports.drag_answer = function(ptor, question_no){
-  for (var i = 0; i < 3; i++) {
-    locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
-      rep[question_no-1].findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
-        rep[question_no-1].findElements(protractor.By.tagName('li')).then(function(answer){
-          answer[0].getText().then(function (text){
-            if(text == 'answer2'){
-              ptor.actions().dragAndDrop(arrow[0], arrow[2]).perform();
-            }
-            else if(text == 'answer1'){
-              ptor.actions().dragAndDrop(arrow[0], arrow[1]).perform();
-            }
-          })
-          answer[1].getText().then(function (text){
-            if(text == 'answer0'){
-              ptor.actions().dragAndDrop(arrow[1], arrow[0]).perform();
-            }
-            else if(text == 'answer2'){
-              ptor.actions().dragAndDrop(arrow[1], arrow[2]).perform();
-            }
-          })
-          answer[2].getText().then(function (text){
-            if(text == 'answer0'){
-              ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
-            }
-            else if(text == 'answer1'){
-              ptor.actions().dragAndDrop(arrow[2], arrow[1]).perform();
-            }
-          })
-        })
-      })
+  var this_question = element(by.repeater('question in quiz.questions').row(question_no-1))
+  var handles = this_question.all(by.className('handle'))
+  var answers = this_question.all(by.tagName('li'))
+  for(var i=0; i<3; i++){
+    answers.get(0).getText().then(function(text){
+      if(text == 'answer1')
+        ptor.actions().dragAndDrop(handles.get(0), handles.get(1)).perform();
+      else if(text == 'answer2')
+        ptor.actions().dragAndDrop(handles.get(0), handles.get(2)).perform();
     })
-  };
-ptor.sleep(3000);
+    answers.get(1).getText().then(function(text){
+      if(text == 'answer0')
+        ptor.actions().dragAndDrop(handles.get(1), handles.get(0)).perform();
+      else if(text == 'answer2')
+        ptor.actions().dragAndDrop(handles.get(1), handles.get(2)).perform();
+    })
+    answers.get(2).getText().then(function(text){
+      if(text == 'answer0')
+        ptor.actions().dragAndDrop(handles.get(2), handles.get(0)).perform();
+      else if(text == 'answer1')
+        ptor.actions().dragAndDrop(handles.get(2), handles.get(1)).perform();
+    })
+  }
 }
 
 //======================================================
@@ -134,11 +115,13 @@ ptor.sleep(3000);
 //======================================================
 
 exports.free_match_answer = function(ptor, question_no, desired_text){
-    locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
-        rep[question_no-1].findElement(protractor.By.tagName('textarea')).then(function(text_area){
-          text_area.sendKeys(desired_text)
-        })
-    })
+  element(by.repeater('question in quiz.questions').row(question_no-1)).element(by.tagName('textarea')).sendKeys(desired_text)
+
+    // locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
+    //     rep[question_no-1].findElement(protractor.By.tagName('textarea')).then(function(text_area){
+    //       text_area.sendKeys(desired_text)
+    //     })
+    // })
 }
     
 //=====================================
@@ -146,9 +129,11 @@ exports.free_match_answer = function(ptor, question_no, desired_text){
 //=====================================
 
 exports.submit_normal_quiz = function(ptor){
-  locator.by_xpath(ptor, '//*[@id="middle"]/center/form/input[2]').then(function(btn){
-    btn.click();
-  })
+  element(by.buttonText('Submit')).click()
+}
+
+exports.save_survey = function(ptor){
+  element(by.buttonText('Save')).click()
 }
 
 //=====================================

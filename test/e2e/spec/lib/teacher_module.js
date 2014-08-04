@@ -79,7 +79,7 @@ exports.get_key_and_enroll = function(ptor, mail){
 //            		delete course
 //====================================================
 exports.delete_course = function(ptor,co_no){
-	var course = element(by.repeater('course in courses').row(co_no))
+	var course = element(by.id('main_course_list')).element(by.repeater('course in courses').row(co_no-1))
 	course.element(by.className('delete')).click()
 	course.element(by.className('fi-check')).click().then(function(){
 		o_c.feedback(ptor, 'Course was successfully deleted.');
@@ -933,9 +933,29 @@ exports.share_module=function(ptor, mo_no, share_with){
 	o_c.open_content(ptor)
 	element(by.id('share_copy')).click()
 	o_c.hide_dropmenu(ptor)
-	var modules=element(by.className('shared-tree')).all(by.tagName('a'))
-	expect(modules.count()).toEqual(mo_no)
-	var input =modules.first().element(by.tagName('input'))
-	expect(input.getAttribute('checked')).toBe('true')
+	var items=element(by.className('shared-tree')).all(by.tagName('a'))
+	var checkboxes = element(by.className('shared-tree')).all(by.tagName('input'))
+	expect(items.count()).toEqual(mo_no)
+	expect(checkboxes.count()).toEqual(mo_no)
+	checkboxes.each(function(checkbox){
+		expect(checkbox.getAttribute('checked')).toBe('true')
+	})
 
+	element(by.model('$parent.selected_teacher')).sendKeys(share_with)
+	element(by.buttonText('Share')).click().then(function(){
+		o_c.feedback(ptor, 'Data was successfully shared with')
+	})
+
+}
+
+exports.check_module_number = function(ptor, no_of_mo){
+  locator.by_repeater(ptor, 'module in modules').then(function(mods){
+    expect(mods.length).toEqual(no_of_mo);
+  })
+}
+
+exports.check_item_number = function(ptor, module_num, total_item_no){
+  element(by.repeater('module in modules').row(module_num-1)).all(by.repeater('item in module.items')).then(function(items){
+    expect(items.length).toEqual(total_item_no)
+  })
 }

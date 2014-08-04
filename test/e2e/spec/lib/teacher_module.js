@@ -203,9 +203,10 @@ exports.delete_item_by_number = function(ptor, mo_no, item_no){
 //====================================================
 
 exports.open_module = function(ptor, mo_no){
-	locator.by_repeater(ptor, 'module in modules').then(function(mods){
-		mods[mo_no-1].click();
-	})
+	element(by.repeater('module in modules').row(mo_no-1)).click()
+	// locator.by_repeater(ptor, 'module in modules').then(function(mods){
+	// 	mods[mo_no-1].click();
+	// })
 }
 
 //====================================================

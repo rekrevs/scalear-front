@@ -67,6 +67,7 @@ var translation_sv=function(){
       links_external_system: "Länkar till externa system",
       new_online_content: "Ny Online Innehåll",
       send_email: "Skicka ett Mail",
+      show_all_courses: "Visa alla kurser",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -152,6 +153,7 @@ var translation_sv=function(){
               privacy: "Sekretessregler",
           },
       feedback:{
+              like_to_comment: "Jag skulle vilja kommentera",
               what_you_think: "Låt oss veta vad du tycker",
               report_technical: "Rapportera ett tekniskt problem",
               send: "Skicka",
@@ -251,7 +253,7 @@ var translation_sv=function(){
               import_new_course: "Import till ny kurs",
               import_existing_course: "Import till befintlig kurs",
               empty: "Du har inga anmälningar just nu.",
-              reviewed_inclass: "Vill du ha den här frågan ska granskas I klass"
+              reviewed_inclass: "Vill du läraren att se över denna fråga i klassen"
           },
       privacy:{
               policy: "Sekretesspolicy",
@@ -627,7 +629,7 @@ var translation_sv=function(){
               my_courses: "Mina kurser",
               new_course: "Ny Kurs",
               add_course: "Lägg till Kurs",
-              join_course: "Ansluta Kurs",
+              join_course: "Gå med i en ny kurs",
               enrolled: "Inskrivna",
               display_lecture_results: "Visa Föreläsningsresultat",
               display_quizzes: "Visa Quiz-frågor",

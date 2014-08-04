@@ -68,6 +68,7 @@ var translation_en=function(){
       links_external_system: "Links to external systems",
       new_online_content: "New Online Content",
       send_email: "Send an Email", 
+      show_all_courses: "Show all courses",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -151,6 +152,7 @@ var translation_en=function(){
         privacy: "Privacy",
       },
       feedback:{
+        like_to_comment: "I’d like to comment on",
         what_you_think: "Let us know what you think",
         report_technical: "Report a technical problem",
         send: "Send",
@@ -251,7 +253,7 @@ var translation_en=function(){
         import_new_course: "Import into new course",
         import_existing_course: "Import into existing course",
         empty: "You don't have any notifications at the moment.",
-        reviewed_inclass: "Would you like this question to be reviewed In Class"
+        reviewed_inclass: "Would you like the teacher to review this question in class"
       },
       privacy:{
         policy: "Privacy Policy",
@@ -629,7 +631,7 @@ var translation_en=function(){
         my_courses: "My Courses",
         new_course: "New Course",
         add_course: "Add Course",
-        join_course: "Join Course",
+        join_course: "Join a new course",
         enrolled: "Enrolled",
         display_lecture_results: "Display Lecture Results",
         display_quizzes: "Display Quizzes",

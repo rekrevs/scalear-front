@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page', '$filter', '$state', '$timeout',
-        function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout) {
+    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page', '$filter', '$state', '$timeout','$rootScope',
+        function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout,$rootScope) {
 
             Page.setTitle('head.information');
+
             $window.scrollTo(0, 0);
             $scope.init = function(){
                 Course.show({
@@ -111,8 +112,16 @@ angular.module('scalearAngularApp')
                 )
             }
 
-            $scope.init();
-            $scope.init_calendar_announcements();
+            if($state.params.redirect){
+                // $scope.$emit('open_navigator')
+                $scope.goToContent()
+            }
+            else{
+                $scope.init();
+                $scope.init_calendar_announcements();
+            }
+
+            
 
         }
     ]);

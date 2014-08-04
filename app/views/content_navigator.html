@@ -4,6 +4,7 @@
 		<i ng-show="!modules.length && !links.length" class="muted" style="padding:20px 10px">{{'groups.empty' | translate}}...</i>
 		<div ng-show="modules.length || links.length">
 			<span ng-switch-when="courseware">
+				<a class="button expand" ui-sref="course.course_information" style="top: 1px;box-shadow: 0.1em 0.1em 0.5em grey;">Course Information</a>
 				<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
 				<ul class="accordion">
 					<li ng-repeat="link in links" class='module accordion-group'>

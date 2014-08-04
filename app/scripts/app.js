@@ -491,7 +491,7 @@ angular.module('scalearAngularApp', [
                 controller: 'announcementsCtrl'
             })
             .state('course.course_information', {
-                url: '/course_information',
+                url: '/course_information?redirect',
                 templateUrl: '/views/student/course/course_information.html',
                 controller: 'studentCourseInformationCtrl'
             })

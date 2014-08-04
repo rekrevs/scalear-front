@@ -925,3 +925,17 @@ exports.add_survey = function(ptor){
 // 		})
 // 	})
 // }
+
+// //====================================================
+// //            		share module
+// //====================================================
+exports.share_module=function(ptor, mo_no, share_with){
+	o_c.open_content(ptor)
+	element(by.id('share_copy')).click()
+	o_c.hide_dropmenu(ptor)
+	var modules=element(by.className('shared-tree')).all(by.tagName('a'))
+	expect(modules.count()).toEqual(mo_no)
+	var input =modules.first().element(by.tagName('input'))
+	expect(input.getAttribute('checked')).toBe('true')
+
+}

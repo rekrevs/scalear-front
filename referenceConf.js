@@ -54,7 +54,8 @@ exports.config = {
         // 'test/e2e/spec/normal-survey.spec.js',
         // 'test/e2e/spec/progress-main.spec.js',
         // 'test/e2e/spec/progress-module.spec.js',
-        'test/e2e/spec/course-editor-basic.spec.js',
+        // 'test/e2e/spec/course-editor-basic.spec.js',
+        'test/e2e/spec/copying-sharing.spec.js',
     ],
 
     // ----- Capabilities to be passed to the webdriver instance ----

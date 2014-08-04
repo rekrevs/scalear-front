@@ -97,6 +97,7 @@ angular.module('scalearAngularApp')
                         var video = Popcorn.HTMLVideoElement('#'+scope.id)//Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
                         player = Popcorn(video,{});
                         video.src = scope.url
+                        player.video.className = "fit-inside"
                         player.controls(scope.controls);
                         player.autoplay(scope.autoplay);
                     }

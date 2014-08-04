@@ -4,7 +4,7 @@
   <!-- <div class="top-bar sub-header"> -->
       <ul class="title-area">
           <li class="name">
-            <h1><a id="content_navigator" class="sub-header-component active" ng-click="open_navigator=!open_navigator" >{{shortname}}: {{selectedmodule.name || 'courses.select_module' | translate}}</a></h1>
+            <h1><a id="content_navigator" class="medium-grey dark-text sub-header-component" ng-click="open_navigator=!open_navigator" >{{shortname}}: {{selectedmodule.name || 'courses.select_module' | translate}}</a></h1>
           </li>
            <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
            <li toggle-top-bar class="menu-icon"><a href="">SUB-MENU</a></li>
@@ -15,56 +15,47 @@
           <!-- Right Nav Section -->
           <ul class="right">
             <li has-dropdown>
-              <a class="sub-header-component active" href="" translate>settings.settings</a>
+              <a class="medium-grey dark-text sub-header-component" href="" translate>settings.settings</a>
               <ul top-bar-dropdown>
                 <li ng-show="preview_as_student">
-                    <a class="sub-header-component has-description grey" ng-click="disablePreview()">
+                    <a class="medium-grey sub-header-component has-description" ng-click="disablePreview()">
                         {{'preview_as_student'| translate}}
-                        <h5 class="description">
+                        <h5 class="dark-description">
                             <small>
                                 Click to exit Preview Mode    
                             </small>
                         </h5>
                     </a>
                 </li>
-                <li class="blue with-padding" style="min-width: 200px;">
-                  <div class="switch tiny show-inline show-inline">
-                    <input id="showNotesCheckbox" type="checkbox" />
-                    <label class="color-white show-for-large-only" for="showNotesCheckbox" translate>course_settings.show_notes</label>
-                    <label class="color-white hide-for-large-only" for="showNotesCheckbox"></label>
-                  </div> 
-                  <small><small class="uppercase valign-top color-white hide-for-large-only show-inline" translate> course_settings.show_notes</small></small>
-                </li>
-                <li class="blue with-padding" style="min-width: 200px;">
-                  <div class="switch tiny show-inline show-inline">
-                      <input id="showQuestionsCheckbox" type="checkbox" />
-                      <label class="color-white show-for-large-only" for="showQuestionsCheckbox" translate>course_settings.show_questions</label>
-                      <label class="color-white hide-for-large-only" for="showQuestionsCheckbox"></label>
-                  </div> 
-                  <small><small class="uppercase valign-top color-white hide-for-large-only show-inline" translate> course_settings.show_questions</small></small>
-                </li>
-                <li class="blue with-padding" style="min-width: 200px;">
-                  <div class="switch tiny show-inline show-inline">
-                      <input id="showQuizzesCheckbox" type="checkbox" />
-                      <label class="color-white show-for-large-only" for="showQuizzesCheckbox" translate>course_settings.show_quizzes</label>
-                      <label class="color-white hide-for-large-only" for="showQuizzesCheckbox"></label>
-                  </div> 
-                  <small><small class="uppercase valign-top color-white hide-for-large-only show-inline" translate> course_settings.show_quizzes</small></small>
-                </li>
-                <li class="blue with-padding" style="min-width: 200px;">
-                  <div class="switch tiny show-inline show-inline">
-                      <input id="showConfusedCheckbox" type="checkbox" />
-                      <label class="color-white show-for-large-only" for="showConfusedCheckbox" translate>course_settings.show_confused</label>
-                      <label class="color-white hide-for-large-only" for="showConfusedCheckbox"></label>
-                  </div> 
-                  <small><small class="uppercase valign-top color-white hide-for-large-only show-inline" translate> course_settings.show_confused</small></small>
+                <li>
+                    <a class="medium-grey sub-header-component">
+                        <input id="showNotesCheckbox" type="checkbox" />
+                        {{'course_settings.show_notes' | translate}}
+                    </a>
                 </li>
                 <li>
-                    <a class="sub-header-component blue" ng-click="exportNotes()">
+                    <a class="medium-grey sub-header-component">
+                        <input id="showQuestionsCheckbox" type="checkbox" />
+                        {{'course_settings.show_questions' | translate}}
+                    </a>
+                </li>
+                <li>
+                    <a class="medium-grey sub-header-component">
+                        <input id="showQuizzesCheckbox" type="checkbox" />
+                        {{'course_settings.show_quizzes' | translate}}
+                    </a>
+                </li>
+                <li>
+                    <a class="medium-grey sub-header-component">
+                        <input id="showConfusedCheckbox" type="checkbox" />
+                        {{'course_settings.show_confused' | translate}}
+                    </a>
+                </li>
+                <li>
+                    <a class="medium-grey sub-header-component" ng-click="exportNotes()">
                         {{'lectures.download_notes' | translate}}
                     </a>
                 </li>
-                
               </ul>
             </li>
           </ul>

@@ -451,6 +451,10 @@ label{
 .top-bar{
 	z-index: 10 !important;
 }
+.nav-item-active, .nav-item-active:hover{
+  background-color: #5da423 !important;
+  color: white !important;
+}
 
 
 /* WEBSITE NOTICE */

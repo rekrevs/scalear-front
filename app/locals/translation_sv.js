@@ -934,6 +934,10 @@ var translation_sv=function(){
           show_questions: "Visa Frågor",
           show_quizzes: "Visa Språktest",
           show_confused: "Visa Förvirrad"
+        },
+        languages:{
+          en: 'Engelska',
+          sv: 'Svenska'
         }
      
     }

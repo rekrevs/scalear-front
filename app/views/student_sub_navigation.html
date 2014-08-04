@@ -4,9 +4,8 @@
   <!-- <div class="top-bar sub-header"> -->
       <ul class="title-area">
           <li class="name">
-            <h1><a id="content_navigator" class="medium-grey dark-text sub-header-component" ng-click="open_navigator=!open_navigator" >{{shortname}}: {{selectedmodule.name || 'courses.select_module' | translate}}</a></h1>
+            <h1><a id="content_navigator" class="medium-grey dark-text sub-header-component" ng-class="{'dark-medium-grey': open_navigator}" ng-click="open_navigator=!open_navigator" ><i class="fi-list" ng-class="{'color-white': open_navigator}"></i> {{shortname}}: {{selectedmodule.name || 'courses.select_module' | translate}}</a></h1>
           </li>
-           <!-- Remove the class "menu-icon" to get rid of menu icon. Take out "Menu" to just have icon alone -->
            <li toggle-top-bar class="menu-icon"><a href="">SUB-MENU</a></li>
            <li ><content-navigator modules="modules" mode="courseware" links="links" open="open_navigator" style="z-index: 1;" /></li>
       </ul>

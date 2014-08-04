@@ -131,4 +131,10 @@ angular.module('scalearAngularApp')
     return function(s){
       return s[0].toUpperCase() + s.slice(1);
     }
-  });
+  })
+  .filter("courseActive", ['$state', '$filter', function($state, $filter){
+    return function(id){
+      var inside = $filter('includedByState')('**.course.**');
+      return inside && $state.params.course_id == id
+    }
+  }]);

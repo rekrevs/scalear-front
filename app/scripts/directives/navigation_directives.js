@@ -193,6 +193,7 @@ angular.module('scalearAngularApp')
     templateUrl:"/views/content_navigator.html",
    link:function(scope, element, attr){
    	  scope.currentmodule = {id: $state.params.module_id}
+   	  scope.currentitem = $state.params.lecture_id || $state.params.quiz_id
    	  scope.moduleSortableOptions={
  		axis: 'y',
 		dropOnEmpty: false,
@@ -270,6 +271,7 @@ angular.module('scalearAngularApp')
   	 	var params = {'module_id': scope.currentmodule.id}    
         params[item.class_name+'_id'] = item.id
         $state.go('course.module.courseware.'+ item.class_name, params)
+        scope.currentitem = item.id
         // console.log(item)
         // // $timeout(function(){
         // //   scope.toggleNavigator();

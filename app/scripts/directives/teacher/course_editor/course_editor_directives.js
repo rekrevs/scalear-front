@@ -14,7 +14,8 @@ angular.module('scalearAngularApp')
                 copy:"&",
                 paste: "&",
                 share:"&",
-                link:"&"
+                link:"&",
+                current: "="
             },
             templateUrl: '/views/teacher/course_editor/module.html',
             link: function(scope,element) {
@@ -82,7 +83,8 @@ angular.module('scalearAngularApp')
                 copy:"&",
                 paste:"&",
                 share:"&",
-                link:"&"
+                link:"&",
+                current: "="
             },
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/item.html',
@@ -103,6 +105,7 @@ angular.module('scalearAngularApp')
                         params[scope.item.class_name+'_id'] = scope.item.id
                         // $state.go('course.module.courseware.'+$scope.last_viewed.item.class_name, params)
                         $state.go('course.module.course_editor.'+scope.item.class_name,params)
+                        scope.$parent.$parent.currentitem = scope.item.id
                     }
                 }
 

@@ -58,10 +58,12 @@
 }
 
 /*COLORING*/
-.white{
+.white, .white-hover{
 	background-color: #ffffff !important;
 }
-
+.whitesmoke, .whitesmoke-hover{
+  background-color: whitesmoke !important
+}
 .blue{
 	background-color: #2ba6cb !important;
 }
@@ -89,14 +91,14 @@
 .medium-grey{
   background-color: #bdbdbd !important;
 }
-.medium-grey:hover, .dark-medium-grey{
+.whitesmoke-hover:hover, .medium-grey:hover, .dark-medium-grey, .dark-medium-grey-hover{
   background-color: #a3a3a3 !important;
 }
 
 .light-grey, .light-grey-hover{
 	background-color: #ececea !important;
 }
-.light-grey-hover:hover{
+.white-hover:hover, .light-grey-hover:hover{
   background-color: #d4d4d2 !important;
 }
 .transparent{
@@ -111,7 +113,6 @@
 	background-color: #fcf8e3 !important;
 }
 
-
 .color-white{
 	color: #ffffff !important;
 }
@@ -122,7 +123,7 @@
 .color-green, .color-green-hover{
 	color: #5da423 !important;
 }
-.color-green-hover:hover{
+.color-lightgreen-hover:hover, .color-green-hover:hover{
   color: #4e8a1d !important;
 }
 .color-red{
@@ -140,8 +141,18 @@
 .color-wheat{
 	color: #c09853 !important;
 }
+
+.color-lightgreen, .color-lightgreen-hover{
+  color:rgb(109,193,131) !important;
+}
+
 .dark-text{
-	color: #222222 !important;
+  color: #222222 !important;
+}
+
+.dark-medium-grey-hover:hover, .green-color-white, .green-color-white:hover{
+  background-color: #5da423 !important;
+  color:#ffffff !important
 }
 
 /*Border Colors*/
@@ -250,13 +261,13 @@ select{
 
 .size-13 { font-size: 13px; }
       
-.size-14 { font-size: 14px; }
+.size-14 { font-size: 14px !important; }
 
 .size-16 { font-size: 16px !important; }
 
 .size-18 { font-size: 18px !important; }
 
-.size-21 { font-size: 21px; }
+.size-21 { font-size: 21px !important;}
 
 .size-24 { font-size: 24px; }
 
@@ -269,6 +280,11 @@ select{
 .size-60 { font-size: 60px; }
 
 .size-72 { font-size: 72px; }
+
+.size-18-light{
+font-size: 18px !important;
+font-weight: 300 !important
+}
 
 /*TEXT*/
 .truncate{
@@ -450,6 +466,14 @@ label{
 
 .top-bar{
 	z-index: 10 !important;
+}
+
+.top-bar input[type="checkbox"]{
+  top:0;
+}
+
+.top-bar .dropdown{
+  box-shadow: -0.04em 0.04em 0.1em lightgrey
 }
 .nav-item-active, .nav-item-active:hover{
   background-color: #5da423 !important;

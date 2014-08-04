@@ -1,10 +1,10 @@
 <div>
   <div style="height: 50px;"></div>
-  <top-bar class="sub-header">
+  <top-bar class="sub-header whitesmoke">
   <!-- <div class="top-bar sub-header"> -->
       <ul class="title-area">
           <li class="name">
-            <h1><a id="content_navigator" class="medium-grey dark-text sub-header-component" ng-class="{'dark-medium-grey': open_navigator}" ng-click="open_navigator=!open_navigator" ><i class="fi-list" ng-class="{'color-white': open_navigator}"></i> {{shortname}}: {{selectedmodule.name || 'courses.select_module' | translate}}</a></h1>
+            <h1><a id="content_navigator" class="dark-text sub-header-component dark-medium-grey" ng-class="{'green-color-white': open_navigator, 'dark-medium-grey-hover': !open_navigator}" ng-click="open_navigator=!open_navigator" style="width: 300px;margin-right:10px"><i class="fi-list" ng-class="{'color-white': open_navigator}"></i> {{shortname}}: {{selectedmodule.name || 'courses.select_module' | translate}}</a></h1>
           </li>
            <li toggle-top-bar class="menu-icon"><a href="">SUB-MENU</a></li>
            <li ><content-navigator modules="modules" mode="courseware" links="links" open="open_navigator" style="z-index: 1;" /></li>
@@ -14,10 +14,10 @@
           <!-- Right Nav Section -->
           <ul class="right">
             <li has-dropdown>
-              <a class="medium-grey dark-text sub-header-component" href="" translate>settings.settings</a>
+              <a class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>settings.settings</a>
               <ul top-bar-dropdown>
                 <li ng-show="preview_as_student">
-                    <a class="medium-grey sub-header-component has-description" ng-click="disablePreview()">
+                    <a class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="disablePreview()">
                         {{'preview_as_student'| translate}}
                         <h5 class="dark-description">
                             <small>
@@ -27,31 +27,31 @@
                     </a>
                 </li>
                 <li>
-                    <a class="medium-grey sub-header-component">
+                    <a class="whitesmoke-hover dark-text sub-header-component">
                         <input id="showNotesCheckbox" type="checkbox" />
                         {{'course_settings.show_notes' | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="medium-grey sub-header-component">
+                    <a class="whitesmoke-hover dark-text sub-header-component">
                         <input id="showQuestionsCheckbox" type="checkbox" />
                         {{'course_settings.show_questions' | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="medium-grey sub-header-component">
+                    <a class="whitesmoke-hover dark-text sub-header-component">
                         <input id="showQuizzesCheckbox" type="checkbox" />
                         {{'course_settings.show_quizzes' | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="medium-grey sub-header-component">
+                    <a class="whitesmoke-hover dark-text sub-header-component">
                         <input id="showConfusedCheckbox" type="checkbox" />
                         {{'course_settings.show_confused' | translate}}
                     </a>
                 </li>
                 <li>
-                    <a class="medium-grey sub-header-component" ng-click="exportNotes()">
+                    <a class="whitesmoke-hover dark-text sub-header-component" ng-click="exportNotes()">
                         {{'lectures.download_notes' | translate}}
                     </a>
                 </li>

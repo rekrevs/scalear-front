@@ -69,7 +69,7 @@ angular.module('scalearAngularApp')
 				}
 
 				scope.goToProgress=function(){
-					if(!$state.includes("**.progress.**")){}
+					if($state.includes("**.module.**"))
 						$state.go("course.module.progress")
 				}
 				scope.copyItem = function(){

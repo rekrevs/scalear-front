@@ -38,8 +38,9 @@
 							</div>
 							
 						</accordion-heading>
-						<ul ng-click="showItemCourseware(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id, itemfinished: item.is_done}" ng-repeat="item in module.items">
+						<ul ng-click="showItemCourseware(item)" ng-show="module.items" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.quizzes.concat(module.lectures) | orderBy:'position'">
 							{{item.name}}
+							<i class="fi-check right with-tiny-margin-left" ng-show="item.is_done"></i>
 							<span class="label round alert with-tiny-padding right" ng-show="item.required" translate>courses.required</span>
 							<span class="label round success with-tiny-padding right" ng-show="item.graded" translate>courses.graded</span>
 

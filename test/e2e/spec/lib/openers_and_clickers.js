@@ -278,7 +278,8 @@ exports.open_course_whole = function(ptor, co_no){
 //              open course by index
 //====================================================
 exports.open_course = function(ptor, co_no){
-    element(by.repeater('course in courses').row(co_no)).element(by.className("button")).click();
+    // element(by.id('main_course_list')).all(by.repeater('course in courses')).count().then(console.log)
+    element(by.id('main_course_list')).element(by.repeater('course in courses').row(co_no-1)).element(by.className("button")).click();
 }
 
 ///////////////////////////////////////////////////////
@@ -335,20 +336,20 @@ exports.to_teacher = function(ptor){
 //                  notification controls
 ///////////////////////////////////////////////////////
 
-exports.accept_notification = function(ptor,inv_no){
-    browser.debugger()
-    element(by.repeater('(id, invitation) in user.invitation_items').row(inv_no)).element(by.className('success')).click()
-    // locator.by_id(ptor, 'notifications').then(function(btn){
-    //     ptor.actions().mouseMove(btn).perform();
-    // })
+exports.accept_invitation = function(ptor,inv_no){
+    element(by.repeater('(id, invitation) in user.invitation_items').row(inv_no-1)).element(by.className('success')).click()
 }
 
-exports.reject_notification = function(ptor,inv_no){
-    element(by.repeater('(id, invitation) in user.invitation_items').row(inv_no)).element(by.className('alert')).click()
+exports.reject_invitation = function(ptor,inv_no){
+    element(by.repeater('(id, invitation) in user.invitation_items').row(inv_no-1)).element(by.className('alert')).click()
+}
 
-    // locator.by_id(ptor, 'notifications').then(function(btn){
-    //     ptor.actions().mouseMove(btn).perform();
-    // })
+exports.accept_shared = function(ptor,shared_no){
+    element(by.repeater('(id, item) in user.shared_items').row(shared_no-1)).element(by.className('success')).click()
+}
+
+exports.reject_shared = function(ptor,shared_no){
+   element(by.repeater('(id, item) in user.shared_items').row(shared_no-1)).element(by.className('alert')).click()
 }
 
 // //====================================================
@@ -363,6 +364,7 @@ exports.open_lectures = function(ptor){
     //     });
     // })
 }
+
 //////////////////////////////end new_layout test mods /////////////////////////////////////////
 
 

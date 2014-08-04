@@ -63,7 +63,7 @@ describe("2", function(){
 		o_c.logout(ptor, o_c.feedback);
 		o_c.sign_in(ptor, params.teacher2_mail, params.password, o_c.feedback);
 		o_c.open_notifications(ptor);
-		o_c.accept_notification(ptor, 0);
+		o_c.accept_invitation(ptor, 1);
 	})
 
 	it('should get the enrollment key and enroll student', function(){

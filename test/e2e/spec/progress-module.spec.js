@@ -131,7 +131,7 @@ var modules_items = {
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
 						{title:'ocq question', type:'OCQ'},						
-						{title:'drag question', type:'DRAG'}
+						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
 						{title:'free question', answers:[]},
@@ -145,7 +145,7 @@ var modules_items = {
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
 						{title:'ocq question', type:'OCQ'},						
-						{title:'drag question', type:'DRAG'}
+						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
 						{title:'free question', answers:[]},
@@ -196,25 +196,25 @@ describe('Modules Selector Button', function(){
 		checkNameOnSelectorButton('New Module')
 	})
 })
-// xdescribe('Navigation Bullets', function(){
+// describe('Navigation Bullets', function(){
 // 	it('should have the same count as the items under the first module', function(){
 // 		verifyNumberOfBullets(6)
 // 	})
 // })
 describe('First Module Progress Page', function(){
-	xit('should have a video container', function(){
+	it('should have a video container', function(){
 		expect(element(by.className('videoborder')).isDisplayed()).toEqual(true)
 	})
-	xit('should display the module progress chart showing that the two students finished on time', function(){
+	it('should display the module progress chart showing that the two students finished on time', function(){
 		progress.checkModuleProgressChart(3, 2)
 	})
-	xit('should display headings for each item in the module with the item name, duration and number of questions and verify sub items count', function(){
+	it('should display headings for each item in the module with the item name, duration and number of questions and verify sub items count', function(){
 		progress.verifyModuleTitlesAndCountOnTimeline(modules_items['New Module'])
 	})
 				// it('should display heading and content filtered by charts',function(){
 				// 	progress.verifyModuleTitlesAndCountFiltered(modules_items['New Module'], 'charts')
 				// })
-	xdescribe('First lecture',function(){
+	describe('First lecture',function(){
 		it('should display correct quiz titles',function(){
 			progress.checkInvideoQuizTitle(0,0,modules_items['New Module'], 50)
 			progress.checkInvideoQuizTitle(0,1,modules_items['New Module'], 50)
@@ -284,7 +284,7 @@ describe('First Module Progress Page', function(){
 			progress.deleteDiscussionComment(0,0,0)
 		})
 	})
-	xdescribe('Second Lecture',function(){
+	describe('Second Lecture',function(){
 		it('should display correct quiz titles',function(){
 			progress.checkInvideoQuizTitle(1,0,modules_items['New Module'], 100)
 			progress.checkInvideoQuizTitle(1,1,modules_items['New Module'], 50)
@@ -358,7 +358,7 @@ describe('First Module Progress Page', function(){
 			progress.checkDiscussionComment(1,0,0,comment0)
 		})
 	})
-	xdescribe('Third Lecture',function(){
+	describe('Third Lecture',function(){
 		it('should display correct quiz titles',function(){
 			progress.checkInvideoSurveyTitle(2,0,modules_items['New Module'])
 			progress.checkInvideoSurveyTitle(2,1,modules_items['New Module'])
@@ -384,7 +384,7 @@ describe('First Module Progress Page', function(){
 			progress.checkTimeEstimate(0)
 		})
 	})
-	xdescribe('First Quiz',function(){
+	describe('First Quiz',function(){
 		it('should display correct quiz titles',function(){
 			progress.checkQuizTitle(3,0,modules_items['New Module'])
 			progress.checkQuizTitle(3,1,modules_items['New Module'])
@@ -415,7 +415,7 @@ describe('First Module Progress Page', function(){
 			progress.ChangeQuizFreeTextGrade(3,1,3,'Good')
 		})
 	})
-	xdescribe('Second Quiz',function(){
+	describe('Second Quiz',function(){
 		it('should display correct quiz titles',function(){
 			progress.checkQuizTitle(4,0,modules_items['New Module'])
 			progress.checkQuizTitle(4,1,modules_items['New Module'])
@@ -445,7 +445,7 @@ describe('First Module Progress Page', function(){
 			progress.checkQuizFreeTextGrades(4,1, modules_items['New Module'])
 		})
 	})
-	xdescribe('First Survey',function(){
+	describe('First Survey',function(){
 		it('should display correct survey titles',function(){
 			progress.checkQuizTitle(5,0,modules_items['New Module'])
 			progress.checkQuizTitle(5,1,modules_items['New Module'])
@@ -471,27 +471,26 @@ describe('First Module Progress Page', function(){
 	
 })
 
-xdescribe('Teacher', function(){
+describe('Teacher', function(){
 	it('should select the second module', function(){
-		student.open_module_number(ptor, 2)
+		// o_c.press_content_navigator(ptor)
+    	teacher.open_module(ptor, 2);
 	})
 })
-xdescribe('Modules Selector Button', function(){
+describe('Modules Selector Button', function(){
 	it('should display the name of the module selected', function(){
 		checkNameOnSelectorButton('New Module 2')
 	})
 })
-xdescribe('Navigation Bullets', function(){
-	it('should have the same count as the items under the second module', function(){
-		verifyNumberOfBullets(6)
-	})
-})
+// describe('Navigation Bullets', function(){
+// 	it('should have the same count as the items under the second module', function(){
+// 		verifyNumberOfBullets(6)
+// 	})
+// })
 
-xdescribe('Second Module Progress Page', function(){
+describe('Second Module Progress Page', function(){
 	it('should have a video container', function(){
-		ptor.findElement(protractor.By.className('video-showroom')).then(function(video){
-			expect(video.isDisplayed()).toBe(true)
-		})
+		expect(element(by.className('videoborder')).isDisplayed()).toEqual(true)
 	})
 	it('should display the module progress chart showing that the one student not started watching', function(){
 		progress.checkModuleProgressChart(1, 1)
@@ -603,11 +602,9 @@ xdescribe('Second Module Progress Page', function(){
 	
 })
 
-
 function checkNameOnSelectorButton(name){
 	expect(element(by.id('content_navigator')).getText()).toEqual(params.short_name+': '+name)
 }
-
 
 function roundTimeToPercentage(percent, duration){
 	var time = Math.floor((duration*percent)/100)

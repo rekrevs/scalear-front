@@ -80,7 +80,7 @@
                         </a>
                     </li>
                     <li ng-show="clipboard && ('*.module.**' | includedByState)">
-                        <a class="medium-grey dark-text sub-header-component has-description" ng-click="pasteItem()">
+                        <a id="paste" class="medium-grey dark-text sub-header-component has-description" ng-click="pasteItem()">
                             {{'menu.paste' | translate}}
                             <h5 class="dark-description">
                                 <small>

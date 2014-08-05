@@ -64,7 +64,7 @@ angular.module('scalearAngularApp')
 					$scope.course= JSON.parse(data.course);
 					$scope.course.custom_links = data.links
 					$scope.today = data.today;	
-					$scope.last_viewed = data.last_viewed
+					$scope.next_item = data.next_item
 					$scope.module_obj = util.toObjectById($scope.course.groups)
 					deferred.resolve($scope); 
 				},

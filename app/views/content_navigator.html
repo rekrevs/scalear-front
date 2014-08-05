@@ -22,7 +22,7 @@
 							</div>
 							
 						</accordion-heading>
-						<ul ng-click="showItemCourseware(item)" ng-show="module.items" title="{{item.name}}" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.quizzes.concat(module.lectures) | orderBy:'position'">
+						<ul ng-click="showItemCourseware(item)" ng-show="module.items" title="{{item.name}}" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items">
 							<div class="small-1 columns left" style="margin:0;padding:0;"><i class="fi-check with-tiny-margin-left color-green size-16" ng-show="item.is_done"></i></div>
 							<div style="padding-left:25px"><div class="truncate-70 show-inline">{{item.name}}</div>
 							<span class="label round alert with-tiny-padding right" ng-show="item.required" translate>courses.required</span>

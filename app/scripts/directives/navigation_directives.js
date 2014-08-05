@@ -50,6 +50,12 @@ angular.module('scalearAngularApp')
 				$rootScope.$watch('clipboard', function(){
 					scope.clipboard = $rootScope.clipboard
 				})
+
+				scope.toggleNavigator=function(){
+					scope.open_navigator = !scope.open_navigator
+					scope.$emit('open_navigator', scope.open_navigator)
+				}
+				
 				scope.addModule=function(){
 					$rootScope.$broadcast('add_module')
 				}	
@@ -94,14 +100,22 @@ angular.module('scalearAngularApp')
 			scope:{
 				modules:"=",
 				links:"=",
-        selectedmodule: "=",
-        shortname: "="
+		        selectedmodule: "=",
+		        shortname: "=",
+		        warning_message:"=warning"
 			},
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){
+				// scope.open_navigator = $rootScope.open_navigator
 				$rootScope.$watch('preview_as_student', function(){
 					scope.preview_as_student = $rootScope.preview_as_student
 				})
+
+				scope.toggleNavigator=function(){
+					scope.open_navigator = !scope.open_navigator
+					scope.$emit('open_navigator', scope.open_navigator)
+				}
+
 				scope.disablePreview=function(){
 	                if($cookieStore.get('preview_as_student')){
 	                  Impersonate.destroy(

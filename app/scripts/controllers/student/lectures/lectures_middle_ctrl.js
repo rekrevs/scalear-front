@@ -125,6 +125,12 @@ angular.module('scalearAngularApp')
                 console.log("lecture")
                 console.log(data)
                 $scope.alert_messages = data.alert_messages;
+                for(var key in $scope.alert_messages){
+                    if(key=="due")
+                        $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
+                    else if(key=="today")
+                        $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
+                }
                 $scope.next_item = data.next_item
                 var lec = data.lecture
                 

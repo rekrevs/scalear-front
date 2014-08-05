@@ -1,57 +1,41 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html>
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-  <meta http-equiv="Content-Style-Type" content="text/css">
-  <title></title>
-  <meta name="Generator" content="Cocoa HTML Writer">
-  <meta name="CocoaVersion" content="1265.21">
-  <style type="text/css">
-    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica}
-    span.Apple-tab-span {white-space:pre}
-  </style>
-</head>
-<body>
-<p class="p1">&lt;style&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span>.fc-event-inner{</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>width: 100%;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>white-space: nowrap;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>overflow: hidden;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>text-overflow: ellipsis;</p>
-<p class="p1"><span class="Apple-tab-span">	</span>}</p>
-<p class="p1">&lt;/style&gt;</p>
-<p class="p1">&lt;center&gt;&lt;loading size="big" show="!eventSources.length"&gt;&lt;/loading&gt;&lt;/center&gt;</p>
-<p class="p1">&lt;style&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span>table{</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>border: none !important;<span class="Apple-converted-space"> </span></p>
-<p class="p1"><span class="Apple-tab-span">	</span>}</p>
-<p class="p1">&lt;/style&gt;</p>
-<p class="p1">&lt;span ng-show="eventSources.length"&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span>&lt;div class="small-12 large-8 columns" ng-show="events.length"&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;h3 ng-show="events.length"&gt;&lt;i class="fi-loop size-30"&gt;&lt;/i&gt; {{'whats_new' | translate}}&lt;/h3&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;!-- &lt;news-feed events="events"&gt;&lt;/news-feed&gt; --&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event"&gt;&lt;/event-item&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span>&lt;div class="large-4 columns hide-for-medium-down" ng-class="{'large-12 auto-right position-relative': !events.length}" ng-show="eventSources.length" style="position: fixed; right: 1rem;"&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span> <span class="Apple-tab-span">	</span>&lt;div class="calendar-container with-margin-top with-margin-bottom" ng-class="{widecalendar: !announcements.length}"&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="width:100%;"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">        </span>&lt;span ng-show="current_user.roles[0].id == 2" class="success alert-box label radius" translate="events.done"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;span ng-show="current_user.roles[0].id == 2" class="warning alert-box label radius" translate="events.not_done"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;span ng-show="current_user.roles[0].id == 2" class="alert alert-box label radius" translate="events.not_done_due"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span> <span class="Apple-tab-span">	</span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span> <span class="Apple-tab-span">	</span>&lt;button class="tiny button grey uppercase" ng-click="cal_export()"&gt;Export Calendar as ICS&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span> <span class="Apple-tab-span">	</span>&lt;button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()"&gt;View Full Calendar&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span>&lt;div class="small-12 columns show-for-medium-down" ng-show="eventSources.length"&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span> <span class="Apple-tab-span">	</span>&lt;div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}"&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="mySecondCalendar" style="width:100%;"&gt;&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-converted-space">        </span>&lt;span class="success alert-box label radius" translate="events.done"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;span class="warning alert-box label radius" translate="events.not_done"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span><span class="Apple-tab-span">	</span>&lt;span class="alert alert-box label radius" translate="events.not_done_due"&gt;&lt;/span&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span> <span class="Apple-tab-span">	</span>&lt;/div&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span> <span class="Apple-tab-span">	</span>&lt;button class="tiny button secondary uppercase" ng-click="cal_export()"&gt;Export Calendar as ICS&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span> <span class="Apple-tab-span">	</span>&lt;button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()"&gt;View Full Calendar&lt;/button&gt;</p>
-<p class="p1"><span class="Apple-tab-span">	</span>&lt;/div&gt;</p>
-<p class="p1">&lt;/span&gt;</p>
-</body>
-</html>
+<style>
+	.fc-event-inner{
+		width: 100%;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+</style>
+<center><loading size="big" show="!eventSources.length"></loading></center>
+<style>
+	table{
+		border: none !important; 
+	}
+</style>
+<span ng-show="eventSources.length">
+	<div class="small-12 large-8 columns" ng-show="events.length">
+		<h3 ng-show="events.length"><i class="fi-loop size-30"></i> {{'whats_new' | translate}}</h3>
+		<!-- <news-feed events="events"></news-feed> -->
+		<event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event"></event-item>
+	</div>
+	<div class="large-4 columns hide-for-medium-down" ng-class="{'large-12 auto-right position-relative': !events.length}" ng-show="eventSources.length" style="position: fixed; right: 1rem;">
+	 	<div class="calendar-container with-margin-top with-margin-bottom" ng-class="{widecalendar: !announcements.length}">
+			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="width:100%;"></div>
+	        <span ng-show="current_user.roles[0].id == 2" class="success alert-box label radius" translate="events.done"></span>
+			<span ng-show="current_user.roles[0].id == 2" class="warning alert-box label radius" translate="events.not_done"></span>
+			<span ng-show="current_user.roles[0].id == 2" class="alert alert-box label radius" translate="events.not_done_due"></span>
+	 	</div>
+	 	<button class="tiny button grey uppercase" ng-click="cal_export()">Export Calendar as ICS</button>
+	 	<button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button>
+	</div>
+	<div class="small-12 columns show-for-medium-down" ng-show="eventSources.length">
+	 	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}">
+			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="mySecondCalendar" style="width:100%;"></div>
+	        <span class="success alert-box label radius" translate="events.done"></span>
+			<span class="warning alert-box label radius" translate="events.not_done"></span>
+			<span class="alert alert-box label radius" translate="events.not_done_due"></span>
+	 	</div>
+	 	<button class="tiny button secondary uppercase" ng-click="cal_export()">Export Calendar as ICS</button>
+	 	<button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button>
+	</div>
+</span>

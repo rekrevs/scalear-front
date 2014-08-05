@@ -55,7 +55,7 @@ angular.module('scalearAngularApp')
 					scope.open_navigator = !scope.open_navigator
 					scope.$emit('open_navigator', scope.open_navigator)
 				}
-				
+
 				scope.addModule=function(){
 					$rootScope.$broadcast('add_module')
 				}	
@@ -291,8 +291,8 @@ angular.module('scalearAngularApp')
                
       scope.showItemCourseware = function(item){
   	 	var params = {'module_id': scope.currentmodule.id}    
-        params[item.class_name+'_id'] = item.id
-        $state.go('course.module.courseware.'+ item.class_name, params)
+        params[item.get_class_name.toLowerCase()+'_id'] = item.id
+        $state.go('course.module.courseware.'+ item.get_class_name.toLowerCase(), params)
         scope.currentitem = item.id
         // console.log(item)
         // // $timeout(function(){

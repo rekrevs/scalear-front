@@ -44,6 +44,7 @@ angular.module('scalearAngularApp')
         $scope.total_duration = 0
         $scope.elapsed_width =0
         $scope.slow = false
+        $scope.course.warning_message=null
     }
 
     var init = function() {            

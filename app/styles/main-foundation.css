@@ -641,6 +641,7 @@ h2 .editable-click{
 }
 .fit-inside{
   max-width: 100%;
+  min-width: 100%;
 }
 
 /*forum elements*/

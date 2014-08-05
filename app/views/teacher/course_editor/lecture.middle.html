@@ -15,7 +15,7 @@
 			<center>
 				<video_container ng-style="container_layer">
 					<div class="row">
-						<loading class="small-12 columns color-blue" size='small' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
+						<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
 					</div>
 					<div ng-show="slow">
 						<div class="row">
@@ -42,7 +42,7 @@
 </div>
 <div class="row quiz_list">
 	<overlay ng-hide="video_ready || lecture.url=='none'">
-		<loading size="big" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
+		<loading size="small" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
 	</overlay>
 	<div class="small-12 small-centered columns">
 		<!-- <center ng-show="fullscreen"><a class='button small secondary fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center> -->

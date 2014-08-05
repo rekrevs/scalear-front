@@ -20,10 +20,10 @@ angular.module('scalearAngularApp')
             }
 
             $scope.goToContent=function(){
-                if($scope.last_viewed.module != -1){
-                    var params = {'module_id': $scope.last_viewed.module}    
-                    params[$scope.last_viewed.item.class_name+'_id'] = $scope.last_viewed.item.id
-                    $state.go('course.module.courseware.'+$scope.last_viewed.item.class_name, params)
+                if($scope.next_item.module != -1){
+                    var params = {'module_id': $scope.next_item.module}    
+                    params[$scope.next_item.item.class_name+'_id'] = $scope.next_item.item.id
+                    $state.go('course.module.courseware.'+$scope.next_item.item.class_name, params)
                 }
             }
 

@@ -219,7 +219,7 @@ angular.module('scalearAngularApp')
             replace: true,
             template: '<div class="overlay well" ng-transclude></div>',
             link: function(scope, element) {
-                var parent = element.parent().parent();
+                var parent = element.parent()
                 // console.log(element.parent())
                 // scope.getWidth = function() {
                 //     return element.parent().width()
@@ -232,7 +232,7 @@ angular.module('scalearAngularApp')
                 // });
                 $timeout(function(){
                     scope.$watch(scope.getHeight, function(newValue, oldValue) {
-                        element.css("height", newValue)
+                        element.css("height", parent.height())
                     })
                 },1000);
             }

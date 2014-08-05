@@ -13,20 +13,19 @@
 	<div class="small-12 small-centered columns">
 		<form name="answer_form" novalidate >
 			<center>
-				<video_container ng-style="container_layer">
-					<div class="row">
-						<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
-					</div>
-					<div ng-show="slow">
-						<div class="row">
-							<h3 class="small-12 columns" style="top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
-							<h3 class="small-12 columns" style="top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>	
-							<loading class="small-12 columns" size='small' show='true' style="font-size:12px;top:70px;" />
-
-						</div>
-					</div>
+				<video_container ng-style="container_layer">					
 					<div>
 						<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
+							<div class="row">
+								<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
+							</div>
+							<div ng-show="slow">
+								<div class="row">
+									<h4 class="small-12 columns" style="top:70px;font-weight:300" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h4>
+									<h4 class="small-12 columns" style="top:70px;font-weight:300" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h4>
+									<loading class="small-12 columns" size='small' show='true' style="font-size:12px;top:70px;" />
+								</div>
+							</div>
 							<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
 							<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 						</quiz>
@@ -41,6 +40,7 @@
 	</div>
 </div>
 <div class="row quiz_list">
+	<!--  -->
 	<overlay ng-hide="video_ready || lecture.url=='none'">
 		<loading size="small" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
 	</overlay>
@@ -60,6 +60,7 @@
 			</div>
 		</div>
 		<br /> -->
+		
 		<quiz_list />
 	</div>
 </div>
@@ -74,7 +75,7 @@
 		<loading size='small' show="lecture.url!='none' && !slow && !video_ready" style="color:#428bca; position:absolute;width: 100%;font-weight:300;font-size:12px;top: 34%;" />
 		<div style='color:#428bca; position:absolute;width: 100%;font-weight:300;font-size:12px;z-index: 6' ng-show="slow">
 			<div>
-				<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
+				<h3 style="position:relative;top:70px;font-weight:300" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
 				<h3 style="position:relative;top:30px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="icon-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>				
 			</div>
 			<div>

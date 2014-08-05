@@ -78,6 +78,22 @@
                 </div>
             </fieldset>
         </div>
+        <div class="small-12 medium-12 large-6 columns">  
+            <fieldset class="with-margin-bottom">
+                <legend><i class="fi-web size-21"></i> {{'language' | translate}}</legend>
+                <div class="small-12 medium-12 large-6 columns">
+                    <button class="tiny button dropdown under-the-other left" dropdown-toggle="#languages_list">{{'languages.'+current_lang | translate}}</button>
+                    <ul id="languages_list" class="f-dropdown">
+                        <li>
+                            <a ng-click="changeLanguage('en')">{{'languages.en' | translate}} <img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                        </li>
+                        <li>
+                            <a ng-click="changeLanguage('sv')">{{'languages.sv' | translate}} <img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </fieldset>
+        </div>
         <center class="large-12 column">
             <div class="alert-box secondary show-inline right">
                 <div class="with-tiny-margin-bottom">{{'account_edit.need_password' | translate}}</div>

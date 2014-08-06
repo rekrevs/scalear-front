@@ -4,7 +4,7 @@
 <!-- endbuild -->
 
 <div class="row">
-	<div class="small-12 medium-12 large-3 columns">
+	<div class="small-12 medium-3 large-3 columns">
 		<div class="row">
 			<video_container>
 				<youtube id="progress_lec_video" url="url" player="progress_player" class="flex-video widescreen"/>
@@ -32,8 +32,8 @@
 			<span class="shortcuts_label right size-12">Shortcuts:</span>
 		</div>
 	</div>
-	<div class="small-12 medium-12 large-9 columns">
-		<div class="row" ng-show="module.items" ng-init="custom_filter=''">
+	<div class="small-12 medium-9 large-9 columns">
+		<!-- <div class="row" ng-show="module.items" ng-init="custom_filter=''">
 			<div class="small-6 columns size-14" >
 		  		<div class="small-1 columns">
 			    	<span translate>groups.filter</span>:
@@ -48,7 +48,7 @@
 			<div class="small-1 small-pull-1 columns right" style="height:35px;">
 				<button class="button" ng-click="print()" style="height:32px;opacity:0.7;padding-top: 7px;"><i class="fi-print"></i></button>
 			</div>
-		</div>
+		</div> -->
 		<div class="main_content" id="printarea">
 			<div class="row">
 				<div ng-if="timeline['module']" ng-init="module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatModuleChartData')" class="small-12 columns">
@@ -68,7 +68,7 @@
 							<a class="see_all" ng-show="quiz.filtered_user" ng-click="quiz.filtered_user = '';quiz.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;"><span translate>questions.see_all</span></a>							
 						</span>
 					</p>
-					<ul class="ul_item inner_content" ng-click="highlight($event,item)" index="{{timeline[module_item.quiz_type][quiz.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items|filter:{data:'!!',type:custom_filter}" >
+					<ul class="ul_item inner_content" ng-click="highlight($event,item)" index="{{timeline[module_item.quiz_type][quiz.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items|filter:filterType" >
 						<li ng-if="item.type=='charts'" ng-init="quiz_chart=createChart(item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData')" class="li_inner color-blue">
 							<div class="row">
 								<inner_title type="{{'lectures.title' | translate}}" class="small-10 columns left" style="margin-right:5px" title="{{item.data.title+' ('+item.data.type+')'}}"/>
@@ -119,7 +119,7 @@
 							</a>
 						</span>
 					</p>
-					<ul class="ul_item vline inner_content" ng-click="highlight($event, item)" index="{{timeline['lecture'][lec.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline['lecture'][lec.meta.id].items|filter:{data:'!!', type:custom_filter}" style="clear:both">
+					<ul class="ul_item vline inner_content" ng-click="highlight($event, item)" index="{{timeline['lecture'][lec.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline['lecture'][lec.meta.id].items|filter:filterType" style="clear:both">
 						<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner color-blue" >
 							<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="{{(item.type[0].toUpperCase()+item.type.slice(1)).split('_').join(' ')}}" />
 							<span class="inner_value"> {{item.data}}</span>

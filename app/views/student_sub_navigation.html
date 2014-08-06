@@ -28,26 +28,26 @@
                 </li>
                 <span ng-show="('**.lecture.**' | includedByState)">
                     <li>
-                      <a class="whitesmoke-hover dark-text sub-header-component">
-                          <input id="showNotesCheckbox" type="checkbox" />
+                      <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('note')">
+                          <input id="showNotesCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.note" />
                           {{'course_settings.show_notes' | translate}}
                       </a>
                   </li>
                   <li>
-                      <a class="whitesmoke-hover dark-text sub-header-component">
-                          <input id="showQuestionsCheckbox" type="checkbox" />
+                      <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('discussion')">
+                          <input id="showQuestionsCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.discussion" />
                           {{'course_settings.show_questions' | translate}}
                       </a>
                   </li>
                   <li>
-                      <a class="whitesmoke-hover dark-text sub-header-component">
-                          <input id="showQuizzesCheckbox" type="checkbox" />
+                      <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('quiz')">
+                          <input id="showQuizzesCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.quiz" />
                           {{'course_settings.show_quizzes' | translate}}
                       </a>
                   </li>
                   <li>
-                      <a class="whitesmoke-hover dark-text sub-header-component">
-                          <input id="showConfusedCheckbox" type="checkbox" />
+                      <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('confused')">
+                          <input id="showConfusedCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.confused" />
                           {{'course_settings.show_confused' | translate}}
                       </a>
                   </li>

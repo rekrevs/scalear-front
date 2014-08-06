@@ -930,7 +930,12 @@ var translation_en=function(){
       show_notes: "Show Notes",
       show_questions: "Show Questions",
       show_quizzes: "Show Quizzes",
-      show_confused: "Show Confused"
+      show_confused: "Show Confused",
+      show_all: "Show All",
+      show_charts: "Show Charts",
+      show_confused: "Show Confused",
+      show_discussion: "Show Discussion",
+      print: "Print"
     },
     languages:{
       en: 'English',

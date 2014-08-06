@@ -935,7 +935,12 @@ var translation_sv=function(){
           show_notes: "Visa Anteckningar",
           show_questions: "Visa Frågor",
           show_quizzes: "Visa Språktest",
-          show_confused: "Visa Förvirrad"
+          show_confused: "Visa Förvirrad",
+          show_all: "Visa All",
+          show_charts: "Visa Diagram",
+          show_confused: "Visa Förvirrad",
+          show_discussion: "Visa Diskussion",
+          print: "Tryck"
         },
         languages:{
           en: 'Engelska',

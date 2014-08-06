@@ -22,6 +22,10 @@ angular.module('scalearAngularApp')
         $scope.exportNotes()
     })
 
+    $scope.$on('filter_update',function(ev,filters){
+      $scope.checkModel=filters
+    })
+
     var isiPad=function(){
         var i = 0,
             iOS = false,

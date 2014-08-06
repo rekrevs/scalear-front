@@ -421,6 +421,19 @@ button.active{
 	background-color: #007295;
 }
 
+/*OPACITY*/
+.low-opacity{
+  opacity: 0.3;
+}
+
+.medium-opacity{
+  opacity:0.7;
+}
+
+.full-opacity{
+  opacity:1;
+}
+
 /*BORDERRS*/
 .no-border{
 	border: none !important;

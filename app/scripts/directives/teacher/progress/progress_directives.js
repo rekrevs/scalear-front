@@ -119,10 +119,13 @@ angular.module('scalearAngularApp')
 					'<div>'+
 						'<h5 translate>courses.time_estimate</h5>'+
 					'</div>'+
-					'<div class="small-10 small-push-1 columns">'+
-						'<div>In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></div>'+
+					'<div class="small-12 large-10 large-push-1 columns">'+
+						'<div>'+
+							'In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b>'+
+							'<a pop-over="popover_options">{{"more" | translate}}...</a>'+
+						'</div>'+
 					'</div>'+
-					'<div class="small-1 inline right columns"><a pop-over="popover_options">{{"more" | translate}}...</a></div>'+
+					// '<div class="small-1 inline right columns"></div>'+
 				'</div>', 
 	    link:function(scope){
 	    	scope.numbers = []

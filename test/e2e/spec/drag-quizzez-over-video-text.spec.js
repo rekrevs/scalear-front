@@ -257,9 +257,9 @@ function expect_quiz(ptor){
 }
 
 function answer(ptor){
-    locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(answer_btn){
-        answer_btn.click();
-    })
+	element(by.buttonText('Check Answer')).then(function(answer_btn){
+		answer_btn.click();
+	})
 }
 
 function check_answer_correct(ptor){

@@ -22,7 +22,7 @@
             </div>
             <div class="large-12 column with-margin-bottom">
                 <i class="fi-clock size-24"></i> 
-                <details-text value="course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> 
+                <details-text id="duration" value="course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> 
                 <span translate="courses.weeks"></span>
             </div>
             <div class="large-12 column with-margin-bottom">
@@ -38,9 +38,9 @@
     </div>
     <div class="small-12 medium-8 large-7 columns">        
         <h2 class="title color-green" title="{{course.name}}">
-            <details-text value="course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text> 
+            <details-text id='short_name' value="course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text> 
             {{' | '}} 
-            <details-text value="course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
+            <details-text id='course_name' value="course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
         </h2>
         <h6 class="color-blue show-for-small-only" title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
         <div class="hide-for-large-up with-padding-bottom">
@@ -60,7 +60,7 @@
             </div>
             <div class="with-margin-bottom">
                 <i class="fi-clock size-24"></i> 
-                <details-text value="course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> 
+                <details-text id='duration' value="course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> 
                 <span translate="courses.weeks"></span>
             </div>
             <div class="with-margin-bottom">
@@ -75,11 +75,11 @@
         </div>
         <h5 translate class="subheader">groups.description</h5>
         <p style="font-weight: 200;">
-            <big-area value="course.description" save="updateCourse()" validate="validateCourse" column="description"></big-area>
+            <big-area id='desc' value="course.description" save="updateCourse()" validate="validateCourse" column="description"></big-area>
         </p>
         <h5 translate class="subheader">courses.prerequisites</h5>
         <p style="font-weight: 200;">
-            <big-area value="course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
+            <big-area id='preq' value="course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
         </p>
     </div>
     <div class="teachers-column hide-for-small-only light-grey">

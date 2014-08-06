@@ -46,7 +46,16 @@ exports.config = {
     specs: [
 
         // 'test/e2e/spec/create-course-check-info.spec.js',
-        'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
+        // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
+        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js',
+        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',
+        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
+        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',
+        // 'test/e2e/spec/ocq-quizzez-over-video.spec.js',
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js',
+        // 'test/e2e/spec/ocq-survey-over-video.spec.js',
+        'test/e2e/spec/create-course-check-info.spec.js',
+        
         // 'test/e2e/spec/teacher-managment.spec.js',
         // 'test/e2e/spec/statistics.spec.js',
         // 'test/e2e/spec/enrolled-students.spec.js',

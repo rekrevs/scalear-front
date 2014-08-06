@@ -19,7 +19,7 @@
         </div>
     </div>
     <div class="small-12 medium-8 large-7 columns">
-        <h2 class="title color-green" title="{{course.name}}">{{course.short_name}} | {{course.name}}</h2>
+        <h2 id='course_code_name' class="title color-green" title="{{course.name}}">{{course.short_name}} | {{course.name}}</h2>
         <h6 class="color-blue show-for-small-only" title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
         <div class="hide-for-large-up with-padding-bottom">
             <div>
@@ -30,7 +30,7 @@
                 <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
             </div>
             <div class="with-margin-bottom">
-                <i class="fi-clock size-24"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
+                <i class="fi-clock size-24"></i> <small id='course_duration' class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
             </div>
             <div class="with-margin-bottom">
                 <i class="fi-link size-24"></i> <a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
@@ -38,11 +38,11 @@
             <hr />
         </div>
         <h5 translate class="subheader">groups.description</h5>
-        <p style="font-weight: 200;">
+        <p id='course_description' style="font-weight: 200;">
             {{course.description}}
         </p>
         <h5 translate class="subheader">courses.prerequisites</h5>
-        <p style="font-weight: 200;">
+        <p id='course_prerequisites' style="font-weight: 200;">
             {{course.prerequisites}}
         </p>
         

@@ -38,7 +38,7 @@ exports.join_course = function(ptor, key)
 //=====================================
 //       check course information
 //=====================================
-exports.check_course_info = function(ptor, course_code, course_name, description, prereq, disscussion_link, course_date, course_duration){
+exports.check_course_info = function(ptor, course_code, course_name, description, prereq, course_date, course_duration){
     ptor.findElement(protractor.By.id('course_code_name')).then(function(code_name){
         expect(code_name.getText()).toContain(course_code);
         expect(code_name.getText()).toContain(course_name);
@@ -49,9 +49,9 @@ exports.check_course_info = function(ptor, course_code, course_name, description
     ptor.findElement(protractor.By.id('course_prerequisites')).then(function(prerequisites){
         expect(prerequisites.getText()).toContain(prereq);
     })
-    ptor.findElement(protractor.By.id('discussion_link')).then(function(disc_link){
-        expect(disc_link.getText()).toContain(disscussion_link);
-    })
+    // ptor.findElement(protractor.By.id('discussion_link')).then(function(disc_link){
+    //     expect(disc_link.getText()).toContain(disscussion_link);
+    // })
 //    ptor.findElement(protractor.By.id('course_date')).then(function(date){
 //        date.getText().then(function(text){
 //            expect(course_date).toContain(text.split(" ")[1]);

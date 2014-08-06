@@ -47,6 +47,7 @@ exports.config = {
 
         // 'test/e2e/spec/create-course-check-info.spec.js',
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
+        // 'test/e2e/spec/drag-quizzez-over-video.spec.js',
         // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
@@ -54,7 +55,9 @@ exports.config = {
         // 'test/e2e/spec/ocq-quizzez-over-video.spec.js',
         // 'test/e2e/spec/mcq-survey-over-video.spec.js',
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',
-        'test/e2e/spec/create-course-check-info.spec.js',
+        // 'test/e2e/spec/create-course-check-info.spec.js',
+        'test/e2e/spec/.spec.js',
+
         
         // 'test/e2e/spec/teacher-managment.spec.js',
         // 'test/e2e/spec/statistics.spec.js',
@@ -65,7 +68,7 @@ exports.config = {
         // 'test/e2e/spec/progress-main.spec.js',
         // 'test/e2e/spec/progress-module.spec.js',
         // 'test/e2e/spec/course-editor-basic.spec.js',
-        'test/e2e/spec/copying-sharing.spec.js',
+        // 'test/e2e/spec/copying-sharing.spec.js',
     ],
 
     // ----- Capabilities to be passed to the webdriver instance ----

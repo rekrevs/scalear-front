@@ -32,10 +32,10 @@ exports.join_course = function(ptor, key)
     {
         input.sendKeys(key);
     });
-    locator.by_xpath(ptor, '/html/body/div[4]/div/div[2]/button[1]').then(function(button)
+    element(by.buttonText('Enroll')).then(function(button)
     {
         button.click();
-    });
+    })
 }
 
 //=====================================

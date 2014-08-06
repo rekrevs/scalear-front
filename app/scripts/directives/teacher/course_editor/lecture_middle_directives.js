@@ -225,7 +225,7 @@ angular.module('scalearAngularApp')
 		 					"</div>"+
 	 					"</div>"+
 
-	 					"<b class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >{{data.answer}}</b>"+
+	 					"<span class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >{{data.answer}}</span>"+
  					"</div>",
 
 		link: function(scope, element, attrs) {
@@ -302,17 +302,14 @@ angular.module('scalearAngularApp')
 
 
 			var template = '<ul>'+
-							'<p><span translate>groups.correct_because</span>:'+
-								'<br>'+
+							'<label><span translate>groups.correct_because</span>'+
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
-								'<br>'+
-								'<div ng-repeat=\'num in list|filter:"!"+pos\' >'+
-									'{{num}} <span translate>groups.incorrect_because</span>:<br>'+
-									'<textarea rows=3 class="must_save" type="text" ng-model="data.explanation[num]" />'+
-									'<br>'+
-								'</div>'+
-								'<input type="button" ng-click="remove()" class="btn btn-danger remove_button" value={{"lectures.remove"|translate}} />'+
-							'</p>'+
+							'</label>'+
+							'<label ng-repeat=\'num in list|filter:"!"+pos\' >'+
+								'{{num}} <span translate>groups.incorrect_because</span>'+
+								'<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />'+
+							'</label>'+
+							'<button type="button" ng-click="remove()" class="button tiny alert with-tiny-margin remove_button">{{"lectures.remove"|translate}}</button>'+
 						'</ul>'
 
             scope.popover_options={

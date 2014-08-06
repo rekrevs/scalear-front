@@ -199,16 +199,10 @@
 
 .dragged{
   float: left;
-  /*width: 58px;
-  height: 78px;*/
-  /*z-index:6000 !important;*/
   padding: 10px;
   padding-top: 10px;
   padding-bottom: 10px;
-  border: 2px solid #333;
-  -moz-border-radius: 10px;
-  -webkit-border-radius: 10px;
-  border-radius: 10px;
+  border: 1px solid #ddd;
   margin: 0 0 0 10px;
   background: #fff;
   position:absolute;

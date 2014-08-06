@@ -686,6 +686,9 @@ h2 .editable-click{
 .editable-input{
 	width: 70% !important;
 }
+input.editable-input{
+  word-break: normal !important;
+}
 
 /*borders*/
 .soft-border{

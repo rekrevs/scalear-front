@@ -141,7 +141,8 @@ angular.module('scalearAngularApp')
                 $scope.lecture.aspect_ratio = "widescreen"
                 if($scope.lecture.url){
                     var type = isYoutube($scope.lecture.url)
-                    if(type){  
+                    if(type){
+                        console.log('type initialized')  
                         if(!isFinalUrl($scope.lecture.url))
                             $scope.lecture.url = "http://www.youtube.com/watch?v="+type[1];                                         
                         getYoutubeDetails(type[1]).then(function(){
@@ -149,7 +150,10 @@ angular.module('scalearAngularApp')
                         })
                     }
                     else
+                    {
+                        console.log('type not initialized')  
                         $scope.updateLecture();
+                    }
                 }
                 
             }

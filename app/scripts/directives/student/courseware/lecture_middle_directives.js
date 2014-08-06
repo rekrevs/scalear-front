@@ -364,9 +364,9 @@ angular.module('scalearAngularApp')
         $log.debug("setAnswerLocation")
         var ontop=angular.element('.ontop');
         console.log(scope.data)
-        scope.width  = scope.data.width * ontop.width() -27;
+        scope.width  = scope.data.width * ontop.width();
         scope.height = scope.data.height* (ontop.height());
-        scope.xcoor = (scope.data.xcoor * ontop.width())+27
+        scope.xcoor = (scope.data.xcoor * ontop.width())
         scope.ycoor = (scope.data.ycoor * (ontop.height()))
         scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
         scope.sub_ycoor = (scope.data.sub_ycoor * ontop.height())

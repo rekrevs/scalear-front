@@ -219,11 +219,20 @@
 }
 
 .input-prepend {
-display: inline-block;
-margin-bottom: 10px;
-font-size: 0;
-white-space: nowrap;
-vertical-align: middle;
+  display: inline-block;
+  margin-bottom: 10px;
+  font-size: 0;
+  white-space: nowrap;
+  vertical-align: middle;
+  width: 100%;
+  height:100%;
+}
+
+.position-header{
+  position: absolute;
+  left: -25px;
+  font-style: bold;
+  cursor: move;
 }
 
 .input-prepend .add-on {

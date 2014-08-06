@@ -8,10 +8,10 @@ var student = require('./lib/student_module');
 
 var ptor = protractor.getInstance();
 var params = ptor.params
-var student_names = ['student test']//,'student two'] 
+var student_names = ['studenttest2 sharklasers','student test'] 
 var student_emails = [params.student_mail_2, params.mail]
 var module_names = ['New Module', 'New Module 2']
-var checkmarks = {'student test': ['on_time', 'not_finished']}//, 'student two': ['on_time', 'not_finished']}
+var checkmarks = {'student test': ['on_time', 'not_finished'], 'studenttest2 sharklasers': ['on_time', 'not_finished']}
 // ptor.driver.manage().window().maximize();
 ptor.driver.manage().window().setSize(ptor.params.width, ptor.params.height);
 ptor.driver.manage().window().setPosition(0, 0);
@@ -47,7 +47,7 @@ describe('Progress Main Page', function(){
 		progress.verifyModuleProgressTable(student_names, module_names, checkmarks)
 	})
 })
-xdescribe('Teacher', function(){
+describe('Teacher', function(){
 	it('should change the status for Student Two and New Module to be \'not done\'', function(){
 		progress.overrideStatus(1, 1, 3)
 		progress.checkStatusImage(1, 1, 'not_finished')
@@ -66,28 +66,26 @@ xdescribe('Teacher', function(){
 	})
 	
 })
-xdescribe('Module Chart', function(){
-	it('should switch to the Module Chart Tab', function(){
-		progress.selectTabInMainProgress(2)
-	})
+describe('Module Chart', function(){
 	it('should show that Student Two solved only 50% of quizzes', function(){
-		progress.wholeProgressBar(1, 0, student_names[0], 50)
+		progress.selectTabInMainProgress(2)
+		progress.wholeProgressBar(2, 0, student_names[0], 50)
 		ptor.navigate().refresh()
 	})
 	it('should show that Student Two solved only 50% of lectures\' quizzes', function(){
 		progress.selectTabInMainProgress(2)
-		progress.wholeProgressBar(1, 1, student_names[0], 50)	
+		progress.wholeProgressBar(2, 1, student_names[0], 50)	
 		ptor.navigate().refresh()
 	})
 
 	it('should show that Student Test solved only 50% of quizzes', function(){
 		progress.selectTabInMainProgress(2)
-		progress.wholeProgressBar(2, 0, student_names[1], 50)
+		progress.wholeProgressBar(1, 0, student_names[1], 50)
 		ptor.navigate().refresh()
 	})
 	it('should show that Student Test solved only 81% of lectures\' quizzes', function(){
 		progress.selectTabInMainProgress(2)
-		progress.wholeProgressBar(2, 1, student_names[1], 81)
+		progress.wholeProgressBar(1, 1, student_names[1], 81)
 		ptor.navigate().refresh()
 	})
 })

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['Course', '$filter', '$rootScope', function(Course, $filter, $rootScope){
+	.directive('mainNavigation', ['$state', function($state){
 		return {
 			replace: true,
 			restrict: "E",
@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: "/views/main_navigation.html",
 			link: function (scope, element) {
-				scope.today = new Date();
+				// scope.today = new Date();
 				// $rootScope.$watch('are_shared', function(){
 				// 	scope.are_shared = $rootScope.are_shared
 				// })
@@ -23,6 +23,14 @@ angular.module('scalearAngularApp')
 				}
 				scope.getEndDate = function(start_date, duration){
 					return start_date.setDate(start_date.getDate()+(duration * 7));
+				}
+
+				scope.goToCourse=function(course){
+					if(scope.user.roles[0].id==2){
+						$state.go('course.course_information',{course_id: course.id, redirect:true})
+					}
+					else
+						$state.go('course.course_information',{course_id: course.id})
 				}
 			}
 		};
@@ -61,7 +69,7 @@ angular.module('scalearAngularApp')
 				}
 
 				scope.goToProgress=function(){
-					if(!$state.includes("**.progress.**")){}
+					if($state.includes("**.module.**"))
 						$state.go("course.module.progress")
 				}
 				scope.copyItem = function(){
@@ -193,6 +201,7 @@ angular.module('scalearAngularApp')
     templateUrl:"/views/content_navigator.html",
    link:function(scope, element, attr){
    	  scope.currentmodule = {id: $state.params.module_id}
+   	  scope.currentitem = $state.params.lecture_id || $state.params.quiz_id
    	  scope.moduleSortableOptions={
  		axis: 'y',
 		dropOnEmpty: false,
@@ -270,6 +279,7 @@ angular.module('scalearAngularApp')
   	 	var params = {'module_id': scope.currentmodule.id}    
         params[item.class_name+'_id'] = item.id
         $state.go('course.module.courseware.'+ item.class_name, params)
+        scope.currentitem = item.id
         // console.log(item)
         // // $timeout(function(){
         // //   scope.toggleNavigator();

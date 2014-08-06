@@ -3,15 +3,25 @@
 	/*padding-top: 10px;*/
 	max-width: 82.5rem !important;
 }
+footer{
+  bottom: 0px;
+}
 .description{
 	margin-top: -15px !important;
 	color: rgba(255, 255, 255, 0.5) !important;
 }
 .description > small{
-	color: rgba(255, 255, 255, 0.5) !important;	
+  color: rgba(255, 255, 255, 0.5) !important; 
+}
+.dark-description{
+  margin-top: -15px !important;
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+.dark-description > small{
+  color: rgba(0, 0, 0, 0.5) !important; 
 }
 .sub-header{
-	background-color: #cfcfcf !important; 
+	background-color: transparent !important; 
 	width: 100%; 
 	top: 45px !important; 
 	/*height: 30px !important;*/
@@ -51,10 +61,12 @@
 }
 
 /*COLORING*/
-.white{
+.white, .white-hover{
 	background-color: #ffffff !important;
 }
-
+.whitesmoke, .whitesmoke-hover{
+  background-color: whitesmoke !important
+}
 .blue{
 	background-color: #2ba6cb !important;
 }
@@ -76,12 +88,21 @@
 .grey{
 	background-color: #a3a3a3 !important;
 }
-.grey:hover{
+.grey:hover, .dark-grey{
 	background-color: #707070 !important;
 }
+.medium-grey{
+  background-color: #bdbdbd !important;
+}
+.whitesmoke-hover:hover, .medium-grey:hover, .dark-medium-grey, .dark-medium-grey-hover{
+  background-color: #a3a3a3 !important;
+}
 
-.light-grey{
+.light-grey, .light-grey-hover{
 	background-color: #ececea !important;
+}
+.white-hover:hover, .light-grey-hover:hover{
+  background-color: #d4d4d2 !important;
 }
 .transparent{
 	background: transparent !important;
@@ -95,7 +116,6 @@
 	background-color: #fcf8e3 !important;
 }
 
-
 .color-white{
 	color: #ffffff !important;
 }
@@ -103,8 +123,11 @@
 .color-blue{
 	color: #2ba6cb !important;
 }
-.color-green{
+.color-green, .color-green-hover{
 	color: #5da423 !important;
+}
+.color-lightgreen-hover:hover, .color-green-hover:hover{
+  color: #4e8a1d !important;
 }
 .color-red{
 	color: #c60f13 !important;
@@ -121,8 +144,18 @@
 .color-wheat{
 	color: #c09853 !important;
 }
+
+.color-lightgreen, .color-lightgreen-hover{
+  color:rgb(109,193,131) !important;
+}
+
 .dark-text{
-	color: #222222 !important;
+  color: #222222 !important;
+}
+
+.dark-medium-grey-hover:hover, .green-color-white, .green-color-white:hover{
+  background-color: #5da423 !important;
+  color:#ffffff !important
 }
 
 /*Border Colors*/
@@ -228,14 +261,16 @@ select{
 .size-10 { font-size: 10px; }
 
 .size-12 { font-size: 12px; }
+
+.size-13 { font-size: 13px; }
       
-.size-14 { font-size: 14px; }
+.size-14 { font-size: 14px !important; }
 
-.size-16 { font-size: 16px; }
+.size-16 { font-size: 16px !important; }
 
-.size-18 { font-size: 18px; }
+.size-18 { font-size: 18px !important; }
 
-.size-21 { font-size: 21px; }
+.size-21 { font-size: 21px !important;}
 
 .size-24 { font-size: 24px; }
 
@@ -249,12 +284,23 @@ select{
 
 .size-72 { font-size: 72px; }
 
+.size-18-light{
+font-size: 18px !important;
+font-weight: 300 !important
+}
+
 /*TEXT*/
 .truncate{
 	width: 100%;
 	white-space: nowrap;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+.truncate-70{
+  width: 70%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
 }
 
 /*LAYERING*/
@@ -304,6 +350,12 @@ select{
 }
 .with-tiny-margin-bottom{
 	margin-bottom: 0.25rem !important;
+}
+.with-tiny-margin-left{
+  margin-left: 0.25rem !important;
+}
+.with-tiny-margin-right{
+  margin-right: 0.25rem !important;
 }
 
 .with-margin-bottom{
@@ -394,6 +446,12 @@ button.active{
 .looks-like-a-link{
 	cursor: pointer;
 }
+.auto-right{
+  right: auto !important;
+}
+.position-relative{
+  position: relative !important;
+}
 label{
 	cursor: text;
 }
@@ -417,6 +475,18 @@ label{
 
 .top-bar{
 	z-index: 10 !important;
+}
+
+.top-bar input[type="checkbox"]{
+  top:0;
+}
+
+.top-bar .dropdown{
+  box-shadow: -0.04em 0.04em 0.1em lightgrey
+}
+.nav-item-active, .nav-item-active:hover{
+  background-color: #5da423 !important;
+  color: white !important;
 }
 
 
@@ -577,6 +647,9 @@ h2 .editable-click{
 /*Video styles*/
 .flex-video.widescreen{
 	padding-bottom: 53.7%;
+}
+.fit-inside{
+  max-width: 100%;
 }
 
 /*forum elements*/

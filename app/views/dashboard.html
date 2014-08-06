@@ -18,7 +18,7 @@
 		<!-- <news-feed events="events"></news-feed> -->
 		<event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event"></event-item>
 	</div>
-	<div class="large-4 columns hide-for-medium-down" ng-show="eventSources.length" style="position: fixed; right: 1rem;">
+	<div class="large-4 columns hide-for-medium-down" ng-class="{'large-12 auto-right position-relative': !events.length}" ng-show="eventSources.length" style="position: fixed; right: 1rem;">
 	 	<div class="calendar-container with-margin-top with-margin-bottom" ng-class="{widecalendar: !announcements.length}">
 			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="width:100%;"></div>
 	        <span ng-show="current_user.roles[0].id == 2" class="success alert-box label radius" translate="events.done"></span>

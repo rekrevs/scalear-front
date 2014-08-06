@@ -1,6 +1,6 @@
 <div  ng-hide="!lecture">
 	<div id="main-video-container" ng-style="container_style" class="small-12 medium-12 large-6 columns"> 
-		<h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4>
+		<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->
 		<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius">
 			 <span ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</span>
 			 <span ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <span>{{alert_message| date:'h:mma'}}</span></span>
@@ -34,7 +34,7 @@
 					</quiz>
 					<youtube ng-show="!slow && lecture.url && video_ready" ng-class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1' />
 					<progress-bar ng-show="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
-						<div ng-show="end_buttons" style="position: absolute;z-index: 1000;top: -71px;left: 47%;width: 0px;">
+						<div ng-show="end_buttons" style="position: absolute;top: -71px;left: 47%;width: 0px;">
 							<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
 					    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
 						</div>

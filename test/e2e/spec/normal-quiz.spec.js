@@ -59,7 +59,7 @@ describe("answer normal quiz correctly", function(){
 
     it('should go to student', function(){
         o_c.to_student(ptor);
-        o_c.open_course_list_student(ptor)
+        o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         o_c.open_lectures(ptor);
     })
@@ -158,7 +158,7 @@ describe("answer normal quiz incorrectly", function(){
 
     it('should go to student', function(){
         o_c.to_student(ptor);
-        o_c.open_course_list_student(ptor)
+        o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         o_c.open_lectures(ptor);
     })
@@ -260,7 +260,7 @@ describe('add required quiz',function(){
 
     it('should go to student', function(){
         o_c.to_student(ptor);
-        o_c.open_course_list_student(ptor)
+        o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         o_c.open_lectures(ptor);
     })

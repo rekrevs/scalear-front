@@ -1,10 +1,11 @@
 <div class="fixed">
-	<top-bar>
+	<top-bar class="white">
 	    <ul class="title-area">
 	      <li class="name">
 	        <h1>
-				<a id="home" href="/#">
-					Scalable<span style="padding-left:0px; color:#2ba6cb;">Learning</span>
+				<a id="home" ui-sref="home" class="dark-text" style="font-weight: 100;font-size: 24px;">
+					<img src="images/logo.png" style="width: 35px; margin-top: -5px;" />
+					Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span>
 				</a>
 			</h1>
 	      </li>
@@ -14,268 +15,211 @@
 	      <!-- Right Nav Section -->
 	      	<!-- STUDENT -->
 	      	<ul ng-switch-when="2" class="right">
-				<li class="divider"></li>
-				<li><a id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
-				<li class="divider"></li>
+				<!-- <li class="divider"></li> -->
+				<li><a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
+				<!-- <li class="divider"></li> -->
 				<li has-dropdown>
-					<a id="all_courses" href="" translate>navigation.courses</a>
+					<a class="white-hover color-green-hover size-18-light" id="all_courses" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('course_list' | includedByState)}" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
-						<li><label translate>navigation.current_courses</label></li>
+						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="has-description" href="" ui-sref="course.course_information({ course_id: course.id })">
-								
+							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" href="" ng-click="goToCourse(course)">
 								{{course.short_name}}
-								<h5 class="description"><small>{{course.name}}</small></h5>
+								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
-						<li class="divider"></li>
-						<li><label translate>other</label></li>
-						<li><a id="join_course" enrollment-modal ng-click="open()">{{'courses.join_course' | translate}}</a></li>
+						<!-- <li class="divider"></li> -->
+						<!-- <li><label translate>other</label></li> -->
+						<li><a class="white-hover dark-text" id="join_course" enrollment-modal ng-click="open()">{{'courses.join_course' | translate}}</a></li>
 						<li>
-							<a id="course_list" class="has-description" ui-sref="course_list">
-								{{'questions.see_all' | translate}} &rarr;
-								<h5 class="description"><small translate>view_whole_courselist</small></h5>
+							<a id="course_list" class="white-hover dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
+								{{'show_all_courses' | translate}}
+								<h5 class="dark-description"><small translate>view_whole_courselist</small></h5>
 							</a>
 						</li>
 					</ul>
 				</li>
-				<li class="divider"></li>
+				<!-- <li class="divider"></li> -->
 				<li has-dropdown>
-					<a id="account" href="" translate>account</a>
+					<a class="white-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" id="account" href="" translate>account</a>
 					<ul top-bar-dropdown>
 						<li has-dropdown>
-							<a class="has-description" href="">
+							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}"  href="">
 								{{'settings.settings' | translate}}
-								<h5 class="description"><small translate>settings_describtion</small></h5>
+								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
 							<ul top-bar-dropdown>
 								<li>
-									<a href="" ng-click="changelanguage('en')" ui-sref="edit_account">
+									<a class="white-hover dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
 										{{'account_edit.account_information' | translate}}
 									</a>
 								</li>
-								<li has-dropdown>
-									<a href="" translate>
-										language
-									</a>
-									<ul top-bar-dropdown>
-										<li>
-											<a href="" ng-click="changelanguage('en')">
-												English
-												<img src="images/uk.png" style="width:25px;height:15px;" />
-											</a>
-										</li>
-										<li>
-											<a href="" ng-click="changelanguage('sv')">
-												Swedish
-												<img src="images/sweden.png" style="width:25px;height:15px;" />
-											</a>
-										</li>
-									</ul>
-								</li>
 							</ul>
 						</li>
-						<li><a id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
+						<li><a class="white-hover dark-text" id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a id="help" href="" translate>head.help</a>
+					<a class="white-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" href="" translate>head.help</a>
 					<ul top-bar-dropdown>
-						<li><a ui-sref="getting_started" translate>help.getting_started</a></li>
-						<li class="divider"></li>
-						<li><a ui-sref="privacy" translate>footer.privacy</a></li>
-						<li><a report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
+						<li><a class="white-hover dark-text" ui-sref-active="nav-item-active" ui-sref="getting_started" translate>help.getting_started</a></li>
+						<!-- <li class="divider"></li> -->
+						<li><a class="white-hover dark-text" ui-sref-active="nav-item-active" ui-sref="privacy" translate>footer.privacy</a></li>
+						<li><a class="white-hover dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>
 				</li>
 			</ul>
 			<!-- TEACHER -->
 			<ul ng-switch-when="1" class="right">
-				<li class="divider"></li>
-				<li><a id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
-				<li class="divider"></li>
+				<!-- <li class="divider"></li> -->
+				<li><a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
+				<!-- <li class="divider"></li> -->
 				<li ng-show="are_shared()">
-					<a ui-sref="show_shared" translate>sharing.view</a>
+					<a class="white-hover color-green-hover size-18-light" ui-sref="show_shared" translate>sharing.view</a>
 				</li>
-				<li class="divider"></li>
-				<li has-dropdown>
-					<a id="notifications" href="" translate>navigation.notifications</a>
+				<!-- <li class="divider"></li> -->
+				<li ng-hide="user.invitations == 0 && user.shared == 0" has-dropdown>
+					<a class="white-hover color-green-hover size-18-light" id="notifications" href="" translate>navigation.notifications</a>
 					<ul top-bar-dropdown>
-						<li><label translate>navigation.notifications</label></li>
-						<li ng-show="user.invitations == 0 && user.shared == 0"><a>{{'notification.empty' | translate}}</a></li>
+						<li><label class="light-grey color-grey" translate>navigation.notifications</label></li>
+						<!-- <li ng-show="user.invitations == 0 && user.shared == 0"><a class="white-hover dark-text">{{'notification.empty' | translate}}</a></li> -->
                         <notification-item ng-repeat="(id, invitation) in user.invitation_items" notification="invitation" id="id"></notification-item>
                         <shared-item-notification ng-repeat="(id, item) in user.shared_items" notification="item" id="id"></shared-item-notification>
 					</ul>
 				</li>
-				<li class="divider"></li>
+				<!-- <li class="divider"></li> -->
 				<li has-dropdown>
-					<a id="all_courses" href="" translate>navigation.courses</a>
+					<a class="white-hover color-green-hover size-18-light" id="all_courses" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('new_course' | includedByState) || ('course_list' | includedByState)}" href="" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
-						<li><label translate>navigation.current_courses</label></li>
+						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="has-description" ui-sref="course.edit_course_information({ course_id: course.id })">
+							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course.edit_course_information({ course_id: course.id })">
 								{{course.short_name}}
-								<h5 class="description"><small>{{course.name}}</small></h5>
+								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
-						<li class="divider"></li>
-						<li><label translate>other</label></li>
-						<li><a id="new_course_sub" ui-sref="new_course" translate>courses.create_course</a></li>
+						<!-- <li class="divider"></li> -->
+						<!-- <li><label translate>other</label></li> -->
+						<li><a class="white-hover dark-text" id="new_course_sub" ui-sref-active="nav-item-active" ui-sref="new_course" translate>courses.create_course</a></li>
 						<li>
-							<a id="course_list" class="has-description" ui-sref="course_list">
-								{{'questions.see_all' | translate}} &rarr;
-								<h5 class="description"><small translate>view_whole_courselist</small></h5>
+							<a id="course_list" class="white-hover dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
+								{{'show_all_courses' | translate}}
+								<h5 class="dark-description"><small translate>view_whole_courselist</small></h5>
 							</a>
 						</li>
 					</ul>
 				</li>
-				<li class="divider"></li>
+				<!-- <li class="divider"></li> -->
 				<li has-dropdown>
-					<a id="account" href="" translate>account</a>
+					<a class="white-hover color-green-hover size-18-light" id="account" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" translate>account</a>
 					<ul top-bar-dropdown>
 						<li has-dropdown>
-							<a class="has-description" href="">
+							<a class="white-hover dark-text has-description" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}">
 								{{'settings.settings' | translate}}
-								<h5 class="description"><small translate>settings_describtion</small></h5>
+								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
 							<ul top-bar-dropdown>
 								<li>
-									<a href="" ng-click="changelanguage('en')" ui-sref="edit_account">
+									<a class="white-hover dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
 										{{'account_edit.account_information' | translate}}
 									</a>
 								</li>
-								<li has-dropdown>
-									<a href="" translate>
-										language
-									</a>
-									<ul top-bar-dropdown>
-										<li>
-											<a href="" ng-click="changelanguage('en')">
-												English
-												<img src="images/uk.png" style="width:25px;height:15px;" />
-											</a>
-										</li>
-										<li>
-											<a href="" ng-click="changelanguage('sv')">
-												Swedish
-												<img src="images/sweden.png" style="width:25px;height:15px;" />
-											</a>
-										</li>
-									</ul>
-								</li>
 							</ul>
 						</li>
-						<li><a id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
+						<li><a class="white-hover dark-text" id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a id="help" href="" translate>head.help</a>
+					<a class="white-hover color-green-hover size-18-light" id="help" href=""  ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" translate>head.help</a>
 					<ul top-bar-dropdown>
-						<li><a ui-sref="getting_started" translate>help.getting_started</a></li>
-						<li><a href="" translate>help.teacher_forum</a></li>
-						<li><a href="" translate>help.instruction_manual</a></li>
-						<li class="divider"></li>
-						<li><a ui-sref="privacy" translate>footer.privacy</a></li>
-						<li><a report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
+						<li><a class="white-hover dark-text" ui-sref="getting_started" ui-sref-active="nav-item-active" translate>help.getting_started</a></li>
+						<li><a class="white-hover dark-text" href="" translate>help.teacher_forum</a></li>
+						<li><a class="white-hover dark-text" href="" translate>help.instruction_manual</a></li>
+						<!-- <li class="divider"></li> -->
+						<li><a class="white-hover dark-text" ui-sref="privacy" ui-sref-active="nav-item-active" translate>footer.privacy</a></li>
+						<li><a class="white-hover dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>
 				</li>
 			</ul>
 			<!-- ADMIN -->
 			<ul ng-switch-when="5" class="right">
-				<li class="divider"></li>
-				<li><a id="statistics" ui-sref="statistics" translate>courses.statistics</a></li>
-				<li class="divider"></li>
+				<!-- <li class="divider"></li> -->
+				<li><a class="white-hover color-green-hover size-18-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" translate>courses.statistics</a></li>
+				<!-- <li class="divider"></li> -->
 				<li ng-show="are_shared()">
-					<a ui-sref="show_shared" translate>sharing.view</a>
+					<a class="white-hover color-green-hover size-18-light" ui-sref="show_shared" translate>sharing.view</a>
 				</li>
-				<li class="divider"></li>
-				<li has-dropdown>
-					<a id="notifications" href="" translate>navigation.notifications</a>
+				<!-- <li class="divider"></li> -->
+				<li ng-hide="user.invitations == 0 && user.shared == 0" has-dropdown>
+					<a class="white-hover color-green-hover size-18-light" id="notifications" href="" translate>navigation.notifications</a>
 					<ul top-bar-dropdown>
-						<li><label translate>navigation.notifications</label></li>
-						<li ng-show="user.invitations == 0 && user.shared == 0"><a>{{'notification.empty' | translate}}</a></li>
+						<li><label class="light-grey color-grey" translate>navigation.notifications</label></li>
+						<li ng-show="user.invitations == 0 && user.shared == 0"><a class="white-hover dark-text">{{'notification.empty' | translate}}</a></li>
                         <notification-item ng-repeat="(id, invitation) in user.invitation_items" notification="invitation" id="id"></notification-item>
                         <shared-item-notification ng-repeat="(id, item) in user.shared_items" notification="item" id="id"></shared-item-notification>
 					</ul>
 				</li>
-				<li class="divider"></li>
-				<li><a id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
-				<li class="divider"></li>
+				<!-- <li class="divider"></li> -->
+				<li><a class="white-hover color-green-hover size-18-light" id="dashboard" ui-sref-active="nav-item-active" ui-sref="dashboard" translate>dashboard</a></li>
+				<!-- <li class="divider"></li> -->
 				<li has-dropdown>
-					<a id="all_courses" href="" translate>navigation.courses</a>
+					<a class="white-hover color-green-hover size-18-light" id="all_courses" href="" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('course_list' | includedByState) || ('new_course' | includedByState)}" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
-						<li><label translate>navigation.current_courses</label></li>
+						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="has-description" ui-sref="course.edit_course_information({ course_id: course.id })">
+							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course.edit_course_information({ course_id: course.id })">
 								{{course.short_name}}
-								<h5 class="description"><small>{{course.name}}</small></h5>
+								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
-						<li class="divider"></li>
-						<li><label translate>other</label></li>
-						<li><a ui-sref="new_course" translate>courses.create_course</a></li>
+						<!-- <li class="divider"></li> -->
+						<!-- <li><label translate>other</label></li> -->
+						<li><a class="white-hover dark-text" ui-sref="new_course" ui-sref-active="nav-item-active" translate>courses.create_course</a></li>
 						<li>
-							<a class="has-description" ui-sref="course_list">
-								{{'questions.see_all' | translate}} &rarr;
-								<h5 class="description"><small translate>view_whole_courselist</small></h5>
+							<a class="white-hover dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
+								{{'questions.see_all' | translate}}
+								<h5 class="dark-description"><small translate>view_whole_courselist</small></h5>
 							</a>
 						</li>
 					</ul>
 				</li>
-				<li class="divider"></li>
+				<!-- <li class="divider"></li> -->
 				<li has-dropdown>
-					<a id="account" href="" translate>account</a>
+					<a class="white-hover color-green-hover size-18-light" id="account" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" translate>account</a>
 					<ul top-bar-dropdown>
 						<li has-dropdown>
-							<a class="has-description" href="">
+							<a class="white-hover dark-text has-description" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}">
 								{{'settings.settings' | translate}}
-								<h5 class="description"><small translate>settings_describtion</small></h5>
+								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
 							<ul top-bar-dropdown>
 								<li>
-									<a href="" ng-click="changelanguage('en')" ui-sref="edit_account">
+									<a class="white-hover dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
 										{{'account_edit.account_information' | translate}}
 									</a>
 								</li>
-								<li has-dropdown>
-									<a href="" translate>
-										language
-									</a>
-									<ul top-bar-dropdown>
-										<li>
-											<a href="" ng-click="changelanguage('en')">
-												English
-												<img src="images/uk.png" style="width:25px;height:15px;" />
-											</a>
-										</li>
-										<li>
-											<a href="" ng-click="changelanguage('sv')">
-												Swedish
-												<img src="images/sweden.png" style="width:25px;height:15px;" />
-											</a>
-										</li>
-									</ul>
-								</li>
 							</ul>
 						</li>
-						<li><a id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
+						<li><a class="white-hover dark-text" id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a id="help" href="" translate>head.help</a>
+					<a class="white-hover color-green-hover size-18-light" id="help" href="" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" translate>head.help</a>
 					<ul top-bar-dropdown>
-						<li><a ui-sref="getting_started" translate>help.getting_started</a></li>
-						<li><a href="" translate>help.teacher_forum</a></li>
-						<li><a href="" translate>help.instruction_manual</a></li>
-						<li class="divider"></li>
-						<li><a ui-sref="privacy" translate>footer.privacy</a></li>
-						<li><a report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
+						<li><a class="white-hover dark-text" ui-sref="getting_started" ui-sref-active="nav-item-active" translate>help.getting_started</a></li>
+						<li><a class="white-hover dark-text" href="" translate>help.teacher_forum</a></li>
+						<li><a class="white-hover dark-text" href="" translate>help.instruction_manual</a></li>
+						<!-- <li class="divider"></li> -->
+						<li><a class="white-hover dark-text" ui-sref="privacy" ui-sref-active="nav-item-active" translate>footer.privacy</a></li>
+						<li><a class="white-hover dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>
 				</li>
 			</ul>
 			<!-- NOT LOGGED IN -->
 			<ul ng-switch-when="undefined" class="right">
-				<li class="divider"></li>
-				<li><a id="login" ui-sref="login" translate>navigation.login</a></li>
+				<!-- <li class="divider"></li> -->
+				<li><a class="white-hover color-green-hover size-18-light" id="login" ui-sref-active="nav-item-active" ui-sref="login" translate>navigation.login</a></li>
+				<li><a class="white-hover color-green-hover size-18-light" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 			</ul>
 	    </top-bar-section>
 	</top-bar>

@@ -8,11 +8,11 @@ var student = require('./lib/student_module');
 //progress_student2
 var ptor = protractor.getInstance();
 var params = ptor.params
-var student_names = ['student two', 'student test']
-var teacher_name = "teacher test" 
-var student_emails = [params.student_mail_2, params.mail]
+var student_names = ['studenttest2 sharklasers', 'student test']
+var teacher_name = "teacher1" 
+var student_emails = [params.student2_mail, params.student_mail]
 var module_names = ['New Module', 'New Module 2']
-var checkmarks = {'student two': ['on_time', 'not_finished'], 'student test': ['on_time', 'not_finished']}
+var checkmarks = {'studenttest2 sharklasers': ['on_time', 'not_finished'], 'student test': ['on_time', 'not_finished']}
 var duration={ min:4, sec:47}
 var total_duration = duration.min*60+duration.sec
 var modules_items = {
@@ -25,8 +25,8 @@ var modules_items = {
 						{title:'DRAG QUIZ', type:'drag', time:roundTimeToPercentage(30, total_duration)}
 					],
 					'free_text':[],
-					'discussion':[{title: 'private question by second student', type:'private', time:roundTimeToPercentage(40, total_duration), likes:0, flags:0, screen_name:'student test'}],
-					'confused':[{title: 'Confused', count:1, time:roundTimeToPercentage(45, total_duration)}],
+					'discussion':[{title: 'private question by second student', type:'private', time:roundToNearestQuarter(40, total_duration), likes:0, flags:0, screen_name:'studenttest2'}],
+					'confused':[{title: 'Confused', count:1, time:roundToNearestQuarter(45, total_duration)}],
 					},
 					{
 					'name':'New Lecture Text', 
@@ -37,8 +37,8 @@ var modules_items = {
 						{title:'DRAG TEXT QUIZ', type:'drag', time:roundTimeToPercentage(30, total_duration)}
 					],
 					'free_text':[],
-					'discussion':[{title: 'public question by second student', type:'public', time:roundTimeToPercentage(40, total_duration), likes:0, flags:0, screen_name:'student test'}],
-					'confused':[{title: 'Confused', count:1, time:roundTimeToPercentage(25, total_duration)}],
+					'discussion':[{title: 'public question by second student', type:'public', time:roundToNearestQuarter(40, total_duration), likes:1, flags:0, screen_name:'studenttest2'}],
+					'confused':[{title: 'Confused', count:1, time:roundToNearestQuarter(25, total_duration)}],
 					},
 					{
 					'name':'New Lecture Surveys', 
@@ -49,14 +49,14 @@ var modules_items = {
 					],
 					'free_text':[],
 					'discussion':[],
-					'confused':[{title: 'Really confused', count:1, time:roundTimeToPercentage(25, total_duration)}],
+					'confused':[{title: 'Really confused', count:1, time:roundToNearestQuarter(25, total_duration)}],
 					},
 					{
 					'name':'New Quiz', 
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
 						{title:'ocq question', type:'OCQ'},						
-						{title:'drag question', type:'DRAG'}
+						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
 						{title:'free question', answers:[{title:'free answer', grade:'Under Review'}]},
@@ -70,7 +70,7 @@ var modules_items = {
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
 						{title:'ocq question', type:'OCQ'},						
-						{title:'drag question', type:'DRAG'}
+						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
 						{title:'free question', answers:[{title:'second free answer', grade:'Under Review'},{title:'second second free answer', grade:'Under Review'}]},
@@ -131,7 +131,7 @@ var modules_items = {
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
 						{title:'ocq question', type:'OCQ'},						
-						{title:'drag question', type:'DRAG'}
+						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
 						{title:'free question', answers:[]},
@@ -145,7 +145,7 @@ var modules_items = {
 					'questions': [
 						{title:'mcq question', type: 'MCQ'},
 						{title:'ocq question', type:'OCQ'},						
-						{title:'drag question', type:'DRAG'}
+						{title:'drag question', type:'drag'}
 					],
 					'free_text':[
 						{title:'free question', answers:[]},
@@ -167,6 +167,7 @@ var modules_items = {
 					'confused':[],
 					}]
 }
+var comment0 = {title: "comment by first student", likes:0, flags:0, screen_name:'student test'}
 var comment1 = {title: "teacher can reply to discussions", likes:0, flags:0, screen_name:teacher_name}
 var comment2 = {title: "still can add many comments", likes:0, flags:0, screen_name:teacher_name}
 // ptor.driver.manage().window().maximize();
@@ -175,41 +176,34 @@ ptor.driver.manage().window().setPosition(0, 0);
 
 describe("teacher", function(){
 	it('should login', function(){
+		o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);	
 	})
 	it('should open the first course', function(){
-		o_c.open_course_whole(ptor);
+		o_c.open_course_list(ptor);
+    	o_c.open_course(ptor, 1);
 	})
 	it('should go to the progress page', function(){
-		o_c.open_tray(ptor)
-		o_c.open_progress_page(ptor)
+		o_c.press_content_navigator(ptor)
+    	teacher.open_module(ptor, 1);
+		o_c.open_progress(ptor)
+		o_c.open_module_progress(ptor)
 	})
 })
-describe('Progress Main Page', function(){
-	it('should be displayed', function(){
-		expect(ptor.getCurrentUrl()).toContain('progress/main')
-	})
-})
-describe('Teacher', function(){
-	it('should select the first module', function(){
-		student.open_module_number(ptor, 1)
-	})
-})
+
 describe('Modules Selector Button', function(){
 	it('should display the name of the module selected', function(){
 		checkNameOnSelectorButton('New Module')
 	})
 })
-describe('Navigation Bullets', function(){
-	it('should have the same count as the items under the first module', function(){
-		verifyNumberOfBullets(6)
-	})
-})
+// describe('Navigation Bullets', function(){
+// 	it('should have the same count as the items under the first module', function(){
+// 		verifyNumberOfBullets(6)
+// 	})
+// })
 describe('First Module Progress Page', function(){
 	it('should have a video container', function(){
-		ptor.findElement(protractor.By.className('video-showroom')).then(function(video){
-			expect(video.isDisplayed()).toBe(true)
-		})
+		expect(element(by.className('videoborder')).isDisplayed()).toEqual(true)
 	})
 	it('should display the module progress chart showing that the two students finished on time', function(){
 		progress.checkModuleProgressChart(3, 2)
@@ -217,9 +211,9 @@ describe('First Module Progress Page', function(){
 	it('should display headings for each item in the module with the item name, duration and number of questions and verify sub items count', function(){
 		progress.verifyModuleTitlesAndCountOnTimeline(modules_items['New Module'])
 	})
-	// it('should display heading and content filtered by charts',function(){
-	// 	progress.verifyModuleTitlesAndCountFiltered(modules_items['New Module'], 'charts')
-	// })
+				// it('should display heading and content filtered by charts',function(){
+				// 	progress.verifyModuleTitlesAndCountFiltered(modules_items['New Module'], 'charts')
+				// })
 	describe('First lecture',function(){
 		it('should display correct quiz titles',function(){
 			progress.checkInvideoQuizTitle(0,0,modules_items['New Module'], 50)
@@ -299,7 +293,7 @@ describe('First Module Progress Page', function(){
 		it('should display quiz statistics correct',function(){
 			progress.checkQuizChart(1,0,1,1)
 			progress.checkQuizChart(1,1,1,1)
-			progress.checkQuizChart(1,2,1,1)
+			progress.checkQuizChart(1,2,1,2)
 			ptor.navigate().refresh();
 			progress.checkQuizChart(1,0,5,1)
 			progress.checkQuizChart(1,1,5,1)
@@ -349,16 +343,19 @@ describe('First Module Progress Page', function(){
 			progress.checkTimeEstimate(0)
 		})
 
-		it('should be able to add a replay to discussion',function(){			
+		it('should be able to add a replay to discussion',function(){	
+			progress.checkDiscussionComment(1,0,0,comment0)
 			progress.addReplyToDiscussion(1,0,comment1.title)
-			progress.checkDiscussionComment(1,0,0,comment1)
+			progress.checkDiscussionComment(1,0,1,comment1)
 			progress.addReplyToDiscussion(1,0,comment2.title)
-			progress.checkDiscussionComment(1,0,1,comment2)
+			progress.checkDiscussionComment(1,0,2,comment2)
 		})
 		it('should be able to delete discussion', function(){
-			progress.deleteDiscussionComment(1,0,0)
-			progress.checkDiscussionComment(1,0,0,comment2)
-			progress.deleteDiscussionComment(1,0,0)
+			progress.deleteDiscussionComment(1,0,1)
+			progress.checkDiscussionComment(1,0,0,comment0)
+			progress.checkDiscussionComment(1,0,1,comment2)
+			progress.deleteDiscussionComment(1,0,1)
+			progress.checkDiscussionComment(1,0,0,comment0)
 		})
 	})
 	describe('Third Lecture',function(){
@@ -476,7 +473,8 @@ describe('First Module Progress Page', function(){
 
 describe('Teacher', function(){
 	it('should select the second module', function(){
-		student.open_module_number(ptor, 2)
+		// o_c.press_content_navigator(ptor)
+    	teacher.open_module(ptor, 2);
 	})
 })
 describe('Modules Selector Button', function(){
@@ -484,17 +482,15 @@ describe('Modules Selector Button', function(){
 		checkNameOnSelectorButton('New Module 2')
 	})
 })
-describe('Navigation Bullets', function(){
-	it('should have the same count as the items under the second module', function(){
-		verifyNumberOfBullets(6)
-	})
-})
+// describe('Navigation Bullets', function(){
+// 	it('should have the same count as the items under the second module', function(){
+// 		verifyNumberOfBullets(6)
+// 	})
+// })
 
 describe('Second Module Progress Page', function(){
 	it('should have a video container', function(){
-		ptor.findElement(protractor.By.className('video-showroom')).then(function(video){
-			expect(video.isDisplayed()).toBe(true)
-		})
+		expect(element(by.className('videoborder')).isDisplayed()).toEqual(true)
 	})
 	it('should display the module progress chart showing that the one student not started watching', function(){
 		progress.checkModuleProgressChart(1, 1)
@@ -606,21 +602,8 @@ describe('Second Module Progress Page', function(){
 	
 })
 
-
-function checkModuleProgressTableVisible(){
-	locator.by_xpath(ptor, '//*[@id="details"]/ui-view/div/div/div[1]/div/progress_matrix/div[2]/table').then(function(table){
-		expect(table.isDisplayed()).toBe(true)
-	})
-}
 function checkNameOnSelectorButton(name){
-	locator.by_classname(ptor, 'modules-collapser').then(function(button){
-		expect(button.getText()).toBe(name)
-	})
-}
-function verifyNumberOfBullets(number){
-	ptor.findElements(protractor.By.tagName('progress-item')).then(function(bullets){
-		expect(bullets.length).toBe(number)
-	})
+	expect(element(by.id('content_navigator')).getText()).toEqual(params.short_name+': '+name)
 }
 
 function roundTimeToPercentage(percent, duration){
@@ -629,6 +612,17 @@ function roundTimeToPercentage(percent, duration){
   	var min = Math.floor((time - (hr * 3600))/60);
   	var sec = Math.floor(time - (hr * 3600) -  (min * 60));
   	if (min < 10) { min = "0" + min; }
+  	if (sec < 10) { sec  = "0" + sec; }
+  	return  min + ':' + sec;
+}
+
+function roundToNearestQuarter(percent, duration){
+	var time = Math.floor((duration*percent)/100)
+	var hr  = Math.floor(time / 3600);
+  	var min = Math.floor((time - (hr * 3600))/60);
+  	var sec = Math.floor(time - (hr * 3600) -  (min * 60));
+ 	sec = (Math.floor(sec/15) * 15) % 60;
+ 	if (min < 10) { min = "0" + min; }
   	if (sec < 10) { sec  = "0" + sec; }
   	return  min + ':' + sec;
 }

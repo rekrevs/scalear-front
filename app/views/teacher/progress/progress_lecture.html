@@ -89,7 +89,7 @@
 									    	<a class="button secondary really-tiny" ng-click="quiz.filtered_user = answer.user_id;quiz.filter_strict=true" style="margin:0 5px">{{'lectures.related' | translate}}</a>
 										</div>
 										<div ng-show="module_item.quiz_type == 'survey'" style="float:right">| 
-											<a ng-show="!answer.show_feedback" class="button really-tiny succes" ng-click="answer.show_feedback = true">{{'lectures.reply'|translate}}</a>
+											<a ng-show="!answer.show_feedback" class="button really-tiny success" ng-click="answer.show_feedback = true">{{'lectures.reply'|translate}}</a>
 											<a ng-show="answer.show_feedback" class="button really-tiny alert" ng-click="answer.show_feedback = false;answer.temp_response=null
 											">{{'lectures.cancel'|translate}}</a>
 										</div>	
@@ -103,7 +103,7 @@
 									<!-- <delete_button ng-show="answer.response && !answer.show_feedback" size='small' action='deleteFeedback(answer)'></delete_button> -->
 									<div class="feedback" ng-show="answer.show_feedback && module_item.quiz_type == 'survey'">
 										<textarea ng-model="answer.temp_response"  style="width: 65%;" />
-										<a ng-click="sendFeedback(answer);answer.show_feedback = false" class="button tiny success">{{'courses.send'|translate}}</a>
+										<button ng-click="sendFeedback(answer);answer.show_feedback = false" class="button tiny success">{{'courses.send'|translate}}</button>
 									</div>
 								</li>
 							</ul>						
@@ -185,7 +185,7 @@
 										<br>
 										<textarea ng-model="discussion.post.temp_response" placeholder="{{'discussion.write_comment' | translate}}"  style="width: 65%;height:80px; border-radius: 0px;"></textarea>
 										<br />
-										<a ng-click="sendComment(discussion.post);discussion.post.show_feedback = false" class="button really-tiny success">{{'courses.send'|translate}}</a>
+										<button ng-click="sendComment(discussion.post);discussion.post.show_feedback = false" class="button tiny success">{{'courses.send'|translate}}</button>
 										<br>
 									</div>
 									<hr />

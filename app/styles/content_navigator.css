@@ -97,19 +97,19 @@
   padding-left: 1.1rem !important;
   margin-bottom: 0px !important;
 }*/
+
+
 .accordion-group .content > ul{
   font-size: 13px !important;
   color: black !important;
   text-align: left !important;
   padding: 2px !important;
-  padding-left: 20px !important;
   margin: 0px 0px 0px 0px !important;
   cursor: pointer !important;
-  /*background-color: */
 }
-/*.accordion-group .content > ul:hover, .currentitem{
+.accordion-group .content > ul:hover, .currentitem{
   background-color: rgba(0,0,0,0.2) !important;
-}*/
+}
 
 .itemfinished{
   border-right: 5px solid rgb(0, 162, 86);
@@ -189,7 +189,9 @@
   cursor: move;
   vertical-align: top;
 }
-
+.last-child{
+  padding-left: 20px !important;
+}
 .h:hover, .last-child:hover, .inneritemopen {
   background-color: rgba(0,0,0,0.2);
   /*background-color: lightgrey;*/

@@ -1,23 +1,27 @@
-<!-- <div class="modal-header"> -->
+<style>
+.reveal-modal{
+    height:40%;
+    overflow: hidden;
+}
+</style>
+<center>
     <h3 translate="users.enter_enrollment"></h3>
-<!-- </div> -->
-<div class="modal-body">
-	<form name="form.key">
-    <center>
-    	<input type="text" ng-model="enrollment.key" name="key" required/><br>
-    	<span class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
-    	<div class='error' ng-if='form.server_error'>{{form.server_error}}</div>
-        <loading size="small" show="form.processing"></loading>
-        
-        {{'users.enrollement_key_format' | translate}} 
-        <br>
-        <b>ABCDE-12345</b>
-        <br>
-        {{'users.get_enrollment_key' | translate}}
-    </center>
-    </form>
-</div>
-<div class="right modal-footer">
-    <button class="success" ng-click="ok()" translate="users.enroll"></button>
-    <button class="alert" ng-click="cancel()" translate="lectures.cancel"></button>
-</div>
+    <div class="modal-body">
+    	<form name="form.key">
+        	<div class="small-12 large-3 small-centered columns"><input type="text" maxlength='11' ng-model="enrollment.key" name="key" required style="text-align: center;font-weight:bold;font-size: 18px;"/></div>
+        	<span class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
+        	<div class='error' ng-if='form.server_error'>{{form.server_error}}</div>
+            <loading size="small" show="form.processing"></loading>
+            {{'users.enrollement_key_format' | translate}} 
+            <br>
+            <b>ABCDE-12345</b>
+            <br>
+            {{'users.get_enrollment_key' | translate}}
+        </form>
+    </div>
+    <div class="modal-footer">
+        <br/>
+        <button class="button small success" ng-click="ok()" translate="users.enroll"></button>
+        <button class="button small alert" ng-click="cancel()" translate="lectures.cancel"></button>
+    </div>
+</center>

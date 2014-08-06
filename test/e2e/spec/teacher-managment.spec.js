@@ -26,7 +26,7 @@ describe("1", function(){
 	// test
 	it('should check number of teachers intially', function(){
 		o_c.to_student(ptor);
-		o_c.open_course_list_student(ptor)
+		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
 		check_teachers_no(ptor, 1);
 	})
@@ -63,7 +63,7 @@ describe("2", function(){
 		o_c.logout(ptor, o_c.feedback);
 		o_c.sign_in(ptor, params.teacher2_mail, params.password, o_c.feedback);
 		o_c.open_notifications(ptor);
-		o_c.accept_notification(ptor, 0);
+		o_c.accept_invitation(ptor, 1);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
@@ -74,7 +74,7 @@ describe("2", function(){
 
 	it('should login as student and check for teachers', function(){
 		o_c.to_student(ptor);
-		o_c.open_course_list_student(ptor)
+		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
 		check_teachers_no(ptor, 2);
 	})

@@ -136,7 +136,7 @@ cursor: pointer;
     left: 90%;
     width: 25px;
     height: 20px;
-    background: url('/images/link_icon_white.png') no-repeat center center;
+    background: url('/images/link_icon_dark.png') no-repeat center center;
     background-size: 20px 20px;
     float: left;
     opacity: 0.9;

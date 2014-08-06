@@ -1,4 +1,4 @@
-<div id="controls" style="width:100%;height:40px;background: black;">
+<div id="controls" class="light-grey" style="width:100%;height:40px;">
     <style>
         input[type='range']::-webkit-slider-thumb {
             -webkit-appearance: none;
@@ -35,9 +35,16 @@
     </div>
 </div>
 <div ng-transclude></div>
-<div ng-show="player.controls.youtube" class="qualityDiv dropdown" dropdown-toggle="#quality_list" ng-click='showQuality()' title="{{'youtube.click_video_quality'|translate}}"></div>
-<ul id="quality_list" class="f-dropdown" style="display:inline; left: 89.7%;top: -140px; border-radius: 0px; background-color: currentcolor; padding: 0px; bottom: auto; min-width: 0px;">
-    <li ng-class="{'blue': chosen_quality=='small' }"><a tabindex="-1" ng-click="setQuality('small')" style="color: white;">240p</a></li>
-    <li ng-class="{'blue': chosen_quality=='large'}"><a tabindex="-1" ng-click="setQuality('large')" style="color: white;">480p</a></li>
-    <li ng-class="{'blue': chosen_quality=='hd720' }"><a tabindex="-1" ng-click="setQuality('hd720')" style="color: white;">720p (HD)</a></li>
-</ul>
+<div ng-show="player.controls.youtube" class="qualityDiv dropdown" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
+    <ul id="quality_list" class="f-dropdown" style="min-width: 100px;">
+        <li ng-class="{'blue': chosen_quality=='small' }">
+            <a ng-click="setQuality('small')">240p</a>
+        </li>
+        <li ng-class="{'blue': chosen_quality=='large'}">
+            <a ng-click="setQuality('large')">480p</a>
+        </li>
+        <li ng-class="{'blue': chosen_quality=='hd720' }">
+            <a ng-click="setQuality('hd720')">720p (HD)</a>
+        </li>
+    </ul>
+</div>

@@ -13,10 +13,13 @@ exports.check_module_number = function(ptor, no_of_mo){
   })
 }
 
-exports.check_item_number = function(ptor, total_item_no){
-    locator.by_repeater(ptor, 'item in module.items').then(function(items){
-        expect(items.length).toEqual(total_item_no);
-    })
+exports.check_item_number = function(ptor, module_num, total_item_no){
+  element(by.repeater('module in modules').row(module_num-1)).all(by.repeater('item in module.items')).then(function(items){
+    expect(items.length).toEqual(total_item_no)
+  })
+    // locator.by_repeater(ptor, 'item in module.items').then(function(items){
+    //     expect(items.length).toEqual(total_item_no);
+    // })
 }
 
 //=====================================

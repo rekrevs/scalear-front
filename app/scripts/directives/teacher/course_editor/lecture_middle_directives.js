@@ -30,8 +30,8 @@ angular.module('scalearAngularApp')
 								'<div class="small-4 small-centered columns">'+
 									'<div class="small-6 columns"><button ng-disabled="disable_save_button" class="button tiny" style="margin:5px 0" ng-click="saveBtn()" translate>save</button></div>'+
 									'<div class="small-6 columns">'+
-										'<a ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</a>'+
-										'<a ng-show=" quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>lectures.cancel</a>'+
+										'<button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
+										'<button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>lectures.cancel</button>'+
 									'</div>'+
 								'</div>'+
 							'</div>'+

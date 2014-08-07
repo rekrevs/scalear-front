@@ -25,13 +25,13 @@ angular.module('scalearAngularApp')
 					return start_date.setDate(start_date.getDate()+(duration * 7));
 				}
 
-				scope.goToCourse=function(course){
-					if(scope.user.roles[0].id==2){
-						$state.go('course.course_information',{course_id: course.id, redirect:true})
-					}
-					else
-						$state.go('course.course_information',{course_id: course.id})
-				}
+				// scope.goToCourse=function(course){
+				// 	if(scope.user.roles[0].id==2){
+				// 		$state.go('course.course_information',{course_id: course.id, redirect:true})
+				// 	}
+				// 	else
+				// 		$state.go('course.course_information',{course_id: course.id})
+				// }
 			}
 		};
 	 }])
@@ -316,8 +316,8 @@ angular.module('scalearAngularApp')
                
       scope.showItemCourseware = function(item){
   	 	var params = {'module_id': scope.currentmodule.id}    
-        params[item.get_class_name.toLowerCase()+'_id'] = item.id
-        $state.go('course.module.courseware.'+ item.get_class_name.toLowerCase(), params)
+        params[item.class_name.toLowerCase()+'_id'] = item.id
+        $state.go('course.module.courseware.'+ item.class_name.toLowerCase(), params)
         scope.currentitem = item.id
         // console.log(item)
         // // $timeout(function(){

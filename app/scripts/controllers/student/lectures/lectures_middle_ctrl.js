@@ -90,9 +90,9 @@ angular.module('scalearAngularApp')
 
     var goToLecture=function(id){
         if($scope.timeline){
-            if(isiPad()){
-                angular.element('#lecture_video')[0].scrollIntoView()
-            }
+            // if(isiPad()){
+            //     angular.element('#lecture_video')[0].scrollIntoView()
+            // }
             $scope.should_play = true
             $scope.lecture = null
 
@@ -148,8 +148,28 @@ angular.module('scalearAngularApp')
                                 $scope.should_play = false
                     }
                 }
+
+                if(isiPad()){
+                    console.log("is ipad!!!!!!")
+                    $scope.video_ready=true
+                }
             })
         }
+    }
+
+    $scope.lecture_player.events.onMeta = function() {
+        console.log("<<<<<----------->>>>")
+        console.log('meta')
+    }
+
+     $scope.lecture_player.events.canPlay = function() {
+        console.log("<<<<<----------->>>>")
+        console.log('canPlay')
+    }
+
+    $scope.lecture_player.events.canplaythrough = function() {
+        console.log("<<<<<----------->>>>")
+        console.log('canplaythrough')
     }
 
      $scope.lecture_player.events.onReady = function() {
@@ -188,6 +208,8 @@ angular.module('scalearAngularApp')
         })
 
         $scope.video_ready=true
+        console.log("<<<<<----------->>>>")
+        console.log($scope.video_ready)
         var time = $location.search();
         
         if(time){
@@ -391,6 +413,15 @@ angular.module('scalearAngularApp')
     }
 
     $scope.toggleFullscreen=function(){
+
+        console.log(isiPad())
+        if(isiPad())
+            mobileFullscreen()
+        else
+            desktopFullscreen()
+    }
+
+    var desktopFullscreen=function(){
         if(!$scope.fullscreen){
             console.log("going fullscreen")
             $scope.resize.big()
@@ -407,6 +438,25 @@ angular.module('scalearAngularApp')
             $scope.video_class = 'video_class'
             $scope.container_style={float: 'left'}
         }
+    }
+
+    var mobileFullscreen=function(){
+        if(!$scope.fullscreen){
+            $scope.video_class = 'mobile_video_full'
+            $scope.video_layer ={'height': '92%', 'position': 'relative', 'z-index': '-1'}
+            $scope.quiz_layer.width="100%"
+            $scope.quiz_layer.height="92%"
+            $scope.fullscreen= true
+        }
+        else{
+            console.log("close fullscreen")
+            $scope.video_class = 'video_class'
+            $scope.video_layer ={}
+            $scope.quiz_layer.width=""
+            $scope.quiz_layer.height=""
+            $scope.fullscreen= false
+        }
+        $timeout(function(){$scope.$emit("updatePosition")})
     }
 
     $scope.addQuestionBlock= function(){

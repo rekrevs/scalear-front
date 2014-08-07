@@ -112,14 +112,14 @@ angular.module('scalearAngularApp')
                 )
             }
 
-            if($state.params.redirect){
-                // $scope.$emit('open_navigator')
-                $scope.goToContent()
-            }
-            else{
+            // if($state.params.redirect){
+            //     // $scope.$emit('open_navigator')
+            //     $scope.goToContent()
+            // }
+            // else{
                 $scope.init();
                 $scope.init_calendar_announcements();
-            }
+            // }
 
             
 

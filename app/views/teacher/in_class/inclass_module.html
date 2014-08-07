@@ -4,7 +4,7 @@
 <!-- endbuild -->
 <div class="row">
 	<div class="small-12 medium-12 large-3 columns" id='details' >
-		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/>
+		<!-- <inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/> -->
 		<div class="row">
 			<a class="button large success" ng-click="display(!inclass_ready)" ng-disabled="!inclass_ready">{{'groups.display_inclass' | translate }}</a>
 		</div>
@@ -25,7 +25,7 @@
 	<br /><br /><br /> -->
 	</div>
 		
-	<div class="main_content small-12 medium-12 large-9 columns" style="border-left: 1px solid lightgray;">
+	<div class="main_content small-12 medium-12 large-9 columns" style="border-left: 1px solid lightgray; height: 83vh; max-height: 83vh;overflow-y: auto;">
 		<center><loading size="big" show="!module.items" /></center>
 		<div class="row" ng-repeat="module_item in module.items">
 		<!-- 	<div  id="{{module_item.quiz_type+'_'+module_item.id}}" ng-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];">

@@ -414,6 +414,13 @@ td.right-border{
 	padding: 5px;
 	display: inline-block;
 }
+.top-bar .toggle-topbar.menu-icon a::after{
+  -webkit-box-shadow: 0 10px 0 1px black, 0 16px 0 1px black, 0 22px 0 1px black;
+  box-shadow: 0 10px 0 1px black, 0 16px 0 1px black, 0 22px 0 1px black;
+}
+.top-bar.expanded .title-area{
+  background: lightgrey;
+}
 
 
 /*STATES*/
@@ -487,7 +494,7 @@ label{
 }
 
 .top-bar{
-	z-index: 10 !important;
+	z-index: 10;
 }
 
 .top-bar input[type="checkbox"]{
@@ -700,6 +707,9 @@ h2 .editable-click{
 .editable-input{
 	width: 70% !important;
 }
+input.editable-input{
+  word-break: normal !important;
+}
 
 /*borders*/
 .soft-border{
@@ -857,4 +867,9 @@ h2 .editable-click{
   bottom: -10px;
   border-left-color: #ffffff;
   border-right-width: 0;
+}
+
+
+iframe{
+  z-index: -1 !important;
 }

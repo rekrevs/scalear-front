@@ -217,13 +217,15 @@ angular.module('scalearAngularApp')
 		 replace:true,
 		 restrict: 'E',
 		 template: "<div>"+
-		 				"<div ng-class='dragClass' style='background-color:transparent;width:300px;height:40px;padding:0px;position:absolute;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
+		 				"<div ng-class='dragClass' style='background-color:blue;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 					"<div class='input-prepend'>"+
-			 					"<span class='add-on'>{{data.pos}}</span>"+
-			 					"<textarea class='area' style='resize:none;width:254px;height:20px;padding:10px;font-size: 14px;' ng-style=\"{width:area_width, height:area_height}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required  tooltip='{{!data.answer?require_translated:\"\"}}'/>"+
+		 						"<span class='position-header error light-grey dark-text no-margin'>{{data.pos}}</span>"+
+			 					"<textarea class='area' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 14px; min-height: 40px; min-width: 40px;' ng-style=\"{max_width: width, max_height: height}\" ng-class=\"{error: !data.answer}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required/>"+
+			 					"<small class='error' ng-show=\"!data.answer\">{{'courses.required' | translate}}</small>"+
 		 					"</div>"+
 	 					"</div>"+
-	 					"<b class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >{{data.answer}}</b>"+
+
+	 					"<span class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >{{data.answer}}</span>"+
  					"</div>",
 
 		link: function(scope, element, attrs) {
@@ -259,6 +261,7 @@ angular.module('scalearAngularApp')
 			scope.calculateSize=function(){
 				var ontop=angular.element('.ontop');
 				var main = angular.element(element.children()[0])
+				console.log(scope.area_width+", "+scope.area_height)
 				scope.data.width= main.width()/ontop.width();
 				scope.data.height= main.height()/(ontop.height());
 			}			
@@ -299,17 +302,14 @@ angular.module('scalearAngularApp')
 
 
 			var template = '<ul>'+
-							'<p><span translate>groups.correct_because</span>:'+
-								'<br>'+
+							'<label><span translate>groups.correct_because</span>'+
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
-								'<br>'+
-								'<div ng-repeat=\'num in list|filter:"!"+pos\' >'+
-									'{{num}} <span translate>groups.incorrect_because</span>:<br>'+
-									'<textarea rows=3 class="must_save" type="text" ng-model="data.explanation[num]" />'+
-									'<br>'+
-								'</div>'+
-								'<input type="button" ng-click="remove()" class="btn btn-danger remove_button" value={{"lectures.remove"|translate}} />'+
-							'</p>'+
+							'</label>'+
+							'<label ng-repeat=\'num in list|filter:"!"+pos\' >'+
+								'{{num}} <span translate>groups.incorrect_because</span>'+
+								'<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />'+
+							'</label>'+
+							'<button type="button" ng-click="remove()" class="button tiny alert with-tiny-margin remove_button">{{"lectures.remove"|translate}}</button>'+
 						'</ul>'
 
             scope.popover_options={
@@ -321,7 +321,7 @@ angular.module('scalearAngularApp')
 
             angular.element(element.children()[0]).resizable({
             	containment: ".videoborder",  
-            	alsoResize: element.find('.area'), 
+            	// alsoResize: element.find('.area'), 
             	minHeight:40, 
             	minWidth:40,
 		  		stop: scope.calculateSize

@@ -356,7 +356,7 @@ angular.module('scalearAngularApp')
   return {
     restrict:'E',
     template:'<div ng-style="{left: xcoor, top: ycoor, width:width, height:height, position: \'absolute\',  marginTop:\'0px\'}" data-drop="true" jqyoui-droppable=\'{onDrop:"setDropped", onOver:"formatDropped", onOut:"clearDropped"}\' class="drop-div" ></div>'+
-             '<b class="dragged handle" style="z-index:1" ng-style="{left: sub_xcoor, top: sub_ycoor}" data-drag="true" data-jqyoui-options=\'{containment:".ontop"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</b>',
+             '<span class="dragged handle" style="z-index:1" ng-style="{left: sub_xcoor, top: sub_ycoor}" data-drag="true" data-jqyoui-options=\'{containment:".ontop"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</span>',
     link:function(scope,elem){
       $log.debug("student drag")
       $log.debug(scope.data)
@@ -364,9 +364,9 @@ angular.module('scalearAngularApp')
         $log.debug("setAnswerLocation")
         var ontop=angular.element('.ontop');
         console.log(scope.data)
-        scope.width  = scope.data.width * ontop.width() -27;
+        scope.width  = scope.data.width * ontop.width();
         scope.height = scope.data.height* (ontop.height());
-        scope.xcoor = (scope.data.xcoor * ontop.width())+27
+        scope.xcoor = (scope.data.xcoor * ontop.width())
         scope.ycoor = (scope.data.ycoor * (ontop.height()))
         scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
         scope.sub_ycoor = (scope.data.sub_ycoor * ontop.height())

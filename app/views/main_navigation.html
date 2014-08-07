@@ -1,15 +1,15 @@
 <div class="fixed">
-	<top-bar class="white">
+	<top-bar class="white" is-hover="false">
 	    <ul class="title-area">
 	      <li class="name">
 	        <h1>
-				<a id="home" ui-sref="home" class="dark-text" style="font-weight: 100;font-size: 24px;">
-					<img src="images/logo.png" style="width: 35px; margin-top: -5px;" />
+				<a id="home" ui-sref="home" class="dark-text must-show-inline" style="font-weight: 100;font-size: 24px;">
+					<img class="hide-for-small" src="images/logo.png" style="width: 35px; margin-top: -5px;" />
 					Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span>
 				</a>
 			</h1>
 	      </li>
-	      <li toggle-top-bar class="menu-icon"><a href=""translate>menu</a></li>
+	      <li toggle-top-bar class="menu-icon"><a class="dark-text" href=""translate>menu</a></li>
 	    </ul>
 	    <top-bar-section ng-switch="user.roles[0].id">
 	      <!-- Right Nav Section -->
@@ -88,7 +88,7 @@
 					</ul>
 				</li>
 				<!-- <li class="divider"></li> -->
-				<li has-dropdown>
+				<li has-dropdown is-hover="false">
 					<a class="white-hover color-green-hover size-18-light" id="all_courses" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('new_course' | includedByState) || ('course_list' | includedByState)}" href="" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->

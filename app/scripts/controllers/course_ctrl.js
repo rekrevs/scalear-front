@@ -2,11 +2,11 @@
 
 angular.module('scalearAngularApp')
 
-.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'util','course_data', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, util,course_data) {
+.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'scalear_utils','course_data', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, scalear_utils,course_data) {
  	
  	angular.extend($scope.$parent, course_data)
 
-}]).factory('courseResolver',['$rootScope', '$stateParams', 'Course', '$log', '$cookieStore', 'util','$q', function($rootScope, $stateParams, Course, $log, $cookieStore, util,$q){
+}]).factory('courseResolver',['$rootScope', '$stateParams', 'Course', '$log', '$cookieStore', 'scalear_utils','$q', function($rootScope, $stateParams, Course, $log, $cookieStore, scalear_utils,$q){
 	var x={
 	 	init:function(id){
 		 	var deferred = $q.defer();
@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
 					$scope.course.custom_links = data.links
 					$scope.today = data.today;	
 					$scope.last_viewed = data.last_viewed
-					$scope.module_obj = util.toObjectById($scope.course.groups)
+					$scope.module_obj = scalear_utils.toObjectById($scope.course.groups)
 					deferred.resolve($scope); 
 				},
 			 	function(){

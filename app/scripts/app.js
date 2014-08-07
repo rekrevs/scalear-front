@@ -68,6 +68,7 @@ angular.module('scalearAngularApp', [
     // 'mm.foundation.transition',
     // 'mm.foundation.typeahead',
     // 'mm.foundation.topbar',
+    'Mac',
     'ngScrollSpy',
     'sticky'
     // 'ngAnimate'

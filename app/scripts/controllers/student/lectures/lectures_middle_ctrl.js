@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','util',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, util) {
+    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','scalear_utils',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, scalear_utils) {
 
     console.log("lect mid ctlr")
     $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
@@ -95,8 +95,8 @@ angular.module('scalearAngularApp')
                 // $scope.should_play = true
                 // for(var item in $scope.timeline['lecture'][id].meta.requirements){
                 //     for(var id in $scope.timeline['lecture'][id].meta.requirements[item]){
-                //         var group_index= util.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-                //         var item_index= util.getIndexById($scope.course.groups[group_index][item], $scope.timeline['lecture'][id].meta.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                //         var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+                //         var item_index= scalear_utils.getIndexById($scope.course.groups[group_index][item], $scope.timeline['lecture'][id].meta.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                 //         if(item_index!=-1 && group_index!=-1)
                 //             if(!$scope.course.groups[group_index][item][item_index].is_done)
                 //                 $scope.should_play = false
@@ -130,8 +130,8 @@ angular.module('scalearAngularApp')
                 
                 for(var item in lec.requirements){
                     for(var id in lec.requirements[item]){
-                        var group_index= util.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-                        var item_index= util.getIndexById($scope.course.groups[group_index][item], lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                        var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+                        var item_index= scalear_utils.getIndexById($scope.course.groups[group_index][item], lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                         if(item_index!=-1 && group_index!=-1)
                             if(!$scope.course.groups[group_index][item][item_index].is_done)
                                 $scope.should_play = false
@@ -533,8 +533,8 @@ angular.module('scalearAngularApp')
             }
             reviewInclass() 
 
-            var group_index= util.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-            var lecture_index= util.getIndexById($scope.course.groups[group_index].lectures, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+            var group_index= scalear_utils.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+            var lecture_index= scalear_utils.getIndexById($scope.course.groups[group_index].lectures, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
             if(lecture_index!=-1 && group_index!=-1)
                 $scope.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
             $scope.lecture.is_done = data.done[2]

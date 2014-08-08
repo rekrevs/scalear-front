@@ -34,17 +34,15 @@ exports.ask_a_question = function(ptor, ques_string, type){
     })
 }
 
-
+// discussion-comment
 exports.comment = function(ptor, q_no, text){
-    // locator.by_repeater(ptor, 'item in timeline').then(function(ques){
-    //     ques[q_no-1].findElement(protractor.By.tagName('textarea')).sendKeys(text);
-    //     ques[q_no-1].findElement(protractor.By.className('btn-small')).click();
-    //     ques[q_no-1].findElement(protractor.By.className('btn-small')).click();
-    // })
-    locator.s_by_name(ptor, 'discussion-timeline-item').then(function(questions){
-        questions[q_no-1].findElement(protractor.By.tagName('textarea')).sendKeys(text);
-        questions[q_no-1].findElement(protractor.By.className('btn-small')).click();
-        questions[q_no-1].findElement(protractor.By.className('btn-small')).click();
+    locator.s_by_partial_text(ptor, 'Comment').then(function(c){
+        c[q_no-1].click();        
+    })
+    locator.s_by_name(ptor, 'comment_area').then(function(ca){
+        ca[q_no-1].sendKeys(text).then(function(){
+            ptor.actions().sendKeys(protractor.Key.ENTER).perform();
+        })
     })
 }
 

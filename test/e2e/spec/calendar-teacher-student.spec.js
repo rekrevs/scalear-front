@@ -27,106 +27,70 @@ month[10] = "November";
 month[11] = "December";
 
 describe("should check calendar functionality", function(){
-  it('should sign in as teacher', function(){
-    o_c.press_login(ptor);
-    o_c.sign_in(ptor, params.teacher_mail, params.password);
-  })
   
-  it('should open a course', function(){
-    o_c.open_course_whole(ptor, 0);
+  it('should sign in as teacher', function(){
+    o_c.press_login(ptor)
+    o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
   })
-  it('should open calendar', function(){
-    open_calendar(ptor);
+
+  it('should create_course', function(){
+    teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+  })
+
+  it('should get the enrollment key and enroll student', function(){
+    teacher.get_key_and_enroll(ptor);
+  })
+  //test
+  it('should add a couple of module and lectures', function(){
+    o_c.open_course_list(ptor)
+    o_c.open_course(ptor, 1);
+    o_c.open_content_editor(ptor);
+    teacher.add_module(ptor, o_c.feedback);
+    teacher.add_module(ptor, o_c.feedback);
+    o_c.press_content_navigator(ptor)
+    teacher.open_module(ptor, 1);
+    teacher.add_lecture(ptor);
+    teacher.add_lecture(ptor);
+    
+    teacher.open_module(ptor, 2);
+    teacher.add_lecture(ptor);
+    teacher.add_lecture(ptor);
+    teacher.add_lecture(ptor);
+    
   })
 
   it('should check if the calendar is visible', function(){
-    is_calendar(ptor);
-  })
-
-  it('should check if the calendar is showing the current month', function(){
-    is_current_month(ptor);  
-  })
-
-  it('should check calendar btns ', function(){
-    get_previous_month(ptor);
-    ptor.navigate().refresh();
-    open_calendar(ptor);
-    get_next_month(ptor);
-    ptor.navigate().refresh();
-    open_calendar(ptor);
-    get_todays_month(ptor);
-  })
-
-})
-
-xdescribe("teacher teacher calendar", function(){
-
-	it('should sign in as teacher', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-	})
-
-	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
-	})
-	//test
-	it('should add a module and change the time zone', function(){
-		
-    teacher.add_module(ptor, o_c.feedback);
-		o_c.home_teacher(ptor);
-		o_c.open_course_whole(ptor);
-    teacher.add_module(ptor, o_c.feedback);
-		o_c.open_tray(ptor);
-		o_c.open_info_teacher(ptor);
-		teacher.change_time_zone(ptor, 143);
-		//teacher.delete_empty_module(ptor, 1, o_c.feedback);
-	})
-
-  it('should log in as student check for modules due date', function(){
     o_c.to_student(ptor);
-    o_c.open_course_whole(ptor);
-    // check_element_date(ptor, 'Module', )
+    all_events_specific_month(ptor, 2);
   })
-	//end test
 
-	it('should delete course', function(){
-		//should choose one of home() or home_teacher() 
-		//depending on the current state(student or teacher)
-		o_c.home(ptor);
-		teacher.delete_course(ptor, o_c.feedback);
-	})
+  it('should clear the course for deletion', function(){
+    o_c.to_teacher(ptor);
+    o_c.open_course_list(ptor);
+      o_c.open_course(ptor, 1);
+      o_c.press_content_navigator(ptor)
+
+      teacher.open_module(ptor, 2);
+      teacher.delete_item_by_number(ptor, 2, 1, o_c.feedback);
+    teacher.delete_item_by_number(ptor, 2, 1, o_c.feedback);
+    teacher.delete_item_by_number(ptor, 2, 1, o_c.feedback);
+    teacher.delete_empty_module(ptor, 2, o_c.feedback)
+
+
+      teacher.open_module(ptor, 1);
+      teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
+    teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
+    teacher.delete_empty_module(ptor, 1, o_c.feedback)
+  })
+  //end test
+
+  it('should delete course', function(){
+    o_c.open_course_list(ptor);
+      teacher.delete_course(ptor, 1);
+      o_c.logout(ptor, o_c.feedback);
+  })
 })
 
-
-xdescribe("teacher student calendar", function(){
-
-	it('should sign in as teacher', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
-	})
-
-	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
-	})
-	//test
-	it('should add a module', function(){
-		//o_c.open_course_whole(ptor);
-	})
-	//end test
-
-	it('should delete course', function(){
-		//should choose one of home() or home_teacher() 
-		//depending on the current state(student or teacher)
-		o_c.home(ptor);
-		teacher.delete_course(ptor, o_c.feedback);
-	})
-})
 
 /////////////////////////////////////////////////////////
 //				test specific functions

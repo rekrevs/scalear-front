@@ -78,7 +78,7 @@ exports.delete_course = function(ptor,co_no){
 	course.element(by.className('delete')).click()
 	course.element(by.className('fi-check')).click().then(function(){
 		o_c.feedback(ptor, 'Course was successfully deleted.');
-		// o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 	// o_c.open_tray(ptor);
 	// o_c.logout(ptor, o_c.feedback);

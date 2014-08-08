@@ -56,7 +56,8 @@ exports.config = {
         // 'test/e2e/spec/mcq-survey-over-video.spec.js',
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',
         // 'test/e2e/spec/create-course-check-info.spec.js',
-        'test/e2e/spec/.spec.js',
+        // 'test/e2e/spec/student-lectures.spec.js',
+        'test/e2e/spec/calendar-teacher-student.spec.js',
 
         
         // 'test/e2e/spec/teacher-managment.spec.js',

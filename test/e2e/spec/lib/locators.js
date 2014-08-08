@@ -67,3 +67,7 @@ exports.s_by_tag = function(ptor, tag){
 exports.s_by_model = function(ptor, model){
 	return ptor.findElements(protractor.By.model(model))
 }
+
+exports.s_by_partial_text = function(ptor, text){
+	return ptor.findElements(protractor.By.partialLinkText(text))
+}

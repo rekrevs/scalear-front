@@ -575,11 +575,17 @@ angular.module('scalearAngularApp')
       },
       templateUrl: "/views/teacher/course_editor/controls_teacher.html",
       link: function (scope, element) {
-  	 	scope.createLink=function(event){
-            scope.link_url=scope.link()
+  	 	scope.selectLink=function(event){
+            // scope.link_url=scope.link()
             $timeout(function() {
                 element.find('.video_link').select();
             });
+        }
+        scope.link_content = {
+        	content: "<div style='word-break: break-all;'>"+scope.link()+"</div>",
+        	html:true,
+        	fullscreen:false,
+        	placement: 'left'
         }
       }
     };

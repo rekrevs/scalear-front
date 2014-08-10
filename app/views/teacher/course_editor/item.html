@@ -3,5 +3,5 @@
 	<div class="truncate-70 show-inline valign-middle left text-left" ng-click="selectItem()">{{item.name}}</div>
 	<i class="fi-link with-tiny-margin-right" ng-show="'**.course_editor.**' | includedByState" ng-click="createLink($event)"></i>
 	<delete_button ng-show="'**.course_editor.**' | includedByState" class="with-tiny-margin-right" size="small" color='dark' action="remove(event)"></delete_button>
-	<input class="small-12 columns item_link" type="text" ng-show="link_url" ng-model="link_url" ng-blur="createLink()" style="top:0" />
+	<input class="small-12 columns item_link" type="text" ng-show="link_url" ng-model="link_url" ng-blur="link_url=null" style="top:0" />
 </li>

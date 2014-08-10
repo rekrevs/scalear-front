@@ -12,6 +12,8 @@ angular.module('scalearAngularApp')
 		        params[$scope.next_item.item.class_name+'_id'] = $scope.next_item.item.id
 		        $state.go('course.module.courseware.'+$scope.next_item.item.class_name, params)
 		    }
+		    else
+		    	$state.go('course.course_information', {course_id:$scope.course.id})
 	 	}
 	 	else
 	 		$state.go('course.edit_course_information', {course_id:$scope.course.id})

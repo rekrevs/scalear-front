@@ -485,7 +485,7 @@ angular.module('scalearAngularApp')
 					"height":"",//(500*1.0/factor)+ 'px',
 					"margin-left": "0px",
 					"margin-top": "0px",
-					"z-index":1
+					"z-index":0
 				}
 
 				if($scope.container)

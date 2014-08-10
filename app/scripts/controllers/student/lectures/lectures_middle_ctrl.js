@@ -437,6 +437,9 @@ angular.module('scalearAngularApp')
              console.log($scope.fullscreen)
             $scope.video_class = 'video_class'
             $scope.container_style={float: 'left'}
+            $scope.quiz_mode = false
+            $timeout(function(){$scope.quiz_mode = true})
+
         }
     }
 

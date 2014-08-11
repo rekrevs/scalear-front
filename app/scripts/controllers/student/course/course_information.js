@@ -13,7 +13,8 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $scope.teachers = data.teachers;
-                        $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
+                        if($scope.course.discussion_link)
+                            $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
                     },
                     function() {}
                 )

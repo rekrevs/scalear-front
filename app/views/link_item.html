@@ -20,19 +20,29 @@
 		</tr>
 	</table>	
 </div> -->
-<div bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:10px;margin:3px 0;">
+<div ng-if="'**.course_editor.**' | includedByState" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:10px;margin:3px 0;">
 	<div class="small-1 columns"><img src="images/link_item.png" height="40px" style="vertical-align: top;" bo-class="{'link_img_small':small}"/></div>
 	<div class="small-8 columns" bo-class="{'link_item_small':small}" style="margin-bottom:5px">
 		<div class="small-12 columns">
-			<details-text ng-if="'**.course_editor.**' | includedByState" value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
-			<div ng-hide="'**.course_editor.**' | includedByState">{{link.name}}</div>
+			<details-text value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
 		</div>
 		<div class="small-12 columns" >
-			<details-link ng-if="'**.course_editor.**' | includedByState" value="link.url" save="update(link)" validation="validate" elem="link"></details-link>
-			<div ng-hide="'**.course_editor.**' | includedByState">{{link.url}}</div>
+			<details-link value="link.url" save="update(link)" validation="validate" elem="link"></details-link>
 		</div>
 	</div>
 	<div class="small-1 columns" style="padding:0" ng-if="'**.course_editor.**' | includedByState">
 		<delete_button size="small" color='dark' action="remove(link)"></delete_button>
+	</div>
+</div>
+
+<div ng-if="!('**.course_editor.**' | includedByState)" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:10px;margin:3px 0;">
+	<div class="small-1 columns"><img src="images/link_item.png" height="40px" style="vertical-align: top;" bo-class="{'link_img_small':small}"/></div>
+	<div class="small-8 columns left" bo-class="{'link_item_small':small}" style="margin-bottom:5px">
+		<div class="small-12 columns">
+			<div bo-text="link.name"></div>
+		</div>
+		<div class="small-12 columns" >
+			<div bo-text="link.url"></div>
+		</div>
 	</div>
 </div>

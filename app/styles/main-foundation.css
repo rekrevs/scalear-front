@@ -26,7 +26,7 @@ footer{
 	top: 45px !important; 
 	/*height: 30px !important;*/
 	position:fixed !important;
-	z-index: 1 !important; 
+	/*z-index: 1 !important; */
 }
 .sub-header-component{
 	background-color: #2ba6cb !important;

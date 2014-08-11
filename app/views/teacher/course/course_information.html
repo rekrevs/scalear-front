@@ -25,7 +25,7 @@
                 <details-text value="course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> 
                 <span translate="courses.weeks"></span>
             </div>
-            <div class="large-12 column with-margin-bottom">
+            <div class="large-12 column with-margin-bottom" ng-show="course.discussion_link">
                 <i class="fi-link size-24"></i> 
                 <details-link value="course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link></ul>
             </div>

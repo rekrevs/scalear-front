@@ -31,7 +31,7 @@
 						</quiz>
 					</div>
 					<youtube id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" class="widescreen" style="margin-bottom: 0;"/>
-			        <progress-bar ng-show="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="seek" current_time='current_time' total_duration='lecture.duration' player="lecture_player" class="text-left">
+			        <progress-bar ng-if="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="seek" current_time='current_time' total_duration='lecture.duration' player="lecture_player" class="text-left">
 			        	<controls-teacher link="createVideoLink()" />
 			    	</progress-bar>
 				</video_container>

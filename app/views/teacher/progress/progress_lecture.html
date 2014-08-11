@@ -53,7 +53,7 @@
 		</div> -->
 		<div bindonce class="main_content" id="printarea">
 			<div class="row">
-				<div bo-if="timeline['module']" ng-init="module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatModuleChartData')" class="small-12 columns">
+				<div ng-if="timeline['module']" ng-init="module_chart=createChart(timeline['module'].items[1].data,students_count, {'colors': ['#0c81c8']},'formatModuleChartData')" class="small-12 columns">
 					<p class="title">
 						<span translate>courses.module_progress</span> 
 						<span class="size-12">(<span translate>courses.based_on_invideo</span>)</span>
@@ -63,10 +63,11 @@
 				</div>
 			</div>
 			<div ng-repeat="module_item in module.items" class="row">
-				<div bo-id="{{module_item.quiz_type+'_'+module_item.id}}" bo-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];" class="small-12 columns">
+				<div bo-id="{{module_item.quiz_type+'_'+module_item.id}}" ng-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];" class="small-12 columns">
 					<p class="title" >
 						<span bo-text="quiz.meta.name"></span>
-						<span class="size-12" bo-text="'('+getKeys(quiz.questions).length">
+						<span class="size-12">
+							<span  bo-text="'('+getKeys(quiz.questions).length"></span>
 							<span translate>questions.questions</span>)
 							<a class="see_all" ng-show="quiz.filtered_user" ng-click="quiz.filtered_user = '';quiz.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;"><span translate>questions.see_all</span></a>							
 						</span>
@@ -113,7 +114,7 @@
 						</li>
 					</ul>
 				</div>
-				<div bo-id="lecture_{{module_item.id}}" bo-if="module_item.class_name=='lecture'" ng-init='lec=lectures[module_item.id]' class="small-12 columns">
+				<div bo-id="lecture_{{module_item.id}}" ng-if="module_item.class_name=='lecture'" ng-init='lec=lectures[module_item.id]' class="small-12 columns">
 					<p class="title" >
 						<span bo-text="lec.meta.name"></span>
 						<span class="size-12"><span bo-text="'('+(lec.meta.duration|format)+', '+getKeys(lec.charts).length"></span>

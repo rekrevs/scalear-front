@@ -191,11 +191,11 @@ angular.module('scalearAngularApp')
         view_index = $scope.highlight_index-1
 
       divs[view_index].scrollIntoView()
-      $timeout(function(){
-        var top = divs[$scope.highlight_index].offset().top - ( $('.main_content').innerHeight / 2 );
-      // console.log(top)
-      $('.main_content').scrollTo( 0, top );
-      })
+      // $timeout(function(){
+      //   var top = divs[$scope.highlight_index].offset().top - ( $('.main_content').innerHeight / 2 );
+      // // console.log(top)
+      // $('.main_content').scrollTo( 0, top );
+      // })
 	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
 	    $scope.$apply()

@@ -100,7 +100,7 @@
                 <div class="row">
                     <div class="large-12 columns">
                         <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'email'|translate}}" ng-model="new_teacher.email" style="height: 34px !important;margin-bottom: 5px;"/>                
-                        <small ng-show='email_form.email.$dirty && email_form.email.$invalid' class="error">{{'invalid_email'|translate}}</small>
+                        <small ng-show='email_form.email.$dirty && email_form.email.$invalid' class="error" translate>invalid_email</small>
                         <span class="errormessage" ng-show="new_teacher.error">{{new_teacher.error}}</span>
                     </div>
                 </div>

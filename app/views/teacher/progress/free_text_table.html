@@ -37,12 +37,12 @@ td{
 					</a>
 					<div ng-show="answer.response" style="padding-left:10px">
 						<div class="size-14" style="font-style: italic;display:inline;">{{answer.response}}</div>
-						<a ng-show="!display_only" ng-click="deleteFeedback(question.answers,$index)" class="button really-tiny secondary">{{'delete'|translate}}</a>
+						<a ng-show="!display_only" ng-click="deleteFeedback(question.answers,$index)" class="button really-tiny secondary" translate>delete</a>
 						<!-- <button_link  title="{{'delete'|translate}}" class="btn-mini" action="deleteFeedback(question.answers,$index)"/>							 -->
 					</div>
 					<div ng-show="answer.show_feedback && !display_only">
 						<textarea ng-model="answer.response" />
-						<a ng-click="sendFeedback(question.answers,$index)" class="button success really-tiny">{{'courses.send'|translate}}</a>
+						<a ng-click="sendFeedback(question.answers,$index)" class="button success really-tiny" translate>courses.send</a>
 						<!-- <button_link title="{{'courses.send'|translate}}" class="btn-mini" action="sendFeedback(question.answers,$index)" /> -->
 					</div>
 				</td>

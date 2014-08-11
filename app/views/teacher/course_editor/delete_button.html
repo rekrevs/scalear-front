@@ -1,19 +1,19 @@
-<span>
-	 <div class="fade in" ng-show="displayDeletePopup" ng-class="{varticaldeletecontainer: vertical}" style="padding: 3px;margin-bottom: 5px;text-align:center;min-width: 65px;">
+<span bindonce>
+	 <div class="fade in" ng-show="displayDeletePopup" bo-class="{varticaldeletecontainer: vertical}" style="padding: 3px;margin-bottom: 5px;text-align:center;min-width: 65px;">
 	        <span class="form-controls-alert" style="margin:auto" >
-	            <button ng-if="displayDeletePopup" ng-class="{varticaldeletebutton: vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1" ng-click="action({event:$event});showDeletePopup(false)"><i class="fi-check"></i></button>
-	            <button ng-if="displayDeletePopup" ng-class="{varticaldeletebutton: vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert" ng-click="showDeletePopup(false)"><i class="fi-x"></i></button>
+	            <button ng-if="displayDeletePopup" bo-class="{varticaldeletebutton: vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1" ng-click="action({event:$event});showDeletePopup(false)"><i class="fi-check"></i></button>
+	            <button ng-if="displayDeletePopup" bo-class="{varticaldeletebutton: vertical}" class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert" ng-click="showDeletePopup(false)"><i class="fi-x"></i></button>
 	        </span>
 	</div>
-	<span ng-if="text != true">
-		<a class="delete" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" title="{{'delete'|translate}}" ng-click="!hideConfirm?showDeletePopup(true):action({event:$event})">
-			<img alt="Trash" ng-if="size == 'big'" ng-src="{{color=='red' && 'images/red_trash_big.png' || 'images/trash_big.png'}}" >
-			<img alt="Trash" ng-if="size != 'big'" ng-src="{{color=='red' && 'images/red_trash_small.png' || 'images/trash_small.png'}}" >
+	<span bo-if="text != true">
+		<a class="delete" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" title="delete" ng-click="!hideConfirm?showDeletePopup(true):action({event:$event})">
+			<img alt="Trash" bo-if="size == 'big'" bo-src="color=='red' && 'images/red_trash_big.png' || 'images/trash_big.png'" >
+			<img alt="Trash" bo-if="size != 'big'" bo-src="color=='red' && 'images/red_trash_small.png' || 'images/trash_small.png'" >
 		</a>
 	</span>
-	<span ng-if="text == true">
-		<a class="delete" ng-hide="displayDeletePopup" style="cursor:pointer; color: #a1a1a1;" title="{{'delete'|translate}}" ng-click="!hideConfirm?showDeletePopup(true):action({event:$event})">
-			{{'delete'|translate}}
+	<span bo-if="text == true">
+		<a class="delete" ng-hide="displayDeletePopup" style="cursor:pointer; color: #a1a1a1;" title="delete" ng-click="!hideConfirm?showDeletePopup(true):action({event:$event})">
+			<span translate>delete</span>
 		</a>
 	</span>
 </span>   

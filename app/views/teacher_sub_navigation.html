@@ -38,26 +38,26 @@
                 <li>
                     <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('charts')">
                         <input id="showQuestionsCheckbox" disabled="disabled" ng-checked="filter.charts"  type="checkbox" />
-                        {{'course_settings.show_charts' | translate}}
+                        <span translate>course_settings.show_charts</span>
                     </a>
 
                 </li>
                 <li>
                     <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('confused')">
                         <input id="showQuizzesCheckbox" disabled="disabled" ng-checked="filter.confused"  type="checkbox" />
-                        {{'course_settings.show_confused' | translate}}
+                        <span translate>course_settings.show_confused</span>
                     </a>
                 </li>
                 <li>
                     <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('discussion')">
                         <input id="showConfusedCheckbox" disabled="disabled" ng-checked="filter.discussion"  type="checkbox" />
-                        {{'course_settings.show_discussion' | translate}}
+                        <span translate>course_settings.show_discussion</span>
                     </a>
                 </li>
                 <li>
                     <a class="whitesmoke-hover dark-text sub-header-component" ng-click="print()">
                         <i class="fi-print size-18" style="margin-right:2px"></i>
-                        {{'course_settings.print' | translate}}
+                        <span translate>course_settings.print</span>
                     </a>
                 </li>
               </ul>
@@ -66,7 +66,7 @@
 
         <!-- Left Nav Section -->
         <ul class="left" id="teacher_left_nav">
-            <li has-dropdown ng-show="('**.course.**' | includedByState)">
+            <li has-dropdown>
                 <a id="progress" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="goToProgress()" translate>head.progress</a>
                 <ul top-bar-dropdown>
                     <li ng-show="'*.module.**' | includedByState">
@@ -84,18 +84,18 @@
             <li ng-show="'*.module.**' | includedByState">
                 <a id="inclass" class="whitesmoke-hover dark-text sub-header-component size-14" ui-sref="course.module.inclass" translate>head.in_class</a>
             </li>
-            <li has-dropdown ng-show="('**.course.**' | includedByState)">
+            <li has-dropdown>
                 <a id="content" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="goToContentEditor()" translate>head.content</a>
                 <ul top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
                     <li>
                         <a id="new_module" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="addModule()">
-                            {{'groups.new_module' | translate}}
+                            <span translate>groups.new_module</span>
                             <h5 class="dark-description"><small translate>modules_group_items</small></h5>
                         </a>
                     </li>
                     <li ng-show="'*.module.**' | includedByState">
                         <a id="new_online_content" online-modal ng-click="openOnlineContentModal()" class="whitesmoke-hover dark-text sub-header-component has-description" href="">
-                            {{'new_online_content' | translate}}
+                            <span translate>new_online_content</span>
                             <h5 class="dark-description"><small>Video lecture, Quiz...</small></h5>
                         </a>
                     </li>
@@ -108,40 +108,42 @@
                     <li>
                         <!-- <div class="divider"></div> -->
                         <a class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="addLink()">
-                            {{'groups.new_link' | translate}}
+                            <span translate>groups.new_link</span>
                             <h5 class="dark-description"><small translate>links_external_system</small></h5>
                         </a>
-                    </li>                    
-                    <li ng-show="'*.module.**' | includedByState">
-                        <!-- <div class="divider"></div> -->
-                        <a id="copy" class="whitesmoke-hover dark-text sub-header-component has-description"ng-click="copyItem()">
-                            {{'menu.copy' | translate}}
-                            <h5 class="dark-description"><small translate>menu.copy_describtion</small></h5>
-                        </a>
-                    </li>
-                    <li ng-show="clipboard && ('*.module.**' | includedByState)">
-                        <a id="paste" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="pasteItem()">
-                            {{'menu.paste' | translate}}
-                            <h5 class="dark-description">
-                                <small>
-                                    {{clipboard.name}}    
-                                </small>
-                            </h5>
-                        </a>
-                    </li>
-                    <li ng-show="'*.module.**' | includedByState">
-                        <a id="share_copy" class="whitesmoke-hover dark-text sub-header-component has-description" href="" sharing-modal ng-click="openSharingModal()">
-                            {{'menu.share_copy' | translate}}
-                            <h5 class="dark-description"><small translate>menu.share_describtion</small></h5>
-                        </a>
-                    </li>
-                    <li ng-show="'*.module.**' | includedByState">
-                        <!-- <div class="divider"></div> -->
-                        <a id="preview_as_student" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="preview()" href="">
-                            {{'preview_student' | translate}}
-                            <h5 class="dark-description"><small translate>preview_describtion</small></h5>
-                        </a>
-                    </li>
+                    </li>   
+                    <span ng-show="'*.module.**' | includedByState">               
+                        <li >
+                            <!-- <div class="divider"></div> -->
+                            <a id="copy" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="copyItem()">
+                                <span translate>menu.copy</span>
+                                <h5 class="dark-description"><small translate>menu.copy_describtion</small></h5>
+                            </a>
+                        </li>
+                        <li ng-show="clipboard">
+                            <a id="paste" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="pasteItem()">
+                                <span translate>menu.paste</span>
+                                <h5 class="dark-description">
+                                    <small>
+                                        {{clipboard.name}}    
+                                    </small>
+                                </h5>
+                            </a>
+                        </li>
+                        <li >
+                            <a id="share_copy" class="whitesmoke-hover dark-text sub-header-component has-description" href="" sharing-modal ng-click="openSharingModal()">
+                                <span translate>menu.share_copy</span>
+                                <h5 class="dark-description"><small translate>menu.share_describtion</small></h5>
+                            </a>
+                        </li>
+                        <li >
+                            <!-- <div class="divider"></div> -->
+                            <a id="preview_as_student" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="preview()" href="">
+                                <span translate>preview_student</span>
+                                <h5 class="dark-description"><small translate>preview_describtion</small></h5>
+                            </a>
+                        </li>
+                    </span>
                 </ul>
             </li>
         </ul>

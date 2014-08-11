@@ -1,6 +1,6 @@
 <div class="row" ng-show="all_surveys">
 	<select class="small-10 columns" ng-model="selected_survey" ng-options="q[0] for q in all_surveys" ng-change="changeSurvey()"></select>
-	<div class="small-2 columns"><a ng-show="button_msg" class="button tiny secondary" ng-click="makeVisibleBtn()">{{button_msg|translate}}</a></div>
+	<div class="small-2 columns"><a ng-show="button_msg" class="button tiny secondary" ng-click="makeVisibleBtn()" translate>{{button_msg}}</a></div>
 </div>
 <div class="row">
 	<div class="small-4 small-centered columns">
@@ -16,7 +16,7 @@
     <div class="small-12 columns chart" ng-if="element[1]!='Free Text Question' && element[1]!='header'" ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index, student_count)">            
         <center ng-init="loading=true"><loading size="small" show="loading" /></center>
         <div google-chart on-ready="loading=false" chart="chart" ></div>
-        <a class="button really-tiny secondary" ng-click="saveAsImg($event)">{{'groups.export_chart'|translate}}</a>
+        <a class="button really-tiny secondary" ng-click="saveAsImg($event)" translate>groups.export_chart</a>
     </div>
     <div class="small-12 columns" ng-if="element[1]=='Free Text Question'">
     	<free-text-table question="survey_free[element[0]]" survey-id="selected_survey[1]" related-answers="related_answers" />

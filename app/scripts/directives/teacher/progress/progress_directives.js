@@ -49,20 +49,22 @@ angular.module('scalearAngularApp')
 	    restrict: "E",
 	    scope: {
 	    	time:'=',
-	    	type:'@',
-	    	title:'@',
+	    	type:'=',
+	    	title:'=',
 	    	color: "="
 	    },
-	    template:'<span class="inner_title" >'+
-					'<span style="cursor:pointer"><span ng-show="time!=null">[{{time|format:"mm:ss"}}]</span> {{type}}: '+ 
-						'<span ng-style="title_style">{{title}}</span>'+
+	    template:'<span class="inner_title" bindonce>'+
+					'<span style="cursor:pointer"><span ng-show="time!=null" bo-text=\'"["+(time|format:"mm:ss")+"]"\'></span> <span bo-text="type"></span>: '+ 
+						'<span ng-style="title_style" bo-text="title"></span>'+
 					'</span>'+
 				'</span>', 
 	    link:function(scope){
 	    	scope.title_style = {"color":"black", "fontWeight":"normal"}
-	    	scope.$watch('color',function(){
-	    		if(scope.color)
+	    	var unwatch =scope.$watch('color',function(){
+	    		if(scope.color){
 	    			scope.title_style.color = scope.color
+	    			unwatch()
+	    		}
 	    			
 	    	})
 	    }

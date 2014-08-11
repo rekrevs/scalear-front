@@ -154,16 +154,53 @@ angular.module('scalearAngularApp')
                     scope.share()
                 }
 
-                scope.createLink=function(event){
-                    event.stopPropagation()
-                    event.preventDefault() 
-                    var params = {module_id: scope.item.group_id}
-                    params[scope.item.class_name+'_id'] = scope.item.id
-                    scope.link_url=$state.href('course.module.courseware.'+scope.item.class_name, params, {absolute: true})
-                    $timeout(function() {
-                        element.find('.item_link').select();
-                    });
+                // scope.createLink=function(event){
+                //     event.stopPropagation()
+                //     event.preventDefault() 
+                //     var params = {module_id: scope.item.group_id}
+                //     params[scope.item.class_name+'_id'] = scope.item.id
+                //     scope.link_url=$state.href('course.module.courseware.'+scope.item.class_name, params, {absolute: true})
+                //     $timeout(function() {
+                //         element.find('.item_link').select();
+                //     });
+                // }
+
+
+                scope.toggleLink=function(event){
+                    console.log("jhgfdsa")
+                    event.stopPropagation() 
+                    // scope.menu_status = false
+                    // scope.link_url=$state.href('course.module.courseware', {module_id: scope.module.id}, {absolute: true})
+                    // $timeout(function() {
+                    //     element.find('.module_link').select();
+                    // });
+
+
+                    if(!scope.link_url){
+                        var params = {module_id: scope.item.group_id}
+                        params[scope.item.class_name+'_id'] = scope.item.id
+                        scope.link_url=$state.href('course.module.courseware.'+scope.item.class_name, params, {absolute: true})
+                        $timeout(function() {
+                            element.find('.item_link').select();
+                        });
+                        $(document).on("click", function (e) {
+                            e.stopPropagation() 
+                            e.preventDefault();
+                            if(e.target != element.find('.fi-link')[0] && e.target !=element.find('.item_link')[0]){
+                              scope.link_url=null
+                              scope.$apply()
+                              $(document).off("click")
+                            }         
+                        });
+                    }
+                    else{
+                        scope.link_url=null
+                        $(document).off("click")  
+                    }
+
                 }
+
+
                 scope.remove=function(event){
                     event.stopPropagation()
                     event.preventDefault() 

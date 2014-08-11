@@ -575,26 +575,38 @@ angular.module('scalearAngularApp')
       },
       templateUrl: "/views/teacher/course_editor/controls_teacher.html",
       link: function (scope, element) {
-  	 	scope.toggleLink=function(event){
-  	 		if(!scope.link_url){
-	            scope.link_url=scope.link()
-	            $timeout(function() {
-	                element.find('.video_link').select();
-	            });
-	            $(document).on("click", function (e) {
-		            if(e.target != element.children()[0] && e.target != element.children()[1]){
-		              scope.link_url=null
-		              scope.$apply()
-		              $(document).off("click")
-		            }         
-         	 	});
-	        }
-	        else{
-	        	scope.link_url=null
-	        	$(document).off("click")  
-	        }
+// <<<<<<< HEAD
+//   	 	scope.toggleLink=function(event){
+//   	 		if(!scope.link_url){
+// 	            scope.link_url=scope.link()
+// 	            $timeout(function() {
+// 	                element.find('.video_link').select();
+// 	            });
+// 	            $(document).on("click", function (e) {
+// 		            if(e.target != element.children()[0] && e.target != element.children()[1]){
+// 		              scope.link_url=null
+// 		              scope.$apply()
+// 		              $(document).off("click")
+// 		            }         
+//          	 	});
+// 	        }
+// 	        else{
+// 	        	scope.link_url=null
+// 	        	$(document).off("click")  
+// 	        }
 
 	         
+  	 	scope.selectLink=function(event){
+            // scope.link_url=scope.link()
+            $timeout(function() {
+                element.find('.video_link').select();
+            });
+        }
+        scope.link_content = {
+        	content: "<div style='word-break: break-all;'>"+scope.link()+"</div>",
+        	html:true,
+        	fullscreen:false,
+        	placement: 'left'
         }
       }
     };

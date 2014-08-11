@@ -132,19 +132,19 @@ angular.module('scalearAngularApp')
   	 		for (var i = 0; i <= 60; i++) {
 		        scope.numbers.push(i);
 		    }
-  	 		var template = "<div style='color:black;font-size:12px'>"+
-  	 						"<span class='span2' style='margin-left:0'><span translate>courses.time_per_quiz</span>:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_quiz' ng-options='i for i in numbers'></select></span>"+
-  	 						"<span class='span2' style='margin-top: 5px;margin-left: 15px;'><span translate>courses.quizzes_for_review</span>: {{quiz_count}}</span><br><br>"+
-  	 						"<span class='span2' style='margin-left:0; width:160px;clear:left'><span translate>courses.time_per_question</span>:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_question' ng-options='i for i in numbers'></select></span>"+	  	 						
-  	 						"<span class='span2' style='margin-top: 5px;margin-left:0'><span translate>courses.questions_for_review</span>: {{question_count}}</span><br><br>"+
-  	 						"<span translate>formula</span>:<br>"+
-  	 					    "<i style='text-align:center;'>( #<span translate>courses.quizzes_for_review</span>  * {{time_quiz}} ) + ( #<span translate>courses.questions_for_review</span> * {{time_question}} )</i>"+
+  	 		var template = "<div style='min-width: 244px;'>"+
+  	 						"<label>{{'courses.time_per_quiz' | translate}}<select ng-model='time_quiz' ng-options='i for i in numbers'></select></label>"+
+  	 						"<label>{{'courses.quizzes_for_review' | translate}}: {{quiz_count}}</label>"+
+  	 						"<label>{{'courses.time_per_question' | translate}}<select ng-model='time_question' ng-options='i for i in numbers'></select></label>"+	  	 						
+  	 						"<label>{{'courses.questions_for_review' | translate}}: {{question_count}}</label>"+
+  	 						"<label translate>formula</label>:"+
+  	 					    "<h4 class='subheader'><small>( #{{'courses.quizzes_for_review' | translate}}  * {{time_quiz}} ) + ( #{{'courses.questions_for_review' | translate}} * {{time_question}} )<small></h4>"+
   	 					   "</div>"
 
            	scope.popover_options={
             	content: template,
             	html:true,
-            	placement:"right"
+            	placement:"bottom"
             }
 
             var estimateCalculator=function(){

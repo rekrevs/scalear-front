@@ -1,5 +1,5 @@
 <div ng-if="!ipad" class='fullscreenDiv' ng-class="{'full':!screenfull.isFullscreen, 'small':screenfull.isFullscreen}" ng-click='fullBtn()'></div>
-<div class='alert alert-success fading' ng-show='show_message' translate="lectures.thanks"></div>
+<div class='alert-box position-absolute with-tiny-padding success' style="left: -340px;top: -25px;" ng-show='show_message' translate="lectures.thanks"></div>
 <span class="hidden_shortcuts panel" ng-show='show_shortcuts'>
 	{{'lectures.keyboard_controls'|translate}}<br>
 	<ul>

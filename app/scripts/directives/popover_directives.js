@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
 .directive('popOver',['$parse','$compile','$q','$window','$log',function ($parse, $compile, $q, $window, $log) {
     return{
   		restrict: 'A',
+
   		link: function(scope, element, attr, ctrl) {
 
 	        var getter = $parse(attr.popOver)
@@ -26,6 +27,12 @@ angular.module('scalearAngularApp')
 		              			});
 			              	});
 	              			
+			          	}
+			          	if(attr.highlight){
+			          		element.on('show', function(){
+				          		console.log('henaaaaaaa')
+				          		element.find('.video_link').select();
+				          	});
 			          	}
 
 			          	popover.getPosition = function(){

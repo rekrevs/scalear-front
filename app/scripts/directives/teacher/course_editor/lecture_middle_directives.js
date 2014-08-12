@@ -20,11 +20,11 @@ angular.module('scalearAngularApp')
 }).directive('editPanel',function(){
 	return {		
 		 restrict: 'E',
-		 template: '<div class="row" id="editing">'+
+		 template: '<div class="row" id="editing" class="padding:10px">'+
 						'<div class="wheat small-6 small-centered columns" >'+
 							'<div class="row">'+
 								'<h5 class="no-margin color-wheat"><span translate>online_quiz.editing_quiz</span> {{selected_quiz.question}} <span translate>at</span> {{selected_quiz.time|format}}'+
-								'<b><br><span translate>double_click_msg</b></h5>'+
+								'<b><br><span >{{double_click_msg |translate}}</span></b></h5>'+
 							'</div>'+
 							'<div class="row">'+
 								'<div class="small-4 small-centered columns">'+

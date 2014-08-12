@@ -134,7 +134,8 @@ angular.module('scalearAngularApp')
   })
   .filter("courseActive", ['$state', '$filter', function($state, $filter){
     return function(id){
-      var inside = $filter('includedByState')('**.course.**');
-      return inside && $state.params.course_id == id
+      return $state.includes('**.course.**') && $state.params.course_id == id
+      // var inside = $filter('includedByState')('**.course.**');
+      // return inside && $state.params.course_id == id
     }
   }]);

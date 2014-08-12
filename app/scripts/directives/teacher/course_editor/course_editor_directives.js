@@ -37,32 +37,53 @@ angular.module('scalearAngularApp')
                     else
                         $state.go('course.module.course_editor.overview',{module_id: scope.module.id})
                 }
-                scope.copyModule=function(event){
-                    event.stopPropagation() 
-                    scope.menu_status = false
-                    scope.copy()
-                }
+                // scope.copyModule=function(event){
+                //     event.stopPropagation() 
+                //     scope.menu_status = false
+                //     scope.copy()
+                // }
 
-                scope.doPaste=function(event){
-                    event.stopPropagation() 
-                    scope.menu_status = false
-                    scope.paste()
-                }
+                // scope.doPaste=function(event){
+                //     event.stopPropagation() 
+                //     scope.menu_status = false
+                //     scope.paste()
+                // }
 
-                scope.shareModule=function(event){
-                    event.stopPropagation() 
-                    scope.menu_status = false
-                    scope.share()
-                }
+                // scope.shareModule=function(event){
+                //     event.stopPropagation() 
+                //     scope.menu_status = false
+                //     scope.share()
+                // }
 
-                scope.createLink=function(event){
-                    console.log("sfghjgfds")
+                scope.toggleLink=function(event){
                     event.stopPropagation() 
                     // scope.menu_status = false
-                    scope.link_url=$state.href('course.module.courseware', {module_id: scope.module.id}, {absolute: true})
-                    $timeout(function() {
-                        element.find('.module_link').select();
-                    });
+                    // scope.link_url=$state.href('course.module.courseware', {module_id: scope.module.id}, {absolute: true})
+                    // $timeout(function() {
+                    //     element.find('.module_link').select();
+                    // });
+
+
+                    if(!scope.link_url){
+                        scope.link_url=$state.href('course.module.courseware', {module_id: scope.module.id}, {absolute: true})
+                        $timeout(function() {
+                            element.find('.module_link').select();
+                        });
+                        $(document).on("click", function (e) {
+                            e.stopPropagation() 
+                            e.preventDefault();
+                            if(e.target != element.find('.fi-link')[0] && e.target !=element.find('.module_link')[0]){
+                              scope.link_url=null
+                              scope.$apply()
+                              $(document).off("click")
+                            }         
+                        });
+                    }
+                    else{
+                        scope.link_url=null
+                        $(document).off("click")  
+                    }
+
                 }
 
                 scope.remove=function(event){
@@ -133,16 +154,53 @@ angular.module('scalearAngularApp')
                     scope.share()
                 }
 
-                scope.createLink=function(event){
-                    event.stopPropagation()
-                    event.preventDefault() 
-                    var params = {module_id: scope.item.group_id}
-                    params[scope.item.class_name+'_id'] = scope.item.id
-                    scope.link_url=$state.href('course.module.courseware.'+scope.item.class_name, params, {absolute: true})
-                    $timeout(function() {
-                        element.find('.item_link').select();
-                    });
+                // scope.createLink=function(event){
+                //     event.stopPropagation()
+                //     event.preventDefault() 
+                //     var params = {module_id: scope.item.group_id}
+                //     params[scope.item.class_name+'_id'] = scope.item.id
+                //     scope.link_url=$state.href('course.module.courseware.'+scope.item.class_name, params, {absolute: true})
+                //     $timeout(function() {
+                //         element.find('.item_link').select();
+                //     });
+                // }
+
+
+                scope.toggleLink=function(event){
+                    console.log("jhgfdsa")
+                    event.stopPropagation() 
+                    // scope.menu_status = false
+                    // scope.link_url=$state.href('course.module.courseware', {module_id: scope.module.id}, {absolute: true})
+                    // $timeout(function() {
+                    //     element.find('.module_link').select();
+                    // });
+
+
+                    if(!scope.link_url){
+                        var params = {module_id: scope.item.group_id}
+                        params[scope.item.class_name+'_id'] = scope.item.id
+                        scope.link_url=$state.href('course.module.courseware.'+scope.item.class_name, params, {absolute: true})
+                        $timeout(function() {
+                            element.find('.item_link').select();
+                        });
+                        $(document).on("click", function (e) {
+                            e.stopPropagation() 
+                            e.preventDefault();
+                            if(e.target != element.find('.fi-link')[0] && e.target !=element.find('.item_link')[0]){
+                              scope.link_url=null
+                              scope.$apply()
+                              $(document).off("click")
+                            }         
+                        });
+                    }
+                    else{
+                        scope.link_url=null
+                        $(document).off("click")  
+                    }
+
                 }
+
+
                 scope.remove=function(event){
                     event.stopPropagation()
                     event.preventDefault() 
@@ -198,7 +256,7 @@ angular.module('scalearAngularApp')
             replace: true,
             template: '<div class="overlay well" ng-transclude></div>',
             link: function(scope, element) {
-                var parent = element.parent().parent();
+                var parent = element.parent()
                 // console.log(element.parent())
                 // scope.getWidth = function() {
                 //     return element.parent().width()
@@ -211,7 +269,7 @@ angular.module('scalearAngularApp')
                 // });
                 $timeout(function(){
                     scope.$watch(scope.getHeight, function(newValue, oldValue) {
-                        element.css("height", newValue)
+                        element.css("height", parent.height())
                     })
                 },1000);
             }

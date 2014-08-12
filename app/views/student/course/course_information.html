@@ -13,7 +13,7 @@
             <div class="large-12 column with-margin-bottom">
                 <i class="fi-clock size-24"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
             </div>
-            <div class="large-12 column with-margin-bottom">
+            <div class="large-12 column with-margin-bottom" ng-if="course.discussion_link">
                 <i class="fi-link size-24"></i> <a id="discussion_link" class="truncate" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
             </div>
         </div>

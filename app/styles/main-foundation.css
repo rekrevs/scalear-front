@@ -26,7 +26,7 @@ footer{
 	top: 45px !important; 
 	/*height: 30px !important;*/
 	position:fixed !important;
-	z-index: 1 !important; 
+	/*z-index: 1 !important; */
 }
 .sub-header-component{
 	background-color: #2ba6cb !important;
@@ -428,6 +428,19 @@ button.active{
 	background-color: #007295;
 }
 
+/*OPACITY*/
+.low-opacity{
+  opacity: 0.3;
+}
+
+.medium-opacity{
+  opacity:0.7;
+}
+
+.full-opacity{
+  opacity:1;
+}
+
 /*BORDERRS*/
 .no-border{
 	border: none !important;
@@ -657,6 +670,9 @@ h2 .editable-click{
 }
 .fit-inside{
   max-width: 100%;
+  min-width: 100%;
+  min-height:100%;
+  max-height:100%;
 }
 
 /*forum elements*/

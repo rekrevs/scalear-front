@@ -47,6 +47,7 @@ angular.module('scalearAngularApp')
       function(response){
         $scope.course=response.course;
         $scope.course.time_zone = timezone
+        $scope.$emit('get_all_courses')
         console.log(timezone)
       }
     );

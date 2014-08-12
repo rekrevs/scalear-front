@@ -12,8 +12,8 @@
                 <select ng-model='privacy' ng-options="f.text for f in choices" style="width: 100%;"></select>
             </td>
             <td>
-                <button type="button" class="button tiny" ng-click="postQuestion(item)">{{'youtube.ask'|translate}}</button>
-                <button type="button" class="button tiny alert" ng-click="cancelQuestion(item)">{{'lectures.cancel'|translate}}</button>
+                <button type="button" class="button tiny" ng-click="postQuestion(item)" translate>youtube.ask</button>
+                <button type="button" class="button tiny alert" ng-click="cancelQuestion(item)" translate>lectures.cancel</button>
             </td>
         </tr>
     </table>

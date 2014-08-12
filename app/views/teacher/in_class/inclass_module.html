@@ -4,7 +4,7 @@
 <!-- endbuild -->
 <div class="row">
 	<div class="small-12 medium-12 large-3 columns" id='details' >
-		<!-- <inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/> -->
+		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/>
 		<div class="row">
 			<a class="button large success" ng-click="display(!inclass_ready)" ng-disabled="!inclass_ready">{{'groups.display_inclass' | translate }}</a>
 		</div>
@@ -43,7 +43,7 @@
 				<p class="title">{{lec.name}}</p>
 				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['lecture'][lec.id].items|filter:data:'!!'" style="clear:both">
 					<li ng-if="item.type=='discussion'" class="li_inner color-coral">
-						<inner_title type="{{'lectures.discussion' | translate}}" />
+						<inner_title type="'lectures.discussion' | translate" />
 						<ul style="padding:5px;padding-left: 40px;color:black;font-weight:normal;font-size: 14px;">
 							<li ng-repeat="question in item.data" >
 								<div style="width: 80%;">{{question[0]}}</div>
@@ -51,10 +51,10 @@
 						</ul>						
 					</li>
 					<li ng-if="item.type=='charts'" class="li_inner color-green">
-						<inner_title type="{{'courses.'+item.data.type.toLowerCase() | translate}}" title="{{item.data.title}}" />
+						<inner_title type="'courses.'+item.data.type.toLowerCase() | translate" title="item.data.title" />
 					</li>
 					<li ng-if="item.type=='free_question'" class="li_inner color-coral">
-						<inner_title  type="{{'groups.free_text_question' | translate}}" title="{{item.data.title}}"/>
+						<inner_title  type="'groups.free_text_question' | translate" title="item.data.title"/>
 						<ul style="clear:both;padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
 							<li ng-repeat="answer in item.data.answers" style="list-style-position:inside; padding:3px 10px">
 								<div style="width:70%">{{answer.online_answer}}</div>
@@ -67,10 +67,10 @@
 				<p class="title">{{quiz.name}}</p>
 				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['survey'][quiz.id].items|filter:data:'!!'">
 					<li ng-if="item.type=='Free Text Question'" class="li_inner color-coral">
-						<inner_title  type="{{'groups.free_text_question' | translate}}" title="{{item.data.title}}"/>
+						<inner_title  type="'groups.free_text_question' | translate" title="item.data.title"/>
 					</li>
 					<li  ng-if="item.type=='charts'" class="li-inner color-blue">
-						<inner_title type="{{'courses.survey' | translate}}" title="{{item.data.title}}" />
+						<inner_title type="'courses.survey' | translate" title="item.data.title" />
 					</li>
 				</ul>
 			</div>

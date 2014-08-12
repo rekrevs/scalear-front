@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state','Page','scalear_utils', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state, Page, scalear_utils) {
+  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state','Page','scalear_utils','$translate', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state, Page, util,$translate) {
     $controller('surveysCtrl', {$scope: $scope});
     
  	var init = function(){
+        $scope.course.warning_message=null
         $scope.studentAnswers={};
         $scope.$parent.$parent.current_item =$stateParams.quiz_id
         $scope.can_solve = true
@@ -30,6 +31,12 @@ angular.module('scalearAngularApp')
             $scope.next_item= data.next_item;
             // $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
 	 		$scope.alert_messages= data.alert_messages
+            for(var key in $scope.alert_messages){
+                if(key=="due")
+                    $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
+                else if(key=="today")
+                    $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
+            }
 		  	$scope.quiz.questions.forEach(function(question,index){
 				question.answers = data.answers[index]
 				 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]==null) // if drag was not solved, put student answer from shuffled answers.

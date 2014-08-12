@@ -20,14 +20,22 @@ angular.module('scalearAngularApp')
       removeShortcuts()
     });
 
-    $scope.filters=
-    {
-      "all":"",
-      "lectures.confused":"confused",
-      // "Questions":"question",
-      "courses.charts": "charts",
-      "lectures.discussion": "discussion",
-    }
+    $scope.$on('filter_update',function(ev,filters){
+      $scope.checkModel=filters
+    })
+
+    $scope.$on('print',function(){
+      $scope.print()
+    })
+    // $scope.filters=
+    // {
+    //   "all":"",
+    //   "lectures.confused":"confused",
+    //   // "Questions":"question",
+    //   "courses.charts": "charts",
+    //   "lectures.discussion": "discussion",
+    // }
+    $scope.checkModel={confused:true, charts:true, discussion:true};
 
     $scope.grade_options= [{
       value: 0, // not set
@@ -163,9 +171,9 @@ angular.module('scalearAngularApp')
 		  // $scope.highlight_index = (($scope.highlight_index+x)%divs.length);
     	// $scope.highlight_index = $scope.highlight_index < 0 ? divs.length+$scope.highlight_index : $scope.highlight_index;	    
 	    var ul = angular.element(divs[$scope.highlight_index])
-	    ul.addClass("highlight").css('opacity','1')
+	    ul.addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
       $scope.highlight_level = 1
-	    angular.element('.ul_item').not('.highlight').css('opacity','0.3')
+	    angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
 	    var parent_div = ul.closest('div')
       if(parent_div.attr('id')){
         var id=parent_div.attr('id').split('_')
@@ -183,11 +191,11 @@ angular.module('scalearAngularApp')
         view_index = $scope.highlight_index-1
 
       divs[view_index].scrollIntoView()
-      $timeout(function(){
-        var top = divs[$scope.highlight_index].offset().top - ( $('.main_content').innerHeight / 2 );
-      // console.log(top)
-      $('.main_content').scrollTo( 0, top );
-      })
+      // $timeout(function(){
+      //   var top = divs[$scope.highlight_index].offset().top - ( $('.main_content').innerHeight / 2 );
+      // // console.log(top)
+      // $('.main_content').scrollTo( 0, top );
+      // })
 	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
 	    $scope.$apply()
@@ -225,8 +233,8 @@ angular.module('scalearAngularApp')
   		// angular.element(divs[$scope.highlight_index]).removeClass('highlight')
       $(".highlight").removeClass("highlight");
   		$scope.highlight_index = divs.index(ul)
-  		angular.element(ul).addClass("highlight").css('opacity','1')
-      angular.element('.ul_item').not('.highlight').css('opacity','0.3')
+  		angular.element(ul).addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
+      angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
       $scope.highlight_level = 1
       setupRemoveHightlightEvent()
       if($scope.selected_item == item)
@@ -252,7 +260,7 @@ angular.module('scalearAngularApp')
 
     var removeHightlight=function(){     
       $(".highlight").removeClass("highlight");
-      angular.element('.ul_item').css('opacity', '1')
+      angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
       $scope.highlight_level = 0
       console.log("removing")
     }
@@ -794,11 +802,6 @@ angular.module('scalearAngularApp')
   }
 
   $scope.print=function(){
-    // var win = window.open('http://localhost:9000/#/courses/13/progress/lectures/34', '_blank');
-    // win.focus();
-    // $timeout(function(){
-    //   win.print()
-    // })
     var toPrint = document.getElementById('printarea');
     var win = window.open('', '_blank');
     win.document.open();
@@ -806,6 +809,17 @@ angular.module('scalearAngularApp')
     win.document.write(toPrint.innerHTML);
     win.document.write('</html>');
     win.document.close();
+  }
+
+
+ $scope.filterType= function(item){
+    var condition=false;
+    for(var e in $scope.checkModel){
+      if($scope.checkModel[e])
+        condition = (condition || (item.type==e && item.data!=null))
+    }
+    var x = item.type!='' && condition
+    return x;
   }
 
 	$scope.getKeys = function( obj ) {

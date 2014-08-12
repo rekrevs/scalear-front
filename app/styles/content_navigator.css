@@ -1,3 +1,6 @@
+li{
+  list-style:none;
+}
 .navigator-dropdown-button{
   /*margin-top: -10px;*/
   position: fixed;

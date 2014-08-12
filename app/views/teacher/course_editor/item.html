@@ -1,7 +1,11 @@
-<li class="disable_selection size-13 text-right" title="{{item.name}}" style="padding: 2px; min-height: 24px;">
-	<img class="left handle with-tiny-margin-right" src="images/move2.png" ng-show="'**.course_editor.**' | includedByState" title='{{"courses.drag_to_reorder"|translate}}' />
+<li ng-if="'**.course_editor.**' | includedByState" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;">
+	<img class="left handle with-tiny-margin-right" src="images/move2.png" bindonce bo-title='"courses.drag_to_reorder"|translate' />
 	<div class="truncate-70 show-inline valign-middle left text-left" ng-click="selectItem()">{{item.name}}</div>
-	<i class="fi-link with-tiny-margin-right" ng-show="'**.course_editor.**' | includedByState" ng-click="createLink($event)"></i>
-	<delete_button ng-show="'**.course_editor.**' | includedByState" class="with-tiny-margin-right" size="small" color='dark' action="remove(event)"></delete_button>
-	<input class="small-12 columns item_link" type="text" ng-show="link_url" ng-model="link_url" ng-blur="createLink()" style="top:0" />
+	<i class="fi-link with-tiny-margin-right" ng-click="toggleLink($event)"></i>
+	<delete_button class="with-tiny-margin-right" size="small" color='dark' action="remove(event)"></delete_button>
+	<input class="small-12 columns item_link" type="text" ng-show="link_url" ng-model="link_url" style="top:0" />
+</li>
+
+<li ng-if="!('**.course_editor.**' | includedByState)" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;">
+	<div class="truncate-70 show-inline valign-middle left text-left" ng-click="selectItem()" bindonce bo-text="item.name"></div>
 </li>

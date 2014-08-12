@@ -113,7 +113,7 @@ angular.module('scalearAngularApp')
       action:"&"
     },
   	template: '<div style="position: absolute;top: 10px; left: 47%;">'+
-                '<button type="button" class="tiny success button with-small-padding" ng-click="action()">{{\'youtube.check_answer\'|translate}}</button'+
+                '<button type="button" class="tiny success button with-small-padding" ng-click="action()"><span translate>youtube.check_answer</span></button>'+
               '</div>',
   	link: function(scope, element, attrs) {}
   }
@@ -706,7 +706,7 @@ angular.module('scalearAngularApp')
     function($timeout) {
         return {
             template: '<div onshow="moveCursorToEnd()" ng-mouseover="overclass = true" ng-mouseleave="overclass= false"  e-rows="3" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="font-family: monospace;font-size: 13px;color: teal;">'+
-                        '<pre style="color: teal;word-break: break-word; padding: 3px; margin: 0px;">'+
+                        '<pre style="color: teal;word-break: break-word; padding: 3px; margin: 0px;width:100%">'+
                           '{{ value || ("empty"|translate)  }}'+
                           '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
                         '</pre>'+

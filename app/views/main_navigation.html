@@ -23,17 +23,17 @@
 					<ul top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" href="" ng-click="goToCourse(course)">
+							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" href="" ui-sref="course({ course_id: course.id })">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
 						<!-- <li class="divider"></li> -->
 						<!-- <li><label translate>other</label></li> -->
-						<li><a class="white-hover dark-text" id="join_course" enrollment-modal ng-click="open()">{{'courses.join_course' | translate}}</a></li>
+						<li><a class="white-hover dark-text" id="join_course" enrollment-modal ng-click="open()" translate>courses.join_course</a></li>
 						<li>
 							<a id="course_list" class="white-hover dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
-								{{'show_all_courses' | translate}}
+								<span translate>show_all_courses</span>
 								<h5 class="dark-description"><small translate>view_whole_courselist</small></h5>
 							</a>
 						</li>
@@ -45,18 +45,18 @@
 					<ul top-bar-dropdown>
 						<li has-dropdown>
 							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}"  href="">
-								{{'settings.settings' | translate}}
+								<span translate>settings.settings</span>
 								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
 							<ul top-bar-dropdown>
 								<li>
-									<a class="white-hover dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
-										{{'account_edit.account_information' | translate}}
+									<a class="white-hover dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account" translate>
+										account_edit.account_information
 									</a>
 								</li>
 							</ul>
 						</li>
-						<li><a class="white-hover dark-text" id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
+						<li><a class="white-hover dark-text" id="logout" ng-click="logout()"><span translate>navigation.logout</span> {{user.name}}</a></li>
 					</ul>
 				</li>
 				<li has-dropdown>
@@ -93,7 +93,7 @@
 					<ul top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course.edit_course_information({ course_id: course.id })">
+							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
@@ -103,7 +103,7 @@
 						<li><a class="white-hover dark-text" id="new_course_sub" ui-sref-active="nav-item-active" ui-sref="new_course" translate>courses.create_course</a></li>
 						<li>
 							<a id="course_list" class="white-hover dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
-								{{'show_all_courses' | translate}}
+								<span translate>show_all_courses</span>
 								<h5 class="dark-description"><small translate>view_whole_courselist</small></h5>
 							</a>
 						</li>
@@ -115,18 +115,18 @@
 					<ul top-bar-dropdown>
 						<li has-dropdown>
 							<a class="white-hover dark-text has-description" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}">
-								{{'settings.settings' | translate}}
+								<span translate>settings.settings</span>
 								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
 							<ul top-bar-dropdown>
 								<li>
-									<a class="white-hover dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
-										{{'account_edit.account_information' | translate}}
+									<a class="white-hover dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account" translate>
+										account_edit.account_information
 									</a>
 								</li>
 							</ul>
 						</li>
-						<li><a class="white-hover dark-text" id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
+						<li><a class="white-hover dark-text" id="logout" ng-click="logout()"><span translate>navigation.logout</span> {{user.name}}</a></li>
 					</ul>
 				</li>
 				<li has-dropdown>
@@ -150,11 +150,11 @@
 					<a class="white-hover color-green-hover size-18-light" ui-sref="show_shared" translate>sharing.view</a>
 				</li>
 				<!-- <li class="divider"></li> -->
-				<li ng-hide="user.invitations == 0 && user.shared == 0" has-dropdown>
+				<li ng-if="user.invitations != 0 && user.shared != 0" has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="notifications" href="" translate>navigation.notifications</a>
 					<ul top-bar-dropdown>
 						<li><label class="light-grey color-grey" translate>navigation.notifications</label></li>
-						<li ng-show="user.invitations == 0 && user.shared == 0"><a class="white-hover dark-text">{{'notification.empty' | translate}}</a></li>
+						<!-- <li ng-show="user.invitations == 0 && user.shared == 0"><a class="white-hover dark-text" translate>notification.empty</a></li> -->
                         <notification-item ng-repeat="(id, invitation) in user.invitation_items" notification="invitation" id="id"></notification-item>
                         <shared-item-notification ng-repeat="(id, item) in user.shared_items" notification="item" id="id"></shared-item-notification>
 					</ul>
@@ -167,7 +167,7 @@
 					<ul top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course.edit_course_information({ course_id: course.id })">
+							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
@@ -177,7 +177,7 @@
 						<li><a class="white-hover dark-text" ui-sref="new_course" ui-sref-active="nav-item-active" translate>courses.create_course</a></li>
 						<li>
 							<a class="white-hover dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
-								{{'questions.see_all' | translate}}
+								<span translate>show_all_courses</span>
 								<h5 class="dark-description"><small translate>view_whole_courselist</small></h5>
 							</a>
 						</li>
@@ -189,18 +189,18 @@
 					<ul top-bar-dropdown>
 						<li has-dropdown>
 							<a class="white-hover dark-text has-description" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}">
-								{{'settings.settings' | translate}}
+								<span translate>settings.settings</span>
 								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
 							<ul top-bar-dropdown>
 								<li>
-									<a class="white-hover dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
-										{{'account_edit.account_information' | translate}}
+									<a class="white-hover dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account" translate>
+										account_edit.account_information
 									</a>
 								</li>
 							</ul>
 						</li>
-						<li><a class="white-hover dark-text" id="logout" ng-click="logout()">{{'navigation.logout' | translate}} {{user.name}}</a></li>
+						<li><a class="white-hover dark-text" id="logout" ng-click="logout()"><span translate>navigation.logout</span> {{user.name}}</a></li>
 					</ul>
 				</li>
 				<li has-dropdown>

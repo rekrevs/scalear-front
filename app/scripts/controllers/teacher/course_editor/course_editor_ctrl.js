@@ -189,6 +189,7 @@ angular.module('scalearAngularApp')
 	    		$scope.module_obj[module.group.id] = $scope.course.modules[$scope.course.modules.length-1]
     			$scope.module_loading=false
                 $state.go('course.module.course_editor.overview', {module_id: module.group.id})
+                $scope.$emit('open_navigator')
 	    	}, 
 	    	function(){}
 		);

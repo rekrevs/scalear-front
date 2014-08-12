@@ -10,7 +10,7 @@
 		<button class="tiny button dropdown under-the-other left" dropdown-toggle="#charts_dropdown_list">{{'statistics.'+selected_series.toLowerCase() || 'courses.charts' | translate}}</button>
 		<ul id="charts_dropdown_list" class="f-dropdown">
 			<li ng-repeat="series in collection">
-		  		<a ng-click="getSeriesData(series)">{{'statistics.'+series.toLowerCase()|translate}}</a>
+		  		<a ng-click="getSeriesData(series)" translate>{{'statistics.'+series.toLowerCase()}}</a>
 			</li>
 		</ul>
 		<highchart id="chart1" config="chartConfig"></highchart>

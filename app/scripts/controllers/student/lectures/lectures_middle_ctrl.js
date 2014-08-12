@@ -22,6 +22,10 @@ angular.module('scalearAngularApp')
         $scope.exportNotes()
     })
 
+    $scope.$on('filter_update',function(ev,filters){
+      $scope.checkModel=filters
+    })
+
     var isiPad=function(){
         var i = 0,
             iOS = false,
@@ -44,6 +48,7 @@ angular.module('scalearAngularApp')
         $scope.total_duration = 0
         $scope.elapsed_width =0
         $scope.slow = false
+        $scope.course.warning_message=null
     }
 
     var init = function() {            
@@ -85,9 +90,9 @@ angular.module('scalearAngularApp')
 
     var goToLecture=function(id){
         if($scope.timeline){
-            if(isiPad()){
-                angular.element('#lecture_video')[0].scrollIntoView()
-            }
+            // if(isiPad()){
+            //     angular.element('#lecture_video')[0].scrollIntoView()
+            // }
             $scope.should_play = true
             $scope.lecture = null
 
@@ -125,6 +130,12 @@ angular.module('scalearAngularApp')
                 console.log("lecture")
                 console.log(data)
                 $scope.alert_messages = data.alert_messages;
+                for(var key in $scope.alert_messages){
+                    if(key=="due")
+                        $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
+                    else if(key=="today")
+                        $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
+                }
                 $scope.next_item = data.next_item
                 var lec = data.lecture
                 
@@ -137,8 +148,28 @@ angular.module('scalearAngularApp')
                                 $scope.should_play = false
                     }
                 }
+
+                if(isiPad()){
+                    console.log("is ipad!!!!!!")
+                    $scope.video_ready=true
+                }
             })
         }
+    }
+
+    $scope.lecture_player.events.onMeta = function() {
+        console.log("<<<<<----------->>>>")
+        console.log('meta')
+    }
+
+     $scope.lecture_player.events.canPlay = function() {
+        console.log("<<<<<----------->>>>")
+        console.log('canPlay')
+    }
+
+    $scope.lecture_player.events.canplaythrough = function() {
+        console.log("<<<<<----------->>>>")
+        console.log('canplaythrough')
     }
 
      $scope.lecture_player.events.onReady = function() {
@@ -177,6 +208,8 @@ angular.module('scalearAngularApp')
         })
 
         $scope.video_ready=true
+        console.log("<<<<<----------->>>>")
+        console.log($scope.video_ready)
         var time = $location.search();
         
         if(time){
@@ -380,6 +413,15 @@ angular.module('scalearAngularApp')
     }
 
     $scope.toggleFullscreen=function(){
+
+        console.log(isiPad())
+        if(isiPad())
+            mobileFullscreen()
+        else
+            desktopFullscreen()
+    }
+
+    var desktopFullscreen=function(){
         if(!$scope.fullscreen){
             console.log("going fullscreen")
             $scope.resize.big()
@@ -395,7 +437,29 @@ angular.module('scalearAngularApp')
              console.log($scope.fullscreen)
             $scope.video_class = 'video_class'
             $scope.container_style={float: 'left'}
+            $scope.quiz_mode = false
+            $timeout(function(){$scope.quiz_mode = true})
+
         }
+    }
+
+    var mobileFullscreen=function(){
+        if(!$scope.fullscreen){
+            $scope.video_class = 'mobile_video_full'
+            $scope.video_layer ={'height': '92%', 'position': 'relative', 'z-index': '-1'}
+            $scope.quiz_layer.width="100%"
+            $scope.quiz_layer.height="92%"
+            $scope.fullscreen= true
+        }
+        else{
+            console.log("close fullscreen")
+            $scope.video_class = 'video_class'
+            $scope.video_layer ={}
+            $scope.quiz_layer.width=""
+            $scope.quiz_layer.height=""
+            $scope.fullscreen= false
+        }
+        $timeout(function(){$scope.$emit("updatePosition")})
     }
 
     $scope.addQuestionBlock= function(){

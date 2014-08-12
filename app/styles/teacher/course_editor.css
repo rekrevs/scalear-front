@@ -251,6 +251,14 @@ ul.accordion ul {
   text-align: center;
 }
 
+.editable-input.editable-has-buttons{
+	width:12px !important;
+}
+
+.qualityDiv{
+	left:93% !important;
+}
+
 /*.ta-editor{
 	min-height:70px;
 	margin-bottom: 30px;

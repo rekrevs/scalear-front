@@ -23,7 +23,7 @@
 					<ul top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" href="" ui-sref="course({ course_id: course.id })">
+							<a class="white-hover dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>

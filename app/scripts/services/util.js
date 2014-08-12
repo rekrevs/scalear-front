@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.service('util', ['$rootScope',function ($rootScope) {
+.service('scalear_utils', ['$rootScope',function ($rootScope) {
   return {
 
     getKeys: function( obj ) {

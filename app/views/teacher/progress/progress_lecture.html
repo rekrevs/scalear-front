@@ -63,7 +63,7 @@
 				</div>
 			</div>
 			<div ng-repeat="module_item in module.items" class="row">
-				<div bo-id="{{module_item.quiz_type+'_'+module_item.id}}" ng-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];" class="small-12 columns">
+				<div id="{{module_item.quiz_type+'_'+module_item.id}}" ng-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];" class="small-12 columns">
 					<p class="title" >
 						<span bo-text="quiz.meta.name"></span>
 						<span class="size-12">
@@ -114,7 +114,7 @@
 						</li>
 					</ul>
 				</div>
-				<div bo-id="lecture_{{module_item.id}}" ng-if="module_item.class_name=='lecture'" ng-init='lec=lectures[module_item.id]' class="small-12 columns">
+				<div id="lecture_{{module_item.id}}" ng-if="module_item.class_name=='lecture'" ng-init='lec=lectures[module_item.id]' class="small-12 columns">
 					<p class="title" >
 						<span bo-text="lec.meta.name"></span>
 						<span class="size-12"><span bo-text="'('+(lec.meta.duration|format)+', '+getKeys(lec.charts).length"></span>

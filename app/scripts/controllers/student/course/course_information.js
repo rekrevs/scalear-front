@@ -8,16 +8,18 @@ angular.module('scalearAngularApp')
 
             $window.scrollTo(0, 0);
             $scope.init = function(){
-                Course.show({
-                    course_id: $stateParams.course_id
-                    },
-                    function(data) {
-                        $scope.teachers = data.teachers;
-                        if($scope.course.discussion_link)
-                            $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
-                    },
-                    function() {}
-                )
+                if($scope.course){
+                    Course.show({
+                        course_id: $stateParams.course_id
+                        },
+                        function(data) {
+                            $scope.teachers = data.teachers;
+                            if($scope.course.discussion_link)
+                                $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
+                        },
+                        function() {}
+                    )
+                }
             }
 
             $scope.goToContent=function(){

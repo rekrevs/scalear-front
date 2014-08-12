@@ -31,6 +31,7 @@ li{
   transition: all 0.3s ease-in-out;
 }
 .content-navigator-container{
+  margin-top: -5px;
   width: 300px;
   /*margin-top: 20px;*/
   /*padding: 10px;*/

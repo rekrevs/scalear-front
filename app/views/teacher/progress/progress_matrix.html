@@ -1,12 +1,11 @@
 <div style="overflow: scroll;">
-    <style>
+    <!-- <style>
         .studentcolumn{
             position:absolute; 
             background: white;
             width: 100px;
-            /*border-right: black 1px solid;*/
         }
-    </style>
+    </style> -->
     <div style="border:1px solid lightgray;float:right;padding: 5px;display:-webkit-inline-box;display:flex;margin-bottom:10px" ng-init="status_img={
     finished_on_time:'images/Finished_on_Time.png',
     finished_not_on_time:'images/Finished_Not_on_time.png',
@@ -17,7 +16,7 @@
             <span style="margin-right:10px;font-size:12px;display:inline" translate>{{'courses.'+stat}}</span>
         </div>
     </div>
-    <table style="width:100%">
+    <table fixed-header style="width:100%">
         <thead>
             <tr>
                 <!-- <th style="min-width: 99px"></th> -->

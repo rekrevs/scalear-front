@@ -1,26 +1,26 @@
-<div class="left-navigation hide-for-small-only left medium-3 large-3 columns" mac-affix>
+<div class="left-navigation hide-for-small-only left medium-3 large-3 columns" mac-affix mac-affix-top="10">
 	<ul ng-if="current_user.roles[0].id == 2" class="side-nav">
 	  <h3><i class="fi-page-multiple size-24"></i> {{'help.getting_started' | translate}}</h3>
-	  <li data-scrollspy-listen="intro"><a ng-click="$parent.scrollTo('intro')">Introduction</a></li>
-	  <li data-scrollspy-listen="enroll"><a ng-click="$parent.scrollTo('enroll')">Joining a Class</a></li>
-	  <li data-scrollspy-listen="due"><a ng-click="$parent.scrollTo('due')">What is Due Next?</a></li>
-	  <li data-scrollspy-listen="interaction"><a ng-click="$parent.scrollTo('interaction')">Questions, Notes, and Confused</a></li>
-	  <li data-scrollspy-listen="progress"><a ng-click="$parent.scrollTo('progress')">Reviewing My Progress</a></li>
-	  <li data-scrollspy-listen="support"><a ng-click="$parent.scrollTo('support')">Contacting My Teacher</a></li>
-	  <li data-scrollspy-listen="feedback"><a ng-click="$parent.scrollTo('feedback')">Technical Problems or Feedback</a></li>
-	  <li data-scrollspy-listen="privacy"><a ng-click="$parent.scrollTo('privacy')">Privacy</a></li>
+	  <li mac-scroll-spy-target="intro"><a ng-click="$parent.scrollTo('intro')">Introduction</a></li>
+	  <li mac-scroll-spy-target="enroll"><a ng-click="$parent.scrollTo('enroll')">Joining a Class</a></li>
+	  <li mac-scroll-spy-target="due"><a ng-click="$parent.scrollTo('due')">What is Due Next?</a></li>
+	  <li mac-scroll-spy-target="interaction"><a ng-click="$parent.scrollTo('interaction')">Questions, Notes, and Confused</a></li>
+	  <li mac-scroll-spy-target="progress"><a ng-click="$parent.scrollTo('progress')">Reviewing My Progress</a></li>
+	  <li mac-scroll-spy-target="support"><a ng-click="$parent.scrollTo('support')">Contacting My Teacher</a></li>
+	  <li mac-scroll-spy-target="feedback"><a ng-click="$parent.scrollTo('feedback')">Technical Problems or Feedback</a></li>
+	  <li mac-scroll-spy-target="privacy"><a ng-click="$parent.scrollTo('privacy')">Privacy</a></li>
 	</ul>
 </div>
-<div ng-if="current_user.roles[0].id == 2" class="with-margin-top small-12 medium-9 large-9 columns">
+<div mac-scroll-spy ng-if="current_user.roles[0].id == 2" class="with-margin-top small-12 medium-9 large-9 columns">
 	<center>
-		<div id="intro" class="small-10" data-scrollspy-broadcast>
+		<div id="intro" class="small-10" mac-scroll-spy-anchor>
 			<h2 class="color-blue">Welcome to ScalableLearning!</h2>
 			<div class="flex-video widescreen">
 	        	<iframe width="560" height="315" src="//www.youtube.com/embed/9u8U2NoXC7c?showinfo=0&rel=0&autohide=0" frameborder="0" allowfullscreen></iframe>
         	</div>
 		</div>
 	</center>
-	<div id="enroll" data-scrollspy-broadcast>
+	<div id="enroll" mac-scroll-spy-anchor>
 		<h4 class="color-blue">Joining a Class</h4>
 		<p>
 			To join a course you need a Course Enrollment key from your instructor. This key will be in the form ABCDE-12345. Once you have your key you can join the course. If you don’t have a key please contact your instructor.
@@ -39,13 +39,13 @@
 			</ol>
 		</p>
 	</div>
-	<div id="due" data-scrollspy-broadcast>
+	<div id="due" mac-scroll-spy-anchor>
 		<h4 class="color-blue">What is Due Next?</h4>
 		<p>
 			To see what is due next, click on "Dashboard", this will give you an overview of all your courses, recent announcements, and when assignments are due in each course.
 		</p>
 	</div>
-	<div id="interaction" data-scrollspy-broadcast>
+	<div id="interaction" mac-scroll-spy-anchor>
 		<h4 class="color-blue">Questions, Notes, and Confused</h4>
 		<ul>
 			<h5 class="subheader">Questions</h5>
@@ -88,7 +88,7 @@
 		</ul>
 		<img class="with-margin" src="images/player-controls.png" />
 	</div>
-	<div id="progress" data-scrollspy-broadcast>
+	<div id="progress" mac-scroll-spy-anchor>
 		<h4 class="color-blue">Reviewing My Progress</h4>
 		<ul>
 			<p>
@@ -96,7 +96,7 @@
 			</p>
 		</ul>
 	</div>
-	<div id="support" data-scrollspy-broadcast>
+	<div id="support" mac-scroll-spy-anchor>
 		<h4 class="color-blue">Contacting My Teacher</h4>
 		<ul>
 			<p>
@@ -104,7 +104,7 @@
 			</p>
 		</ul>
 	</div>
-	<div id="feedback" data-scrollspy-broadcast>
+	<div id="feedback" mac-scroll-spy-anchor>
 		<h4 class="color-blue">Technical Problems or Feedback</h4>
 		<ul>
 			<p>
@@ -112,7 +112,7 @@
 			</p>
 		</ul>
 	</div>
-	<div id="privacy" data-scrollspy-broadcast>
+	<div id="privacy" mac-scroll-spy-anchor>
 		<h4 class="color-blue">Privacy</h4>
 		<ul>
 			<p>

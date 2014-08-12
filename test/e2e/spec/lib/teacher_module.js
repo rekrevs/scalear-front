@@ -650,9 +650,7 @@ exports.init_lecture = function(ptor, lec_name, lec_url){
 			element(by.id('url')).click()
 			.then(function(){
 				element(by.className('editable-input')).sendKeys(lec_url)
-				element(by.className('check')).click()
 				element(by.className('check')).click();
-				
 			})
 		})	
 	})

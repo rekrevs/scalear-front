@@ -100,7 +100,7 @@ describe("2", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
+		// o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -297,7 +297,7 @@ xdescribe("4", function(){
 })
 
 xdescribe("5", function(){
-		it('should sign in as teacher', function(){
+	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
@@ -365,7 +365,6 @@ xdescribe("5", function(){
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
 	})
-
 })
 
 ///^#?([a-f0-9]{6}|[a-f0-9]{3})$/

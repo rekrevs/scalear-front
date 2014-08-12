@@ -49,20 +49,22 @@ angular.module('scalearAngularApp')
 	    restrict: "E",
 	    scope: {
 	    	time:'=',
-	    	type:'@',
-	    	title:'@',
+	    	type:'=',
+	    	title:'=',
 	    	color: "="
 	    },
-	    template:'<span class="inner_title" >'+
-					'<span style="cursor:pointer"><span ng-show="time!=null">[{{time|format:"mm:ss"}}]</span> {{type}}: '+ 
-						'<span ng-style="title_style">{{title}}</span>'+
+	    template:'<span class="inner_title" bindonce>'+
+					'<span style="cursor:pointer"><span ng-show="time!=null" bo-text=\'"["+(time|format:"mm:ss")+"]"\'></span> <span bo-text="type"></span>: '+ 
+						'<span ng-style="title_style" bo-text="title"></span>'+
 					'</span>'+
 				'</span>', 
 	    link:function(scope){
 	    	scope.title_style = {"color":"black", "fontWeight":"normal"}
-	    	scope.$watch('color',function(){
-	    		if(scope.color)
+	    	var unwatch =scope.$watch('color',function(){
+	    		if(scope.color){
 	    			scope.title_style.color = scope.color
+	    			unwatch()
+	    		}
 	    			
 	    	})
 	    }
@@ -119,29 +121,32 @@ angular.module('scalearAngularApp')
 					'<div>'+
 						'<h5 translate>courses.time_estimate</h5>'+
 					'</div>'+
-					'<div class="small-10 small-push-1 columns">'+
-						'<div>In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></div>'+
+					'<div class="small-12 large-10 large-push-1 columns">'+
+						'<div>'+
+							'In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b>'+
+							'<a pop-over="popover_options">{{"more" | translate}}...</a>'+
+						'</div>'+
 					'</div>'+
-					'<div class="small-1 inline right columns"><a pop-over="popover_options">{{"more" | translate}}...</a></div>'+
+					// '<div class="small-1 inline right columns"></div>'+
 				'</div>', 
 	    link:function(scope){
 	    	scope.numbers = []
   	 		for (var i = 0; i <= 60; i++) {
 		        scope.numbers.push(i);
 		    }
-  	 		var template = "<div style='color:black;font-size:12px'>"+
-  	 						"<span class='span2' style='margin-left:0'><span translate>courses.time_per_quiz</span>:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_quiz' ng-options='i for i in numbers'></select></span>"+
-  	 						"<span class='span2' style='margin-top: 5px;margin-left: 15px;'><span translate>courses.quizzes_for_review</span>: {{quiz_count}}</span><br><br>"+
-  	 						"<span class='span2' style='margin-left:0; width:160px;clear:left'><span translate>courses.time_per_question</span>:<select style='font-size:12px; width:50px; height:20px; margin:5px' ng-model='time_question' ng-options='i for i in numbers'></select></span>"+	  	 						
-  	 						"<span class='span2' style='margin-top: 5px;margin-left:0'><span translate>courses.questions_for_review</span>: {{question_count}}</span><br><br>"+
-  	 						"<span translate>formula</span>:<br>"+
-  	 					    "<i style='text-align:center;'>( #<span translate>courses.quizzes_for_review</span>  * {{time_quiz}} ) + ( #<span translate>courses.questions_for_review</span> * {{time_question}} )</i>"+
+  	 		var template = "<div style='min-width: 244px;'>"+
+  	 						"<label>{{'courses.time_per_quiz' | translate}}<select ng-model='time_quiz' ng-options='i for i in numbers'></select></label>"+
+  	 						"<label>{{'courses.quizzes_for_review' | translate}}: {{quiz_count}}</label>"+
+  	 						"<label>{{'courses.time_per_question' | translate}}<select ng-model='time_question' ng-options='i for i in numbers'></select></label>"+	  	 						
+  	 						"<label>{{'courses.questions_for_review' | translate}}: {{question_count}}</label>"+
+  	 						"<label translate>formula</label>:"+
+  	 					    "<h4 class='subheader'><small>( #{{'courses.quizzes_for_review' | translate}}  * {{time_quiz}} ) + ( #{{'courses.questions_for_review' | translate}} * {{time_question}} )<small></h4>"+
   	 					   "</div>"
 
            	scope.popover_options={
             	content: template,
             	html:true,
-            	placement:"right"
+            	placement:"bottom"
             }
 
             var estimateCalculator=function(){

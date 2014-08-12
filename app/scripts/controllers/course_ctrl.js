@@ -2,9 +2,26 @@
 
 angular.module('scalearAngularApp')
 
-.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'util','course_data', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, util,course_data) {
+.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'util','course_data','$state', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, util,course_data,$state) {
  	
  	angular.extend($scope.$parent, course_data)
+ 	if($state.includes("**.course")){
+	 	if($rootScope.current_user.roles[0].id == 2){
+	 		if($scope.next_item.module != -1 ){
+		        var params = {'module_id': $scope.next_item.module}    
+		        params[$scope.next_item.item.class_name+'_id'] = $scope.next_item.item.id
+		        $state.go('course.module.courseware.'+$scope.next_item.item.class_name, params)
+		    }
+		    else
+		    	$state.go('course.course_information', {course_id:$scope.course.id})
+	 	}
+	 	else
+	 		$state.go('course.edit_course_information', {course_id:$scope.course.id})
+	 }
+
+ // 	$scope.goToContent=function(){
+	    
+	// }
 
 }]).factory('courseResolver',['$rootScope', '$stateParams', 'Course', '$log', '$cookieStore', 'util','$q', function($rootScope, $stateParams, Course, $log, $cookieStore, util,$q){
 	var x={
@@ -64,7 +81,7 @@ angular.module('scalearAngularApp')
 					$scope.course= JSON.parse(data.course);
 					$scope.course.custom_links = data.links
 					$scope.today = data.today;	
-					$scope.last_viewed = data.last_viewed
+					$scope.next_item = data.next_item
 					$scope.module_obj = util.toObjectById($scope.course.groups)
 					deferred.resolve($scope); 
 				},

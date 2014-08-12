@@ -17,9 +17,9 @@
                 </div>
                 <div class="small-12 medium-6 large-4 columns with-margin-left">
                     <div class="button-group" ng-init="filterChoice = 'all'">
-                        <button type="button" class="button tiny" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length">{{'courses.select_all'|translate}}</button>
-                        <button type="button" class="button tiny alert" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0">{{'courses.deselect_all' | translate}}</button>
-                        <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0" ng-click="emailForm()">{{'email'|translate}}</button>
+                        <button type="button" class="button tiny" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length"><span translate>courses.select_all</span></button>
+                        <button type="button" class="button tiny alert" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0"><span translate>courses.deselect_all</span></button>
+                        <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0" ng-click="emailForm()"><span translate>email</span></button>
                     </div>
                 </div>
             </div>

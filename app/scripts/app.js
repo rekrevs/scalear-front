@@ -354,7 +354,7 @@ angular.module('scalearAngularApp', [
                         return courseResolver.init($stateParams.course_id)
                     }]
                 },
-                abstract: true
+                // abstract: true
             })           
             .state('course.module',{
                 url:'/modules/:module_id',
@@ -491,12 +491,12 @@ angular.module('scalearAngularApp', [
                 controller: 'announcementsCtrl'
             })
             .state('course.course_information', {
-                url: '/course_information?redirect',
+                url: '/course_information',
                 templateUrl: '/views/student/course/course_information.html',
                 controller: 'studentCourseInformationCtrl'
             })
             .state('course.edit_course_information', {
-                url: '',
+                url: '/information',
                 templateUrl: '/views/teacher/course/course_information.html',
                 controller: 'teacherCourseInformationCtrl'
             })

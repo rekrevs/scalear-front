@@ -1,8 +1,14 @@
 <div class="large-12 column">
-    <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="small-12 large-6 columns right warning alert-box with-margin-right with-tiny-padding">
-    	 <p class="no-margin" ng-show='key=="due"'>{{"controller_msg.due_date_passed"|translate}} - {{alert_message[0]}}({{alert_message[1]}} {{ "controller_msg."+alert_message[2]| translate}}) {{"controller_msg.ago" | translate}}</p>
-    	 <p class="no-margin" ng-show='key=="submit"'>{{"controller_msg.already_submitted" | translate}} {{quiz.quiz_type | translate}} {{'controller_msg.no_more_attempts' | translate}} </p>
-    	 <p class="no-margin" ng-show='key=="today"'>{{"controller_msg.due"|translate}} {{"controller_msg.today"|translate}} {{"at"|translate}} <b>{{alert_message| date:'h:mma'}}</b></p>
+    <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="small-12 large-6 columns right warning alert-box with-margin-right with-tiny-padding show-for-small-only">
+    	 <p class="no-margin" ng-show='key=="due"'>
+            <span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span translate>{{ "controller_msg."+alert_message[2]}})</span> <span translate>controller_msg.ago</span>
+        </p>
+    	 <p class="no-margin" ng-show='key=="submit"'>
+            <span translate>controller_msg.already_submitted</span><span translate>{{quiz.quiz_type}} <span translate>controller_msg.no_more_attempts</span> 
+        </p>
+    	 <p class="no-margin" ng-show='key=="today"'>
+            <span translate>controller_msg.due</span><span translate>controller_msg.today</span> <span translate>at</span> <b>{{alert_message| date:'h:mma'}}</b>
+         </p>
     </div>
 
     <h3>
@@ -32,13 +38,13 @@
     	<form name="form">
     		<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct"></student-quiz>
     		<button ng-disabled="status.status=='Submitted' || quiz.questions.length==0" type="button" class="button tiny" ng-click="saveQuiz('save')">
-                {{ 'save' |translate}}      
+               <span translate>save</span>
             </button>
     		<button ng-disabled="(status.status=='Submitted' && status.attempts==quiz.retries+1) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="button tiny success" ng-click="saveQuiz('submit')">
-                {{ 'submit' |translate}}
+                <span translate>submit</span>
             </button>
             <button type="button" ng-show="next_item.id" ng-click="go_to_next_item()" class="button tiny">
-                {{'next'| translate}}
+                <span translate>next</span>
             </button>
     	</form>
 

@@ -1,15 +1,15 @@
 <span>
-	<a class="button success" style="float: right; margin-right:10px; margin-bottom: 10px;" ng-click="toggleAdd();" tooltip-placement="top" tooltip="Add items" tooltip-append-to-body="true">+ {{'sharing.add' | translate}}</a>
+	<a class="button success" style="float: right; margin-right:10px; margin-bottom: 10px;" ng-click="toggleAdd();" tooltip-placement="top" tooltip="Add items" tooltip-append-to-body="true">+ <span translate>sharing.add</span></a>
 	<br />
 	<div ng-show="!collapse_add" class="add-menu-container">
 		<div ng-click="addlecture(index)" class="add-item">
-			{{'courses.add_lecture'|translate}}
+			<span translate>courses.add_lecture</span>
 		</div>
 		<div ng-click="addquiz(index, 'quiz')" class="add-item">
-			{{'lectures.add_quiz'|translate}}
+			<span translate>lectures.add_quiz</span>
 		</div>
 		<div ng-click="addquiz(index, 'survey')" class="add-item">
-			{{'courses.add_survey'|translate}}
+			<span translate>courses.add_survey</span>
 		</div>
 	</div>
 </span>

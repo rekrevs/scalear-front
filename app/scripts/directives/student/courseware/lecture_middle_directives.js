@@ -113,7 +113,7 @@ angular.module('scalearAngularApp')
       action:"&"
     },
   	template: '<div style="position: absolute;top: 10px; left: 47%;">'+
-                '<button type="button" class="tiny success button with-small-padding" ng-click="action()">{{\'youtube.check_answer\'|translate}}</button'+
+                '<button type="button" class="tiny success button with-small-padding" ng-click="action()"><span translate>youtube.check_answer</span></button>'+
               '</div>',
   	link: function(scope, element, attrs) {}
   }
@@ -356,7 +356,7 @@ angular.module('scalearAngularApp')
   return {
     restrict:'E',
     template:'<div ng-style="{left: xcoor, top: ycoor, width:width, height:height, position: \'absolute\',  marginTop:\'0px\'}" data-drop="true" jqyoui-droppable=\'{onDrop:"setDropped", onOver:"formatDropped", onOut:"clearDropped"}\' class="drop-div" ></div>'+
-             '<b class="dragged handle" style="z-index:1" ng-style="{left: sub_xcoor, top: sub_ycoor}" data-drag="true" data-jqyoui-options=\'{containment:".ontop"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</b>',
+             '<span class="dragged handle" style="z-index:1" ng-style="{left: sub_xcoor, top: sub_ycoor}" data-drag="true" data-jqyoui-options=\'{containment:".ontop"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</span>',
     link:function(scope,elem){
       $log.debug("student drag")
       $log.debug(scope.data)
@@ -364,9 +364,9 @@ angular.module('scalearAngularApp')
         $log.debug("setAnswerLocation")
         var ontop=angular.element('.ontop');
         console.log(scope.data)
-        scope.width  = scope.data.width * ontop.width() -27;
+        scope.width  = scope.data.width * ontop.width();
         scope.height = scope.data.height* (ontop.height());
-        scope.xcoor = (scope.data.xcoor * ontop.width())+27
+        scope.xcoor = (scope.data.xcoor * ontop.width())
         scope.ycoor = (scope.data.ycoor * (ontop.height()))
         scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
         scope.sub_ycoor = (scope.data.sub_ycoor * ontop.height())
@@ -706,7 +706,7 @@ angular.module('scalearAngularApp')
     function($timeout) {
         return {
             template: '<div onshow="moveCursorToEnd()" ng-mouseover="overclass = true" ng-mouseleave="overclass= false"  e-rows="3" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="font-family: monospace;font-size: 13px;color: teal;">'+
-                        '<pre style="color: teal;word-break: break-word; padding: 3px; margin: 0px;">'+
+                        '<pre style="color: teal;word-break: break-word; padding: 3px; margin: 0px;width:100%">'+
                           '{{ value || ("empty"|translate)  }}'+
                           '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
                         '</pre>'+

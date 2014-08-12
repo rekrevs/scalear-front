@@ -1,6 +1,6 @@
 <style>
 .reveal-modal{
-    height:40%;
+    height:auto;
     overflow: hidden;
 }
 </style>
@@ -10,7 +10,7 @@
     	<form name="form.key">
         	<div class="small-12 large-3 small-centered columns"><input type="text" maxlength='11' ng-model="enrollment.key" name="key" required style="text-align: center;font-weight:bold;font-size: 18px;"/></div>
         	<span class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
-        	<div class='error' ng-if='form.server_error'>{{form.server_error}}</div>
+        	<small class='error' ng-if='form.server_error'>{{form.server_error}}</small>
             <loading size="small" show="form.processing"></loading>
             {{'users.enrollement_key_format' | translate}} 
             <br>

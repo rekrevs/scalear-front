@@ -56,7 +56,7 @@ angular.module('mm.foundation.accordion', [])
     restrict:'EA',
     controller:'AccordionController',
     transclude: true,
-    replace: false,
+    replace: true,
     templateUrl: 'template/accordion/accordion.html'
   };
 })

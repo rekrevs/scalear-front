@@ -5,5 +5,5 @@
 	<teacher-navigation modules="course.modules" links="course.custom_links" selectedmodule="course.selected_module" shortname="course.short_name"></teacher-navigation>
 </div>
 <div ng-if="current_user.roles[0].id == 2">
-	<student-navigation modules="course.groups" links="course.custom_links" selectedmodule="course.selected_module" shortname="course.short_name"></student-navigation>
+	<student-navigation modules="course.groups" links="course.custom_links" selectedmodule="course.selected_module" shortname="course.short_name" warning="course.warning_message"></student-navigation>
 </div>

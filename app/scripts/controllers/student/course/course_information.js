@@ -13,17 +13,18 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $scope.teachers = data.teachers;
-                        $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
+                        if($scope.course.discussion_link)
+                            $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
                     },
                     function() {}
                 )
             }
 
             $scope.goToContent=function(){
-                if($scope.last_viewed.module != -1){
-                    var params = {'module_id': $scope.last_viewed.module}    
-                    params[$scope.last_viewed.item.class_name+'_id'] = $scope.last_viewed.item.id
-                    $state.go('course.module.courseware.'+$scope.last_viewed.item.class_name, params)
+                if($scope.next_item.module != -1){
+                    var params = {'module_id': $scope.next_item.module}    
+                    params[$scope.next_item.item.class_name+'_id'] = $scope.next_item.item.id
+                    $state.go('course.module.courseware.'+$scope.next_item.item.class_name, params)
                 }
             }
 
@@ -112,14 +113,14 @@ angular.module('scalearAngularApp')
                 )
             }
 
-            if($state.params.redirect){
-                // $scope.$emit('open_navigator')
-                $scope.goToContent()
-            }
-            else{
+            // if($state.params.redirect){
+            //     // $scope.$emit('open_navigator')
+            //     $scope.goToContent()
+            // }
+            // else{
                 $scope.init();
                 $scope.init_calendar_announcements();
-            }
+            // }
 
             
 

@@ -98,7 +98,8 @@ angular.module('scalearAngularApp')
                         player = Popcorn(video,{});
                         video.src = scope.url
                         player.video.className = "fit-inside"
-                        player.controls(scope.controls);
+                        if(isiPad())
+                        	player.controls(true);
                         player.autoplay(scope.autoplay);
                     }
 					$log.debug("loading!!!")
@@ -108,7 +109,7 @@ angular.module('scalearAngularApp')
 					parent.focus()
 
 					scope.timeout_promise = $timeout(function(){
-						if(player_controls.readyState() == 0)
+						if(player_controls.readyState() == 0 && !(isiPad() && isMP4(scope.url)))
 							scope.$emit('slow', isYoutube(scope.url))
 					},15000)
 				}
@@ -262,7 +263,8 @@ angular.module('scalearAngularApp')
 					player.on("loadeddata", 
 						function(){
 							console.log("ready video yaahhh")
-							
+							if(isiPad())
+								player.controls(false);
 							$log.debug("Video data loaded")	
 							if(player_events.onReady){
 								player_events.onReady();
@@ -483,7 +485,7 @@ angular.module('scalearAngularApp')
 					"height":"",//(500*1.0/factor)+ 'px',
 					"margin-left": "0px",
 					"margin-top": "0px",
-					"z-index":1
+					"z-index":0
 				}
 
 				if($scope.container)

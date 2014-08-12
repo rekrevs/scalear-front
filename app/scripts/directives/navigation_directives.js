@@ -25,13 +25,13 @@ angular.module('scalearAngularApp')
 					return start_date.setDate(start_date.getDate()+(duration * 7));
 				}
 
-				scope.goToCourse=function(course){
-					if(scope.user.roles[0].id==2){
-						$state.go('course.course_information',{course_id: course.id, redirect:true})
-					}
-					else
-						$state.go('course.course_information',{course_id: course.id})
-				}
+				// scope.goToCourse=function(course){
+				// 	if(scope.user.roles[0].id==2){
+				// 		$state.go('course.course_information',{course_id: course.id, redirect:true})
+				// 	}
+				// 	else
+				// 		$state.go('course.course_information',{course_id: course.id})
+				// }
 			}
 		};
 	 }])
@@ -47,9 +47,25 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){
+				scope.filter= {confused:true, charts:true, discussion:true};
 				$rootScope.$watch('clipboard', function(){
 					scope.clipboard = $rootScope.clipboard
 				})
+
+				$rootScope.$on('open_navigator', function(){
+					scope.open_navigator=true
+				})
+
+				$rootScope.$on('close_navigator', function(){
+					scope.open_navigator=false
+				})
+
+
+				scope.toggleNavigator=function(){
+					scope.open_navigator = !scope.open_navigator
+					scope.$emit('navigator_change', scope.open_navigator)
+				}
+
 				scope.addModule=function(){
 					$rootScope.$broadcast('add_module')
 				}	
@@ -83,7 +99,16 @@ angular.module('scalearAngularApp')
 				}
 				scope.pasteItem = function(){
 					$rootScope.$broadcast('paste_item')
-				}			
+				}
+
+				scope.print=function(){
+					$rootScope.$broadcast('print')
+				}	
+
+				scope.updateFilter=function(type){
+					scope.filter[type] = !scope.filter[type]
+					$rootScope.$broadcast('filter_update', scope.filter)
+				}		
 			}
 		};
  }]).directive('studentNavigation', ['ErrorHandler', '$cookieStore', '$rootScope', '$state', 'Impersonate', function(ErrorHandler, $cookieStore, $rootScope, $state, Impersonate) {
@@ -94,14 +119,23 @@ angular.module('scalearAngularApp')
 			scope:{
 				modules:"=",
 				links:"=",
-        selectedmodule: "=",
-        shortname: "="
+		        selectedmodule: "=",
+		        shortname: "=",
+		        warning_message:"=warning"
 			},
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){
+				// scope.open_navigator = $rootScope.open_navigator
+				scope.filter={quiz:true,confused:true, discussion:true, note:true};
 				$rootScope.$watch('preview_as_student', function(){
 					scope.preview_as_student = $rootScope.preview_as_student
 				})
+
+				scope.toggleNavigator=function(){
+					scope.open_navigator = !scope.open_navigator
+					scope.$emit('open_navigator', scope.open_navigator)
+				}
+
 				scope.disablePreview=function(){
 	                if($cookieStore.get('preview_as_student')){
 	                  Impersonate.destroy(
@@ -135,6 +169,11 @@ angular.module('scalearAngularApp')
 	            scope.exportNotes=function(){
 	            	$rootScope.$broadcast("export_notes")
 	            }
+
+	            scope.updateFilter=function(type){
+					scope.filter[type] = !scope.filter[type]
+					$rootScope.$broadcast('filter_update', scope.filter)
+				}	
 			}
 		};
  }]).directive('userNavigation', ['ErrorHandler','$rootScope', 'User', 'Home',function(ErrorHandler,$rootScope, User, Home) {
@@ -277,8 +316,8 @@ angular.module('scalearAngularApp')
                
       scope.showItemCourseware = function(item){
   	 	var params = {'module_id': scope.currentmodule.id}    
-        params[item.class_name+'_id'] = item.id
-        $state.go('course.module.courseware.'+ item.class_name, params)
+        params[item.class_name.toLowerCase()+'_id'] = item.id
+        $state.go('course.module.courseware.'+ item.class_name.toLowerCase(), params)
         scope.currentitem = item.id
         // console.log(item)
         // // $timeout(function(){

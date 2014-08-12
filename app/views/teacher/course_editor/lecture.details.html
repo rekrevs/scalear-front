@@ -3,9 +3,9 @@
   		<loading size="small" show="true" style="position:relative; top:40%;" />
 	</span>
 </center>
-<div ng-hide="!lecture">
+<div class="small-12 medium-12" ng-hide="!lecture">
 	<h4 ><span translate>lectures.lecture_details</span>:</h4>
-	<table class="table" >
+	<table class="table small-12 medium-12 large-12">
 		<tr>
 			<td class="right-border"><span translate>lectures.title</span>:</td>
 			<td >
@@ -25,8 +25,8 @@
 		<tr ng-show="video.thumbnail">
 			<td colspan="2">
 				<center>
-					<span translate>lectures.video_preview</span>:
-				<div id="lecture_thumbnail" ng-bind-html="video.thumbnail"></div>
+					<span translate>lectures.video_preview</span>
+					<div id="lecture_thumbnail" ng-bind-html="video.thumbnail"></div>
 				</center>
 			</td>
 		</tr>

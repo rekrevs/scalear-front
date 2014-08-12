@@ -59,7 +59,7 @@ angular.module('scalearAngularApp')
 	// 			$log.debug($scope.course);
 	// 			$scope.today = data.today;	
 	// 			$scope.last_viewed = data.last_viewed
-	// 			$scope.module_obj = util.toObjectById($scope.course.groups)
+	// 			$scope.module_obj = scalear_utils.toObjectById($scope.course.groups)
 	// 			var classname = 'lecture'
 
 	// 		 	if($state.params.module_id)

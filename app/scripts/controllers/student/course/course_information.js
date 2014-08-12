@@ -8,16 +8,18 @@ angular.module('scalearAngularApp')
 
             $window.scrollTo(0, 0);
             $scope.init = function(){
-                Course.show({
-                    course_id: $stateParams.course_id
-                    },
-                    function(data) {
-                        $scope.teachers = data.teachers;
-                        if($scope.course.discussion_link)
-                            $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
-                    },
-                    function() {}
-                )
+                if($scope.course){
+                    Course.show({
+                        course_id: $stateParams.course_id
+                        },
+                        function(data) {
+                            $scope.teachers = data.teachers;
+                            if($scope.course.discussion_link)
+                                $scope.short_url = $scope.shorten($scope.course.discussion_link, 20)
+                        },
+                        function() {}
+                    )
+                }
             }
 
             $scope.goToContent=function(){
@@ -89,7 +91,7 @@ angular.module('scalearAngularApp')
                         for (var element in $scope.calendar.events){
                             console.log(new Date($scope.calendar.events[element].start))
                             $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
-                            $scope.calendar.events[element].title +=  ' @'+$filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+util.hour12($scope.calendar.events[element].start.getHours())
+                            $scope.calendar.events[element].title +=  ' @'+$filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+scalear_utils.hour12($scope.calendar.events[element].start.getHours())
                             if($scope.calendar.events[element].quizId)
                                 $scope.calendar.events[element].url= $state.href("course.module.courseware.quiz",{course_id: $scope.calendar.events[element].courseId, module_id:$scope.calendar.events[element].groupId ,quiz_id:$scope.calendar.events[element].quizId})
                             else if($scope.calendar.events[element].lectureId)

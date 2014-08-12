@@ -208,9 +208,9 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 }
 
 .main_content{
-	overflow-y:auto; 
+	/*overflow-y:auto; */
 	overflow-x:hidden; 
-	height:700px;
+	/*height:700px;*/
 	/*height:100%; 
 	width:100%;*/
 	/*margin-left:20px;*/

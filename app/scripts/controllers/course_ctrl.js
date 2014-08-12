@@ -1,9 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-
-.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'util','course_data','$state', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, util,course_data,$state) {
- 	
+.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'scalear_utils','course_data', '$state', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, scalear_utils,course_data, $state) {
  	angular.extend($scope.$parent, course_data)
  	if($state.includes("**.course")){
 	 	if($rootScope.current_user.roles[0].id == 2){
@@ -23,7 +21,7 @@ angular.module('scalearAngularApp')
 	    
 	// }
 
-}]).factory('courseResolver',['$rootScope', '$stateParams', 'Course', '$log', '$cookieStore', 'util','$q', function($rootScope, $stateParams, Course, $log, $cookieStore, util,$q){
+}]).factory('courseResolver',['$rootScope', '$stateParams', 'Course', '$log', '$cookieStore', 'scalear_utils','$q', function($rootScope, $stateParams, Course, $log, $cookieStore, scalear_utils,$q){
 	var x={
 	 	init:function(id){
 		 	var deferred = $q.defer();
@@ -82,7 +80,7 @@ angular.module('scalearAngularApp')
 					$scope.course.custom_links = data.links
 					$scope.today = data.today;	
 					$scope.next_item = data.next_item
-					$scope.module_obj = util.toObjectById($scope.course.groups)
+					$scope.module_obj = scalear_utils.toObjectById($scope.course.groups)
 					deferred.resolve($scope); 
 				},
 			 	function(){

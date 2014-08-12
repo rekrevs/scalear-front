@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','util','$translate','Timeline','Page', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, util,$translate, Timeline,Page) {
+  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page) {
     $window.scrollTo(0, 0);
     Page.setTitle('head.in_class')
     $scope.inclass_player={}
@@ -153,8 +153,8 @@ angular.module('scalearAngularApp')
     }
 
     var adjustModuleItems=function(){
-      var lec_id = util.getKeys($scope.lectures)
-      var survey_id = util.getKeys($scope.quizzes)
+      var lec_id = scalear_utils.getKeys($scope.lectures)
+      var survey_id = scalear_utils.getKeys($scope.quizzes)
       for(var i=0; i<$scope.module.items.length; i++){
         if ($scope.module.items[i].class_name == 'lecture'){          
           if(lec_id.indexOf($scope.module.items[i].id.toString()) == -1){  

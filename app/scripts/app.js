@@ -68,6 +68,7 @@ angular.module('scalearAngularApp', [
     // 'mm.foundation.transition',
     // 'mm.foundation.typeahead',
     // 'mm.foundation.topbar',
+    'Mac',
     'ngScrollSpy',
     'sticky'
     // 'ngAnimate'
@@ -223,7 +224,7 @@ angular.module('scalearAngularApp', [
 
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider',
     function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider) {
-        // cfpLoadingBarProvider.color = 'red';
+        cfpLoadingBarProvider.includeSpinner = false;
         console.log(cfpLoadingBarProvider)
 
         $logProvider.debugEnabled(false)

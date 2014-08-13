@@ -5,13 +5,14 @@ angular.module('scalearAngularApp')
         // $scope.$parent.not_module = false;
         // $scope.$parent.currentmodule = $state.params.module_id
         // $scope.$parent.currentitem = -1
-        $scope.$watch('course.selected_module', function(){
+        var unwatch =$scope.$watch('course.selected_module', function(){
             if($scope.course && $scope.course.selected_module){
                 $scope.module=$scope.course.selected_module
                 if($scope.module.due_date)
                         $scope.module.due_date_enabled =!isDueDateDisabled()
             }
             init();
+            unwatch()
         })
         var init = function(){
             // console.log($scope.course.selected_module)

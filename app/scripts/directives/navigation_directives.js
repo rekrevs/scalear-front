@@ -152,7 +152,9 @@ angular.module('scalearAngularApp')
 	                      $cookieStore.remove('old_user_id')
 	                      $cookieStore.remove('new_user_id')
 	                      $cookieStore.remove('course_id')
-	                      $state.go('course.edit_course_information', {course_id: course_id})
+	                      $rootScope.current_user= null
+	                      $state.go('course.edit_course_information', {course_id: course_id},{reload:true})
+			              $rootScope.$broadcast('get_all_courses')
 	                    },
 	                    function(){
 	                      console.log("bad")

@@ -17,10 +17,6 @@ angular.module('scalearAngularApp')
 	 		$state.go('course.edit_course_information', {course_id:$scope.course.id})
 	 }
 
- // 	$scope.goToContent=function(){
-	    
-	// }
-
 }]).factory('courseResolver',['$rootScope', '$stateParams', 'Course', '$log', '$cookieStore', 'scalear_utils','$q', function($rootScope, $stateParams, Course, $log, $cookieStore, scalear_utils,$q){
 	var x={
 	 	init:function(id){
@@ -28,10 +24,11 @@ angular.module('scalearAngularApp')
             var unwatch = $rootScope.$watch('current_user', function(){
                 if($rootScope.current_user && $rootScope.current_user.roles){
                     unwatch()
-                    if($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5)
+                    if($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5){
                         x.getTeacherData(id).then(function(data){
                             deferred.resolve(data); 
                         })
+                    }
                     else if($rootScope.current_user.roles[0].id == 2){
                         x.getStudentData(id).then(function(data){
                             deferred.resolve(data); 

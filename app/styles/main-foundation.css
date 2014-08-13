@@ -362,6 +362,22 @@ font-weight: 300 !important
   margin-right: 0.25rem !important;
 }
 
+.with-small-margin{
+  margin: 0.50rem !important;
+}
+.with-small-margin-top{
+  margin-top: 0.50rem !important;
+}
+.with-small-margin-bottom{
+  margin-bottom: 0.50rem !important;
+}
+.with-small-margin-left{
+  margin-left: 0.50rem !important;
+}
+.with-small-margin-right{
+  margin-right: 0.50rem !important;
+}
+
 .with-margin-bottom{
 	margin-bottom: 1.25rem !important;
 }

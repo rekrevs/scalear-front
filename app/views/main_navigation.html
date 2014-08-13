@@ -150,7 +150,7 @@
 					<a class="white-hover color-green-hover size-18-light" ui-sref="show_shared" translate>sharing.view</a>
 				</li>
 				<!-- <li class="divider"></li> -->
-				<li ng-if="user.invitations != 0 && user.shared != 0" has-dropdown>
+				<li ng-hide="user.invitations == 0 && user.shared == 0" has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="notifications" href="" translate>navigation.notifications</a>
 					<ul top-bar-dropdown>
 						<li><label class="light-grey color-grey" translate>navigation.notifications</label></li>

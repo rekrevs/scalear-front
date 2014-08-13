@@ -1,4 +1,4 @@
-<div ng-if="'**.course_editor.**' | includedByState" class="disable_selection text-right" ng-class="{currentmodule: current}" style="padding: 5px; min-height: 35px;" >
+<div ng-if="'**.course_editor.**' | includedByState" class="disable_selection text-right" ng-class="{currentmodule: current}" style="padding: 5px; min-height: 35px;">
 	<img class='left handle with-tiny-margin' src='images/move2.png' bindonce bo-title="'courses.drag_to_reorder'|translate" />
 	<div class="truncate-70 show-inline left text-left" ng-click="selectModule()">{{module.name}}</div>
 	<i class="fi-link with-tiny-margin-right" ng-click="toggleLink($event)"></i>
@@ -7,7 +7,7 @@
 	<input class="small-12 columns module_link" type="text" ng-show="link_url" ng-model="link_url"/>
 </div>
 
-<div ng-if="!('**.course_editor.**' | includedByState)" class="disable_selection text-right" ng-class="{currentmodule: current}" style="padding: 5px; min-height: 35px;" >
-	<div class="truncate-70 show-inline left text-left" ng-click="selectModule()" bindonce bo-text="module.name"></div>
+<div ng-if="!('**.course_editor.**' | includedByState)" class="disable_selection text-right" ng-class="{currentmodule: current}" style="padding: 5px; min-height: 35px;" ng-click="selectModule()">
+	<div class="truncate-70 show-inline left text-left" bindonce bo-text="module.name"></div>
 </div>
 

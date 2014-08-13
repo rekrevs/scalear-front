@@ -6,6 +6,6 @@
 	<input class="small-12 columns item_link" type="text" ng-show="link_url" ng-model="link_url" style="top:0" />
 </li>
 
-<li ng-if="!('**.course_editor.**' | includedByState)" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;">
-	<div class="truncate-70 show-inline valign-middle left text-left" ng-click="selectItem()" bindonce bo-text="item.name"></div>
+<li ng-if="!('**.course_editor.**' | includedByState)" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;" ng-click="selectItem()">
+	<div class="truncate-70 show-inline valign-middle left text-left" bindonce bo-text="item.name"></div>
 </li>

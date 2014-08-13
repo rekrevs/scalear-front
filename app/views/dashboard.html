@@ -14,7 +14,7 @@
 </style>
 <span ng-show="eventSources.length">
 	<div class="small-12 large-8 columns" ng-show="events.length">
-		<h3 ng-show="events.length"><i class="fi-loop size-30"></i> {{'whats_new' | translate}}</h3>
+		<h3 ng-show="events.length"><i class="fi-loop size-30"></i> <span translate>whats_new</span></h3>
 		<!-- <news-feed events="events"></news-feed> -->
 		<event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event"></event-item>
 	</div>

@@ -437,6 +437,7 @@ angular.module('scalearAngularApp')
                 doc.link.url = "http://"
                 // $scope.module.custom_links.push(doc.link)
                 $scope.course.custom_links.push(doc.link)
+                $scope.$emit('open_navigator')
             }, 
             function(){}
         );

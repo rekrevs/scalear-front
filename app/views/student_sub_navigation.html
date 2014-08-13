@@ -18,7 +18,7 @@
               <ul top-bar-dropdown>
                 <li ng-show="preview_as_student">
                     <a class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="disablePreview()">
-                        {{'preview_as_student'| translate}}
+                        <span translate>preview_as_student</span>{
                         <h5 class="dark-description">
                             <small>
                                 Click to exit Preview Mode    
@@ -30,18 +30,19 @@
                     <li>
                       <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('note')">
                           <input id="showNotesCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.note" />
-                          {{'course_settings.show_notes' | translate}}
+                          <span translate>course_settings.show_notes</span>
                       </a>
                   </li>
                   <li>
                       <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('discussion')">
                           <input id="showQuestionsCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.discussion" />
-                          {{'course_settings.show_questions' | translate}}
+                          <span translate>course_settings.show_questions</span>
                       </a>
                   </li>
                   <li>
                       <a class="whitesmoke-hover dark-text sub-header-component" ng-click="updateFilter('quiz')">
                           <input id="showQuizzesCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.quiz" />
+                          <span translate>course_settings.show_quizzes</span>
                           {{'course_settings.show_quizzes' | translate}}
                       </a>
                   </li>
@@ -53,7 +54,7 @@
                   </li>
                   <li>
                       <a class="whitesmoke-hover dark-text sub-header-component" ng-click="exportNotes()">
-                          {{'lectures.download_notes' | translate}}
+                          <span translate>lectures.download_notes</span>
                       </a>
                   </li>
                 </span>

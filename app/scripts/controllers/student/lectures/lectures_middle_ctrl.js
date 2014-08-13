@@ -480,6 +480,8 @@ angular.module('scalearAngularApp')
 
     $scope.addNote=function(){
         var time=$scope.lecture_player.controls.getTime()
+        console.log($state.params.lecture_id)
+        console.log($scope.timeline['lecture'])
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note",  null);
         $scope.lecture_player.controls.pause();
         $scope.fullscreen= false

@@ -49,19 +49,28 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="right-border"><span translate>courses.required</span>:</td>
+			<td class="right-border">
+				<span translate>settings.settings</span>:
+				<i class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /> <span class='color-red'>Required: </span>Students must complete this item to complete the module</i>" tooltip-append-to-body="true"></i>
+			</td>
 			<td>
-				<details-check checked="lecture.required" save="updateLecture()" yes="{{'lectures.lecture_required'|translate}}" no="{{'lectures.lecture_not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateLecture" column="required"></details-check> 
+				<details-check checked="lecture.required" save="updateLecture()" yes="{{'courses.in_order'|translate}}" no="{{'lectures.not_in_order'|translate}}" title="{{'courses.in_order'|translate}}?" validate="validateLecture" column="required" ></details-check> 
 				<br />
+				<details-check checked="lecture.graded" save="updateLecture()" yes="{{'courses.required'|translate}}" no="{{'lectures.not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateLecture" column="graded"></details-check> 
+				<!-- <input type="checkbox" ng-checked="lecture.required">
+				<span class="size-12" translate>courses.required</span> -->
+				
+				<!-- <input type="checkbox" ng-checked="lecture.graded">
+				<span class="size-12" translate>courses.graded</span> -->
 			</td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td class="right-border"><span translate>courses.graded</span>:</td>
 			<td>
 				<details-check checked="lecture.graded" save="updateLecture()" yes="{{'lectures.lecture_graded'|translate}}" no="{{'lectures.lecture_not_graded'|translate}}" title="{{'courses.graded'|translate}}?" validate="validateLecture" column="graded"></details-check> 
 				<br />
 			</td>
-		</tr>
+		</tr> -->
 
 		<!-- <tr>
 			<td><span translate>lectures.detected_aspect_ratio</span>:</td>

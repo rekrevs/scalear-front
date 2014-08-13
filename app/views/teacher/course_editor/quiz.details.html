@@ -14,17 +14,25 @@
 			</td>
 		</tr>
 		<tr >
-			<td class="right-border"><span translate>courses.required</span>:</td>
+			<td class="right-border"><span translate>settings.settings</span>:
+				<i ng-if="quiz.quiz_type=='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /> <span class='color-red'>Required: </span>Students must complete this item to complete the module</i>" tooltip-append-to-body="true"></i>
+				<i ng-if="quiz.quiz_type!='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /></i>" tooltip-append-to-body="true"></i>
+			</td>
 			<td>
-				<details-check checked="quiz.required" save="updateQuiz()" yes="{{'lectures.quiz_required'|translate}}" no="{{'lectures.quiz_not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="required"></details-check> <br />
-				</td>
+				<details-check checked="quiz.required" save="updateQuiz()" yes="{{'courses.in_order'|translate}}" no="{{'lectures.not_in_order'|translate}}" title="{{'courses.in_order'|translate}}?" validate="validateQuiz" column="required" ></details-check> 
+				<br />
+				<span ng-if="quiz.quiz_type=='quiz'" ><details-check checked="quiz.graded" save="updateQuiz()" yes="{{'courses.required'|translate}}" no="{{'lectures.not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="graded"></details-check></span>
+
+
+				<!-- <details-check checked="quiz.required" save="updateQuiz()" yes="{{'lectures.quiz_required'|translate}}" no="{{'lectures.quiz_not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="required"></details-check> <br /> -->
+			</td>
 		</tr>
-		<tr ng-if="quiz.quiz_type=='quiz'">
+		<!-- <tr ng-if="quiz.quiz_type=='quiz'">
 			<td class="right-border"><span translate>courses.graded</span>:</td>
 			<td>
 				<details-check checked="quiz.graded" save="updateQuiz()" yes="{{'lectures.quiz_graded'|translate}}" no="{{'lectures.quiz_not_graded'|translate}}" title="{{'courses.graded'|translate}}?" validate="validateQuiz" column="graded"></details-check> <br />
 				</td>
-		</tr>
+		</tr> -->
 		<tr ng-if="quiz.quiz_type=='quiz'">
 			<td class="right-border"><span translate>courses.retries</span>:</td>
 			<td>

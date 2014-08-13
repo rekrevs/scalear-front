@@ -1,17 +1,17 @@
 <div style="overflow:auto; position: absolute; width: 95%;height:90%"> <!-- has all discussions -->      
     <div ng-repeat="l in lectures" class='dimmed' style="min-width: 95%;" ng-class="{lectureopen: l.id == lecture.id}" id={{"outline_"+l.id}}> 
         <h5 class="light-grey" ng-click="seek()(null, l.id)" style="cursor:pointer; margin-bottom: 0px;">{{l.name}} 
-        <span class="label round alert with-tiny-padding with-tiny-margin-right right" ng-show="l.required" translate>courses.required</span>
-        <span class="label round success with-tiny-padding with-tiny-margin-right right" ng-show="l.graded" translate>courses.graded</span></h3>
+        <!-- <span class="label round alert with-tiny-padding with-tiny-margin-right right" ng-show="l.required" translate>courses.required</span> -->
+        <span class="label round blue with-tiny-padding with-tiny-margin-right right" ng-show="!l.graded" translate>optional</span></h5>
         <div style="margin-left: 20px;">
             <span ng-if="l.description">
-                <h6 class="subheader uppercase">{{'lectures.description' | translate}}</h5>
+                <h6 class="subheader uppercase" translate>lectures.description</h6>
                 <p class="dark-text">
                     {{l.description}}
                 </p>
             </span>
             <span ng-if="l.slides && l.slides != 'none'">
-                <h6 class="subheader uppercase">{{'lectures.slides' | translate}}</h5>
+                <h6 class="subheader uppercase" translate>lectures.slides</h6>
                 <p class="truncate">
                     <a href="{{l.slides | formatURL}}" style="word-wrap: break-word;">{{l.slides | formatURL}}</a>
                 </p>

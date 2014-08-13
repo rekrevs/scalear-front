@@ -136,12 +136,12 @@ angular.module('scalearAngularApp')
 		        scope.numbers.push(i);
 		    }
   	 		var template = "<div style='min-width: 244px;'>"+
-  	 						"<label>{{'courses.time_per_quiz' | translate}}<select ng-model='time_quiz' ng-options='i for i in numbers'></select></label>"+
-  	 						"<label>{{'courses.quizzes_for_review' | translate}}: {{quiz_count}}</label>"+
-  	 						"<label>{{'courses.time_per_question' | translate}}<select ng-model='time_question' ng-options='i for i in numbers'></select></label>"+	  	 						
-  	 						"<label>{{'courses.questions_for_review' | translate}}: {{question_count}}</label>"+
+  	 						"<label><span translate>courses.time_per_quiz</span><select ng-model='time_quiz' ng-options='i for i in numbers'></select></label>"+
+  	 						"<label><span translate>courses.quizzes_for_review</span>: {{quiz_count}}</label>"+
+  	 						"<label><span translate>courses.time_per_question</span><select ng-model='time_question' ng-options='i for i in numbers'></select></label>"+	  	 						
+  	 						"<label><span translate>ourses.questions_for_review</span>: {{question_count}}</label>"+
   	 						"<label translate>formula</label>:"+
-  	 					    "<h4 class='subheader'><small>( #{{'courses.quizzes_for_review' | translate}}  * {{time_quiz}} ) + ( #{{'courses.questions_for_review' | translate}} * {{time_question}} )<small></h4>"+
+  	 					    "<h4 class='subheader'><small>( #<span translate>courses.quizzes_for_review</span> * {{time_quiz}} ) + ( #<span translate>courses.questions_for_review</span> * {{time_question}} )<small></h4>"+
   	 					   "</div>"
 
            	scope.popover_options={

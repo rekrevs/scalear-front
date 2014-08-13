@@ -475,7 +475,7 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<div class='row'>"+
-						"<div class='small-10 columns'>"+
+						"<div class='small-8 columns'>"+
 							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
 							"<small class='error' ng-show='submitted && aform.answer.$error.required'><span translate>courses.required</span>!</small>"+
 							"<small class='error' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
@@ -485,7 +485,7 @@ angular.module('scalearAngularApp')
 						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
 							"<input ng-change='updateValues()' atleastone type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+
 						"</div>"+
-						"<div class='small-1 columns'>"+
+						"<div class='small-2 columns'>"+
 							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
 						"</div>"+
 					"</div>"+
@@ -497,7 +497,7 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<div class='row'>"+
-						"<div class='small-10 columns'>"+
+						"<div class='small-8 columns'>"+
 							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
 							"<small class='error' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
 							"<small class='error' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
@@ -506,7 +506,7 @@ angular.module('scalearAngularApp')
 						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
 							"<input id='radio_correct' atleastone type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
 						"</div>"+
-						"<div class='small-1 columns'>"+
+						"<div class='small-2 columns'>"+
 							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+
 						"</div>"+
 					"</div>"+
@@ -534,11 +534,11 @@ angular.module('scalearAngularApp')
 							"<div class='small-1 columns'>"+
 								"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item' ></span>"+
 							"</div>"+
-							"<div class='small-10 columns'>"+
+							"<div class='small-8 columns'>"+
 								"<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' style='margin-bottom:0'/>"+
 								"<small class='error' ng-show='submitted && aform.answer.$error.required && !hide_valid' ><span translate>courses.required</span>!</small>"+
 							"</div>"+
-							"<div class='small-1 columns'>"+
+							"<div class='small-2 columns'>"+
 								"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' />"+
 							"</div>"+
 						"</div>"+

@@ -278,7 +278,7 @@ angular.module('scalearAngularApp', [
             })
             .state('confirmed', {
                 url: '/users/confirmed',
-                templateUrl: 'views/users/confirmed.html',
+                templateUrl: '/views/users/confirmed.html',
                 controller: 'UsersConfirmedCtrl'
             })
             .state('edit_account', {

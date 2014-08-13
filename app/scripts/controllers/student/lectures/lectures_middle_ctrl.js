@@ -130,6 +130,13 @@ angular.module('scalearAngularApp')
                 console.log("lecture")
                 console.log(data)
                 $scope.alert_messages = data.alert_messages;
+                if(data.done[2]){
+                    var group_index= scalear_utils.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+                    var lecture_index= scalear_utils.getIndexById($scope.course.groups[group_index].lectures, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                    if(lecture_index!=-1 && group_index!=-1)
+                        $scope.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
+                        $scope.lecture.is_done = data.done[2]
+                }
                 for(var key in $scope.alert_messages){
                     if(key=="due")
                         $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
@@ -603,7 +610,7 @@ angular.module('scalearAngularApp')
             var lecture_index= scalear_utils.getIndexById($scope.course.groups[group_index].lectures, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
             if(lecture_index!=-1 && group_index!=-1)
                 $scope.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
-            $scope.lecture.is_done = data.done[2]
+                $scope.lecture.is_done = data.done[2]
         }
 
         $interval(function(){

@@ -438,9 +438,8 @@ angular.module('scalearAngularApp')
 				scope.updateValues();
 			}
 			
-			scope.show = function()
-			{
-				 return ("content" in scope.quiz)
+			scope.show = function(){
+				 return ("time" in scope.quiz)
 			}
 			
 			scope.$watch('quiz.answers', function(){

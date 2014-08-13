@@ -47,6 +47,10 @@ footer{
 	top: 50% !important;
 }
 
+span.error, small.error{
+  margin-bottom: 0
+}
+
 /*MODAL*/
 .reveal-modal{
 	/*position: absolute !important;*/

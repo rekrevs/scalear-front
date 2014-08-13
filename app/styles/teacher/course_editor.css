@@ -251,7 +251,7 @@ ul.accordion ul {
   text-align: center;
 }
 
-.editable-input.editable-has-buttons{
+input[type="checkbox"].editable-input.editable-has-buttons{
 	width:12px !important;
 }
 

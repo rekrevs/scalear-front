@@ -602,7 +602,7 @@ angular.module('scalearAngularApp')
             });
         }
         scope.link_content = {
-        	content: "<div style='word-break: break-all;'>"+scope.link()+"</div>",
+        	content: "<div style='word-break: break-all;'>{{link()}}</div>",
         	html:true,
         	fullscreen:false,
         	placement: 'left'

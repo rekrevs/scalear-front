@@ -45,18 +45,18 @@ exports.config = {
     // Spec patterns are relative to the location of this config.
     specs: [
 
-        // 'test/e2e/spec/create-course-check-info.spec.js',
+        // 'test/e2e/spec/create-course-check-info.spec.js',//<x>
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',
-        'test/e2e/spec/free-text-quizzez-over-video-text.spec.js',
-        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',
-        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
-        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',
-        // 'test/e2e/spec/ocq-quizzez-over-video.spec.js',
-        // 'test/e2e/spec/mcq-survey-over-video.spec.js',
-        // 'test/e2e/spec/ocq-survey-over-video.spec.js',
-        // 'test/e2e/spec/student-lectures.spec.js',
-        // 'test/e2e/spec/calendar-teacher-student.spec.js',
+        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //<x>
+        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//<x>
+        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',//<x>
+        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',//<x>
+        // 'test/e2e/spec/ocq-quizzez-over-video.spec.js',//<x>
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js',//<x>
+        // 'test/e2e/spec/ocq-survey-over-video.spec.js',//<x>
+        // 'test/e2e/spec/student-lectures.spec.js',//<x>
+        // 'test/e2e/spec/calendar-teacher-student.spec.js',//<x>
 
         
         // 'test/e2e/spec/teacher-managment.spec.js',

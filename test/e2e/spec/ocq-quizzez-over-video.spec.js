@@ -85,7 +85,6 @@ describe("2", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -142,7 +141,7 @@ describe("2", function(){
 	})
 })
 
-xdescribe("3", function(){
+describe("3", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -161,7 +160,6 @@ xdescribe("3", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -169,19 +167,20 @@ xdescribe("3", function(){
 	})
 
 	it('should create quiz', function(){
-		youtube.seek(ptor, 49);
-		create_ocq_quiz(ptor, o_c.feedback);
-		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y, o_c.feedback);
+		youtube.seek(ptor, 21);
+		create_ocq_quiz(ptor);
+		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y);
 	})
 
 	it('should login a student and check for no of ocqs ', function(){
 		o_c.to_student(ptor);
-		o_c.open_course_whole(ptor);
-		o_c.open_tray(ptor);
-		o_c.open_lectures(ptor);
-		youtube.seek(ptor, 49);
+		o_c.open_course_list(ptor);
+		o_c.open_course_whole(ptor, 0);
+		o_c.press_content_navigator(ptor);
+		teacher.open_module(ptor, 1);
+		o_c.press_content_navigator(ptor);
+		youtube.seek(ptor, 21);
 		expect_quiz(ptor);
-		check_ocq_no(ptor, 3);
 	})
 
 	it('should answer ocq quiz correctly',function(){

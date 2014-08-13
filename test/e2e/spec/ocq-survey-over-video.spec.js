@@ -36,7 +36,6 @@ xdescribe("1", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -85,7 +84,6 @@ describe("2", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -163,7 +161,6 @@ describe("3", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -321,11 +318,11 @@ function make_ocq_survey_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x,
 
                 ontop.findElements(protractor.By.tagName('input')).then(function(check_boxes){
                     check_boxes[0].getLocation().then(function(loc){
-                        expect(loc.x-location.x).toBeLessThan(Math.floor((w*q1_x)/ontop_w));
-                        expect(loc.y-location.y).toBeLessThan(Math.floor((h*q1_y)/ontop_h));
+                        expect(loc.x).toBeLessThan(Math.floor((w*q1_x)/ontop_w));
+                        expect(loc.y).toBeLessThan(Math.floor((h*q1_y)/ontop_h));
 
-                        expect(loc.x-location.x).toBeGreaterThan(Math.floor((w*q1_x)/ontop_w)-10);
-                        expect(loc.y-location.y).toBeGreaterThan(Math.floor((h*q1_y)/ontop_h)-10);
+                        expect(loc.x).toBeGreaterThan(Math.floor((w*q1_x)/ontop_w)-10);
+                        expect(loc.y).toBeGreaterThan(Math.floor((h*q1_y)/ontop_h)-10);
                     })
 
                     check_boxes[1].getLocation().then(function(loc){

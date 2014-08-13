@@ -22,7 +22,7 @@ var discussion_link_shrt_ch = 'www.discu';
 var course_date = new Date();
 var date = course_date.toString();
 
-xdescribe("teacher create course check info", function(){
+describe("teacher create course check info", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);

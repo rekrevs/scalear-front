@@ -29,7 +29,6 @@ describe('1', function(){
         o_c.open_course_list(ptor);
         o_c.open_course_whole(ptor, 0);
         teacher.add_module(ptor);
-        o_c.press_content_navigator(ptor);
         teacher.open_module(ptor, 1);
         teacher.create_lecture(ptor);           
         o_c.press_content_navigator(ptor);
@@ -88,7 +87,6 @@ describe("2", function(){
         o_c.open_course_list(ptor);
         o_c.open_course_whole(ptor, 0);
         teacher.add_module(ptor);
-        o_c.press_content_navigator(ptor);
         teacher.open_module(ptor, 1);
         teacher.create_lecture(ptor);           
         o_c.press_content_navigator(ptor);
@@ -144,7 +142,6 @@ describe("3", function(){
         o_c.open_course_list(ptor);
         o_c.open_course_whole(ptor, 0);
         teacher.add_module(ptor);
-        o_c.press_content_navigator(ptor);
         teacher.open_module(ptor, 1);
         teacher.create_lecture(ptor);           
         o_c.press_content_navigator(ptor);
@@ -202,7 +199,6 @@ describe("4", function(){
         o_c.open_course_list(ptor);
         o_c.open_course_whole(ptor, 0);
         teacher.add_module(ptor);
-        o_c.press_content_navigator(ptor);
         teacher.open_module(ptor, 1);
         teacher.create_lecture(ptor);           
         o_c.press_content_navigator(ptor);

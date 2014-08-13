@@ -7,7 +7,7 @@ var youtube = require('./lib/youtube.js');
 var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
-
+//<x>
 xdescribe("1", function(){
 
 	it('should sign in as teacher', function(){
@@ -27,7 +27,7 @@ xdescribe("1", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
+		// o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -80,8 +80,8 @@ xdescribe("1", function(){
 		teacher.delete_course(ptor, 1);
 	})
 })
-
-describe("2", function(){
+//<x>
+xdescribe("2", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -152,7 +152,7 @@ describe("2", function(){
 		teacher.delete_course(ptor, 1);
 	})
 })
-
+//<x>
 xdescribe("3", function(){
 	
 	it('should sign in as teacher', function(){
@@ -172,7 +172,6 @@ xdescribe("3", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -224,7 +223,7 @@ xdescribe("3", function(){
 		teacher.delete_course(ptor, 1);
 	})
 })
-
+//<x>
 xdescribe("4", function(){
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -243,7 +242,6 @@ xdescribe("4", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -295,8 +293,8 @@ xdescribe("4", function(){
 		teacher.delete_course(ptor, 1);
 	})
 })
-
-xdescribe("5", function(){
+//<x>
+describe("5", function(){
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
@@ -314,7 +312,6 @@ xdescribe("5", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);

@@ -22,7 +22,7 @@ var mcq_q2_y = 157; //133-6;
 var mcq_q3_x = 169; //175-6;
 var mcq_q3_y = 187; //133-6;
 
-describe("1", function(){
+xdescribe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -90,7 +90,6 @@ describe("2", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
@@ -168,7 +167,6 @@ describe("3", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course_whole(ptor, 0);
 		teacher.add_module(ptor);
-		o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.create_lecture(ptor);			
 		o_c.press_content_navigator(ptor);

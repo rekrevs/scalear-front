@@ -21,7 +21,7 @@
 	</table>	
 </div> -->
 <div ng-if="'**.course_editor.**' | includedByState" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:10px;margin:3px 0;">
-	<div class="small-1 columns"><img src="images/link_item.png" height="40px" style="vertical-align: top;" bo-class="{'link_img_small':small}"/></div>
+	<div class="small-1 columns with-small-margin-right"><img src="images/link_item.png" height="40px" style="vertical-align: top;" bo-class="{'link_img_small':small}"/></div>
 	<div class="small-8 columns" bo-class="{'link_item_small':small}" style="margin-bottom:5px">
 		<div class="small-12 columns">
 			<details-text value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
@@ -30,8 +30,8 @@
 			<details-link value="link.url" save="update(link)" validation="validate" elem="link"></details-link>
 		</div>
 	</div>
-	<div class="small-1 columns" style="padding:0" ng-if="'**.course_editor.**' | includedByState">
-		<delete_button size="small" color='dark' action="remove(link)"></delete_button>
+	<div class="small-2 columns" style="padding:0" ng-if="'**.course_editor.**' | includedByState">
+		<delete_button size="small" vertical="true" color='dark' action="remove(link)"></delete_button>
 	</div>
 </div>
 

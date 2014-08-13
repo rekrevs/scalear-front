@@ -16,10 +16,10 @@
 				<i class="fi-calendar size-21"></i> <small class="truncate" title="{{course.start_date | amDateFormat:'MMMM Do YYYY'}}">{{course.start_date | amDateFormat:'MMMM Do YYYY'}}</small>
 			</div>
 			<div class="small-4 columns" ng-class="{'small-6': !course.ended}">
-				<i class="fi-clock size-21"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
+				<i class="fi-clock size-21"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} <span translate>courses.weeks</span></small>
 			</div>
 			<div class="small-4 columns" ng-if="course.ended">
-				<i class="fi-check size-21"></i> <small class="truncate" title="{{'finished' | translate}}">{{'finished' | translate}}</small>
+				<i class="fi-check size-21"></i> <small class="truncate" title="{{'finished' | translate}}"><span translate>finished</span></small>
 			</div>
 		</div>
   	</div>

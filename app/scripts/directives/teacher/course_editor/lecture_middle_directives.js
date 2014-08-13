@@ -176,7 +176,7 @@ angular.module('scalearAngularApp')
 			var template =""
 			if(scope.quiz.quiz_type == 'survey')
 				template = "<form name='aform'>"+								
-								"<label><span translate>groups.answer<h6><small translate>lectures.shown_in_graph</small></h6>"+ 
+								"<label><span translate>groups.answer</span><h6><small translate>lectures.shown_in_graph</small></h6>"+ 
 								"<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
 								"</label>"+
@@ -184,14 +184,14 @@ angular.module('scalearAngularApp')
 							"</form>"
 			else
 				template = "<form name='aform'>"+
-								"<label>{{'lectures.correct' | translate}}"+
+								"<label><span translate>lectures.correct</span>"+
 								"<input class='must_save_check' ng-class='{error: aform.mcq.$error.atleastone}' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/>"+
 								"<small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 								"</label><label><span translate>groups.answer</span>"+
 								"<h6 class='subheader'><small translate>lectures.shown_in_graph</small></h6>"+ 
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
-								"</label><label><span>lectures.explanation</span>"+
+								"</label><label><span translate>lectures.explanation</span>"+
 								"<h6 class='subheader'><small translate>lectures.shown_to_student</small></h6>"+
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>"+
 								"</label>"+
@@ -221,7 +221,7 @@ angular.module('scalearAngularApp')
 		 					"<div class='input-prepend'>"+
 		 						"<span class='position-header error light-grey dark-text no-margin'>{{data.pos}}</span>"+
 			 					"<textarea class='area' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 14px; min-height: 40px; min-width: 40px;' ng-style=\"{max_width: width, max_height: height}\" ng-class=\"{error: !data.answer}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required/>"+
-			 					"<small class='error' ng-show=\"!data.answer\">{{'courses.required' | translate}}</small>"+
+			 					"<small class='error' ng-show=\"!data.answer\" translate>courses.required</small>"+
 		 					"</div>"+
 	 					"</div>"+
 

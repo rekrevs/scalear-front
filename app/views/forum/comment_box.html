@@ -1,4 +1,4 @@
 <span style="margin-top: 5px;">
-	<a href="" ng-hide="showfield" ng-click="toggleField()">{{'discussion.comment' | translate}}</a>
+	<a href="" ng-hide="showfield" ng-click="toggleField()" translate>discussion.comment</a>
 	<textarea name="comment_area" ng-show="showfield" style="overflow: hidden;padding: 4px; width: 90%; resize: none;" ng-model="comment" placeholder="{{'discussion.write_comment' | translate}}" ng-auto-expand ng-enter="submitComment()" ng-blur="hideField()" autofocus></textarea>
 </span>

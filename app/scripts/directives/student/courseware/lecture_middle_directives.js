@@ -721,6 +721,7 @@ angular.module('scalearAngularApp')
 
                 scope.$on('$destroy', function() {
                   shortcut.remove("enter");
+                  shortcut.remove("esc");
                 });
 
                 scope.moveCursorToEnd=function(){
@@ -732,6 +733,9 @@ angular.module('scalearAngularApp')
                   });
 
                   shortcut.add("enter", function(){
+                    $('form.editable-textarea').submit();
+                  }, {"disable_in_input" : false});
+                  shortcut.add("esc", function(){
                     $('form.editable-textarea').submit();
                   }, {"disable_in_input" : false});
 

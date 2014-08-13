@@ -4,6 +4,6 @@
     <img ng-show="comment.user_flag!=1" ng-src='{{comment.user_flag==1?"../images/flag-red.png":"../images/flag-grey.png"}}' ng-click="flag(comment)" style="cursor: pointer; float: right;" tooltip="{{'discussion.flag_post' | translate}}" tooltip-append-to-body="true"/>
 </span>
 <span ng-if="type == 'text'">
-	<a href="" ng-click="flag(comment)" ng-show="comment.user_flag!=1" style="color: #a1a1a1;">{{'discussion.flag' | translate}}</a>
-	<a href="" ng-click="unflag(comment)" ng-show="comment.user_flag==1" style="color: #a1a1a1;">{{'discussion.unflag' | translate}}</a>
+	<a href="" ng-click="flag(comment)" ng-show="comment.user_flag!=1" style="color: #a1a1a1;" translate>discussion.flag</a>
+	<a href="" ng-click="unflag(comment)" ng-show="comment.user_flag==1" style="color: #a1a1a1;" translate>discussion.unflag</a>
 </span>

@@ -63,11 +63,14 @@ var translation_sv=function(){
       review_module_progress: "Översyn av modul Progress",
       choose_inclass_material: "Välj in-class Recension Material",
       all_students_progress: "Alla studenter Progress",
-      modules_group_items: "Moduler gruppera objekt tillsammans",
+      modules_group_items: "Grupp föreläsningar och frågesporter",
       links_external_system: "Länkar till externa system",
-      new_online_content: "Ny Online Innehåll",
+      new_online_content: "Ny modul Post",
       send_email: "Skicka ett Mail",
       show_all_courses: "Visa alla kurser",
+      New_Video_Question: "Ny Video Question",
+      Insert_a_question: "Sätt i en fråga i en video",
+
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -136,12 +139,12 @@ var translation_sv=function(){
             destination: "Bestämmelseort"
           },
           menu:{
-            copy:"Kopiera",
-            paste: "Klistra in",
+            copy:"Kopiera Föremål",
+            paste: "klistra Punkt",
             share: "Dela",
-            share_copy: "Dela en Kopia",
+            share_copy: "Dela Material",
             copy_describtion: "Kopierar det markerade objektet",
-            share_describtion: "Dela en kopia med en lärare",
+            share_describtion: "Dela en kopia med en annan lärare",
             create_link: "Skapa länk"
           },
           settings:{

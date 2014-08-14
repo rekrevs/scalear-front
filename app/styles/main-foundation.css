@@ -895,3 +895,10 @@ input.editable-input{
 iframe{
   z-index: -1 !important;
 }
+
+a.disabled {
+   pointer-events: none;
+   cursor: default;
+   background-color: rgba(0,0,0,.1) !important;
+   color: rgba(0,0,0,.4) !important;;
+}

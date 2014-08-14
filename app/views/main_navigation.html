@@ -98,7 +98,7 @@
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
-						<!-- <li class="divider"></li> -->
+						<li class="divider"></li>
 						<!-- <li><label translate>other</label></li> -->
 						<li><a class="white-hover dark-text" id="new_course_sub" ui-sref-active="nav-item-active" ui-sref="new_course" translate>courses.create_course</a></li>
 						<li>
@@ -126,6 +126,8 @@
 								</li>
 							</ul>
 						</li>
+
+						<li class="divider"></li>
 						<li><a class="white-hover dark-text" id="logout" ng-click="logout()"><span translate>navigation.logout</span> {{user.name}}</a></li>
 					</ul>
 				</li>
@@ -133,9 +135,10 @@
 					<a class="white-hover color-green-hover size-18-light" id="help" href=""  ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" translate>head.help</a>
 					<ul top-bar-dropdown>
 						<li><a class="white-hover dark-text" ui-sref="getting_started" ui-sref-active="nav-item-active" translate>help.getting_started</a></li>
+						<li class="divider"></li>
 						<li><a class="white-hover dark-text" href="" translate>help.teacher_forum</a></li>
 						<li><a class="white-hover dark-text" href="" translate>help.instruction_manual</a></li>
-						<!-- <li class="divider"></li> -->
+						<li class="divider"></li>
 						<li><a class="white-hover dark-text" ui-sref="privacy" ui-sref-active="nav-item-active" translate>footer.privacy</a></li>
 						<li><a class="white-hover dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>

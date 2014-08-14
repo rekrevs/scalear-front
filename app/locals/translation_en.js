@@ -64,11 +64,14 @@ var translation_en=function(){
       review_module_progress: "Review Module Progress",
       choose_inclass_material: "Choose in-class Review Material",
       all_students_progress: "All Students Progress",
-      modules_group_items: "Modules group items together",
+      modules_group_items: "Group lectures and quizzes",
       links_external_system: "Links to external systems",
-      new_online_content: "New Online Content",
+      new_online_content: "New Module Item",
       send_email: "Send an Email", 
       show_all_courses: "Show all courses",
+      New_Video_Question: "New Video Question",
+      Insert_a_question: "Insert a question in a video",
+
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -123,12 +126,12 @@ var translation_en=function(){
         actions: "Actions"
       },
       menu:{
-        copy:"Copy",
-        paste: "Paste",
+        copy:"Copy Item",
+        paste: "Paste Item",
         share: "Share",
-        share_copy: "Share a Copy",
+        share_copy: "Share Material",
         copy_describtion: "Copies the selected item",
-        share_describtion: "Share a copy with a teacher",
+        share_describtion: "Share a copy with another teacher",
         create_link: "Create Link"
       },
       sharing:{
@@ -480,7 +483,7 @@ var translation_en=function(){
         must_place_items: "You must place all items",
         must_choose_answer: "Must choose atleast one answer",
         add_link: "Add Link",
-        new_link: "New Link",
+        new_link: "New Web Link",
         please_wait: "Please Wait",
         lectures: "Lectures",
         quizzes: "Quizzes",

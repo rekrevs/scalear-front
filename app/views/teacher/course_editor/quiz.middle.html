@@ -8,6 +8,14 @@
 		<h3 >{{quiz.name}}</h3>
 	</div>
 </div>
+<div class="row">
+	<div class="large-6 columns">
+		<span translate>lectures.instructions</span>: 
+		<details-area value="quiz.instructions" save="updateQuiz()" validate="validateQuiz" column="instructions"></details-area>
+	</div>
+</div>
+<br>
+
 <div class="panel" style="padding: 0 15px;">
 	<div ng-show="!preview">
 		<!-- <overlay ng-show="!questions">

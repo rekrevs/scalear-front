@@ -15,13 +15,21 @@
 		</tr>
 		<tr >
 			<td class="right-border"><span translate>settings.settings</span>:
-				<i ng-if="quiz.quiz_type=='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /> <span class='color-red'>Required: </span>Students must complete this item to complete the module</i>" tooltip-append-to-body="true"></i>
-				<i ng-if="quiz.quiz_type!='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /></i>" tooltip-append-to-body="true"></i>
+				<!-- <i ng-if="quiz.quiz_type=='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /> <span class='color-red'>Required: </span>Students must complete this item to complete the module</i>" tooltip-append-to-body="true"></i>
+				<i ng-if="quiz.quiz_type!='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /></i>" tooltip-append-to-body="true"></i> -->
 			</td>
 			<td>
-				<details-check checked="quiz.required" save="updateQuiz()" yes="{{'courses.in_order'|translate}}" no="{{'lectures.not_in_order'|translate}}" title="{{'courses.in_order'|translate}}?" validate="validateQuiz" column="required" ></details-check> 
+				<span tooltip="Students must complete this item before going on to the next item in the module" tooltip-placement="left" tooltip-append-to-body="true">
+					<input type="checkbox" ng-model="quiz.required"  ng-change='updateQuiz()'>
+					<span class="size-12" translate>courses.in_order</span>
+				</span>
+				<!-- <details-check checked="quiz.required" save="updateQuiz()" yes="{{'courses.in_order'|translate}}" no="{{'lectures.not_in_order'|translate}}" title="{{'courses.in_order'|translate}}?" validate="validateQuiz" column="required" ></details-check>  -->
 				<br />
-				<span ng-if="quiz.quiz_type=='quiz'" ><details-check checked="quiz.graded" save="updateQuiz()" yes="{{'courses.required'|translate}}" no="{{'lectures.not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="graded"></details-check></span>
+				<span ng-if="quiz.quiz_type=='quiz'" tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true">
+					<input type="checkbox" ng-model="quiz.graded" ng-change="updateQuiz()">
+					<span class="size-12" translate>courses.required</span>
+				</span>
+					<!-- <details-check checked="quiz.graded" save="updateQuiz()" yes="{{'courses.required'|translate}}" no="{{'lectures.not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="graded"></details-check> -->
 
 
 				<!-- <details-check checked="quiz.required" save="updateQuiz()" yes="{{'lectures.quiz_required'|translate}}" no="{{'lectures.quiz_not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="required"></details-check> <br /> -->

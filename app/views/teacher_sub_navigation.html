@@ -4,7 +4,7 @@
 <!-- <div class="top-bar sub-header"> -->
     <ul class="title-area">
         <li class="name">
-          <h1><a id="content_navigator" class="truncate dark-text sub-header-component" ng-class="{'green-color-white': open_navigator, 'dark-medium-grey-hover': !open_navigator}" ng-click="toggleNavigator()" style="width: 300px;margin-right:10px"><i class="fi-list" ng-class="{'color-white': open_navigator}"></i> {{shortname}}: {{selectedmodule.name || 'courses.select_module' | translate}}</a></h1>
+          <h1><a id="content_navigator" class="truncate dark-text sub-header-component" ng-class="{'green-color-white': open_navigator, 'dark-medium-grey-hover': !open_navigator}" ng-click="toggleNavigator()" style="width: 300px;margin-right:10px"><i class="fi-list" ng-class="{'color-white': open_navigator}"></i> {{course.short_name}}: {{course.selected_module.name || 'courses.select_module' | translate}}</a></h1>
         </li>
          <li toggle-top-bar class="menu-icon"><a href=""></a></li>
          <li ></li>
@@ -20,7 +20,7 @@
                 <li><a id="course_info" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.edit_course_information" translate>head.course_information</a></li>
                 <li><a id="announcements" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.announcements" translate>head.announcements</a></li>
                 <li><a id="enrolled_students" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.enrolled_students" translate>head.enrolled_students</a></li>
-                <li><a id="add_students" enroll-help-modal ng-click="openHelpModal()" class="whitesmoke-hover dark-text sub-header-component">Add Sudents</a></li>
+                <li><a id="add_students" enroll-help-modal ng-click="openHelpModal(course)" class="whitesmoke-hover dark-text sub-header-component">Add Sudents</a></li>
             </ul>
           </li>
         </ul>
@@ -151,5 +151,5 @@
       </top-bar-section>
 <!-- </div> -->
 </top-bar>
-<content-navigator modules="modules" links="links" mode="editor" open="open_navigator" style="z-index: 1;" />
+<content-navigator modules="course.modules" links="course.custom_links" mode="editor" open="open_navigator" style="z-index: 1;" />
 </div>

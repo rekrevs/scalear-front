@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
     })
 
      $scope.$on('activate_preview',function(){
-        $scope.impersonate($stateParams.module_id)
+        $scope.impersonate()
      })
 
      $scope.$on('delete_module',function(event, module){
@@ -152,11 +152,18 @@ angular.module('scalearAngularApp')
  		return CourseEditor.capitalize(s)
  	}
 
- 	$scope.impersonate = function(module_id){
+ 	$scope.impersonate = function(){
  		emptyClipboard()
+        var module_id = $stateParams.module_id
         if($scope.module_obj[module_id].items.length){
             $cookieStore.put('old_user_id', $rootScope.current_user.id)
-            $cookieStore.put('course_id', $stateParams.course_id)
+            $cookieStore.put('state', $state.current.name)
+            $cookieStore.put('params', $state.params)
+            // $cookieStore.put('course_id', $stateParams.course_id)
+            // $cookieStore.put('module_id', module_id)
+           // $cookieStore.put()
+
+           console.log($state.current)
             $scope.disable_preview = true
             var item = $scope.module_obj[module_id].items[0]
             Impersonate.create({},{course_id: $stateParams.course_id},

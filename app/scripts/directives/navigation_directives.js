@@ -40,10 +40,11 @@ angular.module('scalearAngularApp')
 			replace:true,
 			restrict: "E",
 			scope:{
-				modules:"=",
-				links:"=",
-        selectedmodule: "=",
-        shortname: "="
+				course:"="
+				// modules:"=",
+				// links:"=",
+		  //       selectedmodule: "=",
+		  //       shortname: "="
 			},
 			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){
@@ -117,11 +118,12 @@ angular.module('scalearAngularApp')
 			restrict: "E",
       transclude: true,
 			scope:{
-				modules:"=",
-				links:"=",
-		        selectedmodule: "=",
-		        shortname: "=",
-		        warning_message:"=warning"
+				course:"="
+				// modules:"=",
+				// links:"=",
+		  //       selectedmodule: "=",
+		  //       shortname: "=",
+		        // warning_message:"=warning"
 			},
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){
@@ -146,14 +148,18 @@ angular.module('scalearAngularApp')
 	                    function(d){
 	                      console.log(d)
 	                      console.log("good")
-	                      var course_id = $cookieStore.get('course_id')
+	                      // var course_id = $cookieStore.get('course_id')
+	                      // var module_id = $cookieStore.get('module_id')
+	                      var params = $cookieStore.get('params')
+	                      var state = $cookieStore.get('state')
 	                      $rootScope.preview_as_student = false
 	                      $cookieStore.remove('preview_as_student')
 	                      $cookieStore.remove('old_user_id')
 	                      $cookieStore.remove('new_user_id')
-	                      $cookieStore.remove('course_id')
+	                      $cookieStore.remove('params')
+	                      $cookieStore.remove('state')
 	                      $rootScope.current_user= null
-	                      $state.go('course.edit_course_information', {course_id: course_id},{reload:true})
+	                      $state.go(state, params,{reload:true})
 			              $rootScope.$broadcast('get_all_courses')
 	                    },
 	                    function(){
@@ -162,7 +168,8 @@ angular.module('scalearAngularApp')
 	                      $cookieStore.remove('preview_as_student')
 	                      $cookieStore.remove('old_user_id')
 	                      $cookieStore.remove('new_user_id')
-	                      $cookieStore.remove('course_id')
+	                      $cookieStore.remove('params')
+	                      $cookieStore.remove('state')
 	                    }
 	                  )
 	                }

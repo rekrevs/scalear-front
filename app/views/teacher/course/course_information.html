@@ -16,11 +16,11 @@
                 <i class="fi-key size-24"></i>
                 {{course.unique_identifier}}
             </div>
-            <div class="large-12 column with-margin-bottom">
+            <div class="large-12 column with-margin-bottom" tooltip="{{'courses.start_date' | translate}}" tooltip-placement="right" tooltip-append-to-body="true">
                 <i class="fi-calendar size-24"></i> 
                 <details-date date="course.start_date | amDateFormat:'dddd, MMMM D YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
             </div>
-            <div class="large-12 column with-margin-bottom">
+            <div class="large-12 column with-margin-bottom" tooltip="{{'courses.duration' | translate}}" tooltip-placement="right" tooltip-append-to-body="true">
                 <i class="fi-clock size-24"></i> 
                 <details-text id="duration" value="course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text> 
                 <span translate="courses.weeks"></span>
@@ -29,7 +29,7 @@
                 <i class="fi-link size-24"></i> 
                 <details-link value="course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link></ul>
             </div>
-            <div class="large-12 column with-margin-bottom">
+            <div class="large-12 column with-margin-bottom" tooltip="{{'courses.time_zone' | translate}}" tooltip-placement="right" tooltip-append-to-body="true">
                 <i class="fi-clock size-24"></i> 
                 <details-time-zone value="course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
             </div>             

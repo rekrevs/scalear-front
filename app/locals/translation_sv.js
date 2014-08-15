@@ -371,7 +371,7 @@ var translation_sv=function(){
               got_some_errors: "Du har några fel",
               provide_answer: "Ange svaret text för varje val",
               provide_url: "Skriv in webbadressen (länk) till din video i avsnittet Föreläsning Detaljer till höger",
-              shown_in_graph: "*Visas i resultat diagram",
+              shown_in_graph: "Visas i resultat diagram",
               shown_to_student: "*Visas i studenter",
               server: "Servern",
               is_slow: " tar lång tid att läsa in den här videon",

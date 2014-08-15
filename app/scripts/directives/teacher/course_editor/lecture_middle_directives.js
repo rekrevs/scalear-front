@@ -20,23 +20,14 @@ angular.module('scalearAngularApp')
 }).directive('editPanel',function(){
 	return {		
 		 restrict: 'E',
-		 template: '<div class="row" id="editing" class="padding:10px">'+
-						'<div class="wheat small-6 small-centered columns" >'+
-							'<div class="row">'+
-								'<h5 class="no-margin color-wheat"><span translate>online_quiz.editing_quiz</span> {{selected_quiz.question}} <span translate>at</span> {{selected_quiz.time|format}}'+
-								'<b><br><span >{{double_click_msg |translate}}</span></b></h5>'+
-							'</div>'+
-							'<div class="row">'+
-								'<div class="small-4 small-centered columns">'+
-									'<div class="small-6 columns"><button ng-disabled="disable_save_button" class="button tiny" style="margin:5px 0" ng-click="saveBtn()" translate>save</button></div>'+
-									'<div class="small-6 columns">'+
-										'<button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
-										'<button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>lectures.cancel</button>'+
-									'</div>'+
-								'</div>'+
-							'</div>'+
-						'</div>'+
-					'</div>',
+		 template: '<div id="editing">'+
+						'<div class="wheat">'+
+							'<h5 class="row no-margin color-wheat">'+
+							'<span>{{double_click_msg |translate}}</span>'+
+							'    <button ng-disabled="disable_save_button" class="button tiny" ng-click="saveBtn()" translate>save</button>'+
+							'    <button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
+							'    <button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>lectures.cancel</button>'+
+						'</h5></div></div>',
 	};
 }).directive('dropdownList',function(){
 	return {
@@ -184,10 +175,10 @@ angular.module('scalearAngularApp')
 							"</form>"
 			else
 				template = "<form name='aform'>"+
-								"<label><span translate>lectures.correct</span>"+
+								"<label><span translate>lectures.correct</span> <span translate>groups.answer</span>"+
 								"<input class='must_save_check' ng-class='{error: aform.mcq.$error.atleastone}' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/>"+
-								"<small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
-								"</label><label><span translate>groups.answer</span>"+
+								"</label><center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
+								"<label>"+
 								"<h6 class='subheader'><small translate>lectures.shown_in_graph</small></h6>"+ 
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+

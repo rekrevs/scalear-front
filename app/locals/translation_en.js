@@ -368,7 +368,7 @@ var translation_en=function(){
         got_some_errors: "You've got some errors",
         provide_answer: "Please provide the answer text for each choice",
         provide_url: "Please enter the URL (link) for your video in the Lecture Details section to the right",
-        shown_in_graph: "*Shown in results graph",
+        shown_in_graph: "Shown on results graph",
         shown_to_student: "*Shown to students",
         server:"The server",
         is_slow: "is taking a long time to load this video",

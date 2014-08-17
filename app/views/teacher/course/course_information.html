@@ -81,13 +81,17 @@
         <p style="font-weight: 200;">
             <big-area id='preq' value="course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
         </p>
+        <h5 translate class="subheader">courses.course_image</h5>
+        <p>
+            <details-link value="course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link>
+        </p>
     </div>
     <div class="teachers-column hide-for-small-only light-grey">
         <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button" style="margin-bottom:4px">
-            <img src="../images/add_teacher.png" /> {{'courses.add_teacher' | translate}}
+            {{'courses.add_teacher' | translate}}
         </button>
         <button ng-show="!teacher_forum" ng-click="toggleDelete()" class="button tiny" ng-class="{'alert': !in_delete, 'success': in_delete}" >
-            <img ng-show="!in_delete" src="../images/delete_teacher.png" />{{toggle_message | translate}}
+            {{toggle_message | translate}}
         </button>
         
         <div ng-show="teacher_forum">

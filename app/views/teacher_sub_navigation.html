@@ -17,10 +17,10 @@
           <li has-dropdown>
             <a id="settings" class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>courses.students</a>
             <ul top-bar-dropdown>
-                <li><a id="course_info" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.edit_course_information" translate>head.course_information</a></li>
-                <li><a id="announcements" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.announcements" translate>head.announcements</a></li>
-                <li><a id="enrolled_students" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.enrolled_students" translate>head.enrolled_students</a></li>
-                <li><a id="add_students" enroll-help-modal ng-click="openHelpModal()" class="whitesmoke-hover dark-text sub-header-component">Add Sudents</a></li>
+                <li><a id="course_info" class="lighter-grey dark-text sub-header-component" ui-sref="course.edit_course_information" translate>head.course_information</a></li>
+                <li><a id="announcements" class="lighter-grey dark-text sub-header-component" ui-sref="course.announcements" translate>head.announcements</a></li>
+                <li><a id="enrolled_students" class="lighter-grey dark-text sub-header-component" ui-sref="course.enrolled_students" translate>head.enrolled_students</a></li>
+                <li><a id="add_students" enroll-help-modal ng-click="openHelpModal()" class="lighter-grey dark-text sub-header-component">Add Sudents</a></li>
             </ul>
           </li>
         </ul>
@@ -70,14 +70,14 @@
                 <a id="progress" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="goToProgress()" translate>head.progress</a>
                 <ul top-bar-dropdown>
                     <li ng-show="'*.module.**' | includedByState">
-                        <a id="review_module_progress" class="whitesmoke-hover dark-text sub-header-component has-description" ui-sref="course.module.progress">
+                        <a id="review_module_progress" class="lighter-grey dark-text sub-header-component has-description" ui-sref="course.module.progress">
                             {{'review_module_progress' | translate}}
                             <h5 class="dark-description"><small translate>choose_inclass_material</small></h5>
                         </a>
                         <!-- <div class="divider"></div> -->
                     </li>
                     <li>                        
-                        <a id="all_student_progress" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.progress" translate>all_students_progress</a>
+                        <a id="all_student_progress" class="lighter-grey dark-text sub-header-component" ui-sref="course.progress" translate>all_students_progress</a>
                     </li>
                 </ul>
             </li>
@@ -88,26 +88,26 @@
                 <a id="content" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="goToContentEditor()" translate>head.content</a>
                 <ul top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
                     <li>
-                        <a id="new_module" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="addModule()">
+                        <a id="new_module" class="lighter-grey dark-text sub-header-component has-description" ng-click="addModule()">
                             <span translate>groups.new_module</span>
                             <h5 class="dark-description"><small translate>modules_group_items</small></h5>
                         </a>
                     </li>
                     <li ng-show="'*.module.**' | includedByState">
-                        <a id="new_online_content" online-modal ng-click="openOnlineContentModal()" class="whitesmoke-hover dark-text sub-header-component has-description" href="">
+                        <a id="new_online_content" online-modal ng-click="openOnlineContentModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
                             <span translate>new_online_content</span>
                             <h5 class="dark-description"><small>Video lecture, Quiz...</small></h5>
                         </a>
                     </li>
                     <li ng-show="'**.lecture.**' | includedByState">
-                        <a questions-modal id="new_in_video_ques" questions-modal ng-click="openQuestionsModal()" class="whitesmoke-hover dark-text sub-header-component has-description" href="">
+                        <a questions-modal id="new_in_video_ques" questions-modal ng-click="openQuestionsModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
                             New In-Video Question
                             <h5 class="dark-description"><small>MCQ, OCQ, Drag...</small></h5>
                         </a>
                     </li>                    
                     <li>
                         <!-- <div class="divider"></div> -->
-                        <a class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="addLink()">
+                        <a class="lighter-grey dark-text sub-header-component has-description" ng-click="addLink()">
                             <span translate>groups.new_link</span>
                             <h5 class="dark-description"><small translate>links_external_system</small></h5>
                         </a>
@@ -115,13 +115,13 @@
                     <span ng-show="'*.module.**' | includedByState">               
                         <li >
                             <!-- <div class="divider"></div> -->
-                            <a id="copy" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="copyItem()">
+                            <a id="copy" class="lighter-grey dark-text sub-header-component has-description" ng-click="copyItem()">
                                 <span translate>menu.copy</span>
                                 <h5 class="dark-description"><small translate>menu.copy_describtion</small></h5>
                             </a>
                         </li>
                         <li ng-show="clipboard">
-                            <a id="paste" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="pasteItem()">
+                            <a id="paste" class="lighter-grey dark-text sub-header-component has-description" ng-click="pasteItem()">
                                 <span translate>menu.paste</span>
                                 <h5 class="dark-description">
                                     <small>
@@ -131,14 +131,14 @@
                             </a>
                         </li>
                         <li >
-                            <a id="share_copy" class="whitesmoke-hover dark-text sub-header-component has-description" href="" sharing-modal ng-click="openSharingModal()">
+                            <a id="share_copy" class="lighter-grey dark-text sub-header-component has-description" href="" sharing-modal ng-click="openSharingModal()">
                                 <span translate>menu.share_copy</span>
                                 <h5 class="dark-description"><small translate>menu.share_describtion</small></h5>
                             </a>
                         </li>
                         <li >
                             <!-- <div class="divider"></div> -->
-                            <a id="preview_as_student" class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="preview()" href="">
+                            <a id="preview_as_student" class="lighter-grey dark-text sub-header-component has-description" ng-click="preview()" href="">
                                 <span translate>preview_student</span>
                                 <h5 class="dark-description"><small translate>preview_describtion</small></h5>
                             </a>

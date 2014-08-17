@@ -141,7 +141,11 @@ var translation_en=function(){
         add: "Add",
         view: "View Shared",
         shared_from: "Data shared from ",
-        destination: "Destination"
+        destination: "Destination",
+        copy_module: "Copy module",
+        copy_lecture: "Copy lecture",
+        copy_quiz: "Copy quiz",
+        copy_survey: "Copy survey"
       },
       settings:{
         settings: "Settings",

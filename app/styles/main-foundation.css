@@ -108,6 +108,13 @@ span.error, small.error{
 .white-hover:hover, .light-grey-hover:hover{
   background-color: #d4d4d2 !important;
 }
+.lighter-grey{
+  background-color: #ededeb !important;
+}
+.lighter-grey:hover{
+  background-color: #a1a19f !important;
+  color: white !important;
+}
 .transparent{
 	background: transparent !important;
 }
@@ -442,6 +449,14 @@ td.right-border{
   background: lightgrey;
 }
 
+.no-js .top-bar-section ul li:hover > a{
+  background-color: #ededeb !important;
+  color: #222 !important;
+}
+.top-bar-section li:not(.has-form) a:not(.button):hover{
+  background-color: #d4d4d2 !important;
+}
+
 
 /*STATES*/
 button.active{
@@ -521,9 +536,9 @@ label{
   top:0;
 }
 
-.top-bar .dropdown{
+/*.top-bar .dropdown{
   box-shadow: -0.04em 0.04em 0.1em lightgrey
-}
+}*/
 .nav-item-active, .nav-item-active:hover{
   background-color: #5da423 !important;
   color: white !important;

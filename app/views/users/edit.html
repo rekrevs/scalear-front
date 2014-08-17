@@ -1,6 +1,6 @@
 <center>
 <h3 class="show-inline"><profile-image email="user.email" class="valign-top hide-for-small-only" imagesize="36"></profile-image> {{'account_edit.edit_account' | translate}}</h3>
-    <form class="panel large-4 medium-8 small-12" ng-submit="update_account()">
+    <form class="panel large-4 medium-8 small-12" ng-submit="open_require_password()">
 
           <div class="row">
             <div class="large-12 medium-12 small-12 columns">
@@ -100,15 +100,7 @@
                     </ul>
                 </div>
             </div>
-
-<center class="large-12 column">
-    <div class="alert-box secondary show-inline ">
-        <div class="with-tiny-margin-bottom">{{'account_edit.need_password' | translate}}</div>
-        <input type="password" id="setting_user_current_confirmation" ng-model="user.current_password" ng-class="{error: user.errors.current_password}" autocomplete="off" placeholder="{{'current_password' | translate}}" />
-        <small ng-show="user.errors.current_password" class="error with-tiny-padding">{{user.errors.current_password.join()}}</small>
         <button type="submit" class="tiny button">{{'account_edit.update' | translate}}</button>
-    </div>
-</center>
     </form>
 </center>
 

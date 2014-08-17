@@ -81,6 +81,10 @@
         <p style="font-weight: 200;">
             <big-area id='preq' value="course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
         </p>
+        <h5 translate class="subheader">courses.course_image</h5>
+        <p>
+            <details-link value="course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link>
+        </p>
     </div>
     <div class="teachers-column hide-for-small-only light-grey">
         <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button" style="margin-bottom:4px">

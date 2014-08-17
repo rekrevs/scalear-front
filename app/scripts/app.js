@@ -223,6 +223,7 @@ angular.module('scalearAngularApp', [
 .config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider',
     function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider) {
         cfpLoadingBarProvider.includeSpinner = false;
+        // cfpLoadingBarProvider.color = 'black';
         console.log(cfpLoadingBarProvider)
 
         $logProvider.debugEnabled(false)

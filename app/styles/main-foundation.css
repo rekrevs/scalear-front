@@ -264,6 +264,7 @@ select{
 }
 .centerimage{
     margin-left:-50%;
+    width: 100%;
 }
 
 /*SIZES*/
@@ -659,6 +660,17 @@ label{
   0%   { transform: rotate(0deg);   transform: rotate(0deg); }
   100% { transform: rotate(360deg); transform: rotate(360deg); }
 }
+
+#loading-bar .bar {
+  background: #5da423 !important;
+}
+#loading-bar .peg {
+  -moz-box-shadow: #5da423 1px 0 6px 1px !important;
+  -ms-box-shadow: #5da423 1px 0 6px 1px !important;
+  -webkit-box-shadow: #5da423 1px 0 6px 1px !important;
+  box-shadow: #5da423 1px 0 6px 1px !important;
+}
+
 
 /*Animations*/
 

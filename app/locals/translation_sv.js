@@ -133,7 +133,13 @@ var translation_sv=function(){
             add: "Lägg",
             view: "Syn Delas",
             shared_from: "Data som delas av ",
-            destination: "Bestämmelseort"
+            destination: "Bestämmelseort",
+            copy_module: "Kopiera modul",
+            copy_lecture: "Kopiera föreläsning",
+            copy_quiz: "Kopiera frågesport",
+            copy_survey: "Kopiera undersökning",
+            to_course: "till kurs",
+            to_module: "till modul"
           },
           menu:{
             copy:"Kopiera",

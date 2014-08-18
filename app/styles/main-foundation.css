@@ -115,6 +115,9 @@ span.error, small.error{
   background-color: #a1a19f !important;
   color: white !important;
 }
+.light-green{
+  background-color: #cbe4b7 !important;
+}
 .transparent{
 	background: transparent !important;
 }
@@ -677,7 +680,15 @@ label{
   -webkit-box-shadow: #5da423 1px 0 6px 1px !important;
   box-shadow: #5da423 1px 0 6px 1px !important;
 }
-
+#loading-bar-spinner .spinner-icon{
+  border-top-color:  #5da423 !important;
+  border-left-color: #5da423 !important;
+}
+#loading-bar-spinner {
+  top: 15px !important;
+  left: 240px !important;
+  /*left: auto !important;*/
+}
 
 /*Animations*/
 

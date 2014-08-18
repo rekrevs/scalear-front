@@ -278,7 +278,7 @@
 	border: 1px solid darkgrey; 
 	max-height: 24%;
 	min-height: 24%;
-	overflow-y: auto;
+	overflow-y: hidden;
 	background:beige;
 }
 

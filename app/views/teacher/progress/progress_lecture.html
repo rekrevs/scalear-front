@@ -144,7 +144,7 @@
 											<a ng-click="deletePost(item.data, $index)" class="button really-tiny alert" style="margin:0 5px" translate>delete</a>
 										</span>	
 									</span>
-									<div style="width: 80%;">
+									<div class="with-margin-bottom">
 										<b>
 											<img bo-show="discussion.post.privacy==1" class="public_img" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}"/>
 											<img bo-show="discussion.post.privacy==0" class="private_img" src="/images/private.png" tooltip="{{'discussion.private_post' | translate}}"/>
@@ -162,7 +162,7 @@
 										</span>
 							 		</div>									
 									<ul>
-										<li ng-repeat="comment in discussion.post.comments" style="padding-left: 30px;color: #616161;font-size:14px" class="no_highlight">
+										<li ng-repeat="comment in discussion.post.comments" style="padding-left: 30px;color: #616161;font-size:14px" class="no_highlight with-tiny-margin-top ">
 											<span class="controls">
 												<span style="float:right">
 													<span ng-show="comment.comment.flags_count > 0">|<a ng-click="removeCommentFlag(comment, discussion.post)" class="button really-tiny" style="margin:0 5px" translate>discussion.remove_flags</a></span>

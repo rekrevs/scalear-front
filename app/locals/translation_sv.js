@@ -71,6 +71,7 @@ var translation_sv=function(){
       show_all_courses: "Visa alla kurser",
       New_Video_Question: "Ny Video Question",
       Insert_a_question: "Sätt i en fråga i en video",
+      copy: "Kopia",
 
       errors_messages:{
               the_form_contains: "Formuläret innehåller",

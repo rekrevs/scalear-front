@@ -465,6 +465,9 @@ button.active{
 }
 
 /*OPACITY*/
+.no-opacity{
+  opacity: 0.0;
+}
 .low-opacity{
   opacity: 0.3;
 }

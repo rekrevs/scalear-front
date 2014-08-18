@@ -149,7 +149,9 @@ var translation_en=function(){
         copy_module: "Copy module",
         copy_lecture: "Copy lecture",
         copy_quiz: "Copy quiz",
-        copy_survey: "Copy survey"
+        copy_survey: "Copy survey",
+        to_course: "to course",
+        to_module: "to module"
       },
       settings:{
         settings: "Settings",

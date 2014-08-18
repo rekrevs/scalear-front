@@ -249,18 +249,22 @@ select{
 
 /*IMAGES*/
 .course-image{
-	/*border-radius: 3px 0px 0px 0px;*/
-	/*min-width: 210px;*/
-	width: 210px;
-	height: 210px;
-	/*min-height: 210px;*/
-	display: inline-block;
-	overflow: hidden;
+  /*border-radius: 3px 0px 0px 0px;*/
+  /*min-width: 210px;*/
+  width: 210px;
+  height: 210px;
+  /*min-height: 210px;*/
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .course-image > img{
-	height: auto;    
-    width: auto;
-    max-width: 200%;
+    width: 100%;
+}
+.course-image > span{
+  display: inline-block;
+  height:100%;
+  vertical-align: middle;
 }
 .centerimage{
     margin-left:-50%;

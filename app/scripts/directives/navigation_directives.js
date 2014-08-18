@@ -63,7 +63,7 @@ angular.module('scalearAngularApp')
 
 				scope.toggleNavigator=function(){
 					scope.open_navigator = !scope.open_navigator
-					scope.$emit('navigator_change', scope.open_navigator)
+					scope.$emit('navigator_open', scope.open_navigator)
 				}
 
 				scope.addModule=function(){

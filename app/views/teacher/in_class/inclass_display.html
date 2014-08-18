@@ -33,7 +33,7 @@
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">
                 <ul style="padding-left:5px">
-                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])" ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
+                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])" ng-style="{fontSize:discfontsize, lineHeight:disclineheight}" ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
                         {{question[0]}}
                         <br>
                     </li>

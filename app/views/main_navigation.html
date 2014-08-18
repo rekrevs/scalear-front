@@ -15,9 +15,9 @@
 	      <!-- Right Nav Section -->
 	      	<!-- STUDENT -->
 	      	<ul ng-switch-when="2" class="right">
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li><a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="all_courses" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('course_list' | includedByState)}" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
@@ -28,7 +28,7 @@
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
-						<!-- <li class="divider"></li> -->
+						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
 						<li><a class="lighter-grey dark-text" id="join_course" enrollment-modal ng-click="open()" translate>courses.join_course</a></li>
 						<li>
@@ -39,7 +39,7 @@
 						</li>
 					</ul>
 				</li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" id="account" href="" translate>account</a>
 					<ul top-bar-dropdown>
@@ -63,7 +63,7 @@
 					<a class="white-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" href="" translate>head.help</a>
 					<ul top-bar-dropdown>
 						<li><a class="lighter-grey dark-text" ui-sref-active="nav-item-active" ui-sref="getting_started" translate>help.getting_started</a></li>
-						<!-- <li class="divider"></li> -->
+						<!-- <li class="divider border-grey medium-opacity"></li> -->
 						<li><a class="lighter-grey dark-text" ui-sref-active="nav-item-active" ui-sref="privacy" translate>footer.privacy</a></li>
 						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>
@@ -71,13 +71,13 @@
 			</ul>
 			<!-- TEACHER -->
 			<ul ng-switch-when="1" class="right">
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li><a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li ng-show="are_shared()">
 					<a class="white-hover color-green-hover size-18-light" ui-sref="show_shared" translate>sharing.view</a>
 				</li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li ng-hide="user.invitations == 0 && user.shared == 0" has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="notifications" href="" translate>navigation.notifications</a>
 					<ul top-bar-dropdown>
@@ -87,7 +87,7 @@
                         <shared-item-notification ng-repeat="(id, item) in user.shared_items" notification="item" id="id"></shared-item-notification>
 					</ul>
 				</li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="all_courses" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('new_course' | includedByState) || ('course_list' | includedByState)}" href="" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
@@ -98,7 +98,7 @@
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
-						<!-- <li class="divider"></li> -->
+						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
 						<li><a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-item-active" ui-sref="new_course" translate>courses.create_course</a></li>
 						<li>
@@ -109,7 +109,7 @@
 						</li>
 					</ul>
 				</li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="account" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" translate>account</a>
 					<ul top-bar-dropdown>
@@ -126,6 +126,7 @@
 								</li>
 							</ul>
 						</li>
+						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" id="logout" ng-click="logout()"><span translate>navigation.logout</span> {{user.name}}</a></li>
 					</ul>
 				</li>
@@ -133,9 +134,10 @@
 					<a class="white-hover color-green-hover size-18-light" id="help" href=""  ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" translate>head.help</a>
 					<ul top-bar-dropdown>
 						<li><a class="lighter-grey dark-text" ui-sref="getting_started" ui-sref-active="nav-item-active" translate>help.getting_started</a></li>
+						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" href="" translate>help.teacher_forum</a></li>
 						<li><a class="lighter-grey dark-text" href="" translate>help.instruction_manual</a></li>
-						<!-- <li class="divider"></li> -->
+						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" ui-sref="privacy" ui-sref-active="nav-item-active" translate>footer.privacy</a></li>
 						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>
@@ -143,13 +145,13 @@
 			</ul>
 			<!-- ADMIN -->
 			<ul ng-switch-when="5" class="right">
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li><a class="white-hover color-green-hover size-18-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" translate>courses.statistics</a></li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li ng-show="are_shared()">
 					<a class="white-hover color-green-hover size-18-light" ui-sref="show_shared" translate>sharing.view</a>
 				</li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li ng-hide="user.invitations == 0 && user.shared == 0" has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="notifications" href="" translate>navigation.notifications</a>
 					<ul top-bar-dropdown>
@@ -159,9 +161,9 @@
                         <shared-item-notification ng-repeat="(id, item) in user.shared_items" notification="item" id="id"></shared-item-notification>
 					</ul>
 				</li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li><a class="white-hover color-green-hover size-18-light" id="dashboard" ui-sref-active="nav-item-active" ui-sref="dashboard" translate>dashboard</a></li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="all_courses" href="" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('course_list' | includedByState) || ('new_course' | includedByState)}" translate>navigation.courses</a>
 					<ul top-bar-dropdown>
@@ -172,7 +174,7 @@
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
-						<!-- <li class="divider"></li> -->
+						<!-- <li class="divider border-grey medium-opacity"></li> -->
 						<!-- <li><label translate>other</label></li> -->
 						<li><a class="lighter-grey dark-text" ui-sref="new_course" ui-sref-active="nav-item-active" translate>courses.create_course</a></li>
 						<li>
@@ -183,7 +185,7 @@
 						</li>
 					</ul>
 				</li>
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="account" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" translate>account</a>
 					<ul top-bar-dropdown>
@@ -209,7 +211,7 @@
 						<li><a class="lighter-grey dark-text" ui-sref="getting_started" ui-sref-active="nav-item-active" translate>help.getting_started</a></li>
 						<li><a class="lighter-grey dark-text" href="" translate>help.teacher_forum</a></li>
 						<li><a class="lighter-grey dark-text" href="" translate>help.instruction_manual</a></li>
-						<!-- <li class="divider"></li> -->
+						<!-- <li class="divider border-grey medium-opacity"></li> -->
 						<li><a class="lighter-grey dark-text" ui-sref="privacy" ui-sref-active="nav-item-active" translate>footer.privacy</a></li>
 						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>
@@ -217,7 +219,7 @@
 			</ul>
 			<!-- NOT LOGGED IN -->
 			<ul ng-switch-when="undefined" class="right">
-				<!-- <li class="divider"></li> -->
+				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li><a class="white-hover color-green-hover size-18-light" id="login" ui-sref-active="nav-item-active" ui-sref="login" translate>navigation.login</a></li>
 				<li><a class="white-hover color-green-hover size-18-light" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 			</ul>

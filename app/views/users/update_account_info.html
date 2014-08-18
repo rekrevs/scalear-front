@@ -1,0 +1,10 @@
+<div class="modal-header">
+    <center><h3>{{'account_edit.need_password' | translate}}</h3></center>
+</div>
+<div class="modal-body">
+    <input type="password" id="setting_user_current_confirmation" ng-model="user.current_password" ng-class="{error: user.errors.current_password}" autocomplete="off" placeholder="{{'current_password' | translate}}" />
+    <small ng-show="user.errors.current_password" class="error with-tiny-padding">{{user.errors.current_password.join()}}</small>
+    <center class="row"><button ng-click="update_account()" class="tiny button">{{'account_edit.update' | translate}}</button>
+    <button ng-click="cancel()" class="tiny button alert">{{'lectures.cancel' | translate}}</button>
+    </center>
+</div>

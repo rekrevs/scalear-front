@@ -23,7 +23,33 @@ angular.module('scalearAngularApp')
             delete $scope.user.errors
     });
 
+    $scope.open = function () {
+        var modalInstance = $modal.open({
+            templateUrl: '/views/users/confirm_delete.html',
+            controller: "ConfirmDeleteCtrl",
+        })
+    }
+
+    $scope.open_require_password = function () {
+        var modalInstance = $modal.open({
+            templateUrl: '/views/users/update_account_info.html',
+            controller: ModalInstanceCtrl,
+            resolve: {
+                user: function () {
+                  return $scope.user;
+                }
+            }
+        })
+    }
+}]);
+
+var ModalInstanceCtrl = function ($scope, $modalInstance, user, User) {
+
+  $scope.user = user;
+  console.log(user);
+
     $scope.update_account = function() {
+            // console.log($scope.user);
             $scope.sending = true;
             delete $scope.user.errors
             User.update_account({}, {
@@ -31,16 +57,17 @@ angular.module('scalearAngularApp')
             }, function() {
                 $scope.sending = false;
                 $scope.show_settings = false;
+                $modalInstance.close();
             }, function(response) {
                 $scope.sending = false;
                 $scope.user.errors = response.data.errors
             })
     }
-    $scope.open = function () {
-        var modalInstance = $modal.open({
-            templateUrl: '/views/users/confirm_delete.html',
-            controller: "ConfirmDeleteCtrl"
-        })
-    }
+  $scope.ok = function () {
+    $modalInstance.close($scope.selected.item);
+  };
 
-}]);
+  $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+  };
+};

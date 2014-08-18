@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout', '$state',function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout, $state) {
+  .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout', '$state', '$q' ,function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout, $state, $q) {
  	$scope.$parent.not_module = true;
  	$scope.$parent.currentitem = $state.params.quiz_id
  	$scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
@@ -182,5 +182,45 @@ angular.module('scalearAngularApp')
 		$scope.preview=false
 		$scope.temp_quiz=null
 	}
+
+	$scope.updateQuiz = function(data, type) {
+                var modified_quiz = angular.copy($scope.quiz);
+                delete modified_quiz.class_name;
+                delete modified_quiz.created_at;
+                delete modified_quiz.updated_at;
+                delete modified_quiz.id;
+                delete modified_quiz.due_date_enabled;
+
+                Quiz.update({
+                        course_id: $stateParams.course_id,
+                        quiz_id: $scope.quiz.id
+                    }, {
+                        quiz: modified_quiz
+                    },
+                    function(data) {
+                        $log.debug(data)
+                    }
+                );
+            };
+
+            $scope.validateQuiz = function(column, data) {
+                var d = $q.defer();
+                var quiz = {}
+                quiz[column] = data;
+                Quiz.validateQuiz({
+                    course_id: $stateParams.course_id,
+                    quiz_id: $scope.quiz.id
+                }, quiz, function(data) {
+                    d.resolve()
+                }, function(data) {
+                    $log.debug(data.status);
+                    $log.debug(data);
+                    if (data.status == 422 && data.data.errors)
+                        d.resolve(data.data.errors.join());
+                    else
+                        d.reject('Server Error');
+                })
+                return d.promise;
+            };
  
  }])

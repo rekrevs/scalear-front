@@ -47,7 +47,7 @@ describe("should check calendar functionality", function(){
     o_c.open_content_editor(ptor);
     teacher.add_module(ptor, o_c.feedback);
     teacher.add_module(ptor, o_c.feedback);
-    o_c.press_content_navigator(ptor)
+    // o_c.press_content_navigator(ptor)
     teacher.open_module(ptor, 1);
     teacher.add_lecture(ptor);
     teacher.add_lecture(ptor);
@@ -86,8 +86,7 @@ describe("should check calendar functionality", function(){
 
   it('should delete course', function(){
     o_c.open_course_list(ptor);
-      teacher.delete_course(ptor, 1);
-      o_c.logout(ptor, o_c.feedback);
+    teacher.delete_course(ptor, 1);
   })
 })
 

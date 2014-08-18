@@ -1,6 +1,115 @@
+<center>
 <h3 class="show-inline"><profile-image email="user.email" class="valign-top hide-for-small-only" imagesize="36"></profile-image> {{'account_edit.edit_account' | translate}}</h3>
-<span>
-    <button type="button" id="del_acc_btn" class="tiny button alert right" ng-click="open()">{{'account_edit.cancel_account' | translate}}</button>
+    <form class="panel large-4 medium-8 small-12" ng-submit="open_require_password()">
+
+          <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+              <label for="setting_user_name">{{'account_edit.first_name' | translate}}
+                      <input type="text" id="setting_user_name" ng-model="user.name" ng-class="{error: user.errors.name}" placeholder="Input your first name..."/>
+                      <small ng-show="user.errors.name" class="error with-tiny-padding">{{user.errors.name.join()}}</small>
+                </label>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                <label>{{'account_edit.last_name' | translate}}
+                  <input type="text" id="setting_last_name" ng-model="user.last_name" ng-class="{error: user.errors.last_name}" placeholder="Input your last name..." />
+                  <small ng-show="user.errors.last_name" class="error with-tiny-padding">{{user.errors.last_name.join()}}</small>
+                </label>
+            </div>
+          </div>
+
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                <label>{{'email' | translate}}
+                      <input type="email" id="setting_user_email" ng-model="user.email" ng-class="{error: user.errors.email}" placeholder="Input your email address..." pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" />
+                      <small ng-show="user.errors.email" class="error with-tiny-padding">{{user.errors.email.join()}}</small>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                <label>{{'account_edit.university' | translate}}
+                      <input type="text" id="setting_user_university" ng-model="user.university" ng-class="{error: user.errors.university}" placeholder="Input your university name..." />
+                      <small ng-show="user.errors.university" class="error with-tiny-padding">{{user.errors.university.join()}}</small>
+                    </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                <div class="row collapse">
+                    <label translate>account_edit.link</label>
+                    <div class="small-3 columns">
+                      <span class="prefix">http://</span>
+                    </div>
+                    <div class="small-9 columns">
+                      <input type="text" id="setting_user_link" ng-model="user.link" placeholder="Input your website link..." />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                <label>{{'account_edit.bio' | translate}}
+                  <textarea id="setting_user_bio" ng-model="user.bio" placeholder="Tell us about yourself..."></textarea>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                <label>{{'account_edit.screen_name' | translate}}
+                    <input type="text" id="settings_screen_name" ng-model="user.screen_name" ng-class="{error: user.errors.screen_name}" placeholder="Input your desired screen name..."/>
+                    <small ng-show="user.errors.screen_name" class="error with-tiny-padding">{{user.errors.screen_name.join()}}</small>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                <label>{{'password' | translate}}
+                    <input type="password" id="setting_user_password" ng-model="user.password" ng-class="{error: user.errors.password}" autocomplete="off" placeholder="Password" />
+                    <small ng-show="user.errors.password" class="error with-tiny-padding">{{user.errors.password.join()}}</small>
+                </label>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                <label>{{'password_confirmation' | translate}}
+                    <input type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" placeholder="Password confirmation"/>
+                    <small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="large-12 medium-12 small-12 columns">
+                <label translate>pref_language</label>
+                <button class="tiny button dropdown under-the-other" dropdown-toggle="#languages_list">{{'languages.'+current_lang | translate}}</button>
+                    <ul id="languages_list" class="f-dropdown">
+                        <li>
+                            <a ng-click="changeLanguage('en')">{{'languages.en' | translate}} <img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                        </li>
+                        <li>
+                            <a ng-click="changeLanguage('sv')">{{'languages.sv' | translate}} <img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        <button type="submit" class="tiny button">{{'account_edit.update' | translate}}</button>
+    </form>
+</center>
+
+<center><button type="button" id="del_acc_btn" class="tiny button alert" ng-click="open()">{{'account_edit.cancel_account' | translate}}</button></center>
+
+
+
+<!-- <span>
+    
     <form ng-submit="update_account()">
         <center class="large-12 with-margin-bottom with-margin-top">
             <profile-image email="user.email" class="valign-top show-for-small-only" imagesize="200">
@@ -103,4 +212,4 @@
             </div>
         </center>
     </form>
-</span>
+</span> -->

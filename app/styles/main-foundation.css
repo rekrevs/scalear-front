@@ -709,6 +709,7 @@ label{
 
 h2 .editable-click{
 	color: #5da423 !important;
+  border-bottom: none !important; 
 }
 
 /*Video styles*/
@@ -921,4 +922,19 @@ input.editable-input{
 
 iframe{
   z-index: -1 !important;
+}
+
+a.disabled {
+   pointer-events: none;
+   cursor: default;
+   background-color: rgba(0,0,0,.1) !important;
+   color: rgba(0,0,0,.4) !important;;
+}
+
+a.editable-empty{
+  border-bottom: none !important; 
+}
+
+a.editable-click{
+  border-bottom: none !important; 
 }

@@ -115,6 +115,9 @@ span.error, small.error{
   background-color: #a1a19f !important;
   color: white !important;
 }
+.light-green{
+  background-color: #cbe4b7 !important;
+}
 .transparent{
 	background: transparent !important;
 }

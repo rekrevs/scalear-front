@@ -938,3 +938,12 @@ a.editable-empty{
 a.editable-click{
   border-bottom: none !important; 
 }
+
+.settings-menu-item{
+  padding: 0 15px;
+  line-height: 45px;
+  white-space: nowrap;
+  font-weight: normal;
+  width: 100%;
+  font-size: 0.8125rem !important;
+}

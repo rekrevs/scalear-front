@@ -28,33 +28,33 @@
                 </li>
                 <span ng-show="('**.lecture.**' | includedByState)">
                     <li>
-                      <a class="lighter-grey dark-text sub-header-component" ng-click="updateFilter('note')">
-                          <input id="showNotesCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.note" />
+                      <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateFilter('note')">
+                          <input id="showNotesCheckbox" type="checkbox" ng-checked="filter.note" />
                           <span translate>course_settings.show_notes</span>
-                      </a>
+                      </div>
                   </li>
                   <li>
-                      <a class="lighter-grey dark-text sub-header-component" ng-click="updateFilter('discussion')">
-                          <input id="showQuestionsCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.discussion" />
+                      <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateFilter('discussion')">
+                          <input id="showQuestionsCheckbox" type="checkbox" ng-checked="filter.discussion" />
                           <span translate>course_settings.show_questions</span>
-                      </a>
+                      </div>
                   </li>
                   <li>
-                      <a class="lighter-grey dark-text sub-header-component" ng-click="updateFilter('quiz')">
-                          <input id="showQuizzesCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.quiz" />
+                      <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateFilter('quiz')">
+                          <input id="showQuizzesCheckbox" type="checkbox" ng-checked="filter.quiz" />
                           <span translate>course_settings.show_quizzes</span>
-                      </a>
+                      </div>
                   </li>
                   <li>
-                      <a class="lighter-grey dark-text sub-header-component" ng-click="updateFilter('confused')">
-                          <input id="showConfusedCheckbox" disabled="disabled" type="checkbox" ng-checked="filter.confused" />
+                      <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateFilter('confused')">
+                          <input id="showConfusedCheckbox" type="checkbox" ng-checked="filter.confused" />
                           <span translate>course_settings.show_confused</span>
-                      </a>
+                      </div>
                   </li>
                   <li>
-                      <a class="lighter-grey dark-text sub-header-component" ng-click="exportNotes()">
+                      <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="exportNotes()">
                           <span translate>lectures.download_notes</span>
-                      </a>
+                      </div>
                   </li>
                 </span>
               </ul>

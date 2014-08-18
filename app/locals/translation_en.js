@@ -72,6 +72,7 @@ var translation_en=function(){
       show_all_courses: "Show all courses",
       New_Video_Question: "New Video Question",
       Insert_a_question: "Insert a question in a video",
+      copy: "Copy",
 
       errors_messages:{
         the_form_contains: "The form contains",

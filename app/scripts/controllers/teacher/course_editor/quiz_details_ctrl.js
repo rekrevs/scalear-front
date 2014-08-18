@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('quizDetailsCtrl', ['$stateParams', '$scope', '$q', 'Quiz', '$log',
-        function($stateParams, $scope, $q, Quiz, $log) {
+    .controller('quizDetailsCtrl', ['$stateParams', '$scope', '$q', 'Quiz', '$log','$state',
+        function($stateParams, $scope, $q, Quiz, $log, $state) {
 
             $scope.$watch('items_obj["quiz"][' + $stateParams.quiz_id + ']', function() {
                 if ($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]) {
@@ -18,6 +18,8 @@ angular.module('scalearAngularApp')
                             $scope.quiz.due_date_enabled = !isDueDateDisabled()
                         }
                     })
+                    $scope.link_url=$state.href('course.module.courseware.quiz', {module_id: $scope.quiz.group_id, quiz_id:$scope.quiz.id}, {absolute: true}) 
+
                 }
             })
 
@@ -37,6 +39,9 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
+                        console.log(data)
+                        $scope.quiz.appearance_time = data.quiz.appearance_time
+                        $scope.quiz.due_date = data.quiz.due_date
                     }
                 );
             };
@@ -48,6 +53,7 @@ angular.module('scalearAngularApp')
             }
 
             $scope.updateDueDate=function(type,enabled){
+                var enabled = $scope.quiz.due_date_enabled
                 var d = new Date($scope.quiz.due_date)
                 if(isDueDateDisabled() && enabled) 
                     var years =  -200 

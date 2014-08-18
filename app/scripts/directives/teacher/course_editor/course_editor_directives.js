@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
                 copy:"&",
                 paste: "&",
                 share:"&",
-                link:"&",
+                // link:"&",
                 current: "="
             },
             templateUrl: '/views/teacher/course_editor/module.html',
@@ -30,11 +30,11 @@ angular.module('scalearAngularApp')
                 //     }
                 // }
                 scope.selectModule=function(){
-                    if($state.includes("**.progress.**"))
-                        $state.go('course.module.progress',{module_id: scope.module.id})
-                    else if($state.includes("**.inclass.**"))
-                        $state.go('course.module.inclass',{module_id: scope.module.id})
-                    else
+                    // if($state.includes("**.progress.**"))
+                    //     $state.go('course.module.progress',{module_id: scope.module.id})
+                    // else if($state.includes("**.inclass.**"))
+                    //     $state.go('course.module.inclass',{module_id: scope.module.id})
+                    // else
                         $state.go('course.module.course_editor.overview',{module_id: scope.module.id})
                 }
                 // scope.copyModule=function(event){
@@ -55,37 +55,6 @@ angular.module('scalearAngularApp')
                 //     scope.share()
                 // }
 
-                scope.toggleLink=function(event){
-                    event.stopPropagation() 
-                    // scope.menu_status = false
-                    // scope.link_url=$state.href('course.module.courseware', {module_id: scope.module.id}, {absolute: true})
-                    // $timeout(function() {
-                    //     element.find('.module_link').select();
-                    // });
-
-
-                    if(!scope.link_url){
-                        scope.link_url=$state.href('course.module.courseware', {module_id: scope.module.id}, {absolute: true})
-                        $timeout(function() {
-                            element.find('.module_link').select();
-                        });
-                        $(document).on("click", function (e) {
-                            e.stopPropagation() 
-                            e.preventDefault();
-                            if(e.target != element.find('.fi-link')[0] && e.target !=element.find('.module_link')[0]){
-                              scope.link_url=null
-                              scope.$apply()
-                              $(document).off("click")
-                            }         
-                        });
-                    }
-                    else{
-                        scope.link_url=null
-                        $(document).off("click")  
-                    }
-
-                }
-
                 scope.remove=function(event){
                     event.preventDefault();
                     event.stopPropagation();  
@@ -104,7 +73,7 @@ angular.module('scalearAngularApp')
                 copy:"&",
                 paste:"&",
                 share:"&",
-                link:"&",
+                // link:"&",
                 current: "="
             },
             restrict: 'E',
@@ -112,22 +81,22 @@ angular.module('scalearAngularApp')
             link: function(scope,element) {
 
                 scope.selectItem=function(){
-                    if($state.includes("**.progress.**")){
-                        var class_name = scope.item.class_name== 'quiz'? scope.item.quiz_type : scope.item.class_name
-                        $location.hash(class_name+'_'+scope.item.id);
-                        $anchorScroll();    
-                    }
-                        // $state.go('course.module.progress',{module_id: scope.id})
-                    else if($state.includes("**.inclass.**"))
-                        return
-                        // $state.go('course.module.inclass',{module_id: scope.id})
-                    else{
+                    // if($state.includes("**.progress.**")){
+                    //     var class_name = scope.item.class_name== 'quiz'? scope.item.quiz_type : scope.item.class_name
+                    //     $location.hash(class_name+'_'+scope.item.id);
+                    //     $anchorScroll();    
+                    // }
+                    //     // $state.go('course.module.progress',{module_id: scope.id})
+                    // else if($state.includes("**.inclass.**"))
+                    //     return
+                    //     // $state.go('course.module.inclass',{module_id: scope.id})
+                    // else{
                         var params = {}    
                         params[scope.item.class_name+'_id'] = scope.item.id
                         // $state.go('course.module.courseware.'+$scope.last_viewed.item.class_name, params)
                         $state.go('course.module.course_editor.'+scope.item.class_name,params)
                         scope.$parent.$parent.currentitem = scope.item.id
-                    }
+                    // }
                 }
 
                 // scope.getDeleteMessage = function() {
@@ -164,41 +133,6 @@ angular.module('scalearAngularApp')
                 //         element.find('.item_link').select();
                 //     });
                 // }
-
-
-                scope.toggleLink=function(event){
-                    console.log("jhgfdsa")
-                    event.stopPropagation() 
-                    // scope.menu_status = false
-                    // scope.link_url=$state.href('course.module.courseware', {module_id: scope.module.id}, {absolute: true})
-                    // $timeout(function() {
-                    //     element.find('.module_link').select();
-                    // });
-
-
-                    if(!scope.link_url){
-                        var params = {module_id: scope.item.group_id}
-                        params[scope.item.class_name+'_id'] = scope.item.id
-                        scope.link_url=$state.href('course.module.courseware.'+scope.item.class_name, params, {absolute: true})
-                        $timeout(function() {
-                            element.find('.item_link').select();
-                        });
-                        $(document).on("click", function (e) {
-                            e.stopPropagation() 
-                            e.preventDefault();
-                            if(e.target != element.find('.fi-link')[0] && e.target !=element.find('.item_link')[0]){
-                              scope.link_url=null
-                              scope.$apply()
-                              $(document).off("click")
-                            }         
-                        });
-                    }
-                    else{
-                        scope.link_url=null
-                        $(document).off("click")  
-                    }
-
-                }
 
 
                 scope.remove=function(event){

@@ -20,29 +20,34 @@
 		</tr>
 	</table>	
 </div> -->
-<div ng-if="'**.course_editor.**' | includedByState" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:10px;margin:3px 0;">
-	<div class="small-1 columns with-small-margin-right"><img src="images/link_item.png" height="40px" style="vertical-align: top;" bo-class="{'link_img_small':small}"/></div>
-	<div class="small-8 columns" bo-class="{'link_item_small':small}" style="margin-bottom:5px">
+<div ng-if="'**.course_editor.**' | includedByState" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:5px;">
+	<img class='left handle with-tiny-margin' src='images/move2.png' bindonce bo-title="'courses.drag_to_reorder'|translate" />
+	<div ng-if="!small" class="small-1 columns with-small-margin-right">
+		<img src="images/link_item.png" width="28px"/> <!-- bo-class="{'link_img_small':small}" -->
+	</div>
+	<div class="small-8 columns" bo-class="{'link_item_small':small}">
 		<div class="small-12 columns">
-			<details-text value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
+			<span>Name: </span><details-text value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
 		</div>
 		<div class="small-12 columns" >
-			<details-link value="link.url" save="update(link)" validation="validate" elem="link"></details-link>
+			<span>URL: </span><details-link value="link.url" save="update(link)" validation="validate" elem="link"></details-link>
 		</div>
 	</div>
 	<div class="small-2 columns" style="padding:0" ng-if="'**.course_editor.**' | includedByState">
-		<delete_button size="small" vertical="true" color='dark' action="remove(link)"></delete_button>
+		<delete_button size="small" vertical="true" color='dark' action="removeLink(link)"></delete_button>
 	</div>
 </div>
 
-<div ng-if="!('**.course_editor.**' | includedByState)" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:10px;margin:3px 0;">
-	<div class="small-1 columns with-small-margin-right"><img src="images/link_item.png" height="40px" style="vertical-align: top;" bo-class="{'link_img_small':small}"/></div>
+<div ng-if="!('**.course_editor.**' | includedByState)" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:5px;">
+	<div ng-if="!small" class="small-1 columns with-small-margin-right">
+		<img src="images/link_item.png" height="40px" style="vertical-align: top;" /> <!-- bo-class="{'link_img_small':small}" -->
+	</div>
 	<div class="small-8 columns left" bo-class="{'link_item_small':small}">
 		<div class="small-12 columns">
-			<div bo-text="link.name"></div>
+			<div>Name: <span bo-text="link.name"></span></div>
 		</div>
 		<div class="small-12 columns" >
-			<div bo-text="link.url"></div>
+			<div>URL: <span bo-text="link.url"></span></div>
 		</div>
 	</div>
 </div>

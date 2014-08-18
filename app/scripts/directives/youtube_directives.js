@@ -414,12 +414,13 @@ angular.module('scalearAngularApp')
 
                     }
 				})
-				scope.$watch('player', function(){
+				var unwatch=scope.$watch('player', function(){
 					if(scope.player){
 						scope.player.controls=player_controls
 						if(scope.player.events)
                         	player_events = scope.player.events
                         scope.$emit("player ready")
+                        unwatch()
 					}
 				})
 

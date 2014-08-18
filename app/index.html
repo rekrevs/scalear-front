@@ -44,6 +44,10 @@
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="bower_components/angular-macgyver/lib/macgyver.css">
     <!-- endbuild -->
+    <!--build:css(.tmp/styles) styles/navigation.css -->
+    <link rel="stylesheet" href="styles/content_navigator.css"/>
+    <!-- endbuild -->
+
     <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
     
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
@@ -102,10 +106,18 @@
         </div> -->
         <div id="main" role="main">
             <div class="container">
-                <div ui-view="navigation"></div>
+                <div ><!-- ui-view="navigation" -->
+                    <div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
+                        <teacher-navigation course="course" message="subheader_message" />
+                    </div>
+                    <div ng-if="current_user.roles[0].id == 2">
+                        <student-navigation course="course" message="subheader_message" />
+                    </div>
+                </div>
                 <div class="row" style="min-height: 83vh;">
                     <div class="small-12 columns main_view" ng-class="{'navigator_open':open_navigator} " ui-view=""></div>
                 </div>
+                
                 <!-- <div style="height: 50px;"></div> -->
                 <footer class="with-tiny-margin">
                     <scalear_footer />
@@ -147,7 +159,7 @@
     <script src="bower_components/angular-translate/angular-translate.min.js"></script>
     <script src="bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.min.js"></script>
     <script src="bower_components/moment/min/moment.min.js"></script>
-    <script src="bower_components/moment/lang/sv.js"></script>
+    <script src="bower_components/moment/locale/sv.js"></script>
     <script src="bower_components/angular-moment/angular-moment.min.js"></script>
 
     <script src="bower_components/angular-xeditable/dist/js/xeditable.min.js"></script>

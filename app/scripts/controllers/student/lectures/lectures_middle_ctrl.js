@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
         $scope.exportNotes()
     })
 
-    $scope.$on('filter_update',function(ev,filters){
+    $scope.$on('lecture_filter_update',function(ev,filters){
       $scope.checkModel=filters
     })
 
@@ -157,26 +157,11 @@ angular.module('scalearAngularApp')
                 }
 
                 if(isiPad()){
-                    console.log("is ipad!!!!!!")
+                    // console.log("is ipad!!!!!!")
                     $scope.video_ready=true
                 }
             })
         }
-    }
-
-    $scope.lecture_player.events.onMeta = function() {
-        console.log("<<<<<----------->>>>")
-        console.log('meta')
-    }
-
-     $scope.lecture_player.events.canPlay = function() {
-        console.log("<<<<<----------->>>>")
-        console.log('canPlay')
-    }
-
-    $scope.lecture_player.events.canplaythrough = function() {
-        console.log("<<<<<----------->>>>")
-        console.log('canplaythrough')
     }
 
      $scope.lecture_player.events.onReady = function() {
@@ -623,7 +608,8 @@ angular.module('scalearAngularApp')
     }
 
     var reviewInclass =function(){
-        var max_time = 5
+        var max_time = 10
+        var close_time= 7.5
         console.log($scope.selected_quiz)
         // if(!$scope.selected_quiz.reviewed && $scope.selected_quiz.quiz_type != 'survey' && !$scope.review_inclass && !$scope.review_inclass_inprogress){
         if($scope.selected_quiz.quiz_type != 'survey' && !$scope.review_inclass && !$scope.review_inclass_inprogress){
@@ -643,7 +629,7 @@ angular.module('scalearAngularApp')
                     $scope.closeReviewNotify()
                     
                     // $scope.review_inclass= false
-                },5000,1)
+                },close_time*1000,1)
             },time*1000,1)
         }
     }
@@ -671,20 +657,19 @@ angular.module('scalearAngularApp')
         })
     }
 
-    // $scope.unvoteForReview=function(){
-    //     console.log("unvote review")
-    //     OnlineQuiz.unvoteForReview(
-    //     {online_quizzes_id:$scope.last_quiz.id},{},
-    //     function(res){
-    //         if(res.done){
-    //             if($scope.last_quiz.reviewed){
-    //                 $scope.last_quiz.reviewed = false
-    //                 $scope.last_quiz.votes_count--
-    //             }
-    //             $scope.closeReviewNotify()
-    //         }
-    //     })
-    // }
+    $scope.unvoteForReview=function(){
+        OnlineQuiz.unvoteForReview(
+        {online_quizzes_id:$scope.last_quiz.id},{},
+        function(res){
+            if(res.done){
+                if($scope.last_quiz.reviewed){
+                    $scope.last_quiz.reviewed = false
+                    $scope.last_quiz.votes_count--
+                }
+                $scope.closeReviewNotify()
+            }
+        })
+    }
 
     $scope.closeReviewNotify=function(){
         console.log("close")

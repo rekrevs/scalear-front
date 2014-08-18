@@ -373,9 +373,12 @@ angular.module('scalearAngularApp')
             $scope.nextQuiz()
           }
         }
-        else
+        else{
           if($scope.selected_item.class_name == 'quiz')
             $scope.item_itr = $scope.module.items.length-1
+          $scope.showBlackScreen('groups.blackscreen_done')
+          $scope.item_itr+=1
+        }
       }
 
       $timeout(function(){
@@ -385,6 +388,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.prevQuiz = function(){
+      $scope.hideBlackScreen()      
       if($scope.module && $scope.module.items){
         if($scope.item_itr >= 0){
           if($scope.module.items[$scope.item_itr]){
@@ -602,7 +606,7 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : false, 'propagate':false});
 
      shortcut.add("b",function() {
-       $scope.toggleBlackScreen()
+       $scope.toggleBlackScreen('groups.blackscreen_close')
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
 
@@ -635,8 +639,16 @@ angular.module('scalearAngularApp')
     shortcut.remove("m")
   }
 
-  $scope.toggleBlackScreen=function(){
+  $scope.toggleBlackScreen=function(msg){
     $scope.show_black_screen = !$scope.show_black_screen
+    $scope.blackscreen_msg = msg
+  }
+   $scope.showBlackScreen=function(msg){
+    $scope.show_black_screen = true
+    $scope.blackscreen_msg = msg
+  }
+   $scope.hideBlackScreen=function(msg){
+    $scope.show_black_screen = false    
   }
 
   $scope.setOriginalClass=function(){

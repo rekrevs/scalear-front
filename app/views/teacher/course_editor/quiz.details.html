@@ -15,13 +15,21 @@
 		</tr>
 		<tr >
 			<td class="right-border"><span translate>settings.settings</span>:
-				<i ng-if="quiz.quiz_type=='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /> <span class='color-red'>Required: </span>Students must complete this item to complete the module</i>" tooltip-append-to-body="true"></i>
-				<i ng-if="quiz.quiz_type!='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /></i>" tooltip-append-to-body="true"></i>
+				<!-- <i ng-if="quiz.quiz_type=='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /> <span class='color-red'>Required: </span>Students must complete this item to complete the module</i>" tooltip-append-to-body="true"></i>
+				<i ng-if="quiz.quiz_type!='quiz'" class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /></i>" tooltip-append-to-body="true"></i> -->
 			</td>
 			<td>
-				<details-check checked="quiz.required" save="updateQuiz()" yes="{{'courses.in_order'|translate}}" no="{{'lectures.not_in_order'|translate}}" title="{{'courses.in_order'|translate}}?" validate="validateQuiz" column="required" ></details-check> 
+				<span tooltip="Students must complete this item before going on to the next item in the module" tooltip-placement="left" tooltip-append-to-body="true">
+					<input type="checkbox" ng-model="quiz.required"  ng-change='updateQuiz()'>
+					<span class="size-12" translate>courses.in_order</span>
+				</span>
+				<!-- <details-check checked="quiz.required" save="updateQuiz()" yes="{{'courses.in_order'|translate}}" no="{{'lectures.not_in_order'|translate}}" title="{{'courses.in_order'|translate}}?" validate="validateQuiz" column="required" ></details-check>  -->
 				<br />
-				<span ng-if="quiz.quiz_type=='quiz'" ><details-check checked="quiz.graded" save="updateQuiz()" yes="{{'courses.required'|translate}}" no="{{'lectures.not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="graded"></details-check></span>
+				<span ng-if="quiz.quiz_type=='quiz'" tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true">
+					<input type="checkbox" ng-model="quiz.graded" ng-change="updateQuiz()">
+					<span class="size-12" translate>courses.required</span>
+				</span>
+					<!-- <details-check checked="quiz.graded" save="updateQuiz()" yes="{{'courses.required'|translate}}" no="{{'lectures.not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="graded"></details-check> -->
 
 
 				<!-- <details-check checked="quiz.required" save="updateQuiz()" yes="{{'lectures.quiz_required'|translate}}" no="{{'lectures.quiz_not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateQuiz" column="required"></details-check> <br /> -->
@@ -42,30 +50,40 @@
 		<tr>
 			<td class="right-border"><span translate>groups.appearance_date</span></td>
 			<td>
-				<details-check checked="quiz.appearance_time_module" save="updateQuiz()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="appearance_time_module" ></details-check> 
-				<br />
-				<div ng-hide="!quiz.appearance_time_module">
-					<!-- <span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+				<input type="checkbox" ng-model="quiz.appearance_time_module" ng-change="updateQuiz()" class="no-margin">
+				<span class="size-12" translate>lectures.use_module</span>
+				<!-- <details-check checked="quiz.appearance_time_module" save="updateQuiz()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="appearance_time_module" ></details-check>  -->
+				<!-- <br /> -->
+				<span ng-hide="!quiz.appearance_time_module">
+					<!-- <span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> -->
+					<span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
 					<!-- <input type='text' ng-model='quiz.appearance_time' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
 					<div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
-							{{quiz.appearance_time | amDateFormat:'MMM Do YYYY, h:mm a'}}
+					{{quiz.appearance_time | amDateFormat:'MMM Do YYYY, h:mm a'}}
 					</div>
-				</div>
-					<span ng-hide="quiz.appearance_time_module">
-						<span translate>lectures.set_date</span>:<br>
-						<details-date date="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-date>
-						<!-- <span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> --><span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
-						<br>
-						<details-time class="timepicker" time="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-time>
-					</span>
+				</span>
+				<br />
+				<span ng-hide="quiz.appearance_time_module">
+					<span translate>lectures.set_date</span>:<br>
+					<details-date date="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-date>
+					<!-- <span ng-show="visible(quiz.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> -->
+					<span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(quiz.appearance_time)" class="icon pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+					<br>
+					<details-time class="timepicker" time="quiz.appearance_time" save="updateQuiz(data, type)" validate="validateQuiz" column="appearance_time"></details-time>
+				</span>
 			</td>
 		</tr>
 		<tr>
 			<td class="right-border"><span translate>groups.due_date</span></td>
 			<td>
-				<details-check checked="quiz.due_date_enabled" validate="updateDueDate" save="updateQuiz()" yes="with due date" no="without due date" title="has due date?" ></details-check> 
+				<input type="checkbox" ng-model="quiz.due_date_enabled" ng-change="updateDueDate();updateQuiz()" class="no-margin">
+				<span class="size-12" >with due date</span>
+
+				<!-- <details-check checked="quiz.due_date_enabled" validate="updateDueDate" save="updateQuiz()" yes="with due date" no="without due date" title="has due date?" ></details-check>  -->
 				<div ng-show="quiz.due_date_enabled">
-					<details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br />
+					<input type="checkbox" ng-model="quiz.due_date_module" ng-change="updateQuiz()" class="no-margin">
+					<span class="size-12" translate>lectures.use_module</span>
+					<!-- <details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br /> -->
 					<div ng-hide="!quiz.due_date_module">
 						<!-- <input type='text' ng-model='quiz.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
 						<div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
@@ -79,6 +97,18 @@
 						<details-time class="timepicker" time="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-time>
   					</span>
   				</div>
+			</td>
+		</tr>
+		<tr>
+			<td class="right-border"><span translate>lectures.instructions</span>:</td>
+			<td>
+				<details-area value="quiz.instructions" save="updateQuiz()" validate="validateQuiz" column="instructions"></details-area>
+			</td>
+		</tr>
+		<tr>
+			<td class="right-border"><span>Student link to quiz</span>:</td>
+			<td class="break-text">
+				<span class="color-editable-blue">{{link_url}}</span>
 			</td>
 		</tr>
 	</table>

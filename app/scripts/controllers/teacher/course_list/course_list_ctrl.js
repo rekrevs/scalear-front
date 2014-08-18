@@ -1,11 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page', function ($scope, Course,$stateParams, $translate, $log, $window,Page) {
+  .controller('courseListCtrl',['$scope','Course','$stateParams', '$translate','$log','$window','Page','$rootScope', function ($scope, Course,$stateParams, $translate, $log, $window,Page, $rootScope) {
 
   	$log.debug("in course list")
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.courses')
+    $rootScope.subheader_message = "All Courses"
   	// 	Course.index({},
 			// function(data){
 			// 	$log.debug(data)
@@ -15,7 +16,12 @@ angular.module('scalearAngularApp')
 			// 	//alert("Could not get courses, please check your internet connection")
 			// })
 
+
   		$scope.column='name'
+
+      $scope.$on('course_filter_update',function(ev, filter){
+        $scope.filterChoice = filter
+      })
 
   		$scope.deleteCourse=function(course){
   			// can't pass index.. cause its not reliable with filter. so instead take course, and get its position in scope.courses

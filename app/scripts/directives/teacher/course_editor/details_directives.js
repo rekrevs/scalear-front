@@ -357,7 +357,7 @@ angular.module('scalearAngularApp')
             scope: {
                 link: "=",
                 // update: "=",
-                // remove: "=",
+                remove: "=",
                 // validate: "=",
                 small:"="
             },
@@ -383,8 +383,11 @@ angular.module('scalearAngularApp')
                     return d.promise;
                 }
 
-                scope.remove=function(){
-                    $rootScope.$broadcast('remove_link', scope.link)
+                scope.removeLink=function(){
+                    if(scope.remove)
+                        scope.remove(scope.link)
+                    else
+                        $rootScope.$broadcast('remove_link', scope.link)
                 }
 
                 scope.update=function(){

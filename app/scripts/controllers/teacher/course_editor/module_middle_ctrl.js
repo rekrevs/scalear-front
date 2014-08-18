@@ -32,6 +32,8 @@ angular.module('scalearAngularApp')
                 },
                 function(){}
             )
+            $scope.link_url=$state.href('course.module.courseware', {module_id: $scope.module.id}, {absolute: true})
+            
         }
         $scope.validateModule = function(column, data) {
                 $log.debug(data)
@@ -103,6 +105,7 @@ angular.module('scalearAngularApp')
             }
 
             $scope.updateDueDate=function(type,enabled){
+                var enabled = $scope.module.due_date_enabled
                 var d = new Date($scope.module.due_date)
                 if(isDueDateDisabled() && enabled) 
                     var years =  -200 
@@ -188,6 +191,32 @@ angular.module('scalearAngularApp')
                         elem.errors=resp.data.errors;
                     }
                 );
+            }
+
+
+            $scope.listSortableOptions={
+                axis: 'y',
+                dropOnEmpty: false,
+                handle: '.handle',
+                cursor: 'crosshair',
+                items: '.group_links',
+                opacity: 0.4,
+                scroll: true,
+                update: function(e, ui) {
+                    Module.sortGroupLinks(
+                        {module_id: $scope.module.id},
+                        {links:$scope.module.custom_links}
+                    )
+                    // Course.sortCourseLinks({course_id:$state.params.course_id},
+                    //     {links: scope.links},
+                    //     function(response){
+                    //         // $log.debug(response)
+                    //     },
+                    //     function(){
+                    //         // $log.debug('Error')
+                    //     }
+                    // );
+                },
             }
 
             // init();

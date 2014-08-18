@@ -136,6 +136,55 @@ angular.module('scalearAngularApp')
 			
 		}
 	}
+ }).directive("moduleProgressCheck",function(){
+	return {
+		restrict: "E",
+		scope: {
+			// percentage: "=",
+			// innercolor: "@",
+			// circlesize: "@",
+			module: "="
+		},
+		templateUrl: "/views/module_progress_check.html",
+	  link: function(scope, element){
+	  		var total = 0
+	  		for(var i=0; i<scope.module.lectures.length; i++){
+				if(scope.module.lectures[i].graded){
+					total++;
+				}
+			}
+			for(var i=0; i<scope.module.quizzes.length; i++){
+				if(scope.module.quizzes[i].quiz_type != 'survey' && scope.module.quizzes[i].graded){
+					total++;
+				}
+			}
+	  		scope.$watch('module', function() {
+				scope.module_done = calculateDone()
+			})
+
+			var calculateDone = function(){
+				// var total = scope.module.lectures.length;
+				var done_count = 0;
+				// for(var i=0; i<scope.module.quizzes.length; i++){
+				// 	if(scope.module.quizzes[i].quiz_type != 'survey' && scope.module.quizzes[i].required == true){
+				// 		total++;
+				// 	}
+				// }
+				scope.module.lectures.forEach(function(lecture, i){
+					if(lecture.is_done && lecture.graded){
+						done_count++;
+					}
+				})
+				scope.module.quizzes.forEach(function(quiz, i){
+					if(quiz.is_done && quiz.quiz_type != 'survey' && quiz.graded){
+						done_count++;
+					}
+				})
+				return done_count == total
+			}
+			
+		}
+	}
  }).directive('coursewareItem',['CourseEditor','$state', '$anchorScroll', '$location', function(CourseEditor, $state, $anchorScroll, $location){
 	return {
 		 scope: {

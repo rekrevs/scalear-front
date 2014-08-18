@@ -292,7 +292,7 @@ angular.module('scalearAngularApp')
 			})
 
 
-			var template = '<ul>'+
+			var template = '<ul class="no-margin">'+
 							'<label><span translate>groups.correct_because</span>'+
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
 							'</label>'+
@@ -585,6 +585,7 @@ angular.module('scalearAngularApp')
 // 	        	$(document).off("click")  
 // 	        }
 
+		// scope.link_data= scope.link()
 	         
   	 	scope.selectLink=function(event){
             // scope.link_url=scope.link()
@@ -593,7 +594,7 @@ angular.module('scalearAngularApp')
             });
         }
         scope.link_content = {
-        	content: "<div style='word-break: break-all;'>{{link()}}</div>",
+        	content: "<b>Student link to time {{link().time| formattime:'hh:mm:ss'}} in this video</b><hr style='margin: 5px;'/><div style='word-break: break-all;'>{{link().url}}</div>",
         	html:true,
         	fullscreen:false,
         	placement: 'left'

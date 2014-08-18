@@ -355,14 +355,18 @@ angular.module('scalearAngularApp')
     }
   }
 
-}]).directive('enrollHelpModal', ['$modal', function($modal){
+}]).directive('enrollHelpModal', ['$modal','$rootScope', function($modal,$rootScope){
   return{
     restrict: 'A',
     replace: true,
     link: function(scope, element){
-      scope.openHelpModal = function () {
+      scope.openHelpModal = function (course) {
+        scope.course= course
+        scope.current_user = $rootScope.current_user
+        console.log(scope.current_user)
         var modalInstance = $modal.open({
-            templateUrl: '/views/modals/help_enroll.html'
+            templateUrl: '/views/modals/help_enroll.html',
+            scope: scope
         })
       }
 

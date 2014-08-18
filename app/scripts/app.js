@@ -338,17 +338,19 @@ angular.module('scalearAngularApp', [
             })
             .state('course', {
                 url: '/courses/:course_id',
-                views: {
-                    'navigation': {
-                        templateUrl: '/views/navigation.html',
-                        controller: 'navigationCtrl'
+                template: '<ui-view/>',
+                controller: 'courseCtrl',
+                // views: {
+                //     'navigation': {
+                //         templateUrl: '/views/navigation.html',
+                //         controller: 'navigationCtrl'
                         
-                    },
-                    '': {
-                        template: '<ui-view/>',
-                        controller: 'courseCtrl'
-                    }
-                },
+                //     },
+                //     '': {
+                //         template: '<ui-view/>',
+                //         controller: 'courseCtrl'
+                //     }
+                // },
                 resolve:{
                     course_data:['courseResolver','$stateParams',function(courseResolver, $stateParams){
                         return courseResolver.init($stateParams.course_id)

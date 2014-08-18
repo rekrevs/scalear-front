@@ -40,14 +40,16 @@ angular.module('scalearAngularApp')
 			replace:true,
 			restrict: "E",
 			scope:{
-				modules:"=",
-				links:"=",
-        selectedmodule: "=",
-        shortname: "="
+				course:"=",
+				message:"="
+				// modules:"=",
+				// links:"=",
+		  //       selectedmodule: "=",
+		  //       shortname: "="
 			},
 			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){
-				scope.filter= {confused:true, charts:true, discussion:true};
+				scope.filter= {confused:true, charts:true, discussion:true, free_question:true};
 				$rootScope.$watch('clipboard', function(){
 					scope.clipboard = $rootScope.clipboard
 				})
@@ -105,9 +107,9 @@ angular.module('scalearAngularApp')
 					$rootScope.$broadcast('print')
 				}	
 
-				scope.updateFilter=function(type){
+				scope.updateProgressFilter=function(type){
 					scope.filter[type] = !scope.filter[type]
-					$rootScope.$broadcast('filter_update', scope.filter)
+					$rootScope.$broadcast('progress_filter_update', scope.filter)
 				}		
 			}
 		};
@@ -117,16 +119,19 @@ angular.module('scalearAngularApp')
 			restrict: "E",
       transclude: true,
 			scope:{
-				modules:"=",
-				links:"=",
-		        selectedmodule: "=",
-		        shortname: "=",
-		        warning_message:"=warning"
+				course:"=",
+				message:"="
+				// modules:"=",
+				// links:"=",
+		  //       selectedmodule: "=",
+		  //       shortname: "=",
+		        // warning_message:"=warning"
 			},
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){
 				// scope.open_navigator = $rootScope.open_navigator
-				scope.filter={quiz:true,confused:true, discussion:true, note:true};
+				scope.lecture_filter={quiz:true,confused:true, discussion:true, note:true};
+				scope.course_filter = "!!"
 				$rootScope.$watch('preview_as_student', function(){
 					scope.preview_as_student = $rootScope.preview_as_student
 				})
@@ -146,14 +151,18 @@ angular.module('scalearAngularApp')
 	                    function(d){
 	                      console.log(d)
 	                      console.log("good")
-	                      var course_id = $cookieStore.get('course_id')
+	                      // var course_id = $cookieStore.get('course_id')
+	                      // var module_id = $cookieStore.get('module_id')
+	                      var params = $cookieStore.get('params')
+	                      var state = $cookieStore.get('state')
 	                      $rootScope.preview_as_student = false
 	                      $cookieStore.remove('preview_as_student')
 	                      $cookieStore.remove('old_user_id')
 	                      $cookieStore.remove('new_user_id')
-	                      $cookieStore.remove('course_id')
+	                      $cookieStore.remove('params')
+	                      $cookieStore.remove('state')
 	                      $rootScope.current_user= null
-	                      $state.go('course.edit_course_information', {course_id: course_id},{reload:true})
+	                      $state.go(state, params,{reload:true})
 			              $rootScope.$broadcast('get_all_courses')
 	                    },
 	                    function(){
@@ -162,7 +171,8 @@ angular.module('scalearAngularApp')
 	                      $cookieStore.remove('preview_as_student')
 	                      $cookieStore.remove('old_user_id')
 	                      $cookieStore.remove('new_user_id')
-	                      $cookieStore.remove('course_id')
+	                      $cookieStore.remove('params')
+	                      $cookieStore.remove('state')
 	                    }
 	                  )
 	                }
@@ -172,9 +182,14 @@ angular.module('scalearAngularApp')
 	            	$rootScope.$broadcast("export_notes")
 	            }
 
-	            scope.updateFilter=function(type){
-					scope.filter[type] = !scope.filter[type]
-					$rootScope.$broadcast('filter_update', scope.filter)
+	            scope.updateLectureFilter=function(type){
+					scope.lecture_filter[type] = !scope.lecture_filter[type]
+					$rootScope.$broadcast('lecture_filter_update', scope.lecture_filter)
+				}
+
+				scope.updateCourseFilter=function(value){
+					scope.course_filter= value
+					$rootScope.$broadcast('course_filter_update', scope.course_filter)
 				}	
 			}
 		};
@@ -225,7 +240,7 @@ angular.module('scalearAngularApp')
 				})
 			}
 		};
- }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture', function(Module, $stateParams, $state, $timeout, Lecture){
+ }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course', function(Module, $stateParams, $state, $timeout, Lecture, Course){
   return{
     restrict:'E',
     // replace: true,
@@ -243,6 +258,20 @@ angular.module('scalearAngularApp')
    link:function(scope, element, attr){
    	  scope.currentmodule = {id: $state.params.module_id}
    	  scope.currentitem = $state.params.lecture_id || $state.params.quiz_id
+   	  // scope.open_this_link = false
+   	  scope.$watch('modules.length',function(){
+   	  	if(scope.modules)
+   	  		scope.currentmodule = {id: $state.params.module_id}
+   	  })
+
+   	  // scope.$watch('links.length',function(){
+   	  // 	console.log(scope.links.length)
+   	  // 	console.log(scope.open_this_link)
+   	  // 	// if(scope.links)
+   	  // 	// 	scope.open_this_link = true
+   	  // })
+
+
    	  scope.moduleSortableOptions={
  		axis: 'y',
 		dropOnEmpty: false,
@@ -285,6 +314,27 @@ angular.module('scalearAngularApp')
 				},
 				function(){
 					// $log.debug('error')
+				}
+			);
+		},
+ 	}
+
+ 	scope.listSortableOptions={
+		axis: 'y',
+		dropOnEmpty: false,
+		handle: '.handle',
+		cursor: 'crosshair',
+		items: '.links',
+		opacity: 0.4,
+		scroll: true,
+		update: function(e, ui) {
+			Course.sortCourseLinks({course_id:$state.params.course_id},
+				{links: scope.links},
+				function(response){
+					// $log.debug(response)
+				},
+				function(){
+					// $log.debug('Error')
 				}
 			);
 		},
@@ -365,7 +415,20 @@ angular.module('scalearAngularApp')
       	// 	$state.go('course.inclass.module',{module_id: module.id})
       	// else
       	// 	$state.go('course.module.course_editor.overview',{module_id: module.id})
+      		// scope.open_this_link = false
       	scope.currentmodule = module
+      }
+
+      scope.goToCourseInfoStudent=function(){
+      	scope.currentmodule = null
+      	$state.go("course.course_information")
+
+      }
+
+   	  scope.goToCourseInfoTeacher=function(){
+      	scope.currentmodule = null
+      	$state.go("course.edit_course_information")
+
       }
    }
   }

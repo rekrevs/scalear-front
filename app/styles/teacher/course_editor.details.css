@@ -32,9 +32,9 @@ input[type='number'].editable-input {
 label{
 	font-size:12px !important;
 }
-#details{
+/*#details{
 	overflow-x:scroll;
-}
+}*/
 
 .timepicker td, .timepicker td a{
 	padding:0;

@@ -10,8 +10,8 @@
             <span translate>controller_msg.due</span><span translate>controller_msg.today</span> <span translate>at</span> <b>{{alert_message| date:'h:mma'}}</b>
          </p>
     </div>
-    <span class="label size-10 round alert with-tiny-padding with-tiny-margin right" ng-show="quiz.required" translate><small>courses.required</small></span>
-    <span class="label size-10 round success with-tiny-padding with-tiny-margin right" ng-show="quiz.graded" translate><small>courses.graded</small></span>
+    <!-- <span class="label size-10 round alert with-tiny-padding with-tiny-margin right" ng-show="quiz.required" translate><small>courses.required</small></span> -->
+    <span class="label size-10 round blue with-tiny-padding with-tiny-margin right" ng-show="!quiz.graded" translate><small>courses.optional</small></span>
 
     <h3>
         <i ng-if="quiz.quiz_type=='quiz'" class="fi-clipboard-notes"></i>

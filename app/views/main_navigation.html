@@ -43,18 +43,18 @@
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" id="account" href="" translate>account</a>
 					<ul top-bar-dropdown>
-						<li has-dropdown>
-							<a class="lighter-grey dark-text has-description" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}"  href="">
-								<span translate>settings.settings</span>
+						<li>
+							<a class="lighter-grey dark-text has-description" ui-sref-active="nav-item-active" ui-sref="edit_account" href="">
+								<span translate>account_edit.account_information</span>
 								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
-							<ul top-bar-dropdown>
+							<!-- <ul top-bar-dropdown>
 								<li>
 									<a class="lighter-grey dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account" translate>
 										account_edit.account_information
 									</a>
 								</li>
-							</ul>
+							</ul> -->
 						</li>
 						<li><a class="lighter-grey dark-text" id="logout" ng-click="logout()"><span translate>navigation.logout</span> {{user.name}}</a></li>
 					</ul>
@@ -113,18 +113,18 @@
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="account" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" translate>account</a>
 					<ul top-bar-dropdown>
-						<li has-dropdown>
-							<a class="lighter-grey dark-text has-description" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}">
-								<span translate>settings.settings</span>
+						<li>
+							<a class="lighter-grey dark-text has-description" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
+								<span translate>account_edit.account_information</span>
 								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
-							<ul top-bar-dropdown>
+							<!-- <ul top-bar-dropdown>
 								<li>
 									<a class="lighter-grey dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account" translate>
 										account_edit.account_information
 									</a>
 								</li>
-							</ul>
+							</ul> -->
 						</li>
 						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" id="logout" ng-click="logout()"><span translate>navigation.logout</span> {{user.name}}</a></li>
@@ -135,8 +135,9 @@
 					<ul top-bar-dropdown>
 						<li><a class="lighter-grey dark-text" ui-sref="getting_started" ui-sref-active="nav-item-active" translate>help.getting_started</a></li>
 						<li class="divider border-grey medium-opacity"></li>
-						<li><a class="lighter-grey dark-text" href="" translate>help.teacher_forum</a></li>
+						<li><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" translate>help.teacher_forum</a></li>
 						<li><a class="lighter-grey dark-text" href="" translate>help.instruction_manual</a></li>
+						<!-- <li class="divider"></li> -->
 						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" ui-sref="privacy" ui-sref-active="nav-item-active" translate>footer.privacy</a></li>
 						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
@@ -189,18 +190,18 @@
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="account" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" translate>account</a>
 					<ul top-bar-dropdown>
-						<li has-dropdown>
-							<a class="lighter-grey dark-text has-description" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}">
-								<span translate>settings.settings</span>
+						<li>
+							<a class="lighter-grey dark-text has-description" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
+								<span translate>account_edit.account_information</span>
 								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
-							<ul top-bar-dropdown>
+							<!-- <ul top-bar-dropdown>
 								<li>
 									<a class="lighter-grey dark-text" href="" ui-sref-active="nav-item-active" ui-sref="edit_account" translate>
 										account_edit.account_information
 									</a>
 								</li>
-							</ul>
+							</ul> -->
 						</li>
 						<li><a class="lighter-grey dark-text" id="logout" ng-click="logout()"><span translate>navigation.logout</span> {{user.name}}</a></li>
 					</ul>

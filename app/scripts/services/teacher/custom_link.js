@@ -11,6 +11,7 @@ angular.module('scalearAngularApp')
         'destroy': { method: 'DELETE', headers:headers },
         'show':{method: 'GET', headers:headers},
         'validate':{method: 'PUT', headers:headers, params: {action: 'validate_link'} },
+        // 'sortCourse':{method: 'GET', headers:headers, params: {action: 'sort_course'} },
         // 'validateName':{method: 'PUT', headers:headers, params: {action: 'validate_link'} },
       });
 

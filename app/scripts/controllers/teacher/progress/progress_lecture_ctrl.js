@@ -20,7 +20,7 @@ angular.module('scalearAngularApp')
       removeShortcuts()
     });
 
-    $scope.$on('filter_update',function(ev,filters){
+    $scope.$on('progress_filter_update',function(ev,filters){
       $scope.checkModel=filters
     })
 
@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
     //   "courses.charts": "charts",
     //   "lectures.discussion": "discussion",
     // }
-    $scope.checkModel={confused:true, charts:true, discussion:true};
+    $scope.checkModel={confused:true, charts:true, discussion:true, free_question:true};
 
     $scope.grade_options= [{
       value: 0, // not set
@@ -121,7 +121,7 @@ angular.module('scalearAngularApp')
             data.id = q_id  
             data.quiz_type='quiz'
             data.title=$scope.quizzes[quiz_id].questions[q_idx].question
-            var type = $scope.quizzes[quiz_id].questions[q_idx].type == "Free Text Question"? $scope.quizzes[quiz_id].questions[q_idx].type : 'charts'
+            var type = $scope.quizzes[quiz_id].questions[q_idx].type == "Free Text Question"? "free_question" : 'charts'
   	 			  $scope.timeline['quiz'][quiz_id].add(0, type, data,'quiz')
           }
   	 		}
@@ -150,7 +150,7 @@ angular.module('scalearAngularApp')
               data.type = $scope.quizzes[survey_id].questions[q_idx].type
               data.id = q_id  
               data.quiz_type='survey'
-              var type = $scope.quizzes[survey_id].questions[q_idx].type == "Free Text Question"? $scope.quizzes[survey_id].questions[q_idx].type : 'charts'
+              var type = $scope.quizzes[survey_id].questions[q_idx].type == "Free Text Question"? "free_question" : 'charts'
               $scope.timeline['survey'][survey_id].add(0, type, data)
         		}
         	}
@@ -190,12 +190,18 @@ angular.module('scalearAngularApp')
       else
         view_index = $scope.highlight_index-1
 
-      divs[view_index].scrollIntoView()
-      $timeout(function(){
-        var top = angular.element(divs[$scope.highlight_index]).offset().top - ( $('.main_content').innerHeight / 2 );
-      // console.log(top)
-      $('.main_content').scrollTop = top;
-      })
+      if(x>0){
+        divs[$scope.highlight_index].scrollIntoView(false)
+      }
+      else{
+        divs[$scope.highlight_index].scrollIntoView(true)
+        divs[$scope.highlight_index].scrollTop+=45
+      }
+      // $timeout(function(){
+      //   var top = angular.element(divs[$scope.highlight_index]).offset().top - ( $('.main_content').innerHeight / 2 );
+      // // console.log(top)
+      // $('.main_content').scrollTop = top;
+      // })
 	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
 	    $scope.$apply()

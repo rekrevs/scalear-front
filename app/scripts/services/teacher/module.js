@@ -38,7 +38,9 @@ angular.module('scalearAngularApp')
             'getQuizCharts':{method:'GET', params:{action:'get_quiz_charts'},headers:headers},
       	'getSurveyChartsInclass':{method:'GET', params:{action:'get_survey_charts_inclass'},headers:headers},
       	'getSurveyCharts':{method:'GET', params:{action:'get_survey_charts'},headers:headers},
-            'getLastWatched':{method: 'GET', params:{action: 'last_watched'}, headers:headers}
+            'getLastWatched':{method: 'GET', params:{action: 'last_watched'}, headers:headers},
+            'sortGroupLinks':{method: 'POST', headers:headers, params: {action: 'sort_group_links'}},
+
 	  });
 
 }])

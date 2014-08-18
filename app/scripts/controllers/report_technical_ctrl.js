@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('ReportTechnicalCtrl',['$scope','$modalInstance','$log','$window', '$rootScope', 'Home', '$translate', '$stateParams', '$location', function ($scope, $modalInstance, $log, $window, $rootScope, Home, $translate, $stateParams, $location) {
 
-  $scope.issue_types=[{value:"system", text:$translate('head.system')}, {value:"content", text:$translate('head.content')}]//"ScalableLearning Website", "Course Content"]
+  $scope.issue_types=[{value:"system", text:$translate('head.system')}, {value:"content", text:$translate('head.course_content')}]//"ScalableLearning Website", "Course Content"]
   $scope.selected_type = $scope.issue_types[0];
 	
   // $scope.ok = function () {

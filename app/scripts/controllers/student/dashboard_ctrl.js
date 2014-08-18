@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
         .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', '$rootScope', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout, $rootScope) {
                 $window.scrollTo(0, 0);
                 Page.setTitle('dashboard');
+                $rootScope.subheader_message = "What's New"
                 var change_lang = function() {
                     if ($scope.eventSources) {
                         if($scope.myCalendar){
@@ -13,6 +14,13 @@ angular.module('scalearAngularApp')
                             $scope.myCalendar.fullCalendar(obj);
                         }
                     }
+                }
+
+                $scope.toggleLargeCalendar=function(){
+                    $scope.large_calendar=!$scope.large_calendar
+                     $timeout(function() {
+                        $(window).resize()
+                    })
                 }
 
                 var cal_ics_obj;

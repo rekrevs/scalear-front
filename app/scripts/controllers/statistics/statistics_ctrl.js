@@ -1,9 +1,10 @@
 
 
 angular.module('scalearAngularApp')
-  .controller('statisticsCtrl',['$scope', 'Kpi','$translate','Page', function ($scope, Kpi,$translate, Page) {
+  .controller('statisticsCtrl',['$scope', 'Kpi','$translate','Page','$rootScope', function ($scope, Kpi,$translate, Page, $rootScope) {
 
     Page.setTitle('courses.statistics');
+    $rootScope.subheader_message = "Statistics Dashboard"
     $scope.close_selector = false;
 
 	var init =function(){

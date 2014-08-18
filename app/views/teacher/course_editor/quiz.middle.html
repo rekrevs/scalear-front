@@ -33,19 +33,19 @@
 				<button class="button small" name="add_question" ng-click="addQuestion()">+ {{'groups.add_question' | translate}}</button>
 				<button class="button small" name="add_header" ng-click="addHeader()">+ {{'groups.add_header' | translate}}</button>
 				<button class="button small success" name="save_quiz" ng-click="saveAll()" translate>save</button>
-				<button class="button small secondary" name="preview_quiz" ng-click="openPreview()" translate>preview</button>
+				<!-- <button class="button small secondary" name="preview_quiz" ng-click="openPreview()" translate>preview</button> -->
 				</div>	
 			</center>
 		</div>
 	</div>
-	<div ng-show="preview" >
+	<!-- <div ng-show="preview" >
 		<br/>
 		<student-quiz ng-if="preview" quiz='temp_quiz' student-answers="formatted_answers" ></student-quiz>
 		<center>
 			<button class="button small" name="edit_quiz" ng-click="closePreview()" translate>edit</button>
 			<button class="button small success" name="save_quiz" ng-click="saveAll()" translate>save</button>
 		</center>
-	</div>
+	</div> -->
 </div>
 
 	

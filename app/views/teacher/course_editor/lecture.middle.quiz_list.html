@@ -5,7 +5,7 @@
 		<th translate>answer.question</th>
 		<th translate>online_quiz.time</th>
 		<th translate>groups.type</th>
-		<th>Delete</th>
+		<th class="text-center" style="width:95px">Delete</th>
 	</tr>
 	</thead>
 	<tbody>
@@ -17,7 +17,7 @@
 				<editable_text value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz">
 			</td>
 			<td>{{quiz.question_type}}</td>
-			<td class="text-center">
+			<td class="text-center no-padding">
 				<delete_button size="big" color='dark' action="deleteQuizButton(quiz)" />
 			</td>
 		</tr>

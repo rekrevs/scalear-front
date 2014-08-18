@@ -12,6 +12,7 @@
 		</div>
 		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count" />
 		<div class="row shortcuts size-10 hide-for-medium-down" >
+			<div class="shortcuts_label size-12">Shortcuts:</div>
 			<div>
 				<div class="small-6 columns">
 					<i class="fi-arrow-up"></i> - <span translate>lectures.go_next_item</span><br />
@@ -29,7 +30,9 @@
 					<i style="font-weight:bold">space</i> - <span translate>lectures.seek_to_location</span>
 				</div>
 			</div>
-			<span class="shortcuts_label right size-12">Shortcuts:</span>
+		</div>
+		<div class="row label size-12 text-left color-blue white" style="margin-top:8px">
+		  <a href="http://google.com" target="_blank">Help: How to use this page</a>
 		</div>
 	</div>
 	<div class="small-12 medium-9 large-9 columns" style="max-height: 83vh; overflow-y: auto;">
@@ -57,7 +60,6 @@
 					<p class="title">
 						<span translate>courses.module_progress</span> 
 						<span class="size-12">(<span translate>courses.based_on_invideo</span>)</span>
-						<span><a ui-sref="course.module.progress_details({module_id:module.id})" class="size-12 color-white right "><span translate>courses.view_detailed_progress</span>...</a></span>
 					</p>
 					<div google-chart chart="module_chart" class="progress_chart" ></div>
 				</div>
@@ -81,7 +83,7 @@
 							</div>
 							<div class="row"><div google-chart chart="quiz_chart" class="small-12 columns progress_chart" ></div></div>
 						</li>
-						<li ng-if="item.type=='Free Text Question'" class="li_inner color-coral">
+						<li ng-if="item.type=='free_question'" class="li_inner color-coral">
 							<inner_title type="'groups.free_text_question' | translate" title="item.data.title" class="left" style="margin-right:5px"/>
 							<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show)"/>
 							</br>

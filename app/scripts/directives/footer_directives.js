@@ -4,18 +4,18 @@ angular.module('scalearAngularApp')
     .directive('version', function(scalear_api) {
         return {
             restrict: 'E',
-            template: '<div style="font-size:10px">v' + scalear_api.version + '</div>'
+            template: '<div style="font-size:10px;color:lightgray;font-weight: 200">v' + scalear_api.version + '</div>'
         };
     })
     .directive('scalearFooter', function() {
         return {
             restrict: 'E',
-            template: '<div class="row" style="text-align: center; line-height: 13px;">' +
+            template: '<div class="row size-12" style="text-align: center; line-height: 12px;">' +
                 
-                '&copy; ' + new Date().getFullYear() + ' <a ui-sref="home">ScalableLearning</a> | ' +
-                '<span translate="footer.about"></span> | ' +
-                '<a ui-sref="privacy" translate="footer.privacy"></a>'+
-                '<br><center><version /></center>' +
+                '&copy; ' + new Date().getFullYear() + ' <a class="color-green">ScalableLearning</a> | ' +
+                '<a ui-sref="home" class="color-green" translate="footer.about"></a> | ' +
+                '<a ui-sref="privacy" class="color-green" translate="footer.privacy"></a>'+
+                '<br><center ><version /></center>' +
                 
                 '</div>'
         };

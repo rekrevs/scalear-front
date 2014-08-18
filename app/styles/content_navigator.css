@@ -76,6 +76,7 @@ li{
 }
 .accordion-heading:hover, .currentmodule{
   background-color: lightgrey !important;
+  border: none !important;
 }
 
 .accordion-heading .accordion-toggle {
@@ -196,9 +197,14 @@ li{
 .last-child{
   padding-left: 20px !important;
 }
-.h:hover, .last-child:hover, .inneritemopen {
+.h:hover, .last-child:hover, .inneritemopen, .links:hover {
   background-color: rgba(0,0,0,0.2);
   /*background-color: lightgrey;*/
+}
+
+ .varticaldeletecontainer{
+  width: 95px; 
+  float: right;
 }
 
 

@@ -22,7 +22,7 @@ angular.module('scalearAngularApp')
         $scope.exportNotes()
     })
 
-    $scope.$on('filter_update',function(ev,filters){
+    $scope.$on('lecture_filter_update',function(ev,filters){
       $scope.checkModel=filters
     })
 
@@ -172,7 +172,7 @@ angular.module('scalearAngularApp')
             // quiz.vote = $scope.voteForReview
             // quiz.unvote = $scope.unvoteForReview
             $scope.cue_events[quiz.id] = $scope.lecture_player.controls.cue(quiz.time, function() {
-                // $scope.closeReviewNotify()
+                $scope.closeReviewNotify()
                 $scope.studentAnswers[quiz.id] = {}
                 $scope.selected_quiz = quiz
                 $scope.last_quiz = quiz
@@ -255,7 +255,7 @@ angular.module('scalearAngularApp')
         console.log("sseekgggg")
         console.log(time)
         console.log(lecture_id)
-        // $scope.closeReviewNotify()
+        $scope.closeReviewNotify()
         if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
             if(time >=0)
                 $scope.lecture_player.controls.seek(time)
@@ -589,7 +589,7 @@ angular.module('scalearAngularApp')
 
                 $scope.selected_quiz.is_quiz_solved=true;
             }
-            // reviewInclass() 
+            reviewInclass() 
 
             var group_index= scalear_utils.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
             var lecture_index= scalear_utils.getIndexById($scope.course.groups[group_index].lectures, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
@@ -608,7 +608,8 @@ angular.module('scalearAngularApp')
     }
 
     var reviewInclass =function(){
-        var max_time = 5
+        var max_time = 10
+        var close_time= 7.5
         console.log($scope.selected_quiz)
         // if(!$scope.selected_quiz.reviewed && $scope.selected_quiz.quiz_type != 'survey' && !$scope.review_inclass && !$scope.review_inclass_inprogress){
         if($scope.selected_quiz.quiz_type != 'survey' && !$scope.review_inclass && !$scope.review_inclass_inprogress){
@@ -628,7 +629,7 @@ angular.module('scalearAngularApp')
                     $scope.closeReviewNotify()
                     
                     // $scope.review_inclass= false
-                },5000,1)
+                },close_time*1000,1)
             },time*1000,1)
         }
     }
@@ -651,7 +652,7 @@ angular.module('scalearAngularApp')
                     $scope.last_quiz.reviewed = true
                     $scope.last_quiz.votes_count++
                 }
-                // $scope.closeReviewNotify()
+                $scope.closeReviewNotify()
             }
         })
     }
@@ -665,7 +666,7 @@ angular.module('scalearAngularApp')
                     $scope.last_quiz.reviewed = false
                     $scope.last_quiz.votes_count--
                 }
-                // $scope.closeReviewNotify()
+                $scope.closeReviewNotify()
             }
         })
     }

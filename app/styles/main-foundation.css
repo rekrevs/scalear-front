@@ -127,6 +127,11 @@ span.error, small.error{
 .color-blue{
 	color: #2ba6cb !important;
 }
+
+.color-editable-blue{
+  color:#428bca !important;
+}
+
 .color-green, .color-green-hover{
 	color: #5da423 !important;
 }
@@ -889,6 +894,17 @@ input.editable-input{
   bottom: -10px;
   border-left-color: #ffffff;
   border-right-width: 0;
+}
+
+/*Calendar*/
+.fc-header-title h2{
+font-size: 24px;
+}
+.fc-header{
+margin:0;
+}
+table.fc-border-separate{
+  margin-bottom: 10px
 }
 
 

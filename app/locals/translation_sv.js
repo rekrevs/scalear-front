@@ -68,6 +68,7 @@ var translation_sv=function(){
       new_online_content: "Ny Online Innehåll",
       send_email: "Skicka ett Mail",
       show_all_courses: "Visa alla kurser",
+      due: "Förfaller",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -89,6 +90,7 @@ var translation_sv=function(){
               calendar: "Kalender",
               announcements: "Meddelanden",
               content: "Kursinnehåll",
+              course_content: "Mina Kursinnehåll",
               system: "ScalableLearning Website",
               information: "Information",
               course_information: "Kursinformation",
@@ -349,7 +351,7 @@ var translation_sv=function(){
               hover_for_details: "Peka för mer information",
               set_date: "Ställ in datum",
               seconds: "Sekunder",              
-              use_module: "Använd Module?",
+              use_module: "Använd modulens synlighet",
               using_module_appearance: "Använda modulens publiceringsdatum",
               not_using_module_appearance:"Inte genom att modulens publiceringsdatum",
               using_module_due: "Använda modulens färdigdatum",
@@ -472,6 +474,7 @@ var translation_sv=function(){
               description: "Beskrivning",
               save_module: "Spara modul",
               external_link: "Externa Länka",
+              external_module_link: "Externa Modul Länkar",
               no_external_links: "Det finns för närvarande inga externa länken i den här modulen...",
               you_sure_delete_link: "Är du säker på att du vill radera länken '{{link}}'?",
               you_sure_delete_module: "Är du säker på att du vill radera modul '{{module}}'?",
@@ -537,6 +540,7 @@ var translation_sv=function(){
               out_of: "ut ur",
               empty: "Tom Modul",
               blackscreen_close: "Klicka på eller Tryck på 'b' för att gå tillbaka",
+              blackscreen_done: "Omdömes klar. Klicka på Avsluta för att avsluta",
               go_to_class: "Gå till klass",
               display_inclass: "Visning för I-klass recension",
               filter: "Filtrera",
@@ -711,7 +715,7 @@ var translation_sv=function(){
               sort_by: "Sortera efter",
               click_to_select: "Klicka för att välja",
               based_on_invideo: "Baserat på in-video frågor besvarade",
-              view_detailed_progress: "Visa detaljer framsteg",
+              view_detailed_progress: "Framsteg Detaljer",
               no_courses: "Just nu, har du inte några kurser som du kan komma åt. Du kan börja genom att lägga till en.",
               invite: "Bjud in till Gå",
               graded: "Graderad"
@@ -944,6 +948,7 @@ var translation_sv=function(){
           show_charts: "Visa Diagram",
           show_confused: "Visa Förvirrad",
           show_discussion: "Visa Diskussion",
+          show_free_question: "Visa Gratis Fråga",
           print: "Tryck"
         },
         languages:{

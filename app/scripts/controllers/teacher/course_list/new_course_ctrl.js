@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('newCourseCtrl',['$rootScope','$scope','Course','$state','$window', '$log','Page', function ($rootScope,$scope, Course,$state, $window, $log,Page) {
+  .controller('newCourseCtrl',['$rootScope','$scope','Course','$state','$window', '$log','Page','scalear_utils', function ($rootScope,$scope, Course,$state, $window, $log,Page, scalear_utils) {
 		$window.scrollTo(0, 0);
 		Page.setTitle('courses.new_course')
 		$scope.submitting=false;
@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
 			function(data){
 				//$scope.course=data.course;
 				$scope.importing=data.importing;
-				$scope.timezones=data.timezones;
+				$scope.timezones=scalear_utils.listTimezones()
 				console.log($scope.timezones)
 				$scope.course.time_zone = $scope.timezones[0]
 				var zone = new Date().getTimezoneOffset()/60 * -1

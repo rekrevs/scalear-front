@@ -157,8 +157,10 @@
         position: absolute;
         /*display: inline-block;*/
         /*z-index: 1000;*/
-        top: 31px;
-        left: 95%;
+        /*top: 31px;
+        left: 95%;*/
+        left: 108%;
+        top: 94%;
         margin-top: 5px;
     }
 
@@ -214,6 +216,16 @@
     .ownpost{
         background-color: #d9f2fc !important;
     }
+
+    .popover-title{
+        margin:0 !important;
+        padding-bottom:0;
+    }
+
+    .popover-content{
+        padding:10px;
+    }
+
     /*@media only screen and (max-width : 1312px) {
       #student-accordion{
         width: 43%;

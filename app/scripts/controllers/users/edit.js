@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
     .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state','$modal','Page',function($rootScope, $scope, User, $state, $modal,Page) {
     
     Page.setTitle('navigation.edit_account')
+    $rootScope.subheader_message = "Account Information"
     $scope.user = {}
     $rootScope.$watch('current_user', function(val) {
         if (val)

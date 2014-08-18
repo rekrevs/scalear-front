@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page','scalear_utils', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page, scalear_utils) {
 
   $window.scrollTo(0, 0);
   $scope.in_delete = false;
@@ -9,19 +9,40 @@ angular.module('scalearAngularApp')
   $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
   $scope.role_names = {'3': 'courses.professor', '4': 'courses.ta'};
   Page.setTitle('head.information')
-  Course.show({course_id:$stateParams.course_id},
-    function(response){
-    	// $scope.course=response.course
-      // console.log($scope.course)
-    	$scope.timezones=response.timezones;
+  $scope.timezones=scalear_utils.listTimezones()
 
-      $scope.timezones.forEach(function(zone){
-        if(zone.name == $scope.course.time_zone){
-          $scope.course.time_zone = zone
-          return
-        }
-    })
-  });
+    $scope.timezones.forEach(function(zone){
+      console.log(zone.name)
+      console.log($scope.course.time_zone)
+      if(zone.name == $scope.course.time_zone){
+        $scope.course.time_zone = zone
+        return
+      }
+  })
+
+  // Course.show({course_id:$stateParams.course_id},
+  //   function(response){
+  //   	// $scope.course=response.course
+  //     // console.log($scope.course)
+  //   	var timezones=response.timezones;
+  //     // console.log($scope.timezones)
+  //     $scope.timezones=[]
+  //     var offset=[]
+  //     timezones.forEach(function(zone){
+  //       // console.log(offset.indexOf(zone.offset))
+  //       console.log("name":"+"zone.name+" ,offset:"+zone.offset+", value:""+zone.value)"
+  //       if(offset.indexOf(zone.offset)==-1){
+  //         $scope.timezones.push(zone)
+  //         offset.push(zone.offset)
+  //       }
+  //       if(zone.name == $scope.course.time_zone){
+  //         $scope.course.time_zone = zone
+  //         return
+  //       }
+  //   })
+  //     console.log($scope.timezones)
+  //     console.log(offset)
+  // });
   
 
   $scope.updateCourse = function(data,type){

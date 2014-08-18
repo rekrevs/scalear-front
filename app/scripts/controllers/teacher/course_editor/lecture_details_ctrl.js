@@ -84,6 +84,9 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
+                        console.log(data)
+                        $scope.lecture.appearance_time = data.lecture.appearance_time
+                        $scope.lecture.due_date = data.lecture.due_date
                         // $scope.modules.forEach(function(module, i) {
                         //     if (module.id == $scope.lecture.group_id) {
                         //         if ($scope.lecture.appearance_time_module) {
@@ -107,6 +110,7 @@ angular.module('scalearAngularApp')
             }
 
             $scope.updateDueDate=function(type,enabled){
+                var enabled = $scope.lecture.due_date_enabled
                 var d = new Date($scope.lecture.due_date)
                 if(isDueDateDisabled() && enabled) 
                     var years =  -200 
@@ -241,7 +245,8 @@ angular.module('scalearAngularApp')
                             $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date; 
                             $scope.lecture.due_date_enabled = !isDueDateDisabled() 
                         } 
-                    }) 
+                    })
+                    $scope.link_url=$state.href('course.module.courseware.lecture', {module_id: $scope.lecture.group_id, lecture_id:$scope.lecture.id}, {absolute: true}) 
                 }
             })
 

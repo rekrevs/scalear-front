@@ -2,13 +2,13 @@
 
 angular.module('scalearAngularApp')
   .controller('quizMiddleCtrl',['$stateParams','$scope','Quiz', 'CourseEditor', '$translate','$log', '$rootScope','ErrorHandler','$timeout', '$state',function ($stateParams,$scope, Quiz, CourseEditor, $translate, $log, $rootScope, ErrorHandler,$timeout, $state) {
- 	$scope.$parent.not_module = true;
- 	$scope.$parent.currentitem = $state.params.quiz_id
+ 	// $scope.$parent.not_module = true;
+ 	// $scope.$parent.currentitem = $state.params.quiz_id
  	$scope.$watch('items_obj["quiz"]['+$stateParams.quiz_id+']', function(){
       if($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]){
         $scope.quiz=$scope.items_obj["quiz"][$stateParams.quiz_id]
-        $scope.$emit('accordianUpdate',$scope.quiz.group_id);
-        $scope.$parent.currentmodule = $scope.quiz.group_id
+        // $scope.$emit('accordianUpdate',$scope.quiz.group_id);
+        // $scope.$parent.currentmodule = $scope.quiz.group_id
       }
     })
 
@@ -58,6 +58,7 @@ angular.module('scalearAngularApp')
 					opacity: 0.4,
 					scroll: true,
 			 	}
+				 
 		    });
 
 	    shortcut.add("Enter",
@@ -79,7 +80,7 @@ angular.module('scalearAngularApp')
 			{questions: ans},
 			function(data){ //success
 				$log.debug(data)
-				init();
+				// init();
 			},
 			function(){
 	 		   // alert("Could not save changes, please check network connection.");
@@ -168,19 +169,19 @@ angular.module('scalearAngularApp')
 	$scope.removeHeader=function(index){
 		$scope.removeQuestion(index)
 	}
-	$scope.openPreview=function(){
-		$scope.preview=true
-		$scope.temp_quiz={questions:$scope.questions}
-		$scope.formatted_answers={}
-		for(var elem in $scope.temp_quiz.questions){			
-			if($scope.temp_quiz.questions[elem].question_type.toUpperCase() == 'DRAG'){
-				$scope.formatted_answers[$scope.temp_quiz.questions[elem].id] = CourseEditor.mergeDragAnswers($scope.temp_quiz.questions[elem].answers, "quiz", $scope.temp_quiz.questions[elem].id).content
-			}
-		}
-	}
-	$scope.closePreview=function(){
-		$scope.preview=false
-		$scope.temp_quiz=null
-	}
+	// $scope.openPreview=function(){
+	// 	$scope.preview=true
+	// 	$scope.temp_quiz={questions:$scope.questions}
+	// 	$scope.formatted_answers={}
+	// 	for(var elem in $scope.temp_quiz.questions){			
+	// 		if($scope.temp_quiz.questions[elem].question_type.toUpperCase() == 'DRAG'){
+	// 			$scope.formatted_answers[$scope.temp_quiz.questions[elem].id] = CourseEditor.mergeDragAnswers($scope.temp_quiz.questions[elem].answers, "quiz", $scope.temp_quiz.questions[elem].id).content
+	// 		}
+	// 	}
+	// }
+	// $scope.closePreview=function(){
+	// 	$scope.preview=false
+	// 	$scope.temp_quiz=null
+	// }
  
  }])

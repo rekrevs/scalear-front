@@ -94,19 +94,26 @@
 		<!--</tr>-->
 
 		<tr>
-			<td class="right-border"><span translate>lectures.appearance_date</span></td>
+			<td class="right-border"><span translate>groups.appearance_date</span></td>
 			<td > 
-				<details-check checked="lecture.appearance_time_module" save="updateLecture()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="appearance_time_module"></details-check> 
-				<br />
-				<div ng-hide="!lecture.appearance_time_module">
-					<!-- <input type='text' ng-model='lecture.appearance_time' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
-					<div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
-
+				<input type="checkbox" ng-model="lecture.appearance_time_module" ng-change="updateLecture()" class="no-margin">
+				<span class="size-12" translate>lectures.use_module</span>
+				
+				<span ng-hide="!lecture.appearance_time_module">
+					<span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+					<div  style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
 					{{lecture.appearance_time | amDateFormat:'MMM Do YYYY, h:mm a'}}
 					</div>
+				</span>
+				
+				<!-- <details-check checked="lecture.appearance_time_module" save="updateLecture()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="appearance_time_module"></details-check>  -->
+				<br />
+				<!-- <div ng-hide="!lecture.appearance_time_module"> -->
+					<!-- <input type='text' ng-model='lecture.appearance_time' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
+					
 					<!-- <span ng-show="visible(lecture.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> -->
-					<span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
-				</div>
+					
+				<!-- </div> -->
 				<span ng-hide="lecture.appearance_time_module">
 					<span translate>lectures.set_date</span>:<br>
 					<details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
@@ -118,11 +125,15 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="right-border"><span translate>lectures.due_date</span></td>
+			<td class="right-border"><span translate>groups.due_date</span></td>
 			<td>
-				<details-check checked="lecture.due_date_enabled" validate="updateDueDate" save="updateLecture()" yes="with due date" no="without due date" title="has due date?" ></details-check> 
+				<input type="checkbox" ng-model="lecture.due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
+				<span class="size-12" >with due date</span>
+				<!-- <details-check checked="lecture.due_date_enabled" validate="updateDueDate" save="updateLecture()" yes="with due date" no="without due date" title="has due date?" ></details-check>  -->
 				<div ng-show="lecture.due_date_enabled">
-					<details-check checked="lecture.due_date_module" save="updateLecture()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="due_date_module"></details-check> 
+					<input type="checkbox" ng-model="lecture.due_date_module" ng-change="updateLecture()" class="no-margin">
+					<span class="size-12" translate>lectures.use_module</span>
+					<!-- <details-check checked="lecture.due_date_module" save="updateLecture()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="due_date_module"></details-check>  -->
 					<br />
 					<div ng-hide="!lecture.due_date_module">
 						<!-- <input type='text' ng-model='lecture.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
@@ -149,6 +160,12 @@
 			<td class="right-border"><span translate>lectures.description</span>:</td>
 			<td>
 				<details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
+			</td>
+		</tr>
+		<tr>
+			<td class="right-border"><span>Student link to lecture</span>:</td>
+			<td class="break-text">
+				<span class="color-editable-blue">{{link_url}}</span>
 			</td>
 		</tr>
 	</table>

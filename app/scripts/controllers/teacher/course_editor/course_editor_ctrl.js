@@ -464,6 +464,7 @@ angular.module('scalearAngularApp')
             {link_id: elem.id},{},
             function(){
                 $scope.course.custom_links.splice($scope.course.custom_links.indexOf(elem), 1)
+                // $scope.module_obj[$stateParams.module_id].custom_links.splice($scope.module_obj[$stateParams.module_id].custom_links.indexOf(elem), 1)
                 // $scope.link_overlay=false
             }, 
             function(){}

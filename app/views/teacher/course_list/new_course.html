@@ -2,7 +2,7 @@
     <h3><i class="fi-book"></i> {{'courses.new_course' | translate}}</h3>
     <div class="medium-2 large-2 columns hide-for-small-only">
         <smart-image defaultimage="'../images/course_image.png'" desiredimage="course.image_url" notfound="image_not_found" style="height: 36px;"></smart-image>
-        <label>{{'courses.course_image' | translate}}
+        <label class="with-small-margin-top">{{'courses.course_image' | translate}}
             <input type="text" ng-model="course.image_url" ng-class="{error: image_not_found || server_errors['image_url']}"/>
             <small class="error with-tiny-padding" ng-show="image_not_found">{{image_not_found | translate}}</small>
             <small class="error with-tiny-padding" ng-show="server_errors['image_url']">{{server_errors['image_url'].join()}}</small>

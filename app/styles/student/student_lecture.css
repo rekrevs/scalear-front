@@ -164,6 +164,27 @@
         top: 94%;*/
         margin-top: 5px;
     }
+    .check-answer{
+        position: absolute;
+        top: 10px;
+        left: 47%;
+    }
+    @-moz-document url-prefix() {
+        
+        .progress_controls{
+            position: relative;
+            top: -7px;
+            left: 95%;
+            margin-top: 5px;
+        }
+        .check-answer{
+            float: right;
+            margin-right: 220px;
+            margin-top: -31px;
+            min-width: 100px;
+            position: initial;
+        }
+    }
 
     .solved{
     cursor: pointer;

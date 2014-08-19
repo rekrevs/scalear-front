@@ -14,9 +14,9 @@ angular.module('scalearAngularApp')
     $scope.tabs=[true,false,false]
     $scope.editors={}
 
-    $scope.$watch('checkModel', function(){
-        $scope.scrollIntoView('outline')
-    },true)
+    // $scope.$watch('checkModel', function(){
+    //     $scope.scrollIntoView('outline')
+    // },true)
 
     $scope.$on("export_notes",function(){
         $scope.exportNotes()
@@ -24,6 +24,7 @@ angular.module('scalearAngularApp')
 
     $scope.$on('lecture_filter_update',function(ev,filters){
       $scope.checkModel=filters
+      $scope.scrollIntoView('outline')
     })
 
     var isiPad=function(){
@@ -202,13 +203,13 @@ angular.module('scalearAngularApp')
         $scope.video_ready=true
         console.log("<<<<<----------->>>>")
         console.log($scope.video_ready)
-        var time = $location.search();
+        var time =$state.params.time
         
         if(time){
             console.log('time aho');
             console.log(time);
             //goToLecture(lecture_id)
-            $scope.seek(parseInt(time.time));
+            $scope.seek(parseInt(time));
         }
 
     }

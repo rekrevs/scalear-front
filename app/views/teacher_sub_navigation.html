@@ -170,7 +170,7 @@
     </top-bar>
     <content-navigator modules="course.modules" links="course.custom_links" mode="editor" open="open_navigator" style="z-index: 1;" />
     </div>
-    <div class="hide-for-small" ng-if="!('**.course.**' | includedByState)">
+    <div class="hide-for-small" ng-if="!('**.course.**' | includedByState) && !('home' | includedByState)">
         <div style="height: 50px;"></div>
         <top-bar class="sub-header whitesmoke">
           <div class="left">

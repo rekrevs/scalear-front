@@ -204,7 +204,8 @@ angular.module('scalearAngularApp')
                 scroll: true,
                 update: function(e, ui) {
                     Module.sortGroupLinks(
-                        {module_id: $scope.module.id},
+                        {   course_id: $state.params.course_id,
+                            module_id: $scope.module.id},
                         {links:$scope.module.custom_links}
                     )
                     // Course.sortCourseLinks({course_id:$state.params.course_id},

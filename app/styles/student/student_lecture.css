@@ -157,10 +157,11 @@
         position: absolute;
         /*display: inline-block;*/
         /*z-index: 1000;*/
-        /*top: 31px;
-        left: 95%;*/
-        left: 108%;
-        top: 94%;
+       /* top: 31px;*/
+        top: 31px;
+        left: 95%;
+       /* left: 108%;
+        top: 94%;*/
         margin-top: 5px;
     }
 

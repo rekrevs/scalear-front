@@ -28,26 +28,26 @@
                   </li>
                   <span ng-show="('**.lecture.**' | includedByState)">
                     <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('note')" style="font-size: 13px;width: 150px;padding: 0 14px;line-height: 45px;">
-                            <input id="showNotesCheckbox" type="checkbox" ng-model="filter.note" ng-change="updateLectureFilter('note')" />
+                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('note')">
+                            <input id="showNotesCheckbox" type="checkbox" ng-checked="lecture_filter.note" />
                             <span translate>course_settings.show_notes</span>
                         </div>
                     </li>
                     <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('discussion')" style="font-size: 13px;width: 150px;padding: 0 14px;line-height: 45px;">
-                            <input id="showQuestionsCheckbox" type="checkbox" ng-checked="filter.discussion" />
+                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('discussion')">
+                            <input id="showQuestionsCheckbox" type="checkbox" ng-checked="lecture_filter.discussion" />
                             <span translate>course_settings.show_questions</span>
                         </div>
                     </li>
                     <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('quiz')" style="font-size: 13px;width: 150px;padding: 0 14px;line-height: 45px;">
-                            <input id="showQuizzesCheckbox" type="checkbox" ng-checked="filter.quiz" />
+                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('quiz')">
+                            <input id="showQuizzesCheckbox" type="checkbox" ng-checked="lecture_filter.quiz" />
                             <span translate>course_settings.show_quizzes</span>
                         </div>
                     </li>
                     <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('confused')" style="font-size: 13px;width: 150px;padding: 0 14px;line-height: 45px;">
-                            <input id="showConfusedCheckbox" type="checkbox" ng-checked="filter.confused" />
+                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('confused')">
+                            <input id="showConfusedCheckbox" type="checkbox" ng-checked="lecture_filter.confused" />
                             <span translate>course_settings.show_confused</span>
                         </div>
                     </li>

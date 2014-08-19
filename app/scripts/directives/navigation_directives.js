@@ -55,17 +55,22 @@ angular.module('scalearAngularApp')
 				})
 
 				$rootScope.$on('open_navigator', function(){
-					scope.open_navigator=true
+					 setNavigator(true)
 				})
 
 				$rootScope.$on('close_navigator', function(){
-					scope.open_navigator=false
+					 setNavigator(false)
 				})
 
 
 				scope.toggleNavigator=function(){
 					scope.open_navigator = !scope.open_navigator
-					scope.$emit('navigator_open', scope.open_navigator)
+					scope.$emit('navigator_change', scope.open_navigator)
+				}
+
+				var setNavigator=function(val){
+					scope.open_navigator = val
+					scope.$emit('navigator_change', scope.open_navigator)
 				}
 
 				scope.addModule=function(){
@@ -136,13 +141,27 @@ angular.module('scalearAngularApp')
 					scope.preview_as_student = $rootScope.preview_as_student
 				})
 
+				$rootScope.$on('open_navigator', function(){
+					setNavigator(true)
+				})
+
+				$rootScope.$on('close_navigator', function(){
+					setNavigator(false)
+				})
+
 				scope.toggleNavigator=function(){
 					scope.open_navigator = !scope.open_navigator
-					scope.$emit('open_navigator', scope.open_navigator)
+					scope.$emit('navigator_change', scope.open_navigator)
+				}
+
+				var setNavigator=function(val){
+					scope.open_navigator = val
+					scope.$emit('navigator_change', scope.open_navigator)
 				}
 
 				scope.disablePreview=function(){
 	                if($cookieStore.get('preview_as_student')){
+	                  setNavigator(false)
 	                  Impersonate.destroy(
 	                    {
 	                        old_user_id:$cookieStore.get('old_user_id'),

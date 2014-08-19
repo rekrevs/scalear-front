@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
             $scope.Page = Page;
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
             $scope.open_navigator = false
-            $scope.$on('navigator_open',function(ev, status){
+            $scope.$on('navigator_change',function(ev, status){
                 $scope.open_navigator = status
             })
             $scope.$on("get_all_courses",function(){

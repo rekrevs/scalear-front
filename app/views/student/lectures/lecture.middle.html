@@ -43,9 +43,11 @@
 							<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
 					    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
 						</div>
-			    		<controls id="controls-bar" class="progress_controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
+			    		<controls id="controls-bar" class="progress_controls" ng-class="{'push-from-left': !quiz_mode}" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
 						</controls>
-						<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
+						<div class="check-answer">
+							<button type="button" ng-show="quiz_mode" class="tiny success button with-small-padding no-margin" ng-click="checkAnswer()" translate>youtube.check_answer</button>
+						</div>
 						<notification message="notification_message" submessage="notification_submessage" /> 
 						<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none"/> 
 			    	</progress-bar>

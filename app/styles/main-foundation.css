@@ -86,13 +86,13 @@ span.error, small.error{
 .whitesmoke, .whitesmoke-hover{
   background-color: whitesmoke !important
 }
-.blue{
+.blue, .blue-no-hover{
 	background-color: #2ba6cb !important;
 }
 .blue:hover{
 	background-color: #207d99 !important;
 }
-.green{
+.green, .green-no-hover{
 	background-color: #5da423 !important;
 }
 .green:hover{

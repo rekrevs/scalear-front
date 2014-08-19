@@ -100,7 +100,7 @@
                 </li>
                 <li has-dropdown>
                     <a id="content" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="goToContentEditor()" translate>head.content</a>
-                    <ul top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
+                    <ul class="lighter-grey-no-hover" top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
                         <li>
                             <a id="new_module" class="lighter-grey dark-text sub-header-component has-description" ng-click="addModule()">
                                 <span translate>groups.new_module</span>
@@ -131,13 +131,13 @@
                         <span ng-show="'*.module.**' | includedByState"> 
                             <div class="divider"></div>              
                             <li >                                
-                                <a id="copy" class="lighter-grey dark-text sub-header-component has-description" ng-click="copyItem()">
+                                <a id="copy" class="lighter-grey dark-text sub-header-component" ng-click="copyItem()">
                                     <span translate>menu.copy</span>
                                     <!-- <h5 class="dark-description"><small translate>menu.copy_describtion</small></h5> -->
                                 </a>
                             </li>
-                            <li>
-                                <a ng-class="{'disabled': clipboard, 'disabled': !clipboard}" id="paste" class="lighter-grey dark-text sub-header-component has-description" ng-click="pasteItem()">
+                            <li ng-class="{'disabled': !clipboard}">
+                                <a id="paste" ng-class="{'disabled': !clipboard}" class="lighter-grey dark-text sub-header-component has-description" ng-click="pasteItem()">
                                     <span translate>menu.paste</span>
                                     <h5 class="dark-description">
                                         <small>

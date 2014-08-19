@@ -715,12 +715,21 @@ angular.module('scalearAngularApp')
     var chars = question_block.text().length;
     var space = question_block.height() * question_block.width();
     
-    // var lines_text = question_block.text().split('\n');
-    // var longest_line = lines_text.sort(function (a, b) { return b.length - a.length; })[0];
+    var lines_text = question_block.text().split('\n');
+    var longest_line = lines_text.sort(function (a, b) { return b.length - a.length; })[0];
     
+
     var lines = (question_block.text().split('\n').length-5)/3;
     var OneLineSize = space/lines;
+
+    var width_disc_font_size = (question_block.width()/(longest_line.length))*2.5 + 'px';
+    
     $scope.discfontsize = (question_block.height()/(lines))/2 + 'px';
+    
+    if((question_block.width()/(longest_line.length))*2.5 < (question_block.height()/(lines))/2){
+      $scope.discfontsize = width_disc_font_size;
+    }
+
     if(((question_block.height()/(lines))/2)>20){
       $scope.disclineheight = 1;     
     }
@@ -730,17 +739,17 @@ angular.module('scalearAngularApp')
     else{
       $scope.disclineheight = .1;
     }
-    // $scope.discfontsize = Math.sqrt((space)/(longest_line.length*lines))+ 'px';
+    
 
-    console.log(question_block.height());
-    console.log($scope.discfontsize);
-    console.log(lines);
-    console.log($scope.discfontsize/lines);
+    if((question_block.height()/(lines))/2 > 30){
+      $scope.discfontsize = 30;
+    }
 
+    console.log((question_block.width()/(longest_line.length)));
+  
     $scope.fontsize = Math.sqrt(space/chars)+'px';
     $scope.sub_fontsize =(((question_block.height()-10)*23)/100) -5 +'px';
     
-
 
     // console.log(question_block)
     // if(question_block.get(0).scrollHeight > question_block.height()){

@@ -60,6 +60,7 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, user, User) {
                 $scope.show_settings = false;
                 $modalInstance.close();
             }, function(response) {
+                $modalInstance.close();
                 $scope.sending = false;
                 $scope.user.errors = response.data.errors
             })

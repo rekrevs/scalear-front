@@ -14,9 +14,9 @@ angular.module('scalearAngularApp')
     $scope.tabs=[true,false,false]
     $scope.editors={}
 
-    $scope.$watch('checkModel', function(){
-        $scope.scrollIntoView('outline')
-    },true)
+    // $scope.$watch('checkModel', function(){
+    //     $scope.scrollIntoView('outline')
+    // },true)
 
     $scope.$on("export_notes",function(){
         $scope.exportNotes()
@@ -24,6 +24,7 @@ angular.module('scalearAngularApp')
 
     $scope.$on('lecture_filter_update',function(ev,filters){
       $scope.checkModel=filters
+      $scope.scrollIntoView('outline')
     })
 
     var isiPad=function(){

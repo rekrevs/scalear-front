@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('MainCtrl', ['$scope','$log','Page', function ($scope, $log,Page ) {   
+  .controller('MainCtrl', ['$scope','$log','Page','$rootScope', function ($scope, $log,Page, $rootScope) {   
    Page.setTitle('Home')
+   $rootScope.subheader_message = null
    
   }]);
 

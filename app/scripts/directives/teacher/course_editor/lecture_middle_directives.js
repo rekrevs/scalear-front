@@ -179,11 +179,11 @@ angular.module('scalearAngularApp')
 								"<input class='must_save_check' ng-class='{error: aform.mcq.$error.atleastone}' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/>"+
 								"</label><center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
 								"<label>"+
-								"<h6 class='subheader'><small translate>lectures.shown_in_graph</small></h6>"+ 
+								"<h6 class='subheader no-margin'><small translate>lectures.shown_in_graph</small></h6>"+ 
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
-								"</label><label><span translate>lectures.explanation</span>"+
-								"<h6 class='subheader'><small translate>lectures.shown_to_student</small></h6>"+
+								"</label><br /><label style='margin-top:10px'><span translate>lectures.explanation</span>"+
+								"<h6 class='subheader no-margin'><small translate>lectures.shown_to_student</small></h6>"+
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>"+
 								"</label>"+
 								"<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+

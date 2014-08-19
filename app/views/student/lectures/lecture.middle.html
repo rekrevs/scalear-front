@@ -37,20 +37,17 @@
 						 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
 						 </div>
 					</quiz>
-					<youtube ng-show="!slow && lecture.url" ng-class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1' />
-					<progress-bar ng-show="!slow && lecture.url" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
+					<youtube ng-class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1' />
+					<progress-bar ng-show="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
 						<div ng-show="end_buttons" style="position: absolute;top: -71px;left: 47%;width: 0px;">
 							<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
 					    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
 						</div>
-			    		<controls id="controls-bar" class="progress_controls" ng-class="{'push-from-left': !quiz_mode}" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
+			    		<controls id="controls-bar" class="progress_controls" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
 						</controls>
-						<notification message="notification_message" submessage="notification_submessage" ></notification> 
-						<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none"></review_inclass> 
-						<!-- <check_answer class="check-answer" ng-show="quiz_mode" action="checkAnswer()"></check_answer> -->
-						<div class="check-answer">
-							<button type="button" ng-show="quiz_mode" class="tiny success button with-small-padding no-margin" ng-click="checkAnswer()" translate>youtube.check_answer</button>
-						</div>
+						<check_answer ng-show="quiz_mode" action="checkAnswer()"/>
+						<notification message="notification_message" submessage="notification_submessage" /> 
+						<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none"/> 
 			    	</progress-bar>
 			    </span>
 		    </video_container>

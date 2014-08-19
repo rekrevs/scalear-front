@@ -202,13 +202,13 @@ angular.module('scalearAngularApp')
         $scope.video_ready=true
         console.log("<<<<<----------->>>>")
         console.log($scope.video_ready)
-        var time = $location.search();
+        var time =$state.params.time
         
         if(time){
             console.log('time aho');
             console.log(time);
             //goToLecture(lecture_id)
-            $scope.seek(parseInt(time.time));
+            $scope.seek(parseInt(time));
         }
 
     }

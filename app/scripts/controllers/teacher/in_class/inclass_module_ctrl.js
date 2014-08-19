@@ -730,21 +730,22 @@ angular.module('scalearAngularApp')
       $scope.discfontsize = width_disc_font_size;
     }
 
-    if(((question_block.height()/(lines))/2)>20){
-      $scope.disclineheight = 1;     
-    }
-    else if(((question_block.height()/(lines))/2)>10 && ((question_block.height()/(lines))/2)<20){
-      $scope.disclineheight = .5;     
-    }
-    else{
-      $scope.disclineheight = .1;
-    }
+
+    // if(((question_block.height()/(lines))/2)>20){
+    //   $scope.disclineheight = 1;     
+    // }
+    // else if(((question_block.height()/(lines))/2)>10 && ((question_block.height()/(lines))/2)<20){
+    //   $scope.disclineheight = .5;     
+    // }
+    // else{
+    //   $scope.disclineheight = .1;
+    // }
     
 
     if((question_block.height()/(lines))/2 > 30){
       $scope.discfontsize = 30;
     }
-
+    $scope.disclineheight = 1//$scope.discfontsize * 0.1
     console.log((question_block.width()/(longest_line.length)));
   
     $scope.fontsize = Math.sqrt(space/chars)+'px';

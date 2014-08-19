@@ -123,7 +123,7 @@ span.error, small.error{
 .white-hover:hover, .light-grey-hover:hover{
   background-color: #d4d4d2 !important;
 }
-.lighter-grey{
+.lighter-grey, .lighter-grey-no-hover{
   background-color: #ededeb !important;
 }
 .lighter-grey:hover{
@@ -973,12 +973,13 @@ iframe{
   z-index: -1 !important;
 }
 
-a.disabled {
+a.disabled, a.disabled:hover, li.disabled {
    pointer-events: none;
    cursor: default;
    background-color: rgba(0,0,0,.1) !important;
    color: rgba(0,0,0,.4) !important;;
 }
+
 
 a.editable-empty{
   border-bottom: none !important; 

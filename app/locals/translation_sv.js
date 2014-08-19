@@ -234,7 +234,7 @@ var translation_sv=function(){
               edit_account: "Kontoinformation",
               leave_blank: "Lämna det tomt om du inte vill ändra det",
               need_password: "Vi behöver ditt nuvarande lösenord för att bekräfta dina ändringar",
-              update: "Uppdatera",
+              update: "Spara ändringar",
               cancel_account: "Ta bort mitt konto",
               unhappy: "Olycklig",
               you_sure: "Är du säker?",

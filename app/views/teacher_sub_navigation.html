@@ -17,7 +17,7 @@
             <ul class="right">
               <li has-dropdown>
                 <a id="settings" class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>courses.students</a>
-                <ul top-bar-dropdown>
+                <ul class="lighter-grey-no-hover" top-bar-dropdown>
                     <!-- <li><a id="course_info" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.edit_course_information" translate>head.course_information</a></li> -->
                     <li><a id="announcements" class="lighter-grey dark-text sub-header-component" ui-sref="course.announcements" translate>head.announcements</a></li>
                     <li><a id="enrolled_students" class="lighter-grey dark-text sub-header-component" ui-sref="course.enrolled_students" translate>head.enrolled_students</a></li>
@@ -29,7 +29,7 @@
             <ul class="right" ng-show="('**.module.progress.**' | includedByState)">
                 <li has-dropdown>
                   <a class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>settings.settings</a>
-                  <ul top-bar-dropdown>
+                  <ul class="lighter-grey-no-hover" top-bar-dropdown>
                     <!-- <li>
                       <a class="whitesmoke-hover dark-text sub-header-component">
                           <input id="showNotesCheckbox" type="checkbox" />
@@ -75,14 +75,14 @@
             <ul class="left" id="teacher_left_nav">
                 <li has-dropdown>
                     <a id="progress" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="goToProgress()" translate>head.progress</a>
-                    <ul top-bar-dropdown>
+                    <ul class="lighter-grey-no-hover" top-bar-dropdown>
                         <span ng-show="'*.module.**' | includedByState">
                             <li>
                                 <a id="review_module_progress" class="lighter-grey dark-text sub-header-component has-description" ui-sref="course.module.progress">
                                     <span translate>review_module_progress</span>
                                     <h5 class="dark-description"><small translate>choose_inclass_material</small></h5>
                                 </a>
-                                <!-- <div class="divider"></div> -->
+                                <!-- <div class="divider border-grey medium-opacity"></div> -->
                             </li>                        
                             <li>
                                 <a id="detail_module_progress" ui-sref="course.module.progress_details" class="lighter-grey dark-text sub-header-component">
@@ -100,7 +100,7 @@
                 </li>
                 <li has-dropdown>
                     <a id="content" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="goToContentEditor()" translate>head.content</a>
-                    <ul top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
+                    <ul class="lighter-grey-no-hover" top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
                         <li>
                             <a id="new_module" class="lighter-grey dark-text sub-header-component has-description" ng-click="addModule()">
                                 <span translate>groups.new_module</span>
@@ -115,7 +115,7 @@
                         </li>   
 
                         <li ng-show="'*.module.**' | includedByState">
-                            <div class="divider"></div>
+                            <div class="divider border-grey medium-opacity"></div>
                             <a id="new_online_content" online-modal ng-click="openOnlineContentModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
                                 <span translate>new_online_content</span>
                                 <h5 class="dark-description"><small>Video, quiz or survey</small></h5>
@@ -129,15 +129,15 @@
                         </li>                    
                         
                         <span ng-show="'*.module.**' | includedByState"> 
-                            <div class="divider"></div>              
+                            <div class="divider border-grey medium-opacity"></div>              
                             <li >                                
-                                <a id="copy" class="lighter-grey dark-text sub-header-component has-description" ng-click="copyItem()">
+                                <a id="copy" class="lighter-grey dark-text sub-header-component" ng-click="copyItem()">
                                     <span translate>menu.copy</span>
                                     <!-- <h5 class="dark-description"><small translate>menu.copy_describtion</small></h5> -->
                                 </a>
                             </li>
-                            <li>
-                                <a ng-class="{'disabled': clipboard, 'disabled': !clipboard}" id="paste" class="lighter-grey dark-text sub-header-component has-description" ng-click="pasteItem()">
+                            <li ng-class="{'disabled': !clipboard}">
+                                <a id="paste" ng-class="{'disabled': !clipboard, 'has-description': clipboard}" class="lighter-grey dark-text sub-header-component" style="height: 45px;" ng-click="pasteItem()">
                                     <span translate>menu.paste</span>
                                     <h5 class="dark-description">
                                         <small>
@@ -146,7 +146,7 @@
                                     </h5>
                                 </a>
                             </li>
-                            <div class="divider"></div>
+                            <div class="divider border-grey medium-opacity"></div>
                             <li >
                                 <a id="share_copy" class="lighter-grey dark-text sub-header-component has-description" href="" sharing-modal ng-click="openSharingModal()">
                                     <span translate>menu.share_copy</span>
@@ -154,7 +154,7 @@
                                 </a>
                             </li>
                             <li >
-                                <div class="divider"></div>
+                                <div class="divider border-grey medium-opacity"></div>
                                 <a id="preview_as_student" class="lighter-grey dark-text sub-header-component has-description" ng-click="preview()" href="">
                                     <span translate>preview_student</span>
                                     <h5 class="dark-description"><small translate>preview_describtion</small></h5>

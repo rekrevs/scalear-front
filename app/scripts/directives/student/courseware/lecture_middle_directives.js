@@ -110,12 +110,11 @@ angular.module('scalearAngularApp')
 .directive("checkAnswer",['$log', function($log) {
   return {
     restrict:"E",
+    replace: true,
     scope:{
       action:"&"
     },
-  	template: '<div style="position: absolute;top: 10px; left: 47%;">'+
-                '<button type="button" class="tiny success button with-small-padding" ng-click="action()"><span translate>youtube.check_answer</span></button>'+
-              '</div>',
+  	template: '<button type="button" class="tiny success button with-small-padding no-margin" ng-click="action()">{{"youtube.check_answer" | translate}}</button>',
   	link: function(scope, element, attrs) {}
   }
 }])

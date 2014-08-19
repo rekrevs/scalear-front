@@ -234,7 +234,7 @@ var translation_en=function(){
         edit_account: "Account Information",
         leave_blank: "Leave it blank if you don't want to change it",
         need_password: "We need your current password to confirm your changes",
-        update: "Update",
+        update: "Save Changes",
         cancel_account: "Cancel my account",
         unhappy: "Unhappy",
         you_sure: "Are you sure?",

@@ -197,7 +197,7 @@
         right: 0px;
         position: relative;
         overflow-y: auto; 
-        min-height: 85%;  
+        min-height: 82vh;  
     }
     .filterbuttons{
         position: absolute;
@@ -313,10 +313,10 @@
         #student-accordion{
             width: 100%;
             float: left;
-            margin-top: 50px;
+            margin-top: 0px;
             clear: both;
             overflow-y: visible;
-            position: absolute;
+            position: relative !important;
         }
         #user_information_container{
             display: none;

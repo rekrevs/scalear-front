@@ -290,7 +290,7 @@ angular.module('scalearAngularApp')
   return {
      replace:true,
      restrict: 'E',
-     template: "<input type='checkbox' name='student_answer' ng-model='data.selected' ng-change='radioChange(data)' ng-style='{left: xcoor, top: ycoor, position: \"absolute\"}' pop-over='explanation_pop'/>",
+     template: "<input type='checkbox' name='student_answer' ng-model='data.selected' ng-change='radioChange(data)' ng-style='{left: xcoor, top: ycoor, position: \"absolute\" }' style='width: 2%; min-width: 12px;' pop-over='explanation_pop'/>",
 
     link: function(scope, element, attrs, controller) {
       $log.debug("student answer link")

@@ -1,4 +1,4 @@
-<div style="overflow:auto; position: absolute; width: 95%;height:90%"> <!-- has all discussions -->      
+<div style="overflow:auto; position: absolute; width: 95%;height:100%"> <!-- has all discussions -->      
     <div ng-repeat="l in lectures" class='dimmed' style="min-width: 95%;" ng-class="{lectureopen: l.id == lecture.id}" id={{"outline_"+l.id}}> 
         <h5 class="light-grey" ng-click="seek()(null, l.id)" style="cursor:pointer; margin-bottom: 0px;padding-left:15px"><b>{{l.name}}</b>
         <!-- <span class="label round alert with-tiny-padding with-tiny-margin-right right" ng-show="l.required" translate>courses.required</span> -->

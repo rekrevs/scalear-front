@@ -173,7 +173,8 @@ var translation_en=function(){
         instructions:"The best way for us to make ScalableLearning better is through feedback from our users. Please send us any comments or questions or problems you may have and we’ll do our best to get back to you as soon as possible.",
         problem_is:"My problem is with",
         provide_desciption: "Please provide more description",
-        provide_email_name: "Please make sure that you provided your name and email address"
+        provide_email_name: "Please make sure that you provided your name and email address",
+        thanks: "Thanks for your feedback! We’ll get back to you soon."
       },
       enroll:{
         help_enroll_student:"Help on enrolling students",

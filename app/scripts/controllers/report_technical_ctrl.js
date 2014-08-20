@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('ReportTechnicalCtrl',['$scope','$modalInstance','$log','$window', '$rootScope', 'Home', '$translate', '$stateParams', '$location', function ($scope, $modalInstance, $log, $window, $rootScope, Home, $translate, $stateParams, $location) {
+  .controller('ReportTechnicalCtrl',['$scope','$modalInstance','$log','$window', '$rootScope', 'Home', '$translate', '$stateParams', '$location', '$interval', function ($scope, $modalInstance, $log, $window, $rootScope, Home, $translate, $stateParams, $location, $interval) {
 
   $scope.issue_types=[{value:"system", text:$translate('head.system')}, {value:"content", text:$translate('head.course_content')}]//"ScalableLearning Website", "Course Content"]
   $scope.selected_type = $scope.issue_types[0];
-	
+	$scope.hide_content = false;
   // $scope.ok = function () {
   // 	$log.debug($scope);
   // 	if($scope.form.key.$valid)
@@ -52,8 +52,12 @@ angular.module('scalearAngularApp')
                   agent: navigator.userAgent
               },
               function(data) {
+                angular.element('.reveal-modal').css('height', 'auto');
+                  $scope.hide_content = true;
                   $scope.technical_data = null;                                    
-                  $modalInstance.close();  
+                  $interval(function(){
+                    $modalInstance.close();
+                  }, 3000, 1)
                   
               }
           );

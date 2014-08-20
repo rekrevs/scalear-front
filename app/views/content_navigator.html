@@ -1,8 +1,8 @@
 <span style="position: fixed; z-index: 2;">
 	<div ng-switch="mode" class="content-navigator-container" ng-class="{containeropen: open_navigator}">
 		<center><loading size="small" show="!modules"></loading></center>
-		<i ng-show="!modules.length && !links.length" class="muted" style="padding:20px 10px"><span translate>groups.empty</span>...</i>
-		<div bindonce ng-show="modules.length || links.length">
+		<!-- <i ng-show="!modules.length && !links.length" class="muted" style="padding:20px 10px"><span translate>groups.empty</span>...</i> -->
+		<div bindonce>
 			<span  ng-switch-when="courseware">
 				<!-- <a class="button expand" ui-sref="course.course_information" style="top: 1px;box-shadow: 0.1em 0.01em 0.5em grey;" translate>head.course_information</a>
 
@@ -86,8 +86,8 @@
 		            	</span>
 					</accordion-group>
 				</accordion>
-
-				<accordion  class="accordion no-margin" ui-sortable="moduleSortableOptions" ng-model='modules'>
+				<i ng-show="!modules.length" class="muted" style="padding:20px 10px"><br/><span style="padding-left:10px" translate>groups.empty</span>...</i>
+				<accordion  ng-show="modules.length" class="accordion no-margin" ui-sortable="moduleSortableOptions" ng-model='modules'>
 					<accordion-group class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}">
 						<accordion-heading class="accordion-heading">
 							<module data="module" ng-click="setCurrentModule(module)" current="currentmodule.id == module.id" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" >

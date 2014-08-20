@@ -479,6 +479,13 @@ td.right-border{
 .top-bar.expanded .title-area{
   background: lightgrey;
 }
+.top-bar-section .has-dropdown > a:after{
+  display: none;
+  width: 0px;
+}
+.top-bar-section .has-dropdown > a{
+  padding-right: 15px !important;
+}
 
 .no-js .top-bar-section ul li:hover > a{
   background-color: #ededeb !important;

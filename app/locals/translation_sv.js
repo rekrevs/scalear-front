@@ -174,7 +174,8 @@ var translation_sv=function(){
               instructions:"Det bästa sättet för oss att göra ScalableLearning bättre är genom feedback från våra användare. Skicka gärna kommentarer eller frågor eller problem som du kan ha och vi ska göra vårt bästa för att komma tillbaka till dig så snart som möjligt.",
               problem_is:"Mitt problem är med",
               provide_desciption: "Ge mer beskrivning",
-              provide_email_name: "Se till att du lämnat ditt namn och e-post"
+              provide_email_name: "Se till att du lämnat ditt namn och e-post",
+              thanks: "Tack för din återkoppling! Vi återkommer till dig snart."
           },
       enroll:{
         help_enroll_student:"Hjälp på inskrivning studenter",

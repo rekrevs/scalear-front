@@ -1,7 +1,7 @@
-<div class="modal-header">
+<div class="modal-header" ng-hide="hide_content">
     <h3><i class="step fi-comment-quotes size-38"></i> {{'feedback.what_you_think' | translate}}</h3>
 </div>
-<div class="modal-body">
+<div class="modal-body" ng-hide="hide_content">
     <p translate>feedback.instructions</p>
     <hr/>
     <div ng-show="!current_user">
@@ -22,7 +22,11 @@
         <loading size="small" show="sending_technical" />
     </center>
 </div>
-<div class="modal-footer">
+<div class="modal-body text-center" ng-show="hide_content">
+        <i class="step fi-comment-quotes color-green" style="font-size: 155px;"></i>
+        <h2 class="color-green with-margin text-center"><b translate>feedback.thanks</b></h2>
+</div>
+<div class="modal-footer" ng-hide="hide_content">
     <br />
     <button class="button small" ng-click="send_technical(selected_type, technical_data, user)" translate="feedback.send"></button>
     <button class="button small alert" ng-click="cancel()" translate="lectures.cancel"></button>

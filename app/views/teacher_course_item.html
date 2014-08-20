@@ -47,16 +47,16 @@
 			</div>
 		</div>
   	</div>
-  	<div class="large-3 columns left show-for-large-up" style="overflow:auto;height: 210px;border-left: 1px solid;width: auto;">
+  	<div class="large-2 columns left show-for-large-up" style="overflow-y: auto;height: 210px;overflow-x: hidden;border-left: 1px solid;width: 23%;padding-right: 0;">
   		<h6 >
   			<div class="dark-text" translate>courses.teachers</div><br />
-  			<div class="row" ng-repeat="teacher in teachers" style="margin-bottom: 10px;">
-  				<div class="small-3 columns">
+  			<div  class="row" ng-repeat="teacher in teachers" style="margin-bottom: 10px;padding: 0 10px;">
+  				<div class="left">
   					<a href="" ng-click="filterteacher(teacher.user.name, teacher.user.email)">
                 	<profile-image email="teacher.user.email" imagesize="40"> </profile-image> 
 	            	</a>
 	            </div>
-	            <div class="small-8 columns left size-14" style="padding-left: 0;">
+	            <div class="left size-14" style="padding-left: 6px;">
 	            	<a class="" href="" ng-click="filterteacher(teacher.user.name, teacher.user.email)">{{teacher.user.name}} ({{'courses.'+teacher.role.name | translate}})</a>
 	            	<br />
 	            	<a href="mailto:{{teacher.user.email}}">{{teacher.user.email}}</a>

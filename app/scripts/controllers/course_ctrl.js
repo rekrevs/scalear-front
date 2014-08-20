@@ -16,6 +16,11 @@ angular.module('scalearAngularApp')
 	 	else
 	 		$state.go('course.edit_course_information', {course_id:$scope.course.id})
 	 }
+	 $scope.$on('$destroy', function() {
+    	$scope.$emit('navigator_change',false)
+    	$scope.$emit('close_navigator')
+    });
+	 
 
 }]).factory('courseResolver',['$rootScope', '$stateParams', 'Course', '$log', '$cookieStore', 'scalear_utils','$q', function($rootScope, $stateParams, Course, $log, $cookieStore, scalear_utils,$q){
 	var x={

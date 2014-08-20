@@ -129,23 +129,25 @@
                         </li>                    
                         
                         <span ng-show="'*.module.**' | includedByState"> 
-                            <div class="divider border-grey medium-opacity"></div>              
+                            <div class="divider border-grey medium-opacity"></div>
                             <li >                                
                                 <a id="copy" class="lighter-grey dark-text sub-header-component" ng-click="copyItem()">
                                     <span translate>menu.copy</span>
                                     <!-- <h5 class="dark-description"><small translate>menu.copy_describtion</small></h5> -->
                                 </a>
                             </li>
-                            <li ng-class="{'disabled': !clipboard}">
-                                <a id="paste" ng-class="{'disabled': !clipboard, 'has-description': clipboard}" class="lighter-grey dark-text sub-header-component" style="height: 45px;" ng-click="pasteItem()">
-                                    <span translate>menu.paste</span>
-                                    <h5 class="dark-description">
-                                        <small>
-                                            {{clipboard.name}}    
-                                        </small>
-                                    </h5>
-                                </a>
-                            </li>
+                        </span>
+                        <li ng-hide="!('*.module.**' | includedByState) && !clipboard" ng-class="{'disabled': !clipboard}">
+                            <a id="paste" ng-class="{'disabled': !clipboard, 'has-description': clipboard}" class="lighter-grey dark-text sub-header-component" style="height: 45px;" ng-click="pasteItem()">
+                                <span translate>menu.paste</span>
+                                <h5 class="dark-description">
+                                    <small>
+                                        {{clipboard.name}}    
+                                    </small>
+                                </h5>
+                            </a>
+                        </li>
+                        <span ng-show="'*.module.**' | includedByState"> 
                             <div class="divider border-grey medium-opacity"></div>
                             <li >
                                 <a id="share_copy" class="lighter-grey dark-text sub-header-component has-description" href="" sharing-modal ng-click="openSharingModal()">

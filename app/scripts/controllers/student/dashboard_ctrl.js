@@ -95,10 +95,8 @@ angular.module('scalearAngularApp')
                         console.log($scope.eventSources)
                         $timeout(function() {
                             $(window).resize()
-                        })
-                    },
-                            function() {
-                            })
+                        },100)
+                    })
                 }
 
                 var getFeed = function(){

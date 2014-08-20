@@ -20,7 +20,7 @@
 				<accordion class="accordion">
 					<accordion-group class="accordion-group" is-open="false">
 						<accordion-heading class="accordion-heading">
-						<div style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
+						<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
 							<div class="show-inline" ng-click="goToCourseInfoStudent()" translate>head.course_information</div>
 						</div>		
 							<!-- <a ui-sref="course.course_information"translate>head.course_information</a>						 -->
@@ -68,7 +68,7 @@
 				<accordion class="no-margin" close-others="false">
 					<accordion-group class="accordion-group">
 						<accordion-heading class="accordion-heading" >
-						<div style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.edit_course_information.**' | includedByState)}" ng-click="goToCourseInfoTeacher()">
+						<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.edit_course_information.**' | includedByState)}" ng-click="goToCourseInfoTeacher()">
 							<div class="show-inline"  translate>head.course_information</div>
 						</div>						
 						</accordion-heading>

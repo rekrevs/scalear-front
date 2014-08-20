@@ -758,13 +758,15 @@ exports.check_for_teacher_nav_bar = function(ptor){
 //=====================================================
 
 exports.open_settings_course_info = function(ptor){
-    locator.by_id(ptor, 'settings').then(function(btn){
-        btn.click().then(function(){
-        	locator.by_id(ptor, 'course_info').then(function(btn2){
-        		btn2.click();
-        	})
-        })
-    })
+	o_c.press_content_navigator()
+	element(by.id('course_info')).click()
+    // locator.by_id(ptor, 'settings').then(function(btn){
+    //     btn.click().then(function(){
+    //     	locator.by_id(ptor, 'course_info').then(function(btn2){
+    //     		btn2.click();
+    //     	})
+    //     })
+    // })
 }
 
 exports.open_settings_announcements = function(ptor){

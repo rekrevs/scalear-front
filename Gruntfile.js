@@ -15,7 +15,8 @@ module.exports = function(grunt) {
         yeoman: {
             // configurable paths
             app: require('./bower.json').appPath || 'app',
-            dist: 'dist'
+            dist: 'dist',
+            coverageE2E: 'coverageE2E'
         },
         watch: {
             coffee: {
@@ -83,7 +84,15 @@ module.exports = function(grunt) {
                 options: {
                     base: '<%= yeoman.dist %>'
                 }
-            }
+            },
+            coverageE2E: {
+                options: {
+                  open: false,
+                  base: [
+                        '<%= yeoman.coverageE2E %>/app'
+                    ]
+                }
+            },
         },
         clean: {
             dist: {
@@ -100,6 +109,15 @@ module.exports = function(grunt) {
             bower: {
                 files: [{
                     src: ['<%= yeoman.dist %>/bower_components', '<%= yeoman.dist %>/views']
+                }]
+            },
+            coverageE2E:{
+                files: [{
+                    dot: true,
+                    src: [
+                        '.tmp',
+                        '<%= yeoman.coverageE2E %>/*',
+                    ]
                 }]
             }
 
@@ -317,7 +335,34 @@ module.exports = function(grunt) {
                 cwd: '<%= yeoman.app %>',
                 dest: '.tmp/styles/',
                 src: ['styles/**/*', 'bower_components/**/*.css']
-            }
+            },
+            coverageE2E: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.coverageE2E %>/app',
+                    src: [
+                        '*.{ico,png,txt}',
+                        '.htaccess',
+                        'bower_components/**/*',
+                        'images/**/*',
+                        'fonts/**/*',
+                        'views/**/*',
+                        'template/**/*',
+                        'styles/**/*',
+                        '*.html',
+                        'locals/*'
+                    ]
+                }]
+            },
+        },
+        instrument: {
+          files: '<%= yeoman.app %>/scripts/**/*.js',
+          options: {
+              lazy: true,
+              basePath: '<%= yeoman.coverageE2E %>/'
+          }
         },
         concurrent: {
             server: [
@@ -358,6 +403,31 @@ module.exports = function(grunt) {
                     args: {} // Target-specific arguments
                 }
             },
+        },
+        protractor_coverage: {
+            options: {
+                configFile: "node_modules/protractor/referenceConf.js", // Default config file
+                keepAlive: true, // If false, the grunt process stops when the test fails.
+                noColor: false, // If true, protractor will not use colors in its output.
+                coverageDir: '<%= yeoman.coverageE2E %>',
+                args: {
+                    // Arguments passed to the command
+                }
+            },
+            coverageE2E: {
+                options: {
+                    configFile: "referenceConf.js", // Target-specific config file
+                    args: {} // Target-specific arguments
+                }
+            },
+        },
+        makeReport: {
+          src: '<%= yeoman.coverageE2E %>/*.json',
+          options: {
+            type: 'html',
+            dir: '<%= yeoman.coverageE2E %>/reports',
+            print: 'detail'
+          }
         },
         cdnify: {
             dist: {
@@ -569,6 +639,20 @@ module.exports = function(grunt) {
                     }
 
                 }
+            }],
+            coverageE2E:[{
+                dest: '<%= yeoman.coverageE2E %>/app/scripts/config.js',
+                wrap: '"use strict";\n\n <%= __ngModule %>',
+                name: 'config',
+                constants: {
+                    scalear_api: {
+                        host: 'http://0.0.0.0:3000',
+                        redirection_url: 'http://0.0.0.0:3000/#/',
+                        version: '2.13.4 (' + new Date().toUTCString() + ')',
+                        help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
+                    },
+
+                }
             }]
         }
 
@@ -620,6 +704,15 @@ module.exports = function(grunt) {
     grunt.registerTask('staging', ['ngconstant:staging', 'build', 'aws_s3:staging', 's3:staging'])
     grunt.registerTask('staging2', ['ngconstant:staging2', 'build'])
     grunt.registerTask('production', ['ngconstant:prod', 'build'])
+    grunt.registerTask('coverage', [
+      'clean:coverageE2E',
+      'copy:coverageE2E',
+      'ngconstant:coverageE2E',
+      'instrument',
+      'connect:coverageE2E',
+      'protractor_coverage:coverageE2E',
+      'makeReport'
+    ]);
 
     grunt.registerTask('default', [
         'jshint',

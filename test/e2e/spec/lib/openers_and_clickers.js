@@ -321,7 +321,7 @@ exports.open_announcements = function(ptor){
 //=======================================================
 exports.to_student = function(ptor){
     this.logout(ptor);
-    this.sign_in(ptor, params.mail, params.password);
+    this.sign_in(ptor, params.student_mail, params.password);
 }
 
 //=======================================================
@@ -707,7 +707,7 @@ exports.open_lectures = function(ptor){
 //     this.home_teacher(ptor);
 //     this.open_tray(ptor);
 //     this.logout(ptor, this.feedback);
-//     this.sign_in(ptor, params.mail, params.password, this.feedback);   
+//     this.sign_in(ptor, params.student_mail, params.password, this.feedback);   
 // }
 
 //=======================================================

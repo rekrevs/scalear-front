@@ -605,7 +605,7 @@ xdescribe("teacher", function(){
 
 xdescribe('First Student', function(){
 	it('should sign in', function(){
-		o_c.sign_in(ptor, params.mail, params.password, o_c.feedback);
+		o_c.sign_in(ptor, params.student_mail, params.password, o_c.feedback);
 	})
 	it('should open the first course', function(){
 		o_c.open_course_whole(ptor)
@@ -1187,7 +1187,7 @@ xdescribe('Second Student', function(){
 
 xdescribe('First Student', function(){
 	it('should sign in', function(){
-		o_c.sign_in(ptor, params.mail, params.password, o_c.feedback)
+		o_c.sign_in(ptor, params.student_mail, params.password, o_c.feedback)
 	})
 	it('should open the first course', function(){
 		o_c.open_course_whole(ptor)

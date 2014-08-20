@@ -111,6 +111,18 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
         //local
+        // frontend: 'http://0.0.0.0:9000/#',
+        // admin_mail: 'admin@scalear.com',
+        // teacher_mail: 'teacher1@sharklasers.com',
+        // teacher2_mail: 'teacher3@sharklasers.com',
+        // student_mail: 'studenttest@sharklasers.com',
+        // student2_mail: 'studenttest2@sharklasers.com',
+        // student3_mail: 'student_mail_2@sharklasers.com',
+        // password: 'password',
+        // admin_password:"password",
+
+
+        //mena
         frontend: 'http://0.0.0.0:9000/#',
         // frontend: 'http://staging.scalable-learning.com/#',
         // teacher_mail: 'teacher3@sharklasers.com',
@@ -119,12 +131,12 @@ exports.config = {
         // teacher_mail: 'teacher15@sharklasers.com',
 
         // mail: 'studenttest@sharklasers.com',
-        mail: 'mena.happy@yahoo.com',
+        student_mail: 'mena.happy@yahoo.com',
 
         admin_mail: 'admin@scalear.com',
         //teacher_mail: 'teacher1@sharklasers.com',
         teacher2_mail: 'teacher3@sharklasers.com',
-        student_mail: 'studenttest@sharklasers.com',
+        // student_mail: 'studenttest@sharklasers.com',
         student2_mail: 'studenttest2@sharklasers.com',
         student3_mail: 'student_mail_2@sharklasers.com',
         password: 'password',

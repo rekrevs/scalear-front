@@ -9,7 +9,7 @@ var student = require('./lib/student_module');
 var ptor = protractor.getInstance();
 var params = ptor.params
 var student_names = ['studenttest2 sharklasers','student test'] 
-var student_emails = [params.student_mail_2, params.mail]
+var student_emails = [params.student_mail_2, params.student_mail]
 var module_names = ['New Module', 'New Module 2']
 var checkmarks = {'student test': ['on_time', 'not_finished'], 'studenttest2 sharklasers': ['on_time', 'not_finished']}
 // ptor.driver.manage().window().maximize();

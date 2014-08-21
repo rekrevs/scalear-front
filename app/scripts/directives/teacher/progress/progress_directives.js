@@ -51,12 +51,12 @@ angular.module('scalearAngularApp')
 	    scope: {
 	    	time:'=',
 	    	type:'=',
-	    	title:'=',
+	    	itemtitle:'=',
 	    	color: "="
 	    },
 	    template:'<span class="inner_title" bindonce>'+
 					'<span style="cursor:pointer"><span ng-show="time!=null" bo-text=\'"["+(time|format:"mm:ss")+"]"\'></span> <span bo-text="type"></span>: '+ 
-						'<span ng-style="title_style" bo-text="title"></span>'+
+						'<span ng-style="title_style" bo-text="itemtitle"></span>'+
 					'</span>'+
 				'</span>', 
 	    link:function(scope){

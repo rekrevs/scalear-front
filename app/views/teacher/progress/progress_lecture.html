@@ -77,20 +77,20 @@
 					<ul class="ul_item inner_content" ng-click="highlight($event,item)" bo-attr bo-attr-index="{{timeline[module_item.quiz_type][quiz.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items|filter:filterType" >
 						<li ng-if="item.type=='charts'" ng-init="quiz_chart=createChart(item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData')" class="li_inner color-blue">
 							<div class="row">
-								<inner_title type="'lectures.title' | translate" class="small-10 columns left" style="margin-right:5px" title="item.data.title+' ('+item.data.type+')'"/>
+								<inner_title type="'lectures.title' | translate" class="small-10 columns left" style="margin-right:5px" itemtitle="item.data.title+' ('+item.data.type+')'"/>
 								<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show)" class="left"/>
 								<br/>
 							</div>
 							<div class="row"><div google-chart chart="quiz_chart" class="small-12 columns progress_chart" ></div></div>
 						</li>
 						<li ng-if="item.type=='free_question'" class="li_inner color-coral">
-							<inner_title type="'groups.free_text_question' | translate" title="item.data.title" class="left" style="margin-right:5px"/>
+							<inner_title type="'groups.free_text_question' | translate" itemtitle="item.data.title" class="left" style="margin-right:5px"/>
 							<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show)"/>
 							</br>
 							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size:14px;clear:both">							
 								<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" style="padding:8px 10px">
 									<div class="controls" >
-										<show_box bo-show="module_item.quiz_type == 'survey'"  ng-init="answer.hide = !answer.hide" value="answer.hide" action="updateHideResponse(quiz.meta.id,answer.id,answer.hide)" style="float:right"/>
+										<show_box bo-show="module_item.quiz_type == 'survey'" value="answer.hide" action="updateHideResponse(quiz.meta.id,answer.id,answer.hide)" style="float:right"/>
 									    <div ng-show="!quiz.filtered_user || quiz.filtered_user==''" tooltip="{{'groups.see_related'|translate}}" tooltip-placement="top" style="float:right">|
 									    	<a class="button secondary really-tiny" ng-click="quiz.filtered_user = answer.user_id;quiz.filter_strict=true" style="margin:0 5px" translate>lectures.related</a>
 										</div>
@@ -127,7 +127,7 @@
 						</span>
 					</p>
 					<ul class="ul_item vline inner_content" ng-click="highlight($event, item)" bo-attr bo-attr-index="{{timeline['lecture'][lec.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline['lecture'][lec.meta.id].items|filter:filterType" style="clear:both">
-						<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner color-blue" >
+						<li ng-if="item.type.indexOf('confused') !=-1" class="li_inner color-blue" ng-class="{'color-red': item.type.indexOf('really') != -1}">
 							<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="(item.type[0].toUpperCase()+item.type.slice(1)).split('_').join(' ')" />
 							<span class="inner_value" bo-text="item.data"></span>
 						</li>
@@ -136,7 +136,7 @@
 							<ul style="padding:5px;padding-left: 40px;color:black;font-weight:normal;font-size: 14px;">
 								<li ng-repeat="discussion in item.data">
 									<span class="controls" >
-										<show_box ng-init="discussion.post.hide = !discussion.post.hide" value="discussion.post.hide" action="updateHideDiscussion(discussion.post.id,discussion.post.hide)" style="float:right"/>
+										<show_box value="discussion.post.hide" action="updateHideDiscussion(discussion.post.id,discussion.post.hide)" style="float:right"/>
 										<span style="float:right">|
 											<a ng-show="!discussion.post.show_feedback" ng-click="discussion.post.show_feedback = true" class="button really-tiny success" style="margin:0 5px" translate>lectures.reply</a>
 											<a ng-show="discussion.post.show_feedback"  ng-click="discussion.post.show_feedback = false; discussion.post.temp_response=null" class="button really-tiny alert" style="margin:0 5px" translate>lectures.cancel</a>
@@ -200,7 +200,7 @@
 							</ul>						
 						</li>
 						<li ng-if="item.type=='free_question'"  ng-init="color=Math.ceil(item.data.review/students_count*100) >= 30? 'red' : ''" class="li_inner color-coral">
-							<inner_title class="left" style="margin-right:5px" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'groups.free_text_question' | translate" title="item.data.title+' - '+Math.ceil(item.data.review/students_count*100)+'% '+('lectures.of_student_review' | translate)" color="color"/>
+							<inner_title class="left" style="margin-right:5px" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'groups.free_text_question' | translate" itemtitle="item.data.title+' - '+Math.ceil(item.data.review/students_count*100)+'% '+('lectures.of_student_review' | translate)" color="color"/>
 							<show_box  value="item.data.show" action="updateHideQuiz(item.data.id,item.data.show)"/>
 							<ul style="clear:both;padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
 								<li ng-repeat="answer in item.data.answers|filter:{user_id:lec.filtered_user}:lec.filter_strict" style="padding:3px 10px">
@@ -216,9 +216,9 @@
 						</li>
 						<li ng-if="item.type=='charts'" ng-init="chart=createChart(item.data.answers,students_count, {}, 'formatLectureChartData', item.data.quiz_type); color =Math.ceil(item.data.review/students_count*100) >= 30? 'red' : ''" class="li_inner color-green">
 							<div class="row">
-								<inner_title ng-if="item.data.quiz_type =='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'courses.'+item.data.quiz_type.toLowerCase() | translate" title="item.data.title+' ('+item.data.type+')'" class="left small-10 columns" style="margin-right:5px"/>
-								<inner_title ng-if="item.data.quiz_type !='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'courses.'+item.data.quiz_type.toLowerCase() | translate" title="item.data.title+' ('+item.data.type+') - '+Math.ceil(item.data.review/students_count*100)+'% '+('lectures.of_student_review' | translate)" color="color" class="small-10 columns left" style="margin-right:5px"/>
-								<show_box ng-init="item.data.hide=!item.data.hide" value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" class="left"/>
+								<inner_title ng-if="item.data.quiz_type =='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'courses.'+item.data.quiz_type.toLowerCase() | translate" itemtitle="item.data.title+' ('+item.data.type+')'" class="left small-10 columns" style="margin-right:5px"/>
+								<inner_title ng-if="item.data.quiz_type !='Survey'" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'courses.'+item.data.quiz_type.toLowerCase() | translate" itemtitle="item.data.title+' ('+item.data.type+') - '+Math.ceil(item.data.review/students_count*100)+'% '+('lectures.of_student_review' | translate)" color="color" class="small-10 columns left" style="margin-right:5px"/>
+								<show_box value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" class="left"/>
 								<br/>
 							</div>
 							<div class="row"><div google-chart chart="chart" class="progress_chart small-12 columns" ></div></div>

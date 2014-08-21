@@ -363,6 +363,7 @@ var translation_sv=function(){
               set_date: "Ställ in datum",
               seconds: "Sekunder",              
               use_module: "Använd modulens synlighet",
+              use_module_due: "Använd modulens förfallodag",
               using_module_appearance: "Använda modulens publiceringsdatum",
               not_using_module_appearance:"Inte genom att modulens publiceringsdatum",
               using_module_due: "Använda modulens färdigdatum",

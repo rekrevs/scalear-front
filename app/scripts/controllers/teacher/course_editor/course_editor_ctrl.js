@@ -86,7 +86,7 @@ angular.module('scalearAngularApp')
     
      $scope.$on('paste_item', function(event, current_item){
         console.log('pasting')
-        $scope.paste($scope.course.selected_module.id)
+        $scope.paste()
         console.log($rootScope.clipboard)
      })
  	// $scope.tree_toggled = false 
@@ -320,15 +320,18 @@ angular.module('scalearAngularApp')
     	$rootScope.clipboard = null
     }
 
-    $scope.paste=function(module_id){
+    $scope.paste=function(){
     	var clipboard = $rootScope.clipboard
-
+        
     	if(clipboard.type == 'module')
 	 		pasteModule(clipboard)
-	 	else if(clipboard.type == 'lecture')
-	 		pasteLecture(clipboard, module_id)
-	 	else if(clipboard.type == 'quiz')
-	 		pasteQuiz(clipboard, module_id)
+        else{
+            var module_id = $scope.course.selected_module.id
+            if(clipboard.type == 'lecture')
+                pasteLecture(clipboard, module_id)
+            else if(clipboard.type == 'quiz')
+                pasteQuiz(clipboard, module_id)
+        } 
     }
 
     var pasteModule=function(module){

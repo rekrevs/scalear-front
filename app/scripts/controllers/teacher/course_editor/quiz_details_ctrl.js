@@ -5,17 +5,31 @@ angular.module('scalearAngularApp')
         function($stateParams, $scope, $q, Quiz, $log, $state) {
 
             $scope.$watch('items_obj["quiz"][' + $stateParams.quiz_id + ']', function() {
+
                 if ($scope.items_obj && $scope.items_obj["quiz"][$stateParams.quiz_id]) {
                     $scope.quiz = $scope.items_obj["quiz"][$stateParams.quiz_id]                    
                     if($scope.quiz.due_date)
-                        $scope.quiz.due_date_enabled =!isDueDateDisabled()
-                    $scope.$watch('module_obj[' + $scope.quiz.group_id + ']',function(){                 
+                        $scope.quiz.due_date_enabled =!isDueDateDisabled($scope.quiz.due_date)
+                    $scope.$watch('module_obj[' + $scope.quiz.group_id + ']',function(){ 
+                     console.log("hello")                
                         if ($scope.quiz.appearance_time_module) {
                             $scope.quiz.appearance_time = $scope.module_obj[$scope.quiz.group_id].appearance_time;
                         }
+                        if(isDueDateDisabled($scope.module_obj[$scope.quiz.group_id].due_date)){
+                            $scope.quiz.disable_due_controls = true//isDueDateDisabled($scope.module_obj[$scope.quiz.group_id].due_date)
+                            console.log("whne to diable controls here !!!!")
+                            console.log($scope.module_obj[$scope.quiz.group_id].due_date)
+                            $scope.quiz.due_date_module = false
+                        }
+                        else{
+                            $scope.quiz.disable_due_controls = false
+                        }
+
                         if ($scope.quiz.due_date_module) {
                             $scope.quiz.due_date = $scope.module_obj[$scope.quiz.group_id].due_date;
-                            $scope.quiz.due_date_enabled = !isDueDateDisabled()
+                                
+                                // $scope.quiz.due_date_enabled = !isDueDateDisabled($scope.quiz.due_date)
+                            // }
                         }
                     })
                     $scope.link_url=$state.href('course.module.courseware.quiz', {module_id: $scope.quiz.group_id, quiz_id:$scope.quiz.id}, {absolute: true}) 
@@ -30,6 +44,7 @@ angular.module('scalearAngularApp')
                 delete modified_quiz.updated_at;
                 delete modified_quiz.id;
                 delete modified_quiz.due_date_enabled;
+                delete modified_quiz.disable_due_controls
 
                 Quiz.update({
                         course_id: $stateParams.course_id,
@@ -46,8 +61,8 @@ angular.module('scalearAngularApp')
                 );
             };
 
-            var isDueDateDisabled=function(){
-                var due = new Date($scope.quiz.due_date)
+            var isDueDateDisabled=function(due_date){
+                var due = new Date(due_date)
                 var today = new Date()
                 return due.getFullYear() > today.getFullYear()+100
             }
@@ -55,15 +70,15 @@ angular.module('scalearAngularApp')
             $scope.updateDueDate=function(type,enabled){
                 var enabled = $scope.quiz.due_date_enabled
                 var d = new Date($scope.quiz.due_date)
-                if(isDueDateDisabled() && enabled) 
+                if(isDueDateDisabled($scope.quiz.due_date) && enabled) 
                     var years =  -200 
-                else if(!isDueDateDisabled() && !enabled)
+                else if(!isDueDateDisabled($scope.quiz.due_date) && !enabled)
                     var years  =  200
                 else
                     var years = 0
                 d.setFullYear(d.getFullYear()+ years)
                 $scope.quiz.due_date = d
-                $scope.quiz.due_date_enabled =!isDueDateDisabled()
+                $scope.quiz.due_date_enabled =!isDueDateDisabled($scope.quiz.due_date)
             }
 
 

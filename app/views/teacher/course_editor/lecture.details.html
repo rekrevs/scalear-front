@@ -131,8 +131,8 @@
 				<span class="size-12" >with due date</span>
 				<!-- <details-check checked="lecture.due_date_enabled" validate="updateDueDate" save="updateLecture()" yes="with due date" no="without due date" title="has due date?" ></details-check>  -->
 				<div ng-show="lecture.due_date_enabled">
-					<input type="checkbox" ng-model="lecture.due_date_module" ng-change="updateLecture()" class="no-margin">
-					<span class="size-12" translate>lectures.use_module</span>
+					<input type="checkbox" ng-disabled="lecture.disable_due_controls" ng-model="lecture.due_date_module" ng-change="updateLecture()" class="no-margin">
+					<span class="size-12" translate>lectures.use_module_due</span>
 					<!-- <details-check checked="lecture.due_date_module" save="updateLecture()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="due_date_module"></details-check>  -->
 					<br />
 					<div ng-hide="!lecture.due_date_module">
@@ -150,11 +150,11 @@
 				</div>
 			</td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td class="right-border"><span translate>lectures.slides</span> URL:</td>
 			<td class="break-text">
     			<details-text value="lecture.slides" save="updateSlidesUrl()" validate="validateLecture" column="slides" ></details-text>
-			</td>
+			</td> -->
 		</tr>
 		<tr>
 			<td class="right-border"><span translate>lectures.description</span>:</td>

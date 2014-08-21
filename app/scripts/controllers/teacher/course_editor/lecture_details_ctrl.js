@@ -73,6 +73,7 @@ angular.module('scalearAngularApp')
                 delete modified_lecture.className;
                 delete modified_lecture.detected_aspect_ratio;
                 delete modified_lecture.due_date_enabled
+                delete modified_lecture.disable_due_controls
 
                 $log.debug(modified_lecture)
 
@@ -103,8 +104,8 @@ angular.module('scalearAngularApp')
                     }
                 );
             }
-            var isDueDateDisabled=function(){
-                var due = new Date($scope.lecture.due_date)
+            var isDueDateDisabled=function(due_date){
+                var due = new Date(due_date)
                 var today = new Date()
                 return due.getFullYear() > today.getFullYear()+100
             }
@@ -112,15 +113,15 @@ angular.module('scalearAngularApp')
             $scope.updateDueDate=function(type,enabled){
                 var enabled = $scope.lecture.due_date_enabled
                 var d = new Date($scope.lecture.due_date)
-                if(isDueDateDisabled() && enabled) 
+                if(isDueDateDisabled($scope.lecture.due_date) && enabled) 
                     var years =  -200 
-                else if(!isDueDateDisabled() && !enabled)
+                else if(!isDueDateDisabled($scope.lecture.due_date) && !enabled)
                     var years  =  200
                 else
                     var years = 0
                 d.setFullYear(d.getFullYear()+ years)
                 $scope.lecture.due_date = d
-                $scope.lecture.due_date_enabled =!isDueDateDisabled()
+                $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date)
             }
             $scope.visible = function(appearance_time) {
                 if (new Date(appearance_time) <= new Date()) {
@@ -235,15 +236,22 @@ angular.module('scalearAngularApp')
                             getYoutubeDetails(video_id[1]);
                     }
                     if($scope.lecture.due_date) 
-                        $scope.lecture.due_date_enabled =!isDueDateDisabled() 
+                        $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date) 
                               
                     $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){                  
                         if ($scope.lecture.appearance_time_module) { 
                             $scope.lecture.appearance_time = $scope.module_obj[$scope.lecture.group_id].appearance_time; 
                         } 
+                        if(isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)){
+                            $scope.lecture.disable_due_controls = true//isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)
+                            $scope.lecture.due_date_module = false
+                        }
+                        else{
+                            $scope.lecture.disable_due_controls = false
+                        }
                         if ($scope.lecture.due_date_module) { 
                             $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date; 
-                            $scope.lecture.due_date_enabled = !isDueDateDisabled() 
+                            // $scope.lecture.due_date_enabled = !isDueDateDisabled() 
                         } 
                     })
                     $scope.link_url=$state.href('course.module.courseware.lecture', {module_id: $scope.lecture.group_id, lecture_id:$scope.lecture.id}, {absolute: true}) 

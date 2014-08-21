@@ -748,7 +748,10 @@ angular.module('scalearAngularApp')
             $scope.updateHideSurveyQuestion($scope.selected_item.lec_id,$scope.selected_item.data.id,$scope.selected_item.data.show)
           }
   			}
-        else if($scope.selected_item.type == "Free Text Question"){
+        // else if($scope.selected_item.type == "Free Text Question"){
+          
+        // }
+        else if($scope.selected_item.type == "free_question"){
           if($scope.selected_item.data.quiz_type == 'survey'){
             console.log($scope.inner_highlight_index)
             if($scope.highlight_level == 1){
@@ -761,16 +764,16 @@ angular.module('scalearAngularApp')
               $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
             }
           }
-        }
-        else if($scope.selected_item.type == "free_question"){
-          if($scope.highlight_level == 1){
-            $scope.selected_item.data.show = !$scope.selected_item.data.show
-            $scope.updateHideQuiz($scope.selected_item.data.id, !$scope.selected_item.data.show)
-          }
           else{
-            var q_ind = $scope.inner_highlight_index
-            $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
-            $scope.updateHideResponseOnlineQuiz($scope.selected_item.data.answers[q_ind].online_quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
+            if($scope.highlight_level == 1){
+              $scope.selected_item.data.show = !$scope.selected_item.data.show
+              $scope.updateHideQuiz($scope.selected_item.data.id, !$scope.selected_item.data.show)
+            }
+            else{
+              var q_ind = $scope.inner_highlight_index
+              $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
+              $scope.updateHideResponseOnlineQuiz($scope.selected_item.data.answers[q_ind].online_quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
+            }
           }
         }
       }

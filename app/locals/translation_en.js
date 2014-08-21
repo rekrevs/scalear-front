@@ -364,6 +364,7 @@ var translation_en=function(){
         set_date: "Set Date",
         seconds: "Seconds",
         use_module: "Use Module’s Visibility",
+        use_module_due: "Use Module’s Due Date",
         using_module_appearance: "Using Module's Appearance Date",
         not_using_module_appearance:"Not Using Module's Appearance Date",
         using_module_due: "Using Module's due Date",

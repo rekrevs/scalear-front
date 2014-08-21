@@ -682,8 +682,9 @@ angular.module('scalearAngularApp')
         // console.log($scope.selected_quiz)
         // console.log($scope.backup_quiz)
         $scope.explanation={}
-        $scope.selected_quiz = angular.copy($scope.backup_quiz)
-        // $scope.seek_and_pause($scope.backup_quiz.time)
+        //angular.copy($scope.backup_quiz)
+        $scope.selected_quiz = $scope.backup_quiz
+        $scope.seek_and_pause($scope.backup_quiz.time)
         $scope.closeReviewNotify()
     }
     

@@ -19,6 +19,7 @@ angular.module('scalearAngularApp')
 	 $scope.$on('$destroy', function() {
     	$scope.$emit('navigator_change',false)
     	$scope.$emit('close_navigator')
+    	$scope.$parent.course= null
     });
 	 
 

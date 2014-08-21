@@ -14,7 +14,8 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('$destroy', function() {
-    	$scope.course.selected_module = null
+        if($scope.course)
+    	   $scope.course.selected_module = null
     });
 	// $state.go('course.module.course_editor.lecture',{module_id:55, lecture_id:232})
 }])

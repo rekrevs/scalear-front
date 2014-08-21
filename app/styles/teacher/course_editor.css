@@ -263,6 +263,10 @@ controls-teacher > div.popover.fade.ng-scope.left.in > div.popover-content{
 	padding-right: 0
 }
 
+details-date > form > span > ul.f-dropdown{
+	left:0% !important;
+}
+
 /*.ta-editor{
 	min-height:70px;
 	margin-bottom: 30px;

@@ -81,8 +81,8 @@
 
 				<!-- <details-check checked="quiz.due_date_enabled" validate="updateDueDate" save="updateQuiz()" yes="with due date" no="without due date" title="has due date?" ></details-check>  -->
 				<div ng-show="quiz.due_date_enabled">
-					<input type="checkbox" ng-model="quiz.due_date_module" ng-change="updateQuiz()" class="no-margin">
-					<span class="size-12" translate>lectures.use_module</span>
+					<input type="checkbox" ng-disabled="quiz.disable_due_controls" ng-model="quiz.due_date_module" ng-change="updateQuiz()" class="no-margin">
+					<span class="size-12" translate>lectures.use_module_due</span>
 					<!-- <details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br /> -->
 					<div ng-hide="!quiz.due_date_module">
 						<!-- <input type='text' ng-model='quiz.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->

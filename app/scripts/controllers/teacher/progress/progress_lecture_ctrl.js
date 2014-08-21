@@ -66,6 +66,13 @@ angular.module('scalearAngularApp')
 	  	 			for(var type in $scope.lectures[lec_id]){
 	  	 				if(type!= "meta")
 		  	 				for(var it in $scope.lectures[lec_id][type] ){
+                  if(type=='discussion'){
+                    for(var f in $scope.lectures[lec_id][type][it][1])
+                      $scope.lectures[lec_id][type][it][1][f].post.hide = !$scope.lectures[lec_id][type][it][1][f].post.hide
+                  }
+                  else if(type=='charts'){
+                    $scope.lectures[lec_id][type][it][1].hide = !$scope.lectures[lec_id][type][it][1].hide
+                  }
 			  	 				$scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])	
 			  	 			}
 	  	 			}	  	 			
@@ -151,6 +158,11 @@ angular.module('scalearAngularApp')
               data.id = q_id  
               data.quiz_type='survey'
               var type = $scope.quizzes[survey_id].questions[q_idx].type == "Free Text Question"? "free_question" : 'charts'
+              if(type=="free_question"){
+                data.answers.forEach(function(answer){
+                  answer.hide = !answer.hide
+                })
+              }
               $scope.timeline['survey'][survey_id].add(0, type, data)
         		}
         	}
@@ -825,7 +837,7 @@ angular.module('scalearAngularApp')
     var condition=false;
     for(var e in $scope.checkModel){
       if($scope.checkModel[e])
-        condition = (condition || (item.type==e && item.data!=null))
+        condition = (condition || (item.type.indexOf(e) != -1 && item.data!=null))
     }
     var x = item.type!='' && condition
     return x;

@@ -430,8 +430,14 @@ angular.module('scalearAngularApp')
              console.log($scope.fullscreen)
             $scope.video_class = 'video_class'
             $scope.container_style={float: 'left'}
-            $scope.quiz_mode = false
-            $timeout(function(){$scope.quiz_mode = true})
+            if($scope.quiz_mode == true){
+                $scope.quiz_mode = false
+                $timeout(function(){$scope.quiz_mode = true})
+            }
+            else{
+                $scope.quiz_mode = true
+                $timeout(function(){$scope.quiz_mode = false})
+            }
 
         }
     }
@@ -725,7 +731,7 @@ angular.module('scalearAngularApp')
     // }
 
     $scope.exportNotes = function(){
-        Lecture.exportNotes({ lecture_id:$state.params.lecture_id},function(n){
+        Lecture.exportNotes({course_id: $state.params.course_id, lecture_id:$state.params.lecture_id},function(n){
           var notes = angular.fromJson(n);
           var temp;
           var all_module_notes= [];
@@ -742,30 +748,25 @@ angular.module('scalearAngularApp')
                 all_module_notes.push(temp);
             }
           }
-          console.log(all_module_notes);
+          // console.log(all_module_notes);
           $scope.Notes = all_module_notes;
 
           var url = document.URL;
           var baseurl = url.split('lectures')[0];
-          console.log(baseurl);
+          // console.log(baseurl);
 
 
           var win = window.open('', '_blank');
           //win.document.open();
           if(win){ 
             win.focus();
-          }
-          else{
-            //Broswer has blocked it
-            alert('Please allow popups for Scalable Learning');
-          }
-          var doc = '<html><head><title>ScalableLearning - Export Notes</title>'+
-                    '<style>body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}.table {width: 100%;margin-bottom: 20px; margin: 0 auto;background: white;border: 1px solid lightgrey;}.table td {padding: 8px;line-height: 20px;text-align: left;vertical-align: top;border-top: 1px solid #dddddd; border-right: 1px solid #dddddd;}'+
-                    '.table th {font-weight: bold;}.table thead th {vertical-align: bottom;} a{color: green; text-decoration: none;} a:hover{color: darkgreen;}</style>'+
-                    '</head><body>';
-          
-          console.log(doc);
-          for (var i = 0; i < all_module_notes.length; i++) {
+
+            var doc = '<html><head><title>ScalableLearning - Export Notes</title>'+
+                        '<style>body{font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;}.table {width: 100%;margin-bottom: 20px; margin: 0 auto;background: white;border: 1px solid lightgrey;}.table td {padding: 8px;line-height: 20px;text-align: left;vertical-align: top;border-top: 1px solid #dddddd; border-right: 1px solid #dddddd;}'+
+                        '.table th {font-weight: bold;}.table thead th {vertical-align: bottom;} a{color: green; text-decoration: none;} a:hover{color: darkgreen;}</style>'+
+                        '</head><body>';
+              
+            for (var i = 0; i < all_module_notes.length; i++) {
                 doc +=('<table class="table" style="width:90%">');
                 doc +=("<h3>"+all_module_notes[i][0].lecture.name+"</h3>");
                 for (var j = 0; j < all_module_notes[i].length; j++) {  
@@ -776,13 +777,17 @@ angular.module('scalearAngularApp')
                     doc +=("</tr>");
                 }
                 doc +=("</table>");
-          };
+            };
 
-          doc +=('<br /><a href='+"'"+'data:Application/octet-stream,'+encodeURIComponent(doc)+"'"+ 'Download = "Notes.html">Download Notes</a>');
-          doc +=('</body></html>');
-          win.document.write(doc);
-          win.document.close();
-
+              doc +=('<br /><a href='+"'"+'data:Application/octet-stream,'+encodeURIComponent(doc)+"'"+ 'Download = "Notes.html">Download Notes</a>');
+              doc +=('</body></html>');
+              win.document.write(doc);
+              win.document.close();
+          }
+          else{
+            //Broswer has blocked it
+            alert('Please allow popups for Scalable Learning');
+          }
         },function(){
 
         })

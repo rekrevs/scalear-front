@@ -265,6 +265,11 @@ select{
 	text-transform: uppercase;
 }
 
+/*TEST STYLES*/
+.text-italic{
+  font-style: italic !important;
+}
+
 /*POSITIONS*/
 .position-absolute{
 	position: absolute !important;
@@ -581,8 +586,8 @@ label{
   box-shadow: -0.04em 0.04em 0.1em lightgrey
 }*/
 .nav-item-active, .nav-item-active:hover{
-  background-color: #5da423 !important;
-  color: white !important;
+  background-color: #ededeb !important;
+  /*color: black !important;*/
 }
 
 
@@ -808,7 +813,9 @@ h2 .editable-click{
 input.editable-input{
   word-break: normal !important;
 }
-
+textarea.editable-input{
+  font-size: 14px !important;
+}
 /*borders*/
 .soft-border{
 	border: 1px solid #ddd;

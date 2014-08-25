@@ -39,15 +39,17 @@
 					</accordion-group>
 					<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 						<accordion-heading class="accordion-heading">
-							<div bindonce ng-click="showModuleCourseware(module)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
+							<div bindonce class="valign-middle" ng-click="showModuleCourseware(module)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
 								<div class="truncate-70 show-inline" bo-text="module.name"></div>
 								<module-progress-check module="module" style="margin-right: 10px; float: right;" />
 							</div>
 							
 						</accordion-heading>
 						<ul ng-click="showItemCourseware(item)" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items">
-							<div class="truncate-70 show-inline" bo-text="item.name"></div>
-							<i class="fi-check right with-tiny-margin-left color-green size-16" ng-show="item.is_done"></i>
+							<div>
+								<div class="truncate-70 show-inline valign-middle" bo-text="item.name"></div>
+								<i class="fi-check right with-tiny-margin-left color-green size-16 valign-middle" ng-show="item.is_done"></i>
+							</div>
 						</ul>
 						<ul bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'">
 							<a bo-href="link.url" target="_blank" bo-text="link.name"></a>

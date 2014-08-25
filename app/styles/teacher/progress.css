@@ -77,7 +77,8 @@
 }
 
 .row{
-	max-width: 74.5rem !important;
+	/*max-width: 74.5rem !important;*/
+	max-width: 88rem !important;
 }
 
 /*ul {margin:0;}*/

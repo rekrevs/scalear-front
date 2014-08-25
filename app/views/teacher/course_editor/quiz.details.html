@@ -25,7 +25,7 @@
 				</span>
 				<!-- <details-check checked="quiz.required" save="updateQuiz()" yes="{{'courses.in_order'|translate}}" no="{{'lectures.not_in_order'|translate}}" title="{{'courses.in_order'|translate}}?" validate="validateQuiz" column="required" ></details-check>  -->
 				<br />
-				<span ng-if="quiz.quiz_type=='quiz'" tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true">
+				<span tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true">
 					<input type="checkbox" ng-model="quiz.graded" ng-change="updateQuiz()">
 					<span class="size-12" translate>courses.required</span>
 				</span>
@@ -77,9 +77,9 @@
 			<td class="right-border"><span translate>groups.due_date</span></td>
 			<td>
 				<input type="checkbox" ng-model="quiz.due_date_enabled" ng-change="updateDueDate();updateQuiz()" class="no-margin">
-				<span class="size-12" >with due date</span>
+				<span class="size-12" >has due date</span>
 
-				<!-- <details-check checked="quiz.due_date_enabled" validate="updateDueDate" save="updateQuiz()" yes="with due date" no="without due date" title="has due date?" ></details-check>  -->
+				<!-- <details-check checked="quiz.due_date_enabled" validate="updateDueDate" save="updateQuiz()" yes="has due date" no="without due date" title="has due date?" ></details-check>  -->
 				<div ng-show="quiz.due_date_enabled">
 					<input type="checkbox" ng-disabled="quiz.disable_due_controls" ng-model="quiz.due_date_module" ng-change="updateQuiz()" class="no-margin">
 					<span class="size-12" translate>lectures.use_module_due</span>

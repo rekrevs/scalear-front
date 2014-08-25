@@ -7,6 +7,9 @@ angular.module('scalearAngularApp')
 
     var init = function()
     {
+    	$scope.module_items = $scope.module_obj[$stateParams.module_id].items
+    	console.log("items are")
+    	console.log($scope.module_items)
 	    Module.getStudentModule(
 	    	{course_id: $stateParams.course_id, module_id:$stateParams.module_id}, 
             function(data){

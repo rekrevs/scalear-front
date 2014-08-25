@@ -49,7 +49,13 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){
-				scope.filter= {confused:true, charts:true, discussion:true, free_question:true};
+				scope.progress_item_filter= {lecture_quizzes:true,confused:true, charts:true, discussion:true, free_question:true};
+				scope.progress_filter= {quiz:true, survey:true};
+				scope.$state = $state
+				scope.$watch("$state.includes('*.module.**')",function(value){
+					scope.in_module_state = value
+				})
+
 				$rootScope.$watch('clipboard', function(){
 					scope.clipboard = $rootScope.clipboard
 				})
@@ -112,9 +118,18 @@ angular.module('scalearAngularApp')
 					$rootScope.$broadcast('print')
 				}	
 
+				scope.updateProgressItemFilter=function(type){
+					if(type =='lecture_quizzes'){
+						scope.progress_item_filter['charts'] = !scope.progress_item_filter['lecture_quizzes']
+						scope.progress_item_filter['free_question'] = !scope.progress_item_filter['lecture_quizzes']
+					}
+					scope.progress_item_filter[type] = !scope.progress_item_filter[type]
+					$rootScope.$broadcast('progress_item_filter_update', scope.progress_item_filter)
+				}
+
 				scope.updateProgressFilter=function(type){
-					scope.filter[type] = !scope.filter[type]
-					$rootScope.$broadcast('progress_filter_update', scope.filter)
+					scope.progress_filter[type] = !scope.progress_filter[type]
+					$rootScope.$broadcast('progress_filter_update', scope.progress_filter)
 				}		
 			}
 		};
@@ -162,6 +177,7 @@ angular.module('scalearAngularApp')
 				scope.disablePreview=function(){
 	                if($cookieStore.get('preview_as_student')){
 	                  setNavigator(false)
+	                  $rootScope.$broadcast("exit_preview")
 	                  Impersonate.destroy(
 	                    {
 	                        old_user_id:$cookieStore.get('old_user_id'),
@@ -300,8 +316,8 @@ angular.module('scalearAngularApp')
 		opacity: 0.4,
 		scroll: true,
 		update: function(e, ui) {
-			scope.$apply()
-			console.log(scope.modules)
+			// scope.$apply()
+			// console.log(scope.modules)
 			Module.saveSort({course_id:$state.params.course_id},
 				{group: scope.modules},
 				function(response){

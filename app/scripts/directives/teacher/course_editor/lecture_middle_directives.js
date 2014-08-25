@@ -22,12 +22,12 @@ angular.module('scalearAngularApp')
 		 restrict: 'E',
 		 template: '<div id="editing">'+
 						'<div class="wheat">'+
-							'<h5 class="row no-margin color-wheat">'+
-							'<span>{{double_click_msg |translate}}</span>'+
+							'<h6 class="row no-margin color-wheat">'+
+							'<span style="margin-right: 5px;">{{double_click_msg |translate}}</span>'+
 							'    <button ng-disabled="disable_save_button" class="button tiny" ng-click="saveBtn()" translate>save</button>'+
 							'    <button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
 							'    <button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>lectures.cancel</button>'+
-						'</h5></div></div>',
+						'</h6></div></div>',
 	};
 }).directive('dropdownList',function(){
 	return {

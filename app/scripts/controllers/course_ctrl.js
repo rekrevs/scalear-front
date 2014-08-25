@@ -84,6 +84,13 @@ angular.module('scalearAngularApp')
 					$scope.today = data.today;	
 					$scope.next_item = data.next_item
 					$scope.module_obj = scalear_utils.toObjectById($scope.course.groups)
+					$scope.course.markDone=function(module_id, item_id, status){
+						var group_index= scalear_utils.getIndexById($scope.course.groups, module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+	                    var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, item_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+	                    if(item_index!=-1 && group_index!=-1)
+	                        $scope.course.groups[group_index].items[item_index].is_done= status
+	                        // $scope.lecture.is_done = data.done[2
+					}
 					deferred.resolve($scope); 
 				},
 			 	function(){

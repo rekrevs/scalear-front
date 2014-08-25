@@ -50,7 +50,7 @@
 							<i class="fi-check right with-tiny-margin-left color-green size-16" ng-show="item.is_done"></i>
 						</ul>
 						<ul bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'">
-							<a bo-href="link.url" target="_blank" bo-text="link.name"></a>
+							<i style="margin-left:10px"><a bo-href="link.url" target="_blank" bo-text="link.name"></a></i>
 						</ul>
 					</accordion-group>
 				</accordion>
@@ -64,7 +64,12 @@
 					</li>
 				</ul>
 				<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>courses.modules</div> -->
-				<accordion class="no-margin" close-others="false">
+				<!-- <accordion class="no-margin" close-others="false">
+					
+				</accordion> -->
+
+
+				<accordion class="accordion no-margin" ui-sortable="moduleSortableOptions" ng-model='modules'>
 					<accordion-group class="accordion-group">
 						<accordion-heading class="accordion-heading" >
 						<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.edit_course_information.**' | includedByState)}" ng-click="goToCourseInfoTeacher()">
@@ -72,7 +77,7 @@
 						</div>						
 						</accordion-heading>
 					</accordion-group>
-					<accordion-group class="accordion-group">
+					<accordion-group class="accordion-group" open="links.length">
 						<accordion-heading class="accordion-heading" >
 							<div style="padding: 5px;border-bottom: 1px solid white;">
 								<div class="show-inline">Course Links</div>
@@ -84,12 +89,7 @@
 		            		</li>
 		            	</span>
 					</accordion-group>
-				</accordion>
-
-				<i ng-show="!modules.length" class="muted"><br /><span style="padding-left:10px" translate>groups.empty</span>...</i>
-
-				<accordion  ng-show="modules.length" class="accordion no-margin" ui-sortable="moduleSortableOptions" ng-model='modules'>
-					<accordion-group class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}">
+					<accordion-group ng-show="modules.length" class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}">
 						<accordion-heading class="accordion-heading">
 							<module data="module" ng-click="setCurrentModule(module)" current="currentmodule.id == module.id" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" >
 							</module>
@@ -101,8 +101,12 @@
 		            	</span>
 					</accordion-group>
 				</accordion>
+				<i ng-show="!modules.length" class="muted"><br /><span style="padding-left:10px" translate>groups.empty</span>...</i>
+				
 			</span>
 			<br>
 		</div>
+		<br>
+		<br>
 	</div>
 </span>

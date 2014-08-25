@@ -20,8 +20,12 @@ angular.module('scalearAngularApp')
       removeShortcuts()
     });
 
+    $scope.$on('progress_item_filter_update',function(ev,filters){
+      $scope.check_sub_items=filters
+    })
+
     $scope.$on('progress_filter_update',function(ev,filters){
-      $scope.checkModel=filters
+      $scope.check_items=filters
     })
 
     $scope.$on('print',function(){
@@ -35,7 +39,8 @@ angular.module('scalearAngularApp')
     //   "courses.charts": "charts",
     //   "lectures.discussion": "discussion",
     // }
-    $scope.checkModel={confused:true, charts:true, discussion:true, free_question:true};
+    $scope.check_sub_items={lecture_quizzes:true,confused:true, charts:true, discussion:true, free_question:true};
+    $scope.check_items={quiz:true, survey:false}
 
     $scope.grade_options= [{
       value: 0, // not set
@@ -201,19 +206,8 @@ angular.module('scalearAngularApp')
         view_index = $scope.highlight_index
       else
         view_index = $scope.highlight_index-1
-
-      if(x>0){
-        divs[$scope.highlight_index].scrollIntoView(false)
-      }
-      else{
-        divs[$scope.highlight_index].scrollIntoView(true)
-        divs[$scope.highlight_index].scrollTop+=45
-      }
-      // $timeout(function(){
-      //   var top = angular.element(divs[$scope.highlight_index]).offset().top - ( $('.main_content').innerHeight / 2 );
-      // // console.log(top)
-      // $('.main_content').scrollTop = top;
-      // })
+      var top = ( $('html').innerHeight() / 2 )-10;
+      $('.main_content').parent().scrollTo(angular.element(divs[$scope.highlight_index]),{offsetTop : top});
 	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
 	    $scope.$apply()
@@ -229,19 +223,24 @@ angular.module('scalearAngularApp')
         $scope.inner_highlight_index = $scope.inner_highlight_index+x
         if($scope.inner_highlight_index < 0)
           $scope.inner_highlight_index = 0
-        else if ($scope.inner_highlight_index >inner_li.length-1)
-          $scope.inner_highlight_index = inner_li.length-1
+        else if ($scope.inner_highlight_index >inner_li.length-1){
+          $scope.manageHighlight(1)
+          return
+        }
+          // $scope.inner_highlight_index = inner_li.length-1
   			// $scope.inner_highlight_index = (($scope.inner_highlight_index+x)%inner_li.length);
     		// $scope.inner_highlight_index = $scope.inner_highlight_index < 0 ? inner_li.length+$scope.inner_highlight_index : $scope.inner_highlight_index;	    
 	    
   			angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
         $scope.highlight_level = 2
-        if ($scope.selected_item && $scope.selected_item.type=="Free Text Question"){
-          var view_index = $scope.inner_highlight_index-3 < 0? 0: $scope.inner_highlight_index - 3
-          inner_li[view_index].scrollIntoView()
-          $timeout(function(){$window.scrollTo($window.ScrollX,150)})
-        }
+        // if ($scope.selected_item && $scope.selected_item.type=="Free Text Question"){
+        //   var view_index = $scope.inner_highlight_index-3 < 0? 0: $scope.inner_highlight_index - 3
+        //   inner_li[view_index].scrollIntoView()
+        //   $timeout(function(){$window.scrollTo($window.ScrollX,150)})
+        // }
   		}
+      var top = ( $('html').innerHeight() / 2 )-10;
+      $('.main_content').parent().scrollTo(angular.element(inner_li[$scope.inner_highlight_index]),{offsetTop : top});
 	    $scope.$apply()
   	}
 
@@ -689,7 +688,7 @@ angular.module('scalearAngularApp')
 
   var setupShortcuts=function(){
     shortcut.add("r",function(){
-      if($scope.selected_item && ($scope.selected_item.type == "Free Text Question" || $scope.selected_item.type == "discussion")) 
+      if($scope.selected_item && ($scope.selected_item.type == "free_question" || $scope.selected_item.type == "discussion")) 
           if($scope.inner_highlight_index >= 0){
             if($scope.selected_item.data.answers)
               $scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback = !$scope.selected_item.data.answers[$scope.inner_highlight_index].show_feedback
@@ -799,13 +798,27 @@ angular.module('scalearAngularApp')
           discussion.post.show_feedback = false; 
           discussion.post.temp_response=null
         })
-      }else if($scope.selected_item.type == "Free Text Question"){
+      }else if($scope.selected_item.type == "free_question"){
         console.log("free text")
-
         $scope.selected_item.data.answers.forEach(function(answer){
           answer.show_feedback = false;
           answer.temp_response = null
         })
+      }
+      $scope.$apply()
+    },{"disable_in_input" : false});
+
+    shortcut.add("enter",function(){
+      console.log($scope.selected_item)
+      if($scope.selected_item.type == 'discussion'){
+        var q_ind = $scope.inner_highlight_index
+        $scope.sendComment($scope.selected_item.data[q_ind].post)
+        $scope.selected_item.data[q_ind].post.show_feedback = false
+      }else if($scope.selected_item.type == "free_question"){
+        console.log("free text")
+        var q_ind = $scope.inner_highlight_index
+        $scope.sendFeedback($scope.selected_item.data.answers[q_ind])
+        $scope.selected_item.data.answers[q_ind].show_feedback = false
       }
       $scope.$apply()
     },{"disable_in_input" : false});
@@ -826,21 +839,48 @@ angular.module('scalearAngularApp')
     var toPrint = document.getElementById('printarea');
     var win = window.open('', '_blank');
     win.document.open();
-    win.document.write('<html><title>::Progress Report::</title><link rel="stylesheet" type="text/css" href="styles/teacher/progress_print.css" /></head><body onload="window.print()">')
+    win.document.write('<html><title>::Progress Report::</title><link rel="stylesheet" type="text/css" href="styles/externals/progress_print.css" /></head><body onload="window.print()"><center><b>'+$scope.course.selected_module.name+'</b></center>')
     win.document.write(toPrint.innerHTML);
     win.document.write('</html>');
     win.document.close();
   }
 
 
- $scope.filterType= function(item){
+ $scope.filterSubItems= function(item){
     var condition=false;
-    for(var e in $scope.checkModel){
-      if($scope.checkModel[e])
+    for(var e in $scope.check_sub_items){
+      if($scope.check_sub_items[e])
         condition = (condition || (item.type.indexOf(e) != -1 && item.data!=null))
     }
     var x = item.type!='' && condition
     return x;
+  }
+
+  $scope.filterItems= function(item){
+    var condition=false;
+    if(item.class_name =="lecture")
+      return true
+    else{
+      for(var e in $scope.check_items){
+        if($scope.check_items[e])
+          condition = (condition || item.quiz_type== e)
+      }
+    }
+    return condition;
+  }
+
+  $scope.calculateReviewPercent=function(review_count, students_count){
+    return Math.ceil(review_count/students_count*100) 
+  }
+
+  $scope.getReviewColor=function(percent){
+    if(percent <10)
+      return 'gray'
+    else if(percent> 20)
+      return 'orange'
+    else
+      return 'black'
+
   }
 
 	$scope.getKeys = function( obj ) {
@@ -851,7 +891,7 @@ angular.module('scalearAngularApp')
 					list.push( item );
 			return list;
 		})( obj );
-	},
+	}
 
   	init()
 }])

@@ -114,8 +114,8 @@
                         <student-navigation course="course" message="subheader_message" />
                     </div>
                 </div>
-                <div class="row" style="min-height: 83vh;">
-                    <div class="small-12 columns main_view" ng-class="{'navigator_open':open_navigator} " ui-view=""></div>
+                <div class="row main_view" ng-class="{'navigator_open':open_navigator} " style="min-height: 83vh;">
+                    <div class="small-12 columns "  ui-view=""></div>
                 </div>
                 
                 <!-- <div style="height: 50px;"></div> -->
@@ -251,6 +251,7 @@
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
 
     <script src="scripts/externals/shortcut.js"></script>
+    <script src="scripts/externals/scrollTo.js"></script>
     <!--<script src="scripts/externals/sortable.js"></script>-->
     <!--<script src="scripts/externals/ace.min.js"></script>-->
 

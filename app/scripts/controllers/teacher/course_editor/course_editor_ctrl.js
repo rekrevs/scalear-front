@@ -7,6 +7,8 @@ angular.module('scalearAngularApp')
  	// $window.scrollTo(0, 0);
  	Page.setTitle('head.content')
 
+    $rootScope.$emit("open_navigator")
+
     $scope.$on('add_item', function(event, type){
         if(type=='video')
              $scope.addLecture($stateParams.module_id)
@@ -220,8 +222,10 @@ angular.module('scalearAngularApp')
     		function(response){
 				$scope.course.modules.splice($scope.course.modules.indexOf(module), 1)
 				delete $scope.module_obj[module.id]
+                emptyClipboard()
 			 	if($stateParams.module_id == module.id)
 			 		$state.go('course.course_editor')
+
     		},
     		function(){}
 		);
@@ -254,6 +258,7 @@ angular.module('scalearAngularApp')
     		function(response){
                 $scope.module_obj[item.group_id].items.splice($scope.module_obj[item.group_id].items.indexOf(item),1)
                 delete $scope.items_obj["lecture"][item.id];
+                emptyClipboard()
 				if($state.params.lecture_id == item.id)
                     $state.go('course.module.course_editor.overview')
     		},
@@ -286,6 +291,7 @@ angular.module('scalearAngularApp')
 	    		function(response){
                     $scope.module_obj[item.group_id].items.splice($scope.module_obj[item.group_id].items.indexOf(item),1)
                     delete $scope.items_obj["quiz"][item.id];
+                    emptyClipboard()
                     if($state.params.quiz_id == item.id)
                         $state.go('course.module.course_editor.overview')
 	    		},

@@ -12,20 +12,15 @@
         </ul>
           <top-bar-section>
             <!-- Right Nav Section -->
-            <ul class="right" ng-hide="!('**.lecture.**' | includedByState) && !preview_as_student">
+            <ul class="right" ng-show="preview_as_student">
+              <li>
+                  <a class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="disablePreview()"><b translate>exit_preview_as_student</b></a>
+              </li>
+            </ul>
+            <ul class="right" ng-hide="!('**.lecture.**' | includedByState)">
               <li has-dropdown>
                 <a class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>settings.settings</a>
                 <ul top-bar-dropdown>
-                  <li ng-show="preview_as_student">
-                      <a class="whitesmoke-hover dark-text sub-header-component has-description" ng-click="disablePreview()">
-                          <span translate>preview_as_student</span>
-                          <h5 class="dark-description">
-                              <small>
-                                  Click to exit Preview Mode    
-                              </small>
-                          </h5>
-                      </a>
-                  </li>
                   <span ng-show="('**.lecture.**' | includedByState)">
                     <li>
                         <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('note')">

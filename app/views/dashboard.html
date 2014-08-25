@@ -13,6 +13,18 @@
 	}
 </style>
 <span ng-show="eventSources.length">
+	<div class="small-12 columns show-for-medium-down" ng-show="eventSources.length">
+	 	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}">
+			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="mySecondCalendar" style="width:100%;"></div>
+	        <button class="show-inline button really-tiny uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button>
+	 		<button class="really-tiny button secondary uppercase no-margin"  ng-click="cal_export()">Export Calendar</button>
+	        <span ng-show="current_user.roles[0].id == 2" class="right">
+	        	<span class="success alert-box label radius" translate="events.done"></span>
+				<span class="warning alert-box label radius" translate="events.not_done"></span>
+				<span class="alert alert-box label radius" translate="events.not_done_due"></span>
+			</span>		
+	 	</div>	 	
+	</div>
 	<div class="small-12 large-6 columns" ng-show="events.length && !large_calendar">
 		<h3 class="show-for-small" ng-show="events.length"><!-- <i class="fi-loop size-30"></i> --> <span translate>whats_new</span></h3>
 		<!-- <news-feed events="events"></news-feed> -->
@@ -21,8 +33,10 @@
 	<div class="large-6 columns hide-for-medium-down" ng-class="{'large-12 auto-right position-relative': !events.length ||large_calendar}" ng-show="eventSources.length" style="right: 1rem;">
 	 	<div class="calendar-container" ng-class="{widecalendar: !announcements.length}">
 			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="myCalendar" style="width:100%;"></div>
-			<button ng-show="!large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()"><i class="fi-zoom-in size-10"/><span> Show large calendar</span></button>
-			<button ng-show="large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()"><i class="fi-zoom-out size-10"/><span> Show small calendar</span></button>
+			<span ng-show="events.length">
+				<button ng-show="!large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()"><i class="fi-zoom-in size-10"/><span> Show large calendar</span></button>
+				<button ng-show="large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()"><i class="fi-zoom-out size-10"/><span> Show small calendar</span></button>
+			</span>
 			<button class="really-tiny button secondary uppercase no-margin" ng-click="cal_export()">Export Calendar</button>
 	        <span ng-show="current_user.roles[0].id == 2" class="right">
 	        	<span class="success alert-box label radius" translate="events.done"></span>
@@ -33,14 +47,5 @@
 	 	
 	 	<!-- <button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button> -->
 	</div>
-	<div class="small-12 columns show-for-medium-down" ng-show="eventSources.length">
-	 	<div style="margin-top:10px; bottom: 0px; top: 0px;height: auto;overflow: auto; padding-bottom: 30px;" class="calendar-container" ng-class="{widecalendar: !announcements.length}">
-			<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" calendar="mySecondCalendar" style="width:100%;"></div>
-	        <span class="success alert-box label radius" translate="events.done"></span>
-			<span class="warning alert-box label radius" translate="events.not_done"></span>
-			<span class="alert alert-box label radius" translate="events.not_done_due"></span>
-	 	</div>
-	 	<button class="tiny button secondary uppercase" ng-click="cal_export()">Export Calendar as ICS</button>
-	 	<button class="tiny button uppercase" dashboard-calendar-modal ng-click="openCalendar()">View Full Calendar</button>
-	</div>
+	
 </span>

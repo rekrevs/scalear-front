@@ -17,7 +17,7 @@
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 small-offset-2 columns">
 		<label class="size-1">
-			<b><span translate>due</span>: </b><input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin"><!-- <details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check> -->
+			<b><span translate>due</span>: </b><input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin"><!-- <details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="has due date" no="without due date" title="has due date?" ></details-check> -->
 			<span ng-show="module.due_date_enabled">
 				<span translate>on</span> <details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>
 	        </span>
@@ -131,7 +131,7 @@
     	<b translate>
 			groups.due_date
 		</b><br />
-    	<details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check>
+    	<details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="has due date" no="without due date" title="has due date?" ></details-check>
         <span ng-show="module.due_date_enabled">
           {{'on' | translate}}
           <details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date>

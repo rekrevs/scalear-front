@@ -137,6 +137,11 @@
         width: 55.9vw; height: 31.444vw;
     }
 
+    .navigator_open .widescreen, .navigator_open .video_class{
+        width: 42.7vw;
+        height: 24.1vw;
+    }
+
     
 
     .video_class_full{

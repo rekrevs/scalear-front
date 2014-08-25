@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
     $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
         $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
-        $scope.$emit('accordianUpdate',$scope.lecture.group_id);
+        // $scope.$emit('accordianUpdate',$scope.lecture.group_id);
     	$scope.$parent.currentmodule = $scope.lecture.group_id
       }
     })	
@@ -46,6 +46,10 @@ angular.module('scalearAngularApp')
 	$scope.closeAlerts= function(){
  		$scope.hide_alerts=true;
  	}
+
+ 	$scope.$on('content_navigator_change',function(ev, status){
+       $timeout(function(){$scope.$emit("updatePosition")})
+    })
 
  	$scope.$on("add_online_quiz",function(event, quiz_type, question_type){
  		$scope.insertQuiz(quiz_type, question_type)

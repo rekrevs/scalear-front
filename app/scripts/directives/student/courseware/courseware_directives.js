@@ -148,19 +148,25 @@ angular.module('scalearAngularApp')
 		templateUrl: "/views/module_progress_check.html",
 	  link: function(scope, element){
 	  		var total = 0
-	  		for(var i=0; i<scope.module.lectures.length; i++){
-				if(scope.module.lectures[i].graded){
+	  // 		for(var i=0; i<scope.module.items.length; i++){
+			// 	if(scope.module.lectures[i].graded){
+			// 		total++;
+			// 	}
+			// }
+			for(var i in scope.module.items){
+				if(scope.module.items[i].graded){
 					total++;
 				}
 			}
-			for(var i=0; i<scope.module.quizzes.length; i++){
-				if(scope.module.quizzes[i].quiz_type != 'survey' && scope.module.quizzes[i].graded){
-					total++;
-				}
-			}
-	  		scope.$watch('module', function() {
+
+			// for(var i=0; i<scope.module.quizzes.length; i++){
+			// 	if(scope.module.quizzes[i].quiz_type != 'survey' && scope.module.quizzes[i].graded){
+			// 		total++;
+			// 	}
+			// }
+	  		scope.$watch('module.items', function() {
 				scope.module_done = calculateDone()
-			})
+			},true)
 
 			var calculateDone = function(){
 				// var total = scope.module.lectures.length;
@@ -170,16 +176,21 @@ angular.module('scalearAngularApp')
 				// 		total++;
 				// 	}
 				// }
-				scope.module.lectures.forEach(function(lecture, i){
-					if(lecture.is_done && lecture.graded){
+				scope.module.items.forEach(function(item, i){
+					if(item.is_done && item.graded){
 						done_count++;
 					}
 				})
-				scope.module.quizzes.forEach(function(quiz, i){
-					if(quiz.is_done && quiz.quiz_type != 'survey' && quiz.graded){
-						done_count++;
-					}
-				})
+				// scope.module.lectures.forEach(function(lecture, i){
+				// 	if(lecture.is_done && lecture.graded){
+				// 		done_count++;
+				// 	}
+				// })
+				// scope.module.quizzes.forEach(function(quiz, i){
+				// 	if(quiz.is_done && quiz.quiz_type != 'survey' && quiz.graded){
+				// 		done_count++;
+				// 	}
+				// })
 				return done_count == total
 			}
 			

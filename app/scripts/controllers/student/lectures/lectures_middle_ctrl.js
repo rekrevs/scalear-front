@@ -27,6 +27,17 @@ angular.module('scalearAngularApp')
       $scope.scrollIntoView('outline')
     })
 
+    $scope.$on('content_navigator_change',function(ev, status){
+       $timeout(function(){$scope.$emit("updatePosition")})
+    })
+
+    $scope.$on('exit_preview',function(){
+        if($scope.lecture_player.controls.pause)
+            $scope.lecture_player.controls.pause()
+    })
+
+    
+
     var isiPad=function(){
         var i = 0,
             iOS = false,
@@ -91,29 +102,10 @@ angular.module('scalearAngularApp')
 
     var goToLecture=function(id){
         if($scope.timeline){
-            // if(isiPad()){
-            //     angular.element('#lecture_video')[0].scrollIntoView()
-            // }
             $scope.should_play = true
             $scope.lecture = null
 
             $timeout(function(){
-                // $scope.should_play = true
-                // for(var item in $scope.timeline['lecture'][id].meta.requirements){
-                //     for(var id in $scope.timeline['lecture'][id].meta.requirements[item]){
-                //         var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-                //         var item_index= scalear_utils.getIndexById($scope.course.groups[group_index][item], $scope.timeline['lecture'][id].meta.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
-                //         if(item_index!=-1 && group_index!=-1)
-                //             if(!$scope.course.groups[group_index][item][item_index].is_done)
-                //                 $scope.should_play = false
-                //     }
-                // }
-                // $scope.timeline['lecture'][id].meta.requirements.lectures.forEach(function(required_id){
-                //     if(!$scope.timeline['lecture'][required_id].meta.is_done){
-                //         $scope.should_play = false
-                //         return
-                //     }
-                // })
                 $scope.lecture = $scope.timeline['lecture'][id].meta
                 Page.setTitle('head.lectures',': '+$scope.lecture.name); 
             })
@@ -130,30 +122,33 @@ angular.module('scalearAngularApp')
             function(data) {
                 console.log("lecture")
                 console.log(data)
+                var lec = data.lecture
+                $scope.next_item = data.next_item 
                 $scope.alert_messages = data.alert_messages;
-                if(data.done[2]){
-                    var group_index= scalear_utils.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-                    var lecture_index= scalear_utils.getIndexById($scope.course.groups[group_index].lectures, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
-                    if(lecture_index!=-1 && group_index!=-1)
-                        $scope.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
-                        $scope.lecture.is_done = data.done[2]
-                }
+                
                 for(var key in $scope.alert_messages){
                     if(key=="due")
                         $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
                     else if(key=="today")
                         $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
                 }
-                $scope.next_item = data.next_item
-                var lec = data.lecture
-                
-                for(var item in lec.requirements){
-                    for(var id in lec.requirements[item]){
-                        var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-                        var item_index= scalear_utils.getIndexById($scope.course.groups[group_index][item], lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
-                        if(item_index!=-1 && group_index!=-1)
-                            if(!$scope.course.groups[group_index][item][item_index].is_done)
-                                $scope.should_play = false
+                               
+                if(!$scope.preview_as_student){
+                    for(var item in lec.requirements){
+                        for(var id in lec.requirements[item]){
+                            var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+                            var item_index= scalear_utils.getIndexById($scope.course.groups[group_index][item], lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                            if(item_index!=-1 && group_index!=-1)
+                                if(!$scope.course.groups[group_index][item][item_index].is_done)
+                                    $scope.should_play = false
+                        }
+                    }
+                }
+
+                if($scope.should_play){
+                    if(data.done[2]){
+                        $scope.course.markDone(data.done[1],data.done[0], data.done[2])
+                        $scope.lecture.is_done = data.done[2]
                     }
                 }
 
@@ -330,7 +325,7 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onPause= function(){
         console.log("pausing")
         $scope.play_pause_class = "play"
-        if(!$scope.quiz_mode) //not a quiz
+        if(!$scope.quiz_mode && !$scope.preview_as_student) //not a quiz
             $scope.submitPause();
     }
 
@@ -430,14 +425,15 @@ angular.module('scalearAngularApp')
              console.log($scope.fullscreen)
             $scope.video_class = 'video_class'
             $scope.container_style={float: 'left'}
+            $timeout(function(){$scope.$emit("updatePosition")})
             if($scope.quiz_mode == true){
                 $scope.quiz_mode = false
-                $timeout(function(){$scope.quiz_mode = true})
+                $timeout(function(){$scope.quiz_mode = true},200)
             }
-            else{
-                $scope.quiz_mode = true
-                $timeout(function(){$scope.quiz_mode = false})
-            }
+            // else{
+            //     $scope.quiz_mode = true
+            //     $timeout(function(){$scope.quiz_mode = false})
+            // }
 
         }
     }
@@ -598,11 +594,13 @@ angular.module('scalearAngularApp')
             }
             reviewInclass() 
 
-            var group_index= scalear_utils.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-            var lecture_index= scalear_utils.getIndexById($scope.course.groups[group_index].lectures, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
-            if(lecture_index!=-1 && group_index!=-1)
-                $scope.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
-                $scope.lecture.is_done = data.done[2]
+            $scope.course.markDone(data.done[1],data.done[0], data.done[2])
+            $scope.lecture.is_done = data.done[2]
+            // var group_index= scalear_utils.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
+            // var lecture_index= scalear_utils.getIndexById($scope.course.groups[group_index].lectures, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+            // if(lecture_index!=-1 && group_index!=-1)
+            //     $scope.course.groups[group_index].lectures[lecture_index].is_done= data.done[2]
+                
         }
 
         $interval(function(){

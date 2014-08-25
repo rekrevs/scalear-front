@@ -14,16 +14,13 @@
             <top-bar-section>
           <!-- <section class="top-bar-section"> -->
             <!-- Right Nav Section -->
-            <ul class="right">
-              <li has-dropdown>
-                <a id="settings" class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>courses.students</a>
-                <ul class="lighter-grey-no-hover" top-bar-dropdown>
-                    <!-- <li><a id="course_info" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.edit_course_information" translate>head.course_information</a></li> -->
-                    <li><a id="announcements" class="lighter-grey dark-text sub-header-component" ui-sref="course.announcements" translate>head.announcements</a></li>
-                    <li><a id="enrolled_students" class="lighter-grey dark-text sub-header-component" ui-sref="course.enrolled_students" translate>head.enrolled_students</a></li>
-                    <li><a id="add_students" enroll-help-modal ng-click="openHelpModal(course)" class="lighter-grey dark-text sub-header-component">Add Sudents</a></li>
-                </ul>
-              </li>
+            <ul class="right" ng-show="('**.course_editor.**' | includedByState) && in_module_state">
+                <li >
+                    <a id="preview_as_student" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="preview()" href="">
+                        <span translate>preview_student</span>
+                        <!-- <h5 class="dark-description"><small translate>preview_describtion</small></h5> -->
+                    </a>
+                </li>
             </ul>
 
             <ul class="right" ng-show="('**.module.progress.**' | includedByState)">
@@ -37,28 +34,34 @@
                       </a>
                     </li> -->
                     <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateProgressFilter('charts')">
-                            <input id="showChartsCheckbox" ng-checked="filter.charts"  type="checkbox" />
-                            <span translate>course_settings.show_charts</span>
+                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateProgressItemFilter('lecture_quizzes')">
+                            <input id="showChartsCheckbox" ng-checked="progress_item_filter.lecture_quizzes"  type="checkbox" />
+                            <span translate>course_settings.show_lecture_quizzes</span>
                         </div>
 
                     </li>
                     <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateProgressFilter('confused')">
-                            <input id="showConfusedCheckbox" ng-checked="filter.confused"  type="checkbox" />
+                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateProgressItemFilter('confused')">
+                            <input id="showConfusedCheckbox" ng-checked="progress_item_filter.confused"  type="checkbox" />
                             <span translate>course_settings.show_confused</span>
                         </div>
                     </li>
                     <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateProgressFilter('discussion')">
-                            <input id="showDiscussionCheckbox" ng-checked="filter.discussion"  type="checkbox" />
+                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateProgressItemFilter('discussion')">
+                            <input id="showDiscussionCheckbox" ng-checked="progress_item_filter.discussion"  type="checkbox" />
                             <span translate>course_settings.show_discussion</span>
                         </div>
                     </li>
                     <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateProgressFilter('free_question')">
-                            <input id="showfreeCheckbox" ng-checked="filter.free_question"  type="checkbox" />
-                            <span translate>course_settings.show_free_question</span>
+                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateProgressFilter('quiz')">
+                            <input id="showfreeCheckbox" ng-checked="progress_filter.quiz"  type="checkbox" />
+                            <span translate>course_settings.show_quizzes</span>
+                        </div>
+                    </li>
+                    <li>
+                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateProgressFilter('survey')">
+                            <input id="showfreeCheckbox" ng-checked="progress_filter.survey"  type="checkbox" />
+                            <span translate>course_settings.show_surveys</span>
                         </div>
                     </li>
                     <li>
@@ -76,26 +79,29 @@
                 <li has-dropdown>
                     <a id="progress" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="goToProgress()" translate>head.progress</a>
                     <ul class="lighter-grey-no-hover" top-bar-dropdown>
-                        <span ng-show="'*.module.**' | includedByState">
-                            <li>
-                                <a id="review_module_progress" class="lighter-grey dark-text sub-header-component has-description" ui-sref="course.module.progress">
+                        <!-- <span ng-show="in_module_state"> -->
+                            <li ng-class="{'disabled': !in_module_state}">
+                                <a id="review_module_progress" ng-class="{'disabled': !in_module_state}" class="lighter-grey dark-text sub-header-component has-description" ui-sref="course.module.progress">
                                     <span translate>review_module_progress</span>
-                                    <h5 class="dark-description"><small translate>choose_inclass_material</small></h5>
+                                    <h5 ng-show="in_module_state" class="dark-description"><small translate>choose_inclass_material</small></h5>
+                                    <h5 ng-show="!in_module_state" class="dark-description"><small>Select a module to see its progress</small></h5>
+
                                 </a>
                                 <!-- <div class="divider border-grey medium-opacity"></div> -->
                             </li>                        
-                            <li>
-                                <a id="detail_module_progress" ui-sref="course.module.progress_details" class="lighter-grey dark-text sub-header-component">
+                            <li ng-class="{'disabled': !in_module_state}">
+                                <a id="detail_module_progress" ng-class="{'disabled has-description': !in_module_state}"ui-sref="course.module.progress_details" class="lighter-grey dark-text sub-header-component">
                                     <span translate>courses.view_detailed_progress</span>
+                                    <h5 ng-show="!in_module_state" class="dark-description"><small>Select a module to see its progress</small></h5>
                                 </a>
                             </li>
-                        </span>
+                        <!-- </span> -->
                         <li>                        
                             <a id="all_student_progress" class="lighter-grey dark-text sub-header-component" ui-sref="course.progress" translate>all_students_progress</a>
                         </li>
                     </ul>
                 </li>
-                <li ng-show="'*.module.**' | includedByState">
+                <li ng-show="in_module_state">
                     <a id="inclass" class="whitesmoke-hover dark-text sub-header-component size-14" ui-sref="course.module.inclass" translate>head.in_class</a>
                 </li>
                 <li has-dropdown>
@@ -114,7 +120,7 @@
                             </a>
                         </li>   
 
-                        <li ng-show="'*.module.**' | includedByState">
+                        <li ng-show="in_module_state">
                             <div class="divider border-grey medium-opacity"></div>
                             <a id="new_online_content" online-modal ng-click="openOnlineContentModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
                                 <span translate>new_online_content</span>
@@ -128,7 +134,7 @@
                             </a>
                         </li>                    
                         
-                        <span ng-show="'*.module.**' | includedByState"> 
+                        <span ng-show="in_module_state"> 
                             <div class="divider border-grey medium-opacity"></div>
                             <li >                                
                                 <a id="copy" class="lighter-grey dark-text sub-header-component" ng-click="copyItem()">
@@ -137,7 +143,8 @@
                                 </a>
                             </li>
                         </span>
-                        <li ng-hide="!('*.module.**' | includedByState) && !clipboard" ng-class="{'disabled': !clipboard}">
+                        <li ng-hide="!in_module_state && !clipboard" ng-class="{'disabled': !clipboard}">
+                            <div ng-show="!in_module_state" class="divider border-grey medium-opacity"></div>
                             <a id="paste" ng-class="{'disabled': !clipboard, 'has-description': clipboard}" class="lighter-grey dark-text sub-header-component" style="height: 45px;" ng-click="pasteItem()">
                                 <span translate>menu.paste</span>
                                 <h5 class="dark-description">
@@ -147,22 +154,24 @@
                                 </h5>
                             </a>
                         </li>
-                        <span ng-show="'*.module.**' | includedByState"> 
+                        <span ng-show="in_module_state"> 
                             <div class="divider border-grey medium-opacity"></div>
                             <li >
                                 <a id="share_copy" class="lighter-grey dark-text sub-header-component has-description" href="" sharing-modal ng-click="openSharingModal()">
                                     <span translate>menu.share_copy</span>
                                     <h5 class="dark-description"><small translate>menu.share_describtion</small></h5>
                                 </a>
-                            </li>
-                            <li >
-                                <div class="divider border-grey medium-opacity"></div>
-                                <a id="preview_as_student" class="lighter-grey dark-text sub-header-component has-description" ng-click="preview()" href="">
-                                    <span translate>preview_student</span>
-                                    <h5 class="dark-description"><small translate>preview_describtion</small></h5>
-                                </a>
-                            </li>
+                            </li>                            
                         </span>
+                    </ul>
+                </li>
+                <li has-dropdown>
+                    <a id="settings" class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>courses.students</a>
+                    <ul class="lighter-grey-no-hover" top-bar-dropdown>
+                        <!-- <li><a id="course_info" class="whitesmoke-hover dark-text sub-header-component" ui-sref="course.edit_course_information" translate>head.course_information</a></li> -->
+                        <li><a id="announcements" class="lighter-grey dark-text sub-header-component" ui-sref="course.announcements" translate>head.announcements</a></li>
+                        <li><a id="enrolled_students" class="lighter-grey dark-text sub-header-component" ui-sref="course.enrolled_students" translate>head.enrolled_students</a></li>
+                        <li><a id="add_students" enroll-help-modal ng-click="openHelpModal(course)" class="lighter-grey dark-text sub-header-component">Add Sudents</a></li>
                     </ul>
                 </li>
             </ul>

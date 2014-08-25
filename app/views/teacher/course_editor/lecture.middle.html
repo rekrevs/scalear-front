@@ -41,6 +41,9 @@
 </div>
 <div class="row quiz_list">
 	<!--  -->
+	<center ng-show="!editing_mode && video_ready">
+		<h6 class="no-margin no-padding color-grey size-14">Use the Content menu to add quizzes and surveys</h5>
+	</center>
 	<overlay ng-hide="video_ready || lecture.url=='none'">
 		<loading size="small" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
 	</overlay>
@@ -50,6 +53,7 @@
 			<edit_panel ng-show="editing_mode" />		
 			<alert ng-show="submitted && !hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</center>
+		
 		<!-- <div class="row">
 			<div class="small-8 small-centered columns">
 				<center>

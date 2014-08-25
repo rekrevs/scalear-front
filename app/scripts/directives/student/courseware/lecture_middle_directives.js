@@ -554,7 +554,7 @@ angular.module('scalearAngularApp')
     restrict:"E",
     scope:{
       timeline:'=',
-      lectures:'=',
+      items:'=',
       lecture:'=current',
       seek:'&'
     },
@@ -682,11 +682,11 @@ angular.module('scalearAngularApp')
       }
 
       scope.saveNote=function(note_text){
-        // console.log(scope.item)
+        console.log(scope.item)
         Lecture.saveNote(
           {
             course_id: $state.params.course_id,
-            lecture_id:$state.params.lecture_id,
+            lecture_id:scope.item.data.lecture_id,
             note_id: scope.item.data.id || null
           }, 
           {

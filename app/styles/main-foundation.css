@@ -1,11 +1,14 @@
+
 .navigator_open{
-  position: relative;
-  left: 300px !important;
-  right: auto; 
+left: 12% !important;
+right: auto;
+width: 78%;
+/* margin: 0; */
 }
 
 .main_view{
   left:0;
+  position: relative;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -243,6 +246,10 @@ span.error, small.error{
 	display: inline-block;
 	width: 75%;
 	float: right;
+}
+
+ol li{
+  list-style-type: decimal;
 }
 
 /*FIELDS*/
@@ -555,7 +562,12 @@ label{
 	padding: 10px; 
 	min-width: 210px;
 	width: 210px;
+  position: absolute;
+  right:5px;
 }
+
+
+
 .under-the-other{
 	display: block !important;
 }
@@ -986,7 +998,7 @@ iframe{
 a.disabled, a.disabled:hover, li.disabled {
    pointer-events: none;
    cursor: default;
-   background-color: rgba(0,0,0,.1) !important;
+   /*background-color: rgba(0,0,0,.1) !important;*/
    color: rgba(0,0,0,.4) !important;;
 }
 
@@ -1006,4 +1018,13 @@ a.editable-click{
   font-weight: normal;
   width: 100%;
   font-size: 0.8125rem !important;
+}
+
+@media only screen and (min-width: 1300px){
+  .navigator_open{
+    left: inherit !important;
+    right: inherit;
+    width: inherit;
+    /* margin: 0; */
+    }
 }

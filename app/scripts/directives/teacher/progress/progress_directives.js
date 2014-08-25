@@ -120,8 +120,9 @@ angular.module('scalearAngularApp')
 	    },
 	    template:'<div class="row time_estimate">'+
 					'<div>'+
-						'<h6 ><span translate>courses.time_estimate</span> In-class: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></h6>'+
+						'<h6 ng-style="{color: color}">In-class <span translate>courses.time_estimate</span>: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></h6>'+
 					'</div>'+
+					'<div><h6 class="size-14">({{quiz_count || 0}} quizzes and {{question_count || 0}} questions)</h6></div>'+
 					'<div>'+
 						'<div>'+
 							'<a pop-over="popover_options" class="color-green">{{"more" | translate}}...</a>'+
@@ -131,12 +132,12 @@ angular.module('scalearAngularApp')
 				'</div>', 
 	    link:function(scope){
 	    	scope.numbers = []
-  	 		for (var i = 0; i <= 60; i++) {
+  	 		for (var i = 0; i <= 6; i++) {
 		        scope.numbers.push(i);
 		    }
   	 		var template = "<div style='min-width: 235px;'>"+
-  	 						"<label class='small-12 columns no-padding'><span translate>courses.quizzes_for_review</span>: {{quiz_count}}</label>"+
-  	 						"<label class='small-12 columns no-padding'><span translate>courses.questions_for_review</span>: {{question_count}}</label>"+
+  	 						// "<label class='small-12 columns no-padding'><span translate>courses.quizzes_for_review</span>: {{quiz_count}}</label>"+
+  	 						// "<label class='small-12 columns no-padding'><span translate>courses.questions_for_review</span>: {{question_count}}</label>"+
   	 						"<label class='small-12 columns no-padding'><span translate>courses.time_per_quiz</span><select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_quiz' ng-options='i for i in numbers'></select></label>"+
   	 						"<label class='small-12 columns no-padding'><span translate>courses.time_per_question</span><select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_question' ng-options='i for i in numbers'></select></label>"+	  	 						
   	 						// "<label translate>formula</label>:"+
@@ -153,8 +154,19 @@ angular.module('scalearAngularApp')
 		    	return scope.quiz_count * scope.time_quiz + scope.question_count * scope.time_question
 		    }
 
+		    var getColor=function(estimate){
+		    	console.log(estimate)
+		    	if(estimate > 25)
+		    		return 'red'
+		    	else if(estimate > 15)
+		    		return 'orange'
+		    	else
+		    		return 'black'
+		    }
+
             scope.$watchCollection('[time_quiz, time_question,quiz_count,question_count]', function(newValues){
-  	 			scope.inclass_estimate = estimateCalculator()					
+  	 			scope.inclass_estimate = estimateCalculator()	
+  	 			scope.color= getColor(scope.inclass_estimate)
 			});
 	    }
     };

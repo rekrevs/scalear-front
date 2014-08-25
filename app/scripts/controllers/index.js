@@ -10,6 +10,7 @@ angular.module('scalearAngularApp')
             $scope.open_navigator = false
             $scope.$on('navigator_change',function(ev, status){
                 $scope.open_navigator = status
+                $scope.$broadcast('content_navigator_change')
             })
             $scope.$on("get_all_courses",function(){
                 getAllCourses()

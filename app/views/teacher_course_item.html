@@ -14,7 +14,7 @@
 				<delete_button size="big" color='dark' action="deletecourse(course)" />
 			</div>
 			<div class="small-10 columns">
-				<h5 class="truncate"><a ui-sref="course.edit_course_information({ course_id: course.id })" class="title looks-like-a-link truncate" style="font-weight:300" title="{{course.name}}">{{course.short_name}} | {{course.name}} <i ng-if="course.importing" style="font-size: 12px;"> ( <span translate>controller_msg.importing_data</span>... )</i></a></h5>
+				<h5 class="truncate"><a ui-sref="course.course_editor({ course_id: course.id })" class="title looks-like-a-link truncate" style="font-weight:300" title="{{course.name}}">{{course.short_name}} | {{course.name}} <i ng-if="course.importing" style="font-size: 12px;"> ( <span translate>controller_msg.importing_data</span>... )</i></a></h5>
 			</div>
 		</div>
 		<!-- <h6 class="color-blue" title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.user.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6> -->

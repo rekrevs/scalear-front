@@ -128,8 +128,8 @@
 			<td class="right-border"><span translate>groups.due_date</span></td>
 			<td>
 				<input type="checkbox" ng-model="lecture.due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
-				<span class="size-12" >with due date</span>
-				<!-- <details-check checked="lecture.due_date_enabled" validate="updateDueDate" save="updateLecture()" yes="with due date" no="without due date" title="has due date?" ></details-check>  -->
+				<span class="size-12" >has due date</span>
+				<!-- <details-check checked="lecture.due_date_enabled" validate="updateDueDate" save="updateLecture()" yes="has due date" no="without due date" title="has due date?" ></details-check>  -->
 				<div ng-show="lecture.due_date_enabled">
 					<input type="checkbox" ng-disabled="lecture.disable_due_controls" ng-model="lecture.due_date_module" ng-change="updateLecture()" class="no-margin">
 					<span class="size-12" translate>lectures.use_module_due</span>

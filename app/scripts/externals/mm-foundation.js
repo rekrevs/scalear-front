@@ -69,7 +69,7 @@ angular.module('mm.foundation.accordion', [])
     transclude:true,              // It transcludes the contents of the directive into the template
     replace: true,                // The element containing the directive will be replaced with the template
     templateUrl:'template/accordion/accordion-group.html',
-    scope:{ heading:'@' },        // Create an isolated scope and interpolate the heading attribute onto this scope
+    scope:{ heading:'@', open:'=' },        // Create an isolated scope and interpolate the heading attribute onto this scope
     controller: function() {
       this.setHeading = function(element) {
         this.heading = element;
@@ -88,6 +88,12 @@ angular.module('mm.foundation.accordion', [])
 
         scope.$parent.$watch(getIsOpen, function(value) {
           scope.isOpen = !!value;
+        });
+      }
+
+      if(attrs.open){
+        scope.$watch('open', function(value) {
+          scope.isOpen = true;
         });
       }
 

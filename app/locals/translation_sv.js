@@ -640,6 +640,7 @@ var translation_sv=function(){
               quiz_progress_chart: "Quiz-framsteg, Diagram",
               lecture_progress_chart: "Föreläsningsframsteg, Diagram",
               course_enrollment_key: "Kursnyckel för inskrivning",
+              enrollment_key: "Kursnyckel",
               time_zone: "Tidszon",
               you_sure_remove_teacher: "Är du säker på att du vill ta bort lärare {{teacher}}?",
               all_students: "Alla studenter",

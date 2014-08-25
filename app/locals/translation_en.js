@@ -638,6 +638,7 @@ var translation_en=function(){
         quiz_progress_chart: "Quiz Progress Chart",
         lecture_progress_chart: "Lecture Progress Chart",
         course_enrollment_key: "Course Enrollment Key for students",
+        enrollment_key: "Enrollment Key",
         time_zone: "Course Time-zone",
         you_sure_remove_teacher: "Are you sure you want to remove teacher {{teacher}}?",
         all_students: "All Students",

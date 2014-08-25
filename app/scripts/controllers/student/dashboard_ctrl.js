@@ -104,12 +104,12 @@ angular.module('scalearAngularApp')
                     console.log('here is the data')
                     console.log(data)
                     $scope.events = []
-                    $scope.latest_events = data.latest_events
+                    // $scope.latest_events = data.latest_events
                     $scope.latest_announcements = data.latest_announcements
-                    $scope.latest_events.forEach(function(event){
-                      event.timestamp = event.appearance_time;
-                      $scope.events.push(event);
-                    })
+                    // $scope.latest_events.forEach(function(event){
+                    //   event.timestamp = event.appearance_time;
+                    //   $scope.events.push(event);
+                    // })
                     $scope.latest_announcements.forEach(function(announcement){
                       announcement.timestamp = announcement.updated_at;
                       $scope.events.push(announcement);

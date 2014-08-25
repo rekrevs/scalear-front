@@ -3,6 +3,10 @@
         <b style="position: absolute;top: 95%;left: 40%;"><span >{{blackscreen_msg | translate}}</span></b>
     </center>
 </div>
+<!-- <div class="large-3left row light-grey dark-text">
+    {{counter}}
+    <button ng-click="stop()">Stop</button>   
+</div> -->
 <div ng-mousemove="lightUpButtons()" class="disable_selection" style="overflow:hidden" screenfull active="fullscreen" >
     <div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen" >
                 <center>
@@ -27,7 +31,7 @@
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'charts'" ng-class="question_block">
-                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
+                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{ selected_timeline_item.data.title}}</div>
                 <div ng-show="chart" ng-class="chart_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}">
                     <div google-chart chart="chart" ></div>
                 </div>

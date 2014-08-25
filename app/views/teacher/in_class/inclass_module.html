@@ -2,12 +2,17 @@
 <link rel="stylesheet" href="styles/teacher/inclass.css"/>
 <link rel="stylesheet" href="styles/teacher/teacher_common.css"/>
 <!-- endbuild -->
+<br>
 <div class="row">
 	<div class="small-12 medium-12 large-3 columns" id='details' >
-		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/>
+		<center>
 		<div class="row">
-			<a class="button large success" ng-click="display(!inclass_ready)" ng-disabled="!inclass_ready">{{'groups.display_inclass' | translate }}</a>
+			<a class="button success" ng-click="display(!inclass_ready)" ng-disabled="!inclass_ready">{{'groups.display_inclass' | translate }}</a>
 		</div>
+		<br>
+	</center>
+
+		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"/>
 		<!-- <button_link title="{{'groups.display_inclass' | translate }}"   action="display(!inclass_ready)" class="btn-xlarge btn-success" ng-disabled="!inclass_ready" style="background-image: initial; min-width: 205px;max-width: 220px;"/> -->
 		<!-- <div ng-show="inclass_setting">
 			<button class="btn" ng-click="initialDisplay(!inclass_ready,true)">Fullscreen</button>
@@ -25,7 +30,7 @@
 	<br /><br /><br /> -->
 	</div>
 		
-	<div class="main_content small-12 medium-12 large-9 columns" style="border-left: 1px solid lightgray; height: 83vh; max-height: 83vh;overflow-y: auto;">
+	<div class="main_content small-12 medium-12 large-9 columns">
 		<center><loading size="big" show="!module.items" /></center>
 		<div class="row" ng-repeat="module_item in module.items">
 		<!-- 	<div  id="{{module_item.quiz_type+'_'+module_item.id}}" ng-if="module_item.class_name=='quiz' && timeline[module_item.quiz_type]" ng-init="quiz=quizzes[module_item.id];">
@@ -40,7 +45,7 @@
 				</ul>
 			</div> -->
 			<div ng-if="module_item.class_name=='lecture'" ng-init='lec=module_item' class="small-12 columns">
-				<p class="title">{{lec.name}}</p>
+				<p class="title light-grey dark-text">{{lec.name}}</p>
 				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['lecture'][lec.id].items|filter:data:'!!'" style="clear:both">
 					<li ng-if="item.type=='discussion'" class="li_inner color-coral">
 						<inner_title type="'lectures.discussion' | translate" />

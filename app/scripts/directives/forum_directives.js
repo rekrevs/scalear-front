@@ -39,6 +39,7 @@ angular.module('scalearAngularApp')
                                 item.data= response.post
                                 scope.error_message=null
                                 scope.current_question = ''
+                                scope.$emit("question_posted")
                             }, 
                             function(){
                                 console.log("failure")

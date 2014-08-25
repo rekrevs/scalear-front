@@ -27,10 +27,10 @@
 	</div>
 	<div class="small-8 columns" bo-class="{'link_item_small':small}">
 		<div class="small-12 columns">
-			<span>Name: </span><details-text value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
+			<span>Name:</span><details-text class="with-small-margin-left" value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
 		</div>
-		<div class="small-12 columns" >
-			<span>URL: </span><details-link value="link.url" save="update(link)" validation="validate" elem="link"></details-link>
+		<div class="small-12 columns truncate" >
+			<span>URL:</span><details-link class="with-small-margin-left" value="link.url" save="update(link)" validation="validate" elem="link" dontshorten="true"></details-link>
 		</div>
 	</div>
 	<div class="small-2 columns" style="padding:0" ng-if="'**.course_editor.**' | includedByState">

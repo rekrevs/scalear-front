@@ -39,7 +39,8 @@ angular.module('scalearAngularApp')
                     value: "=",
                     save: "&",
                     validate: "&",
-                    column: "@"
+                    column: "@",
+                    dontshorten: "="
                 },
                 link: function(scope, element) {
                     scope.selectField = function() {
@@ -51,7 +52,13 @@ angular.module('scalearAngularApp')
                     };
                     scope.$watch('value', function(){
                         if(scope.value){
-                            scope.short_url = shorten(scope.value, 20)
+                            if(scope.dontshorten){
+                                scope.short_url = scope.value
+                            }
+                            else{
+                                scope.short_url = shorten(scope.value, 20)
+                            }
+                            
                         }
                         else{
                             scope.short_url = null;

@@ -586,8 +586,8 @@ label{
   box-shadow: -0.04em 0.04em 0.1em lightgrey
 }*/
 .nav-item-active, .nav-item-active:hover{
-  background-color: #5da423 !important;
-  color: white !important;
+  background-color: #ededeb !important;
+  /*color: black !important;*/
 }
 
 

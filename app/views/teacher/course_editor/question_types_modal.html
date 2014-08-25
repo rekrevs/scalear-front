@@ -1,27 +1,25 @@
 <h3>Choose Question Type...</h3>
-<br />
 <h4>Quiz: On top of the video <small>(place choices on top of the video)</small></h4>
-<br />
 <center>
-	<div class="button-group" style="display: inline-block;">
-        <ul class="small-block-grid-2 medium-block-grid-2 large-block-grid-3">
+	<div>
+        <div class="small-block-grid-2 medium-block-grid-2 large-block-grid-3 small-4">
             <li>
                 <a id='ocq' type="button" class="th blue" ng-class="{thumbactive: question_type == 'ocq'}" ng-model="question_type" ng-click="addQuiz('invideo','OCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/ocq_video_symbol.png">
                 </a>
-                <h5>One Correct Answer</h5>
+                <h4><small>One Correct Answer</small></h4>
             </li>
             <li>
                 <a id='mcq' type="button" class="th blue" ng-class="{thumbactive: question_type == 'mcq'}" ng-model="question_type" ng-click="addQuiz('invideo','MCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/mcq_video_symbol.png">
                 </a>
-                <h5>Multiple Correct Answers</h5>
+                <h4><small>Multiple Correct Answers</small></h4>
             </li>
             <li>
                 <a id='drag' type="button" class="th blue" ng-class="{thumbactive: question_type == 'drag'}" ng-model="question_type" ng-click="addQuiz('invideo','drag')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/drag_video_symbol.png">
                 </a>
-                <h5>Drag into Order</h5>
+                <h4><small>Drag into Order</small></h4>
             </li>
            <!--  <li>
                 <a type="button" class="th blue" ng-class="{thumbactive: question_type == 'text'}" ng-model="question_type" ng-click="addQuiz('invideo','Free Text Question')" >
@@ -29,40 +27,40 @@
                 </a>
                 <h5>Text Answer</h5>
             </li> -->
-        </ul> 
+        </div> 
     </div>
 </center>
 
 <h4>Quiz: Type in the question <small>(write question and choices on a white background)</small></h4>
 <br />
 <center>
-    <div class="button-group" style="display: inline-block;">
-        <ul class="small-block-grid-2 medium-block-grid-2 large-block-grid-4">
+    <div>
+        <div class="small-block-grid-2 medium-block-grid-2 large-block-grid-4 small-4">
             <li>
                 <a id='ocq_text'type="button" class="th grey" ng-class="{thumbactive: question_type == 'ocq_html'}" ng-model="question_type" ng-click="addQuiz('html','OCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/quiz_symbol.png">
                 </a>
-                <h5>One Correct Answer</h5>
+                <h4><small>One Correct Answer</small></h4>
             </li>
             <li>
                 <a id='mcq_text' type="button" class="th grey" ng-class="{thumbactive: question_type == 'mcq_html'}" ng-model="question_type" ng-click="addQuiz('html','MCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/mcq_symbol.png">
                 </a>
-                <h5>Multiple Correct Answers</h5>
+                <h4><small>Multiple Correct Answers</small></h4>
             </li>
             <li>
                 <a id='drag_text' type="button" class="th grey" ng-class="{thumbactive: question_type == 'drag_html'}" ng-model="question_type" ng-click="addQuiz('html','drag')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/drag_symbol.png">
                 </a>
-                <h5>Drag into Order</h5>
+                <h4><small>Drag into Order</small></h4>
             </li>
             <li>
                 <a id='free_text' type="button" class="th grey" ng-class="{thumbactive: question_type == 'text_html'}" ng-model="question_type" ng-click="addQuiz('html','Free Text Question')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/text_symbol.png">
                 </a>
-                <h5>Text Answer</h5>
+                <h4><small>Text Answer</small></h4>
             </li>
-        </ul> 
+        </div> 
     </div>
 </center>
 

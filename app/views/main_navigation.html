@@ -74,10 +74,6 @@
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li><a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" translate>dashboard</a></li>
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
-				<li ng-show="are_shared()">
-					<a class="white-hover color-green-hover size-18-light" ui-sref="show_shared" translate>sharing.view</a>
-				</li>
-				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li ng-hide="user.invitations == 0 && user.shared == 0" has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="notifications" href="" translate>navigation.notifications</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
@@ -89,7 +85,7 @@
 				</li>
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
-					<a class="white-hover color-green-hover size-18-light" id="all_courses" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('new_course' | includedByState) || ('course_list' | includedByState)}" href="" translate>navigation.courses</a>
+					<a class="white-hover color-green-hover size-18-light" id="all_courses" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('new_course' | includedByState) || ('course_list' | includedByState) || ('show_shared' | includedByState)}" href="" translate>navigation.courses</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
@@ -100,7 +96,10 @@
 						</li>
 						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
-						<li><a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-item-active" ui-sref="new_course" translate>courses.create_course</a></li>
+						<li><a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-item-active" ui-sref="new_course" translate>courses.new_course</a></li>
+						<li ng-show="are_shared()">
+							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-item-active" translate>sharing.view</a>
+						</li>
 						<li>
 							<a id="course_list" class="lighter-grey dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
 								<span translate>show_all_courses</span>
@@ -149,10 +148,6 @@
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li><a class="white-hover color-green-hover size-18-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" translate>courses.statistics</a></li>
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
-				<li ng-show="are_shared()">
-					<a class="white-hover color-green-hover size-18-light" ui-sref="show_shared" translate>sharing.view</a>
-				</li>
-				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li ng-hide="user.invitations == 0 && user.shared == 0" has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="notifications" href="" translate>navigation.notifications</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
@@ -166,7 +161,7 @@
 				<li><a class="white-hover color-green-hover size-18-light" id="dashboard" ui-sref-active="nav-item-active" ui-sref="dashboard" translate>dashboard</a></li>
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
-					<a class="white-hover color-green-hover size-18-light" id="all_courses" href="" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('course_list' | includedByState) || ('new_course' | includedByState)}" translate>navigation.courses</a>
+					<a class="white-hover color-green-hover size-18-light" id="all_courses" href="" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('course_list' | includedByState) || ('new_course' | includedByState) || ('show_shared' | includedByState)}" translate>navigation.courses</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
@@ -177,7 +172,10 @@
 						</li>
 						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
-						<li><a class="lighter-grey dark-text" ui-sref="new_course" ui-sref-active="nav-item-active" translate>courses.create_course</a></li>
+						<li><a class="lighter-grey dark-text" ui-sref="new_course" ui-sref-active="nav-item-active" translate>courses.new_course</a></li>
+						<li ng-show="are_shared()">
+							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-item-active" translate>sharing.view</a>
+						</li>
 						<li>
 							<a class="lighter-grey dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
 								<span translate>show_all_courses</span>

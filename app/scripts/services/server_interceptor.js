@@ -47,27 +47,27 @@ angular.module('scalearAngularApp')
                         }, 4000, 1);
                     }
 
-                    if (response.data.notice && response.config.url.search(re) != -1) {
-                        if (angular.isDefined($rootScope.stop)) {
-                            $interval.cancel($rootScope.stop);
-                            $rootScope.stop = undefined;
-                        }
-                        $rootScope.show_alert = "success";
-                        ErrorHandler.showMessage(response.data.notice, 'errorMessage');
-                        $rootScope.stop = $interval(function() {
-                            $rootScope.show_alert = "";
-                        }, 4000, 1);
-                    } else if (response.headers()["x-flash-notice"] || response.headers()["x-flash-message"] && response.config.url.search(re) != -1) {
-                        if (angular.isDefined($rootScope.stop)) {
-                            $interval.cancel($rootScope.stop);
-                            $rootScope.stop = undefined;
-                        }
-                        $rootScope.show_alert = "success";
-                        ErrorHandler.showMessage(response.headers()["x-flash-notice"] || response.headers()["x-flash-message"], 'errorMessage');
-                        $rootScope.stop = $interval(function() {
-                            $rootScope.show_alert = "";
-                        }, 4000, 1);
-                    }
+                    // if (response.data.notice && response.config.url.search(re) != -1) {
+                    //     if (angular.isDefined($rootScope.stop)) {
+                    //         $interval.cancel($rootScope.stop);
+                    //         $rootScope.stop = undefined;
+                    //     }
+                    //     $rootScope.show_alert = "success";
+                    //     ErrorHandler.showMessage(response.data.notice, 'errorMessage');
+                    //     $rootScope.stop = $interval(function() {
+                    //         $rootScope.show_alert = "";
+                    //     }, 4000, 1);
+                    // } else if (response.headers()["x-flash-notice"] || response.headers()["x-flash-message"] && response.config.url.search(re) != -1) {
+                    //     if (angular.isDefined($rootScope.stop)) {
+                    //         $interval.cancel($rootScope.stop);
+                    //         $rootScope.stop = undefined;
+                    //     }
+                    //     $rootScope.show_alert = "success";
+                    //     ErrorHandler.showMessage(response.headers()["x-flash-notice"] || response.headers()["x-flash-message"], 'errorMessage');
+                    //     $rootScope.stop = $interval(function() {
+                    //         $rootScope.show_alert = "";
+                    //     }, 4000, 1);
+                    // }
 
                     return response || $q.when(response);
                 },

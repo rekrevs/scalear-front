@@ -556,7 +556,8 @@ var translation_sv=function(){
               go_to_class: "Gå till klass",
               display_inclass: "Visning för I-klass recension",
               filter: "Filtrera",
-              see_related: "Se relaterade svar på elev"
+              see_related: "Se relaterade svar på elev",
+              has_due_date: "Har Due Date"
           },
       courses:{
               image_not_found: "Image inte hittad...",
@@ -628,6 +629,7 @@ var translation_sv=function(){
               duration: "Tidsutsträckning",
               prerequisites: "Förutsättningar",
               course_image: "Kurs Image",
+              course_image_url: "Kurs Image URL",
               overall_statistics: "övergripande statistik",
               total_quiz_grade: "Quiz-resultat, totalt",
               total_invideo_quiz_grade: "I-videon Quiz-resultat, totalt",
@@ -682,6 +684,7 @@ var translation_sv=function(){
               no_lectures: "Inga Föreläsningar",
               no_lecture_quizzes: "Inga föreläsnings-Quiz-frågor",
               import_data: "Importera data från",
+              copy_from_existing: "Kopiera data från befintlig kurs",
               optional: "Valfri",
               no_quizzes: "Inga Quiz-frågor",
               no_surveys: "Ingen Enkäter",

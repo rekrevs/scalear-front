@@ -12,7 +12,10 @@
             <div class="large-12 column">
                 <a class="button tiny success" ng-click="exportCourse()" ><span translate>courses.export_as</span> CSV</a>
             </div>
-            
+            <div id="enrollment_key" class="large-12 column with-margin-bottom">
+                <i class="fi-photo size-18"></i><small class="with-tiny-margin-left" translate>courses.course_image_url</small>
+                <div><details-link value="course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link></div>
+            </div>
             <div id="enrollment_key" class="large-12 column with-margin-bottom">
                 <i class="fi-key size-18"></i><small class="with-tiny-margin-left" translate>courses.enrollment_key</small>
                 <div>{{course.unique_identifier}}</div>
@@ -21,6 +24,12 @@
                 <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.start_date</small>
                 <div>
                     <details-date date="course.start_date | amDateFormat:'dddd, MMMM D YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
+                </div>
+            </div>
+            <div class="large-12 column with-margin-bottom">
+                <i class="fi-web size-18"></i> <small class="with-tiny-margin-left" translate>courses.time_zone</small>
+                <div>
+                    <details-time-zone value="course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
                 </div>
             </div>
             <div class="large-12 column with-margin-bottom">
@@ -35,12 +44,6 @@
                     <details-link value="course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link>
                 </div>
             </div>
-            <div class="large-12 column with-margin-bottom">
-                <i class="fi-web size-18"></i> <small class="with-tiny-margin-left" translate>courses.time_zone</small>
-                <div>
-                    <details-time-zone value="course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
-                </div>
-            </div>             
         </div>
        
     </div>
@@ -59,6 +62,10 @@
                 <a class="button tiny success" ng-click="exportCourse()" ><span translate>courses.export_as</span> CSV</a>
             </div>
             <div class="with-margin-bottom">
+                <i class="fi-photo size-18"></i><small class="with-tiny-margin-left" translate>courses.course_image_url</small>
+                <div><details-link value="course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link></div>
+            </div>
+            <div class="with-margin-bottom">
                 <i class="fi-key size-18"></i><small class="with-tiny-margin-left" translate>courses.enrollment_key</small>
                 <div>{{course.unique_identifier}}</div>
             </div>
@@ -66,6 +73,12 @@
                 <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.start_date</small>
                 <div>
                     <details-date date="course.start_date | amDateFormat:'dddd, MMMM D YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
+                </div>
+            </div>
+            <div class="with-margin-bottom">
+                <i class="fi-web size-18"></i> <small class="with-tiny-margin-left" translate>courses.time_zone</small>
+                <div>
+                    <details-time-zone value="course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
                 </div>
             </div>
             <div class="with-margin-bottom">
@@ -80,12 +93,6 @@
                     <details-link value="course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link>
                 </div>
             </div>
-            <div class="with-margin-bottom">
-                <i class="fi-web size-18"></i> <small class="with-tiny-margin-left" translate>courses.time_zone</small>
-                <div>
-                    <details-time-zone value="course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
-                </div>
-            </div>
             <hr />
         </div>
         <h5 translate class="subheader">groups.description</h5>
@@ -95,10 +102,6 @@
         <h5 translate class="subheader">courses.prerequisites</h5>
         <p style="font-weight: 200;">
             <big-area id='preq' value="course.prerequisites" save="updateCourse()" validate="validateCourse" column="prerequisites"></big-area>
-        </p>
-        <h5 translate class="subheader">courses.course_image</h5>
-        <p>
-            <details-link value="course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link>
         </p>
     </div>
     <div class="teachers-column hide-for-small-only light-grey">

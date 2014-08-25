@@ -6,7 +6,7 @@
         </div>
         <div style="position: absolute; margin-top: 220px;" class="show-for-medium-up">
             <div class="large-10 column with-small-margin-bottom no-padding">
-                <i class="fi-photo size-18"></i> <small class="with-tiny-margin-left" translate>courses.course_image</small>
+                <i class="fi-photo size-18"></i> <small class="with-tiny-margin-left" translate>courses.course_image_url</small>
                 <div>
                     <input type="text" ng-model="course.image_url" ng-class="{error: image_not_found || server_errors['image_url']}"/>
                     <small class="error with-tiny-padding" ng-show="image_not_found">{{image_not_found | translate}}</small>
@@ -20,20 +20,20 @@
                     <small class="error with-tiny-padding" ng-show="server_errors['start_date']">{{server_errors['start_date'].join()}}</small>
                 </div>
             </div>
-            <div class="large-10 column with-small-margin-bottom no-padding">
-                <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
-                <div>
-                    <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
-                    <small class="error with-tiny-padding" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</small>
-                </div>
-            </div>
             <div class="large-10 column with-small-margin-bottom no-padding left">
                 <i class="fi-web size-18"></i> <small class="with-tiny-margin-left" translate>courses.time_zone</small>
                 <div>
                     <select name="timezone" ng-model="course.time_zone" ng-options="element.value for element in timezones" ng-class="{error: server_errors['time_zone']}"></select>
                     <small class="error with-tiny-padding" ng-show="server_errors['time_zone']">{{server_errors['time_zone'].join()}}</small>
                 </div>
-            </div>             
+            </div>
+            <div class="large-10 column with-small-margin-bottom no-padding left">
+                <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
+                <div>
+                    <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
+                    <small class="error with-tiny-padding" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</small>
+                </div>
+            </div>
         </div>
        
     </div>
@@ -56,7 +56,7 @@
                 <img class="small-7" ng-src="{{course.image_url || '../images/course_image.png'}}" fallback-src="../images/course_image.png" loading-src />
                 <div class="with-tiny-margin-bottom no-padding small-10 with-margin-top">
                     <span class="left">
-                        <i class="fi-photo size-18"></i> <small class="with-tiny-margin-left" translate>courses.course_image</small>
+                        <i class="fi-photo size-18"></i> <small class="with-tiny-margin-left" translate>courses.course_image_url</small>
                     </span>
                     <div>
                         <input type="text" ng-model="course.image_url" ng-class="{error: image_not_found || server_errors['image_url']}"/>
@@ -75,20 +75,20 @@
                 </div>
                 <div class="with-tiny-margin-bottom no-padding small-10">
                     <span class="left">
-                        <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
-                    </span>
-                    <div>
-                        <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
-                        <small class="error with-tiny-padding" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</small>
-                    </div>
-                </div>
-                <div class="with-tiny-margin-bottom no-padding small-10">
-                    <span class="left">
                         <i class="fi-web size-18"></i> <small class="with-tiny-margin-left" translate>courses.time_zone</small>
                     </span>
                     <div>
                         <select name="timezone" ng-model="course.time_zone" ng-options="element.value for element in timezones" ng-class="{error: server_errors['time_zone']}"></select>
                         <small class="error with-tiny-padding" ng-show="server_errors['time_zone']">{{server_errors['time_zone'].join()}}</small>
+                    </div>
+                </div>
+                <div class="with-tiny-margin-bottom no-padding small-10">
+                    <span class="left">
+                        <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
+                    </span>
+                    <div>
+                        <input name="duration" min="0" type="number" ng-model="course.duration" placeholder="*{{'courses.weeks' | translate}}" ng-class="{error: server_errors['duration']}" />
+                        <small class="error with-tiny-padding" ng-show="server_errors['duration']">{{server_errors['duration'].join()}}</small>
                     </div>
                 </div>
             </center>
@@ -104,7 +104,7 @@
             <textarea rows="3" style="height: 100px;" ng-model="course.prerequisites" ng-class="{error: server_errors['prerequisites']}"></textarea>
             <small class="error with-tiny-padding" ng-show="server_errors['prerequisites']">{{server_errors['prerequisites'].join()}}</small>
         </p>
-        <h5 translate class="subheader">courses.import_data</h5>
+        <h5 translate class="subheader">courses.copy_from_existing</h5>
         <p>
             <select ng-model="import_from" ng-options="element.id as element.name for element in importing"></select>
         </p>

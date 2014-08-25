@@ -839,7 +839,7 @@ angular.module('scalearAngularApp')
     var toPrint = document.getElementById('printarea');
     var win = window.open('', '_blank');
     win.document.open();
-    win.document.write('<html><title>::Progress Report::</title><link rel="stylesheet" type="text/css" href="styles/externals/progress_print.css" /></head><body onload="window.print()"><center><b>'+$scope.course.selected_module.name+'</b></center>')
+    win.document.write('<html><title>::Progress Report::</title><link rel="stylesheet" type="text/css" href="styles/externals/print/progress_print.css" /></head><body onload="window.print()"><center><b>'+$scope.course.selected_module.name+'</b></center>')
     win.document.write(toPrint.innerHTML);
     win.document.write('</html>');
     win.document.close();

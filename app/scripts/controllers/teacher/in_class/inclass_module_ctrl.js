@@ -797,6 +797,17 @@ angular.module('scalearAngularApp')
     return $scope.selected_timeline_item.data.type == 'Survey'
   }
 
+  $scope.counter = 1000;
+  $scope.onTimeout = function(){
+      $scope.counter--;
+      mytimeout = $timeout($scope.onTimeout,1000);
+  }
+  var mytimeout = $timeout($scope.onTimeout,1000);
+    
+  $scope.stop = function(){
+      $timeout.cancel(mytimeout);
+  }
+
   init();
 
   }]);

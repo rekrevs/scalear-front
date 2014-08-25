@@ -708,7 +708,7 @@ angular.module('scalearAngularApp')
     function($timeout) {
         return {
             template: '<div onshow="moveCursorToEnd()" e-rows="3" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="font-size: 13px;color: teal;">'+
-                        '<div style="color: teal;word-break: break-word; padding: 3px; margin: 0px;width:100%; background:lightyellow; cursor: text;">'+
+                        '<div style="word-break: break-word; padding: 3px; margin: 0px;width:100%; cursor: text;">'+
                           '{{ value || ("empty"|translate)  }}'+
                           // '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
                         '</div>'+

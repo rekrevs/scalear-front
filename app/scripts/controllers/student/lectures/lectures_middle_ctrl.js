@@ -466,6 +466,12 @@ angular.module('scalearAngularApp')
         // }
         var time=$scope.lecture_player.controls.getTime()
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion",  null);
+        // this if statment preserve the first state in case of multible questions
+        // if(typeof $scope.disc_temp_fullscreen === 'undefined' && typeof $scope.disc_temp_state === 'undefined'){
+            $scope.disc_temp_fullscreen = $scope.fullscreen;
+            $scope.disc_temp_state = $scope.play_pause_class;
+        // }
+
         $scope.lecture_player.controls.pause();
         $scope.fullscreen= false
         $scope.checkModel.discussion = true
@@ -478,6 +484,10 @@ angular.module('scalearAngularApp')
         console.log($state.params.lecture_id)
         console.log($scope.timeline['lecture'])
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note",  null);
+
+        $scope.note_temp_fullscreen = $scope.fullscreen;
+        $scope.note_temp_state = $scope.play_pause_class;
+
         $scope.lecture_player.controls.pause();
         $scope.fullscreen= false
         $scope.checkModel.note = true
@@ -792,8 +802,34 @@ angular.module('scalearAngularApp')
     }
 
     $scope.$on('note_updated',function(){
-        if(!$scope.quiz_mode)
+        
+        if(($scope.note_temp_fullscreen == true || $scope.disc_temp_fullscreen == true) && $scope.fullscreen != true){
+            $scope.toggleFullscreen();
+        }
+
+        // if(typeof $scope.disc_temp_state === 'undefined'){
+        //     $scope.disc_temp_state = 'pause';
+        // }
+
+        if(($scope.note_temp_state == "pause" || $scope.disc_temp_state == "pause") && ($scope.play_pause_class != "pause" && !$scope.quiz_mode)){
             $scope.lecture_player.controls.play();
+        }
+
+    })
+
+    $scope.$on('question_posted',function(){
+
+        if(($scope.note_temp_fullscreen == true || $scope.disc_temp_fullscreen == true) && $scope.fullscreen != true){
+            $scope.toggleFullscreen();
+        }
+
+        // if(typeof $scope.disc_temp_state === 'undefined'){
+        //     $scope.disc_temp_state = 'pause';
+        // }
+
+        if(($scope.note_temp_state == "pause" || $scope.disc_temp_state == "pause") && ($scope.play_pause_class != "pause" && !$scope.quiz_mode)){
+            $scope.lecture_player.controls.play();
+        }
     })
 
     init();

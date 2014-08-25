@@ -35,7 +35,8 @@
     "foundation": "zurb/bower-foundation#~5.0.2",
     "angular-foundation": "~0.3.0",
     "angular-macgyver": "~0.3.4",
-    "moment": "~2.8.1"
+    "moment": "~2.8.1",
+    "angular-img-fallback": "~0.0.2"
   },
   "devDependencies": {
     "angular-mocks": ">1.0.7",

@@ -2,24 +2,26 @@
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 small-offset-2 columns">
 		<label class="size-1">
-			<b><span translate>groups.module_name</span>: </b><details-text class="size-18" value="module.name" save="updateModule()" validate="validateModule" column="name"></details-text>
+			<b><span translate>groups.module_name</span>:</b><details-text class="size-18 with-small-margin-left" value="module.name" save="updateModule()" validate="validateModule" column="name"></details-text>
 		</label>
     </div>
 </div>
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 small-offset-2 columns">
 		<label class="size-1">
-			<b><span translate>visible</span>: </b><details-date date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
-			<i class="fi-alert" tooltip-placement="right" tooltip="{{'invisible' | translate}}" ng-hide="visible(module.appearance_time)"></i>
+			<b><span translate>visible</span>:</b><details-date class="with-small-margin-left" date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
+			<span ng-hide="visible(module.appearance_time)">
+				<i class="fi-alert"></i><small class="subheader with-tiny-margin-left" translate>invisible</small>
+			</span>
 		</label>
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 small-offset-2 columns">
 		<label class="size-1">
-			<b><span translate>due</span>: </b><input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin"><!-- <details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="has due date" no="without due date" title="has due date?" ></details-check> -->
-			<span ng-show="module.due_date_enabled">
-				<span translate>on</span> <details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>
+			<input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin" /><b><span class="with-small-margin-left" translate>groups.has_due_date</span></b><!-- <details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check> -->
+			<span ng-show="module.due_date_enabled">:
+				<details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>
 	        </span>
 		</label>
 	</div>
@@ -27,14 +29,14 @@
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 small-offset-2 columns">
 		<label class="size-1">
-			<b><span translate>groups.description</span>: </b><big-area value="module.description" save="updateModule()" validate="validateModule" column="description"></big-area>
+			<b><span translate>groups.description</span>:</b><big-area class="with-small-margin-left" value="module.description" save="updateModule()" validate="validateModule" column="description"></big-area>
 		</label>
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 small-offset-2 columns">
 		<label class="size-1">
-			<b><span >Student link to module</span>: </b><span class="color-editable-blue">{{link_url}}</span>
+			<b><span >Student link to module</span>:</b><span class="color-editable-blue with-small-margin-left">{{link_url}}</span>
 		</label>
 	</div>
 </div>

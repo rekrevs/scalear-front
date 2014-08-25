@@ -68,7 +68,8 @@ angular.module('scalearAngularApp', [
     // 'mm.foundation.transition',
     // 'mm.foundation.typeahead',
     // 'mm.foundation.topbar',
-    'Mac'
+    'Mac',
+    'dcbImgFallback'
     // 'ngAnimate'
 ])
     .constant('headers', {

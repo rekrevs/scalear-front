@@ -560,7 +560,8 @@ var translation_en=function(){
         go_to_class: "Go to class",
         display_inclass: "Display For In-Class Review",
         filter: "Filter",
-        see_related: "See related answers to student"
+        see_related: "See related answers to student",
+        has_due_date: "Has Due Date"
       },
       courses:{
         image_not_found: "Image not found...",
@@ -632,6 +633,7 @@ var translation_en=function(){
         duration: "Course Duration in Weeks",
         prerequisites: "Prerequisites",
         course_image: "Course Image",
+        course_image_url: "Course Image URL",
         overall_statistics: "Overall Statistics",
         total_quiz_grade: "Total Quiz Grade",
         total_invideo_quiz_grade: "Total Invideo Quiz Grade",
@@ -644,6 +646,7 @@ var translation_en=function(){
         quiz_progress_chart: "Quiz Progress Chart",
         lecture_progress_chart: "Lecture Progress Chart",
         course_enrollment_key: "Course Enrollment Key for students",
+        enrollment_key: "Enrollment Key",
         time_zone: "Course Time-zone",
         you_sure_remove_teacher: "Are you sure you want to remove teacher {{teacher}}?",
         all_students: "All Students",
@@ -685,6 +688,7 @@ var translation_en=function(){
         no_lectures: "No Lectures",
         no_lecture_quizzes: "No Lecture Quizzes",
         import_data: "Import Data From",
+        copy_from_existing: "Copy Data from Existing Course",
         optional: "Optional",
         no_quizzes: "No Quizzes",
         no_surveys: "No Surveys",

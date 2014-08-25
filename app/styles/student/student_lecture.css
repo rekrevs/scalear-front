@@ -193,7 +193,8 @@
 
     .solved{
     cursor: pointer;
-    color:#0088CC;
+    /*color:#0088CC;*/
+    color: black;
 
 }
     #student-accordion{
@@ -241,7 +242,7 @@
       -webkit-transition: opacity .25s ease-in;
     }
     .ownpost{
-        background-color: #d9f2fc !important;
+        background-color: #e6f6fc !important;
     }
 
     .popover-title{

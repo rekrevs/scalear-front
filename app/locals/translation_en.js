@@ -967,6 +967,39 @@ var translation_en=function(){
       show_lecture_quizzes: "Show Lecture Quizzes",
       print: "Print"
     },
+    content:{
+      choose_content_type: "Choose Content Type" ,
+      interactive: "Interactive Content",
+      interactive_desc: "Optional interactive questions and grading",
+      types:{
+        video: "Video",
+        quiz: "Quiz",
+        survey: "Survey"
+      },
+      questions:{
+        choose_question_type: "Choose Question Type",
+        categories:{
+          on_video:{
+            title: "On-video Quiz",
+            desc: "Place quiz choices on top of the video",
+          },
+          text_quiz:{
+            title: "Text Quiz",
+            desc: "Quiz on a white background",
+          },
+          on_video_survey:{
+            title: "On-video Survey",
+            desc: "Place survey choices on top of the video, not graded"
+          }
+        },
+        types:{
+          ocq: "One Correct Answer",
+          mcq: "Multiple Correct Answers",
+          drag: "Drag into Order",
+          text: "Text Answer"
+        }
+      }
+    },
     languages:{
       en: 'English',
       sv: 'Swedish'

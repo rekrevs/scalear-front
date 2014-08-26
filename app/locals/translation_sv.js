@@ -976,6 +976,39 @@ var translation_sv=function(){
           show_lecture_quizzes: "Visa Föreläsning Frågesport",
           print: "Tryck"
         },
+        content:{
+          choose_content_type: "Välj Innehålls typ" ,
+          interactive: "Interaktiv Innehåll",
+          interactive_desc: "Valfria interaktiva frågor och betygssättning",
+          types:{
+            video: "Video",
+            quiz: "Frågesport",
+            survey: "Undersökning"
+          },
+          questions:{
+            choose_question_type: "Välj Fråge Typ",
+            categories:{
+              on_video:{
+                title: "On-video Frågesport",
+                desc: "Placera frågesport val på toppen av videon",
+              },
+              text_quiz:{
+                title: "Text Frågesport",
+                desc: "Frågesport på en vit bakgrund",
+              },
+              on_video_survey:{
+                title: "On-video Undersökning",
+                desc: "Placera enkät val på toppen av videon, sorterade"
+              }
+            },
+            types:{
+              ocq: "One rätt svar",
+              mcq: "Flera rätta svar",
+              drag: "Dra till Order",
+              text: "Text svar"
+            }
+          }
+        },
         languages:{
           en: 'Engelska',
           sv: 'Svenska'

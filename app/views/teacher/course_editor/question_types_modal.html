@@ -1,25 +1,26 @@
-<h3>Choose Question Type...</h3>
-<h4>Quiz: On top of the video <small>(place choices on top of the video)</small></h4>
-<center>
-	<div>
-        <div class="small-block-grid-2 medium-block-grid-2 large-block-grid-3 small-4">
+<h3><span translate>content.questions.choose_question_type</span>...</h3>
+<div class="small-12 medium-6 large-4 columns">
+    <h5 translate>content.questions.categories.on_video.title</h5>
+    <small class="subheader" translate>content.questions.categories.on_video.desc</small>
+    <div class="with-small-margin-top">
+        <div class="small-block-grid-2 medium-block-grid-2 large-block-grid-3 small-12">
             <li>
                 <a id='ocq' type="button" class="th blue" ng-class="{thumbactive: question_type == 'ocq'}" ng-model="question_type" ng-click="addQuiz('invideo','OCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/ocq_video_symbol.png">
                 </a>
-                <h4><small>One Correct Answer</small></h4>
+                <h5><small translate>content.questions.types.ocq</small></h5>
             </li>
             <li>
                 <a id='mcq' type="button" class="th blue" ng-class="{thumbactive: question_type == 'mcq'}" ng-model="question_type" ng-click="addQuiz('invideo','MCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/mcq_video_symbol.png">
                 </a>
-                <h4><small>Multiple Correct Answers</small></h4>
+                <h5><small translate>content.questions.types.mcq</small></h5>
             </li>
             <li>
                 <a id='drag' type="button" class="th blue" ng-class="{thumbactive: question_type == 'drag'}" ng-model="question_type" ng-click="addQuiz('invideo','drag')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/drag_video_symbol.png">
                 </a>
-                <h4><small>Drag into Order</small></h4>
+                <h5><small translate>content.questions.types.drag</small></h5>
             </li>
            <!--  <li>
                 <a type="button" class="th blue" ng-class="{thumbactive: question_type == 'text'}" ng-model="question_type" ng-click="addQuiz('invideo','Free Text Question')" >
@@ -27,65 +28,63 @@
                 </a>
                 <h5>Text Answer</h5>
             </li> -->
-        </div> 
+        </div>
     </div>
-</center>
-
-<h4>Quiz: Type in the question <small>(write question and choices on a white background)</small></h4>
-<br />
-<center>
-    <div>
-        <div class="small-block-grid-2 medium-block-grid-2 large-block-grid-4 small-4">
+</div>
+<div class="small-12 medium-6 large-4 columns">
+    <h5 translate>content.questions.categories.text_quiz.title</h5>
+    <small class="subheader" translate>content.questions.categories.text_quiz.desc</small>
+    <div class="with-small-margin-top">
+        <div class="small-block-grid-2 medium-block-grid-2 large-block-grid-4 small-12">
             <li>
                 <a id='ocq_text'type="button" class="th grey" ng-class="{thumbactive: question_type == 'ocq_html'}" ng-model="question_type" ng-click="addQuiz('html','OCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/quiz_symbol.png">
                 </a>
-                <h4><small>One Correct Answer</small></h4>
+                <h5><small translate>content.questions.types.ocq</small></h5>
             </li>
             <li>
                 <a id='mcq_text' type="button" class="th grey" ng-class="{thumbactive: question_type == 'mcq_html'}" ng-model="question_type" ng-click="addQuiz('html','MCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/mcq_symbol.png">
                 </a>
-                <h4><small>Multiple Correct Answers</small></h4>
+                <h5><small translate>content.questions.types.mcq</small></h5>
             </li>
             <li>
                 <a id='drag_text' type="button" class="th grey" ng-class="{thumbactive: question_type == 'drag_html'}" ng-model="question_type" ng-click="addQuiz('html','drag')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/drag_symbol.png">
                 </a>
-                <h4><small>Drag into Order</small></h4>
+                <h5><small translate>content.questions.types.drag</small></h5>
             </li>
             <li>
                 <a id='free_text' type="button" class="th grey" ng-class="{thumbactive: question_type == 'text_html'}" ng-model="question_type" ng-click="addQuiz('html','Free Text Question')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/text_symbol.png">
                 </a>
-                <h4><small>Text Answer</small></h4>
+                <h5><small translate>content.questions.types.text</small></h5>
             </li>
-        </div> 
+        </div>
     </div>
-</center>
-
-<h4>Survey: On top of the video <small>(place choices on top of the video)</small></h4>
-<br />
-<center>
-    <div class="button-group" style="display: inline-block;">
-        <ul class="small-block-grid-2 medium-block-grid-2 large-block-grid-2">
+</div>
+<div class="small-12 medium-6 large-4 columns">
+    <h5 translate>content.questions.categories.on_video_survey.title</h5>
+    <small class="subheader" translate>content.questions.categories.on_video_survey.desc</small>
+    <div class="with-small-margin-top">
+        <div class="small-block-grid-2 medium-block-grid-2 large-block-grid-2 small-12 medium-8 large-8">
             <li>
                 <a id='ocq_sur' type="button" class="th blue" ng-class="{thumbactive: question_type == 'ocq'}" ng-model="question_type" ng-click="addQuiz('survey','OCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/ocq_video_symbol.png">
                 </a>
-                <h5>One Correct Answer</h5>
+                <h5><small translate>content.questions.types.ocq</small></h5>
             </li>
             <li>
                 <a id='mcq_sur' type="button" class="th blue" ng-class="{thumbactive: question_type == 'mcq'}" ng-model="question_type" ng-click="addQuiz('survey','MCQ')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/mcq_video_symbol.png">
                 </a>
-                <h5>Multiple Correct Answers</h5>
+                <h5><small translate>content.questions.types.mcq</small></h5>
             </li>
-        </ul> 
+        </div> 
     </div>
-</center>
+</div>
 
-<div class="right modal-footer">
+<div class="modal-footer clear-both">
     <!-- <button class="success" ng-disabled="!question_type" ng-click="ok(question_type)">{{'sharing.add' | translate}} {{question_type}}</button> -->
-    <button class="alert" ng-click="cancel()" translate="lectures.cancel"></button>
+    <button class="button alert right" ng-click="cancel()" translate="lectures.cancel"></button>
 </div>

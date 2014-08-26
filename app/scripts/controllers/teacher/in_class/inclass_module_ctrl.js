@@ -749,13 +749,17 @@ angular.module('scalearAngularApp')
     
 
     if((question_block.height()/(lines))/2 > 30){
-      $scope.discfontsize = 30;
+      $scope.discfontsize = 30 + 'px';
     }
     $scope.disclineheight = 1//$scope.discfontsize * 0.1
     console.log((question_block.width()/(longest_line.length)));
   
     $scope.fontsize = Math.sqrt(space/chars)+'px';
     $scope.sub_fontsize =(((question_block.height()-10)*23)/100) -5 +'px';
+
+    if(Math.sqrt(space/chars) > 30){
+      $scope.fontsize = 30 +'px';
+    }
     
 
     // console.log(question_block)

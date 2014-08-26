@@ -361,11 +361,17 @@ font-weight: 300 !important
 .no-padding{
 	padding: 0px !important; 
 }
+.no-padding-top{
+  padding-top: 0px !important; 
+}
 .no-margin{
 	margin: 0px !important;
 }
 .no-margin-bottom{
 	margin-bottom: 0px !important;
+}
+.no-margin-top{
+  margin-top: 0px !important;
 }
 .with-padding{
 	padding: 1.25rem !important;
@@ -387,6 +393,9 @@ font-weight: 300 !important
 }
 .with-tiny-padding-right{
 	padding-right: 0.25rem !important;
+}
+.with-tiny-padding-left{
+  padding-left: 0.25rem !important;
 }
 .with-tiny-margin{
 	margin: 0.25rem !important;

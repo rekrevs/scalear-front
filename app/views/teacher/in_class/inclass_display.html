@@ -68,7 +68,7 @@
     </div>
 
     <div style="position:fixed;padding-top:5px; text-align: center; bottom: 5px; width: 100%;left:0">
-        <div class="bottom-left">
+        <div class="bottom-left left">
             <button ng-class="button_class+' '+dark_buttons" ng-click="exitBtn()"  class="button reall-tiny secondary exit_btn">{{button_names[0]}}</button>
         </div>
         <div class="bottom-middle">           
@@ -79,18 +79,18 @@
              <button ng-class="button_class+' '+dark_buttons" ng-click="skip(5)" class="button reall-tiny secondary" style="padding: 3px 10px;">
                 <i class="fi-fast-forward" /><span> {{button_names[5]}}</span>
             </button>
-            <button ng-class="button_class" ng-click="nextQuiz()" class="button reall-tiny secondary" ><i class="fi-next" /></button>           
+            <button ng-class="button_class" ng-click="nextQuiz()" class="button reall-tiny secondary" ><i class="fi-next" /></button>          
         </div>
-        <div class="bottom-right">
+        <div class="bottom-right no-padding-top right">
             <!-- <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="button reall-tiny secondary" style="float:right; margin-right: 3%;"><i class="fi-arrows-out" ng-show="!fullscreen" /><i class="fi-arrows-in" ng-show="fullscreen"/></button> -->
+            <button ng-disabled="true" ng-class="button_class+' '+dark_buttons" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:gray">{{min_counter +':'+ sec_counter}}</button> 
+            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-hide="!counting"; ng-click="togglePause()"><span translate>pause</span></button>
+            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-hide="counting"; ng-click="togglePause()"><span translate>resume</span></button>
             <span ng-hide="selected_item.class_name=='quiz'" >
-                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" style="float:right; margin-right: 2%;"  class="button reall-tiny secondary">{{hide_text}}</button>
+                <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" class="button reall-tiny secondary">{{hide_text}}</button>
             </span>
         </div>
     </div>
 </div>
- <div class="large-12 left row">
-            <h1 style="color:white">{{min_counter +':'+ sec_counter}}</h1>
-            <button ng-disabled="!counting"; class="button" ng-click="pause()">pause</button>
-            <button ng-disabled="counting"; class="button" ng-click="resume()">Resume</button>
-        </div>
+<div class="large-12 left row">
+</div>

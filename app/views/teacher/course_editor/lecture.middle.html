@@ -26,7 +26,7 @@
 									<loading class="small-12 columns" size='small' show='true' style="font-size:12px;top:70px;" />
 								</div>
 							</div>
-							<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
+							<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)" save="saveBtn()"/>
 							<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 						</quiz>
 					</div>

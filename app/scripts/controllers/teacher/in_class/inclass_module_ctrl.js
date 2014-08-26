@@ -27,8 +27,14 @@ angular.module('scalearAngularApp')
         $scope.setOriginalClass()
         $scope.setQuizShortcuts()
         screenfull.request();
-        $scope.fullscreen = true
-        $scope.blurButtons()
+        $scope.fullscreen = true;
+        $scope.blurButtons();
+
+        $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz;
+        $scope.timer -= 1;
+        $scope.min_counter = $scope.timer;
+        $scope.counter = 59;
+        
         // $timeout(function(){
         //   // $scope.fullscreen_user_settings  = true
           
@@ -743,13 +749,17 @@ angular.module('scalearAngularApp')
     
 
     if((question_block.height()/(lines))/2 > 30){
-      $scope.discfontsize = 30;
+      $scope.discfontsize = 30 + 'px';
     }
     $scope.disclineheight = 1//$scope.discfontsize * 0.1
     console.log((question_block.width()/(longest_line.length)));
   
     $scope.fontsize = Math.sqrt(space/chars)+'px';
     $scope.sub_fontsize =(((question_block.height()-10)*23)/100) -5 +'px';
+
+    if(Math.sqrt(space/chars) > 30){
+      $scope.fontsize = 30 +'px';
+    }
     
 
     // console.log(question_block)
@@ -797,15 +807,36 @@ angular.module('scalearAngularApp')
     return $scope.selected_timeline_item.data.type == 'Survey'
   }
 
-  $scope.counter = 1000;
+  
   $scope.onTimeout = function(){
+      if($scope.counter == 0){
+        $scope.timer--;
+        $scope.counter = 59;
+      }
       $scope.counter--;
+      $scope.sec_counter = $scope.counter;
+      $scope.min_counter = $scope.timer;
+
+      if($scope.counter < 10){
+        $scope.sec_counter = '0'+$scope.counter;
+      }
+      if($scope.timer < 10){
+        $scope.min_counter = '0'+$scope.timer;
+      }
       mytimeout = $timeout($scope.onTimeout,1000);
   }
+
   var mytimeout = $timeout($scope.onTimeout,1000);
-    
-  $scope.stop = function(){
+  $scope.counting = true;
+  
+  $scope.pause = function(){
       $timeout.cancel(mytimeout);
+      $scope.counting = false;
+  }
+  
+  $scope.resume = function(){
+      var mytimeout = $timeout($scope.onTimeout,1000);
+      $scope.counting = true;
   }
 
   init();

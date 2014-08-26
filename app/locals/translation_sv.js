@@ -1,5 +1,6 @@
 var translation_sv=function(){
     return {
+      online_name_comment:'(Din online namn visas för andra elever och lärare när du gör kommentarer eller ställa frågor. Om du inte vill ha anonyma kommentarer in i ditt riktiga namn här.)',
       finished: 'Kom',
       yes: 'Ja',
       no: 'Nej',
@@ -15,7 +16,7 @@ var translation_sv=function(){
       quiz: "Quiz",
       survey: "Enkät",
       name: "Namn",
-      email: "E-post",
+      email: "Skola E-post",
       password: "Lösenord",
       password_confirmation: "Bekräfta lösenord",
       current_password: "Aktuellt lösenord",
@@ -251,7 +252,7 @@ var translation_sv=function(){
               first_name: "Förnamn",
               last_name: "Efternamn",
               screen_name: "Online Namn",
-              university: "Universitet",
+              university: "Skola eller Universitet",
               link: "Hemsida",
               bio: "Biografi",
               security: "Säkerhet"

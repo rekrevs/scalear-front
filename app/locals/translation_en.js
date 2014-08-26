@@ -1,5 +1,6 @@
 var translation_en=function(){
     return {
+      online_name_comment: '(Your online name is shown to other students and teachers when you make comments or ask questions. If you do not want to have anonymous comments put in your real name here.)',
       finished: 'Finished',
       yes: 'Yes',
       no: 'No',
@@ -15,7 +16,7 @@ var translation_en=function(){
       quiz: "Quiz",
       survey: "Survey",
       name: "Name",
-      email: "Email",
+      email: "School Email",
       password: "Password",
       password_confirmation: "Password confirmation",
       current_password: "Current Password",
@@ -251,7 +252,7 @@ var translation_en=function(){
         first_name: "First Name",
         last_name: "Last Name",
         screen_name: "Online Name",
-        university: "University",
+        university: "School or University",
         link: "Website",
         bio: "Biography",
         security: "Security"

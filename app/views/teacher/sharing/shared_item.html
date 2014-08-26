@@ -1,4 +1,4 @@
-<div ng-show="data.length>0" class="panel large-12 column">
+<div ng-show="data.length>0" class="large-12 column">
 	<!-- <div class="shared-item-header"> -->
 	<h5 ><i class="fi-social-skillshare"></i> {{'sharing.shared_from' | translate}}</b>{{data[0].teacher.name}}</h5>
 		
@@ -18,6 +18,12 @@
 					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
 						{{item.created_at | timeAgo}}
 					</div>
+					<center>
+	<!-- 					Module: “test” shared by David Black-Schaffer from course COURSE_NAME -->
+						<div class="time-label shared-at blue color-white uppercase no-margin-top">
+							<b> Module: “{{module.name}}” shared by {{data[0].teacher.name}} from {{module.description}}</b>
+						</div>
+					</center>
 					<div class="small-12 with-margin-bottom">
 						<div class="alert-box color-white no-margin show-inline"><b>{{'lectures.module' | translate}}:</b> {{module.name}}</div>
 						<ul>

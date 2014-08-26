@@ -31,9 +31,15 @@ angular.module('scalearAngularApp')
         $scope.blurButtons();
 
         $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz;
-        $scope.timer -= 1;
+        if ($scope.timer != 0) {
+          $scope.timer -= 1;
+          $scope.counter = 59;
+        }
+        if($scope.timer <= 0){
+          $scope.counter = 0;
+          $scope.timer = 0;
+        }
         $scope.min_counter = $scope.timer;
-        $scope.counter = 59;
         
         // $timeout(function(){
         //   // $scope.fullscreen_user_settings  = true
@@ -809,34 +815,49 @@ angular.module('scalearAngularApp')
 
   
   $scope.onTimeout = function(){
-      if($scope.counter == 0){
+      $scope.mytimeout = $timeout($scope.onTimeout,1000);
+    
+      if($scope.counter == 0 && $scope.timer == 0){
+        $scope.counting_finished = true;
+        $scope.pause();
+      }
+
+      if($scope.counter == 0 && $scope.timer != 0){
         $scope.timer--;
         $scope.counter = 59;
       }
-      $scope.counter--;
-      $scope.sec_counter = $scope.counter;
-      $scope.min_counter = $scope.timer;
+      if(!$scope.counting_finished)
+      {
+        $scope.counter--;
+        $scope.sec_counter = $scope.counter;
+        $scope.min_counter = $scope.timer;
+      }
 
       if($scope.counter < 10){
         $scope.sec_counter = '0'+$scope.counter;
       }
+
       if($scope.timer < 10){
         $scope.min_counter = '0'+$scope.timer;
       }
-      mytimeout = $timeout($scope.onTimeout,1000);
   }
 
-  var mytimeout = $timeout($scope.onTimeout,1000);
+  $scope.mytimeout = $timeout($scope.onTimeout,1000);
   $scope.counting = true;
   
-  $scope.pause = function(){
-      $timeout.cancel(mytimeout);
-      $scope.counting = false;
+  $scope.togglePause = function(){
+      if($scope.counting){
+        $timeout.cancel($scope.mytimeout);
+        $scope.counting = false;
+      }
+      else{
+        $scope.mytimeout = $timeout($scope.onTimeout,1000);
+        $scope.counting = true;
+      }
   }
   
   $scope.resume = function(){
-      var mytimeout = $timeout($scope.onTimeout,1000);
-      $scope.counting = true;
+      
   }
 
   init();

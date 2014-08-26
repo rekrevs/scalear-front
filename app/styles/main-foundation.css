@@ -565,6 +565,9 @@ label{
   position: absolute;
   right:5px;
 }
+.clear-both{
+  clear: both !important;
+}
 
 
 
@@ -756,9 +759,9 @@ label{
      -moz-transition:    -moz-transform .3s ease-out;
        -o-transition:      -o-transform .3s ease-out;
           transition:         transform .3s ease-out;
-  -webkit-transform: translate(0, -25%);
+  /*-webkit-transform: translate(0, -25%);
       -ms-transform: translate(0, -25%);
-          transform: translate(0, -25%);
+          transform: translate(0, -25%);*/
 }
 .reveal-modal.in {
   -webkit-transform: translate(0, 0);

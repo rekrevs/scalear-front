@@ -251,6 +251,11 @@ ol li{
 input[type="search"]{
 	height: 1.0rem !important;
 }
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 select{
 	margin: 0 0 1rem 0;
 }

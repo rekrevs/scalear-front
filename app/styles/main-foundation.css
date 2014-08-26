@@ -420,6 +420,19 @@ font-weight: 300 !important
   margin-right: 0.50rem !important;
 }
 
+.with-medium-margin-top{
+  margin-top: 1rem !important;
+}
+.with-medium-margin-bottom{
+  margin-bottom: 1rem !important;
+}
+.with-medium-margin-left{
+  margin-left: 1rem !important;
+}
+.with-medium-margin-right{
+  margin-right: 1rem !important;
+}
+
 .with-margin-bottom{
 	margin-bottom: 1.25rem !important;
 }

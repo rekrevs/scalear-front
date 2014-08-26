@@ -13,11 +13,11 @@ describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor)
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
@@ -28,40 +28,41 @@ describe("1", function(){
 		o_c.to_student(ptor);
 		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
+		o_c.press_content_navigator()
+		o_c.open_course_info()
 		check_teachers_no(ptor, 1);
 	})
-	//end test
+	// //end test
 
 	it('should delete course', function(){
 		o_c.to_teacher(ptor)
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 })
 
 describe("2", function(){
 
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor)
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	//test
 	it('should add a teacher', function(){
 		o_c.open_course_info(ptor);
-		o_c.hide_dropmenu(ptor)
+		// o_c.hide_dropmenu(ptor)
 		press_add_teacher(ptor);
 		fill_teacher_info(ptor, params.teacher2_mail, 2);
 		ptor.sleep(3000);
 	})
 	it('should login as the guest teacher and confirm', function(){
 		o_c.logout(ptor, o_c.feedback);
-		o_c.sign_in(ptor, params.teacher2_mail, params.password, o_c.feedback);
+		o_c.sign_in(ptor, params.teacher2_mail, params.password);
 		o_c.open_notifications(ptor);
 		o_c.accept_invitation(ptor, 1);
 	})
@@ -76,15 +77,17 @@ describe("2", function(){
 		o_c.to_student(ptor);
 		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
+		o_c.press_content_navigator()
+		o_c.open_course_info()
 		check_teachers_no(ptor, 2);
 	})
-	//end test
+	// //end test
 
 	it('should delete course', function(){
 		o_c.to_teacher(ptor)
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 })
 

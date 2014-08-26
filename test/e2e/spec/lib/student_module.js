@@ -25,17 +25,10 @@ exports.check_item_number = function(ptor, module_num, total_item_no){
 //=====================================
 //        join course by key
 //=====================================
-exports.join_course = function(ptor, key)
-{
+exports.join_course = function(ptor, key){
     o_c.open_join_course(ptor);
-    locator.by_name(ptor, 'key').then(function(input)
-    {
-        input.sendKeys(key);
-    });
-    element(by.buttonText('Enroll')).then(function(button)
-    {
-        button.click();
-    })
+    element(by.name('key')).sendKeys(key)
+    element(by.buttonText('Enroll')).click()
 }
 
 //=====================================

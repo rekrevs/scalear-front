@@ -23,9 +23,10 @@ exports.press_login = function(ptor){
 exports.sign_in = function(ptor, email, password){
     element(by.id('user_email')).sendKeys(email);
     element(by.id('user_passowrd')).sendKeys(password);
-    element(by.id('login_btn')).click().then(function(){
-        o_c.feedback(ptor, 'Signed in successfully');
-    });
+    element(by.id('login_btn')).click()
+    // .then(function(){
+    //     o_c.feedback(ptor, 'Signed in successfully');
+    // });
     // locator.by_id(ptor,'user_email').then(function(email_field) {
     //     email_field.sendKeys(email);
     // });
@@ -52,9 +53,10 @@ exports.sign_in_admin = function(ptor){
 exports.logout = function(ptor) {
     this.open_account(ptor);
     locator.by_id(ptor, "logout").then(function(link) {
-        link.click().then(function() {
-            o_c.feedback(ptor, 'Signed out successfully');
-        });
+        link.click()
+        // .then(function() {
+        //     o_c.feedback(ptor, 'Signed out successfully');
+        // });
     })
 }
 
@@ -80,9 +82,10 @@ exports.fill_sign_up_forum=function(ptor, screen_name, fname, lname, mail, unive
     element(by.model('user.screen_name')).sendKeys(screen_name)
     element(by.model('user.password')).sendKeys(password)
     element(by.model('user.password_confirmation')).sendKeys(password)
-    element(by.buttonText('Sign up')).click().then(function(){
-        o_c.feedback(ptor, 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.');
-    })
+    element(by.buttonText('Sign up')).click()
+    // .then(function(){
+    //     o_c.feedback(ptor, 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.');
+    // })
 }
 
 //====================================================
@@ -279,23 +282,23 @@ exports.open_course_whole = function(ptor, co_no){
 //====================================================
 exports.open_course = function(ptor, co_no){
     // element(by.id('main_course_list')).all(by.repeater('course in courses')).count().then(console.log)
-    element(by.id('main_course_list')).element(by.repeater('course in courses').row(co_no-1)).element(by.className("button")).click();
+    element(by.id('main_course_list')).element(by.repeater('course in courses').row(co_no-1)).element(by.className("title")).click();
 }
 
 ///////////////////////////////////////////////////////
 //                  content_navigator
 ///////////////////////////////////////////////////////
-exports.press_content_navigator = function(ptor){
-    locator.by_id(ptor, 'content_navigator').then(function(btn){
-        btn.click();
-    })
+exports.press_content_navigator = function(){
+    element(by.id('content_navigator')).click()
+    // locator.by_id(ptor, 'content_navigator').then(function(btn){
+    //     btn.click();
+    // })
 }
 // //====================================================
 // //          press course information button
 // //====================================================
 
-exports.open_course_info = function(ptor){
-    this.open_settings(ptor);
+exports.open_course_info = function(){
     element(by.id('course_info')).click()
 }
 
@@ -363,6 +366,17 @@ exports.open_lectures = function(ptor){
     //         expect(url).toContain('courseware');
     //     });
     // })
+}
+///////////////////////////////////////////////////////
+//                  Delete User
+///////////////////////////////////////////////////////
+exports.cancel_account=function(){
+    this.open_account(ptor);
+    element(by.id('account_information')).click()
+    element(by.buttonText("Cancel my account")).click()
+    element(by.id("del_con_pwd")).sendKeys(params.password)
+    element(by.id("del_ok_btn")).click()
+    expect(element(by.id('login')).isElementPresent()).toBe(true)
 }
 
 //////////////////////////////end new_layout test mods /////////////////////////////////////////

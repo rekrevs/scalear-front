@@ -434,8 +434,8 @@ font-weight: 300 !important
 .with-margin-right{
 	margin-right: 1.25rem !important;
 }
-.with-left-right{
-	margin-right: 1.25rem !important;
+.with-margin-left{
+	margin-left: 1.25rem !important;
 }
 
 

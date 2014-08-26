@@ -20,7 +20,7 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events={}
     $scope.$parent.lecture_player =  $scope.lecture_player
     $scope.alert={
-    	type:"error", 
+    	type:"alert", 
     	msg: "lectures.got_some_errors"
     }
 	$scope.quiz_types_list=[

@@ -355,8 +355,12 @@ angular.module('scalearAngularApp')
 			{
 				return "content" in scope.quiz
 			}
-
-			scope.cc =['MCQ', 'OCQ','Free Text Question']
+			scope.quiz_types=[
+				{value:"MCQ", text:"Multiple Choice (multiple correct answers)"},
+				{value:"OCQ", text:"Multiple Choice (one correct answer)"},
+				{value:"Free Text Question", text:"Free Answer (text answer)"}
+			]
+			// scope.quiz_types =['MCQ', 'OCQ','Free Text Question']
 			scope.match_types =['Free Text', 'Match Text']
 			console.log(scope.quiz)
 			// if(scope.isFreeText()){
@@ -365,9 +369,9 @@ angular.module('scalearAngularApp')
 		 	// }
 
 			if(!scope.isSurvey())
-				scope.cc.push('drag')
+				scope.quiz_types.push({value:"drag", text:"Drag-and-Drop (ordering)"})
 			// else
-			// 	scope.cc.push('Free Text Question')
+			// 	scope.quiz_types.push('Free Text Question')
 			$log.debug("QUIZZ is ");
 			$log.debug(scope.quiz);
 			scope.addAnswer=scope.add()

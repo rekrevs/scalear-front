@@ -153,7 +153,6 @@ angular.module('scalearAngularApp')
                 }
 
                 if(isiPad()){
-                    // console.log("is ipad!!!!!!")
                     $scope.video_ready=true
                 }
             })
@@ -163,19 +162,17 @@ angular.module('scalearAngularApp')
      $scope.lecture_player.events.onReady = function() {
         $scope.slow = false
         $scope.total_duration = $scope.lecture_player.controls.getDuration()
-        $scope.cue_events={}
         $scope.lecture.online_quizzes.forEach(function(quiz) {
-            // quiz.vote = $scope.voteForReview
-            // quiz.unvote = $scope.unvoteForReview
-            $scope.cue_events[quiz.id] = $scope.lecture_player.controls.cue(quiz.time, function() {
+            $scope.lecture_player.controls.cue(quiz.time, function() {
+                $scope.lecture_player.controls.pause()
+                $scope.seek(quiz.time)  
+                console.log(quiz.time)
+                console.log($scope.lecture_player.controls.getTime())              
                 $scope.closeReviewNotify()
                 $scope.studentAnswers[quiz.id] = {}
-                $scope.selected_quiz = quiz
-                $scope.last_quiz = quiz
-                $scope.backup_quiz = angular.copy(quiz)
-                
+                $scope.selected_quiz = quiz                              
                 $scope.quiz_mode = true
-                $scope.lecture_player.controls.pause()
+                
                 if(quiz.quiz_type == 'html') {    
                     $log.debug("HTML quiz")
                     $scope.quiz_layer.backgroundColor = "white"
@@ -192,21 +189,15 @@ angular.module('scalearAngularApp')
                     $scope.quiz_layer.overflowY = ''
                 }
                 $scope.$apply()
+                $scope.last_quiz = quiz
+                $scope.backup_quiz = angular.copy(quiz)  
             })
         })
 
         $scope.video_ready=true
-        console.log("<<<<<----------->>>>")
-        console.log($scope.video_ready)
-        var time =$state.params.time
-        
-        if(time){
-            console.log('time aho');
-            console.log(time);
-            //goToLecture(lecture_id)
+        var time =$state.params.time        
+        if(time)
             $scope.seek(parseInt(time));
-        }
-
     }
 
     $scope.scrollIntoView=function(tab, fast){
@@ -238,7 +229,6 @@ angular.module('scalearAngularApp')
     }
 
      $scope.refreshVideo=function(){
-        // $scope.lecture_player.controls.refreshVideo()
         $scope.slow=false
         var temp_url = $scope.lecture.url
         $scope.lecture.url =""
@@ -248,9 +238,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
-        console.log("sseekgggg")
-        console.log(time)
-        console.log(lecture_id)
         $scope.closeReviewNotify()
         if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
             if(time >=0)
@@ -267,7 +254,6 @@ angular.module('scalearAngularApp')
     $scope.seek_and_pause=function(time,lecture_id){
         if($scope.lecture_player.controls.getTime() != time)
             clearQuiz()
-        console.log(time)
         $scope.seek(time,lecture_id)
         $scope.lecture_player.controls.pause()
         $scope.play_pause_class = "play"
@@ -289,9 +275,6 @@ angular.module('scalearAngularApp')
 
     var checkIfQuizSolved=function(){
         if($scope.quiz_mode && !$scope.selected_quiz.is_quiz_solved) {
-            console.log($scope.lecture_player.controls.getTime())
-            console.log($scope.selected_quiz.time)
-            console.log($scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
             if($scope.lecture_player.controls.getTime() >= $scope.selected_quiz.time)
                 returnToQuiz($scope.selected_quiz.time)
             else {

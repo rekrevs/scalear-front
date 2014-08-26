@@ -193,10 +193,10 @@ input[type="checkbox"], input[type="radio"] {
 .drop-div{
   /*border-style: dashed;*/
   border: 1px dashed #ddd;
-  /*-moz-border-radius: 10px;*/
-  /*-webkit-border-radius: 10px;*/
-  /*border-radius: 10px;*/
-  /*margin: 0 0 0 10px;*/
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  margin: 0 0 0 2px;
   background: #fff;
   opacity: 0.9;
   overflow: auto;
@@ -215,6 +215,10 @@ input[type="checkbox"], input[type="radio"] {
   left:10px;
   margin-top:0px;
   cursor:move;
+  -moz-border-radius: 10px;
+  -webkit-border-radius: 10px;
+  border-radius: 10px;
+  -moz-box-shadow: 0 0 .3em rgba(0, 0, 0, .8);
 }
 
 .dropped{

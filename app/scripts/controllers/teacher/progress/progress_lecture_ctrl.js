@@ -870,7 +870,7 @@ angular.module('scalearAngularApp')
   }
 
   $scope.calculateReviewPercent=function(review_count, students_count){
-    return Math.ceil(review_count/students_count*100) 
+    return Math.ceil(review_count/students_count*100) || 0 
   }
 
   $scope.getReviewColor=function(percent){

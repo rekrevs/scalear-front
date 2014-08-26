@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
     });
 
 
- 	$scope.alert={type:"error", msg:"lectures.got_some_errors"}
+ 	$scope.alert={type:"alert", msg:"lectures.got_some_errors"}
  
  	$scope.closeAlerts= function(){
  		$scope.hide_alerts=true;

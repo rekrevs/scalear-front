@@ -23,7 +23,7 @@
 				      <span class="prefix"><span translate>groups.type</span>:</span>
 				    </div>
 				    <div class="small-11 columns">
-				    	<select ng-model='quiz.question_type' required  ng-options='val for val in cc' class='choices'></select>
+				    	<select ng-model='quiz.question_type' required  ng-options='obj.value as obj.text for obj in quiz_types' class='choices'></select>
 				    </div>
 				</div>
 			    <div class="small-11 columns" ng-if='isFreeText() && !isSurvey()'>

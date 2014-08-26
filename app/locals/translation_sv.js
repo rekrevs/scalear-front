@@ -385,7 +385,7 @@ var translation_sv=function(){
               not_required:"Inte Krävs",
               not_graded:"Inte Graderad",
               not_in_order: "Inte I Ordning",
-              got_some_errors: "Du har några fel",
+              got_some_errors: "Rätta till felen ovan",
               provide_answer: "Ange svaret text för varje val",
               provide_url: "Skriv in webbadressen (länk) till din video i avsnittet Föreläsning Detaljer till höger",
               shown_in_graph: "Visas i resultat diagram",

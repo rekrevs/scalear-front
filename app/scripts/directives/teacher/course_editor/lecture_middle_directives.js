@@ -57,6 +57,7 @@ angular.module('scalearAngularApp')
 		 	quiz:"=",
 		 	data:"=",
 		 	list:'=',
+		 	save: "&",
 		 	remove:"&"
 		 },
 		 replace:true,
@@ -167,17 +168,19 @@ angular.module('scalearAngularApp')
 			var template =""
 			if(scope.quiz.quiz_type == 'survey')
 				template = "<form name='aform'>"+								
-								"<label><span translate>groups.answer</span><h6><small translate>lectures.shown_in_graph</small></h6>"+ 
+								"<label class='show-inline'><span translate>groups.answer</span><h6><small translate>lectures.shown_in_graph</small></h6></label>"+ 
+								"<delete_button class='right' size='big' hide-confirm='true'  color='dark' action='remove()'></delete_button>"+
 								"<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
-								"</label>"+
-								"<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+
+								"<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save</span></button>"+
+								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+
 							"</form>"
 			else
 				template = "<form name='aform'>"+
-								"<label><span translate>lectures.correct</span> <span translate>groups.answer</span>"+
-								"<input class='must_save_check' ng-class='{error: aform.mcq.$error.atleastone}' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/>"+
-								"</label><center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
+								"<label class='show-inline'><span translate>lectures.correct</span> <span translate>groups.answer</span>"+
+								"<input class='must_save_check' ng-class='{error: aform.mcq.$error.atleastone}' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+
+								"<delete_button class='right' size='big' hide-confirm='true'  color='dark' action='remove()'></delete_button>"+
+								"<center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
 								"<label>"+
 								"<h6 class='subheader no-margin'><small translate>lectures.shown_in_graph</small></h6>"+ 
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
@@ -186,7 +189,8 @@ angular.module('scalearAngularApp')
 								"<h6 class='subheader no-margin'><small translate>lectures.shown_to_student</small></h6>"+
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>"+
 								"</label>"+
-								"<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+
+								"<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save</span></button>"+
+								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+
 							"</form>"
 
            	scope.popover_options={
@@ -293,14 +297,15 @@ angular.module('scalearAngularApp')
 
 
 			var template = '<ul class="no-margin">'+
-							'<label><span translate>groups.correct_because</span>'+
-								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
-							'</label>'+
+							'<label class="show-inline"><span translate>groups.correct_because</span></label>'+
+							"<delete_button class='right' size='big' hide-confirm='true'  color='dark' action='remove()'></delete_button>"+
+							'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
 							'<label ng-repeat=\'num in list|filter:"!"+pos\' >'+
 								'{{num}} <span translate>groups.incorrect_because</span>'+
 								'<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />'+
 							'</label>'+
-							'<button type="button" ng-click="remove()" class="button tiny alert with-tiny-margin remove_button" translate>lectures.remove</button>'+
+							"<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save</span></button>"+
+							// '<button type="button" ng-click="remove()" class="button tiny alert with-tiny-margin remove_button" translate>lectures.remove</button>'+
 						'</ul>'
 
             scope.popover_options={

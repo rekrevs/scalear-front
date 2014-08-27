@@ -669,6 +669,7 @@ angular.module('scalearAngularApp')
     $scope.chart_class = 'original_chart'
     $scope.student_question_class = 'original_student_question'
     $scope.question_block = 'question_block'
+    $scope.question_block_free_text = 'question_block_free_text'
     // $scope.question_block={
     //   'overflowY':'visible'
     // }

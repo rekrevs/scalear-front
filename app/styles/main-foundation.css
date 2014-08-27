@@ -626,6 +626,10 @@ label{
   background-color: #ededeb !important;
   /*color: black !important;*/
 }
+.nav-inner-item-active, .nav-inner-item-active:hover{
+  background-color: #d4d4d2 !important;
+  /*color: black !important;*/
+}
 
 
 /* WEBSITE NOTICE */

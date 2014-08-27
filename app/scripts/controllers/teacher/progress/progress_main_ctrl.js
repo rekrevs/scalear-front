@@ -155,7 +155,7 @@ angular.module('scalearAngularApp')
             },
             chartArea:{top: 10},
             "vAxis": {
-                "title": $translate("courses.statistics")
+                // "title": $translate("courses.statistics")
             }
         };
 	  	chart.data = $scope.formatTotalChartData(chart_data)

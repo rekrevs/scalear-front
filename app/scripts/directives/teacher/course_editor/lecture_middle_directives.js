@@ -168,11 +168,11 @@ angular.module('scalearAngularApp')
 			var template =""
 			if(scope.quiz.quiz_type == 'survey')
 				template = "<form name='aform'>"+								
-								"<label class='show-inline'><span translate>groups.answer</span><h6><small translate>lectures.shown_in_graph</small></h6></label>"+ 
+								"<label class='show-inline'><span translate>groups.answer</span><h6 class='no-margin-bottom'><small translate>lectures.shown_in_graph</small></h6></label>"+ 
 								"<delete_button class='right' size='big' hide-confirm='true'  color='dark' action='remove()'></delete_button>"+
 								"<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
-								"<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save</span></button>"+
+								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-12'><span translate>save</span></button>"+
 								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+
 							"</form>"
 			else
@@ -181,7 +181,7 @@ angular.module('scalearAngularApp')
 								"<input class='must_save_check' ng-class='{error: aform.mcq.$error.atleastone}' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+
 								"<delete_button class='right' size='big' hide-confirm='true'  color='dark' action='remove()'></delete_button>"+
 								"<center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
-								"<label>"+
+								"<label class='with-small-margin-top'><span translate>groups.answer</span>"+
 								"<h6 class='subheader no-margin'><small translate>lectures.shown_in_graph</small></h6>"+ 
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
@@ -189,7 +189,7 @@ angular.module('scalearAngularApp')
 								"<h6 class='subheader no-margin'><small translate>lectures.shown_to_student</small></h6>"+
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>"+
 								"</label>"+
-								"<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save</span></button>"+
+								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-12'><span translate>save</span></button>"+
 								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+
 							"</form>"
 
@@ -220,7 +220,7 @@ angular.module('scalearAngularApp')
 		 					"</div>"+
 	 					"</div>"+
 
-	 					"<span class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >{{data.answer}}</span>"+
+	 					"<span class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" ><h6 class='subheader no-margin' style='font-size: 0.1rem !important;'><small translate>answer.starting_location</small></h6>{{data.answer}}</span>"+
  					"</div>",
 
 		link: function(scope, element, attrs) {
@@ -412,7 +412,8 @@ angular.module('scalearAngularApp')
 					"<div ng-switch-when='FREE TEXT QUESTION' ><html_freetext ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
-					"<ul  ng-switch-when='DRAG' ui-sortable ng-model='quiz.answers' >"+
+					"<ul  ng-switch-when='DRAG' class='no-padding-top' ui-sortable ng-model='quiz.answers' >"+
+						"<h5 class='no-margin-top'><small translate>answer.random</small></h5>"+
 						"<html_drag ng-repeat='answer in quiz.answers' />"+
 					"</ul>"+
 				"</div>",
@@ -476,20 +477,23 @@ angular.module('scalearAngularApp')
 		template:"<ng-form name='aform'>"+
 					"<div class='row'>"+
 						"<div class='small-8 columns'>"+
+							"<label class='text-left'><span translate>groups.answer</span></label>"+
 							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
 							"<small class='error' ng-show='submitted && aform.answer.$error.required'><span translate>courses.required</span>!</small>"+
 							"<small class='error' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
-							"<input ng-if='show() && !isSurvey()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' />"+
+							"<span ng-if='show() && !isSurvey()'><label class='text-left'><span translate>lectures.explanation</span></label>"+
+							"<input type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
 
 						"</div>"+
 						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
+							"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
 							"<input ng-change='updateValues()' atleastone type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+
 						"</div>"+
 						"<div class='small-2 columns'>"+
 							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
 						"</div>"+
 					"</div>"+
-				"</ng-form>"
+				"</ng-form><hr />"
 	}
 	
 }).directive('htmlOcq',function(){
@@ -498,19 +502,22 @@ angular.module('scalearAngularApp')
 		template:"<ng-form name='aform'>"+
 					"<div class='row'>"+
 						"<div class='small-8 columns'>"+
+							"<label class='text-left'><span translate>groups.answer</span></label>"+
 							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
 							"<small class='error' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
 							"<small class='error' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
-							"<input ng-if='show() && !isSurvey()' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /> "+
+							"<span ng-if='show() && !isSurvey()'><label class='text-left'><span translate>lectures.explanation</span></label>"+
+							"<input type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
 						"</div>"+
 						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
+							"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
 							"<input id='radio_correct' atleastone type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
 						"</div>"+
 						"<div class='small-2 columns'>"+
 							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+
 						"</div>"+
 					"</div>"+
-				"</ng-form>",
+				"</ng-form><hr />",
 		link: function(scope)
 		{
 			if(scope.answer.correct)

@@ -211,6 +211,9 @@ var translation_en=function(){
         destroy: "Destroy",
         you_sure: "Are you sure?",
         new_answer: "New Answer",
+        starting_location: "Starting Location",
+        correct_location: "Correct Location",
+        random: "The answers below will be presented to the student in random order"
       },
       profile:{
         profile: "Profile",

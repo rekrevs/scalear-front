@@ -211,6 +211,9 @@ var translation_sv=function(){
               destroy: "Ta bort",
               you_sure: "Är du säker?",
               new_answer: "Nytt Svar",
+              starting_location: "Start Läge",
+              correct_location: "Rätt plats",
+              random: "Svaren nedan kommer att presenteras för studenten i slumpmässig ordning"
           },
       profile:{
         profile: "Profil",

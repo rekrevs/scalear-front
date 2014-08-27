@@ -731,8 +731,9 @@ angular.module('scalearAngularApp')
     var longest_line = lines_text.sort(function (a, b) { return b.length - a.length; })[0];
     
 
-    var lines = (question_block.text().split('\n').length-5)/3;
-    var OneLineSize = space/lines;
+    var lines = $scope.selected_timeline_item.data.length;
+    
+    // var OneLineSize = space/lines;
 
     var width_disc_font_size = (question_block.width()/(longest_line.length))*2.5 + 'px';
     
@@ -757,8 +758,16 @@ angular.module('scalearAngularApp')
     if((question_block.height()/(lines))/2 > 30){
       $scope.discfontsize = 30 + 'px';
     }
-    $scope.disclineheight = 1//$scope.discfontsize * 0.1
-    console.log((question_block.width()/(longest_line.length)));
+    $scope.disclineheight = (question_block.height()/(lines))/2 * 0.1
+    if($scope.disclineheight > 1.2)
+    {
+      $scope.disclineheight = 1; 
+    }
+    else{
+      $scope.disclineheight = 3 +'px';
+    }
+
+    console.log($scope.disclineheight);
   
     $scope.fontsize = Math.sqrt(space/chars)+'px';
     $scope.sub_fontsize =(((question_block.height()-10)*23)/100) -5 +'px';

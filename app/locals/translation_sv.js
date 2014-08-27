@@ -678,6 +678,7 @@ var translation_sv=function(){
               at_time: "vid tidpunkten",
               to: "Till",
               send: "Skicka",
+              send_reply: "Skicka svar och skicka meddelande till elev",
               subject: "Ämne",
               all_students_in: "Alla studenter i",
               number_of_questions: "Antal frågor",

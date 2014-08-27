@@ -59,7 +59,7 @@ angular.module('scalearAngularApp')
                             //console.log(new Date($scope.calendar.events[element].start))
                                 $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
                                 $scope.calendar.events[element].title += ' @' + $filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+scalear_utils.hour12($scope.calendar.events[element].start.getHours())
-                                var fullTitle = $scope.calendar.events[element].courseName.name +" : "+ $scope.calendar.events[element].title ;
+                                var fullTitle = $scope.calendar.events[element].courseName.short_name +" : "+ $scope.calendar.events[element].title ;
                                 $scope.calendar.events[element].title = fullTitle;
                                 
                                 if ($scope.calendar.events[element].quizId)
@@ -85,7 +85,7 @@ angular.module('scalearAngularApp')
                             //console.log(new Date($scope.calendar.events[element].start))
                                 $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
                                 $scope.calendar.events[element].title += ' @' + $filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+scalear_utils.hour12($scope.calendar.events[element].start.getHours())
-                                var fullTitle = $scope.calendar.events[element].courseName.name +" : "+ $scope.calendar.events[element].title ;
+                                var fullTitle = $scope.calendar.events[element].courseName.short_name +" : "+ $scope.calendar.events[element].title ;
                                 $scope.calendar.events[element].title = fullTitle;
                                 $scope.calendar.events[element].url=$state.href("course.progress.module", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId})
                             }

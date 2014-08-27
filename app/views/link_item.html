@@ -22,10 +22,8 @@
 </div> -->
 <div ng-if="'**.course_editor.**' | includedByState" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:5px;">
 	<img class='left handle with-tiny-margin' src='images/move2.png' bindonce bo-title="'courses.drag_to_reorder'|translate" />
-	<div ng-if="!small" class="small-1 columns with-small-margin-right">
-		<img src="images/link_item.png" width="28px"/> <!-- bo-class="{'link_img_small':small}" -->
-	</div>
-	<div class="small-8 columns" bo-class="{'link_item_small':small}">
+	<i class="fi-link left" ng-if="!small"></i>
+	<div class="small-10 columns no-padding" bo-class="{'link_item_small':small}">
 		<div class="small-12 columns">
 			<span>Name:</span><details-text class="with-small-margin-left" value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
 		</div>
@@ -33,7 +31,7 @@
 			<span>URL:</span><details-link class="with-small-margin-left" value="link.url" save="update(link)" validation="validate" elem="link" dontshorten="true"></details-link>
 		</div>
 	</div>
-	<div class="small-2 columns" style="padding:0" ng-if="'**.course_editor.**' | includedByState">
+	<div class="small-1 columns" style="padding:0" ng-if="'**.course_editor.**' | includedByState">
 		<delete_button size="small" vertical="true" color='dark' action="removeLink(link)"></delete_button>
 	</div>
 </div>

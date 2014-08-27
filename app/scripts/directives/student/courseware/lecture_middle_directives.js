@@ -686,7 +686,7 @@ angular.module('scalearAngularApp')
         Lecture.saveNote(
           {
             course_id: $state.params.course_id,
-            lecture_id:scope.item.data.lecture_id,
+            lecture_id:scope.item.data.lecture_id || $state.params.lecture_id,
             note_id: scope.item.data.id || null
           }, 
           {

@@ -21,11 +21,12 @@ describe("1", function(){
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 	// test
 	it('should check number of teachers intially', function(){
-		o_c.to_student(ptor);
+		// o_c.to_student(ptor);
+		o_c.sign_in(ptor, params.student_mail, params.password);
 		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
 		o_c.press_content_navigator()
@@ -70,11 +71,12 @@ describe("2", function(){
 	it('should get the enrollment key and enroll student', function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 
 	it('should login as student and check for teachers', function(){
-		o_c.to_student(ptor);
+		// o_c.to_student(ptor);
+		o_c.sign_in(ptor, params.student_mail, params.password);
 		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
 		o_c.press_content_navigator()

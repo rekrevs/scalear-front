@@ -62,16 +62,14 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 //====================================================
 //            get key and save in a holder
 //====================================================
-exports.get_key_and_enroll = function(ptor, mail){
-	var email = mail || params.student_mail
-	var password =  params.password
+exports.get_key_and_enroll = function(ptor, email, password){
 	o_c.open_course_info(ptor);
 	element(by.binding('course.unique_identifier')).getText().then(function(text){
 		o_c.logout(ptor);
-		o_c.sign_in(ptor, params.student_mail, params.password);
+		o_c.sign_in(ptor, email, password);
 		student.join_course(ptor, text);
 		o_c.logout(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 	// locator.by_id(ptor, 'enrollment_key').then(function(element){
 	// 	element.getText().then(function(text){
@@ -931,4 +929,46 @@ exports.check_item_number = function(ptor, module_num, total_item_no){
   element(by.repeater('module in modules').row(module_num-1)).all(by.repeater('item in module.items')).then(function(items){
     expect(items.length).toEqual(total_item_no)
   })
+}
+
+//====================================================
+//               Announcements
+//====================================================
+
+exports.create_new_announcement=function(ptor, ann_txt){
+	element(by.id('new_announcement')).click()
+	element(by.className('ta-editor')).sendKeys(ann_txt)
+	element(by.id('save_button')).click()
+	// .then(function(){
+	// 	o_c.feedback(ptor,'Announcement was successfully created.');
+	// })
+}
+
+exports.check_number_of_announcments=function(ptor, no_of_ann){
+  locator.by_repeater(ptor, 'announcement in announcements').then(function(announcments) {
+      expect(announcments.length).toEqual(no_of_ann);
+  });  
+}
+
+
+exports.check_announcements_data=function(ptor, no_of_ann){
+	locator.s_by_binding(ptor, 'a.announcement').then(function(announcments) {
+    	announcments.reverse();
+    	announcments.forEach(function(announcment, i) {
+      		expect(announcment.getText()).toEqual('announcement ' + (i + 1));
+    	});
+  	});
+}
+
+exports.delete_announcement=function(ann_no){
+	ann = element(by.repeater('announcement in announcements').row(ann_no-1))
+	ann.element(by.className('delete')).click()
+	ann.element(by.className('fi-check')).click()
+}
+
+exports.check_announcment_with_date=function(ptor, ann_no, ann_date){
+    locator.s_by_classname(ptor, 'well-lg').then(function(date){
+      date.reverse();
+      expect(date[ann_no-1].getText()).toContain(ann_date);
+    });
 }

@@ -282,7 +282,14 @@
 	overflow-y: hidden;
 	background:beige;
 }
-
+.question_block_free_text{
+	position:relative;
+	border: 1px solid darkgrey; 
+	max-height: 24%;
+	min-height: 24%;
+	overflow-y: auto;
+	background:beige;
+}
 .zoom_question_block{
 	position:relative;
 	/*border: 1px solid darkgrey; */

@@ -32,13 +32,13 @@
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">
                 <ul style="padding-left:5px">
-                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])" ng-style="{fontSize:discfontsize, lineHeight:disclineheight}" ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
+                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])" ng-style="{fontSize:discfontsize,lineHeight:disclineheight}"ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
                         {{question[0]}}
                         <br>
                     </li>
                 </ul>
             </div>
-            <div ng-show="!hide_questions && selected_timeline_item.type == 'free_question'" ng-class="question_block">
+            <div ng-show="!hide_questions && selected_timeline_item.type == 'free_question'" ng-class="question_block_free_text">
                 <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
                 <ul  style="padding-left:50px" ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
                     <li ng-repeat="answer in selected_timeline_item.data.answers" ng-style="{fontSize:sub_fontsize, lineHeight:sub_fontsize}" style="list-style:disc;">

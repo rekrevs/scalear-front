@@ -14,19 +14,29 @@
         <form ng-submit="login()" novalidate>
             <h2 translate="welcome"></h2>
             <div class="small-10 large-5">
-                <div class="small-12 large-4 columns show-for-medium-down">
+                <div class="small-12 large-4 columns">
                     <profile-image email="user.email" imagesize="150"></profile-image>
                 </div>
-                <div class="small-12 large-8 columns">
-                    <div class="small-12 columns">
-                        <label>{{'email' | translate}}
-                            <input placeholder="{{'email' | translate}}" type="email" ng-model="user.email" id="user_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" auto-fill-sync autocomplete="off"/>
-                        </label>
+                <div class="small-12 medium-9 large-8 columns with-margin-top">
+                    <div class="small-12 medium-8 large-12 columns right">
+                        <div class="row">
+                            <div class="small-12 medium-12 large-3 columns with-tiny-margin-top no-padding-right">
+                                <label>{{'email' | translate}}</label>
+                            </div>
+                            <div class="small-12 medium-12 large-9 columns medium-centered">
+                                <input placeholder="{{'email' | translate}}" type="email" ng-model="user.email" id="user_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" auto-fill-sync autocomplete="off"/>
+                            </div>
+                        </div>
                     </div>
-                    <div class="small-12 columns">
-                        <label>{{'password' | translate}}
+                    <div class="small-12 medium-8 large-12 columns right">
+                    <div class="row">
+                        <div class="small-12 medium-12 large-3 columns with-tiny-margin-top no-padding-right">
+                            <label>{{'password' | translate}}</label>
+                        </div>
+                        <div class="small-12 medium-12 large-9 columns medium-centered">
                             <input placeholder="{{'password' | translate}}" type="password" ng-model="user.password" id="user_passowrd" class="password optional modern-input" name="user[password]" size="50" auto-fill-sync/>
-                        </label>
+                        </div>
+                        </div>
                     </div>
 
                     <div class="small-12 columns">
@@ -34,9 +44,6 @@
                             <input type="checkbox" ng-model="user.remember_me">
                         </label>
                     </div>
-                </div>
-                <div class="small-12 large-4 columns hide-for-medium-down">
-                    <profile-image email="user.email" imagesize="150"></profile-image>
                 </div>
                 <div class="small-12 column">
                     <button id="login_btn" type="submit" class="button">{{'sign_in' | translate}}</button>

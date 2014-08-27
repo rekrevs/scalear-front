@@ -675,6 +675,7 @@ var translation_en=function(){
         at_time: "at time",
         to: "To",
         send: "Send",
+        send_reply: "Post reply and send message to student",
         subject: "Subject",
         all_students_in: "All Students in",
         number_of_questions: "Number of questions",

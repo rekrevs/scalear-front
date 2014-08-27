@@ -142,6 +142,9 @@ span.error, small.error{
 .wheat{
 	background-color: #fcf8e3 !important;
 }
+.black{
+  background-color: black !important;
+}
 
 .color-white{
 	color: #ffffff !important;
@@ -225,6 +228,9 @@ span.error, small.error{
 }
 .border-transparent{
 	border: transparent !important;
+}
+.border-black{
+  border-color: black !important;
 }
 
 
@@ -368,6 +374,15 @@ font-weight: 300 !important
 }
 .no-padding-top{
   padding-top: 0px !important; 
+}
+.no-padding-bottom{
+  padding-bottom: 0px !important; 
+}
+.no-padding-right{
+  padding-right: 0px !important; 
+}
+.no-padding-left{
+  padding-left: 0px !important; 
 }
 .no-margin{
 	margin: 0px !important;
@@ -528,6 +543,9 @@ td.right-border{
 .top-bar-section li:not(.has-form) a:not(.button):hover{
   background-color: #d4d4d2 !important;
 }
+.side-nav li a{
+  color: #5da423;
+}
 
 
 /*STATES*/
@@ -558,6 +576,29 @@ button.active{
 	border-left: none !important;
 	border-top: none !important;
 	border-bottom: none !important;
+}
+.no-border-left{
+  border-left: none !important;
+}
+.no-border-right{
+  border-right: none !important;
+}
+.no-border-top{
+  border-top: none !important;
+}
+.no-border-bottom{
+  border-bottom: none !important;
+}
+.border-left{
+  border-left: solid;
+}
+.with-light-border{
+  border: 1px solid lightgrey;
+}
+
+/*BORDER SIZES*/
+.border-2{
+  border-width: 2px;
 }
 
 /*OTHERS*/

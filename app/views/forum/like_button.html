@@ -1,5 +1,9 @@
 <div  style="text-align: center; display: inline-block; margin-right:15px">
 	<span>{{votes_count}}</span>
-	<div ng-show="!voted" class="fi-arrow-up looks-like-a-link size-21" ng-style="{'display': display_style}" tooltip="{{'discussion.like' | translate}}" tooltip-placement="left" tooltip-append-to-body="false" ng-click="up()"></div>
-	<div ng-show="voted" class="fi-arrow-down looks-like-a-link size-21" ng-style="{'display': display_style}" tooltip="{{'discussion.unlike' | translate}}" tooltip-placement="left" tooltip-append-to-body="false" ng-click="down()"></div>
+	<div ng-show="!voted" class="looks-like-a-link" ng-style="{'display': display_style}" tooltip="{{'discussion.like' | translate}}" tooltip-placement="left" tooltip-append-to-body="false" ng-click="up()">
+		<img src="images/chevron_up.png" />
+	</div>
+	<div ng-show="voted" class="looks-like-a-link" ng-style="{'display': display_style}" tooltip="{{'discussion.unlike' | translate}}" tooltip-placement="left" tooltip-append-to-body="false" ng-click="down()">
+		<img src="images/chevron_down.png" />
+	</div>
 </div>

@@ -40,19 +40,19 @@ xdescribe("1", function(){
     })
 
     it('should create_course', function(){
-        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
         // o_c.home_teacher(ptor);
     })
     
     //test
     it('should add a module and lectures', function(){
         // o_c.open_course_whole(ptor);
-        teacher.add_module(ptor, o_c.feedback);
-        o_c.press_content_navigator(ptor)
+        teacher.add_module(ptor);
+        // o_c.press_content_navigator(ptor)
         teacher.open_module(ptor, 1);
-        teacher.add_lecture(ptor, 1, o_c.feedback);
-        teacher.add_lecture(ptor, 1, o_c.feedback);
-        teacher.add_module(ptor, o_c.feedback);
+        teacher.add_lecture(ptor, 1);
+        teacher.add_lecture(ptor, 1);
+        teacher.add_module(ptor);
         teacher.open_module(ptor, 2);
         teacher.open_module(ptor, 1);
     })
@@ -64,12 +64,12 @@ xdescribe("1", function(){
     it('should sign in teacher 2', function(){
         // o_c.home_teacher(ptor);
         // o_c.open_tray(ptor);
-        o_c.logout(ptor, o_c.feedback);
-        o_c.sign_in(ptor, params.teacher2_mail, params.password, o_c.feedback);
+        o_c.logout(ptor);
+        o_c.sign_in(ptor, params.teacher2_mail, params.password);
     })
     
     it('should create_course', function(){
-        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
         // o_c.home_teacher(ptor);
     })
     
@@ -101,7 +101,7 @@ xdescribe("1", function(){
     it("should check course content with updated data",function(){
         o_c.open_course_list(ptor);
         o_c.open_course(ptor, 1);
-        o_c.press_content_navigator(ptor)
+        // o_c.press_content_navigator(ptor)
         teacher.check_module_number(ptor, 1)
         teacher.open_module(ptor, 1);
         teacher.check_item_number(ptor, 1, 2)
@@ -110,17 +110,17 @@ xdescribe("1", function(){
     
     it('should clear the course for deletion', function(){
         // teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_item_by_number(ptor, 1, 1);
 
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+        teacher.delete_empty_module(ptor, 1);
     })
     
     it('should delete course', function(){
         // o_c.to_teacher(ptor)
         o_c.open_course_list(ptor);
         teacher.delete_course(ptor, 1);
-        o_c.logout(ptor, o_c.feedback);
+        o_c.logout(ptor);
     })
     
     it('should sign in teacher 1', function(){
@@ -130,13 +130,13 @@ xdescribe("1", function(){
     it('should clear the course for deletion', function(){
         o_c.open_course_list(ptor);
         o_c.open_course(ptor, 1);
-        o_c.press_content_navigator(ptor)
+        // o_c.press_content_navigator(ptor)
         teacher.open_module(ptor, 2);
-        teacher.delete_empty_module(ptor, 2, o_c.feedback);
+        teacher.delete_empty_module(ptor, 2);
         teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_empty_module(ptor, 1);
     })
 
     it('should delete course', function(){
@@ -144,7 +144,7 @@ xdescribe("1", function(){
         //depending on the current state(student or teacher)
         o_c.open_course_list(ptor);
         teacher.delete_course(ptor, 1);
-        o_c.logout(ptor, o_c.feedback);
+        o_c.logout(ptor);
     })
 })
 
@@ -152,16 +152,16 @@ describe("2", function(){
 
     it('should sign in as teacher', function(){
         o_c.press_login(ptor)
-        o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
     it('should create_course', function(){
-        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
         // o_c.home_teacher(ptor);
     })
     
     it('should create another', function(){
-        teacher.create_course(ptor, "short_name", "course_name", "15", params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+        teacher.create_course(ptor, "short_name", "course_name", "15", params.discussion_link, params.image_link, params.course_description, params.prerequisites);
         // o_c.home_teacher(ptor);
     })
 
@@ -170,13 +170,13 @@ describe("2", function(){
         // o_c.open_course_whole(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);        
-        o_c.open_content_editor(ptor);
-        teacher.add_module(ptor, o_c.feedback);
-        o_c.press_content_navigator(ptor)
+        // o_c.open_content_editor(ptor);
+        teacher.add_module(ptor);
+        // o_c.press_content_navigator(ptor)
         teacher.open_module(ptor, 1);
-        teacher.add_lecture(ptor, 1, o_c.feedback);
-        teacher.add_lecture(ptor, 1, o_c.feedback);
-        teacher.add_module(ptor, o_c.feedback);
+        teacher.add_lecture(ptor, 1);
+        teacher.add_lecture(ptor, 1);
+        teacher.add_module(ptor);
         teacher.open_module(ptor, 2);
         teacher.open_module(ptor, 1);
     })
@@ -190,9 +190,9 @@ describe("2", function(){
         // o_c.home_teacher(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 2);
-        o_c.open_content_editor(ptor)
-        teacher.add_module(ptor, o_c.feedback);
-        o_c.press_content_navigator(ptor)
+        // o_c.open_content_editor(ptor)
+        teacher.add_module(ptor);
+        // o_c.press_content_navigator(ptor)
         teacher.check_module_number(ptor, 1)
     })
 
@@ -206,24 +206,24 @@ describe("2", function(){
     //end test
 
     it('should clear the second course for deletion', function(){
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+        teacher.delete_empty_module(ptor, 1);
         teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_item_by_number(ptor, 1, 1);
 
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+        teacher.delete_empty_module(ptor, 1);
     })
 
     it('should clear the first course for deletion', function(){
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
-        o_c.press_content_navigator(ptor)
+        // o_c.press_content_navigator(ptor)
         teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_item_by_number(ptor, 1, 1);
 
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+        teacher.delete_empty_module(ptor, 1);
+        teacher.delete_empty_module(ptor, 1);
 
     })
 
@@ -234,7 +234,7 @@ describe("2", function(){
         o_c.open_course_list(ptor);
         teacher.delete_course(ptor, 1);
         teacher.delete_course(ptor, 1);
-        o_c.logout(ptor, o_c.feedback);
+        o_c.logout(ptor);
     })
 })
 
@@ -278,7 +278,7 @@ function paste_module(ptor){
 function check_paste_visible(item_name){
     o_c.open_content(ptor)
     expect(element(by.id('paste')).isDisplayed()).toBe(true)
-    expect(element(by.id('paste')).element(by.className('description')).getText()).toEqual(item_name)
+    expect(element(by.id('paste')).element(by.className('dark-descriptio')).getText()).toEqual(item_name)
 }
 
 // function share_module(ptor, mo_no, share_with){
@@ -304,7 +304,7 @@ function check_paste_visible(item_name){
 function put_shared_in_course(ptor, item_no, course_no){
     var item = element(by.repeater('module in item.modules').row(item_no-1))
     var courses= item.element(by.model('selected_course'))
-    var add = item.element(by.buttonText('Add'))
+    var add = item.element(by.buttonText('Copy'))
 
     expect(add.isEnabled()).toBe(false)
     courses.click()

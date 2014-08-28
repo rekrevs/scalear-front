@@ -34,12 +34,7 @@ angular.module('scalearAngularApp')
             $scope.next_item= data.next_item;
             // $scope.$emit('accordianUpdate',{g_id:$scope.quiz.group_id, type:"quiz", id:$scope.quiz.id});
 	 		$scope.alert_messages= data.alert_messages
-            for(var key in $scope.alert_messages){
-                if(key=="due")
-                    $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
-                else if(key=="today")
-                    $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
-            }
+            $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
 		  	$scope.quiz.questions.forEach(function(question,index){
 				question.answers = data.answers[index]
 				 if(question.question_type.toUpperCase()=="DRAG" && $scope.studentAnswers[question.id]==null) // if drag was not solved, put student answer from shuffled answers.
@@ -69,6 +64,7 @@ angular.module('scalearAngularApp')
     		Quiz.saveStudentQuiz({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},{student_quiz: $scope.studentAnswers, commit: action}, function(data){
     			$scope.status=data.status;
     			$scope.alert_messages= data.alert_messages;
+                $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
                 // $scope.next_item= data.next_item;
     			if(data.correct)
     				$scope.correct=data.correct; 
@@ -84,4 +80,16 @@ angular.module('scalearAngularApp')
     		$scope.submitted=true;
     	}
     };
+
+    var setupWarningMsg=function(alert_messages){
+        for(var key in alert_messages){
+            if(key=="submit")
+                return $translate('controller_msg.already_submitted')+' '+$scope.quiz.quiz_type+' '+$translate("controller_msg.no_more_attempts")
+            else if(key=="due")
+                return $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
+            else if(key=="today")
+                return $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
+        }
+    }
+
   }]);

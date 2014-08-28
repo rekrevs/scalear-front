@@ -139,21 +139,20 @@ exports.delete_course = function(ptor,co_no){
 //====================================================
 
 exports.add_module = function(ptor){
-	var module_count = 0 
 	element.all(by.repeater('module in modules')).count().then(function(count){
-		module_count = count
-	})
-	o_c.open_content_editor(ptor);
-	element(by.id('new_module')).click()
-	expect(element.all(by.repeater('module in modules')).count()).toEqual(module_count+1)
+		var module_count = count
+		o_c.open_content(ptor);
+		element(by.id('new_module')).click()
+		expect(element.all(by.repeater('module in modules')).count()).toEqual(module_count+1)
 
-	// locator.by_id(ptor, 'new_module').then(function(mod){
-	// 	mod.click()
-	// 	// .then(function(){
-	//  // 		o_c.feedback(ptor, 'Module was successfully created');	 	
-	// 	// })
-	// })
-	o_c.hide_dropmenu(ptor);
+		// locator.by_id(ptor, 'new_module').then(function(mod){
+		// 	mod.click()
+		// 	// .then(function(){
+		//  // 		o_c.feedback(ptor, 'Module was successfully created');	 	
+		// 	// })
+		// })
+		o_c.hide_dropmenu(ptor);
+	})	
 }
 
 exports.delete_empty_module = function(ptor, mo_no){
@@ -269,10 +268,13 @@ exports.rename_item = function(ptor, name){
 	element(by.id('name')).click()
 	.then(function(){
 		element(by.className('editable-input')).sendKeys(name)
-		element(by.className('check')).click().then(function(){
-			o_c.feedback(ptor, 'successfully updated')			
+		element(by.className('check')).click()
+
+		expect(element(by.id('name')).getText()).toContain(name)
+		// .then(function(){
+		// 	o_c.feedback(ptor, 'successfully updated')			
 			
-		})	
+		// })	
 	})
 }
 
@@ -499,29 +501,33 @@ exports.add_survey_header = function(ptor, header){
 //            	save normal quiz or survey
 //====================================================
 exports.save_quiz = function(ptor){
-	element(by.name('save_quiz')).click().then(function(){
-		o_c.feedback(ptor, 'Quiz was successfully saved');
-	})
+	element(by.name('save_quiz')).click()
+	// .then(function(){
+	// 	o_c.feedback(ptor, 'Quiz was successfully saved');
+	// })
 }
 
 //====================================================
 //            	save normal survey
 //====================================================
 exports.save_survey = function(ptor){
-	locator.by_name(ptor, 'save_quiz').click().then(function(){
-		o_c.feedback(ptor, 'Survey was successfully saved');
-	})
+	locator.by_name(ptor, 'save_quiz').click()
+	// .then(function(){
+	// 	o_c.feedback(ptor, 'Survey was successfully saved');
+	// })
 }
 
 //====================================================
 //            	make the quiz required
 //====================================================
-exports.make_quiz_required = function(ptor){
-	element(by.tagName('details-check')).click()
-	element(by.className('editable-input')).click()
-	element(by.className('check')).click().then(function(){
-		o_c.feedback(ptor, 'Quiz was successfully updated');
-	})
+exports.change_quiz_required = function(){
+	element(by.model('quiz.graded')).click()
+	// element(by.tagName('details-check')).click()
+	// element(by.className('editable-input')).click()
+	// element(by.className('check')).click()
+	// .then(function(){
+	// 	o_c.feedback(ptor, 'Quiz was successfully updated');
+	// })
 	// locator.by_tag(ptor, 'details-check').click().then(function(){
 	// 	locator.by_classname(ptor, 'editable-input').then(function(checkbox){
 	// 		checkbox.click().then(function(){
@@ -536,12 +542,13 @@ exports.make_quiz_required = function(ptor){
 	// })
 }
 
-exports.make_survey_required = function(ptor){
-	element(by.tagName('details-check')).click()
-	element(by.className('editable-input')).click()
-	element(by.className('check')).click().then(function(){
-		o_c.feedback(ptor, 'Survey was successfully updated');
-	})
+exports.change_survey_required = function(ptor){
+	element(by.model('quiz.graded')).click()
+	// element(by.tagName('details-check')).click()
+	// element(by.className('editable-input')).click()
+	// element(by.className('check')).click().then(function(){
+	// 	o_c.feedback(ptor, 'Survey was successfully updated');
+	// })
 	// locator.by_tag(ptor, 'details-check').click().then(function(){
 	// 	locator.by_classname(ptor, 'editable-input').then(function(checkbox){
 	// 		checkbox.click().then(function(){
@@ -554,6 +561,13 @@ exports.make_survey_required = function(ptor){
 	// 	})
 		
 	// })
+}
+
+exports.change_attempt_num=function(num){
+	element(by.tagName('details-number')).click()
+	element(by.className('editable-input')).sendKeys(num)
+	element(by.className('check')).click()
+	expect(element(by.tagName('details-number')).getText()).toEqual(""+num)
 }
 
 
@@ -913,9 +927,10 @@ exports.share_module=function(ptor, mo_no, share_with){
 	})
 
 	element(by.model('$parent.selected_teacher')).sendKeys(share_with)
-	element(by.buttonText('Share')).click().then(function(){
-		o_c.feedback(ptor, 'Data was successfully shared with')
-	})
+	element(by.buttonText('Share')).click()
+	// .then(function(){
+	// 	o_c.feedback(ptor, 'Data was successfully shared with')
+	// })
 
 }
 

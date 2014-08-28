@@ -22,6 +22,10 @@ exports.check_item_number = function(ptor, module_num, total_item_no){
     // })
 }
 
+exports.check_timeline_item_number = function(ptor, num){
+  expect(element.all(by.repeater("l in items")).count()).toBe(num)
+}
+
 //=====================================
 //        join course by key
 //=====================================
@@ -107,7 +111,7 @@ exports.drag_answer = function(ptor, question_no){
 //======================================================
 
 exports.free_match_answer = function(ptor, question_no, desired_text){
-  element(by.repeater('question in quiz.questions').row(question_no-1)).element(by.tagName('textarea')).sendKeys(desired_text)
+  element(by.repeater('question in quiz.questions').row(question_no-1)).element(by.tagName('textarea')).clear().sendKeys(desired_text)
 
     // locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
     //     rep[question_no-1].findElement(protractor.By.tagName('textarea')).then(function(text_area){

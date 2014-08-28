@@ -736,9 +736,9 @@ exports.scroll = function(ptor, value) {
 // //                  scroll to top
 // //=======================================================
 
-// exports.scroll_to_top = function(ptor) {
-//     ptor.executeScript('window.scrollBy(0, -20000)', '');
-// }
+exports.scroll_to_top = function(ptor) {
+    ptor.executeScript('window.scrollBy(0, -20000)', '');
+}
 // //=======================================================
 // //                  scroll to bottom
 // //=======================================================

@@ -8,7 +8,7 @@ var app = angular.module('scalearAngularApp')
         Page.setTitle('head.enrolled_students')
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
-        $scope.loading_students = true
+        $scope.loading_students = true, $scope.delete_mode = false;
         Course.getEnrolledStudents(
           {course_id: $stateParams.course_id},
           function(students){
@@ -80,6 +80,9 @@ var app = angular.module('scalearAngularApp')
         $scope.toggleHelpEnrolling = function(){
           $scope.isCollapsed = !$scope.isCollapsed
           $window.scrollTo(0, 0);
+        }
+        $scope.toggleDeleteMode = function(){
+          $scope.delete_mode = !$scope.delete_mode
         }
   }]);
 

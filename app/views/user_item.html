@@ -1,8 +1,7 @@
-<div class="small-6 medium-4 large-3 columns left">
-	<ul class="vcard looks-like-a-link" ng-class="{'border-grey grey': user.checked}" ng-click="toggleSelect()">
-		<profile-image email="user.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
-		<li class="fn truncate" title="{{user.full_name}}">{{user.full_name}}</li>
-		<li class="email truncate"><a href="" send-email ng-click="emailsingle(user)" title="{{'email' | translate}}: {{user.email}}">{{user.email}}</a></li>
-    </ul>
-    <delete_button size="big" color='dark' action="removestudent(user)" style="position: absolute;right: 23px;margin: 2px;" />
+<div class="vcard looks-like-a-link" ng-class="{'border-grey grey': user.checked}" ng-click="toggleSelect()">
+	<profile-image email="user.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
+	<li class="fn truncate" title="{{user.full_name}}">{{user.full_name}}</li>
+	<li class="email truncate"><a href="" send-email ng-click="emailsingle(user)" title="{{'email' | translate}}: {{user.email}}">{{user.email}}</a></li>
+	<delete_button ng-show="deletemode" size="big" color='dark' action="removestudent(user)">
+	</delete_button>
 </div>

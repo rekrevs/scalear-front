@@ -48,7 +48,7 @@
                 <div class="small-12 column">
                     <div class="small-6 columns">
                         <label translate>pref_language</label>
-                        <button class="tiny button dropdown under-the-other" dropdown-toggle="#languages_list">{{'languages.'+current_lang | translate}}</button>
+                        <button type="button" class="tiny button dropdown under-the-other" dropdown-toggle="#languages_list">{{'languages.'+current_lang | translate}}</button>
                         <ul id="languages_list" class="f-dropdown">
                             <li>
                                 <a ng-click="$parent.changeLanguage('en')">{{'languages.en' | translate}} <img src="images/uk.png" style="width:25px;height:15px;" /></a>

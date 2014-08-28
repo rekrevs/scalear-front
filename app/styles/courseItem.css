@@ -5,7 +5,7 @@
 	width: 100%;
 	position: relative;
 	min-height: 210px;
-	max-height: 210px;
+	/*max-height: 210px;*/
 	height: auto;
 	background-color: white;
 	margin: 9px;

@@ -16,7 +16,8 @@ var translation_en=function(){
       quiz: "Quiz",
       survey: "Survey",
       name: "Name",
-      email: "School Email",
+      email: "Email",
+      edit_email :"School Email",
       password: "Password",
       password_confirmation: "Password confirmation",
       current_password: "Current Password",
@@ -211,6 +212,9 @@ var translation_en=function(){
         destroy: "Destroy",
         you_sure: "Are you sure?",
         new_answer: "New Answer",
+        starting_location: "Starting Location",
+        correct_location: "Correct Location",
+        random: "The answers below will be presented to the student in random order"
       },
       profile:{
         profile: "Profile",
@@ -672,6 +676,7 @@ var translation_en=function(){
         at_time: "at time",
         to: "To",
         send: "Send",
+        send_reply: "Post reply and send message to student",
         subject: "Subject",
         all_students_in: "All Students in",
         number_of_questions: "Number of questions",

@@ -1,7 +1,7 @@
 <div style="overflow:auto; position: absolute; width: 95%;height:100%"> <!-- has all discussions -->      
-    <div ng-repeat="l in items" class='dimmed' style="min-width: 95%;" ng-class="{lectureopen: l.id == lecture.id}" id={{"outline_"+l.id}}> 
+    <div ng-repeat="l in items" class="with-light-border no-border-top no-border-bottom no-border-right" style="min-width: 95%;" ng-class="{'border-left border-2 border-black': l.id == lecture.id}" id={{"outline_"+l.id}}> 
         <span ng-if="l.class_name =='lecture'">
-            <h5 class="light-grey" ng-click="seek()(null, l.id)" style="cursor:pointer; margin-bottom: 0px;padding-left:15px"><b>{{l.name}}</b>
+            <h5 class="light-grey" ng-click="seek()(null, l.id)" ng-class="{'color-white black': l.id == lecture.id}" style="cursor:pointer; margin-bottom: 0px;padding-left:15px"><b>{{l.name}}</b>
             <!-- <span class="label round alert with-tiny-padding with-tiny-margin-right right" ng-show="l.required" translate>courses.required</span> -->
             <span class="label round blue with-tiny-padding with-tiny-margin-right right" ng-show="!l.graded" translate>optional</span></h5>
             <div style="margin-left: 20px;">

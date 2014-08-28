@@ -16,7 +16,8 @@ var translation_sv=function(){
       quiz: "Quiz",
       survey: "Enkät",
       name: "Namn",
-      email: "Skola E-post",
+      email: "E-post",
+      edit_email:"Skola E-post",
       password: "Lösenord",
       password_confirmation: "Bekräfta lösenord",
       current_password: "Aktuellt lösenord",
@@ -211,6 +212,9 @@ var translation_sv=function(){
               destroy: "Ta bort",
               you_sure: "Är du säker?",
               new_answer: "Nytt Svar",
+              starting_location: "Start Läge",
+              correct_location: "Rätt plats",
+              random: "Svaren nedan kommer att presenteras för studenten i slumpmässig ordning"
           },
       profile:{
         profile: "Profil",
@@ -674,6 +678,7 @@ var translation_sv=function(){
               at_time: "vid tidpunkten",
               to: "Till",
               send: "Skicka",
+              send_reply: "Skicka svar och skicka meddelande till elev",
               subject: "Ämne",
               all_students_in: "Alla studenter i",
               number_of_questions: "Antal frågor",

@@ -319,6 +319,7 @@ module.exports = function(grunt) {
                         'template/**/*',
                         '*.html',
                         'views/**/*.html',
+                        'external_documents/**/*'
                         // 'scripts/externals/popcorn-complete.min.js'
                     ]
                 }, {
@@ -620,7 +621,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '3.6.4 (' + new Date().toUTCString() + ')',
+                        version: '3.6.6 (' + new Date().toUTCString() + ')',
                         help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
                     },
 
@@ -634,7 +635,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '3.6.5 (' + new Date().toUTCString() + ')',
+                        version: '3.6.6 (' + new Date().toUTCString() + ')',
                         help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
                     }
 
@@ -648,7 +649,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '3.6.5 (' + new Date().toUTCString() + ')',
+                        version: '3.6.6 (' + new Date().toUTCString() + ')',
                         help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
                     },
 

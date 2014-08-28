@@ -109,7 +109,7 @@
 									<!-- <delete_button ng-show="answer.response && !answer.show_feedback" size='small' action='deleteFeedback(answer)'></delete_button> -->
 									<div class="feedback" ng-show="answer.show_feedback && module_item.quiz_type == 'survey'">
 										<textarea ng-model="answer.temp_response"  style="width: 65%;" />
-										<button ng-click="sendFeedback(answer);answer.show_feedback = false" class="button tiny success" translate>courses.send</button>
+										<button ng-click="sendFeedback(answer);answer.show_feedback = false" class="button tiny success" translate>send_reply</button>
 									</div>
 								</li>
 							</ul>						
@@ -192,7 +192,7 @@
 										<br>
 										<textarea ng-model="discussion.post.temp_response" bo-attr bo-attr-placeholder="'discussion.write_comment' | translate"  style="width: 65%;height:80px; border-radius: 0px;"></textarea>
 										<br />
-										<button ng-click="sendComment(discussion.post);discussion.post.show_feedback = false" class="button tiny success" translate>courses.send</button>
+										<button ng-click="sendComment(discussion.post);discussion.post.show_feedback = false" class="button tiny success" translate>courses.send_reply</button>
 										<br>
 									</div>
 									<hr />

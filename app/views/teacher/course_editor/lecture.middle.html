@@ -20,10 +20,10 @@
 								<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
 							</div>
 							<div ng-show="slow">
-								<div class="row">
-									<h4 class="small-12 columns" style="top:70px;font-weight:300" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h4>
-									<h4 class="small-12 columns" style="top:70px;font-weight:300" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h4>
-									<loading class="small-12 columns" size='small' show='true' style="font-size:12px;top:70px;" />
+								<div class="row" style="background: rgba(255,255,255,0.5) !important;">
+									<h4><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h4>
+									<h4><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h4>
+									<!-- <loading class="small-12 columns" size='small' show='true' style="font-size:12px;top:70px;" /> -->
 								</div>
 							</div>
 							<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)" save="saveBtn()"/>

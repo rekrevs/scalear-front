@@ -23,7 +23,7 @@
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="lighter-grey dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
+							<a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
@@ -32,7 +32,7 @@
 						<!-- <li><label translate>other</label></li> -->
 						<li><a class="lighter-grey dark-text" id="join_course" enrollment-modal ng-click="open()" translate>courses.join_course</a></li>
 						<li>
-							<a id="course_list" class="lighter-grey dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
+							<a id="course_list" class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="course_list">
 								<span translate>show_all_courses</span>
 								<!-- <h5 class="dark-description"><small translate>view_whole_courselist</small></h5> -->
 							</a>
@@ -44,7 +44,7 @@
 					<a class="white-hover color-green-hover size-18-light"  ui-sref-active="nav-item-active" id="account" ui-sref="edit_account" translate>account</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<li>
-							<a id="account_information" class="lighter-grey dark-text has-description" ui-sref-active="nav-item-active" ui-sref="edit_account" href="">
+							<a id="account_information" class="lighter-grey dark-text has-description" ui-sref-active="nav-inner-item-active" ui-sref="edit_account" href="">
 								<span translate>account_edit.account_information</span>
 								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
@@ -60,11 +60,11 @@
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a class="white-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" href="" translate>head.help</a>
+					<a class="white-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" ui-sref="getting_started" translate>head.help</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
-						<li><a class="lighter-grey dark-text" ui-sref-active="nav-item-active" ui-sref="getting_started" translate>help.getting_started</a></li>
+						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="getting_started" translate>help.getting_started</a></li>
 						<!-- <li class="divider border-grey medium-opacity"></li> -->
-						<li><a class="lighter-grey dark-text" ui-sref-active="nav-item-active" ui-sref="privacy" translate>footer.privacy</a></li>
+						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="privacy" translate>footer.privacy</a></li>
 						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>
 				</li>
@@ -89,19 +89,19 @@
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="lighter-grey dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
+							<a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
 						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
-						<li><a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-item-active" ui-sref="new_course" translate>courses.new_course</a></li>
+						<li><a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-inner-item-active" ui-sref="new_course" translate>courses.new_course</a></li>
 						<li ng-show="are_shared()">
-							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-item-active" translate>sharing.view</a>
+							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
 						</li>
 						<li>
-							<a id="course_list" class="lighter-grey dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
+							<a id="course_list" class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="course_list">
 								<span translate>show_all_courses</span>
 								<!-- <h5 class="dark-description"><small translate>view_whole_courselist</small></h5> -->
 							</a>
@@ -113,7 +113,7 @@
 					<a class="white-hover color-green-hover size-18-light" id="account" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" translate>account</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<li>
-							<a id="account_information" class="lighter-grey dark-text has-description" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
+							<a id="account_information" class="lighter-grey dark-text has-description" href="" ui-sref-active="nav-inner-item-active" ui-sref="edit_account">
 								<span translate>account_edit.account_information</span>
 								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
@@ -130,15 +130,15 @@
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a class="white-hover color-green-hover size-18-light" id="help" href=""  ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" translate>head.help</a>
+					<a class="white-hover color-green-hover size-18-light" id="help" ui-sref="getting_started"  ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" translate>head.help</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
-						<li><a class="lighter-grey dark-text" ui-sref="getting_started" ui-sref-active="nav-item-active" translate>help.getting_started</a></li>
+						<li><a class="lighter-grey dark-text" ui-sref="getting_started" ui-sref-active="nav-inner-item-active" translate>help.getting_started</a></li>
 						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" target="_blank" translate>help.teacher_forum</a></li>
-						<li><a class="lighter-grey dark-text" href="" translate>help.instruction_manual</a></li>
+						<li><a class="lighter-grey dark-text" href="external_documents/scalable-learning-manual.pdf" translate>help.instruction_manual</a></li>
 						<!-- <li class="divider"></li> -->
 						<li class="divider border-grey medium-opacity"></li>
-						<li><a class="lighter-grey dark-text" ui-sref="privacy" ui-sref-active="nav-item-active" translate>footer.privacy</a></li>
+						<li><a class="lighter-grey dark-text" ui-sref="privacy" ui-sref-active="nav-inner-item-active" translate>footer.privacy</a></li>
 						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>
 				</li>
@@ -165,19 +165,19 @@
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="lighter-grey dark-text has-description" ng-class="{'nav-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
+							<a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
 						</li>
 						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
-						<li><a class="lighter-grey dark-text" ui-sref="new_course" ui-sref-active="nav-item-active" translate>courses.new_course</a></li>
+						<li><a class="lighter-grey dark-text" ui-sref="new_course" ui-sref-active="nav-inner-item-active" translate>courses.new_course</a></li>
 						<li ng-show="are_shared()">
-							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-item-active" translate>sharing.view</a>
+							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
 						</li>
 						<li>
-							<a class="lighter-grey dark-text has-description" ui-sref-active="nav-item-active" ui-sref="course_list">
+							<a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="course_list">
 								<span translate>show_all_courses</span>
 								<!-- <h5 class="dark-description"><small translate>view_whole_courselist</small></h5> -->
 							</a>
@@ -189,7 +189,7 @@
 					<a class="white-hover color-green-hover size-18-light" id="account" href="" ng-class="{'nav-item-active': ('**.edit_account.**' | includedByState)}" translate>account</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<li>
-							<a id="account_information" class="lighter-grey dark-text has-description" href="" ui-sref-active="nav-item-active" ui-sref="edit_account">
+							<a id="account_information" class="lighter-grey dark-text has-description" href="" ui-sref-active="nav-inner-item-active" ui-sref="edit_account">
 								<span translate>account_edit.account_information</span>
 								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
 							</a>
@@ -206,14 +206,14 @@
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a class="white-hover color-green-hover size-18-light" id="help" href="" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" translate>head.help</a>
+					<a class="white-hover color-green-hover size-18-light" id="help" ui-sref="getting_started" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" translate>head.help</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
-						<li><a class="lighter-grey dark-text" ui-sref="getting_started" ui-sref-active="nav-item-active" translate>help.getting_started</a></li>
+						<li><a class="lighter-grey dark-text" ui-sref="getting_started" ui-sref-active="nav-inner-item-active" translate>help.getting_started</a></li>
 						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" target="_blank" translate>help.teacher_forum</a></li>
-						<li><a class="lighter-grey dark-text" href="" translate>help.instruction_manual</a></li>
+						<li><a class="lighter-grey dark-text" href="external_documents/scalable-learning-manual.pdf" translate>help.instruction_manual</a></li>
 						<li class="divider border-grey medium-opacity"></li>
-						<li><a class="lighter-grey dark-text" ui-sref="privacy" ui-sref-active="nav-item-active" translate>footer.privacy</a></li>
+						<li><a class="lighter-grey dark-text" ui-sref="privacy" ui-sref-active="nav-inner-item-active" translate>footer.privacy</a></li>
 						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 					</ul>
 				</li>

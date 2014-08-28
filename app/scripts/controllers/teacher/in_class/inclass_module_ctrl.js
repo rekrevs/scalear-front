@@ -669,6 +669,7 @@ angular.module('scalearAngularApp')
     $scope.chart_class = 'original_chart'
     $scope.student_question_class = 'original_student_question'
     $scope.question_block = 'question_block'
+    $scope.question_block_free_text = 'question_block_free_text'
     // $scope.question_block={
     //   'overflowY':'visible'
     // }
@@ -731,8 +732,9 @@ angular.module('scalearAngularApp')
     var longest_line = lines_text.sort(function (a, b) { return b.length - a.length; })[0];
     
 
-    var lines = (question_block.text().split('\n').length-5)/3;
-    var OneLineSize = space/lines;
+    var lines = $scope.selected_timeline_item.data.length;
+    
+    // var OneLineSize = space/lines;
 
     var width_disc_font_size = (question_block.width()/(longest_line.length))*2.5 + 'px';
     
@@ -757,8 +759,16 @@ angular.module('scalearAngularApp')
     if((question_block.height()/(lines))/2 > 30){
       $scope.discfontsize = 30 + 'px';
     }
-    $scope.disclineheight = 1//$scope.discfontsize * 0.1
-    console.log((question_block.width()/(longest_line.length)));
+    $scope.disclineheight = (question_block.height()/(lines))/2 * 0.1
+    if($scope.disclineheight > 1.2)
+    {
+      $scope.disclineheight = 1; 
+    }
+    else{
+      $scope.disclineheight = 3 +'px';
+    }
+
+    console.log($scope.disclineheight);
   
     $scope.fontsize = Math.sqrt(space/chars)+'px';
     $scope.sub_fontsize =(((question_block.height()-10)*23)/100) -5 +'px';

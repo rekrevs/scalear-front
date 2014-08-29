@@ -9,7 +9,7 @@
 		      <span class="prefix"><span translate>answer.question</span>:</span>
 		    </div>
 		    <div class="small-9 columns">
-		      <input required name='qlabel' type='text' ng-model='quiz[column]'/>
+		      <input required name='qlabel' type='text' ng-model='quiz[column]' ng-class="{error: (submitted && qform.qlabel.$error.required)}"/>
 		      <small class='error' ng-show='submitted && qform.qlabel.$error.required'><span translate>courses.required</span>!</small>
 		    </div>
 		    <div class="small-1 columns">

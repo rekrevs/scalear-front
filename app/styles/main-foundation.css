@@ -114,6 +114,12 @@ span.error, small.error{
 .whitesmoke-hover:hover, .medium-grey:hover, .dark-medium-grey, .dark-medium-grey-hover{
   background-color: #a3a3a3 !important;
 }
+.dark-blue{
+  background-color: #207d99 !important;
+}
+.dark-green{
+  background-color: #3f7018 !important; 
+}
 
 .light-grey, .light-grey-hover{
 	background-color: #ececea !important;
@@ -475,6 +481,19 @@ font-weight: 300 !important
 	margin-left: 1.25rem !important;
 }
 
+.with-bigger-margin-bottom{
+  margin-bottom: 1.50rem !important;
+}
+.with-bigger-margin-top{
+  margin-top: 1.50rem !important;
+}
+.with-bigger-margin-right{
+  margin-right: 1.50rem !important;
+}
+.with-bigger-margin-left{
+  margin-left: 1.50rem !important;
+}
+
 
 /*OVERFLOW*/
 .overflow-auto{
@@ -547,6 +566,14 @@ td.right-border{
   color: #5da423;
 }
 
+.tabs{
+  border-bottom: 1px solid lightgrey;
+}
+.tabs dd.active, .tabs .tab-title.active {
+  border: 1px solid lightgrey;
+  border-bottom: none;
+}
+
 
 /*STATES*/
 button.active{
@@ -616,6 +643,9 @@ button.active{
 }
 .looks-like-a-link{
 	cursor: pointer;
+}
+.looks-like-a-hook{
+  cursor: move;
 }
 .auto-right{
   right: auto !important;

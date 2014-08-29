@@ -1,5 +1,5 @@
 <center>
-    <div class="small-12 column">
+    <!-- <div class="small-12 column">
         <div class="panel left with-margin">
             <span>{{'language' | translate}}</span>
             <div class="show-inline" ng-show="$parent.current_lang=='sv'" ng-cloak>
@@ -9,10 +9,10 @@
                 <a style="cursor:pointer;" ng-click="$parent.changeLanguage('sv')"><img src="images/uk.png" style="width:25px;height:15px;" /></a>
             </div>
         </div>
-    </div>
+    </div> -->
     <div class="small-12 column">
         <form ng-submit="login()" novalidate>
-            <h2 translate="welcome"></h2>
+            <h2><span translate>welcome</span>Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></h2>
             <div class="small-10 large-5">
                 <div class="small-12 large-4 columns">
                     <profile-image email="user.email" imagesize="150"></profile-image>
@@ -46,7 +46,21 @@
                     </div>
                 </div>
                 <div class="small-12 column">
-                    <button id="login_btn" type="submit" class="button">{{'sign_in' | translate}}</button>
+                    <div class="small-6 columns">
+                        <label translate>pref_language</label>
+                        <button type="button" class="tiny button dropdown under-the-other" dropdown-toggle="#languages_list">{{'languages.'+current_lang | translate}}</button>
+                        <ul id="languages_list" class="f-dropdown">
+                            <li>
+                                <a ng-click="$parent.changeLanguage('en')">{{'languages.en' | translate}} <img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                            </li>
+                            <li>
+                                <a ng-click="$parent.changeLanguage('sv')">{{'languages.sv' | translate}} <img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="small-6 columns">
+                        <button id="login_btn" type="submit" class="button">{{'sign_in' | translate}}</button>
+                    </div>
                 </div>
             </div>
             

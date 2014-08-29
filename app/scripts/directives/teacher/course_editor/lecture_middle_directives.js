@@ -219,8 +219,9 @@ angular.module('scalearAngularApp')
 			 					"<small class='error' ng-show=\"!data.answer\" translate>courses.required</small>"+
 		 					"</div>"+
 	 					"</div>"+
-
-	 					"<span class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" ><h6 class='subheader no-margin' style='font-size: 0.1rem !important;'><small translate>answer.starting_location</small></h6>{{data.answer}}</span>"+
+	 					"<span class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" ><h6 class='subheader no-margin' style='font-size: 0.1rem !important;'>{{data.answer}}"+
+	 						"<span class='position-header error light-grey dark-text no-margin' style='top: -1px; left: -45px;'>Start</span>"+
+	 					"</span>"+
  					"</div>",
 
 		link: function(scope, element, attrs) {
@@ -539,7 +540,7 @@ angular.module('scalearAngularApp')
 					"<ng-form name='aform'>"+					
 						"<div class='row' style='padding: 5px;'>"+
 							"<div class='small-1 columns'>"+
-								"<span class='ui-icon ui-icon-arrowthick-2-n-s drag-item' ></span>"+
+								"<img class='drag-item looks-like-a-hook' src='images/move2.png' />"+
 							"</div>"+
 							"<div class='small-8 columns'>"+
 								"<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' style='margin-bottom:0'/>"+

@@ -171,7 +171,8 @@ angular.module('scalearAngularApp')
       user: '=',
       select: '=',
       emailsingle: '=',
-      removestudent: '='
+      removestudent: '=',
+      deletemode: '='
     },
     templateUrl: '/views/user_item.html',
     link: function(scope){

@@ -136,22 +136,22 @@
             <div class="large-12 medium-12 small-12 columns">
                 <label translate>pref_language</label>
                 <button class="tiny button dropdown under-the-other" dropdown-toggle="#languages_list">{{'languages.'+current_lang | translate}}</button>
-                    <ul id="languages_list" class="f-dropdown">
-                        <li>
-                            <a ng-click="changeLanguage('en')">{{'languages.en' | translate}} <img src="images/uk.png" style="width:25px;height:15px;" /></a>
-                        </li>
-                        <li>
-                            <a ng-click="changeLanguage('sv')">{{'languages.sv' | translate}} <img src="images/sweden.png" style="width:25px;height:15px;" /></a>
-                        </li>
-                    </ul>
-                </div>
+                <ul id="languages_list" class="f-dropdown">
+                    <li>
+                        <a ng-click="changeLanguage('en')">{{'languages.en' | translate}} <img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                    </li>
+                    <li>
+                        <a ng-click="changeLanguage('sv')">{{'languages.sv' | translate}} <img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                    </li>
+                </ul>
             </div>
-            <div class="row">
-                <center>
-                <button type="submit" class="tiny button success">{{'online_quiz.save_changes' | translate}}</button>
-                <button type="button" id="del_acc_btn" class="tiny button alert" ng-click="open()">{{'account_edit.cancel_account' | translate}}</button>
-                </center>
-            </div>
+        </div>
+        <div class="row">
+            <center>
+            <button type="submit" class="tiny button success">{{'online_quiz.save_changes' | translate}}</button>
+            <button type="button" id="del_acc_btn" class="tiny button alert" ng-click="open()">{{'account_edit.cancel_account' | translate}}</button>
+            </center>
+        </div>
     </form>
 </center>
 

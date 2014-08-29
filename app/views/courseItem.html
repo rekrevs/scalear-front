@@ -8,19 +8,25 @@
 	</div>
   	<div class="small-12 medium-8 large-9 columns" style="padding-top: 10px; padding-bottom: 10px; display: inline-block;">
 		<h5 class="truncate"><a ui-sref="course({ course_id: course.id })" class="title looks-like-a-link truncate" title="{{course.name}}" style="font-weight: 300;">{{course.short_name}} | {{course.name}}</a></h5>
-		<h6 class="dark-text" title="{{course.name}}"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers" style="font-weight: 400; padding-left:4px">{{teacher.user.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
+		<h6 class="dark-text" ng-if="teachers"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers" style="font-weight: 400; padding-left:4px">{{teacher.user.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
 		<p class="describtion">
 			{{course.description}}
 		</p>
 		<div class="bottom-bar">
-			<div class="small-4 columns" ng-class="{'small-6': !course.ended}">
-				<i class="fi-calendar size-21"></i> <small class="truncate" title="{{course.start_date | amDateFormat:'MMMM Do YYYY'}}">{{course.start_date | amDateFormat:'MMMM Do YYYY'}}</small>
+			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom">
+				<i class="fi-calendar size-18"></i><small class="with-small-margin-left" translate>courses.start_date</small>
+				<div class="with-medium-margin-left">
+					<small class="truncate" title="{{course.start_date | amDateFormat:'MMMM Do YYYY'}}">{{course.start_date | amDateFormat:'MMMM Do YYYY'}}</small>
+				</div>
 			</div>
-			<div class="small-4 columns" ng-class="{'small-6': !course.ended}">
-				<i class="fi-clock size-21"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} <span translate>courses.weeks</span></small>
+			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom">
+				<i class="fi-clock size-18"></i><small class="with-small-margin-left" translate>lectures.duration</small>
+				<div class="with-medium-margin-left">
+					<small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
+				</div>
 			</div>
-			<div class="small-4 columns" ng-if="course.ended">
-				<i class="fi-check size-21"></i> <small class="truncate" title="{{'finished' | translate}}"><span translate>finished</span></small>
+			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom left" ng-if="course.ended">
+				<i class="fi-check size-18"></i></i><small class="with-small-margin-left" translate>finished</small>
 			</div>
 		</div>
   	</div>

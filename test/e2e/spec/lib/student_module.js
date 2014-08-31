@@ -133,6 +133,332 @@ exports.save_survey = function(ptor){
 }
 
 //=====================================
+//    submits a invideo quiz
+//=====================================
+
+
+exports.expect_quiz=function(ptor){
+  expect(element(by.buttonText('Check Answer')).isDisplayed()).toEqual(true);
+}
+
+exports.answer_quiz=function(ptor){
+  element(by.buttonText('Check Answer')).click()
+}
+
+exports.check_answer_correct=function(ptor){
+  locator.by_tag(ptor,'notification').then(function(popover){
+    expect(popover.getText()).toContain('Correct');
+  })
+}
+
+exports.check_answer_incorrect=function(ptor){
+  locator.by_tag(ptor,'notification').then(function(popover){
+    expect(popover.getText()).toContain('Incorrect');
+  })
+}
+
+exports.check_answer_thanks=function(ptor){
+  locator.by_tag(ptor,'notification').then(function(popover){
+    expect(popover.getText()).toContain('Thank you for your answer');
+  })
+}
+
+exports.expect_drag_popover_on_hover_incorrect=function(ptor){
+  locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
+    ptor.actions().mouseMove(place[0]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    locator.by_classname(ptor, 'popover-title').then(function(popover){
+      expect(popover.getText()).toContain("Incorrect");
+    })
+
+    ptor.actions().mouseMove(place[1]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    locator.by_classname(ptor, 'popover-title').then(function(popover){
+      expect(popover.getText()).toContain("Incorrect");
+    })
+
+    ptor.actions().mouseMove(place[2]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    locator.by_classname(ptor, 'popover-title').then(function(popover){
+      expect(popover.getText()).toContain("Incorrect");
+    })
+  })
+}
+
+exports.expect_drag_popover_on_hover_correct=function(ptor){
+  locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
+    ptor.actions().mouseMove(place[0]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    locator.by_classname(ptor, 'popover-title').then(function(popover){
+      expect(popover.getText()).toContain("Correct");
+    })
+
+    ptor.actions().mouseMove(place[1]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    locator.by_classname(ptor, 'popover-title').then(function(popover){
+      expect(popover.getText()).toContain("Correct");
+    })
+
+    ptor.actions().mouseMove(place[2]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    locator.by_classname(ptor, 'popover-title').then(function(popover){
+      expect(popover.getText()).toContain("Correct");
+    })
+  })
+}
+
+exports.expect_popover_on_hover_correct=function(ptor, no){
+  locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+    ptor.actions().mouseMove(check_boxes[no-1]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    locator.by_classname(ptor, 'popover-title').then(function(popover){
+      expect(popover.getText()).toContain("Correct");
+    })
+  })
+}
+
+exports.expect_popover_on_hover_incorrect=function(ptor, no){
+  locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+    ptor.actions().mouseMove(check_boxes[no-1]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    locator.by_classname(ptor, 'popover-title').then(function(popover){
+      expect(popover.getText()).toContain("Incorrect");
+    })
+  })
+}
+
+exports.expect_no_popover=function(ptor, no){
+  locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+    ptor.actions().mouseMove(check_boxes[no-1]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    ptor.isElementPresent(by.className('popover-title')).then(function(present){
+          expect(present).toBe(false);
+      })
+  })
+}
+
+//=====================================
+//    answer mcq invideo quiz
+//=====================================
+exports.check_invideo_mcq_no=function(ptor, no){
+  locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+    expect(check_boxes.length).toEqual(no);
+  })
+}
+
+exports.answer_invideo_mcq=function(ptor, choice_no){
+    locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+    check_boxes[choice_no-1].click();
+  })
+}
+
+//=====================================
+//    answer ocq invideo quiz
+//=====================================
+exports.check_invideo_ocq_no=function(ptor, no){
+  locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+    expect(check_boxes.length).toEqual(no);
+  })
+}
+
+exports.answer_invideo_ocq=function(ptor, choice_no){
+    locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+    check_boxes[choice_no-1].click();
+  })
+}
+
+//=====================================
+//    answer drag invideo quiz
+//=====================================
+
+exports.check_text_drag_no=function(ptor, no){
+  locator.by_classname(ptor,'drag-sort').findElements(protractor.By.tagName('li')).then(function(answer){
+    expect(answer.length).toEqual(no);
+  })
+}
+
+exports.check_drags_no=function(ptor, no){
+  locator.by_repeater(ptor,'answer in selected_quiz.online_answers').then(function(check_boxes){
+    expect(check_boxes.length).toEqual(no);
+  })
+}
+
+exports.answer_text_drag_correct=function(ptor){
+  for (var i = 0; i < 3; i++) {
+    locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
+      locator.by_classname(ptor,'drag-sort').findElements(protractor.By.tagName('li')).then(function(answer){
+        answer[0].getText().then(function (text){
+          if(text == 'answer 3'){
+            ptor.actions().dragAndDrop(arrow[0], arrow[2]).perform();
+          }
+          else if(text == 'answer 2'){
+            ptor.actions().dragAndDrop(arrow[0], arrow[1]).perform();
+          }
+        })
+        answer[1].getText().then(function (text){
+          if(text == 'answer 1'){
+            ptor.actions().dragAndDrop(arrow[1], arrow[0]).perform();
+          }
+          else if(text == 'answer 3'){
+            ptor.actions().dragAndDrop(arrow[1], arrow[2]).perform();
+          }
+        })
+        answer[2].getText().then(function (text){
+          if(text == 'answer 1'){
+            ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
+          }
+          else if(text == 'answer 2'){
+            ptor.actions().dragAndDrop(arrow[2], arrow[1]).perform();
+          }
+        })    
+      })
+    })
+  }
+  ptor.sleep(3000);
+}
+
+ exports.answer_text_drag_incorrect=function(ptor){
+  locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
+    locator.by_classname(ptor,'drag-sort').findElements(protractor.By.tagName('li')).then(function(answer){
+      answer[0].getText().then(function (text){
+        if(text == 'answer 1'){
+          ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
+        }
+      })
+      answer[1].getText().then(function (text){
+        if(text == 'answer 1'){
+          ptor.actions().dragAndDrop(arrow[1], arrow[2]).perform();
+        }
+        else if(text == 'answer 3'){
+          ptor.actions().dragAndDrop(arrow[1], arrow[0]).perform();
+        }
+      })
+      answer[2].getText().then(function (text){
+        if(text == 'answer 3'){
+          ptor.actions().dragAndDrop(arrow[0], arrow[2]).perform();
+        }
+        if(text == 'answer 1'){
+          ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
+        }
+      })
+    })
+  })
+  ptor.sleep(3000);
+}
+
+exports.answer_drag_correct=function(ptor){
+  //shuffle answers so all becomes clickable
+  locator.s_by_classname(ptor,'dragged').then(function(answer){
+      ptor.actions().mouseMove(answer[0]).perform();
+      ptor.actions().mouseMove({x: 5, y: 5}).perform();
+      ptor.actions().mouseDown().perform();
+      ptor.actions().mouseMove({x: 100, y: 0}).perform();
+      ptor.actions().mouseUp().perform();
+      
+      ptor.actions().mouseMove(answer[1]).perform();
+      ptor.actions().mouseMove({x: 5, y: 5}).perform();
+      ptor.actions().mouseDown().perform();
+      ptor.actions().mouseMove({x: 200, y: 0}).perform();
+      ptor.actions().mouseUp().perform();
+
+      ptor.actions().mouseMove(answer[2]).perform();
+      ptor.actions().mouseMove({x: 5, y: 5}).perform();
+      ptor.actions().mouseDown().perform();
+      ptor.actions().mouseMove({x: 300, y: 0}).perform();
+      ptor.actions().mouseUp().perform();
+    })
+  locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
+    locator.s_by_classname(ptor,'dragged').then(function(answer){
+      answer[0].getText().then(function (text){
+        ptor.actions().mouseMove(answer[0]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseDown().perform();
+        ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseUp().perform(); 
+      })
+
+      answer[1].getText().then(function (text){
+        ptor.actions().mouseMove(answer[1]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseDown().perform();
+        ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseUp().perform(); 
+      })
+
+      answer[2].getText().then(function (text){
+        ptor.actions().mouseMove(answer[2]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseDown().perform();
+        ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseUp().perform(); 
+      })
+    })
+  })
+    ptor.sleep(3000);
+}
+
+
+exports.answer_drag_incorrect=function(ptor){
+  //shuffle answers so all becomes clickable
+  locator.s_by_classname(ptor,'dragged').then(function(answer){
+      ptor.actions().mouseMove(answer[0]).perform();
+      ptor.actions().mouseMove({x: 5, y: 5}).perform();
+      ptor.actions().mouseDown().perform();
+      ptor.actions().mouseMove({x: 100, y: 0}).perform();
+      ptor.actions().mouseUp().perform();
+      
+      ptor.actions().mouseMove(answer[1]).perform();
+      ptor.actions().mouseMove({x: 5, y: 5}).perform();
+      ptor.actions().mouseDown().perform();
+      ptor.actions().mouseMove({x: 200, y: 0}).perform();
+      ptor.actions().mouseUp().perform();
+
+      ptor.actions().mouseMove(answer[2]).perform();
+      ptor.actions().mouseMove({x: 5, y: 5}).perform();
+      ptor.actions().mouseDown().perform();
+      ptor.actions().mouseMove({x: 300, y: 0}).perform();
+      ptor.actions().mouseUp().perform();
+    })
+  locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
+    locator.s_by_classname(ptor,'dragged').then(function(answer){
+      answer[2].getText().then(function (text){
+        ptor.actions().mouseMove(answer[0]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseDown().perform();
+        ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseUp().perform(); 
+      })
+
+      answer[1].getText().then(function (text){
+        ptor.actions().mouseMove(answer[2]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseDown().perform();
+        ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseUp().perform(); 
+      })
+
+      answer[0].getText().then(function (text){
+        ptor.actions().mouseMove(answer[1]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseDown().perform();
+        ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
+        ptor.actions().mouseMove({x: 5, y: 5}).perform();
+        ptor.actions().mouseUp().perform(); 
+      })
+    })
+  })
+    ptor.sleep(3000);
+}
+
+
+
+
+//=====================================
 //          press confused btn
 //=====================================
 

@@ -22,7 +22,7 @@ var d_q2_y = 130;
 var d_q3_x = 169; //175-6;
 var d_q3_y = 190;
 
-xdescribe("1", function(){
+describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -51,7 +51,7 @@ xdescribe("1", function(){
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_drag_quiz(ptor);
+		teacher.create_invideo_drag_quiz(ptor);
         make_drag_questions_and_check(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y);
 	})
 	//end test
@@ -72,10 +72,10 @@ xdescribe("1", function(){
 	})
 })
 
-xdescribe("2", function(){
+describe("2", function(){
 
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor);
+		// o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -101,8 +101,8 @@ xdescribe("2", function(){
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_drag_quiz(ptor);
-		make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y);
+		teacher.create_invideo_drag_quiz(ptor);
+		teacher.make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y);
 	})
 
 	it('should login a student and check for no of drags ', function(){
@@ -113,24 +113,24 @@ xdescribe("2", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
-		expect_quiz(ptor);
-		check_drags_no(ptor, 3)
+		student.expect_quiz(ptor);
+		student.check_drags_no(ptor, 3)
 	})
 
 	it('should answer drag quiz correctly',function(){
-		answer_drag_correct(ptor)
+		student.answer_drag_correct(ptor)
 	})
 
 	it('should press answer button',function(){
-		answer_quiz(ptor);
+		student.answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
-		check_answer_correct(ptor);
+		student.check_answer_correct(ptor);
 	})
 
 	it('should check every popovers', function(){
-		expect_popover_on_hover_correct(ptor);
+		student.expect_drag_popover_on_hover_correct(ptor);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -152,7 +152,7 @@ xdescribe("2", function(){
 describe("3", function(){
 
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor);
+		// o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -178,8 +178,8 @@ describe("3", function(){
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_drag_quiz(ptor);
-		make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y);
+		teacher.create_invideo_drag_quiz(ptor);
+		teacher.make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y);
 	})
 
 	it('should login a student and check for no of drags ', function(){
@@ -190,24 +190,24 @@ describe("3", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
-		expect_quiz(ptor);
-		check_drags_no(ptor, 3)
+		student.expect_quiz(ptor);
+		student.check_drags_no(ptor, 3)
 	})
 
 	it('should answer drag quiz correctly',function(){
-		answer_drag_incorrect(ptor);
+		student.answer_drag_incorrect(ptor);
 	})
 
 	it('should press answer button',function(){
-		answer_quiz(ptor);
+		student.answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
-		check_answer_incorrect(ptor);
+		student.check_answer_incorrect(ptor);
 	})
 
 	it('should check every popovers', function(){
-		expect_popover_on_hover_incorrect(ptor);
+		student.expect_drag_popover_on_hover_incorrect(ptor);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -229,11 +229,6 @@ describe("3", function(){
 //				test specific functions
 /////////////////////////////////////////////////////////
 
-function create_drag_quiz(ptor){
-	teacher.open_content_new_in_video_ques(ptor);
-	element(by.id("drag")).click()
-	expect(element(by.id("editing")).isDisplayed()).toEqual(true);
-}
 
 function make_drag_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
     var ontop_w = 0;
@@ -273,7 +268,7 @@ function make_drag_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y,
 	// teacher.open_module(ptor, 1);
 	// o_c.press_content_navigator(ptor);
 	youtube.seek(ptor, 21);
-	expect_quiz(ptor);
+	student.expect_quiz(ptor);
 
     var w, h= 0;
     //(width*169)/570
@@ -305,30 +300,7 @@ function make_drag_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y,
 }
 
 
-function make_drag_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
-	locator.by_id(ptor,'ontop').then(function(ontop){
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove(ontop, {x: q1_x, y: q1_y}).perform();
-		ptor.actions().doubleClick().perform();
 
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove(ontop, {x: q2_x, y: q2_y}).perform();
-		ptor.actions().doubleClick().perform();
-
-		ptor.actions().mouseMove(ontop).perform();
-		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
-		ptor.actions().doubleClick().perform();
-
-		ptor.sleep(2000);
-		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
-		// .then(function(btn){
-		// 	btn.click().then(function(){
-		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
-		// 	})
-		// })
-	})
-}
 
 
 function check_drag_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
@@ -363,184 +335,24 @@ function check_drag_questions_coord(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 	})
 }
 
- function check_drags_no(ptor, no){
-	locator.by_repeater(ptor,'answer in selected_quiz.online_answers').then(function(check_boxes){
-		expect(check_boxes.length).toEqual(no);
-	})
-}
-
-function expect_quiz(ptor){
-	expect(element(by.buttonText('Check Answer')).isDisplayed()).toEqual(true);
-}
-
-function answer_quiz(ptor){
-	element(by.buttonText('Check Answer')).click()
-}
-
-function check_answer_correct(ptor){
-	locator.by_tag(ptor,'notification').then(function(popover){
-		expect(popover.getText()).toContain('Correct');
-	})
-}
-
-function check_answer_incorrect(ptor){
-	locator.by_tag(ptor,'notification').then(function(popover){
-		expect(popover.getText()).toContain('Incorrect');
-	})
-}
+// function check_drags_no(ptor, no){
+// 	locator.by_repeater(ptor,'answer in selected_quiz.online_answers').then(function(check_boxes){
+// 		expect(check_boxes.length).toEqual(no);
+// 	})
+// }
 
 
-function answer_drag_correct(ptor){
-	//shuffle answers so all becomes clickable
-	locator.s_by_classname(ptor,'dragged').then(function(answer){
-			ptor.actions().mouseMove(answer[0]).perform();
-			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		 	ptor.actions().mouseDown().perform();
-		 	ptor.actions().mouseMove({x: 100, y: 0}).perform();
-		 	ptor.actions().mouseUp().perform();
-			
-			ptor.actions().mouseMove(answer[1]).perform();
-			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		 	ptor.actions().mouseDown().perform();
-		 	ptor.actions().mouseMove({x: 200, y: 0}).perform();
-		 	ptor.actions().mouseUp().perform();
 
-		 	ptor.actions().mouseMove(answer[2]).perform();
-			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		 	ptor.actions().mouseDown().perform();
-		 	ptor.actions().mouseMove({x: 300, y: 0}).perform();
-		 	ptor.actions().mouseUp().perform();
-		})
-	locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
-		locator.s_by_classname(ptor,'dragged').then(function(answer){
-			answer[0].getText().then(function (text){
-				ptor.actions().mouseMove(answer[0]).perform();
-				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseDown().perform();
-			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseUp().perform();	
-			})
+// function check_answer_correct(ptor){
+// 	locator.by_tag(ptor,'notification').then(function(popover){
+// 		expect(popover.getText()).toContain('Correct');
+// 	})
+// }
 
-			answer[1].getText().then(function (text){
-				ptor.actions().mouseMove(answer[1]).perform();
-				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseDown().perform();
-			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseUp().perform();	
-			})
-
-			answer[2].getText().then(function (text){
-				ptor.actions().mouseMove(answer[2]).perform();
-				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseDown().perform();
-			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseUp().perform();	
-			})
-		})
-	})
-		ptor.sleep(3000);
-}
+// function check_answer_incorrect(ptor){
+// 	locator.by_tag(ptor,'notification').then(function(popover){
+// 		expect(popover.getText()).toContain('Incorrect');
+// 	})
+// }
 
 
-function expect_popover_on_hover_correct(ptor){
-	locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
-		ptor.actions().mouseMove(place[0]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Correct");
-		})
-
-		ptor.actions().mouseMove(place[1]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Correct");
-		})
-
-		ptor.actions().mouseMove(place[2]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Correct");
-		})
-	})
-}
-
-
-function answer_drag_incorrect(ptor){
-	//shuffle answers so all becomes clickable
-	locator.s_by_classname(ptor,'dragged').then(function(answer){
-			ptor.actions().mouseMove(answer[0]).perform();
-			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		 	ptor.actions().mouseDown().perform();
-		 	ptor.actions().mouseMove({x: 100, y: 0}).perform();
-		 	ptor.actions().mouseUp().perform();
-			
-			ptor.actions().mouseMove(answer[1]).perform();
-			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		 	ptor.actions().mouseDown().perform();
-		 	ptor.actions().mouseMove({x: 200, y: 0}).perform();
-		 	ptor.actions().mouseUp().perform();
-
-		 	ptor.actions().mouseMove(answer[2]).perform();
-			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		 	ptor.actions().mouseDown().perform();
-		 	ptor.actions().mouseMove({x: 300, y: 0}).perform();
-		 	ptor.actions().mouseUp().perform();
-		})
-	locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
-		locator.s_by_classname(ptor,'dragged').then(function(answer){
-			answer[2].getText().then(function (text){
-				ptor.actions().mouseMove(answer[0]).perform();
-				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseDown().perform();
-			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseUp().perform();	
-			})
-
-			answer[1].getText().then(function (text){
-				ptor.actions().mouseMove(answer[2]).perform();
-				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseDown().perform();
-			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseUp().perform();	
-			})
-
-			answer[0].getText().then(function (text){
-				ptor.actions().mouseMove(answer[1]).perform();
-				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseDown().perform();
-			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			 	ptor.actions().mouseUp().perform();	
-			})
-		})
-	})
-		ptor.sleep(3000);
-}
-
-
-function expect_popover_on_hover_incorrect(ptor){
-	locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
-		ptor.actions().mouseMove(place[0]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Incorrect");
-		})
-
-		ptor.actions().mouseMove(place[1]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Incorrect");
-		})
-
-		ptor.actions().mouseMove(place[2]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Incorrect");
-		})
-	})
-}

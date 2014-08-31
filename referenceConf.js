@@ -66,8 +66,8 @@ exports.config = {
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',//done
         // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //<x>//done
         
-        'test/e2e/spec/mcq-survey-over-video.spec.js',//<x>
-        // 'test/e2e/spec/ocq-survey-over-video.spec.js',//<x>
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js',//<x>//done
+        'test/e2e/spec/ocq-survey-over-video.spec.js',//<x>//done
 
         // 'test/e2e/spec/student-lectures.spec.js',//<x>
 

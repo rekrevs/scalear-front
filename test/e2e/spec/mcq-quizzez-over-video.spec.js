@@ -46,12 +46,13 @@ describe("1", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should create quiz and check it student side', function(){
 		youtube.seek(ptor, 21);
-		create_mcq_quiz(ptor);
+		teacher.create_invideo_mcq_quiz(ptor);
 		make_mcq_questions_and_check(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
 	})
 	//end test
@@ -95,13 +96,14 @@ describe("2", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_mcq_quiz(ptor);
-		make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
+		teacher.create_invideo_mcq_quiz(ptor);
+		teacher.make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
 	})
 
 	it('should login a student and check for no of mcqs ', function(){
@@ -112,26 +114,26 @@ describe("2", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
-		expect_quiz(ptor);
+		student.expect_quiz(ptor);
 	})
 
 	it('should answer mcq quiz correctly',function(){
-		check_answer_given_answer_order(ptor, 1);
-		check_answer_given_answer_order(ptor, 3);
+		student.answer_invideo_mcq(ptor, 1);
+		student.answer_invideo_mcq(ptor, 3);
 	})
 
 	it('should press answer button',function(){
-		answer_quiz(ptor);
+		student.answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
-		check_answer_correct(ptor);
+		student.check_answer_correct(ptor);
 	})
 
 	it('should check every popovers', function(){
-		expect_popover_on_hover_correct(ptor, 1);
-		expect_popover_on_hover_incorrect(ptor, 2)
-		expect_popover_on_hover_correct(ptor, 3);
+		student.expect_popover_on_hover_correct(ptor, 1);
+		student.expect_popover_on_hover_incorrect(ptor, 2)
+		student.expect_popover_on_hover_correct(ptor, 3);
 	})
 	//end test
 
@@ -175,13 +177,14 @@ describe("3", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "mcq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_mcq_quiz(ptor);
-		make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
+		teacher.create_invideo_mcq_quiz(ptor);
+		teacher.make_mcq_questions(ptor, mcq_q1_x, mcq_q1_y, mcq_q2_x, mcq_q2_y, mcq_q3_x, mcq_q3_y);
 	})
 
 	it('should login a student and check for no of mcqs ', function(){
@@ -192,23 +195,23 @@ describe("3", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
-		expect_quiz(ptor);
+		student.expect_quiz(ptor);
 	})
 
 	it('should answer mcq quiz correctly',function(){
-		check_answer_given_answer_order(ptor, 2);
+		student.answer_invideo_mcq(ptor, 2);
 	})
 
 	it('should press answer button',function(){
-		answer_quiz(ptor);
+		student.answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
-		check_answer_incorrect(ptor);
+		student.check_answer_incorrect(ptor);
 	})
 
 	it('should check every popovers', function(){
-		expect_popover_on_hover_incorrect(ptor, 2);
+		student.expect_popover_on_hover_incorrect(ptor, 2);
 	})
 	//end test
 
@@ -231,11 +234,7 @@ describe("3", function(){
 //				test specific functions
 /////////////////////////////////////////////////////////
 
-function create_mcq_quiz(ptor){
-	teacher.open_content_new_in_video_ques(ptor);
-	element(by.id("mcq")).click()
-	expect(element(by.id("editing")).isDisplayed()).toEqual(true);
-}
+
 
 function make_mcq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, feedback){
 	var ontop_w = 0;
@@ -285,7 +284,7 @@ function make_mcq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, 
 	// teacher.open_module(ptor, 1);
 	// o_c.press_content_navigator(ptor);
 	youtube.seek(ptor, 21);
-	expect_quiz(ptor);
+	student.expect_quiz(ptor);
 
 	var w, h= 0;
 	locator.by_id(ptor,'ontop').then(function(ontop){
@@ -324,102 +323,102 @@ function make_mcq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, 
 }
 
 
-function make_mcq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
-	var ontop_w = 0;
-	var ontop_h = 0;
-	locator.by_id(ptor,'ontop').then(function(ontop){
-		ontop.getSize().then(function(size){
-			ontop_w = size.width;
-			ontop_h = size.height
+// function make_mcq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
+// 	var ontop_w = 0;
+// 	var ontop_h = 0;
+// 	locator.by_id(ptor,'ontop').then(function(ontop){
+// 		ontop.getSize().then(function(size){
+// 			ontop_w = size.width;
+// 			ontop_h = size.height
 
-			ptor.actions().mouseMove(ontop).perform();
-			ptor.actions().mouseMove(ontop,{x: q1_x, y: q1_y}).perform();
-			ptor.actions().doubleClick().perform();
-			ptor.actions().click().perform();
-			locator.by_classname(ptor, 'must_save_check').click();
+// 			ptor.actions().mouseMove(ontop).perform();
+// 			ptor.actions().mouseMove(ontop,{x: q1_x, y: q1_y}).perform();
+// 			ptor.actions().doubleClick().perform();
+// 			ptor.actions().click().perform();
+// 			locator.by_classname(ptor, 'must_save_check').click();
 
-			ptor.actions().mouseMove(ontop).perform();
-			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			ptor.actions().click().perform();
+// 			ptor.actions().mouseMove(ontop).perform();
+// 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+// 			ptor.actions().click().perform();
 
-			ptor.actions().mouseMove(ontop).perform();
-			ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
-			ptor.actions().doubleClick().perform();
+// 			ptor.actions().mouseMove(ontop).perform();
+// 			ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
+// 			ptor.actions().doubleClick().perform();
 
-			ptor.actions().mouseMove(ontop).perform();
-			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-			ptor.actions().click().perform();
+// 			ptor.actions().mouseMove(ontop).perform();
+// 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+// 			ptor.actions().click().perform();
 
-			ptor.actions().mouseMove(ontop).perform();
-			ptor.actions().mouseMove(ontop,{x: q3_x, y: q3_y}).perform();
-			ptor.actions().doubleClick().perform();
-			ptor.actions().click().perform();
-			locator.by_classname(ptor, 'must_save_check').click();
-			ptor.sleep(2000);
-			o_c.scroll(ptor, 1000);
-			element(by.buttonText('Save')).click()
-			// .then(function(btn){
-			// 	btn.click().then(function(){
-			// 		o_c.feedback(ptor, 'Quiz was successfully saved');
-			// 	})
-			// })
-		})
-	})
-}
+// 			ptor.actions().mouseMove(ontop).perform();
+// 			ptor.actions().mouseMove(ontop,{x: q3_x, y: q3_y}).perform();
+// 			ptor.actions().doubleClick().perform();
+// 			ptor.actions().click().perform();
+// 			locator.by_classname(ptor, 'must_save_check').click();
+// 			ptor.sleep(2000);
+// 			o_c.scroll(ptor, 1000);
+// 			element(by.buttonText('Save')).click()
+// 			// .then(function(btn){
+// 			// 	btn.click().then(function(){
+// 			// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+// 			// 	})
+// 			// })
+// 		})
+// 	})
+// }
 
-function check_mcq_no(ptor, no){
-	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
-		expect(check_boxes.length).toEqual(no);
-	})
-}
+// function check_mcq_no(ptor, no){
+// 	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+// 		expect(check_boxes.length).toEqual(no);
+// 	})
+// }
 
-function expect_quiz(ptor){
-	expect(element(by.buttonText('Check Answer')).isDisplayed()).toEqual(true);
- //    element(by.tagName('check_answer')).then(function(check_answer_btn){
-	// })
-}
+// function expect_quiz(ptor){
+// 	expect(element(by.buttonText('Check Answer')).isDisplayed()).toEqual(true);
+//  //    element(by.tagName('check_answer')).then(function(check_answer_btn){
+// 	// })
+// }
 
-function check_answer_given_answer_order(ptor, choice_no){
-	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
-		check_boxes[choice_no-1].click();
-	})
-}
+// function answer_invideo_mcq(ptor, choice_no){
+// 	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+// 		check_boxes[choice_no-1].click();
+// 	})
+// }
 
-function answer_quiz(ptor){
-	element(by.buttonText('Check Answer')).click()
-	// .then(function(answer_btn){
-	// 	answer_btn.click();
-	// })
-}
+// function answer_quiz(ptor){
+// 	element(by.buttonText('Check Answer')).click()
+// 	// .then(function(answer_btn){
+// 	// 	answer_btn.click();
+// 	// })
+// }
 
-function check_answer_correct(ptor){
-	locator.by_tag(ptor,'notification').then(function(popover){
-		expect(popover.getText()).toContain('Correct');
-	})
-}
+// function check_answer_correct(ptor){
+// 	locator.by_tag(ptor,'notification').then(function(popover){
+// 		expect(popover.getText()).toContain('Correct');
+// 	})
+// }
 
-function check_answer_incorrect(ptor){
-	locator.by_tag(ptor,'notification').then(function(popover){
-		expect(popover.getText()).toContain('Incorrect');
-	})
-}
+// function check_answer_incorrect(ptor){
+// 	locator.by_tag(ptor,'notification').then(function(popover){
+// 		expect(popover.getText()).toContain('Incorrect');
+// 	})
+// }
 
-function expect_popover_on_hover_correct(ptor, no){
-	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
-		ptor.actions().mouseMove(check_boxes[no-1]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Correct");
-		})
-	})
-}
+// function expect_popover_on_hover_correct(ptor, no){
+// 	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+// 		ptor.actions().mouseMove(check_boxes[no-1]).perform();
+// 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
+// 		locator.by_classname(ptor, 'popover-title').then(function(popover){
+// 			expect(popover.getText()).toContain("Correct");
+// 		})
+// 	})
+// }
 
-function expect_popover_on_hover_incorrect(ptor, no){
-	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
-		ptor.actions().mouseMove(check_boxes[no-1]).perform();
-		ptor.actions().mouseMove({x: 5, y: 5}).perform();
-		locator.by_classname(ptor, 'popover-title').then(function(popover){
-			expect(popover.getText()).toContain("Incorrect");
-		})
-	})
-}
+// function expect_popover_on_hover_incorrect(ptor, no){
+// 	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+// 		ptor.actions().mouseMove(check_boxes[no-1]).perform();
+// 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
+// 		locator.by_classname(ptor, 'popover-title').then(function(popover){
+// 			expect(popover.getText()).toContain("Incorrect");
+// 		})
+// 	})
+// }

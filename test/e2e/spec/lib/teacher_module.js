@@ -912,6 +912,298 @@ exports.add_survey = function(ptor){
 // }
 
 // //====================================================
+// //            		add invideo quizzes
+// //====================================================
+
+var create_invideo_quiz=function(id){
+	exports.open_content_new_in_video_ques(ptor);
+	element(by.id(id)).click()
+	expect(element(by.id("editing")).isDisplayed()).toEqual(true);
+}
+ 
+exports.create_invideo_drag_text_quiz=function(){
+	create_invideo_quiz("drag_text")
+}
+
+exports.create_invideo_drag_quiz=function(){
+	create_invideo_quiz("drag")
+}
+
+exports.create_invideo_mcq_text_quiz=function(){
+	create_invideo_quiz("mcq_text")
+}
+
+exports.create_invideo_mcq_quiz=function(){
+	create_invideo_quiz("mcq")
+}
+
+exports.create_invideo_mcq_survey=function(){
+	create_invideo_quiz("mcq_sur")
+}
+
+exports.create_invideo_ocq_text_quiz=function(){
+	create_invideo_quiz("ocq_text")
+}
+
+exports.create_invideo_ocq_quiz=function(){
+	create_invideo_quiz("ocq")
+}
+
+exports.create_invideo_ocq_survey=function(){
+	create_invideo_quiz("ocq_sur")
+}
+
+
+exports.make_mcq_text_questions=function(ptor, feedback){
+
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
+		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
+
+		ontop.findElements(protractor.By.name('answer')).then(function(answer){
+			answer[0].sendKeys("answer 1");
+			answer[1].sendKeys("answer 2");
+			answer[2].sendKeys("answer 3");
+		})
+		ontop.findElements(protractor.By.name('mcq')).then(function(check){
+			check[0].click();
+			check[2].click();
+
+		})
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
+	})
+}
+
+exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
+	var ontop_w = 0;
+	var ontop_h = 0;
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ontop.getSize().then(function(size){
+			ontop_w = size.width;
+			ontop_h = size.height
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove(ontop,{x: q1_x, y: q1_y}).perform();
+			ptor.actions().doubleClick().perform();
+			ptor.actions().click().perform();
+			locator.by_classname(ptor, 'must_save_check').click();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			ptor.actions().click().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
+			ptor.actions().doubleClick().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove({x: 5, y: 5}).perform();
+			ptor.actions().click().perform();
+
+			ptor.actions().mouseMove(ontop).perform();
+			ptor.actions().mouseMove(ontop,{x: q3_x, y: q3_y}).perform();
+			ptor.actions().doubleClick().perform();
+			ptor.actions().click().perform();
+			locator.by_classname(ptor, 'must_save_check').click();
+			ptor.sleep(2000);
+			o_c.scroll(ptor, 1000);
+			element(by.buttonText('Save')).click()
+			// .then(function(btn){
+			// 	btn.click().then(function(){
+			// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+			// 	})
+			// })
+		})
+	})
+}
+
+exports.make_mcq_survey_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q1_x, y: q1_y}).perform();
+		ptor.actions().doubleClick().perform();
+		ptor.actions().click().perform();
+		
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		ptor.actions().click().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q2_x, y: q2_y}).perform();
+		ptor.actions().doubleClick().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		ptor.actions().click().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
+		ptor.actions().doubleClick().perform();
+		ptor.actions().click().perform();
+		
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
+	})
+}
+
+exports.make_ocq_text_questions=function(ptor, feedback){
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
+		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
+
+		ontop.findElements(protractor.By.name('answer')).then(function(answer){
+			answer[0].sendKeys("answer 1");
+			answer[1].sendKeys("answer 2");
+			answer[2].sendKeys("answer 3");
+		})
+		ontop.findElements(protractor.By.id('radio_correct')).then(function(check){
+			check[1].click();
+		})
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
+	})
+}
+
+exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop,{x: q1_x, y: q1_y}).perform();
+		ptor.actions().doubleClick().perform();
+		
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		ptor.actions().click().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
+		ptor.actions().doubleClick().perform();
+		ptor.actions().click().perform();
+		locator.by_classname(ptor, 'must_save_check').click();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		ptor.actions().click().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
+		ptor.actions().doubleClick().perform();
+
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
+	})
+}
+
+exports.make_ocq_survey_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q1_x, y: q1_y}).perform();
+		ptor.actions().doubleClick().perform();
+		ptor.actions().click().perform();
+		
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		ptor.actions().click().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q2_x, y: q2_y}).perform();
+		ptor.actions().doubleClick().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove({x: 5, y: 5}).perform();
+		ptor.actions().click().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
+		ptor.actions().doubleClick().perform();
+		ptor.actions().click().perform();
+		
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
+	})
+}
+
+
+exports.make_drag_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q1_x, y: q1_y}).perform();
+		ptor.actions().doubleClick().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q2_x, y: q2_y}).perform();
+		ptor.actions().doubleClick().perform();
+
+		ptor.actions().mouseMove(ontop).perform();
+		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
+		ptor.actions().doubleClick().perform();
+
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
+	})
+}
+
+exports.make_drag_text_questions=function(ptor){
+	locator.by_id(ptor,'ontop').then(function(ontop){
+		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
+		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
+
+		ontop.findElements(protractor.By.name('answer')).then(function(answer){
+			answer[0].sendKeys("answer 1");
+			answer[1].sendKeys("answer 2");
+			answer[2].sendKeys("answer 3");
+		})
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
+	})
+}
+
+
+
+
+// //====================================================
 // //            		share module
 // //====================================================
 exports.share_module=function(ptor, mo_no, share_with){

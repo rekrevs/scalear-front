@@ -669,23 +669,23 @@ exports.open_content_new_online_content = function(ptor){
 }
 
 //https://www.youtube.com/watch?v=SKqBmAHwSkg#t=89
-exports.create_lecture = function(ptor){
-    locator.by_id(ptor, 'content').then(function(btn){
-        btn.click().then(function(){
-        	locator.by_id(ptor, 'new_online_content').then(function(btn2){
-        		btn2.click().then(function(){
-        			locator.by_classname(ptor,'button-group').then(function(modal){
-						modal.findElements(protractor.By.tagName("li")).then(function(btns){
-							btns[0].click().then(function(){
-								o_c.feedback(ptor,"Lecture was successfully created");
-							})
-						})
-  					})
-        		})
-        	})
-        })
-    })
-}
+// exports.create_lecture = function(ptor){
+//     locator.by_id(ptor, 'content').then(function(btn){
+//         btn.click().then(function(){
+//         	locator.by_id(ptor, 'new_online_content').then(function(btn2){
+//         		btn2.click().then(function(){
+//         			locator.by_classname(ptor,'button-group').then(function(modal){
+// 						modal.findElements(protractor.By.tagName("li")).then(function(btns){
+// 							btns[0].click().then(function(){
+// 								o_c.feedback(ptor,"Lecture was successfully created");
+// 							})
+// 						})
+//   					})
+//         		})
+//         	})
+//         })
+//     })
+// }
 
 exports.init_lecture = function(ptor, lec_name, lec_url){
 	element(by.id('name')).click()
@@ -703,41 +703,41 @@ exports.init_lecture = function(ptor, lec_name, lec_url){
 }
 
 
-exports.create_quiz = function(ptor){
-    locator.by_id(ptor, 'content').then(function(btn){
-        btn.click().then(function(){
-        	locator.by_id(ptor, 'new_online_content').then(function(btn2){
-        		btn2.click().then(function(){
-        			locator.by_classname(ptor,'button-group').then(function(modal){
-						modal.findElements(protractor.By.tagName("li")).then(function(btns){
-							btns[1].click().then(function(){
-								o_c.feedback(ptor,"Lecture was successfully created");
-							})
-						})
-  					})
-        		})
-        	})
-        })
-    })
-}
+// exports.create_quiz = function(ptor){
+//     locator.by_id(ptor, 'content').then(function(btn){
+//         btn.click().then(function(){
+//         	locator.by_id(ptor, 'new_online_content').then(function(btn2){
+//         		btn2.click().then(function(){
+//         			locator.by_classname(ptor,'button-group').then(function(modal){
+// 						modal.findElements(protractor.By.tagName("li")).then(function(btns){
+// 							btns[1].click().then(function(){
+// 								o_c.feedback(ptor,"Lecture was successfully created");
+// 							})
+// 						})
+//   					})
+//         		})
+//         	})
+//         })
+//     })
+// }
 
-exports.create_survey = function(ptor){
-    locator.by_id(ptor, 'content').then(function(btn){
-        btn.click().then(function(){
-        	locator.by_id(ptor, 'new_online_content').then(function(btn2){
-        		btn2.click().then(function(){
-        			locator.by_classname(ptor,'button-group').then(function(modal){
-						modal.findElements(protractor.By.tagName("li")).then(function(btns){
-							btns[2].click().then(function(){
-								o_c.feedback(ptor,"Lecture was successfully created");
-							})
-						})
-  					})
-        		})
-        	})
-        })
-    })
-}
+// exports.create_survey = function(ptor){
+//     locator.by_id(ptor, 'content').then(function(btn){
+//         btn.click().then(function(){
+//         	locator.by_id(ptor, 'new_online_content').then(function(btn2){
+//         		btn2.click().then(function(){
+//         			locator.by_classname(ptor,'button-group').then(function(modal){
+// 						modal.findElements(protractor.By.tagName("li")).then(function(btns){
+// 							btns[2].click().then(function(){
+// 								o_c.feedback(ptor,"Lecture was successfully created");
+// 							})
+// 						})
+//   					})
+//         		})
+//         	})
+//         })
+//     })
+// }
 
 /////////////////////////////////////////////////////////////////////
 //						in video questions

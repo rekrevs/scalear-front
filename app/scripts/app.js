@@ -69,7 +69,8 @@ angular.module('scalearAngularApp', [
     // 'mm.foundation.typeahead',
     // 'mm.foundation.topbar',
     'Mac',
-    'dcbImgFallback'
+    'dcbImgFallback',
+    'youtube-embed'
     // 'ngAnimate'
 ])
     .constant('headers', {
@@ -175,7 +176,10 @@ angular.module('scalearAngularApp', [
                             s = 0;
                         }
                     }
-                    
+                    if($rootScope.current_user && $rootScope.current_user.intro_watched == false){
+                        $state.go('confirmed')
+                        s = 1;
+                    }
                     if (!routeClean(to.name) && result == 0 ) // user not logged in trying to access a page that needs authentication.
                     {
                         console.log(to.name)

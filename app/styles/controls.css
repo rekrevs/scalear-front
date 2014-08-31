@@ -108,30 +108,16 @@
 }
 
 .qualityDiv{
-   /* position: relative;
-    
-    top: -30px;
-    left: 95%;
     width: 30px;
-    height: 27px;
-    background:url('/images/quality.png') no-repeat center center;
-    background-size:20px 20px;
-    cursor:pointer;*/
-    position: relative;
-/* z-index: 1000; */
-top: -26px;
-left: 95%;
-width: 25px;
-height: 20px;
-background: url('/images/quality.png') no-repeat center center;
-background-size: 20px 20px;
-float: left;
-cursor: pointer;
+    height: 30px;
+    background: black;
+    background: url('/images/quality.png') no-repeat center center;
+    background-size: 20px 20px;
+    cursor: pointer;
 }
 
 .linkDiv{
-    position: relative;
-    /* z-index: 1000; */
+    /*position: relative;
     top: -26px;
     left: 90%;
     width: 25px;
@@ -140,7 +126,13 @@ cursor: pointer;
     background-size: 20px 20px;
     float: left;
     opacity: 0.9;
-    cursor:pointer;
+    cursor:pointer;*/
+    width: 30px;
+    height: 30px;
+    background: black;
+    background: url('/images/link_icon_dark.png') no-repeat center center;
+    background-size: 20px 20px;
+    cursor: pointer;
 }
 
 .video_link{

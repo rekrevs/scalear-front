@@ -6,15 +6,15 @@
                 {{ind}} {{question.content}}
             </div> 
             <div class="small-4 columns right" ng-if='quiz.quiz_type=="quiz" && question.question_type!="Free Text Question"'>
-                <p ng-if='correct[question.id]==1' class='color-green right' translate='lectures.correct'></p>
-                <p ng-if='correct[question.id]==0' class='color-red right' translate='lectures.incorrect'></p>
+                <p ng-if='correct[question.id]==1' class='color-green correct right' translate='lectures.correct'></p>
+                <p ng-if='correct[question.id]==0' class='color-red incorrect right' translate='lectures.incorrect'></p>
             </div class="small-4 columns right">
 
             <div class="small-4 columns right" ng-if='quiz.quiz_type=="quiz" && question.question_type=="Free Text Question"'>
-                <p ng-if='correct[question.id]==0' class='color-gray right' translate='courses.under_review'></p>
-                <p ng-if='correct[question.id]==1' class='color-red right' translate='lectures.incorrect'></p>
-                <p ng-if='correct[question.id]==2' class='color-orange right' translate='lectures.partial'></p>
-                <p ng-if='correct[question.id]==3' class='color-green right' translate='lectures.correct'></p>
+                <p ng-if='correct[question.id]==0' class='color-gray under_review right' translate='courses.under_review'></p>
+                <p ng-if='correct[question.id]==1' class='color-red incorrect right' translate='lectures.incorrect'></p>
+                <p ng-if='correct[question.id]==2' class='color-orange partial right' translate='lectures.partial'></p>
+                <p ng-if='correct[question.id]==3' class='color-green correct right' translate='lectures.correct'></p>
             </div class="small-4 columns right">
             <div class="small-12 columns">
                 <div class="large-12 column" ng-if='question.question_type == "Free Text Question"'>

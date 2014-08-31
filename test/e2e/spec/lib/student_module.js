@@ -22,20 +22,17 @@ exports.check_item_number = function(ptor, module_num, total_item_no){
     // })
 }
 
+exports.check_timeline_item_number = function(ptor, num){
+  expect(element.all(by.repeater("l in items")).count()).toBe(num)
+}
+
 //=====================================
 //        join course by key
 //=====================================
-exports.join_course = function(ptor, key)
-{
+exports.join_course = function(ptor, key){
     o_c.open_join_course(ptor);
-    locator.by_name(ptor, 'key').then(function(input)
-    {
-        input.sendKeys(key);
-    });
-    element(by.buttonText('Enroll')).then(function(button)
-    {
-        button.click();
-    })
+    element(by.name('key')).sendKeys(key)
+    element(by.buttonText('Enroll')).click()
 }
 
 //=====================================
@@ -55,11 +52,11 @@ exports.check_course_info = function(ptor, course_code, course_name, description
     // ptor.findElement(protractor.By.id('discussion_link')).then(function(disc_link){
     //     expect(disc_link.getText()).toContain(disscussion_link);
     // })
-//    ptor.findElement(protractor.By.id('course_date')).then(function(date){
-//        date.getText().then(function(text){
-//            expect(course_date).toContain(text.split(" ")[1]);
-//        });
-//    })
+   // ptor.findElement(protractor.By.id('course_date')).then(function(date){
+   //     date.getText().then(function(text){
+   //         expect(course_date).toContain(text.split(" ")[1]);
+   //     });
+   // })
     ptor.findElement(protractor.By.id('course_duration')).then(function(duration){
         expect(duration.getText()).toContain(course_duration);
     })
@@ -114,7 +111,7 @@ exports.drag_answer = function(ptor, question_no){
 //======================================================
 
 exports.free_match_answer = function(ptor, question_no, desired_text){
-  element(by.repeater('question in quiz.questions').row(question_no-1)).element(by.tagName('textarea')).sendKeys(desired_text)
+  element(by.repeater('question in quiz.questions').row(question_no-1)).element(by.tagName('textarea')).clear().sendKeys(desired_text)
 
     // locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
     //     rep[question_no-1].findElement(protractor.By.tagName('textarea')).then(function(text_area){

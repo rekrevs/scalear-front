@@ -16,20 +16,21 @@ xdescribe("1", function(){
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 	//test
 	it('should add a module and lecture to create quizzes', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
+		o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		// o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor);			
+		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 		
@@ -44,20 +45,20 @@ xdescribe("1", function(){
 	it('should login a student and expect quiz', function(){
 		o_c.to_student(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		o_c.press_content_navigator(ptor);
+		o_c.open_course(ptor, 1);
+		// o_c.press_content_navigator(ptor);
+		// teacher.open_module(ptor, 1);
+		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
 		expect_quiz(ptor);
 	})
 
 	it('should answer free text quiz', function(){
-		answer_free_text(ptor, "ay kalam");
+		answer_free_text(ptor, "answering free text question");
 	})
 
 	it('should press answer button',function(){
-		answer(ptor);
+		answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
@@ -67,17 +68,16 @@ xdescribe("1", function(){
 	it('should clear the course for deletion', function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-		teacher.delete_empty_module(ptor, 1, o_c.feedback);
+	    o_c.open_course(ptor, 1);
+	    teacher.open_module(ptor, 1);
+	    teacher.delete_item_by_number(ptor, 1, 1);
+	    teacher.delete_empty_module(ptor, 1)
 	})
-	//end test
 
 	it('should delete course', function(){
 		o_c.open_course_list(ptor);
-		teacher.delete_course(ptor, 1);
+	    teacher.delete_course(ptor, 1);
+	    o_c.logout(ptor);
 	})
 })
 //<x>
@@ -89,20 +89,21 @@ xdescribe("2", function(){
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 	//test
 	it('should add a module and lecture to create quizzes', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
+		o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		// o_c.press_content_navigator(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor);			
+		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
@@ -110,26 +111,26 @@ xdescribe("2", function(){
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
 		create_free_text_quiz(ptor);
-		make_match_text_questions(ptor, "menaz");
+		make_match_text_questions(ptor, "match this answer");
 	})
 
 	it('should login a student and expect quiz', function(){
 		o_c.to_student(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		o_c.press_content_navigator(ptor);
+		o_c.open_course(ptor, 1);
+		// o_c.press_content_navigator(ptor);
+		// teacher.open_module(ptor, 1);
+		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
 		expect_quiz(ptor);
 	})
 
 	it('should answer free text quiz', function(){
-		answer_free_text(ptor, "menaz");
+		answer_free_text(ptor, "match this answer");
 	})
 
 	it('should press answer button',function(){
-		answer(ptor);
+		answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
@@ -139,19 +140,17 @@ xdescribe("2", function(){
 	it('should clear the course for deletion', function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-		teacher.delete_empty_module(ptor, 1, o_c.feedback);
+	    o_c.open_course(ptor, 1);
+	    teacher.open_module(ptor, 1);
+	    teacher.delete_item_by_number(ptor, 1, 1);
+	    teacher.delete_empty_module(ptor, 1)
 	})
-	//end test
 
 	it('should delete course', function(){
 		o_c.open_course_list(ptor);
-		teacher.delete_course(ptor, 1);
-	})
-})
+	    teacher.delete_course(ptor, 1);
+	    o_c.logout(ptor);
+	})})
 //<x>
 xdescribe("3", function(){
 	
@@ -161,19 +160,20 @@ xdescribe("3", function(){
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 	//test
 	it('should add a module and lecture to create quizzes', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
+		o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor);			
+		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
@@ -181,26 +181,26 @@ xdescribe("3", function(){
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
 		create_free_text_quiz(ptor);
-		make_match_text_questions(ptor, "menaz");
+		make_match_text_questions(ptor, "match this answer");
 	})
 
 	it('should login a student and expect quiz', function(){
 		o_c.to_student(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		o_c.press_content_navigator(ptor);
+		o_c.open_course(ptor, 1);
+		// o_c.press_content_navigator(ptor);
+		// teacher.open_module(ptor, 1);
+		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
 		expect_quiz(ptor);
 	})
 
 	it('should answer free text quiz', function(){
-		answer_free_text(ptor, "mena");
+		answer_free_text(ptor, "don't match this answer");
 	})
 
 	it('should press answer button',function(){
-		answer(ptor);
+		answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
@@ -210,17 +210,16 @@ xdescribe("3", function(){
 	it('should clear the course for deletion', function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-		teacher.delete_empty_module(ptor, 1, o_c.feedback);
+	    o_c.open_course(ptor, 1);
+	    teacher.open_module(ptor, 1);
+	    teacher.delete_item_by_number(ptor, 1, 1);
+	    teacher.delete_empty_module(ptor, 1)
 	})
-	//end test
 
 	it('should delete course', function(){
 		o_c.open_course_list(ptor);
-		teacher.delete_course(ptor, 1);
+	    teacher.delete_course(ptor, 1);
+	    o_c.logout(ptor);
 	})
 })
 //<x>
@@ -231,19 +230,20 @@ xdescribe("4", function(){
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 	//test
 	it('should add a module and lecture to create quizzes', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
+		o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor);			
+		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
@@ -257,10 +257,10 @@ xdescribe("4", function(){
 	it('should login a student and expect quiz', function(){
 		o_c.to_student(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		o_c.press_content_navigator(ptor);
+		o_c.open_course(ptor, 1);
+		// o_c.press_content_navigator(ptor);
+		// teacher.open_module(ptor, 1);
+		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
 		expect_quiz(ptor);
 	})
@@ -270,7 +270,7 @@ xdescribe("4", function(){
 	})
 
 	it('should press answer button',function(){
-		answer(ptor);
+		answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
@@ -280,17 +280,16 @@ xdescribe("4", function(){
 	it('should clear the course for deletion', function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-		teacher.delete_empty_module(ptor, 1, o_c.feedback);
+	    o_c.open_course(ptor, 1);
+	    teacher.open_module(ptor, 1);
+	    teacher.delete_item_by_number(ptor, 1, 1);
+	    teacher.delete_empty_module(ptor, 1)
 	})
-	//end test
 
 	it('should delete course', function(){
 		o_c.open_course_list(ptor);
-		teacher.delete_course(ptor, 1);
+	    teacher.delete_course(ptor, 1);
+	    o_c.logout(ptor);
 	})
 })
 //<x>
@@ -301,19 +300,20 @@ describe("5", function(){
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 	//test
 	it('should add a module and lecture to create quizzes', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
+		o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
-		teacher.create_lecture(ptor);			
+		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
@@ -327,10 +327,10 @@ describe("5", function(){
 	it('should login a student and expect quiz', function(){
 		o_c.to_student(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		o_c.press_content_navigator(ptor);
+		o_c.open_course(ptor, 1);
+		// o_c.press_content_navigator(ptor);
+		// teacher.open_module(ptor, 1);
+		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
 		expect_quiz(ptor);
 	})
@@ -340,7 +340,7 @@ describe("5", function(){
 	})
 
 	it('should press answer button',function(){
-		answer(ptor);
+		answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
@@ -350,17 +350,16 @@ describe("5", function(){
 	it('should clear the course for deletion', function(){
 		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		o_c.press_content_navigator(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-		teacher.delete_empty_module(ptor, 1, o_c.feedback);
+	    o_c.open_course(ptor, 1);
+	    teacher.open_module(ptor, 1);
+	    teacher.delete_item_by_number(ptor, 1, 1);
+	    teacher.delete_empty_module(ptor, 1)
 	})
-	//end test
 
 	it('should delete course', function(){
 		o_c.open_course_list(ptor);
-		teacher.delete_course(ptor, 1);
+	    teacher.delete_course(ptor, 1);
+	    o_c.logout(ptor);
 	})
 })
 
@@ -374,22 +373,19 @@ describe("5", function(){
 
 function create_free_text_quiz(ptor){
 	teacher.open_content_new_in_video_ques(ptor);
-	locator.by_id(ptor, "free_text").then(function(link){
-		link.click().then(function(){
-			o_c.feedback(ptor, "Quiz was successfully created");
-			expect(locator.by_id(ptor, 'editing').isDisplayed()).toEqual(true);
-		})
-	})
+	element(by.id("free_text")).click()
+	expect(element(by.id("editing")).isDisplayed()).toEqual(true);
 }
 
 function make_free_text_questions(ptor){
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).then(function(btn){
-			btn.click().then(function(){
-				o_c.feedback(ptor, 'Quiz was successfully saved');
-			})
-		})
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
 }
 
 function make_match_text_questions(ptor, text, feedback){
@@ -408,23 +404,20 @@ function make_match_text_questions(ptor, text, feedback){
         })
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).then(function(btn){
-			btn.click().then(function(){
-				o_c.feedback(ptor, 'Quiz was successfully saved');
-			})
-		})
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
 }
 
 function expect_quiz(ptor){
-    element(by.tagName('check_answer')).then(function(check_answer_btn){
-		expect(check_answer_btn.isDisplayed()).toEqual(true);
-	})
+	expect(element(by.buttonText('Check Answer')).isDisplayed()).toEqual(true);
 }
 
-function answer(ptor){
-	element(by.buttonText('Check Answer')).then(function(answer_btn){
-		answer_btn.click();
-	})
+function answer_quiz(ptor){
+	element(by.buttonText('Check Answer')).click()
 }
 
 function check_answer_correct(ptor){

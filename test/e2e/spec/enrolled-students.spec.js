@@ -27,15 +27,15 @@ var password = 'password';
 ////////// searching
 ////////// emailing
 
-xdescribe("1", function(){
+describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor)
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
@@ -52,51 +52,57 @@ xdescribe("1", function(){
 	it('should delete course', function(){
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 })
 
-xdescribe("2", function(){
+describe("2", function(){
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor)
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+		// o_c.press_login(ptor)
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 
 	//test
 	it('should enroll student1', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail1);
+		teacher.get_key_and_enroll(ptor, studentmail1,params.password);
 	})
-	it('should enroll student2', function(){	
+	it('should enroll student2', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);	
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail2);
+		teacher.get_key_and_enroll(ptor, studentmail2,params.password);
 	})
 	it('should enroll student3', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail3);
+		teacher.get_key_and_enroll(ptor, studentmail3,params.password);
 	})
 	it('should enroll student4', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail4);
+		teacher.get_key_and_enroll(ptor, studentmail4,params.password);
 	})
 	it('should enroll student5', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail5);
+		teacher.get_key_and_enroll(ptor, studentmail5,params.password);
 	})
 	it('check for enrolled students', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
 		o_c.open_enrolled(ptor);
@@ -107,32 +113,34 @@ xdescribe("2", function(){
 	it('should delete course', function(){
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 })
 
 describe("3", function(){
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor)
-		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);
+		// o_c.press_login(ptor)
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
 	it('should create course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 
 	//test
 	it('should enroll student1', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail1);
+		teacher.get_key_and_enroll(ptor, studentmail1, params.password);
 	})
 
 	it('check for enrolled students', function(){
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
 		o_c.open_enrolled(ptor);
@@ -140,15 +148,21 @@ describe("3", function(){
 	})
 
 	it('should delete student', function(){
-		delete_enrolled_student(ptor, 1, o_c.feedback);
+		delete_enrolled_student(ptor, 1);
 		check_enrolled_no(ptor, 1);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 
 	it('should check if student is not enrolled', function(){
-		o_c.sign_in(ptor, params.student_mail, params.password, o_c.feedback);
+		o_c.sign_in(ptor, studentmail1, params.password);
 		o_c.open_course_list(ptor)
-		check_if_courses_exist(ptor);
+		check_if_courses_exist(ptor, 0);
+		o_c.logout(ptor);
+	})
+	it('should check if other student is still enrolled', function(){
+		o_c.sign_in(ptor, params.student_mail, params.password);
+		o_c.open_course_list(ptor)
+		check_if_courses_exist(ptor, 1);
 	})
 	//end test
 
@@ -156,78 +170,78 @@ describe("3", function(){
 		o_c.to_teacher(ptor)
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 })
 
 xdescribe("", function(){
 	xit('should sign up 1', function(){
-		o_c.sign_up(ptor, screen_name, fname, lname, studentmail1, univer, biog, webs, password, o_c.feedback);
+		o_c.sign_up(ptor, screen_name, fname, lname, studentmail1, univer, biog, webs, password);
 		ptor.sleep(3000);
-		o_c.confirm_account(ptor, studentmail1, o_c.feedback);
+		o_c.confirm_account(ptor, studentmail1);
 		ptor.sleep(5000);
 		o_c.open_tray(ptor);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 
 	xit('should sign up 2', function(){
-		o_c.sign_up(ptor, screen_name, fname, lname, studentmail2, univer, biog, webs, password, o_c.feedback);
+		o_c.sign_up(ptor, screen_name, fname, lname, studentmail2, univer, biog, webs, password);
 		ptor.sleep(3000);
-		o_c.confirm_account(ptor, studentmail2, o_c.feedback);
+		o_c.confirm_account(ptor, studentmail2);
 		ptor.sleep(5000);
 		o_c.open_tray(ptor);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 
 	xit('should sign up 3', function(){
-		o_c.sign_up(ptor, screen_name, fname, lname, studentmail3, univer, biog, webs, password, o_c.feedback);
-		o_c.confirm_account(ptor, studentmail3, o_c.feedback);
+		o_c.sign_up(ptor, screen_name, fname, lname, studentmail3, univer, biog, webs, password);
+		o_c.confirm_account(ptor, studentmail3);
 		o_c.open_tray(ptor);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 
 	xit('should sign up 4', function(){
-		o_c.sign_up(ptor, screen_name, fname, lname, studentmail4, univer, biog, webs, password, o_c.feedback);
-		o_c.confirm_account(ptor, studentmail4, o_c.feedback);
+		o_c.sign_up(ptor, screen_name, fname, lname, studentmail4, univer, biog, webs, password);
+		o_c.confirm_account(ptor, studentmail4);
 		o_c.open_tray(ptor);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 
 	xit('should sign up 5', function(){
-		o_c.sign_up(ptor, screen_name, fname, lname, studentmail5, univer, biog, webs, password, o_c.feedback);
-		o_c.confirm_account(ptor, studentmail5, o_c.feedback);
+		o_c.sign_up(ptor, screen_name, fname, lname, studentmail5, univer, biog, webs, password);
+		o_c.confirm_account(ptor, studentmail5);
 		o_c.open_tray(ptor);
-		o_c.logout(ptor, o_c.feedback);
+		o_c.logout(ptor);
 	})
 
 	xit('should delete account 1', function(){
-		o_c.sign_in(ptor, studentmail1, params.password, o_c.feedback);
+		o_c.sign_in(ptor, studentmail1, params.password);
 		o_c.open_tray(ptor);
-		o_c.cancel_account(ptor, params.password, o_c.feedback);
+		o_c.cancel_account(ptor, params.password);
 	})
 
 	xit('should delete account 2', function(){
-		o_c.sign_in(ptor, studentmail2, params.password, o_c.feedback);
+		o_c.sign_in(ptor, studentmail2, params.password);
 		o_c.open_tray(ptor);
-		o_c.cancel_account(ptor, params.password, o_c.feedback);
+		o_c.cancel_account(ptor, params.password);
 	})
 
 	xit('should delete account 3', function(){
-		o_c.sign_in(ptor, studentmail3, params.password, o_c.feedback);
+		o_c.sign_in(ptor, studentmail3, params.password);
 		o_c.open_tray(ptor);
-		o_c.cancel_account(ptor, params.password, o_c.feedback);
+		o_c.cancel_account(ptor, params.password);
 	})
 
 	xit('should delete account 4', function(){
-		o_c.sign_in(ptor, studentmail4, params.password, o_c.feedback);
+		o_c.sign_in(ptor, studentmail4, params.password);
 		o_c.open_tray(ptor);
-		o_c.cancel_account(ptor, params.password, o_c.feedback);
+		o_c.cancel_account(ptor, params.password);
 	})
 
 	xit('should delete account 5', function(){		
-		o_c.sign_in(ptor, studentmail5, params.password, o_c.feedback);
+		o_c.sign_in(ptor, studentmail5, params.password);
 		o_c.open_tray(ptor);
-		o_c.cancel_account(ptor, params.password, o_c.feedback);
+		o_c.cancel_account(ptor, params.password);
 	 })
 })
 /////////////////////////////////////////////////////////
@@ -245,7 +259,7 @@ xdescribe("", function(){
 // 		element.getText().then(function(text){
 // 			o_c.home_teacher(ptor);
 // 			o_c.open_tray(ptor);
-// 			o_c.logout(ptor, o_c.feedback);
+// 			o_c.logout(ptor);
 // 			o_c.sign_in(ptor, mail, params.password, o_c.feedback);
 // 			student.join_course(ptor, text, o_c.feedback);
 // 			o_c.home(ptor);
@@ -268,13 +282,18 @@ function check_enrolled_no(ptor, no){
 //====================================================
 //         			delete student
 //====================================================
-function delete_enrolled_student(ptor, no, feedback){
-	var student = element(by.repeater("student in students").row(no-1))
-	student.element(by.className('delete')).click()
-	student.element(by.className('fi-check')).click().then(function(){
-		o_c.feedback(ptor, 'was removed from Course');
-		// o_c.logout(ptor, o_c.feedback);
+function delete_enrolled_student(ptor, no){
+	element.all(by.repeater('student in students')).count().then(function(count){
+		var student_no = count	
+		var student = element(by.repeater("student in students").row(no-1))
+		student.element(by.className('delete')).click()
+		student.element(by.className('fi-check')).click()
+		expect(element.all(by.repeater('student in students')).count()).toEqual(student_no-1)
 	})
+	// .then(function(){
+	// 	o_c.feedback(ptor, 'was removed from Course');
+	// 	// o_c.logout(ptor, o_c.feedback);
+	// })
 	// element.all(by.repeater("student in students")).get(no-1).element(by.className('delete')).click()
 
 	// locator.by_repeater(ptor, "student in students").then(function(students){
@@ -294,8 +313,8 @@ function delete_enrolled_student(ptor, no, feedback){
 //
 //
 
-function check_if_courses_exist(ptor){
-	expect(element.all(by.repeater('course in courses')).count()).toEqual(0)
+function check_if_courses_exist(ptor, val){
+	expect(element.all(by.repeater('course in courses')).count()).toEqual(val*2)
 	// ptor.driver.isElementPresent(by.className('whole')).then(function(present){
  //    	expect(present).toBe(false);
 	// })

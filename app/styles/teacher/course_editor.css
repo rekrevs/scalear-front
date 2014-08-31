@@ -264,10 +264,6 @@ input[type="checkbox"].editable-input.editable-has-buttons{
 	left:93% !important;
 }
 
-controls-teacher > div.popover.fade.ng-scope.left.in > div.popover-content{
-	padding-right: 0
-}
-
 details-date > form > span > ul.f-dropdown{
 	left:0% !important;
 }

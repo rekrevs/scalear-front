@@ -8,11 +8,11 @@
         <div style="position: absolute; margin-top: 220px;" class="show-for-large-up">
             <button type="button" calendar-modal class="button tiny uppercase" ng-click="openCalendar()">Calendar</button>
             <button id="course_content" type="button" class="button tiny uppercase under-the-other " ng-click="goToContent()" ng-disabled="!course.groups.length">Go to Course</button>
-            <div class="large-12 column with-margin-bottom">
+            <div id='course_date' class="large-12 column with-margin-bottom">
                 <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
             </div>
             <div class="large-12 column with-margin-bottom">
-                <i class="fi-clock size-24"></i> <small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
+                <i class="fi-clock size-24"></i> <small id='course_duration' class="truncate">{{course.duration}} <span translate>courses.weeks</span></small>
             </div>
             <div class="large-12 column with-margin-bottom" ng-if="course.discussion_link">
                 <i class="fi-link size-24"></i> <a id="discussion_link" class="truncate" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
@@ -27,11 +27,11 @@
                 <button id="calendar_btn" calendar-modal type="button" class="button tiny uppercase right" ng-click="openCalendar()">Calendar</button>
                 <button id="course_content" type="button" class="button tiny uppercase " ng-click="goToContent()" ng-disabled="!course.groups.length">Go to Course</button>
             </div>
-            <div class="with-margin-bottom">
+            <div id='course_date' class="with-margin-bottom">
                 <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
             </div>
             <div class="with-margin-bottom">
-                <i class="fi-clock size-24"></i> <small id='course_duration' class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
+                <i class="fi-clock size-24"></i> <small id='course_duration' class="truncate">{{course.duration}} <span translate>courses.weeks</span></small>
             </div>
             <div class="with-margin-bottom">
                 <i class="fi-link size-24"></i> <a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>

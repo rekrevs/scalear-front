@@ -76,6 +76,7 @@ var translation_sv=function(){
       Insert_a_question: "Sätt i en fråga i en video",
       copy: "Kopia",
       due: "Förfaller",
+      my: "Mitt",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",

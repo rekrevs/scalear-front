@@ -23,6 +23,7 @@ angular.module('scalearAngularApp')
           'delete_account':{method:'delete', headers:headers},
           'get_user': {method: 'GET', headers: headers, params:{action: 'get_user_angular'}},
           'alterPref':{method: 'POST', params:{action:'alter_pref'}, headers:headers},
+          'updateIntroWatched':{method: 'POST', params:{action: 'update_intro_watched'}, headers:headers}
 
       });
 

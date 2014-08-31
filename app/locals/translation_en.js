@@ -77,6 +77,7 @@ var translation_en=function(){
       Insert_a_question: "Insert a question in a video",
       copy: "Copy",
       due:"Due",
+      my: "My",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",

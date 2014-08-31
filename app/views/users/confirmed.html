@@ -1,8 +1,11 @@
 <center>
-	<div class="small-10">
-		<h2 class="color-blue">Welcome to ScalableLearning!</h2>
-		<div class="flex-video widescreen">
-	    	<iframe width="560" height="315" src="//www.youtube.com/embed/9u8U2NoXC7c?showinfo=0&rel=0&autohide=0&autoplay=1" frameborder="0" allowfullscreen></iframe>
+	<div class="small-8">
+		<h2 class="color-green">Welcome to ScalableLearning!</h2>
+		<div class="flex-video widescreen with-light-border" style="z-index: 1;">
+			<!-- <embed id="intro_video" src="http://www.youtube.com/v/9u8U2NoXC7c?version=3&enablejsapi=1&showinfo=0&rel=0&autohide=0&theme=light" frameborder="0" allowfullscreen></embed> -->
+			<youtube-video id="intro_video" video-id="video_id" player-vars="player_params"></youtube-video>
 		</div>
 	</div>
+
+	<button type="button" class="button success" ng-click="watchedIntro()" ng-disabled="!can_proceed"><span class="with-small-margin-left" translate>enroll.go_to</span><span class="with-small-margin-left" translate>my</span><span class="with-small-margin-left" translate>dashboard</span></button>
 </center>

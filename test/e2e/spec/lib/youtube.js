@@ -77,9 +77,10 @@ exports.seek = function(ptor, percent){
 	var cw, ch;
 	progress = element(by.className('progressBar'))
 	ptor.wait(function() {
-        return progress.isDisplayed().then(function(disp) {
+        return element(by.className('progressBar')).isPresent().then(function(disp) {
+        	console.log("waiting")
             return disp;
-        });
+        }, 120000);
     });
 	progress.getSize().then(function(size){
 		pw = size.width;

@@ -22,7 +22,7 @@ var discussion_link_shrt_ch = 'www.discu';
 var course_date = new Date();
 var date = course_date.toString();
 
-describe("teacher create course check info", function(){
+xdescribe("teacher create course check info", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -30,28 +30,29 @@ describe("teacher create course check info", function(){
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
-		ptor.sleep(5000);	
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+		// ptor.sleep(5000);	
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 	//test
 	it('should log out from teacher then login as a student', function(){
-		o_c.to_student(ptor);
+		o_c.sign_in(ptor, params.student_mail, params.password);
 	})
 
 	it('should open info and test course information', function(){
-		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
+		o_c.open_course_list(ptor)
+		o_c.open_course(ptor, 1);
 		student.check_course_info(ptor, params.short_name, params.course_name, params.course_description, params.prerequisites, Date(), params.course_duration);
 	})
 	//end test
 	it('should delete course', function(){
-		o_c.to_teacher(ptor);
+		o_c.to_teacher(ptor)
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
+		o_c.logout(ptor);
 	})
 })
 
@@ -63,18 +64,20 @@ describe("teacher check the ability to change course info", function(){
 	})
 
 	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
-		ptor.sleep(5000);	
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+		// ptor.sleep(5000);	
 	})
 
 	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 	//test
 	it('should go to info page and change info', function(){
-		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0);
-		change_course_info(ptor,course_description_ch, prerequisites_ch, short_name_ch, course_name_ch, discussion_link_ch, course_duration_ch, o_c.feedback);
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.open_course_list(ptor)
+		o_c.open_course(ptor, 1);
+		o_c.open_course_info(ptor);
+		teacher.change_course_info(ptor,course_description_ch, prerequisites_ch, short_name_ch, course_name_ch, discussion_link_ch, course_duration_ch);
 	})
 
 	it('should log out from teacher then login as a student', function(){
@@ -82,100 +85,15 @@ describe("teacher check the ability to change course info", function(){
 	})
 
 	it('should open info and test course information', function(){
-		o_c.open_course_list(ptor);
-		o_c.open_course_whole(ptor, 0)
-		student.check_course_info(ptor, short_name_ch, course_name_ch, course_description_ch, prerequisites_ch, discussion_link_shrt_ch, date, course_duration_ch)
+		o_c.open_course_list(ptor)
+		o_c.open_course(ptor, 1);
+		student.check_course_info(ptor, short_name_ch, course_name_ch, course_description_ch, prerequisites_ch, date, course_duration_ch)
 	})
 	//end test
 	it('should delete course', function(){
-		o_c.to_teacher(ptor);
+		o_c.to_teacher(ptor)
 		o_c.open_course_list(ptor);
 		teacher.delete_course(ptor, 1);
+		o_c.logout(ptor);
 	})
 })
-
-//======================================================
-//
-//======================================================
-
-
-function change_course_info(ptor, course_description, prerequisites, short_name, course_name, discussion_link, course_duration, feedback){
-    locator.by_id(ptor, 'desc').then(function(desc){
-		desc.click();
-        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
-			txt_area.clear();
-			txt_area.sendKeys(course_description);
-		})
-        locator.by_classname(ptor, 'check').then(function(submit_btn){
-			submit_btn.click().then(function(){
-                feedback(ptor,'Course was successfully updated');
-            });
-		})
-	})
-
-    locator.by_id(ptor, 'preq').then(function(prereq){
-		prereq.click();
-        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
-			txt_area.clear();
-			txt_area.sendKeys(prerequisites);
-		})
-        locator.by_classname(ptor, 'check').then(function(submit_btn){
-			submit_btn.click().then(function(){
-                feedback(ptor,'Course was successfully updated');
-            });
-		})
-	})
-
-    locator.by_id(ptor, 'short_name').then(function(shrt_nm){
-		shrt_nm.click();
-        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
-			txt_area.clear();
-			txt_area.sendKeys(short_name);
-		})
-        locator.by_classname(ptor, 'check').then(function(submit_btn){
-			submit_btn.click().then(function(){
-                feedback(ptor,'Course was successfully updated');
-            });
-		})
-	})
-
-    locator.by_id(ptor, 'course_name').then(function(crs_nm){
-		crs_nm.click();
-        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
-			txt_area.clear();
-			txt_area.sendKeys(course_name);
-		})
-        locator.by_classname(ptor, 'check').then(function(submit_btn){
-			submit_btn.click().then(function(){
-                feedback(ptor,'Course was successfully updated');
-            });
-		})
-	})
-    
- //    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/span/ul[2]/details-link/a').then(function(disc_lnk){
-	// 	disc_lnk.click();
- //        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
-	// 		txt_area.clear();
-	// 		txt_area.sendKeys(discussion_link);
-	// 	})
- //        locator.by_classname(ptor, 'check').then(function(submit_btn){
-	// 		submit_btn.click().then(function(){
- //                feedback(ptor,'Course was successfully updated');
- //            });
-	// 	})
-	// })
-
-    locator.by_id(ptor, 'duration').then(function(crs_dur){
-		crs_dur.click();
-        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
-			txt_area.clear();
-			txt_area.sendKeys(course_duration);
-		})
-        locator.by_classname(ptor, 'check').then(function(submit_btn){
-			submit_btn.click().then(function(){
-                feedback(ptor,'Course was successfully updated');
-            });
-		})
-	})
-	ptor.sleep(3000);
-}

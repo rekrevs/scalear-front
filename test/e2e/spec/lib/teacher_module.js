@@ -987,3 +987,93 @@ exports.check_announcment_with_date=function(ptor, ann_no, ann_date){
       expect(date[ann_no-1].getText()).toContain(ann_date);
     });
 }
+
+//====================================================
+//               Course Information
+//====================================================
+
+exports.change_course_info=function(ptor, course_description, prerequisites, short_name, course_name, discussion_link, course_duration){
+    locator.by_id(ptor, 'desc').then(function(desc){
+		desc.click();
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
+			txt_area.clear();
+			txt_area.sendKeys(course_description);
+		})
+        locator.by_classname(ptor, 'check').then(function(submit_btn){
+			submit_btn.click()
+			// .then(function(){
+   //              feedback(ptor,'Course was successfully updated');
+   //          });
+		})
+	})
+
+    locator.by_id(ptor, 'preq').then(function(prereq){
+		prereq.click();
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
+			txt_area.clear();
+			txt_area.sendKeys(prerequisites);
+		})
+        locator.by_classname(ptor, 'check').then(function(submit_btn){
+			submit_btn.click()
+			// .then(function(){
+   //              feedback(ptor,'Course was successfully updated');
+   //          });
+		})
+	})
+
+    locator.by_id(ptor, 'short_name').then(function(shrt_nm){
+		shrt_nm.click();
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
+			txt_area.clear();
+			txt_area.sendKeys(short_name);
+		})
+        locator.by_classname(ptor, 'check').then(function(submit_btn){
+			submit_btn.click()
+			// .then(function(){
+   //              feedback(ptor,'Course was successfully updated');
+   //          });
+		})
+	})
+
+    locator.by_id(ptor, 'course_name').then(function(crs_nm){
+		crs_nm.click();
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
+			txt_area.clear();
+			txt_area.sendKeys(course_name);
+		})
+        locator.by_classname(ptor, 'check').then(function(submit_btn){
+			submit_btn.click()
+			// .then(function(){
+   //              feedback(ptor,'Course was successfully updated');
+   //          });
+		})
+	})
+    
+ //    locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/ui-view/div[1]/span/ul[2]/details-link/a').then(function(disc_lnk){
+	// 	disc_lnk.click();
+ //        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
+	// 		txt_area.clear();
+	// 		txt_area.sendKeys(discussion_link);
+	// 	})
+ //        locator.by_classname(ptor, 'check').then(function(submit_btn){
+	// 		submit_btn.click().then(function(){
+ //                feedback(ptor,'Course was successfully updated');
+ //            });
+	// 	})
+	// })
+
+    locator.by_id(ptor, 'duration').then(function(crs_dur){
+		crs_dur.click();
+        locator.by_classname(ptor, 'editable-has-buttons').then(function(txt_area){
+			txt_area.clear();
+			txt_area.sendKeys(course_duration);
+		})
+        locator.by_classname(ptor, 'check').then(function(submit_btn){
+			submit_btn.click()
+			// .then(function(){
+   //              feedback(ptor,'Course was successfully updated');
+   //          });
+		})
+	})
+	ptor.sleep(3000);
+}

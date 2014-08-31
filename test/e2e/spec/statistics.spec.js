@@ -102,7 +102,7 @@ function add_student_then_check(ptor){
         expect(text).toEqual(String(students_no))
     })
     o_c.logout(ptor);
-    o_c.sign_in(ptor, params.teacher_mail, params.password);
+    // o_c.sign_in(ptor, params.teacher_mail, params.password);
 }
 
 function add_teacher_then_check(ptor){

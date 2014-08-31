@@ -22,6 +22,12 @@ angular.module('scalearAngularApp')
   	}
   	$scope.$on('youtube.player.ended', function ($event, player) {
 	    $scope.can_proceed = true;
+      $interval(function(){
+        $scope.remaining--;
+        if($scope.remaining == 0){
+          $scope.watchedIntro();
+        }
+      }, 1000, 5)
   	});
   	$scope.watchedIntro = function(){
 		User.updateIntroWatched({
@@ -29,8 +35,11 @@ angular.module('scalearAngularApp')
 		},{
 			intro_watched: true
 		}, function(){
+      console.log('SUCCEEDED')
 			$rootScope.current_user.intro_watched = true;
 			$state.go('dashboard');
-		}, function(){});
+		}, function(){
+      console.log('failed')
+    });
   	}
   }]);

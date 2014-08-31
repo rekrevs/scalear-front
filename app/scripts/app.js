@@ -176,7 +176,7 @@ angular.module('scalearAngularApp', [
                             s = 0;
                         }
                     }
-                    if($rootScope.current_user.intro_watched == false){
+                    if($rootScope.current_user && $rootScope.current_user.intro_watched == false){
                         $state.go('confirmed')
                         s = 1;
                     }

@@ -849,6 +849,16 @@ exports.open_settings_enrolled = function(ptor){
     })
 }
 
+exports.open_settings_add_students = function(ptor){
+    locator.by_id(ptor, 'settings').then(function(btn){
+        btn.click().then(function(){
+        	locator.by_id(ptor, 'add_students').then(function(btn2){
+        		btn2.click();
+        	})
+        })
+    })
+}
+
 // //====================================================
 // //            		add lecture
 // //====================================================

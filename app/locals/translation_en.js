@@ -78,6 +78,7 @@ var translation_en=function(){
       copy: "Copy",
       due:"Due",
       my: "My",
+      redirect_courselist: "Redirecting to your course list in ",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",

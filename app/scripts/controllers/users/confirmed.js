@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
 		}, function(){
       console.log('SUCCEEDED')
 			$rootScope.current_user.intro_watched = true;
-			$state.go('dashboard');
+			$state.go('course_list');
 		}, function(){
       console.log('failed')
     });

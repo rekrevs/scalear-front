@@ -164,7 +164,7 @@
         /*z-index: 1000;*/
        /* top: 31px;*/
         top: 31px;
-        left: 95%;
+        /*left: 95%;*/
        /* left: 108%;
         top: 94%;*/
         margin-top: 5px;
@@ -178,14 +178,15 @@
         
         .progress_controls{
             position: relative;
+            display: inline-block;
             top: -7px;
-            left: 95%;
-            margin-top: 5px;
+            /*left: 95%;*/
+            float: right;
+            margin-top: 35px;
         }
         .check-answer{
             float: right;
             margin-right: 220px;
-            margin-top: -31px;
             min-width: 100px;
             position: initial;
         }
@@ -315,6 +316,7 @@
         }
         #main-video-container{
             float: none !important;
+            margin-bottom: 40px;
         }
         #student-accordion{
             width: 100%;

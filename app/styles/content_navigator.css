@@ -62,7 +62,7 @@ li{
 }
 .accordion {
   margin-bottom: 5px;
-  margin-top: 5px;
+  /*margin-top: 5px;*/
 }
 
 .accordion-group > a {

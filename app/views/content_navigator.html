@@ -33,7 +33,7 @@
 						</accordion-heading>
 						<ul ng-repeat="link in links">
 							<div  style="padding:0 4px;">
-								<a bo-href="link.url" target="_blank"  class="truncate-70 show-inline" bo-text="link.name"></a>
+								<a class="with-margin-left" bo-href="link.url" target="_blank"  class="truncate-70 show-inline" bo-text="link.name"></a>
 							</div>
 						</ul>
 					</accordion-group>
@@ -47,12 +47,12 @@
 						</accordion-heading>
 						<ul ng-click="showItemCourseware(item)" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items">
 							<div>
-								<div class="truncate-70 show-inline valign-middle" bo-text="item.name"></div>
+								<div class="truncate-70 with-margin-left show-inline valign-middle" bo-text="item.name"></div>
 								<i class="fi-check right with-tiny-margin-left color-green size-16 valign-middle" ng-show="item.is_done"></i>
 							</div>
 						</ul>
 						<ul bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'">
-							<i style="margin-left:10px"><a bo-href="link.url" target="_blank" bo-text="link.name"></a></i>
+							<a class="with-margin-left dark-text" bo-href="link.url" target="_blank" bo-text="link.name"></a>
 						</ul>
 					</accordion-group>
 				</accordion>

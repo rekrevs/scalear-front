@@ -413,9 +413,11 @@ angular.module('scalearAngularApp')
 					"<div ng-switch-when='FREE TEXT QUESTION' ><html_freetext ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='MCQ' ><html_mcq  ng-repeat='answer in quiz.answers' /></div>"+
 					"<div ng-switch-when='OCQ' ><html_ocq  ng-repeat='answer in quiz.answers' /></div>"+	
-					"<ul  ng-switch-when='DRAG' class='no-padding-top' ui-sortable ng-model='quiz.answers' >"+
+					"<ul  ng-switch-when='DRAG' class='no-padding-top'>"+
 						"<h5 class='no-margin-top'><small translate>answer.random</small></h5>"+
-						"<html_drag ng-repeat='answer in quiz.answers' />"+
+						"<span ui-sortable ng-model='quiz.answers'>"+
+							"<html_drag ng-repeat='answer in quiz.answers' />"+
+						"</span>"+
 					"</ul>"+
 				"</div>",
 		link:function(scope){
@@ -447,6 +449,15 @@ angular.module('scalearAngularApp')
 			scope.$watch('quiz.answers', function(){
 				scope.updateValues();	
 			},true)
+			scope.answers_sortable_options={
+		 		axis: 'y',
+				dropOnEmpty: false,
+				handle: '.drag-item',
+				cursor: 'crosshair',
+				items: '.drag-answer',
+				opacity: 0.4,
+				scroll: true
+		 	}
 			
 		}
 	};
@@ -536,7 +547,7 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		replace:true,
-		template:"<li class='ui-state-default'>"+	
+		template:"<li class='drag-answer ui-state-default'>"+	
 					"<ng-form name='aform'>"+					
 						"<div class='row' style='padding: 5px;'>"+
 							"<div class='small-1 columns'>"+

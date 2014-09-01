@@ -250,8 +250,12 @@ angular.module('scalearAngularApp')
 		replace:true,
 		template:"<li class='ui-state-default'>"+
 					"<ng-form name='aform'>"+
-							"<span class='ui-icon ui-icon-arrowthick-2-n-s handle'></span>"+
-							"{{answer}}"+
+              "<div class='row' style='padding: 5px;'>"+
+  							"<div class='small-1 columns no-padding-right'>"+
+                  "<img class='handle looks-like-a-hook' src='images/move2.png' />"+
+                "</div>"+
+  							"<div class='small-11 columns no-padding-left'><h6>{{answer}}</h6></div>"+
+              "</div>"+
 					"</ng-form>"+
 				"</li>"				 
 	}

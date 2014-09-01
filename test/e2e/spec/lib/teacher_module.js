@@ -575,19 +575,25 @@ exports.change_attempt_num=function(num){
 //				rename a module
 //===================================================
 exports.rename_module = function(ptor, name){
-	locator.by_classname(ptor, 'whole-middle').then(function(details){
-		details.findElement(protractor.By.tagName('details-text')).click().then(function(){
-			locator.by_classname(ptor, 'editable-input').then(function(field){
-				field.sendKeys(name).then(function(){
-					locator.by_classname(ptor, 'icon-ok').then(function(confirm_button){
-						confirm_button.click().then(function(){
-							o_c.feedback(ptor, 'successfully updated')
-						})
-					})
-				})
-			})
-		})
+	element(by.id("module")).element(by.tagName("details-text")).click().then(function(){
+		element(by.className('editable-input')).sendKeys(name)
+		element(by.className('check')).click()
 	})
+
+	// locator.by_classname(ptor, 'whole-middle').then(function(details){
+	// 	details.findElement(protractor.By.tagName('details-text')).click().then(function(){
+	// 		locator.by_classname(ptor, 'editable-input').then(function(field){
+	// 			field.sendKeys(name).then(function(){
+	// 				locator.by_classname(ptor, 'fi-check').then(function(confirm_button){
+	// 					confirm_button.click()
+	// 					// .then(function(){
+	// 					// 	o_c.feedback(ptor, 'successfully updated')
+	// 					// })
+	// 				})
+	// 			})
+	// 		})
+	// 	})
+	// })
 }
 
 //====================================================
@@ -953,8 +959,28 @@ exports.create_invideo_ocq_survey=function(){
 	create_invideo_quiz("ocq_sur")
 }
 
+exports.create_invideo_free_text_quiz=function(){
+	create_invideo_quiz("free_text")
+}
 
-exports.make_mcq_text_questions=function(ptor, feedback){
+exports.exit_invideo_quiz = function(){
+	element(by.buttonText("Exit")).click()
+}
+
+exports.cancel_invideo_quiz = function(){
+	element(by.buttonText('Cancel')).click()
+}
+
+exports.rename_invideo_quiz = function(ptor, quiz_no, name){
+	var editable = element(by.repeater('quiz in quiz_list').row(quiz_no-1)).element(by.tagName('editable_text'))
+	var pencil = element(by.repeater('quiz in quiz_list').row(quiz_no-1)).element(by.className('fi-pencil'))
+	ptor.actions().mouseMove(editable).perform()
+	pencil.click()
+	element(by.className('editable-input')).sendKeys(name)
+	editable.element(by.className('fi-check')).click()
+}
+
+exports.make_mcq_text_questions=function(ptor){
 
 	locator.by_id(ptor,'ontop').then(function(ontop){
 		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
@@ -1059,7 +1085,7 @@ exports.make_mcq_survey_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q
 	})
 }
 
-exports.make_ocq_text_questions=function(ptor, feedback){
+exports.make_ocq_text_questions=function(ptor){
 	locator.by_id(ptor,'ontop').then(function(ontop){
 		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
 		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
@@ -1198,6 +1224,41 @@ exports.make_drag_text_questions=function(ptor){
 		// 	})
 		// })
 	})
+}
+
+exports.make_free_text_questions=function(ptor){
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
+}
+
+exports.make_match_text_questions=function(ptor, text){
+		locator.by_id(ptor,'ontop').findElement(protractor.By.tagName('select')).then(function(ontop){
+            ontop.click().then(function(){
+                ptor.sleep(2000);
+                locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('option')).then(function(options){
+                    options[1].click().then(function(){
+                        ptor.sleep(2000);
+                        locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(ins){
+                            ins[1].sendKeys(text);
+                        })
+                    })
+                })
+            })
+        })
+		ptor.sleep(2000);
+		o_c.scroll(ptor, 1000);
+		element(by.buttonText('Save')).click()
+		// .then(function(btn){
+		// 	btn.click().then(function(){
+		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
+		// 	})
+		// })
 }
 
 

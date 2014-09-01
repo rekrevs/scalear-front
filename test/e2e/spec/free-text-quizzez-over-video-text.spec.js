@@ -8,7 +8,7 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 //<x>
-xdescribe("1", function(){
+describe("1", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -32,14 +32,15 @@ xdescribe("1", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 		
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_free_text_quiz(ptor);
-		make_free_text_questions(ptor);	
+		teacher.create_invideo_free_text_quiz(ptor);
+		teacher.make_free_text_questions(ptor);	
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -50,19 +51,19 @@ xdescribe("1", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
-		expect_quiz(ptor);
+		student.expect_quiz(ptor);
 	})
 
 	it('should answer free text quiz', function(){
-		answer_free_text(ptor, "answering free text question");
+		student.answer_free_text(ptor, "answering free text question");
 	})
 
 	it('should press answer button',function(){
-		answer_quiz(ptor);
+		student.answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
-		check_free_answer(ptor);
+		student.check_answer_thanks(ptor);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -81,10 +82,10 @@ xdescribe("1", function(){
 	})
 })
 //<x>
-xdescribe("2", function(){
+describe("2", function(){
 
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor);
+		// o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -105,13 +106,14 @@ xdescribe("2", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_free_text_quiz(ptor);
-		make_match_text_questions(ptor, "match this answer");
+		teacher.create_invideo_free_text_quiz(ptor);
+		teacher.make_match_text_questions(ptor, "match this answer");
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -122,19 +124,19 @@ xdescribe("2", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
-		expect_quiz(ptor);
+		student.expect_quiz(ptor);
 	})
 
 	it('should answer free text quiz', function(){
-		answer_free_text(ptor, "match this answer");
+		student.answer_free_text(ptor, "match this answer");
 	})
 
 	it('should press answer button',function(){
-		answer_quiz(ptor);
+		student.answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
-		check_answer_correct(ptor);
+		student.check_answer_correct(ptor);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -152,10 +154,10 @@ xdescribe("2", function(){
 	    o_c.logout(ptor);
 	})})
 //<x>
-xdescribe("3", function(){
+describe("3", function(){
 	
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor);
+		// o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -175,13 +177,14 @@ xdescribe("3", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_free_text_quiz(ptor);
-		make_match_text_questions(ptor, "match this answer");
+		teacher.create_invideo_free_text_quiz(ptor);
+		teacher.make_match_text_questions(ptor, "match this answer");
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -192,19 +195,19 @@ xdescribe("3", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
-		expect_quiz(ptor);
+		student.expect_quiz(ptor);
 	})
 
 	it('should answer free text quiz', function(){
-		answer_free_text(ptor, "don't match this answer");
+		student.answer_free_text(ptor, "don't match this answer");
 	})
 
 	it('should press answer button',function(){
-		answer_quiz(ptor);
+		student.answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
-		check_answer_incorrect(ptor);
+		student.check_answer_incorrect(ptor);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -223,9 +226,9 @@ xdescribe("3", function(){
 	})
 })
 //<x>
-xdescribe("4", function(){
+describe("4", function(){
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor);
+		// o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -245,13 +248,14 @@ xdescribe("4", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_free_text_quiz(ptor);
-		make_match_text_questions(ptor, "/^[a-z0-9_-]{3,16}$/");
+		teacher.create_invideo_free_text_quiz(ptor);
+		teacher.make_match_text_questions(ptor, "/^[a-z0-9_-]{3,16}$/");
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -262,19 +266,19 @@ xdescribe("4", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
-		expect_quiz(ptor);
+		student.expect_quiz(ptor);
 	})
 
 	it('should answer free text quiz', function(){
-		answer_free_text(ptor, "my-us3r_n4m3");
+		student.answer_free_text(ptor, "my-us3r_n4m3");
 	})
 
 	it('should press answer button',function(){
-		answer_quiz(ptor);
+		student.answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
-		check_answer_correct(ptor);
+		student.check_answer_correct(ptor);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -295,7 +299,7 @@ xdescribe("4", function(){
 //<x>
 describe("5", function(){
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor);
+		// o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -315,13 +319,14 @@ describe("5", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "free_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
-		create_free_text_quiz(ptor);
-		make_match_text_questions(ptor, "/^[a-z0-9_-]{3,16}$/");
+		teacher.create_invideo_free_text_quiz(ptor);
+		teacher.make_match_text_questions(ptor, "/^[a-z0-9_-]{3,16}$/");
 	})
 
 	it('should login a student and expect quiz', function(){
@@ -332,19 +337,19 @@ describe("5", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 21);
-		expect_quiz(ptor);
+		student.expect_quiz(ptor);
 	})
 
 	it('should answer free text quiz', function(){
-		answer_free_text(ptor, "th1s1s-wayt00_l0ngt0beausername");
+		student.answer_free_text(ptor, "th1s1s-wayt00_l0ngt0beausername");
 	})
 
 	it('should press answer button',function(){
-		answer_quiz(ptor);
+		student.answer_quiz(ptor);
 	})
 
 	it('should check if the answer is correct',function(){
-		check_answer_incorrect(ptor);
+		student.check_answer_incorrect(ptor);
 	})
 
 	it('should clear the course for deletion', function(){
@@ -371,75 +376,35 @@ describe("5", function(){
 //====================================================
 //====================================================
 
-function create_free_text_quiz(ptor){
-	teacher.open_content_new_in_video_ques(ptor);
-	element(by.id("free_text")).click()
-	expect(element(by.id("editing")).isDisplayed()).toEqual(true);
-}
 
-function make_free_text_questions(ptor){
-		ptor.sleep(2000);
-		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
-		// .then(function(btn){
-		// 	btn.click().then(function(){
-		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
-		// 	})
-		// })
-}
 
-function make_match_text_questions(ptor, text, feedback){
-		locator.by_id(ptor,'ontop').findElement(protractor.By.tagName('select')).then(function(ontop){
-            ontop.click().then(function(){
-                ptor.sleep(2000);
-                locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('option')).then(function(options){
-                    options[1].click().then(function(){
-                        ptor.sleep(2000);
-                        locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(ins){
-                            ins[1].sendKeys(text);
-                        })
-                    })
-                })
-            })
-        })
-		ptor.sleep(2000);
-		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
-		// .then(function(btn){
-		// 	btn.click().then(function(){
-		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
-		// 	})
-		// })
-}
 
-function expect_quiz(ptor){
-	expect(element(by.buttonText('Check Answer')).isDisplayed()).toEqual(true);
-}
 
-function answer_quiz(ptor){
-	element(by.buttonText('Check Answer')).click()
-}
 
-function check_answer_correct(ptor){
-	locator.by_tag(ptor,'notification').then(function(popover){
-		expect(popover.getText()).toContain('Correct');
-	})
-}
 
-function check_answer_incorrect(ptor){
-	locator.by_tag(ptor,'notification').then(function(popover){
-		expect(popover.getText()).toContain('Incorrect');
-	})
-}
+// function expect_quiz(ptor){
+// 	expect(element(by.buttonText('Check Answer')).isDisplayed()).toEqual(true);
+// }
 
-function check_free_answer(ptor){
-	locator.by_tag(ptor,'notification').then(function(popover){
-		expect(popover.getText()).toContain('Thank you for your answer');
-	})
-}
+// function answer_quiz(ptor){
+// 	element(by.buttonText('Check Answer')).click()
+// }
 
-function answer_free_text(ptor, text){
-	locator.by_id(ptor,'ontop').findElement(protractor.By.tagName('textarea')).then(function(txt){
-		txt.sendKeys(text);
-	})
-}
+// function check_answer_correct(ptor){
+// 	locator.by_tag(ptor,'notification').then(function(popover){
+// 		expect(popover.getText()).toContain('Correct');
+// 	})
+// }
+
+// function check_answer_incorrect(ptor){
+// 	locator.by_tag(ptor,'notification').then(function(popover){
+// 		expect(popover.getText()).toContain('Incorrect');
+// 	})
+// }
+
+// function check_free_answer(ptor){
+// 	locator.by_tag(ptor,'notification').then(function(popover){
+// 		expect(popover.getText()).toContain('Thank you for your answer');
+// 	})
+// }
+

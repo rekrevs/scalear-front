@@ -455,6 +455,12 @@ exports.answer_drag_incorrect=function(ptor){
     ptor.sleep(3000);
 }
 
+exports.answer_free_text=function(ptor, text){
+  locator.by_id(ptor,'ontop').findElement(protractor.By.tagName('textarea')).then(function(txt){
+    txt.sendKeys(text);
+  })
+}
+
 
 
 
@@ -470,4 +476,16 @@ exports.press_confused_btn = function(ptor){
   element(by.className('confusedDiv')).click().then(function(){
     expect(element.all(by.name('confused-timeline-item')).count()).toEqual(confused_no+1)
   })
+}
+
+exports.create_note=function(ptor, text){
+    locator.by_classname(ptor, 'notesDiv').then(function(not){
+        not.click().then(function(){
+            locator.by_classname(ptor, 'editable-controls').then(function(t){
+                t.findElement(protractor.By.tagName('textarea')).sendKeys(text);
+                ptor.sleep(3000);
+                ptor.actions().sendKeys(protractor.Key.ENTER).perform();
+            })
+        })
+    })
 }

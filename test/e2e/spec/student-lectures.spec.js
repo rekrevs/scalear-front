@@ -18,52 +18,54 @@ describe('1', function(){
     })
 
     it('should create_course', function(){
-        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
     it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor);
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
     })
     
     it('should add a module and lecture to create quizzes', function(){
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
+        o_c.open_course(ptor, 1);
         teacher.add_module(ptor);
         teacher.open_module(ptor, 1);
-        teacher.create_lecture(ptor);           
+        teacher.add_lecture(ptor);           
         o_c.press_content_navigator(ptor);
+        ptor.sleep(2000)
         teacher.init_lecture(ptor, "lecture 1","https://www.youtube.com/watch?v=SKqBmAHwSkg");
     })
 
     it('should navigate to student', function(){
         o_c.to_student(ptor);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
-        o_c.press_content_navigator(ptor);
-        teacher.open_module(ptor, 1);
-        o_c.press_content_navigator(ptor);
+        o_c.open_course(ptor, 1);
+        // o_c.press_content_navigator(ptor);
+        // teacher.open_module(ptor, 1);
+        // o_c.press_content_navigator(ptor);
     })
 
     it('should check confused ',function(){
         youtube.seek(ptor, 50);
-        press_confused_btn(ptor);
-        ptor.sleep(5000);
+        student.press_confused_btn(ptor);
+        ptor.sleep(2000);
         check_outline_ele_no(ptor, 1);
     })
 
     it('should clear the course for deletion', function(){
         o_c.to_teacher(ptor);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
-        o_c.press_content_navigator(ptor);
+        o_c.open_course(ptor, 1);
         teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_empty_module(ptor, 1)
     })
 
     it('should delete course', function(){
         o_c.open_course_list(ptor);
         teacher.delete_course(ptor, 1);
+        o_c.logout(ptor);
     })
 })
 
@@ -71,35 +73,37 @@ describe('1', function(){
 describe("2", function(){
 
     it('should sign in as teacher', function(){
-        o_c.press_login(ptor);
+        // o_c.press_login(ptor);
         o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
     it('should create_course', function(){
-        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
     it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor);
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
     })
     
     it('should add a module and lecture to create quizzes', function(){
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
+        o_c.open_course(ptor, 1);
         teacher.add_module(ptor);
         teacher.open_module(ptor, 1);
-        teacher.create_lecture(ptor);           
+        teacher.add_lecture(ptor);           
         o_c.press_content_navigator(ptor);
+        ptor.sleep(2000)
         teacher.init_lecture(ptor, "lecture 1","https://www.youtube.com/watch?v=SKqBmAHwSkg");
     })
 
     it('should navigate to student', function(){
         o_c.to_student(ptor);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
-        o_c.press_content_navigator(ptor);
-        teacher.open_module(ptor, 1);
-        o_c.press_content_navigator(ptor);
+        o_c.open_course(ptor, 1);
+        // o_c.press_content_navigator(ptor);
+        // teacher.open_module(ptor, 1);
+        // o_c.press_content_navigator(ptor);
         discussions.ask_public_question(ptor, "question 1");
         check_outline_ele_no(ptor, 1);
 
@@ -110,51 +114,53 @@ describe("2", function(){
     it('should clear the course for deletion', function(){
         o_c.to_teacher(ptor);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
-        o_c.press_content_navigator(ptor);
+        o_c.open_course(ptor, 1);
         teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_empty_module(ptor, 1)
     })
 
     it('should delete course', function(){
         o_c.open_course_list(ptor);
         teacher.delete_course(ptor, 1);
+        o_c.logout(ptor);
     })
 })
 
 describe("3", function(){
 
     it('should sign in as teacher', function(){
-        o_c.press_login(ptor);
+        // o_c.press_login(ptor);
         o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
     it('should create_course', function(){
-        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
     it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor);
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
     })
     
     it('should add a module and lecture to create quizzes', function(){
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
+        o_c.open_course(ptor, 1);
         teacher.add_module(ptor);
         teacher.open_module(ptor, 1);
-        teacher.create_lecture(ptor);           
+        teacher.add_lecture(ptor);           
         o_c.press_content_navigator(ptor);
+        ptor.sleep(2000)
         teacher.init_lecture(ptor, "lecture 1","https://www.youtube.com/watch?v=SKqBmAHwSkg");
     })
 
     it('should open the course to be tested', function(){
         o_c.to_student(ptor);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
-        o_c.press_content_navigator(ptor);
-        teacher.open_module(ptor, 1);
-        o_c.press_content_navigator(ptor);
+        o_c.open_course(ptor, 1);
+        // o_c.press_content_navigator(ptor);
+        // teacher.open_module(ptor, 1);
+        // o_c.press_content_navigator(ptor);
         youtube.seek(ptor, 50);
         discussions.ask_public_question(ptor, "question 1");
         discussions.comment(ptor, 1, "comment 1");
@@ -168,68 +174,70 @@ describe("3", function(){
     it('should clear the course for deletion', function(){
         o_c.to_teacher(ptor);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
-        o_c.press_content_navigator(ptor);
+        o_c.open_course(ptor, 1);
         teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_empty_module(ptor, 1)
     })
 
     it('should delete course', function(){
         o_c.open_course_list(ptor);
         teacher.delete_course(ptor, 1);
+        o_c.logout(ptor);
     })
 })
 
 describe("4", function(){
     it('should sign in as teacher', function(){
-        o_c.press_login(ptor);
+        // o_c.press_login(ptor);
         o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
     it('should create_course', function(){
-        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
     it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor);
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
     })
     
     it('should add a module and lecture to create quizzes', function(){
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
+        o_c.open_course(ptor, 1);
         teacher.add_module(ptor);
         teacher.open_module(ptor, 1);
-        teacher.create_lecture(ptor);           
+        teacher.add_lecture(ptor);           
         o_c.press_content_navigator(ptor);
+        ptor.sleep(2000)
         teacher.init_lecture(ptor, "lecture 1","https://www.youtube.com/watch?v=SKqBmAHwSkg");
     })
 
-    it('should open the course to be tested', function(){
+    it('should open the course to be tested and create a note', function(){
         o_c.to_student(ptor);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
-        o_c.press_content_navigator(ptor);
-        teacher.open_module(ptor, 1);
-        o_c.press_content_navigator(ptor);
+        o_c.open_course(ptor, 1);
+        // o_c.press_content_navigator(ptor);
+        // teacher.open_module(ptor, 1);
+        // o_c.press_content_navigator(ptor);
         youtube.seek(ptor, 50);
-        create_note(ptor, 'menaz');
+        student.create_note(ptor, 'This is a new note');
         check_outline_ele_no(ptor, 1);
     })
 
     it('should clear the course for deletion', function(){
         o_c.to_teacher(ptor);
         o_c.open_course_list(ptor);
-        o_c.open_course_whole(ptor, 0);
-        o_c.press_content_navigator(ptor);
+        o_c.open_course(ptor, 1);
         teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1, o_c.feedback);
-        teacher.delete_empty_module(ptor, 1, o_c.feedback);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_empty_module(ptor, 1)
     })
 
     it('should delete course', function(){
         o_c.open_course_list(ptor);
         teacher.delete_course(ptor, 1);
+        o_c.logout(ptor);
     })
 })
 
@@ -238,15 +246,15 @@ describe("4", function(){
 //          increment confused and expect one
 //====================================================
 
-function press_confused_btn(ptor){
-    locator.by_classname(ptor, 'confusedDiv').then(function(btn){
-        btn.click().then(function(){
-            locator.by_repeater(ptor, 'element in timeline').then(function(elements){
-                expect(elements.length).toEqual(1);
-            })
-        })
-    })
-}
+// function press_confused_btn(ptor){
+//     locator.by_classname(ptor, 'confusedDiv').then(function(btn){
+//         btn.click().then(function(){
+//             locator.by_repeater(ptor, 'element in timeline').then(function(elements){
+//                 expect(elements.length).toEqual(1);
+//             })
+//         })
+//     })
+// }
 
 function check_confused_no(ptor, con_no){
     locator.by_repeater(ptor, 'element in timeline').then(function(elements){
@@ -309,14 +317,3 @@ function check_outline_ele_no(ptor, no){
     })
 }
 
-function create_note(ptor, text){
-    locator.by_classname(ptor, 'notesDiv').then(function(not){
-        not.click().then(function(){
-            locator.by_classname(ptor, 'editable-controls').then(function(t){
-                t.findElement(protractor.By.tagName('textarea')).sendKeys(text);
-                ptor.sleep(3000);
-                ptor.actions().sendKeys(protractor.Key.ENTER).perform();
-            })
-        })
-    })
-}

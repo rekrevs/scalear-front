@@ -609,15 +609,15 @@ exports.cancel_account=function(){
 //    })
 // }
 
-// //====================================================
-// //            open item by no from timeline
-// //====================================================
+//====================================================
+//            open item by no from timeline
+//====================================================
 
-// exports.open_item = function(ptor,item_no, total_item_no){
-//     locator.s_by_classname(ptor, 'courseware-item-circle').then(function(item){
-//         item[item_no-1].click();
-//     })
-// }
+exports.open_item = function(ptor,item_no, total_item_no){
+    locator.s_by_classname(ptor, 'l in items').then(function(item){
+        item[item_no-1].click();
+    })
+}
 
 // //=====================================
 // //        open profile

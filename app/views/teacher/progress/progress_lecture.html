@@ -74,7 +74,7 @@
 							<a class="see_all" ng-show="quiz.filtered_user" ng-click="quiz.filtered_user = '';quiz.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;"><span translate>questions.see_all</span></a>							
 						</span>
 					</p>
-					<ul class="ul_item inner_content" ng-click="highlight($event,item)" bo-attr bo-attr-index="{{timeline[module_item.quiz_type][quiz.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items" >
+					<ul class="ul_item inner_content" ng-click="highlight($event,item)" bo-attr bo-attr-index="{{timeline[module_item.quiz_type][quiz.meta.id].items.indexOf(item)}}" ng-repeat="item in timeline[module_item.quiz_type][quiz.meta.id].items|filter:{data:'!!'}" >
 						<li ng-if="item.type=='charts'" ng-init="quiz_chart=createChart(item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData')" class="li_inner color-blue">
 							<div class="row">
 								<inner_title type="'lectures.title' | translate" class="small-10 columns left" style="margin-right:5px" itemtitle="item.data.title+' ('+item.data.type+')'"/>
@@ -109,7 +109,7 @@
 									<!-- <delete_button ng-show="answer.response && !answer.show_feedback" size='small' action='deleteFeedback(answer)'></delete_button> -->
 									<div class="feedback" ng-show="answer.show_feedback && module_item.quiz_type == 'survey'">
 										<textarea ng-model="answer.temp_response"  style="width: 65%;" />
-										<button ng-click="sendFeedback(answer);answer.show_feedback = false" class="button tiny success" translate>send_reply</button>
+										<button ng-click="sendFeedback(answer);answer.show_feedback = false" class="send_feedback button tiny success" translate>courses.send_reply</button>
 									</div>
 								</li>
 							</ul>						
@@ -147,20 +147,20 @@
 										</span>	
 									</span>
 									<div class="with-margin-bottom">
-										<b>
+										<b class="disc_screen_name">
 											<img bo-show="discussion.post.privacy==1" class="public_img" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}"/>
 											<img bo-show="discussion.post.privacy==0" class="private_img" src="/images/private.png" tooltip="{{'discussion.private_post' | translate}}"/>
                                         	
-									 		<span bo-text="discussion.post.screen_name"></span>:
+									 		<span  bo-text="discussion.post.screen_name"></span>:
 								 		</b>
-							 		 	<span bo-text="discussion.post.content"></span>
+							 		 	<span class="disc_content" bo-text="discussion.post.content"></span>
 							 		 	<span style="float: right;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 											<img bo-src='discussion.post.flags_count>0?"../images/flag-red.png":"../images/flag-grey.png"'/>
-											<span bo-text="discussion.post.flags_count"></span>
+											<span class="disc_flags_count" bo-text="discussion.post.flags_count"></span>
 										</span>
 										<span style="float: right; margin-right: 10px;" tooltip="{{'discussion.likes' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 											<img src='../images/likes.png'/>
-											<span bo-text="discussion.post.votes_count"></span>
+											<span class="disc_votes_count" bo-text="discussion.post.votes_count"></span>
 										</span>
 							 		</div>									
 									<ul>
@@ -172,15 +172,15 @@
 												</span>	
 											</span>										
 											<div>
-												<b><span bo-text="comment.comment.screen_name"></span>:</b>
-												 <span bo-text="comment.comment.content"></span>
+												<b><span class="comment_screen_name" bo-text="comment.comment.screen_name"></span>:</b>
+												<span class="comment_content" bo-text="comment.comment.content"></span>
 											 	<span style="float: right; color: black;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 													<img bo-src='comment.comment.flags_count>0?"../images/flag-red.png":"../images/flag-grey.png"'/>
-													<span bo-text="comment.comment.flags_count"></span>
+													<span class="comment_flags_count" bo-text="comment.comment.flags_count"></span>
 												</span>
 												<span style="float: right; color: black; margin-right: 10px;" tooltip="{{'discussion.likes' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 													<img src='../images/likes.png'/>
-													<span bo-text="comment.comment.votes_coun"></span>
+													<span class="comment_votes_count" bo-text="comment.comment.votes_count"></span>
 												</span>		
 											 	<!-- <span ng-show="comment.comment.user_id == current_user.id">|
 													<delete_button  size="small" color='dark' action="deleteComment(comment, discussion.post)"></delete_button>
@@ -192,7 +192,7 @@
 										<br>
 										<textarea ng-model="discussion.post.temp_response" bo-attr bo-attr-placeholder="'discussion.write_comment' | translate"  style="width: 65%;height:80px; border-radius: 0px;"></textarea>
 										<br />
-										<button ng-click="sendComment(discussion.post);discussion.post.show_feedback = false" class="button tiny success" translate>courses.send_reply</button>
+										<button ng-click="sendComment(discussion.post);discussion.post.show_feedback = false" class="send_comment button tiny success" translate>courses.send_reply</button>
 										<br>
 									</div>
 									<hr />

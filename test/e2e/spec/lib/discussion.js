@@ -74,7 +74,7 @@ exports.vote_up = function(ptor, q_no){
     //         ques[q_no-1].findElement(protractor.By.className('icon-chevron-up')).click();
     // })
     locator.s_by_name(ptor, 'discussion-timeline-item').then(function(questions){
-        questions[q_no-1].findElement(protractor.By.className('icon-chevron-up')).click();
+        questions[q_no-1].findElement(protractor.By.className('upvote')).click();
     })
 }
 
@@ -83,7 +83,7 @@ exports.vote_down = function(ptor, q_no){
     //         ques[q_no-1].findElement(protractor.By.className('icon-chevron-down')).click();
     // })
     locator.s_by_name(ptor, 'discussion-timeline-item').then(function(questions){
-        questions[q_no-1].findElement(protractor.By.className('icon-chevron-down')).click();
+        questions[q_no-1].findElement(protractor.By.className('downvote')).click();
     })
 }
 

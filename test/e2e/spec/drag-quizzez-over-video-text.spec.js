@@ -91,6 +91,7 @@ describe("1", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "drag_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
@@ -164,6 +165,7 @@ describe("2", function(){
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
 		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
 		teacher.init_lecture(ptor, "drag_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 

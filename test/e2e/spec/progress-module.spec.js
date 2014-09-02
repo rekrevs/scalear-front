@@ -174,7 +174,7 @@ var comment2 = {title: "still can add many comments", likes:0, flags:0, screen_n
 ptor.driver.manage().window().setSize(ptor.params.width, ptor.params.height);
 ptor.driver.manage().window().setPosition(0, 0);
 
-describe("teacher", function(){
+describe("Teacher", function(){
 	it('should login', function(){
 		o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password, o_c.feedback);	
@@ -183,24 +183,21 @@ describe("teacher", function(){
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
 	})
-	it('should go to the progress page', function(){
-		o_c.press_content_navigator(ptor)
-    	teacher.open_module(ptor, 1);
+	it('should go to the progress page', function(){		
+    	o_c.open_module(ptor, 1);
+    	o_c.press_content_navigator(ptor)
 		o_c.open_progress(ptor)
 		o_c.open_module_progress(ptor)
+		o_c.hide_dropmenu(ptor)		
 	})
 })
 
-describe('Modules Selector Button', function(){
+describe('Content Navigator Button', function(){
 	it('should display the name of the module selected', function(){
 		checkNameOnSelectorButton('New Module')
 	})
 })
-// describe('Navigation Bullets', function(){
-// 	it('should have the same count as the items under the first module', function(){
-// 		verifyNumberOfBullets(6)
-// 	})
-// })
+
 describe('First Module Progress Page', function(){
 	it('should have a video container', function(){
 		expect(element(by.className('videoborder')).isDisplayed()).toEqual(true)
@@ -211,14 +208,12 @@ describe('First Module Progress Page', function(){
 	it('should display headings for each item in the module with the item name, duration and number of questions and verify sub items count', function(){
 		progress.verifyModuleTitlesAndCountOnTimeline(modules_items['New Module'])
 	})
-				// it('should display heading and content filtered by charts',function(){
-				// 	progress.verifyModuleTitlesAndCountFiltered(modules_items['New Module'], 'charts')
-				// })
+
 	describe('First lecture',function(){
 		it('should display correct quiz titles',function(){
-			progress.checkInvideoQuizTitle(0,0,modules_items['New Module'], 50)
-			progress.checkInvideoQuizTitle(0,1,modules_items['New Module'], 50)
-			progress.checkInvideoQuizTitle(0,2,modules_items['New Module'], 0)
+			progress.checkInvideoQuizTitle(0,0,modules_items['New Module'], 50, 1)
+			progress.checkInvideoQuizTitle(0,1,modules_items['New Module'], 50, 1)
+			progress.checkInvideoQuizTitle(0,2,modules_items['New Module'], 0, 0)
 		})
 		it('should display quiz statistics correct',function(){
 			progress.checkQuizChart(0,0,1,2)
@@ -286,21 +281,21 @@ describe('First Module Progress Page', function(){
 	})
 	describe('Second Lecture',function(){
 		it('should display correct quiz titles',function(){
-			progress.checkInvideoQuizTitle(1,0,modules_items['New Module'], 100)
-			progress.checkInvideoQuizTitle(1,1,modules_items['New Module'], 50)
-			progress.checkInvideoQuizTitle(1,2,modules_items['New Module'], 50)
+			progress.checkInvideoQuizTitle(1,0,modules_items['New Module'], 100, 2)
+			progress.checkInvideoQuizTitle(1,1,modules_items['New Module'], 50, 1)
+			progress.checkInvideoQuizTitle(1,2,modules_items['New Module'], 0, 0)
 		})
 		it('should display quiz statistics correct',function(){
 			progress.checkQuizChart(1,0,1,1)
-			progress.checkQuizChart(1,1,1,1)
-			progress.checkQuizChart(1,2,1,2)
+			progress.checkQuizChart(1,1,4,1)
+			progress.checkQuizChart(1,2,1,1)
 			ptor.navigate().refresh();
 			progress.checkQuizChart(1,0,5,1)
-			progress.checkQuizChart(1,1,5,1)
+			progress.checkQuizChart(1,1,2,1)
 			progress.checkQuizChart(1,2,2,1)
 			ptor.navigate().refresh();
 			progress.checkQuizChart(1,0,3,1)
-			progress.checkQuizChart(1,2,3,1)
+			progress.checkQuizChart(1,2,3,2)
 		})
 		it('should have correct discussion titles and content',function(){
 			progress.checkDiscussionTitle(1,0,modules_items['New Module'])
@@ -466,6 +461,8 @@ describe('First Module Progress Page', function(){
 			var reply_msg = "Reply to Free text question" 
 			progress.addReplyToFreeText(5,0, reply_msg)
 			progress.checkReplyToFreeText(5,0, reply_msg)
+			// o_c.scroll_to_bottom(ptor)
+			// progress.deleteReplyToFreeText(5,0,0)
 		})
 	})
 	
@@ -473,11 +470,15 @@ describe('First Module Progress Page', function(){
 
 describe('Teacher', function(){
 	it('should select the second module', function(){
-		// o_c.press_content_navigator(ptor)
+		o_c.press_content_navigator(ptor)
     	teacher.open_module(ptor, 2);
+    	o_c.press_content_navigator(ptor)
+		o_c.open_progress(ptor)
+		o_c.open_module_progress(ptor)
+		o_c.hide_dropmenu(ptor)		
 	})
 })
-describe('Modules Selector Button', function(){
+describe('Content Navigator Button', function(){
 	it('should display the name of the module selected', function(){
 		checkNameOnSelectorButton('New Module 2')
 	})
@@ -501,9 +502,9 @@ describe('Second Module Progress Page', function(){
 
 	describe('First lecture',function(){
 		it('should display correct quiz titles',function(){
-			progress.checkInvideoQuizTitle(0,0,modules_items['New Module 2'], 0)
-			progress.checkInvideoQuizTitle(0,1,modules_items['New Module 2'], 50)
-			progress.checkInvideoQuizTitle(0,2,modules_items['New Module 2'], 0)
+			progress.checkInvideoQuizTitle(0,0,modules_items['New Module 2'], 0, 0)
+			progress.checkInvideoQuizTitle(0,1,modules_items['New Module 2'], 50 ,1)
+			progress.checkInvideoQuizTitle(0,2,modules_items['New Module 2'], 0, 0)
 		})
 		it('should display quiz statistics correct',function(){
 			progress.checkQuizChart(0,0,1,1)
@@ -527,9 +528,9 @@ describe('Second Module Progress Page', function(){
 	})
 	describe('Second Lecture',function(){
 		it('should display correct quiz titles',function(){
-			progress.checkInvideoQuizTitle(1,0,modules_items['New Module 2'], 0)
-			progress.checkInvideoQuizTitle(1,1,modules_items['New Module 2'], 0)
-			progress.checkInvideoQuizTitle(1,2,modules_items['New Module 2'], 0)
+			progress.checkInvideoQuizTitle(1,0,modules_items['New Module 2'], 0, 0)
+			progress.checkInvideoQuizTitle(1,1,modules_items['New Module 2'], 0, 0)
+			progress.checkInvideoQuizTitle(1,2,modules_items['New Module 2'], 0, 0)
 		})
 		it('should be able to show quiz inclass and have correct time estimate',function(){
 			progress.checkTimeEstimate(0)

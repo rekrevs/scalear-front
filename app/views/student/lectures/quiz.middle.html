@@ -11,7 +11,7 @@
          </p>
     </div>
     <!-- <span class="label size-10 round alert with-tiny-padding with-tiny-margin right" ng-show="quiz.required" translate><small>courses.required</small></span> -->
-    <span class="label size-10 round blue with-tiny-padding with-tiny-margin right" ng-show="!quiz.graded" ><small translate>courses.optional</small></span>
+    <span class="label size-10 round blue with-tiny-padding with-tiny-margin right" ng-if="quiz && !quiz.graded" ><span translate>courses.optional</span></span>
 
     <h3>
         <i ng-if="quiz.quiz_type=='quiz'" class="fi-clipboard-notes"></i>
@@ -31,12 +31,12 @@
     	</p> -->
     </div>
     <hr>
-    <center ng-show="!can_solve">
+    <center ng-show="!should_solve">
         <div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' >
             <h2 style="position:relative;top:90px;font-weight:300;font-size:18px" ><span translate>lectures.finish_before_proceeding</span></h2>
         </div>  
     </center>
-    <div ng-show="can_solve">
+    <div ng-show="should_solve">
     	<form name="form">
     		<student-quiz quiz='quiz' student-answers="studentAnswers" submitted="submitted" correct="correct"></student-quiz>
     		<button ng-disabled="status.status=='Submitted' || quiz.questions.length==0" type="button" class="button tiny" ng-click="saveQuiz('save')">

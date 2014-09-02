@@ -67,16 +67,16 @@ exports.config = {
         // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //<x>//done
         
         // 'test/e2e/spec/mcq-survey-over-video.spec.js',//<x>//done
-        'test/e2e/spec/ocq-survey-over-video.spec.js',//<x>//done
+        // 'test/e2e/spec/ocq-survey-over-video.spec.js',//<x>//done
 
-        // 'test/e2e/spec/student-lectures.spec.js',//<x>
+        // 'test/e2e/spec/student-lectures.spec.js',//<x>//done
 
         // 'test/e2e/spec/init-progress-data.spec.js',        
         // 'test/e2e/spec/progress-main.spec.js',
-        // 'test/e2e/spec/progress-module.spec.js',
+        'test/e2e/spec/progress-module.spec.js',
         // 'test/e2e/spec/inclass.spec.js',
 
-        // 'test/e2e/spec/calendar-teacher-student.spec.js',//<x>
+        // 'test/e2e/spec/calendar-teacher-student.spec.js',//<x>//done
         // 'test/e2e/spec/statistics.spec.js',//done
     ],
 

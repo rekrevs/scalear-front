@@ -291,21 +291,18 @@ angular.module('scalearAngularApp')
     },
     templateUrl:"/views/content_navigator.html",
    link:function(scope, element, attr){
-   	  scope.currentmodule = {id: $state.params.module_id}
-   	  scope.currentitem = $state.params.lecture_id || $state.params.quiz_id
-   	  // scope.open_this_link = false
+   	  scope.$state = $state
+	  var unwatch = scope.$watch('$state.params.module_id',function(){
+	  	if($state.params.module_id){
+	  		scope.currentmodule = {id: $state.params.module_id}
+   	  		scope.currentitem = $state.params.lecture_id || $state.params.quiz_id
+	  		unwatch()
+	  	}
+   	  })
    	  scope.$watch('modules.length',function(){
    	  	if(scope.modules)
    	  		scope.currentmodule = {id: $state.params.module_id}
    	  })
-
-   	  // scope.$watch('links.length',function(){
-   	  // 	console.log(scope.links.length)
-   	  // 	console.log(scope.open_this_link)
-   	  // 	// if(scope.links)
-   	  // 	// 	scope.open_this_link = true
-   	  // })
-
 
    	  scope.moduleSortableOptions={
  		axis: 'y',
@@ -378,8 +375,8 @@ angular.module('scalearAngularApp')
 		scope.open_navigator = !scope.open_navigator
 	}
 
-      scope.showModuleCourseware = function(module){
-        if(!scope.currentmodule || module.id != scope.currentmodule.id || module.id != $stateParams.module_id){
+  	scope.showModuleCourseware = function(module){
+        if(module.id != $state.params.module_id){
           scope.currentmodule = module//$scope.module_obj[module_id];
           // $scope.close_selector = true;
           Module.getLastWatched(
@@ -397,7 +394,7 @@ angular.module('scalearAngularApp')
               }
           }) 
         }  
-      }
+  	}
 
       // $scope.goToContent=function(){
                

@@ -61,9 +61,10 @@ exports.overrideStatus = function(student_no, module_no, desired_status){
 	.all(by.tagName('td')).get(module_no).element(by.tagName('img')).click()
 	
 	element(by.className('popover')).all(by.tagName('input'))
-	.get(desired_status-1).click().then(function(){
-		o_c.feedback(ptor, 'successfully changed')
-	})
+	.get(desired_status-1).click()
+	// .then(function(){
+	// 	o_c.feedback(ptor, 'successfully changed')
+	// })
 
 	element(by.tagName('table')).all(by.tagName('tr')).get(student_no)
 	.all(by.tagName('td')).get(module_no).element(by.tagName('img')).click()
@@ -179,20 +180,21 @@ exports.verifyModuleTitlesAndCountOnTimeline = function(modules_items, filter){
 					total = item.discussion.length
 				else
 					total = item.questions.length+item.free_text.length+item.discussion.length+item.confused.length
-				
 				expect(sub_items.length).toBe(total)
 			})
 			items[i].findElement(protractor.By.className('title')).then(function(title){
-				expect(title.getText()).toContain(item.name)
-				title.findElement(protractor.By.tagName('span')).then(function(duration_questions){
-					var summary = "("
-					if(item.duration){
-						summary+=item.duration+', '
-						// expect(duration_questions.getText()).toContain(item.duration)
-					}
-					summary+=(item.questions.length+item.free_text.length) +' Questions)'
-					expect(duration_questions.getText()).toContain(summary)
-				})
+				var summary = "("
+				if(item.duration){
+					summary+=item.duration+', '
+					// expect(duration_questions.getText()).toContain(item.duration)
+				}
+				summary+=(item.questions.length+item.free_text.length) +' Questions)'
+				var main_title = item.name+" "+ summary
+				expect(title.getText()).toEqual(main_title)
+				// title.findElement(protractor.By.tagName('span')).then(function(duration_questions){
+					
+				// 	expect(duration_questions.getText()).toContain(summary)
+				// })
 			})
 		})
 	})
@@ -251,10 +253,10 @@ exports.checkConfusedTitle=function(item_index,title_index, module_items){
 	// })
 }
 
-exports.checkInvideoQuizTitle=function(item_index,title_index, module_items, percentage){
+exports.checkInvideoQuizTitle=function(item_index,title_index, module_items, percentage, count){
 	var question = module_items[item_index].questions[title_index]	
 	var title = element(by.repeater('module_item in module.items').row(item_index)).all(by.className('color-green')).get(title_index).element(by.className('inner_title'))
-	expect(title.getText()).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+percentage+'% of students voted for review')
+	expect(title.getText()).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+count+' students ('+percentage+'%) voted for review')
 	// 		expect(titles[title_index].findElement(protractor.By.className('inner_title')).getText()).toEqual('['+question.time+'] Quiz: '+question.title+' ('+question.type+') - '+percentage+'% of students voted for review')
 	// })
 	// locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
@@ -327,13 +329,13 @@ exports.checkDiscussionTitle=function(item_index,title_index, module_items){
 exports.checkDiscussionContent=function(item_index,index, module_items){
 	var discussion = module_items[item_index].discussion[index]
 	var content = element(by.repeater('module_item in module.items').row(item_index)).all(by.className('color-coral')).get(index)
-	expect(content.element(by.binding('discussion.post.screen_name')).getText()).toEqual(discussion.screen_name+':')
-	expect(content.element(by.binding('discussion.post.content')).getText()).toEqual(discussion.title)
-	expect(content.element(by.binding('discussion.post.flags_count')).getText()).toEqual(discussion.flags.toString())
-	expect(content.element(by.binding('discussion.post.votes_count')).getText()).toEqual(discussion.likes.toString())
+	expect(content.element(by.className('disc_screen_name')).getText()).toEqual(discussion.screen_name+':')
+	expect(content.element(by.className('disc_content')).getText()).toEqual(discussion.title)
+	expect(content.element(by.className('disc_flags_count')).getText()).toEqual(discussion.flags.toString())
+	expect(content.element(by.className('disc_votes_count')).getText()).toEqual(discussion.likes.toString())
 
-	var public_img = content.element(by.binding('discussion.post.screen_name')).element(by.className('public_img'))
-	var private_img = content.element(by.binding('discussion.post.screen_name')).element(by.className('private_img'))
+	var public_img = content.element(by.className('disc_screen_name')).element(by.className('public_img'))
+	var private_img = content.element(by.className('disc_screen_name')).element(by.className('private_img'))
 	if(discussion.type == 'private'){		
 		expect(public_img.isDisplayed()).toBe(false)
 		expect(private_img.isDisplayed()).toBe(true)
@@ -342,27 +344,6 @@ exports.checkDiscussionContent=function(item_index,index, module_items){
 		expect(public_img.isDisplayed()).toBe(true)
 		expect(private_img.isDisplayed()).toBe(false)
 	}
-
-
-	// locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
-	// 	items[item_index].findElements(protractor.By.className('coral')).then(function(content){
-			
-	// 		expect(content[index].findElement(protractor.By.binding('discussion.post.screen_name')).getText()).toEqual(discussion.screen_name+':')
-	// 		expect(content[index].findElement(protractor.By.binding('discussion.post.content')).getText()).toEqual(discussion.title)
-	// 		expect(content[index].findElement(protractor.By.binding('discussion.post.flags_count')).getText()).toEqual(discussion.flags.toString())
-	// 		expect(content[index].findElement(protractor.By.binding('discussion.post.votes_count')).getText()).toEqual(discussion.likes.toString())
-	// 		if(discussion.type == 'private'){
-	// 			o_c.scroll(ptor,50)
-	// 			expect(content[index].findElement(protractor.By.binding('discussion.post.screen_name')).findElement(protractor.By.className('public_img')).isDisplayed()).toBe(false)
-	// 			expect(content[index].findElement(protractor.By.binding('discussion.post.screen_name')).findElement(protractor.By.className('private_img')).isDisplayed()).toBe(true)
-	// 		}
-	// 		else{
-	// 			o_c.scroll(ptor,50)
-	// 			expect(content[index].findElement(protractor.By.binding('discussion.post.screen_name')).findElement(protractor.By.className('public_img')).isDisplayed()).toBe(true)
-	// 			expect(content[index].findElement(protractor.By.binding('discussion.post.screen_name')).findElement(protractor.By.className('private_img')).isDisplayed()).toBe(false)
-	// 		}
-	// 	})
-	// })
 }
 
 exports.addReplyToDiscussion=function(item_index, index, msg){
@@ -370,7 +351,7 @@ exports.addReplyToDiscussion=function(item_index, index, msg){
 	var reply_button = discussion.element(by.className('success'))
 	var text_area = discussion.element(by.model('discussion.post.temp_response'))
 	var cancel_button= discussion.element(by.className('alert'))
-	var send = discussion.element(by.buttonText('Send'))
+	var send = discussion.element(by.className('send_comment'))
 	reply_button.click()
 	expect(reply_button.isDisplayed()).toBe(false)
 	expect(text_area.isDisplayed()).toBe(true)
@@ -404,19 +385,10 @@ exports.addReplyToDiscussion=function(item_index, index, msg){
 exports.checkDiscussionComment=function(item_index, discussion_index, comment_index,content){
 	var discussion = element(by.repeater('module_item in module.items').row(item_index)).all(by.className('color-coral')).get(discussion_index)
 	var comment = discussion.element(by.repeater('comment in discussion.post.comments').row(comment_index))
-	expect(comment.element(by.binding('comment.comment.screen_name')).getText()).toEqual(content.screen_name+':')
-	expect(comment.element(by.binding('comment.comment.content')).getText()).toEqual(content.title)
-	expect(comment.element(by.binding('comment.comment.flags_count')).getText()).toEqual(content.flags.toString())
-	expect(comment.element(by.binding('comment.comment.votes_count')).getText()).toEqual(content.likes.toString())
-	// locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
-	// 	items[item_index].findElements(protractor.By.className('coral')).then(function(discussion){
-	// 		var comment= discussion[discussion_index].findElement(protractor.By.repeater('comment in discussion.post.comments').row(comment_index))
-	// 		expect(comment.findElement(protractor.By.binding('comment.comment.screen_name')).getText()).toEqual(content.screen_name+':')
-	// 		expect(comment.findElement(protractor.By.binding('comment.comment.content')).getText()).toEqual(content.title)
-	// 		expect(comment.findElement(protractor.By.binding('comment.comment.flags_count')).getText()).toEqual(content.flags.toString())
-	// 		expect(comment.findElement(protractor.By.binding('comment.comment.votes_count')).getText()).toEqual(content.likes.toString())
-	// 	})
-	// })
+	expect(comment.element(by.className('comment_screen_name')).getText()).toEqual(content.screen_name)
+	expect(comment.element(by.className('comment_content')).getText()).toEqual(content.title)
+	expect(comment.element(by.className('comment_flags_count')).getText()).toEqual(content.flags.toString())
+	expect(comment.element(by.className('comment_votes_count')).getText()).toEqual(content.likes.toString())
 }
 
 exports.deleteDiscussionComment=function(item_index, discussion_index, comment_index){
@@ -575,7 +547,7 @@ exports.addReplyToFreeText=function(item_index, index, msg){
 	var reply_button = free_text.element(by.className('success'))
 	var text_area = free_text.element(by.model('answer.temp_response'))
 	var cancel_button= free_text.element(by.className('alert'))
-	var send = free_text.element(by.buttonText('Send'))
+	var send = free_text.element(by.className('send_feedback'))
 	reply_button.click()
 	expect(reply_button.isDisplayed()).toBe(false)
 	expect(text_area.isDisplayed()).toBe(true)
@@ -606,10 +578,10 @@ exports.addReplyToFreeText=function(item_index, index, msg){
 exports.checkReplyToFreeText=function(item_index, index, msg){
 	var free_text= element(by.repeater('module_item in module.items').row(item_index)).all(by.className('color-coral')).get(index)
 	expect(free_text.element(by.binding('answer.response')).getText()).toEqual(msg)
-	// locator.by_repeater(ptor, 'module_item in module.items').then(function(items){
-	// 	items[item_index].findElements(protractor.By.className('coral')).then(function(discussion){			
-	// 		expect(discussion[index].findElement(protractor.By.binding('answer.response')).getText()).toEqual(msg)
-	// 	})
-	// })
 }
 
+exports.deleteReplyToFreeText=function(item_index, index, ans_index){
+	var free_text = element(by.repeater('module_item in module.items').row(item_index)).all(by.className('color-coral')).get(index)
+	var answer = free_text.element(by.repeater('answer in item.data.answers').row(ans_index))
+	answer.element(by.className('alert')).click()
+}

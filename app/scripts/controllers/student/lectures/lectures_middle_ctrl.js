@@ -132,14 +132,16 @@ angular.module('scalearAngularApp')
                     else if(key=="today")
                         $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
                 }
+                console.log("$scope.course")
+                console.log($scope.course)
                                
                 if(!$scope.preview_as_student){
                     for(var item in lec.requirements){
                         for(var id in lec.requirements[item]){
                             var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-                            var item_index= scalear_utils.getIndexById($scope.course.groups[group_index][item], lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                            var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                             if(item_index!=-1 && group_index!=-1)
-                                if(!$scope.course.groups[group_index][item][item_index].is_done)
+                                if(!$scope.course.groups[group_index].items[item_index].is_done)
                                     $scope.should_play = false
                         }
                     }

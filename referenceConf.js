@@ -71,9 +71,9 @@ exports.config = {
 
         // 'test/e2e/spec/student-lectures.spec.js',//<x>//done
 
-        'test/e2e/spec/init-progress-data.spec.js',        
+        // 'test/e2e/spec/init-progress-data.spec.js',        
         // 'test/e2e/spec/progress-main.spec.js',
-        // 'test/e2e/spec/progress-module.spec.js',
+        'test/e2e/spec/progress-module.spec.js',
         // 'test/e2e/spec/inclass.spec.js',
 
         // 'test/e2e/spec/calendar-teacher-student.spec.js',//<x>//done

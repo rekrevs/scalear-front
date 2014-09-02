@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
     //   "lectures.discussion": "discussion",
     // }
     $scope.check_sub_items={lecture_quizzes:true,confused:true, charts:true, discussion:true, free_question:true};
-    $scope.check_items={quiz:true, survey:false}
+    $scope.check_items={quiz:true, survey:true}
 
     $scope.grade_options= [{
       value: 0, // not set

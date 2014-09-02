@@ -478,6 +478,20 @@ exports.press_confused_btn = function(ptor){
   })
 }
 
+exports.add_really_confused=function(ptor){
+  var confused_no = 0;
+  element.all(by.name('confused-timeline-item')).then(function(items){
+    confused_no = items.length
+  })
+  element(by.className('confusedDiv')).click().then(function(){
+    ptor.sleep(1000)
+    element(by.className('confusedDiv')).click().then(function(){
+      expect(element.all(by.name('confused-timeline-item')).count()).toEqual(confused_no+1)
+    })
+  })
+ 
+}
+
 exports.create_note=function(ptor, text){
     locator.by_classname(ptor, 'notesDiv').then(function(not){
         not.click().then(function(){

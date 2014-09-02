@@ -10,8 +10,8 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 var student_names = ['studenttest2 sharklasers','student test'] 
 var student_emails = [params.student_mail_2, params.student_mail]
-var module_names = ['New Module', 'New Module 2']
-var checkmarks = {'student test': ['on_time', 'not_finished'], 'studenttest2 sharklasers': ['on_time', 'not_finished']}
+var module_names = ['','New Module', 'New Module 2']
+var checkmarks = {'student test': ['on_time', 'not_finished'], 'studenttest2 sharklasers': ['not_finished', 'not_finished']}
 // ptor.driver.manage().window().maximize();
 ptor.driver.manage().window().setSize(ptor.params.width, ptor.params.height);
 ptor.driver.manage().window().setPosition(0, 0);
@@ -37,8 +37,8 @@ describe('Progress Main Page', function(){
 	})
 	it('should display two tabs, Module Progress and Module Chart', function(){
 		var list = element(by.className('tabs')).all(by.tagName('dd'))
-		expect(list.get(0).getText()).toBe('Module Progress')
-		expect(list.get(1).getText()).toBe('Module Chart')
+		expect(list.get(0).getText()).toBe('Course Progress')
+		expect(list.get(1).getText()).toBe('Progress Graph')
 	})
 	it('should display a table that contains the data', function(){
 		expect(element(by.tagName('table')).isDisplayed()).toBe(true)
@@ -49,8 +49,8 @@ describe('Progress Main Page', function(){
 })
 describe('Teacher', function(){
 	it('should change the status for Student Two and New Module to be \'not done\'', function(){
-		progress.overrideStatus(1, 1, 3)
-		progress.checkStatusImage(1, 1, 'not_finished')
+		progress.overrideStatus(1, 1, 2)
+		progress.checkStatusImage(1, 1, 'on_time')
 	})
 
 	it('should change the status for Student Test and New Module 2 to be \'finished on time\'', function(){
@@ -59,7 +59,7 @@ describe('Teacher', function(){
 	})
 	it('should revert them back', function(){
 		progress.overrideStatus(1, 1, 1)
-		progress.checkStatusImage(1, 1, 'on_time')
+		progress.checkStatusImage(1, 1, 'not_finished')
 
 		progress.overrideStatus(2, 2, 1)
 		progress.checkStatusImage(2, 2, 'not_finished')		

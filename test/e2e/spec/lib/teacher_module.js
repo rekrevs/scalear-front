@@ -278,6 +278,14 @@ exports.rename_item = function(ptor, name){
 	})
 }
 
+exports.change_lecture_inorder=function(){
+	element(by.model('lecture.required')).click()
+}
+
+exports.change_quiz_inorder=function(){
+	element(by.model('quiz.required')).click()
+}
+
 
 //====================================================
 //            		add mcq question for normal quiz

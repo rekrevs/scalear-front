@@ -610,13 +610,34 @@ exports.cancel_account=function(){
 // }
 
 //====================================================
+//            click on a module to expand
+//====================================================
+
+exports.open_module = function(ptor, mo_no){
+    element(by.repeater('module in modules').row(mo_no-1)).click()
+    // locator.by_repeater(ptor, 'module in modules').then(function(mods){
+    //  mods[mo_no-1].click();
+    // })
+}
+
+//====================================================
 //            open item by no from timeline
 //====================================================
 
-exports.open_item = function(ptor,item_no, total_item_no){
-    locator.s_by_classname(ptor, 'l in items').then(function(item){
-        item[item_no-1].click();
-    })
+exports.open_item = function(ptor,item_no){
+    element.all(by.repeater('l in items')).get(item_no-1).element(by.tagName('h5')).click()
+    // locator.s_by_classname(ptor, 'l in items').then(function(item){
+    //     item[item_no-1].click();
+    // })
+}
+
+//====================================================
+//            open item by no from content navigator
+//====================================================
+
+exports.open_item_from_navigator=function(ptor, item_no){    
+    //element(by.repeater('module in modules').row(mo_no-1)).
+    element(by.repeater('item in module.items').row(item_no-1)).click()
 }
 
 // //=====================================
@@ -743,9 +764,9 @@ exports.scroll_to_top = function(ptor) {
 // //                  scroll to bottom
 // //=======================================================
 
-// exports.scroll_to_bottom = function(ptor) {
-//     ptor.executeScript('window.scrollBy(0, 20000)', '');
-// }
+exports.scroll_to_bottom = function(ptor) {
+    ptor.executeScript('window.scrollBy(0, 20000)', '');
+}
 // //=======================================================
 // //                  scroll to element
 // //=======================================================

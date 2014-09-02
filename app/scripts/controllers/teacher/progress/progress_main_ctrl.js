@@ -77,7 +77,10 @@ angular.module('scalearAngularApp')
             module_status = 0
 
         Module.changeModuleStatus(
-            {module_id:module_id},
+            {
+                course_id: $stateParams.course_id,
+                module_id:module_id
+            },
             {
                 user_id: student_id,
                 status: module_status

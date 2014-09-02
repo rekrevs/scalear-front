@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page) {
+  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page','$interval', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page, $interval) {
     $window.scrollTo(0, 0);
     Page.setTitle('head.in_class')
     $scope.inclass_player={}
@@ -40,11 +40,8 @@ angular.module('scalearAngularApp')
           $scope.timer = 0;
         }
         $scope.min_counter = $scope.timer;
-        
-        // $timeout(function(){
-        //   // $scope.fullscreen_user_settings  = true
-          
-        // })
+        $scope.timer_interval = $interval($scope.onTimeout,1000);
+        $scope.counting = true;
 
         angular.element($window).bind('resize',
           function(){
@@ -235,7 +232,7 @@ angular.module('scalearAngularApp')
 
     $scope.exitBtn = function () {
       screenfull.exit()
-      $scope.modalInstance.dismiss();
+      $scope.modalInstance.dismiss('cancel');
       cleanUp()
     };
 
@@ -248,6 +245,7 @@ angular.module('scalearAngularApp')
       $scope.unregister_state_event();
       $scope.removeShortcuts()
       resetVariables()
+      $interval.cancel($scope.timer_interval);
     }
 
     $scope.playBtn = function(){
@@ -731,8 +729,9 @@ angular.module('scalearAngularApp')
     var lines_text = question_block.text().split('\n');
     var longest_line = lines_text.sort(function (a, b) { return b.length - a.length; })[0];
     
-
-    var lines = $scope.selected_timeline_item.data.length;
+    var lines = 0
+    if($scope.selected_timeline_item)
+      lines = $scope.selected_timeline_item.data.length;
     
     // var OneLineSize = space/lines;
 
@@ -824,20 +823,20 @@ angular.module('scalearAngularApp')
   }
 
   
-  $scope.onTimeout = function(){
-      $scope.mytimeout = $timeout($scope.onTimeout,1000);
-    
-      if($scope.counter == 0 && $scope.timer == 0){
-        $scope.counting_finished = true;
-        $scope.pause();
+  $scope.onTimeout = function(){  
+      if($scope.counter == 0){
+        if($scope.timer == 0){
+          $scope.counting_finished = true;
+          $scope.pause();
+        }
+        else{
+          $scope.timer--;
+          $scope.counter = 59;
+        }
+
       }
 
-      if($scope.counter == 0 && $scope.timer != 0){
-        $scope.timer--;
-        $scope.counter = 59;
-      }
-      if(!$scope.counting_finished)
-      {
+      if(!$scope.counting_finished){
         $scope.counter--;
         $scope.sec_counter = $scope.counter;
         $scope.min_counter = $scope.timer;
@@ -851,23 +850,16 @@ angular.module('scalearAngularApp')
         $scope.min_counter = '0'+$scope.timer;
       }
   }
-
-  $scope.mytimeout = $timeout($scope.onTimeout,1000);
-  $scope.counting = true;
   
   $scope.togglePause = function(){
       if($scope.counting){
-        $timeout.cancel($scope.mytimeout);
+        $interval.cancel($scope.timer_interval);
         $scope.counting = false;
       }
       else{
-        $scope.mytimeout = $timeout($scope.onTimeout,1000);
+        $scope.timer_interval = $interval($scope.onTimeout,1000);
         $scope.counting = true;
       }
-  }
-  
-  $scope.resume = function(){
-      
   }
 
   init();

@@ -200,6 +200,11 @@ exports.open_module_progress = function(ptor){
     element(by.id('review_module_progress')).click()
 }
 
+exports.open_inclass=function(){
+    element(by.id('inclass')).click()
+}
+
+
 exports.open_content_editor = function(ptor){
    element(by.id('content')).click()
 }

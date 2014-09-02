@@ -16,7 +16,7 @@ exports.ask_public_question = function(ptor, text){
 //==========================================================
 
 exports.ask_a_question = function(ptor, ques_string, type){
-     var questions_no = 0;
+    var questions_no = 0;
     element.all(by.name('discussion-timeline-item')).then(function(items){
         questions_no = items.length
     })

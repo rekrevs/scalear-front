@@ -237,6 +237,16 @@ exports.expect_no_popover=function(ptor, no){
   })
 }
 
+exports.check_explanation = function(ptor, no, exp){
+  locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+    ptor.actions().mouseMove(check_boxes[no-1]).perform();
+    ptor.actions().mouseMove({x: 5, y: 5}).perform();
+    locator.by_classname(ptor, 'popover').then(function(popover){
+      expect(popover.getText()).toContain(exp);
+    })
+  })
+}
+
 //=====================================
 //    answer mcq invideo quiz
 //=====================================
@@ -247,7 +257,7 @@ exports.check_invideo_mcq_no=function(ptor, no){
 }
 
 exports.answer_invideo_mcq=function(ptor, choice_no){
-    locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
+  locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
     check_boxes[choice_no-1].click();
   })
 }

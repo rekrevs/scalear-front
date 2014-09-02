@@ -1012,8 +1012,14 @@ exports.make_mcq_text_questions=function(ptor){
 		ontop.findElements(protractor.By.name('mcq')).then(function(check){
 			check[0].click();
 			check[2].click();
-
 		})
+
+		element.all(by.model("answer.explanation")).then(function(ex){
+			ex[0].sendKeys("explanation 1");
+			ex[1].sendKeys("explanation 2");
+			ex[2].sendKeys("explanation 3");
+		})
+
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
 		element(by.buttonText('Save')).click()
@@ -1038,6 +1044,9 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ptor.actions().doubleClick().perform();
 			ptor.actions().click().perform();
 			locator.by_classname(ptor, 'must_save_check').click();
+			element.all(by.model("data.explanation")).then(function(ex){
+				ex[0].sendKeys("explanation 1");	
+			})
 
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
@@ -1046,6 +1055,10 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
 			ptor.actions().doubleClick().perform();
+			ptor.actions().click().perform();
+			element.all(by.model("data.explanation")).then(function(ex){
+				ex[0].sendKeys("explanation 2");	
+			})
 
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
@@ -1056,6 +1069,10 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ptor.actions().doubleClick().perform();
 			ptor.actions().click().perform();
 			locator.by_classname(ptor, 'must_save_check').click();
+			element.all(by.model("data.explanation")).then(function(ex){
+				ex[0].sendKeys("explanation 3");	
+			})
+
 			ptor.sleep(2000);
 			o_c.scroll(ptor, 1000);
 			element(by.buttonText('Save')).click()
@@ -1116,6 +1133,13 @@ exports.make_ocq_text_questions=function(ptor){
 		ontop.findElements(protractor.By.id('radio_correct')).then(function(check){
 			check[1].click();
 		})
+
+		element.all(by.model("answer.explanation")).then(function(ex){
+			ex[0].sendKeys("explanation 1");
+			ex[1].sendKeys("explanation 2");
+			ex[2].sendKeys("explanation 3");
+		})
+		
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
 		element(by.buttonText('Save')).click()
@@ -1132,7 +1156,12 @@ exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove(ontop,{x: q1_x, y: q1_y}).perform();
 		ptor.actions().doubleClick().perform();
-		
+		ptor.actions().click().perform();
+
+		element.all(by.model("data.explanation")).then(function(ex){
+			ex[0].sendKeys("explanation 1");	
+		})
+
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
 		ptor.actions().click().perform();
@@ -1142,6 +1171,9 @@ exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 		ptor.actions().doubleClick().perform();
 		ptor.actions().click().perform();
 		locator.by_classname(ptor, 'must_save_check').click();
+		element.all(by.model("data.explanation")).then(function(ex){
+			ex[0].sendKeys("explanation 2");	
+		})
 
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
@@ -1150,6 +1182,11 @@ exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
 		ptor.actions().doubleClick().perform();
+		ptor.actions().click().perform();
+		
+		element.all(by.model("data.explanation")).then(function(ex){
+			ex[0].sendKeys("explanation 3");	
+		})
 
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);

@@ -40,8 +40,8 @@
 					<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 						<accordion-heading class="accordion-heading">
 							<div bindonce class="valign-middle" ng-click="showModuleCourseware(module)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
-								<div class="truncate-70 show-inline" bo-text="module.name"></div>
-								<module-progress-check module="module" style="margin-right: 10px; float: right;" />
+								<module-progress-check module="module" style="margin-right: 10px; float: right;"></module-progress-check>
+								<div class="truncate-70 with-small-margin-left" bo-text="module.name"></div>
 							</div>
 							
 						</accordion-heading>

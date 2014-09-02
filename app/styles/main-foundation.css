@@ -580,8 +580,9 @@ td.right-border{
   border-bottom: none;
 }
 .accordion dd > a{
-  max-height: 35px;
-  height: 35px;
+  /*max-height: 35px;*/
+  /*max-height: auto;*/
+  /*height: 35px;*/
 }
 
 

@@ -688,7 +688,7 @@ var translation_sv=function(){
               editing_course: "Redigera Kurs",
               edit_quiz: "Redigera Quiz",
               edit_course_information: "Redigera Kursinformation",
-              remove_from_course: "Ta bort från kurs",
+              remove_from_course: "Avlägsna studenter",
               you_sure_delete_student: "Är du säker på att du vill ta bort studenten {{student}}?",
               required: "Nödvändig",
               in_order: "I Ordning",

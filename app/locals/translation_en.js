@@ -686,7 +686,7 @@ var translation_en=function(){
         editing_course: "Editing Course",
         edit_quiz: "Edit Quiz",
         edit_course_information: "Edit Course Information",
-        remove_from_course: "Remove from course",
+        remove_from_course: "Remove students",
         you_sure_delete_student: "Are you sure that you want to remove student {{student}}?",
         required: "Required",
         in_order: "In Order",

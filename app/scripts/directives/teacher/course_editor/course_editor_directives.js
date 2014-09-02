@@ -228,7 +228,8 @@ angular.module('scalearAngularApp')
                 placement: '=',
                 vertical: '=',
                 text: '=',
-                color: '@'
+                color: '@',
+                overlaymode: '='
             },
             replace: true,
             restrict: 'E',

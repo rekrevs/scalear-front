@@ -584,6 +584,26 @@ td.right-border{
   /*max-height: auto;*/
   /*height: 35px;*/
 }
+.delete-overlay{
+  width: 100%;
+  background: rgba(255,255,255,0.7);
+  height: 100%;
+  position: absolute;
+  z-index: 1;
+  left: 0px;
+  top: 0px;
+}
+.align-center{
+  width: 50%;
+  height: 15%;
+  overflow: auto;
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
 
 
 /*STATES*/

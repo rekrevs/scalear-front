@@ -18,7 +18,7 @@
 			</a>
 		</span>
 	</span>
-	<div ng-if="overlaymode">
+	<div ng-if="overlaymode" bindonce>
 		<span class="align-center">
 			<button class="button tiny alert valign-middle" ng-hide="displayDeletePopup" title="remove" ng-click="!hideConfirm?showDeletePopup(true):action({event:$event})"><span translate>lectures.remove</span></button>
 			<div class="fade in" ng-show="displayDeletePopup" bo-class="{varticaldeletecontainer: vertical}" style="padding: 3px;text-align:center;min-width: 65px;">

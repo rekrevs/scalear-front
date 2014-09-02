@@ -1,6 +1,6 @@
 <span class="small-6 medium-3 large-2 columns left">
-	<delete_button ng-show="deletemode" size="big" color='dark' action="removestudent(user)" overlaymode="true"></delete_button>
 	<div class="panel looks-like-a-link small-12" ng-class="{'border-grey dark-medium-grey': user.checked}" ng-click="toggleSelect()">
+		<delete_button ng-show="deletemode" size="big" color='dark' action="removestudent(user)" overlaymode="true"></delete_button>
 		<profile-image class="small-12" email="user.email" imagesize="165" class="small-12" style="margin-bottom: 5px;"></profile-image>
 		<li class="fn truncate" title="{{user.full_name}}">{{user.full_name}}</li>
 		<li class="email truncate"><a href="" send-email ng-click="emailsingle(user)" title="{{'email' | translate}}: {{user.email}}">{{user.email}}</a></li>

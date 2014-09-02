@@ -56,7 +56,7 @@ xdescribe("invideo quiz time and name validation", function(){
 	})
 })
 
-describe("lec data validation", function(){
+describe("lec name data validation", function(){
 	
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -78,7 +78,46 @@ describe("lec data validation", function(){
 	it('should change the name and validate', function(){
 		change_lecture_name(' ');
 		error_feedback("Name can't be blank");
+	})
 
+	it('should clear the course for deletion', function(){
+		// o_c.to_teacher(ptor);
+		o_c.open_course_list(ptor);
+	    o_c.open_course(ptor, 1);
+	    teacher.open_module(ptor, 1);
+	    teacher.delete_item_by_number(ptor, 1, 1);
+	    teacher.delete_empty_module(ptor, 1)
+	})
+
+	it('should delete course', function(){
+		o_c.open_course_list(ptor);
+	    teacher.delete_course(ptor, 1);
+	    o_c.logout(ptor);
+	})
+})
+
+describe("lec url data validation", function(){
+	
+	it('should sign in as teacher', function(){
+		// o_c.press_login(ptor);
+		o_c.sign_in(ptor, params.teacher_mail, params.password);
+	})
+
+	it('should create_course', function(){
+		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+	})
+
+	it('should add a module and lecture to create quizzes', function(){
+		teacher.add_module(ptor);
+		teacher.open_module(ptor, 1);
+		teacher.add_lecture(ptor);			
+		o_c.press_content_navigator(ptor);
+		teacher.init_lecture(ptor, "lecture","https://www.youtube.com/watch?v=SKqBmAHwSkg");
+	})
+
+	it('should change the name and validate', function(){
+		change_lecture_url(' ');
+		error_feedback("Url can't be blank");
 	})
 
 	it('should clear the course for deletion', function(){
@@ -137,7 +176,7 @@ function change_lecture_name(name){
 
 function change_lecture_url(url){
 	element(by.id('url')).click().then(function(){
-		element(by.className('editable-input')).sendKeys(lec_url)
+		element(by.className('editable-input')).sendKeys(url)
 		element(by.className('check')).click();
 	})
 }

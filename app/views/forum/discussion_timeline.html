@@ -21,7 +21,7 @@
                             <delete_button class="hiddendeletebutton hide-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
                         </div>
                         <div style="display: inline-block; float: right;" ng-show="item.data.user_id != current_user.id">
-                            <flag-button comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
+                            <flag-button name="flag" comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
                         </div>
 
                         <div class="like-button" ng-show="item.data.user_id != current_user.id">

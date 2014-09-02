@@ -81,9 +81,9 @@ exports.config = {
 
         // 'test/e2e/spec/enrollment-help.spec.js',//done
         // 'test/e2e/spec/notes.spec.js',//done
-        // 'test/e2e/spec/discussions.spec.js',//done
+        'test/e2e/spec/discussions.spec.js',//done
 
-        'test/e2e/spec/validations.spec.js',//not done
+        // 'test/e2e/spec/validations.spec.js',//not done
 
 
     ],
@@ -140,14 +140,16 @@ exports.config = {
 
 
         //mena
-        frontend: 'http://0.0.0.0:9000/#',
+        frontend: 'http://0.0.0.0:9000/#/',
         // // frontend: 'http://staging.scalable-learning.com/#',
         // // teacher_mail: 'teacher3@sharklasers.com',
+        student_mail: 'studenttest@sharklasers.com',
         student_mail_2: 'studenttest2@sharklasers.com',
+        student_mail_3: 'student6@email.com',
+        
         teacher_mail: 'teacher2@sharklasers.com',
         // // teacher_mail: 'teacher15@sharklasers.com',
 
-        student_mail: 'studenttest@sharklasers.com',
         // student_mail: 'mena.happy@yahoo.com',
 
         // admin_mail: 'admin@scalear.com',

@@ -69,7 +69,7 @@
 				</ul>
 			</div>
 			<div ng-if="module_item.class_name=='quiz'" ng-init='quiz=module_item' class="small-12 columns">
-				<p class="title">{{quiz.name}}</p>
+				<p class="title light-grey dark-text">{{quiz.name}}</p>
 				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['survey'][quiz.id].items|filter:data:'!!'">
 					<li ng-if="item.type=='Free Text Question'" class="li_inner color-coral">
 						<inner_title  type="'groups.free_text_question' | translate" itemtitle="item.data.title"/>

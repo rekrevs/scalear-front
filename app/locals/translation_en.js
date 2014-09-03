@@ -822,6 +822,7 @@ var translation_en=function(){
         no_quizzes: "No Quizzes",
         in_correct_place: "in correct place",
         another_quiz_consider_shifting: "There's another quiz within 5 seconds from this one - consider shifting it.",
+        update_account_information: "You need to update your account information before proceeding"
       },
       statistics:{
         statistics_dashboard: "Statistics Dashboard",

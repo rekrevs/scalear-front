@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler', '$timeout', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler, $timeout) {
    $scope.user={}
    Page.setTitle('navigation.login')
    $scope.login = function(){
@@ -11,8 +11,19 @@ angular.module('scalearAngularApp')
             //console.log("signed_in");
             $rootScope.iscollapsed = true;
             $rootScope.$broadcast("get_all_courses")
-            $state.go("dashboard");
-
+            console.log('here\'s what i got')
+            console.log(data)
+            if(!data.info_complete){
+              $state.go("edit_account");
+              $rootScope.show_alert = "error";
+              ErrorHandler.showMessage("You need to update your account information", 'errorMessage', 8000);
+              $timeout(function() {
+                  $rootScope.show_alert = "";
+              }, 7000);
+            }
+            else{
+              $state.go("dashboard");
+            }
         },function(){
           $scope.sending = false;
             //console.log("failed")

@@ -20,6 +20,8 @@ angular.module('scalearAngularApp')
   		theme: 'light',
   		autoplay: 1
   	}
+    console.log('current user')
+    console.log($rootScope.current_user)
   	$scope.$on('youtube.player.ended', function ($event, player) {
 	    $scope.can_proceed = true;
       $interval(function(){

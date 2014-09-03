@@ -167,45 +167,53 @@ angular.module('scalearAngularApp', [
                     {
                         // $state.go("login");
                     }
-                    if(to.name == 'confirmed'){
-                        if(from.name == 'show_confirmation'){
-                            $state.go("confirmed")
-                        }
-                        else{
-                            $state.go("home");
-                            s = 0;
-                        }
+                    console.log('here!!!')
+                    console.log($rootScope.current_user)
+                    if($rootScope.current_user && $rootScope.current_user.info_complete == false){
+                        $state.go('edit_account')
+                        s = 2;
                     }
-                    if($rootScope.current_user && $rootScope.current_user.intro_watched == false){
-                        $state.go('confirmed')
-                        s = 1;
-                    }
-                    if (!routeClean(to.name) && result == 0 ) // user not logged in trying to access a page that needs authentication.
-                    {
-                        console.log(to.name)
-                        $state.go("login");
-                        s = 0;
-                    } else if ((stateTeacher(to.name) && result == 2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
-                    {
-                        $state.go("course_list");
-                        s = 0;
-                    } 
-                    else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
-                    {
-                        $state.go("course_list");
-                        s = 0;
-                    } 
-                    else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
-                    {
-                        console.log("herefef coud")
-                        $state.go("course_list");
-                    } else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
-                    {
-                        $state.go("course_list");
-                    } else if (stateNoAuth(to.name)) {
-                        if (result == 1 || result == 2) {
-                            $state.go("home");
+                    else{
+                        if(to.name == 'confirmed'){
+                            if(from.name == 'show_confirmation'){
+                                $state.go("confirmed")
+                            }
+                            else{
+                                $state.go("home");
+                                s = 0;
+                            }
+                        }
+                        if($rootScope.current_user && $rootScope.current_user.intro_watched == false && to.name != "edit_account"){
+                            $state.go('confirmed')
+                            s = 1;
+                        }
+                        if (!routeClean(to.name) && result == 0 ) // user not logged in trying to access a page that needs authentication.
+                        {
+                            console.log(to.name)
+                            $state.go("login");
                             s = 0;
+                        } else if ((stateTeacher(to.name) && result == 2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
+                        {
+                            $state.go("course_list");
+                            s = 0;
+                        } 
+                        else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
+                        {
+                            $state.go("course_list");
+                            s = 0;
+                        } 
+                        else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
+                        {
+                            console.log("herefef coud")
+                            $state.go("course_list");
+                        } else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
+                        {
+                            $state.go("course_list");
+                        } else if (stateNoAuth(to.name)) {
+                            if (result == 1 || result == 2) {
+                                $state.go("home");
+                                s = 0;
+                            }
                         }
                     }
 
@@ -215,6 +223,13 @@ angular.module('scalearAngularApp', [
                         $timeout(function() {
                             $rootScope.show_alert = "";
                         }, 4000);
+                    }
+                    if(s == 2){
+                        $rootScope.show_alert = "error";
+                        ErrorHandler.showMessage("You need to update your account information", 'errorMessage', 8000);
+                        $timeout(function() {
+                            $rootScope.show_alert = "";
+                        }, 7000);
                     }
                     // success
                })

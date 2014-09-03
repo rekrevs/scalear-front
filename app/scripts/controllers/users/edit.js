@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
     }
 }]);
 
-var ModalInstanceCtrl = function ($scope, $modalInstance, user, User) {
+var ModalInstanceCtrl = function ($scope, $rootScope, $state, $modalInstance, user, User) {
 
   $scope.user = user;
   console.log(user);
@@ -58,6 +58,11 @@ var ModalInstanceCtrl = function ($scope, $modalInstance, user, User) {
             }, function() {
                 $scope.sending = false;
                 $scope.show_settings = false;
+                console.log('mena')
+                console.log($rootScope.current_user.info_complete)
+                if($rootScope.current_user.intro_watched == false){
+                    $state.go('confirmed')
+                }
                 $modalInstance.close();
             }, function(response) {
                 $scope.sending = false;

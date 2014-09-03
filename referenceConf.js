@@ -69,7 +69,7 @@ exports.config = {
         // 'test/e2e/spec/mcq-survey-over-video.spec.js',//done
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',//done
 
-        // 'test/e2e/spec/student-lectures.spec.js',
+        'test/e2e/spec/student-lectures.spec.js',
 
         // 'test/e2e/spec/init-progress-data.spec.js', //done       
         // 'test/e2e/spec/progress-main.spec.js',//done
@@ -81,7 +81,9 @@ exports.config = {
 
         // 'test/e2e/spec/enrollment-help.spec.js',//done
         // 'test/e2e/spec/notes.spec.js',//done
-        'test/e2e/spec/discussions.spec.js',//done
+        // 'test/e2e/spec/discussions.spec.js',//done
+
+        // 'test/e2e/spec/timeline.spec.js',//done
 
         // 'test/e2e/spec/validations.spec.js',//not done
 

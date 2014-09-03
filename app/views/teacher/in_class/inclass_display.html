@@ -1,8 +1,3 @@
-<div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen">
-    <center>
-        <b style="position: absolute;top: 95%;left: 40%;"><span >{{blackscreen_msg | translate}}</span></b>
-    </center>
-</div>
 <div ng-mousemove="lightUpButtons()" class="disable_selection" style="overflow:hidden" screenfull active="fullscreen" >
     <div ng-click="toggleBlackScreen()" ng-show="show_black_screen" class="blackscreen" >
                 <center>
@@ -10,7 +5,7 @@
                 </center>
             </div>
     <div style="min-height: 34px;position: fixed;width: 100%;top: 0;left:0">
-        <span style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray">{{lecture_name}}</span>
+        <span class="lecture_title" style="padding-left: 3%; padding-top:2px;font-size: 23px;float: left;color:lightgray">{{lecture_name}}</span>
         <div ng-hide="selected_item.class_name=='quiz'" style="float:right; margin-right: 50px;padding-top:0px" >
             <button ng-class="button_class+' '+dark_buttons" ng-click="playBtn()" class="button reall-tiny secondary"><i ng-class="play_pause_class" /></button>
             <button ng-class="button_class+' '+dark_buttons" ng-click="muteBtn()" class="button reall-tiny secondary"><i ng-class="mute_class" /></button>
@@ -25,22 +20,22 @@
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'charts'" ng-class="question_block">
-                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
-                <div ng-show="chart" ng-class="chart_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}">
+                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
+                <div ng-show="chart" ng-class="chart_class">
                     <div google-chart chart="chart" ></div>
                 </div>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">
                 <ul style="padding-left:5px">
-                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])" ng-style="{fontSize:discfontsize,lineHeight:disclineheight}"ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
+                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])" ng-style="{fontSize:discfontsize,lineHeight:disclineheight}" ng-class="question_class">
                         {{question[0]}}
                         <br>
                     </li>
                 </ul>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'free_question'" ng-class="question_block_free_text">
-                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" ng-hide="question_class =='zoom_question'" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
-                <ul  style="padding-left:50px" ng-class="question_class" data-drag="question_class =='zoom_question'" data-jqyoui-options="{containment:'.drag_container'}" jqyoui-draggable="{animate:true}" >
+                <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" ng-class="question_class" >{{selected_timeline_item.data.type+' | '+ selected_timeline_item.data.title}}</div>
+                <ul  style="padding-left:50px" ng-class="question_class" >
                     <li ng-repeat="answer in selected_timeline_item.data.answers" ng-style="{fontSize:sub_fontsize, lineHeight:sub_fontsize}" style="list-style:disc;">
                         <p>{{answer.online_answer}}</p>
                     </li>
@@ -84,8 +79,8 @@
         <div class="bottom-right no-padding-top right">
             <!-- <button ng-class="button_class+' '+dark_buttons" ng-click="toggleFullscreen()"  class="button reall-tiny secondary" style="float:right; margin-right: 3%;"><i class="fi-arrows-out" ng-show="!fullscreen" /><i class="fi-arrows-in" ng-show="fullscreen"/></button> -->
             <button ng-disabled="true" ng-class="button_class+' '+dark_buttons" ng-class="{'color-red':counting_finished}" class="button reall-tiny with-tiny-padding-right with-tiny-padding-left secondary" style="color:gray">{{min_counter +':'+ sec_counter}}</button> 
-            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-hide="!counting"; ng-click="togglePause()"><span translate>pause</span></button>
-            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-hide="counting"; ng-click="togglePause()"><span translate>resume</span></button>
+            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="counting && !counting_finished"; ng-click="togglePause()"><span translate>Pause</span></button>
+            <button class="button reall-tiny secondary with-tiny-padding-right with-tiny-padding-left" ng-class="button_class+' '+dark_buttons" ng-show="!counting && !counting_finished"; ng-click="togglePause()"><span translate>Resume</span></button>
             <span ng-hide="selected_item.class_name=='quiz'" >
                 <button ng-class="button_class+' '+dark_buttons" ng-click="toggleHideQuestions()" class="button reall-tiny secondary">{{hide_text}}</button>
             </span>

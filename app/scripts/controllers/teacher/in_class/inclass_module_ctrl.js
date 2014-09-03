@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page) {
+  .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page','$interval', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page, $interval) {
     $window.scrollTo(0, 0);
     Page.setTitle('head.in_class')
     $scope.inclass_player={}
@@ -14,13 +14,7 @@ angular.module('scalearAngularApp')
     } 
 
   	$scope.display = function (disabled) {
-      if(!disabled){
         resetVariables()
-        if($scope.current_quiz_lecture)
-          delete $scope.current_quiz_lecture
-        if($scope.chart_data)
-          delete $scope.chart_data
-
         openModal()
         changeButtonsSize()
         $scope.hide_text = $scope.button_names[3]
@@ -31,20 +25,9 @@ angular.module('scalearAngularApp')
         $scope.blurButtons();
 
         $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz;
-        if ($scope.timer != 0) {
-          $scope.timer -= 1;
-          $scope.counter = 59;
-        }
-        if($scope.timer <= 0){
-          $scope.counter = 0;
-          $scope.timer = 0;
-        }
-        $scope.min_counter = $scope.timer;
-        
-        // $timeout(function(){
-        //   // $scope.fullscreen_user_settings  = true
-          
-        // })
+        $scope.counter =  $scope.timer>0? 1 : 0;
+        $scope.counting = true;
+        $scope.timerCountdown()
 
         angular.element($window).bind('resize',
           function(){
@@ -62,9 +45,6 @@ angular.module('scalearAngularApp')
                 $scope.$apply()
             }
         });
-
-      }  
-
   	};
 
     // $scope.initialDisplay = function(disabled,fullscreen){
@@ -104,7 +84,9 @@ angular.module('scalearAngularApp')
         $scope.fullscreen = false 
         $scope.selected_item=null
         $scope.selected_timeline_item=null
-        $scope.quality_set ='blue_font'
+        $scope.quality_set ='color-blue'
+        $scope.counting = true;
+        $scope.counting_finished=false
     }
 
     var init = function(){
@@ -235,7 +217,7 @@ angular.module('scalearAngularApp')
 
     $scope.exitBtn = function () {
       screenfull.exit()
-      $scope.modalInstance.dismiss();
+      $scope.modalInstance.dismiss('cancel');
       cleanUp()
     };
 
@@ -248,6 +230,7 @@ angular.module('scalearAngularApp')
       $scope.unregister_state_event();
       $scope.removeShortcuts()
       resetVariables()
+      $interval.cancel($scope.timer_interval);
     }
 
     $scope.playBtn = function(){
@@ -278,7 +261,7 @@ angular.module('scalearAngularApp')
       var time = $scope.inclass_player.controls.getTime()
       if(!$scope.quality_set){
         $scope.inclass_player.controls.changeQuality('hd720',time)
-        $scope.quality_set='blue_font'
+        $scope.quality_set='color-blue'
       }
       else{
         $scope.inclass_player.controls.changeQuality(null,time)
@@ -319,6 +302,7 @@ angular.module('scalearAngularApp')
       if($scope.should_mute == true){
         $scope.muteBtn()
       }
+      $scope.timer_interval = $interval($scope.timerCountdown,1000);
     }
 
     $scope.inclass_player.events.onMeta=function(){
@@ -731,8 +715,9 @@ angular.module('scalearAngularApp')
     var lines_text = question_block.text().split('\n');
     var longest_line = lines_text.sort(function (a, b) { return b.length - a.length; })[0];
     
-
-    var lines = $scope.selected_timeline_item.data.length;
+    var lines = 0
+    if($scope.selected_timeline_item)
+      lines = $scope.selected_timeline_item.data.length;
     
     // var OneLineSize = space/lines;
 
@@ -802,12 +787,12 @@ angular.module('scalearAngularApp')
   $scope.lightUpButtons=function(){
     $scope.last_movement_time= new Date()
     $scope.dark_buttons =null
-    $timeout(function(){
+    $interval(function(){
       if((new Date()) - $scope.last_movement_time  >=5000){
         $scope.dark_buttons="dark_button"
       }
         
-    },5000)
+    },5000,1)
   }
 
   // $scope.toggleFullscreen=function(){
@@ -824,50 +809,33 @@ angular.module('scalearAngularApp')
   }
 
   
-  $scope.onTimeout = function(){
-      $scope.mytimeout = $timeout($scope.onTimeout,1000);
-    
-      if($scope.counter == 0 && $scope.timer == 0){
-        $scope.counting_finished = true;
-        $scope.pause();
+  $scope.timerCountdown = function(){  
+      if($scope.counter == 0){
+        if($scope.timer == 0){
+          $scope.counting_finished = true;
+          $scope.togglePause();
+        }
+        else{
+          $scope.timer--;
+          $scope.counter = 59;
+        }
       }
-
-      if($scope.counter == 0 && $scope.timer != 0){
-        $scope.timer--;
-        $scope.counter = 59;
-      }
-      if(!$scope.counting_finished)
-      {
+      else if(!$scope.counting_finished)
         $scope.counter--;
-        $scope.sec_counter = $scope.counter;
-        $scope.min_counter = $scope.timer;
-      }
 
-      if($scope.counter < 10){
-        $scope.sec_counter = '0'+$scope.counter;
-      }
-
-      if($scope.timer < 10){
-        $scope.min_counter = '0'+$scope.timer;
-      }
+      $scope.sec_counter = $scope.counter < 10? '0'+$scope.counter: $scope.counter;
+      $scope.min_counter = $scope.timer < 10? '0'+$scope.timer: $scope.timer;
   }
-
-  $scope.mytimeout = $timeout($scope.onTimeout,1000);
-  $scope.counting = true;
   
   $scope.togglePause = function(){
       if($scope.counting){
-        $timeout.cancel($scope.mytimeout);
+        $interval.cancel($scope.timer_interval);
         $scope.counting = false;
       }
       else{
-        $scope.mytimeout = $timeout($scope.onTimeout,1000);
+        $scope.timer_interval = $interval($scope.timerCountdown,1000);
         $scope.counting = true;
       }
-  }
-  
-  $scope.resume = function(){
-      
   }
 
   init();

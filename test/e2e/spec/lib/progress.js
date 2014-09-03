@@ -585,3 +585,23 @@ exports.deleteReplyToFreeText=function(item_index, index, ans_index){
 	var answer = free_text.element(by.repeater('answer in item.data.answers').row(ans_index))
 	answer.element(by.className('alert')).click()
 }
+
+exports.checkQuizChartInclass = function(bar, number_of_students, percentage){
+	// element(by.className('original_chart')).element(by.tagName('svg')).element(by.tagName('g'))
+	// .all(by.tagName('g')).get(1).all(by.tagName())
+
+
+	locator.by_classname(ptor, 'original_chart').findElements(protractor.By.tagName('svg')).then(function(chart){
+		chart[0].findElement(protractor.By.tagName('g')).then(function(bars_container){
+			bars_container.findElements(protractor.By.tagName('g')).then(function(inners){
+				inners[2].findElements(protractor.By.tagName('rect')).then(function(bars){
+					bars[bar-1].click().then(function(){
+						locator.by_classname(ptor, 'google-visualization-tooltip').getText().then(function(text){
+							expect(text).toContain(number_of_students+" answers ("+percentage+"%)")
+						})
+					})
+				})
+			})
+		})
+	})
+}

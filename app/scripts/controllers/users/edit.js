@@ -63,10 +63,12 @@ var ModalInstanceCtrl = function ($scope, $rootScope, $state, $modalInstance, us
                 if($rootScope.current_user.intro_watched == false){
                     $state.go('confirmed')
                 }
+                $scope.user.current_password = null;
                 $modalInstance.close();
             }, function(response) {
                 $scope.sending = false;
                 $scope.user.errors = response.data.errors
+                $scope.user.current_password = null;
                 if(!response.data.errors.current_password){
                     $modalInstance.close();
                 }

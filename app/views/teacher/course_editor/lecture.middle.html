@@ -19,9 +19,11 @@
 							<!-- <div class="row">
 								<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
 							</div> -->
-							<div class="slow-message" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="slow">
-								<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
-								<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
+							<div class="slow-message" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="!lecture.url || (!video_ready)">
+								<span ng-show="slow">
+									<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
+									<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
+								</span>
 								<loading size='small' show='true' style="position:relative;top:70px;" />
 							</div>
 							<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)" save="saveBtn()"/>

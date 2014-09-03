@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page', function ($scope, $rootScope, User, UserSession, $state, $interval, Page) {
   	$scope.can_proceed = false, $scope.remaining = 5;
   	Page.setTitle('Welcome to ScalableLearning');
-    $rootScope.subheader_message = "Intro Video"
+    $rootScope.subheader_message = "Intro Video (3 minutes)"
   	UserSession.getRole().then(function(result) {
   		if(result == 2){
 	  		$scope.video_id = "9u8U2NoXC7c"

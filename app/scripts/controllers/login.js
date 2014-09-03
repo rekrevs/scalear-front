@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
             if(!data.info_complete){
               $state.go("edit_account");
               $rootScope.show_alert = "error";
-              ErrorHandler.showMessage("You need to update your account information", 'errorMessage', 8000);
+              ErrorHandler.showMessage($translate("controller_msg.update_account_information"), 'errorMessage', 8000);
               $timeout(function() {
                   $rootScope.show_alert = "";
               }, 7000);

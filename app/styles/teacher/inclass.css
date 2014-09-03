@@ -160,6 +160,8 @@
 	background: black;
 	position: absolute;
 	color:white;
+	top: 0;
+	left: 0;
 }
 .original_video{
 	max-height:75%;

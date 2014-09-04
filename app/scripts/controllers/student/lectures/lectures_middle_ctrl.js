@@ -348,7 +348,7 @@ angular.module('scalearAngularApp')
         $scope.notification_submessage=$translate(sub_msg);
         $interval(function(){
             removeNotification()
-        }, 2000, 1);
+        }, 3000, 1);
     }
 
      var removeNotification = function(){

@@ -4,26 +4,6 @@
 <link rel="stylesheet" href="styles/controls.css" type="text/css" media="screen" />
 <link rel="stylesheet" href="styles/student/student_lecture.css"/>
 <!-- endbuild -->
-
-<!-- <div class="row" style="width:100%; margin-right: -20px;">
-<center ng-show="!course"><br/><br/><loading size="big" show="!course"/></center>
-	<div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2;">
-		<table ng-show="course && !hide_all" style="width: 95%;">
-			<tr>
-				<td style="width: 170px;">
-					<modules-selector modules ="course.groups" current="current_module" action="showModule" detailed="true" /> 
-				</td>
-				<td style="padding: 0px;" ng-style="{width:spacing+'%'}" ng-repeat="item in current_module.quizzes.concat(current_module.lectures) | orderBy:'position'">
-					<div style="text-align: left;">
-						<courseware-item name="item.name" id="item.id" circlesize="12" group_id="current_module.id" class_name="item.get_class_name" quiz_type="item.quiz_type" done="item.is_done" required="item.required" current="current_item"></courseware-item>
-					</div>
-					<hr style="width: 100%; margin: 0; position: relative; top: -9px; z-index: -1; float: right;" />
-				</td>
-			</tr>
-		</table>
-	</div>
-</div> -->
-<!-- <div style="position: fixed; height: 100%; width: 300px; background-color: black;"></div> -->
-<!-- <content-navigator modules="course.groups" mode="courseware" currentmodule="current_module" currentitem="current_item" style="z-index: 1;">
-</content-navigator> -->
-<div ui-view></div>
+<div ui-view class="small-12"></div>
+<!-- <div ui-view="middle" class="small-12 medium-12 large-7 columns"></div>
+<div  id="student-accordion" class="small-12 medium-12 large-5 columns no-padding-right" ui-view="right"></div> -->

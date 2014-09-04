@@ -607,6 +607,10 @@ td.right-border{
 .top-bar-section .dropdown li.title h5 a{
   color: #222;
 }
+.slow-message{
+  background: rgba(255,255,255, 0.8) !important;
+  position: absolute;
+}
 
 
 /*STATES*/

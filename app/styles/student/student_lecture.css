@@ -198,14 +198,14 @@
     color: black;
 
 }
-    #student-accordion{
+    /*#student-accordion{
         width: 40%;
         float: right; 
         right: 0px;
         position: relative;
         overflow-y: auto; 
         min-height: 82vh;  
-    }
+    }*/
     .filterbuttons{
         position: absolute;
         z-index: 1;
@@ -318,14 +318,14 @@
             float: none !important;
             margin-bottom: 40px;
         }
-        #student-accordion{
+        /*#student-accordion{
             width: 100%;
             float: left;
             margin-top: 0px;
             clear: both;
             overflow-y: visible;
             position: relative !important;
-        }
+        }*/
         #user_information_container{
             display: none;
         }

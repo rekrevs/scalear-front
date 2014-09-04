@@ -479,11 +479,27 @@ angular.module('scalearAngularApp', [
             // })
             .state('course.module.courseware.lecture', {
                 url: '/lectures/:lecture_id?time',
+                // views: {
+                //     'middle': {
+                //         templateUrl: '/views/student/lectures/lecture.middle.html',
+                //         controller: 'studentLectureMiddleCtrl'
+                //     },
+                //     'right': {
+                //         templateUrl: '/views/student/lectures/lecture.right.html',
+                //         controller: 'studentLectureMiddleCtrl'
+                //     }
+                // }
                 templateUrl: '/views/student/lectures/lecture.middle.html',
                 controller: 'studentLectureMiddleCtrl'
             })
             .state('course.module.courseware.quiz', {
                 url: '/quizzes/:quiz_id',
+                // views: {
+                //     'quiz': {
+                //         templateUrl: '/views/student/lectures/quiz.middle.html',
+                //         controller: 'studentQuizMiddleCtrl'
+                //     }
+                // }
                 templateUrl: '/views/student/lectures/quiz.middle.html',
                 controller: 'studentQuizMiddleCtrl'
             })

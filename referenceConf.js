@@ -52,7 +52,8 @@ exports.config = {
         // 'test/e2e/spec/teacher-managment.spec.js', //done
         // 'test/e2e/spec/enrolled-students.spec.js',//done
         // 'test/e2e/spec/create-announcements.spec.js',//done
-        // 'test/e2e/spec/copying-sharing.spec.js',//done
+        'test/e2e/spec/sharing.spec.js',//done
+        'test/e2e/spec/copying.spec.js',//done
 
         // 'test/e2e/spec/normal-quiz.spec.js',//done
         // 'test/e2e/spec/normal-survey.spec.js',//done
@@ -74,7 +75,7 @@ exports.config = {
         // 'test/e2e/spec/init-progress-data.spec.js', //done       
         // 'test/e2e/spec/progress-main.spec.js',//done
         // 'test/e2e/spec/progress-module.spec.js',//done
-        'test/e2e/spec/inclass.spec.js',
+        // 'test/e2e/spec/inclass.spec.js',//done
 
         // 'test/e2e/spec/calendar-teacher-student.spec.js',//<x>//done
         // 'test/e2e/spec/statistics.spec.js',//done
@@ -164,7 +165,7 @@ exports.config = {
         // admin_password:"admin_account_password",
 
         short_name: "csc-test",
-        course_name: "testing course 100",
+        course_name: "aesting course 100",
         course_duration: '19',
         discussion_link: 'www.testing-link.com',
         image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",

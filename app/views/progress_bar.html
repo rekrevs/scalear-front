@@ -27,8 +27,8 @@
         </div>
     </div>
     <div style="height: 32px;">
-        <div>
-            <button ng-show="player.controls.youtube" class="qualityDiv no-padding dropdown right show-inline drop-top" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
+        <div class="right">
+            <button ng-show="player.controls.youtube" class="qualityDiv no-padding dropdown show-inline drop-top" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
                 <ul id="quality_list" class="f-dropdown quality-dropdown" style="min-width: 100px;">
                     <li ng-class="{'blue': chosen_quality=='small' }">
                         <a ng-click="setQuality('small')">240p</a>
@@ -41,6 +41,7 @@
                     </li>
                 </ul>
             </button>
+            
         </div>
         <div class="right" ng-transclude></div>
         <div class="controlDiv show-inline left" ng-class="play_pause_class" ng-click="playBtn()"></div>

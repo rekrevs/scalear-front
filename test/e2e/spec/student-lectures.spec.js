@@ -68,7 +68,6 @@ describe('1', function(){
         o_c.logout(ptor);
     })
 })
-
     
 describe("2", function(){
 
@@ -241,30 +240,12 @@ describe("4", function(){
     })
 })
 
-
-//====================================================
-//          increment confused and expect one
-//====================================================
-
-// function press_confused_btn(ptor){
-//     locator.by_classname(ptor, 'confusedDiv').then(function(btn){
-//         btn.click().then(function(){
-//             locator.by_repeater(ptor, 'element in timeline').then(function(elements){
-//                 expect(elements.length).toEqual(1);
-//             })
-//         })
-//     })
-// }
-
 function check_confused_no(ptor, con_no){
     locator.by_repeater(ptor, 'element in timeline').then(function(elements){
         expect(elements.length).toEqual(con_no);
     })
 }
 
-//====================================================
-//      check_confused_location
-//====================================================
 
 function check_confused_time(ptor){
     var pw, ph;

@@ -1171,9 +1171,8 @@ a.editable-click{
 
 @media only screen and (min-width: 1300px){
   .navigator_open{
-    left: inherit !important;
-    right: inherit;
-    width: inherit;
-    /* margin: 0; */
+    left: 7.5% !important;
+    right: auto;
+    width: 86%;
     }
 }

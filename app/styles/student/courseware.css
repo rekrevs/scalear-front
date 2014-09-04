@@ -355,3 +355,9 @@ input[type="checkbox"], input[type="radio"] {
   }
 
 }*/
+
+@media only screen and (min-width: 2000px){
+    .row{
+        max-width: 142rem !important;
+    }
+}

@@ -23,7 +23,7 @@
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
+							<a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ng-click="goToCourse(course)">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
@@ -89,7 +89,7 @@
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
+							<a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ng-click="goToCourse(course)">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
@@ -97,7 +97,7 @@
 						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
 						<li><a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-inner-item-active" ui-sref="new_course" translate>courses.new_course</a></li>
-						<li ng-show="are_shared()">
+						<li ng-show="areShared()">
 							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
 						</li>
 						<li>
@@ -165,7 +165,7 @@
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<!-- <li><label translate>navigation.current_courses</label></li> -->
 						<li ng-repeat="course in courses | filter:{ended: false}">
-							<a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ui-sref="course({ course_id: course.id })">
+							<a class="lighter-grey dark-text has-description" ng-class="{'nav-inner-item-active': (course.id | courseActive)}" ng-click="goToCourse(course)">
 								{{course.short_name}}
 								<h5 class="dark-description"><small>{{course.name}}</small></h5>
 							</a>
@@ -173,7 +173,7 @@
 						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
 						<li><a class="lighter-grey dark-text" ui-sref="new_course" ui-sref-active="nav-inner-item-active" translate>courses.new_course</a></li>
-						<li ng-show="are_shared()">
+						<li ng-show="areShared()">
 							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
 						</li>
 						<li>

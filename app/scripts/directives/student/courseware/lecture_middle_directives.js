@@ -248,16 +248,7 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		replace:true,
-		template:"<li class='ui-state-default'>"+
-					"<ng-form name='aform'>"+
-              "<div class='row' style='padding: 5px;'>"+
-  							"<div class='small-1 columns no-padding-right'>"+
-                  "<img class='handle looks-like-a-hook' src='images/move2.png' />"+
-                "</div>"+
-  							"<div class='small-11 columns no-padding-left'><h6>{{answer}}</h6></div>"+
-              "</div>"+
-					"</ng-form>"+
-				"</li>"				 
+		templateUrl: '/views/student/lectures/html_drag.html', 
 	}
 	
 }).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
@@ -597,6 +588,7 @@ angular.module('scalearAngularApp')
       scope.deleteConfused = function(confused){
         Lecture.deleteConfused(
         {
+          course_id: confused.data.course_id,
           lecture_id: confused.data.lecture_id, 
           confused_id: confused.data.id
         }, 
@@ -671,7 +663,7 @@ angular.module('scalearAngularApp')
           Lecture.deleteNote(
             {
               course_id: $state.params.course_id,
-              lecture_id:$state.params.lecture_id,
+              lecture_id: scope.item.data.lecture_id || $state.params.lecture_id,
               note_id: scope.item.data.id
             },function(){
                 scope.$emit('update_timeline', scope.item)
@@ -690,7 +682,7 @@ angular.module('scalearAngularApp')
         Lecture.saveNote(
           {
             course_id: $state.params.course_id,
-            lecture_id:scope.item.data.lecture_id || $state.params.lecture_id,
+            lecture_id: scope.item.data.lecture_id || $state.params.lecture_id,
             note_id: scope.item.data.id || null
           }, 
           {

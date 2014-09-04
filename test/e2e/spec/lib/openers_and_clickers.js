@@ -8,7 +8,9 @@ var params = ptor.params;
 exports.press_login = function(ptor){
     ptor.get(params.frontend);
     ptor.sleep(1000);
-    
+
+    element(by.id('home')).click();
+
     locator.by_id(ptor, "login").then(function(l){
         l.click().then(function(){
             expect(locator.by_id(ptor,"user_email").isDisplayed()).toEqual(true);

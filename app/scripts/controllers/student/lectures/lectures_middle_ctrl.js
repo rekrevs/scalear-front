@@ -24,7 +24,9 @@ angular.module('scalearAngularApp')
 
     $scope.$on('lecture_filter_update',function(ev,filters){
       $scope.checkModel=filters
-      $scope.scrollIntoView('outline')
+      $timeout(function(){
+        $scope.scrollIntoView()
+    },200)
     })
 
     $scope.$on('content_navigator_change',function(ev, status){
@@ -84,9 +86,6 @@ angular.module('scalearAngularApp')
         $scope.$watch('timeline',function(){
             if($scope.timeline){
                 goToLecture($state.params.lecture_id) 
-                $timeout(function(){
-                    $scope.scrollIntoView('outline')
-                },500)
             }
         })
 
@@ -157,6 +156,9 @@ angular.module('scalearAngularApp')
                 if(isiPad()){
                     $scope.video_ready=true
                 }
+                $timeout(function(){
+                    $scope.scrollIntoView()
+                },500)
             })
         }
     }
@@ -202,12 +204,14 @@ angular.module('scalearAngularApp')
             $scope.seek(parseInt(time));
     }
 
-    $scope.scrollIntoView=function(tab, fast){
+    $scope.scrollIntoView=function(){
+        console.log("scroll to view")
         if($scope.lecture && !isiPad()){
-            $timeout(function(){
-                $location.hash(tab+'_'+$scope.lecture.id);
-                $anchorScroll();    
-            })
+            $('.student_timeline').scrollTo('#outline_'+$scope.lecture.id, {offsetTop: 100, duration: 400});
+            // $timeout(function(){
+            //     $location.hash(tab+'_'+$scope.lecture.id);
+            //     $anchorScroll();    
+            // })
         }
     }
 
@@ -344,7 +348,7 @@ angular.module('scalearAngularApp')
         $scope.notification_submessage=$translate(sub_msg);
         $interval(function(){
             removeNotification()
-        }, 2000, 1);
+        }, 3000, 1);
     }
 
      var removeNotification = function(){

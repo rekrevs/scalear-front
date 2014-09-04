@@ -547,23 +547,7 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		replace:true,
-		template:"<li class='drag-answer ui-state-default'>"+	
-					"<ng-form name='aform'>"+					
-						"<div class='row' style='padding: 5px;'>"+
-							"<div class='small-1 columns'>"+
-								"<img class='drag-item looks-like-a-hook' src='images/move2.png' />"+
-							"</div>"+
-							"<div class='small-8 columns'>"+
-								"<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' style='margin-bottom:0'/>"+
-								"<small class='error' ng-show='submitted && aform.answer.$error.required && !hide_valid' ><span translate>courses.required</span>!</small>"+
-							"</div>"+
-							"<div class='small-2 columns'>"+
-								"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' />"+
-							"</div>"+
-						"</div>"+
-					"</ng-form>"+
-				"</li>"
-
+		templateUrl: '/views/teacher/course_editor/html_drag.html',
 	}
 	
 }).directive('atleastone', ['$log', function($log) {

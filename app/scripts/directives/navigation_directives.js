@@ -25,13 +25,10 @@ angular.module('scalearAngularApp')
 					return start_date.setDate(start_date.getDate()+(duration * 7));
 				}
 
-				// scope.goToCourse=function(course){
-				// 	if(scope.user.roles[0].id==2){
-				// 		$state.go('course.course_information',{course_id: course.id, redirect:true})
-				// 	}
-				// 	else
-				// 		$state.go('course.course_information',{course_id: course.id})
-				// }
+				scope.goToCourse=function(course){
+					if(course.id != $state.params.course_id)
+						$state.go('course', {course_id: course.id})
+				}
 			}
 		};
 	 }])
@@ -296,13 +293,13 @@ angular.module('scalearAngularApp')
 	  	if($state.params.module_id){
 	  		scope.currentmodule = {id: $state.params.module_id}
    	  		scope.currentitem = $state.params.lecture_id || $state.params.quiz_id
-	  		unwatch()
+	  		// unwatch()
 	  	}
    	  })
-   	  scope.$watch('modules.length',function(){
-   	  	if(scope.modules)
-   	  		scope.currentmodule = {id: $state.params.module_id}
-   	  })
+   	  // scope.$watch('modules.length',function(){
+   	  // 	if(scope.modules)
+   	  // 		scope.currentmodule = {id: $state.params.module_id}
+   	  // })
 
    	  scope.moduleSortableOptions={
  		axis: 'y',
@@ -399,7 +396,7 @@ angular.module('scalearAngularApp')
       // $scope.goToContent=function(){
                
       scope.showItemCourseware = function(item){
-  	 	var params = {'module_id': scope.currentmodule.id}    
+  	 	var params = {'module_id': $state.params.module_id}    
         params[item.class_name.toLowerCase()+'_id'] = item.id
         $state.go('course.module.courseware.'+ item.class_name.toLowerCase(), params)
         scope.currentitem = item.id

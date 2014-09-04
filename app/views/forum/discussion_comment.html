@@ -13,7 +13,7 @@
                         <delete_button class="hiddendeletebutton" size="small" action="delete()(item)" vertical="false" text="false" style="display: inline-block; color: #a1a1a1;" color="red"></delete_button>
                     </div>
                     <div style="display: inline-block; float: right;" ng-show="item.comment.user_id != current_user.id">
-                        <flag-button comment="item.comment" flag="flagComment" unflag="unflagComment" type="icon"></flag-button>
+                        <flag-button name="flag_comment" comment="item.comment" flag="flagComment" unflag="unflagComment" type="icon"></flag-button>
                     </div>
 
                     <div class="like-button" ng-show="item.comment.user_id != current_user.id">

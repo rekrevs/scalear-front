@@ -27,18 +27,21 @@
         </div>
     </div>
     <div style="height: 32px;">
-        <div ng-show="player.controls.youtube" class="qualityDiv dropdown right show-inline" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
-            <ul id="quality_list" class="f-dropdown" style="min-width: 100px;">
-                <li ng-class="{'blue': chosen_quality=='small' }">
-                    <a ng-click="setQuality('small')">240p</a>
-                </li>
-                <li ng-class="{'blue': chosen_quality=='large'}">
-                    <a ng-click="setQuality('large')">480p</a>
-                </li>
-                <li ng-class="{'blue': chosen_quality=='hd720' }">
-                    <a ng-click="setQuality('hd720')">720p (HD)</a>
-                </li>
-            </ul>
+        <div class="right">
+            <button ng-show="player.controls.youtube" class="qualityDiv no-padding dropdown show-inline drop-top" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
+                <ul id="quality_list" class="f-dropdown quality-dropdown" style="min-width: 100px;">
+                    <li ng-class="{'blue': chosen_quality=='small' }">
+                        <a ng-click="setQuality('small')">240p</a>
+                    </li>
+                    <li ng-class="{'blue': chosen_quality=='large'}">
+                        <a ng-click="setQuality('large')">480p</a>
+                    </li>
+                    <li ng-class="{'blue': chosen_quality=='hd720' }">
+                        <a ng-click="setQuality('hd720')">720p (HD)</a>
+                    </li>
+                </ul>
+            </button>
+            
         </div>
         <div class="right" ng-transclude></div>
         <div class="controlDiv show-inline left" ng-class="play_pause_class" ng-click="playBtn()"></div>

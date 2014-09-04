@@ -260,12 +260,19 @@ input[type="checkbox"].editable-input.editable-has-buttons{
 	width:12px !important;
 }
 
-.qualityDiv{
+/*.qualityDiv{
 	left:93% !important;
-}
+}*/
 
 details-date > form > span > ul.f-dropdown{
 	left:0% !important;
+}
+
+@media only screen and (min-width: 1300px){
+	.navigator_open .widescreen{
+      width: 61.5vw!important;
+      height: 34.6vw!important;
+    }
 }
 
 /*.ta-editor{

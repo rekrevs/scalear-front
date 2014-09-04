@@ -111,15 +111,10 @@
     background: url('/images/quality.png') no-repeat center center;
     background-size: 20px 20px;
     cursor: pointer;
-    outline: none !important;
 }
-.qualityDiv:hover, .qualityDiv:focus{
-
-    background: url('/images/quality.png') no-repeat center center;
-    background-size: 20px 20px;
-    padding: 0;
-    border-top: 0px;
-    outline: none  !important;
+.control-button:hover, .control-button:focus{
+    background-color: transparent;
+    outline: none;
 }
 
 .linkDiv{

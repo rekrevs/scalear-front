@@ -539,6 +539,27 @@ td.right-border{
 
 
 /*CUSTOM ELEMENTS*/
+.top-dropdown{
+  margin-top: -138px;
+  margin-left: -70px;
+}
+.top-dropdown:before{
+  border: inset 0px;
+  border-color: transparent transparent transparent transparent;
+}
+.top-dropdown:after{
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border: inset 7px;
+  border-color: #ffffff transparent transparent transparent;
+  border-top-style: solid;
+  position: absolute;
+  top: 102px;
+  left: 77px;
+  z-index: 98;
+}
 .time-label{
 	padding: 5px;
 	display: inline-block;
@@ -610,6 +631,12 @@ td.right-border{
 .slow-message{
   background: rgba(255,255,255, 0.8) !important;
   position: absolute;
+}
+.progress-events{
+    width:3px;
+    height: 8px;
+    /*z-index: 5000;*/
+    position: absolute;
 }
 
 

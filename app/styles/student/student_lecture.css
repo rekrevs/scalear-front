@@ -163,7 +163,7 @@
         /*display: inline-block;*/
         /*z-index: 1000;*/
        /* top: 31px;*/
-        top: 31px;
+        top: 30px !important;
         /*left: 95%;*/
        /* left: 108%;
         top: 94%;*/
@@ -179,7 +179,7 @@
         .progress_controls{
             position: relative;
             display: inline-block;
-            top: -7px;
+            top: -7px !important;
             /*left: 95%;*/
             float: right;
             margin-top: 35px;

@@ -163,7 +163,7 @@
         /*display: inline-block;*/
         /*z-index: 1000;*/
        /* top: 31px;*/
-        top: 31px;
+        top: 30px !important;
         /*left: 95%;*/
        /* left: 108%;
         top: 94%;*/
@@ -179,7 +179,7 @@
         .progress_controls{
             position: relative;
             display: inline-block;
-            top: -7px;
+            top: -7px !important;
             /*left: 95%;*/
             float: right;
             margin-top: 35px;
@@ -198,14 +198,14 @@
     color: black;
 
 }
-    #student-accordion{
+    /*#student-accordion{
         width: 40%;
         float: right; 
         right: 0px;
         position: relative;
         overflow-y: auto; 
         min-height: 82vh;  
-    }
+    }*/
     .filterbuttons{
         position: absolute;
         z-index: 1;
@@ -318,14 +318,14 @@
             float: none !important;
             margin-bottom: 40px;
         }
-        #student-accordion{
+        /*#student-accordion{
             width: 100%;
             float: left;
             margin-top: 0px;
             clear: both;
             overflow-y: visible;
             position: relative !important;
-        }
+        }*/
         #user_information_container{
             display: none;
         }
@@ -339,7 +339,7 @@
 
 @media only screen and (min-width: 1300px){
      .navigator_open .widescreen, .navigator_open .video_class{
-        width: 49.6vw;
-        height: 27.9vw;
+        width: 47.5vw;
+        height: 26.7vw;
     }
 }

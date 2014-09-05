@@ -48,7 +48,7 @@ exports.config = {
         // 'test/e2e/spec/main_menu.spec.js',
 
         // 'test/e2e/spec/course-editor-basic.spec.js',//done
-        // 'test/e2e/spec/create-course-check-info.spec.js',//<x> done
+        // 'test/e2e/spec/create-course-check-info.spec.js', done
         // 'test/e2e/spec/teacher-managment.spec.js', //done
         // 'test/e2e/spec/enrolled-students.spec.js',//done
         // 'test/e2e/spec/create-announcements.spec.js',//done
@@ -58,27 +58,37 @@ exports.config = {
         // 'test/e2e/spec/normal-quiz.spec.js',//done
         // 'test/e2e/spec/normal-survey.spec.js',//done
 
-        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',//<x> //done
-        // 'test/e2e/spec/ocq-quizzez-over-video.spec.js',//<x> //done
-        // 'test/e2e/spec/drag-quizzez-over-video.spec.js', //done
+        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js', //done
+        // 'test/e2e/spec/ocq-quizzez-over-video.spec.js', //done
+        // 'test/e2e/spec/drag-quizzez-over-video.spec.js', //done >> pending validation cause drag ain't working 3ande
 
-        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//<x> //done
-        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',//<x> //done
+        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js', //done
+        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js', //done
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',//done
-        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //<x>//done
-        
-        // 'test/e2e/spec/mcq-survey-over-video.spec.js',//<x>//done
-        // 'test/e2e/spec/ocq-survey-over-video.spec.js',//<x>//done
+        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //done
 
-        // 'test/e2e/spec/student-lectures.spec.js',//<x>//done
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js',//done
+        // 'test/e2e/spec/ocq-survey-over-video.spec.js',//done
+
+        'test/e2e/spec/student-lectures.spec.js',
 
         // 'test/e2e/spec/init-progress-data.spec.js', //done       
         // 'test/e2e/spec/progress-main.spec.js',//done
         // 'test/e2e/spec/progress-module.spec.js',//done
         // 'test/e2e/spec/inclass.spec.js',//done
-
-        // 'test/e2e/spec/calendar-teacher-student.spec.js',//<x>//done
+        
+        // 'test/e2e/spec/calendar-teacher-student.spec.js',
         // 'test/e2e/spec/statistics.spec.js',//done
+
+        // 'test/e2e/spec/enrollment-help.spec.js',//done
+        // 'test/e2e/spec/notes.spec.js',//done
+        // 'test/e2e/spec/discussions.spec.js',//done
+
+        // 'test/e2e/spec/timeline.spec.js',//done
+
+        // 'test/e2e/spec/validations.spec.js',//not done
+
+
     ],
 
     // ----- Capabilities to be passed to the webdriver instance ----
@@ -121,26 +131,28 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
         //local
-        frontend: 'http://0.0.0.0:9000/#',
-        admin_mail: 'admin@scalear.com',
-        teacher_mail: 'teacher1@sharklasers.com',
-        teacher2_mail: 'teacher3@sharklasers.com',
-        student_mail: 'studenttest@sharklasers.com',
-        student2_mail: 'studenttest2@sharklasers.com',
-        student3_mail: 'student_mail_2@sharklasers.com',
-        password: 'password',
-        admin_password:"password",
+        // frontend: 'http://0.0.0.0:9000/#',
+        // admin_mail: 'admin@scalear.com',
+        // teacher_mail: 'teacher1@sharklasers.com',
+        // teacher2_mail: 'teacher3@sharklasers.com',
+        // student_mail: 'studenttest@sharklasers.com',
+        // student2_mail: 'studenttest2@sharklasers.com',
+        // student3_mail: 'student_mail_2@sharklasers.com',
+        // password: 'password',
+        // admin_password:"password",
 
 
         //mena
-        // frontend: 'http://0.0.0.0:9000/#',
+        frontend: 'http://0.0.0.0:9000/#/',
         // // frontend: 'http://staging.scalable-learning.com/#',
         // // teacher_mail: 'teacher3@sharklasers.com',
-        // // mail: 'studenttest2@sharklasers.com',
-        // // teacher_mail: 'teacher2@sharklasers.com',
+        student_mail: 'studenttest@sharklasers.com',
+        student_mail_2: 'studenttest2@sharklasers.com',
+        student_mail_3: 'student6@email.com',
+        
+        teacher_mail: 'teacher2@sharklasers.com',
         // // teacher_mail: 'teacher15@sharklasers.com',
 
-        // // mail: 'studenttest@sharklasers.com',
         // student_mail: 'mena.happy@yahoo.com',
 
         // admin_mail: 'admin@scalear.com',
@@ -149,7 +161,7 @@ exports.config = {
         // // student_mail: 'studenttest@sharklasers.com',
         // student2_mail: 'studenttest2@sharklasers.com',
         // student3_mail: 'student_mail_2@sharklasers.com',
-        // password: 'password',
+        password: 'password',
         // admin_password:"password",
 
         //staging

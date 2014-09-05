@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
     $scope.resize = {}
     $scope.tabs=[true,false,false]
     $scope.editors={}
+    $scope.batei5 = 'helloashudiahfuhsdifuhsidfuh sidufhsiduhf'
 
     // $scope.$watch('checkModel', function(){
     //     $scope.scrollIntoView('outline')
@@ -69,7 +70,7 @@ angular.module('scalearAngularApp')
         initVariables()
         $scope.video_class = 'video_class'
         $scope.play_pause_class = 'play'
-        $scope.container_style={float: 'left'}
+        $scope.container_style={float: 'right'}
         
         if(!isiPad()){
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
@@ -258,6 +259,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek_and_pause=function(time,lecture_id){
+        console.log($scope.lecture_player)
         if($scope.lecture_player.controls.getTime() != time)
             clearQuiz()
         $scope.seek(time,lecture_id)
@@ -319,6 +321,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.timeUpdate = function(){
+        console.log('1')
         $scope.current_time = $scope.lecture_player.controls.getTime()
         $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
     }
@@ -348,7 +351,7 @@ angular.module('scalearAngularApp')
         $scope.notification_submessage=$translate(sub_msg);
         $interval(function(){
             removeNotification()
-        }, 2000, 1);
+        }, 3000, 1);
     }
 
      var removeNotification = function(){

@@ -34,51 +34,12 @@ angular.module('scalearAngularApp')
     $scope.open_require_password = function () {
         var modalInstance = $modal.open({
             templateUrl: '/views/users/update_account_info.html',
-            controller: ModalInstanceCtrl,
+            controller: 'SaveAccountCtrl',
             resolve: {
-                user: function () {
+                user_new: function () {
                   return $scope.user;
                 }
             }
         })
     }
 }]);
-
-var ModalInstanceCtrl = function ($scope, $rootScope, $state, $modalInstance, user, User) {
-
-  $scope.user = user;
-  console.log(user);
-
-    $scope.update_account = function() {
-            // console.log($scope.user);
-            $scope.sending = true;
-            delete $scope.user.errors
-            User.update_account({}, {
-                user: $scope.user
-            }, function() {
-                $scope.sending = false;
-                $scope.show_settings = false;
-                console.log('mena')
-                console.log($rootScope.current_user.info_complete)
-                if($rootScope.current_user.intro_watched == false){
-                    $state.go('confirmed')
-                }
-                $scope.user.current_password = null;
-                $modalInstance.close();
-            }, function(response) {
-                $scope.sending = false;
-                $scope.user.errors = response.data.errors
-                $scope.user.current_password = null;
-                if(!response.data.errors.current_password){
-                    $modalInstance.close();
-                }
-            })
-    }
-  $scope.ok = function () {
-    $modalInstance.close($scope.selected.item);
-  };
-
-  $scope.cancel = function () {
-    $modalInstance.dismiss('cancel');
-  };
-};

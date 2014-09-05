@@ -112,6 +112,10 @@
     background-size: 20px 20px;
     cursor: pointer;
 }
+.control-button:hover, .control-button:focus{
+    background-color: transparent;
+    outline: none;
+}
 
 .linkDiv{
     /*position: relative;

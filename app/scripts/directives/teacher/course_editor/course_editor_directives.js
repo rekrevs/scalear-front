@@ -188,7 +188,7 @@ angular.module('scalearAngularApp')
             transclude: true,
             restrict: 'E',
             replace: true,
-            template: '<div class="overlay well" ng-transclude></div>',
+            template: '<div class="overlay" ng-transclude></div>',
             link: function(scope, element) {
                 var parent = element.parent()
                 // console.log(element.parent())
@@ -203,6 +203,7 @@ angular.module('scalearAngularApp')
                 // });
                 $timeout(function(){
                     scope.$watch(scope.getHeight, function(newValue, oldValue) {
+                        console.log(parent.height())
                         element.css("height", parent.height())
                     })
                 },1000);

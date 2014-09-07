@@ -97,8 +97,8 @@
 						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
 						<li><a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-inner-item-active" ui-sref="new_course" translate>courses.new_course</a></li>
-						<li ng-show="are_shared()">
-							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
+						<li ng-show="areShared()">
+							<a id="view_shared" class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
 						</li>
 						<li>
 							<a id="course_list" class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="course_list">
@@ -173,8 +173,8 @@
 						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
 						<li><a class="lighter-grey dark-text" ui-sref="new_course" ui-sref-active="nav-inner-item-active" translate>courses.new_course</a></li>
-						<li ng-show="are_shared()">
-							<a class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
+						<li ng-show="areShared()">
+							<a id="view_shared" class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
 						</li>
 						<li>
 							<a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="course_list">

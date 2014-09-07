@@ -215,6 +215,11 @@ exports.open_online_content = function(ptor){
    element(by.id('new_online_content')).click()
 }
 
+exports.open_view_shared=function(){
+    this.open_courses(ptor);
+    element(by.id('view_shared')).click()
+}
+
 exports.hide_dropmenu = function(ptor){
     element(by.id('content_navigator')).then(function(btn){
         ptor.actions().mouseMove(btn).perform();

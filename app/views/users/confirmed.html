@@ -2,7 +2,11 @@
 	<div class="small-8">
 		<h2 class="color-green">Welcome to ScalableLearning!</h2>
 		<div class="flex-video widescreen with-light-border" style="z-index: 1;">
-			<youtube-video id="intro_video" video-id="video_id" player-vars="player_params"></youtube-video>
+			<div id="intro_video"></div>
+			<!-- <youtube-video id="intro_video" video-id="video_id" player-vars="player_params"></youtube-video> -->
+			<!-- <youtube id="lecture_video" url="video_url" player="lecture_player" class="widescreen ease_in_out"/> -->
+	        <!-- <progress-bar ng-if="!slow && video_url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="seek" current_time='current_time' total_duration='lecture.duration' player="lecture_player" class="text-left"> -->
+	    	<!-- </progress-bar> -->
 		</div>
 	</div>
 	<h5 class="subheader" ng-show="can_proceed"><span translate>redirect_courselist</span>{{remaining}}<span class="with-small-margin-left" translate>lectures.seconds</span>...</h5>

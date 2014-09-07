@@ -70,7 +70,6 @@ angular.module('scalearAngularApp', [
     // 'mm.foundation.topbar',
     'Mac',
     'dcbImgFallback',
-    'youtube-embed'
     // 'ngAnimate'
 ])
     .constant('headers', {

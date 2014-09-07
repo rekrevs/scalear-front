@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$stateParams', '$translate','$q','$log', '$filter', function ($scope, $state, Module, CustomLink, $stateParams, $translate, $q, $log, $filter) {      
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$stateParams', '$translate','$q','$log', '$filter', '$rootScope', function ($scope, $state, Module, CustomLink, $stateParams, $translate, $q, $log, $filter, $rootScope) {      
         // $scope.$parent.not_module = false;
         // $scope.$parent.currentmodule = $state.params.module_id
         // $scope.$parent.currentitem = -1
@@ -26,8 +26,10 @@ angular.module('scalearAngularApp')
                 },
                 function(data){
                     $scope.$watch('module',function(){
-                        if($scope.module)
+                        if($scope.module){
                             angular.extend($scope.module, data)
+                            console.log($scope.module)
+                        }
                     })                    
                 },
                 function(){}
@@ -153,6 +155,9 @@ angular.module('scalearAngularApp')
                     function(){}
                 );
             }
+            $scope.$on('update_numbers', function(){
+                init();
+            })
             // $scope.validateName= function(data, elem){
             //     var d = $q.defer();
             //     var doc={}

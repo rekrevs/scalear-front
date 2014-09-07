@@ -261,6 +261,7 @@ angular.module('scalearAngularApp')
                 emptyClipboard()
 				if($state.params.lecture_id == item.id)
                     $state.go('course.module.course_editor.overview')
+                $scope.$broadcast('update_numbers')
     		},
     		function(){}
 		);
@@ -294,6 +295,7 @@ angular.module('scalearAngularApp')
                     emptyClipboard()
                     if($state.params.quiz_id == item.id)
                         $state.go('course.module.course_editor.overview')
+                    $scope.$broadcast('update_numbers')
 	    		},
 	    		function(){}
 			);

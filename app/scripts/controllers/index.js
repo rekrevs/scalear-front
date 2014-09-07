@@ -79,30 +79,30 @@ angular.module('scalearAngularApp')
                 //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_out"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
             }
 
-            $scope.coursePage = function() {
-               $state.go("course_list");
-            }
+            // $scope.coursePage = function() {
+            //    $state.go("course_list");
+            // }
 
-            $scope.open = function() {
-                var modalInstance = $modal.open({
-                    templateUrl: '/views/invitation.html',
-                    controller: "InvitationModalCtrl",
-                    // resolve: {
-                    // items: function () {
-                    // return $scope.items;
-                    // }
-                    //}
-                });
+            // $scope.open = function() {
+            //     var modalInstance = $modal.open({
+            //         templateUrl: '/views/invitation.html',
+            //         controller: "InvitationModalCtrl",
+            //         // resolve: {
+            //         // items: function () {
+            //         // return $scope.items;
+            //         // }
+            //         //}
+            //     });
 
-                modalInstance.result.then(function(course_id) {
-                    if (course_id)
-                        $state.go("course.course_editor", {
-                            course_id: course_id
-                        })
-                }, function() {
-                    $log.info('Modal dismissed at: ' + new Date());
-                });
-            };
+            //     modalInstance.result.then(function(course_id) {
+            //         if (course_id)
+            //             $state.go("course.course_editor", {
+            //                 course_id: course_id
+            //             })
+            //     }, function() {
+            //         $log.info('Modal dismissed at: ' + new Date());
+            //     });
+            // };
 
 
 

@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
 				// $rootScope.$watch('are_shared', function(){
 				// 	scope.are_shared = $rootScope.are_shared
 				// })
-				scope.are_shared = function(){
+				scope.areShared = function(){
 					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared
 				}
 				scope.getEndDate = function(start_date, duration){

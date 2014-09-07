@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
 	          function(data){
 	            $rootScope.current_user.shared = data.shared_items
 	            delete $rootScope.current_user.shared_items[scope.id]
-	            $state.transitionTo('show_shared')
+	            $state.go('show_shared',{}, {reload:true})
 	          },
 	          function(){}
 	        )

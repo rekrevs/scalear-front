@@ -225,7 +225,7 @@ exports.delete_item_by_number = function(ptor, mo_no, item_no){
 //====================================================
 
 exports.open_module = function(ptor, mo_no){
-	element(by.repeater('module in modules').row(mo_no-1)).click()
+	element(by.className('content-navigator-container')).element(by.repeater('module in modules').row(mo_no-1)).click()
 	// locator.by_repeater(ptor, 'module in modules').then(function(mods){
 	// 	mods[mo_no-1].click();
 	// })
@@ -235,11 +235,7 @@ exports.open_module = function(ptor, mo_no){
 //            click on an item to edit
 //====================================================
 exports.open_item = function(ptor, mo_no, item_no){
-	// locator.by_repeater(ptor, 'module in modules').then(function(mods){
-		ptor.findElements(protractor.By.repeater('item in module.items')).then(function(items){
-			items[item_no-1].click();
-		})
-	// })
+	 element(by.repeater('module in modules').row(mo_no-1)).element(by.repeater('item in module.items').row(item_no-1)).click()
 }
 
 //====================================================
@@ -1340,6 +1336,21 @@ exports.share_module=function(ptor, mo_no, share_with){
 	// 	o_c.feedback(ptor, 'Data was successfully shared with')
 	// })
 
+}
+
+exports.share_item=function(ptor, item_no, share_with){
+	o_c.open_content(ptor)
+	element(by.id('share_copy')).click()
+	o_c.hide_dropmenu(ptor)
+	var items=element(by.className('shared-tree')).all(by.tagName('a'))
+	var checkboxes = element(by.className('shared-tree')).all(by.tagName('input'))
+	expect(checkboxes.get(0).getAttribute('checked')).toBe(null)
+	expect(checkboxes.get(item_no).getAttribute('checked')).toBe('true')
+	element(by.model('$parent.selected_teacher')).sendKeys(share_with)
+	element(by.buttonText('Share')).click()
+	// .then(function(){
+	// 	o_c.feedback(ptor, 'Data was successfully shared with')
+	// })
 }
 
 exports.check_module_number = function(ptor, no_of_mo){

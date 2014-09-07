@@ -106,27 +106,30 @@ angular.module('scalearAngularApp')
                 return due.getFullYear() > today.getFullYear()+100
             }
 
-            $scope.updateDueDate=function(type,enabled){
+            $scope.updateDueDate=function(){
                 var enabled = $scope.module.due_date_enabled
-                var d = new Date($scope.module.due_date)
+                var due_date = new Date($scope.module.due_date)
+                var week = 7
                 if(isDueDateDisabled() && enabled) 
                     var years =  -200 
                 else if(!isDueDateDisabled() && !enabled)
                     var years  =  200
                 else
                     var years = 0
-                d.setFullYear(d.getFullYear()+ years)
-                $scope.module.due_date = d
+                due_date.setFullYear(due_date.getFullYear()+ years)
+
+                var appearance_date = new Date($scope.module.appearance_time)
+                if(due_date <= appearance_date){
+                    due_date=appearance_date
+                    due_date.setDate(appearance_date.getDate()+ week)
+                }
+                
+                $scope.module.due_date = due_date
                 $scope.module.due_date_enabled =!isDueDateDisabled()
             }
 
             $scope.visible = function(appearance_time) {
                 return new Date(appearance_time) <= new Date()
-                // if ()) {
-                //     return true;
-                // } else {
-                //     return false;
-                // }
             }
 
             $scope.addCustomLink=function(){

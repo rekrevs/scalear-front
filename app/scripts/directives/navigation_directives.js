@@ -293,13 +293,12 @@ angular.module('scalearAngularApp')
 	  	if($state.params.module_id){
 	  		scope.currentmodule = {id: $state.params.module_id}
    	  		scope.currentitem = $state.params.lecture_id || $state.params.quiz_id
-	  		// unwatch()
+	  	}
+	  	else{
+	  		scope.currentmodule = null
+	  		scope.currentitem = null
 	  	}
    	  })
-   	  // scope.$watch('modules.length',function(){
-   	  // 	if(scope.modules)
-   	  // 		scope.currentmodule = {id: $state.params.module_id}
-   	  // })
 
    	  scope.moduleSortableOptions={
  		axis: 'y',

@@ -110,18 +110,27 @@ angular.module('scalearAngularApp')
                 return due.getFullYear() > today.getFullYear()+100
             }
 
-            $scope.updateDueDate=function(type,enabled){
+            $scope.updateDueDate=function(){
                 var enabled = $scope.lecture.due_date_enabled
-                var d = new Date($scope.lecture.due_date)
+                var due_date = new Date($scope.lecture.due_date)
+                var week = 7
                 if(isDueDateDisabled($scope.lecture.due_date) && enabled) 
                     var years =  -200 
                 else if(!isDueDateDisabled($scope.lecture.due_date) && !enabled)
                     var years  =  200
                 else
                     var years = 0
-                d.setFullYear(d.getFullYear()+ years)
-                $scope.lecture.due_date = d
+                due_date.setFullYear(due_date.getFullYear()+ years)
+
+                var appearance_date = new Date($scope.lecture.appearance_time)
+                if(due_date <= appearance_date){
+                    due_date=appearance_date
+                    due_date.setDate(appearance_date.getDate()+ week)
+                }
+
+                $scope.lecture.due_date = due_date
                 $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date)
+                $scope.lecture.due_date_module = $scope.lecture.due_date_enabled
             }
             $scope.visible = function(appearance_time) {
                 if (new Date(appearance_time) <= new Date()) {

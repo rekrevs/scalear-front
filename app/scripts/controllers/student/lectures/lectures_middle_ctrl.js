@@ -130,7 +130,7 @@ angular.module('scalearAngularApp')
                     if(key=="due")
                         $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
                     else if(key=="today")
-                        $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
+                        $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$filter("date")($scope.alert_messages[key],'shortTime')
                 }
                 console.log("$scope.course")
                 console.log($scope.course)
@@ -321,7 +321,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.timeUpdate = function(){
-        console.log('1')
         $scope.current_time = $scope.lecture_player.controls.getTime()
         $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
     }

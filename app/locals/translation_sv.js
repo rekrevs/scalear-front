@@ -1,6 +1,6 @@
 var translation_sv=function(){
     return {
-      online_name_comment:'(Din online namn visas för andra elever och lärare när du gör kommentarer eller ställa frågor. Om du inte vill ha anonyma kommentarer in i ditt riktiga namn här.)',
+      online_name_comment:'(Din Online namn visas för andra elever och lärare när du gör kommentarer eller ställa frågor. Om du vill vara anonym, använd standard eller en pseudonym.)',
       finished: 'Kom',
       yes: 'Ja',
       no: 'Nej',

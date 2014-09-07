@@ -1,6 +1,6 @@
 var translation_en=function(){
     return {
-      online_name_comment: '(Your online name is shown to other students and teachers when you make comments or ask questions. If you do not want to have anonymous comments put in your real name here.)',
+      online_name_comment: '(Your Online Name is shown to other students and teachers when you make comments or ask questions. If you wish to be anonymous, use the default or a pseudonym.)',
       finished: 'Finished',
       yes: 'Yes',
       no: 'No',

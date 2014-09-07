@@ -824,7 +824,7 @@ var translation_sv=function(){
               no_quizzes: "Inga quiz-Frågor",
               in_correct_place: "på rätt plats",
               another_quiz_consider_shifting: "Det finns en annan quiz-fråga inom fem sekunder från det denna - överväg att flytta den.",
-              update_account_information: "Du behöver uppdatera din kontoinformation innan du fortsätter"
+              update_account_information: "Vänligen uppdatera din kontoinformation för att använda den nya versionen av ScalableLearning."
           },
           statistics:{
             statistics_dashboard: "Statistikpanelen",

@@ -20,7 +20,7 @@
                              <small ng-show="user.errors.name" class="error with-tiny-padding">{{user.errors.name.join()}}</small>
                         </div>
                         <div class="with-small-margin-top small-3 columns">
-                            <label><small style="font-style:italic;" translate>courses.required</small></label>
+                            <label><small style="font-style:italic;" ng-class="{'color-red': !user.name}" translate>courses.required</small></label>
                         </div>
                     </div>
                 </div>
@@ -41,7 +41,7 @@
                            <small ng-show="user.errors.last_name" class="error with-tiny-padding">{{user.errors.last_name.join()}}</small>
                           </div>
                         <div class="with-small-margin-top small-3 columns">
-                            <label><small style="font-style:italic;" translate>courses.required</small></label>
+                            <label><small style="font-style:italic;" ng-class="{'color-red': !user.last_name}" translate>courses.required</small></label>
                         </div>
                   </div>
                 </div>
@@ -62,7 +62,7 @@
                         <small ng-show="user.errors.email" class="error with-tiny-padding">{{user.errors.email.join()}}</small>
                     </div>
                     <div class="with-small-margin-top small-3 columns">
-                              <label><small style="font-style:italic;" translate>courses.required</small></label>
+                              <label><small style="font-style:italic;" ng-class="{'color-red': !user.email}" translate>courses.required</small></label>
                       </div>
                     </div>
                   </div>
@@ -83,7 +83,7 @@
                         <small ng-show="user.errors.university" class="error with-tiny-padding">{{user.errors.university.join()}}</small>
                       </div>
                       <div class="with-small-margin-top small-3 columns">
-                              <label><small style="font-style:italic;" translate>courses.required</small></label>
+                              <label><small style="font-style:italic;" ng-class="{'color-red': !user.university}" translate>courses.required</small></label>
                       </div>
                     </div>
                   </div>
@@ -104,7 +104,7 @@
                           <small ng-show="user.errors.screen_name" class="error with-tiny-padding">{{user.errors.screen_name.join()}}</small>
                           </div>
                       <div class="with-small-margin-top small-3 columns">
-                            <label><small style="font-style:italic;" translate>courses.required</small></label>
+                            <label><small style="font-style:italic;" ng-class="{'color-red': !user.screen_name}" translate>courses.required</small></label>
                       </div>
                     </div>
                   </div>

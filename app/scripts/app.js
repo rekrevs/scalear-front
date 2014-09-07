@@ -226,9 +226,9 @@ angular.module('scalearAngularApp', [
                     if(s == 2){
                         $rootScope.show_alert = "error";
                         ErrorHandler.showMessage($translate("controller_msg.update_account_information"), 'errorMessage', 8000);
-                        $timeout(function() {
-                            $rootScope.show_alert = "";
-                        }, 7000);
+                        // $timeout(function() {
+                        //     $rootScope.show_alert = "";
+                        // }, 7000);
                     }
                     // success
                })

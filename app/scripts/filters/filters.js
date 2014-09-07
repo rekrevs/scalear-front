@@ -91,7 +91,7 @@ angular.module('scalearAngularApp')
   })
   .filter("formatURL", function(){
     return function(url){
-      if(url)
+      // if(url)
         if (!url.match(/^[a-zA-Z]+:\/\//)){
             url = 'http://' + url;
         }

@@ -92,9 +92,9 @@
 		            	</span>
 					</accordion-group>
 					<span ui-sortable="moduleSortableOptions" ng-model='modules'>
-						<accordion-group ng-show="modules.length" class="module accordion-group" ng-repeat="module in modules" is-open="{{currentmodule.id == module.id}}">
+						<accordion-group ng-show="modules.length" class="module accordion-group" ng-repeat="module in modules" close="currentmodule.id != module.id">
 							<accordion-heading class="accordion-heading">
-								<module data="module" ng-click="setCurrentModule(module)" current="currentmodule.id == module.id" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" >
+								<module data="module" current="currentmodule.id == module.id" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" >
 								</module>
 							</accordion-heading>
 		          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>

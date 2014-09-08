@@ -20,7 +20,7 @@
 	<div class="small-12 large-6 columns" ng-show="events.length && !large_calendar">
 		<h3 class="show-for-small" ng-show="events.length"><!-- <i class="fi-loop size-30"></i> --> <span translate>whats_new</span></h3>
 		<!-- <news-feed events="events"></news-feed> -->
-		<event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event"></event-item>
+		<event-item ng-repeat="event in events | orderBy:'timestamp':'reverse'" event="event" role="current_user.roles[0].id"></event-item>
 	</div>
 	<div class="large-6 columns hide-for-medium-down" ng-class="{'large-12 auto-right position-relative': !events.length ||large_calendar}" ng-show="eventSources.length" style="right: 1rem;">
 	 	<div class="calendar-container" ng-class="{widecalendar: !announcements.length}">

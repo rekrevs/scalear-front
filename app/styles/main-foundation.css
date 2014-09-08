@@ -283,7 +283,10 @@ select{
 .uppercase{
 	text-transform: uppercase;
 }
-
+/*FONT WEIGHT*/
+.text-bold{
+  font-weight: bold !important;
+}
 /*TEST STYLES*/
 .text-italic{
   font-style: italic !important;
@@ -637,6 +640,10 @@ td.right-border{
     height: 8px;
     /*z-index: 5000;*/
     position: absolute;
+}
+.scrollable-if-tall{
+  max-height: 90vh !important;
+  overflow-y: auto; 
 }
 
 

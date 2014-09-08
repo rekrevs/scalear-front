@@ -58,7 +58,7 @@
     }
     .timeline-item{
         cursor: pointer;
-        width: 45px;
+        width: 25px;
         position: relative;
         left: -4px;
     }

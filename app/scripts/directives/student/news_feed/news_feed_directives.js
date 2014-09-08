@@ -26,7 +26,8 @@ angular.module('scalearAngularApp')
 				// body: '=',
 				// date: '=',
 				// typee: '='
-				event: '='
+				event: '=',
+				role: '='
 				// announcement_body: '='
 			},
       		templateUrl: '/views/student/news_feed/event_item.html',

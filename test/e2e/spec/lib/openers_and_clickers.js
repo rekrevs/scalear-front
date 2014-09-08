@@ -411,45 +411,47 @@ exports.cancel_account=function(){
 //     ptor.findElement(protractor.By.xpath('//*[@id="main"]/div/div[1]/div/div/center/div[3]/form/div/table/tbody/tr/td[3]/table/tbody/tr[3]/td/input')).click();
 // }
 
-// //====================================================
-// //                 confirm account
-// //====================================================
-// exports.confirm_account = function(ptor, smail, feedback){
-//     ptor.driver.get('https://www.guerrillamail.com/inbox');
-//         ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
-//             inbox.click().then(function(){
-//                 ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
-//                     mail.sendKeys(smail.split('@')[0]).then(function(){
-//                         ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
-//                             set_btn.click().then(function(){
-//                                 ptor.driver.findElement(protractor.By.id('use-alias')).then(function(check_scram){
-//                                     check_scram.click().then(function(){
-//                                         ptor.driver.sleep(11000);
-//                                         ptor.driver.findElements(protractor.By.tagName('td')).then(function(emails){
-//                                             console.log(emails.length);
-//                                             emails[1].click();
-//                                             ptor.driver.sleep(3000).then(function(){
-//                                                 ptor.driver.findElement(protractor.By.partialLinkText('confirmation?confirmation_token')).then(function(link){
-//                                                     link.getAttribute('href').then(function(confirm_link){
-//                                                         var final_link = params.frontend+confirm_link.split('.com/#')[1];
-//                                                         ptor.driver.get(final_link).then(function(){
-//                                                             feedback(ptor, 'Your account was successfully confirmed. You are now signed in.');
-//                                                             ptor.driver.sleep(7000)
-//                                                             ptor.navigate().refresh();
-//                                                         })
-//                                                     })
-//                                                 })
-//                                             })
-//                                         })
-//                                     })
-//                                 })
-//                             })
-//                         })
-//                     })
-//                 });
-//            })
-//        })
-// }
+//====================================================
+//                 confirm account
+//====================================================
+exports.confirm_account = function(ptor, smail){
+    ptor.driver.get('https://www.guerrillamail.com/inbox');
+        ptor.driver.findElement(protractor.By.id("inbox-id")).then(function(inbox){
+            inbox.click().then(function(){
+                ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/input')).then(function(mail){
+                    mail.clear()
+                    mail.sendKeys(smail.split('@')[0]).then(function(){
+                        ptor.driver.findElement(protractor.By.xpath('//*[@id="inbox-id"]/button[1]')).then(function(set_btn){
+                            set_btn.click().then(function(){
+                                ptor.driver.findElement(protractor.By.id('use-alias')).then(function(check_scram){
+                                    check_scram.click().then(function(){
+                                        ptor.driver.sleep(11000);
+                                        ptor.driver.findElements(protractor.By.tagName('td')).then(function(emails){
+                                            console.log(emails.length);
+                                            emails[1].click();
+                                            ptor.driver.sleep(3000).then(function(){
+                                                ptor.driver.findElement(protractor.By.partialLinkText('confirmation?confirmation_token')).then(function(link){
+                                                    link.getText().then(function(confirm_link){
+                                                        console.log(confirm_link);
+                                                        var final_link = params.frontend+confirm_link.split('#')[1];
+                                                        ptor.driver.get(final_link).then(function(){
+                                                            // feedback(ptor, 'Your account was successfully confirmed. You are now signed in.');
+                                                            ptor.driver.sleep(7000)
+                                                            ptor.navigate().refresh();
+                                                        })
+                                                    })
+                                                })
+                                            })
+                                        })
+                                    })
+                                })
+                            })
+                        })
+                    })
+                });
+           })
+       })
+}
 
 
 

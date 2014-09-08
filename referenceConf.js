@@ -70,7 +70,7 @@ exports.config = {
         // 'test/e2e/spec/mcq-survey-over-video.spec.js',//done
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',//done
 
-        // 'test/e2e/spec/student-lectures.spec.js',
+        // 'test/e2e/spec/student-lectures.spec.js', //done
 
         // 'test/e2e/spec/init-progress-data.spec.js', //done       
         // 'test/e2e/spec/progress-main.spec.js',//done
@@ -83,11 +83,13 @@ exports.config = {
         // 'test/e2e/spec/enrollment-help.spec.js',//done
         // 'test/e2e/spec/notes.spec.js',//done
         // 'test/e2e/spec/discussions.spec.js',//done
+         // 'test/e2e/spec/module-statistics.spec.js',//not done
+
 
         // 'test/e2e/spec/timeline.spec.js',//done
 
         // 'test/e2e/spec/validations.spec.js',//not done
-
+         'test/e2e/spec/user-cycle.spec.js',//not done
 
     ],
 
@@ -106,7 +108,7 @@ exports.config = {
     // A base URL for your application under test. Calls to protractor.get()
     // with relative paths will be prepended with this.
     // baseUrl: 'http://staging.scalable-learning.com/#',
-    baseUrl: 'http://0.0.0.0:9000/#',
+    // baseUrl: 'http://0.0.0.0:9000/#',
 
 
     // Selector for the element housing the angular app - this defaults to
@@ -143,13 +145,13 @@ exports.config = {
 
 
         //mena
-        // frontend: 'http://0.0.0.0:9000/#/',
-        // // // frontend: 'http://staging.scalable-learning.com/#',
-        // // // teacher_mail: 'teacher3@sharklasers.com',
-        // student_mail: 'studenttest@sharklasers.com',
-        // student_mail_2: 'studenttest2@sharklasers.com',
-        // student_mail_3: 'student6@email.com',
-        
+        frontend: 'http://0.0.0.0:9000/#',
+        // // frontend: 'http://staging.scalable-learning.com/#',
+        // // teacher_mail: 'teacher3@sharklasers.com',
+        student_mail: 'studenttest@sharklasers.com',
+        student_mail_2: 'studenttest2@sharklasers.com',
+        student_mail_3: 'student6@email.com',
+
         // teacher_mail: 'teacher2@sharklasers.com',
         // // // teacher_mail: 'teacher15@sharklasers.com',
 

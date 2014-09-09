@@ -275,7 +275,7 @@ angular.module('scalearAngularApp')
  }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course', function(Module, $stateParams, $state, $timeout, Lecture, Course){
   return{
     restrict:'E',
-    // replace: true,
+    replace: true,
     transclude: true,
     scope:{
       links:'=',

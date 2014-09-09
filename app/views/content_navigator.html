@@ -1,116 +1,101 @@
-<span style="position: fixed; z-index: 2;">
-	<div ng-switch="mode" class="content-navigator-container" ng-class="{containeropen: open_navigator}">
-		<center><loading size="small" show="!modules"></loading></center>
-		<div bindonce>
-			<span  ng-switch-when="courseware">
-				<!-- <a class="button expand" ui-sref="course.course_information" style="top: 1px;box-shadow: 0.1em 0.01em 0.5em grey;" translate>head.course_information</a>
+<div ng-switch="mode" class="content-navigator-container" ng-class="{'containeropen small-12 medium-4 large-3 columns no-padding no-margin': open_navigator}" style="margin-top: -5px !important; position: fixed;">
+	<center><loading size="small" show="!modules"></loading></center>
+	<div bindonce>
+		<span  ng-switch-when="courseware">
+			<accordion class="accordion">
+				<accordion-group class="accordion-group" is-open="false">
+					<accordion-heading class="accordion-heading">
+					<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
+						<div class="show-inline" ng-click="goToCourseInfoStudent()" translate>head.course_information</div>
+					</div>		
+						<!-- <a ui-sref="course.course_information"translate>head.course_information</a>						 -->
+					</accordion-heading>
+				</accordion-group>
+				<accordion-group class="accordion-group">
+					<accordion-heading class="accordion-heading">
+						<div style="padding: 5px;border-bottom: 1px solid white;">
+							<div class="show-inline">Course Links</div>
+						</div>							
+					</accordion-heading>
+					<ul ng-repeat="link in links">
+						<div  style="padding:0 4px;">
+							<a class="with-margin-left" bo-href="link.url" target="_blank"  class="truncate-70 show-inline" bo-text="link.name"></a>
+						</div>
+					</ul>
+				</accordion-group>
+				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
+					<accordion-heading class="accordion-heading">
+						<div bindonce class="valign-middle" ng-click="showModuleCourseware(module)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
+							<module-progress-check module="module" style="margin-right: 10px; float: right;"></module-progress-check>
+							<div class="truncate-70 with-small-margin-left" bo-text="module.name"></div>
+						</div>
+						
+					</accordion-heading>
+					<ul ng-click="showItemCourseware(item)" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items">
+						<div>
+							<div class="truncate-70 with-margin-left show-inline valign-middle" bo-text="item.name"></div>
+							<i class="fi-check right with-tiny-margin-left color-green size-16 valign-middle" ng-show="item.is_done"></i>
+						</div>
+					</ul>
+					<ul bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'">
+						<a class="with-margin-left dark-text" bo-href="link.url" target="_blank" bo-text="link.name"></a>
+					</ul>
+				</accordion-group>
+			</accordion>
+		</span>
+		<span ng-switch-when="editor">
+			<!-- <a class="button expand" ui-sref="course.edit_course_information" style="top: 1px;box-shadow: 0.1em 0.01em 0.5em grey;" translate>head.course_information</a> -->
+			<!-- <div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
+			<ul class="no-margin" ui-sortable="listSortableOptions" ng-model='links'>
+				<li ng-repeat="link in links" class='links accordion-group'>
+					<link-item link="link" small="true">
+				</li>
+			</ul>
+			<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>courses.modules</div> -->
+			<!-- <accordion class="no-margin" close-others="false">
+				
+			</accordion> -->
 
 
-				<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
-				<ul class="accordion">
-					<li ng-repeat="link in links" class='module accordion-group'>
-						<link-item link="link" update="updateCustomLink" remove="removeCustomLink" nameval="validateName" urlval="validateURL" small="true">
-						<a bo-href="link.url" target="_blank" bo-text="link.name"></a>
-					</li>
-				</ul>
- -->
-
-				<!-- <div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>courses.modules</div> -->
-				<accordion class="accordion">
-					<accordion-group class="accordion-group" is-open="false">
+			<accordion class="accordion no-margin">
+				<accordion-group class="accordion-group">
+					<accordion-heading class="accordion-heading" >
+					<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.edit_course_information.**' | includedByState)}" ng-click="goToCourseInfoTeacher()">
+						<div class="show-inline"  translate>head.course_information</div>
+					</div>						
+					</accordion-heading>
+				</accordion-group>
+				<accordion-group class="accordion-group" open="links.length">
+					<accordion-heading class="accordion-heading" >
+						<div style="padding: 5px;border-bottom: 1px solid white;" ng-class="{'with-bigger-margin-left': ('**.course_editor.**' | includedByState)}">
+							<div class="show-inline">Course Links</div>
+						</div>	
+					</accordion-heading>
+					<span class="no-margin" ui-sortable="listSortableOptions" ng-model='links'>
+	            		<li class="links"  ng-repeat="link in links">
+	            			<link-item link="link" small="true">
+	            		</li>
+	            	</span>
+				</accordion-group>
+				<span ui-sortable="moduleSortableOptions" ng-model='modules'>
+					<accordion-group ng-show="modules.length" class="module accordion-group" ng-repeat="module in modules" close="currentmodule.id != module.id">
 						<accordion-heading class="accordion-heading">
-						<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
-							<div class="show-inline" ng-click="goToCourseInfoStudent()" translate>head.course_information</div>
-						</div>		
-							<!-- <a ui-sref="course.course_information"translate>head.course_information</a>						 -->
+							<module data="module" current="currentmodule.id == module.id" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" >
+							</module>
 						</accordion-heading>
-					</accordion-group>
-					<accordion-group class="accordion-group">
-						<accordion-heading class="accordion-heading">
-							<div style="padding: 5px;border-bottom: 1px solid white;">
-								<div class="show-inline">Course Links</div>
-							</div>							
-						</accordion-heading>
-						<ul ng-repeat="link in links">
-							<div  style="padding:0 4px;">
-								<a class="with-margin-left" bo-href="link.url" target="_blank"  class="truncate-70 show-inline" bo-text="link.name"></a>
-							</div>
-						</ul>
-					</accordion-group>
-					<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
-						<accordion-heading class="accordion-heading">
-							<div bindonce class="valign-middle" ng-click="showModuleCourseware(module)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
-								<module-progress-check module="module" style="margin-right: 10px; float: right;"></module-progress-check>
-								<div class="truncate-70 with-small-margin-left" bo-text="module.name"></div>
-							</div>
-							
-						</accordion-heading>
-						<ul ng-click="showItemCourseware(item)" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem == item.id}" ng-repeat="item in module.items">
-							<div>
-								<div class="truncate-70 with-margin-left show-inline valign-middle" bo-text="item.name"></div>
-								<i class="fi-check right with-tiny-margin-left color-green size-16 valign-middle" ng-show="item.is_done"></i>
-							</div>
-						</ul>
-						<ul bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'">
-							<a class="with-margin-left dark-text" bo-href="link.url" target="_blank" bo-text="link.name"></a>
-						</ul>
-					</accordion-group>
-				</accordion>
-			</span>
-			<span ng-switch-when="editor">
-				<!-- <a class="button expand" ui-sref="course.edit_course_information" style="top: 1px;box-shadow: 0.1em 0.01em 0.5em grey;" translate>head.course_information</a> -->
-				<!-- <div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>groups.external_link</div>
-				<ul class="no-margin" ui-sortable="listSortableOptions" ng-model='links'>
-					<li ng-repeat="link in links" class='links accordion-group'>
-						<link-item link="link" small="true">
-					</li>
-				</ul>
-				<div style="text-align: left;margin: 10px 0 2px 6px;font-weight: bold;font-size: 15px;" translate>courses.modules</div> -->
-				<!-- <accordion class="no-margin" close-others="false">
-					
-				</accordion> -->
-
-
-				<accordion class="accordion no-margin">
-					<accordion-group class="accordion-group">
-						<accordion-heading class="accordion-heading" >
-						<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.edit_course_information.**' | includedByState)}" ng-click="goToCourseInfoTeacher()">
-							<div class="show-inline"  translate>head.course_information</div>
-						</div>						
-						</accordion-heading>
-					</accordion-group>
-					<accordion-group class="accordion-group" open="links.length">
-						<accordion-heading class="accordion-heading" >
-							<div style="padding: 5px;border-bottom: 1px solid white;" ng-class="{'with-bigger-margin-left': ('**.course_editor.**' | includedByState)}">
-								<div class="show-inline">Course Links</div>
-							</div>	
-						</accordion-heading>
-						<span class="no-margin" ui-sortable="listSortableOptions" ng-model='links'>
-		            		<li class="links"  ng-repeat="link in links">
-		            			<link-item link="link" small="true">
+	          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
+		            		<li class="last-child item looks-like-a-link" ng-repeat="item in module.items" ng-class="{currentitem: currentitem == item.id}">
+	             				<item data="item" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="copy(item)" paste="paste(module.id, $parent.$index)" share="openShareModal(item.id,item.class_name)"></item>
 		            		</li>
 		            	</span>
 					</accordion-group>
-					<span ui-sortable="moduleSortableOptions" ng-model='modules'>
-						<accordion-group ng-show="modules.length" class="module accordion-group" ng-repeat="module in modules" close="currentmodule.id != module.id">
-							<accordion-heading class="accordion-heading">
-								<module data="module" current="currentmodule.id == module.id" copy="copy(module)" paste="paste(module.id, $index)" share="openShareModal(module.id)" >
-								</module>
-							</accordion-heading>
-		          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
-			            		<li class="last-child item looks-like-a-link" ng-repeat="item in module.items" ng-class="{currentitem: currentitem == item.id}">
-		             				<item data="item" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" copy="copy(item)" paste="paste(module.id, $parent.$index)" share="openShareModal(item.id,item.class_name)"></item>
-			            		</li>
-			            	</span>
-						</accordion-group>
-					</span>
-				</accordion>
-				<i ng-show="!modules.length" class="muted"><br /><span style="padding-left:10px" translate>groups.empty</span>...</i>
-				
-			</span>
-			<br>
-		</div>
-		<br>
+				</span>
+			</accordion>
+			<i ng-show="!modules.length" class="muted"><br /><span style="padding-left:10px" translate>groups.empty</span>...</i>
+			
+		</span>
 		<br>
 	</div>
-</span>
+	<br>
+	<br>
+</div>

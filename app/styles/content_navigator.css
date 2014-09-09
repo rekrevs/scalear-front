@@ -31,34 +31,37 @@ li{
   transition: all 0.3s ease-in-out;
 }
 .content-navigator-container{
-  margin-top: -5px;
-  width: 300px;
+  /*margin-top: -50px;*/
+  /*width: 300px;*/
   /*margin-top: 20px;*/
   /*padding: 10px;*/
-  left: -300px;
-  position: fixed;
-  display: inline-block;
+  /*left: -300px;*/
+  /*position: fixed;*/
+  display: none;
+  left: 0px;
+  /*display: inline-block;*/
   /*background-color: #222;*/
   background-color: white;
   /*box-shadow: 1px 1px 1px lightgrey;*/
   height: 88%;
   overflow-y: auto;
   z-index: 1 !important;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 .containeropen{
-  height: 88%;
-  width: 300px;
-  left: 0px;
-  -webkit-transition: all 0.3s ease-in-out;
-  -moz-transition: all 0.3s ease-in-out;
-  -o-transition: all 0.3s ease-in-out;
-  -ms-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  /*height: 88%;*/
+  /*width: 300px;*/
+  /*left: 0px;*/
+  display: inline-block;
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 .accordion {
   margin-bottom: 5px;

@@ -958,7 +958,8 @@ h2 .editable-click{
 
 /*Video styles*/
 .flex-video.widescreen{
-	padding-bottom: 53.7%;
+	/*padding-bottom: 53.7%;*/
+  padding-bottom: 53.25% !important;
 }
 .fit-inside{
   max-width: 100%;

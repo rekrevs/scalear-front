@@ -31,11 +31,12 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder panel widescreen" style="padding:0; border:none" ng-transclude></div>' //style="border:4px solid" 
+			template: '<div class="videoborder panel widescreen transparent" style="padding:0; border:none" ng-transclude></div>' //style="border:4px solid" 
 		};
 	})
 	.directive('youtube',['$rootScope','$log','$timeout','$window',function($rootScope,$log,$timeout,$window){
 		return {
+			transclude: true,
 			restrict: 'E',
 			replace:true,
 			scope:{
@@ -47,7 +48,7 @@ angular.module('scalearAngularApp')
                 controls: '@',
 
 			},
-            template:"<div></div>",
+            template:"<div><div ng-transclude></div></div>",
 			link: function(scope, element){
 
                 scope.vq='hd720';

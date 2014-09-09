@@ -53,7 +53,7 @@ exports.config = {
         // 'test/e2e/spec/enrolled-students.spec.js',//done
         // 'test/e2e/spec/create-announcements.spec.js',//done
         // 'test/e2e/spec/sharing.spec.js',//done
-        'test/e2e/spec/copying.spec.js',//done
+        // 'test/e2e/spec/copying.spec.js',//done
 
         // 'test/e2e/spec/normal-quiz.spec.js',//done
         // 'test/e2e/spec/normal-survey.spec.js',//done
@@ -83,14 +83,15 @@ exports.config = {
         // 'test/e2e/spec/enrollment-help.spec.js',//done
         // 'test/e2e/spec/notes.spec.js',//done
         // 'test/e2e/spec/discussions.spec.js',//done
-         // 'test/e2e/spec/module-statistics.spec.js',//not done
-
-
+        // 'test/e2e/spec/module-statistics.spec.js',//not done
+        // 'test/e2e/spec/user-cycle.spec.js',//done
         // 'test/e2e/spec/timeline.spec.js',//done
 
-        // 'test/e2e/spec/validations.spec.js',//not done
-         'test/e2e/spec/user-cycle.spec.js',//not done
+        'test/e2e/spec/account-info-validation.spec.js',//done
 
+
+        // 'test/e2e/spec/validations.spec.js',//not done
+        // 'test/e2e/spec/forget-password-resend-conf.spec.js',// not done
     ],
 
     // ----- Capabilities to be passed to the webdriver instance ----
@@ -133,15 +134,15 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
         //local
-        frontend: 'http://0.0.0.0:9000/#',
-        admin_mail: 'admin@scalear.com',
-        teacher_mail: 'teacher1@sharklasers.com',
-        teacher2_mail: 'teacher3@sharklasers.com',
-        student_mail: 'studenttest@sharklasers.com',
-        student2_mail: 'studenttest2@sharklasers.com',
-        student3_mail: 'student_mail_2@sharklasers.com',
+        // frontend: 'http://0.0.0.0:9000/#',
+        // admin_mail: 'admin@scalear.com',
+        // teacher_mail: 'teacher1@sharklasers.com',
+        // teacher2_mail: 'teacher3@sharklasers.com',
+        // student_mail: 'studenttest@sharklasers.com',
+        // student2_mail: 'studenttest2@sharklasers.com',
+        // student3_mail: 'student_mail_2@sharklasers.com',
         password: 'password',
-        admin_password:"password",
+        // admin_password:"password",
 
 
         //mena
@@ -152,7 +153,7 @@ exports.config = {
         student_mail_2: 'studenttest2@sharklasers.com',
         student_mail_3: 'student6@email.com',
 
-        // teacher_mail: 'teacher2@sharklasers.com',
+        teacher_mail: 'teacher2@sharklasers.com',
         // // // teacher_mail: 'teacher15@sharklasers.com',
 
         // // student_mail: 'mena.happy@yahoo.com',

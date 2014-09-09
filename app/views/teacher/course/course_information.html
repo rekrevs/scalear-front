@@ -6,7 +6,7 @@
             <img ng-src="{{course.image_url || '../images/course_image.png'}}" />
         </div> -->
         <img class="small-10 medium-6 large-12 columns with-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
-        <div class="small-12 columns no-padding" class="show-for-large-up">
+        <div class="small-12 columns no-padding">
             <button type="button" id="calendar_btn" class="button tiny uppercase" calendar-modal ng-click="openCalendar()">View Course Calendar</button>
             <button type="button" class="button tiny success" ng-click="exportCourse()" ><span translate>courses.export_as</span> CSV</button>
             <div id="enrollment_key" class="large-12 column with-margin-bottom no-padding">

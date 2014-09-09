@@ -117,11 +117,11 @@
                     </content-navigator>
                     <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" links="course.custom_links" open="open_navigator">
                     </content-navigator>
-                    <div ng-show="open_navigator" style="min-height: 1px;" class="containeropen small-12 medium-4 large-3 columns no-padding no-margin">
+                    <div ng-show="open_navigator" style="min-height: 1px;" class="containeropen small-12 medium-4 large-2 columns no-padding no-margin">
                         
                     </div>
                 <!-- </div> -->
-                <div class="row main_view" ng-class="{'small-12 medium-8 large-9 columns': open_navigator}" style="min-height: 83vh;">
+                <div class="row main_view" ng-class="{'small-12 medium-8 large-10 columns': open_navigator}" style="min-height: 83vh;">
                     <div class="small-12 columns "  ui-view=""></div>
                 </div>
                 

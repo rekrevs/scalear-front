@@ -618,8 +618,8 @@ td.right-border{
 }
 .align-center{
   width: 50%;
-  height: 15%;
-  overflow: auto;
+  height: 25%;
+  overflow: visible;
   margin: auto;
   position: absolute;
   top: 0;

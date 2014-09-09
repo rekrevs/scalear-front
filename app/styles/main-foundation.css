@@ -4,7 +4,16 @@ left: 12% !important;
 right: auto;
 width: 78%;
 }*/
-
+.containeropen.large-2{
+  min-width: 300px !important;
+  max-width: 300px !important;
+}
+.max-width-me{
+  max-width: calc(100% - 300px) !important;
+}
+.containeropen.small-12{
+  max-width: none !important;
+}
 .main_view{
   left:0;
   position: relative;
@@ -13,7 +22,7 @@ width: 78%;
 .row{
 	/*margin-top: 50px;*/
 	/*padding-top: 10px;*/
-	max-width: 82.5rem !important;
+	max-width: 85rem;
 }
 footer{
   bottom: 0px;
@@ -925,6 +934,13 @@ label{
   -o-transition: all 0.3s ease-in-out;
   -ms-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
+}
+.faster_ease_in_out{
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
 }
 
 .reveal-modal.fade {

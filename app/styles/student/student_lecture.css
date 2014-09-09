@@ -331,15 +331,12 @@
         }
      }
 
-      
-      .video_container{
-        /*float: left;*/
-        /*width:63%;*/
-      }
-
 @media only screen and (min-width: 1300px){
-     .navigator_open .widescreen, .navigator_open .video_class{
+    .navigator_open .widescreen, .navigator_open .video_class{
         width: 47.5vw;
         height: 26.7vw;
     }
-}
+    .video_class_full, .navigator_open .video_class_full {
+        width: 100%;
+        height: 98%;
+    }

@@ -130,7 +130,7 @@ angular.module('scalearAngularApp')
 
                 $scope.lecture.due_date = due_date
                 $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date)
-                $scope.lecture.due_date_module = $scope.lecture.due_date_enabled
+                $scope.lecture.due_date_module = !$scope.lecture.disable_due_controls && $scope.lecture.due_date_enabled
             }
             $scope.visible = function(appearance_time) {
                 if (new Date(appearance_time) <= new Date()) {

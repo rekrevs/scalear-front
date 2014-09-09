@@ -9,23 +9,19 @@ angular.module('scalearAngularApp')
                 pref: '='
             },
             link:function(scope,element,attrs){
-
-
                 scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
-                
-                scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];
-    
+                scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
                 $('.text_block').focus();
+
                 scope.postQuestion=function(item){
+                    scope.$emit("question_updated")
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
+                        if($rootScope.current_user.discussion_pref != scope.privacy.value){
+                            $rootScope.current_user.discussion_pref = scope.privacy.value;                                
+                            User.alterPref({},{privacy: scope.privacy.value})
+                        }
 
-                        //scope.action()(scope.current_question, scope.privacy.value)
-                            if($rootScope.current_user.discussion_pref != scope.privacy.value){
-                                $rootScope.current_user.discussion_pref = scope.privacy.value;                                
-                                User.alterPref({},{privacy: scope.privacy.value})
-                            }
-
-                            Forum.createPost(
+                        Forum.createPost(
                             {post: 
                                 {
                                     content: scope.current_question, 
@@ -39,7 +35,6 @@ angular.module('scalearAngularApp')
                                 item.data= response.post
                                 scope.error_message=null
                                 scope.current_question = ''
-                                scope.$emit("question_posted")
                             }, 
                             function(){
                                 console.log("failure")
@@ -50,11 +45,13 @@ angular.module('scalearAngularApp')
                         scope.error_message = $translate("discussion.cannot_be_empty")
                 }
                 scope.cancelQuestion=function(question){
+                    scope.$emit("question_updated")
                     scope.$emit('update_timeline', question)
                 }
 
                 shortcut.add("enter", function(){
                     scope.postQuestion(scope.item)
+                    scope.$apply()
                 }, {"disable_in_input" : false});
 
                 scope.$on('$destroy', function() {

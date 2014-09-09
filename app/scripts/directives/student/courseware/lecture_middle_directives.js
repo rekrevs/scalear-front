@@ -18,6 +18,7 @@ angular.module('scalearAngularApp')
           shortcut.remove("c");
           shortcut.remove("q");
           shortcut.remove("n");
+          shortcut.remove("f");
       });
     	
     	scope.show_message=false;
@@ -70,6 +71,10 @@ angular.module('scalearAngularApp')
           }, {"disable_in_input" : true});
           shortcut.add("n", function(){
             scope.notesBtn()
+            scope.$apply()
+          }, {"disable_in_input" : true});
+          shortcut.add("f", function(){
+            scope.fullBtn()
             scope.$apply()
           }, {"disable_in_input" : true});
   		}
@@ -690,7 +695,7 @@ angular.module('scalearAngularApp')
             time: scope.item.time
           }, 
           function(response){
-            scope.$emit("note_updated")
+            // scope.$emit("note_updated")
             scope.item.data = response.note
             //console.log(response.note)
           }, 
@@ -705,7 +710,7 @@ angular.module('scalearAngularApp')
         return {
             template: '<div onshow="moveCursorToEnd()" e-rows="3" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal;">'+
                         '<div style="word-break: break-word; padding: 3px; margin: 0px;width:100%; cursor: text;">'+
-                          '{{ value || ("empty"|translate)  }}'+
+                          '{{ value }}'+
                           // '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
                         '</div>'+
                       '</div>',
@@ -747,6 +752,7 @@ angular.module('scalearAngularApp')
                   scope.show()
 
                 scope.saveData = function() {
+                  scope.$emit("note_updated")
                   if(!scope.value)
                     scope.delete()
                   else

@@ -17,10 +17,10 @@
                 <input ng-disabled="sending" type="email" id="setting_user_email" ng-model="user.email" ng-class="{error: user.errors.email}" placeholder="Input your email address..." pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" />
                 <small ng-show="user.errors.email" class="error with-tiny-padding">{{user.errors.email.join()}}</small>
             </label>
-            <button type="submit" ng-disabled="sending" class="button">{{'password_edit.send_reset' | translate}}</button>
+            <button id="forget_btn" type="submit" ng-disabled="sending" class="button">{{'password_edit.send_reset' | translate}}</button>
         </div>
     </form>
-    <div class="small-12 column with-margin">
+<!--     <div class="small-12 column with-margin">
         <center>
             <br />
             <br />
@@ -30,5 +30,5 @@
             <br/>
             <a ui-sref="new_confirmation" translate="password_edit.didnt_receive_confirmation"></a>
         </center>
-    </div>
+    </div> -->
 </div>

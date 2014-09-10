@@ -53,7 +53,7 @@ exports.config = {
         // 'test/e2e/spec/enrolled-students.spec.js',//done
         // 'test/e2e/spec/create-announcements.spec.js',//done
         // 'test/e2e/spec/sharing.spec.js',//done
-        'test/e2e/spec/copying.spec.js',//done
+        // 'test/e2e/spec/copying.spec.js',//done
 
         // 'test/e2e/spec/normal-quiz.spec.js',//done
         // 'test/e2e/spec/normal-survey.spec.js',//done
@@ -70,7 +70,7 @@ exports.config = {
         // 'test/e2e/spec/mcq-survey-over-video.spec.js',//done
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',//done
 
-        // 'test/e2e/spec/student-lectures.spec.js',
+        // 'test/e2e/spec/student-lectures.spec.js', //done
 
         // 'test/e2e/spec/init-progress-data.spec.js', //done       
         // 'test/e2e/spec/progress-main.spec.js',//done
@@ -83,12 +83,15 @@ exports.config = {
         // 'test/e2e/spec/enrollment-help.spec.js',//done
         // 'test/e2e/spec/notes.spec.js',//done
         // 'test/e2e/spec/discussions.spec.js',//done
-
+        // 'test/e2e/spec/module-statistics.spec.js',//not done
+        // 'test/e2e/spec/user-cycle.spec.js',//done
         // 'test/e2e/spec/timeline.spec.js',//done
 
+        'test/e2e/spec/account-info-validation.spec.js',//done
+
+
         // 'test/e2e/spec/validations.spec.js',//not done
-
-
+        // 'test/e2e/spec/forget-password-resend-conf.spec.js',// not done
     ],
 
     // ----- Capabilities to be passed to the webdriver instance ----
@@ -106,7 +109,7 @@ exports.config = {
     // A base URL for your application under test. Calls to protractor.get()
     // with relative paths will be prepended with this.
     // baseUrl: 'http://staging.scalable-learning.com/#',
-    baseUrl: 'http://0.0.0.0:9000/#',
+    // baseUrl: 'http://0.0.0.0:9000/#',
 
 
     // Selector for the element housing the angular app - this defaults to
@@ -131,26 +134,26 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
         //local
-        frontend: 'http://0.0.0.0:9000/#',
-        admin_mail: 'admin@scalear.com',
-        teacher_mail: 'teacher1@sharklasers.com',
-        teacher2_mail: 'teacher3@sharklasers.com',
-        student_mail: 'studenttest@sharklasers.com',
-        student2_mail: 'studenttest2@sharklasers.com',
-        student3_mail: 'student_mail_2@sharklasers.com',
+        // frontend: 'http://0.0.0.0:9000/#',
+        // admin_mail: 'admin@scalear.com',
+        // teacher_mail: 'teacher1@sharklasers.com',
+        // teacher2_mail: 'teacher3@sharklasers.com',
+        // student_mail: 'studenttest@sharklasers.com',
+        // student2_mail: 'studenttest2@sharklasers.com',
+        // student3_mail: 'student_mail_2@sharklasers.com',
         password: 'password',
-        admin_password:"password",
+        // admin_password:"password",
 
 
         //mena
-        // frontend: 'http://0.0.0.0:9000/#/',
-        // // // frontend: 'http://staging.scalable-learning.com/#',
-        // // // teacher_mail: 'teacher3@sharklasers.com',
-        // student_mail: 'studenttest@sharklasers.com',
-        // student_mail_2: 'studenttest2@sharklasers.com',
-        // student_mail_3: 'student6@email.com',
-        
-        // teacher_mail: 'teacher2@sharklasers.com',
+        frontend: 'http://0.0.0.0:9000/#',
+        // // frontend: 'http://staging.scalable-learning.com/#',
+        // // teacher_mail: 'teacher3@sharklasers.com',
+        student_mail: 'studenttest@sharklasers.com',
+        student_mail_2: 'studenttest2@sharklasers.com',
+        student_mail_3: 'student6@email.com',
+
+        teacher_mail: 'teacher2@sharklasers.com',
         // // // teacher_mail: 'teacher15@sharklasers.com',
 
         // // student_mail: 'mena.happy@yahoo.com',

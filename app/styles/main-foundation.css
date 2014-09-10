@@ -4,9 +4,10 @@ left: 12% !important;
 right: auto;
 width: 78%;
 }*/
-.containeropen.large-2{
+.containeropen.large-2, .containeropen.medium-4{
   min-width: 300px !important;
   max-width: 300px !important;
+  /*width: 300px !important;*/
 }
 .max-width-me{
   max-width: calc(100% - 300px) !important;

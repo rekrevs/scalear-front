@@ -299,8 +299,8 @@
             font-size: x-small;
         }
         .video_class, .widescreen{
-            width: 71vw;
-            height: 39.9375vw;
+            /*width: 71vw;*/
+            /*height: 39.9375vw;*/
         }
 
         .mobile_video_full{
@@ -339,7 +339,7 @@
 
 @media only screen and (min-width: 1300px){
      .navigator_open .widescreen, .navigator_open .video_class{
-        width: 47.5vw;
-        height: 26.7vw;
+        /*width: 47.5vw;*/
+        /*height: 26.7vw;*/
     }
 }

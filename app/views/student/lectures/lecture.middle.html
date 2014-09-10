@@ -31,7 +31,7 @@
 							</center>
 						</div> -->
 						<youtube class="flex-video widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='1' style="width: 99%; margin: 0 auto;">
-							<quiz ng-style="quiz_layer" ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (!lecture.url || (!video_ready)) || slow" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1;">
+							<quiz ng-style="quiz_layer" ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (!lecture.url || (!video_ready)) || slow" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1; width: 100% !important;">
 								<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;">
 								</loading>
 								<div class="slow-message" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="!lecture.url || (!video_ready)">

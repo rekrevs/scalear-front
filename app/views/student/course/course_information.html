@@ -11,10 +11,14 @@
             <button type="button" calendar-modal class="button tiny uppercase" ng-click="openCalendar()">Calendar</button>
             <button id="course_content" type="button" class="button tiny uppercase under-the-other " ng-click="goToContent()" ng-disabled="!course.groups.length">Go to Course</button>
             <div id='course_date' class="large-12 column with-margin-bottom no-padding">
-                <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
+                <i class="fi-calendar size-24"></i><small class="with-tiny-margin-left" translate>courses.start_date</small>
+                <div>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div>
             </div>
             <div class="large-12 column with-margin-bottom no-padding">
-                <i class="fi-clock size-24"></i> <small id='course_duration' class="truncate">{{course.duration}} <span translate>courses.weeks</span></small>
+                <i class="fi-clock size-24"></i><small class="with-tiny-margin-left" translate>courses.duration</small>
+                <div>
+                    <small id='course_duration' class="truncate">{{course.duration}}</small>
+                </div>
             </div>
             <div class="large-12 column with-margin-bottom no-padding" ng-if="course.discussion_link">
                 <i class="fi-link size-24"></i> <a id="discussion_link" class="truncate" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
@@ -30,13 +34,20 @@
                 <button id="course_content" type="button" class="button tiny uppercase " ng-click="goToContent()" ng-disabled="!course.groups.length">Go to Course</button>
             </div>
             <div id='course_date' class="with-margin-bottom">
-                <i class="fi-calendar size-24"></i> {{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}
+                <i class="fi-calendar size-24"></i><small class="with-tiny-margin-left" translate>courses.start_date</small>
+                <div>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div>
             </div>
             <div class="with-margin-bottom">
-                <i class="fi-clock size-24"></i> <small id='course_duration' class="truncate">{{course.duration}} <span translate>courses.weeks</span></small>
+                <i class="fi-clock size-24"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
+                <div>
+                    <small id='course_duration' class="truncate">{{course.duration}}</small>
+                </div>
             </div>
             <div class="with-margin-bottom">
-                <i class="fi-link size-24"></i> <a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
+                <i class="fi-link size-24"></i> <small class="with-tiny-margin-left" translate>courses.discussion_forum_link</small>
+                <div>
+                    <a id="discussion_link" href="{{url_with_protocol(course.discussion_link)}}" target="_blank">{{short_url}}</a>
+                </div>
             </div>
             <hr />
         </div>

@@ -23,7 +23,8 @@ width: 78%;
 .row{
 	/*margin-top: 50px;*/
 	/*padding-top: 10px;*/
-	max-width: 85rem;
+	/*max-width: 85rem;*/
+  max-width: 99%;
 }
 footer{
   bottom: 0px;
@@ -653,6 +654,9 @@ td.right-border{
 .scrollable-if-tall{
   max-height: 90vh !important;
   overflow-y: auto; 
+}
+.tooltip{
+  padding: 0.25rem;
 }
 
 

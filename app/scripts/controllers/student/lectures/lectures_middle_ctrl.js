@@ -70,7 +70,7 @@ angular.module('scalearAngularApp')
         initVariables()
         $scope.video_class = 'video_class'
         $scope.play_pause_class = 'play'
-        $scope.container_style={float: 'right'}
+        // $scope.container_style={float: 'right'}
         
         if(!isiPad()){
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
@@ -78,7 +78,7 @@ angular.module('scalearAngularApp')
                     $scope.resize.small()
                     $scope.fullscreen = false
                     $scope.video_class= 'video_class'
-                    $scope.container_style={float: 'left'}
+                    // $scope.container_style={float: 'left'}
                     $scope.$apply()
                 }
             });
@@ -407,7 +407,7 @@ angular.module('scalearAngularApp')
             $scope.fullscreen= true
             console.log($scope.fullscreen)
             $scope.video_class = 'video_class_full'
-            $scope.container_style={float: 'none'}
+            // $scope.container_style={float: 'none'}
         }
         else{
              console.log("going small")
@@ -415,7 +415,7 @@ angular.module('scalearAngularApp')
             $scope.fullscreen= false
              console.log($scope.fullscreen)
             $scope.video_class = 'video_class'
-            $scope.container_style={float: 'left'}
+            // $scope.container_style={float: 'left'}
             $timeout(function(){$scope.$emit("updatePosition")})
             if($scope.quiz_mode == true){
                 $scope.quiz_mode = false

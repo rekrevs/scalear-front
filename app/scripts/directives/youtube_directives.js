@@ -479,15 +479,15 @@ angular.module('scalearAngularApp')
 				var video=angular.copy(container)
 				// video["height"]-=40
 
-				var layer={		
-					"top":"",
-					"left":"",
+				var layer={
 					"position":"absolute",
-					"width":"",
-					"height":"",//(500*1.0/factor)+ 'px',
 					"margin-left": "0px",
 					"margin-top": "0px",
-					"z-index":0
+					"z-index":1,
+					"width": "99%",
+					"height": '100%',
+					"top": "0px",
+					"left": "0px"
 				}
 
 				if($scope.container)

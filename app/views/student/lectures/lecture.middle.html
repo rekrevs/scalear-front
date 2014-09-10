@@ -21,14 +21,6 @@
 						</center>
 					</span>
 					<span ng-if="should_play" >
-						<quiz ng-style="quiz_layer" ng-show="quiz_mode" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0'>
-							 <div ng-if="selected_quiz.quiz_type == 'html'" >
-							 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
-							 </div>
-							 <div ng-if="selected_quiz.quiz_type != 'html'">
-							 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
-							 </div>
-						</quiz>
 						<div ng-style="quiz_layer" class="widescreen slow-message" ng-show="!lecture.url || (!video_ready)">
 							<center>
 								<span ng-show="slow">
@@ -38,7 +30,16 @@
 								<loading size='small' show='true' style="position:relative;top:70px;" />
 							</center>
 						</div>
-						<youtube class="ease_in_out" ng-class="video_class" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" autoplay='1' />
+						<youtube class="flex-video widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='1' style="width: 99%; margin: 0 auto;">
+							<quiz ng-style="quiz_layer" ng-show="quiz_mode" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1;">
+								<div ng-if="selected_quiz.quiz_type == 'html'" >
+								 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
+								</div>
+								<div ng-if="selected_quiz.quiz_type != 'html'">
+								 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
+								</div>
+							</quiz>
+						</youtube>
 						<progress-bar ng-show="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
 							<div ng-show="end_buttons" style="position: absolute;top: -71px;left: 47%;width: 0px;">
 								<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>

@@ -3,10 +3,10 @@
 	<div bindonce>
 		<span  ng-switch-when="courseware">
 			<accordion class="accordion">
-				<accordion-group class="accordion-group" is-open="false">
+				<accordion-group class="accordion-group" is-open="false" ng-click="goToCourseInfoStudent()">
 					<accordion-heading class="accordion-heading">
 					<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.course_information.**' | includedByState)}">
-						<div class="show-inline" ng-click="goToCourseInfoStudent()" translate>head.course_information</div>
+						<div class="show-inline" translate>head.course_information</div>
 					</div>		
 						<!-- <a ui-sref="course.course_information"translate>head.course_information</a>						 -->
 					</accordion-heading>

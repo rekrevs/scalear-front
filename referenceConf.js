@@ -83,12 +83,11 @@ exports.config = {
         // 'test/e2e/spec/enrollment-help.spec.js',//done
         // 'test/e2e/spec/notes.spec.js',//done
         // 'test/e2e/spec/discussions.spec.js',//done
+        // 'test/e2e/spec/account-info-validation.spec.js',//done
+
         // 'test/e2e/spec/module-statistics.spec.js',//not done
         // 'test/e2e/spec/user-cycle.spec.js',//done
         // 'test/e2e/spec/timeline.spec.js',//done
-
-        'test/e2e/spec/account-info-validation.spec.js',//done
-
 
         // 'test/e2e/spec/validations.spec.js',//not done
         // 'test/e2e/spec/forget-password-resend-conf.spec.js',// not done

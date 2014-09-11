@@ -1,57 +1,92 @@
 var locator = require('./lib/locators');
 var o_c = require('./lib/openers_and_clickers');
-var teacher = require('./lib/teacher_module');
-var student = require('./lib/student_module');
-var youtube = require('./lib/youtube.js');
-var disc = require('./lib/discussion.js');
 
 var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-var screen_name = "dummy"
-var fname = "fname"
-var lname = "lname"
-var mail = "dummy@sharklasers.com"
+var screen_name = "Student 0"
+var fname = "Test"
+var lname = "Student"
+var mail = "student1@email.com"
 var univer = "uni"
 var biog = "text w text"
 var webs = ".com"
 var password = "password"
 
+var screen_name_new = "Student 0_1"
+var fname_new = "Test_1"
+var lname_new = "Student_1"
+var mail_new = "student1_1@email.com"
+var univer_new = "uni_1"
+var biog_new = "text w text_1"
+var webs_new = ".com_1"
+var password_new = "password_1"
+
 describe("sign-up as teacher", function(){
 
-	xit('should sign up as teacher', function(){
-		o_c.sign_up_teacher(ptor, screen_name, fname, lname, mail, univer, biog, webs, password);
-		expect(element(by.id('main')).getText()).toContain('Thanks for joining ScalableLearning!');
-	})
-
-	xit('should confirm account', function(){
-		o_c.confirm_account(ptor, mail);
-		expect(element(by.id('main')).getText()).toContain('Welcome to ScalableLearning');
-	})
-
 	it('should open account info to check for info', function(){
-		 o_c.press_login(ptor);
+		o_c.press_login(ptor);
         o_c.sign_in(ptor, mail, params.password);
-		seek(ptor, 99);
-		ptor.sleep(15000);
+        o_c.open_account(ptor);
+	    element(by.id('account_information')).click();
 	})
 
+	it("should check for info", function(){
+		expect(element(by.model('user.name')).getAttribute('value')).toEqual(fname);
+		expect(element(by.model('user.last_name')).getAttribute('value')).toEqual(lname);
+		expect(element(by.model('user.email')).getAttribute('value')).toEqual(mail);
+		expect(element(by.model('user.university')).getAttribute('value')).toEqual(univer);
+		expect(element(by.model('user.screen_name')).getAttribute('value')).toEqual(screen_name);
+		expect(element(by.model('user.link')).getAttribute('value')).toEqual(webs);
+		expect(element(by.model('user.bio')).getAttribute('value')).toEqual(biog);
+	})
+
+	it("should change for info", function(){
+		element(by.model('user.name')).clear().sendKeys(fname_new);
+		element(by.model('user.last_name')).clear().sendKeys(lname_new);
+		element(by.model('user.email')).clear().sendKeys(mail_new);
+		element(by.model('user.university')).clear().sendKeys(univer_new);
+		element(by.model('user.screen_name')).clear().sendKeys(screen_name_new);
+		element(by.model('user.link')).clear().sendKeys(webs_new);
+		element(by.model('user.bio')).clear().sendKeys(biog_new);
+		element(by.id('update_info')).click();
+		element(by.model('user.current_password')).sendKeys('password');
+		element(by.id('update_info_modal')).click();
+		ptor.navigate().refresh();
+	})
+
+	it("should check for info", function(){
+		expect(element(by.model('user.name')).getAttribute('value')).toEqual(fname_new);
+		expect(element(by.model('user.last_name')).getAttribute('value')).toEqual(lname_new);
+		expect(element(by.model('user.email')).getAttribute('value')).toEqual(mail);
+		expect(element(by.model('user.university')).getAttribute('value')).toEqual(univer_new);
+		expect(element(by.model('user.screen_name')).getAttribute('value')).toEqual(screen_name_new);
+		expect(element(by.model('user.link')).getAttribute('value')).toEqual(webs_new);
+		expect(element(by.model('user.bio')).getAttribute('value')).toEqual(biog_new);
+	})
+
+	it("should change for info", function(){
+		element(by.model('user.name')).clear().sendKeys(fname);
+		element(by.model('user.last_name')).clear().sendKeys(lname);
+		element(by.model('user.email')).clear().sendKeys(mail);
+		element(by.model('user.university')).clear().sendKeys(univer);
+		element(by.model('user.screen_name')).clear().sendKeys(screen_name);
+		element(by.model('user.link')).clear().sendKeys(webs);
+		element(by.model('user.bio')).clear().sendKeys(biog);
+		element(by.id('update_info')).click();
+		element(by.model('user.current_password')).sendKeys('password');
+		element(by.id('update_info_modal')).click();
+		ptor.navigate().refresh();
+	})
+
+	it("should check for info", function(){
+		expect(element(by.model('user.name')).getAttribute('value')).toEqual(fname);
+		expect(element(by.model('user.last_name')).getAttribute('value')).toEqual(lname);
+		expect(element(by.model('user.email')).getAttribute('value')).toEqual(mail);
+		expect(element(by.model('user.university')).getAttribute('value')).toEqual(univer);
+		expect(element(by.model('user.screen_name')).getAttribute('value')).toEqual(screen_name);
+		expect(element(by.model('user.link')).getAttribute('value')).toEqual(webs);
+		expect(element(by.model('user.bio')).getAttribute('value')).toEqual(biog);
+	})
 })
-
-function seek(ptor, percent){
-	var pw, ph;
-	var cw, ch;
-	progress = element(by.className('ytp-play-progress'))
-	ptor.wait(function() {
-        return element(by.className('ytp-play-progress')).isPresent().then(function(disp) {
-        	console.log("waiting")
-            return disp;
-        }, 120000);
-    });
-	progress.getSize().then(function(size){
-		pw = size.width;
-		ph = size.height;
-		ptor.actions().mouseMove(progress,{x: (percent*pw)/100, y: 4}).click().perform();
-	})
-}

@@ -8,7 +8,7 @@
             <small ng-show="user.errors.current_password" class="error with-tiny-padding">{{user.errors.current_password.join()}}</small>
 		</div>
 	</center>
-    <center class="row"><button ng-click="update_account()" class="tiny button">{{'account_edit.update' | translate}}</button>
+    <center class="row"><button id="update_info_modal" ng-click="update_account()" class="tiny button">{{'account_edit.update' | translate}}</button>
     <button ng-click="cancel()" class="tiny button alert">{{'lectures.cancel' | translate}}</button>
     </center>
 </div>

@@ -301,7 +301,7 @@ exports.open_course = function(ptor, co_no){
 //                  content_navigator
 ///////////////////////////////////////////////////////
 exports.press_content_navigator = function(){
-    element(by.id('content_navigator')).click()
+    element(by.id('content_navigator')).click();
     // locator.by_id(ptor, 'content_navigator').then(function(btn){
     //     btn.click();
     // })

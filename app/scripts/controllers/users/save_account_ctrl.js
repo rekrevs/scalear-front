@@ -16,7 +16,6 @@ angular.module('scalearAngularApp')
         }, function() {
             $scope.sending = false;
             $scope.show_settings = false;
-            console.log('mena')
             console.log($rootScope.current_user.info_complete)
             $rootScope.show_alert = "";
             if($rootScope.current_user.intro_watched == false){

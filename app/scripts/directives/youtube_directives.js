@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder panel widescreen transparent" style="padding:0; border:none" ng-transclude></div>' //style="border:4px solid" 
+			template: '<div class="videoborder panel widescreen transparent" style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid" 
 		};
 	})
 	.directive('youtube',['$rootScope','$log','$timeout','$window',function($rootScope,$log,$timeout,$window){
@@ -513,6 +513,8 @@ angular.module('scalearAngularApp')
 				var factor=16.0/9.0
                 var win = angular.element($window)
 
+                var progressbar_height = 40
+
 				$scope.fullscreen = true
 				angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
 				angular.element("body").css("overflow","hidden");
@@ -530,11 +532,11 @@ angular.module('scalearAngularApp')
 				};
 
 				var video=angular.copy(container)
-				video["height"]-=40
+				video["height"]-=progressbar_height
 				video["position"]=""
 
 
-				var video_height = win.height()-40;
+				var video_height = win.height()-progressbar_height;
 				var video_width = video_height*factor
 				
 				//var video_width = (win.height()-26)*factor
@@ -544,7 +546,7 @@ angular.module('scalearAngularApp')
 					$log.debug("width cutt offff")
 					console.log("width cutt offff")
 					video_height= (win.width()-$scope.max_width)*1.0/factor;
-					var margin_top = ((win.height()-40) - (video_height))/2.0; //+30
+					var margin_top = ((win.height()-progressbar_height) - (video_height))/2.0; //+30
 
 					layer={
 						"position":"fixed",
@@ -562,7 +564,7 @@ angular.module('scalearAngularApp')
 					console.log(win.width())
 					console.log(video_width)
 					console.log(((win.width()-$scope.max_width) - video_width)/2.0)
-					video_width = (win.height()-40)*factor
+					// video_width = (win.height()-progressbar_height)*factor
 					var margin_left= ((win.width()-$scope.max_width) - video_width)/2.0;
 					layer={
 						"position":"fixed",

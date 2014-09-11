@@ -54,7 +54,6 @@ angular.module('scalearAngularApp')
 
 
     var initVariables=function(){
-        console.log("ionit variavle")
         $scope.studentAnswers = {}
         $scope.explanation = {}
         $scope.fullscreen = false
@@ -63,13 +62,13 @@ angular.module('scalearAngularApp')
         $scope.elapsed_width =0
         $scope.slow = false
         $scope.course.warning_message=null
+        $scope.video_class = 'flex-video'
+        $scope.container_class=''
+        $scope.play_pause_class = 'play'
     }
 
     var init = function() {            
-        initVariables()
-        $scope.video_class = 'video_class'
-        $scope.play_pause_class = 'play'
-        // $scope.container_style={float: 'right'}
+        initVariables()      
         
         if(!isiPad()){
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
@@ -403,7 +402,9 @@ angular.module('scalearAngularApp')
         $scope.resize.small()
         $scope.fullscreen= false
          console.log($scope.fullscreen)
-        $scope.video_class = 'video_class'
+        $scope.video_class = 'flex-video'
+        $scope.container_class=''
+
         // $scope.container_style={float: 'left'}
         $timeout(function(){$scope.$emit("updatePosition")})
         if($scope.quiz_mode == true){
@@ -416,14 +417,14 @@ angular.module('scalearAngularApp')
         console.log("going fullscreen")
         $scope.resize.big()
         $scope.fullscreen= true
-        console.log($scope.fullscreen)
         $scope.video_class = 'video_class_full'
-        $scope.container_style={float: 'none'}
+        $scope.container_class='video_class_full'
     }
 
     var goMobileSmallScreen=function(){
         console.log("close fullscreen")
-        $scope.video_class = 'video_class'
+        $scope.video_class = 'flex-video'
+        $scope.container_class=''
         $scope.video_layer ={}
         $scope.quiz_layer.width=""
         $scope.quiz_layer.height=""
@@ -433,6 +434,7 @@ angular.module('scalearAngularApp')
 
     var goMobileFullscreen=function(){
         $scope.video_class = 'mobile_video_full'
+        $scope.container_class='mobile_video_full'
         $scope.video_layer ={'height': '92%', 'position': 'relative', 'z-index': '-1'}
         $scope.quiz_layer.width="100%"
         $scope.quiz_layer.height="92%"

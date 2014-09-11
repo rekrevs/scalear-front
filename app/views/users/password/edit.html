@@ -12,23 +12,28 @@
             </div>
             <h3 class="show-inline" translate>password_edit.forgot_password</h3>
         </div>
-        <div class="small-12 medium-12 large-6 columns">  
-            <fieldset class="with-margin-bottom">
-                <legend><i class="fi-lock size-21"></i> {{'account_edit.security' | translate}}</legend>
-                <div class="large-6 columns">
-                    <label>{{'password' | translate}}
-                        <input ng-disabled="sending" type="password" id="setting_user_password" ng-model="user.password" ng-class="{error: user.errors.password}" autocomplete="off" placeholder="Password" />
-                        <small ng-show="user.errors.password" class="error with-tiny-padding">{{user.errors.password.join()}}</small>
-                    </label>
-                </div>
-                <div class="large-6 columns">
-                    <label>{{'password_confirmation' | translate}}
-                        <input ng-disabled="sending" type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" placeholder="Password confirmation"/>
-                        <small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
-                    </label>
-                </div>
-            </fieldset>
+        <center>
+
+        <div class='row'>
+            <div class="large-6 large-centered medium-9 medium-centered small-12 columns">
+                <fieldset class="with-margin-bottom">
+                    <legend><i class="fi-lock size-21"></i> {{'account_edit.security' | translate}}</legend>
+                    <div class="large-12 columns">
+                        <label>{{'password' | translate}}
+                            <input ng-disabled="sending" type="password" id="setting_user_password" ng-model="user.password" ng-class="{error: user.errors.password}" autocomplete="off" placeholder="Password" />
+                            <small ng-show="user.errors.password" class="error with-tiny-padding">{{user.errors.password.join()}}</small>
+                        </label>
+                    </div>
+                    <div class="large-12 columns">
+                        <label>{{'password_confirmation' | translate}}
+                            <input ng-disabled="sending" type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" placeholder="Password confirmation"/>
+                            <small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
+                        </label>
+                    </div>
+                </fieldset>
+            </div>
         </div>
-        <button type="submit" ng-disabled="sending" class="button valign-bottom">{{'password_edit.change_password2' | translate}}</button>
+        <button id="change_password" type="submit" ng-disabled="sending" class="button valign-bottom">{{'password_edit.change_password2' | translate}}</button>
+    </center>
     </form>
 </div>

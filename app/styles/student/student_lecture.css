@@ -134,13 +134,13 @@
     }*/
 
     .video_class, .widescreen{
-        width: 55.9vw; 
-        height: 31.444vw;
+        /*width: 55.9vw; */
+        /*height: 31.444vw;*/
     }
 
     .navigator_open .widescreen, .navigator_open .video_class{
-        width: 42.7vw;
-        height: 24.1vw;
+        /*width: 42.7vw;*/
+        /*height: 24.1vw;*/
     }
     
 
@@ -299,8 +299,8 @@
             font-size: x-small;
         }
         .video_class, .widescreen{
-            width: 71vw;
-            height: 39.9375vw;
+            /*width: 71vw;*/
+            /*height: 39.9375vw;*/
         }
 
         .mobile_video_full{
@@ -332,9 +332,9 @@
      }
 
 @media only screen and (min-width: 1300px){
-    .navigator_open .widescreen, .navigator_open .video_class{
-        width: 47.5vw;
-        height: 26.7vw;
+     .navigator_open .widescreen, .navigator_open .video_class{
+        /*width: 47.5vw;*/
+        /*height: 26.7vw;*/
     }
     .video_class_full, .navigator_open .video_class_full {
         width: 100%;

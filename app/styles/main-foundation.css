@@ -1,11 +1,20 @@
 
-.navigator_open{
+/*.navigator_open{
 left: 12% !important;
 right: auto;
 width: 78%;
-/* margin: 0; */
+}*/
+.containeropen.large-2, .containeropen.medium-4{
+  min-width: 300px !important;
+  max-width: 300px !important;
+  /*width: 300px !important;*/
 }
-
+.max-width-me{
+  max-width: calc(100% - 300px) !important;
+}
+.containeropen.small-12{
+  max-width: none !important;
+}
 .main_view{
   left:0;
   position: relative;
@@ -14,7 +23,8 @@ width: 78%;
 .row{
 	/*margin-top: 50px;*/
 	/*padding-top: 10px;*/
-	max-width: 82.5rem !important;
+	/*max-width: 85rem;*/
+  max-width: 99%;
 }
 footer{
   bottom: 0px;
@@ -619,8 +629,8 @@ td.right-border{
 }
 .align-center{
   width: 50%;
-  height: 15%;
-  overflow: auto;
+  height: 25%;
+  overflow: visible;
   margin: auto;
   position: absolute;
   top: 0;
@@ -644,6 +654,9 @@ td.right-border{
 .scrollable-if-tall{
   max-height: 90vh !important;
   overflow-y: auto; 
+}
+.tooltip{
+  padding: 0.25rem;
 }
 
 
@@ -927,6 +940,13 @@ label{
   -ms-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
+.faster_ease_in_out{
+  -webkit-transition: all 0.1s ease-in-out;
+  -moz-transition: all 0.1s ease-in-out;
+  -o-transition: all 0.1s ease-in-out;
+  -ms-transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;
+}
 
 .reveal-modal.fade {
   -webkit-transition: -webkit-transform .3s ease-out;
@@ -959,7 +979,8 @@ h2 .editable-click{
 
 /*Video styles*/
 .flex-video.widescreen{
-	padding-bottom: 53.7%;
+	/*padding-bottom: 53.7%;*/
+  padding-bottom: 53.25% !important;
 }
 .fit-inside{
   max-width: 100%;
@@ -1207,10 +1228,10 @@ a.editable-click{
   font-size: 0.8125rem !important;
 }
 
-@media only screen and (min-width: 1300px){
+/*@media only screen and (min-width: 1300px){
   .navigator_open{
     left: 7.5% !important;
     right: auto;
     width: 86%;
     }
-}
+}*/

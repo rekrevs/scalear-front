@@ -95,8 +95,6 @@
         </header> -->
         <header>
             <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage" courses="courses"></main-navigation>
-        <header>
-            
         </header>
         <!-- <div ng-if="clipboard && clipboard.show_msg" class="top-ribbon">
             <notice-message message="{{clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' has been copied. To paste it into another module, right-click on the module and choose Paste'}}" close="true" button-action="closeClipboard()" button-title="{{'lectures.remove' | translate}}" />
@@ -106,7 +104,7 @@
         </div> -->
         <div id="main" role="main">
             <div class="container">
-                <div ><!-- ui-view="navigation" -->
+                <div><!-- ui-view="navigation" -->
                     <div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
                         <teacher-navigation course="course" message="subheader_message" />
                     </div>
@@ -114,12 +112,21 @@
                         <student-navigation course="course" message="subheader_message" />
                     </div>
                 </div>
-                <div class="row main_view ease_in_out" ng-class="{'navigator_open':open_navigator} " style="min-height: 83vh;">
+                <!-- <div ng-class="{'small-12 medium-3 large-3 columns no-padding no-margin': open_navigator}"> -->
+                    <content-navigator ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="course.modules" links="course.custom_links" mode="editor" open="open_navigator">
+                    </content-navigator>
+                    <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" links="course.custom_links" open="open_navigator">
+                    </content-navigator>
+                    <div ng-show="open_navigator" style="min-height: 1px;" class="containeropen small-12 medium-4 large-2 columns no-padding no-margin">
+                        
+                    </div>
+                <!-- </div> -->
+                <div class="row main_view" ng-class="{'small-12 medium-8 large-10 columns max-width-me': open_navigator}" style="min-height: 83vh;">
                     <div class="small-12 columns "  ui-view=""></div>
                 </div>
                 
                 <!-- <div style="height: 50px;"></div> -->
-                <footer class="with-tiny-margin">
+                <footer class="with-tiny-margin small-12 columns">
                     <scalear_footer />
                 </footer>
             </div> 

@@ -15,7 +15,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: 'E', 
-			template: '<div class="ontop" id="ontop" style="position: absolute;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
+			template: '<div class="ontop" id="ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
 }).directive('editPanel',function(){
 	return {		
@@ -490,7 +490,7 @@ angular.module('scalearAngularApp')
 					"<div class='row'>"+
 						"<div class='small-8 columns'>"+
 							"<label class='text-left'><span translate>groups.answer</span></label>"+
-							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
+							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' class='no-margin-bottom' />"+
 							"<small class='error' ng-show='submitted && aform.answer.$error.required'><span translate>courses.required</span>!</small>"+
 							"<small class='error' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<span ng-if='show() && !isSurvey()'><label class='text-left'><span translate>lectures.explanation</span></label>"+
@@ -515,7 +515,7 @@ angular.module('scalearAngularApp')
 					"<div class='row'>"+
 						"<div class='small-8 columns'>"+
 							"<label class='text-left'><span translate>groups.answer</span></label>"+
-							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' />"+
+							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' class='no-margin-bottom' />"+
 							"<small class='error' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
 							"<small class='error' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<span ng-if='show() && !isSurvey()'><label class='text-left'><span translate>lectures.explanation</span></label>"+

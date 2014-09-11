@@ -69,7 +69,7 @@ angular.module('scalearAngularApp')
         initVariables()
         $scope.video_class = 'video_class'
         $scope.play_pause_class = 'play'
-        $scope.container_style={float: 'right'}
+        // $scope.container_style={float: 'right'}
         
         if(!isiPad()){
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
@@ -404,7 +404,7 @@ angular.module('scalearAngularApp')
         $scope.fullscreen= false
          console.log($scope.fullscreen)
         $scope.video_class = 'video_class'
-        $scope.container_style={float: 'left'}
+        // $scope.container_style={float: 'left'}
         $timeout(function(){$scope.$emit("updatePosition")})
         if($scope.quiz_mode == true){
             $scope.quiz_mode = false

@@ -4,38 +4,40 @@
 <!-- endbuild -->
 
 <div class="row">
-	<div class="small-12 medium-3 large-3 columns">
-		<div class="row">
-			<video_container>
-				<youtube id="progress_lec_video" url="url" player="progress_player" class="flex-video widescreen" style="z-index: 1;"/>
-			</video_container>
-		</div>
-		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count" />
-		<div class="row shortcuts size-10 hide-for-medium-down" >
-			<div class="shortcuts_label size-12">Shortcuts:</div>
-			<div>
-				<div class="small-6 columns">
-					<i class="fi-arrow-up"></i> - <span translate>lectures.go_next_item</span><br />
-					<i class="fi-arrow-down"></i> - <span translate>lectures.go_previous_item</span>
-				</div>				
-				<div class="small-6 columns">
-					<i style="font-weight:bold">r</i> - <span translate>lectures.reply</span><br />
-					<i style="font-weight:bold">m</i> - <span translate>lectures.mark</span>
-				</div>
-				<div class="small-6 columns">
-					<i class="fi-arrow-left"></i> - <span translate>lectures.go_inside_item</span><br />
-					<i class="fi-arrow-right"></i> - <span translate>lectures.go_outside_item</span>
-				</div>
-				<div class="small-6 columns">
-					<i style="font-weight:bold">space</i> - <span translate>lectures.seek_to_location</span>
+	<div class="small-12 medium-4 large-3 columns">
+		<center>
+			<!-- <div class="row"> -->
+				<video_container>
+					<youtube id="progress_lec_video" url="url" player="progress_player" class="flex-video widescreen" style="z-index: 1;"/>
+				</video_container>
+			<!-- </div> -->
+			<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count"></inclass_estimate>
+			<div class="row shortcuts size-10 hide-for-medium-down" >
+				<div class="shortcuts_label size-12">Shortcuts:</div>
+				<div>
+					<div class="small-6 columns">
+						<i class="fi-arrow-up"></i> - <span translate>lectures.go_next_item</span><br />
+						<i class="fi-arrow-down"></i> - <span translate>lectures.go_previous_item</span>
+					</div>				
+					<div class="small-6 columns">
+						<i style="font-weight:bold">r</i> - <span translate>lectures.reply</span><br />
+						<i style="font-weight:bold">m</i> - <span translate>lectures.mark</span>
+					</div>
+					<div class="small-6 columns">
+						<i class="fi-arrow-left"></i> - <span translate>lectures.go_inside_item</span><br />
+						<i class="fi-arrow-right"></i> - <span translate>lectures.go_outside_item</span>
+					</div>
+					<div class="small-6 columns">
+						<i style="font-weight:bold">space</i> - <span translate>lectures.seek_to_location</span>
+					</div>
 				</div>
 			</div>
-		</div>
-		<div class="row label size-12 text-left color-blue white" style="margin-top:8px">
-		  <a href="http://google.com" target="_blank">Help: How to use this page</a>
-		</div>
+			<div class="row label size-12 text-left color-blue white" style="margin-top:8px">
+			  <a href="http://google.com" target="_blank">Help: How to use this page</a>
+			</div>
+		</center>
 	</div>
-	<div class="small-12 medium-9 large-9 columns" style="max-height: 83vh; overflow-y: auto;">
+	<div class="small-12 medium-8 large-9 columns" style="max-height: 83vh; overflow-y: auto;">
 		<!-- <div class="row" ng-show="module.items" ng-init="custom_filter=''">
 	<div class="small-12 medium-12 large-9 columns" style="max-height: 83vh; overflow-y: auto; height: 83vh;">
 		<div class="row" ng-show="module.items" ng-init="custom_filter=''">
@@ -164,7 +166,7 @@
 										</span>
 							 		</div>									
 									<ul>
-										<li ng-repeat="comment in discussion.post.comments" style="padding-left: 30px;color: #616161;font-size:14px" class="no_highlight with-tiny-margin-top ">
+										<li ng-repeat="comment in discussion.post.comments" style="color: #616161;font-size:14px" class="no_highlight with-tiny-margin-top small-12 no-padding-right">
 											<span class="controls">
 												<span style="float:right">
 													<span ng-show="comment.comment.flags_count > 0">|<a ng-click="removeCommentFlag(comment, discussion.post)" class="button really-tiny" style="margin:0 5px" translate>discussion.remove_flags</a></span>

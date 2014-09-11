@@ -112,13 +112,38 @@ exports.drag_answer = function(ptor, question_no){
 
 exports.free_match_answer = function(ptor, question_no, desired_text){
   element(by.repeater('question in quiz.questions').row(question_no-1)).element(by.tagName('textarea')).clear().sendKeys(desired_text)
-
-    // locator.by_repeater(ptor, 'question in quiz.questions').then(function(rep){
-    //     rep[question_no-1].findElement(protractor.By.tagName('textarea')).then(function(text_area){
-    //       text_area.sendKeys(desired_text)
-    //     })
-    // })
 }
+
+//=====================================
+//    Check normal quiz MCQ or OCQ question
+//=====================================
+exports.check_mcq_answer = function(ptor, question_no, choice_no){
+  this.check_quiz_question(ptor, question_no, choice_no)
+}
+
+exports.check_ocq_answer = function(ptor, question_no, choice_no){
+  this.check_quiz_question(ptor, question_no, choice_no)
+}
+
+exports.check_quiz_question=function(ptor, question_no, choice_no){
+  var checked = element(by.repeater('question in quiz.questions').row(question_no-1)).all(by.tagName('input')).get(choice_no-1).getAttribute('checked')
+  expect(checked).toEqual('true')
+}
+
+exports.check_free_match_answer = function(ptor, question_no, desired_text){
+  var text = element(by.repeater('question in quiz.questions').row(question_no-1)).element(by.tagName('textarea')).getAttribute('value')
+  expect(text).toEqual(desired_text)
+}
+
+exports.check_drag_answer = function(ptor, question_no){
+  var this_question = element(by.repeater('question in quiz.questions').row(question_no-1))
+  var answers = this_question.all(by.tagName('li'))
+  expect(answers.get(0).getText()).toEqual('answer0')
+  expect(answers.get(1).getText()).toEqual('answer1')
+  expect(answers.get(2).getText()).toEqual('answer2')
+}
+
+
     
 //=====================================
 //    submits a normal quiz
@@ -126,6 +151,10 @@ exports.free_match_answer = function(ptor, question_no, desired_text){
 
 exports.submit_normal_quiz = function(ptor){
   element(by.buttonText('Submit')).click()
+}
+
+exports.save_normal_quiz = function(ptor){
+  element(by.buttonText('Save')).click()
 }
 
 exports.save_survey = function(ptor){

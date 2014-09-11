@@ -57,6 +57,11 @@ describe('add required quiz and answer it',function(){
     it('should add a DRAG question', function(){
         teacher.add_quiz_question_drag(ptor, 'drag question', 2)
     })
+
+    it('should reorder drag question', function(){
+        teacher.add_quiz_question_drag(ptor, 'drag question', 2)
+        teacher.reorder_drag_answer(ptor)
+    })
     it('should save the quiz', function(){
         teacher.save_quiz(ptor)
     })
@@ -131,7 +136,7 @@ describe('add required quiz and answer it',function(){
     })
 })
 
-describe("add optional quiz and answer it incorrect with multiple attempts", function(){
+xdescribe("add optional quiz and answer it incorrect with multiple attempts", function(){
 
     it('should sign in as teacher', function(){
         // o_c.press_login(ptor)
@@ -280,6 +285,134 @@ describe("add optional quiz and answer it incorrect with multiple attempts", fun
         o_c.open_course_list(ptor);
         o_c.open_course(ptor, 1);
         // o_c.press_content_navigator(ptor)
+        teacher.open_module(ptor, 1);
+        teacher.delete_item_by_number(ptor, 1, 1);
+        teacher.delete_empty_module(ptor, 1)
+        o_c.open_course_list(ptor);
+        teacher.delete_course(ptor, 1);
+        o_c.logout(ptor);
+    })
+})
+
+xdescribe('add quiz and student saves it',function(){
+    it('should sign in as teacher', function(){
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
+    })
+
+    it('should create_course', function(){
+        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
+    })
+
+    it('should get the enrollment key and enroll student', function(){
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    })
+
+    it('should add a normal quiz', function(){
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
+        o_c.open_course_list(ptor);
+        o_c.open_course(ptor, 1);
+        teacher.add_module(ptor);
+        ptor.sleep(3000)
+        teacher.add_quiz(ptor)
+    })
+
+    it('should add a FIRST header', function(){
+        teacher.add_quiz_header(ptor, 'first header')
+    })
+    it('should add a MCQ question', function(){
+        teacher.add_quiz_question_mcq(ptor, 'mcq question', 2, [1, 2])
+    })
+    it('should add a SECOND header', function(){
+        teacher.add_quiz_header(ptor, 'second header')
+    })
+    it('should add an OCQ question', function(){
+        teacher.add_quiz_question_ocq(ptor, 'ocq question', 2, 1)
+    })
+    it('should add a FREE question', function(){
+        teacher.add_quiz_question_free(ptor, 'free question')
+    })
+
+    it('should add a MATCH question', function(){
+        teacher.add_quiz_question_free(ptor, 'match question', 'match answer')
+    })
+    it('should add a DRAG question', function(){
+        teacher.add_quiz_question_drag(ptor, 'drag question', 2)
+    })
+    it('should save the quiz', function(){
+        teacher.save_quiz(ptor)
+    })
+
+    it('should go to student', function(){
+        o_c.to_student(ptor);
+        o_c.open_course_list(ptor)
+        o_c.open_course(ptor, 1);
+        // o_c.open_lectures(ptor);
+    })
+
+    it('should check number of attempts',function(){
+        check_number_attempts(ptor, 0,1)
+    })
+
+    it('check submit button enabled',function(){
+        check_submit_enabled(ptor)
+    })
+
+    it('should answer mcq incorrect', function(){
+        // student.mcq_answer(ptor, 2, 1);
+        student.mcq_answer(ptor, 2, 2);
+    })
+
+    it('should answer ocq correct', function(){
+        student.ocq_answer(ptor, 4, 1);
+    })
+
+    it('should answer free question', function(){
+        student.free_match_answer(ptor, 5, 'free answer')
+    })
+
+    it('should answer match question', function(){
+        student.free_match_answer(ptor, 6, 'match answer')
+    })  
+
+    it('should answer drag correct', function(){
+        ptor.sleep(3000);
+        student.drag_answer(ptor, 7);
+        ptor.sleep(3000);
+    })
+
+    it('should save and check correct and incorrect count',function(){
+        student.save_normal_quiz(ptor);
+        incorrect_no(0)
+        correct_no(0);
+        under_review_no(0)
+    })
+
+    it('should check number of attempts',function(){
+        check_number_attempts(ptor, 0,1)
+    })
+
+    it('check submit button enabled',function(){
+        check_submit_enabled(ptor)
+    })
+
+    it('should refresh',function(){
+        ptor.navigate().refresh();
+    })  
+
+    it('should check student answers',function(){
+        student.check_mcq_answer(ptor, 2, 2);
+        student.check_ocq_answer(ptor, 4, 1);
+        o_c.scroll(ptor, 500)
+        student.check_free_match_answer(ptor, 5, 'free answer')
+        student.check_free_match_answer(ptor, 6, 'match answer')
+        o_c.scroll_to_bottom(ptor)
+        student.check_drag_answer(ptor, 7);
+    })  
+    
+    it('should delete course', function(){
+        o_c.to_teacher(ptor);
+        o_c.open_course_list(ptor);
+        o_c.open_course(ptor, 1);
         teacher.open_module(ptor, 1);
         teacher.delete_item_by_number(ptor, 1, 1);
         teacher.delete_empty_module(ptor, 1)

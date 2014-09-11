@@ -649,9 +649,10 @@ exports.open_item = function(ptor,item_no){
 //            open item by no from content navigator
 //====================================================
 
-exports.open_item_from_navigator=function(ptor, item_no){    
+exports.open_item_from_navigator=function(mo_no, item_no){    
     //element(by.repeater('module in modules').row(mo_no-1)).
-    element(by.repeater('item in module.items').row(item_no-1)).click()
+    // element(by.repeater('item in module.items').row(item_no-1)).click()
+    element(by.repeater('module in modules').row(mo_no-1)).element(by.repeater('item in module.items').row(item_no-1)).click()
 }
 
 // //=====================================

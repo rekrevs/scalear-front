@@ -282,6 +282,10 @@ exports.change_quiz_inorder=function(){
 	element(by.model('quiz.required')).click()
 }
 
+exports.change_survey_inorder=function(){
+	element(by.model('quiz.required')).click()
+}
+
 
 //====================================================
 //            		add mcq question for normal quiz
@@ -392,6 +396,34 @@ exports.add_survey_question_mcq = function(ptor, question, number_of_additional_
 	// 		})
 	// 	});
 	// })
+}
+
+exports.reorder_drag_answer = function(ptor){
+  var this_question = element.all(by.repeater('question in questions')).last()
+  var handles = this_question.all(by.className('drag-item'))
+  var answers = this_question.all(by.repeater('answer in quiz.answers'))
+  ptor.actions().dragAndDrop(handles.get(0), handles.get(1)).perform();
+  ptor.actions().dragAndDrop(handles.get(0), handles.get(2)).perform();
+  for(var i=0; i<3; i++){
+    answers.get(0).getText().then(function(text){
+      if(text == 'answer1')
+        ptor.actions().dragAndDrop(handles.get(0), handles.get(1)).perform();
+      else if(text == 'answer2')
+        ptor.actions().dragAndDrop(handles.get(0), handles.get(2)).perform();
+    })
+    answers.get(1).getText().then(function(text){
+      if(text == 'answer0')
+        ptor.actions().dragAndDrop(handles.get(1), handles.get(0)).perform();
+      else if(text == 'answer2')
+        ptor.actions().dragAndDrop(handles.get(1), handles.get(2)).perform();
+    })
+    answers.get(2).getText().then(function(text){
+      if(text == 'answer0')
+        ptor.actions().dragAndDrop(handles.get(2), handles.get(0)).perform();
+      else if(text == 'answer1')
+        ptor.actions().dragAndDrop(handles.get(2), handles.get(1)).perform();
+    })
+  }
 }
 
 //====================================================
@@ -526,45 +558,14 @@ exports.save_survey = function(ptor){
 //====================================================
 exports.change_quiz_required = function(){
 	element(by.model('quiz.graded')).click()
-	// element(by.tagName('details-check')).click()
-	// element(by.className('editable-input')).click()
-	// element(by.className('check')).click()
-	// .then(function(){
-	// 	o_c.feedback(ptor, 'Quiz was successfully updated');
-	// })
-	// locator.by_tag(ptor, 'details-check').click().then(function(){
-	// 	locator.by_classname(ptor, 'editable-input').then(function(checkbox){
-	// 		checkbox.click().then(function(){
-	// 			locator.by_classname(ptor, 'icon-ok').then(function(confirm){
-	// 				confirm.click().then(function(){
-	// 					o_c.feedback(ptor, 'Quiz was successfully updated');
-	// 				})
-	// 			})
-	// 		})
-	// 	})
-		
-	// })
 }
 
 exports.change_survey_required = function(ptor){
 	element(by.model('quiz.graded')).click()
-	// element(by.tagName('details-check')).click()
-	// element(by.className('editable-input')).click()
-	// element(by.className('check')).click().then(function(){
-	// 	o_c.feedback(ptor, 'Survey was successfully updated');
-	// })
-	// locator.by_tag(ptor, 'details-check').click().then(function(){
-	// 	locator.by_classname(ptor, 'editable-input').then(function(checkbox){
-	// 		checkbox.click().then(function(){
-	// 			locator.by_classname(ptor, 'icon-ok').then(function(confirm){
-	// 				confirm.click().then(function(){
-	// 					o_c.feedback(ptor, 'Quiz was successfully updated');
-	// 				})
-	// 			})
-	// 		})
-	// 	})
-		
-	// })
+}
+
+exports.change_lecture_required = function(){
+	element(by.model('lecture.graded')).click()
 }
 
 exports.change_attempt_num=function(num){

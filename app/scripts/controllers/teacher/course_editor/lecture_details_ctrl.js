@@ -199,7 +199,7 @@ angular.module('scalearAngularApp')
                 return url.match(/(.*mp4$)/);
             }
             var isYoutube= function(url){
-                return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+                return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
             }
 
             var getYoutubeDetails= function(id){

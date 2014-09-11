@@ -378,7 +378,7 @@ angular.module('scalearAngularApp')
 
                 var isYoutube= function(url){
             		var video_url = url || scope.url || ""
-                    return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+                    return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
                 }
 
                 var isShortYoutube= function(url){

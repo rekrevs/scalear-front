@@ -4,57 +4,13 @@ angular.module('scalearAngularApp')
     .directive("module", ['$rootScope','$timeout','$state',function($rootScope, $timeout,$state) {
         return {
             restrict: "E",
+            replace:true,
             scope: {
                 module:"=data",
-                // name: "=",
-                // id: '=',
-                // remove: "&",
-                click:"&",
-                // open: "=",
-                copy:"&",
-                paste: "&",
-                share:"&",
-                // link:"&",
                 current: "="
             },
             templateUrl: '/views/teacher/course_editor/module.html',
             link: function(scope,element) {
-                // scope.menu_status = false
-                // scope.invertOpen = function() {
-                //     if (scope.open[scope.id])
-                //         scope.open[scope.id] = false
-                //     else {
-                //         for (var i in scope.open)
-                //             scope.open[i] = false;
-                //         scope.open[scope.id] = true
-                //     }
-                // }
-                scope.selectModule=function(){
-                    // if($state.includes("**.progress.**"))
-                    //     $state.go('course.module.progress',{module_id: scope.module.id})
-                    // else if($state.includes("**.inclass.**"))
-                    //     $state.go('course.module.inclass',{module_id: scope.module.id})
-                    // else
-                        $state.go('course.module.course_editor.overview',{module_id: scope.module.id})
-                }
-                // scope.copyModule=function(event){
-                //     event.stopPropagation() 
-                //     scope.menu_status = false
-                //     scope.copy()
-                // }
-
-                // scope.doPaste=function(event){
-                //     event.stopPropagation() 
-                //     scope.menu_status = false
-                //     scope.paste()
-                // }
-
-                // scope.shareModule=function(event){
-                //     event.stopPropagation() 
-                //     scope.menu_status = false
-                //     scope.share()
-                // }
-
                 scope.remove=function(event){
                     event.preventDefault();
                     event.stopPropagation();  
@@ -65,76 +21,11 @@ angular.module('scalearAngularApp')
     }]).directive('item', ['$rootScope','$timeout','$anchorScroll','$location','$state', function($rootScope, $timeout, $anchorScroll,$location,$state) {
         return {
             scope: {
-                // name: '=',
-                // id: '=',
-                // className: '=',
                 item:'=data',
-                remove: '&',
-                copy:"&",
-                paste:"&",
-                share:"&",
-                // link:"&",
-                current: "="
             },
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/item.html',
             link: function(scope,element) {
-
-                scope.selectItem=function(){
-                    // if($state.includes("**.progress.**")){
-                    //     var class_name = scope.item.class_name== 'quiz'? scope.item.quiz_type : scope.item.class_name
-                    //     $location.hash(class_name+'_'+scope.item.id);
-                    //     $anchorScroll();    
-                    // }
-                    //     // $state.go('course.module.progress',{module_id: scope.id})
-                    // else if($state.includes("**.inclass.**"))
-                    //     return
-                    //     // $state.go('course.module.inclass',{module_id: scope.id})
-                    // else{
-                        var params = {}    
-                        params[scope.item.class_name+'_id'] = scope.item.id
-                        // $state.go('course.module.courseware.'+$scope.last_viewed.item.class_name, params)
-                        $state.go('course.module.course_editor.'+scope.item.class_name,params)
-                        scope.$parent.$parent.currentitem = scope.item.id
-                    // }
-                }
-
-                // scope.getDeleteMessage = function() {
-                //     var translation_value = {}
-                //     translation_value[scope.className] = scope.name
-                //     return $translate('groups.you_sure_delete_' + scope.className, translation_value)
-                // }
-
-                scope.copyItem=function(event){
-                    event.stopPropagation() 
-                    scope.menu_status = false
-                    scope.copy()
-                }
-
-                scope.doPaste=function(event){
-                    event.stopPropagation() 
-                    scope.menu_status = false
-                    scope.paste()
-                }
-
-                scope.shareItem=function(event){
-                    event.stopPropagation() 
-                    scope.menu_status = false
-                    scope.share()
-                }
-
-                // scope.createLink=function(event){
-                //     event.stopPropagation()
-                //     event.preventDefault() 
-                //     var params = {module_id: scope.item.group_id}
-                //     params[scope.item.class_name+'_id'] = scope.item.id
-                //     scope.link_url=$state.href('course.module.courseware.'+scope.item.class_name, params, {absolute: true})
-                //     $timeout(function() {
-                //         element.find('.item_link').select();
-                //     });
-                // }
-
-
                 scope.remove=function(event){
                     event.stopPropagation()
                     event.preventDefault() 

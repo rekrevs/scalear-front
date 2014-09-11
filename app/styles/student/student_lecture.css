@@ -146,7 +146,8 @@
 
     .video_class_full, .navigator_open .video_class_full{
         width:100%;
-        height:98%;
+        margin: 0;
+        /*height:98%;*/
     }
 
     .mobile_video_full, .navigator_open .mobile_video_full  {

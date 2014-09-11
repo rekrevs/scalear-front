@@ -484,7 +484,7 @@ angular.module('scalearAngularApp')
 					"margin-left": "0px",
 					"margin-top": "0px",
 					"z-index":1,
-					"width": "99%",
+					"width": "100%",
 					"height": '100%',
 					"top": "0px",
 					"left": "0px"

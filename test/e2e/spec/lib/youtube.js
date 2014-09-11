@@ -42,7 +42,7 @@ exports.press_pause = function (ptor){
 }
 
 exports.get_current_video_time = function(ptor){
-	locator.by_classname(ptor, 'timer').findElements(protractor.By.className('ng-binding')).then(function(timers){
+	return locator.by_classname(ptor, 'timer').findElements(protractor.By.className('ng-binding')).then(function(timers){
 		return timers[0].getText();
 	})
 }

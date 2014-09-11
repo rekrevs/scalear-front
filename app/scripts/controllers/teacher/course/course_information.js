@@ -114,7 +114,7 @@ angular.module('scalearAngularApp')
     Course.getTeachers({course_id:$stateParams.course_id},
       function(value){
            $scope.teachers = value.data;
-           $scope.new_teacher = null;
+           $scope.new_teacher = {};
        },
        function(value){}
     )
@@ -175,18 +175,18 @@ angular.module('scalearAngularApp')
       {course_id:$stateParams.course_id},
       {new_teacher:$scope.new_teacher},
         function(value) {
-            $scope.error = $scope.getTeachers();
+            // $scope.errors = $scope.getTeachers();
             $scope.teacher_forum = false
         },
         //handle error
         function(value) {
-          $scope.errors=
-          $scope.new_teacher.error=value.data.errors.email
+          console.log(value)
+          $scope.new_teacher.errors=value.data.errors
 
           // for(var element in $scope.new_teachers)
           // {
           // }
-          $log.debug($scope.errors);
+          // $log.debug($scope.errors);
           //$scope.error = $scope.getTeachers();
         }
     )

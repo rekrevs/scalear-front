@@ -940,7 +940,7 @@ describe('First Student', function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(1000)
 		o_c.open_module(ptor, 1);
-		o_c.open_item_from_navigator(ptor, 5);
+		o_c.open_item_from_navigator(1, 5);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(1000)
 	})
@@ -976,7 +976,7 @@ describe('First Student', function(){
 	it('should open the survey',function(){
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(1000)
-		o_c.open_item_from_navigator(ptor, 6);
+		o_c.open_item_from_navigator(1, 6);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(1000)
 	})
@@ -1316,7 +1316,7 @@ describe('Second Student', function(){
 	it('should open the first lecture again', function(){
 		o_c.press_content_navigator(ptor);
 		o_c.open_module(ptor, 1);
-		o_c.open_item_from_navigator(ptor, 1);
+		o_c.open_item_from_navigator(1, 1);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(1000)
 	})
@@ -1372,7 +1372,7 @@ describe('First Student', function(){
 	it('should open the first module second lecture', function(){
 		o_c.press_content_navigator(ptor);
 		o_c.open_module(ptor, 1);
-		o_c.open_item_from_navigator(ptor, 2);
+		o_c.open_item_from_navigator(1, 2);
 		o_c.press_content_navigator(ptor);
 		ptor.sleep(1000)
 	})

@@ -280,19 +280,16 @@ angular.module('scalearAngularApp')
     scope:{
       links:'=',
       modules: '=',
-      // currentmodule: '=',
-      // currentitem: '=',
-      // scrollto: '=',
       mode: '@',
       open_navigator:'=open'
     },
     templateUrl:"/views/content_navigator.html",
    link:function(scope, element, attr){
    	  scope.$state = $state
-	  var unwatch = scope.$watch('$state.params.module_id',function(){
+	  var unwatch = scope.$watch('$state.params',function(){
 	  	if($state.params.module_id){
 	  		scope.currentmodule = {id: $state.params.module_id}
-   	  		scope.currentitem = $state.params.lecture_id || $state.params.quiz_id
+   	  		scope.currentitem = {id: $state.params.lecture_id || $state.params.quiz_id}
 	  	}
 	  	else{
 	  		scope.currentmodule = null
@@ -374,90 +371,47 @@ angular.module('scalearAngularApp')
   	scope.showModuleCourseware = function(module){
         if(module.id != $state.params.module_id){
           scope.currentmodule = module//$scope.module_obj[module_id];
-          // $scope.close_selector = true;
           Module.getLastWatched(
-            {course_id: $stateParams.course_id, module_id: module.id}, function(data){
-              // $timeout(function(){
-              //   scope.toggleNavigator();
-              // })
+            {
+            	course_id: $stateParams.course_id, 
+            	module_id: module.id
+            }, 
+            function(data){
               if(data.last_watched != -1){
                 $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
-                scope.currentitem = data.last_watched
+                scope.currentitem = {id:data.last_watched}
               }
               else{
                 $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
-                scope.currentitem = module.quizzes[0].id
+                scope.currentitem = {id:module.quizzes[0].id}
               }
           }) 
         }  
   	}
-
-      // $scope.goToContent=function(){
                
-      scope.showItemCourseware = function(item){
-  	 	var params = {'module_id': $state.params.module_id}    
-        params[item.class_name.toLowerCase()+'_id'] = item.id
-        $state.go('course.module.courseware.'+ item.class_name.toLowerCase(), params)
-        scope.currentitem = item.id
-        // console.log(item)
-        // // $timeout(function(){
-        // //   scope.toggleNavigator();
-        // // })
-        // // var item_id = item.get_class_name.toLowerCase()+'_id';
-        // if(item.get_class_name.toLowerCase() == 'lecture'){
-        //   $state.go('course.module.courseware.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'lecture_id': item.id})
-        // }
-        // else if(item.get_class_name.toLowerCase() == 'quiz'){
-        //   $state.go('course.module.courseware.'+item.get_class_name.toLowerCase(), {'module_id': scope.currentmodule.id, 'quiz_id': item.id})
-        // }
-        // console.log('course.module.courseware.'+item.get_class_name.toLowerCase()+' ahoo')
-      }
+  	scope.showItem = function(item, type){
+ 		var params = {'module_id': $state.params.module_id}    
+	    params[item.class_name.toLowerCase()+'_id'] = item.id
+	    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
+	    scope.currentitem = {id:item.id}
+  	}
 
-      // scope.showModuleInclass = function(module){
-      //   $timeout(function(){
-      //     scope.toggleNavigator();
-      //   })
-      //   scope.currentmodule = module//$scope.getSelectedModule()
-      //   $state.go('course.inclass.module',{module_id: module.id})
-      //   // $scope.toggleSelector();
-      // }
+ 	scope.showModule=function(module){
+        $state.go('course.module.course_editor.overview',{module_id: module.id})
+        scope.currentmodule = module
+    }
+  	scope.goToCourseInfoStudent=function(){
+	  	scope.currentmodule = null
+	  	$state.go("course.course_information")
 
-      // scope.showModuleProgress = function(index){
-      //   scope.currentmodule = scope.modules[index]
-      //   // scope.toggleNavigator();
-      // }
-      // scope.showItemProgress = function(item){
-      //   $timeout(function(){$state.go('course.progress.lecture', {module_id: item.group_id});});
-      //   scope.scrollto(item);
-      // }
+  	}
 
-      scope.clearCurrent = function(event){
-        event.stopPropagation();
-        scope.currentmodule = null;
-        scope.currentitem = null;
-      }
-      scope.setCurrentModule=function(module){
-      	// if($state.includes("*.progress.*"))
-      	// 	$state.go('course.progress.lecture',{module_id: module.id})
-      	// else if($state.includes("*.inclass.*"))
-      	// 	$state.go('course.inclass.module',{module_id: module.id})
-      	// else
-      	// 	$state.go('course.module.course_editor.overview',{module_id: module.id})
-      		// scope.open_this_link = false
-      	scope.currentmodule = module
-      }
-
-      scope.goToCourseInfoStudent=function(){
-      	scope.currentmodule = null
-      	$state.go("course.course_information")
-
-      }
-
-   	  scope.goToCourseInfoTeacher=function(){
+  	scope.goToCourseInfoTeacher=function(){
       	scope.currentmodule = null
       	$state.go("course.edit_course_information")
 
-      }
+  	}
+  	
    }
   }
 }]);

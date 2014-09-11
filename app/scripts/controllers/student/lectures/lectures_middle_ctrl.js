@@ -13,7 +13,6 @@ angular.module('scalearAngularApp')
     $scope.resize = {}
     $scope.tabs=[true,false,false]
     $scope.editors={}
-    $scope.batei5 = 'helloashudiahfuhsdifuhsidfuh sidufhsiduhf'
 
     // $scope.$watch('checkModel', function(){
     //     $scope.scrollIntoView('outline')
@@ -75,11 +74,7 @@ angular.module('scalearAngularApp')
         if(!isiPad()){
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
                 if(!screenfull.isFullscreen){
-                    $scope.resize.small()
-                    $scope.fullscreen = false
-                    $scope.video_class= 'video_class'
-                    $scope.container_style={float: 'left'}
-                    $scope.$apply()
+                    goSmallScreen()
                 }
             });
         }
@@ -392,59 +387,56 @@ angular.module('scalearAngularApp')
     }
 
     $scope.toggleFullscreen=function(){
-
-        console.log(isiPad())
-        if(isiPad())
-            mobileFullscreen()
-        else
-            desktopFullscreen()
+        $scope.fullscreen? goSmallScreen() : goFullscreen() 
     }
 
-    var desktopFullscreen=function(){
-        if(!$scope.fullscreen){
-            console.log("going fullscreen")
-            $scope.resize.big()
-            $scope.fullscreen= true
-            console.log($scope.fullscreen)
-            $scope.video_class = 'video_class_full'
-            $scope.container_style={float: 'none'}
-        }
-        else{
-             console.log("going small")
-            $scope.resize.small()
-            $scope.fullscreen= false
-             console.log($scope.fullscreen)
-            $scope.video_class = 'video_class'
-            $scope.container_style={float: 'left'}
-            $timeout(function(){$scope.$emit("updatePosition")})
-            if($scope.quiz_mode == true){
-                $scope.quiz_mode = false
-                $timeout(function(){$scope.quiz_mode = true},200)
-            }
-            // else{
-            //     $scope.quiz_mode = true
-            //     $timeout(function(){$scope.quiz_mode = false})
-            // }
+    var goFullscreen=function(){
+        isiPad()? goMobileFullscreen() : goDesktopFullscreen()
+    }
 
+    var goSmallScreen=function(){
+        isiPad()? goMobileSmallScreen() : goDesktopSmallScreen()
+    }
+
+    var goDesktopSmallScreen=function(){
+        console.log("going small")
+        $scope.resize.small()
+        $scope.fullscreen= false
+         console.log($scope.fullscreen)
+        $scope.video_class = 'video_class'
+        $scope.container_style={float: 'left'}
+        $timeout(function(){$scope.$emit("updatePosition")})
+        if($scope.quiz_mode == true){
+            $scope.quiz_mode = false
+            $timeout(function(){$scope.quiz_mode = true},200)
         }
     }
 
-    var mobileFullscreen=function(){
-        if(!$scope.fullscreen){
-            $scope.video_class = 'mobile_video_full'
-            $scope.video_layer ={'height': '92%', 'position': 'relative', 'z-index': '-1'}
-            $scope.quiz_layer.width="100%"
-            $scope.quiz_layer.height="92%"
-            $scope.fullscreen= true
-        }
-        else{
-            console.log("close fullscreen")
-            $scope.video_class = 'video_class'
-            $scope.video_layer ={}
-            $scope.quiz_layer.width=""
-            $scope.quiz_layer.height=""
-            $scope.fullscreen= false
-        }
+    var goDesktopFullscreen=function(){
+        console.log("going fullscreen")
+        $scope.resize.big()
+        $scope.fullscreen= true
+        console.log($scope.fullscreen)
+        $scope.video_class = 'video_class_full'
+        $scope.container_style={float: 'none'}
+    }
+
+    var goMobileSmallScreen=function(){
+        console.log("close fullscreen")
+        $scope.video_class = 'video_class'
+        $scope.video_layer ={}
+        $scope.quiz_layer.width=""
+        $scope.quiz_layer.height=""
+        $scope.fullscreen= false
+        $timeout(function(){$scope.$emit("updatePosition")})
+    }
+
+    var goMobileFullscreen=function(){
+        $scope.video_class = 'mobile_video_full'
+        $scope.video_layer ={'height': '92%', 'position': 'relative', 'z-index': '-1'}
+        $scope.quiz_layer.width="100%"
+        $scope.quiz_layer.height="92%"
+        $scope.fullscreen= true
         $timeout(function(){$scope.$emit("updatePosition")})
     }
 
@@ -458,13 +450,13 @@ angular.module('scalearAngularApp')
         var time=$scope.lecture_player.controls.getTime()
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion",  null);
         // this if statment preserve the first state in case of multible questions
-        // if(typeof $scope.disc_temp_fullscreen === 'undefined' && typeof $scope.disc_temp_state === 'undefined'){
-            $scope.disc_temp_fullscreen = $scope.fullscreen;
-            $scope.disc_temp_state = $scope.play_pause_class;
+        // if(typeof $scope.last_fullscreen_state === 'undefined' && typeof $scope.last_play_state === 'undefined'){
+        $scope.last_fullscreen_state = $scope.fullscreen;
+        $scope.last_play_state = $scope.play_pause_class;
         // }
 
         $scope.lecture_player.controls.pause();
-        $scope.fullscreen= false
+        goSmallScreen()
         $scope.checkModel.discussion = true
         // $scope.timeline['lecture'][$state.params.lecture_id].add(time, "question_block", {})
 
@@ -472,15 +464,13 @@ angular.module('scalearAngularApp')
 
     $scope.addNote=function(){
         var time=$scope.lecture_player.controls.getTime()
-        console.log($state.params.lecture_id)
-        console.log($scope.timeline['lecture'])
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note",  null);
 
-        $scope.note_temp_fullscreen = $scope.fullscreen;
-        $scope.note_temp_state = $scope.play_pause_class;
+        $scope.last_fullscreen_state = $scope.fullscreen;
+        $scope.last_play_state = $scope.play_pause_class;
 
         $scope.lecture_player.controls.pause();
-        $scope.fullscreen= false
+        goSmallScreen()
         $scope.checkModel.note = true
 
     }
@@ -793,35 +783,22 @@ angular.module('scalearAngularApp')
     }
 
     $scope.$on('note_updated',function(){
-        
-        if(($scope.note_temp_fullscreen == true || $scope.disc_temp_fullscreen == true) && $scope.fullscreen != true){
-            $scope.toggleFullscreen();
-        }
-
-        // if(typeof $scope.disc_temp_state === 'undefined'){
-        //     $scope.disc_temp_state = 'pause';
-        // }
-
-        if(($scope.note_temp_state == "pause" || $scope.disc_temp_state == "pause") && ($scope.play_pause_class != "pause" && !$scope.quiz_mode)){
-            $scope.lecture_player.controls.play();
-        }
-
+        returnToState()
     })
 
-    $scope.$on('question_posted',function(){
+    $scope.$on('question_updated',function(){
+        returnToState()
+    })
 
-        if(($scope.note_temp_fullscreen == true || $scope.disc_temp_fullscreen == true) && $scope.fullscreen != true){
-            $scope.toggleFullscreen();
+    var returnToState=function(){
+        if($scope.last_fullscreen_state && !$scope.fullscreen){
+            goFullscreen();
         }
 
-        // if(typeof $scope.disc_temp_state === 'undefined'){
-        //     $scope.disc_temp_state = 'pause';
-        // }
-
-        if(($scope.note_temp_state == "pause" || $scope.disc_temp_state == "pause") && ($scope.play_pause_class != "pause" && !$scope.quiz_mode)){
+        if($scope.last_play_state == "pause" && ($scope.play_pause_class != "pause" && !$scope.quiz_mode)){
             $scope.lecture_player.controls.play();
         }
-    })
+    }
 
     init();
 }]);

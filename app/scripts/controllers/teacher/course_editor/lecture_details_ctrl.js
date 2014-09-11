@@ -130,7 +130,7 @@ angular.module('scalearAngularApp')
 
                 $scope.lecture.due_date = due_date
                 $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date)
-                $scope.lecture.due_date_module = $scope.lecture.due_date_enabled
+                $scope.lecture.due_date_module = !$scope.lecture.disable_due_controls && $scope.lecture.due_date_enabled
             }
             $scope.visible = function(appearance_time) {
                 if (new Date(appearance_time) <= new Date()) {
@@ -199,7 +199,7 @@ angular.module('scalearAngularApp')
                 return url.match(/(.*mp4$)/);
             }
             var isYoutube= function(url){
-                return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/)([^\s&]{11})/);
+                return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
             }
 
             var getYoutubeDetails= function(id){

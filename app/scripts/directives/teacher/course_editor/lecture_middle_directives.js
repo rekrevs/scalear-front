@@ -77,22 +77,22 @@ angular.module('scalearAngularApp')
 		link: function(scope, element, attrs) {
 
 			//==FUNCTIONS==//
-			var setAnswerLocation=function(){
-				element.css('z-index', 5)
-				$log.debug("setting answer location")
-				var ontop=angular.element('.ontop');		
-				var w = scope.data.width * ontop.width();
-				var h = scope.data.height* (ontop.height());
-				// var add_left= (w-13)/2.0
-				// var add_top = (h-13)/2.0
-				// scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
-				// scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
-				scope.xcoor = scope.data.xcoor
-				scope.ycoor = scope.data.ycoor
-				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-				// $log.debug(scope.xcoor+add_left)
-				// $log.debug(scope.ycoor+add_top)
-			}	
+			// var setAnswerLocation=function(){
+			// 	element.css('z-index', 5)
+			// 	$log.debug("setting answer location")
+			// 	var ontop=angular.element('.ontop');		
+			// 	var w = scope.data.width * ontop.width();
+			// 	var h = scope.data.height* (ontop.height());
+			// 	// var add_left= (w-13)/2.0
+			// 	// var add_top = (h-13)/2.0
+			// 	// scope.xcoor = (scope.data.xcoor * ontop.width())+ add_left;				
+			// 	// scope.ycoor = (scope.data.ycoor * (ontop.height())) + add_top;
+			// 	scope.xcoor = scope.data.xcoor
+			// 	scope.ycoor = scope.data.ycoor
+			// 	scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
+			// 	// $log.debug(scope.xcoor+add_left)
+			// 	// $log.debug(scope.ycoor+add_top)
+			// }	
 
 			scope.setAnswerColor=function(){
 				$log.debug("image change")
@@ -212,14 +212,14 @@ angular.module('scalearAngularApp')
 		 replace:true,
 		 restrict: 'E',
 		 template: "<div>"+
-		 				"<div ng-class='dragClass' style='background-color:blue;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: width, height: height, top: ycoor, left: xcoor}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
+		 				"<div ng-class='dragClass' style='background-color:blue;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: width, height: height, left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 					"<div class='input-prepend'>"+
 		 						"<span class='position-header error light-grey dark-text no-margin'>{{data.pos}}</span>"+
 			 					"<textarea class='area' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 14px; min-height: 40px; min-width: 40px;' ng-style=\"{max_width: width, max_height: height}\" ng-class=\"{error: !data.answer}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required/>"+
 			 					"<small class='error' ng-show=\"!data.answer\" translate>courses.required</small>"+
 		 					"</div>"+
 	 					"</div>"+
-	 					"<span class='dragged handle' data-drag='true' ng-style=\"{top: sub_ycoor, left: sub_xcoor}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" ><h6 class='subheader no-margin' style='font-size: 0.1rem !important;'>{{data.answer}}"+
+	 					"<span class='dragged handle' data-drag='true' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" ><h6 class='subheader no-margin' style='font-size: 0.1rem !important;'>{{data.answer}}"+
 	 						"<span class='position-header error light-grey dark-text no-margin' style='top: -1px; left: -45px;'>Start</span>"+
 	 					"</span>"+
  					"</div>",
@@ -230,18 +230,22 @@ angular.module('scalearAngularApp')
                 scope.require_translated= $translate("courses.required")
             });
 			//==FUNCTIONS==//
-			var setAnswerLocation=function(){
-				var ontop=angular.element('.ontop');
-				scope.width  = scope.data.width * ontop.width();
-				scope.height = scope.data.height* (ontop.height());
-				scope.xcoor = (scope.data.xcoor * ontop.width())
-				scope.ycoor = (scope.data.ycoor * (ontop.height()))
-				scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
-				scope.sub_ycoor = (scope.data.sub_ycoor * (ontop.height()))
-				scope.area_width= scope.width - 50
-				scope.area_height= scope.height - 20
-				scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
-			}
+			// var setAnswerLocation=function(){
+			// 	var ontop=angular.element('.ontop');
+			// 	scope.width  = scope.data.width * ontop.width();
+			// 	scope.height = scope.data.height* (ontop.height());
+			// 	// scope.xcoor = (scope.data.xcoor * ontop.width())
+			// 	// scope.ycoor = (scope.data.ycoor * (ontop.height()))
+			// 	// scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
+			// 	// scope.sub_ycoor = (scope.data.sub_ycoor * (ontop.height()))
+			// 	scope.xcoor = scope.data.xcoor
+			// 	scope.ycoor = scope.data.ycoor
+			// 	scope.sub_xcoor = scope.data.sub_xcoor 
+			// 	scope.sub_ycoor = scope.data.sub_ycoor
+			// 	scope.area_width= scope.width - 50
+			// 	scope.area_height= scope.height - 20
+			// 	scope.popover_options.fullscreen = (ontop.css('position') == 'fixed');
+			// }
 
 			scope.calculatePosition=function(){
 				var ontop=angular.element('.ontop');
@@ -263,10 +267,10 @@ angular.module('scalearAngularApp')
 			}			
 			//==========//	
 			
-			$rootScope.$on("updatePosition",function(){
-				$log.debug("event emiited updated position")
-				setAnswerLocation()
-			})	
+			// $rootScope.$on("updatePosition",function(){
+			// 	$log.debug("event emiited updated position")
+			// 	setAnswerLocation()
+			// })	
 
 			scope.dragClass = "component dropped answer_drag" 
 
@@ -324,7 +328,7 @@ angular.module('scalearAngularApp')
 		  		stop: scope.calculateSize
         	});
 
-        	setAnswerLocation()
+        	// setAnswerLocation()
 		}
 	};
 }]).directive('answerform',['$log',function($log){

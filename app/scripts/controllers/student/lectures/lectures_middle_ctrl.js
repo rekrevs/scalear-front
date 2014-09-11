@@ -800,6 +800,9 @@ angular.module('scalearAngularApp')
         if($scope.last_play_state == "pause" && ($scope.play_pause_class != "pause" && !$scope.quiz_mode)){
             $scope.lecture_player.controls.play();
         }
+
+        $scope.last_fullscreen_state = null
+        $scope.last_play_state = null
     }
 
     init();

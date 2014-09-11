@@ -48,7 +48,7 @@
 
         <div id="volume" class="volumeDiv show-inline left" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)"></div>
         <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-right: 15px;margin-top: 14px;"/>
-        <div class="timer color-grey show-inline size-14" style="margin-top:9px;text-align: left">
+        <div class="timer color-grey show-inline size-14 hide-for-small-only" style="margin-top:9px;text-align: left">
             <span style="float:left;">{{current_time|format}}</span>
             <span > / {{total_duration|format}}</span>
         </div>

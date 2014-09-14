@@ -658,6 +658,22 @@ td.right-border{
 .tooltip{
   padding: 0.25rem;
 }
+.progress-events-container{
+  height: 8px;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+  width: 100%;
+}
+@-moz-document url-prefix() {
+  .progress-events-container{
+    height: 8px;
+    position: relative;
+    top: -8px;
+    z-index: 1;
+    width: 100%;
+  }
+}
 
 
 /*STATES*/

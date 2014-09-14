@@ -1046,6 +1046,9 @@ textarea.editable-input{
   	border-radius: 4px;
   	padding: 20px 0;
 }
+.soft-border-bottom{
+  border-bottom: 1px solid;
+}
 
 
 /*DATEPICKER STYLING*/

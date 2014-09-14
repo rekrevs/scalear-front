@@ -64,13 +64,13 @@
 	            	</span>
 				</accordion-group>
 				<span ui-sortable="moduleSortableOptions" ng-model='modules'>
-					<accordion-group ng-show="modules.length" class="module accordion-group" ng-repeat="module in modules" close="currentmodule.id != module.id">
+					<accordion-group ng-show="modules.length" class="module accordion-group" ng-repeat="module in modules" close="currentmodule.id != module.id" is-open="{{currentmodule.id == module.id}}">
 						<accordion-heading class="accordion-heading">
 							<module data="module" ng-class="{currentmodule: currentmodule.id == module.id}" ng-click="showModule(module)" >
 							</module>
 						</accordion-heading>
 	          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
-		            		<li class="last-child item looks-like-a-link" ng-repeat="item in module.items" ng-class="{currentitem: currentitem == item.id}">
+		            		<li class="last-child item looks-like-a-link" ng-repeat="item in module.items" ng-class="{currentitem: currentitem.id == item.id}">
 	             				<item data="item" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ng-click="showItem(item, 'course_editor')"></item>
 		            		</li>
 		            	</span>

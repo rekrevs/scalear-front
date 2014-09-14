@@ -42,7 +42,7 @@
 <div class="row quiz_list">
 	<!--  -->
 	<center ng-show="!editing_mode && video_ready">
-		<h6 class="no-margin no-padding color-grey size-14">Use the Content menu to add quizzes and surveys</h6>
+		<h6 class="with-margin-top no-padding color-grey size-14">Use the Content menu to add quizzes and surveys</h6>
 	</center>
 	<overlay ng-hide="video_ready || lecture.url=='none'">
 		<loading size="small" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
@@ -51,7 +51,7 @@
 		<!-- <center ng-show="fullscreen"><a class='button small secondary fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center> -->
 		<center style="margin-bottom:10px">
 			<edit_panel ng-show="editing_mode" />		
-			<alert ng-show="submitted && !hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
+			<alert ng-show="!hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</center>
 		
 		<!-- <div class="row">

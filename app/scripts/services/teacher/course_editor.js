@@ -69,7 +69,7 @@ angular.module('scalearAngularApp')
 				xcoor:l  || 0,
 				ycoor:t  || 0,
 				sub_xcoor:l  || 0,
-				sub_ycoor:(t-0.052)  || 0
+				sub_ycoor:(t-0.09)  || 0
 			}
 		}
 		else{

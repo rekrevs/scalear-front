@@ -130,9 +130,10 @@ angular.module('scalearAngularApp')
 				
 			}
 			scope.selectField=function(ev){
-				var target = angular.element(ev.target)
+				// var target = angular.element(ev.target)
 				$timeout(function(){
-					target.select()
+					// target.select()
+					element.find('textarea')[0].select()
 				})
 				
 			}
@@ -170,20 +171,20 @@ angular.module('scalearAngularApp')
 				template = "<form name='aform'>"+								
 								"<label class='show-inline'><span translate>groups.answer</span><h6 class='no-margin-bottom'><small translate>lectures.shown_in_graph</small></h6></label>"+ 
 								"<delete_button class='right' size='big' hide-confirm='true'  color='dark' action='remove()'></delete_button>"+
-								"<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' required></textarea>"+
+								"<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()' value={{data.answer}} name='answer' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
 								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-12'><span translate>save</span></button>"+
 								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+
 							"</form>"
 			else
-				template = "<form name='aform'>"+
+				template = "<form name='aform' >"+
 								"<label class='show-inline'><span translate>lectures.correct</span> <span translate>groups.answer</span>"+
 								"<input class='must_save_check' ng-class='{error: aform.mcq.$error.atleastone}' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+
 								"<delete_button class='right' size='big' hide-confirm='true'  color='dark' action='remove()'></delete_button>"+
 								"<center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
 								"<label class='with-small-margin-top'><span translate>groups.answer</span>"+
 								"<h6 class='subheader no-margin'><small translate>lectures.shown_in_graph</small></h6>"+ 
-								"<textarea rows=3 class='must_save' type='text' ng-model='data.answer' ng-focus='selectField($event)' value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
+								"<textarea rows=3 class='must_save' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
 								"</label><br /><label style='margin-top:10px'><span translate>lectures.explanation</span>"+
 								"<h6 class='subheader no-margin'><small translate>lectures.shown_to_student</small></h6>"+
@@ -207,7 +208,7 @@ angular.module('scalearAngularApp')
 			scope.setAnswerColor()
 		}
 	};
-}]).directive('drag', ['$rootScope','$log','$translate', function($rootScope, $log, $translate){
+}]).directive('drag', ['$log','$timeout', function($log, $timeout){
 	return {
 		 replace:true,
 		 restrict: 'E',
@@ -215,20 +216,20 @@ angular.module('scalearAngularApp')
 		 				"<div ng-class='dragClass' style='background-color:blue;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: width, height: height, left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 					"<div class='input-prepend'>"+
 		 						"<span class='position-header error light-grey dark-text no-margin'>{{data.pos}}</span>"+
-			 					"<textarea class='area' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 14px; min-height: 40px; min-width: 40px;' ng-style=\"{max_width: width, max_height: height}\" ng-class=\"{error: !data.answer}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required/>"+
+			 					"<textarea  ng-focus='selectField()' class='area' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 14px; min-height: 40px; min-width: 40px;' ng-style=\"{max_width: width, max_height: height}\" ng-class=\"{error: !data.answer}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required/>"+
 			 					"<small class='error' ng-show=\"!data.answer\" translate>courses.required</small>"+
 		 					"</div>"+
 	 					"</div>"+
-	 					"<span class='dragged handle' data-drag='true' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" ><h6 class='subheader no-margin' style='font-size: 0.1rem !important;'>{{data.answer}}"+
+	 					"<span class='dragged handle' data-drag='true' style='height: 31px;' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" ><h6 class='subheader no-margin' style='font-size: 0.1rem !important;'>{{data.answer}}"+
 	 						"<span class='position-header error light-grey dark-text no-margin' style='top: -1px; left: -45px;'>Start</span>"+
 	 					"</span>"+
  					"</div>",
 
 		link: function(scope, element, attrs) {
 
-            $rootScope.$watch("current_lang", function(){
-                scope.require_translated= $translate("courses.required")
-            });
+            // $rootScope.$watch("current_lang", function(){
+            //     scope.require_translated= $translate("courses.required")
+            // });
 			//==FUNCTIONS==//
 			// var setAnswerLocation=function(){
 			// 	var ontop=angular.element('.ontop');
@@ -264,7 +265,15 @@ angular.module('scalearAngularApp')
 				console.log(scope.area_width+", "+scope.area_height)
 				scope.data.width= main.width()/ontop.width();
 				scope.data.height= main.height()/(ontop.height());
-			}			
+			}	
+
+			scope.selectField=function(){
+				console.log("dfghjkhljkhgfdskm")
+				$timeout(function(){
+					element.find('textarea')[0].select()
+				})				
+			}	
+			// scope.selectField()	
 			//==========//	
 			
 			// $rootScope.$on("updatePosition",function(){

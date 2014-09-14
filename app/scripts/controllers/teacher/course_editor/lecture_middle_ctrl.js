@@ -23,6 +23,7 @@ angular.module('scalearAngularApp')
     	type:"alert", 
     	msg: "lectures.got_some_errors"
     }
+    $scope.hide_alerts=true;
 	$scope.quiz_types_list=[
 		{type:'MCQ', text:"insert_mcq"},
 		{type:'OCQ', text:"insert_ocq"}, 
@@ -184,7 +185,9 @@ angular.module('scalearAngularApp')
 			function(data){ //success
 				$log.debug(data);
 				// console.log(data)
+				$scope.editing_mode= false
 				$scope.showOnlineQuiz(data.quiz)
+				data.quiz.new_quiz = true
 				$scope.quiz_list.push(data.quiz)
 				$scope.quiz_loading = false;
 				$scope.quiz_deletable = true
@@ -197,32 +200,32 @@ angular.module('scalearAngularApp')
 
 	$scope.showOnlineQuiz= function(quiz){
 		if($scope.selected_quiz != quiz){
-			if ($scope.quiz_deletable){
-				$scope.deleteQuiz($scope.selected_quiz)
-				clearQuizVariables()
-			}
-			$log.debug("SHOWONLINEQUIX")
-			$log.debug(quiz)
-			$scope.hide_alerts = true;
-			$scope.submitted= false
-			$scope.editing_mode = true;
-			$scope.selected_quiz = quiz
-			$scope.lecture_player.controls.seek_and_pause(quiz.time)
+			if(!$scope.editing_mode){
+				$scope.hide_alerts = true;
+				$scope.submitted= false
+				$scope.editing_mode = true;
+				$scope.selected_quiz = quiz
+				$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
-			if(quiz.quiz_type =="html"){
-				$log.debug("HTML quiz")
-				$scope.double_click_msg=""
-				$scope.quiz_layer.backgroundColor= "white"
-				$scope.quiz_layer.overflowX= 'hidden'
-	            $scope.quiz_layer.overflowY= 'auto'
-				getHTMLData()
+				if(quiz.quiz_type =="html"){
+					$log.debug("HTML quiz")
+					$scope.double_click_msg=""
+					$scope.quiz_layer.backgroundColor= "white"
+					$scope.quiz_layer.overflowX= 'hidden'
+		            $scope.quiz_layer.overflowY= 'auto'
+					getHTMLData()
+				}
+				else{ // invideo or survey quiz				
+					$scope.double_click_msg = "online_quiz.double_click_new_answer";
+					$scope.quiz_layer.backgroundColor="transparent"
+					$scope.quiz_layer.overflowX= ''
+					$scope.quiz_layer.overflowY= ''
+					getQuizData();				
+				}
 			}
-			else{ // invideo or survey quiz				
-				$scope.double_click_msg = "online_quiz.double_click_new_answer";
-				$scope.quiz_layer.backgroundColor="transparent"
-				$scope.quiz_layer.overflowX= ''
-				$scope.quiz_layer.overflowY= ''
-				getQuizData();				
+			else{
+				$scope.alert.msg= "lectures.save_quiz"
+				$scope.hide_alerts=false;
 			}
 		}
 	}
@@ -426,12 +429,9 @@ angular.module('scalearAngularApp')
 	};
 	
 	$scope.saveBtn = function(){
-		$log.debug($scope.selected_quiz.answers)
-		if((($scope.answer_form.$valid && $scope.selected_quiz.quiz_type == 'html') || ($scope.selected_quiz.quiz_type != 'html' && is_form_valid())) && $scope.selected_quiz.answers.length)
- 		{
+		if((($scope.answer_form.$valid && $scope.selected_quiz.quiz_type == 'html') || ($scope.selected_quiz.quiz_type != 'html' && is_form_valid())) && $scope.selected_quiz.answers.length){
 	 		$scope.submitted=false;
 	 		$scope.hide_alerts=true;
-			$log.debug("saving")
 			var data
 			if($scope.selected_quiz.question_type.toUpperCase() == 'DRAG' && $scope.selected_quiz.quiz_type == 'html'){
 				var obj = CourseEditor.mergeDragAnswers($scope.selected_quiz.answers, "lecture", $scope.selected_quiz.id)

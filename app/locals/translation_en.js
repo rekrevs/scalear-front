@@ -419,6 +419,7 @@ var translation_en=function(){
         reply: "Reply",
         download_notes: "Download Notes",
         finish_before_proceeding:"Please finish previous required lectures before proceeding",
+        save_quiz: "Please save or exit currently opened quiz",
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

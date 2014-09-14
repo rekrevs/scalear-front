@@ -422,6 +422,7 @@ var translation_sv=function(){
               reply: "Svara",
               download_notes: "Nedladdning Anmärkningar",
               finish_before_proceeding:"Vänligen avsluta tidigare krävs föreläsningar innan du fortsätter",
+              save_quiz: "Vänligen spara eller avsluta nu öppnat frågesport",
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

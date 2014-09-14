@@ -658,6 +658,22 @@ td.right-border{
 .tooltip{
   padding: 0.25rem;
 }
+.progress-events-container{
+  height: 8px;
+  position: absolute;
+  top: 0px;
+  z-index: 1;
+  width: 100%;
+}
+@-moz-document url-prefix() {
+  .progress-events-container{
+    height: 8px;
+    position: relative;
+    top: -8px;
+    z-index: 1;
+    width: 100%;
+  }
+}
 
 
 /*STATES*/
@@ -1045,6 +1061,9 @@ textarea.editable-input{
  	-moz-border-radius: 4px;
   	border-radius: 4px;
   	padding: 20px 0;
+}
+.soft-border-bottom{
+  border-bottom: 1px solid;
 }
 
 

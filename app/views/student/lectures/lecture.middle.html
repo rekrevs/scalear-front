@@ -1,8 +1,8 @@
-<div class="small-12 medium-12 large-7 columns">
+<div class="small-12 medium-11 medium-centered large-uncentered large-7 columns">
 	<div  ng-hide="!lecture" class="small-12">
 		<div id="main-video-container" ng-style="container_style"> 
 			<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->
-			<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-small-only	">
+			<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-medium-down" style="margin:5px">
 				 <span ng-show='key=="due"'>
 				 	<span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}}<span translate>{{ "controller_msg."+alert_message[2]}}</span>) 
 				 	<span translate>controller_msg.ago</span>
@@ -12,7 +12,7 @@
 				 </span>
 			</span>
 			<form name="answer_form" novalidate >
-				<video_container  class="ease_in_out" ng-init="video_class='flex-video'" screenfull active="fullscreen" style="width:100%;height:100%">
+				<video_container  ng-class="container_class" ng-init="video_class='flex-video'" screenfull active="fullscreen" style="width:100%;height:100%">
 					<span class="no_solve" ng-if="!should_play">
 						<center>
 							<div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' >
@@ -30,16 +30,14 @@
 								<loading size='small' show='true' style="position:relative;top:70px;" />
 							</center>
 						</div> -->
-						<youtube class="flex-video widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='1' style="margin: 0 auto;">
-							<quiz ng-style="quiz_layer" ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (!lecture.url || (!video_ready)) || slow" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1; width: 100% !important;">
+						<youtube class="flex-video widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='1' ng-style="video_layer" style="margin: 0 auto;">
+							<quiz ng-style="quiz_layer" ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (slow && !video_reaady)" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1; width: 100% !important;">
 								<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="top: 150px;">
 								</loading>
-								<div class="slow-message text-center" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="!lecture.url || (!video_ready)">
-									<span ng-show="slow">
-										<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
-										<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
-										<loading size='big' show='true' style="position:relative;top:70px;" />
-									</span>	
+								<div class="slow-message text-center" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="slow">
+									<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
+									<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
+									<loading size='big' show='true' style="position:relative;top:70px;" />
 								</div>
 								<div ng-if="selected_quiz.quiz_type == 'html'" >
 								 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>

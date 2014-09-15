@@ -403,7 +403,7 @@ angular.module('scalearAngularApp')
         $scope.fullscreen= false
          console.log($scope.fullscreen)
         $scope.video_class = 'flex-video'
-        $scope.container_class=''
+        // $scope.container_class=''
 
         // $scope.container_style={float: 'left'}
         $timeout(function(){$scope.$emit("updatePosition")})
@@ -418,7 +418,7 @@ angular.module('scalearAngularApp')
         $scope.resize.big()
         $scope.fullscreen= true
         $scope.video_class = 'video_class_full'
-        $scope.container_class='video_class_full'
+        // $scope.container_class=''
     }
 
     var goMobileSmallScreen=function(){
@@ -433,11 +433,12 @@ angular.module('scalearAngularApp')
     }
 
     var goMobileFullscreen=function(){
-        $scope.video_class = 'mobile_video_full'
+        $scope.video_class = ''
         $scope.container_class='mobile_video_full'
-        $scope.video_layer ={'height': '92%', 'position': 'relative', 'z-index': '-1'}
-        $scope.quiz_layer.width="100%"
-        $scope.quiz_layer.height="92%"
+        $scope.video_layer ={'width':'100%','height': '93%', 'position': 'relative', 'z-index': '-1'}
+        // $scope.quiz_layer.width="100%"
+        // $scope.quiz_layer.height="95%"
+        $scope.resize.big()
         $scope.fullscreen= true
         $timeout(function(){$scope.$emit("updatePosition")})
     }

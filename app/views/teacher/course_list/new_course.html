@@ -1,5 +1,6 @@
 <form novalidate class="form-horizontal" name="form" ng-submit="createCourse()">
     <div class="small-12 medium-4 large-3 columns">
+        <h3 class="show-for-medium ng-binding"><i class="fi-book"></i> {{'courses.new_course' | translate}}</h3>
         <div class="course-image left show-for-medium-up">
             <span></span>
             <img ng-src="{{course.image_url || '../images/course_image.png'}}" fallback-src="../images/course_image.png" loading-src />

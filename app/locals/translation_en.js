@@ -1,5 +1,6 @@
 var translation_en=function(){
     return {
+      tellus: 'Tell us about yourself...',
       online_name_comment: '(Your Online Name is shown to other students and teachers when you make comments or ask questions. If you wish to be anonymous, use the default or a pseudonym.)',
       finished: 'Finished',
       yes: 'Yes',
@@ -581,6 +582,7 @@ var translation_en=function(){
         has_due_date: "Has Due Date"
       },
       courses:{
+        course_links: 'Course Links',
         image_not_found: "Image not found...",
         you_asked: "You asked: ",
         confused: "Confused",

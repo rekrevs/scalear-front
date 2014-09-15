@@ -138,4 +138,10 @@ angular.module('scalearAngularApp')
       // var inside = $filter('includedByState')('**.course.**');
       // return inside && $state.params.course_id == id
     }
-  }]);
+  }]).filter('reverse', function() {
+  return function(items) {
+    console.log(items)
+     if(items)
+      return items.slice().reverse();
+  };
+});;

@@ -1,8 +1,3 @@
-<style>
-.row{
-	max-width: 72.5em !important;
-}
-</style>
 <center ng-show="!announcements"><br/><br/><loading size="big" show="!announcements"/></center>
 </br>
 
@@ -23,7 +18,7 @@
 
 <br />
 
-<announcement-item ng-repeat="announcement in announcements | filter:{announcement: searchAnnouncement}" announcement="announcement" saveannouncement="saveAnnouncement" showannouncement="showAnnouncement" hideannouncement="hideAnnouncement" deleteannouncement="deleteAnnouncement" saving="saving" index="$index"></announcement-item>
+<announcement-item ng-repeat="announcement in announcements | filter:{announcement: searchAnnouncement}| reverse" announcement="announcement" saveannouncement="saveAnnouncement" showannouncement="showAnnouncement" hideannouncement="hideAnnouncement" deleteannouncement="deleteAnnouncement" saving="saving"></announcement-item>
 
 <!-- <div class="left small-11 medium-6 large-6 columns">
 	<input id="search_announcement" ng-model="searchAnnouncement" placeholder="{{'courses.search' | translate}}" type="search" ng-disabled="!announcements.length" />

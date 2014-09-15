@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
 				            angular.element(".arrow").css("top",'50%');
 				            if(options.rightcut)
 				            	adjustLeft(pop)
-				            if(options.fullscreen)
+				            if(options.topcut)
 				            	adjustTop(pop)
 			
 				            return pop;
@@ -59,24 +59,26 @@ angular.module('scalearAngularApp')
 			          	}
 
 			          	var adjustTop=function(pop){
+			          		console.log("topcut")
 				            var win = angular.element($window)
 				            var arrow = angular.element(".arrow")
 							var elem_top= element.offset().top
+							console.log(elem_top)
 							var elem_bottom= win.height() - elem_top;
 							var arrow_pos
-							if(elem_top<170) //too close to top
-							{
-								arrow_pos = pop.top + (pop.height/2)
+							if(elem_top<225){ //too close to top
+								console.log(angular.element('.popover').parent().position())
+								arrow_pos = angular.element('.popover').parent().position().top + pop.height 
 						 		arrow.css("top",arrow_pos+'px');
-								pop.top = (angular.element('.popover').height() / 2)  - (pop.height/2)
+								pop.top = angular.element('.popover').height() - (angular.element('.popover').height()/4) +pop.height 
 							}
-							else if(elem_bottom < 160) //too close to bottom
-							{					
-								arrow_pos =elem_bottom - (pop.height/2) - 20
-						 		arrow.css("top",'initial');
-						 		arrow.css("bottom",arrow_pos+'px');
-								pop.top = win.height() - (angular.element('.popover').height() / 2) - (pop.height/2) - 10
-							}
+							// else if(elem_bottom < 160) //too close to bottom
+							// {					
+							// 	arrow_pos =elem_bottom - (pop.height/2) - 20
+						 // 		arrow.css("top",'initial');
+						 // 		arrow.css("bottom",arrow_pos+'px');
+							// 	pop.top = win.height() - (angular.element('.popover').height() / 2) - (pop.height/2) - 10
+							// }
 			          	}
 
 			          	$(document).on("click", function (e) {

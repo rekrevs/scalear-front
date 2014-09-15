@@ -136,8 +136,11 @@ angular.module('scalearAngularApp')
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/delete_button.html',
             link: function(scope) {
-                scope.showDeletePopup = function(value) {
+                scope.showDeletePopup = function(value,ev) {
                     scope.displayDeletePopup = value
+                    ev.stopPropagation()
+                    ev.preventDefault()
+
                 };
                 // var template =  "<input type='button' value='Delete' ng-click='' class='btn btn-small btn-primary'/>"+
                 //                 "<input type='button' value='cancel' ng-click='' class='btn btn-small'/>";

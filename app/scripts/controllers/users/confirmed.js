@@ -2,18 +2,19 @@
 
 angular.module('scalearAngularApp')
 	.controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page', function ($scope, $rootScope, User, UserSession, $state, $interval, Page) {
-		$scope.can_proceed = false, $scope.remaining = 5;
+		$scope.can_proceed = false 
+		$scope.remaining = 5;
 		Page.setTitle('Welcome to ScalableLearning');
 		$rootScope.subheader_message = "Intro Video (3 minutes)"
 		UserSession.getRole().then(function(result) {
-			if(result == 2){
+			$scope.role= result
+			if($scope.role == 2){
 				$scope.video_url = "https://www.youtube.com/watch?v=9u8U2NoXC7c?theme=light&autoplay=1&controls=1"
 			}
 			else{
 				$scope.video_url = "https://www.youtube.com/watch?v=3x4ZGfzdU8Y?theme=light&autoplay=1&controls=1"
 			}
-			$scope.video = Popcorn.HTMLYouTubeVideoElement(
-			 '#intro_video');
+			$scope.video = Popcorn.HTMLYouTubeVideoElement('#intro_video');
 			$scope.player = Popcorn($scope.video)
 			$scope.video.src = $scope.video_url
 			$scope.player.on( "canplay", function(){
@@ -31,16 +32,15 @@ angular.module('scalearAngularApp')
 		})
 		
 		$scope.watchedIntro = function(){
-		User.updateIntroWatched({
-			id: $rootScope.current_user.id
-		},{
-			intro_watched: true
-		}, function(){
-			console.log('SUCCEEDED')
-			$rootScope.current_user.intro_watched = true;
-			$state.go('course_list');
-		}, function(){
-			console.log('failed')
-		});
+		User.updateIntroWatched(
+			{id: $rootScope.current_user.id},
+			{intro_watched: true}, 
+			function(){
+				console.log('SUCCEEDED')
+				$rootScope.current_user.intro_watched = true;
+				$state.go('course_list');
+			}, function(){
+				console.log('failed')
+			});
 		}
 	}]);

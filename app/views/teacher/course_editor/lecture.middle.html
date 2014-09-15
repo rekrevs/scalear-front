@@ -13,10 +13,7 @@
 	<div class="small-12 small-centered columns">
 		<form name="answer_form" novalidate >
 			<center>
-				<video_container class="ease_in_out" ng-style="container_layer" class="small-12">					
-					<div>
-						
-					</div>
+				<video_container class="ease_in_out" ng-style="container_layer" class="small-12">
 					<youtube id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" class="flex-video widescreen" style="overflow:visible">
 						<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" style="z-index: 1;">
 							<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />

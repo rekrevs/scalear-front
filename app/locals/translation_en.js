@@ -31,6 +31,7 @@ var translation_en=function(){
       at: " at ",
       on: " on ",
       save: "Save",
+      save_close: "Save and Close",
       edit: "Edit",
       preview: "Preview",
       character_exceed_limit: "Character number exceeded limits",
@@ -40,6 +41,7 @@ var translation_en=function(){
       language: "Language",
       pref_language: "Language Preference",
       delete: "Delete",
+      click_to_delete: "Click here to delete, click outside to close",
       ie_disclaimer: "Internet Explorer is not fully compatible with the interactive video features used on Scalable Learning. We strongly encourage you to use",
       chrome: "Google's Chrome Browser",
       welcome: "Welcome to ",
@@ -306,6 +308,13 @@ var translation_en=function(){
         correct_for: "will be correct for",
         any_integer: "any integer number between 0 and 9",
         numbers:"the numbers 10, 14 and 29"
+      },
+      intro:{
+        teacher_introduction: "This 3-minute video will give you a rapid overview of how to create lectures, add quizzes, and review your students' online performance. You may",
+        teacher_skip_intro: "the introduction if you really want to, and can always find more detailed help in the Help menu.",
+        student_introduction: "This 3-minute video will show you how to answer quizzes, ask questions online, vote for in-class reviews, and give you tips on how to study effectively in a flipped class. You may",
+        student_skip_intro: "the introduction if you really want to",
+        by_using_service: "By using this service you agree to our",
       },
       lectures:{
         duration: "Duration",

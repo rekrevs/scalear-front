@@ -31,6 +31,7 @@ var translation_sv=function(){
       at: "vid",
       on: "på",
       save: "Spara", 
+      save_close: "Spara och stäng",
       edit: "Redigera",
       preview: "Förhandsgranska",     
       empty:"Tomma",
@@ -38,6 +39,7 @@ var translation_sv=function(){
       language: "Språk",
       pref_language: "språkinställning",
       delete: "Radera",
+      click_to_delete: "Klicka här för att ta bort, klicka utanför för att stänga",
       character_exceed_limit: "Den inmatade texten var för lång.",
       ie_disclaimer: "Internet Explorer är inte helt förenlig med de interaktiva videofunktioner som används om Scalable lärande. Vi rekommenderar att du använder",
       chrome: "Google Chrome webbläsare",
@@ -306,6 +308,13 @@ var translation_sv=function(){
         correct_for: "kommer att vara korrekt för",
         any_integer: "varje heltal mellan 0 och 9",
         numbers: "siffrorna 10, 14 och 29"
+      },
+      intro:{
+        teacher_introduction: "Detta 3-minuters video ger dig en snabb överblick över hur du skapar föreläsningar, lägga frågesporter, och granska dina elevers nätet prestanda. Du kan",
+        teacher_skip_intro: "introduktionen om du verkligen vill, och kan alltid hitta mer detaljerad hjälp på Hjälp-menyn.",
+        student_introduction: "Detta 3-minuters video visar dig hur man svarar frågesporter, ställa frågor på nätet, rösta på i-klassen recensioner, och ger dig tips om hur man kan studera effektivt i ett vänt klass. Du kan",
+        student_skip_intro: "introduktionen om du verkligen vill.",
+        by_using_service: "Genom att använda den här tjänsten samtycker du till vår",
       },
       lectures:{
               duration: "Tidsutsträckning",

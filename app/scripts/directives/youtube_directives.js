@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
 			transclude: true,
 			replace:true,
 			restrict: "E",
-			template: '<div class="videoborder panel widescreen transparent" style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid" 
+			template: '<div class="videoborder panel widescreen " style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid" 
 		};
 	})
 	.directive('youtube',['$rootScope','$log','$timeout','$window',function($rootScope,$log,$timeout,$window){
@@ -513,7 +513,7 @@ angular.module('scalearAngularApp')
 				var factor=16.0/9.0
                 var win = angular.element($window)
 
-                var progressbar_height = 40
+                var progressbar_height = 45
 
 				$scope.fullscreen = true
 				angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");

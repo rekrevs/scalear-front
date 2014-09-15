@@ -88,6 +88,9 @@ exports.config = {
         // 'test/e2e/spec/module-statistics.spec.js',//not done
         // 'test/e2e/spec/user-cycle.spec.js',//done
         // 'test/e2e/spec/timeline.spec.js',//done
+        // 'test/e2e/spec/dashboard.spec.js',//done
+        'test/e2e/spec/preview-as-student.spec.js',//done
+
 
         // 'test/e2e/spec/validations.spec.js',//not done
         // 'test/e2e/spec/forget-password-resend-conf.spec.js',// not done
@@ -140,19 +143,18 @@ exports.config = {
         // student_mail: 'studenttest@sharklasers.com',
         // student2_mail: 'studenttest2@sharklasers.com',
         // student3_mail: 'student_mail_2@sharklasers.com',
-        password: 'password',
+        // password: 'password',
         // admin_password:"password",
 
-
         //mena
-        frontend: 'http://0.0.0.0:9000/#',
-        // // frontend: 'http://staging.scalable-learning.com/#',
+        // frontend: 'http://0.0.0.0:9000/#',
+        // frontend: 'http://staging.scalable-learning.com/#',
         // // teacher_mail: 'teacher3@sharklasers.com',
-        student_mail: 'studenttest@sharklasers.com',
-        student_mail_2: 'studenttest2@sharklasers.com',
-        student_mail_3: 'student6@email.com',
+        // student_mail: 'studenttest@sharklasers.com',
+        // student_mail_2: 'studenttest2@sharklasers.com',
+        // student_mail_3: 'student6@email.com',
 
-        teacher_mail: 'teacher2@sharklasers.com',
+        // teacher_mail: 'teacher2@sharklasers.com',
         // // // teacher_mail: 'teacher15@sharklasers.com',
 
         // // student_mail: 'mena.happy@yahoo.com',
@@ -167,15 +169,15 @@ exports.config = {
         // // admin_password:"password",
 
         //staging
-        // frontend: 'http://staging.scalable-learning.com/#',
-        // admin_email: 'admin@scalable-learning.com',       
-        // teacher_mail: 'teacher1@sharklasers.com',
+        frontend: 'http://staging.scalable-learning.com/#',
+        admin_email: 'admin@scalable-learning.com',       
+        teacher_mail: 'anyteacher@email.com',
         // teacher2_mail: 'teacher2@sharklasers.com',
         // teacher3_mail: 'teacher3@sharklasers.com',
-        // student_mail: 'studenttest@sharklasers.com',
-        // student2_mail:'studenttest2@sharklasers.com',
-        // student3_mail: 'student_mail_2@sharklasers.com',
-        // password: 'password',
+        student_mail: 'student2@email.com',
+        student_mail2: 'student3@email.com',
+        student_mail3: 'student4@email.com',
+        password: 'password',
         // admin_password:"admin_account_password",
 
         short_name: "csc-test",

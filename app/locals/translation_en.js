@@ -400,7 +400,7 @@ var translation_en=function(){
         not_in_order: "Not In Order",
         got_some_errors: "Please correct the errors above",
         provide_answer: "Please provide the answer text for each choice",
-        provide_url: "Please enter the URL (link) for your video in the Lecture Details section to the right",
+        quiz_no_answer: "Quiz doesn't have a correct answer",
         shown_in_graph: "Shown on results graph",
         shown_to_student: "*Shown to students",
         server:"The server",

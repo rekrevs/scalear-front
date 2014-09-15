@@ -179,9 +179,9 @@ angular.module('scalearAngularApp')
 			else
 				template = "<form name='aform' >"+
 								"<label class='show-inline'><span translate>lectures.correct</span> <span translate>groups.answer</span>"+
-								"<input class='must_save_check' ng-class='{error: aform.mcq.$error.atleastone}' atleastone ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+
+								"<input class='must_save_check' ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+ //ng-class='{error: aform.mcq.$error.atleastone}' atleastone
 								"<span class='right' tooltip-append-to-body='true' tooltip={{'click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>"+
-								"<center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
+								// "<center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
 								"<label class='with-small-margin-top'><span translate>groups.answer</span>"+
 								"<h6 class='subheader no-margin'><small translate>lectures.shown_in_graph</small></h6>"+ 
 								"<textarea rows=3 class='must_save' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
@@ -504,16 +504,16 @@ angular.module('scalearAngularApp')
 					"<div class='row'>"+
 						"<div class='small-8 columns'>"+
 							"<label class='text-left'><span translate>groups.answer</span></label>"+
-							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) || (submitted && aform.mcq.$error.atleastone)}' />"+
+							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required)' />"+  //|| (submitted && aform.mcq.$error.atleastone)}
 							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required'><span translate>courses.required</span>!</small>"+
-							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
+							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<span ng-if='show() && !isSurvey()'><label class='text-left'><span translate>lectures.explanation</span></label>"+
 							"<input type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
 
 						"</div>"+
 						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
 							"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
-							"<input ng-change='updateValues()' atleastone type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+
+							"<input ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+  //atleastone
 						"</div>"+
 						"<div class='small-2 columns'>"+
 							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
@@ -529,15 +529,15 @@ angular.module('scalearAngularApp')
 					"<div class='row'>"+
 						"<div class='small-8 columns'>"+
 							"<label class='text-left'><span translate>groups.answer</span></label>"+
-							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) || (submitted && aform.$error.atleastone)}' />"+
+							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
 							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
-							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
+							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<span ng-if='show() && !isSurvey()'><label class='text-left'><span translate>lectures.explanation</span></label>"+
 							"<input type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
 						"</div>"+
 						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
 							"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
-							"<input id='radio_correct' atleastone type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+
+							"<input id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+ //atleastone
 						"</div>"+
 						"<div class='small-2 columns'>"+
 							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+

@@ -740,7 +740,7 @@ var translation_en=function(){
         duration_invalid: "Duration is invalid",
         charts: "Charts",
         total_statistics: "Total Statistics",
-        enroll_instruction: "To enroll in a course click 'Join Course' below and enter the course enrollment key from your instructor.",
+        enroll_instruction: "To enroll in a course choose 'Join a new course' from the Courses menu and enter the Enrollment Key from your instructor.",
         export_as: "Export course as",
         main_progress: "Main Progress",
         under_review:"Under Review",

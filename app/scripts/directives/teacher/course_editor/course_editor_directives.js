@@ -213,6 +213,7 @@ angular.module('scalearAngularApp')
                     var modalInstance = $modal.open({
                         templateUrl: '/views/teacher/course_editor/question_types_modal.html',
                         controller: ModalInstanceCtrl,
+                        windowClass: 'large'
                     })
                 }
                 var ModalInstanceCtrl = ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance, $rootScope) {

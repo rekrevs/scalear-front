@@ -742,7 +742,7 @@ var translation_sv=function(){
               duration_invalid: "Tidsutsträckning är ogiltig",
               charts: "Diagram",
               total_statistics: "Total Statistik",
-              enroll_instruction: "För att anmäla dig till en kurs klicka på 'Ansluta Kurs' nedan och ange kursens kursnyckel från din instruktör.",
+              enroll_instruction: "För att anmäla dig till en kurs väljer 'Gå med i en ny kurs' på kurser-menyn och ange kursnyckel från din instruktör",
               export_as: "Exportera kurs som",
               main_progress: "Huvudsaklig Framsteg",
               under_review: "föremål för översyn",

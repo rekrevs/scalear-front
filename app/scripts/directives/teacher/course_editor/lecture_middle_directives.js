@@ -214,7 +214,7 @@ angular.module('scalearAngularApp')
 		 replace:true,
 		 restrict: 'E',
 		 template: "<div>"+
-		 				"<div ng-class='dragClass' style='background-color:blue;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: width, height: height, left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
+		 				"<div ng-class='dragClass' style='background-color:blue;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 					"<div class='input-prepend'>"+
 		 						"<span class='position-header error light-grey dark-text no-margin'>{{data.pos}}</span>"+
 			 					"<textarea  ng-focus='selectField()' class='area' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 14px; min-height: 40px; min-width: 40px;' ng-style=\"{max_width: width, max_height: height}\" ng-class=\"{error: !data.answer}\" ng-model='data.answer' value='{{data.answer}}' pop-over='popover_options' unique='true' required/>"+

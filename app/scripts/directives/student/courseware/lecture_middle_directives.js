@@ -290,7 +290,7 @@ angular.module('scalearAngularApp')
   return {
      replace:true,
      restrict: 'E',
-     template: "<input type='checkbox' name='student_answer' ng-model='data.selected' ng-change='radioChange(data)' ng-style='{left: xcoor, top: ycoor, position: \"absolute\" }' style='width: 2%; min-width: 12px;' pop-over='explanation_pop'/>",
+     templateUrl: "/views/student/lectures/answer.html",
 
     link: function(scope, element, attrs, controller) {
       $log.debug("student answer link")
@@ -302,19 +302,21 @@ angular.module('scalearAngularApp')
         element.attr('type',type)
       }
 
-      var setAnswerLocation=function(){
-        $log.debug("setting answer location")
-        var ontop=angular.element('.ontop');    
-        var w = scope.data.width * ontop.width();
-        var h = scope.data.height* (ontop.height());
-        var add_left= (w-13)/4.0
-        var add_top = (h-13)/4.0
-        scope.xcoor = parseFloat(scope.data.xcoor * ontop.width())// - add_left;       
-        scope.ycoor = parseFloat(scope.data.ycoor * (ontop.height())) //- add_top;
-        scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
-        $log.debug(scope.xcoor)
-        $log.debug(scope.ycoor)
-      } 
+      // var setAnswerLocation=function(){
+      //   $log.debug("setting answer location")
+      //   var ontop=angular.element('.ontop');    
+      //   var w = scope.data.width * ontop.width();
+      //   var h = scope.data.height* (ontop.height());
+      //   var add_left= (w-13)/4.0
+      //   var add_top = (h-13)/4.0
+      //   // scope.xcoor = parseFloat(scope.data.xcoor * ontop.width())// - add_left;       
+      //   // scope.ycoor = parseFloat(scope.data.ycoor * (ontop.height())) //- add_top;
+      //   scope.xcoor = scope.data.xcoor * 100)// - add_left;       
+      //   scope.ycoor = scope.data.ycoor * 100) //- add_top;
+      //   scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
+      //   $log.debug(scope.xcoor)
+      //   $log.debug(scope.ycoor)
+      // } 
 
       scope.radioChange=function(corr_ans){
         if(scope.quiz.question_type == "OCQ"){
@@ -326,10 +328,10 @@ angular.module('scalearAngularApp')
         }
       }
 
-      $rootScope.$on("updatePosition",function(){
-        $log.debug("event emiited updated position")
-        setAnswerLocation()
-      })         
+      // $rootScope.$on("updatePosition",function(){
+      //   $log.debug("event emiited updated position")
+      //   setAnswerLocation()
+      // })         
      
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id])
@@ -346,7 +348,7 @@ angular.module('scalearAngularApp')
       })
 
       setup()
-      setAnswerLocation()
+      // setAnswerLocation()
       
     }
   };
@@ -355,23 +357,22 @@ angular.module('scalearAngularApp')
 .directive('studentDrag',['$rootScope','$translate','$log', function($rootScope, $translate, $log){
   return {
     restrict:'E',
-    template:'<div ng-style="{left: xcoor, top: ycoor, width:width, height:height, position: \'absolute\',  margin:\'0px\'}" data-drop="true" jqyoui-droppable=\'{onDrop:"setDropped", onOver:"formatDropped", onOut:"clearDropped"}\' class="drop-div" ></div>'+
-             '<span class="dragged handle" style="z-index:1;margin:0" ng-style="{left: sub_xcoor, top: sub_ycoor}" data-drag="true" data-jqyoui-options=\'{containment:".ontop"}\' jqyoui-draggable=\'{onStart:"formatDrag", onDrag:"adjustDrag"}\' pop-over="explanation_pop">{{data.answer}}</span>',
+    templateUrl: '/views/student/lectures/answer_drag.html',
     link:function(scope,elem){
       $log.debug("student drag")
       $log.debug(scope.data)
-      var setAnswerLocation=function(){
-        $log.debug("setAnswerLocation")
-        var ontop=angular.element('.ontop');
-        console.log(scope.data)
-        scope.width  = scope.data.width * ontop.width();
-        scope.height = scope.data.height* (ontop.height());
-        scope.xcoor = (scope.data.xcoor * ontop.width())
-        scope.ycoor = (scope.data.ycoor * (ontop.height()))
-        scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
-        scope.sub_ycoor = (scope.data.sub_ycoor * ontop.height())
-        scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
-      }
+      // var setAnswerLocation=function(){
+      //   $log.debug("setAnswerLocation")
+      //   var ontop=angular.element('.ontop');
+      //   console.log(scope.data)
+      //   scope.width  = scope.data.width * ontop.width();
+      //   scope.height = scope.data.height* (ontop.height());
+      //   scope.xcoor = (scope.data.xcoor * ontop.width())
+      //   scope.ycoor = (scope.data.ycoor * (ontop.height()))
+      //   scope.sub_xcoor = (scope.data.sub_xcoor * ontop.width())
+      //   scope.sub_ycoor = (scope.data.sub_ycoor * ontop.height())
+      //   scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
+      // }
       
       var setup=function(){
       	$log.debug("setup function")
@@ -381,12 +382,12 @@ angular.module('scalearAngularApp')
       	scope.explanation[scope.data.id] = null
       }
       
-      $rootScope.$on("updatePosition",function(){
-        $log.debug("event emitted updated position")
-        setAnswerLocation()
-       	var drag_elem = angular.element('#'+scope.data.id)
-        resizeAnswer(drag_elem)
-    	}) 
+     //  $rootScope.$on("updatePosition",function(){
+     //    $log.debug("event emitted updated position")
+     //    setAnswerLocation()
+     //   	var drag_elem = angular.element('#'+scope.data.id)
+     //    resizeAnswer(drag_elem)
+    	// }) 
       
       scope.formatDrag=function(event, ui){
         var drag_elem = angular.element(ui.helper[0])
@@ -425,8 +426,14 @@ angular.module('scalearAngularApp')
         var drop_elem = angular.element(elem[0]).find('div')
         if(!scope.studentAnswers[scope.quiz.id][scope.data.id]){
           ui.draggable.css('background-color', 'lightblue')          
+          ui.draggable.css('width', (scope.data.width*100)+'%')          
+          ui.draggable.css('height', (scope.data.height*100)+'%')
+
+          ui.draggable.css('left', (scope.data.xcoor*100)+'%')          
+          ui.draggable.css('top', (scope.data.ycoor*100)+'%')          
+          // ui.draggable.css('p', (scope.data.ycoor*100)+'%')          
           ui.draggable.addClass('dropped')
-          resizeAnswer(ui.draggable, drop_elem)
+          // resizeAnswer(ui.draggable, drop_elem)
           scope.studentAnswers[scope.quiz.id][scope.data.id]=ui.draggable.text()
           ui.draggable.attr('id', scope.data.id)
           scope.$apply()
@@ -440,6 +447,7 @@ angular.module('scalearAngularApp')
       }
 	
        scope.clearDropped=function(event, ui){
+
        	destroyPopover(ui.draggable)
         clear(ui.draggable)
       }
@@ -491,7 +499,7 @@ angular.module('scalearAngularApp')
       })
 
   	  setup()
-      setAnswerLocation()
+      // setAnswerLocation()
     }
   }
 }])

@@ -185,28 +185,19 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	text-align: left;
 }
 
-.time_estimate{
-	/*width: 26.4%;*/
-	/*background: #222;*/
+/*.time_estimate{
 	border: 2px solid rgb(0, 162, 86) !important;
-	/*color: white;*/
 	color: black;
 	padding:5px;
 	text-align:center;
 	margin-bottom:15px !important;
-	/*position:fixed; */
-	/*top: 400px; remove this line*/
-	/*left:30px;*/
-	/*margin-top: 290px;*/
-}
+}*/
 
-.time_estimate a{
-	/*color:orange;*/
+/*.time_estimate a{
 	float:right;
 	cursor:pointer;
-	/*position: absolute;*/
 	right: 5px;
-}
+}*/
 
 .main_content{
 	/*overflow-y:auto; */

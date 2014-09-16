@@ -75,7 +75,7 @@ angular.module('scalearAngularApp')
                 {"label": $translate('courses.students'),"type": "number"}
             ]
         formated_data.rows= []
-        var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
+        var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.watched')+" > 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
         for(var ind in data)
         {
             var row=

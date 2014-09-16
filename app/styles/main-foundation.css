@@ -1280,6 +1280,7 @@ a.editable-click{
   }
   .land-height{
     height: 68vh !important;
+    -webkit-overflow-scrolling: touch;
   }
 
   .land-min-height{
@@ -1311,5 +1312,6 @@ a.editable-click{
 
   .portrait-medium-height{
     height: 52vh !important;
+     -webkit-overflow-scrolling: touch;
   }
 }

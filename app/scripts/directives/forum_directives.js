@@ -60,7 +60,7 @@ angular.module('scalearAngularApp')
             }
         }
     }])
-    .directive('discussionTimeline',["Forum","Timeline","$translate",'$rootScope', function(Forum, Timeline, $translate, $rootScope) {
+    .directive('discussionTimeline',["Forum","Timeline","$translate",'$rootScope','$filter', function(Forum, Timeline, $translate, $rootScope,$filter) {
     return {
         restrict:"A",
         scope:{
@@ -70,8 +70,11 @@ angular.module('scalearAngularApp')
         },
         templateUrl:'/views/forum/discussion_timeline.html',
         link: function(scope, element, attrs) {
+            console.log(")")
             scope.current_user = $rootScope.current_user
-            
+            scope.formattedTime = $filter('formattime','hh:mm:ss')(scope.item.time)
+            scope.private_text = $translate("discussion.private_post")
+            scope.public_text = $translate("discussion.public_post")
             scope.deleteDiscussion = function(discussion){
                 Forum.deletePost(
                     {post_id: discussion.data.id}, 
@@ -235,7 +238,7 @@ angular.module('scalearAngularApp')
             }
         }
     }
-}]).directive('votingButton', function(){
+}]).directive('votingButton', ['$translate',function($translate){
     return{
         restrict: 'E',
         scope:{            
@@ -248,6 +251,8 @@ angular.module('scalearAngularApp')
         },
         templateUrl: '/views/forum/like_button.html',
         link: function(scope, element){
+            scope.like_text= $translate('discussion.like')
+            scope.unlike_text= $translate('discussion.unlike')
             if(scope.direction == 'horizontal')
                 angular.element(element.find('.looks-like-a-link')).css('display',  'inline-block')
                 // scope.display_style= 'inline-block'
@@ -256,7 +261,7 @@ angular.module('scalearAngularApp')
                 // scope.display_style= 'block'
         }
     }
-}).directive('flagButton', function(){
+}]).directive('flagButton', ['$translate',function($translate){
     return{
         restrict: 'E',
         scope:{            
@@ -268,9 +273,13 @@ angular.module('scalearAngularApp')
 
         },
         templateUrl: '/views/forum/flag_button.html',
-        link: function(scope, element){}
+        link: function(scope, element){
+            scope.flag_text=$translate("discussion.flag_post")
+            scope.unflag_text=$translate("unflag_post")
+
+        }
     }
-}).directive("timelineFilters",function(){
+}]).directive("timelineFilters",function(){
     return{
         restrict: "E",
         scope: {
@@ -316,7 +325,7 @@ angular.module('scalearAngularApp')
         restrict: 'E',
         scope:{            
             discussion: '=',
-            submit: '='
+            submit:"="
         },
         templateUrl: '/views/forum/comment_box.html',
         link: function(scope, element){
@@ -329,9 +338,6 @@ angular.module('scalearAngularApp')
             }
             scope.toggleField = function(){
                 scope.showfield = !scope.showfield
-                // var textarea = element.find('textarea')
-                // textarea[0].focus()
-                // console.log(textarea[0].focus())
             }
             scope.hideField = function(){
                 if(!scope.comment && scope.showfield == true){

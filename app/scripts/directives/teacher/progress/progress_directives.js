@@ -118,7 +118,7 @@ angular.module('scalearAngularApp')
 	    	quiz_count:'=quizCount',
 	    	question_count:'=questionCount'
 	    },
-	    template:'<div class="row time_estimate">'+
+	    template:'<div class="row panel with-small-margin text-center time_estimate">'+
 					'<div>'+
 						'<h6 ng-style="{color: color}">In-class <span translate>courses.time_estimate</span>: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></h6>'+
 					'</div>'+

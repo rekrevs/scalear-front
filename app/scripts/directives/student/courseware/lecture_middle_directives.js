@@ -586,9 +586,9 @@ angular.module('scalearAngularApp')
     },
     templateUrl:'/views/student/lectures/confused_timeline.html',
     link:function(scope, element, attrs){
-      var unwatch = scope.$watch('item.data.very',function(){
-          scope.msg =scope.item.data.very? 'courses.really_confused': 'courses.confused'
-      })
+      // var unwatch = scope.$watch('item.data.very',function(){
+      //     scope.msg =scope.item.data.very? 'courses.really_confused': 'courses.confused'
+      // })
 
       scope.deleteConfused = function(confused){
         Lecture.deleteConfused(
@@ -598,8 +598,8 @@ angular.module('scalearAngularApp')
           confused_id: confused.data.id
         }, 
         function(response){
-          console.log("deleted");
-          unwatch()
+          // console.log("deleted");
+          // unwatch()
           // delete scope.item
           scope.$emit('update_timeline', confused)
           // now want to remove from list (both l.confuseds and $scope.timeline..)

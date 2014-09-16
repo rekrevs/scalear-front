@@ -1264,3 +1264,52 @@ a.editable-click{
     width: 86%;
     }
 }*/
+
+
+@media only screen and (orientation:landscape) and (max-width: 48.063em){
+  .land-medium-7 {
+    position: relative;
+    width: 58.33333%;
+  }
+  .land-no-padding{
+    padding: 0px !important; 
+  }
+  .land-medium-5{
+    position: relative;
+    width: 41.66667%;
+  }
+  .land-height{
+    height: 68vh !important;
+  }
+
+  .land-min-height{
+    min-height: 70vh !important;
+  }
+}
+
+@media screen and (orientation:portrait){
+  .portrait-medium-11{
+    position: relative;
+    width: 91.66667%; 
+  }
+
+  .portrait-medium-12{
+    position: relative;
+    width: 100%;
+  }
+
+  .portrait-medium-centered{
+     position: relative;
+    margin-left: auto;
+    margin-right: auto;
+    float: none;
+  }
+
+  .portrait-no-padding{
+    padding: 0px !important; 
+  }
+
+  .portrait-medium-height{
+    height: 52vh !important;
+  }
+}

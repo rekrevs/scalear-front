@@ -249,9 +249,11 @@ angular.module('scalearAngularApp')
         templateUrl: '/views/forum/like_button.html',
         link: function(scope, element){
             if(scope.direction == 'horizontal')
-                scope.display_style= 'inline-block'
+                angular.element(element.find('.looks-like-a-link')).css('display',  'inline-block')
+                // scope.display_style= 'inline-block'
             else
-                scope.display_style= 'block'
+                angular.element(element.find('.looks-like-a-link')).css('display',  'block')
+                // scope.display_style= 'block'
         }
     }
 }).directive('flagButton', function(){

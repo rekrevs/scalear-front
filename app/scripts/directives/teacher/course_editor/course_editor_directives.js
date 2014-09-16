@@ -145,18 +145,18 @@ angular.module('scalearAngularApp')
                 // var template =  "<input type='button' value='Delete' ng-click='' class='btn btn-small btn-primary'/>"+
                 //                 "<input type='button' value='cancel' ng-click='' class='btn btn-small'/>";
 
-                var template = "<div class='alert alert-block alert-error notification fade in' style='padding: 3px;margin-bottom: 5px; width: 50px;text-align:center'>"+
-                                        "<span class='form-controls-alert' style='margin:auto' >"+
-                                            "<a class='btn btn-danger btn-mini' ng-click='action({event:$event});showDeletePopup(false)' translate>delete</a>"+
-                                            // "<a class='btn btn-mini' ng-click='showDeletePopup(false)' translate>lectures.cancel</a>"+
-                                        "</span>"+
-                                "</div>";
+                // var template = "<div class='alert alert-block alert-error notification fade in' style='padding: 3px;margin-bottom: 5px; width: 50px;text-align:center'>"+
+                //                         "<span class='form-controls-alert' style='margin:auto' >"+
+                //                             "<a class='btn btn-danger btn-mini' ng-click='action({event:$event});showDeletePopup(false)' translate>delete</a>"+
+                //                             // "<a class='btn btn-mini' ng-click='showDeletePopup(false)' translate>lectures.cancel</a>"+
+                //                         "</span>"+
+                //                 "</div>";
 
-                scope.myoptions={
-                    content: template,
-                    html:true,
-                    placement:scope.placement || 'bottom'
-                }
+                // scope.myoptions={
+                //     content: template,
+                //     html:true,
+                //     placement:scope.placement || 'bottom'
+                // }
             }
         }
     }).directive('addModuleItems', function(){

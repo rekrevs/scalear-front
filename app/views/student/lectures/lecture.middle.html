@@ -1,16 +1,16 @@
-<div class="small-12 medium-11 medium-centered large-uncentered large-7 columns">
+<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-medium-down" style="margin:5px">
+	 <span ng-show='key=="due"'>
+	 	<span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}}<span translate>{{ "controller_msg."+alert_message[2]}}</span>) 
+	 	<span translate>controller_msg.ago</span>
+	 </span>
+	 <span ng-show='key=="today"'>
+	 	<span translate>controller_msg.due</span> <span translate>controller_msg.today</span> <span translate>at</span> <span>{{alert_message| date:'h:mma'}}</span>
+	 </span>
+</span>
+<div class="small-12 land-medium-7 portrait-medium-centered large-uncentered portrait-medium-12 large-7 portrait-no-padding land-no-padding columns">
 	<div  ng-hide="!lecture" class="small-12">
 		<div id="main-video-container" ng-style="container_style"> 
 			<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->
-			<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-medium-down" style="margin:5px">
-				 <span ng-show='key=="due"'>
-				 	<span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}}<span translate>{{ "controller_msg."+alert_message[2]}}</span>) 
-				 	<span translate>controller_msg.ago</span>
-				 </span>
-				 <span ng-show='key=="today"'>
-				 	<span translate>controller_msg.due</span> <span translate>controller_msg.today</span> <span translate>at</span> <span>{{alert_message| date:'h:mma'}}</span>
-				 </span>
-			</span>
 			<form name="answer_form" novalidate >
 				<video_container  ng-class="container_class" ng-init="video_class='flex-video'" screenfull active="fullscreen" style="width:100%;height:100%">
 					<span class="no_solve" ng-if="!should_play">
@@ -66,9 +66,7 @@
 		</div>
 	</div>
 </div>
-<div  id="student-accordion" class="small-12 medium-12 large-5 columns no-padding-right" style="height: 82vh;">
-	<div class="student_timeline" class="small-12" style="height: 100%; overflow-y: auto;">
-		<student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause">
+<div  id="student-accordion" class="student_timeline small-12 land-medium-5 portrait-medium-12 large-5 columns no-padding-right portrait-no-padding portrait-medium-height land-height" style="height: 82vh;overflow-y: auto;">
+	<student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause">
 		</student_timeline>
-	</div>
 </div>

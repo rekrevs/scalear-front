@@ -25,8 +25,8 @@
                 <tbody class="with-small-padding-left" ng-repeat="item in timeline[l.id].items | filter:filterType">
                     <tr name="quiz-timeline-item" quiz_timeline ng-if="item.type=='quiz'" item='item' seek='seek()' />
                     <tr name="confused-timeline-item" confused_timeline ng-if="item.type=='confused'" item='item' seek='seek()'/>
-                    <tr name="discussion-timeline-item" discussion_timeline ng-if="item.type=='discussion'" item='item' seek='seek()' />
-                    <tr name="notes-timeline-item" notes_timeline ng-if="item.type=='note'" item="item" seek='seek()' />
+                    <!-- <tr name="discussion-timeline-item" discussion_timeline ng-if="item.type=='discussion'" item='item' seek='seek()' /> -->
+                    <!-- <tr name="notes-timeline-item" notes_timeline ng-if="item.type=='note'" item="item" seek='seek()' /> -->
                 </tbody>
             </table>
         </span>

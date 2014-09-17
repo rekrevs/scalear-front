@@ -2,11 +2,18 @@
 	<div ng-if="'**.course_editor.**' | includedByState">
 		<img class='left handle with-tiny-margin' src='images/move2.png' bindonce bo-title="'courses.drag_to_reorder'|translate" />
 		<div class="truncate-70 show-inline left text-left">{{module.name}}</div>
-		<delete_button class="with-tiny-margin-right" size='small' color='dark' action='remove(event)' />		
+		<div class="color-grey" bo-text="module.total_time | formatFormattedTime:'h:mm'"></div>
+		<delete_button class="with-tiny-margin-right" size='small' color='dark' action='remove(event)'/>			
 	</div>
 
 	<div ng-if="!('**.course_editor.**' | includedByState)" >
-		<div class="truncate-70 show-inline left text-left" bindonce bo-text="module.name"></div>
+		<div class="row">
+			<div class="small-9 columns">
+				<div class="truncate-70 show-inline left text-left" bindonce bo-text="module.name"></div>	
+			</div>
+			<div class="small-3 columns">
+				<div class="color-grey" bo-text="module.total_time | formatFormattedTime:'h:mm'"></div>
+			</div>
+		</div>
 	</div>
 </div>
-

@@ -395,6 +395,7 @@ angular.module('scalearAngularApp')
 
     var goSmallScreen=function(){
         isiPad()? goMobileSmallScreen() : goDesktopSmallScreen()
+        $scope.lecture_player.controls.pause();
     }
 
     var goDesktopSmallScreen=function(){
@@ -457,8 +458,6 @@ angular.module('scalearAngularApp')
         $scope.last_fullscreen_state = $scope.fullscreen;
         $scope.last_play_state = $scope.play_pause_class;
         // }
-
-        $scope.lecture_player.controls.pause();
         goSmallScreen()
         $scope.checkModel.discussion = true
         // $scope.timeline['lecture'][$state.params.lecture_id].add(time, "question_block", {})
@@ -472,7 +471,6 @@ angular.module('scalearAngularApp')
         $scope.last_fullscreen_state = $scope.fullscreen;
         $scope.last_play_state = $scope.play_pause_class;
 
-        $scope.lecture_player.controls.pause();
         goSmallScreen()
         $scope.checkModel.note = true
 

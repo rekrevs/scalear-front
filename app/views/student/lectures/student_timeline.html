@@ -1,22 +1,20 @@
 
-<div class="small-12">
+<div bindonce class="small-12">
 <!-- has all discussions -->      
-    <div ng-repeat="l in items" class="with-light-border no-border-top no-border-bottom no-border-right small-12" ng-class="{'border-left border-2 border-black': l.id == lecture.id}" id='{{"outline_"+l.id}}'> 
-        <span ng-if="l.class_name =='lecture'">
-            <h5 class="light-grey" ng-click="seek()(null, l.id)" ng-class="{'color-white black': l.id == lecture.id}" style="cursor:pointer; margin-bottom: 0px;padding-left:15px"><b>{{l.name}}</b>
+    <div ng-repeat="l in items" class="with-light-border no-border-top no-border-bottom no-border-right small-12" ng-class="{'border-left border-2 border-black': l.id == lecture.id}" bo-id='"outline_"+l.id'> 
+        <span bo-if="l.class_name =='lecture'">
+            <h5 class="light-grey" ng-click="seek()(null, l.id)" ng-class="{'color-white black': l.id == lecture.id}" style="cursor:pointer; margin-bottom: 0px;padding-left:15px"><b bo-text="l.name"></b>
             <!-- <span class="label round alert with-tiny-padding with-tiny-margin-right right" ng-show="l.required" translate>courses.required</span> -->
-            <span class="label round blue with-tiny-padding with-tiny-margin-right right" ng-show="!l.graded" style="margin-top: 3px;" translate>optional</span></h5>
+            <span class="label round blue with-tiny-padding with-tiny-margin-right right" bo-show="!l.graded" style="margin-top: 3px;" translate>optional</span></h5>
             <div style="margin-left: 20px;">
-                <span ng-if="l.description">
+                <span bo-if="l.description">
                     <h6 class="subheader uppercase" translate>lectures.description</h6>
-                    <p class="dark-text">
-                        {{l.description}}
-                    </p>
+                    <p class="dark-text" bo-text="l.description"></p>
                 </span>
-                <span ng-if="l.slides && l.slides != 'none'">
+                <span bo-if="l.slides && l.slides != 'none'">
                     <h6 class="subheader uppercase" translate>lectures.slides</h6>
                     <p class="truncate">
-                        <a href="{{l.slides | formatURL}}" style="word-wrap: break-word;">{{l.slides | formatURL}}</a>
+                        <a bo-href="l.slides | formatURL" style="word-wrap: break-word;" bo-text="l.slides | formatURL"></a>
                     </p>
                 </span>
             </div>
@@ -30,9 +28,9 @@
                 </tbody>
             </table>
         </span>
-        <span ng-if="l.class_name !='lecture'">
-            <h5 class="light-grey" ui-sref="course.module.courseware.quiz({quiz_id: l.id})" style="cursor:pointer; margin-bottom: 0px;padding-left:15px"><b>{{l.name}}</b>
-            <span class="label round blue with-tiny-padding with-tiny-margin-right right" ng-show="!l.graded" style="margin-top: 3px;" translate>optional</span></h5>
+        <span bo-if="l.class_name !='lecture'">
+            <h5 class="light-grey" ui-sref="course.module.courseware.quiz({quiz_id: l.id})" style="cursor:pointer; margin-bottom: 0px;padding-left:15px"><b bo-text="l.name"></b>
+            <span class="label round blue with-tiny-padding with-tiny-margin-right right" bo-show="!l.graded" style="margin-top: 3px;" translate>optional</span></h5>
         </span>
     </div>
 </div>

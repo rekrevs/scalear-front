@@ -30,9 +30,8 @@
                 <td class="studentcolumn" style="min-width: 99px" ><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right" bo-text="student.full_name"></span></td>
                 <td class="state" bindonce ng-repeat='module in status[student.id] track by $index'>
                    <span bo-if="module[3]>0">
-                        <center tooltip="{{module[2]}}/{{module[3]}} quizzes solved" tooltip-append-to-body="true" tooltip-placement="top">
-                            <img class="marker"
-                            bo-src="status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]"
+                        <center>
+                            <img tooltip="{{module[2]}}/{{module[3]}} quizzes solved" tooltip-append-to-body="true" tooltip-placement="top" class="marker" bo-src="status_img[student.status[module[0]].split(' ').join('_').toLowerCase()||getImg(module[1])]"
                             style="width:15px; cursor: pointer;">
                             <div bo-if="module[1]>0 && !student.status[module[0]]" bo-text="'('+module[1]+' '+('controller_msg.days'|translate)+')'"></div>
                         </center>

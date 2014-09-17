@@ -52,6 +52,27 @@ angular.module('scalearAngularApp')
               return hr + ':' + min + ':' + sec;
           }
       }
+  }).filter("formatFormattedTime",function (){
+
+      return function(time, format){
+          
+          var hr  = time.split(':')[0]
+          var min = time.split(':')[1]
+          var sec = time.split(':')[2]
+
+          if (format) {
+              var formatted_time = format.replace('hh', hr);
+              formatted_time = formatted_time.replace('h', hr*1+""); // check for single hour formatting
+              formatted_time = formatted_time.replace('mm', min);
+              formatted_time = formatted_time.replace('m', min*1+""); // check for single minute formatting
+              formatted_time = formatted_time.replace('ss', sec);
+              formatted_time = formatted_time.replace('s', sec*1+""); // check for single second formatting
+              return formatted_time;
+          }
+          else {
+              return hr + ':' + min + ':' + sec;
+          }
+      }
   }).filter('timeAgo', function() {
     return function(dateString) {
       return moment(dateString).fromNow()
@@ -136,9 +157,6 @@ angular.module('scalearAngularApp')
     return function(s, role){
       if(role == 'student'){
         return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase() +'-'+(md5(s).substring(0,4).toUpperCase())
-      }
-      else if(role == 'teacher'){
-        return md5(s)
       }
       // return s[0].toUpperCase() + s.slice(1);
     }

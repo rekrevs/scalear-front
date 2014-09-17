@@ -1,59 +1,51 @@
 <td style="padding: 0px;" class="timeline-icon-container text-right valign-top">
-    <div class="solved timeline-item" ng-click="seek()(item.time, item.data.lecture_id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="{{(item.time) | formattime:'hh:mm:ss'}}">
+    <div class="solved timeline-item" ng-click="seek()(item.time, item.data.lecture_id)" tooltip-placement="left" tooltip-append-to-body="true" tooltip="{{formattedTime}}">
         <img src="../images/discussion-timeline.png" />
     </p>
 </td>
 <td ng-if="item.data==null" colspan="3">
     <question_block item="item" />
 </td>
-<td ng-if="item.data" colspan="3" style="padding: 0px;padding-right: 8px;">
+<td ng-if="item.data" colspan="3" bindonce style="padding: 0px;padding-right: 8px;">
     <div class="discussion-content" ng-class="{ownpost: item.data.user_id == current_user.id, flagged: item.data.flags_count > 0}">
         <table style="width: 100%;" class="transparent no-border no-margin">
             <tr>
                 <td style="padding-bottom: 0px;">
                     <div>
-                        <b>{{item.data.screen_name}}</b>
+                        <b bo-text="item.data.screen_name" ></b>
                         <div class="timestamp with-small-margin-left">
-                        {{ item.data.created_at | timeAgo }}<span ng-if="item.data.flags_count > 0" style="color: red;"><span style="color: #a1a1a1">  </span><span translate>discussion.flagged_post</span></span>
+                        {{ item.data.created_at | timeAgo }}
+                        <span ng-if="item.data.flags_count > 0" style="color: red;">
+                            <span style="color: #a1a1a1">  </span>
+                            <span translate>discussion.flagged_post</span>
+                        </span>
                         </div>
                         <div ng-show="item.data.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
-                            <delete_button class="show-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
-                            <delete_button class="hiddendeletebutton hide-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
+                            <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
+                            <!-- <delete_button class="hiddendeletebutton hide-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button> -->
                         </div>
-                        <div style="display: inline-block; float: right;" ng-show="item.data.user_id != current_user.id">
-                            <flag-button name="flag" comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
-                        </div>
-
-                        <div class="like-button" ng-show="item.data.user_id != current_user.id">
-                            <voting-button votes-count="item.data.votes_count" voted="item.data.user_vote" up="upvotePost" down="downvotePost" direction="horizontal"></voting-button>
+                        <span ng-show="item.data.user_id != current_user.id">
+                            <div style="display: inline-block; float: right;" >
+                                <flag-button name="flag" comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
+                            </div>
+                            <div class="like-button" >
+                                <voting-button votes-count="item.data.votes_count" voted="item.data.user_vote" up="upvotePost" down="downvotePost" direction="horizontal"></voting-button>
+                            </div>
                         </div>
                        
                         <div style="cursor: pointer;" ng-click="seek()(item.time, item.data.lecture_id)">
                             <div style="margin-bottom: 5px;">
                                 <span ng-show="item.data.user_id == current_user.id">
-                                    <img ng-show="item.data.privacy==0" src="/images/private.png" tooltip="{{'discussion.private_post' | translate}}"/>
-                                    <img ng-show="item.data.privacy==1" src="/images/public.png" tooltip="{{'discussion.public_post' | translate}}"/>
+                                    <img ng-show="item.data.privacy==0" src="/images/private.png" tooltip="{{private_text}}"/>
+                                    <img ng-show="item.data.privacy==1" src="/images/public.png" tooltip="{{public_text}}"/>
                                 </span>
-                                <span translate>q</span> {{item.data.content}}
+                                <span translate>q</span><span bo-text="item.data.content"></span>
                             </div>
                         </div>
                     </div>
                 </td>
             </tr>
         </table>
-        <!-- <div class="post-controls" ng-if="item.data.user_id != current_user.id"> -->
-            <!-- <div class="like-button" ng-show="item.data.user_id != current_user.id">
-                <voting-button discussion="item" up="upvotePost" down="downvotePost" direction="horizontal"></voting-button>
-                .
-            </div>
-            <div style="display: inline-block;" ng-show="item.data.user_id != current_user.id">
-                <flag-button comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
-            </div> -->
-            
-        <!-- </div> -->
-        <!-- <div class="timestamp">
-            {{item.data.created_at | amDateFormat:'MMMM Do YYYY, h:mm a'}}
-        </div> -->
     </div>
     <div class="comments-table">
         <div ng-repeat="comment_data in item.data.comments" class="discussion-comment" ng-class="{ownpost: comment_data.comment.user_id == current_user.id, flagged: comment_data.comment.flags_count > 0}">
@@ -61,10 +53,6 @@
         </div>
         <span>
             <comment-box discussion="item" submit="reply"></comment-box>
-            <!-- <textarea ng-model="current_reply" placeholder="{{'discussion.write_comment' | translate}}" ng-style="{height:height+'px', width:width+'%'}" ng-focus="onCommentFocus()"></textarea> -->
-            <!-- <i ng-show="error_message" style="color:red; font-size:12px"><br>{{error_message}}<br></i> -->
-            <!-- <input type="button" class="btn btn-small" style="background-image: initial; vertical-align: top;" ng-click="reply(item, current_reply);current_reply=null" value={{"discussion.comment"|translate}} /> -->
         </span>
     </div>
 </td>
-<!--<td ng-show="e.type=='confused' && e.data.very==true"><p class="solved" ng-click="seek()(e.time, item.data.lecture_id)" translate>{{"courses.really_confused"}}</p></td>-->

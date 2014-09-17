@@ -30,6 +30,7 @@ angular.module('scalearAngularApp')
   .filter("formattime",function (){
 
       return function(secs, format){
+        if(secs > 0){
           var hr  = Math.floor(secs / 3600);
           var min = Math.floor((secs - (hr * 3600))/60);
           var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
@@ -51,6 +52,10 @@ angular.module('scalearAngularApp')
           else {
               return hr + ':' + min + ':' + sec;
           }
+        }
+        else{
+          return '0:00'
+        }
       }
   }).filter("formatFormattedTime",function (){
 
@@ -151,6 +156,14 @@ angular.module('scalearAngularApp')
   .filter("capitalize", function(){
     return function(s){
       return s[0].toUpperCase() + s.slice(1);
+    }
+  })
+  .filter("anonymous", function(){
+    return function(s, role){
+      if(role == 'student'){
+        return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase() +'-'+(md5(s).substring(0,4).toUpperCase())
+      }
+      // return s[0].toUpperCase() + s.slice(1);
     }
   })
   .filter("courseActive", ['$state', '$filter', function($state, $filter){

@@ -25,22 +25,31 @@
 				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="{{currentmodule.id == module.id}}">
 					<accordion-heading class="accordion-heading">
 						<div bindonce class="valign-middle" ng-click="showModuleCourseware(module)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
-							<module-progress-check module="module" style="margin-right: 10px; float: right;"></module-progress-check>
 							<div class="row">
-								<div class="small-9 columns">
+								<div class="small-8 columns">
 									<div class="truncate" bo-text="module.name"></div>
 								</div>
-								<div class="small-3 columns">
-									<div class="color-grey" bo-text="module.total_time | formatFormattedTime:'hh:mm'"></div>
+								<div class="small-2 columns">
+									<div class="color-grey" bo-text="module.total_time | formatFormattedTime:'h:mm'"></div>
+								</div>
+								<div class="small-2 columns">
+									<module-progress-check module="module"></module-progress-check>		
 								</div>
 							</div>
 						</div>
 						
 					</accordion-heading>
 					<ul ng-click="showItem(item, 'courseware')" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id}" ng-repeat="item in module.items">
-						<div>
-							<div class="truncate-70 with-margin-left show-inline valign-middle" bo-text="item.name"></div>
-							<i class="fi-check right with-tiny-margin-left color-green size-16 valign-middle" ng-show="item.is_done"></i>
+						<div class="row">
+							<div class="small-2 columns">
+							<i class="no-padding fi-check color-green" ng-show="item.is_done"></i>
+							<i class="no-padding fi-check color-green" style="opacity: 0;" ng-hide="item.is_done"></i>
+							</div>
+							<div class="small-7 columns truncate-68" style="margin-left:-1.5rem;" bo-text="item.name">	
+							</div>
+							<div class="small-2 with-tiny-margin-right columns">
+								<div class="color-grey" bo-text="item.duration | formattime:'h:mm'"></div>
+							</div>
 						</div>
 					</ul>
 					<ul bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'">

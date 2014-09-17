@@ -25,6 +25,7 @@ width: 78%;
 	/*padding-top: 10px;*/
 	/*max-width: 85rem;*/
   max-width: 99%;
+  margin: 0 auto;
 }
 footer{
   bottom: 0px;

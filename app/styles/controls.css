@@ -113,7 +113,7 @@
     cursor: pointer;
 }
 .control-button:hover, .control-button:focus{
-    background-color: transparent;
+    background-color: gray;
     outline: none;
 }
 
@@ -145,6 +145,9 @@
     float: left;
 }
 
+.fullscreenDiv.full:hover, .fullscreenDiv.small:hover{
+    background-color: gray;
+}
 .fullscreenDiv.full{
     background:url('/images/fullscreen3.png') no-repeat center center;
     background-size:20px 20px;

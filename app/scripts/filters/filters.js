@@ -30,6 +30,7 @@ angular.module('scalearAngularApp')
   .filter("formattime",function (){
 
       return function(secs, format){
+        if(secs > 0){
           var hr  = Math.floor(secs / 3600);
           var min = Math.floor((secs - (hr * 3600))/60);
           var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
@@ -51,6 +52,10 @@ angular.module('scalearAngularApp')
           else {
               return hr + ':' + min + ':' + sec;
           }
+        }
+        else{
+          return '0:00'
+        }
       }
   }).filter("formatFormattedTime",function (){
 

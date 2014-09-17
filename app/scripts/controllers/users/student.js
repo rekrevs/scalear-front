@@ -20,7 +20,7 @@ angular.module('scalearAngularApp')
                     $scope.sending = false;
                     //console.log("signed up");
                     // $state.go("home");
-                    $state.go('thanks_for_registering');
+                    $state.go('thanks_for_registering',{type:1});
                 }, function(response) {
                     $scope.user.errors = response.data.errors
                     $scope.sending = false;

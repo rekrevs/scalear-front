@@ -292,7 +292,7 @@ angular.module('scalearAngularApp', [
                 controller: 'UsersStudentCtrl'
             })
             .state('thanks_for_registering', {
-                url: '/users/thanks',
+                url: '/users/thanks?type',
                 templateUrl: '/views/users/thanks.html',
                 controller: 'ThanksForRegisteringCtrl'
             })

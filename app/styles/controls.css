@@ -172,10 +172,6 @@ li{
     bottom:30px;
 }
 
-.submit-html{
-    left:200px;
-    bottom:5px;
-}
 
 .exit{
     top:0px;
@@ -184,30 +180,6 @@ li{
     color:gray;
     text-decoration: none;
 }
-
-.confused_notif{
-    position:absolute;
-    /*#margin-top::-60px;*/
-    right:110px;
-    bottom: -15px;
-}
-
-.hidden_div2{
-    position:absolute;
-    /*#margin-top:-50px;*/
-    right:110px;
-    bottom: -1px;
-    z-index:3;
-}
-
-.hidden_shortcuts2{
-    position:absolute;
-    /*#margin-top:-50px;*/
-    left:10px;
-    top: -440px;
-    z-index:3;
-}
-
 
 .controlDiv{
     /* Centering the control div */

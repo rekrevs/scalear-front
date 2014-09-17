@@ -1239,6 +1239,15 @@ a.disabled, a.disabled:hover, li.disabled {
    color: rgba(0,0,0,.4) !important;;
 }
 
+.disable_selection{
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 
 a.editable-empty{
   border-bottom: none !important; 
@@ -1264,6 +1273,7 @@ a.editable-click{
     width: 86%;
     }
 }*/
+
 
 
 @media only screen and (orientation:landscape) and (max-width: 48.063em){
@@ -1313,5 +1323,17 @@ a.editable-click{
   .portrait-medium-height{
     height: 52vh !important;
      -webkit-overflow-scrolling: touch;
+  }
+}
+
+@media only screen and (min-width:40.063em){
+  .medium-small-height{
+    height: 21vh !important;
+  }
+}
+
+@media only screen and (min-width:64.063em) {
+  .large-big-height{
+    height: 82vh !important;
   }
 }

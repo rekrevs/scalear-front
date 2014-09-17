@@ -414,7 +414,7 @@ var translation_en=function(){
         confused: "Confused",
         discussion: "Discussion",
         provide_url:"Please Provide A Video URL",
-        vidoe_not_exist: "Video may not exist or may still uploading",
+        vidoe_not_exist: "Video may not exist or may still be uploading",
         incompatible_link: "Incompatible link",
         replay: "Replay",
         retry: "Retry",

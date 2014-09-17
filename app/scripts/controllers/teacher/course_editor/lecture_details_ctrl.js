@@ -31,21 +31,26 @@ angular.module('scalearAngularApp')
                                 console.log(id)
                                 var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
                                 $http.jsonp(url).success(function(data) {
-                                    if(data.entry.media$group.yt$duration.seconds<1)
-                                        d.reject("video may not exist or may still uploading");
-                                    else
+                                    if(parseInt(data.entry.media$group.yt$duration.seconds)<1){
+                                        d.reject($translate('lectures.vidoe_not_exist'));
+                                        return d.promise
+                                    }
+                                    else{
                                         d.resolve()
+                                    }
                                 }).error(function(){
-                                    d.reject("video may not exist or may still uploading");
+                                    d.reject($translate('lectures.vidoe_not_exist'));
+                                    return d.promise
                                 }); 
                             }
                             else if(isMP4(lecture.url))
                                 d.resolve() 
                             else 
-                                d.reject("Incompatible link")                  
+                                d.reject($translate('lectures.incompatible_link'))                  
                         }
-                        d.resolve()
-                        
+                        else{
+                            d.resolve()
+                        }
                     }, 
                     function(data) {
                         $log.debug(data.status);

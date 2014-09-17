@@ -409,6 +409,7 @@ var translation_en=function(){
         try_reload:"You can continue waiting, or try reloading the page",
         video_events: "Video Events",
         video_notes: "Notes",
+        note: "Note",
         outline: "Outline",
         confused: "Confused",
         discussion: "Discussion",

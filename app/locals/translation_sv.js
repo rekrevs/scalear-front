@@ -412,6 +412,7 @@ var translation_sv=function(){
               try_reload:"Du kan fortsätta vänta, eller prova att uppdatera sidan",
               video_events: "Video Händelser",
               video_notes: "Anmärkningar",
+              note: "Anteckning",
               outline: "Disposition",
               confused: "Förvirrad",
               discussion: "Diskussion",

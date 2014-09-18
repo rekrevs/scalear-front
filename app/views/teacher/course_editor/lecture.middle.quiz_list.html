@@ -1,12 +1,12 @@
 <loading size="small" show="quiz_loading"/>
-<table class="table large-12 columns">
+<table class="table large-12 columns quiz_list">
 	<thead>
 		<tr>
-		<th translate>answer.question</th>
-		<th translate>online_quiz.time</th>
-		<th translate>groups.type</th>
-		<th class="text-center" style="width:95px">Delete</th>
-	</tr>
+			<th translate>answer.question</th>
+			<th translate>online_quiz.time</th>
+			<th translate>groups.type</th>
+			<th class="text-center" style="width:95px">Delete</th>
+		</tr>
 	</thead>
 	<tbody>
 		<tr ng-repeat="quiz in quiz_list|orderBy:'time'" ng-class="{wheat: quiz.id == $parent.selected_quiz.id}">
@@ -16,7 +16,10 @@
 			<td ng-init="quiz.formatedTime = (quiz.time|format)">
 				<editable_text name="quiz_time" value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz">
 			</td>
-			<td>{{quiz.question_type}}</td>
+			<td><span ng-show="quiz.quiz_type=='survey'">Survey</span>
+				<span ng-show="quiz.quiz_type!='survey'">Quiz</span>
+				- {{quiz.question_type}}
+			</td>
 			<td class="text-center no-padding">
 				<delete_button size="big" color='dark' action="deleteQuizButton(quiz)" />
 			</td>

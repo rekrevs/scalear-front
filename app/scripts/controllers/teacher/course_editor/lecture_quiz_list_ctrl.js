@@ -6,12 +6,6 @@ angular.module('scalearAngularApp')
 	$log.debug("loading quiz list")
 	$scope.editing_mode = false
 
-	//$scope.$watch('lecture',function(){
-		//if($scope.lecture)
-
-	//})
-
-
 	var init= function(){
 		OnlineQuiz.getQuizList(
 			{lecture_id:$stateParams.lecture_id},
@@ -81,7 +75,4 @@ angular.module('scalearAngularApp')
 		quiz.time = seconds
 		updateOnlineQuiz(quiz)
 	}
-
-
-
 }]);

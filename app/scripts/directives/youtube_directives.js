@@ -717,6 +717,13 @@ angular.module('scalearAngularApp')
 	          scope.chosen_quality=quality;
 	          scope.quality=false;
       		}
+      		scope.scrollEvent = function(id, type){
+      			// if(!isiPad()){
+      				console.log(id)
+      				console.log(type)
+            		$('.student_timeline').scrollTo('#'+type+'_'+id, {offsetTop: 100, duration: 350});
+            	// }
+      		}
 
             shortcut.add("Space",function(){
             	scope.playBtn()				

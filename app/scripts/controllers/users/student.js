@@ -1,12 +1,17 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('UsersStudentCtrl', ['$scope', 'User', '$state','Page',
-        function($scope, User, $state, Page) {
+    .controller('UsersStudentCtrl', ['$scope', 'User', '$state','Page', '$filter',
+        function($scope, User, $state, Page, $filter) {
             Page.setTitle('sign_up')
             $scope.user = {
                 "role_ids": "2"
             }
+            $scope.$watch('user.email', function(){
+                // if($scope.user.email){
+                    $scope.user.screen_name = $filter('anonymous')((Math.random()*10) + $scope.user.email, 'student')  
+                // }
+            })
             $scope.sign_up = function() {
                 $scope.sending = true;
                 $scope.final_user = angular.copy($scope.user)
@@ -20,7 +25,7 @@ angular.module('scalearAngularApp')
                     $scope.sending = false;
                     //console.log("signed up");
                     // $state.go("home");
-                    $state.go('thanks_for_registering');
+                    $state.go('thanks_for_registering',{type:1});
                 }, function(response) {
                     $scope.user.errors = response.data.errors
                     $scope.sending = false;

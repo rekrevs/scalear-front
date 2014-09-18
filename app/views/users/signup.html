@@ -111,10 +111,10 @@
                                         <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.screen_name}" translate>courses.required</small></label>
                                     </div>
                                 </div>
+                                <h4 class="small-9 columns no-padding"><small translate>online_name_comment</small></h4>
                             </div>
                         </div>
                     </div>
-                    <h5><small translate>online_name_comment</small></h5>
                 </div>
 
                 <div class="row">
@@ -146,19 +146,21 @@
                 <div class="row with-medium-margin-top">
                     <div class="large-12 medium-12 small-12 columns">
                         <div class="row">
-                                <div class="small-4 columns">
-                                    <label class="with-small-margin-top  right">{{'password' | translate}}</label>
+                          <div class="small-4 columns">
+                              <label class="with-small-margin-top  right">{{'password' | translate}}</label>
+                          </div>
+                           <div class="small-8 columns left">
+                              <div class="row">
+                                <div class="small-9 columns">
+                                   <input type="password" id="setting_user_password" ng-model="user.password" ng-class="{error: user.errors.password}" autocomplete="off" />
+                                   <small ng-show="user.errors.password" class="error with-tiny-padding">{{user.errors.password.join()}}</small>
                                 </div>
-                                 <div class="small-8 columns left">
-                                    <div class="small-9 columns">
-                                       <input type="password" id="setting_user_password" ng-model="user.password" ng-class="{error: user.errors.password}" autocomplete="off" />
-                                       <small ng-show="user.errors.password" class="error with-tiny-padding">{{user.errors.password.join()}}</small>
-                                    </div>
-                                    <div class="with-small-margin-top small-3 columns">
-                                        <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.password}" translate>courses.required</small></label>
-                                    </div>
+                                <div class="with-small-margin-top small-3 columns">
+                                    <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.password}" translate>courses.required</small></label>
                                 </div>
-                            </div>
+                              </div>
+                          </div>
+                        </div>
                     </div>
                 </div>
 
@@ -169,12 +171,14 @@
                                     <label class="with-small-margin-top  right">{{'password_confirmation' | translate}}</label>
                                 </div>
                                 <div class="small-8 columns left">
-                                    <div class="small-9 columns">
-                                        <input type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" />
-                                        <small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
-                                    </div>
-                                    <div class="with-small-margin-top small-3 columns">
-                                        <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.password_confirmation}" translate>courses.required</small></label>
+                                    <div class="row">
+                                      <div class="small-9 columns">
+                                          <input type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" />
+                                          <small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
+                                      </div>
+                                      <div class="with-small-margin-top small-3 columns">
+                                          <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.password_confirmation}" translate>courses.required</small></label>
+                                      </div>
                                     </div>
                                 </div>
                              </div>

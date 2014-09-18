@@ -158,6 +158,14 @@ angular.module('scalearAngularApp')
       return s[0].toUpperCase() + s.slice(1);
     }
   })
+  .filter("anonymous", function(){
+    return function(s, role){
+      if(role == 'student'){
+        return role.charAt(0).toUpperCase() + role.slice(1).toLowerCase() +'-'+(md5(s).substring(0,4).toUpperCase())
+      }
+      // return s[0].toUpperCase() + s.slice(1);
+    }
+  })
   .filter("courseActive", ['$state', '$filter', function($state, $filter){
     return function(id){
       return $state.includes('**.course.**') && $state.params.course_id == id

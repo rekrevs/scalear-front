@@ -10,12 +10,13 @@
 </li>
 
 <li ng-if="!('**.course_editor.**' | includedByState)" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;">
-	<div class="row">
-		<div class="small-9 columns">
+	<!-- <div class="row"> -->
+	<div class="position-relative" style="height: 20px;">
+		<!-- <div class="small-9 columns"> -->
 			<div class="truncate-70 show-inline valign-middle left text-left" bindonce bo-text="item.name"></div>
-		</div>
-		<div class="small-9 columns">
-			<div class="color-grey" bo-text="item.duration | formattime:'h:mm'"></div>
-		</div>
+		<!-- </div> -->
+		<!-- <div class="small-9 columns"> -->
+			<div class="color-dark-grey with-small-margin-right" bo-text="item.duration | formattime:'h:mm'"></div>
+		<!-- </div> -->
 	</div>
 </li>

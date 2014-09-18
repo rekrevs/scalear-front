@@ -7,14 +7,12 @@
 		<small class="color-grey" ng-bind="module.total_time | formattime:'h:mm'"></small>			
 	</div>
 
-	<div ng-if="!('**.course_editor.**' | includedByState)" >
-		<div class="row">
-			<div class="small-9 columns">
-				<div class="truncate-70 show-inline left text-left" bindonce bo-text="module.name"></div>	
-			</div>
-			<div class="small-3 columns">
-				<div class="color-grey" bo-text="module.total_time | formattime:'h:mm'"></div>
-			</div>
-		</div>
+	<div class="position-relative" ng-if="!('**.course_editor.**' | includedByState)" >
+		<!-- <div class="small-9 columns"> -->
+			<div class="truncate-70 show-inline left text-left" bindonce bo-text="module.name"></div>	
+		<!-- </div> -->
+		<!-- <div class="small-3 columns"> -->
+			<small class="color-grey" bo-text="module.total_time | formattime:'h:mm'"></small>
+		<!-- </div> -->
 	</div>
 </div>

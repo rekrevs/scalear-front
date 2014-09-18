@@ -92,6 +92,7 @@ angular.module('scalearAngularApp')
                         $log.debug(data)
                         console.log(data)
                         $scope.lecture.appearance_time = data.lecture.appearance_time
+                        $scope.course.selected_module.total_time += data.lecture.duration
                         $scope.lecture.due_date = data.lecture.due_date
                         // $scope.modules.forEach(function(module, i) {
                         //     if (module.id == $scope.lecture.group_id) {

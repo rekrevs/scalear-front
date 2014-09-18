@@ -1,8 +1,12 @@
 <li ng-if="'**.course_editor.**' | includedByState" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;">
-	<img class="left handle with-tiny-margin-right" src="images/move2.png" bindonce bo-title='"courses.drag_to_reorder"|translate' />
-	<div class="truncate-70 show-inline valign-middle left text-left">{{item.name}}</div>
-	<div class="color-grey" bo-text="item.duration | formattime:'h:mm'"></div>
-	<delete_button class="with-tiny-margin-right" size="small" color='dark' action="remove(event)" />
+	<div class="position-relative" style="height: 20px;">
+		<delete_button class="with-tiny-margin-left with-small-margin-right right z-one" size='small' color='dark' action='remove(event)' mode="content_navigator" moduleitem="true">
+		</delete_button>
+		<img class="left handle with-tiny-margin-right" src="images/move2.png" bindonce bo-title='"courses.drag_to_reorder"|translate' />
+		<div class="truncate-70 show-inline valign-middle left text-left">{{item.name}}</div>
+		<div class="color-dark-grey" ng-show="item.duration" ng-bind="item.duration | formattime:'h:mm'"></div>
+	</div>
+	<!-- <delete_button class="with-tiny-margin-right" size="small" color='dark' action="remove(event)" /> -->
 </li>
 
 <li ng-if="!('**.course_editor.**' | includedByState)" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;">

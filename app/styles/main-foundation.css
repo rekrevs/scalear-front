@@ -310,6 +310,9 @@ select{
 .position-absolute{
 	position: absolute !important;
 }
+.position-relative{
+  position: relative !important;
+}
 
 /*IMAGES*/
 .course-image{
@@ -630,6 +633,18 @@ td.right-border{
   z-index: 1;
   left: 0px;
   top: 0px;
+}
+.delete-overlay.count-padding{
+  width: calc(100% + 10px);
+  height: calc(100% + 10px);
+  top: -5px;
+  left: -5px;
+}
+.delete-overlay.count-item-padding{
+  width: calc(100% + 24px);
+  height: calc(100% + 4px);
+  top: -2px;
+  left: -22px;
 }
 .align-center{
   width: 50%;

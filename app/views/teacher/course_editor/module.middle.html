@@ -50,7 +50,7 @@
 					<span translate>groups.total_time</span>
 				</h5>
 				<h4 class="text-info total_inner" style="padding-bottom: 15px;" >
-					<b>{{module.total_time}}</b>
+					<b>{{module.total_time | formattime: 'hh:mm:ss'}}</b>
 				</h4>
 			</li>
 			<li class="total">
@@ -74,7 +74,7 @@
 		<tbody>
 			<tr>
 				<td class="right-border"translate>groups.total_time</td>
-				<td ><b>{{module.total_time}}</b></td>
+				<td ><b>{{module.total_time | formattime: 'hh:mm:ss'}}</b></td>
 			</tr>
 			<tr>
 				<td class="right-border"translate>groups.total_number_lec_qustions</td>
@@ -152,7 +152,7 @@
     <br />
     <center>
 		<div class="total">
-			<h5 class="text-info total_title" ><span translate>groups.total_time</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{module.total_time}}</b></h4>
+			<h5 class="text-info total_title" ><span translate>groups.total_time</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{module.total_time | formattime: 'hh:mm:ss'}}</b></h4>
 		</div>
 		<div class="total">
 			<h5 class="text-info total_title" ><span translate>groups.total_number_lec_qustions</span></h5><h4 class="text-info total_inner" style="padding-bottom: 15px;" ><b>{{module.total_questions}}</b></h4>

@@ -34,7 +34,10 @@ angular.module('scalearAngularApp')
           var hr  = Math.floor(secs / 3600);
           var min = Math.floor((secs - (hr * 3600))/60);
           var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
-
+          if(secs < 60){
+            min = 1
+            sec = 0
+          }
           if (hr < 10)  { hr    = "0" + hr; }
           if (min < 10) { min = "0" + min; }
           if (sec < 10) { sec  = "0" + sec; }

@@ -31,8 +31,11 @@
                     </div>
 
                     <div class="row">
-                        <div class="small-7 medium-12 large-12 small-centered columns">
-                            <label class="right ">{{'remember_me' | translate}}
+                        <div class="small-12 medium-12 large-12 small-centered columns">
+                            <label class="right hide-for-small-only">{{'remember_me' | translate}}
+                                <input type="checkbox" ng-model="user.remember_me">
+                            </label>
+                            <label class="show-for-small-only">{{'remember_me' | translate}}
                                 <input type="checkbox" ng-model="user.remember_me">
                             </label>
                         </div>
@@ -90,5 +93,8 @@
                 </div>
             </div>
         </div>
+        <br>
+        <br>
+        <br>
     </div>
 </center>

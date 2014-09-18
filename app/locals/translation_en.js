@@ -545,7 +545,7 @@ var translation_en=function(){
         add_question: "Add Question",
         add_header: "Add Header",
         hide: "Hide",
-        make_visible: "Make Visible",
+        make_visible: "Make Survey Visible to Students",
         saved: "Saved",
         delete: "Delete",
         total_time: "Total Time",

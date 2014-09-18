@@ -1,6 +1,6 @@
 <div class="row" ng-show="all_surveys">
 	<select class="small-10 columns" ng-model="selected_survey" ng-options="q[0] for q in all_surveys" ng-change="changeSurvey()"></select>
-	<div class="small-2 columns"><a ng-show="button_msg" class="button tiny secondary" ng-click="makeVisibleBtn()" translate>{{button_msg}}</a></div>
+	<div class="small-2 columns"><a ng-show="button_msg" class="button tiny secondary" ng-click="makeVisibleBtn()">{{button_msg | translate}}</a></div>
 </div>
 <div class="row">
 	<div class="small-4 small-centered columns">

@@ -547,7 +547,7 @@ var translation_sv=function(){
               add_question: "Lägg till Fråga",
               add_header: "Lägg Nick",
               hide: "Dölj",
-              make_visible: "Synliggör",
+              make_visible: "Gör Survey Visas för studenter",
               saved: "Sparad",
               delete: "Radera",
               total_time: "Total Tid",

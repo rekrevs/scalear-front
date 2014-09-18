@@ -26,7 +26,7 @@ var translation_sv=function(){
       status:"Ställning",
       sign_up: "Registrera dig",
       sign_in: "Logga in",
-      remember_me: "Kom ihåg mig",
+      remember_me: "Förbli inloggad",
       sign_in_with: "Logga in med ",
       submit: "Framlägga",
       at: "vid",
@@ -236,15 +236,16 @@ var translation_sv=function(){
         history: "Historia"
       },
       password_edit:{
+              help:"hjälpa:",
               change_password: "Ändra ditt lösenord",
               change_password2: "Ändra mitt lösenord",
               new_password: "Nytt lösenord",
               new_password_confirmation: "Nytt lösenord Bekräftelse",
               confirm_password: "Bekräfta nytt lösenord",
-              forgot_password: "Har du glömt ditt lösenord?",
+              forgot_password: "Återställ lösenord",
               send_reset: "Skicka mig instruktioner för att återställa lösenordet",
               resetting: "Återställning av Lösenord",
-              didnt_receive_confirmation: "Fick inte någon bekräftelse ännu?",
+              didnt_receive_confirmation: "Åter skicka e-postbekräftelse",
               didnt_receive_unlock: "Fick inte instruktioner för upplåsning ännu?",
           },
       account_edit:{

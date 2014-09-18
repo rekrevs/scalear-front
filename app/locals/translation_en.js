@@ -26,7 +26,7 @@ var translation_en=function(){
       status:"Status",
       sign_up: "Sign up",
       sign_in: "Sign in",
-      remember_me: "Remember me",
+      remember_me: "Keep me logged in",
       sign_in_with: "Sign in with ",
       submit: "Submit",
       at: " at ",
@@ -236,15 +236,16 @@ var translation_en=function(){
         history: "History"
       },
       password_edit:{
+        help:"Help:",
         change_password: "Change your Password",
         change_password2: "Change my Password",
         new_password: "New password",
         new_password_confirmation: "New Password Confirmation",
         confirm_password: "Confirm new password",
-        forgot_password: "Forgot your Password?",
+        forgot_password: "Reset password",
         send_reset: "Send me Reset Password Instructions",
         resetting: "Resetting Password",
-        didnt_receive_confirmation: "Didn't receive confirmation instructions?",
+        didnt_receive_confirmation: "Re-send confirmation email",
         didnt_receive_unlock: "Didn't receive unlock instructions?",
       },
       account_edit:{

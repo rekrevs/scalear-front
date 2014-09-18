@@ -26,14 +26,14 @@
 					<accordion-heading class="accordion-heading">
 						<div bindonce class="valign-middle" ng-click="showModuleCourseware(module)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
 							<div class="row">
-								<div class="small-8 columns">
+								<div class="small-1 no-padding columns no-padding-left" style="min-height: 1px;">
+									<module-progress-check class="left" module="module"></module-progress-check>		
+								</div>
+								<div class="small-9 columns no-padding-left">
 									<div class="truncate" bo-text="module.name"></div>
 								</div>
-								<div class="small-2 columns">
-									<div class="color-grey" bo-text="module.total_time | formatFormattedTime:'h:mm'"></div>
-								</div>
-								<div class="small-2 columns">
-									<module-progress-check module="module"></module-progress-check>		
+								<div class="small-2 no-padding text-right columns">
+									<small class="color-grey" bo-text="module.total_time | formatFormattedTime:'h:mm'"></small>
 								</div>
 							</div>
 						</div>
@@ -48,7 +48,7 @@
 							<div class="small-7 columns truncate-68" style="margin-left:-1.5rem;" bo-text="item.name">	
 							</div>
 							<div class="small-2 with-tiny-margin-right columns">
-								<div class="color-grey" bo-text="item.duration | formattime:'h:mm'"></div>
+								<div class="color-dark-grey" bo-text="item.duration | formattime:'h:mm'"></div>
 							</div>
 						</div>
 					</ul>

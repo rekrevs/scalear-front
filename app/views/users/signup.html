@@ -61,23 +61,19 @@
 											<textarea class="with-tiny-margin-bottom" id="setting_user_bio" ng-model="user.bio" placeholder="Tell us about yourself..."></textarea>
 										</div>
 										<div class="large-6 medium-6 small-12 columns no-padding">
-											<!-- <div class="with-small-margin-top small-12 columns no-padding"> -->
 													<div class="small-12 columns">
 														<label class="with-small-margin-top  left">{{'password' | translate}}</label>
 														<small class="with-small-margin-top  right" style="font-style:italic;" ng-class="{'color-red text-bold': !user.password}" translate>courses.required</small>
 														<input type="password" id="setting_user_password" ng-model="user.password" ng-class="{error: user.errors.password}" autocomplete="off" />
 														<small ng-show="user.errors.password" class="error with-tiny-padding">{{user.errors.password.join()}}</small>
 													</div>
-											<!-- </div> -->
 
-											<!-- <div class="with-small-margin-top small-12 columns no-padding"> -->
 													<div class="small-12 columns">
 														<label class="with-small-margin-top  left">{{'password_confirmation' | translate}}</label>
 														<small class="with-small-margin-top  right" style="font-style:italic;" ng-class="{'color-red text-bold': !user.password}" translate>courses.required</small>
 														<input type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" />
 														<small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
 													</div>
-											<!-- </div> -->
 										</div>
 
 								<div class="large-6 medium-6 small-12 columns">
@@ -98,8 +94,6 @@
 										<button type="submit" ng-disabled="sending" class="button success" >{{'sign_up' | translate}}</button>
 									</div>
 								</div>
-								<!-- <div class="large-6 medium-6 small-12 columns">
-								</div>  -->
 						</div>
 				</center>
 		</form>

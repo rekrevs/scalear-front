@@ -134,7 +134,9 @@ angular.module('scalearAngularApp')
                 vertical: '=',
                 text: '=',
                 color: '@',
-                overlaymode: '='
+                overlaymode: '=',
+                mode: '@',
+                moduleitem: '@'
             },
             replace: true,
             restrict: 'E',

@@ -369,10 +369,10 @@ angular.module('scalearAngularApp')
     			module_id :module_id
     		},
     		function(data){
-    			console.log(data)
     			$scope.item_overlay = false 
     			data.lecture.class_name='lecture'
     			$scope.module_obj[module_id].items.push(data.lecture)
+                $scope.module_obj[module_id].total_time += data.lecture.duration
                 $scope.items_obj["lecture"][data.lecture.id] = data.lecture
     		}, 
     		function(){}

@@ -198,10 +198,10 @@ li{
   vertical-align: top;
 }
 .last-child{
-  padding-left: 20px !important;
+  padding-left: 15px !important;
 }
 .h:hover, .last-child:hover, .inneritemopen{
-  background-color: rgba(0,0,0,0.2);
+  background-color: rgba(0,0,0,0.1);
   /*background-color: lightgrey;*/
 }
 

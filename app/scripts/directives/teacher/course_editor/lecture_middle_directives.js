@@ -504,7 +504,7 @@ angular.module('scalearAngularApp')
 					"<div class='row'>"+
 						"<div class='small-8 columns'>"+
 							"<label class='text-left'><span translate>groups.answer</span></label>"+
-							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required)' />"+  //|| (submitted && aform.mcq.$error.atleastone)}
+							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required)}' />"+  //|| (submitted && aform.mcq.$error.atleastone)}
 							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required'><span translate>courses.required</span>!</small>"+
 							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<span ng-if='show() && !isSurvey()'><label class='text-left'><span translate>lectures.explanation</span></label>"+
@@ -550,10 +550,7 @@ angular.module('scalearAngularApp')
 			{
 				scope.radioChange(scope.answer);
 			}
-			scope.getName= function()
-			{
-				return "ocq"+scope.index+scope.$index
-			}
+			
 		}
 	}
 	

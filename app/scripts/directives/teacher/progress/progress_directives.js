@@ -202,11 +202,18 @@ angular.module('scalearAngularApp')
 .directive("tab5",function(){
     return{
 	    restrict: "E",
+	    controller: "surveysProgressCtrl",
+	    templateUrl:'/views/teacher/progress/surveys_progress_tab.html' 
+    };
+})
+.directive("tab6",function(){
+    return{
+	    restrict: "E",
 	    controller: "surveysCtrl",
 	    templateUrl:'/views/teacher/progress/surveys_tab.html' 
     };
 })
-.directive("tab6",function(){
+.directive("tab7",function(){
     return{
 	    restrict: "E",
 	    controller: "quizzesCtrl",

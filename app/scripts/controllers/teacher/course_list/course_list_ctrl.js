@@ -23,18 +23,15 @@ angular.module('scalearAngularApp')
         $scope.filterChoice = filter
       })
 
+      $rootScope.$broadcast("get_all_courses")
+
   		$scope.deleteCourse=function(course){
-  			// can't pass index.. cause its not reliable with filter. so instead take course, and get its position in scope.courses
-  			//if(confirm($translate("courses.you_sure_delete_course", {course:course.name}))){
-	  			Course.destroy({course_id: course.id},{},
-	  				function(response){
-	  					$scope.courses.splice($scope.courses.indexOf(course), 1)
-	  					$log.debug(response)
-	  				},
-	  				function(){
-	  					//alert("Could not delete course, please check your internet connection")
-	  				})
-	  	//	}
+  			Course.destroy({course_id: course.id},{},
+  				function(response){
+  					$scope.courses.splice($scope.courses.indexOf(course), 1)
+  					$log.debug(response)
+  				},
+  				function(){})
   		}
 
   		$scope.filterTeacher=function(teacher_name, teacher_email){

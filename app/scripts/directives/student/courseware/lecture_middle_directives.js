@@ -396,16 +396,18 @@ angular.module('scalearAngularApp')
 
       scope.adjustDrag=function(event, ui){
         var drag_elem = angular.element(ui.helper[0])
-        var ontop = angular.element('.ontop');
+        var ontop = angular.element('.ontop');        
         var left= event.pageX - ontop.offset().left
         var top = event.pageY - ontop.offset().top
-        
-        if((event.pageX - drag_elem.width())< ontop.offset().left)
-        	ui.position.left = 0
-        else if(left> ontop.width())
+        if((event.pageX - drag_elem.width())< ontop.offset().left){
+        	ui.position.left = 0}
+        else if(left> ontop.width()){
+
         	 ui.position.left = ontop.width() -  drag_elem.width()
-      	else
-      		ui.position.left = left - drag_elem.width()
+          }
+      	else{
+      		ui.position.left = left - drag_elem.width()/2
+        }
 
           if((event.pageY - drag_elem.height())< ontop.offset().top)
           	ui.position.top  = 0

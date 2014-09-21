@@ -740,6 +740,7 @@ var translation_sv=function(){
               course_progress: "Kurs Framsteg",
               lecture_progress: "Föreläsning Framsteg",
               quizzes_progress: "Frågesporter Framsteg",
+              surveys_progress: "Undersökningar Framsteg",
               quiz_title: "Quiz-titel",
               invalid_input: "Ogiltiga Indata",
               duration_invalid: "Tidsutsträckning är ogiltig",

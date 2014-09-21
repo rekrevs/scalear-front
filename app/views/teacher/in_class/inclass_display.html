@@ -26,10 +26,13 @@
                 </div>
             </div>
             <div ng-show="!hide_questions && selected_timeline_item.type == 'discussion'" ng-class="question_block">
-                <ul style="padding-left:5px" >
+                <ul style="padding-left:5px;padding-top: 0.5%;" >
                     <span ng-style="{fontSize:discfontsize,lineHeight:disclineheight}" >Question:</span>
-                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question[1])"  ng-style="{fontSize:discfontsize,lineHeight:disclineheight}" ng-class="question_class">
-                        {{question[0]}}
+                    <li ng-repeat="question in selected_timeline_item.data" ng-click="seek(question.post.time)"  ng-style="{fontSize:discfontsize,lineHeight:disclineheight}" ng-class="question_class">
+                        {{question.post.content}}
+                        <ul>
+                            <li ng-repeat="comment in question.post.comments"><i>{{comment.comment.content}}</i></li>
+                        </ul>
                         <br>
                     </li>
                 </ul>

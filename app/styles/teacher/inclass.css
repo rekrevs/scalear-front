@@ -306,7 +306,7 @@ li.original_question{
 	opacity: 1;
 	left: 0 !important;
 	top: 0 !important;
-	padding-top: 1%;
+	padding-top: 0%;
 	max-width: initial;
 	min-width: initial;
 	float: none;
@@ -382,7 +382,7 @@ li.smallest_question{
 .main_content{
 	overflow-y:auto; 
 	overflow-x:hidden; 
-	height:500px;
+	height:82vh;
 	/*height:100%; 
 	width:100%;*/
 	/*margin-left:20px;*/

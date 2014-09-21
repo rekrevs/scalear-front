@@ -8,6 +8,7 @@ angular.module('scalearAngularApp')
         $scope.lecture_scroll_disable = true
         $scope.quiz_scroll_disable = true
         $scope.chart_scroll_disable= true
+        $scope.survey_scroll_disable = true
     }
 
     $scope.tabState = function(state){

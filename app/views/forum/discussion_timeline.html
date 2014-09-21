@@ -6,7 +6,7 @@
 <td ng-if="item.data==null" colspan="3">
     <question_block item="item" />
 </td>
-<td ng-if="item.data" colspan="3" bindonce style="padding: 0px;padding-right: 8px;">
+<td ng-if="item.data" colspan="3" bindonce style="padding: 0px;padding-right: 8px;" class="white-with-hover">
     <div class="discussion-content" ng-class="{ownpost: item.data.user_id == current_user.id, flagged: item.data.flags_count > 0}">
         <table style="width: 100%;" class="transparent no-border no-margin">
             <tr>

@@ -19,14 +19,12 @@
         <div class="elapsed" ng-style="{width: elapsed_width}" >
         </div>
         <div class="progress-events-container">
-
-            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'discussion' } " style="{{'left :'+((element['time']/total_duration)*100)+'%; background-color: black; '}}" tooltip="{{'courses.you_asked'|translate}}{{element.data.content}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="scrollEvent(element.data.id, element.type)"></div>
-
-            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'confused', data.very: false} " style="{{'left :'+((element['time']/total_duration)*100)+'%; background-color: orange; '}}" tooltip="{{'courses.confused' | translate}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="scrollEvent(element.data.id, element.type)"></div>
-
-            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'confused', data.very: true} " style="{{'left :'+((element['time']/total_duration)*100)+'%; background-color: red; '}}" tooltip="{{'courses.really_confused'|translate}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="scrollEvent(element.data.id, element.type)"></div>
-
-            <div class="progress-events" ng-repeat="element in timeline.items | filter:{ type: 'note'} " style="{{'left :'+((element['time']/total_duration)*100)+'%; background-color: teal; '}}" tooltip="{{'lectures.note'|translate}}{{': '+element.data.data}}" tooltip-placement="top" tooltip-append-to-body="true" ng-click="scrollEvent(element.data.id, element.type)"></div>
+             <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/total_duration)*100)+'%'}" ng-click="scrollEvent(element.data.id, element.type)">
+                <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'courses.you_asked'|translate}}{{element.data.content}}"  tooltip-append-to-body="true"></span>
+                <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==false" style="background-color: orange;" tooltip="{{'courses.confused' | translate}}" tooltip-append-to-body="true"></span>
+                <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==true" style="background-color: red" tooltip="{{'courses.really_confused'|translate}}" tooltip-append-to-body="true"></span>
+                <span class="progress-events" ng-if="element.type=='note'" style="background-color: teal" tooltip="{{'lectures.note'|translate}}{{': '+element.data.data}}" tooltip-append-to-body="true"></span>
+            </div>
         </div>
     </div>
     <div style="height: 32px;">
@@ -43,8 +41,7 @@
                         <a ng-click="setQuality('hd720')">720p (HD)</a>
                     </li>
                 </ul>
-            </button>
-            
+            </button>            
         </div>
         <div class="right" style="max-width: 300px;" ng-transclude></div>
         <div class="controlDiv show-inline left" ng-class="play_pause_class" ng-click="playBtn()"></div>

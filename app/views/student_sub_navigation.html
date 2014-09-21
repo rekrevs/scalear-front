@@ -17,11 +17,11 @@
                   <a class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="disablePreview()"><b translate>exit_preview_as_student</b></a>
               </li>
             </ul>
-            <ul class="right" ng-hide="!('**.lecture.**' | includedByState)">
-              <li has-dropdown>
+            <ul class="right" ng-if="('**.lecture.**' | includedByState)">
+              <li has-dropdown ng-init="initFilters()">
                 <a class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>settings.settings</a>
                 <ul top-bar-dropdown>
-                  <span ng-show="('**.lecture.**' | includedByState)">
+                  <span >
                     <li>
                         <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('note')">
                             <input id="showNotesCheckbox" type="checkbox" ng-checked="lecture_filter.note" />
@@ -56,7 +56,9 @@
               </li>
             </ul>
 
-            <div ng-show="course.warning_message" class="left"><h5 class="warning alert-box radius hide-for-medium-down" style="padding: 4px;margin:8px">{{course.warning_message}}</h5></div>
+            <div ng-show="course.warning_message" class="left">
+              <h5 class="warning alert-box radius hide-for-medium-down" style="padding: 4px;margin:8px">{{course.warning_message}}</h5>
+            </div>
 
           </top-bar-section>
     <!-- </div> -->
@@ -72,7 +74,7 @@
       </div>
       <top-bar-section>
       <div ng-if="('course_list' | includedByState)" class="right" style="padding-right:10px">
-        <div class="button-group">
+        <div class="button-group" ng-init="initFilters()">
             <button type="button" ng-click="updateCourseFilter('!!')" class="button tiny" ng-class="{active: course_filter == '!!'}">All</button>
             <button type="button" ng-click="updateCourseFilter(false)" class="button tiny" ng-class="{active: course_filter == false}">Current</button>
             <button type="button" ng-click="updateCourseFilter(true)" class="button tiny" ng-class="{active: course_filter == true}" >Finished</button>

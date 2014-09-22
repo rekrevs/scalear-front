@@ -46,8 +46,7 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){
-				scope.progress_item_filter= {lecture_quizzes:true,confused:true, charts:true, discussion:true, free_question:true};
-				scope.progress_filter= {quiz:true, survey:true};
+				//  initFilters()
 				scope.$state = $state
 				scope.$watch("$state.includes('*.module.**')",function(value){
 					scope.in_module_state = value
@@ -65,6 +64,10 @@ angular.module('scalearAngularApp')
 					 setNavigator(false)
 				})
 
+				scope.initFilters=function(){
+					scope.progress_item_filter= {lecture_quizzes:true,confused:true, charts:true, discussion:true, free_question:true};
+					scope.progress_filter= {quiz:true, survey:true};
+				}
 
 				scope.toggleNavigator=function(){
 					scope.open_navigator = !scope.open_navigator
@@ -147,8 +150,7 @@ angular.module('scalearAngularApp')
 			templateUrl: '/views/student_sub_navigation.html',
 			link: function(scope){
 				// scope.open_navigator = $rootScope.open_navigator
-				scope.lecture_filter={quiz:true,confused:true, discussion:true, note:true};
-				scope.course_filter = "!!"
+				
 				$rootScope.$watch('preview_as_student', function(){
 					scope.preview_as_student = $rootScope.preview_as_student
 				})
@@ -160,6 +162,11 @@ angular.module('scalearAngularApp')
 				$rootScope.$on('close_navigator', function(){
 					setNavigator(false)
 				})
+
+				scope.initFilters=function(){
+					scope.lecture_filter={quiz:true,confused:true, discussion:true, note:true};
+					scope.course_filter = "!!"
+				}
 
 				scope.toggleNavigator=function(){
 					scope.open_navigator = !scope.open_navigator

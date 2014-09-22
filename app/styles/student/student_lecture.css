@@ -5,6 +5,13 @@
         min-width: 40%;
         margin-top: -30px;
     }*/
+
+    .white-with-hover{
+        background-color: #ffffff;
+    }
+    .white-with-hover:hover{
+        background-color: #d4d4d2;
+    }
     .form-inline textarea {
         width: 95% !important;
     }
@@ -47,9 +54,9 @@
         margin-bottom: 5px;
         line-height: normal;
     }
-    .table{
+    /*.table{
         border-collapse: separate;
-    }
+    }*/
     /*.table td{
         border-bottom: 1px lightgrey;
     }*/

@@ -72,8 +72,13 @@ angular.module('scalearAngularApp')
 	  	 				if(type!= "meta")
 		  	 				for(var it in $scope.lectures[lec_id][type] ){
                   if(type=='discussion'){
-                    for(var f in $scope.lectures[lec_id][type][it][1])
-                      $scope.lectures[lec_id][type][it][1][f].post.hide = !$scope.lectures[lec_id][type][it][1][f].post.hide
+                    for(var disc in $scope.lectures[lec_id][type][it][1]){
+                      $scope.lectures[lec_id][type][it][1][disc].post.hide = !$scope.lectures[lec_id][type][it][1][disc].post.hide
+                      for(var com in $scope.lectures[lec_id][type][it][1][disc].post.comments){
+                        $scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide = !$scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide
+
+                      }
+                    }
                   }
                   else if(type=='charts'){
                     $scope.lectures[lec_id][type][it][1].hide = !$scope.lectures[lec_id][type][it][1].hide
@@ -339,6 +344,18 @@ angular.module('scalearAngularApp')
       )
     }
 
+    $scope.updateHideComment=function(comment, discussion){
+      Forum.hideComment({},
+        {
+          post_id:discussion.id,
+          comment_id:comment.comment.id,
+          hide:comment.comment.hide
+        },
+        function(){},
+        function(){}
+      )
+    }
+
     $scope.updateHideResponse = function(quiz_id, id, value){
       Quiz.hideResponses(
         {
@@ -388,6 +405,8 @@ angular.module('scalearAngularApp')
        Forum.createComment(
         {comment: {content: discussion.temp_response, post_id:discussion.id, lecture_id:discussion.lecture_id}}, 
         function(response){
+          console.log(response)
+          response.comment.hide=false
           discussion.comments.push(response)
           discussion.temp_response = null
         },function(){}

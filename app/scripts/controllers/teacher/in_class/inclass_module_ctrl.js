@@ -103,10 +103,9 @@ angular.module('scalearAngularApp')
           for(var lec_id in $scope.lectures){
             $scope.timeline['lecture'][lec_id] = new Timeline()
             for(var type in $scope.lectures[lec_id]){
-             // if(type== "question" || type == "charts")
-                for(var it in $scope.lectures[lec_id][type] ){
-                  $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])  
-                }
+              for(var it in $scope.lectures[lec_id][type] ){
+                $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])  
+              }
             }           
           }
           getSurveyCharts()
@@ -747,7 +746,7 @@ angular.module('scalearAngularApp')
     $scope.disclineheight = (question_block.height()/(lines))/2 * 0.1
     if($scope.disclineheight > 1.2)
     {
-      $scope.disclineheight = 1; 
+      $scope.disclineheight = 0.8; 
     }
     else{
       $scope.disclineheight = 3 +'px';

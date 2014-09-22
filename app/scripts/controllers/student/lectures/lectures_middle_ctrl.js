@@ -77,6 +77,8 @@ angular.module('scalearAngularApp')
                 }
             });
         }
+        else
+            $('lecture_container').addClass('ipad')
 
         $scope.$watch('timeline',function(){
             if($scope.timeline){
@@ -202,7 +204,7 @@ angular.module('scalearAngularApp')
     $scope.scrollIntoView=function(){
         console.log("scroll to view")
         if($scope.lecture && !isiPad()){
-            $('.student_timeline').scrollTo('#outline_'+$scope.lecture.id, {offsetTop: 100, duration: 400});
+            $('.student_timeline').scrollTo('#outline_'+$scope.lecture.id, {offsetTop: $('.student_timeline').offset().top+5, duration: 400});
             // $timeout(function(){
             //     $location.hash(tab+'_'+$scope.lecture.id);
             //     $anchorScroll();    
@@ -537,16 +539,14 @@ angular.module('scalearAngularApp')
             if($scope.selected_quiz.question_type == "OCQ" && selected_answers.length==1)
                 selected_answers = selected_answers[0]
         }
-        else //DRAG
-        {
+        else{ //DRAG
             selected_answers={}
             selected_answers = $scope.studentAnswers[$scope.selected_quiz.id]
             var count = 0
             for (var el in selected_answers)
                 if(selected_answers[el])
                     count++
-            if(count<$scope.selected_quiz.online_answers.length)
-            {
+            if(count<$scope.selected_quiz.online_answers.length){
                 showNotification("groups.must_place_items")
                 return
             }

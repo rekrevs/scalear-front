@@ -19,8 +19,8 @@
                     </li>
                 </ul>
 
-                <ul class="right" ng-show="('**.module.progress.**' | includedByState)">
-                    <li has-dropdown>
+                <ul class="right" ng-if="('**.module.progress.**' | includedByState)">
+                    <li has-dropdown ng-init="initFilters()">
                       <a class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>settings.settings</a>
                       <ul class="lighter-grey-no-hover" top-bar-dropdown>
                         <li>

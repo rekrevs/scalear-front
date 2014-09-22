@@ -21,7 +21,7 @@
 			<a ng-click="watchedIntro()" translate>groups.skip</a>
 			<span translate>intro.student_skip_intro</span>
 		</p>
-		<button type="button" class="button success" ng-click="watchedIntro()"><span class="with-small-margin-left" translate>enroll.go_to</span><span class="with-small-margin-left" translate>my</span><span class="with-small-margin-left" translate>navigation.courses</span></button>
+		<button type="button" ng-show="can_proceed" class="button success" ng-click="watchedIntro()"><span class="with-small-margin-left" translate>enroll.go_to</span><span class="with-small-margin-left" translate>my</span><span class="with-small-margin-left" translate>navigation.courses</span></button>
 	</div>
 	<small>
 		<span translate>intro.by_using_service</span>

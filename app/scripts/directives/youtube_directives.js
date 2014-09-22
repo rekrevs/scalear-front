@@ -138,7 +138,7 @@ angular.module('scalearAngularApp')
 						base_url = splitted_url[0]
 						query = '&'+splitted_url[1]	
 					}
-					return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+scope.autoplay+"&controls&origin=https://www.youtube.com"+query;
+					return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+scope.autoplay+"&controls&origin=http://www.youtube.com"+query;
 				}
 
                 scope.kill_popcorn = function(){
@@ -718,11 +718,9 @@ angular.module('scalearAngularApp')
 	          scope.quality=false;
       		}
       		scope.scrollEvent = function(id, type){
-      			// if(!isiPad()){
-      				console.log(id)
-      				console.log(type)
-            		$('.student_timeline').scrollTo('#'+type+'_'+id, {offsetTop: 100, duration: 350});
-            	// }
+      			$('.student_timeline').scrollTo('#'+type+'_'+id, {offsetTop: 100, duration: 350});
+      			 $('#'+type+'_'+id).animate({'backgroundColor' : '#ffff99'},"fast")
+      			 $('#'+type+'_'+id).animate({'backgroundColor' : '#ffffff'},2000)
       		}
 
             shortcut.add("Space",function(){

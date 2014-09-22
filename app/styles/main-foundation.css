@@ -1361,66 +1361,75 @@ a.editable-click{
     }
 }*/
 
-
+.small-height-small{
+    height: 40vh !important;
+  }
 
 @media only screen and (orientation:landscape) and (max-width: 48.063em){
-  .land-medium-7 {
+  .ipad .land-medium-7 {
     position: relative;
     width: 58.33333%;
   }
-  .land-no-padding{
+  .ipad .land-no-padding{
     padding: 0px !important; 
   }
-  .land-medium-5{
+  .ipad .land-medium-5{
     position: relative;
     width: 41.66667%;
   }
-  .land-height{
+  .ipad .land-height{
     height: 68vh !important;
     -webkit-overflow-scrolling: touch;
   }
 
-  .land-min-height{
+  .ipad .land-min-height{
     min-height: 70vh !important;
   }
 }
 
 @media screen and (orientation:portrait){
-  .portrait-medium-11{
+  .ipad .portrait-medium-11{
     position: relative;
     width: 91.66667%; 
   }
 
-  .portrait-medium-12{
+  .ipad .portrait-medium-12{
     position: relative;
     width: 100%;
   }
 
-  .portrait-medium-centered{
+  .ipad .portrait-medium-centered{
      position: relative;
     margin-left: auto;
     margin-right: auto;
     float: none;
   }
 
-  .portrait-no-padding{
+  .ipad.portrait-no-padding{
     padding: 0px !important; 
   }
 
-  .portrait-medium-height{
+  .ipad.portrait-medium-height{
     height: 52vh !important;
      -webkit-overflow-scrolling: touch;
   }
 }
 
-@media only screen and (min-width:40.063em){
-  .medium-small-height{
+@media only screen and (min-height:20.063em) and (min-width:40.063em){
+  .medium-height-small{
     height: 21vh !important;
   }
 }
+@media only screen and (min-height:40.063em) and (min-width:40.063em){
+  .medium-height-small{
+    height: 40vh !important;
+  }
+}
+
+
 
 @media only screen and (min-width:64.063em) {
-  .large-big-height{
+  .large-height-big{
     height: 82vh !important;
   }
 }

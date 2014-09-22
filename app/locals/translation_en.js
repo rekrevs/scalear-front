@@ -739,6 +739,7 @@ var translation_en=function(){
         course_progress: "Course Progress",
         lecture_progress: "Lecture Progress",
         quizzes_progress: "Quizzes Progress",
+        surveys_progress: "Surveys Progress",
         quiz_title: "Quiz Title",
         invalid_input: "Invalid Input",
         duration_invalid: "Duration is invalid",

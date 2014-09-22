@@ -16,7 +16,21 @@
 	      	<!-- STUDENT -->
 	      	<ul ng-switch-when="2" class="right">
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
-				<li><a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete" translate>dashboard</a></li>
+				<li has-dropdown>
+					<a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete" translate>dashboard</a>
+					<ul class="lighter-grey-no-hover" top-bar-dropdown>
+						<li>
+							<a class="lighter-grey dark-text" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete">
+								<span translate>head.calendar</span>
+							</a>
+						</li>
+						<li>
+							<a class="lighter-grey dark-text has-description" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete">
+								<span translate>head.announcements</span>
+							</a>
+						</li>
+					</ul>
+				</li>
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a ui-sref="course_list" class="white-hover color-green-hover size-18-light" id="all_courses" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('course_list' | includedByState)}" ng-show="user.intro_watched && user.info_complete"  translate>navigation.courses</a>
@@ -72,7 +86,16 @@
 			<!-- TEACHER -->
 			<ul ng-switch-when="1" class="right">
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
-				<li><a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete" translate>dashboard</a></li>
+				<li has-dropdown>
+					<a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete" translate>dashboard</a>
+					<ul class="lighter-grey-no-hover" top-bar-dropdown>
+						<li>
+							<a class="lighter-grey dark-text" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete">
+								<span translate>head.calendar</span>
+							</a>
+						</li>
+					</ul>
+				</li>
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li ng-hide="user.invitations == 0 && user.shared == 0" has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="notifications" href="" ng-show="user.intro_watched && user.info_complete" translate>navigation.notifications</a>
@@ -158,7 +181,16 @@
 					</ul>
 				</li>
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
-				<li><a class="white-hover color-green-hover size-18-light" id="dashboard" ui-sref-active="nav-item-active" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete" translate>dashboard</a></li>
+				<li has-dropdown>
+					<a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete" translate>dashboard</a>
+					<ul class="lighter-grey-no-hover" top-bar-dropdown>
+						<li>
+							<a class="lighter-grey dark-text" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete">
+								<span translate>head.calendar</span>
+							</a>
+						</li>
+					</ul>
+				</li>
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a ui-sref="course_list" class="white-hover color-green-hover size-18-light" id="all_courses" href="" ng-class="{'nav-item-active': ('**.course.**' | includedByState) || ('course_list' | includedByState) || ('new_course' | includedByState) || ('show_shared' | includedByState)}" ng-show="user.intro_watched && user.info_complete" translate>navigation.courses</a>

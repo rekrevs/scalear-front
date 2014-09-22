@@ -810,9 +810,9 @@ label{
   top:0;
 }
 
-/*.top-bar .dropdown{
-  box-shadow: -0.04em 0.04em 0.1em lightgrey
-}*/
+.top-bar .dropdown{
+  box-shadow: -0.04em 0.04em 0.1em darkgray
+}
 .nav-item-active, .nav-item-active:hover{
   background-color: #ededeb !important;
   /*color: black !important;*/
@@ -1362,4 +1362,8 @@ a.editable-click{
   .large-height-big{
     height: 80vh !important;
   }
+}
+
+a.active{
+    color: black !important;
 }

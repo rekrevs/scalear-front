@@ -1,19 +1,19 @@
 <h5 class="show-for-medium-down"><i class="fi-page-multiple size-18"></i> {{'help.getting_started' | translate}}</h5>
 <div class="left-navigation hide-for-small-only left medium-3 large-3 columns" mac-affix>
 	<ul ng-if="current_user.roles[0].id == 2" class="side-nav">
-	  <li mac-scroll-spy-target="intro"><a ng-click="$parent.scrollTo('intro')">Introduction</a></li>
-	  <li mac-scroll-spy-target="enroll"><a ng-click="$parent.scrollTo('enroll')">Joining a Class</a></li>
-	  <li mac-scroll-spy-target="due"><a ng-click="$parent.scrollTo('due')">What is Due Next?</a></li>
-	  <li mac-scroll-spy-target="interaction"><a ng-click="$parent.scrollTo('interaction')">Questions, Notes, and Confused</a></li>
-	  <li mac-scroll-spy-target="progress"><a ng-click="$parent.scrollTo('progress')">Reviewing My Progress</a></li>
-	  <li mac-scroll-spy-target="support"><a ng-click="$parent.scrollTo('support')">Contacting My Teacher</a></li>
-	  <li mac-scroll-spy-target="feedback"><a ng-click="$parent.scrollTo('feedback')">Technical Problems or Feedback</a></li>
-	  <li mac-scroll-spy-target="privacy"><a ng-click="$parent.scrollTo('privacy')">Privacy</a></li>
+	  <li><a href="#intro" du-smooth-scroll du-scrollspy offset="90">Introduction</a></li>
+	  <li><a href="#enroll" du-smooth-scroll du-scrollspy offset="90">Joining a Class</a></li>
+	  <li><a href="#due" du-smooth-scroll du-scrollspy offset="90">What is Due Next?</a></li>
+	  <li><a href="#interaction" du-smooth-scroll du-scrollspy offset="90">Questions, Notes, and Confused</a></li>
+	  <li><a href="#progress" du-smooth-scroll du-scrollspy offset="90">Reviewing My Progress</a></li>
+	  <li><a href="#support" du-smooth-scroll du-scrollspy offset="90">Contacting My Teacher</a></li>
+	  <li><a href="#feedback" du-smooth-scroll du-scrollspy offset="90">Technical Problems or Feedback</a></li>
+	  <li><a href="#privacy" du-smooth-scroll du-scrollspy offset="90">Privacy</a></li>
 	</ul>
 </div>
 <div class="with-margin-top small-12 medium-9 large-9 columns">
 	<center ng-show="video_url">
-		<div id="intro" class="small-10" mac-scroll-spy-anchor>
+		<div id="intro" class="small-10">
 			<h2 class="color-green">Introduction to <span class"dark-text">Scalable</span>Learning (3 min)</h2>
 			<div class="flex-video widescreen with-light-border" style="z-index: 1;">
 				<div id="intro_videoo"></div>
@@ -21,7 +21,7 @@
 		</div>
 	</center>
 	<span ng-if="current_user.roles[0].id == 2">
-		<div id="enroll" mac-scroll-spy-anchor>
+		<div id="enroll">
 			<h4 class="color-green">Joining a Class</h4>
 			<p>
 				To join a course you need a Course Enrollment key from your instructor. This key will be in the form ABCDE-12345. Once you have your key you can join the course. If you don’t have a key please contact your instructor.
@@ -40,13 +40,13 @@
 				</ol>
 			</p>
 		</div>
-		<div id="due" mac-scroll-spy-anchor>
+		<div id="due">
 			<h4 class="color-green">What is Due Next?</h4>
 			<p>
 				To see what is due next, click on "Dashboard", this will give you an overview of all your courses, recent announcements, and when assignments are due in each course.
 			</p>
 		</div>
-		<div id="interaction" mac-scroll-spy-anchor>
+		<div id="interaction">
 			<h4 class="color-green">Questions, Notes, and Confused</h4>
 			<ul>
 				<h5 class="subheader">Questions</h5>
@@ -89,7 +89,7 @@
 			</ul>
 			<img class="with-margin" src="images/player-controls.png" />
 		</div>
-		<div id="progress" mac-scroll-spy-anchor>
+		<div id="progress">
 			<h4 class="color-green">Reviewing My Progress</h4>
 			<ul>
 				<p>
@@ -97,7 +97,7 @@
 				</p>
 			</ul>
 		</div>
-		<div id="support" mac-scroll-spy-anchor>
+		<div id="support">
 			<h4 class="color-green">Contacting My Teacher</h4>
 			<ul>
 				<p>
@@ -105,7 +105,7 @@
 				</p>
 			</ul>
 		</div>
-		<div id="feedback" mac-scroll-spy-anchor>
+		<div id="feedback">
 			<h4 class="color-green">Technical Problems or Feedback</h4>
 			<ul>
 				<p>
@@ -113,13 +113,19 @@
 				</p>
 			</ul>
 		</div>
-		<div id="privacy" mac-scroll-spy-anchor>
+
+		<div id="privacy">
 			<h4 class="color-green">Privacy</h4>
 			<ul>
 				<p>
 					ScalableLearning takes your privacy seriously and we encourage you to read our privacy policy under the "Help" menu.
 				</p>
 			</ul>
+		</div>
+        <div id="whitespace" class="hide-for-small-only">
+            <p>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </p>
 		</div>
 	</span>
 </div>

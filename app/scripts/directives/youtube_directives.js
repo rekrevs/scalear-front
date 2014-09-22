@@ -704,7 +704,8 @@ angular.module('scalearAngularApp')
             scope.progress = function(event){
 		        var element = angular.element('.progressBar');
 		        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
-		        scope.seek()(scope.total_duration*ratio)    
+		        scope.seek()(scope.total_duration*ratio)
+		        scrollToNearestEvent(scope.total_duration*ratio)
             }
 
           	scope.showQuality = function(){
@@ -717,10 +718,25 @@ angular.module('scalearAngularApp')
 	          scope.chosen_quality=quality;
 	          scope.quality=false;
       		}
-      		scope.scrollEvent = function(id, type){
+      		scope.scrollEvent = function(type, id){
+      			scrollToItem(type, id)
+      			addHighlight(type, id)
+      		}
+
+      		var scrollToItem=function(type, id){
       			$('.student_timeline').scrollTo('#'+type+'_'+id, {offsetTop: 100, duration: 350});
-      			 $('#'+type+'_'+id).animate({'backgroundColor' : '#ffff99'},"fast")
-      			 $('#'+type+'_'+id).animate({'backgroundColor' : '#ffffff'},2000)
+      		}
+      		var addHighlight = function(type, id){
+      			$('#'+type+'_'+id).animate({'backgroundColor' : '#ffff99'},"fast")
+      			$('#'+type+'_'+id).animate({'backgroundColor' : '#ffffff'},2000)
+      		}
+
+      		var scrollToNearestEvent=function(time){
+      			console.log(time)
+      			console.log(scope.timeline.getNearestEvent(time))
+      			var nearest_item= scope.timeline.getNearestEvent(time)
+      			if(Math.abs(nearest_item.time - time) <=30)
+      				scrollToItem(nearest_item.type, nearest_item.data.id)
       		}
 
             shortcut.add("Space",function(){

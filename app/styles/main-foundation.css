@@ -1293,8 +1293,8 @@ a.editable-click{
     }
 }*/
 
-.small-height-small{
-    height: 40vh !important;
+.small-height-big{
+    height: 48vh !important;
   }
 
 @media only screen and (orientation:landscape) and (max-width: 48.063em){
@@ -1349,19 +1349,17 @@ a.editable-click{
 
 @media only screen and (min-height:20.063em) and (min-width:40.063em){
   .medium-height-small{
-    height: 21vh !important;
+    height: 16vh !important;
   }
 }
 @media only screen and (min-height:40.063em) and (min-width:40.063em){
   .medium-height-small{
-    height: 40vh !important;
+    height: 37vh !important;
   }
 }
 
-
-
 @media only screen and (min-width:64.063em) {
   .large-height-big{
-    height: 82vh !important;
+    height: 80vh !important;
   }
 }

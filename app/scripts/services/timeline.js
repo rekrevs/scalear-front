@@ -27,13 +27,25 @@ angular.module('scalearAngularApp')
                 }
             }
 
-            this.search_by_id = function(id, type)
-            {
+            this.search_by_id = function(id, type){
                 for ( var time_index = this.items.length - 1; time_index >= 0; time_index-- ) {
                     if ( this.items[time_index].data.id == id && this.items[time_index].type==type) {
                         return time_index
                     }
                 }
+            }
+
+            this.getNearestEvent=function(time){
+                var min = this.items[this.items.length - 1].time
+                var nearest_event = this.items[this.items.length - 1]
+                for ( var time_index = this.items.length - 1; time_index >= 0; time_index-- ) {
+                    var time_diff =Math.abs(time - this.items[time_index].time)
+                    if ( Math.abs(time - this.items[time_index].time)< min ){
+                        min = time_diff
+                        nearest_event = this.items[time_index]
+                    }
+                }
+                return nearest_event
             }
         };
         return x;

@@ -301,6 +301,9 @@ select{
 .text-bold{
   font-weight: bold !important;
 }
+.text-normal{
+  font-weight: normal !important;
+}
 /*TEST STYLES*/
 .text-italic{
   font-style: italic !important;
@@ -437,18 +440,63 @@ font-weight: 300 !important
 .with-small-padding{
 	padding: 0.50rem !important;
 }
+.with-medium-padding{
+  padding: 0.625rem !important;
+}
+
+.with-padding-right{
+  padding-right: 1.25rem !important;
+}
+.with-padding-left{
+  padding-left: 1.25rem !important;
+}
+.with-padding-top{
+  padding-top: 1.25rem !important;
+}
+.with-padding-bottom{
+  padding-bottom: 1.25rem !important;
+}
+
 .with-medium-padding-right{
-	padding-right: 0.625rem !important
+	padding-right: 0.625rem !important;
 }
 .with-medium-padding-left{
-	padding-left: 0.625rem !important
+	padding-left: 0.625rem !important;
 }
+.with-medium-padding-top{
+  padding-top: 0.625rem !important;
+}
+.with-medium-padding-bottom{
+  padding-bottom: 0.625rem !important;
+}
+
+.with-small-padding-right{
+  padding-right: 0.50rem !important;
+}
+.with-small-padding-left{
+  padding-left: 0.50rem !important;
+}
+.with-small-padding-top{
+  padding-top: 0.50rem !important;
+}
+.with-small-padding-bottom{
+  padding-bottom: 0.50rem !important;
+}
+
 .with-tiny-padding-right{
 	padding-right: 0.25rem !important;
 }
 .with-tiny-padding-left{
   padding-left: 0.25rem !important;
 }
+.with-tiny-padding-top{
+  padding-top: 0.25rem !important;
+}
+.with-tiny-padding-bottom{
+  padding-bottom: 0.25rem !important;
+}
+
+
 .with-tiny-margin{
 	margin: 0.25rem !important;
 }
@@ -559,6 +607,26 @@ td.right-border{
 
 
 /*CUSTOM ELEMENTS*/
+.speech-bubble-up{
+  position: relative;
+}
+.f-dropdown{
+  width: auto !important;
+}
+.speech-bubble-up::before{
+  width: 0px;
+  height: 0px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  content: '';
+  border-bottom: 8px solid #ececea;
+  position: absolute;
+  top: -8px;
+  left: 20px;
+}
+.speech-bubble-down::before{
+
+}
 .top-dropdown{
   margin-top: -138px;
   margin-left: -70px;

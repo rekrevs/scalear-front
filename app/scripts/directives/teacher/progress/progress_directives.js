@@ -79,9 +79,8 @@ angular.module('scalearAngularApp')
 	    	action:"&"
 	    },
 	    template:'<div>'+
-	    			'<div class="left no-padding">| </div>'+
 					'<div class="left no-padding" style="margin-right:3px;margin-left:2px">'+
-						'<input class="show_inclass" type="checkbox" ng-model="value" ng-change="change()" />'+
+						'<input class="show_inclass no-margin" type="checkbox" ng-model="value" ng-change="change()" />'+
 					'</div>'+
 					'<div class="left size-12 no-padding" style="color:black;font-weight:normal;margin-top: 3px;" translate>courses.show_in_class</div>'+
 				'</div>', 

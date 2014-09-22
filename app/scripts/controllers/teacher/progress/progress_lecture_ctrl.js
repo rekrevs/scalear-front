@@ -329,7 +329,7 @@ angular.module('scalearAngularApp')
 		  )
   	}
 
-    $scope.updateHideDiscussion=function(id,value){
+    $scope.updateHideDiscussion=function(id, value){
       if(value)
         $scope.review_question_count--
       else
@@ -348,15 +348,21 @@ angular.module('scalearAngularApp')
       Forum.hideComment({},
         {
           post_id:discussion.id,
-          comment_id:comment.comment.id,
-          hide:comment.comment.hide
+          comment_id:comment.id,
+          hide:comment.hide
         },
-        function(){},
+        function(){
+          console.log(comment.hide)
+          if(comment.hide){
+            discussion.hide= true
+            $scope.updateHideDiscussion(discussion.id,!discussion.hide)
+          }
+        },
         function(){}
       )
     }
 
-    $scope.updateHideResponse = function(quiz_id, id, value){
+    $scope.updateHideResponse = function(quiz_id, item, answer){
       Quiz.hideResponses(
         {
           course_id:$stateParams.course_id,
@@ -364,9 +370,16 @@ angular.module('scalearAngularApp')
         },
         {
           hide:{
-            id:id, 
-            hide: value
+            id:answer.id, 
+            hide: answer.hide
           }                
+        },
+        function(){
+          console.log(answer.hide)
+          if(answer.hide){
+            item.data.show = true
+            $scope.updateHideSurveyQuestion(quiz_id, item.data.id, item.data.show)
+          }
         }
       )
     }

@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
         link: function(scope, element, attrs) {
             console.log(")")
             scope.current_user = $rootScope.current_user
-            scope.formattedTime = $filter('formattime','hh:mm:ss')(scope.item.time)
+            scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
             scope.private_text = $translate("discussion.private_post")
             scope.public_text = $translate("discussion.public_post")
             scope.deleteDiscussion = function(discussion){

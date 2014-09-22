@@ -609,8 +609,7 @@ angular.module('scalearAngularApp')
       // var unwatch = scope.$watch('item.data.very',function(){
       //     scope.msg =scope.item.data.very? 'courses.really_confused': 'courses.confused'
       // })
-      scope.formattedTime = $filter('formattime','hh:mm:ss')(scope.item.time)
-
+      scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.deleteConfused = function(confused){
         Lecture.deleteConfused(
         {
@@ -642,7 +641,7 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/student/lectures/quiz_timeline.html',
     link:function(scope, element, attrs){
-      scope.formattedTime = $filter('formattime','hh:mm:ss')(scope.item.time)
+      scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.voteForReview=function(){
         console.log("vote review")
         OnlineQuiz.voteForReview(
@@ -682,7 +681,7 @@ angular.module('scalearAngularApp')
     },
     templateUrl:"/views/student/lectures/notes_timeline.html",
     link:function(scope,element,attrs){
-      scope.formattedTime = $filter('formattime','hh:mm:ss')(scope.item.time)
+      scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.deleteNote=function(){
         // console.log(scope.item)
         if(scope.item.data && scope.item.data.id){

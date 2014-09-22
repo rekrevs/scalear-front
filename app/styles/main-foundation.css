@@ -811,8 +811,9 @@ label{
 }
 
 .top-bar .dropdown{
-  box-shadow: -0.04em 0.04em 0.1em darkgray
+  box-shadow: -.4em .4em 1em darkgrey
 }
+
 .nav-item-active, .nav-item-active:hover{
   background-color: #ededeb !important;
   /*color: black !important;*/

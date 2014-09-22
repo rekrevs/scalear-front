@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['$state', function($state){
+	.directive('mainNavigation', ['$state', '$tour', function($state, $tour){
 		return {
 			replace: true,
 			restrict: "E",
@@ -18,6 +18,7 @@ angular.module('scalearAngularApp')
 				// $rootScope.$watch('are_shared', function(){
 				// 	scope.are_shared = $rootScope.are_shared
 				// })
+				scope.tour = false;
 				scope.areShared = function(){
 					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared
 				}
@@ -29,6 +30,8 @@ angular.module('scalearAngularApp')
 					if(course.id != $state.params.course_id)
 						$state.go('course', {course_id: course.id})
 				}
+				scope.startTour = $tour.start
+				scope.endTour = $tour.end
 			}
 		};
 	 }])

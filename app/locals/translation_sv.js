@@ -986,7 +986,8 @@ var translation_sv=function(){
           getting_started: "Komma igång",
           feedback: "Respons",
           teacher_forum: "Lärar Forum",
-          instruction_manual: "Bruksanvisning"
+          instruction_manual: "Bruksanvisning",
+          tips: "Tips"
         },
         course_settings:{
           show_notes: "Visa Anteckningar",

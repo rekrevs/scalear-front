@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','scalear_utils',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, scalear_utils) {
+    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','scalear_utils', '$tour',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, scalear_utils, $tour) {
 
     console.log("lect mid ctlr")
     $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
@@ -386,10 +386,16 @@ angular.module('scalearAngularApp')
             }
         });
     }
+    $scope.$on('mark_confused', function(){
+        $scope.addConfused();
+    })
 
     $scope.toggleFullscreen=function(){
         $scope.fullscreen? goSmallScreen() : goFullscreen() 
     }
+    $scope.$on('toggle_fullscreen', function(){
+        $scope.toggleFullscreen();
+    })
 
     var goFullscreen=function(){
         isiPad()? goMobileFullscreen() : goDesktopFullscreen()
@@ -465,6 +471,10 @@ angular.module('scalearAngularApp')
         // $scope.timeline['lecture'][$state.params.lecture_id].add(time, "question_block", {})
 
     };
+    $scope.$on('post_question', function(){
+        console.log('posting question')
+        $scope.addQuestionBlock();
+    })
 
     $scope.addNote=function(){
         var time=$scope.lecture_player.controls.getTime()
@@ -477,6 +487,10 @@ angular.module('scalearAngularApp')
         $scope.checkModel.note = true
 
     }
+    $scope.$on('take_note', function(){
+        console.log('taking note')
+        $scope.addNote();
+    })
 
     $scope.$on('video_back',function(ev, time){
         console.log(time)

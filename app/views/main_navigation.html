@@ -76,6 +76,7 @@
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" ui-sref="getting_started" ng-show="user.intro_watched && user.info_complete" translate>head.help</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
+						<li><a class="lighter-grey dark-text" ng-click="startTour()"><span translate>help.tips</span></a></li>
 						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="getting_started" translate>help.getting_started</a></li>
 						<!-- <li class="divider border-grey medium-opacity"></li> -->
 						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="privacy" translate>footer.privacy</a></li>
@@ -155,6 +156,7 @@
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" id="help" ui-sref="getting_started"  ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" ng-show="user.intro_watched && user.info_complete" translate>head.help</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
+						<li><a class="lighter-grey dark-text" ng-click="startTour()"><span translate>help.tips</span></a></li>
 						<li><a class="lighter-grey dark-text" ui-sref="getting_started" ui-sref-active="nav-inner-item-active" translate>help.getting_started</a></li>
 						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" target="_blank" translate>help.teacher_forum</a></li>
@@ -238,8 +240,9 @@
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a class="white-hover color-green-hover size-18-light" id="help" ui-sref="getting_started" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" ng-show="user.intro_watched && user.info_complete" translate>head.help</a>
+					<a class="white-hover color-green-hover size-18-light" id="help" ui-sref="getting_started" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" ng-show="user.intro_watched p-index="5" translate>head.help</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
+						<li><a class="lighter-grey dark-text" ng-click="startTour()"><span translate>help.tips</span></a></li>
 						<li><a class="lighter-grey dark-text" ui-sref="getting_started" ui-sref-active="nav-inner-item-active" translate>help.getting_started</a></li>
 						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" target="_blank" translate>help.teacher_forum</a></li>

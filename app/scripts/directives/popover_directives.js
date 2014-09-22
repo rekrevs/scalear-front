@@ -40,7 +40,12 @@ angular.module('scalearAngularApp')
 				            $compile(this.$tip)(scope);
 				            scope.$digest();
 				            this.$tip.data('popover', this);
-				            angular.element(".arrow").css("top",'50%');
+				            if(!options.disabletop){
+				            	angular.element(".arrow").css("top",'50%');
+				            }
+				            if(options.displayontop){
+				            	angular.element('.popover').css('z-index', '999999');
+				            }
 				            if(options.rightcut)
 				            	adjustLeft(pop)
 				            if(options.topcut)

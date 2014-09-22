@@ -10,7 +10,7 @@
 <span id="lecture_container">
 	<div class="small-8 small-centered land-medium-7 portrait-medium-12 medium-8 large-uncentered large-7 no-padding columns">
 		<div  ng-hide="!lecture" class="small-12">
-			<div id="main-video-container" ng-style="container_style"> 
+			<div id="main-video-container" ng-style="container_style" step-text="Here is where you watch your online videos and answer quizzes." step-index="1" step-placement="bottom" step-append-to-body="true"> 
 				<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->
 				<form name="answer_form" novalidate >
 					<video_container  ng-class="container_class" ng-init="video_class='flex-video'" screenfull active="fullscreen" style="width:100%;height:100%">
@@ -53,8 +53,8 @@
 									<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
 							    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
 								</div>
-					    		<controls id="controls-bar" class="progress_controls" ng-class="{'push-from-left': !quiz_mode}" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
-								</controls>
+					    		<!-- <controls id="controls-bar" class="progress_controls" ng-class="{'push-from-left': !quiz_mode}" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
+								</controls> -->
 								<div class="check-answer">
 									<button type="button" ng-show="quiz_mode" class="tiny success button with-small-padding no-margin" ng-click="checkAnswer()" translate>youtube.check_answer</button>
 								</div>
@@ -67,7 +67,7 @@
 			</div>
 		</div>
 	</div>
-	<div  id="student-accordion" class="student_timeline small-12 land-medium-5 portrait-medium-12 large-5 columns no-padding-right portrait-no-padding portrait-medium-height land-height medium-height-small large-height-big small-height-small" style="overflow-y: auto;">
+	<div  id="student-accordion" class="student_timeline small-12 land-medium-5 portrait-medium-12 large-5 columns no-padding-right portrait-no-padding portrait-medium-height land-height medium-height-small large-height-big small-height-small" style="overflow-y: auto;" step-text="Use the timeline to jump back in the lecture and review your quizzes, questions, and notes." step-index="3" step-placement="left" step-append-to-body="true">
 		<student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause" />
 	</div>
 </span>

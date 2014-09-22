@@ -430,6 +430,23 @@ angular.module('scalearAngularApp')
           ui.draggable.css('background-color', 'lightblue')          
           ui.draggable.css('width', (scope.data.width*100)+'%')          
           ui.draggable.css('height', (scope.data.height*100)+'%')
+          
+          ui.draggable.css('word-wrap', 'break-word')
+          ui.draggable.css('overflow', 'hidden')
+          console.log("ontop.width");
+          var ontop_w = angular.element('#ontop').width();
+          var ontop_h = angular.element('#ontop').height();
+          var ui_w = ((scope.data.width)*ontop_w)
+          var ui_h = ((scope.data.height)*ontop_h)
+
+          var text_ratio = (ui_h*ui_w)/(ui.draggable.text().length)
+          if(Math.sqrt(text_ratio)>25){
+            text_ratio = 25;
+          }
+          else if(Math.sqrt(text_ratio)<25){
+            text_ratio = Math.sqrt(text_ratio);
+          }
+          ui.draggable.css('font-size', text_ratio +'px')
 
           ui.draggable.css('left', (scope.data.xcoor*100)+'%')          
           ui.draggable.css('top', (scope.data.ycoor*100)+'%')          
@@ -452,6 +469,7 @@ angular.module('scalearAngularApp')
 
        	destroyPopover(ui.draggable)
         clear(ui.draggable)
+        ui.draggable.css('font-size', 15 +'px')
       }
 
       var clear=function(draggable){

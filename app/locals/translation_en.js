@@ -977,7 +977,8 @@ var translation_en=function(){
       getting_started: "Getting Started",
       feedback: "Feedback",
       teacher_forum: "Teacher Forum",
-      instruction_manual: "Instruction Manual"
+      instruction_manual: "Instruction Manual",
+      tips: "Tips"
     },
     course_settings:{
       show_notes: "Show Notes",

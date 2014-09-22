@@ -28,8 +28,10 @@
         </div>
     </div>
     <div style="height: 32px;">
-        <div class="right">
-            <button ng-show="player.controls.youtube" class="qualityDiv no-padding control-button dropdown show-inline drop-top" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
+        <div class="right with-tiny-margin-right" style="max-width: 300px;width: 300px;height: 32px;display: inline-block; text-align: right;">  
+            <controls ng-if="('**.courseware.lecture' | includedByState)" class="show-inline">
+            </controls>
+            <button ng-show="player.controls.youtube" class="qualityDiv no-padding control-button dropdown show-inline drop-top right" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
                 <ul id="quality_list" class="f-dropdown quality-dropdown top-dropdown" style="min-width: 100px;">
                     <li ng-class="{'blue': chosen_quality=='small' }">
                         <a ng-click="setQuality('small')">240p</a>
@@ -41,9 +43,9 @@
                         <a ng-click="setQuality('hd720')">720p (HD)</a>
                     </li>
                 </ul>
-            </button>            
+            </button>
+            <div class="right" ng-transclude></div>
         </div>
-        <div class="right" style="max-width: 300px;" ng-transclude></div>
         <div class="controlDiv show-inline left" ng-class="play_pause_class" ng-click="playBtn()"></div>
 
         <div id="volume" class="volumeDiv show-inline left" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)"></div>

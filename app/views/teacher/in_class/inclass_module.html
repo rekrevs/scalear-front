@@ -51,7 +51,10 @@
 						<inner_title type="'lectures.discussion' | translate" />
 						<ul style="padding:5px;padding-left: 40px;color:black;font-weight:normal;font-size: 14px;">
 							<li ng-repeat="question in item.data" >
-								<div style="width: 80%;">{{question[0]}}</div>
+								<div style="width: 80%;">{{question.post.content}}</div>
+								<ul>
+		                            <li class="size-14" ng-repeat="comment in question.post.comments"><i>{{comment.comment.content}}</i></li>
+		                        </ul>
 							</li>
 						</ul>						
 					</li>

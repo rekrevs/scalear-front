@@ -49,16 +49,16 @@
         </div>
 
         <div ng-show="selected_item.class_name=='quiz'" style="position: absolute;width: 100%;min-height: 100%;max-height: 100%;height: 100%;left: 0;right: 0;bottom: 0;margin: 0;padding: 0;overflow: auto;">
-            <div ng-repeat="item in timeline['survey'][selected_item.id].items|filter:{data:'!!'}" style="background:white;">
-                <div style="padding-top: 1%;padding-left: 1%;font-size: 40px;line-height: 40px;opacity: 1;">{{item.data.title}}</div>
-                <div ng-if="item.type == 'charts'" ng-init="chart = createChart(item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')">
+            <div style="background:white;">
+                <div style="padding-top: 1%;padding-left: 1%;font-size: 40px;line-height: 40px;opacity: 1;">{{selected_timeline_item.data.title}}</div>
+                <div ng-if="selected_timeline_item.type == 'charts'" ng-init="chart = createChart(selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')">
                     <div google-chart chart="chart" ></div>
                 </div>
-                <div ng-if="item.type == 'Free Text Question'">
+                <div ng-if="selected_timeline_item.type == 'Free Text Question'">
                     <ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal">
-                        <li ng-repeat="question in item.data.answers" style="padding:3px 15px;">
-                            <p style="font-size:20px">{{question.answer}}</p>
-                            <i ng-show="question.response" style="padding-left: 30px;color: steelblue;font-size:16px">{{question.response}}</i>
+                        <li ng-repeat="question in selected_timeline_item.data.answers" style="padding:3px 15px;">
+                            <p style="font-size:20px; margin:0">{{question.answer}}</p>
+                            <i ng-show="question.response" style="padding-left: 30px;color: steelblue;font-size:20px">{{question.response}}</i>
                         </li>
                     </ul>               
                 </div>

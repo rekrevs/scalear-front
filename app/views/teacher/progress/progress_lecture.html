@@ -92,7 +92,7 @@
 							<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size:14px;clear:both">							
 								<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" style="padding:8px 10px">
 									<div class="controls" >
-										<show_box bo-show="module_item.quiz_type == 'survey'" value="answer.hide" action="updateHideResponse(quiz.meta.id,answer.id,answer.hide)" style="float:right"/>
+										<show_box bo-show="module_item.quiz_type == 'survey'" value="answer.hide" action="updateHideResponse(quiz.meta.id,item,answer)" style="float:right"/>
 									    <div ng-show="!quiz.filtered_user || quiz.filtered_user==''" tooltip="{{'groups.see_related'|translate}}" tooltip-placement="top" style="float:right">|
 									    	<a class="button secondary really-tiny" ng-click="quiz.filtered_user = answer.user_id;quiz.filter_strict=true" style="margin:0 5px" translate>lectures.related</a>
 										</div>
@@ -168,7 +168,7 @@
 									<ul>
 										<li ng-repeat="comment in discussion.post.comments" style="color: #616161;font-size:14px" class="no_highlight with-tiny-margin-top small-12 no-padding-right">
 											<span class="controls">
-												<show_box value="comment.comment.hide" action="updateHideComment(comment, discussion.post)" style="float:right"/>
+												<show_box value="comment.comment.hide" action="updateHideComment(comment.comment, discussion.post)" style="float:right"/>
 												<span style="float:right">
 													<span ng-show="comment.comment.flags_count > 0">|<a ng-click="removeCommentFlag(comment, discussion.post)" class="button really-tiny" style="margin:0 5px" translate>discussion.remove_flags</a></span>
 													<span ng-show="comment.comment.flags_count > 0 || comment.comment.user_id == current_user.id" >|<a ng-click="deleteComment(comment, discussion.post)" class="button really-tiny alert" style="margin:0 5px" translate>delete</a></span>

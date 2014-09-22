@@ -352,8 +352,8 @@ angular.module('scalearAngularApp')
                 if(type == 'lecture' && $scope.selected_timeline_item.type == "charts")
                   $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData')
 
-                if(type == 'survey')
-                  $scope.timeline_itr=-1
+                // if(type == 'survey')
+                //   $scope.timeline_itr=-1
               }
               else{
                 $scope.item_itr+=1
@@ -572,8 +572,8 @@ angular.module('scalearAngularApp')
 
   $scope.setQuizShortcuts=function(){
     $scope.removeShortcuts()
-    shortcut.add("Page_up",function() {
-       $scope.nextQuiz()
+    shortcut.add("Page_up",function() {       
+       $scope.prevQuiz()
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
 
@@ -583,7 +583,7 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : false, 'propagate':false});
 
     shortcut.add("Page_down",function() {
-       $scope.prevQuiz()
+      $scope.nextQuiz()
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
 

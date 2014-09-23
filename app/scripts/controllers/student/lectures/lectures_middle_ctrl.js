@@ -77,8 +77,11 @@ angular.module('scalearAngularApp')
                 }
             });
         }
-        else
-            $('lecture_container').addClass('ipad')
+        else{
+            $('#lecture_container').addClass('ipad')
+            $('.main_view').addClass('ipad')
+            $('.container').addClass('ipad')
+        }
 
         $scope.$watch('timeline',function(){
             if($scope.timeline){

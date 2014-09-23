@@ -38,7 +38,6 @@ angular.module('scalearAngularApp')
           }
           $scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"
           $scope.loading_surveys_chart = false
-          $scope.$watch("current_lang", redrawChart);
   			}, 
   			function(){
   				//alert("Failed to load survyes, please check your internet connection")
@@ -117,14 +116,17 @@ angular.module('scalearAngularApp')
     	)
     }
 
-    var redrawChart = function(new_val, old_val){ 
-      if(new_val != old_val){
-          var temp = angular.copy( $scope.survey_chart_data)
-          $scope.survey_chart_data = {}
-          $timeout(function(){
-               $scope.survey_chart_data = temp
-          })
-      }
+    $scope.updateHideSurveyQuestion=function(quiz_id,id, value){
+      Quiz.showStudent(
+        {
+          course_id:$stateParams.course_id,
+          quiz_id:quiz_id
+        },
+        {
+          question:id,
+          show:value
+        }
+      )
     }
 
 

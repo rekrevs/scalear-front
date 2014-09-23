@@ -23,7 +23,7 @@ td{
 		<tbody>
 			<tr ng-repeat="answer in question.answers|survey:display_only">
 				<td ng-show="!display_only" style="border-right: 1px gray solid;">
-					<input type="checkbox" ng-if="!display_only && survey_id" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHideSurvey(answer.id, !answer.hide)" />
+					<input type="checkbox" ng-if="!display_only && survey_id" ng-init="answer.student_hide=!answer.student_hide" ng-model="answer.student_hide" ng-change="saveCheckedHideSurvey(answer.id, !answer.student_hide)" />
 					<input type="checkbox" ng-if="!display_only && lecture_id" ng-init="answer.hide=!answer.hide" ng-model="answer.hide" ng-change="saveCheckedHideQuiz(answer.id, !answer.hide)" />
 				</td>
 				<td ng-show="question.answers.showGroups && !display_only" style="border-right: 1px gray solid;">

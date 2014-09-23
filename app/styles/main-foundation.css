@@ -1386,6 +1386,12 @@ a.editable-click{
   .ipad .land-min-height{
     min-height: 70vh !important;
   }
+
+  .ipad .land-uncentered{
+    margin-left: 0;
+    margin-right: 0;
+    float: left; 
+  }
 }
 
 @media screen and (orientation:portrait){
@@ -1406,12 +1412,12 @@ a.editable-click{
     float: none;
   }
 
-  .ipad.portrait-no-padding{
+  .ipad .portrait-no-padding{
     padding: 0px !important; 
   }
 
-  .ipad.portrait-medium-height{
-    height: 52vh !important;
+  .ipad .portrait-medium-height{
+    height: 35vh !important;
      -webkit-overflow-scrolling: touch;
   }
 }

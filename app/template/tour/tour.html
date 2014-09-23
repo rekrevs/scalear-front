@@ -8,8 +8,9 @@
   <div class="joyride-content-wrapper">
     <h4 ng-bind="title" ng-show="title"></h4>
     <p ng-bind="content"></p>
-    <a class="small button joyride-next-tip" ng-show="!isLastStep()" ng-click="nextStep()">Next</a>
-    <a class="small button joyride-next-tip" ng-show="isLastStep()" ng-click="endTour()">End</a>
+    <a class="tiny button joyride-next-tip secondary" ng-show="!isLastStep()" ng-click="nextStep()">Next</a>
+    <a class="tiny button joyride-next-tip secondary" ng-show="isLastStep()" ng-click="endTour()">Done</a>
+    <a class="tiny button joyride-next-tip success" ng-show="isLastStep()" ng-click="endTour()" ui-sref="getting_started">More Tips</a>
     <a class="joyride-close-tip" ng-click="endTour()">&times;</a>
   </div>
 </div>

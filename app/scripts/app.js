@@ -78,8 +78,8 @@ angular.module('scalearAngularApp', [
         'X-Requested-With': 'XMLHttpRequest'
     })
    // .value('$anchorScroll', angular.noop)
-    .run(['$http', '$rootScope', 'scalear_api', 'editableOptions', 'editableThemes', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies',
-        function($http, $rootScope, scalear_api, editableOptions, editableThemes, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies) {
+    .run(['$http', '$rootScope', 'scalear_api', 'editableOptions', 'editableThemes', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour',
+        function($http, $rootScope, scalear_api, editableOptions, editableThemes, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour) {
 
 
             $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
@@ -156,6 +156,9 @@ angular.module('scalearAngularApp', [
 
             $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
                 //$rootScope.start_loading=true;
+                if($tour.isActive()){
+                    $tour.end();
+                }
                 $rootScope.iscollapsed = true;
                if(from.url != '/'){
                UserSession.getRole().then(function(result) {

@@ -332,7 +332,7 @@ angular.module('scalearAngularApp')
     ]).directive('detailsTime', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-bstime="time" e-show-meridian="true" e-minute-step="15" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (time | date:"shortTime") || ("empty"|translate) }}<i ng-class="overclass"></i></a><timepicker ng-hide="true" />',
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-bstime="time" e-show-meridian="false" e-minute-step="15" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (time | date:"HH:MM") || ("empty"|translate) }}<i ng-class="overclass"></i></a><timepicker ng-hide="true" />',
                 restrict: 'E',
                 scope: {
                     time: "=",

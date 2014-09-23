@@ -14,7 +14,7 @@
 	    <top-bar-section ng-switch="user.roles[0].id">
 	      <!-- Right Nav Section -->
 	      	<!-- STUDENT -->
-	      	<ul ng-switch-when="2" class="right">
+	      	<ul ng-switch-when="2" class="right" step-text="Use the Dashboard for an overview of what's due next, choose and join new courses in the Courses menu, and get help and tips from the Help menu." step-index="5" step-placement="bottom" step-append-to-body="true">
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete" translate>dashboard</a>
@@ -85,7 +85,7 @@
 				</li>
 			</ul>
 			<!-- TEACHER -->
-			<ul ng-switch-when="1" class="right">
+			<ul ng-switch-when="1" class="right" step-text="Use the Dashboard for an overview of what's due next, choose and join new courses in the Courses menu, and get help and tips from the Help menu." step-index="5" step-placement="bottom" step-append-to-body="true">
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete" translate>dashboard</a>
@@ -169,7 +169,7 @@
 				</li>
 			</ul>
 			<!-- ADMIN -->
-			<ul ng-switch-when="5" class="right">
+			<ul ng-switch-when="5" class="right" step-text="Use the Dashboard for an overview of what's due next, choose and join new courses in the Courses menu, and get help and tips from the Help menu." step-index="5" step-placement="bottom" step-append-to-body="true">
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
 				<li><a class="white-hover color-green-hover size-18-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" ng-show="user.intro_watched && user.info_complete" translate>courses.statistics</a></li>
 				<!-- <li class="divider border-grey medium-opacity"></li> -->

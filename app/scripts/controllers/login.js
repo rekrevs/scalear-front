@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
   .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler', '$timeout', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler, $timeout) {
    $scope.user={}
    Page.setTitle('navigation.login')
+   $('#user_email').select()
    $scope.login = function(){
     $scope.sending = true;
         User.sign_in({},{"user":$scope.user}, function(data){

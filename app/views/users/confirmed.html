@@ -1,6 +1,6 @@
 <center>
 	<div class="small-8">
-		<h2 class="color-green">Welcome to ScalableLearning!</h2>
+		<h2 >Welcome to Scalable<span class="color-green text-bold">Learning</span>!</h2>
 		<div class="flex-video widescreen with-light-border" style="z-index: 1;">
 			<div id="intro_video"></div>
 			<!-- <youtube-video id="intro_video" video-id="video_id" player-vars="player_params"></youtube-video> -->
@@ -13,18 +13,20 @@
 	<div class="small-8 with-margin-top">
 		<p ng-if="role!=2">
 			<span translate>intro.teacher_introduction</span>
-			<a ng-click="watchedIntro()" translate>groups.skip</a>
+			<a  class="color-green" ng-click="watchedIntro()" translate>groups.skip</a>
 			<span translate>intro.teacher_skip_intro</span>
 		</p>
 		<p ng-if="role==2">
 			<span translate>intro.student_introduction</span>
-			<a ng-click="watchedIntro()" translate>groups.skip</a>
-			<span translate>intro.student_skip_intro</span>
+			<span class="text-bold">Scalable</span><span class="color-green text-bold" >Learning</span>
+			<span translate>intro.student_introduction_cont</span>
+			(<a class="color-green" ng-click="watchedIntro()" ><span translate>groups.skip</span> Video</a>)
+			<!-- <span translate>intro.student_skip_intro</span> -->
 		</p>
 		<button type="button" ng-show="can_proceed" class="button success" ng-click="watchedIntro()"><span class="with-small-margin-left" translate>enroll.go_to</span><span class="with-small-margin-left" translate>my</span><span class="with-small-margin-left" translate>navigation.courses</span></button>
 	</div>
-	<small>
+	<div>
 		<span translate>intro.by_using_service</span>
-		<a ui-sref="privacy" translate>privacy.policy</a>
-	</small>
+		<a class="color-green" ui-sref="privacy" translate>privacy.policy</a>
+	</div>
 </center>

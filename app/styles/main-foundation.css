@@ -879,7 +879,7 @@ label{
 }
 
 .top-bar .dropdown{
-  box-shadow: -.4em .4em 1em darkgrey
+  box-shadow: -0.1em 0.1em 0.4em darkgrey
 }
 
 .nav-item-active, .nav-item-active:hover{

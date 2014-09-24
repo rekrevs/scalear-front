@@ -314,7 +314,8 @@ var translation_sv=function(){
       intro:{
         teacher_introduction: "Detta 3-minuters video ger dig en snabb överblick över hur du skapar föreläsningar, lägga frågesporter, och granska dina elevers nätet prestanda. Du kan",
         teacher_skip_intro: "introduktionen om du verkligen vill, och kan alltid hitta mer detaljerad hjälp på Hjälp-menyn.",
-        student_introduction: "Detta 3-minuters video visar dig hur man svarar frågesporter, ställa frågor på nätet, rösta på i-klassen recensioner, och ger dig tips om hur man kan studera effektivt i ett vänt klass. Du kan",
+        student_introduction: "Detta 3-minuters video beskriver hur du använder",
+        student_introduction_cont: "och hur man studerar effektivt i ett vänt klass",
         student_skip_intro: "introduktionen om du verkligen vill.",
         by_using_service: "Genom att använda den här tjänsten samtycker du till vår",
       },

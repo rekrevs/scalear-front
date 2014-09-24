@@ -314,7 +314,8 @@ var translation_en=function(){
       intro:{
         teacher_introduction: "This 3-minute video will give you a rapid overview of how to create lectures, add quizzes, and review your students' online performance. You may",
         teacher_skip_intro: "the introduction if you really want to, and can always find more detailed help in the Help menu.",
-        student_introduction: "This 3-minute video will show you how to answer quizzes, ask questions online, vote for in-class reviews, and give you tips on how to study effectively in a flipped class. You may",
+        student_introduction: "This 3-minute video describes how to use",
+        student_introduction_cont: "and how to study effectively in a flipped class",
         student_skip_intro: "the introduction if you really want to",
         by_using_service: "By using this service you agree to our",
       },

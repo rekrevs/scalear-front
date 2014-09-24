@@ -182,7 +182,7 @@
     .check-answer{
         position: absolute;
         top: 10px;
-        left: 47%;
+        left: 45%;
     }
     @-moz-document url-prefix() {
         
@@ -196,10 +196,10 @@
         }
         .check-answer{
             float: right;
-            margin-right: 200px;
+            margin-right: 228px;
             min-width: 100px;
-            position: initial;
-            margin-top: -30px;
+            position: relative;
+            margin-top: -10px;
         }
     }
 

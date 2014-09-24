@@ -1,6 +1,8 @@
 <center>
 	<div class="small-8">
-		<h2 >Welcome to Scalable<span class="color-green text-bold">Learning</span>!</h2>
+
+		<h2>Welcome to
+			<span  style="font-weight: 300;">Scalable<span class="no-padding color-green" style="font-weight: 400;">Learning</span></span>!</h2>
 		<div class="flex-video widescreen with-light-border" style="z-index: 1;">
 			<div id="intro_video"></div>
 			<!-- <youtube-video id="intro_video" video-id="video_id" player-vars="player_params"></youtube-video> -->
@@ -18,9 +20,9 @@
 		</p>
 		<p ng-if="role==2">
 			<span translate>intro.student_introduction</span>
-			<span class="text-bold">Scalable</span><span class="color-green text-bold" >Learning</span>
-			<span translate>intro.student_introduction_cont</span>
-			(<a class="color-green" ng-click="watchedIntro()" ><span translate>groups.skip</span> Video</a>)
+			<span style="font-weight: 300;">Scalable</span><span class="color-green" style="font-weight: 400" >Learning</span>
+			<span translate>intro.student_introduction_cont</span>.
+			(<a class="color-green" ng-click="watchedIntro()" translate>groups.skip</a>)
 			<!-- <span translate>intro.student_skip_intro</span> -->
 		</p>
 		<button type="button" ng-show="can_proceed" class="button success" ng-click="watchedIntro()"><span class="with-small-margin-left" translate>enroll.go_to</span><span class="with-small-margin-left" translate>my</span><span class="with-small-margin-left" translate>navigation.courses</span></button>

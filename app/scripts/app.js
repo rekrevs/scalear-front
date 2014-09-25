@@ -163,9 +163,9 @@ angular.module('scalearAngularApp', [
                if(from.url != '/'){
                UserSession.getRole().then(function(result) {
                     var s = 1;
-                    if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent)) {
-                        $state.go("ie");
-                    }
+                    // if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent)) {
+                    //     $state.go("ie");
+                    // }
                     if((to.name=='home' && result == 0))
                     {
                         // $state.go("login");

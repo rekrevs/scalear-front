@@ -635,7 +635,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '3.8.5 (' + new Date().toUTCString() + ')',
+                        version: '3.8.1 (' + new Date().toUTCString() + ')',
                         help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
                     }
 

@@ -160,12 +160,12 @@ angular.module('scalearAngularApp', [
                     $tour.end();
                 }
                 $rootScope.iscollapsed = true;
-               if(from.url != '/'){
+
                UserSession.getRole().then(function(result) {
                     var s = 1;
-                    // if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent)) {
-                    //     $state.go("ie");
-                    // }
+                    if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name != "home") {
+                        $state.go("ie");
+                    }
                     if((to.name=='home' && result == 0))
                     {
                         // $state.go("login");
@@ -236,7 +236,6 @@ angular.module('scalearAngularApp', [
                     }
                     // success
                })
-           }
 
         });
 

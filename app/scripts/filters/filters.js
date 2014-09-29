@@ -103,7 +103,7 @@ angular.module('scalearAngularApp')
       var result = [];
 
       angular.forEach(input, function(elem,key){
-        if(!elem.hide)
+        if(!elem.student_hide)
           result.push(elem) 
       });
       return result;

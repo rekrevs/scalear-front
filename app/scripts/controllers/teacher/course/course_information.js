@@ -175,7 +175,7 @@ angular.module('scalearAngularApp')
       {course_id:$stateParams.course_id},
       {new_teacher:$scope.new_teacher},
         function(value) {
-            // $scope.errors = $scope.getTeachers();
+            $scope.getTeachers();
             $scope.teacher_forum = false
         },
         //handle error

@@ -1371,17 +1371,27 @@ a.editable-click{
   }
 
 @media only screen and (orientation:landscape) and (max-width: 48.063em){
-  .ipad .land-medium-7 {
+  .ipad .land-medium-4 {
     position: relative;
-    width: 58.33333%;
-  }
-  .ipad .land-no-padding{
-    padding: 0px !important; 
+    width: 33.33333%; 
   }
   .ipad .land-medium-5{
     position: relative;
     width: 41.66667%;
   }
+  .ipad .land-medium-7 {
+    position: relative;
+    width: 58.33333%;
+  }
+  .ipad .land-medium-8 {
+    position: relative;
+    width: 66.66667%; 
+  }
+
+  .ipad .land-no-padding{
+    padding: 0px !important; 
+  }
+  
   .ipad .land-height{
     height: 68vh !important;
     -webkit-overflow-scrolling: touch;

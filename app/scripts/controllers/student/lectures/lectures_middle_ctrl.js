@@ -442,12 +442,16 @@ angular.module('scalearAngularApp')
         $scope.quiz_layer.height=""
         $scope.fullscreen= false
         $timeout(function(){$scope.$emit("updatePosition")})
+        if($scope.quiz_mode == true){
+            $scope.quiz_mode = false
+            $timeout(function(){$scope.quiz_mode = true},200)
+        }
     }
 
     var goMobileFullscreen=function(){
         $scope.video_class = ''
         $scope.container_class='mobile_video_full'
-        $scope.video_layer ={'width':'100%','height': '93%', 'position': 'relative', 'z-index': '-1'}
+        $scope.video_layer ={'width':'100%','height': '93%', 'position': 'relative'}
         // $scope.quiz_layer.width="100%"
         // $scope.quiz_layer.height="95%"
         $scope.resize.big()

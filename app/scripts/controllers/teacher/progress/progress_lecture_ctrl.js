@@ -158,6 +158,7 @@ angular.module('scalearAngularApp')
         function(data){
           console.log(data)
         	$scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
+          $scope.review_survey_count = data.review_survey_count
         	$scope.timeline["survey"]={}
         	for (var survey_id in $scope.quizzes ){
         		$scope.timeline["survey"][survey_id]=new Timeline()
@@ -400,7 +401,10 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateHideSurveyQuestion=function(quiz_id,id, value){
-      console.log("updaing")
+      if(value)
+        $scope.review_survey_count++
+      else
+        $scope.review_survey_count--
       Quiz.showInclass(
         {
           course_id:$stateParams.course_id,
@@ -550,7 +554,7 @@ angular.module('scalearAngularApp')
             {"label": $translate('courses.students'),"type": "number"}
         ]
     formated_data.rows= []
-    var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
+    var x_titles=[$translate('courses.not_started_watching'), $translate('courses.watched')+" <= 50%", $translate('courses.watched')+" > 50%", $translate('courses.completed_on_time'), $translate('courses.completed_late')]
     for(var ind in data)
     {
         var row=

@@ -125,6 +125,7 @@ angular.module('scalearAngularApp')
         function(data){
           console.log(data)
           $scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
+          $scope.review_survey_count = data.review_survey_count
           $scope.timeline["survey"]={}
           for (var survey_id in $scope.quizzes ){
             $scope.timeline["survey"][survey_id]=new Timeline()
@@ -137,7 +138,7 @@ angular.module('scalearAngularApp')
 
           adjustModuleItems()
           
-          if($scope.review_question_count || $scope.review_quizzes_count)
+          if($scope.review_question_count || $scope.review_quizzes_count || $scope.review_survey_count)
             $scope.inclass_ready = true
           console.log($scope.timeline)
         },

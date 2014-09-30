@@ -115,13 +115,14 @@ angular.module('scalearAngularApp')
 	    	time_quiz:'=timeQuiz',
 	    	time_question:'=timeQuestion',
 	    	quiz_count:'=quizCount',
-	    	question_count:'=questionCount'
+	    	question_count:'=questionCount',
+	    	survey_count:'=surveyCount'
 	    },
 	    template:'<div class="row panel with-small-margin text-center time_estimate">'+
 					'<div>'+
 						'<h6 ng-style="{color: color}">In-class <span translate>courses.time_estimate</span>: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></h6>'+
 					'</div>'+
-					'<div><h6 class="size-14">({{quiz_count || 0}} quizzes and {{question_count || 0}} questions)</h6></div>'+
+					'<div><h6 class="size-14">({{quiz_count || 0}} quizzes, {{question_count || 0}} discussions and {{survey_count || 0}} surveys) </h6></div>'+
 					'<div>'+
 						'<div>'+
 							'<a pop-over="popover_options" class="color-green">{{"more" | translate}}...</a>'+
@@ -150,7 +151,7 @@ angular.module('scalearAngularApp')
             }
 
             var estimateCalculator=function(){
-		    	return scope.quiz_count * scope.time_quiz + scope.question_count * scope.time_question
+		    	return scope.quiz_count * scope.time_quiz + scope.question_count * scope.time_question + scope.survey_count * scope.time_question
 		    }
 
 		    var getColor=function(estimate){
@@ -163,7 +164,7 @@ angular.module('scalearAngularApp')
 		    		return 'black'
 		    }
 
-            scope.$watchCollection('[time_quiz, time_question,quiz_count,question_count]', function(newValues){
+            scope.$watchCollection('[time_quiz, time_question,quiz_count,question_count, survey_count]', function(newValues){
   	 			scope.inclass_estimate = estimateCalculator()	
   	 			scope.color= getColor(scope.inclass_estimate)
 			});

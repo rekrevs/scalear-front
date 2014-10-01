@@ -13,7 +13,7 @@
 			<div id="main-video-container" ng-style="container_style"> 
 				<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->				
 					<form name="answer_form" novalidate >
-						<span step-text="Here is where you watch your online videos and answer quizzes." step-index="1" step-placement="right" step-append-to-body="true">
+						<span >
 							<video_container  ng-class="container_class" ng-init="video_class='flex-video'" screenfull active="fullscreen" style="width:100%;height:100%">
 								<span class="no_solve" ng-if="!should_play">
 									<center>
@@ -22,7 +22,7 @@
 										</div>						
 									</center>
 								</span>
-								<span ng-if="should_play" >
+								<span ng-if="should_play" step-text="Here is where you watch your online videos and answer quizzes." step-index="1" step-placement="right" step-append-to-body="true">
 									<!-- <div ng-style="quiz_layer" class="widescreen slow-message" ng-show="!lecture.url || (!video_ready)">
 										<center>
 											<span ng-show="slow">

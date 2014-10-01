@@ -260,6 +260,13 @@ angular.module('scalearAngularApp')
 					player_controls.play()
 				}
 
+				player_controls.changeSpeed = function(value){
+					var speeds = player.media.getSpeeds();
+					if(speeds.indexOf(value) != -1){
+						player.media.setSpeed(value)
+					}
+				}
+
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
@@ -687,6 +694,10 @@ angular.module('scalearAngularApp')
                 }
             });
 
+            scope.setSpeed = function(){
+            	console.log(scope.player.controls)
+            	console.log(scope.player.controls.speed())
+            }
             scope.mute= function()
             {
                 scope.player.controls.mute();

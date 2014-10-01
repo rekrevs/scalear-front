@@ -260,9 +260,12 @@ angular.module('scalearAngularApp')
 					player_controls.play()
 				}
 
+				player_controls.getSpeeds = function(){
+					return player.media.getSpeeds();
+				}
+
 				player_controls.changeSpeed = function(value){
-					var speeds = player.media.getSpeeds();
-					if(speeds.indexOf(value) != -1){
+					if(player_controls.getSpeeds().indexOf(value) != -1){
 						player.media.setSpeed(value)
 					}
 				}
@@ -663,6 +666,8 @@ angular.module('scalearAngularApp')
             scope.mute_unmute_class="mute";
             scope.quality=false;
       		scope.chosen_quality='hd720';
+      		scope.chosen_speed=1
+      		scope.supported_speeds = scope.player.controls.getSpeeds()
 
             scope.playBtn = function(){
                 if(scope.player.controls.paused()){
@@ -693,10 +698,9 @@ angular.module('scalearAngularApp')
                         scope.mute_unmute_class="unmute";
                 }
             });
-
-            scope.setSpeed = function(){
-            	console.log(scope.player.controls)
-            	console.log(scope.player.controls.speed())
+            scope.setSpeed = function(val){
+            	scope.player.controls.changeSpeed(val)
+            	scope.chosen_speed = val;
             }
             scope.mute= function()
             {

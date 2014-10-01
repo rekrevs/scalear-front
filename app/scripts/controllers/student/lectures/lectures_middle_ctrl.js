@@ -207,7 +207,8 @@ angular.module('scalearAngularApp')
     $scope.scrollIntoView=function(){
         console.log("scroll to view")
         if($scope.lecture && !isiPad()){
-            $('.student_timeline').scrollTo('#outline_'+$scope.lecture.id, {offsetTop: $('.student_timeline').offset().top+5, duration: 400});
+            console.log($('.student_timeline'))
+            $('.student_timeline').scrollToThis('#outline_'+$scope.lecture.id, {offsetTop: $('.student_timeline').offset().top+5, duration: 400});
             // $timeout(function(){
             //     $location.hash(tab+'_'+$scope.lecture.id);
             //     $anchorScroll();    

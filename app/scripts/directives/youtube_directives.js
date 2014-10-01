@@ -724,7 +724,7 @@ angular.module('scalearAngularApp')
       		}
 
       		var scrollToItem=function(type, id){
-      			$('.student_timeline').scrollTo('#'+type+'_'+id, {offsetTop: 100, duration: 350});
+      			$('.student_timeline').scrollToThis('#'+type+'_'+id, {offsetTop: 100, duration: 350});
       		}
       		var addHighlight = function(type, id){
       			$('#'+type+'_'+id).animate({'backgroundColor' : '#ffff99'},"fast")

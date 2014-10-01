@@ -350,8 +350,12 @@ angular.module('scalearAngularApp')
                   }
                 }
 
-                if(type == 'lecture' && $scope.selected_timeline_item.type == "charts")
-                  $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData')
+                if($scope.selected_timeline_item.type == "charts"){
+                  if(type == 'lecture')
+                    $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData')
+                  else
+                    $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')
+                }
 
                 // if(type == 'survey')
                 //   $scope.timeline_itr=-1
@@ -370,10 +374,10 @@ angular.module('scalearAngularApp')
           }
         }
         else{
-          if($scope.selected_item.class_name == 'quiz')
-            $scope.item_itr = $scope.module.items.length-1
+          // if($scope.selected_item.class_name == 'quiz')
+          //   $scope.item_itr = $scope.module.items.length-1
           $scope.showBlackScreen('groups.blackscreen_done')
-          $scope.item_itr+=1
+          // $scope.item_itr+=1
         }
       }
 
@@ -381,51 +385,77 @@ angular.module('scalearAngularApp')
         $scope.adjustTextSize()
       })
       $scope.blurButtons()
+
+      console.log("timeline item")
+      console.log($scope.selected_timeline_item)
     }
 
     $scope.prevQuiz = function(){
-      $scope.hideBlackScreen()      
-      if($scope.module && $scope.module.items){
-        if($scope.item_itr >= 0){
-          if($scope.module.items[$scope.item_itr]){
-            $scope.selected_item = $scope.module.items[$scope.item_itr]
-            var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
-            if($scope.timeline[type] && $scope.timeline[type][$scope.selected_item.id]){
-              $scope.timeline_itr-=1 
-              if($scope.timeline_itr > 0){
+      if($scope.isBlackScreenOn()){
+        $scope.hideBlackScreen()
+      }
+      else{
+        if($scope.module && $scope.module.items){
+          if($scope.item_itr >= 0){
+            if($scope.module.items[$scope.item_itr]){
+              $scope.selected_item = $scope.module.items[$scope.item_itr]
+              var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
+              if($scope.timeline[type] && $scope.timeline[type][$scope.selected_item.id]){
+                $scope.timeline_itr-=1 
+                if($scope.timeline_itr > 0){
 
-                if(type == 'survey'){
-                  $scope.timeline_itr=-1
-                }
+                  // if(type == 'survey'){
+                  //   $scope.timeline_itr=-1
+                  // }
 
-                if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
-                  $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
-                  $scope.lecture_name = $scope.module.items[$scope.item_itr].name
+                  if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
+                    $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
+                    $scope.lecture_name = $scope.module.items[$scope.item_itr].name
+                  }
+                  else{             
+                    $scope.prevQuiz()
+                    return
+                  }
+                               
+                  if($scope.selected_item.url){
+                    if($scope.lecture_url.indexOf($scope.selected_item.url) == -1){
+                      $scope.inclass_player.controls.setStartTime($scope.selected_timeline_item.time)
+                      $scope.lecture_url= $scope.selected_item.url
+                    }
+                    else{
+                      $timeout(function(){
+                        $scope.seek($scope.selected_timeline_item.time)
+                      })
+                    }
+                  }
+
+                  if($scope.selected_timeline_item.type == "charts"){
+                    if(type == 'lecture')
+                      $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData')
+                    else
+                      $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')
+                  }
+
                 }
-                else{             
+                else{
+                  $scope.item_itr-=1
+                  if($scope.module.items[$scope.item_itr])
+                  $scope.selected_item = $scope.module.items[$scope.item_itr]
+                  var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
+                  if($scope.item_itr < 0){
+                    $scope.timeline_itr= 0
+                  }
+                  else
+                    $scope.timeline_itr= $scope.timeline[type][$scope.selected_item.id].items.length
+
                   $scope.prevQuiz()
-                  return
                 }
-                             
-                if($scope.selected_item.url){
-                  if($scope.lecture_url.indexOf($scope.selected_item.url) == -1){
-                    $scope.inclass_player.controls.setStartTime($scope.selected_timeline_item.time)
-                    $scope.lecture_url= $scope.selected_item.url
-                  }
-                  else{
-                    $timeout(function(){
-                      $scope.seek($scope.selected_timeline_item.time)
-                    })
-                  }
-                }
-
-                if(type == 'lecture' && $scope.selected_timeline_item.type == "charts")
-                  $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers,{}, 'formatLectureChartData')
               }
-              else{
+            }
+            else{
                 $scope.item_itr-=1
                 if($scope.module.items[$scope.item_itr])
-                $scope.selected_item = $scope.module.items[$scope.item_itr]
+                  $scope.selected_item = $scope.module.items[$scope.item_itr]
                 var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
                 if($scope.item_itr < 0){
                   $scope.timeline_itr= 0
@@ -434,25 +464,10 @@ angular.module('scalearAngularApp')
                   $scope.timeline_itr= $scope.timeline[type][$scope.selected_item.id].items.length
 
                 $scope.prevQuiz()
-              }
             }
-          }
-          else{
-              $scope.item_itr-=1
-              if($scope.module.items[$scope.item_itr])
-                $scope.selected_item = $scope.module.items[$scope.item_itr]
-              var type = $scope.selected_item.class_name == 'quiz'? $scope.selected_item.quiz_type : $scope.selected_item.class_name
-              if($scope.item_itr < 0){
-                $scope.timeline_itr= 0
-              }
-              else
-                $scope.timeline_itr= $scope.timeline[type][$scope.selected_item.id].items.length
-
-              $scope.prevQuiz()
           }
         }
       }
-
       $timeout(function(){
         $scope.adjustTextSize()
       })
@@ -645,6 +660,10 @@ angular.module('scalearAngularApp')
   }
    $scope.hideBlackScreen=function(msg){
     $scope.show_black_screen = false    
+  }
+
+  $scope.isBlackScreenOn=function(){
+    return $scope.show_black_screen
   }
 
   $scope.setOriginalClass=function(){

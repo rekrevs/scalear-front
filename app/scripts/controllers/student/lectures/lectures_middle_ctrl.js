@@ -199,7 +199,7 @@ angular.module('scalearAngularApp')
         })
 
         $scope.video_ready=true
-        $scope.supported_speeds = $scope.lecture_player.controls.getSpeeds();
+        console.log($scope.supported_speeds)
         var time =$state.params.time        
         if(time)
             $scope.seek(parseInt(time));

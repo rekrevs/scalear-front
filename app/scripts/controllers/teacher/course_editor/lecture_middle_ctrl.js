@@ -72,7 +72,6 @@ angular.module('scalearAngularApp')
         $scope.lecture_player.controls.seek(0)
         $scope.lecture_player.controls.volume(0.5);
      	//$scope.lecture.duration = $scope.lecture_player.controls.getDuration()
-      $scope.supported_speeds = $scope.lecture_player.controls.getSpeeds();
  	}
 
 	$scope.lecture_player.events.onPlay= function(){

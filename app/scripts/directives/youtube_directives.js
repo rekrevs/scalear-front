@@ -667,7 +667,12 @@ angular.module('scalearAngularApp')
             scope.quality=false;
       		scope.chosen_quality='hd720';
       		scope.chosen_speed=1
-      		scope.supported_speeds = scope.player.controls.getSpeeds()
+      		var unwatch = scope.$watch('player', function(){
+      			if(scope.player){
+      				scope.supported_speeds = scope.player.controls.getSpeeds();
+      				unwatch();
+      			}
+      		})
 
             scope.playBtn = function(){
                 if(scope.player.controls.paused()){

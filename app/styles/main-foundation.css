@@ -655,7 +655,7 @@ td.right-border{
 #quality_list{
   min-width: 210px;
   left: -115px !important;
-  top: -48px !important;
+  top: 5px !important;
 }
 .time-label{
 	padding: 5px;

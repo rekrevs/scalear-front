@@ -1,4 +1,5 @@
-$.fn.scrollTo = function( target, options, callback ){
+$.fn.scrollToThis = function( target, options, callback ){
+  console.log("SCROOLLLL!!!!!!! TOOOO ---------")
   if(typeof options == 'function' && arguments.length == 2){ callback = options; options = target; }
   var settings = $.extend({
     scrollTarget  : target,

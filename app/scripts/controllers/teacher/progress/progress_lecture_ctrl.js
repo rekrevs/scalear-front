@@ -213,7 +213,7 @@ angular.module('scalearAngularApp')
       else
         view_index = $scope.highlight_index-1
       var top = ( $('html').innerHeight() / 2 )-10;
-      $('.main_content').parent().scrollTo(angular.element(divs[$scope.highlight_index]),{offsetTop : top});
+      $('.main_content').parent().scrollToThis(angular.element(divs[$scope.highlight_index]),{offsetTop : top});
 	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
 	    $scope.$apply()
@@ -246,7 +246,7 @@ angular.module('scalearAngularApp')
         // }
   		}
       var top = ( $('html').innerHeight() / 2 )-10;
-      $('.main_content').parent().scrollTo(angular.element(inner_li[$scope.inner_highlight_index]),{offsetTop : top});
+      $('.main_content').parent().scrollToThis(angular.element(inner_li[$scope.inner_highlight_index]),{offsetTop : top});
 	    $scope.$apply()
   	}
 

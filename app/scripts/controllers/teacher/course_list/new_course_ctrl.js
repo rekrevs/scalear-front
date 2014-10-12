@@ -48,11 +48,11 @@ angular.module('scalearAngularApp')
 		                $scope.submitting=false;
 						$scope.submitted=false;
 						if(data.importing==true){
-							//$(window).scrollTop(0);
+							//$(window).scrollToThisp(0);
 							$state.go("course_list")
 						}
 						else{
-							//$(window).scrollTop(0);
+							//$(window).scrollToThisp(0);
 							$state.go("course.course_editor",{"course_id":data.course.id})
 						}
 						$rootScope.$broadcast('get_all_courses')

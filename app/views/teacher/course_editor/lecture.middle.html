@@ -28,7 +28,7 @@
 							<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
 						</quiz>
 					</youtube>
-			        <progress-bar ng-if="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="seek" current_time='current_time' total_duration='lecture.duration' player="lecture_player" class="text-left">
+			        <progress-bar ng-if="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="seek" current_time='current_time' total_duration='lecture.duration' player="lecture_player" speeds="supported_speeds" class="text-left">
 			        	<controls-teacher link="createVideoLink()" />
 			    	</progress-bar>
 				</video_container>

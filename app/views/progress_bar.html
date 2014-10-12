@@ -47,7 +47,7 @@
                     </div>
                     <div class="small-6 columns no-padding">
                         <li class="dark-text">Change Speed</li>
-                        <li ng-repeat="speed in supported_speeds" ng-class="{'green': chosen_speed == speed }" ng-if="speed >= 1">
+                        <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed }" ng-if="speed >= 1">
                             <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeed(speed)"><small>x{{speed}}</small></a>
                         </li>
                     </div>

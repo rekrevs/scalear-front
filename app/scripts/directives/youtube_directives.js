@@ -658,6 +658,7 @@ angular.module('scalearAngularApp')
             // confused_areas: '=confusedAreas',
             // progressEvents: '=',
             timeline: '=',
+            speeds: '='
             // lecture: '='
            // autoplay:'@'
         },
@@ -667,12 +668,14 @@ angular.module('scalearAngularApp')
             scope.quality=false;
       		scope.chosen_quality='hd720';
       		scope.chosen_speed=1
-      		var unwatch = scope.$watch('player', function(){
-      			if(scope.player){
-      				scope.supported_speeds = scope.player.controls.getSpeeds();
-      				unwatch();
-      			}
-      		})
+      		// var unwatch = scope.$watch('player', function(){
+      		// 	if(scope.player){
+      		// 		scope.player.events.onReady = function(){
+        //         scope.supported_speeds = scope.player.controls.getSpeeds();
+        //         unwatch();
+        //       }
+      		// 	}
+      		// })
 
             scope.playBtn = function(){
                 if(scope.player.controls.paused()){

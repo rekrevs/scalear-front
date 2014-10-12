@@ -52,6 +52,16 @@
                         </li>
                     </div>
                 </ul>
+            </button>
+            <button ng-show="!player.controls.youtube" class="qualityDiv no-padding control-button dropdown show-inline drop-top right" dropdown-toggle="#speed_list" title="{{'youtube.click_video_quality'|translate}}">
+                <ul id="speed_list" class="f-dropdown speed-dropdown top-dropdown" style="display: block;">
+                    <div class="small-12 columns no-padding">
+                        <li class="dark-text">Change Speed</li>
+                        <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed.value }">
+                            <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeed(speed.value)"><small>{{speed.name}}</small></a>
+                        </li>
+                    </div>
+                </ul>
             </button>            
         </div>
 

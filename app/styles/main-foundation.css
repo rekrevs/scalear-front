@@ -657,6 +657,14 @@ td.right-border{
   left: -115px !important;
   top: 5px !important;
 }
+#speed_list{
+  min-width: 120px !important;
+  left: -25px !important;
+  top: -20px !important;
+}
+#speed_list::after{
+  left: 86%;
+}
 .time-label{
 	padding: 5px;
 	display: inline-block;

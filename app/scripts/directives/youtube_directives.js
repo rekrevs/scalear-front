@@ -261,14 +261,22 @@ angular.module('scalearAngularApp')
 				}
 
 				player_controls.getSpeeds = function(){
-					return player.media.getSpeeds();
+					if(player.controls.youtube){
+            return player.media.getSpeeds();
+          }
 				}
 
 				player_controls.changeSpeed = function(value){
-					if(player_controls.getSpeeds().indexOf(value) != -1){
-						player.media.setSpeed(value)
-					}
+          if(player.controls.youtube){
+            if(player_controls.getSpeeds().indexOf(value) != -1){
+              player.media.setSpeed(value)
+            }
+          }
+          else{
+            player.video.playbackRate = value
+          }
 				}
+
 
 				var setupEvents=function(){
 					player.on("loadeddata", 
@@ -668,14 +676,18 @@ angular.module('scalearAngularApp')
             scope.quality=false;
       		scope.chosen_quality='hd720';
       		scope.chosen_speed=1
-      		// var unwatch = scope.$watch('player', function(){
-      		// 	if(scope.player){
-      		// 		scope.player.events.onReady = function(){
-        //         scope.supported_speeds = scope.player.controls.getSpeeds();
-        //         unwatch();
-        //       }
-      		// 	}
-      		// })
+      		var unwatch = scope.$watch('player', function(){
+      			if(scope.player){
+      				if(!scope.player.controls.youtube){
+                scope.speeds = [{name:'80%', value: 0.8},
+                                {name:'100%', value: 1},
+                                {name:'120%', value: 1.2},
+                                {name:'150%', value: 1.5},
+                                {name:'180%', value: 1.8}]
+              }
+      			}
+      		})
+            
 
             scope.playBtn = function(){
                 if(scope.player.controls.paused()){

@@ -38,7 +38,7 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 		o_c.scroll(ptor, 1000)
 		// ptor.executeScript('window.scrollBy(0, 1000)', '');
 		// browser.debugger()
-		element(by.buttonText("Create Course")).click()
+		element(by.buttonText("Create Course")).click();
 		// .then(function(){
 		// 	 o_c.feedback(ptor, 'Course was successfully created.');
 		// })
@@ -1049,6 +1049,8 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
 			ptor.actions().click().perform();
 
+			ptor.sleep(2000);
+
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
 			ptor.actions().doubleClick().perform();
@@ -1060,6 +1062,8 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
 			ptor.actions().click().perform();
+
+			ptor.sleep(2000);
 
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove(ontop,{x: q3_x, y: q3_y}).perform();

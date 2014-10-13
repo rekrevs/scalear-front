@@ -25,22 +25,8 @@ exports.press_login = function(ptor){
 exports.sign_in = function(ptor, email, password){
     element(by.id('user_email')).sendKeys(email);
     element(by.id('user_passowrd')).sendKeys(password);
-    element(by.id('login_btn')).click()
-    // .then(function(){
-    //     o_c.feedback(ptor, 'Signed in successfully');
-    // });
-    // locator.by_id(ptor,'user_email').then(function(email_field) {
-    //     email_field.sendKeys(email);
-    // });
-    // locator.by_id(ptor,'user_passowrd').then(function(password_field) {
-    //     password_field.sendKeys(password);
-    // });
-
-    // locator.by_id(ptor, "login_btn").then(function(btn){
-    //     btn.click().then(function() {
-    //         o_c.feedback(ptor, 'Signed in successfully');
-    //     });
-    // });
+    element(by.id('login_btn')).click();
+    ptor.sleep(2000);
 }
 
 exports.sign_in_admin = function(ptor){
@@ -56,9 +42,6 @@ exports.logout = function(ptor) {
     this.open_account(ptor);
     locator.by_id(ptor, "logout").then(function(link) {
         link.click()
-        // .then(function() {
-        //     o_c.feedback(ptor, 'Signed out successfully');
-        // });
     })
 }
 
@@ -84,10 +67,7 @@ exports.fill_sign_up_forum=function(ptor, screen_name, fname, lname, mail, unive
     element(by.model('user.screen_name')).sendKeys(screen_name)
     element(by.model('user.password')).sendKeys(password)
     element(by.model('user.password_confirmation')).sendKeys(password)
-    element(by.buttonText('Sign up')).click()
-    // .then(function(){
-    //     o_c.feedback(ptor, 'A message with a confirmation link has been sent to your email address. Please open the link to activate your account.');
-    // })
+    element(by.buttonText('Sign up')).click();
 }
 
 //====================================================

@@ -7,7 +7,8 @@ var youtube = require('./lib/youtube.js');
 var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
-//<x>
+
+
 describe("1", function(){
 
 	it('should sign in as teacher', function(){
@@ -50,7 +51,8 @@ describe("1", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -81,7 +83,7 @@ describe("1", function(){
 	    o_c.logout(ptor);
 	})
 })
-//<x>
+
 describe("2", function(){
 
 	it('should sign in as teacher', function(){
@@ -123,7 +125,8 @@ describe("2", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -152,8 +155,9 @@ describe("2", function(){
 		o_c.open_course_list(ptor);
 	    teacher.delete_course(ptor, 1);
 	    o_c.logout(ptor);
-	})})
-//<x>
+	})
+})
+
 describe("3", function(){
 	
 	it('should sign in as teacher', function(){
@@ -194,7 +198,8 @@ describe("3", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -225,7 +230,7 @@ describe("3", function(){
 	    o_c.logout(ptor);
 	})
 })
-//<x>
+
 describe("4", function(){
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
@@ -265,7 +270,8 @@ describe("4", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -296,7 +302,7 @@ describe("4", function(){
 	    o_c.logout(ptor);
 	})
 })
-//<x>
+
 describe("5", function(){
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
@@ -336,7 +342,8 @@ describe("5", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 

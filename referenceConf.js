@@ -57,7 +57,7 @@ exports.config = {
         // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',
         // 'test/e2e/spec/mcq-survey-over-video.spec.js',
         // 'test/e2e/spec/module-statistics.spec.js',
-        'test/e2e/spec/normal-quiz.spec.js',
+        // 'test/e2e/spec/normal-quiz.spec.js',
 
     
     //{{notreviewed}}

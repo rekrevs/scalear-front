@@ -163,6 +163,10 @@ span.error, small.error{
   background-color: black !important;
 }
 
+.color-gray{
+  color: gray !important;
+}
+
 .color-white{
 	color: #ffffff !important;
 }

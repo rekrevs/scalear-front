@@ -648,9 +648,22 @@ td.right-border{
   border-color: #ffffff transparent transparent transparent;
   border-top-style: solid;
   position: absolute;
-  top: 102px;
-  left: 77px;
+  top: 100%;
+  left: 92%;
   z-index: 98;
+}
+#quality_list{
+  min-width: 210px;
+  left: -115px !important;
+  top: 5px !important;
+}
+#speed_list{
+  min-width: 120px !important;
+  left: -25px !important;
+  top: -20px !important;
+}
+#speed_list::after{
+  left: 86%;
 }
 .time-label{
 	padding: 5px;

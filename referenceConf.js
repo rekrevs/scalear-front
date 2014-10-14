@@ -58,6 +58,15 @@ exports.config = {
         // 'test/e2e/spec/mcq-survey-over-video.spec.js',
         // 'test/e2e/spec/module-statistics.spec.js',
         // 'test/e2e/spec/normal-quiz.spec.js',
+        // 'test/e2e/spec/normal-survey.spec.js',
+        // 'test/e2e/spec/notes.spec.js',
+        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
+        // 'test/e2e/spec/ocq-quizzez-over-video.spec.js',
+        // 'test/e2e/spec/ocq-survey-over-video.spec.js',
+        // 'test/e2e/spec/ocq-survey-over-video.spec.js',
+        // 'test/e2e/spec/sharing.spec.js',
+        'test/e2e/spec/statistics.spec.js',
+
 
     
     //{{notreviewed}}
@@ -70,6 +79,11 @@ exports.config = {
         // 'test/e2e/spec/forget-password-resend-conf.spec.js',
         // 'test/e2e/spec/inclass.spec.js',
         // 'test/e2e/spec/init-progress-data.spec.js',
+        // 'test/e2e/spec/preview-as-student.spec.js',
+        // 'test/e2e/spec/progress-main.spec.js',
+        // 'test/e2e/spec/progress-module.spec.js',
+
+
 
 
 
@@ -138,14 +152,14 @@ exports.config = {
 
         // student_mail: 'mena.happy@yahoo.com',
 
-        // admin_mail: 'admin@scalear.com',
+        admin_mail: 'admin@scalear.com',
         // teacher_mail: 'teacher1@sharklasers.com',
-        // teacher2_mail: 'teacher3@sharklasers.com',
+        teacher2_mail: 'teacher15@sharklasers.com',
         // // student_mail: 'studenttest@sharklasers.com',
         // student2_mail: 'studenttest2@sharklasers.com',
         // student3_mail: 'student_mail_2@sharklasers.com',
         password: 'password',
-        // admin_password:"password",
+        admin_password:"password",
 
         // //staging
         // frontend: 'http://staging.scalable-learning.com/#',

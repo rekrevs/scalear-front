@@ -207,7 +207,10 @@ function check_survey_name(ptor, name){
 }
 
 function check_optional_tag_exist(val){
-    expect(element(by.className('label')).isDisplayed()).toBe(val)
-    if(val)
-        expect(element(by.className('label')).getText()).toEqual("Optional")
+    if(val == false){
+        expect(element.all(by.className('label')).count()).toBe(0)
+    }
+    else{
+        expect(element.all(by.className('label')).count()).toBe(1) 
+    }
 }

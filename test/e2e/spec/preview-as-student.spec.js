@@ -66,7 +66,7 @@ describe("go to preview as student mode", function(){
     })
 })
 
-describe("in order and required doesnot apply", function(){
+xdescribe("in order and required doesnot apply", function(){
     it('should sign in as teacher', function(){
         o_c.press_login(ptor);
         o_c.sign_in(ptor, params.teacher_mail, params.password);

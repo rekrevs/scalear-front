@@ -107,7 +107,8 @@ describe("2", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -185,7 +186,8 @@ describe("3", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -225,7 +227,7 @@ describe("3", function(){
 describe("explanation validation", function(){
 
 	it('should sign in as teacher', function(){
-		// o_c.press_login(ptor);
+		o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -262,7 +264,8 @@ describe("explanation validation", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -304,75 +307,9 @@ describe("explanation validation", function(){
 	})
 })
 
-// xdescribe("4", function(){
-
-// 	it('should sign in as teacher', function(){
-// 		o_c.sign_in(ptor, params.teacher_mail, params.password);
-// 	})
-
-// 	it('should create_course', function(){
-// 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
-// 	})
-
-// 	it('should get the enrollment key and enroll student', function(){
-// 		teacher.get_key_and_enroll(ptor);
-// 	})
-// 	//test
-// 	it('should add a module and lecture to create quizzes', function(){
-// 		o_c.open_course_whole(ptor);
-// 		teacher.add_module(ptor);
-// 		teacher.open_module(ptor, 1);
-// 		teacher.create_lecture(ptor, "ocq_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
-// 	})
-
-// 	it('should create quiz', function(){
-// 		youtube.seek(ptor, 49);
-// 		create_invideo_ocq_quiz(ptor);
-// 		make_ocq_questions(ptor, ocq_q1_x, ocq_q1_y, ocq_q2_x, ocq_q2_y, ocq_q3_x, ocq_q3_y);
-// 	})
-
-// 	it('should login a student and check for no of ocqs ', function(){
-// 		o_c.to_student(ptor);
-// 		o_c.open_course_whole(ptor);
-// 		o_c.open_tray(ptor);
-// 		o_c.open_lectures(ptor);
-// 		youtube.seek(ptor, 49);
-// 		expect_quiz(ptor);
-// 		check_ocq_no(ptor, 3);
-// 	})
-
-// 	it('should answer ocq quiz correctly',function(){
-// 		answer_invideo_ocq(ptor, 2)
-// 		is_checked(ptor, 2);
-// 		is_not_checked(ptor, 3)
-// 		answer_invideo_ocq(ptor, 3)
-// 		is_not_checked(ptor, 2);
-// 		is_checked(ptor, 3)
-// 	})
-
-// 	it('should clear the course for deletion', function(){
-// 		o_c.to_teacher(ptor);
-// 		o_c.open_course_list(ptor);
-// 		o_c.open_course_whole(ptor, 0);
-// 		o_c.press_content_navigator(ptor);
-// 		teacher.open_module(ptor, 1);
-// 		teacher.delete_item_by_number(ptor, 1, 1);
-// 		teacher.delete_empty_module(ptor, 1);
-// 	})
-// 	//end test
-
-// 	it('should delete course', function(){
-// 		o_c.open_course_list(ptor);
-// 		teacher.delete_course(ptor, 1);
-// 	})
-// })
 /////////////////////////////////////////////////////////
 //				test specific functions
 /////////////////////////////////////////////////////////
-
-
-
-
 
 
 function make_ocq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
@@ -393,6 +330,8 @@ function make_ocq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
             ptor.actions().mouseMove({x: 5, y: 5}).perform();
             ptor.actions().click().perform();
 
+            ptor.sleep(2000);
+
             ptor.actions().mouseMove(ontop).perform();
             ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
             ptor.actions().doubleClick().perform();
@@ -400,6 +339,8 @@ function make_ocq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
             ptor.actions().mouseMove(ontop).perform();
             ptor.actions().mouseMove({x: 5, y: 5}).perform();
             ptor.actions().click().perform();
+
+            ptor.sleep(2000);
 
             ptor.actions().mouseMove(ontop).perform();
             ptor.actions().mouseMove(ontop,{x: q3_x, y: q3_y}).perform();

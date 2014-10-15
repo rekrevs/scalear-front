@@ -2837,7 +2837,7 @@ angular.module("mm.foundation.topbar", [])
     }]);
 angular.module( 'mm.foundation.tour', [ 'mm.foundation.position', 'mm.foundation.tooltip' ] )
 
-.service( '$tour', [ '$window', function ( $window ) {
+.service( '$tour', [ '$window', '$rootScope', function ( $window, $rootScope) {
   var currentIndex = getCurrentStep();
   var ended = false;
   var steps = {};
@@ -2880,6 +2880,7 @@ angular.module( 'mm.foundation.tour', [ 'mm.foundation.position', 'mm.foundation
   };
 
   this.end = function () {
+    $rootScope.$emit('tour_ended')
     setCurrentStep( 0 );
   };
 }])

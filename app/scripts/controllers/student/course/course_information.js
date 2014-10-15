@@ -5,6 +5,7 @@ angular.module('scalearAngularApp')
         function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout,$rootScope) {
 
             Page.setTitle('head.information');
+            Page.startTour();
 
             $window.scrollTo(0, 0);
             $scope.init = function(){

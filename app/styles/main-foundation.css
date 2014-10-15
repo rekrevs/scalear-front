@@ -1374,6 +1374,31 @@ a.editable-click{
   width: 100%;
   font-size: 0.8125rem !important;
 }
+.joyride-tip-guide{
+  width: auto;
+  margin: 10px;
+}
+.joyride-tip-guide.left{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.joyride-tip-guide.right{
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.joyride-tip-guide.top{
+  margin-top: 0px;
+}
+.joyride-tip-guide.bottom{
+  margin-bottom: 0px;
+}
+.joyride-content-wrapper{
+  padding: 0.50rem !important;
+  width: 90%;
+}
+.joyride-content-wrapper > p{
+  margin-bottom: 0.25rem !important;
+}
 
 /*@media only screen and (min-width: 1300px){
   .navigator_open{

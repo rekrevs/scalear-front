@@ -8,6 +8,7 @@ angular.module('scalearAngularApp')
     $rootScope.$on('tour_ended', function(){
       var completion = $rootScope.current_user.completion_wizard
       completion[Page.pageName()] = true;
+      console.log(completion)
       User.updateCompletionWizard(
         {id: $rootScope.current_user.id},
         {completion_wizard: completion}, 

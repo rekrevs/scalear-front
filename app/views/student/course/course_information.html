@@ -8,9 +8,9 @@
         <img class="small-10 medium-6 large-12 columns with-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
         <div class="small-12 columns no-padding show-for-large-up">
         <!-- <div style="position: absolute; margin-top: 220px;" class="show-for-large-up"> -->
-            <button type="button" calendar-modal class="button tiny uppercase" ng-click="openCalendar()" step-text="Click this button to view the course calendar." step-index="1" step-placement="right" step-append-to-body="false">Calendar</button>
-            <button id="course_content" type="button" class="button tiny uppercase under-the-other " ng-click="goToContent()" ng-disabled="!course.groups.length" step-text="Click this button to go to the course content and start learning." step-index="2" step-placement="right" step-append-to-body="false">Go to Course</button>
-            <span step-text="Here you will find various information about the course." step-index="3" step-placement="top" step-append-to-body="false">
+            <button type="button" calendar-modal class="button tiny uppercase" ng-click="openCalendar()" page-name="{{current}}"step-text="Click this button to view the course calendar." step-index="1" step-placement="right" step-append-to-body="false">Calendar</button>
+            <button id="course_content" type="button" class="button tiny uppercase under-the-other " ng-click="goToContent()" ng-disabled="!course.groups.length" page-name="{{current}}"step-text="Click this button to go to the course content and start learning." step-index="2" step-placement="right" step-append-to-body="false">Go to Course</button>
+            <span page-name="{{current}}"step-text="Here you will find various information about the course." step-index="3" step-placement="top" step-append-to-body="false">
                 <div id='course_date' class="large-12 column with-margin-bottom no-padding">
                     <i class="fi-calendar size-24"></i><small class="with-tiny-margin-left" translate>courses.start_date</small>
                     <div>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div>
@@ -29,13 +29,13 @@
     </div>
     <div class="small-12 medium-12 large-9 columns">
         <h2 id='course_code_name' class="title color-green" title="{{course.name}}">{{course.short_name}} | {{course.name}}</h2>
-        <h6 class="color-blue show-for-small-only" title="{{course.name}}"><span class="dark-text" step-text="This is the list of all the teachers in this course." step-index="6" step-placement="top" step-append-to-body="false" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
+        <h6 class="color-blue show-for-small-only" title="{{course.name}}"><span class="dark-text" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
         <div class="hide-for-large-up with-padding-bottom">
             <div>
-                <button id="calendar_btn" calendar-modal type="button" class="button tiny uppercase right" ng-click="openCalendar()"step-text="Click this button to view the course calendar." step-index="1" step-placement="bottom" step-append-to-body="false">Calendar</button>
-                <button id="course_content" type="button" class="button tiny uppercase " ng-click="goToContent()" ng-disabled="!course.groups.length" step-text="Click this button to go to the course content and start learning." step-index="2" step-placement="bottom" step-append-to-body="false">Go to Course</button>
+                <button id="calendar_btn" calendar-modal type="button" class="button tiny uppercase right" ng-click="openCalendar()"page-name="{{current}}"step-text="Click this button to view the course calendar." step-index="1" step-placement="bottom" step-append-to-body="false">Calendar</button>
+                <button id="course_content" type="button" class="button tiny uppercase " ng-click="goToContent()" ng-disabled="!course.groups.length" page-name="{{current}}"step-text="Click this button to go to the course content and start learning." step-index="2" step-placement="bottom" step-append-to-body="false">Go to Course</button>
             </div>
-            <span step-text="Here you will find various information about the course." step-index="3" step-placement="top" step-append-to-body="false">
+            <span page-name="{{current}}"step-text="Here you will find various information about the course." step-index="3" step-placement="top" step-append-to-body="false">
                 <div id='course_date' class="with-margin-bottom">
                     <i class="fi-calendar size-24"></i><small class="with-tiny-margin-left" translate>courses.start_date</small>
                     <div>{{course.start_date | amDateFormat:'dddd, MMMM D YYYY'}}</div>
@@ -56,7 +56,7 @@
             <hr />
         </div>
         <div class="small-12 columns no-padding">
-            <h5 translate class="subheader" step-text="This is the list of all the teachers in this course." step-index="6" step-placement="top" step-append-to-body="false">courses.taught_by</h5>
+            <h5 translate class="subheader" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false">courses.taught_by</h5>
             <p style="font-weight: 200;">
                 <div class="small-12 medium-6 large-6 columns with-small-margin-bottom" ng-repeat="teacher in teachers">
                     <profile-image class="small-2 medium-2 large-2 no-padding columns" email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
@@ -73,12 +73,12 @@
             <p id='course_description' style="font-weight: 200;">
                 {{course.description}}
             </p>
-            <h5 translate class="subheader" step-text="This is what you need to know to take this course." step-index="8" step-placement="top" step-append-to-body="false">courses.prerequisites</h5>
+            <h5 translate class="subheader" page-name="{{current}}"step-text="This is what you need to know to take this course." step-index="5" step-placement="top" step-append-to-body="false">courses.prerequisites</h5>
             <p id='course_prerequisites' style="font-weight: 200;">
                 {{course.prerequisites}}
             </p>
             
-            <h5 translate class="subheader" step-text="Here you will find the latest announcements posted by your teachers for this course." step-index="9" step-placement="top" step-append-to-body="false">head.announcements</h5>
+            <h5 translate class="subheader" page-name="{{current}}"step-text="Here you will find the latest announcements posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false">head.announcements</h5>
             <p style="font-weight: 200;">
                 <student-announcement-item announcement="announcement" ng-repeat="announcement in announcements"></student-announcement-item>
             </p>

@@ -22,7 +22,7 @@
 										</div>						
 									</center>
 								</span>
-								<span ng-if="should_play" step-text="Here is where you watch your online videos and answer quizzes." step-index="1" step-placement="right" step-append-to-body="true">
+								<span ng-if="should_play" page-name="{{current}}" step-text="Here is where you watch your online videos and answer quizzes." step-index="1" step-placement="right" step-append-to-body="true">
 									<!-- <div ng-style="quiz_layer" class="widescreen slow-message" ng-show="!lecture.url || (!video_ready)">
 										<center>
 											<span ng-show="slow">
@@ -70,7 +70,7 @@
 			</div>
 		</div>
 	</div>
-	<div  id="student-accordion" class="student_timeline small-12 land-medium-4 portrait-medium-12 large-5 columns no-padding-right portrait-no-padding portrait-medium-height land-height medium-height-small large-height-big small-height-big no-padding-left" style="overflow-y: auto;" step-text="Use the Timeline to jump back in the lecture and review your quizzes, questions, and notes." step-index="3" step-placement="top" step-append-to-body="true">
+	<div  id="student-accordion" class="student_timeline small-12 land-medium-4 portrait-medium-12 large-5 columns no-padding-right portrait-no-padding portrait-medium-height land-height medium-height-small large-height-big small-height-big no-padding-left" style="overflow-y: auto;" page-name="{{current}}" step-text="Use the Timeline to jump back in the lecture and review your quizzes, questions, and notes." step-index="3" step-placement="top" step-append-to-body="true">
 		<student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause" />
 	</div>
 </span>

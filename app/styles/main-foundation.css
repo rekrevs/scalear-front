@@ -1376,6 +1376,7 @@ a.editable-click{
 }
 .joyride-tip-guide{
   width: auto;
+  min-width: 165px;
   margin: 10px;
 }
 .joyride-tip-guide.left{

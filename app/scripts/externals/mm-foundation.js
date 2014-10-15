@@ -2909,7 +2909,7 @@ angular.module( 'mm.foundation.tour', [ 'mm.foundation.position', 'mm.foundation
   };
 }])
 
-.directive( 'stepText', [ '$position', '$tooltip', '$tour', '$window', function ( $position, $tooltip, $tour, $window ) {
+.directive( 'stepText', [ '$position', '$tooltip', '$tour', '$window', 'Page', function ( $position, $tooltip, $tour, $window, Page) {
   function isElementInViewport( element ) {
     var rect = element[0].getBoundingClientRect();
 
@@ -2923,8 +2923,11 @@ angular.module( 'mm.foundation.tour', [ 'mm.foundation.position', 'mm.foundation
 
   function show( scope, element, attrs ) {
     var index = parseInt( attrs.stepIndex, 10);
+    if(attrs.pageName){
+      var page = attrs.pageName.replace('.', '_');
+    }
 
-    if ( $tour.isActive() && index ) {
+    if ( $tour.isActive() && index && page == Page.pageName()) {
       $tour.add( index, attrs );
 
       if ( index === $tour.current() ) {

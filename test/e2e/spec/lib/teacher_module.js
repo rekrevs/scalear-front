@@ -108,13 +108,6 @@ exports.add_module = function(ptor){
 		o_c.open_content(ptor);
 		element(by.id('new_module')).click()
 		expect(element.all(by.repeater('module in modules')).count()).toEqual(module_count+1)
-
-		// locator.by_id(ptor, 'new_module').then(function(mod){
-		// 	mod.click()
-		// 	// .then(function(){
-		//  // 		o_c.feedback(ptor, 'Module was successfully created');	 	
-		// 	// })
-		// })
 		o_c.hide_dropmenu(ptor);
 	})	
 }
@@ -145,6 +138,88 @@ exports.delete_empty_module = function(ptor, mo_no){
  //            })
  //        })
  //    })
+}
+
+//====================================================
+//            		add - edit / delete course links
+//====================================================
+
+exports.add_course_link = function(ptor){
+	element.all(by.repeater('link in links')).count().then(function(count){
+		var links_count = count
+		o_c.open_content(ptor);
+		element(by.id('add_course_link')).click()
+		expect(element.all(by.repeater('link in links')).count()).toEqual(links_count+1)
+		o_c.hide_dropmenu(ptor);
+	})	
+}
+
+exports.delete_course_link = function(ptor, link_no){
+	element.all(by.repeater('link in links')).count().then(function(count){
+		var links_count = count
+	
+		element(by.repeater('link in links').row(link_no-1))
+		.then(function(item){
+			item.element(by.className('delete')).click()
+			item.element(by.className('fi-check')).click()
+			// .then(function(){
+			// 	o_c.feedback(ptor, 'was successfully deleted');
+			// })
+		})
+		expect(element.all(by.repeater('link in links')).count()).toEqual(links_count-1)
+	})
+}
+
+exports.edit_course_link_info = function(link_no, name, link){
+	element(by.repeater('link in links').row(link_no-1))
+		.then(function(item){
+			item.element(by.tagName("details-text")).click().then(function(){
+				element(by.className('editable-input')).sendKeys(name)
+				element(by.className('check')).click()
+			})
+			item.element(by.tagName("details-link")).click().then(function(){
+				element(by.className('editable-input')).sendKeys(link)
+				element(by.className('check')).click()
+			})
+		})
+}
+
+exports.add_module_link = function(ptor){
+	element.all(by.repeater('doc in module.custom_links')).count().then(function(count){
+		var links_count = count
+		element(by.id('add_module_link')).click()
+		expect(element.all(by.repeater('doc in module.custom_links')).count()).toEqual(links_count+1)
+	})	
+}
+
+exports.delete_module_link = function(ptor, link_no){
+	element.all(by.repeater('doc in module.custom_links')).count().then(function(count){
+		var links_count = count
+	
+		element(by.repeater('doc in module.custom_links').row(link_no-1))
+		.then(function(item){
+			item.element(by.className('delete')).click()
+			item.element(by.className('fi-check')).click()
+			// .then(function(){
+			// 	o_c.feedback(ptor, 'was successfully deleted');
+			// })
+		})
+		expect(element.all(by.repeater('doc in module.custom_links')).count()).toEqual(links_count-1)
+	})
+}
+
+exports.edit_module_link_info = function(link_no, name, link){
+	element(by.repeater('doc in module.custom_links').row(link_no-1))
+		.then(function(item){
+			item.element(by.tagName("details-text")).click().then(function(){
+				element(by.className('editable-input')).sendKeys(name)
+				element(by.className('check')).click()
+			})
+			item.element(by.tagName("details-link")).click().then(function(){
+				element(by.className('editable-input')).sendKeys(link)
+				element(by.className('check')).click()
+			})
+		})
 }
 
 //====================================================
@@ -200,6 +275,14 @@ exports.open_module = function(ptor, mo_no){
 //====================================================
 exports.open_item = function(ptor, mo_no, item_no){
 	 element(by.repeater('module in modules').row(mo_no-1)).element(by.repeater('item in module.items').row(item_no-1)).click()
+}
+
+
+//====================================================
+//            click on an course_links to expand
+//====================================================
+exports.open_course_links = function(){
+  element(by.className('content-navigator-container')).element(by.className('links_accordion')).click()
 }
 
 //====================================================

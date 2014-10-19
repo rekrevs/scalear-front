@@ -32,15 +32,17 @@ angular.module('scalearAngularApp')
 		})
 		
 		$scope.watchedIntro = function(){
-		User.updateIntroWatched(
-			{id: $rootScope.current_user.id},
-			{intro_watched: true}, 
-			function(){
-				console.log('SUCCEEDED')
-				$rootScope.current_user.intro_watched = true;
-				$state.go('course_list');
-			}, function(){
-				console.log('failed')
-			});
-		}
+			var completion = $rootScope.current_user.completion_wizard
+			completion['intro_watched'] = true;
+			User.updateCompletionWizard(
+				{id: $rootScope.current_user.id},
+				{completion_wizard: completion}, 
+				function(){
+					console.log('SUCCEEDED')
+					$rootScope.current_user.completion_wizard.intro_watched = true;
+					$state.go('course_list');
+				}, function(){
+					console.log('failed')
+				});
+			}
 	}]);

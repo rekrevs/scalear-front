@@ -163,6 +163,10 @@ span.error, small.error{
   background-color: black !important;
 }
 
+.color-gray{
+  color: gray !important;
+}
+
 .color-white{
 	color: #ffffff !important;
 }
@@ -648,9 +652,22 @@ td.right-border{
   border-color: #ffffff transparent transparent transparent;
   border-top-style: solid;
   position: absolute;
-  top: 102px;
-  left: 77px;
+  top: 100%;
+  left: 92%;
   z-index: 98;
+}
+#quality_list{
+  min-width: 210px;
+  left: -115px !important;
+  top: 5px !important;
+}
+#speed_list{
+  min-width: 120px !important;
+  left: -25px !important;
+  top: -20px !important;
+}
+#speed_list::after{
+  left: 86%;
 }
 .time-label{
 	padding: 5px;
@@ -1356,6 +1373,32 @@ a.editable-click{
   font-weight: normal;
   width: 100%;
   font-size: 0.8125rem !important;
+}
+.joyride-tip-guide{
+  width: auto;
+  min-width: 165px;
+  margin: 10px;
+}
+.joyride-tip-guide.left{
+  margin-left: 0px;
+  margin-right: 0px;
+}
+.joyride-tip-guide.right{
+  margin-right: 0px;
+  margin-left: 0px;
+}
+.joyride-tip-guide.top{
+  margin-top: 0px;
+}
+.joyride-tip-guide.bottom{
+  margin-bottom: 0px;
+}
+.joyride-content-wrapper{
+  padding: 0.50rem !important;
+  width: 90%;
+}
+.joyride-content-wrapper > p{
+  margin-bottom: 0.25rem !important;
 }
 
 /*@media only screen and (min-width: 1300px){

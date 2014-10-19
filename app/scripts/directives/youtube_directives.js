@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
 			template: '<div class="videoborder panel widescreen " style="padding:0; border:none; margin:0" ng-transclude></div>' //style="border:4px solid" 
 		};
 	})
-	.directive('youtube',['$rootScope','$log','$timeout','$window',function($rootScope,$log,$timeout,$window){
+	.directive('youtube',['$rootScope','$log','$timeout','$window', '$cookieStore', function($rootScope,$log,$timeout,$window, $cookieStore){
 		return {
 			transclude: true,
 			restrict: 'E',
@@ -259,6 +259,22 @@ angular.module('scalearAngularApp')
 					player_controls.seek(0)
 					player_controls.play()
 				}
+
+				player_controls.getSpeeds = function(){
+          return player.media.getSpeeds();
+				}
+
+				player_controls.changeSpeed = function(value, youtube){
+          if(youtube){
+            if(player_controls.getSpeeds().indexOf(value) != -1){
+              player.media.setSpeed(value)
+            }
+          }
+          else{
+            player.video.playbackRate = value
+          }
+				}
+
 
 				var setupEvents=function(){
 					player.on("loadeddata", 
@@ -629,7 +645,7 @@ angular.module('scalearAngularApp')
 		}
 	}
 }])
-.directive('progressBar',['$rootScope','$log','$window',function($rootScope,$log, $window){
+.directive('progressBar',['$rootScope','$log','$window', '$cookieStore',function($rootScope,$log, $window, $cookieStore){
     return {
     	transclude:true,
         restrict: 'E',
@@ -648,6 +664,7 @@ angular.module('scalearAngularApp')
             // confused_areas: '=confusedAreas',
             // progressEvents: '=',
             timeline: '=',
+            videoready: '='
             // lecture: '='
            // autoplay:'@'
         },
@@ -656,6 +673,38 @@ angular.module('scalearAngularApp')
             scope.mute_unmute_class="mute";
             scope.quality=false;
       		scope.chosen_quality='hd720';
+      		scope.chosen_speed=1
+          scope.setSpeed = function(val){
+            console.log('setting youtube speed to '+val)
+            scope.player.controls.changeSpeed(val, true)
+            scope.chosen_speed = val;
+            $cookieStore.put('youtube_speed', scope.chosen_speed)
+          }
+          scope.setSpeedMp4 = function(val){
+            console.log('setting mp4 speed to '+val)
+            scope.player.controls.changeSpeed(val, false)
+            scope.chosen_speed = val;
+            $cookieStore.put('mp4_speed', scope.chosen_speed)
+          }
+          scope.$watch('videoready', function(){
+            if(scope.videoready == true){
+              if(scope.player.controls.youtube){
+                scope.speeds = scope.player.controls.getSpeeds();
+                scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
+                console.log('the chosen speed is '+scope.chosen_speed)
+                scope.setSpeed(scope.chosen_speed)
+              }
+              else{
+                scope.speeds = [{name:'80%', value: 0.8},
+                                {name:'100%', value: 1},
+                                {name:'120%', value: 1.2},
+                                {name:'150%', value: 1.5},
+                                {name:'180%', value: 1.8}]
+                scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
+                scope.setSpeedMp4(scope.chosen_speed)
+              }
+            }
+          })
 
             scope.playBtn = function(){
                 if(scope.player.controls.paused()){
@@ -686,7 +735,6 @@ angular.module('scalearAngularApp')
                         scope.mute_unmute_class="unmute";
                 }
             });
-
             scope.mute= function()
             {
                 scope.player.controls.mute();

@@ -67,7 +67,7 @@
                 <!-- Left Nav Section -->
                 <ul class="left" id="teacher_left_nav">
                     <li has-dropdown>
-                        <a id="progress" class="whitesmoke-hover dark-text sub-header-component size-14" ng-class="{'nav-item-active': ('course.progress' | includedByState) || ('course.module.progress' | includedByState) || ('course.module.progress_details' | includedByState)}" ng-click="goToProgress()" translate>head.progress</a>
+                        <a id="progress" class="whitesmoke-hover dark-text sub-header-component size-14" ng-class="{'nav-item-active': ('course.progress' | includedByState) || ('course.module.progress' | includedByState) || ('course.module.progress_details' | includedByState)}" ng-click="goToProgress()" page-name="head.information" step-text="You can filter the list of courses by selecting different filters." step-index="7" step-placement="bottom" step-append-to-body="flase" translate>head.progress</a>
                         <ul class="lighter-grey-no-hover" top-bar-dropdown>
                                 <li ng-class="{'disabled': !in_module_state}">
                                     <a id="review_module_progress" ng-class="{'disabled': !in_module_state}" class="lighter-grey dark-text sub-header-component has-description" ui-sref="course.module.progress" ui-sref-active="nav-inner-item-active">

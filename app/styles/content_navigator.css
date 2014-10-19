@@ -115,7 +115,11 @@ li{
   margin: 0px 0px 0px 0px !important;
   cursor: pointer !important;
 }
-.accordion-group .content > ul:hover, .currentitem, .selectedmodule{
+/*.accordion-group .content > ul:hover, .currentitem, .selectedmodule{
+  background-color: rgba(0,0,0,0.2) !important;
+}*/
+
+.currentitem, .selectedmodule{
   background-color: rgba(0,0,0,0.2) !important;
 }
 

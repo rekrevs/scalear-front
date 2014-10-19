@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
      startTour: function(){
       var unwatch = $rootScope.$watch('current_user', function(){
         if($rootScope.current_user){
-          if(!$rootScope.current_user.completion_wizard[page_name.replace('.', '_')]){
+          if(!$rootScope.current_user.completion_wizard[page_name.replace('.', '_')] && !$rootScope.current_user.completion_wizard['all']){
             console.log('starting tour for '+page_name.replace('.', '_'))
             $rootScope.$emit('start_tour');
           }

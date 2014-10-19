@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
         .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', '$rootScope', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout, $rootScope) {
                 $window.scrollTo(0, 0);
                 Page.setTitle('dashboard');
+                Page.startTour();
                 $rootScope.subheader_message = "What's New"
                 var change_lang = function() {
                     if ($scope.eventSources) {

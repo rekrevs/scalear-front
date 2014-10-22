@@ -5,13 +5,13 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-var screen_name = "Student 0"
-var fname = "Test"
-var lname = "Student"
-var mail = "student1@email.com"
-var univer = "uni"
-var biog = "text w text"
-var webs = ".com"
+var screen_name = "student test"
+var fname = "student"
+var lname = "test"
+var mail = "studenttest@sharklasers.com"
+var univer = "world university"
+var biog = "kalam keteeer yege 140 char"
+var webs = "www.website.com"
 var password = "password"
 
 var screen_name_new = "Student 0_1"

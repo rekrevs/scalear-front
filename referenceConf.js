@@ -68,27 +68,21 @@ exports.config = {
         // 'test/e2e/spec/statistics.spec.js',
         // 'test/e2e/spec/student-lectures.spec.js',
         // 'test/e2e/spec/teacher-managment.spec.js',
-        'test/e2e/spec/timeline.spec.js',
-
-
-    
-    //{{notreviewed}}
-        //lessa 
+        // 'test/e2e/spec/timeline.spec.js',
+        // 'test/e2e/spec/validations.spec.js',
         // 'test/e2e/spec/account-info-validation.spec.js',
         // 'test/e2e/spec/create-course-check-info.spec.js',
+        // 'test/e2e/spec/preview-as-student.spec.js',
+
+        
+    //{{notreviewed}}
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',
         // 'test/e2e/spec/enrolled-students.spec.js',
-        // 'test/e2e/spec/forget-password-resend-conf.spec.js',
-        // 'test/e2e/spec/inclass.spec.js',
         // 'test/e2e/spec/init-progress-data.spec.js',
-        // 'test/e2e/spec/preview-as-student.spec.js',
         // 'test/e2e/spec/progress-main.spec.js',
         // 'test/e2e/spec/progress-module.spec.js',
-
-
-
-
+        // 'test/e2e/spec/inclass.spec.js',
 
     ],
 

@@ -56,7 +56,6 @@ xdescribe("invideo quiz time and name validation", function(){
 	})
 })
 
-describe("lec name data validation", function(){
 	
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);

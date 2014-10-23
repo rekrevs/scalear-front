@@ -53,7 +53,7 @@
 				<h5 class="dark-text" translate>courses.enroll_instruction</h5>
 			</center>
 		</div>
-		<div class="row" step-text="These are the courses you're enrolled in. Click the name of a course for access." step-index="2" step-placement="top" step-append-to-body="false" page-name="{{current}}">
+		<div class="row" ng-if="courses.length > 0" step-text="These are the courses you're enrolled in. Click the name of a course for access." step-index="2" step-placement="top" step-append-to-body="false" page-name="{{current}}">
 			<course-item ng-repeat="course in courses | filter:{ended:filterChoice}" course='course' teachers='course.teacher_enrollments'></course-item>
 		</div>
 	</div>

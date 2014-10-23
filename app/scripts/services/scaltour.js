@@ -9,17 +9,19 @@ angular.module('scalearAngularApp')
       var unwatch = $rootScope.$watch('current_user', function(){
         if($rootScope.current_user){
           var completion = $rootScope.current_user.completion_wizard
-          completion[Page.pageName()] = true;
-          console.log(completion)
-          User.updateCompletionWizard(
-            {id: $rootScope.current_user.id},
-            {completion_wizard: completion}, 
-            function(){
-              $rootScope.current_user.completion_wizard[Page.pageName()] = true;
-              unwatch();
-            }, function(){
-              unwatch();
-          });
+          if(completion.intro_watched == true){
+            completion[Page.pageName()] = true;
+            console.log(completion)
+            User.updateCompletionWizard(
+              {id: $rootScope.current_user.id},
+              {completion_wizard: completion}, 
+              function(){
+                $rootScope.current_user.completion_wizard[Page.pageName()] = true;
+                unwatch();
+              }, function(){
+                unwatch();
+            });
+          }  
         }
       })
     })

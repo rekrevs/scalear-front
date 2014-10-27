@@ -73,16 +73,16 @@ exports.config = {
         // 'test/e2e/spec/account-info-validation.spec.js',
         // 'test/e2e/spec/create-course-check-info.spec.js',
         // 'test/e2e/spec/preview-as-student.spec.js',
+        // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
+        // 'test/e2e/spec/drag-quizzez-over-video.spec.js',
+        'test/e2e/spec/enrolled-students.spec.js',
 
         
     //{{notreviewed}}
-        // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
-        // 'test/e2e/spec/drag-quizzez-over-video.spec.js',
-        // 'test/e2e/spec/enrolled-students.spec.js',
+        // 'test/e2e/spec/inclass.spec.js',
         // 'test/e2e/spec/init-progress-data.spec.js',
         // 'test/e2e/spec/progress-main.spec.js',
         // 'test/e2e/spec/progress-module.spec.js',
-        // 'test/e2e/spec/inclass.spec.js',
 
     ],
 
@@ -143,6 +143,9 @@ exports.config = {
         student_mail: 'studenttest@sharklasers.com',
         student_mail_2: 'studenttest2@sharklasers.com',
         student_mail_3: 'student6@email.com',
+        student_mail_4: 'student7@email.com',
+        student_mail_5: 'student8@email.com',
+
 
         teacher_mail: 'teacher2@sharklasers.com',
         // // teacher_mail: 'teacher15@sharklasers.com',

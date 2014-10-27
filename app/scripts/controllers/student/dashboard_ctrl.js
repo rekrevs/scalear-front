@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
                     $scope.filtered_events = []
                     Dashboard.getDashboard({},
                     function(data) {
-                        console.log(data)
+
                         $scope.uiConfig = {
                             calendar: {
                                 editable: false,
@@ -43,21 +43,23 @@ angular.module('scalearAngularApp')
                             }
                         };
                         $scope.calendar = data;
+
                         // var allAnnouncements = [];
                         // allAnnouncements = allAnnouncements.concat.apply(allAnnouncements, JSON.parse(data.announcements));
                         //$scope.announcements = JSON.parse(data.announcements);
-                        //console.log($scope.announcements);
+
 
                         data.events.forEach(function(event) {
                             if (event.firstItem) {
                                 $scope.filtered_events.push(event)
+
                             }
                         })
                         $scope.calendar.events = $scope.filtered_events;
                         cal_ics_obj = $scope.filtered_events;
                         if($rootScope.current_user.roles[0].id == 2){
                             for (var element in $scope.calendar.events) {
-                            //console.log(new Date($scope.calendar.events[element].start))
+
                                 $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
                                 $scope.calendar.events[element].title += ' @' + $filter('date')($scope.calendar.events[element].start, 'HH:MM')//' @'+scalear_utils.hour12($scope.calendar.events[element].start.getHours())
                                 var fullTitle = $scope.calendar.events[element].courseName.short_name +" : "+ $scope.calendar.events[element].title ;
@@ -80,10 +82,10 @@ angular.module('scalearAngularApp')
                             }
                         }
                         else{
-                            console.log('this is the teacher side')
-                            console.log($scope.calendar.events)
+
+
                             for (var element in $scope.calendar.events) {
-                            //console.log(new Date($scope.calendar.events[element].start))
+
                                 $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
                                 $scope.calendar.events[element].title += ' @' + $filter('date')($scope.calendar.events[element].start, 'HH:MM')//' @'+scalear_utils.hour12($scope.calendar.events[element].start.getHours())
                                 var fullTitle = $scope.calendar.events[element].courseName.short_name +" : "+ $scope.calendar.events[element].title ;
@@ -93,7 +95,7 @@ angular.module('scalearAngularApp')
 
                         }
                         $scope.eventSources.push($scope.calendar);
-                        console.log($scope.eventSources)
+
                         $timeout(function() {
                             $(window).resize()
                         },100)
@@ -102,8 +104,8 @@ angular.module('scalearAngularApp')
 
                 var getFeed = function(){
                     NewsFeed.index({}, function(data){
-                    console.log('here is the data')
-                    console.log(data)
+
+
                     $scope.events = []
                     // $scope.latest_events = data.latest_events
                     $scope.latest_announcements = data.latest_announcements
@@ -116,10 +118,10 @@ angular.module('scalearAngularApp')
                       $scope.events.push(announcement);
                     })
                     // $scope.coming_up = data.coming_up
-                    console.log('got these')
-                    console.log($scope.events)
+
+
                   }, function(){
-                    console.log('Couldn\'t get the data');
+
                   })
                 }
 
@@ -127,7 +129,7 @@ angular.module('scalearAngularApp')
                 var ics_file = "BEGIN:VCALENDAR\n";
                 ics_file += "VERSION:2.0\n";
 
-                console.log(cal_ics_obj);
+
 
 
                 for (var element in cal_ics_obj) {

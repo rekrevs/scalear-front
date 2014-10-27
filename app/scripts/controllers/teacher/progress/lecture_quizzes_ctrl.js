@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
             };
 
             var getURL = function(id) {
-                return $scope.lecture_data.lectures[id][1]
+                return $scope.lecture_data.lectures[id][1]+"&controls=1&autohide=1&fs=1&theme=light"
             };
 
             $scope.formatLectureChartData = function(data) {

@@ -671,8 +671,6 @@
           if( aValue < 0 || aValue > 1 ) {
             throw "Volume value must be between 0.0 and 1.0";
           }
-          console.log('menshawi changing volume')
-
           setVolume( aValue );
         }
       },

@@ -55,7 +55,6 @@ angular.module('scalearAngularApp')
       value: 3,
       text: $translate('courses.good')
     }]
-
   	var init= function(){
   		$scope.timeline = new Timeline()
   		Module.getModuleProgress({
@@ -64,7 +63,7 @@ angular.module('scalearAngularApp')
 	  		},
 	  		function(data){
 	  			angular.extend($scope, data)
-	  	 		$scope.url = $scope.first_lecture
+	  	 		$scope.url = $scope.first_lecture+"&controls=1&autohide=1&fs=1&theme=light"
 	  	 		$scope.timeline['lecture'] = {}
 	  	 		for(var lec_id in $scope.lectures){
 	  	 			$scope.timeline['lecture'][lec_id] = new Timeline()
@@ -532,7 +531,7 @@ angular.module('scalearAngularApp')
     if($scope.url.indexOf(url) == -1){
       if($scope.progress_player.controls.isYoutube(url))
         $scope.progress_player.controls.setStartTime(time)
-      $scope.url= url
+      $scope.url= url+"&controls=1&autohide=1&fs=1&theme=light"
       if($scope.progress_player.controls.isMP4(url)){
         $timeout(function(){
           $scope.progress_player.controls.seek_and_pause(time)

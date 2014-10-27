@@ -25,7 +25,10 @@ angular.module('scalearAngularApp')
 	    			console.log("student statistics")
 	    			console.log(data)
 	    			$scope.statistics = data
-    			 	$scope.lecture_url =($scope.statistics.lecture_url == "none") ? "" : $scope.statistics.lecture_url+"&controls=1&autohide=1&fs=1&theme=light"
+    			 	$scope.lecture_url =($scope.statistics.lecture_url == "none") ? "" : $scope.statistics.lecture_url
+            if(isYoutube($scope.lecture_url)){
+              $scope.lecture_url += "&controls=1&autohide=1&fs=1&theme=light"
+            }
 	    			$scope.loading_statistics_chart=false
 	    			var win = angular.element($window)
 					$scope.win_width = (90.5*win.width())/100
@@ -44,6 +47,10 @@ angular.module('scalearAngularApp')
 	    		function(){}
     		)
 	    }
+      var isYoutube= function(url){
+          var video_url = url || scope.url || ""
+          return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
+      }
 
 	    $scope.getStatisticsType=function(ind){
 	    	return $scope.types[ind]
@@ -188,7 +195,12 @@ angular.module('scalearAngularApp')
         	}
         	if($scope.lecture_url.indexOf(lec) == -1){
         		$scope.statistics_player.controls.setStartTime(to_seek)
-	            $scope.lecture_url = lec+"&controls=1&autohide=1&fs=1&theme=light"
+	            if(isYoutube($scope.lecture_url)){
+                $scope.lecture_url = lec+"&controls=1&autohide=1&fs=1&theme=light"
+              }
+              else{
+                $scope.lecture_url = lec 
+              }
 	        }
 	        else
              	$scope.statistics_player.controls.seek_and_pause(to_seek)

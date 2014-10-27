@@ -61,10 +61,18 @@ angular.module('scalearAngularApp')
 	  			course_id: $stateParams.course_id,
           module_id: $stateParams.module_id
 	  		},
-	  		function(data){
+	  		function(data){{
 	  			angular.extend($scope, data)
-	  	 		$scope.url = $scope.first_lecture+"&controls=1&autohide=1&fs=1&theme=light"
+            if($scope.progress_player.controls.isYoutube($scope.first_lecture)){
+              $scope.url = $scope.first_lecture+"&controls=1&autohide=1&fs=1&theme=light"
+            }
+            if($scope.progress_player.controls.isMP4($scope.first_lecture)){
+              console.log($scope.progress_player)
+              $scope.url = $scope.first_lecture
+            }
+          }
 	  	 		$scope.timeline['lecture'] = {}
+
 	  	 		for(var lec_id in $scope.lectures){
 	  	 			$scope.timeline['lecture'][lec_id] = new Timeline()
 	  	 			for(var type in $scope.lectures[lec_id]){
@@ -529,10 +537,12 @@ angular.module('scalearAngularApp')
     console.log(url)
     console.log($scope.url)
     if($scope.url.indexOf(url) == -1){
-      if($scope.progress_player.controls.isYoutube(url))
+      if($scope.progress_player.controls.isYoutube(url)){
         $scope.progress_player.controls.setStartTime(time)
-      $scope.url= url+"&controls=1&autohide=1&fs=1&theme=light"
+        $scope.url= url+"&controls=1&autohide=1&fs=1&theme=light"
+      }
       if($scope.progress_player.controls.isMP4(url)){
+        $scope.url= url
         $timeout(function(){
           $scope.progress_player.controls.seek_and_pause(time)
         })

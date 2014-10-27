@@ -99,7 +99,7 @@ angular.module('scalearAngularApp')
                         player = Popcorn(video,{});
                         video.src = scope.url
                         player.video.className = "fit-inside"
-                        if(isiPad())
+                        if(isiPad() || scope.controls == "default")
                         	player.controls(true);
                         player.autoplay(scope.autoplay);
                     }

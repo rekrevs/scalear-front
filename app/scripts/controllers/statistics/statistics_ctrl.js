@@ -128,14 +128,15 @@ angular.module('scalearAngularApp')
 		$scope.selected_series= key
 		var chart_data=[]
 		$scope.chartConfig.loading = true
-        var d = new Date()
-		Kpi.readData({key:key, start:'2012-01-01', end: d.toDateString()},
+        var start_date = new Date('2012-01-01').toISOString().split("T")[0]
+        var end_date   = new Date().toISOString().split("T")[0]
+		Kpi.readData({key:key, start:start_date, end: end_date},
 			function(series){
 				series.data.forEach(function(elem, ind){
 					chart_data[ind]= elem.value
 				})
 				$scope.chartConfig.series[0].data= chart_data
-				$scope.chartConfig.title.text = $translate('statistics.'+key.toLowerCase())+" "+$translate('statistics.rate_from')+" "+series.start.split("T")[0]+" "+$translate('statistics.to')+" "+ series.stop.split("T")[0] 
+				$scope.chartConfig.title.text = $translate('statistics.'+key.toLowerCase())+" "+$translate('statistics.rate_from')+" "+start_date+" "+$translate('statistics.to')+" "+ end_date 
 				$scope.chartConfig.loading = false
                 $scope.stats_title = 'statistics.'+$scope.selected_series.toLowerCase()
 			},

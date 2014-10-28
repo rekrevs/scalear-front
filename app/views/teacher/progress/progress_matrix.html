@@ -16,17 +16,17 @@
             <span style="margin-right:10px;font-size:12px;display:inline" translate>{{'courses.'+stat}}</span>
         </div>
     </div>
-    <table fixed-header style="width:100%">
+    <table fixed-header style="width:100%; height: 65vh !important;">
         <thead>
             <tr>
                 <!-- <th style="min-width: 99px"></th> -->
-                <th></th>
+                <th style="min-width: 104px;"></th>
                 <th class="columnName" ng-repeat="name in columnNames track by $index" style="min-width: 100px">
                     <center><span bindonce bo-text="name"></span></center>
                 </th>
             </tr>
         </thead>
-        <tbody when-scrolled='remaining()'>
+        <tbody when-scrolled='remaining()' style="height: 80% !important;">
             <tr bindonce ng-repeat="student in students | orderBy:'last_name':false" >
                 <td class="studentcolumn" ><span tooltip="{{student.email}}" tooltip-append-to-body="true" tooltip-placement="right" bo-text="student.full_name"></span></td>
                 <td class="state" bindonce ng-repeat='module in status[student.id] track by $index'>

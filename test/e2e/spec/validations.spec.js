@@ -38,6 +38,7 @@ describe("invideo quiz time and name validation", function(){
 		o_c.scroll(ptor, 1000);
 		change_name(ptor,"sleep");
 		ptor.navigate().refresh();
+		ptor.sleep(5000)
 	})
 
 	it('should clear the course for deletion', function(){
@@ -56,6 +57,7 @@ describe("invideo quiz time and name validation", function(){
 	})
 	
 	it('should sign in as teacher', function(){
+		ptor.sleep(2000)
 		o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
@@ -157,7 +159,7 @@ function change_name(ptor, text){
 	})	
 	ptor.sleep(5000);
 		element(by.className('editable-input')).sendKeys('test');
-		element(by.className('editable-buttons')).findElement(protractor.By.className('fi-check')).then(function(confirm){
+		ptor.findElement(protractor.By.className('editable-buttons')).findElement(protractor.By.className('fi-check')).then(function(confirm){
 			confirm.click();
 		})
 		

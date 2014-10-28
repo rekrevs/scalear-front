@@ -69,13 +69,13 @@ exports.config = {
         // 'test/e2e/spec/student-lectures.spec.js',
         // 'test/e2e/spec/teacher-managment.spec.js',
         // 'test/e2e/spec/timeline.spec.js',
-        // 'test/e2e/spec/validations.spec.js',
+        'test/e2e/spec/validations.spec.js',
         // 'test/e2e/spec/account-info-validation.spec.js',
         // 'test/e2e/spec/create-course-check-info.spec.js',
         // 'test/e2e/spec/preview-as-student.spec.js',
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',
-        'test/e2e/spec/enrolled-students.spec.js',
+        // 'test/e2e/spec/enrolled-students.spec.js',
 
         
     //{{notreviewed}}
@@ -180,8 +180,8 @@ exports.config = {
         image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
         course_description: 'too many words',
         prerequisites: '1- course 1 2- course 2 3- course 3',
-        width: 1366,
-        height: 768,
+        width: 1441,
+        height: 900,
         
         // frontend: 'http://staging.scalable-learning.com/#/',
         //====================================================

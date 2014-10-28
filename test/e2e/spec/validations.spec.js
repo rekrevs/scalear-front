@@ -6,9 +6,9 @@ var youtube = require('./lib/youtube.js');
 
 var ptor = protractor.getInstance();
 var params = ptor.params
-ptor.driver.manage().window().maximize();
+ptor.driver.manage().window().setSize(params.width, params.height);
 
-xdescribe("invideo quiz time and name validation", function(){
+describe("invideo quiz time and name validation", function(){
 	
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -54,8 +54,6 @@ xdescribe("invideo quiz time and name validation", function(){
 	    teacher.delete_course(ptor, 1);
 	    o_c.logout(ptor);
 	})
-})
-
 	
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -159,7 +157,9 @@ function change_name(ptor, text){
 	})	
 	ptor.sleep(5000);
 		element(by.className('editable-input')).sendKeys('test');
-		element(by.className('fi-check')).click();
+		element(by.className('editable-buttons')).findElement(protractor.By.className('fi-check')).then(function(confirm){
+			confirm.click();
+		})
 		
 		element.all(by.name('quiz_name')).then(function(q_names){
 			expect(q_names[0].getText()).toEqual('test');

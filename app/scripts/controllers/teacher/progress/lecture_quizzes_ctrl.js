@@ -29,6 +29,9 @@ angular.module('scalearAngularApp')
                         $scope.lecture_data = data.charts_data
                         if ($scope.lecture_data.question_ids.length) {
                             $scope.url = getURL($scope.lecture_data.question_ids[0])
+                            if(isYoutube($scope.url)){
+                                $scope.url += "&controls=1&autohide=1&fs=1&theme=light"
+                            }
                             $scope.total = $scope.lecture_data.question_ids.length
                             $scope.sub_question_ids = $scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_limit)
                             $scope.student_count = $scope.lecture_data.students_count
@@ -75,9 +78,18 @@ angular.module('scalearAngularApp')
                 var url = getURL(id)
                 if ($scope.url.indexOf(url) == -1) {
                     $scope.lecture_player.controls.setStartTime(getTime(id))
-                    $scope.url = url
+                    if($scope.lecture_player.controls.isYoutube(url)){
+                        $scope.url = url+"&controls=1&autohide=1&fs=1&theme=light"
+                    }
+                    if($scope.lecture_player.controls.isMP4(url)){
+                        $scope.url = url   
+                    }
                 } else
                     $scope.lecture_player.controls.seek_and_pause(getTime(id))
+            }
+            var isYoutube= function(url){
+                var video_url = url || scope.url || ""
+                return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
             }
 
             var getQuizType = function(id) {

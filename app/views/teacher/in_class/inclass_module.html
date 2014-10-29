@@ -76,6 +76,14 @@
 				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['survey'][quiz.id].items|filter:data:'!!'">
 					<li ng-if="item.type=='Free Text Question'" class="li_inner color-coral">
 						<inner_title  type="'groups.free_text_question' | translate" itemtitle="item.data.title"/>
+						<ul style="clear:both;padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
+							<li ng-repeat="answer in item.data.answers" style="list-style-position:inside; padding:3px 10px">
+								<div style="width:70%">{{answer.answer}}</div>
+								<ul>
+									<li><div style="font-size: 14px;width:70%">{{answer.response}}</div></li>
+								</ul>
+							</li>
+						</ul>
 					</li>
 					<li  ng-if="item.type=='charts'" class="li-inner color-blue">
 						<inner_title type="'courses.survey' | translate" itemtitle="item.data.title" />

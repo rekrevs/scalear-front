@@ -1517,7 +1517,7 @@ a.active{
     -webkit-animation-name: blinker;
     -webkit-animation-duration: 1s;
     -webkit-animation-timing-function: linear;
-    -webkit-animation-iteration-count: 3;
+    -webkit-animation-iteration-count: 5;
     
     -moz-animation-name: blinker;
     -moz-animation-duration: 1s;

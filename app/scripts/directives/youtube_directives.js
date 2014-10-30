@@ -645,7 +645,7 @@ angular.module('scalearAngularApp')
 		}
 	}
 }])
-.directive('progressBar',['$rootScope','$log','$window', '$cookieStore',function($rootScope,$log, $window, $cookieStore){
+.directive('progressBar',['$rootScope','$log','$window', '$cookieStore','$timeout',function($rootScope,$log, $window, $cookieStore, $timeout){
     return {
     	transclude:true,
         restrict: 'E',
@@ -664,7 +664,8 @@ angular.module('scalearAngularApp')
             // confused_areas: '=confusedAreas',
             // progressEvents: '=',
             timeline: '=',
-            videoready: '='
+            videoready: '=',
+            blink : "="
             // lecture: '='
            // autoplay:'@'
         },
@@ -803,6 +804,13 @@ angular.module('scalearAngularApp')
 	         	shortcut.remove("b");
           		shortcut.remove("Space");
 	      	});
+
+	      	scope.$on("blink_blink", function(){
+	      		scope.blink = "blink_btn";
+	      		scope.timeout_f = $timeout(function(){
+	      			scope.blink = "";
+				},5000)
+	      	})
         }
     }
 }])

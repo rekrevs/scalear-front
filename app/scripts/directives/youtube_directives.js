@@ -809,7 +809,7 @@ angular.module('scalearAngularApp')
 	      		scope.blink = "blink_btn";
 	      		scope.timeout_f = $timeout(function(){
 	      			scope.blink = "";
-				},5000)
+				},2000)
 	      	})
         }
     }

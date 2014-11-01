@@ -539,9 +539,6 @@ angular.module('scalearAngularApp')
             }, 
             function(data){
                 displayResult(data);
-                if(data.msg=="Successfully Submitted"){
-                    console.log("emit ya zmeeele");
-                }
             });
         }
         else{

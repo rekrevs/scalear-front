@@ -19,10 +19,12 @@
                 <youtube class="inclass_sceen" id="inclass_vid" url="lecture_url" player="inclass_player" />
                 <youtube id="hidden_video" url="'https://www.youtube.com/watch?v=Oi1BcouEmio&vq=small&loop=1&autoplay=1'" style="width: 25px;height: 50px;top:90%; left:2%;position:absolute;z-index:-1"/>
             </div>
-            <div ng-show="!hide_questions && selected_timeline_item.type == 'charts'" ng-class="question_block">
+            <div class="small-12 columns" ng-show="!hide_questions && selected_timeline_item.type == 'charts'" ng-class="question_block">
+            <div class="small-8 columns">
                 <div ng-style="{fontSize:fontsize, lineHeight:fontsize}" style="padding-left:5px;padding-top: 0.5%;" >{{selected_timeline_item.data.type}}:</div>
                 <div ng-style="{fontSize:fontsize, lineHeight:fontsize}"  ng-class="question_class">{{selected_timeline_item.data.title}}</div>
-                <div ng-show="chart" ng-class="chart_class">
+                </div>
+                <div class="small-4 columns" ng-show="chart" ng-class="chart_class">
                     <div google-chart chart="chart" ></div>
                 </div>
             </div>

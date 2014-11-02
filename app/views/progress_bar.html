@@ -20,7 +20,7 @@
         </div>
         <div class="progress-events-container">
              <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/total_duration)*100)+'%'}" ng-click="scrollEvent(element.type, element.data.id)">
-                <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'courses.you_asked'|translate}}{{element.data.content}}"  tooltip-append-to-body="true"></span>
+                <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'answer.question'|translate}}: {{element.data.content}}"  tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==false" style="background-color: orange;" tooltip="{{'courses.confused' | translate}}" tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==true" style="background-color: red" tooltip="{{'courses.really_confused'|translate}}" tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type=='note'" style="background-color: teal" tooltip="{{'lectures.note'|translate}}{{': '+element.data.data}}" tooltip-append-to-body="true"></span>
@@ -58,14 +58,14 @@
                     <div class="small-12 columns no-padding">
                         <li class="dark-text">Change Speed</li>
                         <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed.value }">
-                            <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeedMp4(speed.value)"><small>{{speed.name}}</small></a>
+                            <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeedMp4(speed.value)"><small>x{{speed.name}}</small></a>
                         </li>
                     </div>
                 </ul>
             </button>            
         </div>
 
-        <div class="controlDiv show-inline left" ng-class="play_pause_class" ng-click="playBtn()"></div>
+        <div class="controlDiv show-inline left {{blink}}" ng-class="play_pause_class" ng-click="playBtn()"></div>
 
         <span class="hide-for-semi-small"><div id="volume" class="volumeDiv show-inline left" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)"></div>
         <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-right: 15px;margin-top: 14px;"/></span>

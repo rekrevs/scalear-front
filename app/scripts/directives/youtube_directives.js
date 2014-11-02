@@ -99,7 +99,7 @@ angular.module('scalearAngularApp')
                         player = Popcorn(video,{});
                         video.src = scope.url
                         player.video.className = "fit-inside"
-                        if(isiPad())
+                        if(isiPad() || scope.controls == "default")
                         	player.controls(true);
                         player.autoplay(scope.autoplay);
                     }
@@ -645,7 +645,7 @@ angular.module('scalearAngularApp')
 		}
 	}
 }])
-.directive('progressBar',['$rootScope','$log','$window', '$cookieStore',function($rootScope,$log, $window, $cookieStore){
+.directive('progressBar',['$rootScope','$log','$window', '$cookieStore','$timeout',function($rootScope,$log, $window, $cookieStore, $timeout){
     return {
     	transclude:true,
         restrict: 'E',
@@ -664,7 +664,8 @@ angular.module('scalearAngularApp')
             // confused_areas: '=confusedAreas',
             // progressEvents: '=',
             timeline: '=',
-            videoready: '='
+            videoready: '=',
+            blink : "="
             // lecture: '='
            // autoplay:'@'
         },
@@ -695,11 +696,11 @@ angular.module('scalearAngularApp')
                 scope.setSpeed(scope.chosen_speed)
               }
               else{
-                scope.speeds = [{name:'80%', value: 0.8},
-                                {name:'100%', value: 1},
-                                {name:'120%', value: 1.2},
-                                {name:'150%', value: 1.5},
-                                {name:'180%', value: 1.8}]
+                scope.speeds = [{name:'0.8', value: 0.8},
+                                {name:'1', value: 1},
+                                {name:'1.2', value: 1.2},
+                                {name:'1.5', value: 1.5},
+                                {name:'1.8', value: 1.8}]
                 scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
                 scope.setSpeedMp4(scope.chosen_speed)
               }
@@ -803,6 +804,13 @@ angular.module('scalearAngularApp')
 	         	shortcut.remove("b");
           		shortcut.remove("Space");
 	      	});
+
+	      	scope.$on("blink_blink", function(){
+	      		scope.blink = "blink_btn";
+	      		scope.timeout_f = $timeout(function(){
+	      			scope.blink = "";
+				},2000)
+	      	})
         }
     }
 }])

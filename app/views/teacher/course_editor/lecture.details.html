@@ -102,7 +102,7 @@
 				<span ng-hide="!lecture.appearance_time_module">
 					<span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
 					<div  style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
-					{{lecture.appearance_time | amDateFormat:'MMM Do YYYY, HH:MM'}}
+					{{lecture.appearance_time | amDateFormat:'MMM Do YYYY, HH:mm'}}
 					</div>
 				</span>
 				
@@ -138,7 +138,7 @@
 					<div ng-hide="!lecture.due_date_module">
 						<!-- <input type='text' ng-model='lecture.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
 						<div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
-							{{lecture.due_date | amDateFormat:'MMM Do YYYY, HH:MM'}}
+							{{lecture.due_date | amDateFormat:'MMM Do YYYY, HH:mm'}}
 						</div>
 					</div>
 					<span ng-hide="lecture.due_date_module">

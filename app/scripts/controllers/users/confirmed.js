@@ -32,13 +32,14 @@ angular.module('scalearAngularApp')
 		})
 		
 		$scope.watchedIntro = function(){
-			var completion = $rootScope.current_user.completion_wizard
+			var completion = {}
 			completion['intro_watched'] = true;
 			User.updateCompletionWizard(
 				{id: $rootScope.current_user.id},
 				{completion_wizard: completion}, 
 				function(){
 					console.log('SUCCEEDED')
+					$rootScope.current_user.completion_wizard = {}
 					$rootScope.current_user.completion_wizard.intro_watched = true;
 					$state.go('course_list');
 				}, function(){

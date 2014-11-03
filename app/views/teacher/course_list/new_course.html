@@ -107,7 +107,7 @@
         </p>
         <h5 translate class="subheader">courses.copy_from_existing</h5>
         <p>
-            <select ng-model="import_from" ng-options="element.id as element.name for element in importing"></select>
+            <select ng-model="import_from" ng-options="element.id as element.short_name+' | '+element.name for element in importing | orderBy:'name'"></select>
         </p>
         <button ng-disabled="submitting || image_not_found" type="submit" class="button success right"><span translate>courses.create_course</span></button>
     </div>

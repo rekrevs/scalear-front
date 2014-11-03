@@ -219,6 +219,7 @@ angular.module('scalearAngularApp')
       screenfull.exit()
       $scope.modalInstance.dismiss('cancel');
       cleanUp()
+      $scope.timer_interval = null;
     };
 
     var cleanUp=function(){
@@ -302,7 +303,9 @@ angular.module('scalearAngularApp')
       if($scope.should_mute == true){
         $scope.muteBtn()
       }
-      $scope.timer_interval = $interval($scope.timerCountdown,1000);
+      if(!$scope.timer_interval){
+        $scope.timer_interval = $interval($scope.timerCountdown,1000);
+      }
     }
 
     $scope.inclass_player.events.onMeta=function(){

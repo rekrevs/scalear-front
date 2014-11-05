@@ -20,7 +20,7 @@
         </div>
         <div class="progress-events-container">
              <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/total_duration)*100)+'%'}" ng-click="scrollEvent(element.type, element.data.id)">
-                <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'courses.you_asked'|translate}}{{element.data.content}}"  tooltip-append-to-body="true"></span>
+                <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'answer.question'|translate}}: {{element.data.content}}"  tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==false" style="background-color: orange;" tooltip="{{'courses.confused' | translate}}" tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==true" style="background-color: red" tooltip="{{'courses.really_confused'|translate}}" tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type=='note'" style="background-color: teal" tooltip="{{'lectures.note'|translate}}{{': '+element.data.data}}" tooltip-append-to-body="true"></span>
@@ -32,20 +32,40 @@
             <controls ng-if="('**.courseware.lecture' | includedByState)" class="show-inline">
             </controls>
             <button ng-show="player.controls.youtube" class="qualityDiv no-padding control-button dropdown show-inline drop-top right" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
-                <ul id="quality_list" class="f-dropdown quality-dropdown top-dropdown" style="min-width: 100px;">
-                    <li ng-class="{'blue': chosen_quality=='small' }">
-                        <a ng-click="setQuality('small')">240p</a>
-                    </li>
-                    <li ng-class="{'blue': chosen_quality=='large'}">
-                        <a ng-click="setQuality('large')">480p</a>
-                    </li>
-                    <li ng-class="{'blue': chosen_quality=='hd720' }">
-                        <a ng-click="setQuality('hd720')">720p (HD)</a>
-                    </li>
+                <ul id="quality_list" class="f-dropdown quality-dropdown top-dropdown" style="min-width: 210px;display: block;left: -115px;top: -48px;">
+                    <div class="small-6 columns no-padding">
+                        <li class="dark-text">Change Quality</li>
+                        <li ng-class="{'blue': chosen_quality=='small' }">
+                            <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality('small')"><small>240p</small></a>
+                        </li>
+                        <li ng-class="{'blue': chosen_quality=='large'}">
+                            <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality('large')"><small>480p</small></a>
+                        </li>
+                        <li ng-class="{'blue': chosen_quality=='hd720' }">
+                            <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality('hd720')"><small>720p (HD)</small></a>
+                        </li>
+                    </div>
+                    <div class="small-6 columns no-padding">
+                        <li class="dark-text">Change Speed</li>
+                        <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed }" ng-if="speed >= 1">
+                            <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeed(speed)"><small>x{{speed}}</small></a>
+                        </li>
+                    </div>
+                </ul>
+            </button>
+            <button ng-show="!player.controls.youtube" class="qualityDiv no-padding control-button dropdown show-inline drop-top right" dropdown-toggle="#speed_list" title="{{'youtube.click_video_quality'|translate}}">
+                <ul id="speed_list" class="f-dropdown speed-dropdown top-dropdown" style="display: block;">
+                    <div class="small-12 columns no-padding">
+                        <li class="dark-text">Change Speed</li>
+                        <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed.value }">
+                            <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeedMp4(speed.value)"><small>x{{speed.name}}</small></a>
+                        </li>
+                    </div>
                 </ul>
             </button>            
         </div>
-        <div class="controlDiv show-inline left" ng-class="play_pause_class" ng-click="playBtn()"></div>
+
+        <div class="controlDiv show-inline left {{blink}}" ng-class="play_pause_class" ng-click="playBtn()"></div>
 
         <span class="hide-for-semi-small"><div id="volume" class="volumeDiv show-inline left" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)"></div>
         <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-right: 15px;margin-top: 14px;"/></span>

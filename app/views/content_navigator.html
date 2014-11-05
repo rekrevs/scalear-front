@@ -39,22 +39,33 @@
 						</div>
 						
 					</accordion-heading>
-					<ul ng-click="showItem(item, 'courseware')" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id}" ng-repeat="item in module.items">
-						<div class="row">
-							<div class="small-2 columns">
-							<i class="no-padding fi-check color-green" ng-show="item.is_done"></i>
-							<i class="no-padding fi-check color-green" style="opacity: 0;" ng-hide="item.is_done"></i>
-							</div>
-							<div class="small-7 columns truncate-68" style="margin-left:-1.5rem;" bo-text="item.name">	
-							</div>
-							<div class="small-2 with-tiny-margin-right columns">
+					<ul>
+						<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')">
+							<div class="position-relative" style="height: 20px;">
+								<i class="no-padding fi-check color-green left with-tiny-margin-right" ng-class="{'no-opacity':!item.is_done}" ></i>
+
+								<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'groups.lecture' | translate"></i>
+								<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'courses.quiz' | translate"></i>
+								<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'courses.survey' | translate"></i>
+
+								<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name"></div>
 								<div class="color-dark-grey" bo-text="item.duration | formattime:'h:mm'"></div>
 							</div>
-						</div>
+						</li>
 					</ul>
-					<ul bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'">
-						<a class="with-margin-left dark-text" bo-href="link.url" target="_blank" bo-text="link.name"></a>
+					<ul>
+						<li bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'" class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;">
+							<div class="position-relative" style="height: 20px;">
+								<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
+								<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.link' | translate"></i>
+								<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name">
+									<a class="dark-text" bo-href="link.url" target="_blank" bo-text="link.name"></a>
+								</div>
+								
+							</div>
+						</li>
 					</ul>
+
 				</accordion-group>
 			</accordion>
 		</span>
@@ -63,7 +74,7 @@
 				<accordion-group class="accordion-group">
 					<accordion-heading class="accordion-heading" >
 					<div id="course_info" style="padding: 5px;border-bottom: 1px solid white;" ng-class="{currentmodule: ('**.edit_course_information.**' | includedByState)}" ng-click="goToCourseInfoTeacher()">
-						<div class="show-inline"  translate>head.course_information</div>
+						<div class="show-inline" translate>head.course_information</div>
 					</div>						
 					</accordion-heading>
 				</accordion-group>

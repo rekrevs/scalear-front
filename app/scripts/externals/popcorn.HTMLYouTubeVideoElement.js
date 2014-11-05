@@ -520,6 +520,14 @@
       player.pauseVideo();
     };
 
+    self.getSpeeds = function(){
+      console.log('getting speed')
+      return player.getAvailablePlaybackRates();
+    };
+    self.setSpeed = function(speed){
+      player.setPlaybackRate(speed)
+    }
+
     function onEnded() {
       if( impl.loop ) {
         changeCurrentTime( 0 );
@@ -567,7 +575,6 @@
     }
 
     Object.defineProperties( self, {
-
       src: {
         get: function() {
           return impl.src;
@@ -664,7 +671,6 @@
           if( aValue < 0 || aValue > 1 ) {
             throw "Volume value must be between 0.0 and 1.0";
           }
-
           setVolume( aValue );
         }
       },
@@ -725,6 +731,7 @@
 
   HTMLYouTubeVideoElement.prototype = new Popcorn._MediaElementProto();
   HTMLYouTubeVideoElement.prototype.constructor = HTMLYouTubeVideoElement;
+  // HTMLYouTubeVideoElement.prototype.getSpeed = getSpeeds();
 
   // Helper for identifying URLs we know how to play.
   HTMLYouTubeVideoElement.prototype._canPlaySrc = function( url ) {

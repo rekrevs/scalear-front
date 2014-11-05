@@ -9,6 +9,7 @@ angular.module('scalearAngularApp')
   $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
   $scope.role_names = {'3': 'courses.professor', '4': 'courses.ta'};
   Page.setTitle('head.information')
+  Page.startTour()
   $scope.timezones=scalear_utils.listTimezones()
 
     $scope.timezones.forEach(function(zone){

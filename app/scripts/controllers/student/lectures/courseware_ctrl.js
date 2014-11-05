@@ -4,6 +4,7 @@ angular.module('scalearAngularApp')
   .controller('coursewareCtrl', ['$scope','$stateParams', '$log','Module','Timeline','Page', function ($scope, $stateParams, $log, Module, Timeline, Page) {
 	
 	Page.setTitle('head.lectures');
+  Page.startTour();
 
     var init = function()
     {

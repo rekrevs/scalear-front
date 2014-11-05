@@ -49,7 +49,7 @@ describe("1", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
 		student.expect_quiz(ptor);
 		student.check_text_drag_no(ptor, 3);
 	})
@@ -82,7 +82,7 @@ describe("1", function(){
 	})
 })
 
-xdescribe("2", function(){
+describe("2", function(){
 
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
@@ -123,7 +123,7 @@ xdescribe("2", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
 		student.expect_quiz(ptor);
 		student.check_text_drag_no(ptor, 3);
 	})

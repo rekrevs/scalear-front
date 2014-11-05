@@ -46,6 +46,7 @@ describe("1", function(){
 describe("2", function(){
 
 	it('should sign in as teacher', function(){
+		// o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 

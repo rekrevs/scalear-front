@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
     $scope.resize = {}
     $scope.tabs=[true,false,false]
     $scope.editors={}
+    $scope.blink_class = "";
 
     // $scope.$watch('checkModel', function(){
     //     $scope.scrollIntoView('outline')
@@ -199,6 +200,7 @@ angular.module('scalearAngularApp')
         })
 
         $scope.video_ready=true
+        console.log($scope.supported_speeds)
         var time =$state.params.time        
         if(time)
             $scope.seek(parseInt(time));
@@ -584,6 +586,11 @@ angular.module('scalearAngularApp')
         },
         function(data){
             displayResult(data)
+            if(data.msg=="Successfully Submitted"){
+                console.log("emit ya zmeeele");
+                $scope.$emit("blink_blink");
+                $scope.$broadcast("blink_blink");
+            }
         },
         function(){}
         )

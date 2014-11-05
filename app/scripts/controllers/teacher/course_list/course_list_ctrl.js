@@ -6,6 +6,7 @@ angular.module('scalearAngularApp')
   	$log.debug("in course list")
     $window.scrollTo(0, 0);
     Page.setTitle('navigation.courses')
+    Page.startTour();
     $rootScope.subheader_message = "All Courses"
   	// 	Course.index({},
 			// function(data){

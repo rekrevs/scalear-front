@@ -5,6 +5,7 @@ angular.module('scalearAngularApp')
         function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout,$rootScope) {
 
             Page.setTitle('head.information');
+            Page.startTour();
 
             $window.scrollTo(0, 0);
             $scope.init = function(){
@@ -81,7 +82,9 @@ angular.module('scalearAngularApp')
                             }
                         };
                         $scope.calendar = data;
-                        $scope.announcements= JSON.parse(data.announcements);
+                        if(data.announcements){
+                            $scope.announcements= JSON.parse(data.announcements);                            
+                        }
                         data.events.forEach(function(event){
                             if(event.firstItem){
                                 $scope.filtered_events.push(event)

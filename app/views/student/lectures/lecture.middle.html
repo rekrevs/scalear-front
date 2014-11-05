@@ -22,7 +22,7 @@
 										</div>						
 									</center>
 								</span>
-								<span ng-if="should_play" step-text="Here is where you watch your online videos and answer quizzes." step-index="1" step-placement="right" step-append-to-body="true">
+								<span ng-if="should_play" page-name="{{current}}" step-text="Here is where you watch your online videos and answer quizzes." step-index="1" step-placement="right" step-append-to-body="true">
 									<!-- <div ng-style="quiz_layer" class="widescreen slow-message" ng-show="!lecture.url || (!video_ready)">
 										<center>
 											<span ng-show="slow">
@@ -49,7 +49,7 @@
 											</div>
 										</quiz>
 									</youtube>
-									<progress-bar ng-show="!slow && lecture.url" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
+									<progress-bar ng-show="!slow && lecture.url" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' blink="blink_class" total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" videoready="video_ready" style="position: relative;">
 										<div ng-show="end_buttons" style="position: absolute;top: -71px;left: 47%;width: 0px;z-index:1">
 											<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
 									    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
@@ -60,8 +60,8 @@
 											<button type="button" ng-show="quiz_mode" class="tiny success button with-small-padding no-margin" ng-click="checkAnswer()" translate>youtube.check_answer</button>
 										</div>
 										<notification message="notification_message" submessage="notification_submessage" /> 
-							    	</progress-bar>
-							    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;" /> 
+						    	</progress-bar>
+						    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;"></review_inclass> 
 							    </span>
 						    </video_container>
 					    </span>
@@ -70,7 +70,7 @@
 			</div>
 		</div>
 	</div>
-	<div  id="student-accordion" class="student_timeline small-12 land-medium-4 portrait-medium-12 large-5 columns no-padding-right portrait-no-padding portrait-medium-height land-height medium-height-small large-height-big small-height-big no-padding-left" style="overflow-y: auto;" step-text="Use the Timeline to jump back in the lecture and review your quizzes, questions, and notes." step-index="3" step-placement="left" step-append-to-body="true">
+	<div  id="student-accordion" class="student_timeline small-12 land-medium-4 portrait-medium-12 large-5 columns no-padding-right portrait-no-padding portrait-medium-height land-height medium-height-small large-height-big small-height-big no-padding-left" style="overflow-y: auto;" page-name="{{current}}" step-text="Use the Timeline to jump back in the lecture and review your quizzes, questions, and notes." step-index="3" step-placement="top" step-append-to-body="true">
 		<student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause" />
 	</div>
 </span>

@@ -47,7 +47,7 @@ exports.config = {
     //{{reviewed}}
         // 'test/e2e/spec/calendar-teacher-student.spec.js',
         // 'test/e2e/spec/copying.spec.js',
-        'test/e2e/spec/course-editor-basic.spec.js',
+        // 'test/e2e/spec/course-editor-basic.spec.js',
         // 'test/e2e/spec/create-announcements.spec.js',
         // 'test/e2e/spec/dashboard.spec.js',
         // 'test/e2e/spec/discussions.spec.js',
@@ -66,26 +66,23 @@ exports.config = {
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',
         // 'test/e2e/spec/sharing.spec.js',
         // 'test/e2e/spec/statistics.spec.js',
-
-
-    
-    //{{notreviewed}}
-        //lessa 
+        // 'test/e2e/spec/student-lectures.spec.js',
+        // 'test/e2e/spec/teacher-managment.spec.js',
+        // 'test/e2e/spec/timeline.spec.js',
+        'test/e2e/spec/validations.spec.js',
         // 'test/e2e/spec/account-info-validation.spec.js',
         // 'test/e2e/spec/create-course-check-info.spec.js',
+        // 'test/e2e/spec/preview-as-student.spec.js',
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',
         // 'test/e2e/spec/enrolled-students.spec.js',
-        // 'test/e2e/spec/forget-password-resend-conf.spec.js',
+
+        
+    //{{notreviewed}}
         // 'test/e2e/spec/inclass.spec.js',
         // 'test/e2e/spec/init-progress-data.spec.js',
-        // 'test/e2e/spec/preview-as-student.spec.js',
         // 'test/e2e/spec/progress-main.spec.js',
         // 'test/e2e/spec/progress-module.spec.js',
-
-
-
-
 
     ],
 
@@ -129,37 +126,40 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
         //local
-        frontend: 'http://0.0.0.0:9000/#',
-        admin_mail: 'admin@scalear.com',
-        teacher_mail: 'teacher1@sharklasers.com',
-        teacher2_mail: 'teacher3@sharklasers.com',
-        student_mail: 'studenttest@sharklasers.com',
-        student2_mail: 'studenttest2@sharklasers.com',
-        student3_mail: 'student_mail_2@sharklasers.com',
-        password: 'password',
-        admin_password:"password",
-
-        // mena
         // frontend: 'http://0.0.0.0:9000/#',
-        // // frontend: 'http://staging.scalable-learning.com/#',
-        // // teacher_mail: 'teacher3@sharklasers.com',
-        // student_mail: 'studenttest@sharklasers.com',
-        // student_mail_2: 'studenttest2@sharklasers.com',
-        // student_mail_3: 'student6@email.com',
-
-        // teacher_mail: 'teacher2@sharklasers.com',
-        // // // teacher_mail: 'teacher15@sharklasers.com',
-
-        // // student_mail: 'mena.happy@yahoo.com',
-
         // admin_mail: 'admin@scalear.com',
-        // // teacher_mail: 'teacher1@sharklasers.com',
-        // teacher2_mail: 'teacher15@sharklasers.com',
-        // // // student_mail: 'studenttest@sharklasers.com',
-        // // student2_mail: 'studenttest2@sharklasers.com',
-        // // student3_mail: 'student_mail_2@sharklasers.com',
+        // teacher_mail: 'teacher1@sharklasers.com',
+        // teacher2_mail: 'teacher3@sharklasers.com',
+        // student_mail: 'studenttest@sharklasers.com',
+        // student2_mail: 'studenttest2@sharklasers.com',
+        // student3_mail: 'student_mail_2@sharklasers.com',
         // password: 'password',
         // admin_password:"password",
+
+        // mena
+        frontend: 'http://0.0.0.0:9000/#',
+        // frontend: 'http://staging.scalable-learning.com/#',
+        // teacher_mail: 'teacher3@sharklasers.com',
+        student_mail: 'studenttest@sharklasers.com',
+        student_mail_2: 'studenttest2@sharklasers.com',
+        student_mail_3: 'student6@email.com',
+        student_mail_4: 'student7@email.com',
+        student_mail_5: 'student8@email.com',
+
+
+        teacher_mail: 'teacher2@sharklasers.com',
+        // // teacher_mail: 'teacher15@sharklasers.com',
+
+        // student_mail: 'mena.happy@yahoo.com',
+
+        admin_mail: 'admin@scalear.com',
+        // teacher_mail: 'teacher1@sharklasers.com',
+        teacher2_mail: 'teacher15@sharklasers.com',
+        // // student_mail: 'studenttest@sharklasers.com',
+        // student2_mail: 'studenttest2@sharklasers.com',
+        // student3_mail: 'student_mail_2@sharklasers.com',
+        password: 'password',
+        admin_password:"password",
 
         // //staging
         // frontend: 'http://staging.scalable-learning.com/#',
@@ -180,8 +180,8 @@ exports.config = {
         image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
         course_description: 'too many words',
         prerequisites: '1- course 1 2- course 2 3- course 3',
-        width: 1366,
-        height: 768,
+        width: 1441,
+        height: 900,
         
         // frontend: 'http://staging.scalable-learning.com/#/',
         //====================================================

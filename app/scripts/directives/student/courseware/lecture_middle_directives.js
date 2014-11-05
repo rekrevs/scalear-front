@@ -512,9 +512,7 @@ angular.module('scalearAngularApp')
      
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id]){
-          scope.selected_id= angular.element(elem[0].lastChild).attr('id')
-          console.log('yeah here is sidufhsidufhsidufhsidhfu sdifuhsdifuhsidhuf--->')
-          console.log(scope.selected_id)
+          scope.selected_id= angular.element(elem.children()[1]).attr('id')
           var ontop=angular.element('.ontop');
           scope.explanation_pop={
             title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[selected_id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",

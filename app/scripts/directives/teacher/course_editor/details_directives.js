@@ -137,15 +137,13 @@ angular.module('scalearAngularApp')
                     column: "@"
                 },
                 link: function(scope, element) {
-                    scope.$on('$destroy', function() {
-                      shortcut.remove("enter");
-                    });
-                    shortcut.add("enter", function(){
-                        element.find('.editable-input').submit()
-                      }, {"disable_in_input" : false});
                     scope.selectField = function() {
                         $timeout(function() {
                             element.find('.editable-input').select();
+                            shortcut.add("enter", function(){
+                                element.find('.editable-input').submit()
+                                shortcut.remove("enter");
+                            }, {"disable_in_input" : false});
                         });
                     },
                     scope.saveData = function(data) {
@@ -338,7 +336,7 @@ angular.module('scalearAngularApp')
     ]).directive('detailsTime', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-bstime="time" e-show-meridian="false" e-minute-step="15" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (time | date:"shortTime") || ("empty"|translate) }}<i ng-class="overclass"></i></a><timepicker ng-hide="true" />',
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-bstime="time" e-show-meridian="false" e-minute-step="15" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (time | date:"HH:mm") || ("empty"|translate) }}<i ng-class="overclass"></i></a><timepicker ng-hide="true" />',
                 restrict: 'E',
                 scope: {
                     time: "=",

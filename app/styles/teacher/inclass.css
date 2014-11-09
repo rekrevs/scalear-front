@@ -117,14 +117,14 @@
 	cursor:pointer;
 }
 
-.inclass_chart{
+/*.inclass_chart{
 	overflow:auto;
 	width:60%;
 	height:90%;
 	background-color:white;
 	float:right;
 	display:inline;
-}
+}*/
 
 .exit_btn{
 /*	display:inline;
@@ -180,8 +180,8 @@
 }
 
 .original_question{
-	max-width: 62%;
-	min-width: 62%;
+	max-width: 60%;
+	min-width: 60%;
 	/*height:20%;*/
 	float: left;
 	padding-top: 0.5%;
@@ -195,8 +195,8 @@
 }
 
 .small_question{
-	max-width: 62%;
-	min-width: 62%;
+	max-width: 60%;
+	min-width: 60%;
 	/*height:20%;*/
 	float: left;
 	padding-top: 1%;
@@ -210,8 +210,8 @@
 }
 
 .smallest_question{
-	max-width: 62%;
-	min-width: 62%;
+	max-width: 60%;
+	min-width: 60%;
 	/*height:20%;*/
 	float: left;
 	padding-top: 1%;
@@ -248,8 +248,8 @@
 }
 
 .original_chart{
-	max-width: 32%;
-	min-width: 32%;
+	max-width: 40%;
+	min-width: 40%;
 	float:right;
 	/*padding-top: 20px;*/
 	opacity:1;
@@ -260,8 +260,8 @@
 
 .zoom_chart{
 	background:beige;
-	max-width: 32%;
-	min-width: 32%;
+	max-width: 40%;
+	min-width: 40%;
 	float:left;
 	padding-top: 5px;
 	padding-bottom: 1%;

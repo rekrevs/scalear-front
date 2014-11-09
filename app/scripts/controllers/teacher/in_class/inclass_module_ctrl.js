@@ -539,7 +539,7 @@ angular.module('scalearAngularApp')
     formated_data.rows = []
     for (var ind in data) {
         var text, correct, incorrect, tooltip_text
-        tooltip_text = "<div style='padding:8px 0 0 5px'><b>"+data[ind][2]+"</b><br>"
+        tooltip_text = "<div style='padding:8px'><b>"+data[ind][2]+"</b><br>"
         if (data[ind][1] == "gray") {
             correct = 0
             incorrect = Math.floor((data[ind][0]/$scope.students_count)*100)
@@ -552,6 +552,7 @@ angular.module('scalearAngularApp')
               tooltip_text +="Correct: "
         }
         text = data[ind][2]
+        console.log(text)
         tooltip_text +=data[ind][0]+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
         var row = {
             "c": [
@@ -803,7 +804,7 @@ angular.module('scalearAngularApp')
     //$scope.student_question_class = $scope.question_class.split('_')[0]+'_student_'+$scope.question_class.split('_')[1]
     
     if($scope.chart)
-      $scope.chart.options.height=question_block.height() - 10
+      $scope.chart.options.height=question_block.height() - 5
   }
 
   $scope.lightUpButtons=function(){

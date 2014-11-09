@@ -6,7 +6,7 @@ angular.module('scalearAngularApp')
   $http.defaults.useXDomain = true;
   return $resource(scalear_api.host+'/:lang/dashboard/:action', {lang:$translate.uses()},
     {
-        'getDashboard':{ method: 'GET', params: {action: 'getDashboard'}, headers:headers}
+        'getDashboard':{ method: 'GET', params: {action: 'get_dashboard'}, headers:headers}
     });
 
 }]);

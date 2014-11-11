@@ -80,6 +80,7 @@ var translation_sv=function(){
       copy: "Kopia",
       due: "Förfaller",
       my: "Mitt",
+      and: "och",
       redirect_courselist: "Omdirigerar till din kurslista under ",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",

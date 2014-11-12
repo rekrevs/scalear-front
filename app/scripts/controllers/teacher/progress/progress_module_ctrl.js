@@ -4,11 +4,12 @@ angular.module('scalearAngularApp')
   .controller('progressModuleCtrl', ['$timeout', '$scope', '$stateParams','Course', 'Module', '$translate','$log', function ($timeout, $scope, $stateParams, Course, Module, $translate, $log) {
 
     $scope.disableInfinitScrolling = function(){
-        $log.debug("infinit scrolling disable")
+        console.log("infinit scrolling disable")
         $scope.lecture_scroll_disable = true
         $scope.quiz_scroll_disable = true
         $scope.chart_scroll_disable= true
         $scope.survey_scroll_disable = true
+        console.log($scope.chart_scroll_disable)
     }
 
     $scope.tabState = function(state){

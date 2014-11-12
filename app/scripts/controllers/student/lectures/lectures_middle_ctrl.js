@@ -441,8 +441,10 @@ angular.module('scalearAngularApp')
         $scope.video_class = 'flex-video'
         $scope.container_class=''
         $scope.video_layer ={}
-        $scope.quiz_layer.width=""
-        $scope.quiz_layer.height=""
+        $scope.quiz_layer.width="100%"
+        $scope.quiz_layer.height="100%"
+        $scope.quiz_layer.position="absolute"
+        $scope.quiz_layer.marginTop=""
         $scope.fullscreen= false
         $timeout(function(){$scope.$emit("updatePosition")})
         if($scope.quiz_mode == true){

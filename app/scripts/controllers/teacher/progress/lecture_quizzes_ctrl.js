@@ -20,6 +20,7 @@ angular.module('scalearAngularApp')
                 $scope.chart_limit = limit
                 $scope.chart_offset = offset
                 $scope.disableInfinitScrolling()
+                $scope.disableChartsScrolling()
                 $scope.loading_lectures_chart = true
                 Module.getLectureCharts({
                         course_id: $stateParams.course_id,
@@ -48,24 +49,41 @@ angular.module('scalearAngularApp')
             $scope.getRemainingLectureCharts = function() {
                 $log.debug("get remaining")
                 $scope.chart_offset += $scope.chart_limit
+                console.log("chart scrolling")
+                console.log($scope.chart_scroll_disable)
+                console.log("offset= "+ $scope.chart_offset)
+                console.log("total= "+ $scope.total)
                 if ($scope.chart_offset <= parseInt($scope.total)) {
                     $scope.loading_lectures_chart = true
                     $scope.disableInfinitScrolling()
+                    $scope.disableChartsScrolling()
                     $timeout(function() {
                         $scope.sub_question_ids = $scope.sub_question_ids.concat($scope.lecture_data.question_ids.slice($scope.chart_offset, $scope.chart_offset + $scope.chart_limit))
                         $scope.loading_lectures_chart = false
                         $scope.enableChartsScrolling()
                     }, 500)
-                } else
+                } else{
                     $scope.disableInfinitScrolling()
+                    $scope.disableChartsScrolling()
+                }
             }
 
             $scope.enableChartsScrolling = function() {
+                console.log("infinit scrolling enabled")
                 if ($scope.tabState() == 1) {
                     $log.debug("enabling chart scrolling")
                     $scope.lecture_scroll_disable = true
                     $scope.quiz_scroll_disable = true
                     $scope.chart_scroll_disable = false
+                    $scope.survey_scroll_disable = true
+                }
+            }
+
+            $scope.disableChartsScrolling = function() {
+                if ($scope.tabState() == 1) {
+                    $scope.lecture_scroll_disable = true
+                    $scope.quiz_scroll_disable = true
+                    $scope.chart_scroll_disable = true
                     $scope.survey_scroll_disable = true
                 }
             }

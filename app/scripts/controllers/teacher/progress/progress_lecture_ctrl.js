@@ -371,6 +371,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateHideResponse = function(quiz_id, item, answer){
+      console.log(quiz_id)
+      console.log(item)
+      console.log(answer)
       Quiz.hideResponses(
         {
           course_id:$stateParams.course_id,
@@ -384,7 +387,7 @@ angular.module('scalearAngularApp')
         },
         function(){
           console.log(answer.hide)
-          if(answer.hide){
+          if(answer.hide && !item.data.show){
             item.data.show = true
             $scope.updateHideSurveyQuestion(quiz_id, item.data.id, item.data.show)
           }
@@ -817,7 +820,7 @@ angular.module('scalearAngularApp')
             else{
               var q_ind = $scope.inner_highlight_index
               $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
-              $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
+              $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item,$scope.selected_item.data.answers[q_ind])
             }
           }
           else{

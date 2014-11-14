@@ -12,9 +12,12 @@ angular.module('scalearAngularApp')
     $scope.$on('add_item', function(event, type){
         if(type=='video')
              $scope.addLecture($stateParams.module_id)
+        else if(type == 'link')
+            $scope.addCustomLink()            
         else
             $scope.addQuiz($stateParams.module_id, type)
     })
+    
     $scope.$on('share_copy', function(event, data){
         console.log(data)
         console.log('caught sharing modal event')
@@ -62,9 +65,9 @@ angular.module('scalearAngularApp')
             $scope.removeQuiz(item)
      })
 
-     $scope.$on('add_link',function(){
-        $scope.addCustomLink()
-     })
+     // $scope.$on('add_link',function(){
+     //    $scope.addCustomLink()
+     // })
 
     $scope.$on('remove_link',function(event, link){
         $scope.removeCustomLink(link)

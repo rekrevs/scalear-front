@@ -4,24 +4,30 @@
 <small class="subheader" translate>content.interactive_desc</small>
 <div class="modal-body">
     <center class="with-small-margin-top">
-        <div class="small-block-grid-3 medium-block-grid-3 large-block-grid-3 small-12 medium-5 large-4">
+        <div class="small-block-grid-4 medium-block-grid-4 large-block-grid-4 small-12 medium-6 large-5">
             <li>
                 <a id="video_item" type="button" class="th blue" ng-class="{thumbactive: content_type == 'Video'}" ng-model="content_type" ng-click="addItem('video')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/video_symbol.png">
                 </a>
-                <b><h3 translate>content.types.video</h3></b>
+                <b><h4 translate>content.types.video</h4></b>
             </li>
             <li>
                 <a id="quiz_item" type="button" class="th green" ng-class="{thumbactive: content_type == 'Quiz'}" ng-model="content_type" ng-click="addItem('quiz')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/quiz_symbol.png">
                 </a>
-                <b><h3 translate>content.types.quiz</h3></b>
+                <b><h4 translate>content.types.quiz</h4></b>
             </li>
             <li>
                 <a id="survey_item" type="button" class="th red" ng-class="{thumbactive: content_type == 'Survey'}" ng-model="content_type" ng-click="addItem('survey')" >
                     <img style="margin: 10%; width: 80%; height: 80%;" src="/images/survey_symbol.png">
                 </a>
-                <b><h3 translate>content.types.survey</h3></b>
+                <b><h4 translate>content.types.survey</h4></b>
+            </li>
+            <li>
+                <a id="link_item" type="button" class="th red" ng-class="{thumbactive: content_type == 'Link'}" ng-model="content_type" ng-click="addItem('link')" >
+                    <img style="margin: 10%; width: 80%; height: 80%;" src="/images/survey_symbol.png">
+                </a>
+                <b><h4 translate>content.types.link</h4></b>
             </li>
         </div>
     </center>

@@ -1003,7 +1003,8 @@ var translation_en=function(){
       types:{
         video: "Video",
         quiz: "Quiz",
-        survey: "Survey"
+        survey: "Survey",
+        link: "Link"
       },
       questions:{
         choose_question_type: "Choose Question Type",

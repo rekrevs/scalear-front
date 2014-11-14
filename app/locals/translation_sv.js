@@ -1012,7 +1012,8 @@ var translation_sv=function(){
           types:{
             video: "Video",
             quiz: "Frågesport",
-            survey: "Undersökning"
+            survey: "Undersökning",
+            link: "Länk"
           },
           questions:{
             choose_question_type: "Välj Fråge Typ",

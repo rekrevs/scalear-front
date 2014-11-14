@@ -450,12 +450,8 @@ angular.module('scalearAngularApp')
           var ui_h = ((scope.data.height)*ontop_h)
 
           var text_ratio = (ui_h*ui_w)/(ui.draggable.text().length)
-          if(Math.sqrt(text_ratio)>25){
-            text_ratio = 25;
-          }
-          else if(Math.sqrt(text_ratio)<25){
-            text_ratio = Math.sqrt(text_ratio);
-          }
+          text_ratio = Math.min(Math.sqrt(text_ratio), 15)
+          
           ui.draggable.css('font-size', text_ratio +'px')
 
           ui.draggable.css('left', (scope.data.xcoor*100)+'%')          

@@ -14,9 +14,7 @@
 	    <top-bar-section ng-switch="user.roles[0].id">
 	      	<ul ng-if="user.roles[0].id" class="right" step-text="Use the Dashboard for an overview of what's due next, choose and join new courses in the Courses menu, and get help and tips from the Help menu." step-index="5" step-placement="bottom" step-append-to-body="true">
 				<!-- <li class="divider border-grey medium-opacity"></li> -->
-				<span ng-if="user.roles[0].id==5">
-					<li><a class="white-hover color-green-hover size-18-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" ng-show="user.intro_watched && user.info_complete" translate>courses.statistics</a></li>
-				</span>
+				<li ng-if="user.roles[0].id==5"><a class="white-hover color-green-hover size-18-light" id="statistics" ui-sref-active="nav-item-active" ui-sref="statistics" ng-show="user.intro_watched && user.info_complete" translate>courses.statistics</a></li>
 				<li has-dropdown>
 					<a class="white-hover color-green-hover size-18-light" ui-sref-active="nav-item-active" id="dashboard" ui-sref="dashboard" ng-show="user.intro_watched && user.info_complete" translate>dashboard</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
@@ -51,15 +49,11 @@
 						</li>
 						<li class="divider border-grey medium-opacity"></li>
 						<!-- <li><label translate>other</label></li> -->
-						<span ng-if="user.roles[0].id==1 || user.roles[0].id==5">
-							<li><a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-inner-item-active" ui-sref="new_course" translate>courses.new_course</a></li>
-							<li ng-show="areShared()">
-								<a id="view_shared" class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
-							</li>
-						</span>
-						<span ng-if="user.roles[0].id==2">
-							<li><a class="lighter-grey dark-text" id="join_course" enrollment-modal ng-click="open()" translate>courses.join_course</a></li>
-						</span>
+						<li ng-if="user.roles[0].id==1 || user.roles[0].id==5"><a class="lighter-grey dark-text" id="new_course_sub" ui-sref-active="nav-inner-item-active" ui-sref="new_course" translate>courses.new_course</a></li>
+						<li ng-if="user.roles[0].id==1 || user.roles[0].id==5" ng-show="areShared()">
+							<a id="view_shared" class="lighter-grey dark-text" ui-sref="show_shared" ui-sref-active="nav-inner-item-active" translate>sharing.view</a>
+						</li>
+						<li ng-if="user.roles[0].id==2"><a class="lighter-grey dark-text" id="join_course" enrollment-modal ng-click="open()" translate>courses.join_course</a></li>
 
 						<li>
 							<a id="course_list" class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="course_list">
@@ -95,11 +89,9 @@
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<li><a class="lighter-grey dark-text" ng-click="startTour()"><span translate>help.tips</span></a></li>
 						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="getting_started" translate>help.getting_started</a></li>
-						<span ng-if="user.roles[0].id==1 || user.roles[0].id==5">						
-							<li class="divider border-grey medium-opacity"></li>
-							<li><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" target="_blank" translate>help.teacher_forum</a></li>
-							<li><a class="lighter-grey dark-text" href="external_documents/scalable-learning-manual.pdf" target="_blank"  translate>help.instruction_manual</a></li>
-						</span>
+						<li ng-if="user.roles[0].id==1 || user.roles[0].id==5" class="divider border-grey medium-opacity"></li>
+						<li ng-if="user.roles[0].id==1 || user.roles[0].id==5"><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" target="_blank" translate>help.teacher_forum</a></li>
+						<li ng-if="user.roles[0].id==1 || user.roles[0].id==5"><a class="lighter-grey dark-text" href="external_documents/scalable-learning-manual.pdf" target="_blank"  translate>help.instruction_manual</a></li>
 						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="privacy" translate>footer.privacy</a></li>
 						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>

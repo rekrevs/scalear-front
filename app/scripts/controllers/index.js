@@ -9,17 +9,6 @@ angular.module('scalearAngularApp')
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
             $scope.navigator = ContentNavigator
             
-            // $scope.$on('navigator_change',function(ev, status){
-            //     // $scope.open_navigator = status
-            //     ContentNavigator.setStatus(status)
-            //     $scope.$broadcast('content_navigator_change')
-            // })
-
-            // $scope.$on('timeline_change',function(ev, status){
-            //     // $scope.open_timeline = status
-            //     $scope.$broadcast('timeline_navigator_change',)
-            // })
-
             $scope.$on("get_all_courses",function(){
                 getAllCourses()
             })

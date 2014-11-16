@@ -178,7 +178,6 @@ angular.module('scalearAngularApp')
 				// })
 
 				scope.initFilters=function(){
-					scope.lecture_filter={quiz:true,confused:true, discussion:true, note:true};
 					scope.course_filter = "!!"
 				}
 
@@ -239,16 +238,7 @@ angular.module('scalearAngularApp')
 	                    }
 	                  )
 	                }
-	            }
-
-	            scope.exportNotes=function(){
-	            	$rootScope.$broadcast("export_notes")
-	            }
-
-	            scope.updateLectureFilter=function(type){
-					scope.lecture_filter[type] = !scope.lecture_filter[type]
-					$rootScope.$broadcast('lecture_filter_update', scope.lecture_filter)
-				}
+	            }	            
 
 				scope.updateCourseFilter=function(value){
 					scope.course_filter= value

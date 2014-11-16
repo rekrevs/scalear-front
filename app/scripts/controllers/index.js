@@ -1,17 +1,25 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour',
-        function($scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate,$cookieStore,Course, ScalTour) {
+    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour', 'ContentNavigator',
+        function($scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate,$cookieStore,Course, ScalTour, ContentNavigator) {
 
 
             $scope.Page = Page;
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
-            $scope.open_navigator = false
-            $scope.$on('navigator_change',function(ev, status){
-                $scope.open_navigator = status
-                $scope.$broadcast('content_navigator_change')
-            })
+            $scope.navigator = ContentNavigator
+            
+            // $scope.$on('navigator_change',function(ev, status){
+            //     // $scope.open_navigator = status
+            //     ContentNavigator.setStatus(status)
+            //     $scope.$broadcast('content_navigator_change')
+            // })
+
+            // $scope.$on('timeline_change',function(ev, status){
+            //     // $scope.open_timeline = status
+            //     $scope.$broadcast('timeline_navigator_change',)
+            // })
+
             $scope.$on("get_all_courses",function(){
                 getAllCourses()
             })

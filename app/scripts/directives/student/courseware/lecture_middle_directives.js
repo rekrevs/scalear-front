@@ -588,7 +588,8 @@ angular.module('scalearAngularApp')
       timeline:'=',
       items:'=',
       lecture:'=current',
-      seek:'&'
+      seek:'&',
+      open_timeline:'=open'
     },
     templateUrl:'/views/student/lectures/student_timeline.html',
     link: function(scope, element, attrs) {

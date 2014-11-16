@@ -2,12 +2,12 @@
 
 angular.module('scalearAngularApp')
 
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$translate','$log','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink','courseResolver','UserSession', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $translate, $log, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink, courseResolver, UserSession) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$translate','$log','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink','courseResolver','UserSession','ContentNavigator', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $translate, $log, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink, courseResolver, UserSession, ContentNavigator) {
 
  	// $window.scrollTo(0, 0);
  	Page.setTitle('head.content')
 
-    $rootScope.$emit("open_navigator")
+    ContentNavigator.open()
 
     $scope.$on('add_item', function(event, type){
         if(type=='video')
@@ -210,7 +210,7 @@ angular.module('scalearAngularApp')
 	    		$scope.module_obj[module.group.id] = $scope.course.modules[$scope.course.modules.length-1]
     			$scope.module_loading=false
                 $state.go('course.module.course_editor.overview', {module_id: module.group.id})
-                $scope.$emit('open_navigator')
+                ContentNavigator.open()
 	    	}, 
 	    	function(){}
 		);
@@ -467,7 +467,7 @@ angular.module('scalearAngularApp')
                 doc.link.url = "http://"
                 // $scope.module.custom_links.push(doc.link)
                 $scope.course.custom_links.push(doc.link)
-                $scope.$emit('open_navigator')
+                ContentNavigator.open()
             }, 
             function(){}
         );
@@ -503,61 +503,5 @@ angular.module('scalearAngularApp')
             }
         );
     }
-
-      
-
-    /*************************************************************************************/
-    
-	// $rootScope.$on('accordianUpdate', function(event, message) {
-	// 	$scope.open_id=message;
-	// 	$scope.open[message]= true;
-	// });
-
- 	// $scope.moduleSortableOptions={
- 	// 	axis: 'y',
-		// dropOnEmpty: false,
-		// handle: '.handle',
-		// cursor: 'crosshair',
-		// items: '.module',
-		// opacity: 0.4,
-		// scroll: true,
-		// update: function(e, ui) {
-		// 	Module.saveSort({course_id:$stateParams.course_id},
-		// 		{group: $scope.modules},
-		// 		function(response){
-		// 			$log.debug(response)
-		// 		},
-		// 		function(){
-		// 			$log.debug('Error')
-		// 		}
-		// 	);
-		// },
- 	// }
-
- 	// $scope.itemSortableOptions={
-		// axis: 'y',
-		// dropOnEmpty: false,
-		// handle: '.handle',
-		// cursor: 'crosshair',
-		// items: '.item',
-		// opacity: 0.4,
-		// scroll: true,
-		// update: function(e, ui) {
-		// 	var group_id=ui.item.scope().item.group_id
-		// 	var group_position=ui.item.scope().$parent.module.position -1
-		// 	Lecture.saveSort(
-		// 		{course_id:$stateParams.course_id, 
-		// 		 group: ui.item.scope().item.group_id},
-		// 		{items: $scope.modules[group_position].items},
-		// 		function(response){
-		// 			$log.debug(response)
-		// 		},
-		// 		function(){
-		// 			$log.debug('error')
-		// 		}
-		// 	);
-		// },
- 	// }
-
 
 }]);

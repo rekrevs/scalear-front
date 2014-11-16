@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','scalear_utils', '$tour',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, scalear_utils, $tour) {
+    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','scalear_utils', '$tour', 'ContentNavigator', 'TimelineNavigator' ,function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, scalear_utils, $tour, ContentNavigator, TimelineNavigator) {
 
     console.log("lect mid ctlr")
     $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
@@ -15,6 +15,9 @@ angular.module('scalearAngularApp')
     $scope.editors={}
     $scope.blink_class = "";
 
+    $scope.TimelineNavigator = TimelineNavigator
+    $scope.ContentNavigator = ContentNavigator
+
     // $scope.$watch('checkModel', function(){
     //     $scope.scrollIntoView('outline')
     // },true)
@@ -22,6 +25,12 @@ angular.module('scalearAngularApp')
     $scope.$on("export_notes",function(){
         $scope.exportNotes()
     })
+
+    // $scope.$on('timeline_change',function(ev, status){
+    //     console.log("timeline change")
+    //     $scope.open_timeline = status
+    //     // manageViewSize(status)
+    // })
 
     $scope.$on('lecture_filter_update',function(ev,filters){
       $scope.checkModel=filters
@@ -38,6 +47,14 @@ angular.module('scalearAngularApp')
         if($scope.lecture_player.controls.pause)
             $scope.lecture_player.controls.pause()
     })
+
+//timeline open
+//small-8 small-centered land-uncentered land-medium-8 portrait-medium-12 medium-8 large-uncentered large-7 no-padding-right columns with-small-padding-right
+    
+    // var manageViewSize=function(){
+    //     $scope.open_timeline = status
+    //     if ($scope.open_timeline && $rootScope.)
+    // }
 
     
 
@@ -210,7 +227,7 @@ angular.module('scalearAngularApp')
         console.log("scroll to view")
         if($scope.lecture && !isiPad()){
             console.log($('.student_timeline'))
-            $('.student_timeline').scrollToThis('#outline_'+$scope.lecture.id, {offsetTop: $('.student_timeline').offset().top+5, duration: 400});
+            $('.student_timeline').scrollToThis('#outline_'+$scope.lecture.id, {offsetTop: $('.student_timeline').offset().top, duration: 400});
             // $timeout(function(){
             //     $location.hash(tab+'_'+$scope.lecture.id);
             //     $anchorScroll();    

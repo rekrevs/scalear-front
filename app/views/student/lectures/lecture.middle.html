@@ -8,7 +8,10 @@
 	 </span>
 </span>
 <span id="lecture_container">
-	<div class="small-8 small-centered land-uncentered land-medium-8 portrait-medium-12 medium-8 large-uncentered large-7 no-padding columns with-small-padding-right">
+	<div class="small-8 small-centered land-uncentered land-medium-8 portrait-medium-12 medium-8 large-8 no-padding columns with-small-padding-right" ng-class="{
+	'large-uncentered':ContentNavigator.status || TimelineNavigator.status,
+	'large-10':ContentNavigator.status && !TimelineNavigator.status
+}">
 		<div  ng-hide="!lecture" class="small-12">
 			<div id="main-video-container" ng-style="container_style"> 
 				<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->				
@@ -70,7 +73,9 @@
 			</div>
 		</div>
 	</div>
-	<div  id="student-accordion" class="student_timeline small-12 land-medium-4 portrait-medium-12 large-5 columns no-padding-right portrait-no-padding portrait-medium-height land-height medium-height-small large-height-big small-height-big no-padding-left" style="overflow-y: auto;" page-name="{{current}}" step-text="Use the Timeline to jump back in the lecture and review your quizzes, questions, and notes." step-index="3" step-placement="top" step-append-to-body="true">
-		<student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause" />
-	</div>
+
+	<student_timeline timeline="timeline['lecture']" items="module_items" current="lecture" seek="seek_and_pause" open="TimelineNavigator.status"/>
+	<!-- <div ng-show="timeline_navigator.status" style="min-height: 1px;" class="timeline_open student_timeline small-12 land-medium-4 portrait-medium-12 large-2 columns no-padding-right portrait-no-padding portrait-medium-height land-height medium-height-small large-height-big small-height-big no-padding-left"></div> -->
+	<!-- <div ng-show="open_timeline" class="student_timeline small-12 medium-4 large-2 columns no-padding no-margin" style="overflow-y: auto;" page-name="{{current}}" step-text="Use the Timeline to jump back in the lecture and review your quizzes, questions, and notes." step-index="3" step-placement="top" step-append-to-body="true"> -->
+	<!-- </div> -->
 </span>

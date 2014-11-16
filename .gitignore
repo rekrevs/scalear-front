@@ -8,3 +8,4 @@ selenium/
 ./selenium/
 .idea/
 coverageE2E
+app/scripts/config.js

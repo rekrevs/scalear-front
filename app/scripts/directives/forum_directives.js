@@ -86,6 +86,16 @@ angular.module('scalearAngularApp')
                 )
             }
 
+            scope.updateDiscussion= function(discussion){
+                Forum.updatePost({post_id: discussion.id},
+                    {content: discussion.content},                    
+                    function(){
+                        discussion.updated_at = new Date()
+                        discussion.edited = true
+                    }
+                )
+            }
+
             scope.flagPost = function(discussion){
                 Forum.flagPost(
                     {post_id: discussion.id}, 

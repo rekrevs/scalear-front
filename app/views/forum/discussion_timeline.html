@@ -14,7 +14,8 @@
                     <div>
                         <b bo-text="item.data.screen_name" ></b>
                         <div class="timestamp with-small-margin-left">
-                        {{ item.data.created_at | timeAgo }}
+                        <span ng-show="item.data.edited">edited</span>
+                        <span>{{ item.data.updated_at | timeAgo }}</span>
                         <span ng-if="item.data.flags_count > 0" style="color: red;">
                             <span style="color: #a1a1a1">  </span>
                             <span translate>discussion.flagged_post</span>
@@ -39,7 +40,9 @@
                                     <img ng-show="item.data.privacy==0" src="/images/private.png" tooltip="{{private_text}}"/>
                                     <img ng-show="item.data.privacy==1" src="/images/public.png" tooltip="{{public_text}}"/>
                                 </span>
-                                <span translate>q</span><span bo-text="item.data.content"></span>
+                                <span translate>q</span>
+                                <!-- <span bo-text="item.data.content"></span> -->
+                                <editable_text value="item.data.content" save="updateDiscussion(item.data)">
                             </div>
                         </div>
                     </div>

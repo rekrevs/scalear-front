@@ -749,6 +749,24 @@ td.right-border{
   color: #5da423;
 }
 
+.arrow_down_dark_icon{
+  position: relative;
+  top:8px;
+  margin: 4px
+}
+.arrow_down_dark_icon:before{
+  content:url("/images/arrow-down-menu-dark-icon.png");
+}
+
+.arrow_up_dark_icon{
+  position: relative;
+  top:7px;
+  margin: 4px
+}
+.arrow_up_dark_icon:before{
+  content:url("/images/arrow-up-menu-dark-icon.png");
+}
+
 .tabs{
   border-bottom: 1px solid lightgrey;
 }

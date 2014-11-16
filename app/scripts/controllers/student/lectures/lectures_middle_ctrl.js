@@ -750,10 +750,10 @@ angular.module('scalearAngularApp')
             $scope.lecture_player.controls.play();
         }
 
-        if(!$scope.last_timeline_state && $scope.TimelineNavigator.getStatus()){
+        if($scope.last_timeline_state == false && $scope.TimelineNavigator.getStatus()){
             $timeout(function(){
                $scope.TimelineNavigator.close() 
-           },600)
+           },400)
         }
 
         $scope.last_fullscreen_state = null

@@ -89,6 +89,9 @@ angular.module('scalearAngularApp')
             $scope.latest_announcements.forEach(function(announcement){
                 announcement.timestamp = announcement.updated_at;
                 $scope.events.push(announcement);
+                $timeout(function() {
+                    resizeCalendar()
+                },300)
             })
         }, function(){})
     }

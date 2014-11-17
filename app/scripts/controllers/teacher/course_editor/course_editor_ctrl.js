@@ -171,7 +171,7 @@ angular.module('scalearAngularApp')
            console.log($state.current)
             $scope.disable_preview = true
             var item = $scope.module_obj[module_id].items[0]
-            $scope.$emit("close_navigator")
+            ContentNavigator.close()
             Impersonate.create({},{course_id: $stateParams.course_id},
               function(data){
                 console.log(data)

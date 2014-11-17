@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$stateParams', '$translate','$q','$log', '$filter', '$rootScope', function ($scope, $state, Module, CustomLink, $stateParams, $translate, $q, $log, $filter, $rootScope) {      
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$stateParams', '$translate','$q','$log', '$filter', '$rootScope','ContentNavigator', function ($scope, $state, Module, CustomLink, $stateParams, $translate, $q, $log, $filter, $rootScope, ContentNavigator) {      
         // $scope.$parent.not_module = false;
         // $scope.$parent.currentmodule = $state.params.module_id
         // $scope.$parent.currentitem = -1
@@ -19,6 +19,7 @@ angular.module('scalearAngularApp')
             // $scope.module = $scope.course.selected_module
             // if($scope.module.due_date)
             //     $scope.module.due_date_enabled =!isDueDateDisabled()
+            $scope.ContentNavigator = ContentNavigator
             Module.getModules(
                 {
                     course_id:$stateParams.course_id,

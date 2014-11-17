@@ -53,6 +53,7 @@ angular.module('scalearAngularApp')
 			templateUrl: '/views/teacher_sub_navigation.html',
 			link: function(scope){
 				//  initFilters()
+				scope.ContentNavigator = ContentNavigator
 				scope.$state = $state
 				scope.$watch("$state.includes('*.module.**')",function(value){
 					scope.in_module_state = value

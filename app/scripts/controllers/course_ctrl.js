@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'scalear_utils','course_data', '$state', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, scalear_utils,course_data, $state) {
+.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'scalear_utils','course_data', '$state','ContentNavigator', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, scalear_utils,course_data, $state, ContentNavigator) {
  	angular.extend($scope.$parent, course_data)
  	if($state.includes("**.course")){
 	 	if($rootScope.current_user.roles[0].id == 2){
@@ -17,8 +17,7 @@ angular.module('scalearAngularApp')
 	 		$state.go('course.edit_course_information', {course_id:$scope.course.id})
 	 }
 	 $scope.$on('$destroy', function() {
-    	$scope.$emit('navigator_change',false)
-    	$scope.$emit('close_navigator')
+    	ContentNavigator.close()
     	$scope.$parent.course= null
     });
 	 

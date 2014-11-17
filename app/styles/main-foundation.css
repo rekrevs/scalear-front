@@ -264,6 +264,27 @@ span.error, small.error{
   color:#ffffff !important
 }
 
+.calendar_color.done{
+  background-color: #d6edd1;
+  color: #648161;
+  border-color: initial;
+}
+.calendar_color.done_late{
+  background-color: #fccab1;
+  color: #d26717;
+  border-color: initial;  
+}
+.calendar_color.not_done{
+  background-color: #d1ddf0;
+  color: #546d8e;
+  border-color: initial;  
+}
+.calendar_color.not_done_late{
+  background-color: #ecb8bf;
+  color: #9c4d59;
+  border-color: initial;  
+}
+
 /*Border Colors*/
 .border-white{
 	border-color: #ffffff !important;

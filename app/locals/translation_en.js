@@ -271,9 +271,11 @@ var translation_en=function(){
       events:{
         deadline_msg: "All deadlines are at midnight on the day specified",
         done: "Done",
+        done_late: "Done late",
         save: "Save",
         exit: "Exit",
         not_done: "Not done",
+        not_done_late: "Not done and late",
         not_done_due: "Not done or due in less than 2 days",
       },
       notification:{

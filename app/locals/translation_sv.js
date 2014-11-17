@@ -271,9 +271,11 @@ var translation_sv=function(){
       events:{
               deadline_msg: "Alla deadlines är vid midnatt den angivna dagen",
               done: "Gjort",
+              done_late: "Gjort sent",
               save: "Spara",
               exit: "Utfart",
               not_done: "Inte gjort",
+              not_done_late: "Inte gjort och sen",
               not_done_due: "Inte gjort eller skall vara färdigt inom 2 dagar",
           },
       notification:{

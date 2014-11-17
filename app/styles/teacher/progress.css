@@ -246,6 +246,11 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	margin-top: 10px;*/
 }
 
+.large_player{
+	width:200%;
+	position: absolute;
+}
+
 /*@media (max-width: 1024px) {*/
 	/*.shortcuts{
 		display:none;

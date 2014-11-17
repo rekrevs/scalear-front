@@ -190,6 +190,7 @@ angular.module('scalearAngularApp')
     }
 
   	$scope.manageHighlight=function(x){
+      resizePlayerSmall()
   		var divs = angular.element('.ul_item')
 		  angular.element(divs[$scope.highlight_index]).removeClass('highlight')	
 		  angular.element('li.highlight').removeClass('highlight')	
@@ -227,6 +228,7 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.manageInnerHighlight=function(x){
+      resizePlayerSmall()
       console.log("mangae inner higligh")
   		var inner_ul= angular.element('ul.highlight').find('ul')
   		if(inner_ul.length){
@@ -258,6 +260,7 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.highlight=function(ev,item){
+      resizePlayerSmall()
   		var ul = angular.element(ev.target).closest('ul.ul_item')
   		var divs = angular.element('.ul_item')
   		// angular.element(divs[$scope.highlight_index]).removeClass('highlight')
@@ -283,15 +286,18 @@ angular.module('scalearAngularApp')
       $(document).click(function(e){
         if(angular.element(e.target).find('.inner_content').length){
           removeHightlight()
+
            $(document).off('click');
         }
       })
     }
 
-    var removeHightlight=function(){     
+    var removeHightlight=function(){  
+      resizePlayerSmall() 
       $(".highlight").removeClass("highlight");
       angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
       $scope.highlight_level = 0
+      $scope.$apply()
       console.log("removing")
     }
 
@@ -776,16 +782,21 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : true});
 
     shortcut.add("Space",function(){
-      if($scope.selected_item && $scope.selected_item.time>0){ 
-        var time = $scope.selected_item.time             
-        if ($scope.selected_item.type == "discussion"){
-          var q_ind = $scope.inner_highlight_index
-          time = $scope.selected_item.data[q_ind].post.time
-          console.log(time)
-        }
-        $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
-        $scope.$apply()
-    }
+      console.log($scope.large_player )
+      if($scope.selected_item && $scope.selected_item.time>0 && !$scope.large_player ){ 
+          var time = $scope.selected_item.time             
+          if ($scope.selected_item.type == "discussion"){
+            var q_ind = $scope.inner_highlight_index
+            time = $scope.selected_item.data[q_ind].post.time
+            console.log(time)
+          }
+          $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+          resizePlayerLarge()
+      }
+      else
+        resizePlayerSmall()
+
+      $scope.$apply()
     },{"disable_in_input" : true});
 
     shortcut.add("m",function(){
@@ -840,6 +851,7 @@ angular.module('scalearAngularApp')
 
     shortcut.add("ESC",function(){
       console.log($scope.selected_item)
+      resizePlayerSmall()
       if($scope.selected_item.type == 'discussion'){
         console.log("disc")
         $scope.selected_item.data.forEach(function(discussion){
@@ -929,6 +941,14 @@ angular.module('scalearAngularApp')
     else
       return 'black'
 
+  }
+
+  var resizePlayerLarge = function(){
+    $scope.large_player = true
+  }
+
+   var resizePlayerSmall = function(){
+    $scope.large_player = false
   }
 
 	$scope.getKeys = function( obj ) {

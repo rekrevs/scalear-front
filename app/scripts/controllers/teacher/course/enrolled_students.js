@@ -9,6 +9,7 @@ var app = angular.module('scalearAngularApp')
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
         $scope.loading_students = true, $scope.delete_mode = false;
+        $scope.grid_view= true
         Course.getEnrolledStudents(
           {course_id: $stateParams.course_id},
           function(students){
@@ -83,6 +84,10 @@ var app = angular.module('scalearAngularApp')
         }
         $scope.toggleDeleteMode = function(){
           $scope.delete_mode = !$scope.delete_mode
+        }
+
+        $scope.gridView=function(val){
+          $scope.grid_view = val
         }
   }]);
 

@@ -2,6 +2,8 @@ var translation_sv=function(){
     return {
       tellus: 'Skriv något om dig själv...',
       online_name_comment:'(Ditt online-namn visas för andra elever och lärare när du skriver kommentarer eller ställer frågor. Om du vill vara anonym, använd den givna pseudonymen ("Student NNNN") eller hitta på en egen.)',
+      new_module_instructions: "Lägg till en ny modul eller valt en existerande genom att klicka på innehålls navigator från vänster",
+      use_content_menu: "Använd innehållsmenyn för att lägga till frågesporter och undersökningar",
       finished: 'Kom',
       yes: 'Ja',
       no: 'Nej',
@@ -75,7 +77,8 @@ var translation_sv=function(){
       new_online_content: "Ny modul Post",
       send_email: "Skicka ett Mail",
       show_all_courses: "Visa alla kurser",
-      New_Video_Question: "Ny Video Question",
+      New_Video_Question: "Ny video fråga",
+      new_video: "Ny Video",
       Insert_a_question: "Sätt i en fråga i en video",
       copy: "Kopia",
       due: "Förfaller",

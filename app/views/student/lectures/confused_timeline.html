@@ -3,10 +3,11 @@
     <img src="../images/confused-timeline.png" />                  
   </div>
 </td>
-<td style="padding: 0px;" colspan="2">
-  <p class="solved size-14" ng-show="item.data.very"  ng-click="seek()(item.time, item.data.lecture_id)" translate>courses.really_confused</p>
-  <p class="solved size-14" ng-show="!item.data.very" ng-click="seek()(item.time, item.data.lecture_id)" translate>courses.confused</p>
+<td style="padding:0 10px;" colspan="2">
+  <p class="solved size-14" ng-show="item.data.very"  ng-click="seek()(item.time, item.data.lecture_id)" style="margin-bottom:5px" translate>courses.really_confused</p>
+  <p class="solved size-14" ng-show="!item.data.very" ng-click="seek()(item.time, item.data.lecture_id)" style="margin-bottom:5px" translate>courses.confused</p>
 </td>
-<td style="min-width:90px; padding: 0px; padding-right: 8px;">                 
-  <delete_button size="small" color='dark' action="deleteConfused(item)" style="float: right;"></delete_button>
+<td style="min-width:95px; padding: 0px; padding-right: 18px;">                 
+  <!-- <delete_button size="small" color='dark' action="deleteConfused(item)" vertical="false" text="false" color="red" style="float: right;"></delete_button> -->
+  <delete_button size="small" action="deleteConfused(item)" vertical="false" text="false" color="red" style="float: right;"></delete_button>
 </td>

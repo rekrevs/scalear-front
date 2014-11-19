@@ -347,7 +347,7 @@ angular.module('scalearAngularApp')
                 link: function(scope, element) {
                     scope.selectField = function() {
                         $timeout(function() {
-                            element.find('.editable-input').select();
+                            element.find('.editable-input td.control-group:nth(0) input').select();
                         });
                     },
                     scope.saveData = function(data) {

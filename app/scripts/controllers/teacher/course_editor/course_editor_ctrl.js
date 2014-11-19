@@ -16,6 +16,7 @@ angular.module('scalearAngularApp')
             $scope.addCustomLink()            
         else
             $scope.addQuiz($stateParams.module_id, type)
+        ContentNavigator.open()
     })
     
     $scope.$on('share_copy', function(event, data){

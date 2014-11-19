@@ -19,18 +19,26 @@ angular.module('scalearAngularApp')
     }
 
     $scope.eventRender = function( event, element, view ) { 
-       if (event.quiz_id)
-            event.item_type = "Quiz"
-        else if (event.lecture_id)
-            event.item_type = "Lecture"
-        else
-            event.item_type = "Module"
+       // if (event.quiz_id)
+       //      event.item_type = "Quiz"
+       //  else if (event.lecture_id)
+       //      event.item_type = "Lecture"
+       //  else
+       //      event.item_type = "Module"
 
-         var tooltip_string = event.course_name+" ("+event.course_short_name+")<br />"+
-                              event.item_type+": "+event.item_title
-        if (event.duration)
-            tooltip_string+=" ("+event.duration+")"        
-        tooltip_string+= "<br />Due at: "+$filter('date')(event.start, 'HH:mm')
+        //  var tooltip_string = event.course_name+" ("+event.course_short_name+")<br />"+
+        //                       event.item_type+": "+event.item_title
+        // if (event.duration)
+        //     tooltip_string+=" ("+event.duration+")"        
+        // tooltip_string+= "<br />Due at: "+$filter('date')(event.start, 'HH:mm')
+
+         var tooltip_string = event.course_short_name+": "+event.item_title+
+                              "<br />Due at  "+$filter('date')(event.start, 'HH:mm')
+
+        if(event.status==1)
+            tooltip_string+="<br />Completed on time"
+        else if(event.status==2)
+            tooltip_string+="<br />Completed "+event.days+" days late"
 
         element.attr({'tooltip-html-unsafe': tooltip_string,'tooltip-append-to-body': true});
         $compile(element)($scope);

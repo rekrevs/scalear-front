@@ -36,18 +36,21 @@
 		</form>
 	</div>
 </div>
-<div class="row quiz_list">
+<div class="row quiz_list with-small-margin-top">
 	<!--  -->
-	<center ng-show="!editing_mode && video_ready">
-		<h6 class="with-margin-top no-padding color-grey size-14">Use the Content menu to add quizzes and surveys</h6>
+	<center ng-show="!editing_mode && video_ready" class="small-block-grid-3">
+		<!-- <h6 class="with-margin-top no-padding color-grey size-14">use_content_menu</h6> -->
+		<button class="button small no-margin" questions-modal ng-click="openQuestionsModal()" ><span translate>New_Video_Question</span> (i)</button>
+		<button class="button small no-margin" online-modal ng-click="openOnlineContentModal()" translate>new_video</button>
+		<button class="button small no-margin" ng-click="addModule()" translate>groups.new_module</button>
 	</center>
 	<overlay ng-hide="video_ready || lecture.url=='none'">
 		<loading size="small" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
 	</overlay>
-	<div class="small-12 small-centered columns" style="margin-top: 40px;">
+	<div class="small-12 small-centered columns" style="margin-top: 10px;">
 		<!-- <center ng-show="fullscreen"><a class='button small secondary fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center> -->
-		<center style="margin-bottom:10px">
-			<edit_panel ng-show="editing_mode" />		
+		<center ng-show="editing_mode" style="margin-bottom:10px">
+			<edit_panel  />		
 			<alert ng-show="!hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</center>
 		

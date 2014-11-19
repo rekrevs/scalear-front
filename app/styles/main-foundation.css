@@ -205,6 +205,10 @@ span.error, small.error{
   background-color: black !important;
 }
 
+.light-yellow{
+   background-color: #FFFFD8 !important;
+}
+
 .color-gray{
   color: gray !important;
 }

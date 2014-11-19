@@ -190,7 +190,7 @@ angular.module('scalearAngularApp')
     }
 
   	$scope.manageHighlight=function(x){
-      resizePlayerSmall()
+      // resizePlayerSmall()
   		var divs = angular.element('.ul_item')
 		  angular.element(divs[$scope.highlight_index]).removeClass('highlight')	
 		  angular.element('li.highlight').removeClass('highlight')	
@@ -224,11 +224,12 @@ angular.module('scalearAngularApp')
       $('.main_content').parent().scrollToThis(angular.element(divs[$scope.highlight_index]),{offsetTop : top});
 	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
+      seekToItem()
 	    $scope.$apply()
   	}
 
   	$scope.manageInnerHighlight=function(x){
-      resizePlayerSmall()
+      // resizePlayerSmall()
       console.log("mangae inner higligh")
   		var inner_ul= angular.element('ul.highlight').find('ul')
   		if(inner_ul.length){
@@ -260,7 +261,7 @@ angular.module('scalearAngularApp')
   	}
 
   	$scope.highlight=function(ev,item){
-      resizePlayerSmall()
+      // resizePlayerSmall()
   		var ul = angular.element(ev.target).closest('ul.ul_item')
   		var divs = angular.element('.ul_item')
   		// angular.element(divs[$scope.highlight_index]).removeClass('highlight')
@@ -279,6 +280,7 @@ angular.module('scalearAngularApp')
         $scope.selected_item.lec_id = id[1]
       }
   		$scope.inner_highlight_index = 0	
+      seekToItem()
   	}
 
    var setupRemoveHightlightEvent=function(){
@@ -367,7 +369,7 @@ angular.module('scalearAngularApp')
         },
         function(){
           console.log(comment.hide)
-          if(comment.hide){
+          if(comment.hide && !discussion.hide){
             discussion.hide= true
             $scope.updateHideDiscussion(discussion.id,!discussion.hide)
           }
@@ -430,6 +432,14 @@ angular.module('scalearAngularApp')
           question:id,
           show:value
         }
+      )
+    }
+
+    $scope.makeSurveyVisible=function(quiz, val){
+      quiz.meta.visible = val
+      Quiz.makeVisible({quiz_id:quiz.meta.id},
+        {visible:val},
+        function(){}
       )
     }
 
@@ -714,6 +724,17 @@ angular.module('scalearAngularApp')
   //   return formated_data
   // }
 
+  var seekToItem=function(){
+    if($scope.selected_item && $scope.selected_item.time>0){          
+        var time = $scope.selected_item.time             
+        if ($scope.selected_item.type == "discussion"){
+          var q_ind = $scope.inner_highlight_index
+          time = $scope.selected_item.data[q_ind].post.time
+          console.log(time)
+        }          
+        $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+    }
+  }
 
 	$scope.createChart = function(data,student_count, options, formatter, type) {
 		var chart = {};
@@ -782,15 +803,7 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : true});
 
     shortcut.add("Space",function(){
-      console.log($scope.large_player )
-      if($scope.selected_item && $scope.selected_item.time>0 && !$scope.large_player ){ 
-          var time = $scope.selected_item.time             
-          if ($scope.selected_item.type == "discussion"){
-            var q_ind = $scope.inner_highlight_index
-            time = $scope.selected_item.data[q_ind].post.time
-            console.log(time)
-          }
-          $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+      if($scope.selected_item && $scope.selected_item.time>0 && !$scope.large_player){          
           resizePlayerLarge()
       }
       else

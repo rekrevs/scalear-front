@@ -38,6 +38,10 @@ angular.module('scalearAngularApp')
     $scope.current_time = 0
     //$scope.lecture.duration = 0
     $scope.fullscreen = false
+
+    shortcut.add("i",function() {       
+       $scope.openQuestionsModal()
+    },{"disable_in_input" : true, 'propagate':false});
 	
     // $state.go('course.course_editor.lecture.quizList');
 
@@ -488,6 +492,10 @@ angular.module('scalearAngularApp')
 		var time=Math.floor($scope.lecture_player.controls.getTime())
 		return {url:$state.href('course.module.courseware.lecture', {module_id:$scope.lecture.group_id, lecture_id: $scope.lecture.id, time:time}, {absolute: true}), time:time}
 	}
+
+	$scope.addModule=function(){
+		$rootScope.$broadcast('add_module')
+	}	
 
 }]);
 

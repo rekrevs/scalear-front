@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page','scalear_utils', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page, scalear_utils) {
+  .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page','scalear_utils','ContentNavigator', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page, scalear_utils, ContentNavigator) {
 
   $window.scrollTo(0, 0);
   $scope.in_delete = false;
@@ -10,6 +10,7 @@ angular.module('scalearAngularApp')
   $scope.role_names = {'3': 'courses.professor', '4': 'courses.ta'};
   Page.setTitle('head.information')
   Page.startTour()
+  ContentNavigator.open()
   $scope.timezones=scalear_utils.listTimezones()
 
     $scope.timezones.forEach(function(zone){

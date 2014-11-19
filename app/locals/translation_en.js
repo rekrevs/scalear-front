@@ -2,6 +2,8 @@ var translation_en=function(){
     return {
       tellus: 'Tell us about yourself...',
       online_name_comment: '(Your Online Name is shown to other students and teachers when you make comments or ask questions. If you wish to be anonymous, use the default or a pseudonym.)',
+      new_module_instructions: "Add a new module or selected an existing by clicking on the content navigator from the left",
+      use_content_menu: "Use the Content menu to add quizzes and surveys",
       finished: 'Finished',
       yes: 'Yes',
       no: 'No',
@@ -78,6 +80,7 @@ var translation_en=function(){
       show_all_courses: "Show all courses",
       New_Video_Question: "New Video Question",
       Insert_a_question: "Insert a question in a video",
+      new_video: "New Video",
       copy: "Copy",
       due:"Due",
       my: "My",

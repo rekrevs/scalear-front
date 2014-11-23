@@ -46,7 +46,8 @@ ul.highlight, li.highlight{
 
 .inner_title{
 	font-size:14px;
-	background: white
+	/*background: white*/
+	background-color: inherit;
 }
 
 .inner_value{

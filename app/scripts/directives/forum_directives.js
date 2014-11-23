@@ -13,6 +13,13 @@ angular.module('scalearAngularApp')
                 scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
                 $('.text_block').focus();
 
+                if(scope.item.data && scope.item.data.isEdit){
+                    scope.privacy = (scope.item.data.privacy == 0)? scope.choices[0] : scope.choices[1]
+                    scope.current_question = scope.item.data.content
+                }
+                // else
+                //     scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
+
                 scope.postQuestion=function(item){
                     scope.$emit("question_updated")
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
@@ -44,13 +51,35 @@ angular.module('scalearAngularApp')
                     else
                         scope.error_message = $translate("discussion.cannot_be_empty")
                 }
+
+                scope.updateQuestion= function(question){
+                    if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
+                        Forum.updatePost({post_id: question.id},
+                            {content: scope.current_question},                    
+                            function(){
+                                question.content = scope.current_question
+                                question.updated_at = new Date()
+                                question.edited = true
+                                question.isEdit = false
+                                scope.error_message=null
+                                scope.current_question = ''
+                            }
+                        )
+                    }
+                    else
+                        scope.error_message = $translate("discussion.cannot_be_empty")
+                }
+
                 scope.cancelQuestion=function(question){
                     scope.$emit("question_updated")
                     scope.$emit('update_timeline', question)
                 }
 
                 shortcut.add("enter", function(){
-                    scope.postQuestion(scope.item)
+                    if(!scope.item.data || !scope.item.data.isEdit)
+                        scope.postQuestion(scope.item)
+                    else
+                        scope.updateQuestion(scope.item.data)
                     scope.$apply()
                 }, {"disable_in_input" : false});
 
@@ -84,17 +113,7 @@ angular.module('scalearAngularApp')
                     }, 
                     function(){}
                 )
-            }
-
-            scope.updateDiscussion= function(discussion){
-                Forum.updatePost({post_id: discussion.id},
-                    {content: discussion.content},                    
-                    function(){
-                        discussion.updated_at = new Date()
-                        discussion.edited = true
-                    }
-                )
-            }
+            }            
 
             scope.flagPost = function(discussion){
                 Forum.flagPost(

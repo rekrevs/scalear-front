@@ -90,6 +90,17 @@
 
 	
 </div>
+
+<!-- <a ng-click="addCustomLink()" ng-disabled="link_overlay" class="button small">
+	    <span translate>groups.add_link</span>
+</a> -->
+<div class="row">
+	<center class="small-block-grid-3">
+		<button class="button small no-margin" questions-modal ng-click="addCustomLink()" translate>groups.new_link</button>
+		<button class="button small no-margin" online-modal ng-click="openOnlineContentModal()" translate>new_video</button>
+		<button class="button small no-margin" ng-click="addModule()" translate>groups.new_module</button>
+	</center>
+</div>
 <br />
 <div class="row">
 	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}"><b translate>groups.external_module_link</b></div>
@@ -105,9 +116,7 @@
 			<link-item link="doc" update="updateCustomLink" remove="removeCustomLink" validate="validate" />
 		</li>
 	</ul>
-	<a ng-click="addCustomLink()" ng-disabled="link_overlay" class="button small">
-	    <span translate>groups.add_link</span>
-	</a>
+	
 </div>
 
 <!-- <overlay ng-show="!module">

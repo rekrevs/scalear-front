@@ -9,11 +9,15 @@
         <tr>
             <td style="width:70%;">
                 <input type="text" disabled ng-model="item.time" format='hh:mm:ss' style="width: 96%;"/>
-                <select ng-model='privacy' ng-options="f.text for f in choices" style="width: 100%;"></select>
+                <select ng-model='privacy' ng-disabled="item.data.isEdit" ng-options="f.text for f in choices" style="width: 100%;"></select>
             </td>
-            <td>
+            <td ng-if="!item.data.isEdit">
                 <button type="button" class="button tiny" ng-click="postQuestion(item)" translate>youtube.ask</button>
                 <button type="button" class="button tiny alert" ng-click="cancelQuestion(item)" translate>lectures.cancel</button>
+            </td>
+            <td ng-if="item.data.isEdit">
+                <button type="button" class="button tiny" ng-click="updateQuestion(item.data)" translate>edit</button>
+                <button type="button" class="button tiny alert" ng-click="item.data.isEdit=false" translate>lectures.cancel</button>
             </td>
         </tr>
     </table>

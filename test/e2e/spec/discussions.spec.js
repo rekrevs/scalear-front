@@ -25,7 +25,7 @@ describe("public/private visibility", function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_2, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
 	})
 
 	it('should add a module and lecture ', function(){
@@ -52,7 +52,7 @@ describe("public/private visibility", function(){
 	})
 
 	it('should go the other student check for visible questions', function(){
-		o_c.sign_in(ptor, params.student_mail_2, params.password);
+		o_c.sign_in(ptor, params.student2_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_disc_no(1);
@@ -92,12 +92,12 @@ describe("flagging/voting-up question", function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_2, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
 
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_3, params.password);
+		teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
 	})
 
 	it('should add a module and lecture ', function(){
@@ -122,7 +122,7 @@ describe("flagging/voting-up question", function(){
 	})
 
 	it('should go the other student and flag a question', function(){
-		o_c.sign_in(ptor, params.student_mail_2, params.password);
+		o_c.sign_in(ptor, params.student2_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_disc_no(1);
@@ -137,7 +137,7 @@ describe("flagging/voting-up question", function(){
 	})
 
 	it('should go the the third student and flag a question', function(){
-		o_c.sign_in(ptor, params.student_mail_3, params.password);
+		o_c.sign_in(ptor, params.student3_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_disc_no(1);
@@ -183,12 +183,12 @@ describe("comments", function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_2, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
 
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_3, params.password);
+		teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
 	})
 
 	it('should add a module and lecture ', function(){
@@ -213,7 +213,7 @@ describe("comments", function(){
 	})
 
 	it('should go the other student and flag a question', function(){
-		o_c.sign_in(ptor, params.student_mail_2, params.password);
+		o_c.sign_in(ptor, params.student2_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_disc_no(1);
@@ -224,7 +224,7 @@ describe("comments", function(){
 	})
 
 	it('should go the the third student and flag a question', function(){
-		o_c.sign_in(ptor, params.student_mail_3, params.password);
+		o_c.sign_in(ptor, params.student3_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_disc_no(1);
@@ -265,12 +265,12 @@ describe("flagging/voting-up comments", function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_2, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
 
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_3, params.password);
+		teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
 	})
 
 	it('should add a module and lecture ', function(){
@@ -297,7 +297,7 @@ describe("flagging/voting-up comments", function(){
 	})
 
 	it('should go the other student and flag a comment', function(){
-		o_c.sign_in(ptor, params.student_mail_2, params.password);
+		o_c.sign_in(ptor, params.student2_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_disc_no(1);
@@ -311,7 +311,7 @@ describe("flagging/voting-up comments", function(){
 	})
 
 	it('should go the the third student and flag a question', function(){
-		o_c.sign_in(ptor, params.student_mail_3, params.password);
+		o_c.sign_in(ptor, params.student3_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_disc_no(1);

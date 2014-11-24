@@ -26,7 +26,7 @@ describe("deleting confused", function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_2, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
 	})
 
 	it('should add a module and lecture ', function(){
@@ -53,7 +53,7 @@ describe("deleting confused", function(){
 	})
 
 	it('should go the other student and check for ability to delete a confused', function(){
-		o_c.sign_in(ptor, params.student_mail_2, params.password);
+		o_c.sign_in(ptor, params.student2_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_confused_no(0);
@@ -100,7 +100,7 @@ describe("deleting notes", function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_2, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
 	})
 
 	it('should add a module and lecture ', function(){
@@ -126,7 +126,7 @@ describe("deleting notes", function(){
 	})
 
 	it('should go the other student and check for ability to delete a confused', function(){
-		o_c.sign_in(ptor, params.student_mail_2, params.password);
+		o_c.sign_in(ptor, params.student2_mail, params.password);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		check_notes_no(0);

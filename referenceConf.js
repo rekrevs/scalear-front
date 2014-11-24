@@ -45,34 +45,34 @@ exports.config = {
     // Spec patterns are relative to the location of this config.
     specs: [
     //{{reviewed}}
-        // 'test/e2e/spec/calendar-teacher-student.spec.js',
-        // 'test/e2e/spec/copying.spec.js',
-        // 'test/e2e/spec/course-editor-basic.spec.js',
-        // 'test/e2e/spec/create-announcements.spec.js',
-        // 'test/e2e/spec/dashboard.spec.js',
-        // 'test/e2e/spec/discussions.spec.js',
-        // 'test/e2e/spec/enrollment-help.spec.js',
+        // 'test/e2e/spec/calendar-teacher-student.spec.js',  //(√)
+        // 'test/e2e/spec/copying.spec.js', //(√)
+        // 'test/e2e/spec/course-editor-basic.spec.js', //(√)
+        // 'test/e2e/spec/create-announcements.spec.js', //(√)
+        // 'test/e2e/spec/dashboard.spec.js', //(√)
+        'test/e2e/spec/discussions.spec.js', 
+        // 'test/e2e/spec/enrollment-help.spec.js', //(√)
         // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',
         // 'test/e2e/spec/mcq-survey-over-video.spec.js',
-        // 'test/e2e/spec/module-statistics.spec.js',
-        // 'test/e2e/spec/normal-quiz.spec.js',
-        // 'test/e2e/spec/normal-survey.spec.js',
-        // 'test/e2e/spec/notes.spec.js',
+        // 'test/e2e/spec/module-statistics.spec.js', //(√)
+        // 'test/e2e/spec/normal-quiz.spec.js', //(√)
+        // 'test/e2e/spec/normal-survey.spec.js', //(√)
+        // 'test/e2e/spec/notes.spec.js', //(√)
         // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/ocq-quizzez-over-video.spec.js',
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',
         // 'test/e2e/spec/sharing.spec.js',
-        // 'test/e2e/spec/statistics.spec.js',
+        // 'test/e2e/spec/statistics.spec.js',  //(√)
         // 'test/e2e/spec/student-lectures.spec.js',
-        // 'test/e2e/spec/teacher-managment.spec.js',
+        // 'test/e2e/spec/teacher-managment.spec.js', //(√)
         // 'test/e2e/spec/timeline.spec.js',
-        'test/e2e/spec/validations.spec.js',
+        // 'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
         // 'test/e2e/spec/account-info-validation.spec.js',
         // 'test/e2e/spec/create-course-check-info.spec.js',
-        // 'test/e2e/spec/preview-as-student.spec.js',
+        // 'test/e2e/spec/preview-as-student.spec.js', //problem with deleting course at the end
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',
         // 'test/e2e/spec/enrolled-students.spec.js',
@@ -126,52 +126,30 @@ exports.config = {
     //   --params.login.user 'Joe'
     params: {
         //local
-        // frontend: 'http://0.0.0.0:9000/#',
-        // admin_mail: 'admin@scalear.com',
-        // teacher_mail: 'teacher1@sharklasers.com',
-        // teacher2_mail: 'teacher3@sharklasers.com',
-        // student_mail: 'studenttest@sharklasers.com',
-        // student2_mail: 'studenttest2@sharklasers.com',
-        // student3_mail: 'student_mail_2@sharklasers.com',
-        // password: 'password',
-        // admin_password:"password",
-
-        // mena
         frontend: 'http://0.0.0.0:9000/#',
-        // frontend: 'http://staging.scalable-learning.com/#',
-        // teacher_mail: 'teacher3@sharklasers.com',
-        student_mail: 'studenttest@sharklasers.com',
-        student_mail_2: 'studenttest2@sharklasers.com',
-        student_mail_3: 'student6@email.com',
-        student_mail_4: 'student7@email.com',
-        student_mail_5: 'student8@email.com',
-
-
-        teacher_mail: 'teacher2@sharklasers.com',
-        // // teacher_mail: 'teacher15@sharklasers.com',
-
-        // student_mail: 'mena.happy@yahoo.com',
-
         admin_mail: 'admin@scalear.com',
-        // teacher_mail: 'teacher1@sharklasers.com',
-        teacher2_mail: 'teacher15@sharklasers.com',
-        // // student_mail: 'studenttest@sharklasers.com',
-        // student2_mail: 'studenttest2@sharklasers.com',
-        // student3_mail: 'student_mail_2@sharklasers.com',
-        password: 'password',
+        teacher_mail:  'teacher1@sharklasers.com',
+        teacher2_mail: 'teacher2@sharklasers.com',
+        teacher3_mail: 'teacher3@sharklasers.com',
+        student_mail:  'studenttest@sharklasers.com',
+        student2_mail: 'studenttest2@sharklasers.com',
+        student3_mail: 'studenttest3@sharklasers.com',
+        student4_mail: 'studenttest4@sharklasers.com',
+        student5_mail: 'studenttest5@sharklasers.com',
         admin_password:"password",
+        password: 'password',
 
-        // //staging
+        //staging
         // frontend: 'http://staging.scalable-learning.com/#',
         // admin_email: 'admin@scalable-learning.com',       
         // teacher_mail: 'anyteacher@email.com',
-        // // teacher2_mail: 'teacher2@sharklasers.com',
-        // // teacher3_mail: 'teacher3@sharklasers.com',
+        // teacher2_mail: 'teacher2@sharklasers.com',
+        // teacher3_mail: 'teacher3@sharklasers.com',
         // student_mail: 'student2@email.com',
         // student_mail2: 'student3@email.com',
         // student_mail3: 'student4@email.com',
         // password: 'password',
-        // // admin_password:"admin_account_password",
+        // admin_password:"admin_account_password",
 
         short_name: "csc-test",
         course_name: "aesting course 100",

@@ -66,25 +66,25 @@ describe("2", function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_2,params.password);
+		teacher.get_key_and_enroll(ptor, params.student2_mail,params.password);
 	})
 	it('should enroll student2', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);	
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_3,params.password);
+		teacher.get_key_and_enroll(ptor, params.student3_mail,params.password);
 	})
 	it('should enroll student3', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_4,params.password);
+		teacher.get_key_and_enroll(ptor, params.student4_mail,params.password);
 	})
 	it('should enroll student4', function(){
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student_mail_5,params.password);
+		teacher.get_key_and_enroll(ptor, params.student5_mail,params.password);
 	})
 
 	it('check for enrolled students', function(){

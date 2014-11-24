@@ -9,7 +9,7 @@
         <li toggle-top-bar class="menu-icon"><a href=""></a></li>
         <li ></li>
       </ul>
-      <ul class="title-area right">
+      <ul class="title-area right" ng-if="('**.courseware.lecture.**' | includedByState)">
         <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="head.lectures" >
           <h1 class="disable_selection right truncate dark-text sub-header-component dark-medium-grey" ng-class="{'blue-color-white': TimelineNavigator.status, 'dark-medium-grey-blue-hover': !TimelineNavigator.status}" style="width: 300px;">
             <span><timeline-filters class="settings" /></span>

@@ -113,7 +113,8 @@ describe("2", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -194,7 +195,8 @@ describe("3", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -271,7 +273,8 @@ describe("check for explanation", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
+		ptor.sleep(1000);
 		student.expect_quiz(ptor);
 	})
 
@@ -338,6 +341,8 @@ function make_mcq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, 
 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
 			ptor.actions().click().perform();
 
+ptor.sleep(2000);
+
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
 			ptor.actions().doubleClick().perform();
@@ -345,6 +350,8 @@ function make_mcq_questions_and_check(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y, 
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
 			ptor.actions().click().perform();
+
+ptor.sleep(2000);
 
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove(ontop,{x: q3_x, y: q3_y}).perform();

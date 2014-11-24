@@ -13,6 +13,18 @@ exports.check_module_number = function(ptor, no_of_mo){
   })
 }
 
+exports.check_course_links_number = function(ptor, no_links){
+  locator.by_repeater(ptor, 'link in links').then(function(links){
+    expect(links.length).toEqual(no_links);
+  })
+}
+
+exports.check_module_links_number = function(ptor, no_links){
+  locator.by_repeater(ptor, 'link in module.custom_links').then(function(links){
+    expect(links.length).toEqual(no_links);
+  })
+}
+
 exports.check_item_number = function(ptor, module_num, total_item_no){
   element(by.repeater('module in modules').row(module_num-1)).all(by.repeater('item in module.items')).then(function(items){
     expect(items.length).toEqual(total_item_no)
@@ -24,6 +36,10 @@ exports.check_item_number = function(ptor, module_num, total_item_no){
 
 exports.check_timeline_item_number = function(ptor, num){
   expect(element.all(by.repeater("l in items")).count()).toBe(num)
+}
+
+exports.open_course_links = function(){
+  element(by.className('content-navigator-container')).element(by.className('links_accordion')).click()
 }
 
 //=====================================

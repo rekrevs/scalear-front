@@ -8,65 +8,6 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-// xdescribe("1", function(){
-
-// 	it('should sign in as teacher', function(){
-// 		o_c.press_login(ptor);
-// 		o_c.sign_in(ptor, params.teacher_mail, params.password);
-// 	})
-
-// 	it('should create_course', function(){
-// 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
-// 	})
-
-// 	it('should get the enrollment key and enroll student', function(){
-// 		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-// 	})
-// 	//test
-// 	it('should add a module and lecture to create quizzes', function(){
-// 		o_c.sign_in(ptor, params.teacher_mail, params.password);
-// 		o_c.open_course_list(ptor);
-// 		o_c.open_course(ptor, 1);
-// 		teacher.add_module(ptor);
-// 		teacher.open_module(ptor, 1);
-// 		teacher.add_lecture(ptor);			
-// 		o_c.press_content_navigator(ptor);
-// 		teacher.init_lecture(ptor, "mcq_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
-// 	})
-
-// 	it('should create quiz', function(){
-// 		youtube.seek(ptor, 21);
-// 		create_invideo_mcq_text_quiz(ptor);
-// 		make_mcq_text_questions(ptor);
-// 	})
-
-// 	it('should login a student and check for mcq no', function(){
-// 		o_c.to_student(ptor);
-// 		o_c.open_course_list(ptor);
-// 		o_c.open_course(ptor, 1);
-// 		// o_c.press_content_navigator(ptor);
-// 		// teacher.open_module(ptor, 1);
-// 		// o_c.press_content_navigator(ptor);
-// 		youtube.seek(ptor, 21);
-// 		expect_quiz(ptor);
-// 		check_invideo_mcq_no(ptor, 3);
-// 	})
-
-// 	it('should clear the course for deletion', function(){
-// 		o_c.to_teacher(ptor);
-// 		o_c.open_course_list(ptor);
-// 	    o_c.open_course(ptor, 1);
-// 	    teacher.open_module(ptor, 1);
-// 	    teacher.delete_item_by_number(ptor, 1, 1);
-// 	    teacher.delete_empty_module(ptor, 1)
-// 	})
-
-// 	it('should delete course', function(){
-// 		o_c.open_course_list(ptor);
-// 	    teacher.delete_course(ptor, 1);
-// 	    o_c.logout(ptor);
-// 	})
-// })
 
 describe("1", function(){
 
@@ -226,7 +167,7 @@ describe("2", function(){
 
 describe("explanation validation", function(){
 	it('should sign in as teacher', function(){
-		// o_c.press_login(ptor);
+		o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 

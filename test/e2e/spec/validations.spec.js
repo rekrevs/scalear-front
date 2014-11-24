@@ -6,9 +6,9 @@ var youtube = require('./lib/youtube.js');
 
 var ptor = protractor.getInstance();
 var params = ptor.params
-ptor.driver.manage().window().maximize();
+ptor.driver.manage().window().setSize(params.width, params.height);
 
-xdescribe("invideo quiz time and name validation", function(){
+describe("invideo quiz time and name validation", function(){
 	
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -38,6 +38,7 @@ xdescribe("invideo quiz time and name validation", function(){
 		o_c.scroll(ptor, 1000);
 		change_name(ptor,"sleep");
 		ptor.navigate().refresh();
+		ptor.sleep(5000)
 	})
 
 	it('should clear the course for deletion', function(){
@@ -54,11 +55,9 @@ xdescribe("invideo quiz time and name validation", function(){
 	    teacher.delete_course(ptor, 1);
 	    o_c.logout(ptor);
 	})
-})
-
-describe("lec name data validation", function(){
 	
 	it('should sign in as teacher', function(){
+		ptor.sleep(2000)
 		o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
@@ -96,7 +95,7 @@ describe("lec name data validation", function(){
 	})
 })
 
-describe("lec url data validation", function(){
+describe("lec details data validation", function(){
 	
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
@@ -115,10 +114,123 @@ describe("lec url data validation", function(){
 		teacher.init_lecture(ptor, "lecture","https://www.youtube.com/watch?v=SKqBmAHwSkg");
 	})
 
-	it('should change the name and validate', function(){
+	it('should make sure that the lecture name is set correctly', function(){
+		element(by.id('name')).then(function(name){
+			expect(name.getText()).toBe('lecture');
+		})
+	})
+	it('should make sure that the lecture url is set correctly', function(){
+		element(by.id('url')).then(function(url){
+			expect(url.getText()).toBe('https://www.youtube.com/watch?v=SKqBmAHwSkg');
+		})
+	})
+
+	it('should try setting the url to blank', function(){
 		change_lecture_url(' ');
 		error_feedback("Url can't be blank");
+		cancel_editing();
 	})
+
+	it('should try setting a Vimeo url', function(){
+		change_lecture_url('http://vimeo.com/109672232');
+		error_feedback("Invalid Input");
+		cancel_editing();
+	})
+
+	it('should try setting a .mov url', function(){
+		change_lecture_url('http://it.uu.se/katalog/davbl791/wide-test.mov');
+		error_feedback("Invalid Input");
+		cancel_editing();
+	})
+
+	it('should try setting a .mp4 url', function(){
+		change_lecture_url('http://it.uu.se/katalog/davbl791/wide-test.mp4');
+	})
+
+	it('should now have the new mp4 video', function(){
+		element(by.id('url')).then(function(url){
+			expect(url.getText()).toBe('http://it.uu.se/katalog/davbl791/wide-test.mp4');
+		})
+	})
+
+	it('should be in order and required by default', function(){
+		element(by.model('lecture.required')).then(function(in_order){
+			expect(in_order.getAttribute('checked')).toBe('true');
+		})
+		element(by.model('lecture.graded')).then(function(graded){
+			expect(graded.getAttribute('checked')).toBe('true');
+		})
+	})
+
+	it('should change the lecture to be not in order', function(){
+		element(by.model('lecture.required')).click().then(function(){
+			ptor.navigate().refresh();
+		})
+	})
+
+	it('should now not be in order', function(){
+		element(by.model('lecture.required')).then(function(in_order){
+			expect(in_order.getAttribute('checked')).toBe(null);
+		})
+	})
+
+	it('should change the lecture to be not required', function(){
+		element(by.model('lecture.graded')).click().then(function(){
+			ptor.navigate().refresh();
+		})
+	})
+
+	it('should now not be required', function(){
+		element(by.model('lecture.graded')).then(function(required){
+			expect(required.getAttribute('checked')).toBe(null);
+		})
+	})
+
+	it('should be using module\'s visiblity and due times bt default', function(){
+		element(by.model('lecture.appearance_time_module')).then(function(appearance_check){
+			expect(appearance_check.getAttribute('checked')).toBe('true')
+		})
+
+		element(by.model('lecture.due_date_enabled')).then(function(due_enabled){
+			expect(due_enabled.getAttribute('checked')).toBe('true')
+		})
+
+		element(by.model('lecture.due_date_module')).then(function(due_module){
+			expect(due_module.getAttribute('checked')).toBe('true')
+		})
+	})
+
+	it('should try changing the appearance date to an invalid date - before module appearance', function(){
+		element(by.model('lecture.appearance_time_module')).then(function(appearance_check){
+			appearance_check.click();
+			expect(appearance_check.getAttribute('checked')).toBe(null)
+		})
+		change_appearance_date(getYesterday("dd-mmmm-yyyy"));
+		error_feedback('Appearance time must be after module appearance time');
+	})
+
+	it('should try changing the appearance date to an invalid date - after due date', function(){
+		change_appearance_date(getAfterNextWeek("dd-mmmm-yyyy"));
+		error_feedback('Appearance time must be before due time');
+		cancel_editing();
+	})
+////////
+	it('should try changing the due date to an invalid date - before appearance', function(){
+		element(by.model('lecture.due_date_module')).then(function(appearance_check){
+			appearance_check.click();
+			expect(appearance_check.getAttribute('checked')).toBe(null)
+		})
+		change_due_date(getYesterday("dd-mmmm-yyyy"));
+		error_feedback('Appearance time must be before due time');
+	})
+
+	it('should try changing the due date to an invalid date - after module\'s due date', function(){
+		change_due_date(getAfterNextWeek("dd-mmmm-yyyy"));
+		error_feedback('Due time must be before module\'s due time');
+		cancel_editing();
+	})
+
+
 
 	it('should clear the course for deletion', function(){
 		// o_c.to_teacher(ptor);
@@ -135,6 +247,83 @@ describe("lec url data validation", function(){
 	    o_c.logout(ptor);
 	})
 })
+
+var months = ["January",
+							"February",
+							"March",
+							"April",
+							"May",
+							"June",
+							"July",
+							"August",
+							"September",
+							"October",
+							"November",
+							"December"
+      			];
+function getYesterday(format){
+	var date = new Date();
+	date.setDate(date.getDate() - 1);
+	return format.replace('yyyy', date.getFullYear()).replace('mmmm', months[date.getMonth()]).replace('mm', date.getMonth()+1).replace('dd', date.getDate());
+
+}
+function getTomorrow(format){
+	var date = new Date();
+	date.setDate(date.getDate() + 1);
+	return format.replace('yyyy', date.getFullYear()).replace('mmmm', months[date.getMonth()]).replace('mm', date.getMonth()+1).replace('dd', date.getDate());
+}
+function getNextWeek(format){
+	var date = new Date();
+	date.setDate(date.getDate() + 7);
+	return format.replace('yyyy', date.getFullYear()).replace('mmmm', months[date.getMonth()]).replace('mm', date.getMonth()+1).replace('dd', date.getDate());
+}
+function getAfterNextWeek(format){
+	var date = new Date();
+	date.setDate(date.getDate() + 8);
+	return format.replace('yyyy', date.getFullYear()).replace('mmmm', months[date.getMonth()]).replace('mm', date.getMonth()+1).replace('dd', date.getDate());
+}
+
+function change_appearance_date(date){
+	element(by.tagName('details-date')).click().then(function(){
+		element(by.className('editable-input')).sendKeys(date);
+		element(by.className('check')).click();
+	})
+}
+function change_appearance_time(hours, minutes){
+	element(by.tagName('details-time')).click().then(function(){
+		element(by.className('editable-controls')).then(function(controls){
+			controls.findElements(protractor.By.tagName('input')).then(function(inputs){
+				inputs[0].sendKeys(hours);
+				inputs[1].sendKeys(minutes);
+			}).then(function(){
+				element(by.className('fi-check')).click();
+			})
+		})
+	})
+}
+
+function change_due_date(date){
+	element.all(by.tagName('details-date')).then(function(dates){
+		dates[1].click().then(function(){
+			element(by.className('editable-input')).sendKeys(date);
+			element(by.className('check')).click();
+		})
+	})
+}
+function change_due_time(hours, minutes){
+	element.all(by.tagName('details-time')).then(function(times){
+		times[1].click().then(function(){
+			element(by.className('editable-controls')).then(function(controls){
+				controls.findElements(protractor.By.tagName('input')).then(function(inputs){
+					inputs[0].sendKeys(hours);
+					inputs[1].sendKeys(minutes);
+				}).then(function(){
+					element(by.className('fi-check')).click();
+				})
+			})
+		})
+	})
+}
 
 function create_and_check(ptor){
 	youtube.seek(ptor, 21);
@@ -160,7 +349,9 @@ function change_name(ptor, text){
 	})	
 	ptor.sleep(5000);
 		element(by.className('editable-input')).sendKeys('test');
-		element(by.className('fi-check')).click();
+		ptor.findElement(protractor.By.className('editable-buttons')).findElement(protractor.By.className('fi-check')).then(function(confirm){
+			confirm.click();
+		})
 		
 		element.all(by.name('quiz_name')).then(function(q_names){
 			expect(q_names[0].getText()).toEqual('test');
@@ -185,4 +376,8 @@ function error_feedback(error){
 	element(by.className('editable-controls')).element(by.className('error')).then(function(err){
 		expect(err.getText()).toContain(error);
 	})
+}
+
+function cancel_editing(){
+	element(by.className('fi-x')).click();
 }

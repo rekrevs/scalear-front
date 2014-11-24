@@ -7,7 +7,7 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-xdescribe("1", function(){
+describe("1", function(){
 
     it('should sign in as teacher', function(){
         o_c.press_login(ptor)
@@ -86,11 +86,11 @@ xdescribe("1", function(){
 })
 
 
-xdescribe("2", function(){
+describe("2", function(){
 
     it('should sign in as teacher', function(){
         o_c.press_login(ptor)
-        o_c.sign_in(ptor, params.teacher2_mail, params.password);
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
     it('should create_course', function(){
@@ -185,7 +185,7 @@ describe("3", function(){
 
     it('should sign in as teacher', function(){
         o_c.press_login(ptor)
-        o_c.sign_in(ptor, params.teacher2_mail, params.password);
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
     it('should create_course', function(){

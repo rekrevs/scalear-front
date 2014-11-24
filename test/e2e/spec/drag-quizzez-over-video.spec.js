@@ -114,7 +114,7 @@ describe("2", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
 		student.expect_quiz(ptor);
 		student.check_drags_no(ptor, 3)
 	})
@@ -192,7 +192,7 @@ describe("3", function(){
 		// o_c.press_content_navigator(ptor);
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
-		youtube.seek(ptor, 21);
+		youtube.seek(ptor, 20.9);
 		student.expect_quiz(ptor);
 		student.check_drags_no(ptor, 3)
 	})

@@ -49,7 +49,7 @@ describe("1", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 20.9);
-		ptor.sleep(1000);
+		ptor.sleep(5000);
 		student.expect_quiz(ptor);
 		student.check_invideo_ocq_no(ptor, 3);
 	})
@@ -93,7 +93,7 @@ describe("1", function(){
 	})
 })
 
-describe("2", function(){
+xdescribe("2", function(){
 
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
@@ -123,7 +123,7 @@ describe("2", function(){
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
 		teacher.create_invideo_ocq_text_quiz(ptor);
-		teacher.make_ocq_text_questions(ptor);
+		// teacher.make_ocq_text_questions(ptor);
 	})
 
 	it('should login a student and check for ocq_no', function(){
@@ -134,7 +134,7 @@ describe("2", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 20.9);
-		ptor.sleep(1000);
+		ptor.sleep(3000);
 		student.expect_quiz(ptor);
 		student.check_invideo_ocq_no(ptor, 3);
 	})
@@ -171,7 +171,7 @@ describe("2", function(){
 	})
 })
 
-describe("explanation validation", function(){
+xdescribe("explanation validation", function(){
 
 	it('should sign in as teacher', function(){
 		// o_c.press_login(ptor);
@@ -201,7 +201,7 @@ describe("explanation validation", function(){
 	it('should create quiz', function(){
 		youtube.seek(ptor, 21);
 		teacher.create_invideo_ocq_text_quiz(ptor);
-		teacher.make_ocq_text_questions(ptor);
+		// teacher.make_ocq_text_questions(ptor);
 	})
 
 	it('should login a student and check for ocq_no', function(){
@@ -212,7 +212,7 @@ describe("explanation validation", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 20.9);
-		ptor.sleep(1000);
+		ptor.sleep(3000);
 		student.expect_quiz(ptor);
 		student.check_invideo_ocq_no(ptor, 3);
 	})

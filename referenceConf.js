@@ -50,17 +50,17 @@ exports.config = {
         // 'test/e2e/spec/course-editor-basic.spec.js', //(√)
         // 'test/e2e/spec/create-announcements.spec.js', //(√)
         // 'test/e2e/spec/dashboard.spec.js', //(√)
-        'test/e2e/spec/discussions.spec.js', 
+        // 'test/e2e/spec/discussions.spec.js', //(√)  
         // 'test/e2e/spec/enrollment-help.spec.js', //(√)
-        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js',
-        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',
-        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',
-        // 'test/e2e/spec/mcq-survey-over-video.spec.js',
+        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //(√)
+        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//(√)
+        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js', ,//(√)
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //(√)
         // 'test/e2e/spec/module-statistics.spec.js', //(√)
         // 'test/e2e/spec/normal-quiz.spec.js', //(√)
         // 'test/e2e/spec/normal-survey.spec.js', //(√)
         // 'test/e2e/spec/notes.spec.js', //(√)
-        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
+        'test/e2e/spec/ocq-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/ocq-quizzez-over-video.spec.js',
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',
         // 'test/e2e/spec/ocq-survey-over-video.spec.js',
@@ -70,8 +70,8 @@ exports.config = {
         // 'test/e2e/spec/teacher-managment.spec.js', //(√)
         // 'test/e2e/spec/timeline.spec.js',
         // 'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
-        // 'test/e2e/spec/account-info-validation.spec.js',
-        // 'test/e2e/spec/create-course-check-info.spec.js',
+        // 'test/e2e/spec/account-info-validation.spec.js',//(√)
+        // 'test/e2e/spec/create-course-check-info.spec.js',//(√)
         // 'test/e2e/spec/preview-as-student.spec.js', //problem with deleting course at the end
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',

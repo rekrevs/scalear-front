@@ -114,7 +114,7 @@ describe("2", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 20.9);
-		ptor.sleep(1000);
+		ptor.sleep(3000);
 		student.expect_quiz(ptor);
 	})
 
@@ -196,7 +196,7 @@ describe("3", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 20.9);
-		ptor.sleep(1000);
+		ptor.sleep(3000);
 		student.expect_quiz(ptor);
 	})
 
@@ -274,7 +274,7 @@ describe("check for explanation", function(){
 		// teacher.open_module(ptor, 1);
 		// o_c.press_content_navigator(ptor);
 		youtube.seek(ptor, 20.9);
-		ptor.sleep(1000);
+		ptor.sleep(3000);
 		student.expect_quiz(ptor);
 	})
 

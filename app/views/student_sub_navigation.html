@@ -4,7 +4,10 @@
     <top-bar class="sub-header whitesmoke" style="z-index: 10 !important;">
       <ul class="title-area">
         <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="head.lectures">
-          <h1 class="disable_selection"><a id="content_navigator" class="truncate dark-text sub-header-component dark-medium-grey" ng-class="{'green-color-white': ContentNavigator.status, 'dark-medium-grey-hover': !ContentNavigator.status}" ng-click="toggleNavigator()" style="width: 300px;margin-right:10px"><i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }"></i> {{course.short_name}}: {{course.selected_module.name || 'courses.select_module' | translate}}</a></h1>
+          <h1 class="disable_selection"><a id="content_navigator" class="truncate dark-text sub-header-component dark-medium-grey" ng-class="{'green-color-white': ContentNavigator.status, 'dark-medium-grey-hover': !ContentNavigator.status}" ng-click="toggleNavigator()" style="width: 300px;margin-right:10px">
+            <i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }"></i>
+            <i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }" style="position:absolute;top:2px;left:15px"></i>
+           {{course.short_name}}: {{course.selected_module.name || 'courses.select_module' | translate}}</a></h1>
         </li>
         <li toggle-top-bar class="menu-icon"><a href=""></a></li>
         <li ></li>
@@ -13,7 +16,7 @@
         <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="head.lectures" >
           <h1 class="disable_selection right truncate dark-text sub-header-component dark-medium-grey" ng-class="{'blue-color-white': TimelineNavigator.status, 'dark-medium-grey-blue-hover': !TimelineNavigator.status}" style="width: 300px;">
             <span><timeline-filters class="settings" /></span>
-            <a id="timeline_navigator" ng-click="toggleTimeline()" style="color: inherit;"><i ng-class="{'arrow_down_dark_icon': !TimelineNavigator.status, 'arrow_up_dark_icon': TimelineNavigator.status }"></i> Timeline</a>            
+            <a id="timeline_navigator" ng-click="toggleTimeline()" style="color: inherit;"><i ng-class="{'arrow_down_dark_icon': !TimelineNavigator.status, 'arrow_up_dark_icon': TimelineNavigator.status }"></i><i ng-class="{'arrow_down_dark_icon': !TimelineNavigator.status, 'arrow_up_dark_icon': TimelineNavigator.status }" style="position:absolute;top:2px;left:15px"></i> Timeline</a>            
           </h1>
         </li>
       </ul>

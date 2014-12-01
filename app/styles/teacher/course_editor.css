@@ -25,9 +25,9 @@ input[type="checkbox"].editable-input.editable-has-buttons{
 	width:12px !important;
 }
 
-details-date > form > span > ul.f-dropdown{
+/*details-date > form > span > ul.f-dropdown{
 	left:0% !important;
-}
+}*/
 
 
 a.editable-click { 

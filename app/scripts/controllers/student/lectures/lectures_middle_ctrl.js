@@ -31,6 +31,14 @@ angular.module('scalearAngularApp')
         $scope.addNote();
     })
 
+    $scope.$on('mark_confused', function(){
+        $scope.addConfused();
+    })
+
+    $scope.$on('toggle_fullscreen', function(){
+        $scope.toggleFullscreen();
+    })
+
     $scope.$on('lecture_filter_update',function(ev,filters){
       $scope.checkModel=filters
       $timeout(function(){
@@ -394,16 +402,12 @@ angular.module('scalearAngularApp')
             }
         });
     }
-    $scope.$on('mark_confused', function(){
-        $scope.addConfused();
-    })
+    
 
     $scope.toggleFullscreen=function(){
         $scope.fullscreen? goSmallScreen() : goFullscreen() 
     }
-    $scope.$on('toggle_fullscreen', function(){
-        $scope.toggleFullscreen();
-    })
+    
 
     var goFullscreen=function(){
         isiPad()? goMobileFullscreen() : goDesktopFullscreen()
@@ -420,6 +424,7 @@ angular.module('scalearAngularApp')
         $scope.fullscreen= false
          console.log($scope.fullscreen)
         $scope.video_class = 'flex-video'
+        $scope.container_class=""
         $timeout(function(){$scope.$emit("updatePosition")})
         if($scope.quiz_mode == true){
             $scope.quiz_mode = false
@@ -432,6 +437,7 @@ angular.module('scalearAngularApp')
         $scope.resize.big()
         $scope.fullscreen= true
         $scope.video_class = 'video_class_full'
+        $scope.container_class="black"
     }
 
     var goMobileSmallScreen=function(){

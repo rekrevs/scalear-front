@@ -8,68 +8,84 @@
 	 </span>
 </span>
 <span id="lecture_container">
-	<div class="small-8 small-centered land-uncentered land-medium-8 portrait-medium-12 medium-8 large-8 no-padding columns with-small-padding-right" ng-class="{
+	<div class="small-8 small-centered land-uncentered land-medium-8 portrait-medium-12 medium-8 large-7 no-padding columns with-small-padding-right" ng-class="{
 	'large-uncentered':ContentNavigator.status || TimelineNavigator.status,
-	'large-10':ContentNavigator.status && !TimelineNavigator.status
-}">
+	'large-9':ContentNavigator.status && !TimelineNavigator.status}">
 		<div  ng-hide="!lecture" class="small-12">
 			<div id="main-video-container" ng-style="container_style"> 
 				<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->				
-					<form name="answer_form" novalidate >
-						<span >
-							<video_container  ng-class="container_class" ng-init="video_class='flex-video'" screenfull active="fullscreen" style="width:100%;height:100%">
-								<span class="no_solve" ng-if="!should_play">
+				<form name="answer_form" novalidate >
+					<span >
+						<video_container  ng-class="container_class" ng-init="video_class='flex-video'" screenfull active="fullscreen" style="width:100%;height:100%">
+							<span class="no_solve" ng-if="!should_play">
+								<center>
+									<div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' >
+										<h2 style="position:relative;top:90px;font-weight:300;font-size:18px" ><span translate>lectures.finish_before_proceeding</span></h2>
+									</div>						
+								</center>
+							</span>
+							<span ng-if="should_play" page-name="{{current}}" step-text="Here is where you watch your online videos and answer quizzes." step-index="1" step-placement="right" step-append-to-body="true">
+								<!-- <div ng-style="quiz_layer" class="widescreen slow-message" ng-show="!lecture.url || (!video_ready)">
 									<center>
-										<div style='color:#428bca; width: 100%;font-weight:300;font-size:12px' >
-											<h2 style="position:relative;top:90px;font-weight:300;font-size:18px" ><span translate>lectures.finish_before_proceeding</span></h2>
-										</div>						
+										<span ng-show="slow">
+											<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
+											<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
+										</span>
+										<loading size='small' show='true' style="position:relative;top:70px;" />
 									</center>
-								</span>
-								<span ng-if="should_play" page-name="{{current}}" step-text="Here is where you watch your online videos and answer quizzes." step-index="1" step-placement="right" step-append-to-body="true">
-									<!-- <div ng-style="quiz_layer" class="widescreen slow-message" ng-show="!lecture.url || (!video_ready)">
-										<center>
-											<span ng-show="slow">
-												<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
-												<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
-											</span>
-											<loading size='small' show='true' style="position:relative;top:70px;" />
-										</center>
-									</div> -->
-									<youtube class="flex-video widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' ng-style="video_layer" style="margin: 0 auto;">
-										<quiz ng-style="quiz_layer" ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (slow && !video_ready)" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1; width: 100% !important;">
-											<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="top: 150px;">
-											</loading>
-											<div class="slow-message text-center" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="slow">
-												<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
-												<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
-												<loading size='big' show='true' style="position:relative;top:70px;" />
-											</div>
-											<div ng-if="selected_quiz.quiz_type == 'html'" >
-											 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
-											</div>
-											<div ng-if="selected_quiz.quiz_type != 'html'">
-											 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
-											</div>
-										</quiz>
-									</youtube>
-									<progress-bar ng-show="!slow && lecture.url" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' blink="blink_class" total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" videoready="video_ready" style="position: relative;">
-										<div ng-show="end_buttons" style="position: absolute;top: -71px;left: 47%;width: 0px;z-index:1">
-											<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
-									    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
+								</div> -->
+								<youtube class="flex-video widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' ng-style="video_layer" style="margin: 0 auto;">
+									<quiz ng-style="quiz_layer" ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (slow && !video_ready)" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1; width: 100% !important;">
+										<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="top: 150px;">
+										</loading>
+										<div class="slow-message text-center" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="slow">
+											<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
+											<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
+											<loading size='big' show='true' style="position:relative;top:70px;" />
 										</div>
-							    		<!-- <controls id="controls-bar" class="progress_controls" ng-class="{'push-from-left': !quiz_mode}" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
-										</controls> -->
-										<div class="check-answer show-inline">
-											<button type="button" ng-show="quiz_mode" class="tiny success button with-small-padding no-margin" ng-click="checkAnswer()" translate>youtube.check_answer</button>
+										<div ng-if="selected_quiz.quiz_type == 'html'" >
+										 	<student-answer-form submitted="submitted" quiz="selected_quiz" student-answers="studentAnswers" explanation="explanation"/>
 										</div>
-										<notification message="notification_message" submessage="notification_submessage" /> 
+										<div ng-if="selected_quiz.quiz_type != 'html'">
+										 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
+										</div>
+									</quiz>
+								</youtube>
+								<progress-bar ng-show="!slow && lecture.url" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' blink="blink_class" total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" videoready="video_ready" style="position: relative;">
+									<div ng-show="end_buttons" style="position: absolute;top: -71px;left: 47%;width: 0px;z-index:1">
+										<button type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
+								    	<button ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span> >> </button>
+									</div>
+						    		<!-- <controls id="controls-bar" class="progress_controls" ng-class="{'push-from-left': !quiz_mode}" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
+									</controls> -->
+									<div class="check-answer show-inline">
+										<button type="button" ng-show="quiz_mode" class="tiny success button with-small-padding no-margin" ng-click="checkAnswer()" translate>youtube.check_answer</button>
+									</div>
+									<notification message="notification_message" submessage="notification_submessage" /> 
 						    	</progress-bar>
 						    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;"></review_inclass> 
-							    </span>
-						    </video_container>
-					    </span>
-					</form>
-				
+								<div ng-if="fullscreen" class="row with-tiny-margin-top">
+									<center class="small-block-grid-3">
+										<button class="button small no-margin-bottom" ng-click="addNote()" tooltip="Click or type N to add a note" tooltip-append-to-body="true">New Note</button>
+										<button class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="Click or type Q to ask a question" tooltip-append-to-body="true">Ask Question</button>
+										<button class="button small no-margin-bottom" ng-click="addConfused()" tooltip="Click or type C to add confused" tooltip-append-to-body="true">Confused</button>
+										<button ng-if="!fullscreen" class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip="Click or type F to enter fullscreen" tooltip-append-to-body="true">Fullscreen</button>
+										<button ng-if="fullscreen" class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip="Click or type F to enter smallscreen" tooltip-append-to-body="true">Smallscreen</button>
+									</center>
+								</div>
+						    </span>
+					    </video_container>
+				    </span>
+				</form>	
+				<div ng-if="!fullscreen" class="row with-tiny-margin-top">
+					<center class="small-block-grid-3">
+						<button class="button small no-margin-bottom" ng-click="addNote()" tooltip="Click or type N to add a note" tooltip-append-to-body="true">New Note</button>
+						<button class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="Click or type Q to ask a question" tooltip-append-to-body="true">Ask Question</button>
+						<button class="button small no-margin-bottom" ng-click="addConfused()" tooltip="Click or type C to add confused" tooltip-append-to-body="true">Confused</button>
+						<button ng-if="!fullscreen" class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip="Click or type F to enter fullscreen" tooltip-append-to-body="true">Fullscreen</button>
+						<button ng-if="fullscreen" class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip="Click or type F to enter smallscreen" tooltip-append-to-body="true">Smallscreen</button>
+					</center>
+				</div>
 			</div>
 		</div>
 	</div>

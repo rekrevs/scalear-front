@@ -40,7 +40,7 @@
 	<!--  -->
 	<center ng-show="!editing_mode && video_ready" class="small-block-grid-3">
 		<!-- <h6 class="with-margin-top no-padding color-grey size-14">use_content_menu</h6> -->
-		<button class="button small no-margin" questions-modal ng-click="openQuestionsModal()" ><span translate>New_Video_Question</span> (i)</button>
+		<button class="button small no-margin" questions-modal ng-click="openQuestionsModal()" tooltip="Click or type I to add a question" tooltip-append-to-body="true" translate>New_Video_Question</button>
 		<button class="button small no-margin" online-modal ng-click="openOnlineContentModal()" translate>new_video</button>
 		<button class="button small no-margin" ng-click="addModule()" translate>groups.new_module</button>
 	</center>

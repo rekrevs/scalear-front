@@ -533,7 +533,7 @@ angular.module('scalearAngularApp')
 				var factor=16.0/9.0
                 var win = angular.element($window)
 
-                var progressbar_height = 45
+                var progressbar_height = 95
 
 				$scope.fullscreen = true
 				angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");

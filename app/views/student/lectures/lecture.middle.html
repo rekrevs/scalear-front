@@ -9,8 +9,8 @@
 </span>
 <span id="lecture_container">
 	<div class="small-8 small-centered land-uncentered land-medium-8 portrait-medium-12 medium-8 large-7 no-padding columns with-small-padding-right" ng-class="{
-	'large-uncentered':ContentNavigator.status || TimelineNavigator.status,
-	'large-9':ContentNavigator.status && !TimelineNavigator.status}">
+	'large-uncentered':ContentNavigator.status || delayed_timeline_open,
+	'large-9':ContentNavigator.status && !delayed_timeline_open}">
 		<div  ng-hide="!lecture" class="small-12">
 			<div id="main-video-container" ng-style="container_style"> 
 				<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->				
@@ -77,7 +77,7 @@
 					    </video_container>
 				    </span>
 				</form>	
-				<div ng-if="!fullscreen" class="row with-tiny-margin-top">
+				<div ng-if="!fullscreen" class="row with-tiny-margin-top with-small-margin-bottom">
 					<center class="small-block-grid-3">
 						<button class="button small no-margin-bottom" ng-click="addNote()" tooltip="Click or type N to add a note" tooltip-append-to-body="true">New Note</button>
 						<button class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="Click or type Q to ask a question" tooltip-append-to-body="true">Ask Question</button>

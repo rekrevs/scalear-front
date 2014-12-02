@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
 
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
+    $scope.delayed_timeline_open = $scope.TimelineNavigator.status
 
     $scope.$on("export_notes",function(){
         $scope.exportNotes()
@@ -40,14 +41,24 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('lecture_filter_update',function(ev,filters){
-      $scope.checkModel=filters
-      $timeout(function(){
-        $scope.scrollIntoView()
-    },200)
+        $scope.checkModel=filters
+        $timeout(function(){
+            $scope.scrollIntoView()
+        },200)
     })
 
     $scope.$on('content_navigator_change',function(ev, status){
        $timeout(function(){$scope.$emit("updatePosition")})
+    })
+
+    $scope.$on('timeline_navigator_change',function(ev, status){
+          if(!status){
+            $timeout(function(){
+                $scope.delayed_timeline_open = false
+            },300)
+          }
+          else
+            $scope.delayed_timeline_open = status
     })
 
     $scope.$on('exit_preview',function(){
@@ -134,8 +145,6 @@ angular.module('scalearAngularApp')
                 lecture_id: id,
             },
             function(data) {
-                console.log("lecture")
-                console.log(data)
                 var lec = data.lecture
                 $scope.next_item = data.next_item 
                 $scope.alert_messages = data.alert_messages;
@@ -146,8 +155,6 @@ angular.module('scalearAngularApp')
                     else if(key=="today")
                         $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$filter("date")($scope.alert_messages[key],'shortTime')
                 }
-                console.log("$scope.course")
-                console.log($scope.course)
                                
                 if(!$scope.preview_as_student){
                     for(var item in lec.requirements){
@@ -163,7 +170,7 @@ angular.module('scalearAngularApp')
 
                 if($scope.should_play){
                     if(data.done[2]){
-                        $scope.course.markDone(data.done[1],data.done[0], data.done[2])
+                        $scope.course.markDone(data.done[1],data.done[0])
                         $scope.lecture.is_done = data.done[2]
                     }
                 }
@@ -180,13 +187,12 @@ angular.module('scalearAngularApp')
 
      $scope.lecture_player.events.onReady = function() {
         $scope.slow = false
-        $scope.total_duration = $scope.lecture_player.controls.getDuration()
+        $scope.total_duration = $scope.lecture_player.controls.getDuration() - 1
+        var duration_milestones = [25, 75, 100]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
             $scope.lecture_player.controls.cue(quiz.time, function() {
                 $scope.lecture_player.controls.pause()
-                $scope.seek(quiz.time)  
-                console.log(quiz.time)
-                console.log($scope.lecture_player.controls.getTime())              
+                $scope.seek(quiz.time)             
                 $scope.closeReviewNotify()
                 $scope.studentAnswers[quiz.id] = {}
                 $scope.selected_quiz = quiz                              
@@ -213,6 +219,22 @@ angular.module('scalearAngularApp')
             })
         })
 
+        duration_milestones.forEach(function(milestone){
+            $scope.lecture_player.controls.cue(($scope.total_duration*milestone)/100, function() {
+                Lecture.updatePercentView({
+                    course_id:$state.params.course_id, 
+                    lecture_id:$state.params.lecture_id
+                },
+                {percent:milestone},function(data){
+                    $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
+                    if(data.done){
+                        $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
+                        $scope.lecture.is_done = data.done
+                    }
+                })
+            })
+        })
+
         $scope.video_ready=true
         console.log($scope.supported_speeds)
         var time =$state.params.time        
@@ -230,6 +252,8 @@ angular.module('scalearAngularApp')
 
     $scope.nextItem=function(){
         if ($scope.next_item.id) {
+            if(!$scope.last_navigator_state)
+                ContentNavigator.close()
             var next_state = "course.module.courseware." + $scope.next_item.class_name
             var s = $scope.next_item.class_name + "_id"
             var to = {}
@@ -339,6 +363,8 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onEnd= function() {
         $scope.end_buttons = true
+        $scope.last_content_state = $scope.ContentNavigator.getStatus()
+        // $scope.ContentNavigator.open()
     }
 
     $scope.lecture_player.events.onSlow=function(is_youtube){
@@ -371,12 +397,6 @@ angular.module('scalearAngularApp')
             window.onmousemove = null  
         }
     }
-    
-    var switchToTab=function(tab){
-        for(var i in $scope.tabs)
-            $scope.tabs[i] = false
-        $scope.tabs[tab] = true
-    }
 
     $scope.addConfused= function(){
         console.log("caosdnsakn")
@@ -407,7 +427,6 @@ angular.module('scalearAngularApp')
     $scope.toggleFullscreen=function(){
         $scope.fullscreen? goSmallScreen() : goFullscreen() 
     }
-    
 
     var goFullscreen=function(){
         isiPad()? goMobileFullscreen() : goDesktopFullscreen()
@@ -602,8 +621,10 @@ angular.module('scalearAngularApp')
             }
             reviewInclass() 
 
-            $scope.course.markDone(data.done[1],data.done[0], data.done[2])
-            $scope.lecture.is_done = data.done[2]                
+            if(data.done[2]){
+                $scope.course.markDone(data.done[1],data.done[0])
+                $scope.lecture.is_done = data.done[2]
+            }
         }
 
         $interval(function(){

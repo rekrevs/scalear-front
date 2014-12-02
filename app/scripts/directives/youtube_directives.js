@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
                         player.video.className = "fit-inside"
                         if(isiPad() || scope.controls == "default")
                         	player.controls(true);
-                        player.autoplay(scope.autoplay);
+                        player.autoplay(false);
                     }
 					$log.debug("loading!!!")
 					$log.debug(scope.url);

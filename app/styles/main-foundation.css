@@ -15,6 +15,9 @@ width: 78%;
 .containeropen.small-12{
   max-width: none !important;
 }
+.content-navigator-container{
+  width: 300px;
+}
 
 .content-navigator-container, .timeline_container{
   /*margin-top: -50px;*/
@@ -23,13 +26,13 @@ width: 78%;
   /*padding: 10px;*/
   /*left: -300px;*/
   /*position: fixed;*/
-  display: none;
+  /*display: none;*/
   /*left: 0px;*/
   /*display: inline-block;*/
   /*background-color: #222;*/
   background-color: white;
   /*box-shadow: 1px 1px 1px lightgrey;*/
-  height: 88%;
+  height: 0;
   overflow-y: auto;
   z-index: 1 !important;
   -webkit-transition: all 0.1s ease-in-out;
@@ -39,17 +42,21 @@ width: 78%;
   transition: all 0.1s ease-in-out;
   -webkit-overflow-scrolling: touch;
 }
-.containeropen, .timeline_open{
-  /*height: 88%;*/
+.containeropen{
+  height: 88%;
   /*width: 300px;*/
   /*left: 0px;*/
-  display: inline-block;
-  -webkit-transition: all 0.1s ease-in-out;
+  /*display: inline-block;*/
+  /*-webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
-  transition: all 0.1s ease-in-out;
+  transition: all 0.1s ease-in-out;*/
 }
+
+/*.timeline_open{
+  height: 0vh
+}*/
 
 .timeline_open.large-2, .timeline_open.medium-4{
   min-width: 300px !important;
@@ -66,7 +73,7 @@ width: 78%;
 	/*margin-top: 50px;*/
 	/*padding-top: 10px;*/
 	/*max-width: 85rem;*/
-  max-width: 99%;
+  max-width: 100%;
   margin: 0 auto;
 }
 footer{
@@ -131,7 +138,10 @@ span.error, small.error{
 }
 
 /*COLORING*/
-.white, .white-hover{
+.anomaly, .anomaly-with-hover{
+  background-color: #FAFBFC !important;
+}
+.white, .white-with-hover{
 	background-color: #ffffff !important;
 }
 .whitesmoke, .whitesmoke-hover{
@@ -177,7 +187,7 @@ span.error, small.error{
 .light-grey, .light-grey-hover{
 	background-color: #ececea !important;
 }
-.white-hover:hover, .light-grey-hover:hover{
+.white-with-hover:hover, .light-grey-hover:hover, .anomaly-with-hover:hover{
   background-color: #d4d4d2 !important;
 }
 .lighter-grey, .lighter-grey-no-hover{
@@ -1502,6 +1512,10 @@ a.editable-click{
 .small-height-big{
     height: 48vh !important;
   }
+
+.no-height{
+  height: 0vh
+}
 
 @media only screen and (orientation:landscape) and (max-width: 48.063em){
   .ipad .land-medium-4 {

@@ -6,7 +6,7 @@
 <td ng-if="item.data==null || item.data.isEdit" colspan="3">
     <question_block item="item" />
 </td>
-<td ng-if="item.data && !item.data.isEdit" colspan="3" bindonce style="padding: 0px;padding-right: 8px;" class="white-with-hover">
+<td ng-if="item.data && !item.data.isEdit" colspan="3" bindonce style="padding: 0px;padding-right: 8px;">
     <div class="discussion-content" ng-class="{ownpost: item.data.user_id == current_user.id, flagged: item.data.flags_count > 0}">
         <table style="width: 100%;" class="transparent no-border no-margin">
             <tr>
@@ -22,7 +22,7 @@
                         </span>
                         </div>
                         <div ng-if="item.data.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
-                            <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
+                            <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="false"></delete_button>
                             <!-- <delete_button class="hiddendeletebutton hide-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button> -->
                         </div>
                         <span ng-if="item.data.user_id != current_user.id">

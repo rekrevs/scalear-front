@@ -13,6 +13,17 @@ angular.module('scalearAngularApp')
                 getAllCourses()
             })
 
+            $scope.$on('content_navigator_change',function(ev, status){
+                if(!status){
+                    $timeout(function(){
+                        $scope.delayed_timeline_open = false
+                    },300)
+                }
+                else
+                    $scope.delayed_timeline_open = status
+            })
+            
+
             var getAllCourses=function(){
                 $scope.courses=null
                 var unwatch = $rootScope.$watch('current_user', function(){

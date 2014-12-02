@@ -295,7 +295,7 @@ angular.module('scalearAngularApp')
 				})
 			}
 		};
- }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course', function(Module, $stateParams, $state, $timeout, Lecture, Course){
+ }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator){
   return{
     restrict:'E',
     replace: true,
@@ -319,6 +319,28 @@ angular.module('scalearAngularApp')
 	  		scope.currentitem = null
 	  	}
    	  })
+
+	   scope.$watch('open_navigator',function(status){
+        if(status){
+            $timeout(function(){
+                scope.delayed_navigator_open = true
+            },100)
+          }
+          else
+            scope.delayed_navigator_open = status
+      	})
+
+   		scope.$on('item_done',function(ev,item){
+   			if(!ContentNavigator.getStatus()){
+		   		ContentNavigator.open()
+		   		$timeout(function(){
+		   			item.is_done = true
+		   		},1000)
+		   	}
+		   	else{
+		   		item.is_done = true
+		   	}
+   		})
 
    	  scope.moduleSortableOptions={
  		axis: 'y',

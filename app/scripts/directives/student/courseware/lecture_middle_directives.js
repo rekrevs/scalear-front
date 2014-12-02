@@ -580,7 +580,7 @@ angular.module('scalearAngularApp')
           }, true);
       }
   };
-}]).directive('studentTimeline', function() {
+}]).directive('studentTimeline', ['$timeout',function($timeout) {
   return {
     replace: true,
     restrict:"E",
@@ -594,6 +594,17 @@ angular.module('scalearAngularApp')
     templateUrl:'/views/student/lectures/student_timeline.html',
     link: function(scope, element, attrs) {
       // scope.checkModel={quiz:true,confused:true, discussion:true};
+
+      scope.$watch('open_timeline',function(status){
+        if(status){
+            $timeout(function(){
+                scope.delayed_timeline_open = true
+            },100)
+          }
+          else
+            scope.delayed_timeline_open = status
+      })
+
         scope.checkEmpty= function(item){
           return  item.type!=''
         }
@@ -609,7 +620,7 @@ angular.module('scalearAngularApp')
         }
     }
   }
-}).directive('confusedTimeline',['Lecture','$filter', function(Lecture,$filter){
+}]).directive('confusedTimeline',['Lecture','$filter', function(Lecture,$filter){
   return{
     restrict:"A",
     // replace:true,
@@ -747,7 +758,7 @@ angular.module('scalearAngularApp')
                           // '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
                         '</div>'+
                         '<div style="font-size: 10px; float: right; display: inline-block;">'+
-                          '<delete_button size="small" action="delete()" vertical="false" text="false" color="red"></delete_button>'+
+                          '<delete_button size="small" action="delete()" vertical="false" text="false" ></delete_button>'+
                         '</div>'+
                       '</div>',
             restrict: 'E',

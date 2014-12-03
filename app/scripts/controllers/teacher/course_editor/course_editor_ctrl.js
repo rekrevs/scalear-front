@@ -2,12 +2,25 @@
 
 angular.module('scalearAngularApp')
 
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$translate','$log','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink','courseResolver','UserSession','ContentNavigator', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $translate, $log, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink, courseResolver, UserSession, ContentNavigator) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$translate','$log','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink','courseResolver','UserSession','ContentNavigator','DetailsNavigator', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $translate, $log, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink, courseResolver, UserSession, ContentNavigator, DetailsNavigator) {
 
  	// $window.scrollTo(0, 0);
  	Page.setTitle('head.content')
 
     ContentNavigator.open()
+    DetailsNavigator.open()
+    $scope.DetailsNavigator = DetailsNavigator
+    $scope.delayed_details_open = DetailsNavigator.getStatus()
+    $scope.$on('details_navigator_change',function(ev, status){
+        console.log("datails status event", status)
+        if(!status){
+            $timeout(function(){
+                $scope.delayed_details_open = false
+            },300)
+          }
+          else
+            $scope.delayed_details_open = status
+    })
 
     $scope.$on('add_item', function(event, type){
         if(type=='video')

@@ -19,6 +19,19 @@ width: 78%;
   width: 300px;
 }
 
+.details-navigator-container{
+  height: 0;
+  overflow-y: auto;
+  z-index: 1 !important;
+  top: -5px;
+  right: -0.96em;
+  -webkit-overflow-scrolling: touch;
+}
+
+.details-navigator-container.large-height-big{
+  height:84vh !important;
+}
+
 .content-navigator-container, .timeline_container{
   /*margin-top: -50px;*/
   /*width: 300px;*/

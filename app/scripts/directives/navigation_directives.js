@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
 			}
 		};
 	 }])
-	.directive('teacherNavigation', ['$rootScope','$state','ContentNavigator', function($rootScope, $state, ContentNavigator) {
+	.directive('teacherNavigation', ['$rootScope','$state','ContentNavigator','DetailsNavigator', function($rootScope, $state, ContentNavigator, DetailsNavigator) {
            return{
 			replace:true,
 			restrict: "E",
@@ -54,6 +54,7 @@ angular.module('scalearAngularApp')
 			link: function(scope){
 				//  initFilters()
 				scope.ContentNavigator = ContentNavigator
+				scope.DetailsNavigator = DetailsNavigator
 				scope.$state = $state
 				scope.$watch("$state.includes('*.module.**')",function(value){
 					scope.in_module_state = value
@@ -82,6 +83,14 @@ angular.module('scalearAngularApp')
 
 				var setNavigator=function(val){
 					ContentNavigator.setStatus(val)
+				}
+
+				scope.toggleDetails=function(){
+					DetailsNavigator.setStatus(!DetailsNavigator.getStatus())
+				}
+
+				var setDetails=function(val){
+					DetailsNavigator.setStatus(val)
 				}
 
 				scope.addModule=function(){
@@ -136,7 +145,9 @@ angular.module('scalearAngularApp')
 				scope.updateProgressFilter=function(type){
 					scope.progress_filter[type] = !scope.progress_filter[type]
 					$rootScope.$broadcast('progress_filter_update', scope.progress_filter)
-				}		
+				}	
+
+				setDetails(true)	
 			}
 		};
  }]).directive('studentNavigation', ['$cookieStore', '$rootScope', '$state', 'Impersonate', 'ContentNavigator','TimelineNavigator', function($cookieStore, $rootScope, $state, Impersonate, ContentNavigator, TimelineNavigator) {

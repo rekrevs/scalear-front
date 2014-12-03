@@ -17,6 +17,6 @@
 		</div>
 	</div>
 </div>
-<div id="middle"  class="small-12 large-8 columns" ui-view="middle" />
+<div id="middle"  class="small-12 large-8 columns" ng-class="{'large-12': !delayed_details_open}" ui-view="middle" />
 
-<div id="details" class="small-12 large-4 columns no-padding" ui-view="details"/>
+<div id="details" class="details-navigator-container small-12 large-4 columns no-padding ease_in_out large-height-big" ui-view="details" ng-class="{'large-height-big small-height-big no-padding-left':DetailsNavigator.status,'no-height': !DetailsNavigator.status}"/>

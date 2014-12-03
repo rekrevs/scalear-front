@@ -49,6 +49,13 @@ angular.module('scalearAngularApp')
 
     $scope.$on('content_navigator_change',function(ev, status){
        $timeout(function(){$scope.$emit("updatePosition")})
+       if(!status){
+            $timeout(function(){
+                $scope.delayed_navigator_open = false
+            },299)
+          }
+          else
+            $scope.delayed_navigator_open = status
     })
 
     $scope.$on('timeline_navigator_change',function(ev, status){

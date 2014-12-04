@@ -17,19 +17,31 @@ angular.module('scalearAngularApp')
 			restrict: 'E', 
 			template: '<div class="ontop" id="ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
-}).directive('editPanel',function(){
+}).directive('editPanel',['$timeout',function($timeout){
 	return {		
 		 restrict: 'E',
 		 template: '<div id="editing">'+
 						'<div class="wheat">'+
 							'<h6 class="row no-margin color-wheat">'+
 							'<span style="margin-right: 5px;">{{double_click_msg |translate}}</span>'+
-							'    <button ng-disabled="disable_save_button" class="button tiny" ng-click="saveBtn()" translate>save</button>'+
-							'    <button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
-							'    <button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>lectures.cancel</button>'+
-						'</h6></div></div>',
+							'<div style="margin-top: 10px;margin-left: 10px;">'+
+								'<div style="float: left;">Title:</div>'+
+								'<input class="quiz_name ng-pristine ng-valid" type="text" ng-model="selected_quiz.question" style="width: 91%;float: left;margin-left: 10px;height: 28px;margin-bottom: 5px;">'+
+							'</div>'+
+							'    <button ng-disabled="disable_save_button" class="button tiny" " style="margin: 10px;float: right;" translate>events.done</button>'+ //ng-click="saveBtn()
+							// '    <button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
+							// '    <button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>lectures.cancel</button>'+
+							'</h6>'+
+						'</div>'+
+					'</div>',
+		link: function(scope, element, attrs) {
+			$timeout(function() {
+				console.log(element.find('.quiz_name'))
+	            element.find('.quiz_name').select();
+	        });
+		}
 	};
-}).directive('dropdownList',function(){
+}]).directive('dropdownList',function(){
 	return {
 		 scope: {
 		 	title:"@",

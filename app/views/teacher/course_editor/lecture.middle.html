@@ -49,7 +49,7 @@
 	</overlay>
 	<div class="small-12 small-centered columns" style="margin-top: 10px;">
 		<!-- <center ng-show="fullscreen"><a class='button small secondary fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center> -->
-		<center ng-show="editing_mode" style="margin-bottom:10px">
+		<center ng-if="editing_mode" style="margin-bottom:10px">
 			<edit_panel  />		
 			<alert ng-show="!hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
 		</center>
@@ -65,7 +65,7 @@
 		</div>
 		<br /> -->
 		
-		<quiz_list />
+		<!-- <quiz_list /> -->
 	</div>
 </div>
 <!-- <overlay ng-hide="video_ready || lecture.url!='none'" style="height:90%">

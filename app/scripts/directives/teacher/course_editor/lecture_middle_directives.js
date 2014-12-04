@@ -23,14 +23,22 @@ angular.module('scalearAngularApp')
 		 template: '<div id="editing">'+
 						'<div class="wheat">'+
 							'<h6 class="row no-margin color-wheat">'+
-							'<span style="margin-right: 5px;">{{double_click_msg |translate}}</span>'+
-							'<div style="margin-top: 10px;margin-left: 10px;">'+
-								'<div style="float: left;">Title:</div>'+
-								'<input class="quiz_name ng-pristine ng-valid" type="text" ng-model="selected_quiz.question" style="width: 91%;float: left;margin-left: 10px;height: 28px;margin-bottom: 5px;">'+
-							'</div>'+
-							'    <button ng-disabled="disable_save_button" class="button tiny" " style="margin: 10px;float: right;" translate>events.done</button>'+ //ng-click="saveBtn()
-							// '    <button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
-							// '    <button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>lectures.cancel</button>'+
+								'<span style="margin-right: 5px;">{{double_click_msg |translate}}</span>'+
+								'<div class="row" style="margin-top:10px">'+
+									'<div class="small-2 columns">Title:</div>'+
+									'<div class="small-9 left columns no-padding">'+
+										'<input class="quiz_name" type="text" ng-model="selected_quiz.question" style="margin-left: 10px;height: 28px;margin-bottom: 5px;">'+
+									'</div>'+
+								'</div>'+
+								'<div class="row">'+
+									'<div class="small-2 columns">Time:</div>'+
+									'<div class="small-4 left columns no-padding">'+
+										'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="margin-left: 10px;height: 28px;margin-bottom: 5px;">'+
+									'</div>'+
+								'</div>'+
+								'<button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:10px;margin-left: 0;float: right;" ng-click="exitBtn()" translate>lectures.cancel</button>'+
+								'<button ng-disabled="disable_save_button" class="button tiny" style="margin: 10px;float: right;" ng-click="saveBtn({exit:true})" translate>events.done</button>'+ //
+								// '    <button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
 							'</h6>'+
 						'</div>'+
 					'</div>',

@@ -2,8 +2,7 @@
 
 angular.module('scalearAngularApp')
     .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout','OnlineQuiz','$q', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout, OnlineQuiz,$q) {
-    $scope.$parent.not_module = true;
-    $scope.$parent.currentitem = $state.params.lecture_id
+
     $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
         $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
@@ -42,6 +41,14 @@ angular.module('scalearAngularApp')
     shortcut.add("i",function() {       
        $scope.openQuestionsModal()
     },{"disable_in_input" : true, 'propagate':false});
+
+    $scope.$on("show_online_quiz",function(ev, quiz){
+    	$scope.showOnlineQuiz(quiz)
+    })
+
+    $scope.$on("delete_online_quiz",function(ev, quiz){
+    	$scope.deleteQuizButton(quiz)
+    })
 	
     // $state.go('course.course_editor.lecture.quizList');
 
@@ -203,6 +210,7 @@ angular.module('scalearAngularApp')
 			$scope.submitted= false
 			$scope.editing_mode = true;
 			$scope.selected_quiz = quiz
+			$scope.$parent.selected_quiz = $scope.selected_quiz
 			$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
 			if(quiz.quiz_type =="html"){

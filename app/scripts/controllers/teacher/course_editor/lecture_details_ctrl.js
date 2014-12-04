@@ -4,8 +4,7 @@ angular.module('scalearAngularApp')
     .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter',
         function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter) {
 
-            var current_url;
-            $scope.video={}
+            
             //**************************FUNCTIONS****************************************///
             $scope.validateLecture = function(column, data) {
                 var d = $q.defer();
@@ -217,6 +216,7 @@ angular.module('scalearAngularApp')
                 $http.jsonp(url)
                     .success(function (data) {
                         $log.debug(data.entry)
+                        $scope.video={}
                         $scope.video.title = data.entry.title.$t;
                         $scope.video.author = data.entry.author[0].name.$t;
         		        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds

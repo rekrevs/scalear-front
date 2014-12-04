@@ -1,10 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureQuizListCtrl',['$scope', 'OnlineQuiz', '$translate','$q','$log','$stateParams', function ($scope, OnlineQuiz, $translate, $q, $log, $stateParams) {
-
-	$log.debug("loading quiz list")
-	$scope.editing_mode = false
+    .controller('lectureQuizListCtrl',['$scope', 'OnlineQuiz', '$translate','$q','$log','$stateParams','$rootScope', function ($scope, OnlineQuiz, $translate, $q, $log, $stateParams, $rootScope) {
 
 	var init= function(){
 		OnlineQuiz.getQuizList(
@@ -47,19 +44,16 @@ angular.module('scalearAngularApp')
 	    }
 	}
 	
-	$scope.validateName= function(data, elem){
+	$scope.validateName= function(question, elem){
 		var d = $q.defer();
 	    var doc={}
-	    doc.question=data;
-	    $log.debug($scope.$parent.quiz_list);
+	    doc.question=question;
 	    OnlineQuiz.validateName(
 	    	{online_quizzes_id: elem.id},
 	    	doc,
 	    	function(){
 				d.resolve()
 			},function(data){
-				$log.debug(data.status);
-				$log.debug(data);
 			if(data.status==422)
 			 	d.resolve(data.data.errors.join());
 			else
@@ -74,5 +68,15 @@ angular.module('scalearAngularApp')
 		var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); // minutes are worth 60 seconds. Hours are worth 60 minutes.
 		quiz.time = seconds
 		updateOnlineQuiz(quiz)
+	}
+
+	$scope.showQuiz=function(quiz){
+		// $scope.selected_quiz = quiz
+		$rootScope.$broadcast("show_online_quiz", quiz)
+	}
+
+	$scope.deleteQuiz=function(quiz){
+		// $scope.selected_quiz = null
+		$rootScope.$broadcast("delete_online_quiz", quiz)
 	}
 }]);

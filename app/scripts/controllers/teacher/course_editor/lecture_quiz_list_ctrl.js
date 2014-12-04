@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
 		OnlineQuiz.getQuizList(
 			{lecture_id:$stateParams.lecture_id},
 			function(data){
-				$scope.$parent.quiz_list = data.quizList
+				$scope.$parent.$parent.$parent.quiz_list = data.quizList
 			},
 			function(){}
 		);	

@@ -814,6 +814,11 @@ td.right-border{
   /*max-height: auto;*/
   /*height: 35px;*/
 }
+
+.details_accordian .content {
+  padding:0 0.5rem !important;
+  background: white !important
+}
 .delete-overlay{
   width: 100%;
   background: rgba(0 ,0 ,0 ,0.5);
@@ -930,6 +935,10 @@ button.active{
 }
 .with-light-border{
   border: 1px solid lightgrey;
+}
+
+.with-white-border-bottom{
+  border-bottom: 1px solid white;
 }
 
 /*BORDER SIZES*/

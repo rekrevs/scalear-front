@@ -10,16 +10,22 @@ angular.module('scalearAngularApp')
     ContentNavigator.open()
     DetailsNavigator.open()
     $scope.DetailsNavigator = DetailsNavigator
-    $scope.delayed_details_open = DetailsNavigator.getStatus()
+    $scope.delayed_details_status = DetailsNavigator.getStatus()
+    $scope.delayed_details_status2 = DetailsNavigator.getStatus()
     $scope.$on('details_navigator_change',function(ev, status){
         console.log("datails status event", status)
         if(!status){
+            $scope.delayed_details_status2 = false
             $timeout(function(){
-                $scope.delayed_details_open = false
-            },300)
+                $scope.delayed_details_status = false
+            },350)
           }
-          else
-            $scope.delayed_details_open = status
+          else{
+            $scope.delayed_details_status = true
+            $timeout(function(){
+                $scope.delayed_details_status2 = true
+            },300)
+        }
     })
 
     $scope.$on('add_item', function(event, type){
@@ -33,9 +39,9 @@ angular.module('scalearAngularApp')
     })
     
     $scope.$on('share_copy', function(event, data){
-        console.log(data)
-        console.log('caught sharing modal event')
-        console.log($scope.course.selected_module)
+        // console.log(data)
+        // console.log('caught sharing modal event')
+        // console.log($scope.course.selected_module)
         var modalInstance = $modal.open({
           templateUrl: '/views/teacher/course_editor/sharing_modal.html',
           controller: "sharingModalCtrl",
@@ -51,13 +57,13 @@ angular.module('scalearAngularApp')
           }
         });
 
-        modalInstance.result.then(function () {
-            console.log("shared")
-            // selectNone()
-        },function () {
-            console.log("close")
-            // selectNone()
-        });
+        // modalInstance.result.then(function () {
+        //     console.log("shared")
+        //     // selectNone()
+        // },function () {
+        //     console.log("close")
+        //     // selectNone()
+        // });
     })
 
      $scope.$on('add_module', function(event){

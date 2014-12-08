@@ -10,12 +10,10 @@ angular.module('scalearAngularApp')
      	$rootScope.$broadcast('timeline_navigator_change', this.status)
      },
      open: function(){
-     	this.status = true
-     	$rootScope.$broadcast('timeline_navigator_change', this.status)
+     	this.setStatus(true)
      },
      close: function(){
-     	this.status = false
-     	$rootScope.$broadcast('timeline_navigator_change', this.status)
+     	this.setStatus(false)
      }
    };
 }]);

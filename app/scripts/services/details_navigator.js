@@ -1,22 +1,21 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.factory('DetailsNavigator', ['$rootScope',function($rootScope) {
+.factory('DetailsNavigator', ['$rootScope','$timeout',function($rootScope,$timeout) {
    return {
      status: false,
      getStatus: function() { return this.status; },
      setStatus: function(stat){ 
      	this.status = stat
-        console.log("datails status", this.status)
-     	$rootScope.$broadcast('details_navigator_change', this.status)
+        // $timeout(function(){
+            $rootScope.$broadcast('details_navigator_change', stat)
+        // },3000)
      },
      open: function(){
-     	this.status = true
-     	$rootScope.$broadcast('details_navigator_change', this.status)
+     	this.setStatus(true)
      },
      close: function(){
-     	this.status = false
-     	$rootScope.$broadcast('details_navigator_change', this.status)
+     	this.setStatus(false)
      }
    };
 }]);

@@ -71,12 +71,10 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.showQuiz=function(quiz){
-		// $scope.selected_quiz = quiz
 		$rootScope.$broadcast("show_online_quiz", quiz)
 	}
 
 	$scope.deleteQuiz=function(quiz){
-		// $scope.selected_quiz = null
 		$rootScope.$broadcast("delete_online_quiz", quiz)
 	}
 }]);

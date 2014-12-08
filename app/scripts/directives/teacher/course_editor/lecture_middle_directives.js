@@ -33,11 +33,11 @@ angular.module('scalearAngularApp')
 								'<div class="row">'+
 									'<div class="small-2 columns">Time:</div>'+
 									'<div class="small-4 left columns no-padding">'+
-										'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="margin-left: 10px;height: 28px;margin-bottom: 5px;">'+
+										'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="margin-left: 10px;height: 28px;margin-bottom:0;">'+
 									'</div>'+
 								'</div>'+
-								'<button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:10px;margin-left: 0;float: right;" ng-click="exitBtn()" translate>lectures.cancel</button>'+
-								'<button ng-disabled="disable_save_button" class="button tiny" style="margin: 10px;float: right;" ng-click="saveBtn({exit:true})" translate>events.done</button>'+ //
+								'<button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:10px;margin-left:0;float:right;margin-top:0;" ng-click="exitBtn()" translate>lectures.cancel</button>'+
+								'<button ng-disabled="disable_save_button" class="button tiny" style="margin: 10px;float:right;margin-top:0;" ng-click="saveBtn({exit:true})" translate>events.done</button>'+ //
 								// '    <button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
 							'</h6>'+
 						'</div>'+

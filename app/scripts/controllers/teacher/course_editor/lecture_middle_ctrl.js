@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout','OnlineQuiz','$q', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout, OnlineQuiz,$q) {
+    .controller('lectureMiddleCtrl', ['$state', '$stateParams', '$scope', 'Lecture', 'CourseEditor', '$translate','$log','$rootScope','ErrorHandler','$timeout','OnlineQuiz','$q','DetailsNavigator', function ($state, $stateParams, $scope, Lecture, CourseEditor, $translate, $log,$rootScope, ErrorHandler, $timeout, OnlineQuiz,$q, DetailsNavigator) {
 
     $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
@@ -154,6 +154,7 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.insertQuiz=function(quiz_type, question_type){
+		$scope.last_details_state = DetailsNavigator.getStatus()
 		var promise = $q.when(true)
 		if ($scope.selected_quiz && $scope.quiz_deletable){
 			var old_insert_time = $scope.selected_quiz.time
@@ -194,6 +195,7 @@ angular.module('scalearAngularApp')
 				$scope.quiz_list.push(data.quiz)
 				$scope.quiz_loading = false;
 				$scope.quiz_deletable = true
+				DetailsNavigator.open()
 			}, 
 			function(){ //error
 				$scope.quiz_loading = false;
@@ -210,7 +212,7 @@ angular.module('scalearAngularApp')
 			$scope.submitted= false
 			$scope.editing_mode = true;
 			$scope.selected_quiz = quiz
-			$scope.$parent.selected_quiz = $scope.selected_quiz
+			$scope.$parent.selected_quiz_id = quiz.id
 			$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
 			if(quiz.quiz_type =="html"){
@@ -474,10 +476,13 @@ angular.module('scalearAngularApp')
 		}
 		closeQuizMode()
 		clearQuizVariables()
+		if(!$scope.last_details_state)
+			DetailsNavigator.close()
 	}
 
 	var clearQuizVariables= function(){
-		$scope.selected_quiz={}		
+		$scope.selected_quiz={}	
+		// $scope.$parent.selected_quiz= {}
 		$scope.quiz_deletable = false
 	}
 

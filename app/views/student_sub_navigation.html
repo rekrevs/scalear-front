@@ -1,6 +1,5 @@
 <div>
   <div ng-if="('**.course.**' | includedByState)">
-    <div style="height: 50px;"></div>
     <top-bar class="sub-header whitesmoke" style="z-index: 10 !important;">
       <ul class="title-area">
         <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="head.lectures">
@@ -34,7 +33,6 @@
   </div>
 
   <div class="hide-for-medium-down" ng-if="!('**.course.**' | includedByState) && !('home' | includedByState)">
-    <div style="height: 50px;"></div>
     <top-bar class="sub-header whitesmoke">
       <div class="left name">
         <h1 class="dark-text" style="padding: 0 40px;color:grey">{{message}}</h1>

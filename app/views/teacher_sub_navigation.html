@@ -1,7 +1,6 @@
 <div>
     <div ng-if="('**.course.**' | includedByState)">
-        <div style="height: 50px;"></div>
-        <top-bar class="sub-header whitesmoke" style="z-index: 10 !important;">
+        <top-bar class="sub-header whitesmoke">
             <ul class="title-area">
                 <li class="name">
                   <h1 class="disable_selection"><a id="content_navigator" class="truncate dark-text sub-header-component" ng-class="{'green-color-white': ContentNavigator.status, 'dark-medium-grey-hover': !ContentNavigator.status}" ng-click="toggleNavigator()" style="width: 300px;margin-right:10px"><i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }"></i>
@@ -175,7 +174,6 @@
         </content-navigator> -->
     </div>
     <div class="hide-for-medium-down" ng-if="!('**.course.**' | includedByState) && !('home' | includedByState)">
-        <div style="height: 50px;"></div>
         <top-bar class="sub-header whitesmoke">
           <div class="left name">
             <h1 class="dark-text" style="padding: 0 40px;color:grey">{{message}}</h1>

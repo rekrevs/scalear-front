@@ -93,7 +93,8 @@ angular.module('mm.foundation.accordion', [])
 
       if(attrs.open){
         scope.$watch('open', function(value) {
-          scope.isOpen = true;
+          if(value)
+            scope.isOpen = true;
         });
       }
 

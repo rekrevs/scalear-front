@@ -85,6 +85,7 @@ var translation_sv=function(){
       my: "Mitt",
       and: "och",
       redirect_courselist: "Omdirigerar till din kurslista under ",
+      did_not_get_credit: "Du fick inte äran för den här videon . För att få kredit för en obligatorisk videon du behöver för att titta på hela ( ingen hoppa ) och besvara varje fråga ( du behöver inte få dem rätt , men) .",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",

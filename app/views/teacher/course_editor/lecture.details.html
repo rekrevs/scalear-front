@@ -1,11 +1,11 @@
-<accordion class="details_accordian" close-others="false">
-  <accordion-group class="accordion-group" is-open="{{lecture && lecture.url == 'none'}}">
+<accordion class="details_accordian" close-others="true">
+  <accordion-group class="accordion-group" is-open="lecture && lecture.url == 'none'">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div class="show-inline">Video</div>
       </div>              
     </accordion-heading>
-    <table class="table small-12 no-margin">
+    <table class="table small-12 no-margin" style="border-top:none">
       <tr>
         <td class="right-border"><span translate>lectures.title</span>:</td>
         <td >
@@ -131,7 +131,7 @@
       </tr>
     </table>
   </accordion-group>
-  <accordion-group class="accordion-group" style="height:65vh; overflow:auto;" open="quiz_list.length">
+  <accordion-group class="accordion-group" open="quiz_list.length">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
         <div class="show-inline">Quizzes</div>

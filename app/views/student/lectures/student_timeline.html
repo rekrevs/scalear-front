@@ -1,4 +1,4 @@
-<div bindonce id="student-accordion" ng-class="{'student_timeline small-12 land-medium-4 portrait-medium-12 columns no-padding-right portrait-no-padding portrait-medium-height land-height medium-height-small large-height-big small-height-big no-padding-left':delayed_timeline_open, 'no-height': !delayed_timeline_open}" class="anomaly timeline_container ease_in_out large-5"  style="top: -5px;">
+<div bindonce id="student-accordion" ng-class="{'land-height medium-height-small large-height-big small-height-big portrait-medium-height':delayed_timeline_open, 'no-height': !delayed_timeline_open}" class="student_timeline lightgrey timeline_container ease_in_out large-5 small-12 land-medium-4 portrait-medium-12 columns no-padding-right portrait-no-padding no-padding-left">
 <!-- has all discussions -->      
     <div ng-repeat="l in items" class="with-light-border no-border-top no-border-bottom no-border-right small-12" ng-class="{'border-left border-2 border-black': l.id == lecture.id}" bo-id='"outline_"+l.id'> 
         <span bo-if="l.class_name =='lecture'">
@@ -20,10 +20,10 @@
             
             <table class="table table-striped no-border no-margin" style="border-spacing: 0.1em; width: 100%;" >
                 <tbody class="with-small-padding-left" ng-repeat="item in timeline[l.id].items | filter:filterType">
-                    <tr name="quiz-timeline-item" quiz_timeline ng-if="item.type=='quiz'" item='item' seek='seek()' id='{{"quiz_"+item.data.id}}' ng-class="{'anomaly-with-hover': item.data.is_quiz_solved, 'anomaly':!item.data.is_quiz_solved}" />
-                    <tr name="confused-timeline-item" confused_timeline ng-if="item.type=='confused'" item='item' seek='seek()' id='{{"confused_"+item.data.id}}' class="anomaly-with-hover" />
-                    <tr name="discussion-timeline-item" discussion_timeline ng-if="item.type=='discussion'" item='item' seek='seek()' id='{{"discussion_"+item.data.id}}'class="anomaly-with-hover"/>
-                    <tr name="notes-timeline-item" notes_timeline ng-if="item.type=='note'" item="item" seek='seek()' id='{{"note_"+item.data.id}}' class="anomaly-with-hover"/>
+                    <tr name="quiz-timeline-item" quiz_timeline ng-if="item.type=='quiz'" item='item' seek='seek()' id='{{"quiz_"+item.data.id}}' ng-class="{'lightgrey-with-hover': item.data.is_quiz_solved, 'lightgrey':!item.data.is_quiz_solved}" />
+                    <tr name="confused-timeline-item" confused_timeline ng-if="item.type=='confused'" item='item' seek='seek()' id='{{"confused_"+item.data.id}}' class="lightgrey-with-hover" />
+                    <tr name="discussion-timeline-item" discussion_timeline ng-if="item.type=='discussion'" item='item' seek='seek()' id='{{"discussion_"+item.data.id}}'class="lightgrey-with-hover"/>
+                    <tr name="notes-timeline-item" notes_timeline ng-if="item.type=='note'" item="item" seek='seek()' id='{{"note_"+item.data.id}}' class="lightgrey-with-hover"/>
                 </tbody>
             </table>
         </span>

@@ -195,11 +195,11 @@ angular.module('scalearAngularApp')
      $scope.lecture_player.events.onReady = function() {
         $scope.slow = false
         $scope.total_duration = $scope.lecture_player.controls.getDuration() - 1
-        var duration_milestones = [25, 75, 100]
+        var duration_milestones = [25, 75]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
-            $scope.lecture_player.controls.cue(quiz.time, function() {
-                $scope.lecture_player.controls.pause()
-                $scope.seek(quiz.time)             
+            $scope.lecture_player.controls.cue(quiz.time, function() {                
+                $scope.seek(quiz.time)   
+                $scope.lecture_player.controls.pause()          
                 $scope.closeReviewNotify()
                 $scope.studentAnswers[quiz.id] = {}
                 $scope.selected_quiz = quiz                              
@@ -227,18 +227,8 @@ angular.module('scalearAngularApp')
         })
 
         duration_milestones.forEach(function(milestone){
-            $scope.lecture_player.controls.cue(($scope.total_duration*milestone)/100, function() {
-                Lecture.updatePercentView({
-                    course_id:$state.params.course_id, 
-                    lecture_id:$state.params.lecture_id
-                },
-                {percent:milestone},function(data){
-                    $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
-                    if(data.done){
-                        $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
-                        $scope.lecture.is_done = data.done
-                    }
-                })
+            $scope.lecture_player.controls.cue(($scope.total_duration*milestone)/100, function(){
+                updateViewPercentage(milestone)
             })
         })
 
@@ -247,6 +237,24 @@ angular.module('scalearAngularApp')
         var time =$state.params.time        
         if(time)
             $scope.seek(parseInt(time));
+    }
+
+    var updateViewPercentage = function(milestone) {
+        Lecture.updatePercentView({
+            course_id:$state.params.course_id, 
+            lecture_id:$state.params.lecture_id
+        },
+        {percent:milestone},function(data){
+            $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
+            if(data.done){
+                $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
+                $scope.lecture.is_done = data.done
+                $scope.not_done_msg = false
+            }
+            else 
+                if(milestone == 100)
+                    $scope.not_done_msg = true
+        })
     }
 
     $scope.scrollIntoView=function(){
@@ -298,7 +306,7 @@ angular.module('scalearAngularApp')
             goToLecture(lecture_id)
             $scope.go_to_time =time
         }
-        $scope.end_buttons = false
+        $scope.video_end = false
     }
 
     $scope.seek_and_pause=function(time,lecture_id){
@@ -353,7 +361,7 @@ angular.module('scalearAngularApp')
         console.log("playing ")
         $scope.play_pause_class = 'pause'  
         checkIfQuizSolved()
-        $scope.end_buttons = false
+        $scope.video_end = false
     }
 
     $scope.lecture_player.events.onPause= function(){
@@ -369,9 +377,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onEnd= function() {
-        $scope.end_buttons = true
-        $scope.last_content_state = $scope.ContentNavigator.getStatus()
-        // $scope.ContentNavigator.open()
+        $scope.video_end = true
+        updateViewPercentage(100)
     }
 
     $scope.lecture_player.events.onSlow=function(is_youtube){
@@ -600,8 +607,8 @@ angular.module('scalearAngularApp')
         function(data){
             displayResult(data)
             if(data.msg=="Successfully Submitted"){
-                console.log("emit ya zmeeele");
-                $scope.$emit("blink_blink");
+                // console.log("emit ya zmeeele");
+                // $scope.$emit("blink_blink");
                 $scope.$broadcast("blink_blink");
             }
         },

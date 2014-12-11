@@ -49,14 +49,14 @@ width: 78%;
   height: 0;
   overflow-y: auto;
   z-index: 1 !important;
-  top: -5px;
+  /*top: -5px;*/
   right: -0.96em;
   -webkit-overflow-scrolling: touch;
 }
 
-.details-navigator-container.large-height-big{
+/*.details-navigator-container.large-height-big{
   height:84vh !important;
-}
+}*/
 
 .content-navigator-container, .timeline_container{
   /*margin-top: -50px;*/
@@ -143,7 +143,7 @@ footer{
 .sub-header-component{
 	background-color: #2ba6cb !important;
 	/*height: 30px !important;*/
-	/*height: 45px !important;*/
+	height: 45px !important;
 	/*line-height: 45px !important;*/
 
 }
@@ -177,7 +177,7 @@ span.error, small.error{
 }
 
 /*COLORING*/
-.anomaly, .anomaly-with-hover{
+.lightgrey, .lightgrey-with-hover{
   background-color: #FAFBFC !important;
 }
 .white, .white-with-hover{
@@ -226,7 +226,7 @@ span.error, small.error{
 .light-grey, .light-grey-hover{
 	background-color: #ececea !important;
 }
-.white-with-hover:hover, .light-grey-hover:hover, .anomaly-with-hover:hover{
+.white-with-hover:hover, .light-grey-hover:hover, .lightgrey-with-hover:hover{
   background-color: #d4d4d2 !important;
 }
 .lighter-grey, .lighter-grey-no-hover{
@@ -856,7 +856,9 @@ td.right-border{
 
 .details_accordian .content {
   padding:0 0.5rem !important;
-  background: white !important
+  background: white !important;
+  max-height: 62vh;
+  overflow: auto;
 }
 .delete-overlay{
   width: 100%;

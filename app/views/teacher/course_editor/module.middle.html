@@ -1,13 +1,13 @@
 
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<label class="size-1">
 			<b><span translate>groups.module_name</span>:</b><details-text class="size-18 with-small-margin-left" value="module.name" save="updateModule()" validate="validateModule" column="name"></details-text>
 		</label>
     </div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<label class="size-1">
 			<b><span translate>visible</span>:</b><details-date class="with-small-margin-left" date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
 			<span ng-hide="visible(module.appearance_time)">
@@ -17,7 +17,7 @@
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin" />
 		<label class="size-1">
 			<b><span class="with-small-margin-left" translate>groups.has_due_date</span></b><!-- <details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check> -->
@@ -28,14 +28,14 @@
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<label class="size-1">
 			<b><span translate>groups.description</span>:</b><big-area class="with-small-margin-left" value="module.description" save="updateModule()" validate="validateModule" column="description"></big-area>
 		</label>
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<label class="size-1">
 			<b><span >Student link to module</span>:</b><span class="color-editable-blue with-small-margin-left">{{link_url}}</span>
 		</label>
@@ -43,7 +43,7 @@
 </div>
 <br />
 <div class="row">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<!--<ul class="small-block-grid-1 medium-block-grid-3 large-block-grid-4">
 			<li class="total">
 				<h5 class="text-info total_title" >
@@ -103,13 +103,13 @@
 </div>
 <br />
 <div class="row">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}"><b translate>groups.external_module_link</b></div>
+	<div class="small-10 columns"><b translate>groups.external_module_link</b></div>
 </div>
 <!-- <div class="row" ng-show="module.custom_links.length ==0">
 	
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}" style="color: #808080;" >{{'groups.no_external_links' | translate}}</div>
+	<div class="small-10 columns" style="color: #808080;" >{{'groups.no_external_links' | translate}}</div>
 </div> -->
-<div class="small-8 columns left" ng-class="{'small-offset-2': !ContentNavigator.status}">
+<div class="small-8 columns left">
 	<br/>
 	<ul ui-sortable="listSortableOptions" ng-model='module.custom_links'>
 		<li class="group_links" ng-repeat="doc in module.custom_links">

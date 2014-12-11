@@ -7,20 +7,24 @@ angular.module('scalearAngularApp')
 
             $scope.Page = Page;
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
-            $scope.navigator = ContentNavigator
+            $scope.ContentNavigator = ContentNavigator
             
             $scope.$on("get_all_courses",function(){
                 getAllCourses()
             })
+            $scope.ContentNavigator.delayed_navigator_open = $scope.ContentNavigator.status
 
             $scope.$on('content_navigator_change',function(ev, status){
                 if(!status){
-                    $timeout(function(){
-                        $scope.delayed_timeline_open = false
+                    $scope.cancelDelay = $timeout(function(){
+                        $scope.ContentNavigator.delayed_navigator_open = false
                     },400)
                 }
-                else
-                    $scope.delayed_timeline_open = status
+                else{
+                    if($scope.cancelDelay)
+                        $timeout.cancel($scope.cancelDelay)
+                    $scope.ContentNavigator.delayed_navigator_open = true
+                }
             })
             
 

@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
 			restrict: 'E', 
 			template: '<div class="ontop" id="ontop" style="position: absolute;width:100%; height: 100%; top:0px; left: 0px;" ng-class="lecture.aspect_ratio" ng-transclude></div>'
 		};
-}).directive('editPanel',['$timeout',function($timeout){
+}).directive('editPanel',['$timeout','$q','OnlineQuiz','$translate',function($timeout, $q, OnlineQuiz, $translate){
 	return {		
 		 restrict: 'E',
 		 template: '<div id="editing">'+
@@ -26,27 +26,88 @@ angular.module('scalearAngularApp')
 								'<span style="margin-right: 5px;">{{double_click_msg |translate}}</span>'+
 								'<div class="row" style="margin-top:10px">'+
 									'<div class="small-2 columns">Title:</div>'+
-									'<div class="small-9 left columns no-padding">'+
-										'<input class="quiz_name" type="text" ng-model="selected_quiz.question" style="margin-left: 10px;height: 28px;margin-bottom: 5px;">'+
+									'<div class="small-9 left columns no-padding" style="margin-left:10px;margin-bottom: 5px;">'+
+										'<input class="quiz_name" type="text" ng-model="selected_quiz.question" style="height: 28px;margin-bottom:0;">'+
+										'<small class="error" ng-show="name_error" ng-bind="name_error"></small>'+
 									'</div>'+
 								'</div>'+
 								'<div class="row">'+
 									'<div class="small-2 columns">Time:</div>'+
-									'<div class="small-4 left columns no-padding">'+
-										'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="margin-left: 10px;height: 28px;margin-bottom:0;">'+
+									'<div class="small-4 left columns no-padding" style="margin-left:10px">'+
+										'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="height: 28px;margin-bottom:0;">'+
+										'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 									'</div>'+
 								'</div>'+
-								'<button ng-show=" quiz_deletable" class="button secondary tiny" style="margin:10px;margin-left:0;float:right;margin-top:0;" ng-click="exitBtn()" translate>lectures.cancel</button>'+
-								'<button ng-disabled="disable_save_button" class="button tiny" style="margin: 10px;float:right;margin-top:0;" ng-click="saveBtn({exit:true})" translate>events.done</button>'+ //
+								'<button ng-show="quiz_deletable" class="button secondary tiny" style="margin:10px;margin-left:0;float:right;margin-top:0;" ng-click="exitBtn()" translate>lectures.cancel</button>'+
+								'<button ng-disabled="disable_save_button" class="button tiny" style="margin: 10px;float:right;margin-top:0;" ng-click="saveEdit(selected_quiz)" translate>events.done</button>'+ //
 								// '    <button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
 							'</h6>'+
 						'</div>'+
 					'</div>',
 		link: function(scope, element, attrs) {
 			$timeout(function() {
-				console.log(element.find('.quiz_name'))
 	            element.find('.quiz_name').select();
 	        });
+
+        	var updateOnlineQuiz=function(quiz){
+				OnlineQuiz.update(
+					{online_quizzes_id: quiz.id},
+					{online_quiz: {time:quiz.time, question:quiz.question}}
+				);
+			}
+		 	var validateTime=function(time) { 		
+				var int_regex = /^\d\d:\d\d:\d\d$/;  //checking format
+				if(int_regex.test(time)) { 
+				    var hhmm = time.split(':'); // split hours and minutes
+				    var hours = parseInt(hhmm[0]); // get hours and parse it to an int
+				    var minutes = parseInt(hhmm[1]); // get minutes and parse it to an int
+				    var seconds = parseInt(hhmm[2]);
+				    // check if hours or minutes are incorrect
+				    var total_duration=(hours*60*60)+(minutes*60)+(seconds);
+				    if(hours < 0 || hours > 24 || minutes < 0 || minutes > 59 || seconds< 0 || seconds > 59) {// display error
+			       		return $translate('online_quiz.incorrect_format_time')
+				    }
+				    else if( (scope.lecture_player.controls.getDuration()-1) <= total_duration || total_duration <= 0 ){
+			       		return $translate('online_quiz.time_outside_range')
+				    }
+				}
+			    else{
+			   		return $translate('online_quiz.incorrect_format_time')
+			    }
+			}
+			
+			var validateName= function(quiz){
+				var d = $q.defer();
+			    var doc={}
+			    doc.question=quiz.question;
+			    OnlineQuiz.validateName(
+			    	{online_quizzes_id: quiz.id},
+			    	doc,
+			    	function(){
+						d.resolve()
+					},function(data){
+					if(data.status==422)
+					 	d.resolve(data.data.errors.join());
+					else
+						d.reject('Server Error');
+					}
+			    )
+			    return d.promise;
+			}
+
+			scope.saveEdit=function(quiz){
+				validateName(quiz).then(function(error){
+					scope.name_error = error
+					scope.time_error = validateTime(quiz.formatedTime)
+					if(!(scope.name_error || scope.time_error) ){
+						var a = quiz.formatedTime.split(':'); // split it at the colons			
+						var seconds = (+a[0]) * 60 * 60 + (+a[1]) * 60 + (+a[2]); // minutes are worth 60 seconds. Hours are worth 60 minutes.
+						quiz.time = seconds
+						updateOnlineQuiz(quiz)
+						scope.saveBtn({exit:true})
+					}
+				})				
+			}
 		}
 	};
 }]).directive('dropdownList',function(){

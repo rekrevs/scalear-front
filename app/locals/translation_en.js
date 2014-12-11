@@ -86,6 +86,7 @@ var translation_en=function(){
       my: "My",
       and: "and",
       redirect_courselist: "Redirecting to your course list in ",
+      did_not_get_credit: "You did not get credit for this video. To get credit for a required video you need to watch the whole thing (no skipping) and answer each question (you don't have to get them right, though).",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",

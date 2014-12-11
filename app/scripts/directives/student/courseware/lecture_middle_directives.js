@@ -599,7 +599,7 @@ angular.module('scalearAngularApp')
         if(status){
             $timeout(function(){
                 scope.delayed_timeline_open = true
-            },150)
+            },300)
           }
           else
             scope.delayed_timeline_open = status

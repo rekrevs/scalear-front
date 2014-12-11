@@ -154,7 +154,6 @@ angular.module('scalearAngularApp')
  	}
 
 	$scope.insertQuiz=function(quiz_type, question_type){
-		$scope.last_details_state = DetailsNavigator.getStatus()
 		var promise = $q.when(true)
 		if ($scope.selected_quiz && $scope.quiz_deletable){
 			var old_insert_time = $scope.selected_quiz.time
@@ -204,6 +203,7 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.showOnlineQuiz= function(quiz){
+		$scope.last_details_state = DetailsNavigator.getStatus()
 		if($scope.selected_quiz != quiz){
 			if($scope.editing_mode){
 				$scope.saveBtn({exit:true})
@@ -397,9 +397,6 @@ angular.module('scalearAngularApp')
 		$log.debug("savingAll")
 		$scope.disable_save_button = true
 		var selected_quiz = angular.copy($scope.selected_quiz)
-		if(options && options.exit)
-			$scope.exitBtn()
-
 		Lecture.updateAnswers(
 			{
 				course_id:$stateParams.course_id,
@@ -407,13 +404,15 @@ angular.module('scalearAngularApp')
 				online_quiz_id: selected_quiz.id
 			},
 			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type },
-			function(data){ //success
-				if(!options || !options.exit){
-					if(selected_quiz.quiz_type =="invideo")
-						getQuizData();
+			function(data){
+				if(options)
+					if(options.exit)
+						$scope.exitBtn()
 					else
-						getHTMLData();
-				}
+						if(selected_quiz.quiz_type =="invideo")
+							getQuizData();
+						else
+							getHTMLData();
 			},
 			function(){}
 		);
@@ -483,6 +482,7 @@ angular.module('scalearAngularApp')
 	var clearQuizVariables= function(){
 		$scope.selected_quiz={}	
 		// $scope.$parent.selected_quiz= {}
+		$scope.$parent.selected_quiz_id = null
 		$scope.quiz_deletable = false
 	}
 

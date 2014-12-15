@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter',
-        function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope',
+        function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope) {
 
             
             //**************************FUNCTIONS****************************************///
@@ -84,10 +84,8 @@ angular.module('scalearAngularApp')
                         lecture: modified_lecture
                     },
                     function(data) {
-                        $log.debug(data)
-                        console.log(data)
                         $scope.lecture.appearance_time = data.lecture.appearance_time
-                        $scope.course.selected_module.total_time += data.lecture.duration
+                        // $scope.course.selected_module.total_time += data.lecture.duration
                         $scope.lecture.due_date = data.lecture.due_date
                     },
                     function() {
@@ -141,13 +139,15 @@ angular.module('scalearAngularApp')
                             $scope.lecture.url = "http://www.youtube.com/watch?v="+type[1];                                         
                         getYoutubeDetails(type[1]).then(function(){
                             $scope.updateLecture();
+                            $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
                         })
                     }
-                    else
-                    {
+                    else{
                         console.log('type not initialized')  
                         $scope.updateLecture();
+                        $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
                     }
+
                 }
                 
             }

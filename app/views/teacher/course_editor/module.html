@@ -4,7 +4,7 @@
 		</delete_button>
 		<img class='left handle with-tiny-margin' src='images/move2.png' bindonce bo-title="'courses.drag_to_reorder'|translate" />
 		<div class="truncate-70 show-inline left text-left">{{module.name}}</div>
-		<small class="color-grey" ng-bind="module.total_time | formattime:'h:mm'"></small>			
+		<small class="color-grey">{{module.total_time | formattime:'h:mm'}}</small>			
 	</div>
 
 	<div class="position-relative" ng-if="!('**.course_editor.**' | includedByState)" >

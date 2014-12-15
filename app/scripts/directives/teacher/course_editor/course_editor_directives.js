@@ -11,6 +11,21 @@ angular.module('scalearAngularApp')
             },
             templateUrl: '/views/teacher/course_editor/module.html',
             link: function(scope,element) {
+                var calculateTime=function(){
+                    var total_calculated_time = 0
+                    scope.module.items.forEach(function(item){
+                        if(item.duration){
+                            total_calculated_time += parseInt(item.duration)
+                        } 
+                    })
+                    scope.module.total_time = total_calculated_time
+                }
+                calculateTime()
+                scope.$on('update_module_time', function(ev, module_id){
+                    if(scope.module.id == module_id){
+                        calculateTime()
+                    }
+                })
                 scope.remove=function(event){
                     event.preventDefault();
                     event.stopPropagation();  

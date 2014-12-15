@@ -167,22 +167,30 @@ angular.module('scalearAngularApp')
           console.log(resp)
           var surveys = resp.surveys
           $scope.review_survey_count = resp.review_survey_count
+          $scope.review_survey_reply_count = {}
         	$scope.timeline["survey"]={}
 
         	for (var survey_id in surveys ){
         		$scope.timeline["survey"][survey_id]=new Timeline()
+            $scope.review_survey_reply_count[survey_id]={}
         		for(var q_index in surveys[survey_id].questions){
         			var q_id = surveys[survey_id].questions[q_index].id
+              $scope.review_survey_reply_count[survey_id][q_id]=0
               var data = surveys[survey_id].charts[q_id] || surveys[survey_id].free_question[q_id]
               data.type = surveys[survey_id].questions[q_index].type
               data.id = q_id  
               data.quiz_type='survey'
+              
               var type = surveys[survey_id].questions[q_index].type == "Free Text Question"? "free_question" : 'charts'
               if(type=="free_question"){
                 data.answers.forEach(function(answer){
+                  if(!answer.hide)
+                    $scope.review_survey_reply_count[survey_id][q_id]++
                   answer.hide = !answer.hide
                 })
               }
+              if(data.show)
+                $scope.review_survey_count+=$scope.review_survey_reply_count[survey_id][q_id]
               $scope.timeline['survey'][survey_id].add(0, type, data)
         		}
         	}
@@ -381,14 +389,22 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideResponse = function(quiz_id, item, answer){
-      console.log(quiz_id)
+    $scope.updateHideResponse = function(survey_id, item, answer){
+      console.log(survey_id)
       console.log(item)
       console.log(answer)
+      if(!answer.hide){
+        $scope.review_survey_reply_count[survey_id][item.data.id]++
+        $scope.review_survey_count++
+      }
+      else{
+        $scope.review_survey_reply_count[survey_id][item.data.id]--
+        $scope.review_survey_count--
+      }
       Quiz.hideResponses(
         {
           course_id:$stateParams.course_id,
-          quiz_id: quiz_id
+          quiz_id: survey_id
         },
         {
           hide:{
@@ -400,7 +416,7 @@ angular.module('scalearAngularApp')
           console.log(answer.hide)
           if(answer.hide && !item.data.show){
             item.data.show = true
-            $scope.updateHideSurveyQuestion(quiz_id, item.data.id, item.data.show)
+            $scope.updateHideSurveyQuestion(survey_id, item.data.id, item.data.show)
           }
         }
       )
@@ -421,15 +437,15 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideSurveyQuestion=function(quiz_id,id, value){
+    $scope.updateHideSurveyQuestion=function(survey_id,id, value){
       if(value)
-        $scope.review_survey_count++
+        $scope.review_survey_count+= $scope.review_survey_reply_count[survey_id][id] || 1
       else
-        $scope.review_survey_count--
+        $scope.review_survey_count-= $scope.review_survey_reply_count[survey_id][id] || 1
       Quiz.showInclass(
         {
           course_id:$stateParams.course_id,
-          quiz_id:quiz_id
+          quiz_id:survey_id
         },
         {
           question:id,

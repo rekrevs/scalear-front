@@ -41,12 +41,14 @@
           </center>
         </td>
       </tr> -->
-      <tr ng-show="video.title">
+      <tr>
         <td class="right-border"><span translate>lectures.provider</span>:</td>
-        <td>
-          <label ng-if="is_youtube">Youtube</label>
-          <label ng-if="!is_youtube">Server</label>
+        <td ng-if="is_youtube">
+          <label >Youtube</label>
           <label >{{is_youtube}} {{video.title}} by {{video.author}}</label>
+        </td>
+        <td ng-if="!is_youtube">
+          <label>Server</label>
         </td>
       </tr>
       <!-- <tr ng-show="video.author">
@@ -71,19 +73,21 @@
     </accordion-heading>
     <table class="table small-12 no-margin">
       <tr>
-        <td class="right-border">
+        <!-- <td class="right-border">
           <span translate>settings.settings</span>:
-        </td>
-        <td>
-          <span tooltip="Students must complete this item before going on to the next item in the module" tooltip-placement="left" tooltip-append-to-body="true">
-            <input type="checkbox" ng-model="lecture.required"  ng-change='updateLecture()'>
-            <span class="size-12" translate>courses.in_order</span>
-          </span>
-          <br />
-          <span tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true" >
-            <input type="checkbox" ng-model="lecture.graded" ng-change="updateLecture()">
-            <span class="size-12" translate>courses.required</span>
-          </span>
+        </td> -->
+        <td colspan="2">
+          <center>
+            <span tooltip="Students must complete this item before going on to the next item in the module" tooltip-placement="left" tooltip-append-to-body="true">
+              <input type="checkbox" ng-model="lecture.required"  ng-change='updateLecture()'>
+              <span class="size-12" translate>courses.in_order</span>
+            </span>
+            <br />
+            <span tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true" >
+              <input type="checkbox" ng-model="lecture.graded" ng-change="updateLecture()">
+              <span class="size-12" translate>courses.required</span>
+            </span>
+        </center>
         </td>
       </tr>
       <tr>

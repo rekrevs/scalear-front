@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
     .directive('detailsText', ['$timeout',
         function($timeout) {
             return {
-                template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     value: "=",

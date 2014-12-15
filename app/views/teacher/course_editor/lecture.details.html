@@ -13,6 +13,12 @@
         </td>
       </tr>
       <tr>
+        <td class="right-border"><span translate>lectures.description</span>:</td>
+        <td>
+          <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
+        </td>
+      </tr>
+      <tr>
         <td ng-class='{"color-red": lecture.url == "none"}' class="right-border">
           <span translate>lectures.url</span>:
           <i class='fi-info' tooltip='{{"youtube.info"|translate}}'></i>
@@ -21,38 +27,34 @@
             <details-text id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"></details-text> 
         </td>
       </tr>
-      <tr ng-show="video.thumbnail">
-        <td colspan="2">
-          <center>
-            <span translate>lectures.video_preview</span>
-            <div id="lecture_thumbnail" ng-bind-html="video.thumbnail"></div>
-          </center>
-        </td>
-      </tr>
-      <tr ng-show="video.title">
-        <td class="right-border"><span translate>lectures.video_title</span>:</td>
-        <td>
-          <label >{{video.title}}</label>
-        </td>
-      </tr>
-      <tr ng-show="video.author">
-        <td class="right-border"><span translate>lectures.author</span>:</td>
-        <td>
-          <label>{{video.author}}</label>
-        </td>
-      </tr>
       <tr>
         <td class="right-border"><span translate>lectures.duration</span>:</td>
         <td>
           <label>{{lecture.duration|format}}</label>
         </td>
       </tr>
-      <tr>
-        <td class="right-border"><span translate>lectures.description</span>:</td>
+      <!-- <tr ng-show="video.thumbnail">
+        <td colspan="2">
+          <center>
+            <span translate>lectures.video_preview</span>
+            <div id="lecture_thumbnail" ng-bind-html="video.thumbnail"></div>
+          </center>
+        </td>
+      </tr> -->
+      <tr ng-show="video.title">
+        <td class="right-border"><span translate>lectures.provider</span>:</td>
         <td>
-          <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
+          <label ng-if="is_youtube">Youtube</label>
+          <label ng-if="!is_youtube">Server</label>
+          <label >{{is_youtube}} {{video.title}} by {{video.author}}</label>
         </td>
       </tr>
+      <!-- <tr ng-show="video.author">
+        <td class="right-border"><span translate>lectures.author</span>:</td>
+        <td>
+          <label>{{video.author}}</label>
+        </td>
+      </tr> -->
       <tr>
         <td class="right-border"><span>Student link to lecture</span>:</td>
         <td class="break-text">

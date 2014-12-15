@@ -333,6 +333,7 @@ var translation_sv=function(){
               lecture_title: "Föreläsningstitel",
               url: "Video URL",
               video_title: "Video Titel",
+              provider: "Föreskrivare",
               thumbnail: "Thumbnail",
               video_preview: "Video Preview",
               author: "Författare",

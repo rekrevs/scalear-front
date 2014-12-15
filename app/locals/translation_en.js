@@ -333,6 +333,7 @@ var translation_en=function(){
         lecture_title: "Lecture Title",
         url: "Video URL",
         video_title: "Video Title",
+        provider: "Provider",
         thumbnail: "Thumbnail",
         video_preview: "Video Preview",
         aspect_ratio: "Aspect Ratio",

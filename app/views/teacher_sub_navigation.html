@@ -116,13 +116,13 @@
 
                             <li ng-show="in_module_state">
                                 <div class="divider border-grey medium-opacity"></div>
-                                <a id="new_online_content" online-modal ng-click="openOnlineContentModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
+                                <a id="new_online_content" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
                                     <span translate>new_online_content</span>
                                     <h5 class="dark-description"><small>Video, quiz, survey or link</small></h5>
                                 </a>
                             </li>
                             <li ng-show="'**.lecture.**' | includedByState">
-                                <a id="new_in_video_ques" questions-modal ng-click="openQuestionsModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
+                                <a id="new_in_video_ques" lecture-questions-modal open-modal="openQuestionsModal" ng-click="openQuestionsModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
                                     <span translate>New_Video_Question</span>
                                     <h5 class="dark-description"><small translate>Insert_a_question</small></h5>
                                 </a>

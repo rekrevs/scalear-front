@@ -67,7 +67,8 @@ angular.module('scalearAngularApp')
                 $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
                 // $scope.calendar.events[element].title = $scope.calendar.events[element].course_short_name +" : "+ $scope.calendar.events[element].title + ' @' + $filter('date')($scope.calendar.events[element].start, 'HH:mm');
                 $scope.calendar.events[element].item_title = $scope.calendar.events[element].title.replace(" due", "");
-                $scope.calendar.events[element].title =  $filter('date')($scope.calendar.events[element].start, 'HH:mm')+'-'+$scope.calendar.events[element].course_short_name +": "+ $scope.calendar.events[element].item_title
+                /*$filter('date')($scope.calendar.events[element].start, 'HH:mm')+'-'+*/
+                $scope.calendar.events[element].title =  $scope.calendar.events[element].course_short_name +": "+ $scope.calendar.events[element].item_title
                 if($rootScope.current_user.roles[0].id == 2){
                     if ($scope.calendar.events[element].quiz_id)
                         $scope.calendar.events[element].url = $state.href("course.module.courseware.quiz", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id, quiz_id: $scope.calendar.events[element].quiz_id})

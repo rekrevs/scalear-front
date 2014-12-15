@@ -4,15 +4,16 @@ angular.module('scalearAngularApp')
     .directive('detailsText', ['$timeout',
         function($timeout) {
             return {
-                template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     value: "=",
                     save: "&",
                     validate: "&",
-                    column: "@"
+                    column: "@",
+                    open:"="
                 },
-                link: function(scope, element) {
+                link: function(scope, element, attr) {
                     scope.selectField = function() {
                         // if(scope.column=="url"){
                         $timeout(function() {
@@ -26,6 +27,25 @@ angular.module('scalearAngularApp')
                             scope.save()
                         })
                     }
+
+                    scope.show=function(){
+                      scope.textBtnForm.$show()
+                      // $('.editable-input').focus()
+                    }
+                    if(attr.open){
+                        var unwatch = scope.$watch('open', function(val){
+                            if(val === true){
+                                scope.show()
+                                unwatch()
+                            }
+                        })
+                    }
+                    
+                    // console.log(attr.open, scope.value)
+                    // if(attr.open && attr.open === true ){
+                    //     console.log(attr.open)
+                    //     scope.show()
+                    // }
                 }
             };
         }

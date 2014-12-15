@@ -397,8 +397,9 @@ angular.module('scalearAngularApp')
         }
     } 
 
-    var showNotification=function(msg, sub_msg){
+    var showNotification=function(msg, sub_msg, middle_msg){
         $scope.notification_message=$translate(msg);
+        $scope.notification_middle_message=$translate(middle_msg);
         $scope.notification_submessage=$translate(sub_msg);
         $interval(function(){
             removeNotification()
@@ -607,8 +608,6 @@ angular.module('scalearAngularApp')
         function(data){
             displayResult(data)
             if(data.msg=="Successfully Submitted"){
-                // console.log("emit ya zmeeele");
-                // $scope.$emit("blink_blink");
                 $scope.$broadcast("blink_blink");
             }
         },
@@ -627,9 +626,12 @@ angular.module('scalearAngularApp')
                     $scope.explanation[el]= data.detailed_exp[el];
                 var verdict=data.correct? "lectures.correct": "lectures.incorrect"
                 var sub_message = ''
+                var middle_msg = ''
                 if (!($scope.selected_quiz.quiz_type=='html' && ($scope.selected_quiz.question_type.toUpperCase()=='DRAG' || $scope.selected_quiz.question_type.toUpperCase()=='FREE TEXT QUESTION')))
+                    if($scope.selected_quiz.question_type.toUpperCase()=='MCQ' && !data.correct)
+                        middle_msg = 'lectures.multiple_correct'
                     sub_message  = 'lectures.hover_for_details'
-                showNotification(verdict, sub_message)
+                showNotification(verdict, sub_message, middle_msg)
 
                 $scope.selected_quiz.is_quiz_solved=true;
             }

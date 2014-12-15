@@ -99,7 +99,8 @@ angular.module('scalearAngularApp')
     restrict:"E",
     scope:{
       message:'=',
-      submessage:'='
+      submessage:'=',
+      middleMessage:'='
     },
     templateUrl: '/views/student/lectures/notification.html',
 

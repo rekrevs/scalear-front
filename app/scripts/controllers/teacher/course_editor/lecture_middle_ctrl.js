@@ -6,7 +6,6 @@ angular.module('scalearAngularApp')
     $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
       if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
         $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
-        // $scope.$emit('accordianUpdate',$scope.lecture.group_id);
     	$scope.$parent.currentmodule = $scope.lecture.group_id
       }
     })	
@@ -35,11 +34,10 @@ angular.module('scalearAngularApp')
 	]
     $scope.play_pause_class = 'play'
     $scope.current_time = 0
-    //$scope.lecture.duration = 0
     $scope.fullscreen = false
 
     shortcut.add("i",function() {       
-       $scope.openQuestionsModal()
+       $scope.addQuestion()
     },{"disable_in_input" : true, 'propagate':false});
 
     $scope.$on("show_online_quiz",function(ev, quiz){
@@ -49,6 +47,10 @@ angular.module('scalearAngularApp')
     $scope.$on("delete_online_quiz",function(ev, quiz){
     	$scope.deleteQuizButton(quiz)
     })
+
+    // $scope.call = function() {
+    //     $scope.fnInCtrl();
+    // };
 	
     // $state.go('course.course_editor.lecture.quizList');
 
@@ -69,19 +71,19 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.onMeta= function(){
         // update duration for all video types.
-        if(Math.ceil($scope.lecture.duration) != Math.ceil($scope.lecture_player.controls.getDuration()))
-        {
-            $scope.lecture.duration=$scope.lecture_player.controls.getDuration();
+        var duration = $scope.lecture_player.controls.getDuration()
+        if(Math.ceil($scope.lecture.duration) != Math.ceil(duration)){
+            $scope.lecture.duration=duration
             $scope.updateLecture();
         }
         $scope.slow = false
     }
  	$scope.lecture_player.events.onReady= function(){
  		$scope.video_ready = true
-        $scope.lecture.duration = $scope.lecture_player.controls.getDuration()
+        // $scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  		$scope.lecture_player.controls.pause()
         $scope.lecture_player.controls.seek(0)
-        $scope.lecture_player.controls.volume(0.5);
+        // $scope.lecture_player.controls.volume(0.5);
      	//$scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  	}
 
@@ -153,6 +155,11 @@ angular.module('scalearAngularApp')
  		return new_time
  	}
 
+ 	$scope.addQuestion=function(){
+ 		$scope.lecture_player.controls.pause();
+ 		$scope.openQuestionsModal()
+ 	}
+
 	$scope.insertQuiz=function(quiz_type, question_type){
 		var promise = $q.when(true)
 		if ($scope.selected_quiz && $scope.quiz_deletable){
@@ -190,7 +197,6 @@ angular.module('scalearAngularApp')
 				// console.log(data)
 				$scope.editing_mode= false
 				$scope.showOnlineQuiz(data.quiz)
-				data.quiz.new_quiz = true
 				$scope.quiz_list.push(data.quiz)
 				$scope.quiz_loading = false;
 				$scope.quiz_deletable = true
@@ -249,7 +255,6 @@ angular.module('scalearAngularApp')
 					$scope.allPos=mergeDragPos(data.answers)
 					$log.debug($scope.allPos)
 				}
-				$scope.disable_save_button = false
 			},
 			function(){}
 		);
@@ -272,8 +277,7 @@ angular.module('scalearAngularApp')
 					$scope.selected_quiz.answers= data.answers
 					if(!$scope.selected_quiz.answers.length)
 						$scope.addHtmlAnswer()				
-				}
-				$scope.disable_save_button = false			
+				}			
 			},
 			function(){}
 		);
@@ -405,14 +409,14 @@ angular.module('scalearAngularApp')
 			},
 			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type },
 			function(data){
-				if(options)
-					if(options.exit)
-						$scope.exitBtn()
+				$scope.disable_save_button = false
+				if(options && options.exit)
+					$scope.exitBtn()
+				else
+					if(selected_quiz.quiz_type =="invideo")
+						getQuizData();
 					else
-						if(selected_quiz.quiz_type =="invideo")
-							getQuizData();
-						else
-							getHTMLData();
+						getHTMLData();
 			},
 			function(){}
 		);

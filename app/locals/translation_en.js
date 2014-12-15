@@ -393,6 +393,7 @@ var translation_en=function(){
         please_choose_one_answer: "Please Choose at least one answer",
         choose_atleast_one: "Choose at least one",
         hover_for_details: "Hover for details",
+        multiple_correct: "There may be multiple correct answers",
         set_date: "Set Date",
         seconds: "Seconds",
         use_module: "Use Module’s Visibility",

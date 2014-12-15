@@ -392,6 +392,7 @@ var translation_sv=function(){
               please_choose_one_answer: "Välj minst ett svar",
               choose_atleast_one: "Välj minst en",
               hover_for_details: "Peka för mer information",
+              multiple_correct: "Det kan finnas flera rätta svar",
               set_date: "Ställ in datum",
               seconds: "Sekunder",              
               use_module: "Använd modulens synlighet",

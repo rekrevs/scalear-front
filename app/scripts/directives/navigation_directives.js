@@ -346,11 +346,15 @@ angular.module('scalearAngularApp')
 		   		ContentNavigator.open()
 		   		$timeout(function(){
 		   			item.is_done = true
+		   			item.blink = true
 		   		},1000)
 		   	}
 		   	else{
 		   		item.is_done = true
 		   	}
+		   	$timeout(function(){
+		   		item.blink = false
+		   	}, 3000)
    		})
 
    	  scope.moduleSortableOptions={

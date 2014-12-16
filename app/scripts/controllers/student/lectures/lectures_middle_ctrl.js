@@ -175,12 +175,13 @@ angular.module('scalearAngularApp')
                     }
                 }
 
-                if($scope.should_play){
-                    if(data.done[2]){
-                        $scope.course.markDone(data.done[1],data.done[0])
-                        $scope.lecture.is_done = data.done[2]
-                    }
-                }
+                // if($scope.should_play){
+                //     if(data.done[2]){
+                //         console.log("!-123-asdedfskefw done!")
+                //         $scope.course.markDone(data.done[1],data.done[0])
+                //         $scope.lecture.is_done = data.done[2]
+                //     }
+                // }
 
                 if(isiPad()){
                     $scope.video_ready=true
@@ -235,8 +236,12 @@ angular.module('scalearAngularApp')
         $scope.video_ready=true
         console.log($scope.supported_speeds)
         var time =$state.params.time        
-        if(time)
+        if(time){
             $scope.seek(parseInt(time));
+            $timeout(function(){
+                $scope.scrollIntoView()
+            },500)
+        }
     }
 
     var updateViewPercentage = function(milestone) {

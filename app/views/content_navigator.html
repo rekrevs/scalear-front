@@ -40,7 +40,7 @@
 						
 					</accordion-heading>
 					<ul>
-						<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.is_done}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')">
+						<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')">
 							<div class="position-relative" style="height: 20px;">
 								<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.is_done}" ></i>
 

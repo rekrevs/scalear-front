@@ -2,12 +2,31 @@
 
 angular.module('scalearAngularApp')
 
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$translate','$log','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink','courseResolver','UserSession','ContentNavigator', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $translate, $log, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink, courseResolver, UserSession, ContentNavigator) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$translate','$log','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink','courseResolver','UserSession','ContentNavigator','DetailsNavigator', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $translate, $log, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink, courseResolver, UserSession, ContentNavigator, DetailsNavigator) {
 
  	// $window.scrollTo(0, 0);
  	Page.setTitle('head.content')
 
     ContentNavigator.open()
+    DetailsNavigator.open()
+    $scope.DetailsNavigator = DetailsNavigator
+    $scope.delayed_details_status = DetailsNavigator.getStatus()
+    $scope.delayed_details_status2 = DetailsNavigator.getStatus()
+    $scope.$on('details_navigator_change',function(ev, status){
+        console.log("datails status event", status)
+        if(!status){
+            $scope.delayed_details_status2 = false
+            $timeout(function(){
+                $scope.delayed_details_status = false
+            },350)
+          }
+          else{
+            $scope.delayed_details_status = true
+            $timeout(function(){
+                $scope.delayed_details_status2 = true
+            },300)
+        }
+    })
 
     $scope.$on('add_item', function(event, type){
         if(type=='video')
@@ -20,9 +39,9 @@ angular.module('scalearAngularApp')
     })
     
     $scope.$on('share_copy', function(event, data){
-        console.log(data)
-        console.log('caught sharing modal event')
-        console.log($scope.course.selected_module)
+        // console.log(data)
+        // console.log('caught sharing modal event')
+        // console.log($scope.course.selected_module)
         var modalInstance = $modal.open({
           templateUrl: '/views/teacher/course_editor/sharing_modal.html',
           controller: "sharingModalCtrl",
@@ -38,13 +57,13 @@ angular.module('scalearAngularApp')
           }
         });
 
-        modalInstance.result.then(function () {
-            console.log("shared")
-            // selectNone()
-        },function () {
-            console.log("close")
-            // selectNone()
-        });
+        // modalInstance.result.then(function () {
+        //     console.log("shared")
+        //     // selectNone()
+        // },function () {
+        //     console.log("close")
+        //     // selectNone()
+        // });
     })
 
      $scope.$on('add_module', function(event){
@@ -200,17 +219,13 @@ angular.module('scalearAngularApp')
   	}
 
  	$scope.addModule=function(){
-    	$log.debug("adding mod")
-    	$scope.module_loading=true
-    	$log.debug("course id is "+$stateParams.course_id);
     	Module.newModule({course_id: $stateParams.course_id, lang:$translate.uses()},{},
-	    	function(module){
-	    		$log.debug(module)
-	    		module.group.items=[]
-	    		$scope.course.modules.push(module.group)
-	    		$scope.module_obj[module.group.id] = $scope.course.modules[$scope.course.modules.length-1]
-    			$scope.module_loading=false
-                $state.go('course.module.course_editor.overview', {module_id: module.group.id})
+	    	function(data){
+                data.group.items=[]
+	    		data.group.new=true
+	    		$scope.course.modules.push(data.group)
+	    		$scope.module_obj[data.group.id] = $scope.course.modules[$scope.course.modules.length-1]
+                $state.go('course.module.course_editor.overview', {module_id: data.group.id})
                 ContentNavigator.open()
 	    	}, 
 	    	function(){}
@@ -265,6 +280,7 @@ angular.module('scalearAngularApp')
                 emptyClipboard()
 				if($state.params.lecture_id == item.id)
                     $state.go('course.module.course_editor.overview')
+                $rootScope.$broadcast("update_module_time", item.group_id)
                 $scope.$broadcast('update_numbers')
     		},
     		function(){}
@@ -299,30 +315,10 @@ angular.module('scalearAngularApp')
                     emptyClipboard()
                     if($state.params.quiz_id == item.id)
                         $state.go('course.module.course_editor.overview')
-                    $scope.$broadcast('update_numbers')
 	    		},
 	    		function(){}
 			);
     }
-
-    // $scope.closeAll=function(index){
-    // 	for(var i in $scope.modules)
-    // 		if(i != index)
-    // 			$scope.modules[i].open = false
-
-    // 	$scope.modules[index].open=! $scope.modules[index].open
-    // 	$scope.open_id = null
-    // }
-
-    // $scope.createModuleLink=function(id){
-    // 	return $state.href('course.module.courseware', {module_id: id}, {absolute: true})
-    // }
-
-    // $scope.createItemLink=function(item){
-    // 	var params = {module_id: item.group_id}
-    // 	params[item.class_name+'_id'] = item.id
-    // 	return $state.href('course.module.courseware.'+item.class_name, params, {absolute: true})
-    // }
 
     $scope.copy=function(item){
     	$rootScope.clipboard = {id:item.id, name:item.name, type:item.class_name||'module', show_msg:true}
@@ -420,35 +416,6 @@ angular.module('scalearAngularApp')
     		function(){}
 		)
     }
-
-   //  $scope.openShareModal = function (id, class_name) {
-	  //   var modalInstance = $modal.open({
-	  //     templateUrl: '/views/teacher/course_editor/sharing_modal.html',
-	  //     controller: "sharingModalCtrl",	      
-	  //     resolve: {
-	  //       selected_item: function () {
-	  //       	if(class_name)
-	  //       		return $scope.items_obj[class_name][id]	
-	  //       },
-	  //       selected_module:function(){
-	  //       	if(class_name)
-	  //       		return $scope.module_obj[$scope.items_obj[class_name][id].group_id]
-	  //       	return $scope.module_obj[id]
-	  //       },
-	  //       modules: function(){
-	  //       	return $scope.modules
-	  //       }
-	  //     }
-	  //   });
-
-	  //   modalInstance.result.then(function () {
-   //      	console.log("shared")
-   //      	selectNone()
-   //    	},function () {
-   //      	console.log("close")
-   //      	selectNone()
-   //    	});
-  	// };
 
 	var selectNone = function(){
 		$scope.modules.forEach(function(module){

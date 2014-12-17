@@ -133,23 +133,24 @@ angular.module('scalearAngularApp')
           module_id:$stateParams.module_id
       },
       function(resp){
-        $scope.quizzes=angular.extend({}, resp.quizzes, $scope.quizzes)
-      	$scope.timeline['quiz'] ={}
         console.log(resp)
-  	 		for(var quiz_id in $scope.quizzes){
+        var quizzes=resp.quizzes
+      	$scope.timeline['quiz'] ={}
+  	 		
+        for(var quiz_id in quizzes){
   	 			$scope.timeline['quiz'][quiz_id] = new Timeline()
-  	 			for(var q_idx in $scope.quizzes[quiz_id].questions){
-            var q_id = $scope.quizzes[quiz_id].questions[q_idx].id
-            var data = $scope.quizzes[quiz_id].charts[q_id] || $scope.quizzes[quiz_id].free_question[q_id]
-            data.type = $scope.quizzes[quiz_id].questions[q_idx].type
+  	 			for(var q_index in quizzes[quiz_id].questions){
+            var q_id = quizzes[quiz_id].questions[q_index].id
+            var data = quizzes[quiz_id].charts[q_id] || quizzes[quiz_id].free_question[q_id]
+            data.type = quizzes[quiz_id].questions[q_index].type
             data.id = q_id  
             data.quiz_type='quiz'
-            data.title=$scope.quizzes[quiz_id].questions[q_idx].question
-            var type = $scope.quizzes[quiz_id].questions[q_idx].type == "Free Text Question"? "free_question" : 'charts'
+            data.title=quizzes[quiz_id].questions[q_index].question
+            var type = quizzes[quiz_id].questions[q_index].type == "Free Text Question"? "free_question" : 'charts'
   	 			  $scope.timeline['quiz'][quiz_id].add(0, type, data,'quiz')
           }
   	 		}
-
+        $scope.quizzes=angular.extend({}, quizzes, $scope.quizzes)
 
  	    },
       function(){}
@@ -162,28 +163,38 @@ angular.module('scalearAngularApp')
             course_id: $stateParams.course_id,
             module_id:$stateParams.module_id
         },
-        function(data){
-          console.log(data)
-        	$scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
-          $scope.review_survey_count = data.review_survey_count
+        function(resp){
+          console.log(resp)
+          var surveys = resp.surveys
+          $scope.review_survey_count = resp.review_survey_count
+          $scope.review_survey_reply_count = {}
         	$scope.timeline["survey"]={}
-        	for (var survey_id in $scope.quizzes ){
+
+        	for (var survey_id in surveys ){
         		$scope.timeline["survey"][survey_id]=new Timeline()
-        		for(var q_idx in $scope.quizzes[survey_id].questions){
-        			var q_id = $scope.quizzes[survey_id].questions[q_idx].id
-              var data = $scope.quizzes[survey_id].charts[q_id] || $scope.quizzes[survey_id].free_question[q_id]
-              data.type = $scope.quizzes[survey_id].questions[q_idx].type
+            $scope.review_survey_reply_count[survey_id]={}
+        		for(var q_index in surveys[survey_id].questions){
+        			var q_id = surveys[survey_id].questions[q_index].id
+              $scope.review_survey_reply_count[survey_id][q_id]=0
+              var data = surveys[survey_id].charts[q_id] || surveys[survey_id].free_question[q_id]
+              data.type = surveys[survey_id].questions[q_index].type
               data.id = q_id  
               data.quiz_type='survey'
-              var type = $scope.quizzes[survey_id].questions[q_idx].type == "Free Text Question"? "free_question" : 'charts'
+              
+              var type = surveys[survey_id].questions[q_index].type == "Free Text Question"? "free_question" : 'charts'
               if(type=="free_question"){
                 data.answers.forEach(function(answer){
+                  if(!answer.hide)
+                    $scope.review_survey_reply_count[survey_id][q_id]++
                   answer.hide = !answer.hide
                 })
               }
+              if(data.show)
+                $scope.review_survey_count+=$scope.review_survey_reply_count[survey_id][q_id]
               $scope.timeline['survey'][survey_id].add(0, type, data)
         		}
         	}
+          $scope.quizzes=angular.extend({}, surveys, $scope.quizzes)
     	 	},
         function(){}
       )
@@ -378,14 +389,22 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideResponse = function(quiz_id, item, answer){
-      console.log(quiz_id)
+    $scope.updateHideResponse = function(survey_id, item, answer){
+      console.log(survey_id)
       console.log(item)
       console.log(answer)
+      if(!answer.hide){
+        $scope.review_survey_reply_count[survey_id][item.data.id]++
+        $scope.review_survey_count++
+      }
+      else{
+        $scope.review_survey_reply_count[survey_id][item.data.id]--
+        $scope.review_survey_count--
+      }
       Quiz.hideResponses(
         {
           course_id:$stateParams.course_id,
-          quiz_id: quiz_id
+          quiz_id: survey_id
         },
         {
           hide:{
@@ -397,7 +416,7 @@ angular.module('scalearAngularApp')
           console.log(answer.hide)
           if(answer.hide && !item.data.show){
             item.data.show = true
-            $scope.updateHideSurveyQuestion(quiz_id, item.data.id, item.data.show)
+            $scope.updateHideSurveyQuestion(survey_id, item.data.id, item.data.show)
           }
         }
       )
@@ -418,15 +437,15 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideSurveyQuestion=function(quiz_id,id, value){
+    $scope.updateHideSurveyQuestion=function(survey_id,id, value){
       if(value)
-        $scope.review_survey_count++
+        $scope.review_survey_count+= $scope.review_survey_reply_count[survey_id][id] || 1
       else
-        $scope.review_survey_count--
+        $scope.review_survey_count-= $scope.review_survey_reply_count[survey_id][id] || 1
       Quiz.showInclass(
         {
           course_id:$stateParams.course_id,
-          quiz_id:quiz_id
+          quiz_id:survey_id
         },
         {
           question:id,
@@ -814,6 +833,7 @@ angular.module('scalearAngularApp')
 
     shortcut.add("m",function(){
       console.log($scope.selected_item)
+      console.log($scope.selected_item.data.quiz_type)
       if($scope.selected_item){        
   			if ($scope.selected_item.type == "discussion"){
   				var q_ind = $scope.inner_highlight_index
@@ -827,13 +847,9 @@ angular.module('scalearAngularApp')
           }
           else if($scope.selected_item.data.show != null){
             $scope.selected_item.data.show = !$scope.selected_item.data.show
-            // $scope.updateHideQuiz($scope.selected_item.data.id,!$scope.selected_item.data.show )
             $scope.updateHideSurveyQuestion($scope.selected_item.lec_id,$scope.selected_item.data.id,$scope.selected_item.data.show)
           }
   			}
-        // else if($scope.selected_item.type == "Free Text Question"){
-          
-        // }
         else if($scope.selected_item.type == "free_question"){
           if($scope.selected_item.data.quiz_type == 'survey'){
             console.log($scope.inner_highlight_index)
@@ -847,7 +863,7 @@ angular.module('scalearAngularApp')
               $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item,$scope.selected_item.data.answers[q_ind])
             }
           }
-          else{
+          else if($scope.selected_item.data.quiz_type == 'quiz'){
             if($scope.highlight_level == 1){
               $scope.selected_item.data.show = !$scope.selected_item.data.show
               $scope.updateHideQuiz($scope.selected_item.data.id, !$scope.selected_item.data.show)

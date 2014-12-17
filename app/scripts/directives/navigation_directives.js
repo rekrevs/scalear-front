@@ -38,7 +38,7 @@ angular.module('scalearAngularApp')
 			}
 		};
 	 }])
-	.directive('teacherNavigation', ['$rootScope','$state','ContentNavigator', function($rootScope, $state, ContentNavigator) {
+	.directive('teacherNavigation', ['$rootScope','$state','ContentNavigator','DetailsNavigator', function($rootScope, $state, ContentNavigator, DetailsNavigator) {
            return{
 			replace:true,
 			restrict: "E",
@@ -54,6 +54,7 @@ angular.module('scalearAngularApp')
 			link: function(scope){
 				//  initFilters()
 				scope.ContentNavigator = ContentNavigator
+				scope.DetailsNavigator = DetailsNavigator
 				scope.$state = $state
 				scope.$watch("$state.includes('*.module.**')",function(value){
 					scope.in_module_state = value
@@ -82,6 +83,14 @@ angular.module('scalearAngularApp')
 
 				var setNavigator=function(val){
 					ContentNavigator.setStatus(val)
+				}
+
+				scope.toggleDetails=function(){
+					DetailsNavigator.setStatus(!DetailsNavigator.getStatus())
+				}
+
+				var setDetails=function(val){
+					DetailsNavigator.setStatus(val)
 				}
 
 				scope.addModule=function(){
@@ -136,7 +145,9 @@ angular.module('scalearAngularApp')
 				scope.updateProgressFilter=function(type){
 					scope.progress_filter[type] = !scope.progress_filter[type]
 					$rootScope.$broadcast('progress_filter_update', scope.progress_filter)
-				}		
+				}	
+
+				setDetails(true)	
 			}
 		};
  }]).directive('studentNavigation', ['$cookieStore', '$rootScope', '$state', 'Impersonate', 'ContentNavigator','TimelineNavigator', function($cookieStore, $rootScope, $state, Impersonate, ContentNavigator, TimelineNavigator) {
@@ -295,7 +306,7 @@ angular.module('scalearAngularApp')
 				})
 			}
 		};
- }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course', function(Module, $stateParams, $state, $timeout, Lecture, Course){
+ }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator){
   return{
     restrict:'E',
     replace: true,
@@ -319,6 +330,32 @@ angular.module('scalearAngularApp')
 	  		scope.currentitem = null
 	  	}
    	  })
+
+	   scope.$watch('open_navigator',function(status){
+        if(status){
+            $timeout(function(){
+                scope.delayed_navigator_open = true
+            },100)
+          }
+          else
+            scope.delayed_navigator_open = status
+      	})
+
+   		scope.$on('item_done',function(ev,item){
+   			if(!ContentNavigator.getStatus()){
+		   		ContentNavigator.open()
+		   		$timeout(function(){
+		   			item.is_done = true
+		   			item.blink = true
+		   		},1000)
+		   	}
+		   	else{
+		   		item.is_done = true
+		   	}
+		   	$timeout(function(){
+		   		item.blink = false
+		   	}, 3000)
+   		})
 
    	  scope.moduleSortableOptions={
  		axis: 'y',

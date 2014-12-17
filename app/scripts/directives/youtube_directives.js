@@ -101,7 +101,7 @@ angular.module('scalearAngularApp')
                         player.video.className = "fit-inside"
                         if(isiPad() || scope.controls == "default")
                         	player.controls(true);
-                        player.autoplay(scope.autoplay);
+                        player.autoplay(false);
                     }
 					$log.debug("loading!!!")
 					$log.debug(scope.url);
@@ -279,10 +279,9 @@ angular.module('scalearAngularApp')
 				var setupEvents=function(){
 					player.on("loadeddata", 
 						function(){
-							console.log("ready video yaahhh")
+							console.log("Video data loaded and ready")
 							if(isiPad())
 								player.controls(false);
-							$log.debug("Video data loaded")	
 							if(player_events.onReady){
 								player_events.onReady();
 								scope.$apply();
@@ -291,8 +290,7 @@ angular.module('scalearAngularApp')
 
 					player.on('playing',
 						function(){
-							console.log("youtue playing")
-							
+							console.log("youtube playing")							
 							parent.focus()
 							if(player_events.onPlay){								
 								player_events.onPlay();
@@ -303,9 +301,7 @@ angular.module('scalearAngularApp')
 					player.on('pause',
 						function(){
 							parent.focus()
-
 							if(player_events.onPause){
-
 								player_events.onPause();
 								scope.$apply();
 							}
@@ -313,13 +309,11 @@ angular.module('scalearAngularApp')
 
                     player.on('timeupdate',
                         function(){
-                            parent.focus()
-
                             if(player_events.timeUpdate){
                                 player_events.timeUpdate();
                                 scope.$apply();
                             }
-                        });
+                    });
 
 					player.on('loadedmetadata',function(){
 						parent.focus()
@@ -349,14 +343,6 @@ angular.module('scalearAngularApp')
 						parent.focus()
 						if(player_events.seeked){
 							player_events.seeked();
-							scope.$apply();
-						}
-					})
-
-					player.on('timeupdate',function(){
-						parent.focus()
-						if(player_events.timeUpdate){
-							player_events.timeUpdate();
 							scope.$apply();
 						}
 					})
@@ -422,19 +408,10 @@ angular.module('scalearAngularApp')
 
 
 				scope.$watch('url', function(){
-
                     if(scope.url && ((isYoutube(scope.url) &&  isFinalUrl(scope.url)) || isVimeo(scope.url) || isMP4(scope.url)) )
-                    {
-
-                      //  var matches = is_final_url(scope.url)
-                        // if((isYoutube(scope.url) &&]){
-                        	console.log("FINAL URl")
-                        	console.log(scope.url)
-                            player_controls.refreshVideo();
-                         // }
-
-                    }
+                        player_controls.refreshVideo()
 				})
+
 				var unwatch=scope.$watch('player', function(){
 					if(scope.player){
 						scope.player.controls=player_controls
@@ -533,7 +510,7 @@ angular.module('scalearAngularApp')
 				var factor=16.0/9.0
                 var win = angular.element($window)
 
-                var progressbar_height = 45
+                var progressbar_height = 95
 
 				$scope.fullscreen = true
 				angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");

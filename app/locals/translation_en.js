@@ -86,6 +86,7 @@ var translation_en=function(){
       my: "My",
       and: "and",
       redirect_courselist: "Redirecting to your course list in ",
+      did_not_get_credit: "You did not get credit for this video. To get credit for a required video you need to watch the whole thing (no skipping) and answer each question (you don't have to get them right, though).",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -332,6 +333,7 @@ var translation_en=function(){
         lecture_title: "Lecture Title",
         url: "Video URL",
         video_title: "Video Title",
+        provider: "Provider",
         thumbnail: "Thumbnail",
         video_preview: "Video Preview",
         aspect_ratio: "Aspect Ratio",
@@ -392,6 +394,7 @@ var translation_en=function(){
         please_choose_one_answer: "Please Choose at least one answer",
         choose_atleast_one: "Choose at least one",
         hover_for_details: "Hover for details",
+        multiple_correct: "There may be multiple correct answers",
         set_date: "Set Date",
         seconds: "Seconds",
         use_module: "Use Module’s Visibility",

@@ -10,13 +10,14 @@
 			<center>
 				<h5 class="muted" translate>new_module_instructions</h5>
 				<br/><br/>
-				<button class="button" online-modal ng-click="addModule();openOnlineContentModal()" translate>new_video</button>
+				<button class="button" module-content-modal open-modal="openOnlineContentModal" ng-click="addModule();openOnlineContentModal()"><span translate>new_video</span></button>
 				<button class="button" ng-click="addModule()" translate>groups.new_module</button>
-
 			</center>
 		</div>
 	</div>
 </div>
-<div id="middle"  class="small-12 large-8 columns" ui-view="middle" />
+<span ng-show="('**.lecture' | includedByState) || ('**.quiz' | includedByState)">
+	<div id="middle"  class="small-12 large-7 columns ease_in_out" ng-class="{'large-centered large-10': !delayed_details_status}" ui-view="middle" />
 
-<div id="details" class="small-12 large-4 columns no-padding" ui-view="details"/>
+	<div id="details" class="details-navigator-container no-padding ease_in_out small-12 large-5 columns" ui-view="details" ng-class="{'large-height-big small-height-big ':delayed_details_status2}"/>
+</span>

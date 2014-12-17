@@ -85,6 +85,7 @@ var translation_sv=function(){
       my: "Mitt",
       and: "och",
       redirect_courselist: "Omdirigerar till din kurslista under ",
+      did_not_get_credit: "Du fick inte äran för den här videon . För att få kredit för en obligatorisk videon du behöver för att titta på hela ( ingen hoppa ) och besvara varje fråga ( du behöver inte få dem rätt , men) .",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -332,6 +333,7 @@ var translation_sv=function(){
               lecture_title: "Föreläsningstitel",
               url: "Video URL",
               video_title: "Video Titel",
+              provider: "Föreskrivare",
               thumbnail: "Thumbnail",
               video_preview: "Video Preview",
               author: "Författare",
@@ -391,6 +393,7 @@ var translation_sv=function(){
               please_choose_one_answer: "Välj minst ett svar",
               choose_atleast_one: "Välj minst en",
               hover_for_details: "Peka för mer information",
+              multiple_correct: "Det kan finnas flera rätta svar",
               set_date: "Ställ in datum",
               seconds: "Sekunder",              
               use_module: "Använd modulens synlighet",

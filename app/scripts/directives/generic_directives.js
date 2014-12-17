@@ -158,7 +158,8 @@ angular.module('scalearAngularApp')
     restrict: "E",
     scope:{
       course: '=',
-      teachers: '='
+      teachers: '=',
+      unenroll:'='
     },
     templateUrl: '/views/courseItem.html',
     link: function(scope){}

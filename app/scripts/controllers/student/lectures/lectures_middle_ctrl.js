@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
 
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
+    $scope.delayed_timeline_open = $scope.TimelineNavigator.status
 
     $scope.$on("export_notes",function(){
         $scope.exportNotes()
@@ -31,15 +32,40 @@ angular.module('scalearAngularApp')
         $scope.addNote();
     })
 
+    $scope.$on('mark_confused', function(){
+        $scope.addConfused();
+    })
+
+    $scope.$on('toggle_fullscreen', function(){
+        $scope.toggleFullscreen();
+    })
+
     $scope.$on('lecture_filter_update',function(ev,filters){
-      $scope.checkModel=filters
-      $timeout(function(){
-        $scope.scrollIntoView()
-    },200)
+        $scope.checkModel=filters
+        $timeout(function(){
+            $scope.scrollIntoView()
+        },200)
     })
 
     $scope.$on('content_navigator_change',function(ev, status){
        $timeout(function(){$scope.$emit("updatePosition")})
+       if(!status){
+            $timeout(function(){
+                $scope.delayed_navigator_open = false
+            },299)
+          }
+          else
+            $scope.delayed_navigator_open = status
+    })
+
+    $scope.$on('timeline_navigator_change',function(ev, status){
+          if(!status){
+            $timeout(function(){
+                $scope.delayed_timeline_open = false
+            },300)
+          }
+          else
+            $scope.delayed_timeline_open = status
     })
 
     $scope.$on('exit_preview',function(){
@@ -126,8 +152,6 @@ angular.module('scalearAngularApp')
                 lecture_id: id,
             },
             function(data) {
-                console.log("lecture")
-                console.log(data)
                 var lec = data.lecture
                 $scope.next_item = data.next_item 
                 $scope.alert_messages = data.alert_messages;
@@ -138,8 +162,6 @@ angular.module('scalearAngularApp')
                     else if(key=="today")
                         $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$filter("date")($scope.alert_messages[key],'shortTime')
                 }
-                console.log("$scope.course")
-                console.log($scope.course)
                                
                 if(!$scope.preview_as_student){
                     for(var item in lec.requirements){
@@ -153,12 +175,13 @@ angular.module('scalearAngularApp')
                     }
                 }
 
-                if($scope.should_play){
-                    if(data.done[2]){
-                        $scope.course.markDone(data.done[1],data.done[0], data.done[2])
-                        $scope.lecture.is_done = data.done[2]
-                    }
-                }
+                // if($scope.should_play){
+                //     if(data.done[2]){
+                //         console.log("!-123-asdedfskefw done!")
+                //         $scope.course.markDone(data.done[1],data.done[0])
+                //         $scope.lecture.is_done = data.done[2]
+                //     }
+                // }
 
                 if(isiPad()){
                     $scope.video_ready=true
@@ -172,13 +195,12 @@ angular.module('scalearAngularApp')
 
      $scope.lecture_player.events.onReady = function() {
         $scope.slow = false
-        $scope.total_duration = $scope.lecture_player.controls.getDuration()
+        $scope.total_duration = $scope.lecture_player.controls.getDuration() - 1
+        var duration_milestones = [25, 75]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
-            $scope.lecture_player.controls.cue(quiz.time, function() {
-                $scope.lecture_player.controls.pause()
-                $scope.seek(quiz.time)  
-                console.log(quiz.time)
-                console.log($scope.lecture_player.controls.getTime())              
+            $scope.lecture_player.controls.cue(quiz.time, function() {                
+                $scope.seek(quiz.time)   
+                $scope.lecture_player.controls.pause()          
                 $scope.closeReviewNotify()
                 $scope.studentAnswers[quiz.id] = {}
                 $scope.selected_quiz = quiz                              
@@ -205,11 +227,39 @@ angular.module('scalearAngularApp')
             })
         })
 
+        duration_milestones.forEach(function(milestone){
+            $scope.lecture_player.controls.cue(($scope.total_duration*milestone)/100, function(){
+                updateViewPercentage(milestone)
+            })
+        })
+
         $scope.video_ready=true
         console.log($scope.supported_speeds)
         var time =$state.params.time        
-        if(time)
+        if(time){
             $scope.seek(parseInt(time));
+            $timeout(function(){
+                $scope.scrollIntoView()
+            },500)
+        }
+    }
+
+    var updateViewPercentage = function(milestone) {
+        Lecture.updatePercentView({
+            course_id:$state.params.course_id, 
+            lecture_id:$state.params.lecture_id
+        },
+        {percent:milestone},function(data){
+            $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
+            if(data.done){
+                $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
+                $scope.lecture.is_done = data.done
+                $scope.not_done_msg = false
+            }
+            else 
+                if(milestone == 100)
+                    $scope.not_done_msg = true
+        })
     }
 
     $scope.scrollIntoView=function(){
@@ -222,6 +272,8 @@ angular.module('scalearAngularApp')
 
     $scope.nextItem=function(){
         if ($scope.next_item.id) {
+            if(!$scope.last_navigator_state)
+                ContentNavigator.close()
             var next_state = "course.module.courseware." + $scope.next_item.class_name
             var s = $scope.next_item.class_name + "_id"
             var to = {}
@@ -259,7 +311,7 @@ angular.module('scalearAngularApp')
             goToLecture(lecture_id)
             $scope.go_to_time =time
         }
-        $scope.end_buttons = false
+        $scope.video_end = false
     }
 
     $scope.seek_and_pause=function(time,lecture_id){
@@ -314,7 +366,7 @@ angular.module('scalearAngularApp')
         console.log("playing ")
         $scope.play_pause_class = 'pause'  
         checkIfQuizSolved()
-        $scope.end_buttons = false
+        $scope.video_end = false
     }
 
     $scope.lecture_player.events.onPause= function(){
@@ -330,7 +382,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onEnd= function() {
-        $scope.end_buttons = true
+        $scope.video_end = true
+        updateViewPercentage(100)
     }
 
     $scope.lecture_player.events.onSlow=function(is_youtube){
@@ -349,8 +402,9 @@ angular.module('scalearAngularApp')
         }
     } 
 
-    var showNotification=function(msg, sub_msg){
+    var showNotification=function(msg, sub_msg, middle_msg){
         $scope.notification_message=$translate(msg);
+        $scope.notification_middle_message=$translate(middle_msg);
         $scope.notification_submessage=$translate(sub_msg);
         $interval(function(){
             removeNotification()
@@ -362,12 +416,6 @@ angular.module('scalearAngularApp')
             $scope.notification_message=null;
             window.onmousemove = null  
         }
-    }
-    
-    var switchToTab=function(tab){
-        for(var i in $scope.tabs)
-            $scope.tabs[i] = false
-        $scope.tabs[tab] = true
     }
 
     $scope.addConfused= function(){
@@ -394,16 +442,11 @@ angular.module('scalearAngularApp')
             }
         });
     }
-    $scope.$on('mark_confused', function(){
-        $scope.addConfused();
-    })
+    
 
     $scope.toggleFullscreen=function(){
         $scope.fullscreen? goSmallScreen() : goFullscreen() 
     }
-    $scope.$on('toggle_fullscreen', function(){
-        $scope.toggleFullscreen();
-    })
 
     var goFullscreen=function(){
         isiPad()? goMobileFullscreen() : goDesktopFullscreen()
@@ -420,6 +463,7 @@ angular.module('scalearAngularApp')
         $scope.fullscreen= false
          console.log($scope.fullscreen)
         $scope.video_class = 'flex-video'
+        $scope.container_class=""
         $timeout(function(){$scope.$emit("updatePosition")})
         if($scope.quiz_mode == true){
             $scope.quiz_mode = false
@@ -432,6 +476,7 @@ angular.module('scalearAngularApp')
         $scope.resize.big()
         $scope.fullscreen= true
         $scope.video_class = 'video_class_full'
+        $scope.container_class="black"
     }
 
     var goMobileSmallScreen=function(){
@@ -568,8 +613,6 @@ angular.module('scalearAngularApp')
         function(data){
             displayResult(data)
             if(data.msg=="Successfully Submitted"){
-                console.log("emit ya zmeeele");
-                $scope.$emit("blink_blink");
                 $scope.$broadcast("blink_blink");
             }
         },
@@ -588,16 +631,21 @@ angular.module('scalearAngularApp')
                     $scope.explanation[el]= data.detailed_exp[el];
                 var verdict=data.correct? "lectures.correct": "lectures.incorrect"
                 var sub_message = ''
+                var middle_msg = ''
                 if (!($scope.selected_quiz.quiz_type=='html' && ($scope.selected_quiz.question_type.toUpperCase()=='DRAG' || $scope.selected_quiz.question_type.toUpperCase()=='FREE TEXT QUESTION')))
+                    if($scope.selected_quiz.question_type.toUpperCase()=='MCQ' && !data.correct)
+                        middle_msg = 'lectures.multiple_correct'
                     sub_message  = 'lectures.hover_for_details'
-                showNotification(verdict, sub_message)
+                showNotification(verdict, sub_message, middle_msg)
 
                 $scope.selected_quiz.is_quiz_solved=true;
             }
             reviewInclass() 
 
-            $scope.course.markDone(data.done[1],data.done[0], data.done[2])
-            $scope.lecture.is_done = data.done[2]                
+            if(data.done[2]){
+                $scope.course.markDone(data.done[1],data.done[0])
+                $scope.lecture.is_done = data.done[2]
+            }
         }
 
         $interval(function(){

@@ -35,6 +35,15 @@ angular.module('scalearAngularApp')
   				function(){})
   		}
 
+      $scope.unenrollCourse=function(course){
+        Course.unenroll({course_id: course.id},{},
+          function(response){
+            $scope.courses.splice($scope.courses.indexOf(course), 1)
+            $log.debug(response)
+          },
+          function(){})
+      }
+
   		$scope.filterTeacher=function(teacher_name, teacher_email){
   			$scope.filtered_teacher_name = teacher_name
         $scope.filtered_teacher = teacher_email;

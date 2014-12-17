@@ -1,13 +1,12 @@
-
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<label class="size-1">
-			<b><span translate>groups.module_name</span>:</b><details-text class="size-18 with-small-margin-left" value="module.name" save="updateModule()" validate="validateModule" column="name"></details-text>
+			<b><span translate>groups.module_name</span>:</b><details-text class="size-18 with-small-margin-left" value="module.name" save="updateModule()" validate="validateModule" column="name" open="module.new"></details-text>
 		</label>
     </div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<label class="size-1">
 			<b><span translate>visible</span>:</b><details-date class="with-small-margin-left" date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
 			<span ng-hide="visible(module.appearance_time)">
@@ -17,10 +16,10 @@
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin" />
 		<label class="size-1">
-			<b><span class="with-small-margin-left" translate>groups.has_due_date</span></b><!-- <details-check checked="module.due_date_enabled" validate="updateDueDate" save="updateModule()" yes="with due date" no="without due date" title="has due date?" ></details-check> -->
+			<b><span class="with-small-margin-left" translate>groups.has_due_date</span></b>
 			<span ng-show="module.due_date_enabled">:
 				<details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>
 	        </span>
@@ -28,14 +27,14 @@
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<label class="size-1">
 			<b><span translate>groups.description</span>:</b><big-area class="with-small-margin-left" value="module.description" save="updateModule()" validate="validateModule" column="description"></big-area>
 		</label>
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
+	<div class="small-10 columns">
 		<label class="size-1">
 			<b><span >Student link to module</span>:</b><span class="color-editable-blue with-small-margin-left">{{link_url}}</span>
 		</label>
@@ -43,78 +42,43 @@
 </div>
 <br />
 <div class="row">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}">
-		<!--<ul class="small-block-grid-1 medium-block-grid-3 large-block-grid-4">
-			<li class="total">
-				<h5 class="text-info total_title" >
-					<span translate>groups.total_time</span>
-				</h5>
-				<h4 class="text-info total_inner" style="padding-bottom: 15px;" >
-					<b>{{module.total_time | formattime: 'hh:mm:ss'}}</b>
-				</h4>
-			</li>
-			<li class="total">
-				<h5 class="text-info total_title" >
-					<span translate>groups.total_number_lec_qustions</span>
-				</h5>
-				<h4 class="text-info total_inner" style="padding-bottom: 15px;" >
-					<b>{{module.total_questions}}</b>
-				</h4>
-			</li>
-			<li class="total">
-				<h5 class="text-info total_title" >
-					<span translate>groups.total_number_quiz_questions</span>
-				</h5>
-				<h4 class="text-info total_inner" style="padding-bottom: 15px;" >
-					<b>{{module.total_quiz_questions}}</b>
-				</h4>
-			</li>
-		</ul>-->
+	<div class="small-10 columns">
 		<table class="small-8 columns">
-		<tbody>
-			<tr>
-				<td class="right-border"translate>groups.total_time</td>
-				<td ><b>{{module.total_time | formattime: 'hh:mm:ss'}}</b></td>
-			</tr>
-			<tr>
-				<td class="right-border"translate>groups.total_number_lec_qustions</td>
-				<td ><b id="total_questions">{{module.total_questions}}</b></td>
-			</tr>
-			<tr>
-				<td class="right-border"translate>groups.total_number_quiz_questions</td>
-				<td ><b id="total_quiz_questions">{{module.total_quiz_questions}}</b></td>
-			</tr>
-		</tbody>
-	</table>
-	</div>
-
-	
+			<tbody>
+				<tr>
+					<td class="right-border"translate>groups.total_time</td>
+					<td ><b>{{module.total_time | formattime: 'hh:mm:ss'}}</b></td>
+				</tr>
+				<tr>
+					<td class="right-border"translate>groups.total_number_lec_qustions</td>
+					<td ><b id="total_questions">{{module.total_questions}}</b></td>
+				</tr>
+				<tr>
+					<td class="right-border"translate>groups.total_number_quiz_questions</td>
+					<td ><b id="total_quiz_questions">{{module.total_quiz_questions}}</b></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>	
 </div>
-
-<!-- <a ng-click="addCustomLink()" ng-disabled="link_overlay" class="button small">
-	    <span translate>groups.add_link</span>
-</a> -->
 <div class="row">
 	<center class="small-block-grid-3">
-		<button  id="add_module_link" class="button small no-margin" questions-modal ng-click="addCustomLink()" translate>groups.new_link</button>
-		<button class="button small no-margin" online-modal ng-click="openOnlineContentModal()" translate>new_video</button>
+		<button id="add_module_link" class="button small no-margin" ng-click="addCustomLink()" translate>groups.new_link</button>
+		<button class="button small no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>new_video</span></button>
 		<button class="button small no-margin" ng-click="addModule()" translate>groups.new_module</button>
 	</center>
 </div>
 <br />
 <div class="row">
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}"><b translate>groups.external_module_link</b></div>
+	<div class="small-10 columns"><b translate>groups.external_module_link</b></div>
 </div>
-<!-- <div class="row" ng-show="module.custom_links.length ==0">
-	
-	<div class="small-10 columns" ng-class="{'small-offset-2': !ContentNavigator.status}" style="color: #808080;" >{{'groups.no_external_links' | translate}}</div>
-</div> -->
-<div class="small-8 columns left" ng-class="{'small-offset-2': !ContentNavigator.status}">
+<div class="small-8 columns left">
 	<br/>
 	<ul ui-sortable="listSortableOptions" ng-model='module.custom_links'>
 		<li class="group_links" ng-repeat="doc in module.custom_links">
 			<link-item link="doc" update="updateCustomLink" remove="removeCustomLink" validate="validate" />
 		</li>
+<<<<<<< HEAD
 	</ul>
 </div>
 
@@ -186,3 +150,7 @@
     </div>
 	<br /><br />
 </div> -->
+=======
+	</ul>	
+</div>
+>>>>>>> feature/2015-Jan

@@ -24,7 +24,7 @@ var app = angular.module('scalearAngularApp')
 //            var answer = confirm($translate('courses.you_sure_delete_student', {student: student.name}));
             //if(answer){
             	student.removing=true;
-                Course.remove_student(
+                Course.removeStudent(
                     {
                         course_id:$stateParams.course_id ,
                         student: student.id

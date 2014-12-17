@@ -11,7 +11,8 @@ angular.module('scalearAngularApp')
       'validateCourse':{method: 'PUT', params: {action: 'validate_course_angular'}, headers:headers},
       'send_email_through':{method: 'POST', params: {action: 'send_email_through'}, headers:headers},
       'send_batch_email_through':{method: 'POST', params: {action: 'send_batch_email_through'}, headers:headers},
-      'remove_student' : { method: 'POST', params: {action: 'remove_student'}, headers:headers},
+      'removeStudent' : { method: 'POST', params: {action: 'remove_student'}, headers:headers},
+      'unenroll' : { method: 'POST', params: {action: 'unenroll'}, headers:headers},
       'destroy': { method: 'DELETE' , headers:headers},
       'show':{method: 'GET', headers:headers},
       'saveTeacher':{ method: 'POST', params: {action: 'save_teachers'}, headers:headers},
@@ -33,7 +34,6 @@ angular.module('scalearAngularApp')
       'getAllTeachers':{method:'GET', headers:headers,params:{action: 'get_all_teachers'}},
       'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},
       'sortCourseLinks':{method: 'POST', headers:headers, params: {action: 'sort_course_links'}},
-
     });
 
 }])

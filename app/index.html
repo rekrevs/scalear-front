@@ -57,10 +57,8 @@
 
 
   <body>
-  	<!--<div ng-show="start_loading" class="errorpagetransparent"></div>-->
-
     <div class="errorpageserver" ng-show="logging_out">
-        <loading size="big" show="true" style="position: relative; top:40%;"></loading>
+        <loading size="big" show="true" style="position: relative;"></loading>
     </div>
     <div id="error_container" ng-show="show_alert!=''" style="height: 0px;" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
         <div style="text-align: center; display:block; height: 0px;">
@@ -76,62 +74,32 @@
       <script src="bower_components/es5-shim/es5-shim.js"></script>
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
-
-    <!-- Add your site or application content here -->
-       <!--  <header class="navbar-fixed-top modern-navbar" ng-show="current_user">
-            <span class="modern-menu-button" ng-show="current_user" ng-click="toggleCollapse()" ng-class="{menuopen: !iscollapsed}">
-                <span class="menu-icon" style="margin-top: 8px;">
-                </span>
-            </span>
-            <a ng-show="current_user" class="pull-right current-user-name">
-                <span ng-bind="current_user.name +' '+ current_user.last_name">    
-                </span>
-            </a>
-            <div class="state">
-                <big><span ng-bind="Page.title()"></span></big>
+     <header>
+        <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage" courses="courses"></main-navigation>
+    </header>     
+    <div id="main" role="main"> 
+        <div class="header">
+            <div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
+                <teacher-navigation course="course" message="subheader_message" />
             </div>
-            <div class="modern-logo">
-                <a href="/#" class="brand"><img alt="Logo" src="images/logo.png" width="30px"> Scalable<span style="padding-left:0px; color:black;">Learning</span> <img alt="Beta_tag_small" class="brand" src="images/beta_tag_small.png" style="width:40px;padding-left:0px;padding-top:10px;">
-                </a>
+            <div ng-if="current_user.roles[0].id == 2">
+                <student-navigation course="course" message="subheader_message" />
             </div>
-        </header> -->
-        <header>
-            <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage" courses="courses"></main-navigation>
-        </header>
-        <!-- <div ng-if="clipboard && clipboard.show_msg" class="top-ribbon">
-            <notice-message message="{{clipboard.type[0].toUpperCase()+clipboard.type.slice(1)+': '+clipboard.name+' has been copied. To paste it into another module, right-click on the module and choose Paste'}}" close="true" button-action="closeClipboard()" button-title="{{'lectures.remove' | translate}}" />
-        </div> -->
-        <!-- <div ng-if="preview_as_student" class="top-ribbon">
-            <notice-message message="{{'preview_as_student'| translate}}" button-action="disablePreview()" button-title="{{'return' | translate}}" />
-        </div> -->
-        <div id="main" role="main">
-            <div class="container">
-                <div><!-- ui-view="navigation" -->
-                    <div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
-                        <teacher-navigation course="course" message="subheader_message" />
-                    </div>
-                    <div ng-if="current_user.roles[0].id == 2">
-                        <student-navigation course="course" message="subheader_message" />
-                    </div>
-                </div>
-                <!-- <div ng-class="{'small-12 medium-3 large-3 columns no-padding no-margin': navigator.status}"> -->
-                    <content-navigator ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="course.modules" links="course.custom_links" mode="editor" open="navigator.status">
-                    </content-navigator>
-                    <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" links="course.custom_links" open="navigator.status">
-                    </content-navigator>
-                    <div ng-show="navigator.status" style="min-height: 1px;" class="containeropen small-12 medium-4 large-2 columns no-padding no-margin">
-                    </div>
-                <!-- </div> -->
-                <div class="row main_view land-min-height" ng-class="{'small-12 medium-8 large-10 columns max-width-me no-padding': navigator.status}" style="min-height: 80vh;">
-                    <div class="small-12 land-no-padding columns " ng-class="{'no-padding-right':('**.courseware.**' | includedByState)}"  ui-view=""></div>
-                </div>
-                
-                <!-- <div style="height: 50px;"></div> -->
-                <footer class="with-tiny-margin small-12 columns">
-                   <scalear_footer />
-                </footer>
-            </div> 
+        </div>             
+        <div class="container row"> 
+            <content-navigator ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="course.modules" links="course.custom_links" mode="editor" open="ContentNavigator.status">
+            </content-navigator>
+            <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" links="course.custom_links" open="ContentNavigator.status">
+            </content-navigator>
+            <div ng-show="ContentNavigator.delayed_navigator_open || ('**.course_editor.overview' | includedByState)" class="containeropen small-12 medium-4 large-2 columns no-padding no-margin">
+            </div>
+            <div class="land-min-height land-no-padding" ng-class="{'small-12 medium-8 large-10 columns max-width-me': ContentNavigator.delayed_navigator_open || ('**.course_editor.overview' | includedByState),'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 15px" ui-view>
+            </div>
         </div> 
+        <footer class="small-12 columns footer">
+           <scalear_footer />
+        </footer>
+    </div> 
 
     
 
@@ -259,6 +227,7 @@
     <script src="scripts/services/dashboard.js"></script>
     <script src="scripts/services/content_navigator.js"></script>
     <script src="scripts/services/timeline_navigator.js"></script>
+    <script src="scripts/services/details_navigator.js"></script>
 
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/index.js"></script>

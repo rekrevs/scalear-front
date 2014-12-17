@@ -39,6 +39,7 @@ angular.module('scalearAngularApp')
 		// "sendFeedback":{method:'POST', params:{action:'create_or_update_survey_responses'},headers:headers},
 		// "deleteFeedback":{method:'DELETE',params:{action:'delete_response'},headers:headers}
 		"exportNotes":{method: 'GET', params:{action:'export_notes'}, headers:headers},
+		"updatePercentView":{method: 'POST', params:{action:'update_percent_view'}, headers:headers},
 	});
 
 }]) 

@@ -14,12 +14,7 @@
         width:90% !important;
     }
 
-    .white-with-hover{
-        background-color: #ffffff;
-    }
-    .white-with-hover:hover{
-        background-color: #d4d4d2;
-    }
+
     .form-inline textarea {
         width: 95% !important;
     }
@@ -263,7 +258,7 @@
       -webkit-transition: opacity .25s ease-in;
     }
     .ownpost{
-        background-color: #e6f6fc !important;
+        background-color: #E3F0EF !important;
     }
 
     .popover-title{

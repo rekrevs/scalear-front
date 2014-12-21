@@ -215,7 +215,7 @@ angular.module('scalearAngularApp')
             },
             restrict: 'A',
             replace: true,
-            controller: function($scope){
+            controller: ['$scope', function($scope){
                 $scope.openModal = function () {
                     var modalInstance = $modal.open({
                         templateUrl: '/views/teacher/course_editor/online_content_modal.html',
@@ -229,7 +229,7 @@ angular.module('scalearAngularApp')
                     }
                   $scope.cancel = $modalInstance.dismiss
                 }]
-            }
+            }]
         }
     }])
     .directive('lectureQuestionsModal', ['$modal',function($modal){
@@ -239,7 +239,7 @@ angular.module('scalearAngularApp')
             },
             restrict: 'A',
             replace: true,
-            controller: function($scope){
+            controller: ['$scope',function($scope){
                 $scope.openModal = function () {
                     var modalInstance = $modal.open({
                         templateUrl: '/views/teacher/course_editor/question_types_modal.html',
@@ -254,6 +254,6 @@ angular.module('scalearAngularApp')
                     }
                   $scope.cancel = $modalInstance.dismiss
                 }]
-            }
+            }]
         }
     }])

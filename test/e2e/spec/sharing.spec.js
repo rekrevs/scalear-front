@@ -6,8 +6,8 @@ var student = require('./lib/student_module')
 var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
-//not working
-xdescribe("1", function(){
+
+describe("1", function(){
 
     it('should sign in as teacher', function(){
         o_c.press_login(ptor)
@@ -151,7 +151,7 @@ xdescribe("1", function(){
 describe("2", function(){
 
     it('should sign in as teacher', function(){
-        o_c.press_login(ptor)
+        // o_c.press_login(ptor)
         o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
@@ -208,6 +208,7 @@ describe("2", function(){
      it('should not find a notification', function(){
         o_c.open_notifications(ptor)
         count_notification(0)
+        o_c.logout(ptor);
     })
 })
 
@@ -302,7 +303,7 @@ describe("3", function(){
 describe("4", function(){
 
     it('should sign in as teacher', function(){
-        // o_c.press_login(ptor)
+        o_c.press_login(ptor)
         o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 

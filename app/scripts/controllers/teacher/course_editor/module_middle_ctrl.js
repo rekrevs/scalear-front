@@ -57,6 +57,7 @@ angular.module('scalearAngularApp')
             };
 
             $scope.updateModule = function(data, type) {
+                delete $scope.module.new
                 var modified_module = angular.copy($scope.module);
                 delete modified_module.id;
                 delete modified_module.items;
@@ -67,7 +68,6 @@ angular.module('scalearAngularApp')
                 delete modified_module.total_questions;
                 delete modified_module.total_quiz_questions;
                 delete modified_module.due_date_enabled;
-                delete modified_module.new
 
                 Module.update({
                         course_id: $stateParams.course_id,

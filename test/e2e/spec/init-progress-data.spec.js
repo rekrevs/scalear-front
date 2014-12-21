@@ -68,7 +68,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 10);
 		teacher.create_invideo_mcq_quiz(ptor);
 		teacher.make_mcq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y);
-		teacher.rename_invideo_quiz(ptor, 1, 'MCQ QUIZ')
+		teacher.rename_invideo_quiz('MCQ QUIZ')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 	})
@@ -88,7 +88,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 20)
 		teacher.create_invideo_ocq_quiz(ptor);
 		teacher.make_ocq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y);
-		teacher.rename_invideo_quiz(ptor, 2, 'OCQ QUIZ')
+		teacher.rename_invideo_quiz('OCQ QUIZ')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 		// quiz_ov.create_ocq_quiz(ptor)
@@ -109,7 +109,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 30)
 		teacher.create_invideo_drag_quiz(ptor);
 		teacher.make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y);
-		teacher.rename_invideo_quiz(ptor, 3, 'DRAG QUIZ')
+		teacher.rename_invideo_quiz('DRAG QUIZ')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 		// quiz_ov.create_drag_quiz(ptor)
@@ -143,7 +143,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 10)
 		teacher.create_invideo_mcq_text_quiz(ptor);
 		teacher.make_mcq_text_questions(ptor);
-		teacher.rename_invideo_quiz(ptor, 1, 'MCQ TEXT QUIZ')		
+		teacher.rename_invideo_quiz('MCQ TEXT QUIZ')		
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -162,7 +162,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 20)
 		teacher.create_invideo_ocq_text_quiz(ptor);
 		teacher.make_ocq_text_questions(ptor);
-		teacher.rename_invideo_quiz(ptor, 2, 'OCQ TEXT QUIZ')
+		teacher.rename_invideo_quiz('OCQ TEXT QUIZ')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -179,7 +179,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 30)
 		teacher.create_invideo_drag_text_quiz(ptor);
 		teacher.make_drag_text_questions(ptor);
-		teacher.rename_invideo_quiz(ptor, 3, 'DRAG TEXT QUIZ')
+		teacher.rename_invideo_quiz('DRAG TEXT QUIZ')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -215,7 +215,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 10)
 		teacher.create_invideo_mcq_survey(ptor);
 		teacher.make_mcq_survey_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y);
-		teacher.rename_invideo_quiz(ptor, 1, 'MCQ SURVEY')
+		teacher.rename_invideo_quiz('MCQ SURVEY')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -236,7 +236,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 20)
 		teacher.create_invideo_ocq_survey(ptor);
 		teacher.make_ocq_survey_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y);
-		teacher.rename_invideo_quiz(ptor, 2, 'OCQ SURVEY')
+		teacher.rename_invideo_quiz('OCQ SURVEY')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 		// survey_ov.create_ocq_survey(ptor)
@@ -415,7 +415,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 10)
 		teacher.create_invideo_mcq_quiz(ptor);
 		teacher.make_mcq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y);
-		teacher.rename_invideo_quiz(ptor, 1, 'MCQ QUIZ')
+		teacher.rename_invideo_quiz('MCQ QUIZ')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -434,7 +434,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 20)
 		teacher.create_invideo_ocq_quiz(ptor);
 		teacher.make_ocq_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y);
-		teacher.rename_invideo_quiz(ptor, 2, 'OCQ QUIZ')
+		teacher.rename_invideo_quiz('OCQ QUIZ')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -453,7 +453,7 @@ xdescribe("teacher", function(){
 			youtube.seek(ptor, 30)
 			teacher.create_invideo_drag_quiz(ptor);
 			teacher.make_drag_questions(ptor, d_q1_x, d_q1_y, d_q2_x, d_q2_y, d_q3_x, d_q3_y);
-			teacher.rename_invideo_quiz(ptor, 3, 'DRAG QUIZ')
+			teacher.rename_invideo_quiz('DRAG QUIZ')
 			teacher.exit_invideo_quiz()
 			o_c.scroll_to_top(ptor)		
 
@@ -497,7 +497,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 10)
 		teacher.create_invideo_mcq_text_quiz(ptor);
 		teacher.make_mcq_text_questions(ptor);
-		teacher.rename_invideo_quiz(ptor, 1, 'MCQ TEXT QUIZ')		
+		teacher.rename_invideo_quiz('MCQ TEXT QUIZ')		
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -517,7 +517,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 20)
 		teacher.create_invideo_ocq_text_quiz(ptor);
 		teacher.make_ocq_text_questions(ptor);
-		teacher.rename_invideo_quiz(ptor, 2, 'OCQ TEXT QUIZ')
+		teacher.rename_invideo_quiz('OCQ TEXT QUIZ')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -535,7 +535,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 30)
 		teacher.create_invideo_drag_text_quiz(ptor);
 		teacher.make_drag_text_questions(ptor);
-		teacher.rename_invideo_quiz(ptor, 3, 'DRAG TEXT QUIZ')
+		teacher.rename_invideo_quiz('DRAG TEXT QUIZ')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -572,7 +572,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 10)
 		teacher.create_invideo_mcq_survey(ptor);
 		teacher.make_mcq_survey_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y);
-		teacher.rename_invideo_quiz(ptor, 1, 'MCQ SURVEY')
+		teacher.rename_invideo_quiz('MCQ SURVEY')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 
@@ -593,7 +593,7 @@ xdescribe("teacher", function(){
 		youtube.seek(ptor, 20)
 		teacher.create_invideo_ocq_survey(ptor);
 		teacher.make_ocq_survey_questions(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y);
-		teacher.rename_invideo_quiz(ptor, 2, 'OCQ SURVEY')
+		teacher.rename_invideo_quiz('OCQ SURVEY')
 		teacher.exit_invideo_quiz()
 		o_c.scroll_to_top(ptor)
 		// survey_ov.create_ocq_survey(ptor)

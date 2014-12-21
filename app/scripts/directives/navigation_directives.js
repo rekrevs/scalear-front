@@ -342,19 +342,19 @@ angular.module('scalearAngularApp')
       	})
 
    		scope.$on('item_done',function(ev,item){
+   			var time = 0
    			if(!ContentNavigator.getStatus()){
 		   		ContentNavigator.open()
-		   		$timeout(function(){
-		   			item.is_done = true
-		   			item.blink = true
-		   		},1000)
-		   	}
-		   	else{
-		   		item.is_done = true
+		   		time= 700
 		   	}
 		   	$timeout(function(){
-		   		item.blink = false
-		   	}, 3000)
+	   			item.is_done = true
+	   			item.blink = true
+   				$timeout(function(){
+			   		item.blink = false
+			   	}, 1000)
+	   		},time)
+		   
    		})
 
    	  scope.moduleSortableOptions={

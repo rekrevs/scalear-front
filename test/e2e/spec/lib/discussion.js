@@ -20,7 +20,7 @@ exports.ask_a_question = function(ptor, ques_string, type){
     element.all(by.name('discussion-timeline-item')).then(function(items){
         questions_no = items.length
     })
-    element(by.className('questionDiv')).click();
+    element(by.id('ask_question_button')).click();
     var question = element(by.id('show_question'))
 
     question.element(by.tagName('textarea')).sendKeys(ques_string);

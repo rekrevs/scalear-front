@@ -20,14 +20,11 @@ describe("1", function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-	})
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
+		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.open_course_list(ptor);
+		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
@@ -42,8 +39,14 @@ describe("1", function(){
 		teacher.make_mcq_text_questions(ptor);
 	})
 
+	it('should get the enrollment key and enroll student', function(){
+		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+	})
+
 	it('should login a student and check for mcq no', function(){
-		o_c.to_student(ptor);
+		// o_c.to_student(ptor);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		// o_c.press_content_navigator(ptor);
@@ -98,15 +101,12 @@ describe("2", function(){
 	it('should create_course', function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-	})
+	
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
+		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.open_course_list(ptor);
+		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
@@ -121,8 +121,14 @@ describe("2", function(){
 		teacher.make_mcq_text_questions(ptor);
 	})
 
+	it('should get the enrollment key and enroll student', function(){
+		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+	})
+
 	it('should login a student and check for mcq no', function(){
-		o_c.to_student(ptor);
+		// o_c.to_student(ptor);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		// o_c.press_content_navigator(ptor);
@@ -175,14 +181,11 @@ describe("explanation validation", function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-	})
 	//test
 	it('should add a module and lecture to create quizzes', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
+		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.open_course_list(ptor);
+		// o_c.open_course(ptor, 1);
 		teacher.add_module(ptor);
 		teacher.open_module(ptor, 1);
 		teacher.add_lecture(ptor);			
@@ -197,8 +200,14 @@ describe("explanation validation", function(){
 		teacher.make_mcq_text_questions(ptor);
 	})
 
+	it('should get the enrollment key and enroll student', function(){
+		o_c.press_content_navigator(ptor);
+		ptor.sleep(2000)
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+	})
+
 	it('should login a student and check for mcq no', function(){
-		o_c.to_student(ptor);
+		// o_c.to_student(ptor);
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		// o_c.press_content_navigator(ptor);

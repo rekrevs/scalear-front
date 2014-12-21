@@ -2,7 +2,7 @@
   <accordion-group class="accordion-group" is-open="lecture && lecture.url == 'none'">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div class="show-inline">Video</div>
+        <div id="video_settings" class="show-inline">Video</div>
       </div>              
     </accordion-heading>
     <table class="table small-12 no-margin" style="border-top:none">
@@ -41,7 +41,7 @@
           </center>
         </td>
       </tr> -->
-      <tr>
+      <tr ng-show="lecture.url == 'none'">
         <td class="right-border"><span translate>lectures.provider</span>:</td>
         <td ng-if="is_youtube">
           <label >Youtube</label>
@@ -68,7 +68,7 @@
   <accordion-group class="accordion-group">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div class="show-inline">Settings</div>
+        <div id="lec_settings" class="show-inline">Settings</div>
       </div>              
     </accordion-heading>
     <table class="table small-12 no-margin">

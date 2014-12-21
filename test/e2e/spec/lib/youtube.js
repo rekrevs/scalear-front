@@ -88,7 +88,7 @@ exports.seek = function(ptor, percent){
 		ptor.actions().mouseMove(progress,{x: (percent*pw)/100, y: 4}).click().perform().then(function(){
 			element(by.className('elapsed')).getSize().then(function(attr){
 				cw = attr.width;
-				expect(cw).toBeGreaterThan(Math.floor((percent*pw)/100)-2);
+				expect(cw).toBeGreaterThan(Math.floor((percent*pw)/100)-5);
 				expect(cw).toBeLessThan(Math.ceil((percent*pw)/100)+2);
 				
 			})

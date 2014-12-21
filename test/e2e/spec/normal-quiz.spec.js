@@ -17,17 +17,13 @@ describe('add required quiz and answer it',function(){
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
-    it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-    })
-
     it('should add a normal quiz', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
+        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.open_course_list(ptor);
+        // o_c.open_course(ptor, 1);
         // o_c.open_content_editor(ptor);
         teacher.add_module(ptor);
-        ptor.sleep(3000)
+        // ptor.sleep(3000)
         teacher.add_quiz(ptor)
     })
 
@@ -66,8 +62,12 @@ describe('add required quiz and answer it',function(){
         teacher.save_quiz(ptor)
     })
 
+    it('should get the enrollment key and enroll student', function(){
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    })
+
     it('should go to student', function(){
-        o_c.to_student(ptor);
+        // o_c.to_student(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         // o_c.open_lectures(ptor);
@@ -147,17 +147,13 @@ describe("add optional quiz and answer it incorrect with multiple attempts", fun
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
-    it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-    })
-
     it('should add a normal quiz', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
+        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.open_course_list(ptor);
+        // o_c.open_course(ptor, 1);
         // o_c.open_content_editor(ptor);
         teacher.add_module(ptor);
-        ptor.sleep(3000)
+        // ptor.sleep(3000)
         teacher.add_quiz(ptor)
     })
 
@@ -195,8 +191,12 @@ describe("add optional quiz and answer it incorrect with multiple attempts", fun
         teacher.save_quiz(ptor)
     })
 
+    it('should get the enrollment key and enroll student', function(){
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    })
+
     it('should go to student', function(){
-        o_c.to_student(ptor);
+        // o_c.to_student(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         // o_c.open_lectures(ptor);
@@ -231,11 +231,12 @@ describe("add optional quiz and answer it incorrect with multiple attempts", fun
         student.free_match_answer(ptor, 6, 'mat answer')
     })  
 
-    it('should answer drag correct', function(){
-        ptor.sleep(2000);
-    })
+    // it('should answer drag correct', function(){
+    //     ptor.sleep(2000);
+    // })
 
     it('should submit',function(){
+        ptor.sleep(30000)
         student.submit_normal_quiz(ptor);
         incorrect_no(4)
         under_review_no(1)
@@ -280,21 +281,21 @@ describe("add optional quiz and answer it incorrect with multiple attempts", fun
         check_submit_disabled(ptor)
     })    
     
-    it('should delete course', function(){
-        o_c.to_teacher(ptor);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
-        // o_c.press_content_navigator(ptor)
-        teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1);
-        teacher.delete_empty_module(ptor, 1)
-        o_c.open_course_list(ptor);
-        teacher.delete_course(ptor, 1);
-        o_c.logout(ptor);
-    })
+    // it('should delete course', function(){
+    //     o_c.to_teacher(ptor);
+    //     o_c.open_course_list(ptor);
+    //     o_c.open_course(ptor, 1);
+    //     // o_c.press_content_navigator(ptor)
+    //     teacher.open_module(ptor, 1);
+    //     teacher.delete_item_by_number(ptor, 1, 1);
+    //     teacher.delete_empty_module(ptor, 1)
+    //     o_c.open_course_list(ptor);
+    //     teacher.delete_course(ptor, 1);
+    //     o_c.logout(ptor);
+    // })
 })
 
-xdescribe('add quiz and student saves it',function(){
+describe('add quiz and student saves it',function(){
     it('should sign in as teacher', function(){
         o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
@@ -303,16 +304,12 @@ xdescribe('add quiz and student saves it',function(){
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
-    it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-    })
-
     it('should add a normal quiz', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
+        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.open_course_list(ptor);
+        // o_c.open_course(ptor, 1);
         teacher.add_module(ptor);
-        ptor.sleep(3000)
+        // ptor.sleep(3000)
         teacher.add_quiz(ptor)
     })
 
@@ -342,8 +339,12 @@ xdescribe('add quiz and student saves it',function(){
         teacher.save_quiz(ptor)
     })
 
+    it('should get the enrollment key and enroll student', function(){
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    })
+
     it('should go to student', function(){
-        o_c.to_student(ptor);
+        // o_c.to_student(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         // o_c.open_lectures(ptor);

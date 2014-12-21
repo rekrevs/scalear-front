@@ -234,6 +234,7 @@ angular.module('scalearAngularApp')
 				$scope.quiz_layer.backgroundColor="transparent"
 				$scope.quiz_layer.overflowX= ''
 				$scope.quiz_layer.overflowY= ''
+				console.log($scope.selected_quiz)
 				getQuizData();				
 			}
 			// }
@@ -250,7 +251,7 @@ angular.module('scalearAngularApp')
 			function(data){ //success
 				$log.debug(data)
 				$scope.selected_quiz.answers= data.answers
-				console.log($scope.selected_quiz.answers)
+				console.log($scope.selected_quiz)
 				if($scope.selected_quiz.question_type.toLowerCase()=="drag"){
 					$scope.allPos=mergeDragPos(data.answers)
 					$log.debug($scope.allPos)
@@ -401,6 +402,8 @@ angular.module('scalearAngularApp')
 		$log.debug("savingAll")
 		$scope.disable_save_button = true
 		var selected_quiz = angular.copy($scope.selected_quiz)
+		if(options && options.exit)
+				$scope.exitBtn()
 		Lecture.updateAnswers(
 			{
 				course_id:$stateParams.course_id,
@@ -410,9 +413,7 @@ angular.module('scalearAngularApp')
 			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type },
 			function(data){
 				$scope.disable_save_button = false
-				if(options && options.exit)
-					$scope.exitBtn()
-				else
+				if(!(options && options.exit))
 					if(selected_quiz.quiz_type =="invideo")
 						getQuizData();
 					else

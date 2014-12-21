@@ -340,7 +340,7 @@ exports.check_drags_no=function(ptor, no){
 
 exports.answer_text_drag_correct=function(ptor){
   for (var i = 0; i < 3; i++) {
-    locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
+    locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('looks-like-a-hook')).then(function(arrow){
       locator.by_classname(ptor,'drag-sort').findElements(protractor.By.tagName('li')).then(function(answer){
         answer[0].getText().then(function (text){
           if(text == 'answer 3'){
@@ -373,7 +373,7 @@ exports.answer_text_drag_correct=function(ptor){
 }
 
  exports.answer_text_drag_incorrect=function(ptor){
-  locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
+  locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('looks-like-a-hook')).then(function(arrow){
     locator.by_classname(ptor,'drag-sort').findElements(protractor.By.tagName('li')).then(function(answer){
       answer[0].getText().then(function (text){
         if(text == 'answer 1'){
@@ -528,7 +528,7 @@ exports.press_confused_btn = function(ptor){
   element.all(by.name('confused-timeline-item')).then(function(items){
     confused_no = items.length
   })
-  element(by.className('confusedDiv')).click().then(function(){
+  element(by.id('confused_button')).click().then(function(){
     expect(element.all(by.name('confused-timeline-item')).count()).toEqual(confused_no+1)
   })
 }
@@ -538,9 +538,9 @@ exports.add_really_confused=function(ptor){
   element.all(by.name('confused-timeline-item')).then(function(items){
     confused_no = items.length
   })
-  element(by.className('confusedDiv')).click().then(function(){
+  element(by.id('confused_button')).click().then(function(){
     ptor.sleep(1000)
-    element(by.className('confusedDiv')).click().then(function(){
+    element(by.id('confused_button')).click().then(function(){
       expect(element.all(by.name('confused-timeline-item')).count()).toEqual(confused_no+1)
     })
   })
@@ -548,7 +548,7 @@ exports.add_really_confused=function(ptor){
 }
 
 exports.create_note=function(ptor, text){
-    locator.by_classname(ptor, 'notesDiv').then(function(not){
+    locator.by_id(ptor, 'add_note_button').then(function(not){
         not.click().then(function(){
             locator.by_classname(ptor, 'editable-controls').then(function(t){
                 t.findElement(protractor.By.tagName('textarea')).sendKeys(text);

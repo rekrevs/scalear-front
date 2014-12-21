@@ -260,7 +260,7 @@ angular.module('scalearAngularApp')
 			else
 				template = "<form name='aform' >"+
 								"<label class='show-inline'><span translate>lectures.correct</span> <span translate>groups.answer</span>"+
-								"<input class='must_save_check' ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+ //ng-class='{error: aform.mcq.$error.atleastone}' atleastone
+								"<input id='correct_checkbox' class='must_save_check' ng-change='radioChange(data);setAnswerColor();updateValues();' ng-model='data.correct' style='margin-left:10px;margin-bottom:2px' type='checkbox' ng-checked='data.correct' name='mcq'/></label>"+ //ng-class='{error: aform.mcq.$error.atleastone}' atleastone
 								"<span class='right' tooltip-append-to-body='true' tooltip={{'click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>"+
 								// "<center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
 								"<label class='with-small-margin-top'><span translate>groups.answer</span>"+

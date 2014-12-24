@@ -77,10 +77,10 @@ exports.config = {
         // 'test/e2e/spec/enrolled-students.spec.js',//(√)
         // 'test/e2e/spec/init-progress-data.spec.js', //(√)
         // 'test/e2e/spec/progress-main.spec.js', //(√)
+        // 'test/e2e/spec/progress-module.spec.js', //(√)
         
-    //{{notreviewed}}        
-        'test/e2e/spec/progress-module.spec.js',
-        // 'test/e2e/spec/inclass.spec.js',
+    //{{notreviewed}}                
+        'test/e2e/spec/inclass.spec.js',
 
 
     ],

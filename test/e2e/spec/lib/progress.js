@@ -190,7 +190,7 @@ exports.verifyModuleTitlesAndCountOnTimeline = function(modules_items, filter){
 				}
 				summary+=(item.questions.length+item.free_text.length) +' Questions)'
 				var main_title = item.name+" "+ summary
-				expect(title.getText()).toEqual(main_title)
+				expect(title.getText()).toContain(main_title)
 				// title.findElement(protractor.By.tagName('span')).then(function(duration_questions){
 					
 				// 	expect(duration_questions.getText()).toContain(summary)

@@ -859,8 +859,9 @@ angular.module('scalearAngularApp')
             }
             else{
               var q_ind = $scope.inner_highlight_index
-              $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
               $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item,$scope.selected_item.data.answers[q_ind])
+              $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
+              
             }
           }
           else if($scope.selected_item.data.quiz_type == 'quiz'){

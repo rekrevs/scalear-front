@@ -13,7 +13,7 @@ var teacher_name = "teacher1"
 var student_emails = [params.student2_mail, params.student_mail]
 var module_names = ['New Module', 'New Module 2']
 var checkmarks = {'studenttest2 sharklasers': ['on_time', 'not_finished'], 'student test': ['on_time', 'not_finished']}
-var duration={ min:4, sec:47}
+var duration={ min:4, sec:46}
 var total_duration = duration.min*60+duration.sec
 var modules_items = {
 	'New Module': [{
@@ -295,7 +295,7 @@ describe('First Module Progress Page', function(){
 			progress.checkQuizChart(1,2,2,1)
 			ptor.navigate().refresh();
 			progress.checkQuizChart(1,0,3,1)
-			progress.checkQuizChart(1,2,3,2)
+			progress.checkQuizChart(1,2,3,1)
 		})
 		it('should have correct discussion titles and content',function(){
 			progress.checkDiscussionTitle(1,0,modules_items['New Module'])

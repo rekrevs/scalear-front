@@ -331,15 +331,15 @@ angular.module('scalearAngularApp')
 	  	}
    	  })
 
-	   scope.$watch('open_navigator',function(status){
-        if(status){
-            $timeout(function(){
-                scope.delayed_navigator_open = true
-            },100)
-          }
-          else
-            scope.delayed_navigator_open = status
-      	})
+	   // scope.$watch('open_navigator',function(status){
+    //     if(status){
+    //         // $timeout(function(){
+    //             scope.delayed_navigator_open = true
+    //         // },100)
+    //       }
+    //       else
+    //         scope.delayed_navigator_open = status
+    //   	})
 
    		scope.$on('item_done',function(ev,item){
    			var time = 0
@@ -348,11 +348,13 @@ angular.module('scalearAngularApp')
 		   		time= 700
 		   	}
 		   	$timeout(function(){
-	   			item.is_done = true
-	   			item.blink = true
-   				$timeout(function(){
-			   		item.blink = false
-			   	}, 1000)
+	   			if(!item.is_done){
+	   				item.is_done = true
+	   				item.blink = true
+	   				$timeout(function(){
+				   		item.blink = false
+				   	}, 1000)
+	   			}	   			
 	   		},time)
 		   
    		})

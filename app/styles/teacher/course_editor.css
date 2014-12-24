@@ -25,10 +25,17 @@ input[type="checkbox"].editable-input.editable-has-buttons{
 	width:12px !important;
 }
 
-/*details-date > form > span > ul.f-dropdown{
-	left:0% !important;
-}*/
+.details_accordian details-date > form > span > ul.f-dropdown{
+	/*left:0% !important;*/
+  left: 37% !important;
+  top: 12rem !important;
+}
 
+#module details-date > form > span > ul.f-dropdown{
+  /*left:0% !important;*/
+  /*left: 37% !important;*/
+  top: 3.3rem !important;
+}
 
 a.editable-click { 
 	/*color: green;*/

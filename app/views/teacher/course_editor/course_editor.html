@@ -17,7 +17,7 @@
 	</div>
 </div>
 <span ng-show="('**.lecture' | includedByState) || ('**.quiz' | includedByState)">
-	<div id="middle"  class="small-12 large-7 columns ease_in_out" ng-class="{'large-centered large-10': !delayed_details_status}" ui-view="middle" />
+	<div id="middle"  class="small-12 large-7 columns ease_in_out" ng-class="{'large-10': !delayed_details_status, 'large-centered with-huge-padding-side': !delayed_details_status && !ContentNavigator.status}" ui-view="middle" />
 
 	<div id="details" class="details-navigator-container no-padding ease_in_out small-12 large-5 columns" ui-view="details" ng-class="{'large-height-big small-height-big ':delayed_details_status2}"/>
 </span>

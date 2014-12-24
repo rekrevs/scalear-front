@@ -621,6 +621,10 @@ font-weight: 300 !important
   padding-bottom: 0.25rem !important;
 }
 
+.with-huge-padding-side{
+  padding-left: 10.5rem !important;
+  padding-right: 10.5rem !important;
+}
 
 .with-tiny-margin{
 	margin: 0.25rem !important;
@@ -858,6 +862,9 @@ td.right-border{
   padding:0 0.5rem !important;
   background: white !important;
   max-height: 62vh;
+  
+}
+.details_accordian .overflow-auto .content{
   overflow: auto;
 }
 .delete-overlay{

@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
                 if(!status){
                     $scope.cancelDelay = $timeout(function(){
                         $scope.ContentNavigator.delayed_navigator_open = false
-                    },400)
+                    },300)
                 }
                 else{
                     if($scope.cancelDelay)

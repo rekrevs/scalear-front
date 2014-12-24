@@ -10,6 +10,7 @@ angular.module('scalearAngularApp')
     ContentNavigator.open()
     DetailsNavigator.open()
     $scope.DetailsNavigator = DetailsNavigator
+    $scope.ContentNavigator = ContentNavigator
     $scope.delayed_details_status = DetailsNavigator.getStatus()
     $scope.delayed_details_status2 = DetailsNavigator.getStatus()
     $scope.$on('details_navigator_change',function(ev, status){

@@ -46,7 +46,7 @@
         		<button ng-disabled="(status.status=='Submitted' && status.attempts==quiz.retries+1) || quiz.questions.length==0" ng-if="quiz.quiz_type=='quiz'" type="button" class="button tiny success" ng-click="saveQuiz('submit')">
                     <span translate>submit</span>
                 </button>
-                <button type="button" ng-show="next_item.id" ng-click="go_to_next_item()" class="button tiny">
+                <button id="next_button" type="button" ng-show="next_item.id" ng-click="go_to_next_item()" class="button tiny">
                     <span translate>next</span>
                 </button>
             </span>

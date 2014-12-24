@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
 
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
-    $scope.delayed_timeline_open = $scope.TimelineNavigator.status
+    $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
 
     $scope.$on("export_notes",function(){
         $scope.exportNotes()
@@ -47,16 +47,18 @@ angular.module('scalearAngularApp')
         },200)
     })
 
-    $scope.$on('content_navigator_change',function(ev, status){
-       $timeout(function(){$scope.$emit("updatePosition")})
-       if(!status){
-            $timeout(function(){
-                $scope.delayed_navigator_open = false
-            },299)
-          }
-          else
-            $scope.delayed_navigator_open = status
-    })
+    // $scope.$on('content_navigator_change',function(ev, status){
+    //    $timeout(function(){$scope.$emit("updatePosition")})
+    //    if(!status){
+    //         $timeout(function(){
+    //             $scope.delayed_navigator_open = false
+    //         },700)
+    //       }
+    //       else
+    //         // $timeout(function(){
+    //             $scope.delayed_navigator_open = status
+    //          // },700)
+    // })
 
     $scope.$on('timeline_navigator_change',function(ev, status){
           if(!status){
@@ -145,6 +147,7 @@ angular.module('scalearAngularApp')
             $scope.$parent.$parent.current_item= id
             initVariables()
             clearQuiz()
+            $scope.closeReviewNotify()
             
             Lecture.getLectureStudent(
             {
@@ -155,7 +158,7 @@ angular.module('scalearAngularApp')
                 var lec = data.lecture
                 $scope.next_item = data.next_item 
                 $scope.alert_messages = data.alert_messages;
-                
+                // $scope.lecture.is_done = data.done[2]
                 for(var key in $scope.alert_messages){
                     if(key=="due")
                         $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
@@ -177,9 +180,9 @@ angular.module('scalearAngularApp')
 
                 // if($scope.should_play){
                 //     if(data.done[2]){
-                //         console.log("!-123-asdedfskefw done!")
-                //         $scope.course.markDone(data.done[1],data.done[0])
-                //         $scope.lecture.is_done = data.done[2]
+                //         // console.log("!-123-asdedfskefw done!")
+                //         // $scope.course.markDone(data.done[1],data.done[0])
+                //         // $scope.lecture.is_done = data.done[2]
                 //     }
                 // }
 
@@ -252,9 +255,11 @@ angular.module('scalearAngularApp')
         {percent:milestone},function(data){
             $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
             if(data.done){
-                $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
-                $scope.lecture.is_done = data.done
-                $scope.not_done_msg = false
+                // if(!$scope.lecture.is_done){
+                    $scope.not_done_msg = false                    
+                    $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
+                    // $scope.lecture.is_done = data.done
+                // }
             }
             else 
                 if(milestone == 100)
@@ -644,7 +649,7 @@ angular.module('scalearAngularApp')
 
             if(data.done[2]){
                 $scope.course.markDone(data.done[1],data.done[0])
-                $scope.lecture.is_done = data.done[2]
+                // $scope.lecture.is_done = data.done[2]
             }
         }
 

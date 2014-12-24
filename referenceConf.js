@@ -68,20 +68,20 @@ exports.config = {
         // 'test/e2e/spec/student-lectures.spec.js', //(√)
         // 'test/e2e/spec/teacher-managment.spec.js', //(√)
         // 'test/e2e/spec/timeline.spec.js',(√)
-        'test/e2e/spec/validations.spec.js', //(X)  should try changing the appearance date to an invalid date - before module appearance
+        // 'test/e2e/spec/validations.spec.js', //(√)  should try changing the appearance date to an invalid date - before module appearance
         // 'test/e2e/spec/account-info-validation.spec.js',//(√)
         // 'test/e2e/spec/create-course-check-info.spec.js',//(√)
         // 'test/e2e/spec/preview-as-student.spec.js',//(√) //problem with deleting course at the end
         // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',//(√)
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',//(√)
         // 'test/e2e/spec/enrolled-students.spec.js',//(√)
-
+        // 'test/e2e/spec/init-progress-data.spec.js', //(√)
+        // 'test/e2e/spec/progress-main.spec.js', //(√)
         
-    //{{notreviewed}}
+    //{{notreviewed}}        
+        'test/e2e/spec/progress-module.spec.js',
         // 'test/e2e/spec/inclass.spec.js',
-        // 'test/e2e/spec/init-progress-data.spec.js',
-        // 'test/e2e/spec/progress-main.spec.js',
-        // 'test/e2e/spec/progress-module.spec.js',
+
 
     ],
 

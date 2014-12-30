@@ -504,7 +504,7 @@ angular.module('scalearAngularApp')
     var goMobileFullscreen=function(){
         $scope.video_class = ''
         $scope.container_class='mobile_video_full'
-        $scope.video_layer ={'width':'100%','height': '93%', 'position': 'relative'}
+        $scope.video_layer ={'width':'100%','height': '86%', 'position': 'relative'}
         $scope.resize.big()
         $scope.fullscreen= true
         $timeout(function(){$scope.$emit("updatePosition")})

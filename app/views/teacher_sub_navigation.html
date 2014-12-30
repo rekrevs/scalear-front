@@ -1,14 +1,12 @@
 <div>
     <div ng-if="('**.course.**' | includedByState)">
         <top-bar class="sub-header whitesmoke">
-            <ul class="title-area">
+            <ul class="title-area left">
                 <li class="name">
                   <h1 class="disable_selection"><a id="content_navigator" class="truncate dark-text sub-header-component" ng-class="{'green-color-white': ContentNavigator.status, 'dark-medium-grey-hover': !ContentNavigator.status}" ng-click="toggleNavigator()" style="width: 300px;margin-right:10px"><i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }"></i>
             <i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }" style="position:absolute;top:2px;left:15px"></i> 
             {{course.short_name}}: {{course.selected_module.name || 'courses.select_module' | translate}}</a></h1>
                 </li>
-                 <li toggle-top-bar class="menu-icon"><a href=""></a></li>
-                 <li ></li>
             </ul>
             <ul class="title-area right" ng-if="('**.module.course_editor.lecture.**' | includedByState) || ('**.module.course_editor.quiz.**' | includedByState)">
                 <li class="name" >
@@ -16,6 +14,8 @@
                     <a ng-click="toggleDetails()" style="color: inherit;"><i ng-class="{'arrow_down_dark_icon': !DetailsNavigator.status, 'arrow_up_dark_icon': DetailsNavigator.status }"></i><i ng-class="{'arrow_down_dark_icon': !DetailsNavigator.status, 'arrow_up_dark_icon': DetailsNavigator.status }" style="position:absolute;top:2px;left:15px"></i> Details</a>
                   </h1>
                 </li>
+                <li toggle-top-bar class="menu-icon"><a href=""></a></li>
+                 <li ></li>
             </ul>
 
             <top-bar-section>

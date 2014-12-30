@@ -27,14 +27,14 @@ angular.module('scalearAngularApp')
 								'<div class="row" style="margin-top:10px">'+
 									'<div class="small-2 columns">Title:</div>'+
 									'<div class="small-9 left columns no-padding" style="margin-left:10px;margin-bottom: 5px;">'+
-										'<input class="quiz_name" type="text" ng-model="selected_quiz.question" style="height: 28px;margin-bottom:0;">'+
+										'<input class="quiz_name" type="text" ng-model="selected_quiz.question" style="height: 30px;margin-bottom:0;">'+
 										'<small class="error" ng-show="name_error" ng-bind="name_error"></small>'+
 									'</div>'+
 								'</div>'+
 								'<div class="row">'+
 									'<div class="small-2 columns">Time:</div>'+
 									'<div class="small-4 left columns no-padding" style="margin-left:10px">'+
-										'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="height: 28px;margin-bottom:0;">'+
+										'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="height: 30px;margin-bottom:0;">'+
 										'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 									'</div>'+
 								'</div>'+

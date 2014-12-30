@@ -1,7 +1,7 @@
 <div class="large-12 column">
     <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="small-12 large-6 columns right warning alert-box with-margin-right with-tiny-padding show-for-medium-down">
     	 <p class="no-margin" ng-show='key=="due"'>
-            <span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span translate>{{ "controller_msg."+alert_message[2]}})</span> <span translate>controller_msg.ago</span>
+            <span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span >{{ "controller_msg."+alert_message[2] | translate }})</span> <span translate>controller_msg.ago</span>
         </p>
     	 <p class="no-margin" ng-show='key=="submit"'>
             <span translate>controller_msg.already_submitted</span> {{quiz.quiz_type}} <span translate>controller_msg.no_more_attempts</span> 

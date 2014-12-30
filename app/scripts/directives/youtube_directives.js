@@ -74,8 +74,10 @@ angular.module('scalearAngularApp')
 
                     if(!scope.controls || scope.controls==undefined)
                         scope.controls=0;   
-                    if(!scope.autoplay || scope.autoplay==undefined || isiPad())
-                        scope.autoplay=0;                     
+                    if(!scope.autoplay || scope.autoplay==undefined)
+                        scope.autoplay=0; 
+                    if(isiPad())
+                    	scope.autoplay=1; 
 
                     //var matches = 
                     //var vimeo= scope.url.match(/vimeo/)  // improve this..
@@ -510,7 +512,7 @@ angular.module('scalearAngularApp')
 				var factor=16.0/9.0
                 var win = angular.element($window)
 
-                var progressbar_height = 95
+                var progressbar_height = 80
 
 				$scope.fullscreen = true
 				angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");

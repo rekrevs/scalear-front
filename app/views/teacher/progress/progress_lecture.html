@@ -75,7 +75,7 @@
 						<span translate>questions.questions</span>)
 						<a class="see_all" ng-show="quiz.filtered_user" ng-click="quiz.filtered_user = '';quiz.filter_strict=false" style="cursor: pointer;margin-left: 15px;color: lightskyblue;"><span translate>questions.see_all</span></a>							
 					</span>
-					<span class="right">
+					<span class="right" bo-show="module_item.quiz_type == 'survey'">
 						<button ng-show="!quiz.meta.visible" class="button secondary really-tiny" ng-click="makeSurveyVisible(quiz, true)" translate>groups.make_visible</button>
 						<button ng-show="quiz.meta.visible" class="button secondary really-tiny" ng-click="makeSurveyVisible(quiz, false)" translate>groups.hide</button>
 					</span>

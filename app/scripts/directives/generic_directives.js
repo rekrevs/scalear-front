@@ -335,7 +335,7 @@ angular.module('scalearAngularApp')
         angular.element('.button').blur()
         var modalInstance = $modal.open({
             templateUrl: '/views/student/calendar/calendar.html',
-            controller: "studentCourseInformationCtrl",
+            controller: "CalendarModalCtrl",
         })
       }
 

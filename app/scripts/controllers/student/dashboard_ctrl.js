@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
 .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', '$rootScope','$compile', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout, $rootScope, $compile) {
-    $window.scrollTo(0, 0);
+
     Page.setTitle('dashboard');
     Page.startTour();
     $rootScope.subheader_message = "What's New"
@@ -19,22 +19,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.eventRender = function( event, element, view ) { 
-       // if (event.quiz_id)
-       //      event.item_type = "Quiz"
-       //  else if (event.lecture_id)
-       //      event.item_type = "Lecture"
-       //  else
-       //      event.item_type = "Module"
-
-        //  var tooltip_string = event.course_name+" ("+event.course_short_name+")<br />"+
-        //                       event.item_type+": "+event.item_title
-        // if (event.duration)
-        //     tooltip_string+=" ("+event.duration+")"        
-        // tooltip_string+= "<br />Due at: "+$filter('date')(event.start, 'HH:mm')
-
-         var tooltip_string = event.course_short_name+": "+event.item_title+
-                              "<br />Due at  "+$filter('date')(event.start, 'HH:mm')
-
+         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />Due at  "+$filter('date')(event.start, 'HH:mm')
         if(event.status==1)
             tooltip_string+="<br />Completed on time"
         else if(event.status==2)
@@ -57,8 +42,6 @@ angular.module('scalearAngularApp')
                         right: 'today prev,next',
                         left: 'title'
                     },
-                    // eventDrop: $scope.alertOnDrop,
-                    // eventResize: $scope.alertOnResize,
                     eventRender: $scope.eventRender
                 }
             };
@@ -67,7 +50,7 @@ angular.module('scalearAngularApp')
                 $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
                 // $scope.calendar.events[element].title = $scope.calendar.events[element].course_short_name +" : "+ $scope.calendar.events[element].title + ' @' + $filter('date')($scope.calendar.events[element].start, 'HH:mm');
                 $scope.calendar.events[element].item_title = $scope.calendar.events[element].title.replace(" due", "");
-                /*$filter('date')($scope.calendar.events[element].start, 'HH:mm')+'-'+*/
+                // $filter('date')($scope.calendar.events[element].start, 'HH:mm')+'-'+
                 $scope.calendar.events[element].title =  $scope.calendar.events[element].course_short_name +": "+ $scope.calendar.events[element].item_title
                 if($rootScope.current_user.roles[0].id == 2){
                     if ($scope.calendar.events[element].quiz_id)

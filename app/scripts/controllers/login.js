@@ -10,10 +10,10 @@ angular.module('scalearAngularApp')
         User.sign_in({},{"user":$scope.user}, function(data){
           $scope.sending = false;
             //console.log("signed_in");
-            $rootScope.iscollapsed = true;
-            $rootScope.$broadcast("get_all_courses")
-            console.log('here\'s what i got')
-            console.log(data)
+            // $rootScope.iscollapsed = true;
+            $rootScope.$broadcast("get_current_courses")
+            // console.log('here\'s what i got')
+            // console.log(data)
             if(!data.info_complete){
               $state.go("edit_account");
               $rootScope.show_alert = "error";
@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
             //console.log("failed")
         });
 
-       $scope.singleModel = 1;
+       // $scope.singleModel = 1;
    }
    
   }]);

@@ -4,29 +4,6 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!--> <html class="no-js" ng-app="scalearAngularApp" ng-controller="indexCtrl"> <!--<![endif]-->
   <head> 
-    <script type="text/javascript">
-
-    var ie11 = /rv:11.0/i.test(navigator.userAgent);
-        if (navigator.appName == 'Microsoft Internet Explorer' || ie11 == true)
-        {
-            console.log(self.location.href.split('/').length)
-           if(self.location.href.split('/')[self.location.href.split('/').length-1].split('?')[0] == "confirmation"){
-                var confirmation_token = self.location.href.split('confirmation_token=')[1]
-                self.location = "users/confirmation?confirmation_token="+confirmation_token;
-            }
-            else if(self.location.href.split('/')[self.location.href.split('/').length-1] == ""){
-
-            }
-            else{
-                self.location = "ie.html"
-                console.log('here\'s the url --new')
-                console.log(self.location.href)
-                console.log('this is IE')
-                // console.log(to.name)
-                // $state.go("ie", {},{notify: false });
-            }
-        }
-    </script> 
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title ng-bind="'ScalableLearning'+' - '+Page.title()">ScalableLearning</title>
@@ -53,6 +30,7 @@
     <!-- endbuild -->
     <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
     <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
+    
   </head>
 
 
@@ -75,7 +53,7 @@
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
      <header>
-        <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage" courses="courses"></main-navigation>
+        <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage" courses="current_courses"></main-navigation>
     </header>     
     <div id="main" role="main"> 
         <div class="header">
@@ -301,6 +279,17 @@
     <script src="scripts/controllers/help/getting_started_ctrl.js"></script>
     <script src="scripts/controllers/users/thanks_for_registering_ctrl.js"></script>
     <script src="scripts/controllers/users/confirmed.js"></script>
+    <script src="scripts/controllers/calendar_modal_ctrl.js"></script>
     <!-- endbuild -->
 </body>
+<script type="text/javascript">
+        var ie11 = /rv:11.0/i.test(navigator.userAgent);
+        if (navigator.appName == 'Microsoft Internet Explorer' || ie11){
+           if(self.location.href.split('/')[self.location.href.split('/').length-1].split('?')[0] == "confirmation"){
+                self.location = "users/confirmation?confirmation_token="+self.location.href.split('confirmation_token=')[1];
+            }
+            else
+                self.location = "ie.html"
+        }
+    </script> 
 </html>

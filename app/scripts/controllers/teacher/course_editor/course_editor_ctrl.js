@@ -205,7 +205,7 @@ angular.module('scalearAngularApp')
                 $rootScope.current_user= null
                 $state.go('course.module.courseware.'+item.class_name,params,{reload:true})
                 $rootScope.preview_as_student = true
-                $scope.$emit('get_all_courses')
+                $scope.$emit('get_current_courses')
                 // UserSession.getRole().then(function(result) {                    
                     // courseResolver.init($stateParams.course_id).then(function(){
                     // })

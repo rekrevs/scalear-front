@@ -13,20 +13,20 @@
             <ul class="title-area right" ng-if="('**.module.course_editor.lecture.**' | includedByState) || ('**.module.course_editor.quiz.**' | includedByState)">
                 <li class="name" >
                   <h1 class="disable_selection right truncate dark-text sub-header-component dark-medium-grey" ng-class="{'blue-color-white': DetailsNavigator.status, 'dark-medium-grey-blue-hover': !DetailsNavigator.status}" style="width: 300px;">
-                    <a ng-click="toggleDetails()" style="color: inherit;"><i ng-class="{'arrow_down_dark_icon': !DetailsNavigator.status, 'arrow_up_dark_icon': DetailsNavigator.status }"></i><i ng-class="{'arrow_down_dark_icon': !DetailsNavigator.status, 'arrow_up_dark_icon': DetailsNavigator.status }" style="position:absolute;top:2px;left:15px"></i> Details</a>            
+                    <a ng-click="toggleDetails()" style="color: inherit;"><i ng-class="{'arrow_down_dark_icon': !DetailsNavigator.status, 'arrow_up_dark_icon': DetailsNavigator.status }"></i><i ng-class="{'arrow_down_dark_icon': !DetailsNavigator.status, 'arrow_up_dark_icon': DetailsNavigator.status }" style="position:absolute;top:2px;left:15px"></i> Details</a>
                   </h1>
                 </li>
             </ul>
 
             <top-bar-section>
-                <ul class="right" ng-show="('**.course_editor.**' | includedByState) && in_module_state">
+               <!--  <ul class="right" ng-show="('**.course_editor.**' | includedByState) && in_module_state">
                     <li >
                         <a id="preview_as_student" class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="preview()" href="">
                             <span translate>preview_student</span>
                         </a>
                     </li>
                 </ul>
-
+ -->
                 <ul class="right" ng-if="('**.module.progress.**' | includedByState)">
                     <li has-dropdown ng-init="initFilters()">
                       <a class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>settings.settings</a>
@@ -150,7 +150,13 @@
                                         <span translate>menu.share_copy</span>
                                         <h5 class="dark-description"><small translate>menu.share_describtion</small></h5>
                                     </a>
-                                </li>                            
+                                </li>
+                                <div class="divider border-grey medium-opacity"></div>
+                                <li >
+                                    <a id="preview_as_student" class="lighter-grey dark-text sub-header-component" ng-click="preview()" href="">
+                                        <span translate>preview_student</span>
+                                    </a>
+                                </li>
                             </span>
                         </ul>
                     </li>

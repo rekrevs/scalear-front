@@ -237,7 +237,7 @@ angular.module('scalearAngularApp')
 	                      $cookieStore.remove('state')
 	                      $rootScope.current_user= null
 	                      $state.go(state, params,{reload:true})
-			              $rootScope.$broadcast('get_all_courses')
+			              $rootScope.$broadcast('get_current_courses')
 	                    },
 	                    function(){
 	                      console.log("bad")

@@ -9,8 +9,8 @@ angular.module('scalearAngularApp')
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
             $scope.ContentNavigator = ContentNavigator
             
-            $scope.$on("get_all_courses",function(){
-                getAllCourses()
+            $scope.$on("get_current_courses",function(){
+                getCurrentCourses()
             })
             $scope.ContentNavigator.delayed_navigator_open = $scope.ContentNavigator.status
 
@@ -28,14 +28,14 @@ angular.module('scalearAngularApp')
             })
             
 
-            var getAllCourses=function(){
-                $scope.courses=null
+            var getCurrentCourses=function(){
+                $scope.current_courses=null
                 var unwatch = $rootScope.$watch('current_user', function(){
                     if($rootScope.current_user && $rootScope.current_user.roles){
-                        Course.index({},
+                        Course.currentCourses({},
                             function(data){
-                                $scope.courses = data
-                                console.log($scope.courses)
+                                $scope.current_courses = data
+                                // console.log($scope.courses)
                                 unwatch()
                             }
                         );
@@ -119,7 +119,7 @@ angular.module('scalearAngularApp')
 
 
 
-            getAllCourses()
+            getCurrentCourses()
 
         }
     ]);

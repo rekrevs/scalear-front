@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
   	$scope.inner_highlight_index = 0
   	$scope.progress_player= {}
   	$scope.timeline = {}
-    $scope.right_container = angular.element('#right-container')
+    // $scope.right_container = angular.element('#right-container')
     $scope.highlight_level = 0
   	$scope.time_parameters={
   		quiz: 3,
@@ -57,59 +57,59 @@ angular.module('scalearAngularApp')
     }]
   	var init= function(){
   		$scope.timeline = new Timeline()
-  		Module.getModuleProgress({
-	  			course_id: $stateParams.course_id,
-          module_id: $stateParams.module_id
-	  		},
-	  		function(data){{
-	  			angular.extend($scope, data)
-            if($scope.progress_player.controls.isYoutube($scope.first_lecture)){
-              $scope.url = $scope.first_lecture+"&controls=1&autohide=1&fs=1&theme=light"
-            }
-            if($scope.progress_player.controls.isMP4($scope.first_lecture)){
-              console.log($scope.progress_player)
-              $scope.url = $scope.first_lecture
-            }
-          }
-	  	 		$scope.timeline['lecture'] = {}
 
-	  	 		for(var lec_id in $scope.lectures){
-	  	 			$scope.timeline['lecture'][lec_id] = new Timeline()
-	  	 			for(var type in $scope.lectures[lec_id]){
-	  	 				if(type!= "meta")
-		  	 				for(var it in $scope.lectures[lec_id][type] ){
+      getModuleCharts()
+      getLectureCharts()
+      getQuizCharts()
+      getSurveyCharts()
+      setupShortcuts()
+    }
+
+  var getLectureCharts = function(){
+    Module.getModuleProgress({
+          course_id: $stateParams.course_id,
+          module_id: $stateParams.module_id
+        },
+        function(data){
+          angular.extend($scope, data)
+          $scope.module= $scope.course.selected_module
+          console.log("moduel ", $scope.course.selected_module)
+          if($scope.progress_player.controls.isYoutube($scope.first_lecture)){
+            $scope.url = $scope.first_lecture+"&controls=1&autohide=1&fs=1&theme=light"
+          }
+          else{
+            $scope.url = $scope.first_lecture
+          }
+          
+          $scope.timeline['lecture'] = {}
+
+          for(var lec_id in $scope.lectures){
+            $scope.timeline['lecture'][lec_id] = new Timeline()
+            for(var type in $scope.lectures[lec_id]){
+              if(type!= "meta")
+                for(var it in $scope.lectures[lec_id][type] ){
                   if(type=='discussion'){
                     for(var disc in $scope.lectures[lec_id][type][it][1]){
                       $scope.lectures[lec_id][type][it][1][disc].post.hide = !$scope.lectures[lec_id][type][it][1][disc].post.hide
                       for(var com in $scope.lectures[lec_id][type][it][1][disc].post.comments){
                         $scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide = !$scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide
-
                       }
                     }
                   }
                   else if(type=='charts'){
                     $scope.lectures[lec_id][type][it][1].hide = !$scope.lectures[lec_id][type][it][1].hide
                   }
-			  	 				$scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])	
-			  	 			}
-	  	 			}	  	 			
-	  	 		}
-          console.log($scope.timeline)
-	  	 		getModuleCharts()
-	  	 		getQuizCharts()
-	  	 		getSurveyCharts()
-				  setupShortcuts()
+                  $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])  
+                }
+           }           
+          }
+          console.log($scope.timeline)          
           // resizeContainer()
-	  		},	
-	  		function(){}
-		)
-	}
-  // var resizeContainer = function(){
-  //   $scope.right_container.css('height', angular.element($window).height() - 130)
-  // }
-  // angular.element($window).bind('resize', function () {
-  //   resizeContainer();
-  // });
+        },  
+        function(){}        
+      )      
+    }
+  
 
  	var getModuleCharts = function(){
     Module.getModuleCharts(

@@ -464,9 +464,10 @@ angular.module('scalearAngularApp')
           ui.draggable.attr('id', scope.data.id)
           scope.$apply()
         }
-        else{   
+        else{ 
           var drag_elem = angular.element('#'+scope.data.id)
           reverseSize(drag_elem)
+          reversePosition(drag_elem)
           clear(drag_elem)
           scope.setDropped(event, ui)
         }
@@ -492,6 +493,11 @@ angular.module('scalearAngularApp')
         draggable.removeClass('dropped')       
         draggable.width('')
         draggable.height('')
+      }
+
+      var reversePosition=function(draggable){
+        draggable.css('left', (scope.data.sub_xcoor*100)+'%')
+        draggable.css('top', (scope.data.sub_ycoor*100)+'%')
       }
       
       var destroyPopover=function(draggable){

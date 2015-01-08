@@ -1,8 +1,8 @@
 <style>
     .reveal-modal{
-        height: 90%;
         top: 2.5%;
         padding: 1.25rem;
+        height: initial;
     }
 </style>
 <h4 ><b translate>content.add_new_content</b>:</h4>
@@ -19,19 +19,6 @@
             </a>
             <center><h5 translate>content.types.video</h5></center>
         </div>
-        <!-- <div class="large-2 medium-4 small-6 columns">
-            <a id='mcq' type="button" class="th blue" ng-class="{thumbactive: question_type == 'mcq'}" ng-model="question_type" ng-click="addQuiz('invideo','MCQ')" >
-                <img style="margin: 5%; width: 80%; height: 80%;" src="/images/mcq_video_symbol.png">
-            </a>
-            <h5><small translate>content.questions.types.mcq</small></h5>
-        </div>
-        <div class="large-2 medium-4 small-6 columns">
-            <a id='drag' type="button" class="th blue" ng-class="{thumbactive: question_type == 'drag'}" ng-model="question_type" ng-click="addQuiz('invideo','drag')" >
-                <img style="margin: 5%; width: 80%; height: 80%;" src="/images/drag_video_symbol.png">
-            </a>
-            <h5><small translate>content.questions.types.drag</small></h5>
-        </div> -->
-        <!-- <div class="large-2 medium-0 small-0 columns"></div> -->
     </div>
 </div>
 
@@ -53,18 +40,6 @@
             </a>
             <center><h5 translate>content.types.survey</h5></center>
         </div>
-        <!-- <div class="large-2 medium-3 small-6 with-small-margin-top columns">
-            <a id='drag_text' type="button" class="th grey" ng-class="{thumbactive: question_type == 'drag_html'}" ng-model="question_type" ng-click="addQuiz('html','drag')" >
-                <img style="margin: 10%; width: 80%; height: 80%;" src="/images/drag_symbol.png">
-            </a>
-            <h5><small translate>content.questions.types.drag</small></h5>
-        </div>
-        <div class="large-2 medium-3 small-6 with-small-margin-top columns">
-            <a id='free_text' type="button" class="th grey" ng-class="{thumbactive: question_type == 'text_html'}" ng-model="question_type" ng-click="addQuiz('html','Free Text Question')" >
-                <img style="margin: 10%; width: 80%; height: 80%;" src="/images/text_symbol.png">
-            </a>
-            <h5><small translate>content.questions.types.text</small></h5>
-        </div> -->
     </div>
 </div>
 <div class="small-12 medium-10 large-10 medium-centered large-centered columns">
@@ -79,56 +54,9 @@
             </a>
             <center><h5 translate>content.types.link</h5></center>
         </div>
-        <!-- <div class="large-2 medium-4 small-6 with-small-margin-top columns">
-            <a id='mcq_sur' type="button" class="th blue" ng-class="{thumbactive: question_type == 'mcq'}" ng-model="question_type" ng-click="addQuiz('survey','MCQ')" >
-                <img style="margin: 10%; width: 80%; height: 80%;" src="/images/mcq_video_symbol.png">
-            </a>
-            <h5><small translate>content.questions.types.mcq</small></h5>
-        </div>
-        <div class="large-2 medium-0 small-0 with-small-margin-top columns">
-        </div> -->
-        <!-- <div class="large-2 medium-0 small-0 with-small-margin-top columns"> -->
-        <!-- </div> -->
     </div> 
 </div>
 
 <div class="modal-footer clear-both">
     <button class="button small alert right no-margin" ng-click="cancel()" translate="lectures.cancel"></button>
-</div> 
-<!-- <h3><span translate>content.choose_content_type</span>...</h3>
-<br />
-<h5 translate>content.interactive</h5>
-<small class="subheader" translate>content.interactive_desc</small>
-<div class="modal-body">
-    <center class="with-small-margin-top">
-        <div class="small-block-grid-4 medium-block-grid-4 large-block-grid-4 small-12 medium-6 large-5">
-            <li>
-                <a id="video_item" type="button" class="th blue" ng-class="{thumbactive: content_type == 'Video'}" ng-model="content_type" ng-click="addItem('video')" >
-                    <img style="margin: 10%; width: 80%; height: 80%;" src="/images/video_symbol.png">
-                </a>
-                <b><h4 translate>content.types.video</h4></b>
-            </li>
-            <li>
-                <a id="quiz_item" type="button" class="th green" ng-class="{thumbactive: content_type == 'Quiz'}" ng-model="content_type" ng-click="addItem('quiz')" >
-                    <img style="margin: 10%; width: 80%; height: 80%;" src="/images/quiz_symbol.png">
-                </a>
-                <b><h4 translate>content.types.quiz</h4></b>
-            </li>
-            <li>
-                <a id="survey_item" type="button" class="th red" ng-class="{thumbactive: content_type == 'Survey'}" ng-model="content_type" ng-click="addItem('survey')" >
-                    <img style="margin: 10%; width: 80%; height: 80%;" src="/images/survey_symbol.png">
-                </a>
-                <b><h4 translate>content.types.survey</h4></b>
-            </li>
-            <li>
-                <a id="link_item" type="button" class="th grey" ng-class="{thumbactive: content_type == 'Link'}" ng-model="content_type" ng-click="addItem('link')" style="width:94%">
-                    <img style="margin: 4% 0" src="/images/link_icon_dark.png">
-                </a>
-                <b><h4 translate>content.types.link</h4></b>
-            </li>
-        </div>
-    </center>
 </div>
-<div class="modal-footer clear-both">
-    <button class="button alert right" ng-click="cancel()" translate="lectures.cancel"></button>
-</div> -->

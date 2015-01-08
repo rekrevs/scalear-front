@@ -196,9 +196,9 @@ var translation_en=function(){
         help_enroll:"Help on Enrollment",
         instruction:"Students enroll by first registering on the scalable learning website and then entering the Course Enrollment Key. To help your students do this, please send them an email with the following instructions.",
         dear_student:"Dear Student",
-        this_term_new_system:"This term in {{course_name}} we will be using ScalableLearning, an online system that helps make your learning experience more interactive. To view the course material you first need to create an account and then add this course. Follow these three simple steps to get started:",
+        this_term_new_system:"This term in {{course_name}} we will be using ScalableLearning to help make your learning more interactive. To get started:",
         // this_term_new_system_continue:"and create a student account with your university email address. You can then add the course by clicking on “Join Course” under “Courses” and entering the course Enrollment Key",
-        create_account_with_university: "and create an account with your university email address. (We’ll send you an email to verify your account before you can get started.)",
+        create_account_with_university: "and create an account with your university email address.",
         with_new_account: "with your new account",
         add_course_by_choosing: "Add your course by choosing “Join Course” from the “Courses” menu and entering the Enrollment Key for",
         sincerely:"Sincerely",
@@ -1023,25 +1023,26 @@ var translation_en=function(){
       },
       questions:{
         choose_question_type: "Choose Question Type",
+        insert_video_question: "Insert a Video Question",
         categories:{
           on_video:{
-            title: "On-video Quiz",
+            title: "In-video Quiz",
             desc: "Place quiz choices on top of the video",
           },
           text_quiz:{
             title: "Text Quiz",
-            desc: "Quiz on a white background",
+            desc: "Text quiz on a white background",
           },
           on_video_survey:{
             title: "On-video Survey",
-            desc: "Place survey choices on top of the video, not graded"
+            desc: "Place survey choices on top of the video"
           }
         },
         types:{
-          ocq: "One Correct Answer",
-          mcq: "Multiple Correct Answers",
-          drag: "Drag into Order",
-          text: "Text Answer"
+          ocq: "One answer",
+          mcq: "Multiple answers",
+          drag: "Drag and drop",
+          text: "Free text answer"
         }
       }
     },

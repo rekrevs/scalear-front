@@ -197,8 +197,8 @@ var translation_sv=function(){
         help_enroll:"Hjälp på Inskrivning",
         instruction:"Studenter anmäla dig genom att först registrera dig på skalbara lärande webbplats och sedan kommer in i kursnyckel Course. För att hjälpa eleverna att göra detta, vänligen skicka ett e-postmeddelande med följande instruktioner.",
         dear_student:"Käre Studenten",
-        this_term_new_system:"Denna term i {{course_name}} kommer vi att använda ScalableLearning, ett online-system som hjälper till att göra din inlärning mer interaktiv. För att se kursmaterialet måste du först skapa ett konto och sedan lägga till den här kursen. Följ dessa tre enkla steg för att komma igång",
-        create_account_with_university: "och skapa ett konto med ditt universitet e-postadress. (Vi kommer att skicka ett mail för att verifiera ditt konto innan du kan komma igång.)",
+        this_term_new_system:"Denna term i { { course_name } } vi kommer att använda ScalableLearning för att göra din inlärning mer interaktiv. För att komma igång:",
+        create_account_with_university: "och skapa ett konto med ditt universitet e-postadress.",
         with_new_account: "med ditt nya konto",
         add_course_by_choosing: "Lägg din kurs genom att välja 'Gå Kurser' från menyn 'Kurser' och ange kursnyckel för",
         sincerely:"Med vänliga hälsningar",
@@ -1031,25 +1031,26 @@ var translation_sv=function(){
           },
           questions:{
             choose_question_type: "Välj Fråge Typ",
+            insert_video_question: "Sätt i en video Fråga",
             categories:{
               on_video:{
-                title: "On-video Frågesport",
+                title: "In-video Frågesport",
                 desc: "Placera frågesport val på toppen av videon",
               },
               text_quiz:{
                 title: "Text Frågesport",
-                desc: "Frågesport på en vit bakgrund",
+                desc: "Text frågesport på en vit bakgrund",
               },
               on_video_survey:{
                 title: "On-video Undersökning",
-                desc: "Placera enkät val på toppen av videon, sorterade"
+                desc: "Placera enkät val på toppen av videon"
               }
             },
             types:{
-              ocq: "One rätt svar",
-              mcq: "Flera rätta svar",
-              drag: "Dra till Order",
-              text: "Text svar"
+              ocq: "ett svar",
+              mcq: "flera svar",
+              drag: "Dra och släpp",
+              text: "Fritext svar"
             }
           }
         },

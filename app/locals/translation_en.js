@@ -1006,14 +1006,20 @@ var translation_en=function(){
       print: "Print"
     },
     content:{
+      add_new_content: "Add New Content",
       choose_content_type: "Choose Content Type" ,
       interactive: "Interactive Content",
       interactive_desc: "Optional interactive questions and grading",
       types:{
         video: "Video",
+        video_desc: "You can add quiz questions on top of the video",
         quiz: "Quiz",
+        quiz_desc: "Text-based, can be graded or optional",
         survey: "Survey",
-        link: "Link"
+        link: "Link",
+        link_desc: "Web link to other sites or pages",
+        quiz_or_survey: "Quiz or Survey",
+        quiz_or_survey_desc: "Text-based, can be graded or optional",
       },
       questions:{
         choose_question_type: "Choose Question Type",

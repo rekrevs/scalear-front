@@ -1015,14 +1015,19 @@ var translation_sv=function(){
           print: "Tryck"
         },
         content:{
+          add_new_content: "Lägg nytt innehåll",
           choose_content_type: "Välj Innehålls typ" ,
           interactive: "Interaktiv Innehåll",
           interactive_desc: "Valfria interaktiva frågor och betygssättning",
           types:{
             video: "Video",
-            quiz: "Frågesport",
+            video_desc: "Du kan lägga till testfrågor ovanpå videon",
+            quiz: "Frågesport",            
             survey: "Undersökning",
-            link: "Länk"
+            link: "Länk",
+            link_desc: "Webblänk till andra webbplatser eller sidor",
+            quiz_or_survey: "Frågesport eller Undersökning",
+            quiz_or_survey_desc: "Text-baserad , kan graderas eller frivillig",
           },
           questions:{
             choose_question_type: "Välj Fråge Typ",

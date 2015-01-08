@@ -258,6 +258,22 @@ span.error, small.error{
    background-color: #FFFFD8 !important;
 }
 
+.violet{
+  background-color: #5e94cb !important;
+}
+
+.violet:hover{
+  background-color: #4D7EB0 !important;
+}
+
+.olive{
+  background-color: #a9c567 !important;
+}
+
+.olive:hover{
+  background-color: #92AB57 !important;
+}
+
 .color-gray{
   color: gray !important;
 }
@@ -301,6 +317,14 @@ span.error, small.error{
 
 .color-lightgreen, .color-lightgreen-hover{
   color:rgb(109,193,131) !important;
+}
+
+.color-violet{
+  color: #5e94cb !important;
+}
+
+.color-olive{
+  color: #a9c567 !important;
 }
 
 .dark-text{

@@ -414,7 +414,7 @@ var translation_en=function(){
         provide_answer: "Please provide the answer text for each choice",
         quiz_no_answer: "Quiz doesn't have a correct answer",
         shown_in_graph: "Shown on results graph",
-        shown_to_student: "*Shown to students",
+        shown_to_student: "Shown to students",
         server:"The server",
         is_slow: "is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",

@@ -264,11 +264,11 @@ angular.module('scalearAngularApp')
 								"<span class='right' tooltip-append-to-body='true' tooltip={{'click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>"+
 								// "<center><small class='error' ng-show='aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small></center>"+
 								"<label class='with-small-margin-top'><span translate>groups.answer</span>"+
-								"<h6 class='subheader no-margin'><small translate>lectures.shown_in_graph</small></h6>"+ 
+								"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>lectures.shown_in_graph</small></h6>"+ 
 								"<textarea rows=3 class='must_save' type='text' ng-init='selectField($event)' ng-model='data.answer'  value={{data.answer}} name='answer' ng-class='{error: aform.answer.$error.required}' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
 								"</label><br /><label style='margin-top:10px'><span translate>lectures.explanation</span>"+
-								"<h6 class='subheader no-margin'><small translate>lectures.shown_to_student</small></h6>"+
+								"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>lectures.shown_to_student</small></h6>"+
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>"+
 								"</label>"+
 								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-12'><span translate>save_close</span></button>"+
@@ -279,7 +279,8 @@ angular.module('scalearAngularApp')
             	content: template,
             	html:true,
             	// fullscreen:false,
-            	topcut:true
+            	topcut:true,
+            	instant_show:!scope.data.id
             }
             
             scope.$watch('quiz.answers', function(){
@@ -544,6 +545,7 @@ angular.module('scalearAngularApp')
 			scope.$watch('quiz.answers', function(){
 				scope.updateValues();	
 			},true)
+
 			scope.answers_sortable_options={
 		 		axis: 'y',
 				dropOnEmpty: false,
@@ -583,24 +585,32 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<div class='row'>"+
-						"<div class='small-8 columns'>"+
-							"<label class='text-left'><span translate>groups.answer</span></label>"+
-							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required)}' />"+  //|| (submitted && aform.mcq.$error.atleastone)}
-							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required'><span translate>courses.required</span>!</small>"+
-							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.mcq.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
-							"<span ng-if='show() && !isSurvey()'><label class='text-left'><span translate>lectures.explanation</span></label>"+
-							"<input type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
-
+						"<div class='small-2 columns' style='padding: 10px 0;'>"+
+							"<label class='text-left' translate>groups.answer</label>"+
 						"</div>"+
-						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
+						"<div class='small-7 columns no-padding'>"+
+							"<input class='no-margin' required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
+							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
+						"</div>"+
+						// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
+						"<div class='small-2 columns' ng-if='!isSurvey()'>"+
 							"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
-							"<input ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+  //atleastone
+							"<input ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+ //atleastone
 						"</div>"+
-						"<div class='small-2 columns'>"+
+						"<div class='small-1 left columns' style='padding: 10px 0;'>"+
 							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
 						"</div>"+
 					"</div>"+
-				"</ng-form><hr />"
+					"<div class ='row' ng-if='show() && !isSurvey()'>"+
+						"<div class='small-2 columns' style='padding: 10px 0;'>"+
+							"<label class='text-left' translate>lectures.explanation</label>"+
+						"</div>"+
+						"<div class='small-7 left columns no-padding'>"+
+							"<input class='no-margin' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
+						"</div>"+
+					"</div>"+
+				"</ng-form>"+
+				"<hr style='margin: 10px 0;'/>"
 	}
 	
 }).directive('htmlOcq',function(){
@@ -608,33 +618,37 @@ angular.module('scalearAngularApp')
 		restrict:'E',
 		template:"<ng-form name='aform'>"+
 					"<div class='row'>"+
-						"<div class='small-8 columns'>"+
-							"<label class='text-left'><span translate>groups.answer</span></label>"+
-							"<input required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
-							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
-							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
-							"<span ng-if='show() && !isSurvey()'><label class='text-left'><span translate>lectures.explanation</span></label>"+
-							"<input type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
+						"<div class='small-2 columns' style='padding: 10px 0;'>"+
+							"<label class='text-left' translate>groups.answer</label>"+
 						"</div>"+
-						"<div class='small-1 columns' ng-if='!isSurvey()'>"+
+						"<div class='small-7 columns no-padding'>"+
+							"<input class='no-margin' required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
+							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
+						"</div>"+
+						// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
+						"<div class='small-2 columns' ng-if='!isSurvey()'>"+
 							"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
 							"<input id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+ //atleastone
 						"</div>"+
-						"<div class='small-2 columns'>"+
-							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' style='float: right; margin-right: 15px;'/>"+
+						"<div class='small-1 left columns' style='padding: 10px 0;'>"+
+							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
 						"</div>"+
 					"</div>"+
-				"</ng-form><hr />",
-		link: function(scope)
-		{
+					"<div class ='row' ng-if='show() && !isSurvey()'>"+
+						"<div class='small-2 columns' style='padding: 10px 0;'>"+
+							"<label class='text-left' translate>lectures.explanation</label>"+
+						"</div>"+
+						"<div class='small-7 left columns no-padding'>"+
+							"<input class='no-margin' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
+						"</div>"+
+					"</div>"+
+				"</ng-form>"+
+				"<hr style='margin: 10px 0;'/>",
+		link: function(scope){
 			if(scope.answer.correct)
-			{
-				scope.radioChange(scope.answer);
-			}
-			
+				scope.radioChange(scope.answer)
 		}
-	}
-	
+	}	
 }).directive('htmlDrag',function(){
 	return {
 		restrict:'E',

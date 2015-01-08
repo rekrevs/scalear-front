@@ -417,7 +417,7 @@ var translation_sv=function(){
               provide_answer: "Ange svaret text för varje val",
               quiz_no_answer: "Frågesport har inte ett korrekt svar",
               shown_in_graph: "Visas i resultat diagram",
-              shown_to_student: "*Visas i studenter",
+              shown_to_student: "Visas i studenter",
               server: "Servern",
               is_slow: " tar lång tid att läsa in den här videon",
               try_reload:"Du kan fortsätta vänta, eller prova att uppdatera sidan",

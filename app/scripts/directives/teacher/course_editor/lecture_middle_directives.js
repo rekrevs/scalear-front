@@ -21,28 +21,26 @@ angular.module('scalearAngularApp')
 	return {		
 		 restrict: 'E',
 		 template: '<div id="editing">'+
-						'<div class="wheat">'+
-							'<h6 class="row no-margin color-wheat">'+
-								'<span style="margin-right: 5px;">{{double_click_msg |translate}}</span>'+
-								'<div class="row" style="margin-top:10px">'+
-									'<div class="small-2 columns">Title:</div>'+
-									'<div class="small-9 left columns no-padding" style="margin-left:10px;margin-bottom: 5px;">'+
-										'<input class="quiz_name" type="text" ng-model="selected_quiz.question" style="height: 30px;margin-bottom:0;">'+
-										'<small class="error" ng-show="name_error" ng-bind="name_error"></small>'+
-									'</div>'+
+						'<h6 class="row no-margin color-wheat wheat">'+
+							'<span>{{double_click_msg |translate}}</span>'+
+							'<div class="row" style="margin-top:10px;text-align:left;margin-left:0;">'+
+								'<div class="small-3 columns" ><span translate>lectures.quiz_question</span>:</div>'+
+								'<div class="small-8 left columns no-padding" style="margin-bottom: 5px;">'+
+									'<input class="quiz_name" type="text" ng-model="selected_quiz.question" style="height: 30px;margin-bottom:0;">'+
+									'<small class="error" ng-show="name_error" ng-bind="name_error"></small>'+
 								'</div>'+
-								'<div class="row">'+
-									'<div class="small-2 columns">Time:</div>'+
-									'<div class="small-4 left columns no-padding" style="margin-left:10px">'+
-										'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="height: 30px;margin-bottom:0;">'+
-										'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
-									'</div>'+
+							'</div>'+
+							'<div class="row" style="text-align:left;margin-left:0;">'+
+								'<div class="small-3 columns"><span translate>lectures.quiz_time</span>:</div>'+
+								'<div class="small-4 left columns no-padding" >'+
+									'<input class="quiz_time" type="text" ng-init="selected_quiz.formatedTime = (selected_quiz.time|format)" ng-model="selected_quiz.formatedTime" style="height: 30px;margin-bottom:0;">'+
+									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 								'</div>'+
-								'<button ng-show="quiz_deletable" class="button secondary tiny" style="margin:10px;margin-left:0;float:right;margin-top:0;" ng-click="exitBtn()" translate>lectures.cancel</button>'+
-								'<button ng-disabled="disable_save_button" class="button tiny" style="margin: 10px;float:right;margin-top:0;" ng-click="saveEdit(selected_quiz)" translate>events.done</button>'+ //
-								// '    <button ng-show="!quiz_deletable" class="button secondary tiny" style="margin:5px 0" ng-click="exitBtn()" translate>groups.exit</button>'+
-							'</h6>'+
-						'</div>'+
+							'</div>'+
+							'<button class="button secondary tiny" style="margin:10px;margin-left:0;float:right;margin-top:0;" ng-click="exitBtn()" translate>lectures.delete_quiz</button>'+
+							'<button ng-disabled="disable_save_button" class="button tiny" style="margin: 10px;float:right;margin-top:0;" ng-click="saveEdit(selected_quiz)" translate>events.done</button>'+ 
+							// '<div><span>Are you sure?</span></div>'
+						'</h6>'+
 					'</div>',
 		link: function(scope, element, attrs) {
 			$timeout(function() {

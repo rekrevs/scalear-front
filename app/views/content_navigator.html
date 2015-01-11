@@ -24,7 +24,7 @@
 				</accordion-group>
 				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="$state.params.module_id == module.id">
 					<accordion-heading class="accordion-heading">
-						<div bindonce class="valign-middle" ng-click="showModuleCourseware(module)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
+						<div bindonce class="valign-middle" ng-click="showModuleCourseware(module, $event)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
 							<div class="row" style="width: 100%;width: 100%;margin-left: auto;margin-right: auto;margin-top: 0;margin-bottom: 0;">
 								<div class="small-1 no-padding columns no-padding-left" style="min-height: 1px;">
 									<module-progress-check class="left" module="module"></module-progress-check>		
@@ -81,7 +81,7 @@
 				<accordion-group class="accordion-group links_accordion soft-border-bottom border-light-grey" open="links.length">
 					<accordion-heading class="accordion-heading " >
 						<div style="padding: 5px;border-bottom: 1px solid white;">
-							<div class="show-inline" ng-class="{'with-bigger-margin-left': ('**.course_editor.**' | includedByState)}">{{'courses.course_links' | translate}}</div>
+							<div class="show-inline">{{'courses.course_links' | translate}}</div>
 						</div>
 					</accordion-heading>
 					<span class="no-margin" ui-sortable="listSortableOptions" ng-model='links'>

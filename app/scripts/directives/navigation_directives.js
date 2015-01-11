@@ -420,7 +420,7 @@ angular.module('scalearAngularApp')
 	// 	scope.open_navigator = !scope.open_navigator
 	// }
 
-  	scope.showModuleCourseware = function(module){
+  	scope.showModuleCourseware = function(module, event){
         if(module.id != $state.params.module_id){
           scope.currentmodule = module//$scope.module_obj[module_id];
           Module.getLastWatched(
@@ -438,7 +438,9 @@ angular.module('scalearAngularApp')
                 scope.currentitem = {id:module.quizzes[0].id}
               }
           }) 
-        }  
+        }
+        else
+          event.stopPropagation()
   	}
                
   	scope.showItem = function(item, type){
@@ -449,10 +451,11 @@ angular.module('scalearAngularApp')
   	}
 
  	scope.showModule=function(module, event){
- 		if(scope.currentmodule.id == module.id)
-        	event.stopPropagation()
     	$state.go('course.module.course_editor.overview',{module_id: module.id})
     	scope.currentmodule = module
+    	if($state.params.module_id == module.id){
+        	event.stopPropagation()
+        }
 
     }
   	scope.goToCourseInfoStudent=function(){

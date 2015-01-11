@@ -367,6 +367,7 @@ var translation_sv=function(){
               save_exit: "Spara och Avsluta",
               explanation: "Förklaring",
               cancel: "Avbryt",
+              delete_quiz: "Radera Quiz",
               remove: "Ta bort",
               editing_lecture: "Redigera Föreläsning",
               listing_lectures: "Listar föreläsningar",
@@ -446,6 +447,8 @@ var translation_sv=function(){
               download_notes: "Ladda ner Anteckningar",
               finish_before_proceeding:"Vänligen avsluta tidigare krävs föreläsningar innan du fortsätter",
               save_quiz: "Vänligen spara eller avsluta nu öppnat frågesport",
+              quiz_question: "Quiz Fråga",
+              quiz_time: "Quiz tid"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",
@@ -453,7 +456,7 @@ var translation_sv=function(){
               Drag_change_time: "Dra till ny plats för att ändra tid",
               save_changes: "Spara ändringar",
               editing_quiz: "Redigerar Quiz",
-              double_click_new_answer: "Dubbelklicka på videon för att lägga till ett nytt svar",
+              double_click_new_answer: "Quiz Redaktör : Dubbelklicka på videon för att lägga till ett nytt svar",
               incorrect_format_time: "Felaktigt format på tiden",
               time: "Tid",
               time_outside_range: "Tid utanför videons speltid",
@@ -664,8 +667,8 @@ var translation_sv=function(){
               total_progress: "Totala framsteg",
               progress_chart: "Framsteg, diagram",
               modules: "Moduler",
-              start_date: "Startdatum",
-              duration: "Tidsutsträckning",
+              start_date: "Kurs Startdatum",
+              duration: "Kurslängd (veckor)",
               prerequisites: "Förutsättningar",
               course_image: "Kurs Image",
               course_image_url: "Kurs Image URL",
@@ -992,7 +995,7 @@ var translation_sv=function(){
         },
         announcements:
         {
-          empty: 'Det finns för närvarande inga meddelanden för denna kurs. Börja med att lägga till ett nytt meddelande.'
+          empty: 'Inga meddelanden ännu'
         },
         help:{
           getting_started: "Komma igång",

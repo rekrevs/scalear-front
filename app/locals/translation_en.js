@@ -3,6 +3,7 @@ var translation_en=function(){
       tellus: 'Tell us about yourself...',
       online_name_comment: '(Your Online Name is shown to other students and teachers when you make comments or ask questions. If you wish to be anonymous, use the default or a pseudonym.)',
       new_module_instructions: "Add a new module or selected an existing by clicking on the content navigator from the left",
+      use_modules_organize: "Use modules to organize your videos and quizzes",
       use_content_menu: "Use the Content menu to add quizzes and surveys",
       finished: 'Finished',
       yes: 'Yes',
@@ -368,6 +369,7 @@ var translation_en=function(){
         save_exit: "Save and Exit",
         explanation: "Explanation",
         cancel: "Cancel",
+        delete_quiz: "Delete Quiz",
         remove: "Remove",
         editing_lecture: "Editing Lecture",
         listing_lectures: "Listing lectures",
@@ -443,6 +445,8 @@ var translation_en=function(){
         download_notes: "Download Notes",
         finish_before_proceeding:"Please finish previous required lectures before proceeding",
         save_quiz: "Please save or exit currently opened quiz",
+        quiz_question: "Quiz Question",
+        quiz_time: "Quiz Time"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -450,7 +454,7 @@ var translation_en=function(){
         Drag_change_time: "Drag to new position to change time",
         save_changes: "Save changes",
         editing_quiz: "Editing quiz",
-        double_click_new_answer: "Double click on the video to add a new answer",
+        double_click_new_answer: "Quiz Editor: Double-click on the video to add a new answer.",
         incorrect_format_time: "Incorrect Format for Time",
         time: "Time",
         time_outside_range: "Time Outside Video Range",
@@ -662,8 +666,8 @@ var translation_en=function(){
         total_progress: "Total Progress",
         progress_chart: "Progress Chart",
         modules: "Modules",
-        start_date: "Course start date",
-        duration: "Course Duration in Weeks",
+        start_date: "Course Start Date",
+        duration: "Course Duration (weeks)",
         prerequisites: "Prerequisites",
         course_image: "Course Image",
         course_image_url: "Course Image URL",
@@ -983,7 +987,7 @@ var translation_en=function(){
     },
     announcements:
     {
-      empty: 'There are currently no announcements for this course. Begin by adding a new announcement.'
+      empty: 'No announcements yet.'
     },
     help:{
       getting_started: "Getting Started",

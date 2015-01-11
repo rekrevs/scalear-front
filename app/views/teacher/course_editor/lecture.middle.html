@@ -37,7 +37,7 @@
 		<button class="button small no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" ><span translate>new_video</span></button>
 		<button class="button small no-margin" ng-click="addModule()" translate>groups.new_module</button>
 	</center>
-	<div class="small-12 small-centered columns" style="margin-top: 10px;">
+	<div class="small-12 small-centered columns">
 		<center ng-if="editing_mode" style="margin-bottom:10px">
 			<edit_panel  />		
 			<alert ng-show="!hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>

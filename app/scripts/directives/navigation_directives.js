@@ -320,7 +320,7 @@ angular.module('scalearAngularApp')
     templateUrl:"/views/content_navigator.html",
    link:function(scope, element, attr){
    	  scope.$state = $state
-	  var unwatch = scope.$watch('$state.params',function(){
+	  scope.$watch('$state.params',function(){
 	  	if($state.params.module_id){
 	  		scope.currentmodule = {id: $state.params.module_id}
    	  		scope.currentitem = {id: $state.params.lecture_id || $state.params.quiz_id}
@@ -330,16 +330,6 @@ angular.module('scalearAngularApp')
 	  		scope.currentitem = null
 	  	}
    	  })
-
-	   // scope.$watch('open_navigator',function(status){
-    //     if(status){
-    //         // $timeout(function(){
-    //             scope.delayed_navigator_open = true
-    //         // },100)
-    //       }
-    //       else
-    //         scope.delayed_navigator_open = status
-    //   	})
 
    		scope.$on('item_done',function(ev,item){
    			var time = 0
@@ -458,9 +448,12 @@ angular.module('scalearAngularApp')
 	    scope.currentitem = {id:item.id}
   	}
 
- 	scope.showModule=function(module){
-        $state.go('course.module.course_editor.overview',{module_id: module.id})
-        scope.currentmodule = module
+ 	scope.showModule=function(module, event){
+ 		if(scope.currentmodule.id == module.id)
+        	event.stopPropagation()
+    	$state.go('course.module.course_editor.overview',{module_id: module.id})
+    	scope.currentmodule = module
+
     }
   	scope.goToCourseInfoStudent=function(){
 	  	scope.currentmodule = null

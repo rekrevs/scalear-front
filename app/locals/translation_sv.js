@@ -3,6 +3,7 @@ var translation_sv=function(){
       tellus: 'Skriv något om dig själv...',
       online_name_comment:'(Ditt online-namn visas för andra elever och lärare när du skriver kommentarer eller ställer frågor. Om du vill vara anonym, använd den givna pseudonymen ("Student NNNN") eller hitta på en egen.)',
       new_module_instructions: "Lägg till en ny modul eller valt en existerande genom att klicka på innehålls navigator från vänster",
+      use_modules_organize: "Använd modulerna för att organisera dina videoklipp och frågesporter",
       use_content_menu: "Använd innehållsmenyn för att lägga till frågesporter och undersökningar",
       finished: 'Kom',
       yes: 'Ja',

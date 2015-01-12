@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
 									'<small class="error position-absolute z-one" ng-show="time_error" ng-bind="time_error"></small>'+
 								'</div>'+
 							'</div>'+
-							'<delete_button size="big" action="deleteQuizButton()" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>'+
+							'<delete_button size="big" action="deleteQuizButton(selected_quiz)" vertical="false" text="true" style="margin:10px;margin-left:0;float:right;margin-top:0;"></delete_button>'+
 							// '<button class="button secondary tiny"  ng-click="exitBtn()" translate>lectures.delete_quiz</button>'+
 							'<button ng-disabled="disable_save_button" class="button tiny" style="margin: 10px;float:right;margin-top:0;" ng-click="saveEdit(selected_quiz)" translate>events.done</button>'+ 
 							// '<div><span>Are you sure?</span></div>'

@@ -89,6 +89,7 @@ angular.module('scalearAngularApp')
               if(type!= "meta")
                 for(var it in $scope.lectures[lec_id][type] ){
                   if(type=='discussion'){
+                    $scope.lectures[lec_id][type][it][0] = $scope.lectures[lec_id][type][it][1][0].post.time
                     for(var disc in $scope.lectures[lec_id][type][it][1]){
                       $scope.lectures[lec_id][type][it][1][disc].post.hide = !$scope.lectures[lec_id][type][it][1][disc].post.hide
                       for(var com in $scope.lectures[lec_id][type][it][1][disc].post.comments){
@@ -104,7 +105,6 @@ angular.module('scalearAngularApp')
            }           
           }
           console.log($scope.timeline)          
-          // resizeContainer()
         },  
         function(){}        
       )      
@@ -268,31 +268,51 @@ angular.module('scalearAngularApp')
   		}
       var top = ( $('html').innerHeight() / 2 )-10;
       $('.main_content').parent().scrollToThis(angular.element(inner_li[$scope.inner_highlight_index]),{offsetTop : top});
-	    $scope.$apply()
+	    seekToItem()
+      $scope.$apply()
   	}
 
   	$scope.highlight=function(ev,item){
-      // resizePlayerSmall()
   		var ul = angular.element(ev.target).closest('ul.ul_item')
   		var divs = angular.element('.ul_item')
-  		// angular.element(divs[$scope.highlight_index]).removeClass('highlight')
       $(".highlight").removeClass("highlight");
   		$scope.highlight_index = divs.index(ul)
   		angular.element(ul).addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
       angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
       $scope.highlight_level = 1
       setupRemoveHightlightEvent()
-      if($scope.selected_item == item)
-        return
+      // if($scope.selected_item == item)
+      //   return
       $scope.selected_item =item
       var parent_div = ul.closest('div')
       if(parent_div.attr('id')){
         var id=parent_div.attr('id').split('_') 
         $scope.selected_item.lec_id = id[1]
       }
-  		$scope.inner_highlight_index = 0	
+  		$scope.inner_highlight_index = 0
+      var inner_li= angular.element(ev.target).closest('li.li_item')
+      if(inner_li.length){
+        if(angular.element('li.highlight').length)
+          angular.element('li.highlight').removeClass('highlight')
+        $scope.inner_highlight_index = ul.find('li.li_item').index(inner_li[0])
+        angular.element(inner_li[0]).addClass('highlight')
+        $scope.highlight_level = 2        
+      }
       seekToItem()
   	}
+
+    // $scope.innerHighlight=function(ev,item){
+    //   var inner_ul= angular.element('ul.highlight').find('ul')
+    //   if(inner_ul.length){
+    //     var inner_li = inner_ul.find('li').not('.no_highlight')
+    //     if(angular.element('li.highlight').length)
+    //       angular.element('li.highlight').removeClass('highlight')
+    //     $scope.inner_highlight_index = $scope.inner_highlight_index+x
+    //     angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
+    //     $scope.highlight_level = 2
+    //   }
+    //   seekToItem()
+    // }
 
    var setupRemoveHightlightEvent=function(){
     console.log("adding")
@@ -744,13 +764,14 @@ angular.module('scalearAngularApp')
   // }
 
   var seekToItem=function(){
-    if($scope.selected_item && $scope.selected_item.time>0){          
+    console.log("seeking to item",$scope.selected_item )
+    if($scope.selected_item && $scope.selected_item.time>=0 && $scope.lectures[$scope.selected_item.lec_id]){          
         var time = $scope.selected_item.time             
         if ($scope.selected_item.type == "discussion"){
           var q_ind = $scope.inner_highlight_index
           time = $scope.selected_item.data[q_ind].post.time
           console.log(time)
-        }          
+        }  
         $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
     }
   }
@@ -822,7 +843,7 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : true});
 
     shortcut.add("Space",function(){
-      if($scope.selected_item && $scope.selected_item.time>0 && !$scope.large_player){          
+      if($scope.selected_item && $scope.selected_item.time>=0 && !$scope.large_player){          
           resizePlayerLarge()
       }
       else

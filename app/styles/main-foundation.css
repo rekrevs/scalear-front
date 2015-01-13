@@ -1593,6 +1593,10 @@ a.editable-click{
   height: 0vh
 }
 
+.width-max-heigh{
+    max-width:114vh
+}
+
 @media only screen and (orientation:landscape) and (max-width: 48.063em){
   .ipad .land-medium-4 {
     position: relative;
@@ -1690,7 +1694,24 @@ a.editable-click{
     padding-left: 10.5rem !important;
     padding-right: 10.5rem !important;
   }
+
+  
 }
+
+@media only screen and (min-width:84.063em) {
+  .large-height-big{
+    height: 80vh !important;
+  }
+  .with-huge-padding-side{
+    padding-left: 10.5rem !important;
+    padding-right: 10.5rem !important;
+  }
+
+  .width-max-heigh{
+    max-width:134vh
+  }
+}
+
 
 @media only screen and (max-width:46.063em){
   .hide-for-semi-medium{
@@ -1698,7 +1719,7 @@ a.editable-click{
   }
 }
 
-@media only screen and (max-width:35.063em){
+@media only screen and (max-width:15.063em){
   .hide-for-semi-small{
     display: none !important;
   }

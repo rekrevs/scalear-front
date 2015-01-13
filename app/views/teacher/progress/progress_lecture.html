@@ -94,7 +94,7 @@
 						<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show)"/>
 						</br>
 						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size:14px;clear:both">							
-							<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" style="padding:8px 10px">
+							<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" class="li_item" style="padding:8px 10px">
 								<div class="controls" >
 									<show_box bo-show="module_item.quiz_type == 'survey'" value="answer.hide" action="updateHideResponse(quiz.meta.id,item,answer)" style="float:right"/>
 								    <div ng-show="!quiz.filtered_user || quiz.filtered_user==''" tooltip="{{'groups.see_related'|translate}}" tooltip-placement="top" style="float:right">|
@@ -140,7 +140,7 @@
 					<li ng-if="item.type=='discussion'" class="li_inner color-coral" >
 						<inner_title ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'lectures.discussion' | translate" />
 						<ul style="padding:5px;padding-left: 40px;color:black;font-weight:normal;font-size: 14px;">
-							<li ng-repeat="discussion in item.data" ng-class="{'light-yellow':discussion.post.hide}">
+							<li ng-repeat="discussion in item.data" class="li_item" ng-class="{'light-yellow':discussion.post.hide}">
 								<span class="controls" >
 									<show_box value="discussion.post.hide" action="updateHideDiscussion(discussion.post.id,discussion.post.hide)" style="float:right"/>
 									<span style="float:right">|
@@ -210,7 +210,7 @@
 						<inner_title class="left" style="margin-right:5px" ng-click="seek(item.time, lec.meta.url)" time="item.time" type="'groups.free_text_question' | translate" itemtitle="item.data.title+' - '+item.data.review+' students ('+percentage+'%) '+('lectures.of_student_review' | translate)" color="color"/>
 						<show_box  value="item.data.show" action="updateHideQuiz(item.data.id,item.data.show)"/>
 						<ul style="clear:both;padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
-							<li ng-repeat="answer in item.data.answers|filter:{user_id:lec.filtered_user}:lec.filter_strict" style="padding:3px 10px">
+							<li ng-repeat="answer in item.data.answers|filter:{user_id:lec.filtered_user}:lec.filter_strict" class="li_item" style="padding:3px 10px">
 								<span class="controls">
 									<show_box ng-init="answer.hide = !answer.hide" value="answer.hide" action="updateHideResponseOnlineQuiz(answer.online_quiz_id,answer.id,answer.hide)" style="float:right"/>
 									<span ng-show="!lec.filtered_user || lec.filtered_user==''" style="float:right">|
@@ -228,7 +228,7 @@
 							<show_box value="item.data.hide" action="updateHideQuiz(item.data.id,item.data.hide)" class="left"/>
 							<br/>
 						</div>
-						<div class="row"><div google-chart chart="chart" class="progress_chart small-12 columns" ></div></div>
+						<div class="row no-margin" style="margin-left: 2px !important;"><div google-chart chart="chart" class="progress_chart small-12 columns" ></div></div>
 					</li>
 				</ul>
 			</div>

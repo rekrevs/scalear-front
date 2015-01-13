@@ -6,7 +6,9 @@
 	background: -o-linear-gradient(left,  #ffffff 13%,gray 13%,gray 16%,#ffffff 16%);
 	background: -ms-linear-gradient(left,  #ffffff 13%,gray 13%,gray 16%,#ffffff 16%);
 	/*background: linear-gradient(to right,  #ffffff 13%,gray 13%,gray 16%,#ffffff 16%);*/
-	background:linear-gradient(to right, #ffffff 3.8%,gray 3.8%,gray 4%,#ffffff 4%);
+	/*background:linear-gradient(to right, #ffffff 3.8%,gray 3.8%,gray 4%,#ffffff 4%);*/
+	background: linear-gradient(to right,#fff 1%, rgb(233,233,233) 1.0%,rgb(233, 233, 233) 6.6%,#fff 2%);
+
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 );
 }
 
@@ -22,7 +24,8 @@ ul.highlight, li.highlight{
 
 .title{
 	/*background-color:#0088cc;*/
-	background-color:#2d2d2d;
+	/*background-color:#2d2d2d;*/
+	background-color:rgb(93, 164, 35);
 	color:white;
 	font-size:18px;
 	padding:10px 20px;

@@ -1645,6 +1645,10 @@ a.editable-click{
     padding-left: 1.5rem;
     font-size: 0.76rem;
   }
+
+  .ipad .width-max-heigh{
+    max-width:initial
+  }
 }
 
 @media screen and (orientation:portrait){
@@ -1672,6 +1676,10 @@ a.editable-click{
   .ipad .portrait-medium-height{
     height: 30vh !important;
      -webkit-overflow-scrolling: touch;
+  }
+
+  .ipad .width-max-heigh{
+    max-width:initial
   }
 }
 

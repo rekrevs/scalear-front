@@ -46,7 +46,7 @@
 			</div> -->
 			<div ng-if="module_item.class_name=='lecture'" ng-init='lec=module_item' class="small-12 columns">
 				<p class="title light-grey dark-text">{{lec.name}}</p>
-				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['lecture'][lec.id].items|filter:data:'!!'" style="clear:both">
+				<ul class="ul_item vline_slim inner_content" ng-repeat="item in timeline['lecture'][lec.id].items|filter:data:'!!'" style="clear:both">
 					<li ng-if="item.type=='discussion'" class="li_inner color-coral">
 						<inner_title type="'lectures.discussion' | translate" />
 						<ul style="padding:5px;padding-left: 40px;color:black;font-weight:normal;font-size: 14px;">
@@ -73,11 +73,11 @@
 			</div>
 			<div ng-if="module_item.class_name=='quiz'" ng-init='quiz=module_item' class="small-12 columns">
 				<p class="title light-grey dark-text">{{quiz.name}}</p>
-				<ul class="ul_item vline inner_content" ng-repeat="item in timeline['survey'][quiz.id].items|filter:data:'!!'">
+				<ul class="ul_item vline_slim inner_content" ng-repeat="item in timeline['survey'][quiz.id].items|filter:data:'!!'">
 					<li ng-if="item.type=='Free Text Question'" class="li_inner color-coral">
 						<inner_title  type="'groups.free_text_question' | translate" itemtitle="item.data.title"/>
 					</li>
-					<li  ng-if="item.type=='charts'" class="li-inner color-blue">
+					<li  ng-if="item.type=='charts'" class="li_inner color-blue">
 						<inner_title type="'courses.survey' | translate" itemtitle="item.data.title" />
 					</li>
 				</ul>

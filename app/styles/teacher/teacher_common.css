@@ -12,6 +12,10 @@
 	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#ffffff',GradientType=1 );
 }
 
+.vline_slim{
+	background: linear-gradient(to right, #ffffff 2%,rgb(194, 191, 191) 3%,rgb(211, 207, 207) 3%,#ffffff 2%)
+}
+
 ul.highlight, li.highlight{
 	border: solid 3px rgb(0, 162, 86);
 	/*border-left: #2d2d2d 10px outset;*/

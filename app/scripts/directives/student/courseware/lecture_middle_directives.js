@@ -662,7 +662,7 @@ angular.module('scalearAngularApp')
     }
   }
 }])
-.directive('quizTimeline',['OnlineQuiz','$filter', function(OnlineQuiz,$filter){
+.directive('quizTimeline',['OnlineQuiz','$filter','$rootScope', function(OnlineQuiz,$filter, $rootScope){
   return{
     restrict:"A",
     // replace:true,
@@ -672,6 +672,7 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/student/lectures/quiz_timeline.html',
     link:function(scope, element, attrs){
+      scope.preview_as_student = $rootScope.preview_as_student
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.voteForReview=function(){
         console.log("vote review")

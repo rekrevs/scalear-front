@@ -75,7 +75,7 @@ angular.module('scalearAngularApp')
           $scope.module= $scope.course.selected_module
           console.log("moduel ", $scope.course.selected_module)
           if($scope.progress_player.controls.isYoutube($scope.first_lecture)){
-            $scope.url = $scope.first_lecture+"&controls=1&autohide=1&fs=1&theme=light"
+            $scope.url = $scope.first_lecture+"&controls=1&fs=1&theme=light"
           }
           else{
             $scope.url = $scope.first_lecture
@@ -415,11 +415,13 @@ angular.module('scalearAngularApp')
       console.log(answer)
       if(!answer.hide){
         $scope.review_survey_reply_count[survey_id][item.data.id]++
-        $scope.review_survey_count++
+        if(item.data.show)
+          $scope.review_survey_count++
       }
       else{
         $scope.review_survey_reply_count[survey_id][item.data.id]--
-        $scope.review_survey_count--
+        if(item.data.show)
+          $scope.review_survey_count--
       }
       Quiz.hideResponses(
         {
@@ -459,9 +461,9 @@ angular.module('scalearAngularApp')
 
     $scope.updateHideSurveyQuestion=function(survey_id,id, value){
       if(value)
-        $scope.review_survey_count+= $scope.review_survey_reply_count[survey_id][id] || 1
+        $scope.review_survey_count+= $scope.review_survey_reply_count[survey_id][id] || 0
       else
-        $scope.review_survey_count-= $scope.review_survey_reply_count[survey_id][id] || 1
+        $scope.review_survey_count-= $scope.review_survey_reply_count[survey_id][id] || 0
       Quiz.showInclass(
         {
           course_id:$stateParams.course_id,
@@ -597,7 +599,7 @@ angular.module('scalearAngularApp')
     if($scope.url.indexOf(url) == -1){
       if($scope.progress_player.controls.isYoutube(url)){
         $scope.progress_player.controls.setStartTime(time)
-        $scope.url= url+"&controls=1&autohide=1&fs=1&theme=light"
+        $scope.url= url+"&controls=1&fs=1&theme=light"
       }
       if($scope.progress_player.controls.isMP4(url)){
         $scope.url= url
@@ -813,34 +815,34 @@ angular.module('scalearAngularApp')
             $scope.$apply()
             angular.element('textarea').focus()
           }
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
 	  shortcut.add("Down",function(){
       if($scope.highlight_level <= 1)
 		    $scope.manageHighlight(1)
       else
         $scope.manageInnerHighlight(1)
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
     shortcut.add("Up",function(){
       if($scope.highlight_level <= 1)
 		    $scope.manageHighlight(-1)
       else
         $scope.manageInnerHighlight(-1)
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Right",function(){
       if($scope.highlight_level == 0)
         $scope.manageHighlight(0)
       else
 		    $scope.manageInnerHighlight(0)
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Left",function(){
       if($scope.highlight_level <= 1)
         removeHightlight()
       else
 		    $scope.manageHighlight(0)
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Space",function(){
       if($scope.selected_item && $scope.selected_item.time>=0 && !$scope.large_player){          
@@ -850,7 +852,7 @@ angular.module('scalearAngularApp')
         resizePlayerSmall()
 
       $scope.$apply()
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("m",function(){
       console.log($scope.selected_item)
@@ -898,26 +900,25 @@ angular.module('scalearAngularApp')
           }
         }
       }
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("ESC",function(){
       console.log($scope.selected_item)
       resizePlayerSmall()
       if($scope.selected_item.type == 'discussion'){
-        console.log("disc")
         $scope.selected_item.data.forEach(function(discussion){
           discussion.post.show_feedback = false; 
           discussion.post.temp_response=null
-        })
+        })        
       }else if($scope.selected_item.type == "free_question"){
-        console.log("free text")
         $scope.selected_item.data.answers.forEach(function(answer){
           answer.show_feedback = false;
           answer.temp_response = null
         })
       }
+      angular.element('ul.highlight .feedback textarea').blur()
       $scope.$apply()
-    },{"disable_in_input" : false});
+    },{"disable_in_input" : false, "propagate":false});
 
     shortcut.add("enter",function(){
       console.log($scope.selected_item)
@@ -932,7 +933,7 @@ angular.module('scalearAngularApp')
         $scope.selected_item.data.answers[q_ind].show_feedback = false
       }
       $scope.$apply()
-    },{"disable_in_input" : false});
+    },{"disable_in_input" : false, "propagate":false});
   }
 
   var removeShortcuts=function(){
@@ -944,6 +945,7 @@ angular.module('scalearAngularApp')
     shortcut.remove("Space");
     shortcut.remove("m");
     shortcut.remove("ESC");
+    shortcut.remove("enter");
   }
 
   $scope.print=function(){

@@ -3,7 +3,7 @@
         <img src="../images/discussion-timeline.png" />
     </p>
 </td>
-<td ng-if="item.data==null || item.data.isEdit" colspan="3">
+<td ng-if="item.data==null || item.data.isEdit" colspan="3" style="padding:0">
     <question_block item="item" />
 </td>
 <td ng-if="item.data && !item.data.isEdit" colspan="3" bindonce style="padding: 0px;padding-right: 8px;">

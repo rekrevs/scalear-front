@@ -254,11 +254,11 @@ angular.module('scalearAngularApp')
         },
         {percent:milestone},function(data){
             $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
-            if(data.done){
+            if(data.done && !$scope.lecture.is_done){
                 // if(!$scope.lecture.is_done){
                     $scope.not_done_msg = false                    
                     $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
-                    // $scope.lecture.is_done = data.done
+                    $scope.lecture.is_done = data.done
                 // }
             }
             else 
@@ -647,9 +647,9 @@ angular.module('scalearAngularApp')
             }
             reviewInclass() 
 
-            if(data.done[2]){
+            if(data.done[2] && !$scope.lecture.is_done){
                 $scope.course.markDone(data.done[1],data.done[0])
-                // $scope.lecture.is_done = data.done[2]
+                $scope.lecture.is_done = data.done[2]
             }
         }
 

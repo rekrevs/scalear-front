@@ -1,8 +1,8 @@
-var ptor = protractor.getInstance();
-var locator = require('./locators');
-var o_c = require('./openers_and_clickers');
-var lecture_middle = require('./lecture_quizzes_management');
-var params = ptor.params;
+// var ptor = protractor.getInstance();
+// var locator = require('./locators');
+// var o_c = require('./openers_and_clickers');
+// var lecture_middle = require('./lecture_quizzes_management');
+// var params = ptor.params;
 
 exports.create_mcq_quiz = function(ptor){
 	teacher.open_content_new_in_video_ques(ptor);

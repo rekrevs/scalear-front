@@ -1,8 +1,8 @@
-var ptor = protractor.getInstance();
-var locator = require('./locators');
-var o_c = require('./openers_and_clickers');
-var lecture_middle = require('./lecture_quizzes_management');
-var params = ptor.params;
+// var ptor = protractor.getInstance();
+// var locator = require('./locators');
+// var o_c = require('./openers_and_clickers');
+// var lecture_middle = require('./lecture_quizzes_management');
+// var params = ptor.params;
 
 exports.create_mcq_survey = function(ptor, feedback){
 	locator.s_by_classname(ptor, 'btn-group').then(function(btns){

@@ -3,13 +3,13 @@
 		<delete_button class="with-tiny-margin-left right z-one" size='small' color='dark' action='remove(event)' mode="content_navigator">
 		</delete_button>
 		<img class='left handle with-tiny-margin' src='images/move2.png' bindonce bo-title="'courses.drag_to_reorder'|translate" />
-		<div class="truncate-70 show-inline left text-left">{{module.name}}</div>
+		<div class="truncate-70 show-inline left text-left module_name">{{module.name}}</div>
 		<small class="color-grey">{{module.total_time | formattime:'h:mm'}}</small>			
 	</div>
 
 	<div class="position-relative" ng-if="!('**.course_editor.**' | includedByState)" >
 		<!-- <div class="small-9 columns"> -->
-			<div class="truncate-70 show-inline left text-left" bindonce bo-text="module.name"></div>	
+			<div class="truncate-70 show-inline left text-left module_name" bindonce bo-text="module.name"></div>	
 		<!-- </div> -->
 		<!-- <div class="small-3 columns"> -->
 			<small class="color-grey" bo-text="module.total_time | formattime:'h:mm'"></small>

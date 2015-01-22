@@ -28,8 +28,8 @@
         </div>
     </div>
     <div class="small-12 medium-12 large-9 columns">
-        <h2 id='course_code_name' class="title color-green" title="{{course.name}}">{{course.short_name}} | {{course.name}}</h2>
-        <h6 class="color-blue show-for-small-only" title="{{course.name}}"><span class="dark-text" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
+        <h2 id='course_code_name' class="title color-green"><span>{{course.short_name}}</span> | <span>{{course.name}}</span></h2>
+        <h6 class="color-blue show-for-small-only"><span class="dark-text" page-name="{{current}}"step-text="This is the list of all the teachers in this course." step-index="4" step-placement="top" step-append-to-body="false" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers">{{teacher.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>
         <div class="hide-for-large-up with-padding-bottom">
             <div>
                 <button id="calendar_btn" calendar-modal type="button" class="button tiny uppercase right" ng-click="openCalendar()"page-name="{{current}}"step-text="Click this button to view the course calendar." step-index="1" step-placement="bottom" step-append-to-body="false">Calendar</button>

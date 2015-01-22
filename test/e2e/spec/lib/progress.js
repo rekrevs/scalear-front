@@ -1,10 +1,10 @@
-var locator = require('./locators');
-var o_c = require('./openers_and_clickers');
-var youtube = require('./youtube');
-var teacher = require('./teacher_module');
-var student = require('./student_module');
-var ptor = protractor.getInstance();
-var params = ptor.params
+// var locator = require('./locators');
+// var o_c = require('./openers_and_clickers');
+// var youtube = require('./youtube');
+// var teacher = require('./teacher_module');
+// var student = require('./student_module');
+// var ptor = protractor.getInstance();
+// var params = ptor.params
 
 
 exports.selectTabInMainProgress = function(which_tab){

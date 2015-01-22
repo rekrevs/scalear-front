@@ -103,7 +103,7 @@
                         <a id="content" class="whitesmoke-hover dark-text sub-header-component size-14" ng-class="{'nav-item-active': ('course.course_editor' | includedByState) || ('course.module.course_editor' | includedByState) || ('course.module.course_editor.overview' | includedByState) || ('course.module.course_editor.lecture' | includedByState) || ('course.module.course_editor.quiz' | includedByState)}" ng-click="goToContentEditor()" translate>head.content</a>
                         <ul class="lighter-grey-no-hover" top-bar-dropdown ng-show="'**.course_editor.**' | includedByState">
                             <li>
-                                <a id="new_module" class="lighter-grey dark-text sub-header-component has-description" ng-click="addModule()">
+                                <a id="sub_new_module" class="lighter-grey dark-text sub-header-component has-description" ng-click="addModule()">
                                     <span translate>groups.new_module</span>
                                     <h5 class="dark-description"><small translate>modules_group_items</small></h5>
                                 </a>
@@ -111,7 +111,7 @@
 
                             <li ng-show="in_module_state">
                                 <div class="divider border-grey medium-opacity"></div>
-                                <a id="new_online_content" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
+                                <a id="sub_new_item" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
                                     <span translate>new_online_content</span>
                                     <h5 class="dark-description"><small>Video, quiz, survey or link</small></h5>
                                 </a>

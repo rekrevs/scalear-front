@@ -24,6 +24,12 @@ CourseEditor.prototype = Object.create({}, {
 	total_lecture_questions:{get:function(){return this.module.element(by.binding('module.total_questions')).getText()}},
 	total_quiz_questions:{get:function(){return this.module.element(by.binding('module.total_quiz_questions')).getText()}},
 	total_time:{get:function(){return this.module.element(by.binding('module.total_time')).getText()}},
+	lecture_settings_accordion:{get:function(){element(by.id("lec_settings"))}},
+	open_lecture_settings:{value:function(){this.lecture_settings_accordion.click()}},
+	lecture_inorder_checkbox:{get:function(){element(by.model('lecture.required'))}},
+	change_lecture_inorder:{value:function(){this.lecture_inorder_checkbox.click()}},
+	quiz_required_checkbox:{get:function(){element(by.model('quiz.graded'))}},
+	change_quiz_required:{value:function(){this.quiz_required_checkbox.click()}},
 	open:{value: function(){
 		element(by.id('content')).click();
 		browser.driver.wait(function() {

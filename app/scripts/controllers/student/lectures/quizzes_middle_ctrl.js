@@ -8,7 +8,8 @@ angular.module('scalearAngularApp')
         $scope.course.warning_message=null
         $scope.studentAnswers={};
         $scope.$parent.$parent.current_item =$stateParams.quiz_id
-        $scope.should_solve = true
+        $scope.should_solve = false
+        $scope.passed_requirments = true
  		Quiz.getQuestions({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},function(data){
             $scope.quiz= data.quiz
             console.log($scope.quiz)
@@ -22,10 +23,11 @@ angular.module('scalearAngularApp')
                         var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, $scope.quiz.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                         if(item_index!=-1 && group_index!=-1)
                             if(!$scope.course.groups[group_index].items[item_index].is_done)
-                                $scope.should_solve = false
+                                $scope.passed_requirments = false
                     }
                 }
             }
+            $scope.should_solve = $scope.passed_requirments
 
 	 		$scope.quiz.questions=data.questions
 	 		$scope.studentAnswers=data.quiz_grades;

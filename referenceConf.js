@@ -105,9 +105,8 @@ exports.config = {
             'test/e2e/spec/announcements.spec.js'
         ],
         student:[
-        'test/e2e/spec/init-progress-data.spec.js',
-        'test/e2e/spec/students_solve_course.spec.js.js',
-        // 'test/e2e/spec/student-lectures.spec.js'
+            'test/e2e/spec/students_solve_course.spec.js',
+            // 'test/e2e/spec/student-lectures.spec.js'
         ],
 
         delete_course:'test/e2e/spec/delete_course.spec.js'

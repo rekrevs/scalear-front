@@ -38,14 +38,14 @@
         <h1 class="dark-text" style="padding: 0 40px;color:grey">{{message}}</h1>
       </div>
         <top-bar-section>
-          <div ng-if="('course_list' | includedByState)" class="right" style="padding-right:10px">
-            <div class="button-group" ng-init="initFilters()">
-              <span step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="navigation_courses">
+          <div ng-if="('course_list' | includedByState)" class="right" style="padding-right:10px">            
+            <span step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="navigation_courses">
+              <div class="button-group" ng-init="initFilters()">
                 <button type="button" ng-click="updateCourseFilter('!!')" class="button tiny" ng-class="{active: course_filter == '!!'}">All</button>
                 <button type="button" ng-click="updateCourseFilter(false)" class="button tiny" ng-class="{active: course_filter == false}">Current</button>
                 <button type="button" ng-click="updateCourseFilter(true)" class="button tiny" ng-class="{active: course_filter == true}" >Finished</button>
-              </span>
-            </div>
+              </div>
+            </span>           
           </div>
         </top-bar-section>
     </top-bar>

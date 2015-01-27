@@ -136,7 +136,8 @@ angular.module('scalearAngularApp')
 
     var goToLecture=function(id){
         if($scope.timeline){
-            $scope.should_play = true
+            $scope.should_play = false
+            $scope.passed_requirments = true
             $scope.lecture = null
 
             $timeout(function(){
@@ -173,10 +174,12 @@ angular.module('scalearAngularApp')
                             var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                             if(item_index!=-1 && group_index!=-1)
                                 if(!$scope.course.groups[group_index].items[item_index].is_done)
-                                    $scope.should_play = false
+                                    $scope.passed_requirments = false
                         }
                     }
                 }
+
+                $scope.should_play = $scope.passed_requirments
 
                 // if($scope.should_play){
                 //     if(data.done[2]){

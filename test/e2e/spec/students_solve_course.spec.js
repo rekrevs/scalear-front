@@ -9,7 +9,9 @@ var Login = require('./pages/login');
 var CourseEditor = require('./pages/course_editor');
 var CourseInformation = require('./pages/course_information');
 var StudentLecture = require('./pages/student/lecture');
-var scroll = require('./lib/utils').scroll;
+var StudentQuiz = require('./pages/student/quiz');
+var scroll_top = require('./lib/utils').scroll_top;
+var scroll_bottom = require('./lib/utils').scroll_bottom;
 var sleep = require('./lib/utils').sleep;
 
 var params = browser.params;
@@ -18,1240 +20,796 @@ var course_list = new CourseList()
 var video = new Video();
 var invideo_quiz = new InvideoQuiz();
 var quiz = new NormalQuiz();
-// var navigator = new ContentNavigator(1)
 var header = new Header()
 var login_page = new Login()
 var course_editor = new CourseEditor()
 var course_info = new CourseInformation()
 var student_lec = new StudentLecture()
+var student_quiz = new StudentQuiz()
+
 describe("Solve Course",function(){
-	describe("Teacher",function(){
+	xdescribe("Teacher",function(){
 		var navigator = new ContentNavigator(1)
 		it("should open course",function(){
 	        course_list.open()
 	        course_list.open_course(1)
-	    })
-	    it("should open second lecture in first module",function(){
+	    })	    
+	    it("should open first quiz in first module",function(){
 	    	navigator.module(1).open()
-	    	navigator.module(1).open_item(2)
-	    })
-	    it('make lecture not in order', function(){
-			course_editor.open_lecture_settings()
-	        course_editor.change_lecture_inorder()
-	    })
-	    it("should open second lecture in first module",function(){
 	    	navigator.module(1).open_item(4)
+	    	sleep(1000)
+	    	scroll_top()
 	    })
+    	it('should make quiz not in order', function(){
+			course_editor.change_quiz_inorder()
+		})
 	    it('make quiz not required', function(){
 	        course_editor.change_quiz_required()
 	    })
-
-	})
-})
-
-
-
-
-
-xdescribe("teacher", function(){
-	
-	it('should add a normal quiz', function(){
-		teacher.add_quiz(ptor);
-	})
-
-	it('make quiz not required', function(){
-        teacher.change_quiz_required()
-    })
-	// //------
-	// // it('should open the first module', function(){
-	// // 	teacher.open_module(ptor, 1)
-	// // })
-	// //------
-	// it('should open the quiz', function(){
-	// 	teacher.open_item(ptor, 2, 4)
-	// })
-
-	it('should add a FIRST header', function(){
-		teacher.add_quiz_header(ptor, 'first header')
-	})
-	it('should add a MCQ question', function(){
-		teacher.add_quiz_question_mcq(ptor, 'mcq question', 2, [1, 2])
-	})
-	it('should add a SECOND header', function(){
-		teacher.add_quiz_header(ptor, 'second header')
-	})
-	it('should add an OCQ question', function(){
-		teacher.add_quiz_question_ocq(ptor, 'ocq question', 2, 1)
-	})
-	it('should add a FREE question', function(){
-		teacher.add_quiz_question_free(ptor, 'free question')
-	})
-	
-	it('should add a MATCH question', function(){
-		teacher.add_quiz_question_free(ptor, 'match question', 'match answer')
-	})
-	it('should add a DRAG question', function(){
-		teacher.add_quiz_question_drag(ptor, 'drag question', 2)
-	})
-	it('should save the quiz', function(){
-		teacher.save_quiz(ptor)
-		o_c.scroll_to_top(ptor)
-	})
-	// it('should scroll to the top', function(){
-	// 	o_c.scroll_to_top(ptor)
-	// })
-
-
-
-	it('should add a normal REQUIRED quiz', function(){
-		teacher.add_quiz(ptor);
-	})
-	// //------
-	// // it('should open the first module', function(){
-	// // 	teacher.open_module(ptor, 1)
-	// // })
-	// //------
-	// it('should open the quiz', function(){
-	// 	teacher.open_item(ptor, 2, 5)
-	// })
-	it('should rename the quiz', function(){
-		teacher.rename_item(ptor, 'New Required Quiz')
-	})
-
-	it('should add a FIRST header', function(){
-		teacher.add_quiz_header(ptor, 'first header')
-	})
-	it('should add a MCQ question', function(){
-		teacher.add_quiz_question_mcq(ptor, 'mcq question', 2, [1, 2])
-	})
-	it('should add a SECOND header', function(){
-		teacher.add_quiz_header(ptor, 'second header')
-	})
-	it('should add an OCQ question', function(){
-		teacher.add_quiz_question_ocq(ptor, 'ocq question', 2, 1)
-	})
-	it('should add a FREE question', function(){
-		teacher.add_quiz_question_free(ptor, 'free question')
-	})
-	
-	it('should add a MATCH question', function(){
-		teacher.add_quiz_question_free(ptor, 'match question', 'match answer')
-	})
-	it('should add a DRAG question', function(){
-		teacher.add_quiz_question_drag(ptor, 'drag question', 2)
-	})
-	it('should save the quiz', function(){
-		teacher.save_quiz(ptor)
-		o_c.scroll_to_top(ptor)
-	})
-
-
-
-	// it('should scroll to the top', function(){
-	// 	o_c.scroll_to_top(ptor)
-	// })
-	it('should add a normal survey', function(){
-		teacher.add_survey(ptor)
-	})
-
-	// it('should open the survey', function(){
-	// 	teacher.open_item(ptor, 2, 6)
-	// })
-
-	it('should add a FIRST header', function(){
-		teacher.add_survey_header(ptor, 'first header')
-	})
-	it('should add a MCQ question for the SURVEY', function(){
-		teacher.add_survey_question_mcq(ptor, 'mcq question', 2)
-	})
-	it('should add a SECOND header', function(){
-		teacher.add_survey_header(ptor, 'second header')
-	})
-	it('should add an OCQ question for the SURVEY', function(){
-		teacher.add_survey_question_ocq(ptor, 'ocq question', 2)
-	})
-	it('should add a FREE question for the SURVEY', function(){
-		teacher.add_survey_question_free(ptor, 'free question')
-	})
-	// it('should scroll to bottom', function(){
-	// 	o_c.scroll_to_bottom(ptor)
-	// })
-	it('should save the survey', function(){
-		teacher.save_survey(ptor)
-		o_c.scroll_to_top(ptor)
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-		o_c.to_teacher(ptor);
-		o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
-        teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-	})
-
-	it('should logout', function(){
-		o_c.logout(ptor);
-	})
-
-})
-
-xdescribe('First Student', function(){
-
-	it('should sign in', function(){
-		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.student_mail, params.password);
-	})
-	it('should open the first course', function(){
-		o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
-	})
-	// it('should go to the courseware page', function(){
-	// 	o_c.open_tray(ptor)
-	// 	o_c.open_lectures(ptor)
-	// })
-
-	//WATCH THE FIRST LECTURE
-	it('should seek the video to 10%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 9.5)
-		waitForOnTop(ptor)
-	})
-	it('should expect MCQ quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz correctly', function(){
-		student.answer_invideo_mcq(ptor, 1)
-		student.answer_invideo_mcq(ptor, 3)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 0)
-	})
-	it('should seek the video to 20%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 19.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect an OCQ quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz incorrectly', function(){
-		student.answer_invideo_ocq(ptor, 1)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question be reviewed in class', function(){
-		request_review_inclass(ptor, 1)
-	})
-	it('should seek the video to 30%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 29.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect a DRAG quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz correctly', function(){
-		student.answer_drag_correct(ptor)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 0)
-	})
-
-	it('should watch video and pass by all milestones', function(){
-		youtube.press_play(ptor)
-        youtube.seek(ptor, 25);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 75);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 99);
-        ptor.sleep(10000)
-	})
-
-
-	//WATCH THE SECOND LECTURE
-	it('should go to the second lecture', function(){
-		go_to_next_item()
-		// o_c.open_item(ptor, 2)
-	})
-
-	it('should seek the video to 10%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 9.5)
-		waitForOnTop(ptor)
-	})
-	it('should expect MCQ TEXT quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz incorrectly', function(){
-		student.answer_invideo_mcq(ptor, 2)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 1)
-	})
-	it('should seek the video to 20%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 19.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect an OCQ TEXT quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz incorrectly', function(){
-		student.answer_invideo_ocq(ptor, 2)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question be reviewed in class', function(){
-		request_review_inclass(ptor, 1)
-	})
-	it('should seek the video to 30%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 29.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect a DRAG TEXT quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz incorrectly', function(){
-		student.answer_text_drag_incorrect(ptor)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 1)
-	})
-
-	it('should watch video and pass by all milestones', function(){
-		youtube.press_play(ptor)
-        youtube.seek(ptor, 25);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 75);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 99);
-        ptor.sleep(10000)
-	})
-
-	//WATCH THE THIRD LECTURE
-	it('should go to the third lecture', function(){
-		// o_c.open_item(ptor, 3)
-		go_to_next_item()
-	})
-
-	it('should seek the video to 10%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 9.5)
-		waitForOnTop(ptor)
-	})
-	it('should expect MCQ SURVEY quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should select the first and second choices', function(){
-		student.answer_invideo_mcq(ptor, 1)
-		student.answer_invideo_mcq(ptor, 2)
-		student.answer_quiz(ptor)
-	})
-	it('should seek the video to 20%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 19.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect an OCQ SURVEY quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should select the third choice', function(){
-		student.answer_invideo_ocq(ptor, 2)
-		student.answer_quiz(ptor)
-	})	
-
-	it('should watch video and pass by all milestones', function(){
-		youtube.press_play(ptor)
-        youtube.seek(ptor, 25);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 75);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 99);
-        ptor.sleep(10000)
-	})
-
-	//SOLVE THE FIRST QUIZ
-	it('should open the quiz',function(){
-		go_to_next_item()
-	})
-
-	it('should answer mcq incorrect', function(){
-		student.mcq_answer(ptor, 2, 2);
-		student.mcq_answer(ptor, 2, 3);
-	})
-
-	it('should answer ocq correct', function(){
-		student.ocq_answer(ptor, 4, 1);
-	})
-
-	it('should answer free question', function(){
-		student.free_match_answer(ptor, 5, 'free answer')
-	})
-
-	it('should answer match question', function(){
-		student.free_match_answer(ptor, 6, 'match answer')
-	})	
-
-	it('should answer drag correct', function(){
-		ptor.sleep(3000);
-		student.drag_answer(ptor, 7);
-		ptor.sleep(3000);
-	})
-
-	it('should submit',function(){
-		student.submit_normal_quiz(ptor);
-		// ptor.sleep(10000)
-	})
-
-	// //SOLVE THE SECOND QUIZ
-	it('should open the quiz',function(){
-		go_to_next_item()
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(2000)
-		// o_c.open_module(ptor, 1);
-		// o_c.open_item_from_navigator(1, 5);
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(2000)
-	})
-
-	it('should answer mcq correct', function(){
-		student.mcq_answer(ptor, 2, 1);
-		student.mcq_answer(ptor, 2, 2);
-	})
-
-	it('should answer ocq incorrect', function(){
-		student.ocq_answer(ptor, 4, 2);
-	})
-
-	it('should answer free question', function(){
-		student.free_match_answer(ptor, 5, 'second free answer')
-	})
-
-	it('should answer match question', function(){
-		student.free_match_answer(ptor, 6, "shouldn't match answer")
-	})	
-
-	it('should answer drag correct', function(){
-		ptor.sleep(3000);
-		student.drag_answer(ptor, 7);
-		ptor.sleep(3000);
-	})
-
-	it('should submit',function(){
-		student.submit_normal_quiz(ptor);
-		// ptor.sleep(10000)
-	})
-	// SOLVE THE SURVEY
-	it('should open the survey',function(){
-		go_to_next_item()
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(2000)
-		// o_c.open_item_from_navigator(1, 6);
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(2000)
-	})
-
-	it('should select the second choice', function(){
-		student.mcq_answer(ptor, 2, 1);
-		student.mcq_answer(ptor, 2, 2);
-	})
-
-	it('should select the first choice', function(){
-		student.ocq_answer(ptor, 4, 2);
-	})
-
-	it('should answer free question', function(){
-		student.free_match_answer(ptor, 5, 'first student free answer')
-	})
-
-	it('should submit the survey',function(){
-		student.save_survey(ptor);
-		// ptor.sleep(10000)
-	})
-
-	it('should change to the second module', function(){
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(2000)
-		o_c.open_module(ptor, 2)
-		o_c.press_content_navigator(ptor);
-		ptor.sleep(2000)
-	})
-	// WATCH THE FIRST LECTURE
-	it('should seek the video to 10%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 9.5)
-		waitForOnTop(ptor)
-	})
-	it('should expect MCQ quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz incorrectly', function(){
-		student.answer_invideo_mcq(ptor, 1)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 0)
-	})
-	it('should seek the video to 20%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 19.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect an OCQ quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz incorrectly', function(){
-		student.answer_invideo_ocq(ptor, 1)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question be reviewed in class', function(){
-		request_review_inclass(ptor, 1)
-	})
-	it('should seek the video to 30%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 29.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect a DRAG quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz correctly', function(){
-		student.answer_drag_incorrect(ptor)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 1)
-	})
-
-	it('should watch video and pass by all milestones', function(){
-		youtube.press_play(ptor)
-        youtube.seek(ptor, 25);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 75);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 99);
-        ptor.sleep(10000)
-	})
-
-	//WATCH THE THIRD LECTURE
-	it('should go to the third lecture', function(){
-		o_c.open_item(ptor, 3)
-		o_c.press_content_navigator(ptor);
-		ptor.sleep(2000)
-	})
-
-	it('should seek the video to 10%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 9.5)
-		waitForOnTop(ptor)
-	})
-	it('should expect MCQ SURVEY quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should select the first and second choices', function(){
-		student.answer_invideo_mcq(ptor, 3)
-		student.answer_quiz(ptor)
-	})
-	it('should seek the video to 20%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 19.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect an OCQ SURVEY quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should select the third choice', function(){
-		student.answer_invideo_ocq(ptor, 1)
-		student.answer_quiz(ptor)
-	})
-	it('should watch video and pass by all milestones', function(){
-		youtube.press_play(ptor)
-        youtube.seek(ptor, 25);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 75);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 99);
-        ptor.sleep(10000)
-	})
-
-	it('should log out', function(){
-		o_c.logout(ptor)
-	})
-	//end test
-
-	// // it('should delete course', function(){
-	// // 	//should choose one of home() or home_teacher() 
-	// // 	//depending on the current state(student or teacher)
-	// // 	o_c.home(ptor);
-	// // 	teacher.delete_course(ptor);
-	// // })
-})
-
-// xdescribe('Teacher', function(){
-// 	it('should sign in', function(){
-// 		// o_c.press_login(ptor);
-// 		o_c.sign_in(ptor, params.teacher_mail, params.password);		
-		
-// 	})
-// 	it('should enroll second student', function(){
-// 		o_c.open_course_list(ptor);
-//         o_c.open_course(ptor, 1);
-//         teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-// 	})
-// })
-
-xdescribe('Second Student', function(){
-
-	it('should sign in', function(){
-		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.student2_mail, params.password);
-	})
-
-	it('should open the first course', function(){
-		o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
-	})
-	// // it('should go to the courseware page', function(){
-	// // 	o_c.open_tray(ptor)
-	// // 	o_c.open_lectures(ptor)
-	// // })
-
-	//WATCH THE FIRST LECTURE
-	it('should seek the video to 10%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 9.5)
-		waitForOnTop(ptor)
-	})
-	it('should expect MCQ quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz correctly', function(){
-		student.answer_invideo_mcq(ptor, 1)
-		student.answer_invideo_mcq(ptor, 3)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 1)
-	})
-	it('should seek the video to 20%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 19.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect an OCQ quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz correctly', function(){
-		student.answer_invideo_ocq(ptor, 2)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question be reviewed in class', function(){
-		request_review_inclass(ptor, 0)
-	})
-	it('should seek the video to 30%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 29.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect a DRAG quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz correctly', function(){
-		student.answer_drag_correct(ptor)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 1)
-	})
-
-	it('should watch video and pass by all milestones', function(){
-		youtube.press_play(ptor)
-        youtube.seek(ptor, 25);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 75);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 99);
-        ptor.sleep(10000)
-	})
-
-	//WATCH THE SECOND LECTURE
-	it('should go to the second lecture', function(){
-		o_c.open_item(ptor, 2)
-	})
-
-	it('should seek the video to 10%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 9.5)
-		waitForOnTop(ptor)
-	})
-	it('should expect MCQ TEXT quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz correctly', function(){
-		student.answer_invideo_mcq(ptor, 1)
-		student.answer_invideo_mcq(ptor, 3)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 1)
-	})
-	it('should seek the video to 20%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 19.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect an OCQ TEXT quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz correctly', function(){
-		student.answer_invideo_ocq(ptor, 1)
-		student.answer_quiz(ptor)
-	})
-	it('wait for the voting question', function(){
-		waitForVoting(ptor)
-	})
-	it('should request that the question not be reviewed in class', function(){
-		request_review_inclass(ptor, 0)
-	})
-	it('should seek the video to 30%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 29.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect a DRAG TEXT quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should solve the quiz correctly', function(){
-		student.answer_text_drag_correct(ptor)
-		student.answer_quiz(ptor)
-	})
-
-	it('should watch video and pass by all milestones', function(){
-		youtube.press_play(ptor)
-        youtube.seek(ptor, 25);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 75);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 99);
-        ptor.sleep(10000)
-	})
-
-	//WATCH THE THIRD LECTURE
-	it('should go to the third lecture', function(){
-		o_c.open_item(ptor, 3)
-	})
-
-	it('should seek the video to 10%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 9.5)
-		waitForOnTop(ptor)
-	})
-	it('should expect MCQ SURVEY quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should select the first choices', function(){
-		student.answer_invideo_mcq(ptor, 1)
-		student.answer_quiz(ptor)
-	})
-	it('should seek the video to 20%', function(){
-		youtube.press_play(ptor)
-		youtube.seek(ptor, 19.5)
-		// youtube.press_play(ptor)
-		waitForOnTop(ptor)
-	})
-	it('should expect an OCQ SURVEY quiz', function(){
-		student.expect_quiz(ptor)
-	})
-	it('should select the third choice', function(){
-		student.answer_invideo_ocq(ptor, 2)
-		student.answer_quiz(ptor)
-	})
-	it('should watch video and pass by all milestones', function(){
-		youtube.press_play(ptor)
-        youtube.seek(ptor, 25);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 75);
-        ptor.sleep(10000)
-        youtube.seek(ptor, 99);
-        ptor.sleep(10000)
-	})
-
-	//SOLVE THE SECOND QUIZ
-	it('should open the quiz',function(){
-		o_c.open_item(ptor, 5);
-	})
-
-	it('should answer mcq correct', function(){
-		student.mcq_answer(ptor, 2, 1);
-		student.mcq_answer(ptor, 2, 2);
-	})
-
-	it('should answer ocq correct', function(){
-		student.ocq_answer(ptor, 4, 1);
-	})
-
-	it('should answer free question', function(){
-		student.free_match_answer(ptor, 5, 'second second free answer')
-	})
-
-	it('should answer match question', function(){
-		student.free_match_answer(ptor, 6, 'match answer')
-	})	
-
-	it('should answer drag correct', function(){
-		ptor.sleep(3000);
-		student.drag_answer(ptor, 7);
-		ptor.sleep(3000);
-	})
-
-	it('should submit',function(){
-		student.submit_normal_quiz(ptor);
-		// ptor.sleep(10000)
-	})
-
-	//add discussions data and confused
-	it('should open the first lecture again', function(){
-		o_c.scroll_to_top(ptor)
-		o_c.open_item(ptor, 1)
-		// o_c.press_content_navigator(ptor);
-		// o_c.open_module(ptor, 1);
-		// o_c.open_item_from_navigator(1, 1);
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(1000)
-	})
-	// it('should open the first lecture', function(){
-	// 	o_c.open_item(ptor, 1)
-	// })
-	it('should seek to 40%', function(){
-		youtube.seek(ptor, 40)
-	})
-	it('should ask a private question', function(){
-		discussions.ask_private_question(ptor, 'private question by second student')
-	})
-	it('should seek to 45%', function(){
-		youtube.seek(ptor, 45)
-	})
-	it('should add a confused', function(){
-		student.press_confused_btn(ptor)
-	})
-	it('should move to the second lecture', function(){
-		o_c.open_item(ptor, 2)
-	})
-	it('should seek to 25%', function(){
-		youtube.seek(ptor, 25)
-	})
-	it('should add a confused', function(){
-		student.press_confused_btn(ptor)
-	})
-	it('should seek to 40%', function(){
-		youtube.seek(ptor, 40)
-	})
-	it('should add a public question', function(){
-		discussions.ask_public_question(ptor, 'public question by second student')
-	})
-	it('should logout', function(){
-		o_c.logout(ptor)
-	})
-});
-
-xdescribe('First Student', function(){
-	it('should sign in', function(){
-		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.student_mail, params.password);
-	})
-
-	it('should open the first course', function(){
-		o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
-	})
-	// it('should go to the courseware page', function(){
-	// 	o_c.open_tray(ptor)
-	// 	o_c.open_lectures(ptor)
-	// })
-	it('should open the first module second lecture', function(){
-		o_c.press_content_navigator(ptor);
-		ptor.sleep(2000)
-		o_c.open_module(ptor, 1);
-		o_c.open_item_from_navigator(1, 2);
-		// o_c.press_content_navigator(ptor);
-		
-	})
-	// it('should open the second lecture', function(){
-	// 	o_c.open_item(ptor, 2)
-	// })
-	it('should upvote the question asked by the Second Student', function(){
-		discussions.vote_up(ptor, 1)
-	})
-	it('should add a comment on the question asked by the Second Student', function(){
-		discussions.comment(ptor, 1, 'comment by first student')
-	})
-	it('should go to the third lecture', function(){
-		o_c.open_item(ptor, 3)
-	})
-	it('should seek to 25%', function(){
-		youtube.seek(ptor, 25)
-	})
-	it('should add a really confused', function(){
-		student.add_really_confused(ptor)
-		// ptor.sleep(1000)
-		// student.press_confused_btn(ptor)
-	})
-	it('should logout', function(){
-		// o_c.home(ptor)
-		// o_c.open_tray(ptor)
-		o_c.logout(ptor)
-	})
-})
-
-/////////////////////////////////////////////////////////
-//				test specific functions
-/////////////////////////////////////////////////////////
-// function create_lecture(lecture_name, lecture_url, module_no, item_no){
-// 	teacher.add_lecture(ptor, module_no);
-// 	teacher.open_item(ptor, module_no, item_no);
-// 	teacher.rename_item(ptor, lecture_name)
-// 	teacher.initialize_lecture(ptor,  lecture_name, lecture_url, true);
-
-// }
-
-
-// function expect_quiz(ptor){
-// 	locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(check_answer_btn){
-// 		expect(check_answer_btn.isDisplayed()).toEqual(true);
-// 	})
-// }
-
-// function answer_quiz(ptor){
-// 	locator.by_tag(ptor,'check_answer').findElement(protractor.By.tagName('input')).then(function(answer_btn){
-// 		answer_btn.click();
-// 	})
-// }
-// function check_answer_given_answer_order(ptor, choice_no){
-// 	locator.by_id(ptor,'ontop').findElements(protractor.By.tagName('input')).then(function(check_boxes){
-// 		check_boxes[choice_no-1].click();
-// 	})
-// }
-
-// function check_answer_correct(ptor){
-// 	locator.by_tag(ptor,'notification').then(function(popover){
-// 		expect(popover.getText()).toContain('Correct');
-// 	})
-// }
-
-// function check_answer_incorrect(ptor){
-// 	locator.by_tag(ptor,'notification').then(function(popover){
-// 		expect(popover.getText()).toContain('Incorrect');
-// 	})
-// }
-
-// function check_answer_correct(ptor){
-// 	locator.by_classname(ptor,'popover-content').then(function(popover){
-// 		expect(popover.getText()).toContain('Correct');
-// 	})
-// }
-
-// function check_answer_incorrect(ptor){
-// 	locator.by_classname(ptor,'popover-content').then(function(popover){
-// 		expect(popover.getText()).toContain('Incorrect');
-// 	})
-// }
-
-
-// function answer_drag_correct(ptor){
-// 	for (var i = 0; i < 3; i++) {
-// 		locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
-// 			locator.by_classname(ptor,'drag-sort').findElements(protractor.By.tagName('li')).then(function(answer){
-// 				answer[0].getText().then(function (text){
-// 					if(text == 'answer 3'){
-// 					 	ptor.actions().dragAndDrop(arrow[0], arrow[2]).perform();
-// 					}
-// 					else if(text == 'answer 2'){
-// 					 	ptor.actions().dragAndDrop(arrow[0], arrow[1]).perform();
-// 					}
-// 				})
-// 				answer[1].getText().then(function (text){
-// 					if(text == 'answer 1'){
-// 						ptor.actions().dragAndDrop(arrow[1], arrow[0]).perform();
-// 					}
-// 					else if(text == 'answer 3'){
-// 					 	ptor.actions().dragAndDrop(arrow[1], arrow[2]).perform();
-// 					}
-// 				})
-// 				answer[2].getText().then(function (text){
-// 					if(text == 'answer 1'){
-// 					 	ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
-// 					}
-// 					else if(text == 'answer 2'){
-// 					 	ptor.actions().dragAndDrop(arrow[2], arrow[1]).perform();
-// 					}
-// 				})		
-// 			})
-// 		})
-// 	}
-// 	ptor.sleep(3000);
-// }
-
-// function answer_drag_incorrect(ptor){
-// 	locator.by_classname(ptor,'drag-sort').findElements(protractor.By.className('ui-icon-arrowthick-2-n-s')).then(function(arrow){
-// 		locator.by_classname(ptor,'drag-sort').findElements(protractor.By.tagName('li')).then(function(answer){
-// 			answer[0].getText().then(function (text){
-// 				if(text == 'answer 1'){
-// 				 	ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
-// 				}
-// 			})
-// 			answer[1].getText().then(function (text){
-// 				if(text == 'answer 1'){
-// 					ptor.actions().dragAndDrop(arrow[1], arrow[2]).perform();
-// 				}
-// 				else if(text == 'answer 3'){
-// 				 	ptor.actions().dragAndDrop(arrow[1], arrow[0]).perform();
-// 				}
-// 			})
-// 			answer[2].getText().then(function (text){
-// 				if(text == 'answer 3'){
-// 				 	ptor.actions().dragAndDrop(arrow[0], arrow[2]).perform();
-// 				}
-// 				if(text == 'answer 1'){
-// 				 	ptor.actions().dragAndDrop(arrow[2], arrow[0]).perform();
-// 				}
-// 			})
-// 		})
-// 	})
-// 	ptor.sleep(3000);
-// }
-
-
-// function answer_drag_correct_ov(ptor){
-// 	//shuffle answers so all becomes clickable
-// 	locator.s_by_classname(ptor,'dragged').then(function(answer){
-// 			ptor.actions().mouseMove(answer[0]).perform();
-// 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 		 	ptor.actions().mouseDown().perform();
-// 		 	ptor.actions().mouseMove({x: 100, y: 0}).perform();
-// 		 	ptor.actions().mouseUp().perform();
-			
-// 			ptor.actions().mouseMove(answer[1]).perform();
-// 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 		 	ptor.actions().mouseDown().perform();
-// 		 	ptor.actions().mouseMove({x: 200, y: 0}).perform();
-// 		 	ptor.actions().mouseUp().perform();
-
-// 		 	ptor.actions().mouseMove(answer[2]).perform();
-// 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 		 	ptor.actions().mouseDown().perform();
-// 		 	ptor.actions().mouseMove({x: 300, y: 0}).perform();
-// 		 	ptor.actions().mouseUp().perform();
-// 		})
-// 	locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
-// 		locator.s_by_classname(ptor,'dragged').then(function(answer){
-// 			answer[0].getText().then(function (text){
-// 				ptor.actions().mouseMove(answer[0]).perform();
-// 				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseDown().perform();
-// 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-// 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
-// 			})
-
-// 			answer[1].getText().then(function (text){
-// 				ptor.actions().mouseMove(answer[1]).perform();
-// 				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseDown().perform();
-// 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-// 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
-// 			})
-
-// 			answer[2].getText().then(function (text){
-// 				ptor.actions().mouseMove(answer[2]).perform();
-// 				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseDown().perform();
-// 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-// 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
-// 			})
-// 		})
-// 	})
-// 		ptor.sleep(3000);
-// }
-
-
-
-// function answer_drag_incorrect_ov(ptor){
-// 	//shuffle answers so all becomes clickable
-// 	locator.s_by_classname(ptor,'dragged').then(function(answer){
-// 			ptor.actions().mouseMove(answer[0]).perform();
-// 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 		 	ptor.actions().mouseDown().perform();
-// 		 	ptor.actions().mouseMove({x: 100, y: 0}).perform();
-// 		 	ptor.actions().mouseUp().perform();
-			
-// 			ptor.actions().mouseMove(answer[1]).perform();
-// 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 		 	ptor.actions().mouseDown().perform();
-// 		 	ptor.actions().mouseMove({x: 200, y: 0}).perform();
-// 		 	ptor.actions().mouseUp().perform();
-
-// 		 	ptor.actions().mouseMove(answer[2]).perform();
-// 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 		 	ptor.actions().mouseDown().perform();
-// 		 	ptor.actions().mouseMove({x: 300, y: 0}).perform();
-// 		 	ptor.actions().mouseUp().perform();
-// 		})
-// 	locator.s_by_classname(ptor, 'ui-droppable').then(function(place){
-// 		locator.s_by_classname(ptor,'dragged').then(function(answer){
-// 			answer[0].getText().then(function (text){
-// 				ptor.actions().mouseMove(answer[2]).perform();
-// 				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseDown().perform();
-// 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-// 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
-// 			})
-
-// 			answer[1].getText().then(function (text){
-// 				ptor.actions().mouseMove(answer[0]).perform();
-// 				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseDown().perform();
-// 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-// 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
-// 			})
-
-// 			answer[2].getText().then(function (text){
-// 				ptor.actions().mouseMove(answer[1]).perform();
-// 				ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseDown().perform();
-// 			 	ptor.actions().mouseMove(place[(text.split(' ')[1]-1)]).perform();
-// 			 	ptor.actions().mouseMove({x: 5, y: 5}).perform();
-// 			 	ptor.actions().mouseUp().perform();	
-// 			})
-// 		})
-// 	})
-// 		ptor.sleep(3000);
-// }
-
-function request_review_inclass(ptor, which){
-	locator.by_classname(ptor,'review_panel').then(function(popover){
-		if(which == 0){
-			popover.findElements(protractor.By.className('button')).then(function(buttons){
-				buttons[1].click();
+	    it("should open second lecture in second module",function(){
+	    	navigator.module(2).open()
+	    	navigator.module(2).open_item(2)
+	    	sleep(1000)
+	    	scroll_top()
+	    })
+	    it('should make lecture not in order', function(){
+			course_editor.open_lecture_settings()
+	        course_editor.change_lecture_inorder()
+	    })
+	    it("should open first quiz in second module",function(){
+	    	navigator.module(2).open_item(4)
+	    	sleep(1000)
+	    	scroll_top()
+	    })
+	    it('should make quiz not required', function(){
+	        course_editor.change_quiz_required()
+	    })
+
+	    it("should logout",function(){
+			header.logout()
+		})
+	})
+
+	describe("First Student",function(){
+		it("should login", function(){
+			header.logout()
+			login_page.sign_in(params.student_mail, params.password)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		describe("First Module",function(){
+			it("should seek video to 9%",function(){
+				video.wait_till_ready()
+				video.play()
+				video.seek(9)
+				student_lec.wait_for_quiz()
 			})
-		}
-		else if(which == 1){
-			popover.findElement(protractor.By.className('button')).then(function(yes){
-				yes.click();
+			it('should expect MCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
 			})
-		}	
-	})
-}
+			it("should answer MCQ quiz",function(){
+				student_lec.mark_answer(1)
+				student_lec.mark_answer(3)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.decline_review_inclass()
+			})
 
-function waitForVoting(ptor){
-	ptor.wait(function() {
-        return ptor.findElement(protractor.By.className('review_panel')).then(function(panel) {
-            return panel.isDisplayed().then(function(displayed) {
-                return displayed
-            });
-        });
-    });
-}
+			it("should seek video to 19%",function(){
+				video.play()
+				video.seek(19)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect OCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer OCQ quiz",function(){
+				student_lec.mark_answer(1)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
 
+			it("should seek video to 29%",function(){
+				video.play()
+				video.seek(29)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect DRAG quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer DRAG quiz",function(){
+				student_lec.drag_answer(1)
+				student_lec.drag_answer(2)
+				student_lec.drag_answer(3)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.decline_review_inclass()
+			})
+			it('should watch video and pass by all milestones', function(){
+				video.play()
+				expect(student_lec.next_button.isDisplayed()).toEqual(false)
+		        video.seek(99);
+		        student_lec.wait_for_video_end()
+		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+			})
 
-// function saveSurvey(ptor){
-// 	locator.by_xpath(ptor, '//*[@id="middle"]/center/form/input[1]').then(function(save_button){
-// 		save_button.click().then(function(){
-// 			o_c.feedback(ptor, 'successfully saved')
-// 		})
-// 	})
-// }
+			it('should go to the second lecture', function(){
+				student_lec.next()
+			})
+			it("should seek video to 9%",function(){
+				video.wait_till_ready()
+				video.play()
+				video.seek(9)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect Text MCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer Text MCQ quiz",function(){
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
 
-function waitForOnTop(ptor){
-	ptor.wait(function(){
-		return ptor.findElement(protractor.By.className('ontop')).then(function(ontop){
-			return ontop.isDisplayed().then(function(displayed){
-				return displayed
+			it("should seek video to 19%",function(){
+				video.play()
+				video.seek(19)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect Text OCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer Text OCQ quiz",function(){
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
+
+			it("should seek video to 29%",function(){
+				video.play()
+				video.seek(29)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect Text DRAG quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer Text DRAG quiz",function(){
+				student_lec.answer_text_drag_incorrect()
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
+			it('should watch video and pass by all milestones', function(){
+				video.play()
+				expect(student_lec.next_button.isDisplayed()).toEqual(false)
+		        video.seek(99);
+		        student_lec.wait_for_video_end()
+		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+			})
+
+			it('should go to the Third lecture', function(){
+				student_lec.next()
+			})
+
+			it("should seek video to 9%",function(){
+				video.wait_till_ready()
+				video.play()
+				video.seek(9)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect MCQ Survey', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer MCQ Survey",function(){
+				student_lec.mark_answer(1)
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+
+			it("should seek video to 19%",function(){
+				video.play()
+				video.seek(19)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect OCQ Survey', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer OCQ Survey",function(){
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+			it('should watch video and pass by all milestones', function(){
+				video.play()
+				expect(student_lec.next_button.isDisplayed()).toEqual(false)
+		        video.seek(99);
+		        student_lec.wait_for_video_end()
+		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+			})
+			it('should go to the first quiz', function(){
+				student_lec.next()
+			})
+			it('should answer mcq incorrect', function(){
+				student_quiz.question(2).mark_answer(2)
+				student_quiz.question(2).mark_answer(3)
+			})
+			it('should answer ocq correct', function(){
+				student_quiz.question(4).mark_answer(1)
+			})
+			it('should answer free question', function(){
+				student_quiz.question(5).type_free_text('free answer')
+			})
+			it('should answer match question', function(){
+				student_quiz.question(6).type_free_text('match answer')
+			})
+			it('should answer drag correct', function(){
+				scroll_bottom()
+				student_quiz.question(7).drag_answer_correct()
+			})
+			it('should submit quiz',function(){
+				student_quiz.submit();
+			})
+
+			it("should go to second quiz",function(){
+				student_quiz.next()
+			})
+			it('should answer mcq incorrect', function(){
+				student_quiz.question(2).mark_answer(1)
+				student_quiz.question(2).mark_answer(2)
+			})
+			it('should answer ocq correct', function(){
+				student_quiz.question(4).mark_answer(2)
+			})
+			it('should answer free question', function(){
+				student_quiz.question(5).type_free_text('second free answer')
+			})
+			it('should answer match question', function(){
+				student_quiz.question(6).type_free_text("shouldn't match answer")
+			})
+			it('should answer drag correct', function(){
+				scroll_bottom()
+				student_quiz.question(7).drag_answer_correct()
+			})
+			it('should submit quiz',function(){
+				student_quiz.submit();
+			})
+
+			it("should go to first survey",function(){
+				student_quiz.next()
+			})
+			it('should answer mcq incorrect', function(){
+				student_quiz.question(2).mark_answer(1)
+				student_quiz.question(2).mark_answer(2)
+			})
+			it('should answer ocq correct', function(){
+				student_quiz.question(4).mark_answer(2)
+			})
+			it('should answer free question', function(){
+				student_quiz.question(5).type_free_text('first student free answer')
+			})
+			it('should submit the survey',function(){
+				student_quiz.save()
+				navigator.set_status(1)
+			})
+		})
+		describe("Second Module",function(){
+			it("should navigate to second module",function(){
+				navigator.open()
+				navigator.module(2).open()
+				navigator.close()
+			})
+			it("should seek video to 9%",function(){
+				video.wait_till_ready()
+				video.play()
+				video.seek(9)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect MCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer MCQ quiz",function(){
+				student_lec.mark_answer(1)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.decline_review_inclass()
+			})
+
+			it("should seek video to 19%",function(){
+				video.play()
+				video.seek(19)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect OCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer OCQ quiz",function(){
+				student_lec.mark_answer(1)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
+
+			it("should seek video to 29%",function(){
+				video.play()
+				video.seek(29)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect DRAG quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer DRAG quiz",function(){
+				student_lec.drag_answer(1,2)
+				student_lec.drag_answer(2,3)
+				student_lec.drag_answer(3,1)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
+			it('should watch video and pass by all milestones', function(){
+				video.play()
+				expect(student_lec.next_button.isDisplayed()).toEqual(false)
+		        video.seek(99);
+		        student_lec.wait_for_video_end()
+		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+		        navigator.set_status(1)
+			})
+
+			it("should navigate to second lectue in second module",function(){
+				navigator.open()
+				navigator.module(2).open_item(2)
+				navigator.close()
+			})
+			it("should seek video to 9%",function(){
+				video.wait_till_ready()
+				video.play()
+				video.seek(9)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect Text MCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer Text MCQ quiz",function(){
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
+
+			it("should seek video to 19%",function(){
+				video.play()
+				video.seek(19)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect Text OCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer Text OCQ quiz",function(){
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
+
+			it("should seek video to 29%",function(){
+				video.play()
+				video.seek(29)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect Text DRAG quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer Text DRAG quiz",function(){
+				student_lec.answer_text_drag_incorrect()
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
+			it('should watch video and pass by all milestones', function(){
+				video.play()
+				expect(student_lec.next_button.isDisplayed()).toEqual(false)
+		        video.seek(99);
+		        student_lec.wait_for_video_end()
+		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+		        navigator.set_status(1)
+			})
+
+			it("should navigate to third lectue in second module",function(){
+				navigator.open()
+				navigator.module(2).open_item(3)
+				navigator.close()
+			})
+
+			it("should seek video to 9%",function(){
+				video.wait_till_ready()
+				video.play()
+				video.seek(9)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect MCQ Survey', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer MCQ Survey",function(){
+				student_lec.mark_answer(1)
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+
+			it("should seek video to 19%",function(){
+				video.play()
+				video.seek(19)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect OCQ Survey', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer OCQ Survey",function(){
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+			it('should watch video and pass by all milestones', function(){
+				video.play()
+				expect(student_lec.next_button.isDisplayed()).toEqual(false)
+		        video.seek(99);
+		        student_lec.wait_for_video_end()
+		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+			})
+			it("should logout",function(){
+				header.logout()
 			})
 		})
 	})
-}
+	describe("Second Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student2_mail, params.password)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		describe("First Module",function(){
+			it("should seek video to 9%",function(){
+				video.wait_till_ready()
+				video.play()
+				video.seek(9)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect MCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer MCQ quiz",function(){
+				student_lec.mark_answer(1)
+				student_lec.mark_answer(3)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
 
-// function press_confused_btn(ptor){
-// 	locator.by_classname(ptor, 'confusedDiv').then(function(btn){
-// 		btn.click().then(function(){
-// 			locator.by_classname(ptor, 'alert-success').then(function(thanks){
-// 				expect(thanks.isDisplayed()).toBe(true)
-// 			})
-// 		})
-// 	})
-// }
+			it("should seek video to 19%",function(){
+				video.play()
+				video.seek(19)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect OCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer OCQ quiz",function(){
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.decline_review_inclass()
+			})
 
-function go_to_next_item(){
-	element(by.id('next_button')).click()
-}
+			it("should seek video to 29%",function(){
+				video.play()
+				video.seek(29)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect DRAG quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer DRAG quiz",function(){
+				student_lec.drag_answer(1)
+				student_lec.drag_answer(2)
+				student_lec.drag_answer(3)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
+			it('should watch video and pass by all milestones', function(){
+				video.play()
+				expect(student_lec.next_button.isDisplayed()).toEqual(false)
+		        video.seek(99);
+		        student_lec.wait_for_video_end()
+		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+			})
 
+			it('should go to the second lecture', function(){
+				student_lec.next()
+			})
+			it("should seek video to 9%",function(){
+				video.wait_till_ready()
+				video.play()
+				video.seek(9)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect Text MCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer Text MCQ quiz",function(){
+				student_lec.mark_answer(1)
+				student_lec.mark_answer(3)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.request_review_inclass()
+			})
 
+			it("should seek video to 19%",function(){
+				video.play()
+				video.seek(19)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect Text OCQ quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer Text OCQ quiz",function(){
+				student_lec.mark_answer(1)
+				student_lec.check_answer()
+			})
+			it('wait for the voting question', function(){
+				student_lec.wait_for_vote()
+			})
+			it('should request that the question not be reviewed in class', function(){
+				student_lec.decline_review_inclass()
+			})
 
+			it("should seek video to 29%",function(){
+				video.play()
+				video.seek(29)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect Text DRAG quiz', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer Text DRAG quiz",function(){
+				student_lec.answer_text_drag_correct()
+				student_lec.check_answer()
+			})
+			it('should watch video and pass by all milestones', function(){
+				video.play()
+				expect(student_lec.next_button.isDisplayed()).toEqual(false)
+		        video.seek(99);
+		        student_lec.wait_for_video_end()
+		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+			})
 
+			it('should go to the Third lecture', function(){
+				student_lec.next()
+			})
 
+			it("should seek video to 9%",function(){
+				video.wait_till_ready()
+				video.play()
+				video.seek(9)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect MCQ Survey', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer MCQ Survey",function(){
+				student_lec.mark_answer(1)
+				student_lec.check_answer()
+			})
 
+			it("should seek video to 19%",function(){
+				video.play()
+				video.seek(19)
+				student_lec.wait_for_quiz()
+			})
+			it('should expect OCQ Survey', function(){
+				expect(student_lec.check_answer_button.isDisplayed()).toEqual(true);
+			})
+			it("should answer OCQ Survey",function(){
+				student_lec.mark_answer(2)
+				student_lec.check_answer()
+			})
+			it('should watch video and pass by all milestones', function(){
+				video.play()
+				expect(student_lec.next_button.isDisplayed()).toEqual(false)
+		        video.seek(99);
+		        student_lec.wait_for_video_end()
+		        expect(student_lec.next_button.isDisplayed()).toEqual(true)
+				navigator.set_status(1)
+			})
 
+			it("should navigate to second quiz in first module",function(){
+				navigator.open()
+				navigator.module(1).open_item(5)
+				navigator.close()
+			})
+			it('should answer mcq incorrect', function(){
+				student_quiz.question(2).mark_answer(1)
+				student_quiz.question(2).mark_answer(2)
+			})
+			it('should answer ocq correct', function(){
+				student_quiz.question(4).mark_answer(1)
+			})
+			it('should answer free question', function(){
+				student_quiz.question(5).type_free_text('second second free answer')
+			})
+			it('should answer match question', function(){
+				student_quiz.question(6).type_free_text('match answer')
+			})
+			it('should answer drag correct', function(){
+				scroll_bottom()
+				student_quiz.question(7).drag_answer_correct()
+			})
+			it('should submit quiz',function(){
+				student_quiz.submit();
+				navigator.set_status(1)
+			})
 
-
-
-
-
+			it("should open first lecture again",function(){
+				navigator.open()
+				navigator.module(1).open_item(1)
+				navigator.close()
+			})
+			it("should seek to 40%",function(){
+				video.seek(40)
+			})
+			it("should add a private discussion",function(){
+	            student_lec.add_discussion()
+	            student_lec.lecture(1).type_discussion("private question by second student")
+	            student_lec.lecture(1).change_discussion_private()
+	            student_lec.lecture(1).save_discussion()
+	            expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+	            expect(student_lec.lecture(1).items.count()).toEqual(4)
+	        })
+			it('should seek to 45%', function(){
+				video.seek(45)
+			})
+			it('should add a confused', function(){
+				expect(student_lec.lecture(1).confused.count()).toEqual(0)
+	            student_lec.add_confused()
+	            expect(student_lec.lecture(1).confused.count()).toEqual(1)
+	            expect(student_lec.lecture(1).items.count()).toEqual(5)
+			})
+			it('should move to the second lecture', function(){
+				navigator.open()
+				navigator.module(1).open_item(2)
+				navigator.close()
+			})
+			it('should seek to 25%', function(){
+				video.seek(25)
+			})
+			it('should add a confused', function(){
+				expect(student_lec.lecture(2).confused.count()).toEqual(0)
+	            student_lec.add_confused()
+	            expect(student_lec.lecture(2).confused.count()).toEqual(1)
+	            expect(student_lec.lecture(2).items.count()).toEqual(4)
+			})
+			it('should seek to 40%', function(){
+				video.seek(40)
+			})
+			it('should add a public question', function(){
+				student_lec.add_discussion()
+	            expect(student_lec.lecture(2).editable_discussion.isDisplayed()).toEqual(true)
+	            student_lec.lecture(2).type_discussion("public question by second student")
+	            student_lec.lecture(2).change_discussion_public()
+	            student_lec.lecture(2).save_discussion()
+	            expect(student_lec.lecture(2).discussions.count()).toEqual(1)
+	            expect(student_lec.lecture(2).editable_discussion.isPresent()).toEqual(false)
+	            expect(student_lec.lecture(2).items.count()).toEqual(5)
+			})
+			it("should logout",function(){
+				header.logout()
+			})			
+		})
+	})
+	describe("First Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student_mail, params.password)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		it('should open second lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open()
+			navigator.module(1).open_item(2)
+			navigator.close()
+		})
+		it("should upvote the question asked by second student",function(){
+			student_lec.lecture(2).vote_discussion(1)
+		})
+		it('should add a comment on the question asked by the Second Student', function(){
+			student_lec.lecture(2).comment(1, 'comment by first student')
+		})
+		it('should open third lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open()
+			navigator.module(1).open_item(3)
+			navigator.close()
+		})
+		it('should seek to 25%', function(){
+			video.seek(25)
+		})
+		it('should add a really confused', function(){
+			expect(student_lec.lecture(3).confused.count()).toEqual(0)
+            student_lec.add_really_confused()
+            expect(student_lec.lecture(3).confused.count()).toEqual(1)
+            expect(student_lec.lecture(3).items.count()).toEqual(3)
+		})
+	})
+})

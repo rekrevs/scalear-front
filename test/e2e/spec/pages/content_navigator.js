@@ -37,6 +37,7 @@ ContentNavigator.prototype = Object.create({}, {
 	navigator_container:{get: function(){return element(by.className('content-navigator-container'))}},
 	open:{value:function(){if(!this.status){this.navigator.click();this.status=1}}},
 	close:{value:function(){if(this.status){this.navigator.click();this.status=0}}},
+	set_status:{value:function(val){this.status = val}},
 	toggle:{value:function(){this.navigator.click();this.status=!this.status}},
 	modules:{get:function(){return this.navigator_container.all(by.repeater('module in modules'))}},
 	module:{value:function(num){return new Module(this.modules.get(num-1))}},

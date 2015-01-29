@@ -2,7 +2,7 @@
 <link rel="stylesheet" href="styles/teacher/teacher_common.css"/>
 <link rel="stylesheet" href="styles/teacher/progress.css"/>
 <!-- endbuild -->
-
+<br/>
 <div class="small-12 medium-4 large-3 columns no-padding">
 	<center>
 		<!-- <div class="row"> -->
@@ -89,12 +89,12 @@
 						</div>
 						<div class="row"><div google-chart chart="quiz_chart" class="small-12 columns progress_chart" ></div></div>
 					</li>
-					<li ng-if="item.type=='free_question'" class="li_inner color-coral" ng-class="{'light-yellow':item.data.show}">
+					<li ng-if="item.type=='free_question'" class="li_inner color-coral">
 						<inner_title type="'groups.free_text_question' | translate" itemtitle="item.data.title" class="left" style="margin-right:5px"/>
 						<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show)"/>
 						</br>
 						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size:14px;clear:both">							
-							<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" class="li_item" style="padding:8px 10px">
+							<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" class="li_item" ng-class="{'light-yellow':item.data.show && answer.hide}" style="padding:8px 10px">
 								<div class="controls" >
 									<show_box bo-show="module_item.quiz_type == 'survey'" value="answer.hide" action="updateHideResponse(quiz.meta.id,item,answer)" style="float:right"/>
 								    <div ng-show="!quiz.filtered_user || quiz.filtered_user==''" tooltip="{{'groups.see_related'|translate}}" tooltip-placement="top" style="float:right">|

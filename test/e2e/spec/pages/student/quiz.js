@@ -75,6 +75,13 @@ QuizPage.prototype=Object.create({},{
 	save:{value:function(){return this.save_button.click()}},
 	submit:{value:function(){this.submit_button.click()}},	
 	next:{value:function(){this.next_button.click()}},
+	status:{get:function(){return element(by.binding('status.attempts')).getText()}},
+	optional_tag:{get:function(){return element(by.className('label'))}},
+	incorrect:{get:function(){return element.all(by.className('incorrect'))}},
+	correct:{get:function(){return element.all(by.className('correct'))}},
+	under_review:{get:function(){return element.all(by.className('under_review'))}},
+	retries:{get:function(){return element(by.binding('quiz.retries')).getText()}},
+	warning_msg:{get:function(){return element(by.className('warning')).getText()}},
 })
 
 module.exports = QuizPage;

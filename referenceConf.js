@@ -106,6 +106,8 @@ exports.config = {
         ],
         student:[
             'test/e2e/spec/students_solve_course.spec.js',
+            // 'test/e2e/spec/discussions.spec.js',
+            // 'test/e2e/spec/notes.spec.js',
             // 'test/e2e/spec/student-lectures.spec.js'
         ],
 
@@ -121,30 +123,28 @@ exports.config = {
         // 'test/e2e/spec/dashboard.spec.js', //
         // 'test/e2e/spec/enrollment-help.spec.js', //
         // 'test/e2e/spec/module-statistics.spec.js'
-
-        // 'test/e2e/spec/discussions.spec.js', //  
-        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //
+        // 'test/e2e/spec/discussions.spec.js', // 
+        // 'test/e2e/spec/notes.spec.js', //        
         // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//
         // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',//
-        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //
-        // 'test/e2e/spec/module-statistics.spec.js', //
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //       
         // 'test/e2e/spec/normal-quiz.spec.js', //
         // 'test/e2e/spec/normal-survey.spec.js', //
-        // 'test/e2e/spec/notes.spec.js', //
         // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js', //
         // 'test/e2e/spec/ocq-quizzez-over-video.spec.js', //
         // 'test/e2e/spec/ocq-survey-over-video.spec.js', //
+        // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',//
+        // 'test/e2e/spec/drag-quizzez-over-video.spec.js',//
+        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //
+
         // 'test/e2e/spec/sharing.spec.js',//
         // 'test/e2e/spec/statistics.spec.js',  //
         // 'test/e2e/spec/student-lectures.spec.js', //
         // 'test/e2e/spec/teacher-managment.spec.js', //
         // 'test/e2e/spec/timeline.spec.js',
         // 'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
-        // 
-        
+        // 'test/e2e/spec/module-statistics.spec.js', //     
         // 'test/e2e/spec/preview-as-student.spec.js',// //problem with deleting course at the end
-        // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',//
-        // 'test/e2e/spec/drag-quizzez-over-video.spec.js',//
         // 'test/e2e/spec/enrolled-students.spec.js',//
         // 
         // 'test/e2e/spec/progress-main.spec.js', //

@@ -1,466 +1,298 @@
-var locator = require('./lib/locators');
-var o_c = require('./lib/openers_and_clickers');
-var teacher = require('./lib/teacher_module');
-var student = require('./lib/student_module');
-var youtube = require('./lib/youtube.js');
-var disc = require('./lib/discussion.js');
+var ContentNavigator = require('./pages/content_navigator');
+var CourseList = require('./pages/course_list');
+var Video = require('./pages/video');
+var Header = require('./pages/header');
+var Login = require('./pages/login');
+var StudentLecture = require('./pages/student/lecture');
 
-var ptor = protractor.getInstance();
-var params = ptor.params
-ptor.driver.manage().window().maximize();
+var params = browser.params;
 
-describe("public/private visibility", function(){
+var course_list = new CourseList()
+var video = new Video();
+var header = new Header()
+var login_page = new Login()
+var student_lec = new StudentLecture()
 
-	it('should sign in as teacher', function(){
-		o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+describe("Discussions",function(){
+	describe("Teacher",function(){
+		it("should logout",function(){
+			header.logout()
+		})
 	})
-
-	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
-	})
-
-	it('should add a module and lecture ', function(){
-		// o_c.to_teacher(ptor);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		teacher.add_module(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(2000)
-		teacher.init_lecture(ptor, "lecture","https://www.youtube.com/watch?v=SKqBmAHwSkg");
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-	})
-
-	it('should ask public and private question as student', function(){
-		// o_c.to_student(ptor);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		youtube.seek(ptor, 21);
-		disc.ask_private_question(ptor, "private ques")
-		youtube.seek(ptor, 42);
-		disc.ask_public_question(ptor, "public ques");
-		// o_c.logout(ptor);
-	})
-
-	it('should get the enrollment key and enroll student2', function(){
-		// teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-		o_c.to_teacher(ptor);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-	})
-
-	it('should go the other student check for visible questions', function(){
-		// o_c.sign_in(ptor, params.student2_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		check_disc_no(1);
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('public');
-	})
-
-	it('should clear the course for deletion', function(){
-		o_c.to_teacher(ptor);
-		o_c.open_course_list(ptor);
-	    o_c.open_course(ptor, 1);
-	    teacher.open_module(ptor, 1);
-	    teacher.delete_item_by_number(ptor, 1, 1);
-	    teacher.delete_empty_module(ptor, 1)
-	})
-
-	it('should delete course', function(){
-		o_c.open_course_list(ptor);
-	    teacher.delete_course(ptor, 1);
-	    o_c.logout(ptor);
-	})
-})
-
-describe("flagging/voting-up question", function(){
-	
-	it('should sign in as teacher', function(){
-		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-	})
-
-	it('create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
-	})
-
-	it('should add a module and lecture ', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		teacher.add_module(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(2000)
-		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
-	})
-
-	it('should ask public question', function(){
-		// o_c.to_student(ptor);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		youtube.seek(ptor, 21);
-		disc.ask_public_question(ptor, "public ques");
-		// o_c.logout(ptor);
-	})
-
-	it('should get the enrollment key and enroll student2', function(){
-		o_c.to_teacher(ptor);
-		// teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
-	})
-
-	it('should go the other student and flag a question', function(){
-		// o_c.sign_in(ptor, params.student2_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		check_disc_no(1);
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('public');
-		disc.flag(ptor, 1);
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('Flagged post');
-		
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('0');
-		disc.vote_up(ptor, 1);
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('1');
-		// o_c.logout(ptor);
-	})
-	it('should get the enrollment key and enroll student3', function(){
-		o_c.to_teacher(ptor);
-		// teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
-	})
-
-	it('should go the the third student and flag a question', function(){
-		// o_c.sign_in(ptor, params.student3_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		check_disc_no(1);
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('public');
-		disc.flag(ptor, 1);
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('Flagged post');
-		
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('1');
-		disc.vote_up(ptor, 1);
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('2');
-	})
-
-	it('should clear the course for deletion', function(){
-		o_c.to_teacher(ptor);
-		o_c.open_course_list(ptor);
-	    o_c.open_course(ptor, 1);
-	    teacher.open_module(ptor, 1);
-	    teacher.delete_item_by_number(ptor, 1, 1);
-	    teacher.delete_empty_module(ptor, 1)
-	})
-
-	it('should delete course', function(){
-		o_c.open_course_list(ptor);
-	    teacher.delete_course(ptor, 1);
-	    o_c.logout(ptor);
-	})
-})
-
-describe("comments", function(){
-	
-	it('should sign in as teacher', function(){
-		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-	})
-
-	it('create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
-	})
-
-	
-
-	it('should add a module and lecture ', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		teacher.add_module(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(2000)
-		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
-	})
-
-	it('should ask public question', function(){
-		// o_c.to_student(ptor);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		youtube.seek(ptor, 21);
-		disc.ask_public_question(ptor, "public ques");
-		// o_c.logout(ptor);
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		o_c.to_teacher(ptor);
-		// teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
-	})
-
-	it('should go the other student and flag a question', function(){
-		// o_c.sign_in(ptor, params.student2_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		check_disc_no(1);
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('public');
-		disc.comment(ptor, 1, "first comment");
-		check_comm_no(1);
-		// o_c.logout(ptor);
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		o_c.to_teacher(ptor);
-		// teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
-	})
-
-	it('should go the the third student and flag a question', function(){
-		// o_c.sign_in(ptor, params.student3_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		check_disc_no(1);
-		disc.comment(ptor, 1, "first comment");
-		check_comm_no(2);
-	})
-
-	it('should clear the course for deletion', function(){
-		o_c.to_teacher(ptor);
-		o_c.open_course_list(ptor);
-	    o_c.open_course(ptor, 1);
-	    teacher.open_module(ptor, 1);
-	    teacher.delete_item_by_number(ptor, 1, 1);
-	    teacher.delete_empty_module(ptor, 1)
-	})
-
-	it('should delete course', function(){
-		o_c.open_course_list(ptor);
-	    teacher.delete_course(ptor, 1);
-	    o_c.logout(ptor);
-	})
-})
-
-describe("flagging/voting-up comments", function(){
-	
-	it('should sign in as teacher', function(){
-		// o_c.press_login(ptor);
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-	})
-
-	it('create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
-	})
-
-	it('should add a module and lecture ', function(){
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		teacher.add_module(ptor);
-		teacher.open_module(ptor, 1);
-		teacher.add_lecture(ptor);			
-		// o_c.press_content_navigator(ptor);
-		// ptor.sleep(2000)
-		teacher.init_lecture(ptor, "LEC","https://www.youtube.com/watch?v=SKqBmAHwSkg");
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
-	})
-
-
-	it('should login a student', function(){
-		// o_c.to_student(ptor);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		youtube.seek(ptor, 21);
-		disc.ask_public_question(ptor, "public ques");
-		disc.comment(ptor, 1, "first comment");
-		check_comm_no(1);
-		// o_c.logout(ptor);
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		o_c.to_teacher(ptor);
-		// teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
-	})
-
-	it('should go the other student and flag a comment', function(){
-		// o_c.sign_in(ptor, params.student2_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		check_disc_no(1);
-		expect(element(by.name('discussion-timeline-item')).getText()).toContain('public');
-		check_comm_no(1);
-		disc.flag_comment(ptor, 1, 1);
-		check_for_flagged(ptor, 1, 1);
-		disc.vote_comment_up(ptor,1 ,1);
-		check_for_vote_no(ptor, 1, 1, 1);
-		// o_c.logout(ptor);
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		o_c.to_teacher(ptor);
-		// teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		// teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
-
-		// o_c.sign_in(ptor, params.teacher_mail, params.password);
-		// o_c.open_course_list(ptor);
-		// o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, params.student3_mail, params.password);
-	})
-
-	it('should go the the third student and flag a question', function(){
-		// o_c.sign_in(ptor, params.student3_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
-		check_disc_no(1);
-		check_for_flagged(ptor, 1, 1);
-		disc.vote_comment_up(ptor,1 ,1);
-		check_for_vote_no(ptor, 1, 1, 2);
-	})
-
-	it('should clear the course for deletion', function(){
-		o_c.to_teacher(ptor);
-		o_c.open_course_list(ptor);
-	    o_c.open_course(ptor, 1);
-	    teacher.open_module(ptor, 1);
-	    teacher.delete_item_by_number(ptor, 1, 1);
-	    teacher.delete_empty_module(ptor, 1)
-	})
-
-	it('should delete course', function(){
-		o_c.open_course_list(ptor);
-	    teacher.delete_course(ptor, 1);
-	    o_c.logout(ptor);
-	})
-})
-
-
-/////////////////////////////////////////////////////////
-//				test specific functions
-/////////////////////////////////////////////////////////
-
-function check_disc_no(no){
-	element.all(by.name('discussion-timeline-item')).then(function(discs){
-		expect(discs.length).toEqual(no);
-	})
-}
-
-function check_comm_no(no){
-	element.all(by.className('discussion-comment')).then(function(comm){
-		expect(comm.length).toEqual(no);
-	})
-}
-
-function check_for_flagged(ptor, q_no, co_no){
-	locator.s_by_name(ptor, 'discussion-timeline-item').then(function(questions){
-        questions[q_no-1].findElements(protractor.By.className('discussion-comment')).then(function(comments){
-            expect(comments[co_no-1].getText()).toContain('Flagged');
+	describe("First Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student_mail, params.password)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		it('should open first lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open_item(1)
+			navigator.close()
+		})
+		it("should seek to 15%",function(){
+			video.seek(15)
+		})
+		it("should add a private discussion",function(){
+            student_lec.add_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isDisplayed()).toEqual(true)
+            student_lec.lecture(1).type_discussion("Private Question")
+            student_lec.lecture(1).change_discussion_private()
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
+            expect(student_lec.lecture(1).items.count()).toEqual(4)
         })
-    })
-}
+        it('should seek to 35%', function(){
+			video.seek(35)
+		})
+		it('should add a public question', function(){
+			student_lec.add_discussion()
+            expect(student_lec.lecture(1).editable_discussion.isDisplayed()).toEqual(true)
+            student_lec.lecture(1).type_discussion("Public Question")
+            student_lec.lecture(1).change_discussion_public()
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).discussions.count()).toEqual(2)
+            expect(student_lec.lecture(1).editable_discussion.isPresent()).toEqual(false)
+            expect(student_lec.lecture(1).items.count()).toEqual(5)
+		})
+		it("should logout",function(){
+			header.logout()
+		})
+	})
 
-function check_for_vote_no(ptor, q_no, co_no, no){
-	locator.s_by_name(ptor, 'discussion-timeline-item').then(function(questions){
-        questions[q_no-1].findElements(protractor.By.className('discussion-comment')).then(function(comments){
-            expect(comments[co_no-1].getText()).toContain(no);
+	describe("Second Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student2_mail, params.password)
+		})
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open_item(1)
+			navigator.close()
+		})
+		it("should check discussion posts",function(){
+			expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+			expect(student_lec.lecture(1).discussion(1).title).toContain("Public Question")
+		})
+		it("should flag post",function(){
+			student_lec.lecture(1).discussion(1).flag()
+			expect(student_lec.lecture(1).discussion(1).text).toContain("Flagged post")
+		})
+		it("should vote post",function(){
+			expect(student_lec.lecture(1).discussion(1).vote_count).toEqual("0")
+			student_lec.lecture(1).discussion(1).vote()
+			expect(student_lec.lecture(1).discussion(1).vote_count).toEqual("1")
+		})
+		it("should add comment",function(){
+			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(0)
+			student_lec.lecture(1).discussion(1).add_comment()
+			student_lec.lecture(1).discussion(1).type_comment("first comment")
+			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(1)
+		})
+		it("should logout",function(){
+			header.logout()
+		})
+	})
+
+	describe("Third Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student3_mail, params.password)
+		})
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open_item(1)
+			navigator.close()
+		})
+		it("should check discussion posts",function(){
+			expect(student_lec.lecture(1).discussions.count()).toEqual(1)
+			expect(student_lec.lecture(1).discussion(1).title).toContain("Public Question")
+			expect(student_lec.lecture(1).discussion(1).text).toContain("Flagged post")
+		})
+		it("should vote post",function(){
+			expect(student_lec.lecture(1).discussion(1).vote_count).toEqual("1")
+			student_lec.lecture(1).discussion(1).vote()
+			expect(student_lec.lecture(1).discussion(1).vote_count).toEqual("2")
+		})
+		it("should check comments",function(){
+			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(1)
+			expect(student_lec.lecture(1).discussion(1).comment(1).title).toEqual("first comment")
+		})
+		it("should add comment",function(){			
+			student_lec.lecture(1).discussion(1).add_comment()
+			student_lec.lecture(1).discussion(1).type_comment("second comment")
+			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(2)
+			expect(student_lec.lecture(1).discussion(1).comment(2).title).toEqual("second comment")
+		})
+		it("should logout",function(){
+			header.logout()
+		})
+	})
+
+	describe("Second Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student2_mail, params.password)
+		})
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open_item(1)
+			navigator.close()
+		})
+		it("should check comments count",function(){
+			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(2)
+			expect(student_lec.lecture(1).discussion(1).comment(1).title).toEqual("first comment")
+			expect(student_lec.lecture(1).discussion(1).comment(2).title).toEqual("second comment")
+
+		})
+		it("should flag second comment",function(){
+			student_lec.lecture(1).discussion(1).comment(2).flag()
+			expect(student_lec.lecture(1).discussion(1).comment(2).text).toContain("Flagged comment")
+		})
+		it("should vote first comment",function(){
+			expect(student_lec.lecture(1).discussion(1).comment(2).vote_count).toEqual("0")
+			student_lec.lecture(1).discussion(1).comment(2).vote()
+			expect(student_lec.lecture(1).discussion(1).comment(2).vote_count).toEqual("1")
+		})
+		it("should seek to 40%",function(){
+			video.seek(40)
+		})
+		it("should add a private discussion",function(){
+            student_lec.add_discussion()
+            student_lec.lecture(1).type_discussion("private question by second student")
+            student_lec.lecture(1).change_discussion_private()
+            student_lec.lecture(1).save_discussion()
+            expect(student_lec.lecture(1).discussions.count()).toEqual(2)
+            expect(student_lec.lecture(1).items.count()).toEqual(5)
         })
-    })
-}
+        it('should move to the second lecture', function(){
+			navigator.open()
+			navigator.module(1).open_item(2)
+			navigator.close()
+		})
+		it('should seek to 40%', function(){
+			video.seek(40)
+		})
+		it('should add a public question', function(){
+			student_lec.add_discussion()
+            expect(student_lec.lecture(2).editable_discussion.isDisplayed()).toEqual(true)
+            student_lec.lecture(2).type_discussion("public question by second student")
+            student_lec.lecture(2).change_discussion_public()
+            student_lec.lecture(2).save_discussion()
+            expect(student_lec.lecture(2).discussions.count()).toEqual(1)
+            expect(student_lec.lecture(2).editable_discussion.isPresent()).toEqual(false)
+            expect(student_lec.lecture(2).items.count()).toEqual(4)
+		})
+        it("should logout",function(){
+			header.logout()
+		})
+	})
+	describe("First Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student_mail, params.password)
+		})
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open_item(1)
+			navigator.close()
+		})
+		it("should check comments",function(){
+			expect(student_lec.lecture(1).discussions.count()).toEqual(2)
+			expect(student_lec.lecture(1).discussion(2).comments.count()).toEqual(2)
+			expect(student_lec.lecture(1).discussion(2).comment(2).text).toContain("Flagged comment")
+		})	
+		it("should vote second comment",function(){
+			expect(student_lec.lecture(1).discussion(2).comment(2).vote_count).toEqual("1")
+			student_lec.lecture(1).discussion(2).comment(2).vote()
+			expect(student_lec.lecture(1).discussion(2).comment(2).vote_count).toEqual("2")
+		})
+		it("should upvote the question asked by second student",function(){
+			expect(student_lec.lecture(2).discussion(1).vote_count).toEqual("0")
+			student_lec.lecture(2).discussion(1).vote()
+			expect(student_lec.lecture(2).discussion(1).vote_count).toEqual("1")
+		})
+		it('should add a comment on the question asked by the Second Student', function(){
+			student_lec.lecture(2).discussion(1).add_comment()
+			student_lec.lecture(2).discussion(1).type_comment("comment by first student")
+			expect(student_lec.lecture(2).discussion(1).comments.count()).toEqual(1)
+			expect(student_lec.lecture(2).discussion(1).comment(1).title).toEqual("comment by first student")
+		})
+		it("should delete comment",function(){
+			student_lec.lecture(2).discussion(1).comment(1).delete()
+			expect(student_lec.lecture(2).discussion(1).comments.count()).toEqual(0)
+		})
+		it("should logout",function(){
+			header.logout()
+		})
+	})
+	describe("Second Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student2_mail, params.password)
+		})
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open_item(1)
+			navigator.close()
+		})
+		it("should check comments",function(){
+			expect(student_lec.lecture(2).discussions.count()).toEqual(1)
+			expect(student_lec.lecture(2).discussion(1).comments.count()).toEqual(0)
+		})
+		it("should delete discussion post",function(){
+			student_lec.lecture(2).discussion(1).delete()
+			expect(student_lec.lecture(2).discussions.count()).toEqual(0)
+			expect(student_lec.lecture(2).items.count()).toEqual(3)
+		})
+		it("should logout",function(){
+			header.logout()
+		})
+	})
+	describe("First Student",function(){
+		it("should login", function(){
+			login_page.sign_in(params.student_mail, params.password)
+		})
+		it('should open first course', function(){
+			course_list.open()
+			course_list.open_course(1)
+		})
+		var navigator = new ContentNavigator(0)
+		it('should open first lecture in first module', function(){
+			navigator.open()
+			navigator.module(1).open_item(1)
+			navigator.close()
+		})
+		it("should check discussion post",function(){
+			expect(student_lec.lecture(2).discussions.count()).toEqual(0)
+			expect(student_lec.lecture(2).items.count()).toEqual(3)
+		})
+		it("should logout",function(){
+			header.logout()
+		})
+	})
+})

@@ -1,11 +1,11 @@
-var locator = require('./lib/locators');
-var o_c = require('./lib/openers_and_clickers');
-var teacher = require('./lib/teacher_module');
-var student = require('./lib/student_module')
+// var locator = require('./lib/locators');
+// var o_c = require('./lib/openers_and_clickers');
+// var teacher = require('./lib/teacher_module');
+// var student = require('./lib/student_module')
 
-var ptor = protractor.getInstance();
-var params = ptor.params
-ptor.driver.manage().window().maximize();
+// var ptor = protractor.getInstance();
+// var params = ptor.params
+// ptor.driver.manage().window().maximize();
 
 describe("1", function(){
 

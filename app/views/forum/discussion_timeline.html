@@ -41,12 +41,11 @@
                                     <img ng-show="item.data.privacy==1" src="/images/public.png" tooltip="{{public_text}}"/>
                                 </span>
                                 <span translate>q</span>
-                                    <span ng-if="item.data.user_id != current_user.id" bo-text="item.data.content"></span>
-                                    <span ng-if="item.data.user_id == current_user.id" ng-mouseover="show_pencil = true;" ng-mouseleave="show_pencil = false;" style="padding-right: 20px;">
-                                        <span>{{item.data.content}}</span>
-                                        <span ng-show="show_pencil" class="fi-pencil size-18" style="position: absolute;" ng-click="item.data.isEdit=true"></span>
-                                    </span>
-                                    <!-- <editable_text ng-if="item.data.user_id == current_user.id" value="item.data.content" save="updateDiscussion(item.data)"> -->
+                                <span ng-if="item.data.user_id != current_user.id" class="discussion_title" bo-text="item.data.content"></span>
+                                <span ng-if="item.data.user_id == current_user.id" ng-mouseover="show_pencil = true;" ng-mouseleave="show_pencil = false;" style="padding-right: 20px;">
+                                    <span class="discussion_title">{{item.data.content}}</span>
+                                    <span ng-show="show_pencil" class="fi-pencil size-18" style="position: absolute;" ng-click="item.data.isEdit=true"></span>
+                                </span>
                             </div>
                         </div>
                     </div>

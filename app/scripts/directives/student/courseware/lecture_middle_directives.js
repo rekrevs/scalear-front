@@ -8,87 +8,87 @@ angular.module('scalearAngularApp')
     templateUrl:"/views/student/lectures/controls.html",
     link: function(scope, element, attrs) {
 
-      scope.screenfull = screenfull
-      scope.$on('$destroy', function() {
-          shortcut.remove("c");
-          shortcut.remove("q");
-          shortcut.remove("n");
-          shortcut.remove("f");
-      });
-      var template = "<b>"+$translate('lectures.keyboard_controls')+"</b>"+
-                      "<ul class='with-small-margin-top'>"+
-                        "<li><kbd>B</kbd> <span translate>lectures.back_10s</span></li>"+
-                        "<li><kbd>Space</kbd> <span translate>lectures.play_pause</span></li>"+
-                        "<li><kbd>Q</kbd> <span translate>lectures.ask_question</span></li>"+
-                        "<li><kbd>C</kbd> <span translate>lectures.confused</span></li>"+
-                        "<li><kbd>N</kbd> <span translate>lectures.video_notes</span></li>"+
-                      "</ul>";
-      scope.popover_options={
-        content: template,
-        html:true,
-        append_to_body: true,
-        placement: 'top',
-        disabletop: true,
-        displayontop: true
-      }
+     //  scope.screenfull = screenfull
+     //  scope.$on('$destroy', function() {
+     //      shortcut.remove("c");
+     //      shortcut.remove("q");
+     //      shortcut.remove("n");
+     //      shortcut.remove("f");
+     //  });
+     //  var template = "<b>"+$translate('lectures.keyboard_controls')+"</b>"+
+     //                  "<ul class='with-small-margin-top'>"+
+     //                    "<li><kbd>B</kbd> <span translate>lectures.back_10s</span></li>"+
+     //                    "<li><kbd>Space</kbd> <span translate>lectures.play_pause</span></li>"+
+     //                    "<li><kbd>Q</kbd> <span translate>lectures.ask_question</span></li>"+
+     //                    "<li><kbd>C</kbd> <span translate>lectures.confused</span></li>"+
+     //                    "<li><kbd>N</kbd> <span translate>lectures.video_notes</span></li>"+
+     //                  "</ul>";
+     //  scope.popover_options={
+     //    content: template,
+     //    html:true,
+     //    append_to_body: true,
+     //    placement: 'top',
+     //    disabletop: true,
+     //    displayontop: true
+     //  }
     	
-    	scope.show_message=false;
-    	scope.show_shortcuts=false;    	
-      scope.notesBtn = function(){
-        scope.$emit('take_note');
-      }
-      scope.questionsBtn = function(){
-        scope.$emit('post_question');
-      }
-      scope.confusedBtn = function(){
-        scope.show_message=true;
-        scope.$emit('mark_confused');
-        $interval(function(){
-          scope.show_message=false;
-        }, 2000, 1);
-      }
-      scope.shortCutsBtn = function(){
-        scope.$emit('toggle_shortcuts');
-      }
-      scope.fullscreenBtn = function(){
-        scope.$emit('toggle_fullscreen');
-      }
+    	// scope.show_message=false;
+    	// scope.show_shortcuts=false;    	
+     //  scope.notesBtn = function(){
+     //    scope.$emit('take_note');
+     //  }
+     //  scope.questionsBtn = function(){
+     //    scope.$emit('post_question');
+     //  }
+     //  scope.confusedBtn = function(){
+     //    scope.show_message=true;
+     //    scope.$emit('mark_confused');
+     //    $interval(function(){
+     //      scope.show_message=false;
+     //    }, 2000, 1);
+     //  }
+     //  scope.shortCutsBtn = function(){
+     //    scope.$emit('toggle_shortcuts');
+     //  }
+     //  scope.fullscreenBtn = function(){
+     //    scope.$emit('toggle_fullscreen');
+     //  }
 
-      scope.showShortcuts=function(){
-        scope.show_shortcuts=!scope.show_shortcuts;
-        if(scope.show_shortcuts)
-          $(document).on("click", function (e) {
-            if(e.target.className != 'shortcutDiv'){
-              scope.show_shortcuts = false
-              scope.$apply()
-              $(document).off("click")
-            }         
-          });
-        else
-          $(document).off("click")        
-      }
+     //  scope.showShortcuts=function(){
+     //    scope.show_shortcuts=!scope.show_shortcuts;
+     //    if(scope.show_shortcuts)
+     //      $(document).on("click", function (e) {
+     //        if(e.target.className != 'shortcutDiv'){
+     //          scope.show_shortcuts = false
+     //          scope.$apply()
+     //          $(document).off("click")
+     //        }         
+     //      });
+     //    else
+     //      $(document).off("click")        
+     //  }
 
-    	scope.setShortcuts = function()
-  		{
-  				shortcut.add("c", function(){
-            scope.confusedBtn()
-            scope.$apply()
-          }, {"disable_in_input" : true});  
+    // 	scope.setShortcuts = function()
+  		// {
+  		// 		shortcut.add("c", function(){
+    //         scope.confusedBtn()
+    //         scope.$apply()
+    //       }, {"disable_in_input" : true});  
 
-  				shortcut.add("q", function(){
-            scope.questionsBtn()
-            scope.$apply()
-          }, {"disable_in_input" : true});
-          shortcut.add("n", function(){
-            scope.notesBtn()
-            scope.$apply()
-          }, {"disable_in_input" : true});
-          shortcut.add("f", function(){
-            scope.fullscreenBtn()
-            scope.$apply()
-          }, {"disable_in_input" : true});
-  		}
-      scope.setShortcuts()
+  		// 		shortcut.add("q", function(){
+    //         scope.questionsBtn()
+    //         scope.$apply()
+    //       }, {"disable_in_input" : true});
+    //       shortcut.add("n", function(){
+    //         scope.notesBtn()
+    //         scope.$apply()
+    //       }, {"disable_in_input" : true});
+    //       shortcut.add("f", function(){
+    //         scope.fullscreenBtn()
+    //         scope.$apply()
+    //       }, {"disable_in_input" : true});
+  		// }
+    //   scope.setShortcuts()
 
     }
   };

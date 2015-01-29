@@ -31,7 +31,7 @@ CourseEditor.prototype = Object.create({}, {
 	lecture_required_checkbox:{get:function(){return element(by.model('lecture.graded'))}},
 	change_lecture_required:{value:function(){this.lecture_inorder_checkbox.click()}},
 	quiz_required_checkbox:{get:function(){return element(by.model('quiz.graded'))}},
-	quiz_retries:{get:function(){return element(by.tagName('details-number'))}}
+	quiz_retries:{get:function(){return element(by.tagName('details-number'))}},
 	change_quiz_required:{value:function(){this.quiz_required_checkbox.click()}},
 	change_quiz_retries:{value:function(num){
 		this.quiz_retries.click()

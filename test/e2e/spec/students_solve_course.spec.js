@@ -321,7 +321,7 @@ describe("Solve Course",function(){
 				student_lec.next()
 			})
 		 	it('should check number of attempts',function(){
-		        expect(student_quiz.status)).toContain(0+"/"+2)
+		        expect(student_quiz.status).toContain(0+"/"+2)
 		    })
 
 		    it('should check submit button enabled',function(){
@@ -358,13 +358,13 @@ describe("Solve Course",function(){
 			})
 			it('should check quiz status after submit',function(){
 		        scroll_top()
-		        expect(student_quiz.status)).toContain(1+"/"+2)
+		        expect(student_quiz.status).toContain(1+"/"+2)
 				expect(student_quiz.submit_button.isEnabled()).toBe(true)
 		    })
 
-			it('should answer mcq incorrect', function(){
+			it('should answer mcq correct', function(){
 				student_quiz.question(2).mark_answer(1)
-				student_quiz.question(2).mark_answer(3)
+				student_quiz.question(2).mark_answer(2)
 			})
 			it('should answer ocq incorrect', function(){
 				student_quiz.question(4).mark_answer(1)
@@ -398,7 +398,7 @@ describe("Solve Course",function(){
 				student_quiz.next()
 			})
 			it('should check number of attempts',function(){
-		        expect(student_quiz.status)).toContain(0+"/"+1)
+		        expect(student_quiz.status).toContain(0+"/"+1)
 		    })
 
 		    it('should check submit button enabled',function(){
@@ -456,7 +456,7 @@ describe("Solve Course",function(){
 				navigator.set_status(1)
 			})
 		})
-		xdescribe("Second Module",function(){
+		describe("Second Module",function(){
 			it("should navigate to second module",function(){
 				navigator.open()
 				navigator.module(2).open()
@@ -480,7 +480,7 @@ describe("Solve Course",function(){
 			})
 			it("should check explanation",function(){
 				student_lec.show_explanation(1)
-				expect(student_lec.explanation_title).toContain("Incorrect")
+				expect(student_lec.explanation_title).toContain("Correct")
 				expect(student_lec.explanation_content).toContain("explanation 1")
 			})
 			it('wait for the voting question', function(){
@@ -706,7 +706,7 @@ describe("Solve Course",function(){
 			})
 		})
 	})
-	xdescribe("Second Student",function(){
+	describe("Second Student",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student2_mail, params.password)
 		})
@@ -715,7 +715,7 @@ describe("Solve Course",function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
-		xdescribe("First Module",function(){
+		describe("First Module",function(){
 			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
@@ -959,7 +959,7 @@ describe("Solve Course",function(){
 			})			
 		})
 	})
-	// xdescribe("First Student",function(){
+	// describe("First Student",function(){
 	// 	it("should login", function(){
 	// 		login_page.sign_in(params.student_mail, params.password)
 	// 	})

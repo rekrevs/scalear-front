@@ -142,7 +142,7 @@ LecturePage.prototype=Object.create({},{
 	text_drag_arrows:{get:function(){return this.text_drag_container.all(by.className('looks-like-a-hook'))}},
 	explanation_title:{get:function(){return element(by.className('popover-title')).getText()}},
 	explanation_popover:{get:function(){return element(by.className('popover'))}},
-	explanation_content:{get:function(){return explanation_popover.getText()}},
+	explanation_content:{get:function(){return this.explanation_popover.getText()}},
 	show_explanation:{value:function(num){
 		browser.driver.actions().mouseMove(this.answers.get(num-1)).perform();
 		browser.driver.actions().mouseMove({x: 5, y: 5}).perform();

@@ -1061,7 +1061,7 @@ var translation_sv=function(){
           }
         },
         languages:{
-          en: 'Engelska',
+          en: 'English',
           sv: 'Svenska'
         }
      

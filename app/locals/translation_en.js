@@ -1054,7 +1054,7 @@ var translation_en=function(){
     },
     languages:{
       en: 'English',
-      sv: 'Swedish'
+      sv: 'Svenska'
     }
 
 

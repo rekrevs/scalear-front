@@ -20,6 +20,7 @@ CourseEditor.prototype = Object.create({}, {
 	module_link:{value:function(num){return new Link(this.module_links.get(num-1))}},
 	copy_button:{get:function(){return element(by.id('copy')) }},
 	paste_button:{get:function(){return element(by.id('paste')) }},
+	share_button:{get:function(){return element(by.id('share_copy'))}},
 	paste_description:{get:function(){return this.paste_button.element(by.className('dark-description')).getText() }},
 	total_lecture_questions:{get:function(){return this.module.element(by.binding('module.total_questions')).getText()}},
 	total_quiz_questions:{get:function(){return this.module.element(by.binding('module.total_quiz_questions')).getText()}},
@@ -101,6 +102,10 @@ CourseEditor.prototype = Object.create({}, {
 		sub_header.show_content_menu()
 		this.paste_button.click()
 	}},
+	open_share_window:{value:function(){
+		sub_header.show_content_menu()
+		this.share_button.click()
+	}}
 	
 });
 

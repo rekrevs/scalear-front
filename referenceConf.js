@@ -100,6 +100,7 @@ exports.config = {
             // 'test/e2e/spec/course_editor_basic.spec.js',
             // 'test/e2e/spec/course_editor_copy.spec.js',
             // 'test/e2e/spec/module_statistics.spec.js',
+            'test/e2e/spec/sharing.spec.js'
         ],
         announcement:[
             'test/e2e/spec/announcements.spec.js'

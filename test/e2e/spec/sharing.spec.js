@@ -1,11 +1,21 @@
-var locator = require('./lib/locators');
-var o_c = require('./lib/openers_and_clickers');
-var teacher = require('./lib/teacher_module');
-var student = require('./lib/student_module')
+var Header = require('./pages/header');
+var Login = require('./pages/login');
+var CourseEditor = require('./pages/course_editor');
+var ContentNavigator = require('./pages/content_navigator');
+var CourseInformation = require('./pages/course_information');
+var CourseList = require('./pages/course_list');
+var StudentLecture = require('./pages/student/lecture');
+var scroll = require('./lib/utils').scroll;
+var sleep = require('./lib/utils').sleep;
 
-var ptor = protractor.getInstance();
-var params = ptor.params
-ptor.driver.manage().window().maximize();
+var params = browser.params;
+
+var header = new Header()
+var login_page = new Login()
+var course_editor = new CourseEditor()
+var course_info = new CourseInformation()
+var course_list = new CourseList()
+var student_lec = new StudentLecture()
 
 describe("1", function(){
 

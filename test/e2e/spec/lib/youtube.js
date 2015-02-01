@@ -4,10 +4,10 @@
 //
 //====================================================
 // 				youtube functionality
-//====================================================
-var ptor = protractor.getInstance();
-var functions = ptor.params;
-var locator = require('./locators');
+// //====================================================
+// var ptor = protractor.getInstance();
+// var functions = ptor.params;
+// var locator = require('./locators');
 
 exports.is_paused = function(ptor){
     locator.by_classname(ptor, 'play').then(function(button) {

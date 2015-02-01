@@ -1,6 +1,6 @@
-var ptor = protractor.getInstance();
-var locator = require('./locators');
-var params = ptor.params;
+// var ptor = protractor.getInstance();
+// var locator = require('./locators');
+// var params = ptor.params;
 
 exports.ask_private_question = function(ptor, text){
     this.ask_a_question(ptor, text, 0)

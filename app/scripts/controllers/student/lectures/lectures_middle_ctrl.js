@@ -18,7 +18,12 @@ angular.module('scalearAngularApp')
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
     $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
-
+    $scope.$on('$destroy', function() {
+        shortcut.remove("c");
+        shortcut.remove("q");
+        shortcut.remove("n");
+        shortcut.remove("f");
+    });
     $scope.$on("export_notes",function(){
         $scope.exportNotes()
     })
@@ -47,19 +52,6 @@ angular.module('scalearAngularApp')
         },200)
     })
 
-    // $scope.$on('content_navigator_change',function(ev, status){
-    //    $timeout(function(){$scope.$emit("updatePosition")})
-    //    if(!status){
-    //         $timeout(function(){
-    //             $scope.delayed_navigator_open = false
-    //         },700)
-    //       }
-    //       else
-    //         // $timeout(function(){
-    //             $scope.delayed_navigator_open = status
-    //          // },700)
-    // })
-
     $scope.$on('timeline_navigator_change',function(ev, status){
           if(!status){
             $timeout(function(){
@@ -76,17 +68,13 @@ angular.module('scalearAngularApp')
     })
 
     var isiPad=function(){
-        var i = 0,
-            iOS = false,
+        var iOS = false,
             iDevice = ['iPad', 'iPhone', 'iPod','Android'];
-
-        for ( ; i < iDevice.length ; i++ ) {
+        for ( var i = 0; i < iDevice.length ; i++ ) {
             if( navigator.platform === iDevice[i] ){ iOS = true; break; }
         }
         return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
     }
-
-
 
     var initVariables=function(){
         $scope.studentAnswers = {}
@@ -134,9 +122,30 @@ angular.module('scalearAngularApp')
         })
     }
 
+    var setShortcuts = function(){
+        shortcut.add("c", function(){
+            $scope.addConfused();
+            $scope.$apply()
+        }, {"disable_in_input" : true});  
+
+        shortcut.add("q", function(){
+            $scope.addQuestionBlock();
+            $scope.$apply()
+        }, {"disable_in_input" : true});
+        shortcut.add("n", function(){
+            $scope.addNote();
+            $scope.$apply()
+        }, {"disable_in_input" : true});
+        shortcut.add("f", function(){
+            $scope.$emit('toggle_fullscreen');
+            $scope.$apply()
+        }, {"disable_in_input" : true});
+    }
+
     var goToLecture=function(id){
         if($scope.timeline){
-            $scope.should_play = true
+            $scope.should_play = false
+            $scope.passed_requirments = true
             $scope.lecture = null
 
             $timeout(function(){
@@ -173,10 +182,14 @@ angular.module('scalearAngularApp')
                             var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                             if(item_index!=-1 && group_index!=-1)
                                 if(!$scope.course.groups[group_index].items[item_index].is_done)
-                                    $scope.should_play = false
+                                    $scope.passed_requirments = false
                         }
                     }
                 }
+
+                $scope.should_play = $scope.passed_requirments
+                if($scope.should_play)
+                    setShortcuts()
 
                 // if($scope.should_play){
                 //     if(data.done[2]){
@@ -739,7 +752,6 @@ angular.module('scalearAngularApp')
           var notes = angular.fromJson(n);
           var temp;
           var all_module_notes= [];
-          //console.log(notes);
           for (var i = 0; i < notes.notes.length; i++) {
             if(notes.notes[i].length>2){
                 temp = angular.fromJson(notes.notes[i])

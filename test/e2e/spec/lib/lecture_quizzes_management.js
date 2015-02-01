@@ -1,7 +1,7 @@
-var ptor = protractor.getInstance();
-var locator = require('./locators');
-var o_c = require('./openers_and_clickers');
-var params = ptor.params;
+// var ptor = protractor.getInstance();
+// var locator = require('./locators');
+// var o_c = require('./openers_and_clickers');
+// var params = ptor.params;
 
 exports.rename_quiz = function(ptor, quiz_no, name){
 	locator.by_classname(ptor, 'quiz_list').then(function(list){

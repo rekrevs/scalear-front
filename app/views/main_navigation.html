@@ -100,7 +100,13 @@
 			</ul>
 			<!-- NOT LOGGED IN -->
 			<ul ng-if="!user.roles[0].id"  class="right">
-				<li><a class="white-with-hover color-green-hover size-18-light" id="signup" ui-sref-active="nav-item-active" ui-sref="student_signup" translate>sign_up</a></li>
+				<li has-dropdown>
+					<a class="white-with-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('student_signup' | includedByState) || ('teacher_signup' | includedByState)}" translate>sign_up</a>
+					<ul class="lighter-grey-no-hover" top-bar-dropdown>
+						<li><a class="lighter-grey dark-text"  ui-sref-active="nav-item-active" ui-sref="student_signup" ><span translate>devise.register.student</span></a></li>
+						<li><a class="lighter-grey dark-text"  ui-sref-active="nav-item-active" ui-sref="teacher_signup" translate>devise.register.teacher</a></li>
+					</ul>
+				</li>
 				<li><a class="white-with-hover color-green-hover size-18-light" id="login" ui-sref-active="nav-item-active" ui-sref="login" translate>navigation.login</a></li>
 				<li><a class="white-with-hover color-green-hover size-18-light" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
 			</ul>

@@ -27,10 +27,19 @@ angular.module('scalearAngularApp')
           )           
     }
 
+    var deleteCourseLocally=function(course){
+      $scope.courses.splice($scope.courses.indexOf(course), 1)
+      var course_index = $scope.current_courses.map(function(x){
+        return course.id
+      }).indexOf(course.id)
+      if(course_index > -1)
+        $scope.current_courses.splice(course_index, 1)
+    }
+
 		$scope.deleteCourse=function(course){
 			Course.destroy({course_id: course.id},{},
 				function(response){
-					$scope.courses.splice($scope.courses.indexOf(course), 1)
+					deleteCourseLocally(course)
 				},
 				function(){})
 		}
@@ -38,7 +47,7 @@ angular.module('scalearAngularApp')
     $scope.unenrollCourse=function(course){
       Course.unenroll({course_id: course.id},{},
         function(response){
-          $scope.courses.splice($scope.courses.indexOf(course), 1)
+          deleteCourseLocally(course)
         },
         function(){})
     }

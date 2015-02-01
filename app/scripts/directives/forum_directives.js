@@ -304,7 +304,7 @@ angular.module('scalearAngularApp')
         templateUrl: '/views/forum/flag_button.html',
         link: function(scope, element){
             scope.flag_text=$translate("discussion.flag_post")
-            scope.unflag_text=$translate("unflag_post")
+            scope.unflag_text=$translate("discussion.unflag_post")
 
         }
     }

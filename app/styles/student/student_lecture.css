@@ -247,7 +247,7 @@
       /*display: none !important;*/
       opacity: 0;
     }
-    .comment-body{
+    .comment_body{
         margin-bottom: 5px;
     }
     .discussion-comment:hover .hiddendeletebutton, .discussion-content:hover .hiddendeletebutton{

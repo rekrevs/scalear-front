@@ -1,8 +1,8 @@
-var ptor = protractor.getInstance();
-var locator = require('./locators');
-var o_c = require('./openers_and_clickers');
-var student = require('./student_module')
-var params = ptor.params;
+// // var ptor = protractor.getInstance();
+// var locator = require('./locators');
+// var o_c = require('./openers_and_clickers');
+// var student = require('./student_module')
+// // var params = ptor.params;
 
 //====================================================
 //               add new course

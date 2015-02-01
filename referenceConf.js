@@ -1,3 +1,46 @@
+var params= {
+    //local
+    frontend: 'http://0.0.0.0:9000/#',
+    admin_mail: 'admin@scalear.com',
+    teacher_mail:  'teacher1@sharklasers.com',
+    teacher2_mail: 'teacher2@sharklasers.com',
+    teacher3_mail: 'teacher3@sharklasers.com',
+    student_mail:  'studenttest@sharklasers.com',
+    student2_mail: 'studenttest2@sharklasers.com',
+    student3_mail: 'studenttest3@sharklasers.com',
+    student4_mail: 'studenttest4@sharklasers.com',
+    student5_mail: 'studenttest5@sharklasers.com',
+    admin_password:"password",
+    password: 'password',
+    url1:"http://www.youtube.com/watch?v=xGcG4cp2yzY",
+    url2:"https://www.youtube.com/watch?v=SKqBmAHwSkg",
+    q_x:169,
+    q1_y:127,
+    q2_y:157,
+    q3_y:187,
+
+    //staging
+    // frontend: 'http://staging.scalable-learning.com/#',
+    // admin_email: 'admin@scalable-learning.com',       
+    // teacher_mail: 'anyteacher@email.com',
+    // teacher2_mail: 'teacher2@sharklasers.com',
+    // teacher3_mail: 'teacher3@sharklasers.com',
+    // student_mail: 'student2@email.com',
+    // student_mail2: 'student3@email.com',
+    // student_mail3: 'student4@email.com',
+    // password: 'password',
+    // admin_password:"admin_account_password",
+
+    short_name: "csc-test",
+    course_name: "aesting course 100",
+    course_duration: '19',
+    discussion_link: 'www.testing-link.com',
+    image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
+    course_description: 'too many words',
+    prerequisites: '1- course 1 2- course 2 3- course 3',
+}
+
+
 // A reference configuration file.
 exports.config = {
     // ----- How to setup Selenium -----
@@ -43,44 +86,71 @@ exports.config = {
     // ----- What tests to run -----
     //
     // Spec patterns are relative to the location of this config.
+    suites: {
+        course_create:[
+            'test/e2e/spec/create_course.spec.js',
+            'test/e2e/spec/fill_course.spec.js',
+        ],
+        validation: [
+            'test/e2e/spec/course_information_validation.spec.js', //not done
+            // 'test/e2e/spec/account_information_validation.spec.js',
+            // 'test/e2e/spec/enrollment_help.spec.js'
+        ],
+        course_editor:[
+            // 'test/e2e/spec/course_editor_basic.spec.js',
+            // 'test/e2e/spec/course_editor_copy.spec.js',
+            // 'test/e2e/spec/module_statistics.spec.js',
+        ],
+        announcement:[
+            'test/e2e/spec/announcements.spec.js'
+        ],
+        student:[
+            'test/e2e/spec/students_solve_course.spec.js',
+            // 'test/e2e/spec/discussions.spec.js',
+            // 'test/e2e/spec/notes.spec.js',
+            // 'test/e2e/spec/student-lectures.spec.js'
+        ],
+
+        delete_course:'test/e2e/spec/delete_course.spec.js'
+      },
     specs: [
-    //{{reviewed}}
-        // 'test/e2e/spec/calendar-teacher-student.spec.js',  //(√)
-        // 'test/e2e/spec/copying.spec.js', //(√)
-        // 'test/e2e/spec/course-editor-basic.spec.js', //(√)
-        // 'test/e2e/spec/create-announcements.spec.js', //(√)
-        // 'test/e2e/spec/dashboard.spec.js', //(√)
-        // 'test/e2e/spec/discussions.spec.js', //(√)  
-        // 'test/e2e/spec/enrollment-help.spec.js', //(√)
-        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //(√)
-        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//(√)
-        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',//(√)
-        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //(√)
-        // 'test/e2e/spec/module-statistics.spec.js', //(√)
-        // 'test/e2e/spec/normal-quiz.spec.js', //(√)
-        // 'test/e2e/spec/normal-survey.spec.js', //(√)
-        // 'test/e2e/spec/notes.spec.js', //(√)
-        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js', //(√)
-        // 'test/e2e/spec/ocq-quizzez-over-video.spec.js', //(√)
-        // 'test/e2e/spec/ocq-survey-over-video.spec.js', //(√)
-        // 'test/e2e/spec/sharing.spec.js',//(√)
-        // 'test/e2e/spec/statistics.spec.js',  //(√)
-        // 'test/e2e/spec/student-lectures.spec.js', //(√)
-        // 'test/e2e/spec/teacher-managment.spec.js', //(√)
-        // 'test/e2e/spec/timeline.spec.js',(√)
-        // 'test/e2e/spec/validations.spec.js', //(√)  should try changing the appearance date to an invalid date - before module appearance
-        // 'test/e2e/spec/account-info-validation.spec.js',//(√)
-        // 'test/e2e/spec/create-course-check-info.spec.js',//(√)
-        // 'test/e2e/spec/preview-as-student.spec.js',//(√) //problem with deleting course at the end
-        // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',//(√)
-        // 'test/e2e/spec/drag-quizzez-over-video.spec.js',//(√)
-        // 'test/e2e/spec/enrolled-students.spec.js',//(√)
-        // 'test/e2e/spec/init-progress-data.spec.js', //(√)
-        // 'test/e2e/spec/progress-main.spec.js', //(√)
-        // 'test/e2e/spec/progress-module.spec.js', //(√)
-        
-    //{{notreviewed}}                
-        'test/e2e/spec/inclass.spec.js',
+    //{{reviewed}}  
+        // 'test/e2e/spec/init-progress-data.spec.js', //  
+        // 'test/e2e/spec/account-info-validation.spec.js',//    
+        // 'test/e2e/spec/copying.spec.js', //
+        // 'test/e2e/spec/course-editor-basic.spec.js', //
+        // 'test/e2e/spec/create-announcements.spec.js', //
+        // 'test/e2e/spec/dashboard.spec.js', //
+        // 'test/e2e/spec/enrollment-help.spec.js', //
+        // 'test/e2e/spec/module-statistics.spec.js'
+        // 'test/e2e/spec/discussions.spec.js', // 
+        // 'test/e2e/spec/notes.spec.js', //        
+        // 'test/e2e/spec/mcq-quizzez-over-video-text.spec.js',//
+        // 'test/e2e/spec/mcq-quizzez-over-video.spec.js',//
+        // 'test/e2e/spec/mcq-survey-over-video.spec.js', //       
+        // 'test/e2e/spec/normal-quiz.spec.js', //
+        // 'test/e2e/spec/normal-survey.spec.js', //
+        // 'test/e2e/spec/ocq-quizzez-over-video-text.spec.js', //
+        // 'test/e2e/spec/ocq-quizzez-over-video.spec.js', //
+        // 'test/e2e/spec/ocq-survey-over-video.spec.js', //
+        // 'test/e2e/spec/drag-quizzez-over-video-text.spec.js',//
+        // 'test/e2e/spec/drag-quizzez-over-video.spec.js',//
+        // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //
+
+        // 'test/e2e/spec/sharing.spec.js',//
+        // 'test/e2e/spec/statistics.spec.js',  //
+        // 'test/e2e/spec/student-lectures.spec.js', //
+        // 'test/e2e/spec/teacher-managment.spec.js', //
+        // 'test/e2e/spec/timeline.spec.js',
+        // 'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
+        // 'test/e2e/spec/module-statistics.spec.js', //     
+        // 'test/e2e/spec/preview-as-student.spec.js',// //problem with deleting course at the end
+        // 'test/e2e/spec/enrolled-students.spec.js',//
+        // 
+        // 'test/e2e/spec/progress-main.spec.js', //
+        // 'test/e2e/spec/progress-module.spec.js', //
+        // 'test/e2e/spec/inclass.spec.js',
+        // 'test/e2e/spec/calendar-teacher-student.spec.js',  //
 
 
     ],
@@ -112,10 +182,19 @@ exports.config = {
     // You can specify a file containing code to run by setting onPrepare to
     // the filename string.
     onPrepare: function() {
-        // At this point, global 'protractor' object will be set up, and jasmine
-        // will be available. For example, you can add a Jasmine reporter with:
-        //     jasmine.getEnv().addReporter(new jasmine.JUnitXmlReporter(
-        //         'outputdir/', true, true));
+        browser.driver.manage().window().maximize();
+        browser.driver.get(params.frontend);
+        browser.driver.sleep(1000);
+        browser.driver.findElement(by.id('login')).click();
+        browser.driver.sleep(1000);
+        browser.driver.findElement(by.id('user_email')).sendKeys(params.teacher_mail);
+        browser.driver.findElement(by.id('user_passowrd')).sendKeys(params.password);
+        browser.driver.findElement(by.id('login_btn')).click();
+        browser.driver.wait(function() {
+          return browser.driver.getCurrentUrl().then(function(url) {
+            return /dashboard/.test(url);
+          });
+        });
     },
 
     // The params object will be passed directly to the protractor instance,
@@ -123,53 +202,7 @@ exports.config = {
     // contain anything you my need in your test.
     // This can be changed via the command line as:
     //   --params.login.user 'Joe'
-    params: {
-        //local
-        frontend: 'http://0.0.0.0:9000/#',
-        admin_mail: 'admin@scalear.com',
-        teacher_mail:  'teacher1@sharklasers.com',
-        teacher2_mail: 'teacher2@sharklasers.com',
-        teacher3_mail: 'teacher3@sharklasers.com',
-        student_mail:  'studenttest@sharklasers.com',
-        student2_mail: 'studenttest2@sharklasers.com',
-        student3_mail: 'studenttest3@sharklasers.com',
-        student4_mail: 'studenttest4@sharklasers.com',
-        student5_mail: 'studenttest5@sharklasers.com',
-        admin_password:"password",
-        password: 'password',
-
-        //staging
-        // frontend: 'http://staging.scalable-learning.com/#',
-        // admin_email: 'admin@scalable-learning.com',       
-        // teacher_mail: 'anyteacher@email.com',
-        // teacher2_mail: 'teacher2@sharklasers.com',
-        // teacher3_mail: 'teacher3@sharklasers.com',
-        // student_mail: 'student2@email.com',
-        // student_mail2: 'student3@email.com',
-        // student_mail3: 'student4@email.com',
-        // password: 'password',
-        // admin_password:"admin_account_password",
-
-        short_name: "csc-test",
-        course_name: "aesting course 100",
-        course_duration: '19',
-        discussion_link: 'www.testing-link.com',
-        image_link: "http://dasonlightinginc.com/uploads/2/9/4/2/2942625/4781952_orig.jpg",
-        course_description: 'too many words',
-        prerequisites: '1- course 1 2- course 2 3- course 3',
-        width: 1441,
-        height: 900,
-        
-        // frontend: 'http://staging.scalable-learning.com/#/',
-        //====================================================
-        //               wait for element
-        //====================================================
-        wait_ele: function(ptor, element){
-          ptor.wait(function(){
-            return ptor.isElementPresent(element)
-        });
-      }
-  },
+    params:params,
     // ----- Options to be passed to minijasminenode -----
     //
     // See the full list at https://github.com/juliemr/minijasminenode

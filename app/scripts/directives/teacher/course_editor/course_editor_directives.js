@@ -120,12 +120,12 @@ angular.module('scalearAngularApp')
                 // scope.$watch(scope.getWidth, function(newValue, oldValue) {
                 //     angular.element(element.children()[0]).css("width", newValue)
                 // });
-                $timeout(function(){
-                    scope.$watch(scope.getHeight, function(newValue, oldValue) {
-                        console.log(parent.height())
-                        element.css("height", parent.height())
-                    })
-                },1000);
+                // $timeout(function(){
+                //     scope.$watch(scope.getHeight, function(newValue, oldValue) {
+                //         console.log(parent.height())
+                //         element.css("height", parent.height())
+                //     })
+                // },1000);
             }
         }
     }])

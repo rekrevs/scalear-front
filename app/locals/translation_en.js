@@ -117,7 +117,8 @@ var translation_en=function(){
         teachers: "Teachers",
         lectures: "Lectures",
         discussion_forum: "Discussion Forum",
-        help: "Help"
+        help: "Help",
+        add_students:"Add Students"
       },
       discussion:{
         private_post: "Private Post",

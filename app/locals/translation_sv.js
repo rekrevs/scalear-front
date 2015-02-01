@@ -118,7 +118,8 @@ var translation_sv=function(){
               calendar: "Kalender",
               discussion_forum: "Diskussionsforum",
               course_information: "Kursinformation",
-              help: "Hjälp"
+              help: "Hjälp",
+              add_students:"Lägg Studenter"
           },
           discussion:{
             private_post: "Privat Inlägget",

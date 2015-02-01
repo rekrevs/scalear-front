@@ -3,7 +3,7 @@
     <top-bar class="sub-header whitesmoke" style="z-index: 10 !important;">
       <ul class="title-area left">
         <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="head.lectures">
-          <h1 class="disable_selection"><a id="content_navigator" class="truncate dark-text sub-header-component dark-medium-grey" ng-class="{'green-color-white': ContentNavigator.status, 'dark-medium-grey-hover': !ContentNavigator.status}" ng-click="toggleNavigator()" style="width: 300px;margin-right:10px">
+          <h1 class="disable_selection"><a id="content_navigator" class="truncate dark-text sub-header-component dark-medium-grey" ng-class="{'green-color-white': ContentNavigator.status, 'dark-medium-grey-hover': !ContentNavigator.status}" ng-click="toggleNavigator()" style="width: 301px;margin-right:10px">
             <i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }"></i>
             <i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }" style="position:absolute;top:2px;left:15px"></i>
            {{course.short_name}}: {{course.selected_module.name || 'courses.select_module' | translate}}</a></h1>
@@ -38,14 +38,14 @@
         <h1 class="dark-text" style="padding: 0 40px;color:grey">{{message}}</h1>
       </div>
         <top-bar-section>
-          <div ng-if="('course_list' | includedByState)" class="right" style="padding-right:10px">
-            <div class="button-group" ng-init="initFilters()">
-              <span step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="navigation_courses">
+          <div ng-if="('course_list' | includedByState)" class="right" style="padding-right:10px">            
+            <span step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="navigation_courses">
+              <div class="button-group" ng-init="initFilters()">
                 <button type="button" ng-click="updateCourseFilter('!!')" class="button tiny" ng-class="{active: course_filter == '!!'}">All</button>
                 <button type="button" ng-click="updateCourseFilter(false)" class="button tiny" ng-class="{active: course_filter == false}">Current</button>
                 <button type="button" ng-click="updateCourseFilter(true)" class="button tiny" ng-class="{active: course_filter == true}" >Finished</button>
-              </span>
-            </div>
+              </div>
+            </span>           
           </div>
         </top-bar-section>
     </top-bar>

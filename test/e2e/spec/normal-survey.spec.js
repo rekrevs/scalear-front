@@ -7,7 +7,6 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-
 describe('add required survey',function(){
 
     it('should sign in as teacher', function(){
@@ -19,17 +18,13 @@ describe('add required survey',function(){
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
-    it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-    })
-
     it('should add a normal survey', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
+        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.open_course_list(ptor);
+        // o_c.open_course(ptor, 1);
         // o_c.open_content_editor(ptor);
         teacher.add_module(ptor);
-        ptor.sleep(3000)
+        // ptor.sleep(1000)
         teacher.add_survey(ptor)
     })
 
@@ -57,8 +52,12 @@ describe('add required survey',function(){
         teacher.save_survey(ptor)
     })
 
+    it('should get the enrollment key and enroll student', function(){
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    })
+
     it('should go to student', function(){
-        o_c.to_student(ptor);
+        // o_c.to_student(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         // o_c.open_lectures(ptor);
@@ -114,17 +113,15 @@ describe("add not required survey", function(){
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
-    it('should get the enrollment key and enroll student', function(){
-       teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-    })
+    
 
     it('should add a normal survey', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
+        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.open_course_list(ptor);
+        // o_c.open_course(ptor, 1);
         // o_c.open_content_editor(ptor);
         teacher.add_module(ptor);
-        ptor.sleep(3000)
+        // ptor.sleep(3000)
         teacher.add_survey(ptor)
     })
 
@@ -152,8 +149,12 @@ describe("add not required survey", function(){
         teacher.save_survey(ptor)
     })
 
+    it('should get the enrollment key and enroll student', function(){
+       teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    })
+
     it('should go to student', function(){
-        o_c.to_student(ptor);
+        // o_c.to_student(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         // o_c.open_lectures(ptor);
@@ -207,7 +208,10 @@ function check_survey_name(ptor, name){
 }
 
 function check_optional_tag_exist(val){
-    expect(element(by.className('label')).isDisplayed()).toBe(val)
-    if(val)
-        expect(element(by.className('label')).getText()).toEqual("Optional")
+    if(val == false){
+        expect(element.all(by.className('label')).count()).toBe(0)
+    }
+    else{
+        expect(element.all(by.className('label')).count()).toBe(1) 
+    }
 }

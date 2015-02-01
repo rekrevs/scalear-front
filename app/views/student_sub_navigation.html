@@ -1,73 +1,38 @@
 <div>
   <div ng-if="('**.course.**' | includedByState)">
-    <div style="height: 50px;"></div>
     <top-bar class="sub-header whitesmoke" style="z-index: 10 !important;">
-    <!-- <div class="top-bar sub-header"> -->
-        <ul class="title-area">
-            <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="head.lectures">
-              <h1 class="disable_selection"><a id="content_navigator" class="truncate dark-text sub-header-component dark-medium-grey" ng-class="{'green-color-white': open_navigator, 'dark-medium-grey-hover': !open_navigator}" ng-click="toggleNavigator()" style="width: 300px;margin-right:10px"><i class="fi-list" ng-class="{'color-white': open_navigator}"></i> {{course.short_name}}: {{course.selected_module.name || 'courses.select_module' | translate}}</a></h1>
-            </li>
-             <li toggle-top-bar class="menu-icon"><a href=""></a></li>
-             <li ></li>
+      <ul class="title-area left">
+        <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="head.lectures">
+          <h1 class="disable_selection"><a id="content_navigator" class="truncate dark-text sub-header-component dark-medium-grey" ng-class="{'green-color-white': ContentNavigator.status, 'dark-medium-grey-hover': !ContentNavigator.status}" ng-click="toggleNavigator()" style="width: 300px;margin-right:10px">
+            <i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }"></i>
+            <i ng-class="{'arrow_down_dark_icon': !ContentNavigator.status, 'arrow_up_dark_icon': ContentNavigator.status }" style="position:absolute;top:2px;left:15px"></i>
+           {{course.short_name}}: {{course.selected_module.name || 'courses.select_module' | translate}}</a></h1>
+        </li>
+        <!-- <li toggle-top-bar class="menu-icon"><a href=""></a></li>
+        <li ></li> -->
+      </ul>
+      <ul class="title-area right" ng-if="('**.courseware.lecture.**' | includedByState)">
+        <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="head.lectures" >
+          <h1 class="disable_selection right truncate dark-text sub-header-component dark-medium-grey" ng-class="{'blue-color-white': TimelineNavigator.status, 'dark-medium-grey-blue-hover': !TimelineNavigator.status}" style="width: 300px;">
+            <span><timeline-filters class="settings hide-for-medium-down" /></span>
+            <a id="timeline_navigator" ng-click="toggleTimeline()" style="color: inherit;"><i ng-class="{'arrow_down_dark_icon': !TimelineNavigator.status, 'arrow_up_dark_icon': TimelineNavigator.status }"></i><i ng-class="{'arrow_down_dark_icon': !TimelineNavigator.status, 'arrow_up_dark_icon': TimelineNavigator.status }" style="position:absolute;top:2px;left:15px"></i> Timeline</a>            
+          </h1>
+        </li>
+      </ul>
+      <top-bar-section>
+       <ul class="right" ng-show="preview_as_student">
+          <li>
+              <a class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="disablePreview()"><b translate>exit_preview_as_student</b></a>
+          </li>
         </ul>
-          <top-bar-section>
-            <!-- Right Nav Section -->
-            <ul class="right" ng-show="preview_as_student">
-              <li>
-                  <a class="whitesmoke-hover dark-text sub-header-component size-14" ng-click="disablePreview()"><b translate>exit_preview_as_student</b></a>
-              </li>
-            </ul>
-            <ul class="right" ng-if="('**.lecture.**' | includedByState)">
-              <li has-dropdown ng-init="initFilters()">
-                <a class="whitesmoke-hover dark-text sub-header-component size-14" href="" translate>settings.settings</a>
-                <ul top-bar-dropdown>
-                  <span >
-                    <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('note')">
-                            <input id="showNotesCheckbox" type="checkbox" ng-checked="lecture_filter.note" />
-                            <span translate>course_settings.show_notes</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('discussion')">
-                            <input id="showQuestionsCheckbox" type="checkbox" ng-checked="lecture_filter.discussion" />
-                            <span translate>course_settings.show_questions</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('quiz')">
-                            <input id="showQuizzesCheckbox" type="checkbox" ng-checked="lecture_filter.quiz" />
-                            <span translate>course_settings.show_quizzes</span>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter('confused')">
-                            <input id="showConfusedCheckbox" type="checkbox" ng-checked="lecture_filter.confused" />
-                            <span translate>course_settings.show_confused</span>
-                        </div>
-                    </li>
-                    <li>
-                        <a class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="exportNotes()">
-                            <span translate>lectures.download_notes</span>
-                        </a>
-                    </li>
-                  </span>
-                </ul>
-              </li>
-            </ul>
-
-            <div ng-show="course.warning_message" class="left">
-              <h5 class="warning alert-box radius hide-for-medium-down" style="padding: 4px;margin:8px">{{course.warning_message}}</h5>
-            </div>
-
-          </top-bar-section>
-    <!-- </div> -->
+        <div ng-show="course.warning_message" class="left">
+          <h5 class="warning alert-box radius hide-for-medium-down" style="padding: 4px;margin:8px">{{course.warning_message}}</h5>
+        </div>
+      </top-bar-section>         
     </top-bar>
-<!--   <content-navigator modules="course.groups" mode="courseware" links="course.custom_links" open="open_navigator" style="z-index: 1;" /> -->
   </div>
 
   <div class="hide-for-medium-down" ng-if="!('**.course.**' | includedByState) && !('home' | includedByState)">
-    <div style="height: 50px;"></div>
     <top-bar class="sub-header whitesmoke">
       <div class="left name">
         <h1 class="dark-text" style="padding: 0 40px;color:grey">{{message}}</h1>
@@ -85,5 +50,4 @@
         </top-bar-section>
     </top-bar>
   </div>
-
 </div>

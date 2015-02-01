@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
   	$scope.inner_highlight_index = 0
   	$scope.progress_player= {}
   	$scope.timeline = {}
-    $scope.right_container = angular.element('#right-container')
+    // $scope.right_container = angular.element('#right-container')
     $scope.highlight_level = 0
   	$scope.time_parameters={
   		quiz: 3,
@@ -57,59 +57,59 @@ angular.module('scalearAngularApp')
     }]
   	var init= function(){
   		$scope.timeline = new Timeline()
-  		Module.getModuleProgress({
-	  			course_id: $stateParams.course_id,
-          module_id: $stateParams.module_id
-	  		},
-	  		function(data){{
-	  			angular.extend($scope, data)
-            if($scope.progress_player.controls.isYoutube($scope.first_lecture)){
-              $scope.url = $scope.first_lecture+"&controls=1&autohide=1&fs=1&theme=light"
-            }
-            if($scope.progress_player.controls.isMP4($scope.first_lecture)){
-              console.log($scope.progress_player)
-              $scope.url = $scope.first_lecture
-            }
-          }
-	  	 		$scope.timeline['lecture'] = {}
 
-	  	 		for(var lec_id in $scope.lectures){
-	  	 			$scope.timeline['lecture'][lec_id] = new Timeline()
-	  	 			for(var type in $scope.lectures[lec_id]){
-	  	 				if(type!= "meta")
-		  	 				for(var it in $scope.lectures[lec_id][type] ){
+      getModuleCharts()
+      getLectureCharts()
+      getQuizCharts()
+      getSurveyCharts()
+      setupShortcuts()
+    }
+
+  var getLectureCharts = function(){
+    Module.getModuleProgress({
+          course_id: $stateParams.course_id,
+          module_id: $stateParams.module_id
+        },
+        function(data){
+          angular.extend($scope, data)
+          $scope.module= $scope.course.selected_module
+          console.log("moduel ", $scope.course.selected_module)
+          if($scope.progress_player.controls.isYoutube($scope.first_lecture)){
+            $scope.url = $scope.first_lecture+"&controls=1&fs=1&theme=light"
+          }
+          else{
+            $scope.url = $scope.first_lecture
+          }
+          
+          $scope.timeline['lecture'] = {}
+
+          for(var lec_id in $scope.lectures){
+            $scope.timeline['lecture'][lec_id] = new Timeline()
+            for(var type in $scope.lectures[lec_id]){
+              if(type!= "meta")
+                for(var it in $scope.lectures[lec_id][type] ){
                   if(type=='discussion'){
+                    $scope.lectures[lec_id][type][it][0] = $scope.lectures[lec_id][type][it][1][0].post.time
                     for(var disc in $scope.lectures[lec_id][type][it][1]){
                       $scope.lectures[lec_id][type][it][1][disc].post.hide = !$scope.lectures[lec_id][type][it][1][disc].post.hide
                       for(var com in $scope.lectures[lec_id][type][it][1][disc].post.comments){
                         $scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide = !$scope.lectures[lec_id][type][it][1][disc].post.comments[com].comment.hide
-
                       }
                     }
                   }
                   else if(type=='charts'){
                     $scope.lectures[lec_id][type][it][1].hide = !$scope.lectures[lec_id][type][it][1].hide
                   }
-			  	 				$scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])	
-			  	 			}
-	  	 			}	  	 			
-	  	 		}
-          console.log($scope.timeline)
-	  	 		getModuleCharts()
-	  	 		getQuizCharts()
-	  	 		getSurveyCharts()
-				  setupShortcuts()
-          // resizeContainer()
-	  		},	
-	  		function(){}
-		)
-	}
-  // var resizeContainer = function(){
-  //   $scope.right_container.css('height', angular.element($window).height() - 130)
-  // }
-  // angular.element($window).bind('resize', function () {
-  //   resizeContainer();
-  // });
+                  $scope.timeline['lecture'][lec_id].add($scope.lectures[lec_id][type][it][0], type, $scope.lectures[lec_id][type][it][1])  
+                }
+           }           
+          }
+          console.log($scope.timeline)          
+        },  
+        function(){}        
+      )      
+    }
+  
 
  	var getModuleCharts = function(){
     Module.getModuleCharts(
@@ -133,23 +133,24 @@ angular.module('scalearAngularApp')
           module_id:$stateParams.module_id
       },
       function(resp){
-        $scope.quizzes=angular.extend({}, resp.quizzes, $scope.quizzes)
-      	$scope.timeline['quiz'] ={}
         console.log(resp)
-  	 		for(var quiz_id in $scope.quizzes){
+        var quizzes=resp.quizzes
+      	$scope.timeline['quiz'] ={}
+  	 		
+        for(var quiz_id in quizzes){
   	 			$scope.timeline['quiz'][quiz_id] = new Timeline()
-  	 			for(var q_idx in $scope.quizzes[quiz_id].questions){
-            var q_id = $scope.quizzes[quiz_id].questions[q_idx].id
-            var data = $scope.quizzes[quiz_id].charts[q_id] || $scope.quizzes[quiz_id].free_question[q_id]
-            data.type = $scope.quizzes[quiz_id].questions[q_idx].type
+  	 			for(var q_index in quizzes[quiz_id].questions){
+            var q_id = quizzes[quiz_id].questions[q_index].id
+            var data = quizzes[quiz_id].charts[q_id] || quizzes[quiz_id].free_question[q_id]
+            data.type = quizzes[quiz_id].questions[q_index].type
             data.id = q_id  
             data.quiz_type='quiz'
-            data.title=$scope.quizzes[quiz_id].questions[q_idx].question
-            var type = $scope.quizzes[quiz_id].questions[q_idx].type == "Free Text Question"? "free_question" : 'charts'
+            data.title=quizzes[quiz_id].questions[q_index].question
+            var type = quizzes[quiz_id].questions[q_index].type == "Free Text Question"? "free_question" : 'charts'
   	 			  $scope.timeline['quiz'][quiz_id].add(0, type, data,'quiz')
           }
   	 		}
-
+        $scope.quizzes=angular.extend({}, quizzes, $scope.quizzes)
 
  	    },
       function(){}
@@ -162,34 +163,45 @@ angular.module('scalearAngularApp')
             course_id: $stateParams.course_id,
             module_id:$stateParams.module_id
         },
-        function(data){
-          console.log(data)
-        	$scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
-          $scope.review_survey_count = data.review_survey_count
+        function(resp){
+          console.log(resp)
+          var surveys = resp.surveys
+          $scope.review_survey_count = resp.review_survey_count
+          $scope.review_survey_reply_count = {}
         	$scope.timeline["survey"]={}
-        	for (var survey_id in $scope.quizzes ){
+
+        	for (var survey_id in surveys ){
         		$scope.timeline["survey"][survey_id]=new Timeline()
-        		for(var q_idx in $scope.quizzes[survey_id].questions){
-        			var q_id = $scope.quizzes[survey_id].questions[q_idx].id
-              var data = $scope.quizzes[survey_id].charts[q_id] || $scope.quizzes[survey_id].free_question[q_id]
-              data.type = $scope.quizzes[survey_id].questions[q_idx].type
+            $scope.review_survey_reply_count[survey_id]={}
+        		for(var q_index in surveys[survey_id].questions){
+        			var q_id = surveys[survey_id].questions[q_index].id
+              $scope.review_survey_reply_count[survey_id][q_id]=0
+              var data = surveys[survey_id].charts[q_id] || surveys[survey_id].free_question[q_id]
+              data.type = surveys[survey_id].questions[q_index].type
               data.id = q_id  
               data.quiz_type='survey'
-              var type = $scope.quizzes[survey_id].questions[q_idx].type == "Free Text Question"? "free_question" : 'charts'
+              
+              var type = surveys[survey_id].questions[q_index].type == "Free Text Question"? "free_question" : 'charts'
               if(type=="free_question"){
                 data.answers.forEach(function(answer){
+                  if(!answer.hide)
+                    $scope.review_survey_reply_count[survey_id][q_id]++
                   answer.hide = !answer.hide
                 })
               }
+              if(data.show)
+                $scope.review_survey_count+=$scope.review_survey_reply_count[survey_id][q_id]
               $scope.timeline['survey'][survey_id].add(0, type, data)
         		}
         	}
+          $scope.quizzes=angular.extend({}, surveys, $scope.quizzes)
     	 	},
         function(){}
       )
     }
 
   	$scope.manageHighlight=function(x){
+      // resizePlayerSmall()
   		var divs = angular.element('.ul_item')
 		  angular.element(divs[$scope.highlight_index]).removeClass('highlight')	
 		  angular.element('li.highlight').removeClass('highlight')	
@@ -223,10 +235,12 @@ angular.module('scalearAngularApp')
       $('.main_content').parent().scrollToThis(angular.element(divs[$scope.highlight_index]),{offsetTop : top});
 	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
+      seekToItem()
 	    $scope.$apply()
   	}
 
   	$scope.manageInnerHighlight=function(x){
+      // resizePlayerSmall()
       console.log("mangae inner higligh")
   		var inner_ul= angular.element('ul.highlight').find('ul')
   		if(inner_ul.length){
@@ -254,44 +268,69 @@ angular.module('scalearAngularApp')
   		}
       var top = ( $('html').innerHeight() / 2 )-10;
       $('.main_content').parent().scrollToThis(angular.element(inner_li[$scope.inner_highlight_index]),{offsetTop : top});
-	    $scope.$apply()
+	    seekToItem()
+      $scope.$apply()
   	}
 
   	$scope.highlight=function(ev,item){
   		var ul = angular.element(ev.target).closest('ul.ul_item')
   		var divs = angular.element('.ul_item')
-  		// angular.element(divs[$scope.highlight_index]).removeClass('highlight')
       $(".highlight").removeClass("highlight");
   		$scope.highlight_index = divs.index(ul)
   		angular.element(ul).addClass("highlight").removeClass('low-opacity').addClass('full-opacity')
       angular.element('.ul_item').not('.highlight').removeClass('full-opacity').addClass('low-opacity')
       $scope.highlight_level = 1
       setupRemoveHightlightEvent()
-      if($scope.selected_item == item)
-        return
+      // if($scope.selected_item == item)
+      //   return
       $scope.selected_item =item
       var parent_div = ul.closest('div')
       if(parent_div.attr('id')){
         var id=parent_div.attr('id').split('_') 
         $scope.selected_item.lec_id = id[1]
       }
-  		$scope.inner_highlight_index = 0	
+  		$scope.inner_highlight_index = 0
+      var inner_li= angular.element(ev.target).closest('li.li_item')
+      if(inner_li.length){
+        if(angular.element('li.highlight').length)
+          angular.element('li.highlight').removeClass('highlight')
+        $scope.inner_highlight_index = ul.find('li.li_item').index(inner_li[0])
+        angular.element(inner_li[0]).addClass('highlight')
+        $scope.highlight_level = 2        
+      }
+      seekToItem()
   	}
+
+    // $scope.innerHighlight=function(ev,item){
+    //   var inner_ul= angular.element('ul.highlight').find('ul')
+    //   if(inner_ul.length){
+    //     var inner_li = inner_ul.find('li').not('.no_highlight')
+    //     if(angular.element('li.highlight').length)
+    //       angular.element('li.highlight').removeClass('highlight')
+    //     $scope.inner_highlight_index = $scope.inner_highlight_index+x
+    //     angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
+    //     $scope.highlight_level = 2
+    //   }
+    //   seekToItem()
+    // }
 
    var setupRemoveHightlightEvent=function(){
     console.log("adding")
       $(document).click(function(e){
         if(angular.element(e.target).find('.inner_content').length){
           removeHightlight()
+
            $(document).off('click');
         }
       })
     }
 
-    var removeHightlight=function(){     
+    var removeHightlight=function(){  
+      resizePlayerSmall() 
       $(".highlight").removeClass("highlight");
       angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
       $scope.highlight_level = 0
+      $scope.$apply()
       console.log("removing")
     }
 
@@ -361,7 +400,7 @@ angular.module('scalearAngularApp')
         },
         function(){
           console.log(comment.hide)
-          if(comment.hide){
+          if(comment.hide && !discussion.hide){
             discussion.hide= true
             $scope.updateHideDiscussion(discussion.id,!discussion.hide)
           }
@@ -370,11 +409,24 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideResponse = function(quiz_id, item, answer){
+    $scope.updateHideResponse = function(survey_id, item, answer){
+      console.log(survey_id)
+      console.log(item)
+      console.log(answer)
+      if(!answer.hide){
+        $scope.review_survey_reply_count[survey_id][item.data.id]++
+        if(item.data.show)
+          $scope.review_survey_count++
+      }
+      else{
+        $scope.review_survey_reply_count[survey_id][item.data.id]--
+        if(item.data.show)
+          $scope.review_survey_count--
+      }
       Quiz.hideResponses(
         {
           course_id:$stateParams.course_id,
-          quiz_id: quiz_id
+          quiz_id: survey_id
         },
         {
           hide:{
@@ -384,9 +436,9 @@ angular.module('scalearAngularApp')
         },
         function(){
           console.log(answer.hide)
-          if(answer.hide){
+          if(answer.hide && !item.data.show){
             item.data.show = true
-            $scope.updateHideSurveyQuestion(quiz_id, item.data.id, item.data.show)
+            $scope.updateHideSurveyQuestion(survey_id, item.data.id, item.data.show)
           }
         }
       )
@@ -407,20 +459,28 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideSurveyQuestion=function(quiz_id,id, value){
+    $scope.updateHideSurveyQuestion=function(survey_id,id, value){
       if(value)
-        $scope.review_survey_count++
+        $scope.review_survey_count+= $scope.review_survey_reply_count[survey_id][id] || 0
       else
-        $scope.review_survey_count--
+        $scope.review_survey_count-= $scope.review_survey_reply_count[survey_id][id] || 0
       Quiz.showInclass(
         {
           course_id:$stateParams.course_id,
-          quiz_id:quiz_id
+          quiz_id:survey_id
         },
         {
           question:id,
           show:value
         }
+      )
+    }
+
+    $scope.makeSurveyVisible=function(quiz, val){
+      quiz.meta.visible = val
+      Quiz.makeVisible({quiz_id:quiz.meta.id},
+        {visible:val},
+        function(){}
       )
     }
 
@@ -539,7 +599,7 @@ angular.module('scalearAngularApp')
     if($scope.url.indexOf(url) == -1){
       if($scope.progress_player.controls.isYoutube(url)){
         $scope.progress_player.controls.setStartTime(time)
-        $scope.url= url+"&controls=1&autohide=1&fs=1&theme=light"
+        $scope.url= url+"&controls=1&fs=1&theme=light"
       }
       if($scope.progress_player.controls.isMP4(url)){
         $scope.url= url
@@ -705,6 +765,18 @@ angular.module('scalearAngularApp')
   //   return formated_data
   // }
 
+  var seekToItem=function(){
+    console.log("seeking to item",$scope.selected_item )
+    if($scope.selected_item && $scope.selected_item.time>=0 && $scope.lectures[$scope.selected_item.lec_id]){          
+        var time = $scope.selected_item.time             
+        if ($scope.selected_item.type == "discussion"){
+          var q_ind = $scope.inner_highlight_index
+          time = $scope.selected_item.data[q_ind].post.time
+          console.log(time)
+        }  
+        $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
+    }
+  }
 
 	$scope.createChart = function(data,student_count, options, formatter, type) {
 		var chart = {};
@@ -743,50 +815,48 @@ angular.module('scalearAngularApp')
             $scope.$apply()
             angular.element('textarea').focus()
           }
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
 	  shortcut.add("Down",function(){
       if($scope.highlight_level <= 1)
 		    $scope.manageHighlight(1)
       else
         $scope.manageInnerHighlight(1)
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
     shortcut.add("Up",function(){
       if($scope.highlight_level <= 1)
 		    $scope.manageHighlight(-1)
       else
         $scope.manageInnerHighlight(-1)
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Right",function(){
       if($scope.highlight_level == 0)
         $scope.manageHighlight(0)
       else
 		    $scope.manageInnerHighlight(0)
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Left",function(){
       if($scope.highlight_level <= 1)
         removeHightlight()
       else
 		    $scope.manageHighlight(0)
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Space",function(){
-      if($scope.selected_item && $scope.selected_item.time>0){ 
-        var time = $scope.selected_item.time             
-        if ($scope.selected_item.type == "discussion"){
-          var q_ind = $scope.inner_highlight_index
-          time = $scope.selected_item.data[q_ind].post.time
-          console.log(time)
-        }
-        $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
-        $scope.$apply()
-    }
-    },{"disable_in_input" : true});
+      if($scope.selected_item && $scope.selected_item.time>=0 && !$scope.large_player){          
+          resizePlayerLarge()
+      }
+      else
+        resizePlayerSmall()
+
+      $scope.$apply()
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("m",function(){
       console.log($scope.selected_item)
+      console.log($scope.selected_item.data.quiz_type)
       if($scope.selected_item){        
   			if ($scope.selected_item.type == "discussion"){
   				var q_ind = $scope.inner_highlight_index
@@ -800,13 +870,9 @@ angular.module('scalearAngularApp')
           }
           else if($scope.selected_item.data.show != null){
             $scope.selected_item.data.show = !$scope.selected_item.data.show
-            // $scope.updateHideQuiz($scope.selected_item.data.id,!$scope.selected_item.data.show )
             $scope.updateHideSurveyQuestion($scope.selected_item.lec_id,$scope.selected_item.data.id,$scope.selected_item.data.show)
           }
   			}
-        // else if($scope.selected_item.type == "Free Text Question"){
-          
-        // }
         else if($scope.selected_item.type == "free_question"){
           if($scope.selected_item.data.quiz_type == 'survey'){
             console.log($scope.inner_highlight_index)
@@ -816,11 +882,12 @@ angular.module('scalearAngularApp')
             }
             else{
               var q_ind = $scope.inner_highlight_index
+              $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item,$scope.selected_item.data.answers[q_ind])
               $scope.selected_item.data.answers[q_ind].hide = !$scope.selected_item.data.answers[q_ind].hide
-              $scope.updateHideResponse($scope.selected_item.data.answers[q_ind].quiz_id,$scope.selected_item.data.answers[q_ind].id,!$scope.selected_item.data.answers[q_ind].hide)
+              
             }
           }
-          else{
+          else if($scope.selected_item.data.quiz_type == 'quiz'){
             if($scope.highlight_level == 1){
               $scope.selected_item.data.show = !$scope.selected_item.data.show
               $scope.updateHideQuiz($scope.selected_item.data.id, !$scope.selected_item.data.show)
@@ -833,25 +900,25 @@ angular.module('scalearAngularApp')
           }
         }
       }
-    },{"disable_in_input" : true});
+    },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("ESC",function(){
       console.log($scope.selected_item)
+      resizePlayerSmall()
       if($scope.selected_item.type == 'discussion'){
-        console.log("disc")
         $scope.selected_item.data.forEach(function(discussion){
           discussion.post.show_feedback = false; 
           discussion.post.temp_response=null
-        })
+        })        
       }else if($scope.selected_item.type == "free_question"){
-        console.log("free text")
         $scope.selected_item.data.answers.forEach(function(answer){
           answer.show_feedback = false;
           answer.temp_response = null
         })
       }
+      angular.element('ul.highlight .feedback textarea').blur()
       $scope.$apply()
-    },{"disable_in_input" : false});
+    },{"disable_in_input" : false, "propagate":false});
 
     shortcut.add("enter",function(){
       console.log($scope.selected_item)
@@ -866,7 +933,7 @@ angular.module('scalearAngularApp')
         $scope.selected_item.data.answers[q_ind].show_feedback = false
       }
       $scope.$apply()
-    },{"disable_in_input" : false});
+    },{"disable_in_input" : false, "propagate":false});
   }
 
   var removeShortcuts=function(){
@@ -878,6 +945,7 @@ angular.module('scalearAngularApp')
     shortcut.remove("Space");
     shortcut.remove("m");
     shortcut.remove("ESC");
+    shortcut.remove("enter");
   }
 
   $scope.print=function(){
@@ -926,6 +994,14 @@ angular.module('scalearAngularApp')
     else
       return 'black'
 
+  }
+
+  var resizePlayerLarge = function(){
+    $scope.large_player = true
+  }
+
+   var resizePlayerSmall = function(){
+    $scope.large_player = false
   }
 
 	$scope.getKeys = function( obj ) {

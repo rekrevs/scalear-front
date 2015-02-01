@@ -25,6 +25,7 @@
 <div ng-show="message" class="panel secondary notification_panel with-tiny-padding" ng-class="{'color-green': message==correct_notify,'color-red': message==incorrect_notify}">
   <center>
     <b><div class="size-14" style="margin-bottom: 7px;">{{message}}</div></b>
+    <small ng-show="middleMessage" class="dark-text">{{middleMessage}}</small>
     <small class="dark-text">{{submessage}}</small>
   </center>
 </div>

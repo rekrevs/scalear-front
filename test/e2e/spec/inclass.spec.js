@@ -24,42 +24,42 @@ describe("1", function () {
         o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
-    // it('should create_course', function(){
-    //     teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
-    // })
+    it('should create_course', function(){
+        teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites, o_c.feedback);
+    })
 
     //test
-    // it('should open course and make some data', function () {
-    //     teacher.add_module(ptor);
-    //     o_c.press_content_navigator(ptor);
-    //     teacher.open_module(ptor, 1);
-    //     teacher.create_lecture(ptor);           
-    //     o_c.press_content_navigator(ptor);
-    //     teacher.init_lecture(ptor, "mcq_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
+    it('should open course and make some data', function () {
+        teacher.add_module(ptor);
+        o_c.press_content_navigator(ptor);
+        teacher.open_module(ptor, 1);
+        teacher.create_lecture(ptor);           
+        o_c.press_content_navigator(ptor);
+        teacher.init_lecture(ptor, "mcq_text_quiz","https://www.youtube.com/watch?v=SKqBmAHwSkg");
         
-    //     ptor.navigate().refresh();
+        ptor.navigate().refresh();
         
-    //     youtube.seek(ptor, 30);
-    //     quiz_ov.create_mcq_quiz(ptor, o_c.feedback);
-    //     lecture_middle.rename_quiz(ptor, 1, 'MCQ QUIZ');
-    //     o_c.scroll_to_top(ptor);
-    //     quiz_ov.make_mcq_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback);
-    //     lecture_middle.exit_quiz(ptor, o_c.feedback);
+        youtube.seek(ptor, 30);
+        quiz_ov.create_mcq_quiz(ptor, o_c.feedback);
+        lecture_middle.rename_quiz(ptor, 1, 'MCQ QUIZ');
+        o_c.scroll_to_top(ptor);
+        quiz_ov.make_mcq_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback);
+        lecture_middle.exit_quiz(ptor, o_c.feedback);
         
-    //     youtube.seek(ptor, 50);
-    //     quiz_ov.create_ocq_quiz(ptor, o_c.feedback);
-    //     lecture_middle.rename_quiz(ptor, 3, 'OCQ QUIZ');
-    //     o_c.scroll_to_top(ptor);
-    //     quiz_ov.make_ocq_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback);
-    //     lecture_middle.exit_quiz(ptor, o_c.feedback);
+        youtube.seek(ptor, 50);
+        quiz_ov.create_ocq_quiz(ptor, o_c.feedback);
+        lecture_middle.rename_quiz(ptor, 3, 'OCQ QUIZ');
+        o_c.scroll_to_top(ptor);
+        quiz_ov.make_ocq_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback);
+        lecture_middle.exit_quiz(ptor, o_c.feedback);
 
-    //     youtube.seek(ptor, 80);
-    //     quiz_ov.create_drag_quiz(ptor, o_c.feedback)
-    //     lecture_middle.rename_quiz(ptor, 5, 'DRAG QUIZ')
-    //     o_c.scroll_to_top(ptor)
-    //     quiz_ov.make_drag_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback)
-    //     lecture_middle.exit_quiz(ptor, o_c.feedback);
-    // })
+        youtube.seek(ptor, 80);
+        quiz_ov.create_drag_quiz(ptor, o_c.feedback)
+        lecture_middle.rename_quiz(ptor, 5, 'DRAG QUIZ')
+        o_c.scroll_to_top(ptor)
+        quiz_ov.make_drag_questions(ptor, 50, 50, 50, 100, 50, 150, o_c.feedback)
+        lecture_middle.exit_quiz(ptor, o_c.feedback);
+    })
 
     it('should open the first course', function(){
         o_c.open_course_list(ptor);
@@ -71,13 +71,13 @@ describe("1", function () {
         o_c.press_content_navigator(ptor)
     })
 
-    xit('should go to the progress page', function(){ 
+    it('should go to the progress page', function(){ 
         o_c.open_progress(ptor)
         o_c.open_module_progress(ptor)
         o_c.hide_dropmenu(ptor)     
     })
 
-    xit('should mark quizzes and discussions to be in class', function () {
+    it('should mark quizzes and discussions to be in class', function () {
        progress.showVideoQuizInclass(0,0)
        progress.showVideoQuizInclass(0,2)
        progress.showDiscussionInclass(0,0)
@@ -274,7 +274,7 @@ xdescribe("2", function () {
     it('should delete course', function () {
         //should choose one of home() or home_teacher() 
         //depending on the current state(student or teacher)
-        o_c.home_teacher(ptor);
+        // o_c.home_teacher(ptor);
         teacher.delete_course(ptor, o_c.feedback);
     })
 })

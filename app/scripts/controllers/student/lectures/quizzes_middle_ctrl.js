@@ -65,7 +65,7 @@ angular.module('scalearAngularApp')
     			$scope.status=data.status;
     			$scope.alert_messages= data.alert_messages;
                 $scope.course.warning_message = setupWarningMsg($scope.alert_messages)
-                // $scope.next_item= data.next_item;
+                $scope.next_item= data.next_item;
     			if(data.correct)
     				$scope.correct=data.correct; 
 				

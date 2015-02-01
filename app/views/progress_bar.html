@@ -18,7 +18,7 @@
     <div class="progressBar" ng-click="progress($event)">
         <div class="elapsed" ng-style="{width: elapsed_width}" >
         </div>
-        <div class="progress-events-container">
+        <div class="progress-events-container" ng-show="timeline.items.length>1">
              <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/total_duration)*100)+'%'}" ng-click="scrollEvent(element.type, element.data.id)">
                 <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'answer.question'|translate}}: {{element.data.content}}"  tooltip-append-to-body="true"></span>
                 <span class="progress-events" ng-if="element.type =='confused'&& element.data.very==false" style="background-color: orange;" tooltip="{{'courses.confused' | translate}}" tooltip-append-to-body="true"></span>

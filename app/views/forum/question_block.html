@@ -1,19 +1,23 @@
 <div id="show_question"> <!-- For question -->
     <table class="table" style="margin-top: 10px;">
         <tr>
-            <td colspan="2">
+            <td colspan="2" style="padding:5px">
                 <div><i ng-show="error_message" style="color:red; font-size:12px"><br>{{error_message}}<br></i></div>
                 <textarea class="text_block" placeholder="{{'lectures.ask_question' | translate}}" ng-model="current_question" style="width: 96%; height: 100%;"></textarea>
             </td>
         </tr>
         <tr>
-            <td style="width:70%;">
+            <td style="width:70%;padding:5px">
                 <input type="text" disabled ng-model="item.time" format='hh:mm:ss' style="width: 96%;"/>
-                <select ng-model='privacy' ng-options="f.text for f in choices" style="width: 100%;"></select>
+                <select ng-model='privacy' ng-disabled="item.data.isEdit" ng-options="f.text for f in choices" style="width: 100%;"></select>
             </td>
-            <td>
+            <td ng-if="!item.data.isEdit" stlye="padding:0">
                 <button type="button" class="button tiny" ng-click="postQuestion(item)" translate>youtube.ask</button>
                 <button type="button" class="button tiny alert" ng-click="cancelQuestion(item)" translate>lectures.cancel</button>
+            </td>
+            <td ng-if="item.data.isEdit">
+                <button type="button" class="button tiny" ng-click="updateQuestion(item.data)" translate>edit</button>
+                <button type="button" class="button tiny alert" ng-click="item.data.isEdit=false" translate>lectures.cancel</button>
             </td>
         </tr>
     </table>

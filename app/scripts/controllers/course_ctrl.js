@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'scalear_utils','course_data', '$state', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, scalear_utils,course_data, $state) {
+.controller('courseCtrl', ['$rootScope', '$stateParams', '$scope', 'Course', '$log', '$cookieStore', 'scalear_utils','course_data', '$state','ContentNavigator', function ($rootScope, $stateParams, $scope, Course, $log, $cookieStore, scalear_utils,course_data, $state, ContentNavigator) {
  	angular.extend($scope.$parent, course_data)
  	if($state.includes("**.course")){
 	 	if($rootScope.current_user.roles[0].id == 2){
@@ -17,8 +17,7 @@ angular.module('scalearAngularApp')
 	 		$state.go('course.edit_course_information', {course_id:$scope.course.id})
 	 }
 	 $scope.$on('$destroy', function() {
-    	$scope.$emit('navigator_change',false)
-    	$scope.$emit('close_navigator')
+    	ContentNavigator.close()
     	$scope.$parent.course= null
     });
 	 
@@ -84,11 +83,12 @@ angular.module('scalearAngularApp')
 					$scope.today = data.today;	
 					$scope.next_item = data.next_item
 					$scope.module_obj = scalear_utils.toObjectById($scope.course.groups)
-					$scope.course.markDone=function(module_id, item_id, status){
+					$scope.course.markDone=function(module_id, item_id){
 						var group_index= scalear_utils.getIndexById($scope.course.groups, module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
 	                    var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, item_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
 	                    if(item_index!=-1 && group_index!=-1)
-	                        $scope.course.groups[group_index].items[item_index].is_done= status
+	                    	$rootScope.$broadcast("item_done", $scope.course.groups[group_index].items[item_index])
+	                        // $scope.course.groups[group_index].items[item_index].is_done= status
 	                        // $scope.lecture.is_done = data.done[2
 					}
 					deferred.resolve($scope); 

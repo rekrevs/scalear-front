@@ -1,27 +1,33 @@
-<loading size="small" show="quiz_loading"/>
-<table class="table large-12 columns quiz_list">
-	<thead>
+<!-- <loading size="small" show="quiz_loading"/> -->
+<table class="table small-12 columns quiz_list">
+	<!-- <thead>
 		<tr>
 			<th style="width:60%" translate>answer.question</th>
 			<th translate>online_quiz.time</th>
 			<th translate>groups.type</th>
 			<th class="text-center" style="width:95px">Delete</th>
 		</tr>
-	</thead>
+	</thead> -->
 	<tbody>
-		<tr ng-repeat="quiz in quiz_list|orderBy:'time'" ng-class="{wheat: quiz.id == $parent.selected_quiz.id}">
-			<td >
-				<editable_text open="{{quiz.new_quiz}}" name="quiz_name" value="quiz.question" validation="validateName" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz">
-			</td>
-			<td ng-init="quiz.formatedTime = (quiz.time|format)">
-				<editable_text name="quiz_time" value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz">
-			</td>
-			<td><span ng-show="quiz.quiz_type=='survey'">Survey</span>
-				<span ng-show="quiz.quiz_type!='survey'">Quiz</span>
-				- {{quiz.question_type}}
-			</td>
-			<td class="text-center no-padding">
-				<delete_button size="big" color='dark' action="deleteQuizButton(quiz)" />
+		<tr ng-repeat="quiz in quiz_list|orderBy:'time'" ng-class="{wheat: quiz.id == selected_quiz_id}">
+			<td style="padding: 0.5625rem 0.1rem;">
+				<span class="size-10" style="margin-bottom:8px">
+					<div class="small-4 columns">
+						<span ng-show="quiz.quiz_type=='survey'">Survey</span>
+						<span ng-show="quiz.quiz_type!='survey'">Quiz</span>
+					</div>
+					<div class="small-4 columns" ng-init="quiz.formatedTime = (quiz.time|format)">
+						<span class="color-blue looks-like-a-link" ng-click="showQuiz(quiz)">{{quiz.formatedTime}}</span>
+						<!-- <editable_text name="quiz_time" value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz"> -->
+					</div>
+					<div class="text-center no-padding small-4 right columns">
+						<delete_button size="small" color='dark' action="deleteQuiz(quiz)" />
+					</div>
+				</span>
+				<div class="small-12 columns">
+					<span class="quiz_title color-blue looks-like-a-link" ng-click="showQuiz(quiz)">{{quiz.question}}</span>
+					<!-- <editable_text open="{{quiz.new_quiz}}" name="quiz_name" value="quiz.question" validation="validateName" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz"> -->
+				</div>	
 			</td>
 		</tr>
 	</tbody>

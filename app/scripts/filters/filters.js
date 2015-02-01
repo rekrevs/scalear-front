@@ -60,13 +60,21 @@ angular.module('scalearAngularApp')
           return '0:00'
         }
       }
-  }).filter("formatFormattedTime",function (){
-
-      return function(time, format){
-          
-          var hr  = time.split(':')[0]
-          var min = time.split(':')[1]
-          var sec = time.split(':')[2]
+  })
+  .filter("roundedformattime",function (){
+      return function(secs, format){
+        if(secs > 0){
+          var hr  = Math.floor(secs / 3600);
+          var min = Math.floor((secs - (hr * 3600))/60);
+          var sec = Math.floor(secs - (hr * 3600) -  (min * 60));
+          if(sec > 0){
+            min+= 1
+            sec = 0
+          }
+          if (hr < 10)  { hr  = "0" + hr; }
+          if (min < 10) { min = "0" + min; }
+          if (sec < 10) { sec  = "0" + sec; }
+          //if (hr)       { hr   = "00"; }
 
           if (format) {
               var formatted_time = format.replace('hh', hr);
@@ -80,8 +88,14 @@ angular.module('scalearAngularApp')
           else {
               return hr + ':' + min + ':' + sec;
           }
+        }
+        else{
+          return '0:00'
+        }
       }
-  }).filter('timeAgo', function() {
+  })
+
+.filter('timeAgo', function() {
     return function(dateString) {
       return moment(dateString).fromNow()
     }
@@ -177,7 +191,6 @@ angular.module('scalearAngularApp')
     }
   }]).filter('reverse', function() {
   return function(items) {
-    console.log(items)
      if(items)
       return items.slice().reverse();
   };

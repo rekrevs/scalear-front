@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', '$rootScope', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout, $rootScope) {
-    $window.scrollTo(0, 0);
+.controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', '$rootScope','$compile', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout, $rootScope, $compile) {
+
     Page.setTitle('dashboard');
     Page.startTour();
     $rootScope.subheader_message = "What's New"
@@ -10,9 +10,25 @@ angular.module('scalearAngularApp')
     $scope.toggleLargeCalendar=function(){
         $scope.large_calendar=!$scope.large_calendar
         $timeout(function() {
-            $(window).resize()
+            resizeCalendar()
         })
     }
+
+    var resizeCalendar=function(){
+        angular.element('#studentCalendar').fullCalendar('render');
+    }
+
+    $scope.eventRender = function( event, element, view ) { 
+         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />Due at  "+$filter('date')(event.start, 'HH:mm')
+        if(event.status==1)
+            tooltip_string+="<br />Completed on time"
+        else if(event.status==2)
+            tooltip_string+="<br />Completed "+event.days+" days late"
+
+        element.attr({'tooltip-html-unsafe': tooltip_string,'tooltip-append-to-body': true});
+        $compile(element)($scope);
+    };
+
 
     var getCalendar = function() {
         $scope.eventSources = [];
@@ -26,35 +42,38 @@ angular.module('scalearAngularApp')
                         right: 'today prev,next',
                         left: 'title'
                     },
-                    eventDrop: $scope.alertOnDrop,
-                    eventResize: $scope.alertOnResize,
+                    eventRender: $scope.eventRender
                 }
             };
             $scope.calendar = data;
             for (var element in $scope.calendar.events) {
                 $scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
-                $scope.calendar.events[element].title = $scope.calendar.events[element].course_name +" : "+ $scope.calendar.events[element].title + ' @' + $filter('date')($scope.calendar.events[element].start, 'HH:mm');
-               
+                // $scope.calendar.events[element].title = $scope.calendar.events[element].course_short_name +" : "+ $scope.calendar.events[element].title + ' @' + $filter('date')($scope.calendar.events[element].start, 'HH:mm');
+                $scope.calendar.events[element].item_title = $scope.calendar.events[element].title.replace(" due", "");
+                // $filter('date')($scope.calendar.events[element].start, 'HH:mm')+'-'+
+                $scope.calendar.events[element].title =  $scope.calendar.events[element].course_short_name +": "+ $scope.calendar.events[element].item_title
                 if($rootScope.current_user.roles[0].id == 2){
                     if ($scope.calendar.events[element].quiz_id)
                         $scope.calendar.events[element].url = $state.href("course.module.courseware.quiz", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id, quiz_id: $scope.calendar.events[element].quiz_id})
                     else if ($scope.calendar.events[element].lecture_id)
                         $scope.calendar.events[element].url = $state.href("course.module.courseware.lecture", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id, lecture_id: $scope.calendar.events[element].lecture_id})
-                    else                        
+                    else
                         $scope.calendar.events[element].url = $state.href("course.module.courseware", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id})
                 }
                 else
                     $scope.calendar.events[element].url=$state.href("course.module.progress", {course_id: $scope.calendar.events[element].course_id, module_id: $scope.calendar.events[element].group_id})
                 
             }
-            $scope.eventSources.push($scope.calendar);
+            $scope.calendar.className = ["truncate"]
 
+            $scope.eventSources.push($scope.calendar);
             $timeout(function() {
-                $(window).resize()
-            },100)
+                resizeCalendar()
+            },300)
         })
     }
 
+    
     var getAnnouncements = function(){
         NewsFeed.index({}, function(data){
             $scope.events = []
@@ -62,6 +81,9 @@ angular.module('scalearAngularApp')
             $scope.latest_announcements.forEach(function(announcement){
                 announcement.timestamp = announcement.updated_at;
                 $scope.events.push(announcement);
+                $timeout(function() {
+                    resizeCalendar()
+                },300)
             })
         }, function(){})
     }

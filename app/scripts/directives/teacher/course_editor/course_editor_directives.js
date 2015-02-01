@@ -11,6 +11,21 @@ angular.module('scalearAngularApp')
             },
             templateUrl: '/views/teacher/course_editor/module.html',
             link: function(scope,element) {
+                var calculateTime=function(){
+                    var total_calculated_time = 0
+                    scope.module.items.forEach(function(item){
+                        if(item.duration){
+                            total_calculated_time += parseInt(item.duration)
+                        } 
+                    })
+                    scope.module.total_time = total_calculated_time
+                }
+                calculateTime()
+                scope.$on('update_module_time', function(ev, module_id){
+                    if(scope.module.id == module_id){
+                        calculateTime()
+                    }
+                })
                 scope.remove=function(event){
                     event.preventDefault();
                     event.stopPropagation();  
@@ -136,7 +151,8 @@ angular.module('scalearAngularApp')
                 color: '@',
                 overlaymode: '=',
                 mode: '@',
-                moduleitem: '@'
+                moduleitem: '@',
+                tooltiptext: "@"
             },
             replace: true,
             restrict: 'E',
@@ -165,37 +181,42 @@ angular.module('scalearAngularApp')
                 // }
             }
         }
-    }).directive('addModuleItems', function(){
+    })
+// .directive('addModuleItems', function(){
+//         return{
+//             scope:{
+//                 index: '=',
+//                 lecture: '=',
+//                 quiz: '='
+//             },
+//             replace: true,
+//             restrict: 'E',
+//             templateUrl: '/views/teacher/course_editor/add_module_items.html',
+//             link: function(scope){
+//                 scope.collapse_add = true
+//                 scope.toggleAdd = function(){
+//                     scope.collapse_add = !scope.collapse_add;
+//                 }
+//                 scope.addlecture = function(index){
+//                     scope.lecture(index)
+//                     scope.toggleAdd()
+//                 }
+//                 scope.addquiz = function(index, type){
+//                     scope.quiz(index, type)
+//                     scope.toggleAdd()
+//                 }
+//             }
+//         }
+//     })
+.directive('moduleContentModal', ['$modal', function($modal){
         return{
             scope:{
-                index: '=',
-                lecture: '=',
-                quiz: '='
+                openModal:"="
             },
-            replace: true,
-            restrict: 'E',
-            templateUrl: '/views/teacher/course_editor/add_module_items.html',
-            link: function(scope){
-                scope.collapse_add = true
-                scope.toggleAdd = function(){
-                    scope.collapse_add = !scope.collapse_add;
-                }
-                scope.addlecture = function(index){
-                    scope.lecture(index)
-                    scope.toggleAdd()
-                }
-                scope.addquiz = function(index, type){
-                    scope.quiz(index, type)
-                    scope.toggleAdd()
-                }
-            }
-        }
-    }).directive('onlineModal', ['$modal', function($modal){
-        return{
             restrict: 'A',
             replace: true,
-            link: function(scope, element){
-                scope.openOnlineContentModal = function () {
+            controller: ['$scope', function($scope){
+                $scope.openModal = function () {
                     var modalInstance = $modal.open({
                         templateUrl: '/views/teacher/course_editor/online_content_modal.html',
                         controller: ModalInstanceCtrl,
@@ -208,14 +229,18 @@ angular.module('scalearAngularApp')
                     }
                   $scope.cancel = $modalInstance.dismiss
                 }]
-            }
+            }]
         }
-    }]).directive('questionsModal', ['$modal',function($modal){
+    }])
+    .directive('lectureQuestionsModal', ['$modal',function($modal){
         return{
+            scope:{
+                openModal:"="
+            },
             restrict: 'A',
             replace: true,
-            link: function(scope, element){
-                scope.openQuestionsModal = function () {
+            controller: ['$scope',function($scope){
+                $scope.openModal = function () {
                     var modalInstance = $modal.open({
                         templateUrl: '/views/teacher/course_editor/question_types_modal.html',
                         controller: ModalInstanceCtrl,
@@ -229,6 +254,6 @@ angular.module('scalearAngularApp')
                     }
                   $scope.cancel = $modalInstance.dismiss
                 }]
-            }
+            }]
         }
-    }]);
+    }])

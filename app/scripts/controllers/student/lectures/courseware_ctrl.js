@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('coursewareCtrl', ['$scope','$stateParams', '$log','Module','Timeline','Page', function ($scope, $stateParams, $log, Module, Timeline, Page) {
+  .controller('coursewareCtrl', ['$scope','$stateParams', '$log','Module','Timeline','Page','$state', function ($scope, $stateParams, $log, Module, Timeline, Page, $state) {
 	
 	Page.setTitle('head.lectures');
-  Page.startTour();
+  	Page.startTour();
 
     var init = function()
     {
@@ -48,12 +48,31 @@ angular.module('scalearAngularApp')
                     }
                 }
                 console.log($scope.timeline)
+                showModuleCourseware($scope.module_obj[$stateParams.module_id])
                 
             }
         );
 	}
 
 	init();
+
+	var showModuleCourseware = function(module){
+        if(!$state.params.lecture_id && !$state.params.quiz_id){
+          Module.getLastWatched(
+            {
+            	course_id: $stateParams.course_id, 
+            	module_id: module.id
+            }, 
+            function(data){
+              if(data.last_watched != -1){
+                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
+              }
+              else{
+                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
+              }
+          }) 
+        }  
+  	}
 
  //    var init = function()
  //    {

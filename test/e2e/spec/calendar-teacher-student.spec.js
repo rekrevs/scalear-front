@@ -37,14 +37,11 @@ describe("should check calendar functionality", function(){
     teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
   })
 
-  it('should get the enrollment key and enroll student', function(){
-    teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-  })
   //test
   it('should add a couple of module and lectures', function(){
-    o_c.sign_in(ptor, params.teacher_mail, params.password);
-    o_c.open_course_list(ptor)
-    o_c.open_course(ptor, 1);
+    // o_c.sign_in(ptor, params.teacher_mail, params.password);
+    // o_c.open_course_list(ptor)
+    // o_c.open_course(ptor, 1);
     // o_c.open_content_editor(ptor);
     teacher.add_module(ptor);
     teacher.add_module(ptor);
@@ -60,10 +57,16 @@ describe("should check calendar functionality", function(){
     
   })
 
+  it('should get the enrollment key and enroll student', function(){
+    teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+  })
+
   it('should check if the calendar is visible', function(){
-    o_c.to_student(ptor);
+    // o_c.to_student(ptor);
+    ptor.sleep(3000)
+    ptor.navigate().refresh();
     all_events_specific_month(ptor, 2);
-    ptor.sleep(5000)
+    ptor.sleep(3000)
   })
 
   it('should clear the course for deletion', function(){

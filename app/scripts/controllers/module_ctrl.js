@@ -3,15 +3,15 @@
 angular.module('scalearAngularApp')
 
 .controller('moduleCtrl', ['$scope','$state', '$rootScope', function ($scope, $state, $rootScope) {
-	var unwatch= $scope.$watch('module_obj['+$state.params.module_id+']', function(){
-        if($scope.module_obj && $scope.module_obj[$state.params.module_id]){
+	// var unwatch= $scope.$watch('module_obj['+$state.params.module_id+']', function(){
+        // if($scope.module_obj && $scope.module_obj[$state.params.module_id]){
             $scope.course.selected_module=$scope.module_obj[$state.params.module_id]
             // $rootScope.selected_module=$scope.module_obj[$state.params.module_id]
             console.log("Main Selected Module")
             console.log($scope.course.selected_module)
-            unwatch()
-        }
-    })
+            // unwatch()
+        // }
+    // })
 
     $scope.$on('$destroy', function() {
         if($scope.course)

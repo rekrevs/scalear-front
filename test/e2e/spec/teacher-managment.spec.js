@@ -20,16 +20,16 @@ describe("1", function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-	})
+	// it('should get the enrollment key and enroll student', function(){
+	// 	teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+	// })
 	// test
 	it('should check number of teachers intially', function(){
 		// o_c.to_student(ptor);
-		o_c.sign_in(ptor, params.student_mail, params.password);
-		o_c.open_course_list(ptor)
-		o_c.open_course(ptor, 1);
-		o_c.press_content_navigator()
+		// o_c.sign_in(ptor, params.student_mail, params.password);
+		// o_c.open_course_list(ptor)
+		// o_c.open_course(ptor, 1);
+		// o_c.press_content_navigator()
 		o_c.open_course_info()
 		check_teachers_no(ptor, 1);
 	})
@@ -46,6 +46,7 @@ describe("1", function(){
 describe("2", function(){
 
 	it('should sign in as teacher', function(){
+		// o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -76,12 +77,12 @@ describe("2", function(){
 
 	it('should login as student and check for teachers', function(){
 		// o_c.to_student(ptor);
-		o_c.sign_in(ptor, params.student_mail, params.password);
+		// o_c.sign_in(ptor, params.student_mail, params.password);
 		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
 		o_c.press_content_navigator()
 		o_c.open_course_info()
-		check_teachers_no(ptor, 2);
+		check_teachers_no(ptor, 4);
 	})
 	// //end test
 
@@ -98,7 +99,7 @@ describe("2", function(){
 /////////////////////////////////////////////////////////
 
 function check_teachers_no(ptor, no){
-	expect(element.all(by.repeater('teacher in teachers')).count()).toEqual(no*2) //for some reason it needs double the amount to pass, so i multiplied by 2
+	expect(element.all(by.repeater('teacher in teachers')).count()).toEqual(no)
 }
 
 function press_add_teacher(ptor){

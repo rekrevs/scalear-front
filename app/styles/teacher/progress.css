@@ -246,6 +246,17 @@ a:hover.trigger.open, a:focus.trigger.open, a:active.trigger.open {border-color:
 	margin-top: 10px;*/
 }
 
+.large_player{
+	width:260% !important;
+	/*position: absolute;*/
+}
+
+.large_player #progress_lec_video{
+	border: 1px solid gray;
+	box-shadow: 0px 3px 20px rgba(0, 0, 0, 0.5);
+	padding-bottom: 60.5% !important;
+}
+
 /*@media (max-width: 1024px) {*/
 	/*.shortcuts{
 		display:none;

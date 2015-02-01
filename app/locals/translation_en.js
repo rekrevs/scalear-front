@@ -2,6 +2,9 @@ var translation_en=function(){
     return {
       tellus: 'Tell us about yourself...',
       online_name_comment: '(Your Online Name is shown to other students and teachers when you make comments or ask questions. If you wish to be anonymous, use the default or a pseudonym.)',
+      new_module_instructions: "Add a new module or selected an existing by clicking on the content navigator from the left",
+      use_modules_organize: "Use modules to organize your videos and quizzes",
+      use_content_menu: "Use the Content menu to add quizzes and surveys",
       finished: 'Finished',
       yes: 'Yes',
       no: 'No',
@@ -76,13 +79,15 @@ var translation_en=function(){
       new_online_content: "New Module Item",
       send_email: "Send an Email", 
       show_all_courses: "Show all courses",
-      New_Video_Question: "New Video Question",
+      Insert_Video_Question: "Insert Video Quiz Here",
       Insert_a_question: "Insert a question in a video",
+      new_video: "New Video",
       copy: "Copy",
       due:"Due",
       my: "My",
       and: "and",
       redirect_courselist: "Redirecting to your course list in ",
+      did_not_get_credit: "You did not get credit for this video. To get credit for a required video you need to watch the whole thing (no skipping) and answer each question (you don't have to get them right, though).",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -192,9 +197,9 @@ var translation_en=function(){
         help_enroll:"Help on Enrollment",
         instruction:"Students enroll by first registering on the scalable learning website and then entering the Course Enrollment Key. To help your students do this, please send them an email with the following instructions.",
         dear_student:"Dear Student",
-        this_term_new_system:"This term in {{course_name}} we will be using ScalableLearning, an online system that helps make your learning experience more interactive. To view the course material you first need to create an account and then add this course. Follow these three simple steps to get started:",
+        this_term_new_system:"This term in {{course_name}} we will be using ScalableLearning to help make your learning more interactive. To get started:",
         // this_term_new_system_continue:"and create a student account with your university email address. You can then add the course by clicking on “Join Course” under “Courses” and entering the course Enrollment Key",
-        create_account_with_university: "and create an account with your university email address. (We’ll send you an email to verify your account before you can get started.)",
+        create_account_with_university: "and create an account with your university email address.",
         with_new_account: "with your new account",
         add_course_by_choosing: "Add your course by choosing “Join Course” from the “Courses” menu and entering the Enrollment Key for",
         sincerely:"Sincerely",
@@ -271,9 +276,11 @@ var translation_en=function(){
       events:{
         deadline_msg: "All deadlines are at midnight on the day specified",
         done: "Done",
+        done_late: "Done late",
         save: "Save",
         exit: "Exit",
         not_done: "Not done",
+        not_done_late: "Not done and late",
         not_done_due: "Not done or due in less than 2 days",
       },
       notification:{
@@ -327,6 +334,7 @@ var translation_en=function(){
         lecture_title: "Lecture Title",
         url: "Video URL",
         video_title: "Video Title",
+        provider: "Provider",
         thumbnail: "Thumbnail",
         video_preview: "Video Preview",
         aspect_ratio: "Aspect Ratio",
@@ -361,6 +369,7 @@ var translation_en=function(){
         save_exit: "Save and Exit",
         explanation: "Explanation",
         cancel: "Cancel",
+        delete_quiz: "Delete Quiz",
         remove: "Remove",
         editing_lecture: "Editing Lecture",
         listing_lectures: "Listing lectures",
@@ -387,6 +396,7 @@ var translation_en=function(){
         please_choose_one_answer: "Please Choose at least one answer",
         choose_atleast_one: "Choose at least one",
         hover_for_details: "Hover for details",
+        multiple_correct: "There may be multiple correct answers",
         set_date: "Set Date",
         seconds: "Seconds",
         use_module: "Use Module’s Visibility",
@@ -406,7 +416,7 @@ var translation_en=function(){
         provide_answer: "Please provide the answer text for each choice",
         quiz_no_answer: "Quiz doesn't have a correct answer",
         shown_in_graph: "Shown on results graph",
-        shown_to_student: "*Shown to students",
+        shown_to_student: "Shown to students",
         server:"The server",
         is_slow: "is taking a long time to load this video",
         try_reload:"You can continue waiting, or try reloading the page",
@@ -417,6 +427,7 @@ var translation_en=function(){
         confused: "Confused",
         discussion: "Discussion",
         provide_url:"Please Provide A Video URL",
+        enter_url:"Enter the video URL",
         vidoe_not_exist: "Video may not exist or may still be uploading",
         incompatible_link: "Incompatible link",
         replay: "Replay",
@@ -434,6 +445,8 @@ var translation_en=function(){
         download_notes: "Download Notes",
         finish_before_proceeding:"Please finish previous required lectures before proceeding",
         save_quiz: "Please save or exit currently opened quiz",
+        quiz_question: "Quiz Question",
+        quiz_time: "Quiz Time"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -441,7 +454,7 @@ var translation_en=function(){
         Drag_change_time: "Drag to new position to change time",
         save_changes: "Save changes",
         editing_quiz: "Editing quiz",
-        double_click_new_answer: "Double click on the video to add a new answer",
+        double_click_new_answer: "Quiz Editor: Double-click on the video to add a new answer.",
         incorrect_format_time: "Incorrect Format for Time",
         time: "Time",
         time_outside_range: "Time Outside Video Range",
@@ -523,7 +536,8 @@ var translation_en=function(){
         must_place_items: "You must place all items",
         must_choose_answer: "Must choose at least one answer",
         add_link: "Add Link",
-        new_link: "New Course Link",
+        new_link: "New Link",
+        new_course_link: "New Course Link",
         please_wait: "Please Wait",
         lectures: "Lectures",
         quizzes: "Quizzes",
@@ -652,8 +666,8 @@ var translation_en=function(){
         total_progress: "Total Progress",
         progress_chart: "Progress Chart",
         modules: "Modules",
-        start_date: "Course start date",
-        duration: "Course Duration in Weeks",
+        start_date: "Course Start Date",
+        duration: "Course Duration (weeks)",
         prerequisites: "Prerequisites",
         course_image: "Course Image",
         course_image_url: "Course Image URL",
@@ -973,7 +987,7 @@ var translation_en=function(){
     },
     announcements:
     {
-      empty: 'There are currently no announcements for this course. Begin by adding a new announcement.'
+      empty: 'No announcements yet.'
     },
     help:{
       getting_started: "Getting Started",
@@ -997,35 +1011,43 @@ var translation_en=function(){
       print: "Print"
     },
     content:{
+      add_new_content: "Add New Content",
       choose_content_type: "Choose Content Type" ,
       interactive: "Interactive Content",
       interactive_desc: "Optional interactive questions and grading",
       types:{
         video: "Video",
+        video_desc: "You can add quiz questions on top of the video",
         quiz: "Quiz",
-        survey: "Survey"
+        quiz_desc: "Text-based, can be graded or optional",
+        survey: "Survey",
+        link: "Link",
+        link_desc: "Web link to other sites or pages",
+        quiz_or_survey: "Quiz or Survey",
+        quiz_or_survey_desc: "Text-based, can be graded or optional",
       },
       questions:{
         choose_question_type: "Choose Question Type",
+        insert_video_question: "Insert a Video Question",
         categories:{
           on_video:{
-            title: "On-video Quiz",
+            title: "In-video Quiz",
             desc: "Place quiz choices on top of the video",
           },
           text_quiz:{
             title: "Text Quiz",
-            desc: "Quiz on a white background",
+            desc: "Text quiz on a white background",
           },
           on_video_survey:{
             title: "On-video Survey",
-            desc: "Place survey choices on top of the video, not graded"
+            desc: "Place survey choices on top of the video"
           }
         },
         types:{
-          ocq: "One Correct Answer",
-          mcq: "Multiple Correct Answers",
-          drag: "Drag into Order",
-          text: "Text Answer"
+          ocq: "One answer",
+          mcq: "Multiple answers",
+          drag: "Drag and drop",
+          text: "Free text answer"
         }
       }
     },

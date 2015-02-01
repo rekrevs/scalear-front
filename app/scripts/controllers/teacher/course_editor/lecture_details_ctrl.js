@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter',
-        function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope',
+        function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope) {
 
-            var current_url;
-            $scope.video={}
+            
             //**************************FUNCTIONS****************************************///
+            $scope.is_youtube = false
             $scope.validateLecture = function(column, data) {
                 var d = $q.defer();
                 var lecture = {}
@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
                     lecture,
                     function() {                        
                         if(column == 'url'){
-                            var type = isYoutube(data)
+                            var type = $scope.isYoutube(data)
                             console.log(type)
                             if(type) {
                                 var id = type[1]//lecture.url.split("v=")[1].split("&")[0]
@@ -65,11 +65,6 @@ angular.module('scalearAngularApp')
             };
 
             $scope.$parent.updateLecture = function(data, type) {
-                // if (data && data instanceof Date) {
-                //     data.setMinutes(data.getMinutes() + 120);
-                //     $scope.lecture[type] = data
-                // }
-                console.log("SADfa")
                 var modified_lecture = angular.copy($scope.lecture);
                 delete modified_lecture.id;
                 delete modified_lecture.created_at;
@@ -89,21 +84,9 @@ angular.module('scalearAngularApp')
                         lecture: modified_lecture
                     },
                     function(data) {
-                        $log.debug(data)
-                        console.log(data)
                         $scope.lecture.appearance_time = data.lecture.appearance_time
-                        $scope.course.selected_module.total_time += data.lecture.duration
+                        // $scope.course.selected_module.total_time += data.lecture.duration
                         $scope.lecture.due_date = data.lecture.due_date
-                        // $scope.modules.forEach(function(module, i) {
-                        //     if (module.id == $scope.lecture.group_id) {
-                        //         if ($scope.lecture.appearance_time_module) {
-                        //             $scope.lecture.appearance_time = module.appearance_time;
-                        //         }
-                        //         if ($scope.lecture.due_date_module) {
-                        //             $scope.lecture.due_date = module.due_date;
-                        //         }
-                        //     }
-                        // });
                     },
                     function() {
                         
@@ -146,34 +129,25 @@ angular.module('scalearAngularApp')
                 }
             }
 
-//            $scope.updateLectureUrl = function() {
-//                urlFormat()
-//                $scope.lecture.aspect_ratio = ""
-//                if ($scope.lecture.url)
-//                    getYoutubeDetails();
-//            }
-
-            var isFinalUrl= function(url){
-                return url.match(/^(http|https):\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
-            }
-
             $scope.updateLectureUrl= function(){                
                 $scope.lecture.aspect_ratio = "widescreen"
                 if($scope.lecture.url){
-                    var type = isYoutube($scope.lecture.url)
+                    var type = $scope.isYoutube($scope.lecture.url)
                     if(type){
                         console.log('type initialized')  
                         if(!isFinalUrl($scope.lecture.url))
                             $scope.lecture.url = "http://www.youtube.com/watch?v="+type[1];                                         
                         getYoutubeDetails(type[1]).then(function(){
                             $scope.updateLecture();
+                            $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
                         })
                     }
-                    else
-                    {
+                    else{
                         console.log('type not initialized')  
                         $scope.updateLecture();
+                        $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
                     }
+
                 }
                 
             }
@@ -183,80 +157,56 @@ angular.module('scalearAngularApp')
                 $scope.updateLecture()
             }
 
-
-            // var urlFormat =function(){
-            //     var url=
-            //     var video_id = isYoutube($scope.lecture.url)
-            //     if(video_id) {
-            //     //$scope.lecture.url= "http://www.youtube.com/watch?v="+video_id[1];
-            //         return video_id; //"youtube";
-            //     }
-            //     else{
-            //         return "other"
-            //     }
-            // }
-
             var invalid_url=function(url){
-                return (!isMP4(url) && !isYoutube(url) && url.trim().length>0)
+                return (!isMP4(url) && !$scope.isYoutube(url) && url.trim().length>0)
             }
 
-            var isMP4= function(url)
-            {
+            var isMP4= function(url){
                 return url.match(/(.*mp4$)/);
             }
-            var isYoutube= function(url){
+            
+            $scope.isYoutube= function(url){
                 var match = url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)([^\s&]{11})/);
                 if(!match)
                     return url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
                 else return match
             }
 
+            var isFinalUrl= function(url){
+                return url.match(/^(http|https):\/\/www\.youtube\.com\/watch\?v=[^\s]{11}[\W\w]*$/);
+            }
+
             var getYoutubeDetails= function(id){
+                $scope.is_youtube = true
                 var d = $q.defer()
                 var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
                 $http.jsonp(url)
                     .success(function (data) {
                         $log.debug(data.entry)
+                        $scope.video={}
                         $scope.video.title = data.entry.title.$t;
                         $scope.video.author = data.entry.author[0].name.$t;
         		        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
                         $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";  
                         d.resolve()                   
-                        //if(data.entry.media$group.yt$aspectRatio == null || data.entry.media$group.yt$aspectRatio == undefined)
-                        //	$scope.lecture.detected_aspect_ratio="smallscreen";
-                        //else
-                        //	$scope.lecture.detected_aspect_ratio = data.entry.media$group.yt$aspectRatio.$t;
-
-                        //	$scope.lecture.aspect_ratio = $scope.lecture.aspect_ratio || $scope.lecture.detected_aspect_ratio
-                        //$scope.lecture.aspect_ratio = "widescreen"
                     });
                 return d.promise;
             }
 
-            // var getVideoDetails = function(){
-            //     console.log("Sdfs")
-            //     $scope.lecture.duration = $scope.$parent.lecture_player.controls.getDuration()
-            // }
-
             //********************************************************************//
-
-            $log.debug("made it in details!!");
-            $scope.screen_options = [
-                    {value: "widescreen",  text: 'widescreen'},
-                    {value: "smallscreen", text: 'smallscreen'}
-            ]
-            $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
+            var item_unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
                 if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
                     $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
                     if($scope.lecture.url && $scope.lecture.url!="none"){
-                        var video_id = isYoutube($scope.lecture.url)
+                        var video_id = $scope.isYoutube($scope.lecture.url)
                         if(video_id)
                             getYoutubeDetails(video_id[1]);
                     }
                     if($scope.lecture.due_date) 
                         $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date) 
-                              
-                    $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){                  
+                    
+                    item_unwatch()      
+                    var module_unwatch = $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){                  
                         if ($scope.lecture.appearance_time_module) { 
                             $scope.lecture.appearance_time = $scope.module_obj[$scope.lecture.group_id].appearance_time; 
                         } 
@@ -270,7 +220,8 @@ angular.module('scalearAngularApp')
                         if ($scope.lecture.due_date_module) { 
                             $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date; 
                             // $scope.lecture.due_date_enabled = !isDueDateDisabled() 
-                        } 
+                        }
+                        module_unwatch() 
                     })
                     $scope.link_url=$state.href('course.module.courseware.lecture', {module_id: $scope.lecture.group_id, lecture_id:$scope.lecture.id}, {absolute: true}) 
                 }

@@ -12,53 +12,15 @@ var fname = "s";
 var lname = "t";
 var univer = "world university";
 
-var studentmail1 = 's1@sharklasers.com';
-var studentmail2 = 's2@sharklasers.com';
-var studentmail3 = 's3@sharklasers.com';
-var studentmail4 = 's4@sharklasers.com';
-var studentmail5 = 's5@sharklasers.com';
 
 var biog = "kalam keteeer yege 140 char bs teacher";
 var webs = "www.website.com";
 var password = 'password';
 
-//////////scenarios in mind
-////////// selection
-////////// searching
-////////// emailing
 
-describe("1", function(){
-
+xdescribe("1", function(){
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor)
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-	})
-
-	it('should create_course', function(){
-		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
-	})
-
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor);
-	})
-	//test
-	it('should', function(){
- 		o_c.open_course_list(ptor);
-    	o_c.open_course(ptor, 1);
-		o_c.open_enrolled(ptor);
-		check_enrolled_no(ptor, 1);
-	})
-	//end test
-	it('should delete course', function(){
-		o_c.open_course_list(ptor);
-		teacher.delete_course(ptor, 1);
-		o_c.logout(ptor);
-	})
-})
-
-describe("2", function(){
-	it('should sign in as teacher', function(){
-		// o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -71,42 +33,37 @@ describe("2", function(){
 	})
 
 	//test
-	it('should enroll student1', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-    	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail1,params.password);
-	})
 	it('should enroll student2', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);	
+		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail2,params.password);
+		teacher.get_key_and_enroll(ptor, params.student2_mail,params.password);
 	})
 	it('should enroll student3', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail3,params.password);
+		teacher.get_key_and_enroll(ptor, params.student3_mail,params.password);
 	})
 	it('should enroll student4', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail4,params.password);
+		teacher.get_key_and_enroll(ptor, params.student4_mail,params.password);
 	})
 	it('should enroll student5', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail5,params.password);
+		teacher.get_key_and_enroll(ptor, params.student5_mail,params.password);
 	})
+
 	it('check for enrolled students', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
 		o_c.open_enrolled(ptor);
-		check_enrolled_no(ptor, 6);
+		check_enrolled_no(ptor, 5);
 	})
 	//end test
 
@@ -117,9 +74,9 @@ describe("2", function(){
 	})
 })
 
-describe("3", function(){
+describe("2", function(){
 	it('should sign in as teacher', function(){
-		// o_c.press_login(ptor)
+		o_c.press_login(ptor)
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -133,14 +90,14 @@ describe("3", function(){
 
 	//test
 	it('should enroll student1', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
-		teacher.get_key_and_enroll(ptor, studentmail1, params.password);
+		teacher.get_key_and_enroll(ptor, params.student2_mail, params.password);
 	})
 
 	it('check for enrolled students', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
+		o_c.to_teacher(ptor);
 		o_c.open_course_list(ptor);
     	o_c.open_course(ptor, 1);
 		o_c.open_enrolled(ptor);
@@ -154,13 +111,13 @@ describe("3", function(){
 	})
 
 	it('should check if student is not enrolled', function(){
-		o_c.sign_in(ptor, studentmail1, params.password);
+		o_c.sign_in(ptor, params.student_mail, params.password);
 		o_c.open_course_list(ptor)
 		check_if_courses_exist(ptor, 0);
 		o_c.logout(ptor);
 	})
 	it('should check if other student is still enrolled', function(){
-		o_c.sign_in(ptor, params.student_mail, params.password);
+		o_c.sign_in(ptor, params.student2_mail, params.password);
 		o_c.open_course_list(ptor)
 		check_if_courses_exist(ptor, 1);
 	})
@@ -283,10 +240,11 @@ function check_enrolled_no(ptor, no){
 //         			delete student
 //====================================================
 function delete_enrolled_student(ptor, no){
+	element(by.id("delete_mode")).click()
 	element.all(by.repeater('student in students')).count().then(function(count){
 		var student_no = count	
 		var student = element(by.repeater("student in students").row(no-1))
-		student.element(by.className('delete')).click()
+		student.element(by.className('text_delete')).click()
 		student.element(by.className('fi-check')).click()
 		expect(element.all(by.repeater('student in students')).count()).toEqual(student_no-1)
 	})

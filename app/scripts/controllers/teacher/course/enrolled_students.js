@@ -2,13 +2,14 @@
 
 var app = angular.module('scalearAngularApp')
 
-  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', '$filter', '$modal', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page, $filter, $modal) {
+  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', '$filter', '$modal','$cookieStore', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page, $filter, $modal,$cookieStore) {
  
         $log.debug("in enrolled students");
         Page.setTitle('head.enrolled_students')
         $scope.emails=[];
         batchEmailService.setEmails($scope.emails)
         $scope.loading_students = true, $scope.delete_mode = false;
+        $scope.list_view= $cookieStore.get('list_view')
         Course.getEnrolledStudents(
           {course_id: $stateParams.course_id},
           function(students){
@@ -23,7 +24,7 @@ var app = angular.module('scalearAngularApp')
 //            var answer = confirm($translate('courses.you_sure_delete_student', {student: student.name}));
             //if(answer){
             	student.removing=true;
-                Course.remove_student(
+                Course.removeStudent(
                     {
                         course_id:$stateParams.course_id ,
                         student: student.id
@@ -41,10 +42,18 @@ var app = angular.module('scalearAngularApp')
         }
 
         $scope.emailSingle=function(student){
+          console.log("HFGfsda")
           $scope.deSelectAll()
           $scope.toggleSelect(student)
           $scope.emailForm()
         }
+
+        // $scope.emailSingle=function(){
+        //   console.log("HFGfsda")
+        //   $scope.deSelectAll()
+        //   $scope.toggleSelect(student)
+        //   $scope.emailForm()
+        // }
         $scope.emailForm = function(){
             var selected_students = $filter('filter')($scope.students, {'checked': true}, true)
             $scope.emails = [];
@@ -83,6 +92,11 @@ var app = angular.module('scalearAngularApp')
         }
         $scope.toggleDeleteMode = function(){
           $scope.delete_mode = !$scope.delete_mode
+        }
+
+        $scope.listView=function(val){
+          $scope.list_view = val
+          $cookieStore.put('list_view', val)
         }
   }]);
 

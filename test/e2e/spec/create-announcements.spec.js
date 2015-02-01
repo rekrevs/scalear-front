@@ -22,15 +22,11 @@ describe("1", function(){
 		teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
 	})
 
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-	})
-
 	//test
 	it('should go to announcements page and make an announcement', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor);
-		o_c.open_course(ptor, 1);
+		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.open_course_list(ptor);
+		// o_c.open_course(ptor, 1);
 		o_c.open_announcements(ptor);
 		teacher.create_new_announcement(ptor, announcement_text1);
 		teacher.create_new_announcement(ptor, announcement_text2);
@@ -38,9 +34,13 @@ describe("1", function(){
 		teacher.check_number_of_announcments(ptor, 3);
 	})
 
+	it('should get the enrollment key and enroll student', function(){
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+	})
+	
 	it('should go to student and check number of announcements', function(){
 		// o_c.sign_in(ptor, params.student_mail, params.password);
-		o_c.to_student(ptor)
+		// o_c.to_student(ptor)
 		o_c.open_course_list(ptor)
 		o_c.open_course(ptor, 1);
 		teacher.check_number_of_announcments(ptor, 3);
@@ -75,9 +75,3 @@ describe("1", function(){
 		o_c.logout(ptor, o_c.feedback);
 	})
 })
-
-/////////////////////////////////////////////////////////
-//				test specific functions
-/////////////////////////////////////////////////////////
-
-

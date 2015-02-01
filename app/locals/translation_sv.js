@@ -2,6 +2,9 @@ var translation_sv=function(){
     return {
       tellus: 'Skriv något om dig själv...',
       online_name_comment:'(Ditt online-namn visas för andra elever och lärare när du skriver kommentarer eller ställer frågor. Om du vill vara anonym, använd den givna pseudonymen ("Student NNNN") eller hitta på en egen.)',
+      new_module_instructions: "Lägg till en ny modul eller valt en existerande genom att klicka på innehålls navigator från vänster",
+      use_modules_organize: "Använd modulerna för att organisera dina videoklipp och frågesporter",
+      use_content_menu: "Använd innehållsmenyn för att lägga till frågesporter och undersökningar",
       finished: 'Kom',
       yes: 'Ja',
       no: 'Nej',
@@ -75,13 +78,15 @@ var translation_sv=function(){
       new_online_content: "Ny modul Post",
       send_email: "Skicka ett Mail",
       show_all_courses: "Visa alla kurser",
-      New_Video_Question: "Ny Video Question",
+      Insert_Video_Question: "Infoga Video Frågesport Här",
+      new_video: "Ny Video",
       Insert_a_question: "Sätt i en fråga i en video",
       copy: "Kopia",
       due: "Förfaller",
       my: "Mitt",
       and: "och",
       redirect_courselist: "Omdirigerar till din kurslista under ",
+      did_not_get_credit: "Du fick inte äran för den här videon . För att få kredit för en obligatorisk videon du behöver för att titta på hela ( ingen hoppa ) och besvara varje fråga ( du behöver inte få dem rätt , men) .",
       errors_messages:{
               the_form_contains: "Formuläret innehåller",
               error: "fel",
@@ -193,8 +198,8 @@ var translation_sv=function(){
         help_enroll:"Hjälp på Inskrivning",
         instruction:"Studenter anmäla dig genom att först registrera dig på skalbara lärande webbplats och sedan kommer in i kursnyckel Course. För att hjälpa eleverna att göra detta, vänligen skicka ett e-postmeddelande med följande instruktioner.",
         dear_student:"Käre Studenten",
-        this_term_new_system:"Denna term i {{course_name}} kommer vi att använda ScalableLearning, ett online-system som hjälper till att göra din inlärning mer interaktiv. För att se kursmaterialet måste du först skapa ett konto och sedan lägga till den här kursen. Följ dessa tre enkla steg för att komma igång",
-        create_account_with_university: "och skapa ett konto med ditt universitet e-postadress. (Vi kommer att skicka ett mail för att verifiera ditt konto innan du kan komma igång.)",
+        this_term_new_system:"Denna term i { { course_name } } vi kommer att använda ScalableLearning för att göra din inlärning mer interaktiv. För att komma igång:",
+        create_account_with_university: "och skapa ett konto med ditt universitet e-postadress.",
         with_new_account: "med ditt nya konto",
         add_course_by_choosing: "Lägg din kurs genom att välja 'Gå Kurser' från menyn 'Kurser' och ange kursnyckel för",
         sincerely:"Med vänliga hälsningar",
@@ -271,9 +276,11 @@ var translation_sv=function(){
       events:{
               deadline_msg: "Alla deadlines är vid midnatt den angivna dagen",
               done: "Gjort",
+              done_late: "Gjort sent",
               save: "Spara",
               exit: "Utfart",
               not_done: "Inte gjort",
+              not_done_late: "Inte gjort och sen",
               not_done_due: "Inte gjort eller skall vara färdigt inom 2 dagar",
           },
       notification:{
@@ -327,6 +334,7 @@ var translation_sv=function(){
               lecture_title: "Föreläsningstitel",
               url: "Video URL",
               video_title: "Video Titel",
+              provider: "Föreskrivare",
               thumbnail: "Thumbnail",
               video_preview: "Video Preview",
               author: "Författare",
@@ -360,6 +368,7 @@ var translation_sv=function(){
               save_exit: "Spara och Avsluta",
               explanation: "Förklaring",
               cancel: "Avbryt",
+              delete_quiz: "Radera Quiz",
               remove: "Ta bort",
               editing_lecture: "Redigera Föreläsning",
               listing_lectures: "Listar föreläsningar",
@@ -386,6 +395,7 @@ var translation_sv=function(){
               please_choose_one_answer: "Välj minst ett svar",
               choose_atleast_one: "Välj minst en",
               hover_for_details: "Peka för mer information",
+              multiple_correct: "Det kan finnas flera rätta svar",
               set_date: "Ställ in datum",
               seconds: "Sekunder",              
               use_module: "Använd modulens synlighet",
@@ -409,7 +419,7 @@ var translation_sv=function(){
               provide_answer: "Ange svaret text för varje val",
               quiz_no_answer: "Frågesport har inte ett korrekt svar",
               shown_in_graph: "Visas i resultat diagram",
-              shown_to_student: "*Visas i studenter",
+              shown_to_student: "Visas i studenter",
               server: "Servern",
               is_slow: " tar lång tid att läsa in den här videon",
               try_reload:"Du kan fortsätta vänta, eller prova att uppdatera sidan",
@@ -420,6 +430,7 @@ var translation_sv=function(){
               confused: "Förvirrad",
               discussion: "Diskussion",
               provide_url:"vg ange en video URL",
+              enter_url:"Ange video URL",
               vidoe_not_exist: "Video kan inte eller kan fortfarande ladda upp",
               incompatible_link: "Inkompatibla länk",
               replay: "Spela",
@@ -437,6 +448,8 @@ var translation_sv=function(){
               download_notes: "Ladda ner Anteckningar",
               finish_before_proceeding:"Vänligen avsluta tidigare krävs föreläsningar innan du fortsätter",
               save_quiz: "Vänligen spara eller avsluta nu öppnat frågesport",
+              quiz_question: "Quiz Fråga",
+              quiz_time: "Quiz tid"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",
@@ -444,7 +457,7 @@ var translation_sv=function(){
               Drag_change_time: "Dra till ny plats för att ändra tid",
               save_changes: "Spara ändringar",
               editing_quiz: "Redigerar Quiz",
-              double_click_new_answer: "Dubbelklicka på videon för att lägga till ett nytt svar",
+              double_click_new_answer: "Quiz Redaktör : Dubbelklicka på videon för att lägga till ett nytt svar",
               incorrect_format_time: "Felaktigt format på tiden",
               time: "Tid",
               time_outside_range: "Tid utanför videons speltid",
@@ -526,7 +539,8 @@ var translation_sv=function(){
               must_choose_answer: "Måste välja minst ett svar",
               answer_question: "Vänligen svara på frågan",
               add_link: "Lägg till Länka",
-              new_link: "Ny Curs länk",
+              new_link: "Ny länk",
+              new_course_link: "Ny Curs länk",
               please_wait: "Var god vänta",
               lectures: "Föreläsningar",
               quizzes: "Quiz-frågor",
@@ -654,8 +668,8 @@ var translation_sv=function(){
               total_progress: "Totala framsteg",
               progress_chart: "Framsteg, diagram",
               modules: "Moduler",
-              start_date: "Startdatum",
-              duration: "Tidsutsträckning",
+              start_date: "Kurs Startdatum",
+              duration: "Kurslängd (veckor)",
               prerequisites: "Förutsättningar",
               course_image: "Kurs Image",
               course_image_url: "Kurs Image URL",
@@ -982,7 +996,7 @@ var translation_sv=function(){
         },
         announcements:
         {
-          empty: 'Det finns för närvarande inga meddelanden för denna kurs. Börja med att lägga till ett nytt meddelande.'
+          empty: 'Inga meddelanden ännu'
         },
         help:{
           getting_started: "Komma igång",
@@ -1006,35 +1020,42 @@ var translation_sv=function(){
           print: "Tryck"
         },
         content:{
+          add_new_content: "Lägg nytt innehåll",
           choose_content_type: "Välj Innehålls typ" ,
           interactive: "Interaktiv Innehåll",
           interactive_desc: "Valfria interaktiva frågor och betygssättning",
           types:{
             video: "Video",
-            quiz: "Frågesport",
-            survey: "Undersökning"
+            video_desc: "Du kan lägga till testfrågor ovanpå videon",
+            quiz: "Frågesport",            
+            survey: "Undersökning",
+            link: "Länk",
+            link_desc: "Webblänk till andra webbplatser eller sidor",
+            quiz_or_survey: "Frågesport eller Undersökning",
+            quiz_or_survey_desc: "Text-baserad , kan graderas eller frivillig",
           },
           questions:{
             choose_question_type: "Välj Fråge Typ",
+            insert_video_question: "Sätt i en video Fråga",
             categories:{
               on_video:{
-                title: "On-video Frågesport",
+                title: "In-video Frågesport",
                 desc: "Placera frågesport val på toppen av videon",
               },
               text_quiz:{
                 title: "Text Frågesport",
-                desc: "Frågesport på en vit bakgrund",
+                desc: "Text frågesport på en vit bakgrund",
               },
               on_video_survey:{
                 title: "On-video Undersökning",
-                desc: "Placera enkät val på toppen av videon, sorterade"
+                desc: "Placera enkät val på toppen av videon"
               }
             },
             types:{
-              ocq: "One rätt svar",
-              mcq: "Flera rätta svar",
-              drag: "Dra till Order",
-              text: "Text svar"
+              ocq: "ett svar",
+              mcq: "flera svar",
+              drag: "Dra och släpp",
+              text: "Fritext svar"
             }
           }
         },

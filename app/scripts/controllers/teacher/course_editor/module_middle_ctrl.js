@@ -1,10 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$stateParams', '$translate','$q','$log', '$filter', '$rootScope', function ($scope, $state, Module, CustomLink, $stateParams, $translate, $q, $log, $filter, $rootScope) {      
-        // $scope.$parent.not_module = false;
-        // $scope.$parent.currentmodule = $state.params.module_id
-        // $scope.$parent.currentitem = -1
+    .controller('moduleMiddleCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$stateParams', '$translate','$q','$log', '$filter', '$rootScope','ContentNavigator', function ($scope, $state, Module, CustomLink, $stateParams, $translate, $q, $log, $filter, $rootScope, ContentNavigator) {      
+        
         var unwatch =$scope.$watch('course.selected_module', function(){
             if($scope.course && $scope.course.selected_module){
                 $scope.module=$scope.course.selected_module
@@ -15,22 +13,19 @@ angular.module('scalearAngularApp')
             unwatch()
         })
         var init = function(){
-            // console.log($scope.course.selected_module)
-            // $scope.module = $scope.course.selected_module
-            // if($scope.module.due_date)
-            //     $scope.module.due_date_enabled =!isDueDateDisabled()
+            $scope.ContentNavigator = ContentNavigator
             Module.getModules(
                 {
                     course_id:$stateParams.course_id,
                     module_id:$stateParams.module_id
                 },
                 function(data){
-                    $scope.$watch('module',function(){
-                        if($scope.module){
-                            angular.extend($scope.module, data)
-                            console.log($scope.module)
-                        }
-                    })                    
+                    // $scope.$watch('module',function(){
+                    //     if($scope.module){
+                    angular.extend($scope.module, data)
+                    //         console.log($scope.module)
+                    //     }
+                    // })                    
                 },
                 function(){}
             )
@@ -62,10 +57,7 @@ angular.module('scalearAngularApp')
             };
 
             $scope.updateModule = function(data, type) {
-                // if (data && data instanceof Date) {
-                //     data.setMinutes(data.getMinutes() + 120);
-                //     $scope.module[type] = data
-                // }
+                delete $scope.module.new
                 var modified_module = angular.copy($scope.module);
                 delete modified_module.id;
                 delete modified_module.items;
@@ -75,9 +67,8 @@ angular.module('scalearAngularApp')
                 delete modified_module.total_time;
                 delete modified_module.total_questions;
                 delete modified_module.total_quiz_questions;
-                delete modified_module.open;
                 delete modified_module.due_date_enabled;
-                
+
                 Module.update({
                         course_id: $stateParams.course_id,
                         module_id: $scope.module.id
@@ -160,28 +151,7 @@ angular.module('scalearAngularApp')
             }
             $scope.$on('update_numbers', function(){
                 init();
-            })
-            // $scope.validateName= function(data, elem){
-            //     var d = $q.defer();
-            //     var doc={}
-            //     doc.name=data;
-            //     CustomLink.validateName(
-            //         {link_id: elem.id},
-            //         doc,
-            //         function(data){
-            //             d.resolve()
-            //         },function(data){
-            //             $log.debug(data.status);
-            //             $log.debug(data);
-            //         if(data.status==422)
-            //             d.resolve(data.data.errors.join());
-            //         else
-            //             d.reject('Server Error');
-            //         }
-            //     )
-            //     return d.promise;
-            // }
-                
+            })                
             
             $scope.updateCustomLink=function(elem){
                 elem.url = $filter("formatURL")(elem.url)
@@ -216,17 +186,6 @@ angular.module('scalearAngularApp')
                             module_id: $scope.module.id},
                         {links:$scope.module.custom_links}
                     )
-                    // Course.sortCourseLinks({course_id:$state.params.course_id},
-                    //     {links: scope.links},
-                    //     function(response){
-                    //         // $log.debug(response)
-                    //     },
-                    //     function(){
-                    //         // $log.debug('Error')
-                    //     }
-                    // );
                 },
             }
-
-            // init();
     }]);

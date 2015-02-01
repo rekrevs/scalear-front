@@ -3,10 +3,10 @@
         <img src="../images/discussion-timeline.png" />
     </p>
 </td>
-<td ng-if="item.data==null" colspan="3">
+<td ng-if="item.data==null || item.data.isEdit" colspan="3" style="padding:0">
     <question_block item="item" />
 </td>
-<td ng-if="item.data" colspan="3" bindonce style="padding: 0px;padding-right: 8px;" class="white-with-hover">
+<td ng-if="item.data && !item.data.isEdit" colspan="3" bindonce style="padding: 0px;padding-right: 8px;">
     <div class="discussion-content" ng-class="{ownpost: item.data.user_id == current_user.id, flagged: item.data.flags_count > 0}">
         <table style="width: 100%;" class="transparent no-border no-margin">
             <tr>
@@ -14,17 +14,18 @@
                     <div>
                         <b bo-text="item.data.screen_name" ></b>
                         <div class="timestamp with-small-margin-left">
-                        {{ item.data.created_at | timeAgo }}
+                        <span ng-show="item.data.edited">edited</span>
+                        <span>{{ item.data.updated_at | timeAgo }}</span>
                         <span ng-if="item.data.flags_count > 0" style="color: red;">
                             <span style="color: #a1a1a1">  </span>
                             <span translate>discussion.flagged_post</span>
                         </span>
                         </div>
-                        <div ng-show="item.data.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
-                            <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button>
+                        <div ng-if="item.data.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
+                            <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="false"></delete_button>
                             <!-- <delete_button class="hiddendeletebutton hide-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button> -->
                         </div>
-                        <span ng-show="item.data.user_id != current_user.id">
+                        <span ng-if="item.data.user_id != current_user.id">
                             <div style="display: inline-block; float: right;" >
                                 <flag-button name="flag" comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
                             </div>
@@ -35,11 +36,17 @@
                        
                         <div style="cursor: pointer;" ng-click="seek()(item.time, item.data.lecture_id)">
                             <div style="margin-bottom: 5px;">
-                                <span ng-show="item.data.user_id == current_user.id">
+                                <span ng-if="item.data.user_id == current_user.id">
                                     <img ng-show="item.data.privacy==0" src="/images/private.png" tooltip="{{private_text}}"/>
                                     <img ng-show="item.data.privacy==1" src="/images/public.png" tooltip="{{public_text}}"/>
                                 </span>
-                                <span translate>q</span><span bo-text="item.data.content"></span>
+                                <span translate>q</span>
+                                    <span ng-if="item.data.user_id != current_user.id" bo-text="item.data.content"></span>
+                                    <span ng-if="item.data.user_id == current_user.id" ng-mouseover="show_pencil = true;" ng-mouseleave="show_pencil = false;" style="padding-right: 20px;">
+                                        <span>{{item.data.content}}</span>
+                                        <span ng-show="show_pencil" class="fi-pencil size-18" style="position: absolute;" ng-click="item.data.isEdit=true"></span>
+                                    </span>
+                                    <!-- <editable_text ng-if="item.data.user_id == current_user.id" value="item.data.content" save="updateDiscussion(item.data)"> -->
                             </div>
                         </div>
                     </div>

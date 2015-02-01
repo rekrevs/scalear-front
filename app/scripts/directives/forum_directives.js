@@ -13,6 +13,13 @@ angular.module('scalearAngularApp')
                 scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
                 $('.text_block').focus();
 
+                if(scope.item.data && scope.item.data.isEdit){
+                    scope.privacy = (scope.item.data.privacy == 0)? scope.choices[0] : scope.choices[1]
+                    scope.current_question = scope.item.data.content
+                }
+                // else
+                //     scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
+
                 scope.postQuestion=function(item){
                     scope.$emit("question_updated")
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
@@ -44,13 +51,35 @@ angular.module('scalearAngularApp')
                     else
                         scope.error_message = $translate("discussion.cannot_be_empty")
                 }
+
+                scope.updateQuestion= function(question){
+                    if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
+                        Forum.updatePost({post_id: question.id},
+                            {content: scope.current_question},                    
+                            function(){
+                                question.content = scope.current_question
+                                question.updated_at = new Date()
+                                question.edited = true
+                                question.isEdit = false
+                                scope.error_message=null
+                                scope.current_question = ''
+                            }
+                        )
+                    }
+                    else
+                        scope.error_message = $translate("discussion.cannot_be_empty")
+                }
+
                 scope.cancelQuestion=function(question){
                     scope.$emit("question_updated")
                     scope.$emit('update_timeline', question)
                 }
 
                 shortcut.add("enter", function(){
-                    scope.postQuestion(scope.item)
+                    if(!scope.item.data || !scope.item.data.isEdit)
+                        scope.postQuestion(scope.item)
+                    else
+                        scope.updateQuestion(scope.item.data)
                     scope.$apply()
                 }, {"disable_in_input" : false});
 
@@ -84,7 +113,7 @@ angular.module('scalearAngularApp')
                     }, 
                     function(){}
                 )
-            }
+            }            
 
             scope.flagPost = function(discussion){
                 Forum.flagPost(
@@ -279,7 +308,7 @@ angular.module('scalearAngularApp')
 
         }
     }
-}]).directive("timelineFilters",function(){
+}]).directive("timelineFilters",['$rootScope',function($rootScope){
     return{
         restrict: "E",
         scope: {
@@ -292,26 +321,50 @@ angular.module('scalearAngularApp')
         //             '<a pop-over="popover_options">{{"more" | translate}}...</a>'+
         //         '</div>', 
         link:function(scope){
-            var template =  "<div style='color:#6e6e6e;font-size:12px'>"+
-                            "<b>Filter Events: </b><br />"+
-                            // "<div class='btn-group align-center' data-toggle='buttons'>"+
-                                // "<label id='quiz_checkbox' class='btn btn-checkbox'>"+
-                                    "<input type='checkbox' ng-model='options.quiz'> {{'quiz' | translate}} | "+
-                                // "</label>"+
-                                // "<label id='confused_checkbox'class='btn btn-checkbox'>"+
-                                    "<input type='checkbox' ng-model='options.confused'> {{'lectures.confused' | translate}} | "+
-                                // "</label>"+
-                                // "<label id='discussion_checkbox' class='btn btn-checkbox'>"+
-                                    "<input type='checkbox' ng-model='options.discussion'> {{'lectures.discussion' | translate}} | "+
-                                // "</label>"+
-                                 // "<label id='notes_checkbox' class='btn btn-checkbox'>"+
-                                    "<input type='checkbox' ng-model='options.note'> {{'lectures.video_notes' | translate}}"+
-                                // "</label>"+
-                            // "</div>"+
-                            "<br /><b>Notes: </b><br />"+
-                            "<a href='' ng-click='$parent.exportNotes()'>{{'lectures.download_notes' | translate}}</a>"+
-                            "</div>"
-                           
+            scope.initFilters=function(){
+                scope.lecture_filter={quiz:true,confused:true, discussion:true, note:true};
+            }
+
+            scope.exportNotes=function(){
+                $rootScope.$broadcast("export_notes")
+            }
+
+            scope.updateLectureFilter=function(type){
+                scope.lecture_filter[type] = !scope.lecture_filter[type]
+                $rootScope.$broadcast('lecture_filter_update', scope.lecture_filter)
+            }
+
+            var template ='<span ng-init="initFilters()">'+
+                            '<li>'+
+                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'note\')">'+
+                                    '<input id="showNotesCheckbox" type="checkbox" ng-checked="lecture_filter.note" />'+
+                                    '<span translate>course_settings.show_notes</span>'+
+                                '</div>'+
+                            '</li>'+
+                            '<li>'+
+                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'discussion\')">'+
+                                    '<input id="showQuestionsCheckbox" type="checkbox" ng-checked="lecture_filter.discussion" />'+
+                                    '<span translate>course_settings.show_discussion</span>'+
+                                '</div>'+
+                            '</li>'+
+                            '<li>'+
+                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'quiz\')">'+
+                                    '<input id="showQuizzesCheckbox" type="checkbox" ng-checked="lecture_filter.quiz" />'+
+                                    '<span translate>course_settings.show_quizzes</span>'+
+                                '</div>'+
+                            '</li>'+
+                            '<li>'+
+                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'confused\')">'+
+                                    '<input id="showConfusedCheckbox" type="checkbox" ng-checked="lecture_filter.confused" />'+
+                                    '<span translate>course_settings.show_confused</span>'+
+                                '</div>'+
+                            '</li>'+
+                            '<li>'+
+                                '<a class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="exportNotes()">'+
+                                    '<span translate>lectures.download_notes</span>'+
+                                '</a>'+
+                            '</li>'+
+                        '</span>'
 
             scope.popover_options={
                 content: template,
@@ -320,7 +373,7 @@ angular.module('scalearAngularApp')
             }
         }
     };
-}).directive('commentBox', function(){
+}]).directive('commentBox', function(){
     return{
         restrict: 'E',
         scope:{            

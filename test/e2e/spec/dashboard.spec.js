@@ -23,8 +23,8 @@ describe("Dashboard", function(){
 	})
 
 	it('should check student side for elements in news feed', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.to_student(ptor);
+		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.to_student(ptor);
 		check_dashboard_elements(0);
 	})
 
@@ -33,7 +33,7 @@ describe("Dashboard", function(){
 		o_c.open_course_list(ptor);
 		o_c.open_course(ptor, 1);
 		o_c.press_content_navigator();
-		ptor.sleep(5000);
+		ptor.sleep(1000);
 		o_c.open_announcements(ptor);
 		teacher.create_new_announcement(ptor, 'announcement_text1');
 		teacher.create_new_announcement(ptor, 'announcement_text2');

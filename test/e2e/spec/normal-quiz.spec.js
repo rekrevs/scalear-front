@@ -17,17 +17,13 @@ describe('add required quiz and answer it',function(){
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
-    it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-    })
-
     it('should add a normal quiz', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
+        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.open_course_list(ptor);
+        // o_c.open_course(ptor, 1);
         // o_c.open_content_editor(ptor);
         teacher.add_module(ptor);
-        ptor.sleep(3000)
+        // ptor.sleep(3000)
         teacher.add_quiz(ptor)
     })
 
@@ -66,8 +62,12 @@ describe('add required quiz and answer it',function(){
         teacher.save_quiz(ptor)
     })
 
+    it('should get the enrollment key and enroll student', function(){
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    })
+
     it('should go to student', function(){
-        o_c.to_student(ptor);
+        // o_c.to_student(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         // o_c.open_lectures(ptor);
@@ -136,7 +136,7 @@ describe('add required quiz and answer it',function(){
     })
 })
 
-xdescribe("add optional quiz and answer it incorrect with multiple attempts", function(){
+describe("add optional quiz and answer it incorrect with multiple attempts", function(){
 
     it('should sign in as teacher', function(){
         // o_c.press_login(ptor)
@@ -147,17 +147,13 @@ xdescribe("add optional quiz and answer it incorrect with multiple attempts", fu
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
-    it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-    })
-
     it('should add a normal quiz', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
+        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.open_course_list(ptor);
+        // o_c.open_course(ptor, 1);
         // o_c.open_content_editor(ptor);
         teacher.add_module(ptor);
-        ptor.sleep(3000)
+        // ptor.sleep(3000)
         teacher.add_quiz(ptor)
     })
 
@@ -195,8 +191,12 @@ xdescribe("add optional quiz and answer it incorrect with multiple attempts", fu
         teacher.save_quiz(ptor)
     })
 
+    it('should get the enrollment key and enroll student', function(){
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    })
+
     it('should go to student', function(){
-        o_c.to_student(ptor);
+        // o_c.to_student(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         // o_c.open_lectures(ptor);
@@ -231,11 +231,12 @@ xdescribe("add optional quiz and answer it incorrect with multiple attempts", fu
         student.free_match_answer(ptor, 6, 'mat answer')
     })  
 
-    it('should answer drag correct', function(){
-        ptor.sleep(2000);
-    })
+    // it('should answer drag correct', function(){
+    //     ptor.sleep(2000);
+    // })
 
     it('should submit',function(){
+        ptor.sleep(30000)
         student.submit_normal_quiz(ptor);
         incorrect_no(4)
         under_review_no(1)
@@ -280,21 +281,21 @@ xdescribe("add optional quiz and answer it incorrect with multiple attempts", fu
         check_submit_disabled(ptor)
     })    
     
-    it('should delete course', function(){
-        o_c.to_teacher(ptor);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
-        // o_c.press_content_navigator(ptor)
-        teacher.open_module(ptor, 1);
-        teacher.delete_item_by_number(ptor, 1, 1);
-        teacher.delete_empty_module(ptor, 1)
-        o_c.open_course_list(ptor);
-        teacher.delete_course(ptor, 1);
-        o_c.logout(ptor);
-    })
+    // it('should delete course', function(){
+    //     o_c.to_teacher(ptor);
+    //     o_c.open_course_list(ptor);
+    //     o_c.open_course(ptor, 1);
+    //     // o_c.press_content_navigator(ptor)
+    //     teacher.open_module(ptor, 1);
+    //     teacher.delete_item_by_number(ptor, 1, 1);
+    //     teacher.delete_empty_module(ptor, 1)
+    //     o_c.open_course_list(ptor);
+    //     teacher.delete_course(ptor, 1);
+    //     o_c.logout(ptor);
+    // })
 })
 
-xdescribe('add quiz and student saves it',function(){
+describe('add quiz and student saves it',function(){
     it('should sign in as teacher', function(){
         o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
@@ -303,16 +304,12 @@ xdescribe('add quiz and student saves it',function(){
         teacher.create_course(ptor, params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
     })
 
-    it('should get the enrollment key and enroll student', function(){
-        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-    })
-
     it('should add a normal quiz', function(){
-        o_c.sign_in(ptor, params.teacher_mail, params.password);
-        o_c.open_course_list(ptor);
-        o_c.open_course(ptor, 1);
+        // o_c.sign_in(ptor, params.teacher_mail, params.password);
+        // o_c.open_course_list(ptor);
+        // o_c.open_course(ptor, 1);
         teacher.add_module(ptor);
-        ptor.sleep(3000)
+        // ptor.sleep(3000)
         teacher.add_quiz(ptor)
     })
 
@@ -342,8 +339,12 @@ xdescribe('add quiz and student saves it',function(){
         teacher.save_quiz(ptor)
     })
 
+    it('should get the enrollment key and enroll student', function(){
+        teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
+    })
+
     it('should go to student', function(){
-        o_c.to_student(ptor);
+        // o_c.to_student(ptor);
         o_c.open_course_list(ptor)
         o_c.open_course(ptor, 1);
         // o_c.open_lectures(ptor);
@@ -422,98 +423,6 @@ xdescribe('add quiz and student saves it',function(){
     })
 })
 
-xdescribe('',function(){
-    it('should add a normal REQUIRED quiz', function(){
-        teacher.add_quiz(ptor, 1);
-    })
-    //------
-    // it('should open the first module', function(){
-    // 	teacher.open_module(ptor, 1)
-    // })
-    //------
-    it('should open the quiz', function(){
-        teacher.open_item(ptor, 1, 5)
-    })
-    it('should rename the quiz', function(){
-        teacher.rename_item(ptor, 'New Required Quiz')
-    })
-    it('should make the quiz required', function(){
-        teacher.make_quiz_required(ptor)
-    })
-
-    it('should add a FIRST header', function(){
-        teacher.add_quiz_header(ptor, 'first header')
-    })
-    it('should add a MCQ question', function(){
-        teacher.add_quiz_question_mcq(ptor, 'mcq question', 2, [1, 2])
-    })
-    it('should add a SECOND header', function(){
-        teacher.add_quiz_header(ptor, 'second header')
-    })
-    it('should add an OCQ question', function(){
-        teacher.add_quiz_question_ocq(ptor, 'ocq question', 2, 1)
-    })
-    it('should add a FREE question', function(){
-        teacher.add_quiz_question_free(ptor, 'free question', false)
-    })
-
-    it('should add a MATCH question', function(){
-        teacher.add_quiz_question_free(ptor, 'match question', true, 'match answer')
-    })
-    it('should add a DRAG question', function(){
-        teacher.add_quiz_question_drag(ptor, 'drag question', 2)
-    })
-    it('should save the quiz', function(){
-        teacher.save_quiz(ptor)
-    })
-
-    it('should scroll to the top', function(){
-        o_c.scroll_to_top(ptor)
-    })
-    it('should add a normal survey', function(){
-        teacher.add_survey(ptor, 1)
-    })
-
-    it('should open the survey', function(){
-        teacher.open_item(ptor, 1, 6)
-    })
-
-    it('should add a FIRST header', function(){
-        teacher.add_quiz_header(ptor, 'first header')
-    })
-    it('should add a MCQ question for the SURVEY', function(){
-        teacher.add_survey_question_mcq(ptor, 'mcq question', 2)
-    })
-    it('should add a SECOND header', function(){
-        teacher.add_quiz_header(ptor, 'second header')
-    })
-    it('should add an OCQ question for the SURVEY', function(){
-        teacher.add_survey_question_ocq(ptor, 'ocq question', 2)
-    })
-    it('should add a FREE question for the SURVEY', function(){
-        teacher.add_survey_question_free(ptor, 'free question')
-    })
-    it('should scroll to bottom', function(){
-        o_c.scroll_to_bottom(ptor)
-    })
-    it('should save the survey', function(){
-        teacher.save_survey(ptor)
-    })
-
-    it('should scroll to the top', function(){
-        o_c.scroll_to_top(ptor)
-    })
-    it('should create a new module', function(){
-        teacher.add_module(ptor);
-    })
-    it('should open the created module', function(){
-        teacher.open_module(ptor, 2)
-    })
-    it('should rename the module created', function(){
-        teacher.rename_module(ptor, 'New Module 2')
-    })
-
-})
 
 /////////////////////////////////////////////////////////////////
 function correct_no(no){

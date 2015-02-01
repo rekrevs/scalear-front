@@ -93,7 +93,7 @@ angular.module('scalearAngularApp', [
                 toolbar: [
                     ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],
                     ['bold', 'italics', 'underline', 'ul', 'ol', 'redo', 'undo', 'clear'],
-                    ['html', 'insertLink', 'unlink', 'insertImage']
+                    ['insertLink', 'unlink', 'insertImage']
                 ],
                 classes: {
                     // focussed: "focussed",

@@ -158,7 +158,8 @@ angular.module('scalearAngularApp')
     restrict: "E",
     scope:{
       course: '=',
-      teachers: '='
+      teachers: '=',
+      unenroll:'='
     },
     templateUrl: '/views/courseItem.html',
     link: function(scope){}
@@ -176,11 +177,12 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/user_item.html',
     link: function(scope){
-      scope.$watch('user', function(){
-        if(scope.user){
-          scope.user.full_name = scope.user.name+' '+scope.user.last_name;
-        }
-      });
+      // var unwatch = scope.$watch('user', function(){
+      //   if(scope.user){
+      //     scope.user.full_name = scope.user.name+' '+scope.user.last_name;
+      //     unwatch()
+      //   }
+      // });
       scope.toggleSelect = function(){
         scope.select(scope.user)
       }
@@ -333,7 +335,7 @@ angular.module('scalearAngularApp')
         angular.element('.button').blur()
         var modalInstance = $modal.open({
             templateUrl: '/views/student/calendar/calendar.html',
-            controller: "studentCourseInformationCtrl",
+            controller: "CalendarModalCtrl",
         })
       }
 

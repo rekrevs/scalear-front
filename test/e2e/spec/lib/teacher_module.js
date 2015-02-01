@@ -10,25 +10,6 @@ var params = ptor.params;
 exports.create_course = function(ptor, short_name, course_name, course_duration, discussion_link, image_link, course_description, prerequisites){
     	o_c.open_new_course(ptor);
 
-		// locator.by_name(ptor, 'short').then(function(shrt_nm){
-		// 	shrt_nm.sendKeys(short_name);
-		// })
-		// locator.by_name(ptor, 'name').then(function(crs_nm){
-		// 	crs_nm.sendKeys(course_name);
-		// })
-		// // locator.by_name(ptor, 'date').then(function(date){
-		// // 	date.click().then(function(){
-		// // 		locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[3]/div[1]/ul/li[1]/li/table/tbody').then(function(dates){
-
-		// // 		})
-		// // 	})
-		// // })
-		// locator.by_name(ptor, 'duration').then(function(crs_dur){
-		// 	crs_dur.sendKeys(course_duration);
-		// })
-		// // locator.by_xpath(ptor, '//*[@id="main"]/div/div/div/form/center/div/div[4]/div[1]/input').then(function(dis_lnk){
-		// // 	dis_lnk.sendKeys(discussion_link);
-		// // })
 		element(by.model("course.short_name")).sendKeys(short_name)
 		element(by.model("course.name")).sendKeys(course_name)
 		element(by.model("course.duration")).sendKeys(course_duration)
@@ -36,27 +17,10 @@ exports.create_course = function(ptor, short_name, course_name, course_duration,
 		element(by.model("course.description")).sendKeys(course_description)
 		element(by.model("course.prerequisites")).sendKeys(prerequisites)
 		o_c.scroll(ptor, 1000)
-		// ptor.executeScript('window.scrollBy(0, 1000)', '');
-		// browser.debugger()
-		element(by.buttonText("Create Course")).click()
-		// .then(function(){
-		// 	 o_c.feedback(ptor, 'Course was successfully created.');
-		// })
+		
+		element(by.buttonText("Create Course")).click();
+		
 		ptor.sleep(5000);
-		// locator.s_by_model(ptor, 'course.image_url')[0].
-		// locator.s_by_model(ptor, 'course.description')[0].then(function(crs_desc){
-		// 	crs_desc.sendKeys(course_description);
-		// })
-		// locator.s_by_model(ptor, 'course.prerequisites')[0].then(function(pre_req){
-		// 	pre_req.sendKeys(prerequisites);
-		// })
-
-		// ptor.executeScript('window.scrollBy(0, 1000)', '');
-		// locator.by_classname(ptor, 'button').then(function(crt_crs_btn){
-		// 	crt_crs_btn.click().then(function() {
-	 //            o_c.feedback(ptor, 'Course was successfully created.');
-	 //        });
-		// })
 }
 
 //====================================================
@@ -68,7 +32,7 @@ exports.get_key_and_enroll = function(ptor, email, password){
 		o_c.logout(ptor);
 		o_c.sign_in(ptor, email, password);
 		student.join_course(ptor, text);
-		o_c.logout(ptor);
+		// o_c.logout(ptor);
 		// o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 	// locator.by_id(ptor, 'enrollment_key').then(function(element){
@@ -144,13 +108,6 @@ exports.add_module = function(ptor){
 		o_c.open_content(ptor);
 		element(by.id('new_module')).click()
 		expect(element.all(by.repeater('module in modules')).count()).toEqual(module_count+1)
-
-		// locator.by_id(ptor, 'new_module').then(function(mod){
-		// 	mod.click()
-		// 	// .then(function(){
-		//  // 		o_c.feedback(ptor, 'Module was successfully created');	 	
-		// 	// })
-		// })
 		o_c.hide_dropmenu(ptor);
 	})	
 }
@@ -181,6 +138,89 @@ exports.delete_empty_module = function(ptor, mo_no){
  //            })
  //        })
  //    })
+}
+
+//====================================================
+//            		add - edit / delete course links
+//====================================================
+
+exports.add_course_link = function(ptor){
+	element.all(by.repeater('link in links')).count().then(function(count){
+		var links_count = count
+		o_c.open_content(ptor);
+		o_c.open_online_content(ptor)
+		element(by.id('link_item')).click()
+		expect(element.all(by.repeater('link in links')).count()).toEqual(links_count+1)
+		o_c.hide_dropmenu(ptor);
+	})	
+}
+
+exports.delete_course_link = function(ptor, link_no){
+	element.all(by.repeater('link in links')).count().then(function(count){
+		var links_count = count
+	
+		element(by.repeater('link in links').row(link_no-1))
+		.then(function(item){
+			item.element(by.className('delete')).click()
+			item.element(by.className('fi-check')).click()
+			// .then(function(){
+			// 	o_c.feedback(ptor, 'was successfully deleted');
+			// })
+		})
+		expect(element.all(by.repeater('link in links')).count()).toEqual(links_count-1)
+	})
+}
+
+exports.edit_course_link_info = function(link_no, name, link){
+	element(by.repeater('link in links').row(link_no-1))
+		.then(function(item){
+			item.element(by.tagName("details-text")).click().then(function(){
+				element(by.className('editable-input')).sendKeys(name)
+				element(by.className('check')).click()
+			})
+			item.element(by.tagName("details-link")).click().then(function(){
+				element(by.className('editable-input')).sendKeys(link)
+				element(by.className('check')).click()
+			})
+		})
+}
+
+exports.add_module_link = function(ptor){
+	element.all(by.repeater('doc in module.custom_links')).count().then(function(count){
+		var links_count = count
+		element(by.id('add_module_link')).click()
+		expect(element.all(by.repeater('doc in module.custom_links')).count()).toEqual(links_count+1)
+	})	
+}
+
+exports.delete_module_link = function(ptor, link_no){
+	element.all(by.repeater('doc in module.custom_links')).count().then(function(count){
+		var links_count = count
+	
+		element(by.repeater('doc in module.custom_links').row(link_no-1))
+		.then(function(item){
+			item.element(by.className('delete')).click()
+			item.element(by.className('fi-check')).click()
+			// .then(function(){
+			// 	o_c.feedback(ptor, 'was successfully deleted');
+			// })
+		})
+		expect(element.all(by.repeater('doc in module.custom_links')).count()).toEqual(links_count-1)
+	})
+}
+
+exports.edit_module_link_info = function(link_no, name, link){
+	element(by.repeater('doc in module.custom_links').row(link_no-1))
+		.then(function(item){
+			item.element(by.tagName("details-text")).click().then(function(){
+				element(by.className('editable-input')).sendKeys(name)
+				element(by.className('check')).click()
+			})
+			item.element(by.tagName("details-link")).click().then(function(){
+				element(by.className('editable-input')).sendKeys(link)
+				element(by.className('check')).click()
+			})
+		})
 }
 
 //====================================================
@@ -238,6 +278,14 @@ exports.open_item = function(ptor, mo_no, item_no){
 	 element(by.repeater('module in modules').row(mo_no-1)).element(by.repeater('item in module.items').row(item_no-1)).click()
 }
 
+
+//====================================================
+//            click on an course_links to expand
+//====================================================
+exports.open_course_links = function(){
+  element(by.className('content-navigator-container')).element(by.className('links_accordion')).click()
+}
+
 //====================================================
 //            		change time zone
 //====================================================
@@ -263,7 +311,7 @@ exports.change_time_zone = function(ptor, value){
 exports.rename_item = function(ptor, name){
 	element(by.id('name')).click()
 	.then(function(){
-		element(by.className('editable-input')).sendKeys(name)
+		element(by.className('editable-input')).clear().sendKeys(name)
 		element(by.className('check')).click()
 
 		expect(element(by.id('name')).getText()).toContain(name)
@@ -568,6 +616,14 @@ exports.change_lecture_required = function(){
 	element(by.model('lecture.graded')).click()
 }
 
+exports.open_lecture_settings= function(){
+	element(by.id("lec_settings")).click()
+}
+
+exports.open_lecture_video_settings= function(){
+	element(by.id("video_settings")).click()
+}
+
 exports.change_attempt_num=function(num){
 	element(by.tagName('details-number')).click()
 	element(by.className('editable-input')).sendKeys(num)
@@ -581,7 +637,7 @@ exports.change_attempt_num=function(num){
 //===================================================
 exports.rename_module = function(ptor, name){
 	element(by.id("module")).element(by.tagName("details-text")).click().then(function(){
-		element(by.className('editable-input')).sendKeys(name)
+		element(by.className('editable-input')).clear().sendKeys(name)
 		element(by.className('check')).click()
 	})
 
@@ -701,12 +757,12 @@ exports.open_content_new_online_content = function(ptor){
 exports.init_lecture = function(ptor, lec_name, lec_url){
 	element(by.id('name')).click()
 	.then(function(){
-		element(by.className('editable-input')).sendKeys(lec_name)
+		element(by.className('editable-input')).clear().sendKeys(lec_name)
 		element(by.className('check')).click().then(function(){
 			// o_c.feedback(ptor, 'successfully updated')			
 			element(by.id('url')).click()
 			.then(function(){
-				element(by.className('editable-input')).sendKeys(lec_url)
+				element(by.className('editable-input')).clear().sendKeys(lec_url)
 				element(by.className('check')).click();
 			})
 		})	
@@ -986,13 +1042,17 @@ exports.cancel_invideo_quiz = function(){
 	element(by.buttonText('Cancel')).click()
 }
 
-exports.rename_invideo_quiz = function(ptor, quiz_no, name){
-	var editable = element(by.repeater('quiz in quiz_list').row(quiz_no-1)).element(by.tagName('editable_text'))
-	var pencil = element(by.repeater('quiz in quiz_list').row(quiz_no-1)).element(by.className('fi-pencil'))
-	ptor.actions().mouseMove(editable).perform()
-	pencil.click()
-	element(by.className('editable-input')).sendKeys(name)
-	editable.element(by.className('fi-check')).click()
+exports.rename_invideo_quiz = function(name){
+	// var editable = element(by.repeater('quiz in quiz_list').row(quiz_no-1)).element(by.tagName('editable_text'))
+	// var pencil = element(by.repeater('quiz in quiz_list').row(quiz_no-1)).element(by.className('fi-pencil'))
+	// ptor.actions().mouseMove(editable).perform()
+	// pencil.click()
+	element(by.className('quiz_name')).clear().sendKeys(name)
+	// editable.element(by.className('fi-check')).click()
+}
+
+exports.change_invideo_quiz_time= function(time){
+	element(by.className('quiz_time')).clear().sendKeys(time)
 }
 
 exports.make_mcq_text_questions=function(ptor){
@@ -1001,15 +1061,17 @@ exports.make_mcq_text_questions=function(ptor){
 		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
 		ontop.findElement(protractor.By.partialLinkText('Add Answer')).click();
 
+		ontop.findElements(protractor.By.name('mcq')).then(function(check){
+			o_c.scroll(ptor, 0);
+			check[0].click();
+			check[2].click();
+		})
 		ontop.findElements(protractor.By.name('answer')).then(function(answer){
 			answer[0].sendKeys("answer 1");
 			answer[1].sendKeys("answer 2");
 			answer[2].sendKeys("answer 3");
 		})
-		ontop.findElements(protractor.By.name('mcq')).then(function(check){
-			check[0].click();
-			check[2].click();
-		})
+
 
 		element.all(by.model("answer.explanation")).then(function(ex){
 			ex[0].sendKeys("explanation 1");
@@ -1017,9 +1079,9 @@ exports.make_mcq_text_questions=function(ptor){
 			ex[2].sendKeys("explanation 3");
 		})
 
-		ptor.sleep(2000);
+		// ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
+		element(by.buttonText('Done')).click()
 		// .then(function(btn){
 		// 	btn.click().then(function(){
 		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
@@ -1040,7 +1102,9 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ptor.actions().mouseMove(ontop,{x: q1_x, y: q1_y}).perform();
 			ptor.actions().doubleClick().perform();
 			ptor.actions().click().perform();
+			ptor.sleep(1000)
 			locator.by_classname(ptor, 'must_save_check').click();
+			// element(by.id("correct_checkbox")).click()
 			element.all(by.model("data.explanation")).then(function(ex){
 				ex[0].sendKeys("explanation 1");	
 			})
@@ -1048,6 +1112,8 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
 			ptor.actions().click().perform();
+
+			ptor.sleep(1000);
 
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
@@ -1061,18 +1127,22 @@ exports.make_mcq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 			ptor.actions().mouseMove({x: 5, y: 5}).perform();
 			ptor.actions().click().perform();
 
+			ptor.sleep(1000);
+
 			ptor.actions().mouseMove(ontop).perform();
 			ptor.actions().mouseMove(ontop,{x: q3_x, y: q3_y}).perform();
 			ptor.actions().doubleClick().perform();
 			ptor.actions().click().perform();
+			ptor.sleep(1000)
+			// element(by.className("popover-content")).element(by.className('must_save_check')).click()
 			locator.by_classname(ptor, 'must_save_check').click();
 			element.all(by.model("data.explanation")).then(function(ex){
 				ex[0].sendKeys("explanation 3");	
 			})
 
-			ptor.sleep(2000);
+			ptor.sleep(1000);
 			o_c.scroll(ptor, 1000);
-			element(by.buttonText('Save')).click()
+			element(by.buttonText('Done')).click()
 			// .then(function(btn){
 			// 	btn.click().then(function(){
 			// 		o_c.feedback(ptor, 'Quiz was successfully saved');
@@ -1108,7 +1178,7 @@ exports.make_mcq_survey_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q
 		
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
+		element(by.buttonText('Done')).click()
 		// .then(function(btn){
 		// 	btn.click().then(function(){
 		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
@@ -1139,7 +1209,7 @@ exports.make_ocq_text_questions=function(ptor){
 		
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
+		element(by.buttonText('Done')).click()
 		// .then(function(btn){
 		// 	btn.click().then(function(){
 		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
@@ -1163,6 +1233,8 @@ exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
 		ptor.actions().click().perform();
 
+		ptor.sleep(2000);
+
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove(ontop,{x: q2_x, y: q2_y}).perform();
 		ptor.actions().doubleClick().perform();
@@ -1175,6 +1247,8 @@ exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove({x: 5, y: 5}).perform();
 		ptor.actions().click().perform();
+        
+        ptor.sleep(2000);
 
 		ptor.actions().mouseMove(ontop).perform();
 		ptor.actions().mouseMove(ontop, {x: q3_x, y: q3_y}).perform();
@@ -1187,7 +1261,7 @@ exports.make_ocq_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
+		element(by.buttonText('Done')).click()
 		// .then(function(btn){
 		// 	btn.click().then(function(){
 		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
@@ -1222,7 +1296,7 @@ exports.make_ocq_survey_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q
 		
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
+		element(by.buttonText('Done')).click()
 		// .then(function(btn){
 		// 	btn.click().then(function(){
 		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
@@ -1248,7 +1322,7 @@ exports.make_drag_questions=function(ptor, q1_x, q1_y, q2_x, q2_y, q3_x, q3_y){
 
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
+		element(by.buttonText('Done')).click()
 		// .then(function(btn){
 		// 	btn.click().then(function(){
 		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
@@ -1269,7 +1343,7 @@ exports.make_drag_text_questions=function(ptor){
 		})
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
+		element(by.buttonText('Done')).click()
 		// .then(function(btn){
 		// 	btn.click().then(function(){
 		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
@@ -1281,7 +1355,7 @@ exports.make_drag_text_questions=function(ptor){
 exports.make_free_text_questions=function(ptor){
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
+		element(by.buttonText('Done')).click()
 		// .then(function(btn){
 		// 	btn.click().then(function(){
 		// 		o_c.feedback(ptor, 'Quiz was successfully saved');
@@ -1305,7 +1379,7 @@ exports.make_match_text_questions=function(ptor, text){
         })
 		ptor.sleep(2000);
 		o_c.scroll(ptor, 1000);
-		element(by.buttonText('Save')).click()
+		element(by.buttonText('Done')).click()
 		// .then(function(btn){
 		// 	btn.click().then(function(){
 		// 		o_c.feedback(ptor, 'Quiz was successfully saved');

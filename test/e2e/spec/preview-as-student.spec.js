@@ -27,8 +27,8 @@ describe("go to preview as student mode", function(){
         teacher.add_module(ptor);
         teacher.open_module(ptor, 1);
         teacher.add_lecture(ptor);           
-        o_c.press_content_navigator(ptor);
-        ptor.sleep(2000)
+        // o_c.press_content_navigator(ptor);
+        // ptor.sleep(2000)
         teacher.init_lecture(ptor, "lecture 1","https://www.youtube.com/watch?v=SKqBmAHwSkg");
     })
 
@@ -66,9 +66,9 @@ describe("go to preview as student mode", function(){
     })
 })
 
-describe("in order and required doesnot apply", function(){
+xdescribe("in order and required doesnot apply", function(){
     it('should sign in as teacher', function(){
-        o_c.press_login(ptor);
+        // o_c.press_login(ptor);
         o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
@@ -84,9 +84,14 @@ describe("in order and required doesnot apply", function(){
         teacher.add_module(ptor);
         teacher.open_module(ptor, 1);
         teacher.add_lecture(ptor);           
-        o_c.press_content_navigator(ptor);
-        ptor.sleep(2000)
+        // o_c.press_content_navigator(ptor);
+        // ptor.sleep(2000)
         teacher.init_lecture(ptor, "lecture 1","https://www.youtube.com/watch?v=SKqBmAHwSkg");
+
+        teacher.add_lecture(ptor);           
+        // o_c.press_content_navigator(ptor);
+        // ptor.sleep(2000)
+        teacher.init_lecture(ptor, "lecture 2","https://www.youtube.com/watch?v=SKqBmAHwSkg");
     })
 
     it('preview as student should be visible', function(){

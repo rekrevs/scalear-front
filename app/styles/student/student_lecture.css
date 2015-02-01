@@ -6,12 +6,15 @@
         margin-top: -30px;
     }*/
 
-    .white-with-hover{
-        background-color: #ffffff;
+    a.editable{
+        color:black;
     }
-    .white-with-hover:hover{
-        background-color: #d4d4d2;
+
+    form.editable-text{
+        width:90% !important;
     }
+
+
     .form-inline textarea {
         width: 95% !important;
     }
@@ -67,7 +70,7 @@
         cursor: pointer;
         width: 25px;
         position: relative;
-        left: -4px;
+        /*left: -4px;*/
     }
     .timeline-icon-container{
         width: 30px;
@@ -227,11 +230,12 @@
         background-color: white;
     }
     .timeline-settings{
-        margin-top: 25px;
-        margin-right: 6px;
         float: right;
         cursor: pointer;
         opacity: 0.5;
+        top: 3px;
+        right: 10px;
+        position: relative;
     }
     .timeline-settings:before{
         content: url("/images/settings-icon-dark.png");
@@ -254,7 +258,7 @@
       -webkit-transition: opacity .25s ease-in;
     }
     .ownpost{
-        background-color: #e6f6fc !important;
+        background-color: #E3F0EF !important;
     }
 
     .popover-title{
@@ -264,6 +268,22 @@
 
     .popover-content{
         padding:10px;
+    }
+
+    .settings .popover{
+        top: 0px !important;
+        padding:0;
+    }
+
+    .settings .arrow{
+        top:9% !important;
+    }
+    .settings .arrow:after{
+        border-left-color: #ededeb !important;
+    }
+
+    .settings .popover-content{
+        padding: 0px
     }
 
     /*@media only screen and (max-width : 1312px) {

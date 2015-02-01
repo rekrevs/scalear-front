@@ -12,9 +12,9 @@ angular.module('scalearAngularApp')
 				//$scope.course=data.course;
 				$scope.importing=data.importing;
 				$scope.timezones=scalear_utils.listTimezones()
-				console.log($scope.timezones)
 				$scope.course.time_zone = $scope.timezones[0]
-				var zone = new Date().getTimezoneOffset()/60 * -1
+				$scope.course.start_date = new Date()
+				var zone = $scope.course.start_date.getTimezoneOffset()/60 * -1
 				for(var tz in $scope.timezones){
 					if(parseInt($scope.timezones[tz].offset) == zone){
 						$scope.course.time_zone = $scope.timezones[tz]
@@ -22,10 +22,7 @@ angular.module('scalearAngularApp')
 					}
 				}
 				$scope.import_from=""				
-				$scope.course.start_date = new Date()
 
-			},function(response){
-				
 			}
 		);
 		
@@ -36,26 +33,18 @@ angular.module('scalearAngularApp')
                 $scope.submitting=true;
                 var d = new Date()
  				modified_course.start_date.setMinutes(modified_course.start_date.getMinutes() - d.getTimezoneOffset());
-
-                // if($scope.import_from){
-                //     console.log($scope.import_from);
-                //     $state.go("import_from",{"shared_item":$scope.import_from})
-                // }
-                // else{
           		modified_course.time_zone = modified_course.time_zone.name;
         		Course.create({course:modified_course, "import":$scope.import_from},
 					function(data){
 		                $scope.submitting=false;
 						$scope.submitted=false;
-						if(data.importing==true){
-							//$(window).scrollToThisp(0);
+						if(data.importing){
 							$state.go("course_list")
 						}
 						else{
-							//$(window).scrollToThisp(0);
 							$state.go("course.course_editor",{"course_id":data.course.id})
 						}
-						$rootScope.$broadcast('get_all_courses')
+						$rootScope.$broadcast('get_current_courses')
 					},function(response){
 						//server error must handle.
 		                $scope.submitting=false;
@@ -67,9 +56,4 @@ angular.module('scalearAngularApp')
 				$scope.submitted=true
 			}
 		}
-
-        $scope.$watch('current_lang', function(newval, oldval){
-            if(newval!=oldval)
-                $scope.server_errors={}
-        });
  }]);

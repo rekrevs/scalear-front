@@ -4,8 +4,20 @@
 <!-- endbuild -->
 
 <div id="module"  class="small-12 columns" ui-view="module" >
-	<div ng-show="!('*.module.**' | includedByState)"><br/><br/><div class="small-8 small-centered columns"><center><h5 class="muted">Add a new module or selected an existing by clicking on the content navigator from the left</h5></center></div><br/><br/></div>
+	<div ng-show="!('*.module.**' | includedByState)">
+		<br/><br/>
+		<div class="small-8 small-centered columns">
+			<center>
+				<h5 class="muted" translate>use_modules_organize</h5>
+				<br/><br/>
+				<button class="button" module-content-modal open-modal="openOnlineContentModal" ng-click="addModule();openOnlineContentModal()"><span translate>new_video</span></button>
+				<button class="button" ng-click="addModule()" translate>groups.new_module</button>
+			</center>
+		</div>
+	</div>
 </div>
-<div id="middle"  class="small-12 large-8 columns" ui-view="middle" />
+<span ng-show="('**.lecture' | includedByState) || ('**.quiz' | includedByState)">
+	<div id="middle"  class="small-12 large-7 columns ease_in_out no-padding width-max-heigh" ng-class="{'large-12 large-centered': !delayed_details_status}" ui-view="middle" />
 
-<div id="details" class="small-12 large-4 columns no-padding" ui-view="details"/>
+	<div id="details" class="details-navigator-container no-padding ease_in_out small-12 large-5 columns" ui-view="details" ng-class="{'large-height-big small-height-big ':delayed_details_status2}"/>
+</span>

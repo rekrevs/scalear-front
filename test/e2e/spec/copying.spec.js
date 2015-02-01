@@ -7,7 +7,7 @@ var ptor = protractor.getInstance();
 var params = ptor.params
 ptor.driver.manage().window().maximize();
 
-xdescribe("1", function(){
+describe("1", function(){
 
     it('should sign in as teacher', function(){
         o_c.press_login(ptor)
@@ -86,11 +86,11 @@ xdescribe("1", function(){
 })
 
 
-xdescribe("2", function(){
+describe("2", function(){
 
     it('should sign in as teacher', function(){
-        o_c.press_login(ptor)
-        o_c.sign_in(ptor, params.teacher2_mail, params.password);
+        // o_c.press_login(ptor)
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
     it('should create_course', function(){
@@ -150,9 +150,7 @@ xdescribe("2", function(){
         teacher.check_module_number(ptor, 2)
         teacher.check_item_number(ptor,2,1)
     })
-
     //end test
-
     it('should clear the second course for deletion', function(){
         teacher.delete_item_by_number(ptor, 2, 1);
         teacher.delete_empty_module(ptor, 2);
@@ -172,7 +170,6 @@ xdescribe("2", function(){
         teacher.delete_empty_module(ptor, 1);
     })
 
-    
     it('should delete course', function(){
         o_c.open_course_list(ptor);
         teacher.delete_course(ptor, 1);
@@ -184,8 +181,8 @@ xdescribe("2", function(){
 describe("3", function(){
 
     it('should sign in as teacher', function(){
-        o_c.press_login(ptor)
-        o_c.sign_in(ptor, params.teacher2_mail, params.password);
+        // o_c.press_login(ptor)
+        o_c.sign_in(ptor, params.teacher_mail, params.password);
     })
 
     it('should create_course', function(){
@@ -241,9 +238,7 @@ describe("3", function(){
         teacher.check_item_number(ptor,2,3)
     })
 
-    
     //end test
-
     it('should clear the course for deletion', function(){
         teacher.delete_item_by_number(ptor, 2, 1);
         teacher.delete_item_by_number(ptor, 2, 1);
@@ -255,7 +250,6 @@ describe("3", function(){
         teacher.delete_item_by_number(ptor, 1, 1);
         teacher.delete_empty_module(ptor, 1);
     })
-
     
     it('should delete course', function(){
         o_c.open_course_list(ptor);

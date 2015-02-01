@@ -1,172 +1,148 @@
-<center>
-	<span ng-show="!lecture">
-  		<loading size="small" show="true" style="position:relative; top:40%;" />
-	</span>
-</center>
-<div class="small-12 medium-12" ng-hide="!lecture">
-	<h4 ><span translate>lectures.lecture_details</span>:</h4>
-	<table class="table small-12 medium-12 large-12">
-		<tr>
-			<td class="right-border"><span translate>lectures.title</span>:</td>
-			<td >
-    			<details-text id="name" value="lecture.name" save="updateLecture()" validate="validateLecture" column="name"></details-text>
-			</td>
-		</tr>
-		<tr>
-			<td ng-class='{"color-red": lecture.url == "none"}' class="right-border">
-				<span translate>lectures.url</span>:
-				<i class='fi-info' tooltip='{{"youtube.info"|translate}}'></i>
-			</td>
-			<td class="break-text">
-    			<details-text id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"></details-text> 
-			</td>
-		</tr>
-
-		<tr ng-show="video.thumbnail">
-			<td colspan="2">
-				<center>
-					<span translate>lectures.video_preview</span>
-					<div id="lecture_thumbnail" ng-bind-html="video.thumbnail"></div>
-				</center>
-			</td>
-		</tr>
-		<tr ng-show="video.title">
-			<td class="right-border"><span translate>lectures.video_title</span>:</td>
-			<td>
-				<label >{{video.title}}</label>
-			</td>
-		</tr>
-		<tr ng-show="video.author">
-			<td class="right-border"><span translate>lectures.author</span>:</td>
-			<td>
-				<label>{{video.author}}</label>
-			</td>
-		</tr>
-		<tr>
-			<td class="right-border"><span translate>lectures.duration</span>:</td>
-			<td>
-				<label>{{lecture.duration|format}}</label>
-			</td>
-		</tr>
-		<tr>
-			<td class="right-border">
-				<span translate>settings.settings</span>:
-				<!-- <i class='fi-info' tooltip-placement="left" tooltip-html-unsafe="<i><span class='color-blue'>In Order: </span>Students must complete this item before going on to the next item in the module<br /> <span class='color-red'>Required: </span>Students must complete this item to complete the module</i>" tooltip-append-to-body="true"></i> -->
-			</td>
-			<td>
-				<span tooltip="Students must complete this item before going on to the next item in the module" tooltip-placement="left" tooltip-append-to-body="true">
-					<input type="checkbox" ng-model="lecture.required"  ng-change='updateLecture()'>
-					<span class="size-12" translate>courses.in_order</span>
-				</span>
-				<!-- <details-check checked="lecture.required" save="updateLecture()" yes="{{'courses.in_order'|translate}}" no="{{'lectures.not_in_order'|translate}}" title="{{'courses.in_order'|translate}}?" validate="validateLecture" column="required" ></details-check>  -->
-				<br />
-				<span tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true" >
-					<input type="checkbox" ng-model="lecture.graded" ng-change="updateLecture()">
-					<span class="size-12" translate>courses.required</span>
-				</span>
-				<!-- <details-check checked="lecture.graded" save="updateLecture()" yes="{{'courses.required'|translate}}" no="{{'lectures.not_required'|translate}}" title="{{'courses.required'|translate}}?" validate="validateLecture" column="graded"></details-check>  -->
-				<!-- <input type="checkbox" ng-checked="lecture.required">
-				<span class="size-12" translate>courses.required</span> -->
-				
-				<!-- <input type="checkbox" ng-checked="lecture.graded">
-				<span class="size-12" translate>courses.graded</span> -->
-			</td>
-		</tr>
-		<!-- <tr>
-			<td class="right-border"><span translate>courses.graded</span>:</td>
-			<td>
-				<details-check checked="lecture.graded" save="updateLecture()" yes="{{'lectures.lecture_graded'|translate}}" no="{{'lectures.lecture_not_graded'|translate}}" title="{{'courses.graded'|translate}}?" validate="validateLecture" column="graded"></details-check> 
-				<br />
-			</td>
-		</tr> -->
-
-		<!-- <tr>
-			<td><span translate>lectures.detected_aspect_ratio</span>:</td>
-			<td>
-				<label style="width:140px;font-size:10px;cursor:text;">{{lecture.detected_aspect_ratio}}</label>
-			</td>
-		</tr> -->
-		<!--<tr>-->
-			<!--<td><span translate>lectures.aspect_ratio</span>:</td>-->
-			<!--<td>-->
-				<!--<details-select value="lecture.aspect_ratio" options="screen_options" save="updateLecture()" validate="validateLecture" column="aspect_ratio" style="width: 120px;" ></details-select>-->
-			<!--</td>-->
-		<!--</tr>-->
-
-		<tr>
-			<td class="right-border"><span translate>groups.appearance_date</span></td>
-			<td > 
-				<input type="checkbox" ng-model="lecture.appearance_time_module" ng-change="updateLecture()" class="no-margin">
-				<span class="size-12" translate>lectures.use_module</span>
-				
-				<span ng-hide="!lecture.appearance_time_module">
-					<span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
-					<div  style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
-					{{lecture.appearance_time | amDateFormat:'MMM Do YYYY, HH:mm'}}
-					</div>
-				</span>
-				
-				<!-- <details-check checked="lecture.appearance_time_module" save="updateLecture()" yes="{{'lectures.using_module_appearance'|translate}}" no="{{'lectures.not_using_module_appearance'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="appearance_time_module"></details-check>  -->
-				<br />
-				<!-- <div ng-hide="!lecture.appearance_time_module"> -->
-					<!-- <input type='text' ng-model='lecture.appearance_time' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
-					
-					<!-- <span ng-show="visible(lecture.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> -->
-					
-				<!-- </div> -->
-				<span ng-hide="lecture.appearance_time_module">
-					<span translate>lectures.set_date</span>:<br>
-					<details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
-					<!-- <span ng-show="visible(lecture.appearance_time)" class="icon pull-right icon-eye-open" tooltip="{{'visible' | translate}}"></span> -->
-					<span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
-					<br>
-					<details-time class="timepicker" time="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-time>
-				</span>
-			</td>
-		</tr>
-		<tr>
-			<td class="right-border"><span translate>groups.due_date</span></td>
-			<td>
-				<input type="checkbox" ng-model="lecture.due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
-				<span class="size-12" >has due date</span>
-				<!-- <details-check checked="lecture.due_date_enabled" validate="updateDueDate" save="updateLecture()" yes="has due date" no="without due date" title="has due date?" ></details-check>  -->
-				<div ng-show="lecture.due_date_enabled">
-					<input type="checkbox" ng-disabled="lecture.disable_due_controls" ng-model="lecture.due_date_module" ng-change="updateLecture()" class="no-margin">
-					<span class="size-12" translate>lectures.use_module_due</span>
-					<!-- <details-check checked="lecture.due_date_module" save="updateLecture()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}" validate="validateLecture" column="due_date_module"></details-check>  -->
-					<br />
-					<div ng-hide="!lecture.due_date_module">
-						<!-- <input type='text' ng-model='lecture.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
-						<div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
-							{{lecture.due_date | amDateFormat:'MMM Do YYYY, HH:mm'}}
-						</div>
-					</div>
-					<span ng-hide="lecture.due_date_module">
-						<span translate>lectures.set_date</span>:<br>
-						<details-date date="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-date>
-						<br>
-						<details-time class="timepicker" time="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-time>
-					</span> 
-				</div>
-			</td>
-		</tr>
-		<!-- <tr>
-			<td class="right-border"><span translate>lectures.slides</span> URL:</td>
-			<td class="break-text">
-    			<details-text value="lecture.slides" save="updateSlidesUrl()" validate="validateLecture" column="slides" ></details-text>
-			</td> -->
-		</tr>
-		<tr>
-			<td class="right-border"><span translate>lectures.description</span>:</td>
-			<td>
-				<details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
-			</td>
-		</tr>
-		<tr>
-			<td class="right-border"><span>Student link to lecture</span>:</td>
-			<td class="break-text">
-				<span class="color-editable-blue">{{link_url}}</span>
-			</td>
-		</tr>
-	</table>
-</div>
+<accordion class="details_accordian" close-others="true">
+  <accordion-group class="accordion-group" is-open="lecture && lecture.url == 'none'">
+    <accordion-heading class="accordion-heading">
+      <div style="padding: 5px;border-bottom: 1px solid white;">
+        <div id="video_settings" class="show-inline">Video</div>
+      </div>              
+    </accordion-heading>
+    <table class="table small-12 no-margin" style="border-top:none">
+      <tr>
+        <td class="right-border"><span translate>lectures.title</span>:</td>
+        <td >
+            <details-text id="name" value="lecture.name" save="updateLecture()" validate="validateLecture" column="name" open="lecture.url == 'none'"></details-text>
+        </td>
+      </tr>
+      <tr>
+        <td class="right-border"><span translate>lectures.description</span>:</td>
+        <td>
+          <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
+        </td>
+      </tr>
+      <tr>
+        <td ng-class='{"color-red": lecture.url == "none"}' class="right-border">
+          <span translate>lectures.url</span>:
+          <i class='fi-info' tooltip='{{"youtube.info"|translate}}'></i>
+        </td>
+        <td class="break-text">
+            <details-text id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"></details-text> 
+        </td>
+      </tr>
+      <tr>
+        <td class="right-border"><span translate>lectures.duration</span>:</td>
+        <td>
+          <label>{{lecture.duration|format}}</label>
+        </td>
+      </tr>
+      <!-- <tr ng-show="video.thumbnail">
+        <td colspan="2">
+          <center>
+            <span translate>lectures.video_preview</span>
+            <div id="lecture_thumbnail" ng-bind-html="video.thumbnail"></div>
+          </center>
+        </td>
+      </tr> -->
+      <tr ng-show="lecture.url == 'none'">
+        <td class="right-border"><span translate>lectures.provider</span>:</td>
+        <td ng-if="is_youtube">
+          <label >Youtube</label>
+          <label >{{is_youtube}} {{video.title}} by {{video.author}}</label>
+        </td>
+        <td ng-if="!is_youtube">
+          <label>Server</label>
+        </td>
+      </tr>
+      <!-- <tr ng-show="video.author">
+        <td class="right-border"><span translate>lectures.author</span>:</td>
+        <td>
+          <label>{{video.author}}</label>
+        </td>
+      </tr> -->
+      <tr>
+        <td class="right-border"><span>Student link to lecture</span>:</td>
+        <td class="break-text">
+          <span class="color-editable-blue">{{link_url}}</span>
+        </td>
+      </tr>
+    </table>
+  </accordion-group>
+  <accordion-group class="accordion-group">
+    <accordion-heading class="accordion-heading">
+      <div style="padding: 5px;border-bottom: 1px solid white;">
+        <div id="lec_settings" class="show-inline">Settings</div>
+      </div>              
+    </accordion-heading>
+    <table class="table small-12 no-margin">
+      <tr>
+        <!-- <td class="right-border">
+          <span translate>settings.settings</span>:
+        </td> -->
+        <td colspan="2">
+          <center>
+            <span tooltip="Students must complete this item before going on to the next item in the module" tooltip-placement="left" tooltip-append-to-body="true">
+              <input type="checkbox" ng-model="lecture.required"  ng-change='updateLecture()'>
+              <span class="size-12" translate>courses.in_order</span>
+            </span>
+            <br />
+            <span tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true" >
+              <input type="checkbox" ng-model="lecture.graded" ng-change="updateLecture()">
+              <span class="size-12" translate>courses.required</span>
+            </span>
+        </center>
+        </td>
+      </tr>
+      <tr>
+        <td class="right-border"><span translate>groups.appearance_date</span></td>
+        <td > 
+          <input type="checkbox" ng-model="lecture.appearance_time_module" ng-change="updateLecture()" class="no-margin">
+          <span class="size-12" translate>lectures.use_module</span>
+          
+          <span ng-hide="!lecture.appearance_time_module">
+            <span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+            <div  style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
+            {{lecture.appearance_time | amDateFormat:'MMM Do YYYY, HH:mm'}}
+            </div>
+          </span>
+          <br />
+          <span ng-hide="lecture.appearance_time_module">
+            <span translate>lectures.set_date</span>:<br>
+            <details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
+            <span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
+            <br>
+            <details-time class="timepicker" time="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-time>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td class="right-border"><span translate>groups.due_date</span></td>
+        <td>
+          <input type="checkbox" ng-model="lecture.due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
+          <span class="size-12" >has due date</span>
+          <div ng-show="lecture.due_date_enabled">
+            <input type="checkbox" ng-disabled="lecture.disable_due_controls" ng-model="lecture.due_date_module" ng-change="updateLecture()" class="no-margin">
+            <span class="size-12" translate>lectures.use_module_due</span>
+            <br />
+            <div ng-hide="!lecture.due_date_module">
+              <div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
+                {{lecture.due_date | amDateFormat:'MMM Do YYYY, HH:mm'}}
+              </div>
+            </div>
+            <span ng-hide="lecture.due_date_module">
+              <span translate>lectures.set_date</span>:<br>
+              <details-date date="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-date>
+              <br>
+              <details-time class="timepicker" time="lecture.due_date" save="updateLecture(data, type)" validate="validateLecture" column="due_date"></details-time>
+            </span> 
+          </div>
+        </td>
+      </tr>
+    </table>
+  </accordion-group>
+  <accordion-group class="accordion-group overflow-auto" open="quiz_list.length">
+    <accordion-heading class="accordion-heading">
+      <div style="padding: 5px;border-bottom: 1px solid white;">
+        <div class="show-inline">Quizzes</div>
+      </div>              
+    </accordion-heading>
+    <quiz_list />
+  </accordion-group>
+</accordion>

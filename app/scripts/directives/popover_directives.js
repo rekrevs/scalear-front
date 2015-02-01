@@ -1,12 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive('popOver',['$parse','$compile','$q','$window','$log',function ($parse, $compile, $q, $window, $log) {
+.directive('popOver',['$parse','$compile','$q','$window','$log','$timeout',function ($parse, $compile, $q, $window, $log, $timeout) {
     return{
   		restrict: 'A',
-
   		link: function(scope, element, attr, ctrl) {
-
 	        var getter = $parse(attr.popOver)
 	        scope.$watch(attr.popOver, function(newval){
 	        	var options = getter(scope)
@@ -14,7 +12,6 @@ angular.module('scalearAngularApp')
 		        	element.popover('destroy');
 		        	element.popover(options);
 		          	var popover = element.data('popover');
-			        
 			        if(options.content){
 		      			if(attr.unique){
 			            	element.on('show', function(){
@@ -25,20 +22,20 @@ angular.module('scalearAngularApp')
 			                  			$this.popover('hide');		                  			
 			                		}
 		              			});
-			              	});
-	              			
+			              	});	              			
 			          	}
+
 			          	if(attr.highlight){
 			          		element.on('show', function(){
-				          		console.log('henaaaaaaa')
 				          		element.find('.video_link').select();
 				          	});
 			          	}
 
+			          	
 			          	popover.getPosition = function(){
 				            var pop = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
 				            $compile(this.$tip)(scope);
-				            scope.$digest();
+				            // scope.$digest();
 				            this.$tip.data('popover', this);
 				            if(!options.disabletop){
 				            	angular.element(".arrow").css("top",'50%');
@@ -77,22 +74,14 @@ angular.module('scalearAngularApp')
 						 		arrow.css("top",arrow_pos+'px');
 								pop.top = angular.element('.popover').height() - (angular.element('.popover').height()/4) +pop.height 
 							}
-							// else if(elem_bottom < 160) //too close to bottom
-							// {					
-							// 	arrow_pos =elem_bottom - (pop.height/2) - 20
-						 // 		arrow.css("top",'initial');
-						 // 		arrow.css("bottom",arrow_pos+'px');
-							// 	pop.top = win.height() - (angular.element('.popover').height() / 2) - (pop.height/2) - 10
-							// }
 			          	}
 
-			          	$(document).on("click", function (e) {
-						    var target = $(e.target)
-						    var inPopover = target.closest('.popover').length > 0
-						    var isElem = target.is(element)
-						    if (!inPopover && !isElem)
-						    	element.popover('hide');
-						});	         
+			          	if(options.instant_show){
+			          		$timeout(function(){
+			          			element.trigger("click")
+			          		})
+			          		options.instant_show =false
+			          	}
 			        }
 			    }
 		    })

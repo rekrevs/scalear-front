@@ -11,13 +11,13 @@
 }
 
 .overlay {
-  width: 97%;
-  /*height: 100%;*/
+  width: 100%;
+  height: 100%;
   position: absolute;
   display: block;
-  opacity: 0.7;
-  background-color: #fff;
-  z-index: 1;
+  /*opacity: 0.7;*/
+  background-color: rgba(255, 255, 255, 0.8);
+  z-index: 2;
   text-align: center;
 }
 
@@ -25,10 +25,17 @@ input[type="checkbox"].editable-input.editable-has-buttons{
 	width:12px !important;
 }
 
-details-date > form > span > ul.f-dropdown{
-	left:0% !important;
+.details_accordian details-date > form > span > ul.f-dropdown{
+	/*left:0% !important;*/
+  left: 37% !important;
+  top: 12rem !important;
 }
 
+#module details-date > form > span > ul.f-dropdown{
+  /*left:0% !important;*/
+  /*left: 37% !important;*/
+  top: 3.3rem !important;
+}
 
 a.editable-click { 
 	/*color: green;*/

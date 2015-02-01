@@ -99,7 +99,8 @@ angular.module('scalearAngularApp')
     restrict:"E",
     scope:{
       message:'=',
-      submessage:'='
+      submessage:'=',
+      middleMessage:'='
     },
     templateUrl: '/views/student/lectures/notification.html',
 
@@ -463,9 +464,10 @@ angular.module('scalearAngularApp')
           ui.draggable.attr('id', scope.data.id)
           scope.$apply()
         }
-        else{   
+        else{ 
           var drag_elem = angular.element('#'+scope.data.id)
           reverseSize(drag_elem)
+          reversePosition(drag_elem)
           clear(drag_elem)
           scope.setDropped(event, ui)
         }
@@ -491,6 +493,11 @@ angular.module('scalearAngularApp')
         draggable.removeClass('dropped')       
         draggable.width('')
         draggable.height('')
+      }
+
+      var reversePosition=function(draggable){
+        draggable.css('left', (scope.data.sub_xcoor*100)+'%')
+        draggable.css('top', (scope.data.sub_ycoor*100)+'%')
       }
       
       var destroyPopover=function(draggable){
@@ -580,7 +587,7 @@ angular.module('scalearAngularApp')
           }, true);
       }
   };
-}]).directive('studentTimeline', function() {
+}]).directive('studentTimeline', ['$timeout',function($timeout) {
   return {
     replace: true,
     restrict:"E",
@@ -588,11 +595,23 @@ angular.module('scalearAngularApp')
       timeline:'=',
       items:'=',
       lecture:'=current',
-      seek:'&'
+      seek:'&',
+      open_timeline:'=open'
     },
     templateUrl:'/views/student/lectures/student_timeline.html',
     link: function(scope, element, attrs) {
       // scope.checkModel={quiz:true,confused:true, discussion:true};
+
+      scope.$watch('open_timeline',function(status){
+        if(status){
+            $timeout(function(){
+                scope.delayed_timeline_open = true
+            },300)
+          }
+          else
+            scope.delayed_timeline_open = status
+      })
+
         scope.checkEmpty= function(item){
           return  item.type!=''
         }
@@ -608,7 +627,7 @@ angular.module('scalearAngularApp')
         }
     }
   }
-}).directive('confusedTimeline',['Lecture','$filter', function(Lecture,$filter){
+}]).directive('confusedTimeline',['Lecture','$filter', function(Lecture,$filter){
   return{
     restrict:"A",
     // replace:true,
@@ -643,7 +662,7 @@ angular.module('scalearAngularApp')
     }
   }
 }])
-.directive('quizTimeline',['OnlineQuiz','$filter', function(OnlineQuiz,$filter){
+.directive('quizTimeline',['OnlineQuiz','$filter','$rootScope', function(OnlineQuiz,$filter, $rootScope){
   return{
     restrict:"A",
     // replace:true,
@@ -653,6 +672,7 @@ angular.module('scalearAngularApp')
     },
     templateUrl: '/views/student/lectures/quiz_timeline.html',
     link:function(scope, element, attrs){
+      scope.preview_as_student = $rootScope.preview_as_student
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.voteForReview=function(){
         console.log("vote review")
@@ -740,10 +760,13 @@ angular.module('scalearAngularApp')
 }]).directive('notesArea', ['$timeout',
     function($timeout) {
         return {
-            template: '<div onshow="moveCursorToEnd()" e-rows="3" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal;">'+
-                        '<div style="word-break: break-word; padding: 3px; margin: 0px;width:100%; cursor: text;">'+
+            template: '<div onshow="moveCursorToEnd()" e-rows="3" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal;" style="padding:0 9px">'+
+                        '<div style="word-break: break-word; padding: 3px; margin: 0px;width:85%; cursor: text;float:left">'+
                           '{{ value }}'+
                           // '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
+                        '</div>'+
+                        '<div style="font-size: 10px; float: right; display: inline-block;">'+
+                          '<delete_button size="small" action="delete()" vertical="false" text="false" ></delete_button>'+
                         '</div>'+
                       '</div>',
             restrict: 'E',

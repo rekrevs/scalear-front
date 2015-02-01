@@ -1,29 +1,41 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour',
-        function($scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate,$cookieStore,Course, ScalTour) {
+    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour', 'ContentNavigator',
+        function($scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate,$cookieStore,Course, ScalTour, ContentNavigator) {
 
-
+            FastClick.attach(document.body);
             $scope.Page = Page;
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
-            $scope.open_navigator = false
-            $scope.$on('navigator_change',function(ev, status){
-                $scope.open_navigator = status
-                $scope.$broadcast('content_navigator_change')
+            $scope.ContentNavigator = ContentNavigator
+            
+            $scope.$on("get_current_courses",function(){
+                getCurrentCourses()
             })
-            $scope.$on("get_all_courses",function(){
-                getAllCourses()
-            })
+            $scope.ContentNavigator.delayed_navigator_open = $scope.ContentNavigator.status
 
-            var getAllCourses=function(){
-                $scope.courses=null
+            $scope.$on('content_navigator_change',function(ev, status){
+                if(!status){
+                    $scope.cancelDelay = $timeout(function(){
+                        $scope.ContentNavigator.delayed_navigator_open = false
+                    },300)
+                }
+                else{
+                    if($scope.cancelDelay)
+                        $timeout.cancel($scope.cancelDelay)
+                    $scope.ContentNavigator.delayed_navigator_open = true
+                }
+            })
+            
+
+            var getCurrentCourses=function(){
+                $scope.current_courses=null
                 var unwatch = $rootScope.$watch('current_user', function(){
                     if($rootScope.current_user && $rootScope.current_user.roles){
-                        Course.index({},
+                        Course.currentCourses({},
                             function(data){
-                                $scope.courses = data
-                                console.log($scope.courses)
+                                $scope.current_courses = data
+                                // console.log($scope.courses)
                                 unwatch()
                             }
                         );
@@ -107,7 +119,7 @@ angular.module('scalearAngularApp')
 
 
 
-            getAllCourses()
+            getCurrentCourses()
 
         }
     ]);

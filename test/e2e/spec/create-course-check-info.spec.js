@@ -22,7 +22,7 @@ var discussion_link_shrt_ch = 'www.discu';
 var course_date = new Date();
 var date = course_date.toString();
 
-xdescribe("teacher create course check info", function(){
+describe("teacher create course check info", function(){
 
 	it('should sign in as teacher', function(){
 		o_c.press_login(ptor);
@@ -38,9 +38,9 @@ xdescribe("teacher create course check info", function(){
 		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
 	//test
-	it('should log out from teacher then login as a student', function(){
-		o_c.sign_in(ptor, params.student_mail, params.password);
-	})
+	// it('should log out from teacher then login as a student', function(){
+	// 	o_c.sign_in(ptor, params.student_mail, params.password);
+	// })
 
 	it('should open info and test course information', function(){
 		o_c.open_course_list(ptor)
@@ -59,7 +59,7 @@ xdescribe("teacher create course check info", function(){
 describe("teacher check the ability to change course info", function(){
 
 	it('should sign in as teacher', function(){
-		o_c.press_login(ptor);
+		// o_c.press_login(ptor);
 		o_c.sign_in(ptor, params.teacher_mail, params.password);
 	})
 
@@ -68,21 +68,23 @@ describe("teacher check the ability to change course info", function(){
 		// ptor.sleep(5000);	
 	})
 
-	it('should get the enrollment key and enroll student', function(){
-		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
-	})
+	
 	//test
 	it('should go to info page and change info', function(){
-		o_c.sign_in(ptor, params.teacher_mail, params.password);
-		o_c.open_course_list(ptor)
-		o_c.open_course(ptor, 1);
+		// o_c.sign_in(ptor, params.teacher_mail, params.password);
+		// o_c.open_course_list(ptor)
+		// o_c.open_course(ptor, 1);
 		o_c.open_course_info(ptor);
 		teacher.change_course_info(ptor,course_description_ch, prerequisites_ch, short_name_ch, course_name_ch, discussion_link_ch, course_duration_ch);
 	})
 
-	it('should log out from teacher then login as a student', function(){
-		o_c.to_student(ptor);
+	it('should get the enrollment key and enroll student', function(){
+		teacher.get_key_and_enroll(ptor, params.student_mail, params.password);
 	})
+
+	// it('should log out from teacher then login as a student', function(){
+	// 	o_c.to_student(ptor);
+	// })
 
 	it('should open info and test course information', function(){
 		o_c.open_course_list(ptor)

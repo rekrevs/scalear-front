@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
         $scope.fullscreen = true;
         $scope.blurButtons();
 
-        $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz;
+        $scope.timer = $scope.review_question_count * $scope.time_parameters.question + $scope.review_quizzes_count * $scope.time_parameters.quiz + $scope.review_survey_count * $scope.time_parameters.question;
         $scope.counter =  $scope.timer>0? 1 : 0;
         $scope.counting = true;
         $scope.timerCountdown()

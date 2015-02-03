@@ -46,12 +46,12 @@ width: 78%;
 }
 
 .details-navigator-container{
-  top:-15px;
+  /*top:-15px;*/
   height: 0;
   overflow-y: auto;
   /*z-index: 1 !important;*/
   /*top: -5px;*/
-  right: -0.96em;
+  right: -0.6em;
   -webkit-overflow-scrolling: touch;
 }
 

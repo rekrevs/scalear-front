@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     Page.setTitle('navigation.courses')
     Page.startTour();
-    $rootScope.subheader_message = "All Courses"
+    $rootScope.subheader_message = $translate("navigation.courses")
 
 		$scope.column='name'
 

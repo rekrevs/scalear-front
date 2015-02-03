@@ -70,7 +70,7 @@
 						<li>
 							<a id="account_information" class="lighter-grey dark-text has-description" ui-sref-active="nav-inner-item-active" ui-sref="edit_account" href="" ng-show="user.intro_watched && user.info_complete">
 								<span translate>account_edit.account_information</span>
-								<h5 class="dark-description"><small translate>settings_describtion</small></h5>
+								<h5 class="dark-description"><small translate>settings_description</small></h5>
 							</a>
 							<!-- <ul class="lighter-grey-no-hover" top-bar-dropdown>
 								<li>
@@ -85,13 +85,16 @@
 					</ul>
 				</li>
 				<li has-dropdown>
-					<a class="white-with-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" ui-sref="getting_started" ng-show="user.intro_watched && user.info_complete" translate>head.help</a>
+					<a class="white-with-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('student_getting_started' | includedByState) || ('teacher_getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" ui-sref="getting_started" ng-show="user.intro_watched && user.info_complete" translate>head.help</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
 						<li><a class="lighter-grey dark-text" ng-click="startTour()"><span translate>help.tips</span></a></li>
-						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="getting_started" translate>help.getting_started</a></li>
-						<li ng-if="user.roles[0].id==1 || user.roles[0].id==5" class="divider border-grey medium-opacity"></li>
-						<li ng-if="user.roles[0].id==1 || user.roles[0].id==5"><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" target="_blank" translate>help.teacher_forum</a></li>
-						<li ng-if="user.roles[0].id==1 || user.roles[0].id==5"><a class="lighter-grey dark-text" href="external_documents/scalable-learning-manual.pdf" target="_blank"  translate>help.instruction_manual</a></li>
+						<li><a ng-if="user.roles[0].id==1 || user.roles[0].id==5" class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="teacher_getting_started" translate>help.getting_started</a></li>
+						<li><a ng-if="user.roles[0].id==2" class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="student_getting_started" translate>help.getting_started</a></li>
+						<span ng-if="user.roles[0].id==1 || user.roles[0].id==5">
+							<li class="divider border-grey medium-opacity"></li>
+							<li><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" target="_blank" translate>help.teacher_forum</a></li>
+							<li><a class="lighter-grey dark-text" href="external_documents/scalable-learning-manual.pdf" target="_blank"  translate>help.instruction_manual</a></li>
+						</span>
 						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="privacy" translate>footer.privacy</a></li>
 						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
@@ -108,7 +111,17 @@
 					</ul>
 				</li>
 				<li><a class="white-with-hover color-green-hover size-18-light" id="login" ui-sref-active="nav-item-active" ui-sref="login" translate>navigation.login</a></li>
-				<li><a class="white-with-hover color-green-hover size-18-light" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
+				<li has-dropdown>
+					<a class="white-with-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('student_getting_started' | includedByState) || ('teacher_getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" ui-sref="getting_started" translate>head.help</a>
+					<ul class="lighter-grey-no-hover" top-bar-dropdown>
+						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="student_getting_started" translate>help.student_getting_started</a></li>
+						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="teacher_getting_started" translate>help.teacher_getting_started</a></li>
+						<li class="divider border-grey medium-opacity"></li>
+						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="privacy" translate>footer.privacy</a></li>
+						<li><a class="lighter-grey dark-text" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li>
+					</ul>
+				</li>
+				<!-- <li><a class="white-with-hover color-green-hover size-18-light" report-technical ng-click="toggleTechnicalDisplay()" translate>help.feedback</a></li> -->
 			</ul>
 	    </top-bar-section>
 	</top-bar>

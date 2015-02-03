@@ -1,14 +1,15 @@
+<h3 ng-if="!user.roles[0].id"><i class="fi-page-multiple size-18"></i> {{'help.getting_started' | translate}}</h3>
 <h5 class="show-for-medium-down"><i class="fi-page-multiple size-18"></i> {{'help.getting_started' | translate}}</h5>
 <div class="left-navigation hide-for-small-only left medium-3 large-3 columns" mac-affix>
-	<ul ng-if="current_user.roles[0].id == 2" class="side-nav">
-	  <li><a href="#intro" du-smooth-scroll du-scrollspy offset="90">Introduction</a></li>
-	  <li><a href="#enroll" du-smooth-scroll du-scrollspy offset="90">Joining a Class</a></li>
-	  <li><a href="#due" du-smooth-scroll du-scrollspy offset="90">What is Due Next?</a></li>
-	  <li><a href="#interaction" du-smooth-scroll du-scrollspy offset="90">Questions, Notes, and Confused</a></li>
-	  <li><a href="#progress" du-smooth-scroll du-scrollspy offset="90">Reviewing My Progress</a></li>
-	  <li><a href="#support" du-smooth-scroll du-scrollspy offset="90">Contacting My Teacher</a></li>
-	  <li><a href="#feedback" du-smooth-scroll du-scrollspy offset="90">Technical Problems or Feedback</a></li>
-	  <li><a href="#privacy" du-smooth-scroll du-scrollspy offset="90">Privacy</a></li>
+	<ul class="side-nav">
+	  <li><a href="#/help/student/getting_started#intro" du-smooth-scroll du-scrollspy offset="90">Introduction</a></li>
+	  <li><a href="#/help/student/getting_started#enroll" du-smooth-scroll du-scrollspy offset="90">Joining a Class</a></li>
+	  <li><a href="#/help/student/getting_started#due" du-smooth-scroll du-scrollspy offset="90">What is Due Next?</a></li>
+	  <li><a href="#/help/student/getting_started#interaction" du-smooth-scroll du-scrollspy offset="90">Questions, Notes, and Confused</a></li>
+	  <li><a href="#/help/student/getting_started#progress" du-smooth-scroll du-scrollspy offset="90">Reviewing My Progress</a></li>
+	  <li><a href="#/help/student/getting_started#support" du-smooth-scroll du-scrollspy offset="90">Contacting My Teacher</a></li>
+	  <li><a href="#/help/student/getting_started#feedback" du-smooth-scroll du-scrollspy offset="90">Technical Problems or Feedback</a></li>
+	  <li><a href="#/help/student/getting_started#privacy" du-smooth-scroll du-scrollspy offset="90">Privacy</a></li>
 	</ul>
 </div>
 <div class="with-margin-top small-12 medium-9 large-9 columns">
@@ -20,7 +21,7 @@
 			</div>
 		</div>
 	</center>
-	<span ng-if="current_user.roles[0].id == 2">
+	<span>
 		<div id="enroll">
 			<h4 class="color-green">Joining a Class</h4>
 			<p>

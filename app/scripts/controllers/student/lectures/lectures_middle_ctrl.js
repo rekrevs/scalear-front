@@ -20,7 +20,8 @@ angular.module('scalearAngularApp')
     $scope.ContentNavigator.open()
     $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
     $scope.$on('$destroy', function() {
-        $scope.course.warning_message=null
+        if($scope.course && $scope.course.warning_message)
+            $scope.course.warning_message=null
         shortcut.remove("c");
         shortcut.remove("q");
         shortcut.remove("n");
@@ -525,6 +526,13 @@ angular.module('scalearAngularApp')
         $timeout(function(){$scope.$emit("updatePosition")})
     }
 
+    var openTimeline=function(){
+        $scope.TimelineNavigator.open()
+        $timeout(function(){
+            $scope.scrollIntoView()
+        })
+    }
+
     $scope.addQuestionBlock= function(){
         var time=$scope.lecture_player.controls.getTime()
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion",  null);
@@ -532,21 +540,21 @@ angular.module('scalearAngularApp')
         $scope.last_play_state = $scope.play_pause_class;
         $scope.last_timeline_state = $scope.TimelineNavigator.getStatus()
         goSmallScreen()
-        $scope.TimelineNavigator.open()
+        openTimeline()
         $scope.checkModel.discussion = true
     };
 
     $scope.addNote=function(){
         var time=$scope.lecture_player.controls.getTime()
+        console.log($scope.timeline['lecture'][$state.params.lecture_id])
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note",  null);
         $scope.last_fullscreen_state = $scope.fullscreen;
         $scope.last_play_state = $scope.play_pause_class;
         $scope.last_timeline_state = $scope.TimelineNavigator.getStatus()
         goSmallScreen()
-        $scope.TimelineNavigator.open()
+        openTimeline()
         $scope.checkModel.note = true
-    }
-    
+    }    
 
     $scope.$on('video_back',function(ev, time){
         console.log(time)
@@ -673,7 +681,7 @@ angular.module('scalearAngularApp')
                 removeNotification()
                 $scope.$apply()
             }
-        }, 600, 1);
+        }, 1500, 1);
 
     }
 

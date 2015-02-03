@@ -256,7 +256,7 @@ angular.module('scalearAngularApp')
 					scope.course_filter= value
 					$rootScope.$broadcast('course_filter_update', scope.course_filter)
 				}	
-				setTimeline(true)
+				// setNavigator(true)
 			}
 		};
  }]).directive('userNavigation', ['$rootScope', 'User', 'Home',function($rootScope, User, Home) {

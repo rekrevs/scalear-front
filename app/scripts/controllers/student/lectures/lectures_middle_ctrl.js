@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
 
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
+    $scope.ContentNavigator.open()
     $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
     $scope.$on('$destroy', function() {
         $scope.course.warning_message=null

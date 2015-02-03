@@ -97,7 +97,6 @@ width: 78%;
 }
 .timeline_container{
   box-shadow: 0px 1px 0px rgba(186, 184, 183, 1), -1px 1px 1px rgba(124, 124, 124, 0.7);
-  top:-16px;
 }
 
 /*.timeline_open{
@@ -234,8 +233,11 @@ span.error, small.error{
 .light-grey, .light-grey-hover{
 	background-color: #ececea !important;
 }
-.white-with-hover:hover, .light-grey-hover:hover, .lightgrey-with-hover:hover{
+.white-with-hover:hover, .light-grey-hover:hover{
   background-color: #d4d4d2 !important;
+}
+.lightgrey-with-hover:hover{
+  background-color:#F7F7E6 !important;
 }
 .lighter-grey, .lighter-grey-no-hover{
   background-color: #ededeb !important;

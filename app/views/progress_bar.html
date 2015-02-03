@@ -28,15 +28,18 @@
         </div>
     </div>
     <div style="height: 32px;">
-        <div class="right with-tiny-margin-right" style="height: 32px;display: inline-block; text-align: right;">  
+        <div class="right">  
             <!-- <controls ng-if="('**.courseware.lecture' | includedByState)" class="show-inline"> -->
             </controls>
             <button ng-show="player.controls.youtube" class="qualityDiv no-padding control-button dropdown show-inline drop-top right" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
-                <ul id="quality_list" class="f-dropdown quality-dropdown top-dropdown" style="min-width: 210px;display: block;left: -115px;top: -48px;">
-                    <div class="small-6 columns no-padding">
-                        <li class="dark-text">Change Quality</li>
+                <ul id="quality_list" class="f-dropdown quality-dropdown top-dropdown" style="min-width: 210px;display: block;left: -115px;top: -48px;background: rgb(245, 245, 245);">
+                    <div class="small-6 columns no-padding" style="border-right: 1px solid rgb(174, 174, 174);">
+                        <li class="dark-text">Quality</li>
                         <li ng-class="{'blue': chosen_quality=='small' }">
                             <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality('small')"><small>240p</small></a>
+                        </li>
+                        <li ng-class="{'blue': chosen_quality=='medium' }">
+                            <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality('medium')"><small>360p</small></a>
                         </li>
                         <li ng-class="{'blue': chosen_quality=='large'}">
                             <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality('large')"><small>480p</small></a>
@@ -46,7 +49,7 @@
                         </li>
                     </div>
                     <div class="small-6 columns no-padding">
-                        <li class="dark-text">Change Speed</li>
+                        <li class="dark-text">Speed</li>
                         <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed }" ng-if="speed >= 1">
                             <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeed(speed)"><small>x{{speed}}</small></a>
                         </li>

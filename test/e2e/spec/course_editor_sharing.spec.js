@@ -2,13 +2,10 @@ var Header = require('./pages/header');
 var Login = require('./pages/login');
 var CourseEditor = require('./pages/course_editor');
 var ContentNavigator = require('./pages/content_navigator');
-var CourseInformation = require('./pages/course_information');
 var CourseList = require('./pages/course_list');
-var StudentLecture = require('./pages/student/lecture');
 var ShareModal = require('./pages/share_modal');
 var SharedPage = require('./pages/shared_page');
 var NewCourse = require('./pages/new_course');
-var scroll = require('./lib/utils').scroll;
 var sleep = require('./lib/utils').sleep;
 
 var params = browser.params;
@@ -16,15 +13,13 @@ var params = browser.params;
 var header = new Header()
 var login_page = new Login()
 var course_editor = new CourseEditor()
-var course_info = new CourseInformation()
 var course_list = new CourseList()
-var student_lec = new StudentLecture()
 var share_window = new ShareModal()
 var shared = new SharedPage()
 var new_course = new NewCourse()
 var navigator = new ContentNavigator(1)
 
-xdescribe("Sharing a module",function(){
+describe("Sharing a module",function(){
     describe("Teacher1",function(){        
         it("should open course",function(){
             course_list.open()
@@ -57,10 +52,10 @@ xdescribe("Sharing a module",function(){
         })
         it('should reject shared data', function(){
             header.show_notification()
-            expect(header.notifications.count()).toEqual(1)
+            expect(header.share_notifications.count()).toEqual(1)
             header.reject_share_notification(1)
             header.show_notification()
-            expect(header.notifications.count()).toEqual(0)
+            expect(header.share_notifications.count()).toEqual(0)
         })
         it('should check if the in the same location', function(){
             expect(browser.driver.getCurrentUrl()).toContain('course_editor')
@@ -100,10 +95,10 @@ xdescribe("Sharing a module",function(){
         })
         it('should accept shared data', function(){
             header.show_notification()
-            expect(header.notifications.count()).toEqual(1)
+            expect(header.share_notifications.count()).toEqual(1)
             header.accept_share_notification(1)
             header.show_notification()
-            expect(header.notifications.count()).toEqual(0)
+            expect(header.share_notifications.count()).toEqual(0)
         })
         it('should check that it redirected to share page', function(){
             expect(browser.driver.getCurrentUrl()).toContain('show_shared')
@@ -137,9 +132,9 @@ xdescribe("Sharing a module",function(){
 
 describe("Sharing a non existing module",function(){
     describe("Teacher1",function(){
-        // it("should login",function(){
-        //     login_page.sign_in(params.teacher_mail, params.password)
-        // })
+        it("should login",function(){
+            login_page.sign_in(params.teacher_mail, params.password)
+        })
         it("should open course",function(){
             course_list.open()
             course_list.open_course(1)
@@ -197,10 +192,10 @@ describe("Sharing a non existing module",function(){
         })
         it('should accept shared data', function(){
             header.show_notification()
-            expect(header.notifications.count()).toEqual(1)
+            expect(header.share_notifications.count()).toEqual(1)
             header.accept_share_notification(1)
             header.show_notification()
-            expect(header.notifications.count()).toEqual(0)
+            expect(header.share_notifications.count()).toEqual(0)
         })
         it("should logout",function(){
             header.logout()
@@ -238,7 +233,7 @@ describe("Sharing a non existing module",function(){
         })
     })
 })
-xdescribe("Sharing single items",function(){
+describe("Sharing single items",function(){
     describe("Teacher1",function(){
         it("should login",function(){
             login_page.sign_in(params.teacher_mail, params.password)
@@ -251,7 +246,10 @@ xdescribe("Sharing single items",function(){
             course_editor.add_module()
             course_editor.add_lecture()
             course_editor.add_survey()
+
             navigator.module(3).open()
+            course_editor.add_module()
+            course_editor.add_lecture()
             course_editor.add_quiz()
         })
 
@@ -293,13 +291,13 @@ xdescribe("Sharing single items",function(){
         })
         it('should accept shared data', function(){
             header.show_notification()
-            expect(header.notifications.count()).toEqual(2)
+            expect(header.share_notifications.count()).toEqual(2)
             header.accept_share_notification(1)
             header.show_notification()
-            expect(header.notifications.count()).toEqual(1)
+            expect(header.share_notifications.count()).toEqual(1)
             header.accept_share_notification(1)
             header.show_notification()
-            expect(header.notifications.count()).toEqual(0)
+            expect(header.share_notifications.count()).toEqual(0)
         })
         it('should check that it redirected to share page', function(){
             expect(browser.driver.getCurrentUrl()).toContain('show_shared')
@@ -356,7 +354,7 @@ xdescribe("Sharing single items",function(){
         })
     })
 })
-xdescribe("Rollback changes Teacher2",function(){
+describe("Rollback changes Teacher2",function(){
     describe("Teacher2",function(){
         it("should delete items and module",function(){
             var module = navigator.module(2)

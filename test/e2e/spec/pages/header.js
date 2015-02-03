@@ -9,7 +9,8 @@ Header.prototype= Object.create({}, {
 	show_account_menu:{value:function(){browser.driver.actions().mouseMove(this.account_menu).perform()}},
 	show_courses_menu:{value:function(){browser.driver.actions().mouseMove(this.courses_menu).perform()}},
 	show_notification:{value:function(){browser.driver.actions().mouseMove(this.notification_menu).perform()}},
-	notifications:{get:function(){return element.all(by.repeater('(id, item) in user.shared_items'))}},
+	share_notifications:{get:function(){return element.all(by.repeater('(id, item) in user.shared_items'))}},
+	invitation_notifications:{get:function(){return element.all(by.repeater('(id, invitation) in user.invitation_items'))}},
 	shared_button:{get:function(){return element(by.id("view_shared"))}},
 	open_shared:{value:function(){
 		this.show_courses_menu()
@@ -26,8 +27,10 @@ Header.prototype= Object.create({}, {
 		element(by.name('key')).sendKeys(key)
     	element(by.buttonText('Enroll')).click()
 	}},
-	reject_share_notification:{value:function(num){this.notifications.get(num-1).element(by.className('alert')).click()}},
-	accept_share_notification:{value:function(num){this.notifications.get(num-1).element(by.className('success')).click()}}
+	reject_share_notification:{value:function(num){this.share_notifications.get(num-1).element(by.className('alert')).click()}},
+	accept_share_notification:{value:function(num){this.share_notifications.get(num-1).element(by.className('success')).click()}},
+	reject_invitation_notification:{value:function(num){this.invitation_notifications.get(num-1).element(by.className('alert')).click()}},
+	accept_invitation_notification:{value:function(num){this.invitation_notifications.get(num-1).element(by.className('success')).click()}},
 })
 
 module.exports = Header;

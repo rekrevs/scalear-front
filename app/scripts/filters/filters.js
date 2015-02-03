@@ -194,4 +194,9 @@ angular.module('scalearAngularApp')
      if(items)
       return items.slice().reverse();
   };
-});;
+}).filter('href', ["$state", function($state) {
+  return function(state) {
+     if(state)
+      return $state.href(state, {}, {absolute: true})
+  };
+}]);

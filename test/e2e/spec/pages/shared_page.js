@@ -6,8 +6,8 @@ SharedItem.prototype = Object.create({}, {
 	courses:{get:function(){return this.field.element(by.model('selected_course')).all(by.tagName('option'))}},
 	modules:{get:function(){return this.field.element(by.model('selected_module')).all(by.tagName('option'))}},
 	add_button:{get:function(){return this.field.element(by.buttonText('Copy'))}},
-	select_course:{value:function(num){this.courses.get(num-2).click()}},
-	select_module:{value:function(num){this.modules.get(num-2).click()}},
+	select_course:{value:function(num){this.courses.get(num).click()}},
+	select_module:{value:function(num){this.modules.get(num).click()}},
 	add:{value:function(){this.add_button.click()}}
 })
 

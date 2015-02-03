@@ -66,13 +66,13 @@
             <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button with-small-margin">
             {{'courses.add_teacher' | translate}}
             </button>
-            <button ng-show="!teacher_forum" ng-click="toggleDelete()" class="button tiny with-small-margin" ng-class="{'alert': !in_delete, 'success': in_delete}" >
+            <button id="delete_teacher" ng-show="!teacher_forum" ng-click="toggleDelete()" class="button tiny with-small-margin" ng-class="{'alert': !in_delete, 'success': in_delete}" >
                 {{toggle_message | translate}}
             </button>
             <form class="row with-small-margin-bottom" name='email_form' ng-show="teacher_forum" novalidate>
                 <div class="text-italic size-12 with-medium-margin">
                     <span translate>adding_teacher</span> scalable-learning.<br>
-                    <span translate>create_account</span><span>: <a href="http://www.scalable-learning.com/#/users/teacher">http://www.scalable-learning.com/#/users/teacher</a></span>
+                    <span translate>create_account</span><span>: <a ui-sref="teacher_signup" ui-sref-opts="{absolute: true}">{{'teacher_signup'| href}}</a></span>
                 </div>
                 <div class="small-12 medium-8 large-6 columns">
                     <div class="row">

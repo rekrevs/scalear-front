@@ -4,23 +4,15 @@
     <br>
     <div  ng-click="this.select()" class="panel">
         <div id="enrollment_message" select-on-click>
-            <!-- <p ><span translate>enroll.dear_student</span>,</p>
-            <p >&emsp;<span translate>enroll.this_term_new_system</span><a href="test.scalable-learning.com/#/users/student"> test.scalable-learning.com/#/users/student </a><span translate>enroll.this_term_new_system_continue</span> <b>{{course.unique_identifier}}</b>.</p>
-            <p ><span translate>enroll.sincerely</span>,<br>{{current_user.name+' '+current_user.last_name}}</p> -->
             <p ><span translate>enroll.dear_student</span>,</p>
             <p>&emsp;
                 <span translate translate-values='{course_name: course.name}'>enroll.this_term_new_system</span>
                 <ol>
                     <li>
                         <span translate>enroll.go_to</span>
-                        <a href="test.scalable-learning.com"> test.scalable-learning.com </a>
+                        <a ui-sref="home" ui-sref-opts="{absolute: true}" >{{'home'| href}}</a>
                         <span translate>enroll.create_account_with_university</span>
                     </li>
-                    <!-- <li>
-                        <span translate>enroll.log_into</span>
-                        <a href="test.scalable-learning.com"> test.scalable-learning.com </a>
-                        <span translate>enroll.with_new_account</span>
-                    </li> -->
                     <li>
                         <span translate>enroll.add_course_by_choosing</span>
                         <span>{{course.short_name}} : </span><b>{{course.unique_identifier}}</b>

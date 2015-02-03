@@ -23,7 +23,7 @@ var student_lec = new StudentLecture()
 var student_quiz = new StudentQuiz()
 
 describe("Solve Course",function(){
-	xdescribe("Teacher",function(){
+	describe("Teacher",function(){
 		var navigator = new ContentNavigator(1)
 		it("should open course",function(){
 	        course_list.open()
@@ -71,7 +71,6 @@ describe("Solve Course",function(){
 
 	describe("First Student",function(){
 		it("should login", function(){
-			header.logout()
 			login_page.sign_in(params.student_mail, params.password)
 		})
 		var navigator = new ContentNavigator(0)

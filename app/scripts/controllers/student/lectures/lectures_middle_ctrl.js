@@ -19,6 +19,7 @@ angular.module('scalearAngularApp')
     $scope.ContentNavigator = ContentNavigator
     $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
     $scope.$on('$destroy', function() {
+        $scope.course.warning_message=null
         shortcut.remove("c");
         shortcut.remove("q");
         shortcut.remove("n");

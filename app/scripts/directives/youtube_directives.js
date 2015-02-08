@@ -55,7 +55,7 @@ angular.module('scalearAngularApp')
                 	console.log("youtube")
                 	player_controls.youtube = true
                 	var video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
-                	player = Popcorn(video,{});
+                	player = Popcorn(video,{frameAnimation:true});
                 	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time, scope.autoplay, scope.controls)
                 	console.log(video.src)
                 }

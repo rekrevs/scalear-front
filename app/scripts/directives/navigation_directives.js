@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['$state', '$tour', function($state, $tour){
+	.directive('mainNavigation', ['$state', '$tour','scalear_api', function($state, $tour, scalear_api){
 		return {
 			replace: true,
 			restrict: "E",
@@ -14,10 +14,8 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: "/views/main_navigation.html",
 			link: function (scope, element) {
-				// scope.today = new Date();
-				// $rootScope.$watch('are_shared', function(){
-				// 	scope.are_shared = $rootScope.are_shared
-				// })
+				scope.scalear_api = scalear_api
+				
 				scope.areShared = function(){
 					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared
 				}

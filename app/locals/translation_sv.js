@@ -1006,7 +1006,8 @@ var translation_sv=function(){
           feedback: "Respons",
           teacher_forum: "Lärar Forum",
           instruction_manual: "Bruksanvisning",
-          tips: "Tips"
+          tips: "Tips",
+          how_to_flip:"Hur du Vänder"
         },
         course_settings:{
           show_notes: "Visa Anteckningar",

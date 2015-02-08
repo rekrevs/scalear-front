@@ -621,8 +621,16 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '3.11 (' + new Date().toUTCString() + ')',
-                        help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
+                        version: '3.11.1 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/scalable-learning-manual.pdf',
+                        flipped_manual: 'external_documents/flipped-manual.pdf',
+                        teacher_welcome_video:"https://www.youtube.com/watch?v=EwZd-_pO92s",
+                        teacher_new_course_video:"https://www.youtube.com/watch?v=D7BINlTL35g",
+                        teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        teacher_intro_video:"https://www.youtube.com/watch?v=3x4ZGfzdU8Y?theme=light&autoplay=1&controls=1",
+                        student_intro_video:"https://www.youtube.com/watch?v=9u8U2NoXC7c?theme=light&autoplay=1&controls=1",
+                        student_welcom_video:"https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:"https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
                     },
 
                 }
@@ -635,7 +643,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '3.11 (' + new Date().toUTCString() + ')',
+                        version: '3.11.1 (' + new Date().toUTCString() + ')',
                         help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
                     }
 
@@ -649,7 +657,7 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '3.11 (' + new Date().toUTCString() + ')',
+                        version: '3.11.1 (' + new Date().toUTCString() + ')',
                         help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
                     },
 

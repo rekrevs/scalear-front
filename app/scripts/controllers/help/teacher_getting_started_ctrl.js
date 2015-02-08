@@ -1,16 +1,13 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('TeacherGettingStartedCtrl', ['$scope', '$location', '$anchorScroll','$rootScope','Page', 'UserSession', function ($scope, $location, $anchorScroll, $rootScope,Page, UserSession) {
+  .controller('TeacherGettingStartedCtrl', ['$scope', '$location', '$anchorScroll','$rootScope','Page', 'scalear_api', function ($scope, $location, $anchorScroll, $rootScope,Page, scalear_api) {
    	Page.setTitle('help.getting_started')
   	$rootScope.subheader_message = "Getting Started"
-	$scope.video_url = "https://www.youtube.com/watch?v=3x4ZGfzdU8Y?theme=light&controls=1"
-  	$scope.video = Popcorn.HTMLYouTubeVideoElement('#intro_videoo');
-	$scope.player = Popcorn($scope.video)
-	$scope.video.src = $scope.video_url
-	
-    $scope.scrollTo = function (id) {
-    	$location.hash(id);
-    	$anchorScroll();
+    $scope.scalear_api = scalear_api
+    $scope.scroll=function(location){
+      $('body').scrollToThis(0, {offsetTop: 0, duration: 0});
+      $('body').scrollToThis('#'+location, {offsetTop: 95, duration: 0});
     }
+    
   }]);

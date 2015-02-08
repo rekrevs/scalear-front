@@ -1,25 +1,26 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page', function ($scope, $rootScope, User, UserSession, $state, $interval, Page) {
+	.controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page','scalear_api', function ($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api) {
 		$scope.can_proceed = false 
 		$scope.remaining = 5;
+		$scope.player = {}
 		Page.setTitle('Welcome to ScalableLearning');
 		$rootScope.subheader_message = "Intro Video (3 minutes)"
 		UserSession.getRole().then(function(result) {
 			$scope.role= result
 			if($scope.role == 2){
-				$scope.video_url = "https://www.youtube.com/watch?v=9u8U2NoXC7c?theme=light&autoplay=1&controls=1"
+				$scope.intro_url = scalear_api.student_intro_video
 			}
 			else{
-				$scope.video_url = "https://www.youtube.com/watch?v=3x4ZGfzdU8Y?theme=light&autoplay=1&controls=1"
+				$scope.intro_url = scalear_api.teacher_intro_video
 			}
-			$scope.video = Popcorn.HTMLYouTubeVideoElement('#intro_video');
-			$scope.player = Popcorn($scope.video)
-			$scope.video.src = $scope.video_url
-			$scope.player.on( "canplay", function(){
-				$scope.player.play();
-			});
+			// $scope.video = Popcorn.HTMLYouTubeVideoElement('#intro_video');
+			// $scope.player = Popcorn($scope.video)
+			// $scope.video.src = $scope.video_url
+			// $scope.player.on( "canplay", function(){
+			// 	$scope.player.play();
+			// });
 			$scope.player.on('ended', function(){
 				$scope.can_proceed = true;
 				$interval(function(){

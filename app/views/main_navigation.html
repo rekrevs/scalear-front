@@ -87,13 +87,14 @@
 				<li has-dropdown>
 					<a class="white-with-hover color-green-hover size-18-light" ng-class="{'nav-item-active': ('student_getting_started' | includedByState) || ('teacher_getting_started' | includedByState) || ('privacy' | includedByState)}" id="help" ui-sref="getting_started" ng-show="user.intro_watched && user.info_complete" translate>head.help</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
-						<li><a class="lighter-grey dark-text" ng-click="startTour()"><span translate>help.tips</span></a></li>
+						<!-- <li><a class="lighter-grey dark-text" ng-click="startTour()"><span translate>help.tips</span></a></li> -->
 						<li><a ng-if="user.roles[0].id==1 || user.roles[0].id==5" class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="teacher_getting_started" translate>help.getting_started</a></li>
 						<li><a ng-if="user.roles[0].id==2" class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="student_getting_started" translate>help.getting_started</a></li>
 						<span ng-if="user.roles[0].id==1 || user.roles[0].id==5">
 							<li class="divider border-grey medium-opacity"></li>
-							<li><a class="lighter-grey dark-text" href="https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum" target="_blank" translate>help.teacher_forum</a></li>
-							<li><a class="lighter-grey dark-text" href="external_documents/scalable-learning-manual.pdf" target="_blank"  translate>help.instruction_manual</a></li>
+							<li><a class="lighter-grey dark-text" ng-href="{{scalear_api.teacher_forum_link}}" target="_blank" translate>help.teacher_forum</a></li>
+							<li><a class="lighter-grey dark-text" ng-href="{{scalear_api.instruction_manual}}" target="_blank" translate>help.instruction_manual</a></li>
+							<li><a class="lighter-grey dark-text" ng-href="{{scalear_api.flipped_manual}}" target="_blank" translate>help.how_to_flip</a></li>
 						</span>
 						<li class="divider border-grey medium-opacity"></li>
 						<li><a class="lighter-grey dark-text" ui-sref-active="nav-inner-item-active" ui-sref="privacy" translate>footer.privacy</a></li>

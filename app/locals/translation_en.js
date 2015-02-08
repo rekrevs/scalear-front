@@ -997,7 +997,8 @@ var translation_en=function(){
       feedback: "Feedback",
       teacher_forum: "Teacher Forum",
       instruction_manual: "Instruction Manual",
-      tips: "Tips"
+      tips: "Tips",
+      how_to_flip:"How to Flip"
     },
     course_settings:{
       show_notes: "Show Notes",

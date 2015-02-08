@@ -1,12 +1,12 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive('version', function(scalear_api) {
+    .directive('version', ['scalear_api',function(scalear_api) {
         return {
             restrict: 'E',
             template: '<div style="font-size:10px;color:lightgray;font-weight: 200">v' + scalear_api.version + '</div>'
         };
-    })
+    }])
     .directive('scalearFooter', function() {
         return {
             restrict: 'E',

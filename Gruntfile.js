@@ -627,8 +627,6 @@ module.exports = function(grunt) {
                         teacher_welcome_video:"https://www.youtube.com/watch?v=EwZd-_pO92s",
                         teacher_new_course_video:"https://www.youtube.com/watch?v=D7BINlTL35g",
                         teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
-                        teacher_intro_video:"https://www.youtube.com/watch?v=3x4ZGfzdU8Y?theme=light&autoplay=1&controls=1",
-                        student_intro_video:"https://www.youtube.com/watch?v=9u8U2NoXC7c?theme=light&autoplay=1&controls=1",
                         student_welcom_video:"https://www.youtube.com/watch?v=bLiZfyBuFkc",
                         teacher_forum_link:"https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
                     },

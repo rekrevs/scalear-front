@@ -428,7 +428,8 @@ var translation_en=function(){
         confused: "Confused",
         discussion: "Discussion",
         provide_url:"Please Provide A Video URL",
-        enter_url:"Enter the video URL",
+        enter_url:"Enter the video Title and URL",
+        enter_url_continue:"in the Details on the right.",
         vidoe_not_exist: "Video may not exist or may still be uploading",
         incompatible_link: "Incompatible link",
         replay: "Replay",
@@ -447,7 +448,9 @@ var translation_en=function(){
         finish_before_proceeding:"Please finish previous required lectures before proceeding",
         save_quiz: "Please save or exit currently opened quiz",
         quiz_question: "Quiz Question",
-        quiz_time: "Quiz Time"
+        quiz_time: "Quiz Time",
+        other_correct_answers: "There may be other correct answers as well",
+        unsolved_quiz: "You have to complete the quiz as part of the video before you can seek to it"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

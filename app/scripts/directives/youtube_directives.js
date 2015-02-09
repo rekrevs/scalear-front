@@ -102,7 +102,7 @@ angular.module('scalearAngularApp')
 				var short_url = isShortYoutube(url)
 				var base_url, query
 				if(short_url){
-					base_url = 'http://www.youtube.com/watch'
+					base_url = 'https://www.youtube.com/watch'
 					query = '&v='+short_url[1]
 				}
 				else{
@@ -110,7 +110,7 @@ angular.module('scalearAngularApp')
 					base_url = splitted_url[0]
 					query = '&'+splitted_url[1]	
 				}
-				return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+autoplay+"&controls="+controls+"&origin=http://www.youtube.com&theme=light"+query;
+				return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+autoplay+"&controls="+controls+"&origin=https://www.youtube.com&theme=light"+query;
 			}
 
             scope.kill_popcorn = function(){

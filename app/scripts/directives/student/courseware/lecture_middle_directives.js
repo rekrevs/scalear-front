@@ -345,11 +345,21 @@ angular.module('scalearAngularApp')
       // })         
      
       scope.$watch('explanation[data.id]', function(newval){
-        if(scope.explanation && scope.explanation[scope.data.id])
-        {
-          var ontop=angular.element('.ontop');  
+        if(scope.explanation && scope.explanation[scope.data.id]){
+          var ontop=angular.element('.ontop');
+          if(scope.explanation[scope.data.id][0]){
+            scope.title_class = "green_notification"
+            scope.exp_title = 'lectures.correct'
+            if(scope.quiz.question_type =="MCQ"){
+              scope.show_sub_title = true
+            }
+          }
+          else{
+            scope.title_class = "red_notification"
+            scope.exp_title = 'lectures.incorrect'
+          }
           scope.explanation_pop={
-            title:"<b ng-class='{green_notification: explanation[data.id][0], red_notification: !explanation[data.id][0]}'>{{explanation[data.id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
+            title:"<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='line-height: 0.5;' ng-show='show_sub_title'><small style='text-transform: initial;'>(<span translate>lectures.other_correct_answers</span>)</small></h6>",
             content:"<div>{{explanation[data.id][1]}}</div>",
             html:true,
             trigger:'hover',
@@ -662,7 +672,7 @@ angular.module('scalearAngularApp')
     }
   }
 }])
-.directive('quizTimeline',['OnlineQuiz','$filter','$rootScope', function(OnlineQuiz,$filter, $rootScope){
+.directive('quizTimeline',['OnlineQuiz','$filter','$rootScope','$translate', function(OnlineQuiz,$filter, $rootScope, $translate){
   return{
     restrict:"A",
     // replace:true,
@@ -674,6 +684,7 @@ angular.module('scalearAngularApp')
     link:function(scope, element, attrs){
       scope.preview_as_student = $rootScope.preview_as_student
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
+      scope.unsolved_msg = $translate("lectures.unsolved_quiz")
       scope.voteForReview=function(){
         console.log("vote review")
         OnlineQuiz.voteForReview(
@@ -724,7 +735,7 @@ angular.module('scalearAngularApp')
               note_id: scope.item.data.id
             },function(){
                 scope.$emit('update_timeline', scope.item)
-                scope.$emit("note_updated")
+                // scope.$emit("note_updated")
             }
           )
         }

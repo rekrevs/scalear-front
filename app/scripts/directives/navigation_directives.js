@@ -188,7 +188,7 @@ angular.module('scalearAngularApp')
 				// })
 
 				scope.initFilters=function(){
-					scope.course_filter = "!!"
+					scope.course_filter = false
 				}
 
 				scope.toggleNavigator=function(){

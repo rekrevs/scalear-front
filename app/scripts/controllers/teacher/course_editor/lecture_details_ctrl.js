@@ -136,7 +136,7 @@ angular.module('scalearAngularApp')
                     if(type){
                         console.log('type initialized')  
                         if(!isFinalUrl($scope.lecture.url))
-                            $scope.lecture.url = "http://www.youtube.com/watch?v="+type[1];                                         
+                            $scope.lecture.url = "https://www.youtube.com/watch?v="+type[1];                                         
                         getYoutubeDetails(type[1]).then(function(){
                             $scope.updateLecture();
                             $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)

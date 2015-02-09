@@ -1,17 +1,11 @@
 <center><loading size="big" show="!course"></loading></center>
 <div ng-show="course">
-    <div class="large-2 columns no-padding">
-        <!-- <div class="course-image left show-for-large-up">
-            <span></span>
-            <img ng-src="{{course.image_url || '../images/course_image.png'}}" />
-        </div> -->
-        <img class="small-10 medium-6 large-12 columns with-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
+    <div class="large-3 columns no-padding">
+        <img class="small-10 medium-6 large-10 columns with-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
         <div class="small-12 columns no-padding" step-text="This section allows you to change the course start date, duration, course image, etc... You can also get the course enrollment key to provide it to your students." step-index="3" step-placement="right" step-append-to-body="flase" page-name="head.information">
             <span page-name="head.information" step-text="Click this button to view the course calendar." step-index="1" step-placement="top" step-append-to-body="flase">
-                <button type="button" id="calendar_btn" class="button tiny uppercase" calendar-modal ng-click="openCalendar()">View Course Calendar</button>
-            </span>
-            <span page-name="head.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
-                <button type="button" class="button tiny success" ng-click="exportCourse()"><span translate>courses.export_as</span> CSV</button>
+                <a ui-sref="course.course_editor" id="edit_btn" class="button tiny">Edit Course</a>
+                <button type="button" id="calendar_btn" class="button tiny " calendar-modal ng-click="openCalendar()">View Course Calendar</button>
             </span>
             <div id="enrollment_key" class="large-12 column with-margin-bottom no-padding">
                 <i class="fi-photo size-18"></i><small class="with-tiny-margin-left" translate>courses.course_image_url</small>
@@ -45,9 +39,12 @@
                     <details-link value="course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link>
                 </div>
             </div>
+            <span page-name="head.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
+                <button type="button" class="button tiny success" ng-click="exportCourse()"><span translate>courses.export_as</span> CSV</button>
+            </span>
         </div>
     </div>
-    <div class="small-12 medium-12 large-10 columns">        
+    <div class="small-12 medium-12 large-9 columns">        
         <h2 class="title color-green" title="{{course.name}}">
             <details-text id='short_name' value="course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text> 
             {{' | '}} 
@@ -63,42 +60,6 @@
         </p>
         <h5 translate class="subheader" page-name="head.information" step-text="You can also manage the teachers in this course, you can add new teachers/TAs using this section." step-index="5" step-placement="top" step-append-to-body="flase">courses.taught_by</h5>
         <p style="font-weight: 200;">
-            <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button with-small-margin">
-            {{'courses.add_teacher' | translate}}
-            </button>
-            <button id="delete_teacher" ng-show="!teacher_forum" ng-click="toggleDelete()" class="button tiny with-small-margin" ng-class="{'alert': !in_delete, 'success': in_delete}" >
-                {{toggle_message | translate}}
-            </button>
-            <form class="row with-small-margin-bottom" name='email_form' ng-show="teacher_forum" novalidate>
-                <div class="text-italic size-12 with-medium-margin">
-                    <span translate>adding_teacher</span> scalable-learning.<br>
-                    <span translate>create_account</span><span>: <a ui-sref="teacher_signup" ui-sref-opts="{absolute: true}">{{'teacher_signup'| href}}</a></span>
-                </div>
-                <div class="small-12 medium-8 large-6 columns">
-                    <div class="row">
-                        <div class="small-12 columns">
-                            <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'email'|translate}}" ng-model="new_teacher.email" ng-class="{'error': (email_form.email.$dirty && email_form.email.$invalid)}"/>                
-                            <small ng-show='email_form.email.$dirty && email_form.email.$invalid' class="error" translate>invalid_email</small>
-                            <small class="error" ng-show="!(email_form.email.$dirty && email_form.email.$invalid)&& new_teacher.errors.email">{{new_teacher.errors.email}}</small>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="small-12 columns">
-                            <select id="new_role" ng-model="new_teacher.role" style="height: 34px;margin-bottom: 5px;">
-                                <option value="3" translate>courses.professor</option>
-                                <option value="4" translate>courses.ta</option>
-                            </select>
-                            <small class="error" ng-show="new_teacher.errors.role">{{new_teacher.errors.role}}</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="small-12 medium-4 large-6 columns">
-                    <!-- <div style="color: dimgrey; min-height: 18px;">{{new_teacher.status}}</div> -->
-                    <a id="invite" ng-click="saveTeacher()" class="button success tiny" style="margin-bottom:2px">{{'courses.invite' | translate}}</a>
-                    <br />
-                    <a class="button alert tiny" ng-click="removeNewTeacher()">Cancel</a> 
-                </div>
-            </form>
             <div class="small-12 medium-6 large-4 columns with-small-margin-bottom" ng-repeat="teacher in teachers">
                 <profile-image class="small-2 medium-2 large-2 no-padding columns" email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
                 <div class="small-10 medium-10 large-10 columns with-small-padding-left">
@@ -111,6 +72,45 @@
                     </li>
                 </div>
             </div>
+            <div class="small-12 columns">
+                <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button with-small-margin">
+                {{'courses.add_teacher' | translate}}
+                </button>
+                <button id="delete_teacher" ng-show="!teacher_forum" ng-click="toggleDelete()" class="button tiny with-small-margin" ng-class="{'alert': !in_delete, 'success': in_delete}" >
+                    {{toggle_message | translate}}
+                </button>
+                <form class="row with-small-margin-bottom" name='email_form' ng-show="teacher_forum" novalidate>
+                    <div class="text-italic size-12 with-medium-margin">
+                        <span translate>adding_teacher</span> scalable-learning.<br>
+                        <span translate>create_account</span><span>: <a ui-sref="teacher_signup" ui-sref-opts="{absolute: true}">{{'teacher_signup'| href}}</a></span>
+                    </div>
+                    <div class="small-12 medium-8 large-6 columns">
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'email'|translate}}" ng-model="new_teacher.email" ng-class="{'error': (email_form.email.$dirty && email_form.email.$invalid)}"/>                
+                                <small ng-show='email_form.email.$dirty && email_form.email.$invalid' class="error" translate>invalid_email</small>
+                                <small class="error" ng-show="!(email_form.email.$dirty && email_form.email.$invalid)&& new_teacher.errors.email">{{new_teacher.errors.email}}</small>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="small-12 columns">
+                                <select id="new_role" ng-model="new_teacher.role" style="height: 34px;margin-bottom: 5px;">
+                                    <option value="3" translate>courses.professor</option>
+                                    <option value="4" translate>courses.ta</option>
+                                </select>
+                                <small class="error" ng-show="new_teacher.errors.role">{{new_teacher.errors.role}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="small-12 medium-4 large-6 columns">
+                        <!-- <div style="color: dimgrey; min-height: 18px;">{{new_teacher.status}}</div> -->
+                        <a id="invite" ng-click="saveTeacher()" class="button success tiny" style="margin-bottom:2px">{{'courses.invite' | translate}}</a>
+                        <br />
+                        <a class="button alert tiny" ng-click="removeNewTeacher()">Cancel</a> 
+                    </div>
+                </form>
+            </div>
         </p>
+        
     </div>
 </div>

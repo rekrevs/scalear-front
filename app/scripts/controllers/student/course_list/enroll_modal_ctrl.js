@@ -1,12 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('StudentEnrollModalCtrl',['$rootScope','$scope','$modalInstance','Course','$log','$window','$state', function ($rootScope, $scope, $modalInstance, Course, $log, $window,$state) {
+  .controller('StudentEnrollModalCtrl',['$rootScope','$scope','$modalInstance','Course','$log','$window','$state','$timeout', function ($rootScope, $scope, $modalInstance, Course, $log, $window,$state, $timeout) {
 
 	$window.scrollTo(0, 0);
 	$scope.enrollment={}
-	$scope.form={}  	
-	
+	$scope.form={} 
+  $timeout(function(){
+    $('#enrollkey_field').select()
+  },100) 
+  
   $scope.enrollStudent = function () {
   	$log.debug($scope);
   	if($scope.form.key.$valid){

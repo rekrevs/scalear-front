@@ -8,7 +8,7 @@
 </td>
 <td style="padding:0 12px;" bindonce>
   <p ng-show="item.data.is_quiz_solved || preview_as_student" class="solved size-14 color-black text-italic" ng-click="seek()(item.time, item.data.lecture_id)" bo-text="item.data.question" style="margin-bottom:5px"></p>
-  <p ng-show="!item.data.is_quiz_solved && !preview_as_student" class="size-14 color-grey text-italic"  bo-text="item.data.question" style="margin-bottom:5px"></p>
+  <p ng-show="!item.data.is_quiz_solved && !preview_as_student" class="size-14 color-grey text-italic"  tooltip-placement="right" tooltip="{{unsolved_msg}}" tooltip-append-to-body="true" bo-text="item.data.question" style="margin-bottom:5px"></p>
 </td>
 <td style="padding: 0px; padding-right: 8px;min-width: 80px;" class="valign-top" colspan="2" ng-show="item.data.is_quiz_solved">
   <img style="float: right;" src="images/check7.png" />

@@ -431,7 +431,8 @@ var translation_sv=function(){
               confused: "Förvirrad",
               discussion: "Diskussion",
               provide_url:"vg ange en video URL",
-              enter_url:"Ange video URL",
+              enter_url:"Ange video Titel och URL",
+              enter_url_continue:"i Detaljer på höger.",
               vidoe_not_exist: "Video kan inte eller kan fortfarande ladda upp",
               incompatible_link: "Inkompatibla länk",
               replay: "Spela",
@@ -450,7 +451,9 @@ var translation_sv=function(){
               finish_before_proceeding:"Vänligen avsluta tidigare krävs föreläsningar innan du fortsätter",
               save_quiz: "Vänligen spara eller avsluta nu öppnat frågesport",
               quiz_question: "Quiz Fråga",
-              quiz_time: "Quiz tid"
+              quiz_time: "Quiz tid",
+              other_correct_answers: "Det kan finnas andra rätta svar samt",
+              unsolved_quiz: "Du måste fylla i frågesporten som en del av videon innan du kan försöka det"
           },
       online_quiz:{
               you_sure_delete_quiz: "Är du säker på att du vill radera Quiz'en '{{quiz}}'?",

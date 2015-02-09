@@ -166,12 +166,12 @@ angular.module('scalearAngularApp', [
                     if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name != "home") {
                         $state.go("ie");
                     }
-                    if((to.name=='home' && result == 0))
-                    {
-                        // $state.go("login");
-                    }
-                    console.log('here!!!')
-                    console.log($rootScope.current_user)
+                    // if((to.name=='home' && result == 0))
+                    // {
+                    //     // $state.go("login");
+                    // }
+                    // console.log('here!!!')
+                    // console.log($rootScope.current_user)
                     if($rootScope.current_user && $rootScope.current_user.info_complete == false){
                         $state.go('edit_account')
                         s = 2;

@@ -73,10 +73,10 @@
 						    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;position: absolute;right: 0;"></review_inclass> 
 								<div ng-if="fullscreen" class="row with-tiny-padding-top with-tiny-padding-bottom black">
 									<center class="small-block-grid-3">
-										<button id="add_note_button" class="button tiny no-margin-bottom" ng-click="addNote()" tooltip="Click or type N to add a note" tooltip-append-to-body="true">New Note</button>
-										<button id="ask_question_button" class="button tiny no-margin-bottom" ng-click="addQuestionBlock()" tooltip="Click or type Q to ask a question" tooltip-append-to-body="true">Ask a Question</button>
-										<button id="confused_button" class="button tiny no-margin-bottom" ng-click="addConfused()" tooltip="Click or type C to say confused" tooltip-append-to-body="true">I'm Confused</button>
-										<button ng-if="fullscreen" class="button tiny no-margin-bottom" ng-click="toggleFullscreen()" tooltip="Click or type F to enter smallscreen" tooltip-append-to-body="true">Exit Fullscreen</button>
+										<button id="add_note_button" class="button small no-margin-bottom" ng-click="addNote()" tooltip="Click or type N to add a note" tooltip-append-to-body="true">New Note</button>
+										<button id="ask_question_button" class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="Click or type Q to ask a question" tooltip-append-to-body="true">Ask a Question</button>
+										<button id="confused_button" class="button small no-margin-bottom" ng-click="addConfused()" tooltip="Click or type C to say confused" tooltip-append-to-body="true">I'm Confused</button>
+										<button ng-if="fullscreen" class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip="Click or type F to enter smallscreen" tooltip-append-to-body="true">Exit Fullscreen</button>
 									</center>
 								</div>
 						    </span>
@@ -85,10 +85,10 @@
 				</form>	
 				<div ng-if="!fullscreen && should_play" class="row no-margin with-tiny-margin-top">
 					<center class="small-block-grid-3">
-						<button id="add_note_button" class="button tiny no-margin-bottom" ng-click="addNote()" tooltip="Click or type N to add a note" tooltip-placement="bottom" tooltip-append-to-body="true">New Note</button>
-						<button id="ask_question_button" class="button tiny no-margin-bottom" ng-click="addQuestionBlock()" tooltip-placement="bottom" tooltip="Click or type Q to ask a question" tooltip-append-to-body="true">Ask a Question</button>
-						<button id="confused_button" class="button tiny no-margin-bottom" ng-click="addConfused()" tooltip="Click or type C to say confused" tooltip-placement="bottom" tooltip-append-to-body="true">I'm Confused</button>
-						<button ng-if="!fullscreen" class="button tiny no-margin-bottom" ng-click="toggleFullscreen()" tooltip-placement="bottom" tooltip="Click or type F to enter fullscreen" tooltip-append-to-body="true">Fullscreen</button>
+						<button id="add_note_button" class="button small no-margin-bottom" ng-click="addNote()" tooltip="Click or type N to add a note" tooltip-placement="bottom" tooltip-append-to-body="true">New Note</button>
+						<button id="ask_question_button" class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip-placement="bottom" tooltip="Click or type Q to ask a question" tooltip-append-to-body="true">Ask a Question</button>
+						<button id="confused_button" class="button small no-margin-bottom" ng-click="addConfused()" tooltip="Click or type C to say confused" tooltip-placement="bottom" tooltip-append-to-body="true">I'm Confused</button>
+						<button ng-if="!fullscreen" class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip-placement="bottom" tooltip="Click or type F to enter fullscreen" tooltip-append-to-body="true">Fullscreen</button>
 					</center>
 				</div>
 			</div>

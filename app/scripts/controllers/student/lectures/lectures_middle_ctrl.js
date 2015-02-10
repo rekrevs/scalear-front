@@ -264,22 +264,19 @@ angular.module('scalearAngularApp')
     }
 
     var updateViewPercentage = function(milestone) {
+        $scope.not_done_msg = false
         Lecture.updatePercentView({
             course_id:$state.params.course_id, 
             lecture_id:$state.params.lecture_id
         },
         {percent:milestone},function(data){
             $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
-            if(data.done && !$scope.lecture.is_done){
-                // if(!$scope.lecture.is_done){
-                    $scope.not_done_msg = false                    
-                    $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
-                    $scope.lecture.is_done = data.done
-                // }
+            if(data.done && !$scope.lecture.is_done){            
+                $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
+                $scope.lecture.is_done = data.done
             }
-            else 
-                if(milestone == 100)
-                    $scope.not_done_msg = true
+            else if(milestone == 100)
+                $scope.not_done_msg = true
         })
     }
 
@@ -674,10 +671,11 @@ angular.module('scalearAngularApp')
             }
             reviewInclass() 
 
-            if(data.done[2] && !$scope.lecture.is_done){
-                $scope.course.markDone(data.done[1],data.done[0])
-                $scope.lecture.is_done = data.done[2]
-            }
+            // if(data.done[2] && !$scope.lecture.is_done){
+            //     $scope.not_done_msg = false
+            //     $scope.course.markDone(data.done[1],data.done[0])
+            //     $scope.lecture.is_done = data.done[2]
+            // }
         }
 
         $interval(function(){

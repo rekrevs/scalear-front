@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
     $rootScope.subheader_message = $translate("navigation.courses")
 
 		$scope.column='name'
-
+    $scope.filterChoice = false
     $scope.$on('course_filter_update',function(ev, filter){
       $scope.filterChoice = filter
     })

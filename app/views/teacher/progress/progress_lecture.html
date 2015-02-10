@@ -83,14 +83,14 @@
 					<li ng-if="item.type=='charts'" ng-init="quiz_chart=createChart(item.data.answers,students_count, {},'format'+module_item.quiz_type[0].toUpperCase()+module_item.quiz_type.slice(1)+'ChartData')" class="li_inner color-blue" ng-class="{'light-yellow':item.data.show}">
 						<div class="row">
 							<inner_title type="'lectures.title' | translate" class="small-10 columns left" style="margin-right:5px" itemtitle="item.data.title+' ('+item.data.type+')'"/>
-							<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show)" class="left"/>
+							<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show, item.type)" class="left"/>
 							<br/>
 						</div>
 						<div class="row"><div google-chart chart="quiz_chart" class="small-12 columns progress_chart" ></div></div>
 					</li>
 					<li ng-if="item.type=='free_question'" class="li_inner color-coral">
 						<inner_title type="'groups.free_text_question' | translate" itemtitle="item.data.title" class="left" style="margin-right:5px"/>
-						<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show)"/>
+						<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show, item.type)"/>
 						</br>
 						<ul style="padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size:14px;clear:both">							
 							<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" class="li_item" ng-class="{'light-yellow':item.data.show && answer.hide}" style="padding:8px 10px">
@@ -169,7 +169,7 @@
 									</span>
 						 		</div>									
 								<ul>
-									<li ng-repeat="comment in discussion.post.comments" style="color: #616161;font-size:14px" class="no_highlight with-tiny-margin-top small-12 no-padding-right">
+									<li ng-repeat="comment in discussion.post.comments" style="color: #616161;font-size:14px" class="no_highlight with-tiny-margin-top small-12 no-padding-right" ng-class="{'white':!comment.comment.hide}">
 										<span class="controls">
 											<show_box value="comment.comment.hide" action="updateHideComment(comment.comment, discussion.post)" style="float:right"/>
 											<span style="float:right">

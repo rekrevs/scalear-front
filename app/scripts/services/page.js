@@ -17,10 +17,12 @@ angular.module('scalearAngularApp')
      },
      startTour: function(){
       var unwatch = $rootScope.$watch('current_user', function(){
-        if($rootScope.current_user && $rootScope.current_user.roles[0].id!=2){
-          if(!$rootScope.current_user.completion_wizard[page_name.replace('.', '_')] && !$rootScope.current_user.completion_wizard['all'] && $rootScope.current_user.completion_wizard['intro_watched'] == true){
-            console.log('starting tour for '+page_name.replace('.', '_'))
-            $rootScope.$emit('start_tour');
+        if($rootScope.current_user){
+          if($rootScope.current_user.roles[0].id!=2){
+            if(!$rootScope.current_user.completion_wizard[page_name.replace('.', '_')] && !$rootScope.current_user.completion_wizard['all'] && $rootScope.current_user.completion_wizard['intro_watched'] == true){
+              console.log('starting tour for '+page_name.replace('.', '_'))
+              $rootScope.$emit('start_tour');
+            }
           }
           unwatch();
         }

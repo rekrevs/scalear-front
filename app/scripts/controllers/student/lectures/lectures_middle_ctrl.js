@@ -295,12 +295,16 @@ angular.module('scalearAngularApp')
         if ($scope.next_item.id) {
             if(!$scope.last_navigator_state)
                 ContentNavigator.close()
-            var next_state = "course.module.courseware." + $scope.next_item.class_name
-            var s = $scope.next_item.class_name + "_id"
-            var to = {}
-            to[s] = $scope.next_item.id
-            to["module_id"]=$scope.next_item.group_id
-            $state.go(next_state, to);
+            if($scope.next_item.class_name == 'lecture')
+                $scope.seek(null, $scope.next_item.id)
+            else{
+                var next_state = "course.module.courseware." + $scope.next_item.class_name
+                var s = $scope.next_item.class_name + "_id"
+                var to = {}
+                to[s] = $scope.next_item.id
+                to["module_id"]=$scope.next_item.group_id
+                $state.go(next_state, to);
+            }
         }
     }
 

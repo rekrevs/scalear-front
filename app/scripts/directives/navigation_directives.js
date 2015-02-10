@@ -152,7 +152,7 @@ angular.module('scalearAngularApp')
            return{
 			replace:true,
 			restrict: "E",
-      transclude: true,
+      		transclude: true,
 			scope:{
 				course:"=",
 				message:"="

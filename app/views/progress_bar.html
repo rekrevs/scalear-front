@@ -34,7 +34,7 @@
             <button ng-show="player.controls.youtube" class="qualityDiv no-padding control-button dropdown show-inline drop-top right" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
                 <ul id="quality_list" class="f-dropdown quality-dropdown top-dropdown" style="min-width: 210px;display: block;left: -115px;top: -48px;background: rgb(245, 245, 245);">
                     <div class="small-6 columns no-padding" style="border-right: 1px solid rgb(174, 174, 174);">
-                        <li class="dark-text">Quality</li>
+                        <li class="dark-text" translate>youtube.quality</li>
                         <li ng-class="{'blue': chosen_quality=='small' }">
                             <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setQuality('small')"><small>240p</small></a>
                         </li>
@@ -49,7 +49,7 @@
                         </li>
                     </div>
                     <div class="small-6 columns no-padding">
-                        <li class="dark-text">Speed</li>
+                        <li class="dark-text" translate>youtube.speed</li>
                         <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed }" ng-if="speed >= 1">
                             <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeed(speed)"><small>x{{speed}}</small></a>
                         </li>
@@ -59,7 +59,7 @@
             <button ng-show="!player.controls.youtube" class="qualityDiv no-padding control-button dropdown show-inline drop-top right" dropdown-toggle="#speed_list" title="{{'youtube.click_video_quality'|translate}}">
                 <ul id="speed_list" class="f-dropdown speed-dropdown top-dropdown" style="display: block;">
                     <div class="small-12 columns no-padding">
-                        <li class="dark-text">Change Speed</li>
+                        <li class="dark-text" translate>youtube.speed</li>
                         <li ng-repeat="speed in speeds" ng-class="{'blue': chosen_speed == speed.value }">
                             <a class="with-tiny-padding-bottom with-tiny-padding-top" ng-click="setSpeedMp4(speed.value)"><small>x{{speed.name}}</small></a>
                         </li>
@@ -80,5 +80,4 @@
         </div>
         <div class="right" ng-transclude></div>
     </div>
-
 </div>

@@ -11,7 +11,7 @@
 		<h5 class="truncate">
 			<a ui-sref="course({ course_id: course.id })" class="title looks-like-a-link truncate" title="{{course.name}}" style="font-weight: 300;">{{course.short_name}} | {{course.name}}</a>
 			<div class="right inline" style="margin-right:5px">
-				<delete_button size="big" tooltiptext="Unenroll" color='dark' action="unenroll(course)" />
+				<delete_button size="big" tooltiptext="unenroll" color='dark' action="unenroll(course)" />
 			</div>
 		</h5>
 		<h6 class="dark-text" ng-if="teachers"><span class="dark-text" translate>courses.taught_by</span> <span ng-repeat="teacher in teachers" style="font-weight: 400; padding-left:4px">{{teacher.user.name}}<span ng-if="$index < teachers.length-1">, </span></span></h6>

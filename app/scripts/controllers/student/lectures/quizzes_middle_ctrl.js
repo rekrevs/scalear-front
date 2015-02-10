@@ -88,7 +88,7 @@ angular.module('scalearAngularApp')
             if(key=="submit")
                 return $translate('controller_msg.already_submitted')+' '+$scope.quiz.quiz_type+' '+$translate("controller_msg.no_more_attempts")
             else if(key=="due")
-                return $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
+                return $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$scope.alert_messages[key][2]+") "+$translate("controller_msg.ago")
             else if(key=="today")
                 return $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
         }

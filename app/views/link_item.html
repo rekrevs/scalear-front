@@ -25,10 +25,10 @@
 	<i class="fi-link left" ng-if="!small"></i>
 	<div class="small-9 columns no-padding" bo-class="{'link_item_small':small}">
 		<div class="small-12 columns">
-			<span>Name:</span><details-text class="with-small-margin-left" value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
+			<span translate>name</span>:<details-text class="with-small-margin-left" value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
 		</div>
 		<div class="small-12 columns truncate"  style="white-space: inherit;">
-			<span>URL:</span><details-link class="with-small-margin-left" value="link.url" save="update(link)" validation="validate" elem="link" dontshorten="true"></details-link>
+			<span>URL</span>:<details-link class="with-small-margin-left" value="link.url" save="update(link)" validation="validate" elem="link" dontshorten="true"></details-link>
 		</div>
 	</div>
 	<div class="small-1 columns" style="padding:0" ng-if="'**.course_editor.**' | includedByState">

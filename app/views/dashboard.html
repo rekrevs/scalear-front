@@ -26,10 +26,16 @@
 
 		<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" style="width:100%;"></div>
 		<span ng-show="events.length" >
-			<button ng-show="!large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()"><i class="fi-zoom-in size-10"/><span> Show large calendar</span></button>
-			<button ng-show="large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()"><i class="fi-zoom-out size-10"/><span> Show small calendar</span></button>
+			<button ng-show="!large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()">
+				<i class="fi-zoom-in size-10"/>
+				<span translate>large_calendar</span>
+			</button>
+			<button ng-show="large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()">
+				<i class="fi-zoom-out size-10"/>
+				<span translate>small_calendar</span>
+			</button>
 		</span>
-		<button class="really-tiny button secondary uppercase no-margin" ng-click="export_calendar()">Export Calendar</button>
+		<button class="really-tiny button secondary uppercase no-margin" ng-click="export_calendar()" translate>export_calendar</button>
         <span ng-show="current_user.roles[0].id == 2" class="right">
         	<span class="calendar_color done alert-box label radius" translate="events.done"></span>
 			<span class="calendar_color done_late alert-box label radius" translate="events.done_late"></span>

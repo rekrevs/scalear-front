@@ -8,7 +8,7 @@
 			        </span>
 			</div>
 			<span bo-if="text != true">
-				<a class="delete" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" tooltip="{{tooltiptext}}" ng-click="!hideConfirm?showDeletePopup(true, $event):action({event:$event})">
+				<a class="delete" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" tooltip="{{tooltiptext_translated}}" ng-click="!hideConfirm?showDeletePopup(true, $event):action({event:$event})">
 
 					<img alt="Trash" bo-if="size == 'big'" bo-src="color=='red' && 'images/red_trash_big.png' || 'images/trash_big.png'" >
 					<img alt="Trash" bo-if="size != 'big'" bo-src="color=='red' && 'images/red_trash_small.png' || 'images/trash_small.png'" >

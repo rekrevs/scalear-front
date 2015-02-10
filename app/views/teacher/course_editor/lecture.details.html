@@ -2,7 +2,7 @@
   <accordion-group class="accordion-group" is-open="lecture && lecture.url == 'none'">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div id="video_settings" class="show-inline">Video</div>
+        <div id="video_settings" class="show-inline" translate>content.types.video</div>
       </div>              
     </accordion-heading>
     <table class="table small-12 no-margin" style="border-top:none">
@@ -68,7 +68,7 @@
   <accordion-group class="accordion-group">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div id="lec_settings" class="show-inline">Settings</div>
+        <div id="lec_settings" class="show-inline" translate>settings.settings</div>
       </div>              
     </accordion-heading>
     <table class="table small-12 no-margin">
@@ -78,12 +78,12 @@
         </td> -->
         <td colspan="2">
           <center>
-            <span tooltip="Students must complete this item before going on to the next item in the module" tooltip-placement="left" tooltip-append-to-body="true">
+            <span tooltip="{{'students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
               <input type="checkbox" ng-model="lecture.required"  ng-change='updateLecture()'>
               <span class="size-12" translate>courses.in_order</span>
             </span>
             <br />
-            <span tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true" >
+            <span tooltip="{{'students_must_complete_required'| translate}}" tooltip-placement="left" tooltip-append-to-body="true" >
               <input type="checkbox" ng-model="lecture.graded" ng-change="updateLecture()">
               <span class="size-12" translate>courses.required</span>
             </span>
@@ -140,7 +140,7 @@
   <accordion-group class="accordion-group overflow-auto" open="quiz_list.length">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div class="show-inline">Quizzes</div>
+        <div class="show-inline" translate>groups.quizzes</div>
       </div>              
     </accordion-heading>
     <quiz_list />

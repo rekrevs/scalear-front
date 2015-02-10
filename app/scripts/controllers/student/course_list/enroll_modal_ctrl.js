@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
 	$scope.form={} 
   $timeout(function(){
     $('#enrollkey_field').select()
-  },100) 
+  },500) 
   
   $scope.enrollStudent = function () {
   	$log.debug($scope);

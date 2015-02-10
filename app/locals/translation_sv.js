@@ -432,6 +432,8 @@ var translation_sv=function(){
               discussion: "Diskussion",
               provide_url:"vg ange en video URL",
               enter_url:"Ange video Titel och URL",
+              for_help:"För hjälp att ladda upp videoklipp",
+              for_help_continue: "Se 'Komma igång' i Hjälp-menyn",
               enter_url_continue:"i Detaljer på höger.",
               vidoe_not_exist: "Video kan inte eller kan fortfarande ladda upp",
               incompatible_link: "Inkompatibla länk",

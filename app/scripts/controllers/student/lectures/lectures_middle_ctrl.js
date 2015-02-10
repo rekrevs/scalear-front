@@ -217,7 +217,7 @@ angular.module('scalearAngularApp')
         $scope.total_duration = $scope.lecture_player.controls.getDuration() - 1
         var duration_milestones = [25, 75]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
-            $scope.lecture_player.controls.cue(quiz.time, function() {                
+            $scope.lecture_player.controls.cue(quiz.time-0.15, function() {                
                 $scope.seek(quiz.time)   
                 $scope.lecture_player.controls.pause()          
                 $scope.closeReviewNotify()

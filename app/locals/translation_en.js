@@ -1,7 +1,7 @@
 var translation_en=function(){
     return {
       tellus: 'Tell us about yourself...',
-      online_name_comment: '(Your Online Name is shown to other students and teachers when you make comments or ask questions. If you wish to be anonymous, use the default or a pseudonym.)',
+      online_name_comment: 'Used when you make comments or ask questions. To be anonymous, use the default or a pseudonym.',
       new_module_instructions: "Add a new module or selected an existing by clicking on the content navigator from the left",
       use_modules_organize: "Use modules to organize your videos and quizzes",
       use_content_menu: "Use the Content menu to add quizzes and surveys",
@@ -430,6 +430,8 @@ var translation_en=function(){
         provide_url:"Please Provide A Video URL",
         enter_url:"Enter the video Title and URL",
         enter_url_continue:"in the Details on the right.",
+        for_help:"For help uploading videos",
+        for_help_continue: "See 'Getting Started' in the Help menu",
         vidoe_not_exist: "Video may not exist or may still be uploading",
         incompatible_link: "Incompatible link",
         replay: "Replay",
@@ -450,7 +452,7 @@ var translation_en=function(){
         quiz_question: "Quiz Question",
         quiz_time: "Quiz Time",
         other_correct_answers: "There may be other correct answers as well",
-        unsolved_quiz: "You have to complete the quiz as part of the video before you can seek to it"
+        unsolved_quiz: "You have to complete the quiz as part of the video before you can jump to it"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

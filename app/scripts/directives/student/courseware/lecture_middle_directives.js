@@ -359,7 +359,7 @@ angular.module('scalearAngularApp')
             scope.exp_title = 'lectures.incorrect'
           }
           scope.explanation_pop={
-            title:"<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='line-height: 0.5;' ng-show='show_sub_title'><small style='text-transform: initial;'>(<span translate>lectures.other_correct_answers</span>)</small></h6>",
+            title:"<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
             content:"<div>{{explanation[data.id][1]}}</div>",
             html:true,
             trigger:'hover',

@@ -622,8 +622,8 @@ module.exports = function(grunt) {
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
                         version: '3.11.2 (' + new Date().toUTCString() + ')',
-                        instruction_manual: 'external_documents/scalable-learning-manual.pdf',
-                        flipped_manual: 'external_documents/flipped-manual.pdf',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.0.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:"https://www.youtube.com/watch?v=EwZd-_pO92s",
                         teacher_new_course_video:"https://www.youtube.com/watch?v=D7BINlTL35g",
                         teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
@@ -642,7 +642,13 @@ module.exports = function(grunt) {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
                         version: '3.11.2 (' + new Date().toUTCString() + ')',
-                        help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.0.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
+                        teacher_welcome_video:"https://www.youtube.com/watch?v=EwZd-_pO92s",
+                        teacher_new_course_video:"https://www.youtube.com/watch?v=D7BINlTL35g",
+                        teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        student_welcom_video:"https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:"https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
                     }
 
                 }
@@ -656,7 +662,13 @@ module.exports = function(grunt) {
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
                         version: '3.11.2 (' + new Date().toUTCString() + ')',
-                        help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.0.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
+                        teacher_welcome_video:"https://www.youtube.com/watch?v=EwZd-_pO92s",
+                        teacher_new_course_video:"https://www.youtube.com/watch?v=D7BINlTL35g",
+                        teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        student_welcom_video:"https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:"https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
                     },
 
                 }

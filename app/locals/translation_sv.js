@@ -81,6 +81,7 @@ var translation_sv=function(){
       send_email: "Skicka ett Mail",
       show_all_courses: "Visa alla kurser",
       Insert_Video_Question: "Infoga Video Frågesport Här",
+      new_video_question:"Ny video Fråga",
       new_video: "Ny Video",
       Insert_a_question: "Sätt i en fråga i en video",
       copy: "Kopia",
@@ -99,6 +100,7 @@ var translation_sv=function(){
       students_must_complete_inorder:"Studenter måste fylla detta objekt innan du går vidare till nästa punkt i modulen",
       students_must_complete_required:"Studenter måste fylla detta objekt för att slutföra modulen",
       online_content_description:"Video, quiz, undersökning eller länk",
+      create_link_time: "Skapa en länk till den här tiden i videon",
       pause: "Paus",
       resume: "Återuppta",
       errors_messages:{
@@ -345,6 +347,7 @@ var translation_sv=function(){
       lectures:{
         duration: "Tidsutsträckning",
         details: "Detaljer",
+        timeline: "Tidslinje",
         lecture_details: "Föreläsnings Detaljer",
         lecture_title: "Föreläsningstitel",
         url: "Video URL",

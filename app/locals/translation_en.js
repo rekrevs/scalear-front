@@ -83,6 +83,7 @@ var translation_en=function(){
       show_all_courses: "Show all courses",
       Insert_Video_Question: "Insert Video Quiz Here",
       Insert_a_question: "Insert a question in a video",
+      new_video_question:"New Video Question",
       new_video: "New Video",
       copy: "Copy",
       due:"Due",
@@ -100,6 +101,7 @@ var translation_en=function(){
       students_must_complete_inorder:"Students must complete this item before going on to the next item in the module",
       students_must_complete_required:"Students must complete this item to complete the module",
       online_content_description:"Video, quiz, survey or link",
+      create_link_time: "Create a link to this time in the video",
       pause: "Pause",
       resume: "Resume",
       errors_messages:{
@@ -345,6 +347,7 @@ var translation_en=function(){
       lectures:{
         duration: "Duration",
         details: "Details",
+        timeline: "Timeline",
         lecture_details: "Lecture Details",
         lecture_title: "Lecture Title",
         url: "Video URL",

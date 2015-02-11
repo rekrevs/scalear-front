@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['$state', '$tour','scalear_api', function($state, $tour, scalear_api){
+	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout', function($state, $tour, scalear_api, $timeout){
 		return {
 			replace: true,
 			restrict: "E",
@@ -32,6 +32,12 @@ angular.module('scalearAngularApp')
 				scope.startTour = function(){
 					console.log($state.current.name)
 					scope.$emit('start_tour', {state: $state.current.name})
+				}
+				scope.closeMenu=function(event){
+					if(!angular.element(event.target).closest('li').hasClass("back"))
+						$timeout(function(){
+							angular.element('.toggle-topbar').click();
+						})							
 				}
 			}
 		};

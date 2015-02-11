@@ -88,7 +88,6 @@ angular.module('scalearAngularApp', [
             editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 success check" type="submit"><i class="fi-check"></i></button>';
             editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert cancel" type="button" ng-click="$form.$cancel()"><i class="fi-x"></i></button>';
             editableThemes['default'].errorTpl = '<small class="error position-absolute z-one with-tiny-padding" ng-show="$error" ng-bind="$error"></small>'
-            console.log(editableThemes['default'])
             $rootScope.textAngularOpts = {
                 toolbar: [
                     ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],
@@ -158,20 +157,14 @@ angular.module('scalearAngularApp', [
                 //$rootScope.start_loading=true;
                 if($tour.isActive()){
                     $tour.end();
-                }
-                $rootScope.iscollapsed = true;
+                }                
 
                UserSession.getRole().then(function(result) {
                     var s = 1;
                     if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name != "home") {
                         $state.go("ie");
                     }
-                    // if((to.name=='home' && result == 0))
-                    // {
-                    //     // $state.go("login");
-                    // }
-                    // console.log('here!!!')
-                    // console.log($rootScope.current_user)
+
                     if($rootScope.current_user && $rootScope.current_user.info_complete == false){
                         $state.go('edit_account')
                         s = 2;

@@ -1043,7 +1043,6 @@ var translation_en=function(){
       show_confused: "Show Confused",
       show_all: "Show All",
       show_charts: "Show Charts",
-      // show_confused: "Show Confused",
       show_discussion: "Show Discussion",
       show_free_question: "Show Free Question",
       show_lecture_quizzes: "Show Lecture Quizzes",

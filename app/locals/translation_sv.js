@@ -810,6 +810,7 @@ var translation_sv=function(){
         questions_for_review: "Frågor för översyn",
         sort_by: "Sortera efter",
         click_to_select: "Klicka för att välja",
+        click_to_copy: "Klicka för att kopiera",
         based_on_invideo: "Baserat på in-video frågor besvarade",
         view_detailed_progress: "Framsteg Detaljer",
         no_courses: "Just nu, har du inte några kurser som du kan komma åt. Du kan börja genom att lägga till en.",

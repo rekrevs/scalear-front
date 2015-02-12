@@ -138,6 +138,10 @@ angular.module('scalearAngularApp')
         }
     )
   }
+
+  $scope.animateCopy=function(){
+     $('#enrollment_key').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
+  }
   $scope.getTeachers();
 
 }]);

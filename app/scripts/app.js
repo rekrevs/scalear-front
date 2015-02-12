@@ -70,6 +70,7 @@ angular.module('scalearAngularApp', [
     // 'mm.foundation.topbar',
     'Mac',
     'dcbImgFallback',
+    'ngClipboard'
     // 'duScroll',
     // 'ngAnimate'
 ])

@@ -366,7 +366,13 @@ angular.module('scalearAngularApp')
       scope.openHelpModal = function (course) {
         scope.course= course
         scope.current_user = $rootScope.current_user
-        console.log(scope.current_user)
+        scope.getTextToCopy = function() {
+          return $("#enrollment_message").text();
+        }
+        scope.animateCopy=function(){
+           $('#enrollment_message').select()
+           $('#enrollment_message, #enrollment_message p').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
+        }
         var modalInstance = $modal.open({
             templateUrl: '/views/modals/help_enroll.html',
             scope: scope

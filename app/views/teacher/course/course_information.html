@@ -7,13 +7,13 @@
                 <a ui-sref="course.course_editor" id="edit_btn" class="button success tiny" translate>edit_course</a><br/>
                 <button type="button" id="calendar_btn" class="button tiny " calendar-modal ng-click="openCalendar()" translate>head.calendar</button>
             </span>
-            <div id="enrollment_key" class="large-12 column with-margin-bottom no-padding">
+            <div class="large-12 column with-margin-bottom no-padding">
                 <i class="fi-photo size-18"></i><small class="with-tiny-margin-left" translate>courses.course_image_url</small>
                 <div><details-link value="course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link></div>
             </div>
-            <div id="enrollment_key" class="large-12 column with-margin-bottom no-padding">
+            <div class="large-12 column with-margin-bottom no-padding">
                 <i class="fi-key size-18"></i><small class="with-tiny-margin-left" translate>courses.enrollment_key</small>
-                <div>{{course.unique_identifier}}</div>
+                <span tooltip="Click to copy"><div id="enrollment_key" clip-click="animateCopy()" clip-copy="course.unique_identifier" >{{course.unique_identifier}}</div></span>
             </div>
             <div class="large-12 column with-margin-bottom no-padding">
                 <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.start_date</small>

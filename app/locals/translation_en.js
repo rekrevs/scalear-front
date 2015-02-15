@@ -104,6 +104,7 @@ var translation_en=function(){
       create_link_time: "Create a link to this time in the video",
       pause: "Pause",
       resume: "Resume",
+      leave_feedback:"Leave your feedback",
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -177,6 +178,7 @@ var translation_en=function(){
         add_to:"Add To",
         add: "Add",
         view: "View Shared",
+        manage: "Manage Shared",
         shared_from: "Data shared from ",
         destination: "Destination",
         copy_module: "Copy module",
@@ -312,11 +314,11 @@ var translation_en=function(){
       },
       privacy:{
         policy: "Privacy Policy",
-        information_collect: " Information we collect ",
-        information_collect_details: "We collect information on how you use the site and interact with the educational content. This includes student responses to quizzes, lecture videos played, pauses, rewinds, questions asked, clicks on the confused button, responses to surveys, and general site navigation. We also collect information on how teachers use the site, including use of the course construction tools, progress visualization, in-class display tools, and general site navigation. This information includes the time, type of action, the response, and the account associated with the action.",
+        information_collect: "What information we collect",
+        information_collect_details: "We collect information on how you use the site and interact with the educational content. This includes student responses to quizzes, lecture videos played, pauses, rewinds, questions asked, questions answered, clicks on the confused button, responses to surveys, and general site navigation. We also collect information on how teachers use the site, including use of the course construction tools, progress visualization, in-class display tools, and general site navigation. This information includes the time, type of action, the response, and the account associated with the action.",
         information_use: "How we use the information",
-        information_use_details: "We use this information to improve the site and learn how to improve teaching and learning. For example, student information is used to help teachers understand how their students are learning (quiz answers), where students are having difficulty in their courses (lecture statistics), and what kinds of questions they are having (surveys and anonymous surveys). The source of anonymous survey information is never provided to teachers to maintain student anonymity. Teacher information is used to help develop better interfaces and identify how we can better provide them with insights into where students need more help.",
-        information_use_details2: "We also use this information for research to improve teaching techniques and the tools we provide. All information used for research is anonymized by removing student names and email addresses.",
+        information_use_details: "We use this information to improve ScalableLearning and learn how to improve teaching and learning. For example, student information is used to help teachers understand how their students are learning (quiz answers), where students are having difficulty in their courses (lecture statistics), and what kinds of questions they are having (surveys and anonymous surveys). The source of anonymous survey information is not shown to teachers on the site to maintain student anonymity. Teacher information is used to help develop better interfaces and identify how we can better provide them with insights into where students need more help.",
+        information_use_details2: "We also use this information for research to improve teaching techniques and the tools we provide. All information used for research is anonymized by removing names and email addresses.",
         confidentiality_and_security: "Confidentiality and security",
         confidentiality_and_security_details: "We take your privacy and security seriously. We promise to never release your personally identifiable information to a third party without your consent. Your information will be stored and protected according to industry norms.",
         use_of_cookies: "Use of cookies",
@@ -327,7 +329,7 @@ var translation_en=function(){
         deleting_profile_details: "If you delete your account on this site all of your personally identifiable information will be removed from our system. Note that it may take a period of time for this information to be deleted from backup systems. Your anonymized usage behavior may be retained for research.",
         policy_changes: "Privacy policy changes",
         policy_changes_details: "The current privacy policy will always be located on this page and we encourage you to visit this page to review changes. Any significant changes in the privacy policy will be sent by email to all active accounts. Changes to the privacy policy take effect when posted here.",
-        last_update: "Last update: 10-April-2013",
+        last_update: "Last update: 13-February-2015",
       },
       regex:{
         enter_string:"Enter the string to match or a regular expression",
@@ -337,7 +339,8 @@ var translation_en=function(){
         numbers:"the numbers 10, 14 and 29"
       },
       intro:{
-        teacher_introduction: "This 3-minute video will give you a rapid overview of how to create lectures, add quizzes, and review your students' online performance. You may",
+        title:"Intro Video",
+        teacher_introduction: "This 10-minute video will give you a rapid overview of how to create lectures, add quizzes, and review your students' online performance. You may",
         teacher_skip_intro: "the introduction if you really want to, and can always find more detailed help in the Help menu.",
         student_introduction: "This 3-minute video describes how to use",
         student_introduction_cont: "and how to study effectively in a flipped class",
@@ -479,6 +482,7 @@ var translation_en=function(){
         click_or_type_confused: "Click or type C to say confused",
         click_or_type_fullscreen: "Click or type F to enter fullscreen",
         click_or_type_smallscreen: "Click or type F to enter smallscreen",
+        student_link_lecture:"Student link to lecture",
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -629,7 +633,8 @@ var translation_en=function(){
         display_inclass: "Display For In-Class Review",
         filter: "Filter",
         see_related: "See related answers to student",
-        has_due_date: "Has Due Date"
+        has_due_date: "Has Due Date",
+        student_link_module:"Student link to module",
       },
       courses:{
         course_links: 'Course Links',

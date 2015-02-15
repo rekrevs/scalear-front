@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page','scalear_api', function ($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api) {
+	.controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page','scalear_api','$translate', function ($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api, $translate) {
 		$scope.can_proceed = false 
 		$scope.remaining = 5;
 		$scope.player={}
 	    $scope.player.controls={}
 	    $scope.player.events={}
 		Page.setTitle('Welcome to ScalableLearning');
-		$rootScope.subheader_message = "Intro Video (3 minutes)"
+		$rootScope.subheader_message = $translate("intro.title")
 		UserSession.getRole().then(function(result) {
 			$scope.role= result
 			if($scope.role == 2){

@@ -174,7 +174,7 @@
         <!-- <content-navigator modules="course.modules" links="course.custom_links" mode="editor" open="ContentNavigator.status" style="z-index: 1;">
         </content-navigator> -->
     </div>
-    <div class="hide-for-medium-down" ng-if="!('**.course.**' | includedByState) && !('home' | includedByState)">
+    <div ng-if="!('**.course.**' | includedByState) && !('home' | includedByState)">
         <top-bar class="sub-header whitesmoke">
           <div class="left name">
             <h1 class="dark-text" style="padding: 0 40px;color:grey">{{message}}</h1>

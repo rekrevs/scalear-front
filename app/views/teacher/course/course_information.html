@@ -7,47 +7,47 @@
                 <a ui-sref="course.course_editor" id="edit_btn" class="button success tiny" translate>edit_course</a><br/>
                 <button type="button" id="calendar_btn" class="button tiny " calendar-modal ng-click="openCalendar()" translate>head.calendar</button>
             </span>
-            <div class="large-12 column with-margin-bottom no-padding">
+            <div class="small-12 column with-margin-bottom no-padding">
                 <i class="fi-photo size-18"></i><small class="with-tiny-margin-left" translate>courses.course_image_url</small>
                 <div><details-link value="course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link></div>
             </div>
-            <div class="large-12 column with-margin-bottom no-padding">
+            <div class="small-12 column with-margin-bottom no-padding">
                 <i class="fi-key size-18"></i><small class="with-tiny-margin-left" translate>courses.enrollment_key</small>
                 <span tooltip="Click to copy"><div id="enrollment_key" clip-click="animateCopy()" clip-copy="course.unique_identifier" >{{course.unique_identifier}}</div></span>
             </div>
-            <div class="large-12 column with-margin-bottom no-padding">
+            <div class="small-12 column with-margin-bottom no-padding">
                 <i class="fi-calendar size-18"></i> <small class="with-tiny-margin-left" translate>courses.start_date</small>
                 <div>
                     <details-date date="course.start_date | amDateFormat:'dddd, MMMM D YYYY'" save="updateCourse(data,type)" validate="validateCourse" column="start_date"></details-date>
                 </div>
             </div>
-            <div class="large-12 column with-margin-bottom no-padding">
+            <div class="small-12 column with-margin-bottom no-padding">
                 <i class="fi-web size-18"></i> <small class="with-tiny-margin-left" translate>courses.time_zone</small>
                 <div>
                     <details-time-zone value="course.time_zone" options="timezones" save="updateCourse()" validate="validateCourse" column="time_zone"></details-time-zone>
                 </div>
             </div>
-            <div class="large-12 column with-margin-bottom no-padding">
+            <div class="small-12 column with-margin-bottom no-padding">
                 <i class="fi-clock size-18"></i> <small class="with-tiny-margin-left" translate>courses.duration</small>
                 <div>
                     <details-text id="duration" value="course.duration" save="updateCourse()" validate="validateCourse" column="duration"></details-text>
                 </div>
             </div>
-            <div class="large-12 column with-margin-bottom no-padding" ng-show="course.discussion_link">
+            <div class="small-12 column with-margin-bottom no-padding" ng-show="course.discussion_link">
                 <i class="fi-link size-18"></i> <small class="with-tiny-margin-left" translate>courses.discussion_forum_link</small>
                 <div>
                     <details-link value="course.discussion_link" save="updateCourse()" validate="validateCourse" column="discussion_link"></details-link>
                 </div>
             </div>
-            <span page-name="head.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
+            <div class="small-12 column with-margin-bottom no-padding" page-name="head.information" step-text="You can export your course to a CSV file." step-index="2" step-placement="right" step-append-to-body="flase">
                 <button type="button" class="button tiny secondary" ng-click="exportCourse()"><span translate>courses.export_as</span> CSV</button>
-            </span>
+            </div >
         </div>
     </div>
     <div class="small-12 medium-12 large-9 columns">        
         <h2 class="title color-green" title="{{course.name}}">
             <details-text id='short_name' value="course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text> 
-            {{' | '}} 
+             | 
             <details-text id='course_name' value="course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
         </h2>
         <h5 translate class="subheader" page-name="head.information" step-text="Edit your course Description and Prerequisites using this section." step-index="4" step-placement="top" step-append-to-body="flase">groups.description</h5>

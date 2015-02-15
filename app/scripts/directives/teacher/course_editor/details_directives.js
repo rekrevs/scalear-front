@@ -291,7 +291,7 @@ angular.module('scalearAngularApp')
         function($timeout, $filter) {
             return {
 
-                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" blur="submit" editable-select="value" buttons="no" e-ng-options="s.value for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px;">{{ short_timezone }}<i ng-class="overclass"></i></a> ',
+                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" blur="submit" editable-select="value" buttons="no" e-ng-options="s.value for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" >{{ showStatus()}}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -343,11 +343,11 @@ angular.module('scalearAngularApp')
                         return short_s;
                     }
 
-                    scope.$watch('value', function(newval) {
-                        if (scope.options){
-                            scope.short_timezone = shorten(scope.showStatus(), 20)
-                        }
-                    });
+                    // scope.$watch('value', function(newval) {
+                    //     if (scope.options){
+                    //         scope.short_timezone = scope.showStatus()//shorten(scope.showStatus(), 20)
+                    //     }
+                    // });
 
                 }
             };

@@ -70,7 +70,7 @@ var translation_sv=function(){
     dashboard: "Instrumentpanel",
     other: "Annat",
     account: "Konto",
-    settings_describtion: "Ändra dina kontoinställningar",
+    settings_description: "Ändra dina kontoinställningar",
     view_whole_courselist: "Se hela din kurslista",
     review_module_progress: "Visa framsteg i modul",
     choose_inclass_material: "Välj material att gå igenom i klassrummet",
@@ -103,6 +103,7 @@ var translation_sv=function(){
     create_link_time: "Skapa en länk till den här tidpunkten i videon",
     pause: "Paus",
     resume: "Återuppta",
+    leave_feedback:"Lämna dina synpunkter",
     errors_messages:{
       the_form_contains: "Formuläret innehåller",
       error: "fel",
@@ -169,6 +170,7 @@ var translation_sv=function(){
       add_to:"Lägg till",
       add: "Lägg",
       view: "Visa delat",
+      manage: "Hantera delat",
       shared_from: "Data delas av ",
       destination: "Destination",
       copy_module: "Kopiera modul",
@@ -337,7 +339,8 @@ var translation_sv=function(){
       numbers: "siffrorna 10, 14 och 29"
     },
     intro:{
-      teacher_introduction: "Denna 3-minuters video ger dig en snabb introduktion till hur du lägger till videos och quizzar och följer dina studenters framsteg på nätet. Du kan",
+      title:"Inledning Video",
+      teacher_introduction: "Denna 10-minuters video ger dig en snabb introduktion till hur du lägger till videos och quizzar och följer dina studenters framsteg på nätet. Du kan",
       teacher_skip_intro: "introduktionen om du vill och kan alltid hitta hjälp under Hjälp-menyn.",
       student_introduction: "Denna 3-minuters video beskriver hur du använder",
       student_introduction_cont: "och hur man studerar effektivt i en flippad kurs",
@@ -477,7 +480,8 @@ var translation_sv=function(){
       finish_before_proceeding:"Se klart tidigare videos innan du fortsätter",
       save_quiz: "Spara eller lämna nu öppnad quiz",
       quiz_question: "Quiz-fråga",
-      quiz_time: "Quiz-tid"
+      quiz_time: "Quiz-tid",
+      student_link_lecture:"Student länk till video",
     },
     online_quiz:{
       you_sure_delete_quiz: "Är du säker på att du vill radera quizen '{{quiz}}'?",
@@ -627,7 +631,8 @@ var translation_sv=function(){
       display_inclass: "Visa för genomgång i klassrummet",
       filter: "Filtrera",
       see_related: "Se relaterade svar för elev",
-      has_due_date: "Har färdigdatum"
+      has_due_date: "Har färdigdatum",
+      student_link_module:"Student länk till modulen",
     },
     courses:{
       course_links: 'Kurslänkar',

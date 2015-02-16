@@ -17,9 +17,9 @@
 }
 
 ul.highlight, li.highlight{
-	border: solid 3px rgb(0, 162, 86);
+	border: solid 3px rgb(0, 162, 86) !important;
 	/*border-left: #2d2d2d 10px outset;*/
-	background: white;
+	/*background: white;*/
 }
 
 .popover.bottom .arrow{

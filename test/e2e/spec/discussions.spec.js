@@ -14,11 +14,11 @@ var login_page = new Login()
 var student_lec = new StudentLecture()
 
 describe("Discussions",function(){
-	describe("Teacher",function(){
-		it("should logout",function(){
-			header.logout()
-		})
-	})
+	// describe("Teacher",function(){
+	// 	it("should logout",function(){
+	// 		header.logout()
+	// 	})
+	// })
 	describe("First Student",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student_mail, params.password)
@@ -30,6 +30,7 @@ describe("Discussions",function(){
 		})
 		it('should open first lecture in first module', function(){
 			navigator.open()
+			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})
@@ -75,6 +76,7 @@ describe("Discussions",function(){
 		var navigator = new ContentNavigator(0)
 		it('should open first lecture in first module', function(){
 			navigator.open()
+			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})
@@ -110,9 +112,9 @@ describe("Discussions",function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
-			navigator.open()
+			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})
@@ -149,9 +151,9 @@ describe("Discussions",function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
-			navigator.open()
+			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})
@@ -211,9 +213,9 @@ describe("Discussions",function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
-			navigator.open()
+			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})
@@ -254,9 +256,9 @@ describe("Discussions",function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
-			navigator.open()
+			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})
@@ -281,9 +283,9 @@ describe("Discussions",function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
-			navigator.open()
+			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})

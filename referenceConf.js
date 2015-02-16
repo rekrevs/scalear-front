@@ -93,13 +93,13 @@ exports.config = {
         ],
         validation: [
             'test/e2e/spec/course_information_validation.spec.js', //not done
-            // 'test/e2e/spec/account_information_validation.spec.js',
-            // 'test/e2e/spec/enrollment_help.spec.js'
+            'test/e2e/spec/account_information_validation.spec.js',
+            'test/e2e/spec/enrollment_help.spec.js'
         ],
         course_editor:[
-            // 'test/e2e/spec/course_editor_basic.spec.js',
-            // 'test/e2e/spec/course_editor_copy.spec.js',
-            // 'test/e2e/spec/module_statistics.spec.js',
+            'test/e2e/spec/course_editor_basic.spec.js',
+            'test/e2e/spec/course_editor_copy.spec.js',
+            'test/e2e/spec/module_statistics.spec.js',
             'test/e2e/spec/course_editor_sharing.spec.js'
         ],
         announcement:[
@@ -109,8 +109,8 @@ exports.config = {
             'test/e2e/spec/teacher-managment.spec.js'
         ],
         student:[
-            'test/e2e/spec/students_solve_course.spec.js',
-            // 'test/e2e/spec/discussions.spec.js',
+            // 'test/e2e/spec/students_solve_course.spec.js',
+            'test/e2e/spec/discussions.spec.js',
             // 'test/e2e/spec/notes.spec.js',
             // 'test/e2e/spec/student-lectures.spec.js'
         ],
@@ -191,14 +191,14 @@ exports.config = {
         browser.driver.sleep(1000);
         browser.driver.findElement(by.id('login')).click();
         browser.driver.sleep(1000);
-        browser.driver.findElement(by.id('user_email')).sendKeys(params.teacher_mail);
-        browser.driver.findElement(by.id('user_passowrd')).sendKeys(params.password);
-        browser.driver.findElement(by.id('login_btn')).click();
-        browser.driver.wait(function() {
-          return browser.driver.getCurrentUrl().then(function(url) {
-            return /dashboard/.test(url);
-          });
-        });
+        // browser.driver.findElement(by.id('user_email')).sendKeys(params.teacher_mail);
+        // browser.driver.findElement(by.id('user_passowrd')).sendKeys(params.password);
+        // browser.driver.findElement(by.id('login_btn')).click();
+        // browser.driver.wait(function() {
+        //   return browser.driver.getCurrentUrl().then(function(url) {
+        //     return /dashboard/.test(url);
+        //   });
+        // });
     },
 
     // The params object will be passed directly to the protractor instance,

@@ -17,7 +17,10 @@ var course_info = new CourseInformation()
 var course_list = new CourseList()
 var student_lec = new StudentLecture()
 
-describe("Teacher in the course editor", function(){	
+describe("Teacher in the course editor", function(){
+	it("should login as teacher",function(){
+		login_page.sign_in(params.teacher_mail, params.password)
+	})
 	var navigator = new ContentNavigator(1)
 	it("should open course",function(){
         course_list.open()
@@ -120,11 +123,10 @@ describe("Student", function(){
 	it("should login", function(){
 		login_page.sign_in(params.student_mail, params.password)
 	})
-	var navigator = new ContentNavigator(0)
+	var navigator = new ContentNavigator(1)
 	it('should have correct number of modules and lectures with same order', function(){
 		course_list.open()
 		course_list.open_course(1)
-		navigator.open()
 		expect(navigator.modules.count()).toEqual(2)
 		var module1 = navigator.module(1)
 		expect(module1.items.count()).toEqual(6)
@@ -219,5 +221,8 @@ describe("Revert Changes - Teacher", function(){
 		expect(module.items.get(3).getText()).toContain("quiz1")
 		expect(module.items.get(4).getText()).toContain("quiz2")
 		expect(module.items.get(5).getText()).toContain("survey1")
+	})
+	it("should logout",function(){
+		header.logout()
 	})
 })

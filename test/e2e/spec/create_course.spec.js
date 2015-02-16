@@ -11,6 +11,9 @@ var	new_course = new NewCourse();
 var course_info = new CourseInformation()
 
 describe("Teacher", function(){	
+	it("should login as teacher",function(){
+		login_page.sign_in(params.teacher_mail, params.password)
+	})
 	it('should create course', function(){
 		new_course.open()
 		new_course.create(params.short_name, params.course_name, params.course_duration, params.discussion_link, params.image_link, params.course_description, params.prerequisites);
@@ -29,8 +32,7 @@ describe("Teacher", function(){
 		header.join_course(enrollment_key)
 	})
 
-	it("should login as teacher",function(){
+	it("should logout",function(){
 		header.logout()
-		login_page.sign_in(params.teacher_mail, params.password)
 	})
 })

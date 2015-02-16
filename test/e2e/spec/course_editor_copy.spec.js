@@ -4,7 +4,8 @@ var ContentNavigator = require('./pages/content_navigator');
 var CourseList = require('./pages/course_list');
 var SubHeader = require('./pages/sub_header')
 var NewCourse = require('./pages/new_course');
-
+var Login = require('./pages/login');
+var login_page = new Login()
 var params = browser.params;
 
 var header = new Header()
@@ -14,6 +15,9 @@ var course_list = new CourseList()
 var new_course = new NewCourse();
 
 describe("Teacher", function(){
+    it("should login as teacher",function(){
+        login_page.sign_in(params.teacher_mail, params.password)
+    })
     it('should create another course', function(){
         new_course.open()
         new_course.create("short_name", "course_name", "15", params.discussion_link, params.image_link, params.course_description, params.prerequisites);
@@ -192,5 +196,8 @@ describe("Revert Changes - Teacher", function(){
         module.open()
         module.delete_item(7)
         expect(module.items.count()).toEqual(6)
+    })
+    it("should logout",function(){
+        header.logout()
     })
 })

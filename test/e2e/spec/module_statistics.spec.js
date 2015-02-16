@@ -5,9 +5,11 @@ var InvideoQuiz = require('./pages/invideo_quiz');
 var NormalQuiz = require('./pages/normal_quiz');
 var Video = require('./pages/video');
 var sleep = require('./lib/utils').sleep;
-
+var Login = require('./pages/login');
+var login_page = new Login()
 var params = browser.params;
-
+var Header = require('./pages/header');
+var header = new Header()
 var video = new Video();
 var invideo_quiz = new InvideoQuiz();
 var quiz = new NormalQuiz();
@@ -17,6 +19,9 @@ var navigator = new ContentNavigator(1)
 
 describe("Module Statistics",function(){
 	describe("Teacher",function(){
+		it("should login as teacher",function(){
+			login_page.sign_in(params.teacher_mail, params.password)
+		})
 		it("should open course",function(){
 	        course_list.open()
 	        course_list.open_course(1)
@@ -165,6 +170,9 @@ describe("Module Statistics",function(){
 		it("should delete module",function(){
 			navigator.module(3).delete()
 			expect(navigator.modules.count()).toEqual(2)
+		})
+		it("should logout",function(){
+			header.logout()
 		})
 	})
 })

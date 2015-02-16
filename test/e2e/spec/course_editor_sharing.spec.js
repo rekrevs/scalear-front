@@ -20,7 +20,10 @@ var new_course = new NewCourse()
 var navigator = new ContentNavigator(1)
 
 describe("Sharing a module",function(){
-    describe("Teacher1",function(){        
+    describe("Teacher1",function(){  
+        it("should login as teacher",function(){
+            login_page.sign_in(params.teacher_mail, params.password)
+        })      
         it("should open course",function(){
             course_list.open()
             course_list.open_course(1)
@@ -139,16 +142,17 @@ describe("Sharing a non existing module",function(){
             course_list.open()
             course_list.open_course(1)
         })
-        it("should add a two new modules",function(){
+        it("should add two new modules",function(){
             course_editor.add_module()
             course_editor.add_lecture()
+            navigator.module(3).open()
             course_editor.add_survey()
             navigator.module(3).open()
             course_editor.add_module()
             course_editor.add_lecture()
+            navigator.module(4).open()
             course_editor.add_quiz()
         })
-
         it('should open third module', function(){
             navigator.module(3).open()
         })
@@ -245,11 +249,13 @@ describe("Sharing single items",function(){
         it("should add a two new modules",function(){
             course_editor.add_module()
             course_editor.add_lecture()
+            navigator.module(3).open()
             course_editor.add_survey()
 
             navigator.module(3).open()
             course_editor.add_module()
             course_editor.add_lecture()
+            navigator.module(4).open()
             course_editor.add_quiz()
         })
 
@@ -354,7 +360,7 @@ describe("Sharing single items",function(){
         })
     })
 })
-describe("Rollback changes Teacher2",function(){
+describe("Rollback changes",function(){
     describe("Teacher2",function(){
         it("should delete items and module",function(){
             var module = navigator.module(2)

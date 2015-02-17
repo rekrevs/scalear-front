@@ -109,15 +109,29 @@ exports.config = {
             'test/e2e/spec/teacher-managment.spec.js'
         ],
         student:[
-            // 'test/e2e/spec/students_solve_course.spec.js',
+            'test/e2e/spec/students_solve_course.spec.js',
             'test/e2e/spec/discussions.spec.js',
-            // 'test/e2e/spec/notes.spec.js',
-            // 'test/e2e/spec/student-lectures.spec.js'
+            'test/e2e/spec/notes.spec.js',
         ],
 
         delete_course:'test/e2e/spec/delete_course.spec.js'
       },
     specs: [
+        'test/e2e/spec/create_course.spec.js',
+        'test/e2e/spec/fill_course.spec.js',
+        'test/e2e/spec/course_information_validation.spec.js', //not done
+        'test/e2e/spec/account_information_validation.spec.js',
+        'test/e2e/spec/enrollment_help.spec.js',
+        'test/e2e/spec/course_editor_basic.spec.js',
+        'test/e2e/spec/course_editor_copy.spec.js',
+        'test/e2e/spec/module_statistics.spec.js',
+        'test/e2e/spec/course_editor_sharing.spec.js',
+        'test/e2e/spec/announcements.spec.js',
+        'test/e2e/spec/teacher-managment.spec.js',
+        'test/e2e/spec/students_solve_course.spec.js',
+        'test/e2e/spec/discussions.spec.js',
+        'test/e2e/spec/notes.spec.js',
+        'test/e2e/spec/delete_course.spec.js'
     //{{reviewed}}  
         // 'test/e2e/spec/init-progress-data.spec.js', //  
         // 'test/e2e/spec/account-info-validation.spec.js',//    
@@ -141,10 +155,9 @@ exports.config = {
         // 'test/e2e/spec/drag-quizzez-over-video.spec.js',//
         // 'test/e2e/spec/free-text-quizzez-over-video-text.spec.js', //
         // 'test/e2e/spec/sharing.spec.js',//
+        // 'test/e2e/spec/teacher-managment.spec.js', //        
+        // 'test/e2e/spec/student-lectures.spec.js', //  
 
-        // 'test/e2e/spec/teacher-managment.spec.js', //
-        
-        // 'test/e2e/spec/student-lectures.spec.js', //        
         // 'test/e2e/spec/timeline.spec.js',
         // 'test/e2e/spec/validations.spec.js', //  should try changing the appearance date to an invalid date - before module appearance
         // 'test/e2e/spec/preview-as-student.spec.js',// //problem with deleting course at the end
@@ -174,7 +187,7 @@ exports.config = {
     // A base URL for your application under test. Calls to protractor.get()
     // with relative paths will be prepended with this.
     // baseUrl: 'http://staging.scalable-learning.com/#',
-    // baseUrl: 'http://0.0.0.0:9000/#',
+    baseUrl: 'http://0.0.0.0:9000/#',
 
 
     // Selector for the element housing the angular app - this defaults to
@@ -191,14 +204,6 @@ exports.config = {
         browser.driver.sleep(1000);
         browser.driver.findElement(by.id('login')).click();
         browser.driver.sleep(1000);
-        // browser.driver.findElement(by.id('user_email')).sendKeys(params.teacher_mail);
-        // browser.driver.findElement(by.id('user_passowrd')).sendKeys(params.password);
-        // browser.driver.findElement(by.id('login_btn')).click();
-        // browser.driver.wait(function() {
-        //   return browser.driver.getCurrentUrl().then(function(url) {
-        //     return /dashboard/.test(url);
-        //   });
-        // });
     },
 
     // The params object will be passed directly to the protractor instance,

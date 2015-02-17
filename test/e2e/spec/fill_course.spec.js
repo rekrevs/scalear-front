@@ -48,6 +48,7 @@ describe("Filling Course",function(){
 			course_editor.add_module();
 			course_editor.rename_module("module 1")
 			expect(navigator.modules.count()).toEqual(1)
+			sleep(50000)
 			course_editor.add_module();
 			course_editor.rename_module("module 2")
 			expect(navigator.modules.count()).toEqual(2)

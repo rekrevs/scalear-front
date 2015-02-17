@@ -23,7 +23,7 @@ describe("Discussions",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student_mail, params.password)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
 			course_list.open()
 			course_list.open_course(1)
@@ -73,12 +73,15 @@ describe("Discussions",function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
 			navigator.open()
 			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
+		})
+		it("should open timeline",function(){
+			student_lec.open_timeline()
 		})
 		it("should check discussion posts",function(){
 			expect(student_lec.lecture(1).discussions.count()).toEqual(1)
@@ -117,6 +120,9 @@ describe("Discussions",function(){
 			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
+		})
+		it("should open timeline",function(){
+			student_lec.open_timeline()
 		})
 		it("should check discussion posts",function(){
 			expect(student_lec.lecture(1).discussions.count()).toEqual(1)
@@ -157,11 +163,13 @@ describe("Discussions",function(){
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})
+		it("should open timeline",function(){
+			student_lec.open_timeline()
+		})
 		it("should check comments count",function(){
 			expect(student_lec.lecture(1).discussion(1).comments.count()).toEqual(2)
 			expect(student_lec.lecture(1).discussion(1).comment(1).title).toEqual("first comment")
 			expect(student_lec.lecture(1).discussion(1).comment(2).title).toEqual("second comment")
-
 		})
 		it("should flag second comment",function(){
 			student_lec.lecture(1).discussion(1).comment(2).flag()
@@ -219,6 +227,9 @@ describe("Discussions",function(){
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})
+		it("should open timeline",function(){
+			student_lec.open_timeline()
+		})
 		it("should check comments",function(){
 			expect(student_lec.lecture(1).discussions.count()).toEqual(2)
 			expect(student_lec.lecture(1).discussion(2).comments.count()).toEqual(2)
@@ -262,6 +273,9 @@ describe("Discussions",function(){
 			navigator.module(1).open_item(1)
 			navigator.close()
 		})
+		it("should open timeline",function(){
+			student_lec.open_timeline()
+		})
 		it("should check comments",function(){
 			expect(student_lec.lecture(2).discussions.count()).toEqual(1)
 			expect(student_lec.lecture(2).discussion(1).comments.count()).toEqual(0)
@@ -288,6 +302,9 @@ describe("Discussions",function(){
 			navigator.module(1).open()
 			navigator.module(1).open_item(1)
 			navigator.close()
+		})
+		it("should open timeline",function(){
+			student_lec.open_timeline()
 		})
 		it("should check discussion post",function(){
 			expect(student_lec.lecture(2).discussions.count()).toEqual(0)

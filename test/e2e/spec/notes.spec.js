@@ -4,7 +4,7 @@ var Video = require('./pages/video');
 var Header = require('./pages/header');
 var Login = require('./pages/login');
 var StudentLecture = require('./pages/student/lecture');
-
+var sleep = require('./lib/utils').sleep;
 var params = browser.params;
 
 var course_list = new CourseList()
@@ -23,7 +23,7 @@ describe("Notes",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student_mail, params.password)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
 			course_list.open()
 			course_list.open_course(1)
@@ -36,11 +36,20 @@ describe("Notes",function(){
 		it("should seek to 67%",function(){
 			video.seek(67)
 		})
+		it("should open timeline",function(){
+			student_lec.open_timeline()
+		})
 		it("should add a note",function(){
 			student_lec.add_note()
 			student_lec.lecture(3).type_note("Some note text for testing.")
 			expect(student_lec.lecture(3).notes.count()).toEqual(1)
-			expect(student_lec.lecture(3).note(1).getText()).toContain("Some note text for testing.")
+			expect(student_lec.lecture(3).note(1).getText()).toEqual("Some note text for testing.")
+		})		
+		it("should edit note",function(){
+			student_lec.lecture(3).note(1).click()
+			student_lec.lecture(3).type_note("Editied note for testing.")
+			expect(student_lec.lecture(3).notes.count()).toEqual(1)
+			expect(student_lec.lecture(3).note(1).getText()).toEqual("Editied note for testing.")
 		})
 		it("should delete note",function(){
 			student_lec.lecture(3).delete_note(1)

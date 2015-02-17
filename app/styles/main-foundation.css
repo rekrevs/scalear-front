@@ -41,9 +41,9 @@ width: 78%;
 .containeropen.small-12{
   max-width: none !important;
 }
-.content-navigator-container{
+/*.content-navigator-container{
   width: 300px;
-}
+}*/
 
 .details-navigator-container{
   /*top:-15px;*/
@@ -74,7 +74,7 @@ width: 78%;
   /*box-shadow: 1px 1px 1px lightgrey;*/
   height: 0;
   overflow-y: auto;
-  z-index: 1 !important;
+  z-index: 2 !important;
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;

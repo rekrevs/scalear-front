@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
       if (hr < 10)  { hr    = "0" + hr; }
       if (min < 10) { min = "0" + min; }
       if (sec < 10) { sec  = "0" + sec; }
-      if (hr)       { hr   = "00"; }
+      // if (hr)       { hr   = "00"; }
 
       if (format) {
         var formatted_time = format.replace('hh', hr);
@@ -38,13 +38,15 @@ angular.module('scalearAngularApp')
             min = 1
             sec = 0
           }
-          if (hr < 10)  { hr    = "0" + hr; }
+          if (hr == 0){ 
+            format =format.replace('hh:', "").replace('h:', "")
+          }
+          else if(hr < 10){ hr  = "0" + hr; }
           if (min < 10) { min = "0" + min; }
-          if (sec < 10) { sec  = "0" + sec; }
-          //if (hr)       { hr   = "00"; }
+          if (sec < 10) { sec = "0" + sec; }
 
           if (format) {
-              var formatted_time = format.replace('hh', hr);
+          var formatted_time = format.replace('hh', hr);
               formatted_time = formatted_time.replace('h', hr*1+""); // check for single hour formatting
               formatted_time = formatted_time.replace('mm', min);
               formatted_time = formatted_time.replace('m', min*1+""); // check for single minute formatting
@@ -95,7 +97,7 @@ angular.module('scalearAngularApp')
       }
   })
 
-.filter('timeAgo', function() {
+.filter('fromNow', function() {
     return function(dateString) {
       return moment(dateString).fromNow()
     }
@@ -199,4 +201,9 @@ angular.module('scalearAngularApp')
      if(state)
       return $state.href(state, {}, {absolute: true})
   };
-}]);
+}]).filter('visible', function() {
+  return function(appearance_time) {
+     if(appearance_time)
+      return new Date(appearance_time) <= new Date()
+  };
+});

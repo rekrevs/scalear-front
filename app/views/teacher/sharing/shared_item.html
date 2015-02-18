@@ -16,7 +16,7 @@
 				</div> -->
 				<div class="panel row with-margin-top">
 					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | timeAgo}}
+						{{item.created_at | fromNow}}
 					</div>
 					<center>
 	<!-- 					Module: “test” shared by David Black-Schaffer from course COURSE_NAME -->
@@ -43,7 +43,7 @@
 			<li ng-repeat="lecture in item.lectures">
 				<div class="panel row with-margin-top">
 					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | timeAgo}}
+						{{item.created_at | fromNow}}
 					</div>
 					<div class="small-12 with-margin-bottom">
 						<div class="alert-box color-white show-inline no-margin"><b>{{'groups.lecture' | translate}}:</b> {{lecture.name}}</div>
@@ -85,7 +85,7 @@
 				</div> -->
 				<div class="panel row with-margin-top">
 					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | timeAgo}}
+						{{item.created_at | fromNow}}
 					</div>
 					<div class="small-12 with-margin-bottom">
 						<div class="alert-box color-white no-margin show-inline"><b>{{'groups.'+quiz.quiz_type | translate}}:</b> {{quiz.name}}</div>

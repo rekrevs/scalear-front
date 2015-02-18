@@ -12,7 +12,7 @@
 				<accordion-group ng-show="links" class="accordion-group links_accordion">
 					<accordion-heading class="accordion-heading">
 						<div style="padding: 5px;border-bottom: 1px solid white;">
-							<div class="show-inline">{{'courses.course_links' | translate}}</div>
+							<div class="show-inline" translate>courses.course_links</div>
 						</div>							
 					</accordion-heading>
 					<ul ng-repeat="link in links">
@@ -29,11 +29,12 @@
 								<div class="small-1 no-padding columns no-padding-left" style="min-height: 1px;">
 									<module-progress-check class="left" module="module"></module-progress-check>		
 								</div>
-								<div class="small-9 columns no-padding-left">
-									<div class="truncate module_name" bo-text="module.name"></div>
+								<div class="small-9 columns no-padding">
+									<i bo-hide="module.appearance_time | visible" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'invisible'|translate}} {{module.appearance_time| fromNow}}"></i>
+									<div bo-class="{'truncate-90':!(module.appearance_time | visible), 'truncate':(module.appearance_time | visible)}" class=" module_name" bo-text="module.name"></div>
 								</div>
 								<div class="small-2 no-padding text-right columns">
-									<small class="color-grey" bo-text="module.total_time | formattime:'h:mm'"></small>
+									<small class="color-grey" bo-text="module.total_time | formattime:'h:mm:ss'"></small>
 								</div>
 							</div>
 						</div>
@@ -49,7 +50,7 @@
 								<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'courses.survey' | translate"></i>
 
 								<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name"></div>
-								<div class="color-dark-grey" bo-text="item.duration | formattime:'h:mm'"></div>
+								<div class="color-dark-grey" ng-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div>
 							</div>
 						</li>
 					</ul>

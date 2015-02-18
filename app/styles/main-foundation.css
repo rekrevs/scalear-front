@@ -727,6 +727,12 @@ font-weight: 300 !important
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.truncate-90{
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .truncate-70{
   width: 70%;
   white-space: nowrap;

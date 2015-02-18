@@ -6,7 +6,7 @@
                     <div class="screen-name">
                         <b bo-text="item.comment.screen_name" ></b>
                         <div class="timestamp with-small-margin-left">
-                            {{ item.comment.created_at | timeAgo }}
+                            {{ item.comment.created_at | fromNow }}
                             <span ng-if="item.comment.flags_count > 0" style="color: red;">
                                 <span style="color: #a1a1a1">  </span>
                                 <span translate>discussion.flagged_comment</span>

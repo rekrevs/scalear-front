@@ -119,9 +119,9 @@ angular.module('scalearAngularApp')
                 $scope.module.due_date_enabled =!isDueDateDisabled()
             }
 
-            $scope.visible = function(appearance_time) {
-                return new Date(appearance_time) <= new Date()
-            }
+            // $scope.visible = function(appearance_time) {
+            //     return new Date(appearance_time) <= new Date()
+            // }
 
             $scope.addCustomLink=function(){
                 $log.debug($scope.module.id)

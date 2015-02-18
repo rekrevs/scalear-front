@@ -4,8 +4,8 @@
 		<i ng-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" title="{{'groups.lecture' | translate}}"></i>
 		<i ng-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" title="{{'courses.quiz' | translate}}"></i>
 		<i ng-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" title="{{'courses.survey' | translate}}"></i>
-		<div class="truncate-70 show-inline valign-middle left text-left">{{item.name}}</div>
-		<div class="color-dark-grey left" ng-show="item.duration" ng-bind="item.duration | formattime:'h:mm'"></div>
+		<div class="truncate-70 show-inline valign-middle left text-left" style="width: 66%">{{item.name}}</div>
+		<div class="color-dark-grey left" ng-show="item.duration" ng-bind="item.duration | formattime:'h:mm:ss'"></div>
 		<delete_button class="right z-one" size='small' color='dark' action='remove(event)' mode="content_navigator" moduleitem="true" />
 	</div>
 	<!-- <delete_button class="with-tiny-margin-right" size="small" color='dark' action="remove(event)" /> -->
@@ -18,10 +18,10 @@
 			<i ng-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" title="{{'groups.lecture' | translate}}"></i>
 			<i ng-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" title="{{'courses.quiz' | translate}}"></i>
 			<i ng-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" title="{{'courses.survey' | translate}}"></i>
-			<div class="truncate-70 show-inline valign-middle left text-left" bindonce bo-text="item.name"></div>
+			<div class="truncate-70 show-inline valign-middle left text-left" bindonce bo-text="item.name" style="width: 66%"></div>
 		<!-- </div> -->
 		<!-- <div class="small-9 columns"> -->
-			<div class="color-dark-grey with-small-margin-right" bo-text="item.duration | formattime:'h:mm'"></div>
+			<div class="color-dark-grey with-small-margin-right" bo-text="item.duration | formattime:'h:mm:ss'"></div>
 		<!-- </div> -->
 	</div>
 </li>

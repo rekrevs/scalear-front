@@ -3,7 +3,8 @@ var ContentNavigator = require('./pages/content_navigator');
 var CourseList = require('./pages/course_list');
 var InvideoQuiz = require('./pages/invideo_quiz');
 var NormalQuiz = require('./pages/normal_quiz');
-
+var Login = require('./pages/login');
+var login_page = new Login()
 var params = browser.params;
 
 var header = new Header()
@@ -14,12 +15,13 @@ var navigator = new ContentNavigator(1)
 
 describe("Filling Course",function(){
 	describe("Teacher",function(){
+		it("should login as teacher",function(){
+			login_page.sign_in(params.teacher_mail, params.password)
+		})
 		it("should open course",function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
-	})
-	describe("Teacher",function(){
 		it("should open first lecture in first module",function(){
 			navigator.module(1).open()
 			navigator.module(1).open_item(1)
@@ -201,7 +203,9 @@ describe("Filling Course",function(){
 			course_list.open()
 			course_list.delete_course(1)
 			expect(course_list.courses.count()).toEqual(0)
-		    header.logout()
+		})
+		it("should logout",function(){
+			header.logout()
 		})
 	})
 })

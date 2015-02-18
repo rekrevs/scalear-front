@@ -17,9 +17,9 @@
 	<div ng-if="announcement.show">
     	<div text-angular ng-model="announcement.announcement" ta-toolbar-button-class="button secondary tiny"></div>
     	<div class = "with-margin-left">
-			<br>
-			<button id="close_button" class="button alert tiny" ng-click="hideannouncement(announcement)" ng-disabled="saving">Close</button>
-			<button id="save_button" class="button tiny" ng-click="saveannouncement(announcement)" ng-disabled="saving">Save</button>
+			<br>			
+			<button id="save_button" class="button tiny" ng-click="saveannouncement(announcement)" ng-disabled="saving" translate>save</button>
+			<button id="close_button" class="button alert tiny" ng-click="hideannouncement(announcement)" ng-disabled="saving" translate>close</button>
 		</div>
 	</div>
 </div>

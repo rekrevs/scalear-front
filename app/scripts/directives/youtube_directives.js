@@ -51,15 +51,13 @@ angular.module('scalearAngularApp')
                 if(isiPad())
                 	scope.autoplay=1; 
 
-                //var matches = 
-                //var vimeo= scope.url.match(/vimeo/)  // improve this..
                 if(isYoutube(scope.url)){
                 	console.log("youtube")
                 	player_controls.youtube = true
                 	var video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
-                	player = Popcorn(video,{});
-                	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time)						
-                    // player = Popcorn.smart( '#'+scope.id, "http://www.youtube.com/watch?v="+matches[1]+'&fs=0&showinfo=0&rel=0&autohide=0&vq='+vq+'&autoplay=1');
+                	player = Popcorn(video,{frameAnimation:true});
+                	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time, scope.autoplay, scope.controls)
+                	console.log(video.src)
                 }
                 else if(isVimeo(scope.url)){
                 	console.log("vimeo")
@@ -100,11 +98,11 @@ angular.module('scalearAngularApp')
 		        return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
 		    }
 
-			var formatYoutubeURL=function(url,vq,time){
+			var formatYoutubeURL=function(url,vq,time, autoplay, controls){
 				var short_url = isShortYoutube(url)
 				var base_url, query
 				if(short_url){
-					base_url = 'http://www.youtube.com/watch'
+					base_url = 'https://www.youtube.com/watch'
 					query = '&v='+short_url[1]
 				}
 				else{
@@ -112,7 +110,7 @@ angular.module('scalearAngularApp')
 					base_url = splitted_url[0]
 					query = '&'+splitted_url[1]	
 				}
-				return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+scope.autoplay+"&controls&origin=http://www.youtube.com"+query;
+				return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+autoplay+"&controls="+controls+"&origin=https://www.youtube.com&theme=light"+query;
 			}
 
             scope.kill_popcorn = function(){

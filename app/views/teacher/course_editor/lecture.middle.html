@@ -1,7 +1,12 @@
 <div class="row">
 	<div class="small-12 small-centered columns">
 		<overlay ng-hide="video_ready || lecture.url!='none'">
-			<h3 class="color-grey" style="position:relative;top:25%" translate>lectures.enter_url</h3>
+			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.enter_url</h3>
+			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.enter_url_continue</h3>
+			<br/>
+			<br/>
+			<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.for_help</h5>
+			<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.for_help_continue</h5>
 		</overlay>
 		<form name="answer_form" novalidate >
 			<center>
@@ -31,10 +36,10 @@
 <div class="row with-small-margin-top">
 	<center class="small-block-grid-3" ng-show="!editing_mode">
 		<span ng-show="lecture.url!='none'" >
-			<button id="new_question" class="button small no-margin" lecture-questions-modal open-modal="openQuestionsModal" ng-click="addQuestion()"><span tooltip="Click or type i to add a question" tooltip-placement="bottom" tooltip-append-to-body="true" translate>Insert_Video_Question</span></button>
+			<button id="new_question" class="button small no-margin" lecture-questions-modal open-modal="openQuestionsModal" ng-click="addQuestion()"><span tooltip="Click or type i to add a question" tooltip-placement="bottom" tooltip-append-to-body="true" translate>Insert_Video_Question</span></button>		
+			<button id="new_item" class="button small no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" ><span translate>new_video</span></button>
+			<button id="new_module" class="button small no-margin" ng-click="addModule()" translate>groups.new_module</button>
 		</span>
-		<button id="new_item" class="button small no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" ><span translate>new_video</span></button>
-		<button id="new_module" class="button small no-margin" ng-click="addModule()" translate>groups.new_module</button>
 	</center>
 	<div class="small-12 small-centered columns">
 		<center ng-if="editing_mode" style="margin-bottom:10px">

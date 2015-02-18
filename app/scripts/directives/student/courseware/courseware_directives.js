@@ -146,9 +146,9 @@ angular.module('scalearAngularApp')
 	  link: function(scope, element){
 	  		var total = 0
 			for(var i in scope.module.items){
-				// if(scope.module.items[i].graded){
+				if(scope.module.items[i].graded){
 					total++;
-				// }
+				}
 			}
 	  		scope.$watch('module.items', function() {
 				scope.module_done = calculateDone()
@@ -157,7 +157,7 @@ angular.module('scalearAngularApp')
 			var calculateDone = function(){
 				var done_count = 0;
 				scope.module.items.forEach(function(item, i){
-					if(item.is_done){ // && item.graded
+					if(item.is_done && item.graded){  
 						done_count++;
 					}
 				})

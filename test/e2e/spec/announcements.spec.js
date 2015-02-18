@@ -17,6 +17,9 @@ var	new_course = new NewCourse()
 var dashboard = new Dashboard()
 
 describe("Teacher",function(){
+	it("should login as teacher",function(){
+		login_page.sign_in(params.teacher_mail, params.password)
+	})
 	it("should open course",function(){
         course_list.open()
         course_list.open_course(1)
@@ -63,7 +66,6 @@ describe("Student",function(){
 	it('should check announcements in first course information', function(){
 		course_list.open()
 		course_list.open_course(1)
-		navigator.open()
 		course_info.open()
 		expect(announcement.posts.count()).toEqual(3)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 1")
@@ -127,7 +129,6 @@ describe("Student",function(){
 	it('should check announcements in first course information', function(){
 		course_list.open()
 		course_list.open_course(1)
-		navigator.open()
 		course_info.open()
 		expect(announcement.posts.count()).toEqual(2)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 2")
@@ -175,5 +176,8 @@ describe("Revert Changes - Teacher",function(){
 	it('should delete second course', function(){
 		course_list.delete_course(2)
 		expect(course_list.courses.count()).toEqual(1)
+	})
+	it("should logout",function(){
+		header.logout()
 	})
 })

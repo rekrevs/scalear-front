@@ -21,15 +21,21 @@
 	 	</div>	 	
 	</div> -->
 	<div class="small-12 large-6 right columns" ng-class="{'large-12 auto-right position-relative': !events.length ||large_calendar}" ng-show="eventSources.length" >
-	<h3 class="show-for-medium-down" ng-show="events.length"><!-- <i class="fi-loop size-30"></i> --> <span translate>whats_new</span></h3>
+	<!-- <h3 class="show-for-medium-down" ng-show="events.length"><i class="fi-loop size-30"></i> <span translate>whats_new</span></h3> -->
  	<div class="calendar-container" step-text="Here's a calendar with all the events for the courses you're in." step-index="1" step-placement="top" step-append-to-body="flase" page-name="{{current}}">
 
 		<div id="studentCalendar" ui-calendar="uiConfig.calendar" ng-model="eventSources" style="width:100%;"></div>
 		<span ng-show="events.length" >
-			<button ng-show="!large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()"><i class="fi-zoom-in size-10"/><span> Show large calendar</span></button>
-			<button ng-show="large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()"><i class="fi-zoom-out size-10"/><span> Show small calendar</span></button>
+			<button ng-show="!large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()">
+				<i class="fi-zoom-in size-10"/>
+				<span translate>large_calendar</span>
+			</button>
+			<button ng-show="large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()">
+				<i class="fi-zoom-out size-10"/>
+				<span translate>small_calendar</span>
+			</button>
 		</span>
-		<button class="really-tiny button secondary uppercase no-margin" ng-click="export_calendar()">Export Calendar</button>
+		<button class="really-tiny button secondary no-margin" ng-click="export_calendar()" translate>export_calendar</button>
         <span ng-show="current_user.roles[0].id == 2" class="right">
         	<span class="calendar_color done alert-box label radius" translate="events.done"></span>
 			<span class="calendar_color done_late alert-box label radius" translate="events.done_late"></span>

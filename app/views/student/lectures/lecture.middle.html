@@ -8,14 +8,15 @@
 	 </span>
 </span>
 <span id="lecture_container" style="overflow:hidden">
-	<div class="ease_in_out small-centered small-12 with-small-padding-right land-medium-8 portrait-medium-12 large-7 no-padding columns width-max-heigh" ng-class="{
+	<div class="ease_in_out small-centered small-12 land-medium-8 portrait-medium-12 large-7 no-padding columns width-max-heigh with-small-padding-right" ng-class="{
 	'large-12 large-centered': !delayed_timeline_open, 
 	'large-uncentered land-uncentered': delayed_timeline_open, 		 
 	'land-medium-11':ContentNavigator.status && !delayed_timeline_open	
 	}">
+	<br/>
 <!-- 'large-uncentered':delayed_navigator_open || delayed_timeline_open,
 	'large-10':ContentNavigator.status && !delayed_timeline_open -->
-		<div  ng-hide="!lecture" class="small-12 with-tiny-padding-top">
+		<div ng-show="lecture" class="small-12 columns no-padding">
 			<div id="main-video-container" ng-style="container_style"> 
 				<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->				
 				<form name="answer_form" novalidate >
@@ -58,8 +59,8 @@
 								<progress-bar ng-if="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' blink="blink_class" total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" videoready="video_ready" style="position: relative;">
 									<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: -170px;position: absolute;text-align: center;background: whitesmoke;z-index: 1;width: 70%;left: 100px;font-weight: 300;"><b><span translate>lectures.note</span>:</b> <span translate>did_not_get_credit</span></div>
 									<div ng-show="video_end" style="position: absolute;top: -71px;left: 47%;z-index:1">
-										<button id="replay_button" type="button" ng-click="replay()" class="btn btn-success" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
-								    	<button id="next_button" ng-show='next_item.id' type="button" ng-click="nextItem()" class="btn btn-success" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span></button>
+										<button id="replay_button" type="button" ng-click="replay()" class="button" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
+								    	<button id="next_button" ng-show='next_item.id' type="button" ng-click="nextItem()" class="button" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span></button>
 									</div>
 						    		<!-- <controls id="controls-bar" class="progress_controls" ng-class="{'push-from-left': !quiz_mode}" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
 									</controls> -->
@@ -70,23 +71,23 @@
 						    	</progress-bar>
 						    	<review_inclass  id="review_inclass" vote="voteForReview()" close="closeReviewNotify()" retry="retryQuiz()" style="display:none;position: absolute;right: 0;"></review_inclass> 
 								<div ng-if="fullscreen" class="row with-tiny-padding-top with-tiny-padding-bottom black">
-									<center class="small-block-grid-3">
-										<button id="add_note_button" class="button small no-margin-bottom" ng-click="addNote()" tooltip="Click or type N to add a note" tooltip-append-to-body="true">New Note</button>
-										<button id="ask_question_button" class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="Click or type Q to ask a question" tooltip-append-to-body="true">Ask a Question</button>
-										<button id="confused_button" class="button small no-margin-bottom" ng-click="addConfused()" tooltip="Click or type C to say confused" tooltip-append-to-body="true">I'm Confused</button>
-										<button ng-if="fullscreen" class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip="Click or type F to enter smallscreen" tooltip-append-to-body="true">Exit Fullscreen</button>
+									<center>
+										<button class="button small no-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.click_or_type_note'|translate}}"  translate>lectures.new_note</button>
+										<button class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.click_or_type_question'|translate}}"  translate>lectures.ask_question</button>
+										<button class="button small no-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.click_or_type_confused'|translate}}"  translate>lectures.im_confused</button>
+										<button class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.click_or_type_smallscreen'|translate}}"  translate>lectures.exit_fullscreen</button>
 									</center>
 								</div>
 						    </span>
 					    </video_container>
 				    </span>
 				</form>	
-				<div ng-if="!fullscreen && should_play" class="row with-tiny-margin-top with-small-margin-bottom">
+				<div ng-if="!fullscreen && should_play" class="row no-margin with-tiny-margin-top">
 					<center class="small-block-grid-3">
-						<button id="add_note_button" class="button small no-margin-bottom" ng-click="addNote()" tooltip="Click or type N to add a note" tooltip-placement="bottom" tooltip-append-to-body="true">New Note</button>
-						<button id="ask_question_button" class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip-placement="bottom" tooltip="Click or type Q to ask a question" tooltip-append-to-body="true">Ask a Question</button>
-						<button id="confused_button" class="button small no-margin-bottom" ng-click="addConfused()" tooltip="Click or type C to say confused" tooltip-placement="bottom" tooltip-append-to-body="true">I'm Confused</button>
-						<button ng-if="!fullscreen" class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip-placement="bottom" tooltip="Click or type F to enter fullscreen" tooltip-append-to-body="true">Fullscreen</button>
+						<button id="add_note_button" class="button small no-margin-bottom" ng-click="addNote()" tooltip="{{'lectures.click_or_type_note'|translate}}" tooltip-append-to-body="true" translate>lectures.new_note</button>
+						<button id="ask_question_button" class="button small no-margin-bottom" ng-click="addQuestionBlock()" tooltip="{{'lectures.click_or_type_question'|translate}}" tooltip-append-to-body="true" translate>lectures.ask_question</button>
+						<button id="confused_button" class="button small no-margin-bottom" ng-click="addConfused()" tooltip="{{'lectures.click_or_type_confused'|translate}}" tooltip-append-to-body="true" translate>lectures.im_confused</button>
+						<button ng-if="!fullscreen" class="button small no-margin-bottom" ng-click="toggleFullscreen()" tooltip="{{'lectures.click_or_type_fullscreen'|translate}}" tooltip-append-to-body="true" translate>lectures.fullscreen</button>
 					</center>
 				</div>
 			</div>

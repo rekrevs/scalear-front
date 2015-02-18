@@ -70,6 +70,7 @@ angular.module('scalearAngularApp', [
     // 'mm.foundation.topbar',
     'Mac',
     'dcbImgFallback',
+    'ngClipboard'
     // 'duScroll',
     // 'ngAnimate'
 ])
@@ -88,7 +89,6 @@ angular.module('scalearAngularApp', [
             editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 success check" type="submit"><i class="fi-check"></i></button>';
             editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert cancel" type="button" ng-click="$form.$cancel()"><i class="fi-x"></i></button>';
             editableThemes['default'].errorTpl = '<small class="error position-absolute z-one with-tiny-padding" ng-show="$error" ng-bind="$error"></small>'
-            console.log(editableThemes['default'])
             $rootScope.textAngularOpts = {
                 toolbar: [
                     ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],
@@ -108,7 +108,7 @@ angular.module('scalearAngularApp', [
 
 
             $log.debug("lang is " + $rootScope.current_lang);
-            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']
+            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie', 'student_getting_started', 'teacher_getting_started']
             var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
             var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
@@ -158,20 +158,14 @@ angular.module('scalearAngularApp', [
                 //$rootScope.start_loading=true;
                 if($tour.isActive()){
                     $tour.end();
-                }
-                $rootScope.iscollapsed = true;
+                }                
 
                UserSession.getRole().then(function(result) {
                     var s = 1;
                     if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name != "home") {
                         $state.go("ie");
                     }
-                    if((to.name=='home' && result == 0))
-                    {
-                        // $state.go("login");
-                    }
-                    console.log('here!!!')
-                    console.log($rootScope.current_user)
+
                     if($rootScope.current_user && $rootScope.current_user.info_complete == false){
                         $state.go('edit_account')
                         s = 2;
@@ -580,10 +574,15 @@ angular.module('scalearAngularApp', [
               templateUrl: '/views/shared.html',
               controller: 'sharedCtrl'
             })
-            .state('getting_started', {
-              url: '/help/getting_started',
-              templateUrl: '/views/help/getting_started.html',
-              controller: 'GettingStartedCtrl'
+            .state('student_getting_started', {
+              url: '/help/student/getting_started',
+              templateUrl: '/views/help/student_getting_started.html',
+              controller: 'StudentGettingStartedCtrl'
+            })
+            .state('teacher_getting_started', {
+              url: '/help/teacher/getting_started',
+              templateUrl: '/views/help/teacher_getting_started.html',
+              controller: 'TeacherGettingStartedCtrl'
             })
     }
 ])

@@ -139,7 +139,7 @@ angular.module('scalearAngularApp')
             replace: true,
             templateUrl: '/views/teacher/course_editor/loading.html',
         };
-    }).directive('deleteButton', function() {
+    }).directive('deleteButton', ['$translate',function($translate) {
         return {
             scope: {
                 size: "@",
@@ -158,6 +158,7 @@ angular.module('scalearAngularApp')
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/delete_button.html',
             link: function(scope) {
+                scope.tooltiptext_translated = $translate(scope.tooltiptext)
                 scope.showDeletePopup = function(value,ev) {
                     scope.displayDeletePopup = value
                     ev.stopPropagation()
@@ -181,7 +182,7 @@ angular.module('scalearAngularApp')
                 // }
             }
         }
-    })
+    }])
 // .directive('addModuleItems', function(){
 //         return{
 //             scope:{

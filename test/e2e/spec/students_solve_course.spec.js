@@ -24,6 +24,9 @@ var student_quiz = new StudentQuiz()
 
 describe("Solve Course",function(){
 	describe("Teacher",function(){
+		it("should login as teacher",function(){
+			login_page.sign_in(params.teacher_mail, params.password)
+		})
 		var navigator = new ContentNavigator(1)
 		it("should open course",function(){
 	        course_list.open()
@@ -32,7 +35,7 @@ describe("Solve Course",function(){
 	    it("should open first quiz in first module",function(){
 	    	navigator.module(1).open()
 	    	navigator.module(1).open_item(4)
-	    	sleep(1000)
+	    	sleep(3000)
 	    	scroll_top()
 	    })
     	it('should make quiz not in order', function(){
@@ -41,10 +44,14 @@ describe("Solve Course",function(){
 	    it('make quiz not required', function(){
 	        course_editor.change_quiz_required()
 	    })
+	    it("should increase retries number",function(){
+	    	course_editor.change_quiz_retries(1)
+			expect(course_editor.quiz_retries.getText()).toEqual("1")
+	    })
 	    it("should open second lecture in second module",function(){
 	    	navigator.module(2).open()
 	    	navigator.module(2).open_item(2)
-	    	sleep(1000)
+	    	sleep(3000)
 	    	scroll_top()
 	    })
 	    it('should make lecture not in order', function(){
@@ -53,7 +60,7 @@ describe("Solve Course",function(){
 	    })
 	    it("should open first quiz in second module",function(){
 	    	navigator.module(2).open_item(4)
-	    	sleep(1000)
+	    	sleep(3000)
 	    	scroll_top()
 	    })
 	    it('should make quiz not required', function(){
@@ -61,7 +68,7 @@ describe("Solve Course",function(){
 	    })
 	    it("should increase retries number",function(){
 	    	course_editor.change_quiz_retries(1)
-			expect(course_editor.quiz_retries.getText()).toEqual(""+num)
+			expect(course_editor.quiz_retries.getText()).toEqual("1")
 	    })
 
 	    it("should logout",function(){
@@ -73,12 +80,16 @@ describe("Solve Course",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student_mail, params.password)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
 		describe("First Module",function(){
+			it("should open first module",function(){
+				navigator.module(1).open()
+				navigator.close()
+			})
 			it("should seek video to 9%",function(){
 				video.wait_till_ready()
 				video.play()
@@ -709,7 +720,7 @@ describe("Solve Course",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student2_mail, params.password)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open first course', function(){
 			course_list.open()
 			course_list.open_course(1)

@@ -2,8 +2,8 @@
     <h3><!-- <i class="step fi-info size-38"></i> --> <span translate>enroll.help_enroll</span></h3>
     <p translate>enroll.instruction</p>
     <br>
-    <div  ng-click="this.select()" class="panel">
-        <div id="enrollment_message" select-on-click>
+    <div class="panel">
+        <div id="enrollment_message" clip-copy="getTextToCopy()" clip-click="animateCopy()">
             <p ><span translate>enroll.dear_student</span>,</p>
             <p>&emsp;
                 <span translate translate-values='{course_name: course.name}'>enroll.this_term_new_system</span>
@@ -24,6 +24,6 @@
                 {{current_user.name+' '+current_user.last_name}}
             </p>
         </div>
-        <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right;position: relative;top: -30px;" ><span translate>courses.click_to_select</span><br><span translate>menu.copy</span>: cmd+C or ctrl+C</div>
+        <div class="well well-lg" style="color: gray;font-size: 12px;font-weight: bold;float: right" ><span translate>courses.click_to_copy</span></div>
     </div>
 </div> 

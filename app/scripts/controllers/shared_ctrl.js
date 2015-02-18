@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('sharedCtrl',['$scope','Page','SharedItem','Module','Lecture','Quiz','$rootScope', function ($scope,Page,SharedItem,Module,Lecture,Quiz, $rootScope) {
+  .controller('sharedCtrl',['$scope','Page','SharedItem','Module','Lecture','Quiz','$rootScope','$translate', function ($scope,Page,SharedItem,Module,Lecture,Quiz, $rootScope, $translate) {
   	Page.setTitle('sharing.view')
-    $rootScope.subheader_message = "Manage Shared"
+    $rootScope.subheader_message = $translate("sharing.manage")
   	var init=function(){
   		SharedItem.showShared(
   			{},

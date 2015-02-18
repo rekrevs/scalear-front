@@ -1,21 +1,25 @@
 <div class="modal-header">
     <h3 translate="devise.registrations.confirm_destroy"></h3>
 </div>
-<div class="modal-body">
-    <p translate>devise.registrations.confirm_destroy_note</p>
-	<form name="form.key">
-        <center class="large-6 column">
-            <label><span translate>password</span>
-                <input type="password" id="del_con_pwd" class="no-margin" ng-model="enrollment.key" name="key" placeholder="{{'current_password'|translate}}" ng-class="{error: form.server_error}" required/>
-                <small class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></small>
-                <small class='error' ng-if='form.server_error'>{{form.server_error}}</small>
-            </label>
-            <div class="alert-box secondary" translate>account_edit.need_password</div>
-            <loading size="small" show="form.processing"></loading>
-        </center>
-    </form>
-</div>
-<div class="modal-footer">
-    <button class="button alert right" id="del_ok_btn" ng-click="ok()" translate="account_edit.cancel_account"></button>
-    <button class="button right with-margin-right" ng-click="cancel()" translate="close"></button>
+<div class="modal-body row">
+    <div class="small-12 column">
+        <p translate>devise.registrations.confirm_destroy_note</p>
+        <div class="small-6 columns small-centered">
+            <form name="form.key">
+                <label>
+                    <div class="text-left with-tiny-margin-bottom" ><span translate>password</span>:</div>
+                    <input type="password" id="del_con_pwd" class="no-margin" ng-model="enrollment.key" name="key" placeholder="{{'current_password'|translate}}" ng-class="{error: form.server_error}" required/>
+                    <small class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></small>
+                    <small class='error' ng-if='form.server_error'>{{form.server_error}}</small>
+                </label>
+                <div class="alert-box secondary" translate>account_edit.need_password</div>
+                <button class="button small alert " id="del_ok_btn" ng-click="ok()" translate="account_edit.cancel_account"></button>
+                <button class="button small  with-margin-right" ng-click="cancel()" translate="close"></button>
+                <loading size="small" show="form.processing"></loading>
+            </form>
+        </div>
+    </div>
+    <div class="modal-footer small-4 small-centered columns">
+        
+    </div>
 </div>

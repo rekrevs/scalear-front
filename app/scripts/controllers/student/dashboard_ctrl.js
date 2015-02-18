@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed','$window', 'Page', '$filter', '$timeout', '$rootScope','$compile', function($scope, $state, $stateParams, Dashboard, NewsFeed, $window, Page, $filter, $timeout, $rootScope, $compile) {
+.controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope','$compile','$translate','$filter', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter) {
 
     Page.setTitle('dashboard');
     Page.startTour();
-    $rootScope.subheader_message = "What's New"
+    $rootScope.subheader_message = $translate("whats_new")
     
     $scope.toggleLargeCalendar=function(){
         $scope.large_calendar=!$scope.large_calendar
@@ -13,17 +13,27 @@ angular.module('scalearAngularApp')
             resizeCalendar()
         })
     }
+    var changeLang = function() {
+        if ($scope.eventSources) {
+            if($scope.myCalendar){
+                angular.element($scope.myCalendar.children()).remove();
+                var obj = ($scope.current_lang == "en") ? full_calendar_en() : full_calendar_sv();
+                obj.eventSources = $scope.eventSources;
+                $scope.myCalendar.fullCalendar(obj);
+            }
+        }
+    }
 
     var resizeCalendar=function(){
         angular.element('#studentCalendar').fullCalendar('render');
     }
 
     $scope.eventRender = function( event, element, view ) { 
-         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />Due at  "+$filter('date')(event.start, 'HH:mm')
+         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />"+$translate('controller_msg.due')+" "+$translate('at')+" "+$filter('date')(event.start, 'HH:mm')
         if(event.status==1)
-            tooltip_string+="<br />Completed on time"
+            tooltip_string+="<br />"+$translate("courses.completed_on_time")
         else if(event.status==2)
-            tooltip_string+="<br />Completed "+event.days+" days late"
+            tooltip_string+="<br />"+$translate("courses.completed")+" "+event.days+" "+$translate("controller_msg.days")+" "+$translate("controller_msg.late")
 
         element.attr({'tooltip-html-unsafe': tooltip_string,'tooltip-append-to-body': true});
         $compile(element)($scope);
@@ -68,6 +78,7 @@ angular.module('scalearAngularApp')
 
             $scope.eventSources.push($scope.calendar);
             $timeout(function() {
+                changeLang()
                 resizeCalendar()
             },300)
         })

@@ -8,8 +8,8 @@
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 columns">
 		<label class="size-1">
-			<b><span translate>visible</span>:</b><details-date class="with-small-margin-left" date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
-			<span ng-hide="visible(module.appearance_time)">
+			<b><span translate>groups.appearance_date</span>:</b><details-date class="with-small-margin-left" date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
+			<span ng-hide="visible(module.appearance_time)" style="margin-left:5px">
 				<i class="fi-alert"></i><small class="subheader with-tiny-margin-left" translate>invisible</small>
 			</span>
 		</label>
@@ -36,7 +36,7 @@
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 columns">
 		<label class="size-1">
-			<b><span >Student link to module</span>:</b><span class="color-editable-blue with-small-margin-left">{{link_url}}</span>
+			<b><span translate>groups.student_link_module</span>:</b><span class="color-editable-blue with-small-margin-left">{{link_url}}</span>
 		</label>
 	</div>
 </div>
@@ -74,6 +74,7 @@
 </div>
 <div class="small-8 columns left">
 	<br/>
+	<i ng-show="!module.custom_links.length" class="color-grey size-12" translate>empty</i>
 	<ul ui-sortable="listSortableOptions" ng-model='module.custom_links'>
 		<li class="group_links" ng-repeat="doc in module.custom_links">
 			<link-item link="doc" update="updateCustomLink" remove="removeCustomLink" validate="validate" />

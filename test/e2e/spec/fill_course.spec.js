@@ -4,9 +4,11 @@ var InvideoQuiz = require('./pages/invideo_quiz');
 var NormalQuiz = require('./pages/normal_quiz');
 var Video = require('./pages/video');
 var sleep = require('./lib/utils').sleep;
-
+var Login = require('./pages/login');
+var Header = require('./pages/header');
 var params = browser.params;
-
+var header = new Header()
+var login_page = new Login()
 var course_list = new CourseList()
 var video = new Video();
 var invideo_quiz = new InvideoQuiz();
@@ -33,17 +35,20 @@ var d_q3_y = 190;
 
 describe("Filling Course",function(){
 	describe("Teacher",function(){
+		it("should login as teacher",function(){
+			login_page.sign_in(params.teacher_mail, params.password)
+		})
 		it("should open course",function(){
 			course_list.open()
 			course_list.open_course(1)
 		})
-	})
-	describe("Teacher",function(){
+	
 		it("should create modules",function(){
 			expect(navigator.modules.count()).toEqual(0)
 			course_editor.add_module();
 			course_editor.rename_module("module 1")
 			expect(navigator.modules.count()).toEqual(1)
+			sleep(50000)
 			course_editor.add_module();
 			course_editor.rename_module("module 2")
 			expect(navigator.modules.count()).toEqual(2)
@@ -53,14 +58,17 @@ describe("Filling Course",function(){
 			course_editor.add_lecture()
 	        course_editor.rename_item("lecture1 video quizzes")
 	        course_editor.change_video_url(params.url1)
+	        video.wait_till_ready()
 
 	        course_editor.add_lecture()
 	        course_editor.rename_item("lecture2 text quizzes")
 	        course_editor.change_video_url(params.url1)
+	        video.wait_till_ready()
 
 	        course_editor.add_lecture()
 	        course_editor.rename_item("lecture3 video surveys")
 	        course_editor.change_video_url(params.url1)
+			video.wait_till_ready()
 
 	        course_editor.add_quiz()
 	        course_editor.rename_item("quiz1")
@@ -79,14 +87,17 @@ describe("Filling Course",function(){
 			course_editor.add_lecture()
 	        course_editor.rename_item("lecture4 video quizzes")
 	        course_editor.change_video_url(params.url1)
+	        video.wait_till_ready()
 
 	        course_editor.add_lecture()
 	        course_editor.rename_item("lecture5 text quizzes")
 	        course_editor.change_video_url(params.url1)
+	        video.wait_till_ready()
 
 	        course_editor.add_lecture()
 	        course_editor.rename_item("lecture6 video surveys")
 	        course_editor.change_video_url(params.url1)
+			video.wait_till_ready()
 
 	        course_editor.add_quiz()
 	        course_editor.rename_item("quiz3")
@@ -714,6 +725,9 @@ describe("Filling Course",function(){
 			question.change_type_free_text()
 			
 			quiz.save()
+		})
+		it("should logout",function(){
+			header.logout()
 		})
 	})
 })

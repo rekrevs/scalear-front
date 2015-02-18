@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state','Page','scalear_utils','$translate', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state, Page, scalear_utils,$translate) {
+  .controller('studentQuizMiddleCtrl', ['$scope','Course','$stateParams', '$controller','Quiz', '$log','CourseEditor','$state','Page','scalear_utils','$translate','ContentNavigator', function ($scope, Course, $stateParams,$controller,Quiz, $log, CourseEditor, $state, Page, scalear_utils,$translate,ContentNavigator) {
     $controller('surveysCtrl', {$scope: $scope});
     
  	var init = function(){
@@ -10,6 +10,8 @@ angular.module('scalearAngularApp')
         $scope.$parent.$parent.current_item =$stateParams.quiz_id
         $scope.should_solve = false
         $scope.passed_requirments = true
+        ContentNavigator.open()
+
  		Quiz.getQuestions({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},function(data){
             $scope.quiz= data.quiz
             console.log($scope.quiz)
@@ -88,7 +90,7 @@ angular.module('scalearAngularApp')
             if(key=="submit")
                 return $translate('controller_msg.already_submitted')+' '+$scope.quiz.quiz_type+' '+$translate("controller_msg.no_more_attempts")
             else if(key=="due")
-                return $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
+                return $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$scope.alert_messages[key][2]+") "+$translate("controller_msg.ago")
             else if(key=="today")
                 return $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
         }

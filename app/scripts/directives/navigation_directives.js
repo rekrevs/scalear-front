@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['$state', '$tour', function($state, $tour){
+	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout', function($state, $tour, scalear_api, $timeout){
 		return {
 			replace: true,
 			restrict: "E",
@@ -14,10 +14,8 @@ angular.module('scalearAngularApp')
 			},
 			templateUrl: "/views/main_navigation.html",
 			link: function (scope, element) {
-				// scope.today = new Date();
-				// $rootScope.$watch('are_shared', function(){
-				// 	scope.are_shared = $rootScope.are_shared
-				// })
+				scope.scalear_api = scalear_api
+				
 				scope.areShared = function(){
 					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared
 				}
@@ -34,6 +32,12 @@ angular.module('scalearAngularApp')
 				scope.startTour = function(){
 					console.log($state.current.name)
 					scope.$emit('start_tour', {state: $state.current.name})
+				}
+				scope.closeMenu=function(event){
+					if(!angular.element(event.target).closest('li').hasClass("back"))
+						$timeout(function(){
+							angular.element('.toggle-topbar').click();
+						})							
 				}
 			}
 		};
@@ -154,7 +158,7 @@ angular.module('scalearAngularApp')
            return{
 			replace:true,
 			restrict: "E",
-      transclude: true,
+      		transclude: true,
 			scope:{
 				course:"=",
 				message:"="
@@ -190,7 +194,7 @@ angular.module('scalearAngularApp')
 				// })
 
 				scope.initFilters=function(){
-					scope.course_filter = "!!"
+					scope.course_filter = false
 				}
 
 				scope.toggleNavigator=function(){
@@ -256,7 +260,7 @@ angular.module('scalearAngularApp')
 					scope.course_filter= value
 					$rootScope.$broadcast('course_filter_update', scope.course_filter)
 				}	
-				setTimeline(true)
+				// setNavigator(true)
 			}
 		};
  }]).directive('userNavigation', ['$rootScope', 'User', 'Home',function($rootScope, User, Home) {

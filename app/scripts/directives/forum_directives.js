@@ -99,7 +99,6 @@ angular.module('scalearAngularApp')
         },
         templateUrl:'/views/forum/discussion_timeline.html',
         link: function(scope, element, attrs) {
-            console.log(")")
             scope.current_user = $rootScope.current_user
             scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
             scope.private_text = $translate("discussion.private_post")

@@ -2,7 +2,7 @@
   <accordion-group class="accordion-group" is-open="lecture && lecture.url == 'none'">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div id="video_settings" class="show-inline">Video</div>
+        <div id="video_settings" class="show-inline" translate>content.types.video</div>
       </div>              
     </accordion-heading>
     <table class="table small-12 no-margin" style="border-top:none">
@@ -13,18 +13,18 @@
         </td>
       </tr>
       <tr>
-        <td class="right-border"><span translate>lectures.description</span>:</td>
-        <td>
-          <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
-        </td>
-      </tr>
-      <tr>
         <td ng-class='{"color-red": lecture.url == "none"}' class="right-border">
           <span translate>lectures.url</span>:
           <i class='fi-info' tooltip='{{"youtube.info"|translate}}'></i>
         </td>
         <td class="break-text">
             <details-text id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"></details-text> 
+        </td>
+      </tr>
+      <tr>
+        <td class="right-border"><span translate>lectures.description</span>:</td>
+        <td>
+          <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
         </td>
       </tr>
       <tr>
@@ -58,7 +58,7 @@
         </td>
       </tr> -->
       <tr>
-        <td class="right-border"><span>Student link to lecture</span>:</td>
+        <td class="right-border"><span translate>lectures.student_link_lecture</span>:</td>
         <td class="break-text">
           <span class="color-editable-blue">{{link_url}}</span>
         </td>
@@ -68,7 +68,7 @@
   <accordion-group class="accordion-group">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div id="lec_settings" class="show-inline">Settings</div>
+        <div id="lec_settings" class="show-inline" translate>settings.settings</div>
       </div>              
     </accordion-heading>
     <table class="table small-12 no-margin">
@@ -78,12 +78,12 @@
         </td> -->
         <td colspan="2">
           <center>
-            <span tooltip="Students must complete this item before going on to the next item in the module" tooltip-placement="left" tooltip-append-to-body="true">
+            <span tooltip="{{'students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
               <input type="checkbox" ng-model="lecture.required"  ng-change='updateLecture()'>
               <span class="size-12" translate>courses.in_order</span>
             </span>
             <br />
-            <span tooltip="Students must complete this item to complete the module" tooltip-placement="left" tooltip-append-to-body="true" >
+            <span tooltip="{{'students_must_complete_required'| translate}}" tooltip-placement="left" tooltip-append-to-body="true" >
               <input type="checkbox" ng-model="lecture.graded" ng-change="updateLecture()">
               <span class="size-12" translate>courses.required</span>
             </span>
@@ -140,7 +140,7 @@
   <accordion-group class="accordion-group overflow-auto" open="quiz_list.length">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
-        <div class="show-inline">Quizzes</div>
+        <div class="show-inline" translate>groups.quizzes</div>
       </div>              
     </accordion-heading>
     <quiz_list />

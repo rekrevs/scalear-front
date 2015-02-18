@@ -717,7 +717,7 @@ angular.module('scalearAngularApp')
     var win = angular.element($window)
     var win_width= win.width()
     if(win_width < 660 ){
-      $scope.button_names=['Ex', 'Ov', 'Un','H','U','']
+      $scope.button_names=['Ex', 'Ov', 'Un','H','U','', 'P', 'R']
       if(win_width <510)
         $scope.button_class = 'smallest_font_button' 
       else
@@ -725,7 +725,7 @@ angular.module('scalearAngularApp')
     }
     else{
       $scope.button_class = 'big_font_button' 
-      $scope.button_names=['Exit', '', '','Hide', 'Unhide', '5sec']
+      $scope.button_names=[$translate('groups.exit'), '', '',$translate('groups.hide'), $translate('groups.hide'), '5sec', $translate('pause'), $translate('resume')]
     }
     $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
   }

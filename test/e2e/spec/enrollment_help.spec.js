@@ -4,16 +4,20 @@ var CourseList = require('./pages/course_list');
 var Students = require('./pages/teacher/students');
 var AccountInformation = require('./pages/account_information');
 var refresh = require('./lib/utils').refresh;
-
+var Login = require('./pages/login');
 var params = browser.params;
 
+var login_page = new Login()
 var header = new Header()
 var course_info = new CourseInformation()
 var course_list = new CourseList()
 var students_page = new Students()
 var account_info = new AccountInformation();
 
-describe("Enrollment Help Check - Teacher",function(){    
+describe("Enrollment Help Check - Teacher",function(){ 
+    it("should login as teacher",function(){
+        login_page.sign_in(params.teacher_mail, params.password)
+    })   
     it("should open course",function(){
         course_list.open()
         course_list.open_course(1)
@@ -35,5 +39,8 @@ describe("Enrollment Help Check - Teacher",function(){
         expect(students_page.teacher_name).toContain(firstname)
         expect(students_page.teacher_name).toContain(lastname)
         refresh()
+    })
+    it("should logout",function(){
+        header.logout()
     })
 })

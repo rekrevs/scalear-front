@@ -5,11 +5,13 @@
 }
 </style>
 <center>
-    <h3 translate="users.enter_enrollment"></h3>
+    <h3 translate>users.enter_enrollment</h3>
     <div class="modal-body">
-    	<form name="form.key">
-        	<div class="small-12 large-3 small-centered columns"><input type="text" maxlength='11' ng-model="enrollment.key" name="key" required style="text-align: center;font-weight:bold;font-size: 18px;"/></div>
-        	<span class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span><br>
+    	<form ng-submit="enrollStudent()" name="form.key">
+        	<div class="small-12 large-3 small-centered columns">
+                <input id="enrollkey_field" type="text" maxlength='11' ng-model="enrollment.key" name="key" required autofocus style="text-align: center;font-weight:bold;font-size: 18px;" class="no-margin with-tiny-margin-bottom"/>
+            </div>
+        	<span class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></span>
         	<small class='error' ng-if='form.server_error'>{{form.server_error}}</small>
             <loading size="small" show="form.processing"></loading>
             {{'users.enrollement_key_format' | translate}} 
@@ -21,7 +23,7 @@
     </div>
     <div class="modal-footer">
         <br/>
-        <button class="button small success" ng-click="ok()" translate="users.enroll"></button>
-        <button class="button small alert" ng-click="cancel()" translate="lectures.cancel"></button>
+        <button class="button small success" ng-click="enrollStudent()" translate="users.enroll"></button>
+        <button class="button small alert" ng-click="cancelEnroll()" translate="lectures.cancel"></button>
     </div>
 </center>

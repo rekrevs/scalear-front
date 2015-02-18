@@ -62,6 +62,7 @@ Lecture.prototype = Object.create({}, {
 	note:{value:function(num){return this.notes.get(num-1)}},
 	note_area:{get:function(){return this.field.element(by.className("editable-controls")).element(by.tagName("textarea"))}},
 	type_note:{value:function(text){
+		this.note_area.clear()
 		this.note_area.sendKeys(text)
 		this.note_area.sendKeys(protractor.Key.ENTER)
 	}},
@@ -80,8 +81,13 @@ Lecture.prototype = Object.create({}, {
 	save_discussion:{value:function(){ this.editable_discussion.element(by.buttonText('Ask')).click()}},
 })
 
-var LecturePage= function(){}
+var LecturePage= function(val){
+	this.status = val|| 0
+}
 LecturePage.prototype=Object.create({},{
+	timeline:{get:function(){return element(by.id('timeline_navigator'))}},
+	open_timeline:{value:function(){if(!this.status){this.timeline.click();this.status=1}}},
+	close_timeline:{value:function(){if(this.status){this.timeline.click();this.status=0}}},
 	timeline_items:{get:function(){return element.all(by.repeater("l in items")); }},
 	confused_button:{get:function(){return element(by.id('confused_button'))}},
 	note_button:{get:function(){return element(by.id('add_note_button'))}},

@@ -26,6 +26,9 @@ var new_course = new NewCourse()
 
 describe("Teacher Management",function(){
 	describe("Teacher1",function(){
+		it("should login as teacher",function(){
+			login_page.sign_in(params.teacher_mail, params.password)
+		})
 		it("should open course",function(){
 	        course_list.open()
 	        course_list.open_course(1)
@@ -72,11 +75,10 @@ describe("Teacher Management",function(){
     	it("should login", function(){    		
 			login_page.sign_in(params.student_mail, params.password)
 		})
-		var navigator = new ContentNavigator(0)
+		var navigator = new ContentNavigator(1)
 		it('should open course information', function(){
 			course_list.open()
 			course_list.open_course(1)
-			navigator.open()
 			course_info.open()
 			expect(course_info.teachers.count()).toEqual(4)
 		})
@@ -109,6 +111,7 @@ describe("Revert Changes",function(){
             login_page.sign_in(params.teacher2_mail, params.password)
         })
         it("should check that course has been removed",function(){
+        	course_list.open()
         	expect(course_list.courses.count()).toEqual(0)
         })
         it("should logout",function(){

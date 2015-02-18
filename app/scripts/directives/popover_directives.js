@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
 			          	popover.getPosition = function(){
 				            var pop = $.fn.popover.Constructor.prototype.getPosition.apply(this, arguments);
 				            $compile(this.$tip)(scope);
-				            // scope.$digest();
+				            scope.$digest();
 				            this.$tip.data('popover', this);
 				            if(!options.disabletop){
 				            	angular.element(".arrow").css("top",'50%');

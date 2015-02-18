@@ -1,10 +1,10 @@
 
 
 angular.module('scalearAngularApp')
-  .controller('statisticsCtrl',['$scope', 'Kpi','$translate','Page','$rootScope', function ($scope, Kpi,$translate, Page, $rootScope) {
+  .controller('statisticsCtrl',['$scope', 'Kpi','$translate','Page','$rootScope','$translate', function ($scope, Kpi,$translate, Page, $rootScope, $translate) {
 
     Page.setTitle('courses.statistics');
-    $rootScope.subheader_message = "Statistics Dashboard"
+    $rootScope.subheader_message = $translate("statistics.statistics_dashboard")
     $scope.close_selector = false;
 
 	var init =function(){
@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
 	  			$scope.collection = data.series
 	  			$scope.selected_series = $scope.collection[0]
 	  			$scope.getSeriesData($scope.selected_series)
-                $scope.$watch("current_lang", redrawChart);
+                // $scope.$watch("current_lang", redrawChart);
 	  		},
 	  		function(){}
 		)
@@ -94,7 +94,7 @@ angular.module('scalearAngularApp')
                 type: 'line',
                 name: '#',
                 pointInterval: 24 * 3600 * 1000,
-                pointStart: Date.UTC(2012, 0, 1),
+                pointStart: Date.UTC(2013, 0, 1),
             }],
             title: {
                 text: null
@@ -128,7 +128,7 @@ angular.module('scalearAngularApp')
 		$scope.selected_series= key
 		var chart_data=[]
 		$scope.chartConfig.loading = true
-        var start_date = new Date('2012-01-01').toISOString().split("T")[0]
+        var start_date = new Date('2013-01-01').toISOString().split("T")[0]
         var end_date   = new Date().toISOString().split("T")[0]
 		Kpi.readData({key:key, start:start_date, end: end_date},
 			function(series){

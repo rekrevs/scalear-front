@@ -1,6 +1,7 @@
 <!-- build:css(.tmp/styles) styles/course_item.css -->
 <link rel="stylesheet" href="styles/courseItem.css"/>
 <!-- endbuild -->
+<center ng-show="!courses"><br/><br/><loading size="big" show="true"/></center>
 <div id="main_course_list">
 	</br>
 	<div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
@@ -36,17 +37,15 @@
 	</div>
 
 	<div ng-if="current_user.roles[0].id == 2">
-		<div class="row show-for-medium-down" ng-show="courses && courses.length">
+		<!-- <div class="row show-for-medium-down" ng-show="courses && courses.length">
 			<div class="small-8 large-8 columns">
 				<div class="button-group" step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="{{current}}">
-				    <button type="button" class="button tiny" ng-class="{active: filterChoice == '!!'}" ng-model="filterChoice" btn-radio="'!!'">All</button>
-				    <button type="button" class="button tiny" ng-class="{active: filterChoice == false}" ng-model="filterChoice" btn-radio="false">Current</button>
-				    <button type="button" class="button tiny" ng-class="{active: filterChoice == true}" ng-model="filterChoice" btn-radio="true">Finished</button>
+				    <button type="button" class="button tiny" ng-class="{active: filterChoice == '!!'}" ng-model="filterChoice" btn-radio="'!!'" translate>all</button>
+				    <button type="button" class="button tiny" ng-class="{active: filterChoice == false}" ng-model="filterChoice" btn-radio="false" translate>current</button>
+				    <button type="button" class="button tiny" ng-class="{active: filterChoice == true}" ng-model="filterChoice" btn-radio="true" translate>finished</button>
 				</div>
 			</div>
-		</div>
-
-		<center ng-show="!courses"><br/><br/><loading size="big" show="!courses"/></center>
+		</div> -->
 
 		<div class="row" ng-show="courses && !courses.length">
 			<center style="height:70px">

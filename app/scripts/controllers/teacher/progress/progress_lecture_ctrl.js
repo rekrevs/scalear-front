@@ -438,7 +438,7 @@ angular.module('scalearAngularApp')
           console.log(answer.hide)
           if(answer.hide && !item.data.show){
             item.data.show = true
-            $scope.updateHideSurveyQuestion(survey_id, item.data.id, item.data.show)
+            $scope.updateHideSurveyQuestion(survey_id, item.data.id, item.data.show, item.type)
           }
         }
       )
@@ -459,11 +459,13 @@ angular.module('scalearAngularApp')
       )
     }
 
-    $scope.updateHideSurveyQuestion=function(survey_id,id, value){
+    $scope.updateHideSurveyQuestion=function(survey_id,id, value, type, item){
+      console.log(item)
+      console.log(type)
       if(value)
-        $scope.review_survey_count+= $scope.review_survey_reply_count[survey_id][id] || 0
+        $scope.review_survey_count+= (type == "charts")? 1 : $scope.review_survey_reply_count[survey_id][id]
       else
-        $scope.review_survey_count-= $scope.review_survey_reply_count[survey_id][id] || 0
+        $scope.review_survey_count-= (type == "charts")? 1 : $scope.review_survey_reply_count[survey_id][id]
       Quiz.showInclass(
         {
           course_id:$stateParams.course_id,
@@ -478,10 +480,7 @@ angular.module('scalearAngularApp')
 
     $scope.makeSurveyVisible=function(quiz, val){
       quiz.meta.visible = val
-      Quiz.makeVisible({quiz_id:quiz.meta.id},
-        {visible:val},
-        function(){}
-      )
+      Quiz.makeVisible({quiz_id:quiz.meta.id},{visible:val})
     }
 
   $scope.sendComment=function(discussion){
@@ -493,6 +492,7 @@ angular.module('scalearAngularApp')
           response.comment.hide=false
           discussion.comments.push(response)
           discussion.temp_response = null
+          angular.element('ul.highlight .feedback textarea').blur()
         },function(){}
       )
     }
@@ -515,6 +515,7 @@ angular.module('scalearAngularApp')
       function(){
         question.response = angular.copy(question.temp_response)
         question.temp_response = null
+        angular.element('ul.highlight .feedback textarea').blur()
       },
       function(){}
       )
@@ -870,7 +871,7 @@ angular.module('scalearAngularApp')
           }
           else if($scope.selected_item.data.show != null){
             $scope.selected_item.data.show = !$scope.selected_item.data.show
-            $scope.updateHideSurveyQuestion($scope.selected_item.lec_id,$scope.selected_item.data.id,$scope.selected_item.data.show)
+            $scope.updateHideSurveyQuestion($scope.selected_item.lec_id,$scope.selected_item.data.id,$scope.selected_item.data.show, $scope.selected_item.type)
           }
   			}
         else if($scope.selected_item.type == "free_question"){
@@ -878,7 +879,7 @@ angular.module('scalearAngularApp')
             console.log($scope.inner_highlight_index)
             if($scope.highlight_level == 1){
               $scope.selected_item.data.show = !$scope.selected_item.data.show
-              $scope.updateHideSurveyQuestion($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show)
+              $scope.updateHideSurveyQuestion($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show, $scope.selected_item.type)
             }
             else{
               var q_ind = $scope.inner_highlight_index
@@ -887,7 +888,7 @@ angular.module('scalearAngularApp')
               
             }
           }
-          else if($scope.selected_item.data.quiz_type == 'quiz'){
+          else if($scope.selected_item.data.quiz_type == 'Quiz'){
             if($scope.highlight_level == 1){
               $scope.selected_item.data.show = !$scope.selected_item.data.show
               $scope.updateHideQuiz($scope.selected_item.data.id, !$scope.selected_item.data.show)

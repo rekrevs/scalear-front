@@ -5,10 +5,10 @@ angular.module('scalearAngularApp')
 
     Page.setTitle('navigation.courses')
     Page.startTour();
-    $rootScope.subheader_message = "All Courses"
+    $rootScope.subheader_message = $translate("navigation.courses")
 
 		$scope.column='name'
-
+    $scope.filterChoice = false
     $scope.$on('course_filter_update',function(ev, filter){
       $scope.filterChoice = filter
     })

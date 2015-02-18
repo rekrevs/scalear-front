@@ -353,7 +353,7 @@
       playerVars.origin = playerVars.origin || domain;
 
       // Show/hide controls. Sync with impl.controls and prefer URL value.
-      playerVars.controls = playerVars.controls || impl.controls ? 2 : 0;
+      playerVars.controls = playerVars.controls=="1" || impl.controls ? 2 : 0;
       impl.controls = playerVars.controls;
 
       // Set wmode to transparent to show video overlays

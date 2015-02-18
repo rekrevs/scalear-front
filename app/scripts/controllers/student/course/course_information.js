@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page', '$filter', '$state', '$timeout','$rootScope',function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout,$rootScope) {
+    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page', '$filter', '$state', '$timeout','$rootScope','ContentNavigator', function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout,$rootScope,ContentNavigator) {
 
     Page.setTitle('head.information');
     Page.startTour();
-
+    ContentNavigator.open()
     $scope.init = function(){
         Course.show({course_id: $stateParams.course_id},
             function(data) {

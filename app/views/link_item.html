@@ -27,8 +27,8 @@
 		<div class="small-12 columns">
 			<span translate>name</span>:<details-text class="with-small-margin-left" value="link.name" save="update(link)" validation="validate" elem="link"></details-text>
 		</div>
-		<div class="small-12 columns truncate"  style="white-space: inherit;">
-			<span>URL</span>:<details-link class="with-small-margin-left" value="link.url" save="update(link)" validation="validate" elem="link" dontshorten="true"></details-link>
+		<div class="small-12 columns break-word">
+			<span>URL</span>:<details-link class="with-small-margin-left" value="link.url" save="update(link)" validation="validate" elem="link" shorten="60"></details-link>
 		</div>
 	</div>
 	<div class="small-1 columns" style="padding:0" ng-if="'**.course_editor.**' | includedByState">
@@ -44,7 +44,7 @@
 		<div class="small-12 columns">
 			<div>Name: <span bo-text="link.name"></span></div>
 		</div>
-		<div class="small-12 columns truncate" >
+		<div class="small-12 columns truncate-90 left" >
 			<div>URL: <span bo-text="link.url"></span></div>
 		</div>
 	</div>

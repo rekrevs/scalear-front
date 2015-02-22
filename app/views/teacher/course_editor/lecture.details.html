@@ -14,17 +14,17 @@
       </tr>
       <tr>
         <td ng-class='{"color-red": lecture.url == "none"}' class="right-border">
-          <span translate>lectures.url</span>:
+          <span translate>lectures.video</span>:
           <i class='fi-info' tooltip='{{"youtube.info"|translate}}'></i>
         </td>
         <td class="break-text">
-            <details-text id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"></details-text> 
+            <details-url id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture"></details-text> 
         </td>
       </tr>
       <tr>
         <td class="right-border"><span translate>lectures.description</span>:</td>
         <td>
-          <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
+          <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description" empty_message="({{ 'lectures.add_description' | translate}}...)"></details-area>
         </td>
       </tr>
       <tr>

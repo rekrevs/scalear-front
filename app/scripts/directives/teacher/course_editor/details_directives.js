@@ -4,14 +4,15 @@ angular.module('scalearAngularApp')
     .directive('detailsText', ['$timeout',
         function($timeout) {
             return {
-                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message ||("empty"|translate) }} <i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     value: "=",
                     save: "&",
                     validate: "&",
                     column: "@",
-                    open:"="
+                    open:"=",
+                    empty_message:"@"
                 },
                 link: function(scope, element, attr) {
                     scope.selectField = function() {
@@ -40,12 +41,52 @@ angular.module('scalearAngularApp')
                             }
                         })
                     }
-                    
-                    // console.log(attr.open, scope.value)
-                    // if(attr.open && attr.open === true ){
-                    //     console.log(attr.open)
-                    //     scope.show()
-                    // }
+                }
+            };
+        }
+    ])
+    .directive('detailsUrl', ['$timeout','$translate',
+        function($timeout,$translate) {
+            return {
+                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                restrict: 'E',
+                scope: {
+                    value: "=",
+                    save: "&",
+                    validate: "&",
+                    open:"="
+                },
+                link: function(scope, element, attr) {
+                    scope.$watch('value',function(){
+                        scope.text = scope.value == "none"? "("+$translate("lectures.add_video")+"...)" : scope.value
+                    })
+                    scope.selectField = function() {
+                        $timeout(function() {
+                            element.find('.editable-input').select();
+                            if(scope.value == "none")
+                                element.find('.editable-input').val("")
+                        });
+                    };
+
+                    scope.saveData = function() {
+                        $timeout(function() {
+                            scope.text = scope.value
+                            scope.save()
+                        })
+                    }
+
+                    scope.show=function(){
+                      scope.textBtnForm.$show()
+                     
+                    }
+                    if(attr.open){
+                        var unwatch = scope.$watch('open', function(val){
+                            if(val === true){
+                                scope.show()
+                                unwatch()
+                            }
+                        })
+                    }
                 }
             };
         }
@@ -53,14 +94,14 @@ angular.module('scalearAngularApp')
     .directive('detailsLink', ['$timeout',
         function($timeout) {
             return {
-                template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ short_url || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ short_url || "http://" }} <i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     value: "=",
                     save: "&",
                     validate: "&",
                     column: "@",
-                    dontshorten: "="
+                    shorten: "="
                 },
                 link: function(scope, element) {
                     scope.selectField = function() {
@@ -72,22 +113,13 @@ angular.module('scalearAngularApp')
                     };
                     scope.$watch('value', function(){
                         if(scope.value){
-                            if(scope.dontshorten){
-                                scope.short_url = scope.value
-                            }
-                            else{
-                                scope.short_url = shorten(scope.value, 20)
-                            }
-                            
-                        }
-                        else{
-                            scope.short_url = null;
+                            scope.short_url = scope.shorten? shrort_url(scope.value, scope.shorten) : scope.value
                         }
                     })
-                    var shorten = function(url, l){
+                    var shrort_url = function(url, l){
                         var l = typeof(l) != "undefined" ? l : 50;
                         var chunk_l = (l/2);
-                        var url = url.replace("http://","").replace("https://","");
+                        // var url = url.replace("http://","").replace("https://","");
 
                         if(url.length <= l){ return url; }
 
@@ -181,20 +213,21 @@ angular.module('scalearAngularApp')
     .directive('detailsArea', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate)  }}<i ng-class="overclass"></i></a> ',
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
                     save: "&",
                     validate: "&",
-                    column: "@"
+                    column: "@",
+                    empty_message:"@emptyMessage"
                 },
                 link: function(scope, element) {
             // scope.selectField = function() {
             //     $timeout(function() {
             //         element.find('.editable-input').select();
             //     });
-            // },
+            // },   
                     scope.saveData = function() {
                         $timeout(function() {
                             scope.save()

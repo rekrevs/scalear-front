@@ -41,9 +41,9 @@ width: 78%;
 .containeropen.small-12{
   max-width: none !important;
 }
-/*.content-navigator-container{
+.content-navigator-container{
   width: 300px;
-}*/
+}
 
 .details-navigator-container{
   /*top:-15px;*/
@@ -115,9 +115,7 @@ width: 78%;
     font-style: italic;
     cursor: pointer;
 }
-.editable-click{
-  color: #428bca !important;
-}
+
 
 /******Content Navigator*******/
 li{
@@ -756,6 +754,9 @@ font-weight: 300 !important
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; 
+}
+.break-word{
+  overflow-wrap: break-word;
 }
 
 /*LAYERING*/
@@ -1494,6 +1495,10 @@ label{
 .reveal-modal-bg.in {
   filter: alpha(opacity=50);
   opacity: .5;
+}
+
+.editable-click{
+  color: #008cba !important;
 }
 
 h2 .editable-click{

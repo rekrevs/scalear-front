@@ -202,6 +202,8 @@ angular.module('scalearAngularApp')
                         if(video_id)
                             getYoutubeDetails(video_id[1]);
                     }
+                    // else
+                        // $scope.lecture.url = $translate("lectures.add_video")
                     if($scope.lecture.due_date) 
                         $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date) 
                     

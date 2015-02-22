@@ -4,56 +4,55 @@
 <center ng-show="!courses"><br/><br/><loading size="big" show="true"/></center>
 <div id="main_course_list">
 	</br>
-	<div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
-		<div class="row" >
-			<div class="small-8 large-8 columns">
-				<a ng-show="courses.length" class="button tiny dropdown" dropdown-toggle="#sort_list"><span translate>courses.sort_by</span></a>
-			  	<ul id="sort_list" class="f-dropdown">
-			    	<li><a href="" ng-click="order('short_name')" translate>courses.course_code</a></li>
-					<li><a href="" ng-click="order('name')" translate>courses.course_name</a></li>
-					<li><a href="" ng-click="order('enrollments')" >#<span translate>courses.students</span></a></li>
-					<li><a href="" ng-click="order('lectures')" >#<span translate>groups.lectures</span></a></li>
-					<li><a href="" ng-click="order('quiz')" >#<span translate>groups.quizzes</span></a></li>
-					<li><a href="" ng-click="order('survey')" >#<span translate>courses.surveys</span></a></li>
-			  	</ul>
-				<a class="button tiny" ng-hide="!courses" ui-sref="new_course" translate>courses.new_course</a><br />
-			</div>
-			<div class="small-4 large-4 columns right" ng-show="courses.length">
-				<input class="tiny" type="search" ng-model="searchText" placeholder="{{'courses.search' | translate}}" />
-				<span ng-show="filtered_teacher">
-					<br />
-					<a ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
-				</span>
+	<div class="row" ng-show="courses && courses.length">
+		<div class="small-12 columns">
+			<span ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
+				<div class="small-4 columns">
+					<a ng-show="courses.length" class="button tiny dropdown" dropdown-toggle="#sort_list"><span translate>courses.sort_by</span></a>
+				  	<ul id="sort_list" class="f-dropdown">
+				  		<li><a href="" ng-click="order('start_date')" translate>courses.start_date</a></li>
+				    	<li><a href="" ng-click="order('short_name')" translate>courses.course_code</a></li>
+						<li><a href="" ng-click="order('name')" translate>courses.course_name</a></li>
+						<li><a href="" ng-click="order('enrollments')" >#<span translate>courses.students</span></a></li>
+						<li><a href="" ng-click="order('lectures')" >#<span translate>groups.lectures</span></a></li>
+						<li><a href="" ng-click="order('quiz')" >#<span translate>groups.quizzes</span></a></li>
+						<li><a href="" ng-click="order('survey')" >#<span translate>courses.surveys</span></a></li>
+				  	</ul>
+					<a class="button tiny" ng-hide="!courses" ui-sref="new_course" translate>courses.new_course</a><br />
+				</div>
+				<div class="small-4 left columns" ng-show="courses.length">
+					<input type="search" ng-model="searchText" placeholder="{{'courses.search' | translate}}" />
+					<span ng-show="filtered_teacher">
+						<br />
+						<a ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
+					</span>
+				</div>
+			</span>				
+			<div class="small-4 right columns button-group" step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="{{current}}">
+			    <button type="button" class="right button tiny" ng-class="{active: course_filter == true}" ng-click="filterCourse(true)" translate>finished</button>
+			    <button type="button" class="right button tiny" ng-class="{active: course_filter == false}" ng-click="filterCourse(false)" translate>current</button>
+			    <button type="button" class="right button tiny" ng-class="{active: course_filter == '!!'}" ng-click="filterCourse('!!')" translate>all</button>
 			</div>
 		</div>
-
+	</div>
+	<div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
 		<div class="row" ng-show="courses && !courses.length">
 			<center  style="height:70px">
 				<h5 class="muted" translate>courses.no_courses</h5>
 			</center>
 		</div>
 		<br />
-		<teacher-course-item ng-repeat="course in courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher" />
+		<teacher-course-item ng-repeat="course in courses|filter:filtered_teacher|orderBy:column:is_reverse |filter:searchText|filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' deletecourse="deleteCourse" filterteacher="filterTeacher" />
 	</div>
 
 	<div ng-if="current_user.roles[0].id == 2">
-		<!-- <div class="row show-for-medium-down" ng-show="courses && courses.length">
-			<div class="small-8 large-8 columns">
-				<div class="button-group" step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="{{current}}">
-				    <button type="button" class="button tiny" ng-class="{active: filterChoice == '!!'}" ng-model="filterChoice" btn-radio="'!!'" translate>all</button>
-				    <button type="button" class="button tiny" ng-class="{active: filterChoice == false}" ng-model="filterChoice" btn-radio="false" translate>current</button>
-				    <button type="button" class="button tiny" ng-class="{active: filterChoice == true}" ng-model="filterChoice" btn-radio="true" translate>finished</button>
-				</div>
-			</div>
-		</div> -->
-
 		<div class="row" ng-show="courses && !courses.length">
 			<center style="height:70px">
 				<h5 class="dark-text" translate>courses.enroll_instruction</h5>
 			</center>
 		</div>
 		<div class="row" ng-if="courses.length > 0" step-text="These are the courses you're enrolled in. Click the name of a course for access." step-index="2" step-placement="top" step-append-to-body="false" page-name="{{current}}">
-			<course-item ng-repeat="course in courses | filter:{ended:filterChoice}" course='course' teachers='course.teacher_enrollments' unenroll="unenrollCourse"></course-item>
+			<course-item ng-repeat="course in courses | filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' unenroll="unenrollCourse"></course-item>
 		</div>
 	</div>
 </div>

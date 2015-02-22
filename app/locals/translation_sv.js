@@ -1091,8 +1091,14 @@ var translation_sv=function(){
         types:{
           ocq: "Ett svar",
           mcq: "Flera svar",
-          drag: "Dra och släpp",
-          text: "Fritext-svar"
+          drag: "Dra-och-släpp",
+          text: "Fritext svar"
+        },
+        quiz_types:{
+          ocq: "Flervals (flera korrekta svar)",
+          mcq: "Flervals (ett korrekta svar)",
+          drag: "Dra-och-släpp (ordering)",
+          text: "Fritext svar (text svar)"
         }
       }
     },

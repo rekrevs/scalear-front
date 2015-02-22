@@ -177,26 +177,6 @@ angular.module('scalearAngularApp')
 					scope.preview_as_student = $rootScope.preview_as_student
 				})
 
-				// $rootScope.$on('open_navigator', function(){
-				// 	setNavigator(true)
-				// })
-
-				// $rootScope.$on('close_navigator', function(){
-				// 	setNavigator(false)
-				// })
-
-				// $rootScope.$on('open_timeline', function(){
-				// 	setNavigator(true)
-				// })
-
-				// $rootScope.$on('close_timeline', function(){
-				// 	setTimeline(false)
-				// })
-
-				scope.initFilters=function(){
-					scope.course_filter = false
-				}
-
 				scope.toggleNavigator=function(){
 					ContentNavigator.setStatus(!ContentNavigator.getStatus())
 				}
@@ -207,14 +187,10 @@ angular.module('scalearAngularApp')
 
 				scope.toggleTimeline=function(){
 					TimelineNavigator.setStatus(!TimelineNavigator.getStatus())
-					// scope.open_timeline = !scope.open_timeline
-					// $rootScope.$broadcast('timeline_change', scope.open_timeline)
 				}
 
 				var setTimeline=function(val){
 					TimelineNavigator.setStatus(val)
-					// scope.open_timeline = val
-					// $rootScope.$broadcast('timeline_change', scope.open_timeline)
 				}
 
 				scope.disablePreview=function(){
@@ -226,11 +202,7 @@ angular.module('scalearAngularApp')
 	                        old_user_id:$cookieStore.get('old_user_id'),
 	                        new_user_id:$cookieStore.get('new_user_id')
 	                    },
-	                    function(d){
-	                      console.log(d)
-	                      console.log("good")
-	                      // var course_id = $cookieStore.get('course_id')
-	                      // var module_id = $cookieStore.get('module_id')
+	                    function(){
 	                      var params = $cookieStore.get('params')
 	                      var state = $cookieStore.get('state')
 	                      $rootScope.preview_as_student = false
@@ -244,7 +216,7 @@ angular.module('scalearAngularApp')
 			              $rootScope.$broadcast('get_current_courses')
 	                    },
 	                    function(){
-	                      console.log("bad")
+	                      console.log("Failed Closing Preview")
 	                      $rootScope.preview_as_student = false
 	                      $cookieStore.remove('preview_as_student')
 	                      $cookieStore.remove('old_user_id')
@@ -254,12 +226,7 @@ angular.module('scalearAngularApp')
 	                    }
 	                  )
 	                }
-	            }	            
-
-				scope.updateCourseFilter=function(value){
-					scope.course_filter= value
-					$rootScope.$broadcast('course_filter_update', scope.course_filter)
-				}	
+	            }
 				// setNavigator(true)
 			}
 		};

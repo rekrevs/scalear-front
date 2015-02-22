@@ -305,30 +305,11 @@ angular.module('scalearAngularApp')
 
     link: function(scope, element, attrs, controller) {
       $log.debug("student answer link")
-      // element.css('z-index', 5)
-      //==FUNCTIONS==//
       var setup=function(){
         scope.explanation_pop ={}
         var type= scope.quiz.question_type =="MCQ"? "checkbox" :"radio"
         element.attr('type',type)
       }
-
-      // var setAnswerLocation=function(){
-      //   $log.debug("setting answer location")
-      //   var ontop=angular.element('.ontop');    
-      //   var w = scope.data.width * ontop.width();
-      //   var h = scope.data.height* (ontop.height());
-      //   var add_left= (w-13)/4.0
-      //   var add_top = (h-13)/4.0
-      //   // scope.xcoor = parseFloat(scope.data.xcoor * ontop.width())// - add_left;       
-      //   // scope.ycoor = parseFloat(scope.data.ycoor * (ontop.height())) //- add_top;
-      //   scope.xcoor = scope.data.xcoor * 100)// - add_left;       
-      //   scope.ycoor = scope.data.ycoor * 100) //- add_top;
-      //   scope.explanation_pop.rightcut =  (ontop.css('position') == 'fixed')
-      //   $log.debug(scope.xcoor)
-      //   $log.debug(scope.ycoor)
-      // } 
-
       scope.radioChange=function(corr_ans){
         if(scope.quiz.question_type == "OCQ"){
           $log.debug("radioChange")
@@ -337,12 +318,7 @@ angular.module('scalearAngularApp')
           })
           corr_ans.selected=true
         }
-      }
-
-      // $rootScope.$on("updatePosition",function(){
-      //   $log.debug("event emiited updated position")
-      //   setAnswerLocation()
-      // })         
+      }         
      
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id]){
@@ -363,13 +339,15 @@ angular.module('scalearAngularApp')
             content:"<div>{{explanation[data.id][1]}}</div>",
             html:true,
             trigger:'hover',
-            rightcut: (ontop.css('position') == 'fixed')
+            placement:(scope.data.xcoor > 0.5)? "left":"right"
           }
+          // if(ontop.css('position') != 'fixed'){
+          //    scope.explanation_pop["container"] = 'body'
+          // }
+
         } 
       })
-
       setup()
-      // setAnswerLocation()
       
     }
   };

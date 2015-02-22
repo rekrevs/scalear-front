@@ -1082,7 +1082,7 @@ var translation_en=function(){
             desc: "Text quiz on a white background",
           },
           on_video_survey:{
-            title: "On-video Survey",
+            title: "In-video Survey",
             desc: "Place survey choices on top of the video"
           }
         },
@@ -1091,6 +1091,12 @@ var translation_en=function(){
           mcq: "Multiple answers",
           drag: "Drag and drop",
           text: "Free text answer"
+        },
+        quiz_types:{
+          ocq: "Multiple Choice (multiple correct answers)",
+          mcq: "Multiple Choice (one correct answer)",
+          drag: "Drag-and-Drop (ordering)",
+          text: "Free Answer (text answer)"
         }
       }
     },

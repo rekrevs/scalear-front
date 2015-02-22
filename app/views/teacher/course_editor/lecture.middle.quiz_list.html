@@ -17,7 +17,7 @@
 						<span ng-show="quiz.quiz_type!='survey'">Quiz</span>
 					</div>
 					<div class="small-4 columns" ng-init="quiz.formatedTime = (quiz.time|format)">
-						<span class="color-blue looks-like-a-link" ng-click="showQuiz(quiz)">{{quiz.formatedTime}}</span>
+						<span class="looks-like-a-link" ng-click="showQuiz(quiz)">{{quiz.formatedTime}}</span>
 						<!-- <editable_text name="quiz_time" value="quiz.formatedTime" validation="validateTime" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz"> -->
 					</div>
 					<div class="text-center no-padding small-4 right columns">
@@ -25,7 +25,7 @@
 					</div>
 				</span>
 				<div class="small-12 columns">
-					<span class="quiz_title color-blue looks-like-a-link" ng-click="showQuiz(quiz)">{{quiz.question}}</span>
+					<span class="quiz_title looks-like-a-link" ng-click="showQuiz(quiz)">{{quiz.question}}</span>
 					<!-- <editable_text open="{{quiz.new_quiz}}" name="quiz_name" value="quiz.question" validation="validateName" save="saveEdit(quiz)" action="showOnlineQuiz(quiz);" elem="quiz"> -->
 				</div>	
 			</td>

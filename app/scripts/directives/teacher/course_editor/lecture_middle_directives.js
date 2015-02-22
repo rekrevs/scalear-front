@@ -422,7 +422,7 @@ angular.module('scalearAngularApp')
         	// setAnswerLocation()
 		}
 	};
-}]).directive('answerform',['$log',function($log){
+}]).directive('answerform',['$log','$translate',function($log, $translate){
 	return {
 		scope: {
 			quiz:"=",
@@ -457,9 +457,9 @@ angular.module('scalearAngularApp')
 				return "content" in scope.quiz
 			}
 			scope.quiz_types=[
-				{value:"MCQ", text:"Multiple Choice (multiple correct answers)"},
-				{value:"OCQ", text:"Multiple Choice (one correct answer)"},
-				{value:"Free Text Question", text:"Free Answer (text answer)"}
+				{value:"MCQ", text:$translate('content.questions.quiz_types.mcq')},
+				{value:"OCQ", text:$translate('content.questions.quiz_types.ocq')},
+				{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')}
 			]
 			// scope.quiz_types =['MCQ', 'OCQ','Free Text Question']
 			scope.match_types =['Free Text', 'Match Text']
@@ -470,7 +470,7 @@ angular.module('scalearAngularApp')
 		 	// }
 
 			if(!scope.isSurvey())
-				scope.quiz_types.push({value:"drag", text:"Drag-and-Drop (ordering)"})
+				scope.quiz_types.push({value:"drag", text:$translate('content.questions.quiz_types.drag')})
 			// else
 			// 	scope.quiz_types.push('Free Text Question')
 			$log.debug("QUIZZ is ");

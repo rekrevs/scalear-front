@@ -109,6 +109,16 @@ width: 78%;
   /*width: 300px !important;*/
 }
 
+.ngTruncateToggleText {
+    color: rgb(0, 140, 186);
+    font-size: 90%;
+    font-style: italic;
+    cursor: pointer;
+}
+.editable-click{
+  color: #428bca !important;
+}
+
 /******Content Navigator*******/
 li{
   list-style:none;
@@ -198,6 +208,14 @@ li{
 /*.accordion-group .content > ul:hover, .currentitem, .selectedmodule{
   background-color: rgba(0,0,0,0.2) !important;
 }*/
+
+.handle{
+  vertical-align: top;
+}
+.handle:hover{
+  cursor: move;
+  vertical-align: top;
+}
 
 .currentitem, .selectedmodule{
   background-color: rgba(0,0,0,0.2) !important;

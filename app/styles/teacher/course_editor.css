@@ -2,14 +2,6 @@
 	z-index: 0;
 }
 
-.handle{
-	vertical-align: top;
-}
-.handle:hover{
-	cursor: move;
-	vertical-align: top;
-}
-
 .overlay {
   width: 95%;
   height: 100%;

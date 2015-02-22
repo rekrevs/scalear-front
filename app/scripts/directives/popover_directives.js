@@ -43,8 +43,8 @@ angular.module('scalearAngularApp')
 				            if(options.displayontop){
 				            	angular.element('.popover').css('z-index', '999999');
 				            }
-				            if(options.rightcut)
-				            	adjustLeft(pop)
+				            // if(options.rightcut)
+				            // 	adjustLeft(pop)
 				            if(options.topcut)
 				            	adjustTop(pop)
 			

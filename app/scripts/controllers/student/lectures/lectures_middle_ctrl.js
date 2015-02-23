@@ -31,10 +31,6 @@ angular.module('scalearAngularApp')
         $scope.exportNotes()
     })
 
-    $scope.$on('post_question', function(){
-        $scope.addQuestionBlock();
-    })
-
     $scope.$on('take_note', function(){
         console.log('taking note')
         $scope.addNote();
@@ -116,7 +112,7 @@ angular.module('scalearAngularApp')
         })
 
 
-        $scope.$on('update_timeline', function(ev, item){ // used for deleting items from directives like confused and discussions
+        $scope.$on('remove_from_timeline', function(ev, item){ // used for deleting items from directives like confused and discussions
             if($scope.timeline){
                 var lec_id = item.data? item.data.lecture_id : $state.params.lecture_id
                 var index=$scope.timeline['lecture'][lec_id].items.indexOf(item)
@@ -536,13 +532,19 @@ angular.module('scalearAngularApp')
 
     $scope.addQuestionBlock= function(){
         var time=$scope.lecture_player.controls.getTime()
-        $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion",  null);
+        if($scope.last_discussion){
+            var discussion = $scope.timeline['lecture'][$state.params.lecture_id].items[$scope.last_discussion]
+            $scope.last_discussion = null
+            $scope.$broadcast("post_question", discussion)
+        }
+        $scope.last_discussion = $scope.timeline['lecture'][$state.params.lecture_id].add(time, "discussion",  null);
         $scope.last_fullscreen_state = $scope.fullscreen;
         $scope.last_play_state = $scope.play_pause_class;
         $scope.last_timeline_state = $scope.TimelineNavigator.getStatus()
         goSmallScreen()
         openTimeline()
         $scope.checkModel.discussion = true
+        
     };
 
     $scope.addNote=function(){
@@ -814,7 +816,7 @@ angular.module('scalearAngularApp')
         returnToState()
     })
 
-    $scope.$on('question_updated',function(){
+    $scope.$on('discussion_updated',function(ev, canceled){
         returnToState()
     })
 

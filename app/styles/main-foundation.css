@@ -374,8 +374,7 @@ span.error, small.error{
 
 /*MODAL*/
 .reveal-modal{
-	/*position: absolute !important;*/
-	height: 70%;
+	height: 80%;
 	/*top: 4.25rem;*/
 	overflow-y: auto; 
 
@@ -498,7 +497,7 @@ span.error, small.error{
 	color: #2ba6cb !important;
 }
 
-.color-editable-blue{
+.color-editable-blue, .editable-click, .editable{
   color:#428bca !important;
 }
 
@@ -1497,9 +1496,6 @@ label{
   opacity: .5;
 }
 
-.editable-click{
-  color: #008cba !important;
-}
 
 h2 .editable-click{
 	color: #5da423 !important;

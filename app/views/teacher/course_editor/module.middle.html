@@ -29,14 +29,14 @@
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 columns">
 		<label class="size-1">
-			<b><span translate>groups.description</span>:</b><big-area class="with-small-margin-left" value="module.description" save="updateModule()" validate="validateModule" column="description"></big-area>
+			<b><span translate>groups.description</span>:</b><big-area class="with-small-margin-left" value="module.description" save="updateModule()" validate="validateModule" column="description" empty_message="({{ 'lectures.add_description' | translate}}...)"></big-area>
 		</label>
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
 	<div class="small-10 columns">
 		<label class="size-1">
-			<b><span translate>groups.student_link_module</span>:</b><span class="color-editable-blue with-small-margin-left">{{link_url}}</span>
+			<b><span translate>groups.student_link_module</span>:</b><span class="with-small-margin-left">{{link_url}}</span>
 		</label>
 	</div>
 </div>

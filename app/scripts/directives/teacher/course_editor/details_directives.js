@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
                     validate: "&",
                     column: "@",
                     open:"=",
-                    empty_message:"@"
+                    empty_message:"@emptyMessage"
                 },
                 link: function(scope, element, attr) {
                     scope.selectField = function() {
@@ -240,13 +240,14 @@ angular.module('scalearAngularApp')
     .directive('bigArea', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="100" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || ("empty"|translate)  }}<i ng-class="overclass"></i></a> ',
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="100" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message ||("empty"|translate)  }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
                     save: "&",
                     validate: "&",
-                    column: "@"
+                    column: "@",
+                    empty_message:"@emptyMessage"
                 },
                 link: function(scope, element) {
             // scope.selectField = function() {

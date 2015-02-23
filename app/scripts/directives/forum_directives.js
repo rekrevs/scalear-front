@@ -21,7 +21,6 @@ angular.module('scalearAngularApp')
                 //     scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
 
                 scope.postQuestion=function(item){
-                    scope.$emit("question_updated")
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
                         if($rootScope.current_user.discussion_pref != scope.privacy.value){
                             $rootScope.current_user.discussion_pref = scope.privacy.value;                                
@@ -42,6 +41,7 @@ angular.module('scalearAngularApp')
                                 item.data= response.post
                                 scope.error_message=null
                                 scope.current_question = ''
+                                scope.$emit("discussion_updated")
                             }, 
                             function(){
                                 console.log("failure")
@@ -49,7 +49,8 @@ angular.module('scalearAngularApp')
                         )
                     }
                     else
-                        scope.error_message = $translate("discussion.cannot_be_empty")
+                        scope.$emit('remove_from_timeline', item)
+                        // scope.error_message = $translate("discussion.cannot_be_empty")
                 }
 
                 scope.updateQuestion= function(question){
@@ -67,13 +68,21 @@ angular.module('scalearAngularApp')
                         )
                     }
                     else
-                        scope.error_message = $translate("discussion.cannot_be_empty")
+                        question.isEdit = false
+                        // scope.error_message = $translate("discussion.cannot_be_empty")
                 }
 
                 scope.cancelQuestion=function(question){
-                    scope.$emit("question_updated")
-                    scope.$emit('update_timeline', question)
+                    scope.$emit("discussion_updated")
+                    scope.$emit('remove_from_timeline', question)
                 }
+
+                scope.$on('post_question', function(ev, item) {
+                   if(!item.data || !item.data.isEdit)
+                        scope.postQuestion(item)
+                    else
+                        scope.updateQuestion(item.data)
+                });
 
                 shortcut.add("enter", function(){
                     if(!scope.item.data || !scope.item.data.isEdit)
@@ -108,7 +117,7 @@ angular.module('scalearAngularApp')
                     {post_id: discussion.data.id}, 
                     function(response){
                         scope.error_message = null
-                        scope.$emit('update_timeline', discussion)
+                        scope.$emit('remove_from_timeline', discussion)
                     }, 
                     function(){}
                 )

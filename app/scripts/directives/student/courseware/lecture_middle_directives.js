@@ -640,7 +640,7 @@ angular.module('scalearAngularApp')
           // console.log("deleted");
           // unwatch()
           // delete scope.item
-          scope.$emit('update_timeline', confused)
+          scope.$emit('remove_from_timeline', confused)
           // now want to remove from list (both l.confuseds and $scope.timeline..)
           // var index=scope.timeline['lecture'][lecture_id].items.indexOf(confused);
           // scope.timeline['lecture'][lecture_id].items.splice(index, 1)
@@ -712,13 +712,13 @@ angular.module('scalearAngularApp')
               lecture_id: scope.item.data.lecture_id || $state.params.lecture_id,
               note_id: scope.item.data.id
             },function(){
-                scope.$emit('update_timeline', scope.item)
+                scope.$emit('remove_from_timeline', scope.item)
                 // scope.$emit("note_updated")
             }
           )
         }
         else{
-          scope.$emit('update_timeline', scope.item)
+          scope.$emit('remove_from_timeline', scope.item)
           scope.$emit("note_updated")
         }
       }

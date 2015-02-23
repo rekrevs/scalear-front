@@ -1,12 +1,17 @@
-<div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns">
+<div class="row">
+	<div class="small-12 columns">
+		<h3 >{{module.name}}</h3>
+	</div>
+</div>
+<!-- <div class="row" style="margin-bottom:10px">
+	<div class="small-12 columns">
 		<label class="size-1">
 			<b><span translate>groups.module_name</span>:</b><details-text class="size-18 with-small-margin-left" value="module.name" save="updateModule()" validate="validateModule" column="name" open="module.new"></details-text>
 		</label>
     </div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns">
+	<div class="small-12 columns">
 		<label class="size-1">
 			<b><span translate>groups.appearance_date</span>:</b><details-date class="with-small-margin-left" date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date> <span translate>at</span> <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
 			<span ng-hide="module.appearance_time | visible" style="margin-left:5px">
@@ -16,7 +21,7 @@
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns">
+	<div class="small-12 columns">
 		<input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin" />
 		<label class="size-1">
 			<b><span class="with-small-margin-left" translate>groups.has_due_date</span></b>
@@ -27,35 +32,39 @@
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns">
+	<div class="small-12 columns">
 		<label class="size-1">
 			<b><span translate>groups.description</span>:</b><big-area class="with-small-margin-left" value="module.description" save="updateModule()" validate="validateModule" column="description"></big-area>
 		</label>
 	</div>
 </div>
 <div class="row" style="margin-bottom:10px">
-	<div class="small-10 columns">
+	<div class="small-12 columns">
 		<label class="size-1">
 			<b><span translate>groups.student_link_module</span>:</b><span class="color-editable-blue with-small-margin-left">{{link_url}}</span>
 		</label>
 	</div>
-</div>
+</div> -->
 <br />
 <div class="row">
-	<div class="small-10 columns">
-		<table class="small-8 columns">
+	<div class="small-12 columns">
+		<table class="small-12 columns">
 			<tbody>
 				<tr>
-					<td class="right-border"translate>groups.total_time</td>
-					<td ><b>{{module.total_time | formattime: 'hh:mm:ss'}}</b></td>
+					<td class="right-border"translate>lectures.videos</td>
+					<td ><b>{{module.total_lectures}} ({{module.total_time | formattime: 'hh:mm:ss'}} total)</b></td>
 				</tr>
 				<tr>
-					<td class="right-border"translate>groups.total_number_lec_qustions</td>
+					<td class="right-border"translate>groups.video_quizzes</td>
 					<td ><b>{{module.total_questions}}</b></td>
 				</tr>
 				<tr>
-					<td class="right-border"translate>groups.total_number_quiz_questions</td>
-					<td ><b>{{module.total_quiz_questions}}</b></td>
+					<td class="right-border"translate>groups.quizzes</td>
+					<td ><b>{{module.total_quizzes}} ({{module.total_quiz_questions}} <span translate>courses.questions</span>)</b></td>
+				</tr>
+				<tr>
+					<td class="right-border"translate>groups.surveys</td>
+					<td ><b>{{module.total_surveys}} ({{module.total_survey_questions}} <span translate>courses.questions</span>)</b></td>
 				</tr>
 			</tbody>
 		</table>
@@ -70,9 +79,9 @@
 </div>
 <br />
 <div class="row">
-	<div class="small-10 columns"><b translate>groups.external_module_link</b></div>
+	<div class="small-12 columns"><b translate>groups.external_module_link</b></div>
 </div>
-<div class="small-8 columns left">
+<div class="small-12 columns no-padding left">
 	<br/>
 	<i ng-show="!module.custom_links.length" class="color-grey size-12" translate>empty</i>
 	<ul ui-sortable="listSortableOptions" ng-model='module.custom_links'>

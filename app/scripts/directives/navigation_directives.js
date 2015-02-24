@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout', function($state, $tour, scalear_api, $timeout){
+	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout','$cookieStore', '$rootScope', 'Impersonate', 'ContentNavigator', function($state, $tour, scalear_api, $timeout, $cookieStore, $rootScope, Impersonate, ContentNavigator){
 		return {
 			replace: true,
 			restrict: "E",
@@ -15,6 +15,10 @@ angular.module('scalearAngularApp')
 			templateUrl: "/views/main_navigation.html",
 			link: function (scope, element) {
 				scope.scalear_api = scalear_api
+
+				$rootScope.$watch('preview_as_student', function(){
+					scope.preview_as_student = $rootScope.preview_as_student
+				})
 				
 				scope.areShared = function(){
 					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared
@@ -39,6 +43,41 @@ angular.module('scalearAngularApp')
 							angular.element('.toggle-topbar').click();
 						})							
 				}
+
+				scope.disablePreview=function(){
+	                if($cookieStore.get('preview_as_student')){
+	                  ContentNavigator.close()
+	                  $rootScope.$broadcast("exit_preview")
+	                  Impersonate.destroy(
+	                    {
+	                        old_user_id:$cookieStore.get('old_user_id'),
+	                        new_user_id:$cookieStore.get('new_user_id')
+	                    },
+	                    function(){
+	                      var params = $cookieStore.get('params')
+	                      var state = $cookieStore.get('state')
+	                      $rootScope.preview_as_student = false
+	                      $cookieStore.remove('preview_as_student')
+	                      $cookieStore.remove('old_user_id')
+	                      $cookieStore.remove('new_user_id')
+	                      $cookieStore.remove('params')
+	                      $cookieStore.remove('state')
+	                      $rootScope.current_user= null
+	                      $state.go(state, params,{reload:true})
+			              $rootScope.$broadcast('get_current_courses')
+	                    },
+	                    function(){
+	                      console.log("Failed Closing Preview")
+	                      $rootScope.preview_as_student = false
+	                      $cookieStore.remove('preview_as_student')
+	                      $cookieStore.remove('old_user_id')
+	                      $cookieStore.remove('new_user_id')
+	                      $cookieStore.remove('params')
+	                      $cookieStore.remove('state')
+	                    }
+	                  )
+	                }
+	            }
 			}
 		};
 	 }])
@@ -173,9 +212,7 @@ angular.module('scalearAngularApp')
 				// scope.open_navigator = $rootScope.open_navigator
 				scope.ContentNavigator = ContentNavigator
 				scope.TimelineNavigator = TimelineNavigator
-				$rootScope.$watch('preview_as_student', function(){
-					scope.preview_as_student = $rootScope.preview_as_student
-				})
+				
 
 				scope.toggleNavigator=function(){
 					ContentNavigator.setStatus(!ContentNavigator.getStatus())
@@ -193,40 +230,7 @@ angular.module('scalearAngularApp')
 					TimelineNavigator.setStatus(val)
 				}
 
-				scope.disablePreview=function(){
-	                if($cookieStore.get('preview_as_student')){
-	                  setNavigator(false)
-	                  $rootScope.$broadcast("exit_preview")
-	                  Impersonate.destroy(
-	                    {
-	                        old_user_id:$cookieStore.get('old_user_id'),
-	                        new_user_id:$cookieStore.get('new_user_id')
-	                    },
-	                    function(){
-	                      var params = $cookieStore.get('params')
-	                      var state = $cookieStore.get('state')
-	                      $rootScope.preview_as_student = false
-	                      $cookieStore.remove('preview_as_student')
-	                      $cookieStore.remove('old_user_id')
-	                      $cookieStore.remove('new_user_id')
-	                      $cookieStore.remove('params')
-	                      $cookieStore.remove('state')
-	                      $rootScope.current_user= null
-	                      $state.go(state, params,{reload:true})
-			              $rootScope.$broadcast('get_current_courses')
-	                    },
-	                    function(){
-	                      console.log("Failed Closing Preview")
-	                      $rootScope.preview_as_student = false
-	                      $cookieStore.remove('preview_as_student')
-	                      $cookieStore.remove('old_user_id')
-	                      $cookieStore.remove('new_user_id')
-	                      $cookieStore.remove('params')
-	                      $cookieStore.remove('state')
-	                    }
-	                  )
-	                }
-	            }
+				
 				// setNavigator(true)
 			}
 		};

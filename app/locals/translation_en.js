@@ -1102,10 +1102,14 @@ var translation_en=function(){
           text: "Free text answer"
         },
         quiz_types:{
-          ocq: "Multiple Choice (multiple correct answers)",
-          mcq: "Multiple Choice (one correct answer)",
+          mcq: "Multiple Choice (multiple correct answers)",
+          ocq: "Multiple Choice (one correct answer)",
           drag: "Drag-and-Drop (ordering)",
           text: "Free Answer (text answer)"
+        },
+        survey_types:{
+          mcq: "Multiple Choice (multiple selections)",
+          ocq: "Multiple Choice (one selection)",
         }
       }
     },

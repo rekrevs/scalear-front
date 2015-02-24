@@ -1104,10 +1104,14 @@ var translation_sv=function(){
           text: "Fritext svar"
         },
         quiz_types:{
-          ocq: "Flervals (flera korrekta svar)",
-          mcq: "Flervals (ett korrekta svar)",
+          mcq: "Flervals (flera korrekta svar)",
+          ocq: "Flervals (ett korrekta svar)",
           drag: "Dra-och-släpp (ordering)",
           text: "Fritext svar (text svar)"
+        },
+        survey_types:{
+          mcq: "Flervals (flera urval)",
+          ocq: "Flervals (ett urval)",
         }
       }
     },

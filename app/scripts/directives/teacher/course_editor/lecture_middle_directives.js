@@ -461,17 +461,27 @@ angular.module('scalearAngularApp')
 				{value:"OCQ", text:$translate('content.questions.quiz_types.ocq')},
 				{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')}
 			]
-			// scope.quiz_types =['MCQ', 'OCQ','Free Text Question']
 			scope.match_types =['Free Text', 'Match Text']
 			console.log(scope.quiz)
-			// if(scope.isFreeText()){
-				if(!scope.quiz.match_type)
-					scope.quiz.match_type = scope.match_types[0]
-		 	// }
+			if(!scope.quiz.match_type)
+				scope.quiz.match_type = scope.match_types[0]
 
-			if(!scope.isSurvey())
-				scope.quiz_types.push({value:"drag", text:$translate('content.questions.quiz_types.drag')})
-			// else
+			if(!scope.isSurvey()){
+				scope.quiz_types=[
+					{value:"MCQ", text:$translate('content.questions.quiz_types.mcq')},
+					{value:"OCQ", text:$translate('content.questions.quiz_types.ocq')},
+					{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')},
+					{value:"drag", text:$translate('content.questions.quiz_types.drag')}
+				]
+			}
+			else{
+				scope.quiz_types=[
+					{value:"MCQ", text:$translate('content.questions.survey_types.mcq')},
+					{value:"OCQ", text:$translate('content.questions.survey_types.ocq')},
+					{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')},
+				]
+			}
+
 			// 	scope.quiz_types.push('Free Text Question')
 			$log.debug("QUIZZ is ");
 			$log.debug(scope.quiz);

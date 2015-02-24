@@ -81,7 +81,7 @@ angular.module('scalearAngularApp')
 			}
 		};
 	 }])
-	.directive('teacherNavigation', ['$rootScope','$state','ContentNavigator','DetailsNavigator', function($rootScope, $state, ContentNavigator, DetailsNavigator) {
+	.directive('teacherNavigation', ['$rootScope','$state','ContentNavigator','DetailsNavigator','Impersonate','$cookieStore', function($rootScope, $state, ContentNavigator, DetailsNavigator, Impersonate, $cookieStore) {
            return{
 			replace:true,
 			restrict: "E",
@@ -140,8 +140,38 @@ angular.module('scalearAngularApp')
 					$rootScope.$broadcast('add_module')
 				}	
 				scope.preview=function(){
-					$rootScope.$broadcast('activate_preview')
+					// $rootScope.$broadcast('activate_preview')
+					// emptyClipboard()
+			        // var module_id = $state.params.module_id
+		            $cookieStore.put('old_user_id', $rootScope.current_user.id)
+		            $cookieStore.put('state', $state.current.name)
+		            $cookieStore.put('params', $state.params)
+		            scope.disable_preview = true
+		            // var item = $scope.module_obj[module_id].items[0]
+		            setNavigator(false)
+		            Impersonate.create({},{course_id: $state.params.course_id},
+		              function(data){
+		                $cookieStore.put('preview_as_student', true)            
+		                $cookieStore.put('new_user_id', data.user.id)
+		                $rootScope.current_user= null 
+		                var params={course_id: $state.params.course_id}
+		                if($state.params.module_id){
+		                	params['module_id']= $state.params.module_id
+		                	$state.go('course.module.courseware',params,{reload:true})
+		                }
+		                else{
+		                	$state.go('course',params,{reload:true})
+		                }
+
+		                $rootScope.preview_as_student = true
+		                scope.$emit('get_current_courses')
+		              },
+		              function(){
+		                console.log("Failed")
+		              }
+		            )
 				}
+
 				scope.addLink=function(){
 					$rootScope.$broadcast('add_link')
 				}

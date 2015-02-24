@@ -31,6 +31,14 @@ angular.module('scalearAngularApp')
     $scope.$on('print',function(){
       $scope.print()
     })
+
+    $scope.$on('scroll_to_item',function(ev, item){
+      var type = item.class_name == "quiz"? item.quiz_type: item.class_name
+      scrollToItem("#"+type+"_"+item.id, 100)
+      removeHightlight()
+      var ul = angular.element("#"+type+"_"+item.id).find('.ul_item')[0]
+      $scope.highlight_index = angular.element('.ul_item').index(ul)-1
+    })
     // $scope.filters=
     // {
     //   "all":"",
@@ -200,6 +208,11 @@ angular.module('scalearAngularApp')
       )
     }
 
+    var scrollToItem=function(elem, dist){
+      var top = dist || ( $('html').innerHeight() / 2 )-10;
+      $('.main_content').parent().scrollToThis(angular.element(elem),{offsetTop : top});
+    }
+
   	$scope.manageHighlight=function(x){
       // resizePlayerSmall()
   		var divs = angular.element('.ul_item')
@@ -231,12 +244,10 @@ angular.module('scalearAngularApp')
         view_index = $scope.highlight_index
       else
         view_index = $scope.highlight_index-1
-      var top = ( $('html').innerHeight() / 2 )-10;
-      $('.main_content').parent().scrollToThis(angular.element(divs[$scope.highlight_index]),{offsetTop : top});
+      scrollToItem(divs[$scope.highlight_index])
 	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
       seekToItem()
-	    $scope.$apply()
   	}
 
   	$scope.manageInnerHighlight=function(x){
@@ -266,10 +277,8 @@ angular.module('scalearAngularApp')
         //   $timeout(function(){$window.scrollTo($window.ScrollX,150)})
         // }
   		}
-      var top = ( $('html').innerHeight() / 2 )-10;
-      $('.main_content').parent().scrollToThis(angular.element(inner_li[$scope.inner_highlight_index]),{offsetTop : top});
+      scrollToItem(inner_li[$scope.inner_highlight_index])
 	    seekToItem()
-      $scope.$apply()
   	}
 
   	$scope.highlight=function(ev,item){
@@ -330,7 +339,6 @@ angular.module('scalearAngularApp')
       $(".highlight").removeClass("highlight");
       angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
       $scope.highlight_level = 0
-      $scope.$apply()
       console.log("removing")
     }
 
@@ -823,12 +831,14 @@ angular.module('scalearAngularApp')
 		    $scope.manageHighlight(1)
       else
         $scope.manageInnerHighlight(1)
+      $scope.$apply()
     },{"disable_in_input" : true, "propagate":false});
     shortcut.add("Up",function(){
       if($scope.highlight_level <= 1)
 		    $scope.manageHighlight(-1)
       else
         $scope.manageInnerHighlight(-1)
+      $scope.$apply()
     },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Right",function(){
@@ -836,6 +846,7 @@ angular.module('scalearAngularApp')
         $scope.manageHighlight(0)
       else
 		    $scope.manageInnerHighlight(0)
+      $scope.$apply()
     },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Left",function(){
@@ -843,6 +854,7 @@ angular.module('scalearAngularApp')
         removeHightlight()
       else
 		    $scope.manageHighlight(0)
+      $scope.$apply()
     },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("Space",function(){

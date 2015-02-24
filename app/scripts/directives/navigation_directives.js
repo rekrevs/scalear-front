@@ -277,7 +277,7 @@ angular.module('scalearAngularApp')
 				})
 			}
 		};
- }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator){
+ }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator','$rootScope',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope){
   return{
     restrict:'E',
     replace: true,
@@ -415,20 +415,27 @@ angular.module('scalearAngularApp')
   	}
                
   	scope.showItem = function(item, type){
- 		var params = {'module_id': $state.params.module_id}    
-	    params[item.class_name.toLowerCase()+'_id'] = item.id
-	    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
-	    scope.currentitem = {id:item.id}
+  		if($state.includes("course.module.progress"))
+  			$rootScope.$broadcast("scroll_to_item",item)
+  		else{
+	 		var params = {'module_id': $state.params.module_id}    
+		    params[item.class_name.toLowerCase()+'_id'] = item.id
+		    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
+		    scope.currentitem = {id:item.id}
+		}
   	}
 
  	scope.showModule=function(module, event){
-    	$state.go('course.module.course_editor.overview',{module_id: module.id})
+ 		if($state.includes("course.module.progress"))
+ 			$state.go('course.module.progress',{module_id: module.id})
+ 		else
+    		$state.go('course.module.course_editor.overview',{module_id: module.id})
     	scope.currentmodule = module
     	if($state.params.module_id == module.id){
         	event.stopPropagation()
         }
-
     }
+
   	scope.goToCourseInfoStudent=function(){
 	  	scope.currentmodule = null
 	  	$state.go("course.course_information")

@@ -34,12 +34,10 @@ angular.module('scalearAngularApp')
 
     $scope.$on('scroll_to_item',function(ev, item){
       var type = item.class_name == "quiz"? item.quiz_type: item.class_name
-      scrollToItem("#"+type+"_"+item.id)
-
-      var divs = angular.element('.ul_item') 
-      var ul = angular.element("#"+type+"_"+item.id).find('.ul_item')[0]
+      scrollToItem("#"+type+"_"+item.id, 100)
       removeHightlight()
-      $scope.highlight_index = divs.index(ul)-1
+      var ul = angular.element("#"+type+"_"+item.id).find('.ul_item')[0]
+      $scope.highlight_index = angular.element('.ul_item').index(ul)-1
     })
     // $scope.filters=
     // {
@@ -210,8 +208,8 @@ angular.module('scalearAngularApp')
       )
     }
 
-    var scrollToItem=function(elem){
-      var top = ( $('html').innerHeight() / 2 )-10;
+    var scrollToItem=function(elem, dist){
+      var top = dist || ( $('html').innerHeight() / 2 )-10;
       $('.main_content').parent().scrollToThis(angular.element(elem),{offsetTop : top});
     }
 

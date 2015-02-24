@@ -13,9 +13,7 @@
 		</center>
 	</div>
 </div>
-<div id="module"  class="small-12 large-7 columns with-small-padding-top" ui-view="module" >	
+<div id="module"  ng-if="('**.overview' | includedByState)" class="small-12 large-7 columns with-small-padding-top" ui-view="module" >	
 </div>
-<span ng-if="('**.lecture' | includedByState) || ('**.quiz' | includedByState)">
-	<div id="middle"  class="small-12 large-7 columns ease_in_out width-max-heigh no-padding with-tiny-padding-top" ng-class="{'large-12 large-centered': !delayed_details_status}" ui-view="middle"/>
-</span>
-	<div id="details" ng-show="!('course.course_editor' | includedByState)" class="details-navigator-container no-padding ease_in_out small-12 large-5 columns" ui-view="details" ng-class="{'large-height-big small-height-big ':delayed_details_status2}"/>
+<div id="middle" ng-if="('**.lecture' | includedByState) || ('**.quiz' | includedByState)" class="small-12 large-7 columns ease_in_out width-max-heigh no-padding with-small-padding-top" ng-class="{'large-12 large-centered': !delayed_details_status}" ui-view="middle"/>
+<div id="details" ng-show="!('course.course_editor' | includedByState)" class="details-navigator-container no-padding ease_in_out small-12 large-5 columns" ui-view="details" ng-class="{'large-height-big small-height-big ':delayed_details_status2}"/>

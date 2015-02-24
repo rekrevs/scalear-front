@@ -55,6 +55,10 @@ angular.module('scalearAngularApp')
                 delete modified_module.total_time;
                 delete modified_module.total_questions;
                 delete modified_module.total_quiz_questions;
+                delete modified_module.total_lectures;
+                delete modified_module.total_quizzes
+                delete modified_module.total_survey_questions
+                delete modified_module.total_surveys
                 delete modified_module.due_date_enabled;
 
                 Module.update({

@@ -68,10 +68,10 @@
             </content-navigator>
             <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" links="course.custom_links" open="ContentNavigator.status">
             </content-navigator>
-            <br ng-hide="('**.course.**' | includedByState) && !('**.course_editor.overview' | includedByState) && !('**.progress' | includedByState)"/>
-            <div ng-show="ContentNavigator.delayed_navigator_open || ('**.course_editor.overview' | includedByState)" class="containeropen small-12 medium-4 large-2 columns no-padding no-margin">
+            <br ng-hide="('**.course.**' | includedByState) && !('**.progress' | includedByState)"/>
+            <div ng-show="ContentNavigator.delayed_navigator_open" class="containeropen small-12 medium-4 large-2 columns no-padding no-margin">
             </div>
-            <div class="land-min-height land-no-padding" ng-class="{'small-12 medium-8 large-10 columns max-width-me': ContentNavigator.delayed_navigator_open || ('**.course_editor.overview' | includedByState),'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
+            <div class="land-min-height land-no-padding" ng-class="{'small-12 medium-8 large-10 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
             </div>
         </div> 
         <footer class="small-12 columns footer">

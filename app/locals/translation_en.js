@@ -85,6 +85,7 @@ var translation_en=function(){
       Insert_a_question: "Insert a question in a video",
       new_video_question:"New Video Question",
       new_video: "New Video",
+      add_content: "Add Content",
       copy: "Copy",
       due:"Due",
       my: "My",
@@ -355,6 +356,7 @@ var translation_en=function(){
         lecture_title: "Lecture Title",
         url: "Video URL",
         video: "Video",
+        videos: "Videos",
         add_video: "Add link to video",
         add_description: "Add description",
         video_title: "Video Title",
@@ -576,10 +578,12 @@ var translation_en=function(){
         must_choose_answer: "Must choose at least one answer",
         add_link: "Add Link",
         new_link: "New Link",
+        add_module_link: "Add Module Link",
         new_course_link: "New Course Link",
         please_wait: "Please Wait",
         lectures: "Lectures",
         quizzes: "Quizzes",
+        surveys: "Surveys",
         new_quiz: "New Quiz",
         answer_question: "Please answer the question",
         choose_correct_answer: "Please choose the correct answer(s)",
@@ -638,6 +642,7 @@ var translation_en=function(){
         see_related: "See related answers to student",
         has_due_date: "Has Due Date",
         student_link_module:"Student link to module",
+        video_quizzes: "Video Quizzes",
       },
       courses:{
         course_links: 'Course Links',
@@ -651,7 +656,6 @@ var translation_en=function(){
         statistics: "Statistics",
         lecture_quizzes: "Lecture Quizzes",
         lecture_statistics: "Lecture Statistics",
-        surveys: "Surveys",
         export_all: "Export all",
         quiz: "Quiz",
         survey: "Survey",
@@ -1065,28 +1069,27 @@ var translation_en=function(){
         video: "Video",
         video_desc: "You can add quiz questions on top of the video",
         quiz: "Quiz",
-        quiz_desc: "Text-based, can be graded or optional",
         survey: "Survey",
-        link: "Link",
+        link: "Course Link",
         link_desc: "Web link to other sites or pages",
         quiz_or_survey: "Quiz or Survey",
-        quiz_or_survey_desc: "Text-based, can be graded or optional",
+        quiz_or_survey_desc: "Text-based, not part of a video. Can be graded or optional",
       },
       questions:{
         choose_question_type: "Choose Question Type",
         insert_video_question: "Insert a Video Question",
         categories:{
           on_video:{
-            title: "In-video Quiz",
-            desc: "Place quiz choices on top of the video",
+            title: "On-video Quiz",
+            desc: "Place quiz choices on top of the video. The quiz must be visible in the video",
           },
           text_quiz:{
             title: "Text Quiz",
-            desc: "Text quiz on a white background",
+            desc: "Text quiz on a white background. Use this if the quiz is not visible in the video",
           },
           on_video_survey:{
-            title: "In-video Survey",
-            desc: "Place survey choices on top of the video"
+            title: "On-video Survey",
+            desc: "Place survey choices on top of the video. The survey must be visible in the video"
           }
         },
         types:{

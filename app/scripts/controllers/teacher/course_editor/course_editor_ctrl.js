@@ -30,14 +30,26 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('add_item', function(event, type){
+        if(!$state.params.module_id && type != "link"){
+            $scope.addModule(function(module_id){
+                $timeout(function(){
+                    addItemBytype(type, module_id)
+                })
+            })
+        }
+        else
+            addItemBytype(type)
+        ContentNavigator.open()
+    })
+
+    var addItemBytype = function(type,module_id){
         if(type=='video')
-             $scope.addLecture($stateParams.module_id)
+             $scope.addLecture(module_id || $state.params.module_id)
         else if(type == 'link')
             $scope.addCustomLink()            
         else
-            $scope.addQuiz($stateParams.module_id, type)
-        ContentNavigator.open()
-    })
+            $scope.addQuiz(module_id || $state.params.module_id, type)
+    }
     
     $scope.$on('share_copy', function(event, data){
         // console.log(data)
@@ -219,7 +231,7 @@ angular.module('scalearAngularApp')
         }
   	}
 
- 	$scope.addModule=function(){
+ 	$scope.addModule=function(callback){
     	Module.newModule({course_id: $stateParams.course_id, lang:$translate.uses()},{},
 	    	function(data){
                 data.group.items=[]
@@ -228,6 +240,8 @@ angular.module('scalearAngularApp')
 	    		$scope.module_obj[data.group.id] = $scope.course.modules[$scope.course.modules.length-1]
                 $state.go('course.module.course_editor.overview', {module_id: data.group.id})
                 ContentNavigator.open()
+                if(callback)
+                    callback(data.group.id)
 	    	}, 
 	    	function(){}
 		);

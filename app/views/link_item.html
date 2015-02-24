@@ -20,7 +20,7 @@
 		</tr>
 	</table>	
 </div> -->
-<div ng-if="'**.course_editor.**' | includedByState" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:5px 10px;width:100%">
+<div ng-if="'**.course_editor.**' | includedByState" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:5px 10px">
 	<img class='left handle with-tiny-margin' src='images/move2.png' bindonce bo-title="'courses.drag_to_reorder'|translate" />
 	<i class="fi-link left" ng-if="!small"></i>
 	<div class="small-9 columns no-padding" bo-class="{'link_item_small':small}">
@@ -36,7 +36,7 @@
 	</div>
 </div>
 
-<div ng-if="!('**.course_editor.**' | includedByState)" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:5px 10px;width:100%">
+<div ng-if="!('**.course_editor.**' | includedByState)" bindonce class="row" style="box-shadow: 0 0 1px lightgrey;padding:5px 10px">
 	<div ng-if="!small" class="small-1 columns with-small-margin-right">
 		<img src="images/link_item.png" height="40px" style="vertical-align: top;" /> <!-- bo-class="{'link_img_small':small}" -->
 	</div>

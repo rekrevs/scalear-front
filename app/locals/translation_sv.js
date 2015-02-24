@@ -104,6 +104,11 @@ var translation_sv=function(){
     pause: "Paus",
     resume: "Återuppta",
     leave_feedback:"Lämna dina synpunkter",
+    support:{
+        ipad:"iPad stöd är för närvarande i beta.",
+        mobiles:"Mobila enheter är för närvarande inte fullt stöd.",
+        issue_and_recommendation:"Videor kommer inte spelas upp automatiskt och du kan stöta på andra frågor. Vi rekommenderar att du använder den här webbplatsen på en stationär/laptop"
+      },
     errors_messages:{
       the_form_contains: "Formuläret innehåller",
       error: "fel",

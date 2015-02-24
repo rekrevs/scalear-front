@@ -105,6 +105,11 @@ var translation_en=function(){
       pause: "Pause",
       resume: "Resume",
       leave_feedback:"Leave your feedback",
+      support:{
+        ipad:"iPad support is currently in beta.",
+        mobiles:"Mobile devices are not currently fully supported.",
+        issue_and_recommendation:"Videos will not autoplay and you may run into other issues. We recommend using this site on a desktop/laptop"
+      },
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",

@@ -1,6 +1,7 @@
 var translation_en=function(){
     return {
       tellus: 'Tell us about yourself...',
+      cannot_ask_question_preview: "You cannot ask questions while previewing as a student",
       online_name_comment: 'Used when you make comments or ask questions. To be anonymous, use the default or a pseudonym.',
       new_module_instructions: "Add a new module or selected an existing by clicking on the content navigator from the left",
       use_modules_organize: "Use modules to organize your videos and quizzes",
@@ -106,6 +107,11 @@ var translation_en=function(){
       pause: "Pause",
       resume: "Resume",
       leave_feedback:"Leave your feedback",
+      support:{
+        ipad:"iPad support is currently in beta.",
+        mobiles:"Mobile devices are not currently fully supported.",
+        issue_and_recommendation:"Videos will not autoplay and you may run into other issues. We recommend using this site on a desktop/laptop"
+      },
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -1099,10 +1105,14 @@ var translation_en=function(){
           text: "Free text answer"
         },
         quiz_types:{
-          ocq: "Multiple Choice (multiple correct answers)",
-          mcq: "Multiple Choice (one correct answer)",
+          mcq: "Multiple Choice (multiple correct answers)",
+          ocq: "Multiple Choice (one correct answer)",
           drag: "Drag-and-Drop (ordering)",
           text: "Free Answer (text answer)"
+        },
+        survey_types:{
+          mcq: "Multiple Choice (multiple selections)",
+          ocq: "Multiple Choice (one selection)",
         }
       }
     },

@@ -16,12 +16,12 @@
                     <div ng-show="item.comment.user_id == current_user.id" style="font-size: 10px; float: right; display: inline-block;">
                         <delete_button class="hiddendeletebutton" size="small" action="delete()(item)" vertical="false" text="false" style="display: inline-block; color: #a1a1a1;" ></delete_button>
                     </div>
-                    <span ng-show="item.comment.user_id != current_user.id">
+                    <span ng-if="item.comment.user_id != current_user.id && !preview_as_student">
                         <div style="display: inline-block; float: right;" >
                             <flag-button name="flag_comment" comment="item.comment" flag="flagComment" unflag="unflagComment" type="icon"></flag-button>
                         </div>
                         <div class="like-button">
-                           <voting-button ng-show="item.comment.user_id != current_user.id" votes-count="item.comment.votes_count" voted="item.comment.user_vote" up="upvoteComment" down="downvoteComment" direction="horizontal"></voting-button>                            
+                           <voting-button votes-count="item.comment.votes_count" voted="item.comment.user_vote" up="upvoteComment" down="downvoteComment" direction="horizontal"></voting-button>                            
                         </div>
                     </span>
                     <div class="comment_body" ng-text-truncate="item.comment.content" ng-tt-words-threshold="15"></div>

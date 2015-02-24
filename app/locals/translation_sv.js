@@ -1,6 +1,7 @@
 var translation_sv=function(){
   return {
     tellus: 'Skriv något om dig själv...',
+    cannot_ask_question_preview: "Du kan inte ställa frågor medan du förhandsgranskar som student",
     online_name_comment:'(Ditt online-namn visas för andra elever och lärare när du skriver kommentarer eller ställer frågor. Du kan ändra det till vad du vill.)',
     new_module_instructions: "Lägg till en ny modul eller välj en existerande genom att klicka på innehållsmenyn till vänster",
     use_modules_organize: "Använd moduler för att organisera ditt kursmaterial",
@@ -105,6 +106,11 @@ var translation_sv=function(){
     pause: "Paus",
     resume: "Återuppta",
     leave_feedback:"Lämna dina synpunkter",
+    support:{
+        ipad:"iPad stöd är för närvarande i beta.",
+        mobiles:"Mobila enheter är för närvarande inte fullt stöd.",
+        issue_and_recommendation:"Videor kommer inte spelas upp automatiskt och du kan stöta på andra frågor. Vi rekommenderar att du använder den här webbplatsen på en stationär/laptop"
+      },
     errors_messages:{
       the_form_contains: "Formuläret innehåller",
       error: "fel",
@@ -1102,10 +1108,14 @@ var translation_sv=function(){
           text: "Fritext svar"
         },
         quiz_types:{
-          ocq: "Flervals (flera korrekta svar)",
-          mcq: "Flervals (ett korrekta svar)",
+          mcq: "Flervals (flera korrekta svar)",
+          ocq: "Flervals (ett korrekta svar)",
           drag: "Dra-och-släpp (ordering)",
           text: "Fritext svar (text svar)"
+        },
+        survey_types:{
+          mcq: "Flervals (flera urval)",
+          ocq: "Flervals (ett urval)",
         }
       }
     },

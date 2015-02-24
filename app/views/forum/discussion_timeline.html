@@ -25,7 +25,7 @@
                             <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="false"></delete_button>
                             <!-- <delete_button class="hiddendeletebutton hide-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button> -->
                         </div>
-                        <span ng-if="item.data.user_id != current_user.id">
+                        <span ng-if="item.data.user_id != current_user.id && !preview_as_student">
                             <div style="display: inline-block; float: right;" >
                                 <flag-button name="flag" comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
                             </div>
@@ -58,7 +58,7 @@
             <discussion-comment item="comment_data" delete="deleteComment"/>
         </div>
         <span>
-            <comment-box discussion="item" submit="reply"></comment-box>
+            <comment-box ng-if="!preview_as_student" discussion="item" submit="reply"></comment-box>
         </span>
     </div>
 </td>

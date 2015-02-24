@@ -1,6 +1,7 @@
 var translation_en=function(){
     return {
       tellus: 'Tell us about yourself...',
+      cannot_ask_question_preview: "You cannot ask questions while previewing as a student",
       online_name_comment: 'Used when you make comments or ask questions. To be anonymous, use the default or a pseudonym.',
       new_module_instructions: "Add a new module or selected an existing by clicking on the content navigator from the left",
       use_modules_organize: "Use modules to organize your videos and quizzes",

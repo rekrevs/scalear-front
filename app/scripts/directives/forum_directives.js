@@ -9,6 +9,7 @@ angular.module('scalearAngularApp')
                 pref: '='
             },
             link:function(scope,element,attrs){
+                scope.preview_as_student = $rootScope.preview_as_student
                 scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
                 scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
                 $('.text_block').focus();
@@ -100,6 +101,7 @@ angular.module('scalearAngularApp')
         templateUrl:'/views/forum/discussion_timeline.html',
         link: function(scope, element, attrs) {
             scope.current_user = $rootScope.current_user
+            scope.preview_as_student = $rootScope.preview_as_student
             scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
             scope.private_text = $translate("discussion.private_post")
             scope.public_text = $translate("discussion.public_post")
@@ -212,7 +214,7 @@ angular.module('scalearAngularApp')
         templateUrl:'/views/forum/discussion_comment.html',
         link: function(scope, element, attrs) {
             scope.current_user = $rootScope.current_user
-
+            scope.preview_as_student = $rootScope.preview_as_student
             scope.flagComment = function(comment){
                 Forum.flagComment(
                     {comment_flag:{comment_id: comment.id}}, 

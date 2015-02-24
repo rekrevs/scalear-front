@@ -1,6 +1,7 @@
 var translation_sv=function(){
   return {
     tellus: 'Skriv något om dig själv...',
+    cannot_ask_question_preview: "Du kan inte ställa frågor medan du förhandsgranskar som student",
     online_name_comment:'(Ditt online-namn visas för andra elever och lärare när du skriver kommentarer eller ställer frågor. Du kan ändra det till vad du vill.)',
     new_module_instructions: "Lägg till en ny modul eller välj en existerande genom att klicka på innehållsmenyn till vänster",
     use_modules_organize: "Använd moduler för att organisera ditt kursmaterial",

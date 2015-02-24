@@ -83,6 +83,7 @@ var translation_sv=function(){
     new_video_question:"Ny videoquiz",
     Insert_Video_Question: "Infoga en videoquiz här",
     new_video: "Ny video",
+    add_content: "Lägg till Innehåll",
     Insert_a_question: "Lägg till en fråga i videon",
     copy: "Kopia",
     due: "Förfaller",
@@ -576,6 +577,7 @@ var translation_sv=function(){
       answer_question: "Vänligen svara på frågan",
       add_link: "Lägg till länk",
       new_link: "Ny länk",
+      add_module_link: "Lägg till modul länk",
       new_course_link: "Ny kurslänk",
       please_wait: "Var god vänta",
       lectures: "Videos",
@@ -1071,7 +1073,7 @@ var translation_sv=function(){
         video_desc: "Du kan lägga till quizfrågor ovanpå videon",
         quiz: "Quiz",            
         survey: "Enkät",
-        link: "Länk",
+        link: "Kurs Länk",
         link_desc: "Länk till andra webbplatser eller sidor",
         quiz_or_survey: "Quiz eller enkät",
         quiz_or_survey_desc: "Text-baserad, kan vara obligatorisk eller frivillig",
@@ -1082,15 +1084,15 @@ var translation_sv=function(){
         categories:{
           on_video:{
             title: "Video-quiz",
-            desc: "Placera quizzen på videon",
+            desc: "Placera quizzen på videon. Quiz måste synas i videon",
           },
           text_quiz:{
             title: "Text-quiz",
-            desc: "Text-quiz på en vit bakgrund",
+            desc: "Text-quiz på en vit bakgrund. Använd detta om quiz inte syns i videon",
           },
           on_video_survey:{
             title: "Video-enkät",
-            desc: "Placera enkäten på videon"
+            desc: "Placera enkäten på videon. Enkät måste synas i videon"
           }
         },
         types:{

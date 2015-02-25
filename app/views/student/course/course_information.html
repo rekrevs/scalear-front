@@ -80,7 +80,8 @@
             
             <h5 translate class="subheader" page-name="{{current}}"step-text="Here you will find the latest announcements posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false">head.announcements</h5>
             <p style="font-weight: 200;">
-                <student-announcement-item announcement="announcement" ng-repeat="announcement in announcements"></student-announcement-item>
+                <!-- <student-announcement-item announcement="announcement" ng-repeat="announcement in announcements"></student-announcement-item> -->
+                <event-item ng-repeat="announcement in announcements | orderBy:'timestamp':'reverse'" event="announcement" role="2"></event-item>
             </p>
         </div>
     </div>

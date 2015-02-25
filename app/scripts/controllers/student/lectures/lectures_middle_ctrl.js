@@ -87,6 +87,10 @@ angular.module('scalearAngularApp')
         $scope.video_class = 'flex-video'
         $scope.container_class=''
         $scope.play_pause_class = 'play'
+        $scope.should_play = false
+        $scope.passed_requirments = true
+        $scope.lecture = null
+        $scope.video_ready=false
     }
 
     var init = function() {            
@@ -142,11 +146,7 @@ angular.module('scalearAngularApp')
     }
 
     var goToLecture=function(id){
-        if($scope.timeline){
-            $scope.should_play = false
-            $scope.passed_requirments = true
-            $scope.lecture = null
-
+        if($scope.timeline){ 
             $timeout(function(){
                 $scope.lecture = $scope.timeline['lecture'][id].meta
                 Page.setTitle('head.lectures',': '+$scope.lecture.name); 
@@ -166,7 +166,6 @@ angular.module('scalearAngularApp')
                 var lec = data.lecture
                 $scope.next_item = data.next_item 
                 $scope.alert_messages = data.alert_messages;
-                // $scope.lecture.is_done = data.done[2]
                 for(var key in $scope.alert_messages){
                     if(key=="due")
                         $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
@@ -189,14 +188,6 @@ angular.module('scalearAngularApp')
                 $scope.should_play = $scope.passed_requirments
                 if($scope.should_play)
                     setShortcuts()
-
-                // if($scope.should_play){
-                //     if(data.done[2]){
-                //         // console.log("!-123-asdedfskefw done!")
-                //         // $scope.course.markDone(data.done[1],data.done[0])
-                //         // $scope.lecture.is_done = data.done[2]
-                //     }
-                // }
 
                 if(isiPad()){
                     $scope.video_ready=true
@@ -249,7 +240,6 @@ angular.module('scalearAngularApp')
         })
 
         $scope.video_ready=true
-        console.log($scope.supported_speeds)
         var time =$state.params.time        
         if(time){
             $scope.seek(parseInt(time));

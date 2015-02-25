@@ -8,11 +8,7 @@
 	</div>
 
 	<div class="position-relative" ng-if="!('**.course_editor.**' | includedByState)" >
-		<!-- <div class="small-9 columns"> -->
-			<div class="truncate-70 show-inline left text-left module_name" bindonce bo-text="module.name"></div>	
-		<!-- </div> -->
-		<!-- <div class="small-3 columns"> -->
-			<small class="color-grey" bo-text="module.total_time | formattime:'h:mm:ss'"></small>
-		<!-- </div> -->
+		<div class="truncate-70 show-inline left text-left module_name" bindonce bo-text="module.name"></div>	
+		<small class="color-grey" bo-text="module.total_time | formattime:'h:mm:ss'"></small>
 	</div>
 </div>

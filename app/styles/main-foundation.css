@@ -1114,6 +1114,7 @@ td.right-border{
   z-index: 1;
   left: 0px;
   top: 0px;
+  border-radius: 2px;
 }
 .delete-overlay.count-padding{
   width: calc(100% + 10px);

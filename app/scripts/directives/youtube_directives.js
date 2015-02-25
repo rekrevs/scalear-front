@@ -604,23 +604,15 @@ return {
     restrict: 'E',
     replace:false,
     scope:{
-        // view:'@',
-        // active:'=',
-        // play_btn:'&playBtn',
         player:'=',
         play_pause_class:'=playPauseClass',
-        // updateProgress:'&',
         elapsed_width: '=elapsedWidth',
         current_time: '=currentTime',
         total_duration: '=totalDuration',
         seek: "&",
-        // confused_areas: '=confusedAreas',
-        // progressEvents: '=',
         timeline: '=',
         videoready: '=',
         blink : "="
-        // lecture: '='
-       // autoplay:'@'
     },
     templateUrl:"/views/progress_bar.html",
     link: function(scope, element, attrs){
@@ -760,7 +752,7 @@ return {
 
       	scope.$on("blink_blink", function(){
       		scope.blink = "blink_btn";
-      		scope.timeout_f = $timeout(function(){
+      		$timeout(function(){
       			scope.blink = "";
 			},2000)
       	})

@@ -1,7 +1,7 @@
 <center ng-show="!announcements"><br/><br/><loading size="big" show="!announcements"/></center>
 </br>
 
-<div class="row">
+<div class="row no-margin">
 	<div class="small-8 large-8 columns">
 		<a id="new_announcement" class="button" ng-show="show_button" ng-disabled="disable_new" ng-click="createAnnouncement()" translate>announcement_form.create_announcement</a>
 		<!-- <br /> -->
@@ -10,7 +10,7 @@
 		<input id="search_announcement" class="tiny" type="search" ng-model="searchAnnouncement" placeholder="{{'courses.search' | translate}}" />
 	</div>
 </div>
-<div class="row">
+<div class="row no-margin">
 	<center ng-show="announcements && !announcements.length" >
 		<h5 class="muted" translate>announcements.empty</h5>
 	</center>

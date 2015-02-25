@@ -28,7 +28,7 @@
 			<blockquote class="announcement-body dark-text with-padding">
 				<span ng-bind-html='event.announcement'>
 				</span>
-				<cite>
+				<cite ng-show="event.course_name">
 					<a ng-if="role != 2" ui-sref="course.edit_course_information({course_id: event.course_id})">{{event.course_name}}</a>
 					<a ng-if="role == 2" ui-sref="course({course_id: event.course_id})">{{event.course_name}}</a>
 				</cite>

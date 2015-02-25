@@ -592,66 +592,72 @@ angular.module('scalearAngularApp')
 }).directive('htmlMcq',function(){	
 	return{
 		restrict:'E',
-		template:"<ng-form name='aform'>"+
-					"<div class='row'>"+
-						"<div class='small-2 columns' style='padding: 10px 0;'>"+
-							"<label class='text-left' translate>groups.answer</label>"+
+		template:"<div class='small-12 no-padding columns'>"+ 
+					"<delete_button class='right with-small-margin-top' size='small' mode='content_navigator' color='dark' action='removeAnswer($index, quiz)' />"+
+					"<ng-form name='aform'>"+
+						"<div class='row collapse'>"+
+							"<div class='small-2 columns' style='padding: 10px 0;'>"+
+								"<label class='text-left' translate>groups.answer</label>"+
+							"</div>"+
+							"<div class='small-7 columns no-padding'>"+
+								"<input class='no-margin' required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
+								"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
+							"</div>"+
+							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
+							"<div class='small-2 columns' ng-if='!isSurvey()'>"+
+								"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
+								"<input ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+ //atleastone
+							"</div>"+
+							// "<div class='small-1 left columns' style='padding: 10px 0;'>"+
+							// 	"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
+							// "</div>"+
 						"</div>"+
-						"<div class='small-7 columns no-padding'>"+
-							"<input class='no-margin' required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
-							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
+						"<div class ='row collapse' ng-if='show() && !isSurvey()'>"+
+							"<div class='small-2 columns' style='padding: 10px 0;'>"+
+								"<label class='text-left' translate>lectures.explanation</label>"+
+							"</div>"+
+							"<div class='small-7 left columns no-padding'>"+
+								"<input class='no-margin' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
+							"</div>"+
 						"</div>"+
-						// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
-						"<div class='small-2 columns' ng-if='!isSurvey()'>"+
-							"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
-							"<input ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+ //atleastone
-						"</div>"+
-						"<div class='small-1 left columns' style='padding: 10px 0;'>"+
-							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
-						"</div>"+
-					"</div>"+
-					"<div class ='row' ng-if='show() && !isSurvey()'>"+
-						"<div class='small-2 columns' style='padding: 10px 0;'>"+
-							"<label class='text-left' translate>lectures.explanation</label>"+
-						"</div>"+
-						"<div class='small-7 left columns no-padding'>"+
-							"<input class='no-margin' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
-						"</div>"+
-					"</div>"+
-				"</ng-form>"+
+					"</ng-form>"+
+				"</div>"+
 				"<hr style='margin: 10px 0;'/>"
 	}
 	
 }).directive('htmlOcq',function(){
 	return {
 		restrict:'E',
-		template:"<ng-form name='aform'>"+
-					"<div class='row'>"+
-						"<div class='small-2 columns' style='padding: 10px 0;'>"+
-							"<label class='text-left' translate>groups.answer</label>"+
+		template:"<div class='small-12 no-padding columns'>"+ 
+					"<ng-form name='aform'>"+
+						"<delete_button class='right with-small-margin-top' mode='content_navigator' size='small' color='dark' action='removeAnswer($index, quiz)' />"+
+						"<div class='row collapse'>"+
+							"<div class='small-2 columns' style='padding: 10px 0;'>"+
+								"<label class='text-left' translate>groups.answer</label>"+
+							"</div>"+
+							"<div class='small-7 columns no-padding'>"+
+								"<input class='no-margin' required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
+								"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
+							"</div>"+
+							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
+							"<div class='small-2 columns' ng-if='!isSurvey()'>"+
+								"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
+								"<input id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+ //atleastone
+							"</div>"+
+							// "<div class='small-1 left columns' style='padding: 10px 0;'>"+
+							// 	"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
+							// "</div>"+
 						"</div>"+
-						"<div class='small-7 columns no-padding'>"+
-							"<input class='no-margin' required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
-							"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
+						"<div class ='row collapse' ng-if='show() && !isSurvey()'>"+
+							"<div class='small-2 columns' style='padding: 10px 0;'>"+
+								"<label class='text-left' translate>lectures.explanation</label>"+
+							"</div>"+
+							"<div class='small-7 left columns no-padding'>"+
+								"<input class='no-margin' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
+							"</div>"+
 						"</div>"+
-						// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
-						"<div class='small-2 columns' ng-if='!isSurvey()'>"+
-							"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
-							"<input id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+ //atleastone
-						"</div>"+
-						"<div class='small-1 left columns' style='padding: 10px 0;'>"+
-							"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
-						"</div>"+
-					"</div>"+
-					"<div class ='row' ng-if='show() && !isSurvey()'>"+
-						"<div class='small-2 columns' style='padding: 10px 0;'>"+
-							"<label class='text-left' translate>lectures.explanation</label>"+
-						"</div>"+
-						"<div class='small-7 left columns no-padding'>"+
-							"<input class='no-margin' type='text' class='explain' placeholder={{'lectures.explanation'|translate}} ng-model='answer.explanation' value='{{answer.explanation}}' /></span>"+
-						"</div>"+
-					"</div>"+
-				"</ng-form>"+
+					"</ng-form>"+
+				"</div>"+
 				"<hr style='margin: 10px 0;'/>",
 		link: function(scope){
 			if(scope.answer.correct)

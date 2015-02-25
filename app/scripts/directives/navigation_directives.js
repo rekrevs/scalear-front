@@ -449,8 +449,9 @@ angular.module('scalearAngularApp')
   	}
                
   	scope.showItem = function(item, type){
-  		if($state.includes("course.module.progress"))
-  			$rootScope.$broadcast("scroll_to_item",item)
+  		if($state.includes("**.progress.**"))
+  			if($state.includes("course.module.progress"))
+  				$rootScope.$broadcast("scroll_to_item",item)
   		else{
 	 		var params = {'module_id': $state.params.module_id}    
 		    params[item.class_name.toLowerCase()+'_id'] = item.id
@@ -460,8 +461,11 @@ angular.module('scalearAngularApp')
   	}
 
  	scope.showModule=function(module, event){
- 		if($state.includes("course.module.progress"))
+ 		if($state.includes("course.module.progress") || $state.includes("course.progress"))
  			$state.go('course.module.progress',{module_id: module.id})
+ 		else if ($state.includes("course.module.progress_details")){
+ 			$state.go('course.module.progress_details',{module_id: module.id})
+ 		}
  		else
     		$state.go('course.module.course_editor.overview',{module_id: module.id})
     	scope.currentmodule = module

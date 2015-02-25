@@ -179,7 +179,7 @@ angular.module('scalearAngularApp')
             var getYoutubeDetails= function(id){
                 $scope.is_youtube = true
                 var d = $q.defer()
-                var url="http://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
+                var url="https://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
                 $http.jsonp(url)
                     .success(function (data) {
                         $log.debug(data.entry)

@@ -2,9 +2,10 @@
 <!-- has all discussions -->      
     <div ng-repeat="l in items" class="with-light-border no-border-top no-border-bottom no-border-right small-12" ng-class="{'border-left border-2 border-black': l.id == lecture.id}" bo-id='"outline_"+l.id'> 
         <span bo-if="l.class_name =='lecture'">
-            <h5  ng-click="seek()(null, l.id)" ng-class="{'color-white black': l.id == lecture.id, 'light-grey-hover':l.id != lecture.id }" style="cursor:pointer; margin: 0px;padding-left:15px"><b class="truncate" bo-text="l.name"></b>
-            <!-- <span class="label round alert with-tiny-padding with-tiny-margin-right right" ng-show="l.required" translate>courses.required</span> -->
-            <span class="label round blue with-tiny-padding with-tiny-margin-right right" bo-show="!l.graded" style="margin-top: 3px;" translate>courses.optional</span></h5>
+            <h5  ng-click="seek()(null, l.id)" ng-class="{'color-white black': l.id == lecture.id, 'light-grey-hover':l.id != lecture.id }" style="cursor:pointer; margin: 0px;padding-left:15px" class="truncate">
+                <b bo-text="l.name"></b>
+                <span class="label round blue with-tiny-padding with-tiny-margin-right right" bo-show="!l.graded" style="margin-top: 3px;" translate>courses.optional</span>
+            </h5>
             <div style="margin-left: 20px;">
                 <span bo-if="l.description">
                     <h6 class="subheader uppercase" translate>lectures.description</h6>

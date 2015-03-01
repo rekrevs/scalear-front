@@ -8,10 +8,10 @@
 			<img ng-src="{{course.image_url || '../images/course_image.png'}}" />
 		</div>
 	</div>
-	<div ng-show="!course.importing" class="right inline with-margin">
+	<div ng-show="!course.importing" class="right inline with-small-margin">
 		<delete_button size="big" mode="content_navigator" color='dark' action="deletecourse(course)" />
 	</div>
-  	<div class="small-12 medium-8 large-9 columns" style="padding-top: 10px; padding-bottom: 10px">  		
+  	<div class="small-12 medium-8 large-9 columns" style="padding-top: 10px;">  		
 		<div class="row">
 			<div class="small-10 columns">
 				<h5 class="truncate"><a ui-sref="course.course_editor({ course_id: course.id })" class="title looks-like-a-link truncate" style="font-weight:300" title="{{course.name}}">{{course.short_name}} | {{course.name}} <i  class="label size-10 round red with-tiny-padding" ng-if="course.importing" style="font-size: 12px;"><span translate>controller_msg.importing_data</span>...</i></a></h5>

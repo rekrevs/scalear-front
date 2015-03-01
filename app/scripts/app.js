@@ -27,6 +27,7 @@ angular.module('scalearAngularApp', [
     'ngResource',
     'ngSanitize',
     'ui.router',
+    // 'ngTouch',
     // 'ui.bootstrap.accordion',
     // 'ui.bootstrap.tabs',
     // 'ui.bootstrap.collapse',

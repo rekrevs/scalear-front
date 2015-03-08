@@ -346,32 +346,32 @@ angular.module('scalearAngularApp')
 
             var template ='<span ng-init="initFilters()">'+
                             '<li>'+
-                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'note\')">'+
-                                    '<input id="showNotesCheckbox" type="checkbox" ng-checked="lecture_filter.note" />'+
-                                    '<span translate>course_settings.show_notes</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'note\')">'+
+                                    '<input id="showNotesCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.note" />'+
+                                    '<span style="font-size:14px" translate>course_settings.show_notes</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'discussion\')">'+
-                                    '<input id="showQuestionsCheckbox" type="checkbox" ng-checked="lecture_filter.discussion" />'+
-                                    '<span translate>course_settings.show_discussion</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'discussion\')">'+
+                                    '<input id="showQuestionsCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.discussion" />'+
+                                    '<span style="font-size:14px" translate>course_settings.show_discussion</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'quiz\')">'+
-                                    '<input id="showQuizzesCheckbox" type="checkbox" ng-checked="lecture_filter.quiz" />'+
-                                    '<span translate>course_settings.show_quizzes</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'quiz\')">'+
+                                    '<input id="showQuizzesCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.quiz" />'+
+                                    '<span style="font-size:14px" translate>course_settings.show_quizzes</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'confused\')">'+
-                                    '<input id="showConfusedCheckbox" type="checkbox" ng-checked="lecture_filter.confused" />'+
-                                    '<span translate>course_settings.show_confused</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'confused\')">'+
+                                    '<input id="showConfusedCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.confused" />'+
+                                    '<span style="font-size:14px" translate>course_settings.show_confused</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<a class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="exportNotes()">'+
-                                    '<span translate>lectures.download_notes</span>'+
+                                '<a class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="exportNotes()">'+
+                                    '<span style="font-size:14px" translate>lectures.download_notes</span>'+
                                 '</a>'+
                             '</li>'+
                         '</span>'

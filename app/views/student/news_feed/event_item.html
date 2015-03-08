@@ -4,7 +4,7 @@
 			<i ng-if="event.class_name == 'quiz' && event.quiz_type != 'survey'" class="fi-clipboard-pencil" ></i>
 			<i ng-if="event.quiz_type == 'survey'" class="fi-clipboard-notes" ></i>  -->
 			<i ng-if="event.class_name == 'announcement'" class="fi-megaphone"/>
-			<small class="with-tiny-margin-left">{{event.timestamp | fromNow}}</small>
+			<small class="with-tiny-margin-left">{{(event.timestamp || event.updated_at) | fromNow}}</small>
 	</div>
 	<div class="with-padding">
 		<!-- <div ng-show="event.class_name == 'lecture' || event.class_name == 'quiz'" class="truncate">

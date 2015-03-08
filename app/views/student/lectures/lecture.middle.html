@@ -13,10 +13,9 @@
 	'large-uncentered land-uncentered': delayed_timeline_open, 		 
 	'land-medium-11':ContentNavigator.status && !delayed_timeline_open	
 	}">
-	<br/>
 <!-- 'large-uncentered':delayed_navigator_open || delayed_timeline_open,
 	'large-10':ContentNavigator.status && !delayed_timeline_open -->
-		<div ng-show="lecture" class="small-12 columns no-padding">
+		<div ng-show="lecture" class="small-12 columns no-padding with-small-padding-top">
 			<div id="main-video-container" ng-style="container_style"> 
 				<!-- <h4 ng-bind="module_obj[lecture.group_id].name+': '+lecture.name" class="show-inline no-margin"></h4> -->				
 				<form name="answer_form" novalidate >
@@ -56,7 +55,7 @@
 										</div>
 									</quiz>
 								</youtube>
-								<progress-bar ng-if="!slow && lecture.url && video_ready" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' blink="blink_class" total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" videoready="video_ready" style="position: relative;">
+								<progress-bar ng-if="!slow && lecture.url && show_progressbar" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' blink="blink_class" total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" videoready="video_ready" style="position: relative;">
 									<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: -170px;position: absolute;text-align: center;background: whitesmoke;z-index: 1;width: 70%;left: 100px;font-weight: 300;"><b><span translate>lectures.note</span>:</b> <span translate>did_not_get_credit</span></div>
 									<div ng-show="video_end" style="position: absolute;top: -71px;left: 47%;z-index:1">
 										<button id="replay_button" type="button" ng-click="replay()" class="button" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>

@@ -475,9 +475,10 @@ return{
 				$scope.unregister_state_event()	
 		}
 
-		$scope.resize.big = function()
-		{
-            $rootScope.changeError = true;
+		$scope.resize.big = function(){
+
+			console.log("resizing big")
+            // $rootScope.changeError = true;
 			//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 			var factor=16.0/9.0
             var win = angular.element($window)
@@ -485,7 +486,7 @@ return{
             var progressbar_height = 80
 
 			$scope.fullscreen = true
-			angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
+			// angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
 			angular.element("body").css("overflow","hidden");
 			angular.element("body").css("position","fixed")
 

@@ -91,6 +91,7 @@ angular.module('scalearAngularApp')
         $scope.passed_requirments = true
         $scope.lecture = null
         $scope.video_ready=false
+        $scope.show_progressbar = false
     }
 
     var init = function() {            
@@ -189,9 +190,9 @@ angular.module('scalearAngularApp')
                 if($scope.should_play)
                     setShortcuts()
 
-                if(isiPad()){
-                    $scope.video_ready=true
-                }
+                // if(isiPad()){
+                //     $scope.video_ready=true
+                // }
                 $timeout(function(){
                     $scope.scrollIntoView()
                 },500)
@@ -296,7 +297,7 @@ angular.module('scalearAngularApp')
         $timeout(function(){
             $scope.lecture_player.controls.play()
             $scope.play_pause_class = "pause"
-        },500)
+        },1000)
     }
 
      $scope.refreshVideo=function(){
@@ -311,7 +312,7 @@ angular.module('scalearAngularApp')
     $scope.seek = function(time, lecture_id) { // must add condition where lecture is undefined could be coming from progress bar
         $scope.closeReviewNotify()
         if(!lecture_id || lecture_id == $scope.lecture.id){ //if current lecture
-            if(time >=0)
+            if(time >=0 && $scope.show_progressbar)
                 $scope.lecture_player.controls.seek(time)
         }
         else{
@@ -375,6 +376,7 @@ angular.module('scalearAngularApp')
         $scope.play_pause_class = 'pause'  
         checkIfQuizSolved()
         $scope.video_end = false
+        //
     }
 
     $scope.lecture_player.events.onPause= function(){
@@ -402,13 +404,17 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.canPlay=function(){
-        if($scope.go_to_time){
+        if($scope.go_to_time && !isiPad()){
             console.log("can play")
             if($scope.go_to_time >=0)
                 $scope.seek_and_pause($scope.go_to_time)
             $scope.go_to_time = null
         }
     } 
+
+    $scope.lecture_player.events.waiting=function(){
+        $scope.show_progressbar = true
+    }
 
     var showNotification=function(msg, sub_msg, middle_msg){
         $scope.notification_message=$translate(msg);
@@ -466,10 +472,8 @@ angular.module('scalearAngularApp')
     }
 
     var goDesktopSmallScreen=function(){
-        console.log("going small")
         $scope.resize.small()
         $scope.fullscreen= false
-         console.log($scope.fullscreen)
         $scope.video_class = 'flex-video'
         $scope.container_class=""
         $timeout(function(){$scope.$emit("updatePosition")})
@@ -480,10 +484,9 @@ angular.module('scalearAngularApp')
     }
 
     var goDesktopFullscreen=function(){
-        console.log("going fullscreen")
         $scope.resize.big()
+        // $scope.video_class = 'video_class_full'        
         $scope.fullscreen= true
-        $scope.video_class = 'video_class_full'
         $scope.container_class="black"
     }
 
@@ -507,7 +510,7 @@ angular.module('scalearAngularApp')
     var goMobileFullscreen=function(){
         $scope.video_class = ''
         $scope.container_class='mobile_video_full'
-        $scope.video_layer ={'width':'100%','height': '86%', 'position': 'relative'}
+        $scope.video_layer ={'width':'100%','height': '88%', 'position': 'relative'}
         $scope.resize.big()
         $scope.fullscreen= true
         $timeout(function(){$scope.$emit("updatePosition")})

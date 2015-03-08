@@ -31,7 +31,7 @@
         <div class="right">  
             <!-- <controls ng-if="('**.courseware.lecture' | includedByState)" class="show-inline"> -->
             </controls>
-            <button ng-show="player.controls.youtube" class="qualityDiv no-padding control-button dropdown show-inline drop-top right" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
+            <button ng-show="player.controls.youtube" class="qualityDiv no-padding control-button show-inline drop-top right" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
                 <ul id="quality_list" class="f-dropdown quality-dropdown top-dropdown" style="min-width: 210px;display: block;left: -115px;top: -48px;background: rgb(245, 245, 245);">
                     <div class="small-6 columns no-padding" style="border-right: 1px solid rgb(174, 174, 174);">
                         <li class="dark-text" translate>youtube.quality</li>
@@ -70,9 +70,9 @@
 
         <div class="controlDiv show-inline left {{blink}}" ng-class="play_pause_class" ng-click="playBtn()"></div>
 
-        <span class="hide-for-semi-small"><div id="volume" class="volumeDiv show-inline left" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)"></div>
+        <span class="hide-for-medium-down"><div id="volume" class="volumeDiv show-inline left" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)"></div>
         <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-right: 15px;margin-top: 14px;"/></span>
-        <div class="timer color-grey show-inline size-14" style="margin-top:9px;text-align: left">
+        <div class="timer color-grey show-inline size-14" style="margin-top:7px;text-align: left">
             <span class="hide-for-small-only">
                 <span style="float:left;">{{current_time|format:'h:mm:ss'}}</span>
                 <span class="hide-for-semi-medium"> / {{total_duration|format:'h:mm:ss'}}</span>

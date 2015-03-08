@@ -218,7 +218,7 @@ angular.module('scalearAngularApp')
 			$scope.submitted= false
 			$scope.editing_mode = true;
 			$scope.selected_quiz = quiz
-			$scope.$parent.selected_quiz_id = quiz.id
+			$scope.$parent.$parent.selected_quiz_id = quiz.id
 			$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
 			if(quiz.quiz_type =="html"){
@@ -286,9 +286,9 @@ angular.module('scalearAngularApp')
 
 	var mergeDragPos=function(answers){
 		var all_pos=[]
-		answers.forEach(function(elem){
+		answers.forEach(function(elem, i){
+			elem.pos = i
 			all_pos.push(parseInt(elem.pos))
-			$log.debug(all_pos)
 		});
 		return all_pos
 	}
@@ -374,27 +374,20 @@ angular.module('scalearAngularApp')
 
 
 	$scope.addAnswer= function(ans,h,w,l,t){
-		$log.debug("adding answer")
   		$scope.new_answer=CourseEditor.newAnswer(ans,h,w,l,t,"lecture", $scope.selected_quiz.id)
   		$scope.selected_quiz.answers.push($scope.new_answer)
   		if($scope.selected_quiz.question_type.toLowerCase() =="drag"){
 			//$scope.new_answer.pos = data.current.pos
 			var max = Math.max.apply(Math,$scope.allPos)
-			max = max ==-Infinity? -1 : max
-			$log.debug("max= "+max)
-			$scope.new_answer.pos=max+1
+			$scope.new_answer.pos = max ==-Infinity? 0 : max+1
 		    $scope.allPos=mergeDragPos($scope.selected_quiz.answers)
 		}
 	}
 	
 	$scope.removeAnswer = function(index){
-		$log.debug("removing answer")
-		var backup = angular.copy($scope.selected_quiz.answers[index])
 		$scope.selected_quiz.answers.splice(index, 1);
-		$log.debug(backup)
 		 if($scope.selected_quiz.question_type.toLowerCase()=="drag"){
 			$scope.allPos=mergeDragPos($scope.selected_quiz.answers)
-			$log.debug($scope.allPos)
 		}
 	}
 
@@ -487,7 +480,7 @@ angular.module('scalearAngularApp')
 	var clearQuizVariables= function(){
 		$scope.selected_quiz={}	
 		// $scope.$parent.selected_quiz= {}
-		$scope.$parent.selected_quiz_id = null
+		$scope.$parent.$parent.selected_quiz_id = null
 		$scope.quiz_deletable = false
 	}
 

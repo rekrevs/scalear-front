@@ -350,7 +350,6 @@ angular.module('scalearAngularApp')
 			}	
 
 			scope.selectField=function(){
-				console.log("dfghjkhljkhgfdskm")
 				$timeout(function(){
 					element.find('textarea')[0].select()
 				})				
@@ -368,36 +367,30 @@ angular.module('scalearAngularApp')
 			if(scope.data.pos == null){	
 				$log.debug("pos undefined")
 				var max = Math.max.apply(Math,scope.list)
-				max = max ==-Infinity? -1 : max
-				$log.debug("max= "+max)
-				scope.data.pos=max+1
+				scope.data.pos = max ==-Infinity? 0 : max+1
 				scope.list.push(scope.data.pos)
 			}
 
-			scope.pos= parseInt(scope.data.pos)
-
 			if(!(scope.data.explanation instanceof Array)){
-				$log.debug("not an array")
 				scope.data.explanation = []
 				for(var i in scope.list)
 					scope.data.explanation[i]=""
 			}
 
 			scope.quiz.answers.forEach(function(ans){
-				if(!ans.explanation[scope.pos])
-				{
-					ans.explanation[scope.pos]=""
-					$log.debug("creating a new eleme in array" + scope.pos)
-				}
+				if(!ans.explanation[scope.data.pos])
+					ans.explanation[scope.data.pos]=""
 			})
 
 
 			var template = '<ul class="no-margin">'+
-							'<label class="show-inline"><span translate>groups.correct_because</span></label>'+
 							"<span class='right' tooltip-append-to-body='true' tooltip={{'click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false'  color='dark' action='remove()'></delete_button></span>"+
-							'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
-							'<label ng-repeat=\'num in list|filter:"!"+pos\' >'+
-								'{{num}} <span translate>groups.incorrect_because</span>'+
+							'<label>'+
+								'<span translate>groups.correct_because</span>'+
+								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
+							'</label>'+							
+							'<label ng-repeat=\'num in list|filter:"!"+data.pos\' >'+
+								'{{num+1}} <span translate>groups.incorrect_because</span>'+
 								'<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />'+
 							'</label>'+
 							"<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save_close</span></button>"+
@@ -408,8 +401,9 @@ angular.module('scalearAngularApp')
             	content: template,
             	html: true,
             	// fullscreen:false
+            	topcut:true,
+            	instant_show:!scope.data.id
             }
-            console.log(element)
 
             angular.element(element.children()[0]).resizable({
             	containment: ".videoborder",  

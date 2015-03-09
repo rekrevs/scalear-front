@@ -4922,7 +4922,8 @@ meta.foundation-mq-topbar {
     width: auto;
     overflow: visible;
     clip: auto;
-    position: absolute !important; } }*/
+    position: absolute !important; } */
+  }
 .text-left {
   text-align: left !important; }
 

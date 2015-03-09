@@ -4839,14 +4839,14 @@ meta.foundation-mq-topbar {
       overflow: visible;
       clip: auto;
       position: absolute !important; }
-    .top-bar-section .has-dropdown > a:focus + .dropdown {
+    /*.top-bar-section .has-dropdown > a:focus + .dropdown {
       display: block;
       position: static !important;
       height: auto;
       width: auto;
       overflow: visible;
       clip: auto;
-      position: absolute !important; }
+      position: absolute !important; }*/
     .top-bar-section .has-dropdown .dropdown li.has-dropdown > a:after {
       border: none;
       content: "\00bb";
@@ -4915,14 +4915,14 @@ meta.foundation-mq-topbar {
     overflow: visible;
     clip: auto;
     position: absolute !important; }
-  .no-js .top-bar-section .has-dropdown > a:focus + .dropdown {
+ /* .no-js .top-bar-section .has-dropdown > a:focus + .dropdown {
     display: block;
     position: static !important;
     height: auto;
     width: auto;
     overflow: visible;
     clip: auto;
-    position: absolute !important; } }
+    position: absolute !important; } }*/
 .text-left {
   text-align: left !important; }
 

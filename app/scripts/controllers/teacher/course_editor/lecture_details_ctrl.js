@@ -4,6 +4,42 @@ angular.module('scalearAngularApp')
     .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope',
         function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope) {
 
+            var item_unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
+                if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
+                    $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
+                    console.log($scope.items_obj["lecture"][$stateParams.lecture_id])
+                    if($scope.lecture.url && $scope.lecture.url!="none"){
+                        var video_id = $scope.isYoutube($scope.lecture.url)
+                        if(video_id)
+                            getYoutubeDetails(video_id[1]);
+                    }
+                    // else
+                        // $scope.lecture.url = $translate("lectures.add_video")
+                    if($scope.lecture.due_date) 
+                        $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date) 
+                    
+                    item_unwatch()      
+                    var module_unwatch = $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){                  
+                        if ($scope.lecture.appearance_time_module) { 
+                            $scope.lecture.appearance_time = $scope.module_obj[$scope.lecture.group_id].appearance_time; 
+                        } 
+                        if(isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)){
+                            $scope.lecture.disable_module_due_controls = true//isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)
+                            // $scope.lecture.due_date_module = false
+                        }
+                        else{
+                            $scope.lecture.disable_module_due_controls = false
+                        }
+                        if ($scope.lecture.due_date_module) { 
+                            $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date; 
+                            // $scope.lecture.due_date_enabled = !isDueDateDisabled() 
+                        }
+                        module_unwatch() 
+                    })
+                    $scope.link_url=$state.href('course.module.courseware.lecture', {module_id: $scope.lecture.group_id, lecture_id:$scope.lecture.id}, {absolute: true}) 
+                }
+            })
+
             
             //**************************FUNCTIONS****************************************///
             $scope.is_youtube = false
@@ -73,7 +109,7 @@ angular.module('scalearAngularApp')
                 delete modified_lecture.className;
                 delete modified_lecture.detected_aspect_ratio;
                 delete modified_lecture.due_date_enabled
-                delete modified_lecture.disable_due_controls
+                delete modified_lecture.disable_module_due_controls
 
                 $log.debug(modified_lecture)
 
@@ -119,7 +155,7 @@ angular.module('scalearAngularApp')
 
                 $scope.lecture.due_date = due_date
                 $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date)
-                $scope.lecture.due_date_module = !$scope.lecture.disable_due_controls && $scope.lecture.due_date_enabled
+                $scope.lecture.due_date_module = !$scope.lecture.disable_module_due_controls && $scope.lecture.due_date_enabled
             }
             $scope.visible = function(appearance_time) {
                 if (new Date(appearance_time) <= new Date()) {
@@ -194,39 +230,6 @@ angular.module('scalearAngularApp')
             }
 
             //********************************************************************//
-            var item_unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
-                if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
-                    $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
-                    if($scope.lecture.url && $scope.lecture.url!="none"){
-                        var video_id = $scope.isYoutube($scope.lecture.url)
-                        if(video_id)
-                            getYoutubeDetails(video_id[1]);
-                    }
-                    // else
-                        // $scope.lecture.url = $translate("lectures.add_video")
-                    if($scope.lecture.due_date) 
-                        $scope.lecture.due_date_enabled =!isDueDateDisabled($scope.lecture.due_date) 
-                    
-                    item_unwatch()      
-                    var module_unwatch = $scope.$watch('module_obj[' + $scope.lecture.group_id + ']',function(){                  
-                        if ($scope.lecture.appearance_time_module) { 
-                            $scope.lecture.appearance_time = $scope.module_obj[$scope.lecture.group_id].appearance_time; 
-                        } 
-                        if(isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)){
-                            $scope.lecture.disable_due_controls = true//isDueDateDisabled($scope.module_obj[$scope.lecture.group_id].due_date)
-                            $scope.lecture.due_date_module = false
-                        }
-                        else{
-                            $scope.lecture.disable_due_controls = false
-                        }
-                        if ($scope.lecture.due_date_module) { 
-                            $scope.lecture.due_date = $scope.module_obj[$scope.lecture.group_id].due_date; 
-                            // $scope.lecture.due_date_enabled = !isDueDateDisabled() 
-                        }
-                        module_unwatch() 
-                    })
-                    $scope.link_url=$state.href('course.module.courseware.lecture', {module_id: $scope.lecture.group_id, lecture_id:$scope.lecture.id}, {absolute: true}) 
-                }
-            })
+            
 
 }]);

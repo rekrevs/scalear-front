@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
 				parent.focus()
 
 				scope.timeout_promise = $interval(function(){
-					if(player_controls.readyState() == 0 && !(isiPad() && isMP4(scope.url)))
+					if(player_controls.readyState() == 0 && !isiPad())
 						scope.$emit('slow', isYoutube(scope.url))
 				},15000, 1)
 			}

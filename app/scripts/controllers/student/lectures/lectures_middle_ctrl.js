@@ -190,9 +190,9 @@ angular.module('scalearAngularApp')
                 if($scope.should_play)
                     setShortcuts()
 
-                // if(isiPad()){
-                //     $scope.video_ready=true
-                // }
+                if(isiPad()){
+                    $scope.video_ready=true
+                }
                 $timeout(function(){
                     $scope.scrollIntoView()
                 },500)
@@ -491,16 +491,15 @@ angular.module('scalearAngularApp')
     }
 
     var goMobileSmallScreen=function(){
-        console.log("close fullscreen")
         $scope.video_class = 'flex-video'
         $scope.container_class=''
         $scope.video_layer ={}
-        $scope.quiz_layer.width="100%"
-        $scope.quiz_layer.height="100%"
-        $scope.quiz_layer.position="absolute"
-        $scope.quiz_layer.marginTop=""
+        // $scope.quiz_layer.width="100%"
+        // $scope.quiz_layer.height="100%"
+        // $scope.quiz_layer.position="absolute"
+        // $scope.quiz_layer.marginTop=""
         $scope.fullscreen= false
-        $timeout(function(){$scope.$emit("updatePosition")})
+        // $timeout(function(){$scope.$emit("updatePosition")})
         if($scope.quiz_mode == true){
             $scope.quiz_mode = false
             $timeout(function(){$scope.quiz_mode = true},200)
@@ -510,10 +509,10 @@ angular.module('scalearAngularApp')
     var goMobileFullscreen=function(){
         $scope.video_class = ''
         $scope.container_class='mobile_video_full'
-        $scope.video_layer ={'width':'100%','height': '88%', 'position': 'relative'}
-        $scope.resize.big()
+        $scope.video_layer ={'width':'100%','height': '90%', 'position': 'relative'}
+        // $scope.resize.big()
         $scope.fullscreen= true
-        $timeout(function(){$scope.$emit("updatePosition")})
+        // $timeout(function(){$scope.$emit("updatePosition")})
     }
 
     var openTimeline=function(){

@@ -1,8 +1,8 @@
-<div class="row" ng-show="all_surveys">
+<div ng-show="all_surveys">
 	<select class="small-10 columns" ng-model="selected_survey" ng-options="q[0] for q in all_surveys" ng-change="changeSurvey()"></select>
 	<div class="small-2 columns"><a ng-show="button_msg" class="button tiny secondary" ng-click="makeVisibleBtn()">{{button_msg | translate}}</a></div>
 </div>
-<div class="row">
+<div>
 	<div class="small-4 small-centered columns">
 		<center>
 			<b>{{selected_survey[0]}}</b>	
@@ -10,7 +10,7 @@
 	</div>
 	<br/>	
 </div>
-<div class="row" ng-repeat="element in ordered_survey">
+<div ng-repeat="element in ordered_survey">
     <div class="small-12 columns chart" ng-if="element[1]!='Free Text Question' && element[1]!='header'" ng-init="chart=createSurveyChart(survey_chart_data[element[0]].answers, $index, student_count)"> 
     	<div >
 			<span translate>answer.question</span>

@@ -1,7 +1,7 @@
 <!--build:css(.tmp/styles) styles/progress.css -->
 <link rel="stylesheet" href="styles/teacher/progress.css"/>
 <!-- endbuild -->
-
+<div class="small-12 columns">
 <tabset>
     <tab heading="{{'courses.course_progress'|translate}}" select="moduleProgressTab()" style="cursor:pointer">
 		<div style="overflow:auto" ng-if="module_status">
@@ -16,3 +16,4 @@
     </tab>
 </tabset>
 <center><loading size="big" show="loading_modules || loading_total_charts" /></center>
+</div>

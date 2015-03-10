@@ -82,6 +82,14 @@ angular.module('scalearAngularApp')
 			          		})
 			          		options.instant_show =false
 			          	}
+
+			          	$(document).on("click", function (e) {
+						    var target = $(e.target)
+						    var inPopover = target.closest('.popover').length > 0
+						    var isElem = target.is(element)
+						    if (!inPopover && !isElem)
+						    	element.popover('hide');
+						});	     
 			        }
 			    }
 		    })

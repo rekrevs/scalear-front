@@ -338,7 +338,7 @@ angular.module('scalearAngularApp')
             title:"<b ng-class='title_class'>{{(exp_title|translate)}}</b><h6 class='subheader no-margin' style='font-size:12px' ng-show='show_sub_title' translate>lectures.other_correct_answers</h6>",
             content:"<div>{{explanation[data.id][1]}}</div>",
             html:true,
-            trigger:'hover',
+            trigger:$rootScope.is_mobile? 'click' : 'hover',
             placement:(scope.data.xcoor > 0.5)? "left":"right"
           }
           // if(ontop.css('position') != 'fixed'){
@@ -509,8 +509,9 @@ angular.module('scalearAngularApp')
             title:"<b ng-class='{green_notification: explanation[selected_id][0], red_notification: !explanation[selected_id][0]}'>{{explanation[selected_id][0]?('lectures.correct'|translate):('lectures.incorrect'|translate)}}</b>",
             content:"<div>{{explanation[selected_id][1]}}</div>",
             html:true,
-            trigger:'hover',
-            rightcut: (ontop.css('position') == 'fixed')
+            trigger:$rootScope.is_mobile? 'click' : 'hover',
+            // rightcut: (ontop.css('position') == 'fixed')
+            placement:(scope.data.xcoor > 0.5)? "left":"right"
           }
           var bg_color = scope.explanation[scope.data.id][0]? "darkseagreen": "orangered"
           angular.element('#'+scope.data.id).css('background-color', bg_color)

@@ -117,7 +117,16 @@ angular.module('scalearAngularApp')
             //     });
             // };
 
+            var isMobile=function(){
+                var iOS = false,
+                    iDevice = ['iPad', 'iPhone', 'iPod','Android'];
+                for ( var i = 0; i < iDevice.length ; i++ ) {
+                    if( navigator.platform === iDevice[i] ){ iOS = true; break; }
+                }
+                return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
+            }
 
+            $rootScope.is_mobile= isMobile()
 
             getCurrentCourses()
 

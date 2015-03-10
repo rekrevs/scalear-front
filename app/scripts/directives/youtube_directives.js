@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
                     scope.controls=0;   
                 if(!scope.autoplay || scope.autoplay==undefined)
                     scope.autoplay=0; 
-                if(isiPad())
+                if($rootScope.is_mobile)
                 	scope.autoplay=1; 
 
                 if(isYoutube(scope.url)){
@@ -71,7 +71,7 @@ angular.module('scalearAngularApp')
                     player = Popcorn(video,{});
                     video.src = scope.url
                     player.video.className = "fit-inside"
-                    if(isiPad() || scope.controls == "default")
+                    if($rootScope.is_mobile || scope.controls == "default")
                     	player.controls(true);
                     player.autoplay(false);
                 }
@@ -82,21 +82,21 @@ angular.module('scalearAngularApp')
 				parent.focus()
 
 				scope.timeout_promise = $interval(function(){
-					if(player_controls.readyState() == 0 && !isiPad())
+					if(player_controls.readyState() == 0 && !$rootScope.is_mobile)
 						scope.$emit('slow', isYoutube(scope.url))
 				},15000, 1)
 			}
 
-		   	var isiPad=function(){
-		        var i = 0,
-		            iOS = false,
-		            iDevice = ['iPad', 'iPhone', 'iPod','Android'];
+		   	// var isiPad=function(){
+		    //     var i = 0,
+		    //         iOS = false,
+		    //         iDevice = ['iPad', 'iPhone', 'iPod','Android'];
 
-		        for ( ; i < iDevice.length ; i++ ) {
-		            if( navigator.platform === iDevice[i] ){ iOS = true; break; }
-		        }
-		        return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
-		    }
+		    //     for ( ; i < iDevice.length ; i++ ) {
+		    //         if( navigator.platform === iDevice[i] ){ iOS = true; break; }
+		    //     }
+		    //     return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
+		    // }
 
 			var formatYoutubeURL=function(url,vq,time, autoplay, controls){
 				var short_url = isShortYoutube(url)
@@ -252,7 +252,7 @@ angular.module('scalearAngularApp')
 				player.on("loadeddata", 
 					function(){
 						console.log("Video data loaded and ready")
-						if(isiPad())
+						if($rootScope.is_mobile)
 							player.controls(false);
 						if(player_events.onReady){
 							player_events.onReady();

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','scalear_utils', '$tour', 'ContentNavigator', 'TimelineNavigator' ,function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, scalear_utils, $tour, ContentNavigator, TimelineNavigator) {
+    .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','scalear_utils', '$tour', 'ContentNavigator', 'TimelineNavigator', '$rootScope',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, scalear_utils, $tour, ContentNavigator, TimelineNavigator, $rootScope) {
 
     console.log("lect mid ctlr")
     $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
@@ -66,14 +66,7 @@ angular.module('scalearAngularApp')
             $scope.lecture_player.controls.pause()
     })
 
-    var isiPad=function(){
-        var iOS = false,
-            iDevice = ['iPad', 'iPhone', 'iPod','Android'];
-        for ( var i = 0; i < iDevice.length ; i++ ) {
-            if( navigator.platform === iDevice[i] ){ iOS = true; break; }
-        }
-        return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
-    }
+    
 
     var initVariables=function(){
         $scope.studentAnswers = {}
@@ -97,7 +90,7 @@ angular.module('scalearAngularApp')
     var init = function() {            
         initVariables()      
         
-        if(!isiPad()){
+        if(!$rootScope.is_mobile){
             document.addEventListener(screenfull.raw.fullscreenchange, function () {
                 if(!screenfull.isFullscreen){
                     goSmallScreen()
@@ -190,7 +183,7 @@ angular.module('scalearAngularApp')
                 if($scope.should_play)
                     setShortcuts()
 
-                if(isiPad()){
+                if($rootScope.is_mobile){
                     $scope.video_ready=true
                 }
                 $timeout(function(){
@@ -269,7 +262,7 @@ angular.module('scalearAngularApp')
 
     $scope.scrollIntoView=function(){
         console.log("scroll to view")
-        if($scope.lecture && !isiPad()){
+        if($scope.lecture && !$rootScope.is_mobile){
             console.log($('.student_timeline'))
             $('.student_timeline').scrollToThis('#outline_'+$scope.lecture.id, {offsetTop: $('.student_timeline').offset().top, duration: 400});
         }
@@ -404,7 +397,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.canPlay=function(){
-        if($scope.go_to_time && !isiPad()){
+        if($scope.go_to_time && !$rootScope.is_mobile){
             console.log("can play")
             if($scope.go_to_time >=0)
                 $scope.seek_and_pause($scope.go_to_time)
@@ -463,11 +456,11 @@ angular.module('scalearAngularApp')
     }
 
     var goFullscreen=function(){
-        isiPad()? goMobileFullscreen() : goDesktopFullscreen()
+        $rootScope.is_mobile? goMobileFullscreen() : goDesktopFullscreen()
     }
 
     var goSmallScreen=function(){
-        isiPad()? goMobileSmallScreen() : goDesktopSmallScreen()
+        $rootScope.is_mobile? goMobileSmallScreen() : goDesktopSmallScreen()
         $scope.lecture_player.controls.pause();
     }
 

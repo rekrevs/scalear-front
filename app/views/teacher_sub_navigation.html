@@ -10,7 +10,7 @@
                 <li toggle-top-bar class="menu-icon"><a href=""></a></li>
                 <li ></li>
             </ul>
-            <ul class="title-area right" ng-if="('**.module.course_editor.lecture.**' | includedByState) || ('**.module.course_editor.quiz.**' | includedByState)">
+            <ul class="title-area right" ng-if="('**.module.course_editor.**' | includedByState)">
                 <li class="name" >
                   <h1 class="disable_selection right truncate dark-text sub-header-component dark-medium-grey" ng-class="{'blue-color-white': DetailsNavigator.status, 'dark-medium-grey-blue-hover': !DetailsNavigator.status}" style="width: 300px;">
                     <a ng-click="toggleDetails()" style="color: inherit;"><i ng-class="{'arrow_down_dark_icon': !DetailsNavigator.status, 'arrow_up_dark_icon': DetailsNavigator.status }"></i><i ng-class="{'arrow_down_dark_icon': !DetailsNavigator.status, 'arrow_up_dark_icon': DetailsNavigator.status }" style="position:absolute;top:2px;left:15px"></i> <span translate>lectures.details</span></a>

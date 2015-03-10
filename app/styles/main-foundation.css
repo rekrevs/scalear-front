@@ -51,7 +51,7 @@ width: 78%;
   overflow-y: auto;
   /*z-index: 1 !important;*/
   /*top: -5px;*/
-  right: -0.6em;
+  /*right: -0.6em;*/
   -webkit-overflow-scrolling: touch;
 }
 
@@ -1821,7 +1821,7 @@ a.editable-click{
 }
 
 .width-max-heigh{
-    max-width:118vh
+    max-width:120vh
 }
 
 @media only screen and (orientation:landscape) and (device-width:768px){
@@ -1845,13 +1845,17 @@ a.editable-click{
     position: relative;
     width: 95.66667%; 
   }
+  .ipad .land-medium-12 {
+    position: relative;
+    width: 100%; 
+  }
 
   .ipad .land-no-padding{
     padding: 0px !important; 
   }
   
   .ipad .land-height{
-    height: 78vh !important;
+    height: 80vh !important;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -1874,7 +1878,7 @@ a.editable-click{
   }
 
   .ipad .width-max-heigh{
-    max-width:initial
+    max-width:134vh
   }
 }
 

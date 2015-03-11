@@ -393,7 +393,7 @@ angular.module('scalearAngularApp')
 
 	var updateAnswers=function(ans, quiz, options){
 		$log.debug("savingAll")
-		$scope.disable_save_button = true
+		// $scope.disable_save_button = true
 		var selected_quiz = angular.copy($scope.selected_quiz)
 		if(options && options.exit)
 				$scope.exitBtn()
@@ -405,7 +405,7 @@ angular.module('scalearAngularApp')
 			},
 			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type },
 			function(data){
-				$scope.disable_save_button = false
+				// $scope.disable_save_button = false
 				if(!(options && options.exit))
 					if(selected_quiz.quiz_type =="invideo")
 						getQuizData();

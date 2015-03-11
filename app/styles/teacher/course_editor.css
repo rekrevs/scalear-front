@@ -223,8 +223,8 @@ label{
 
 .position-header{
   position: absolute;
-  left: -25px;
-  font-style: bold;
+  left: -49px;
+  font-weight: bold;
   cursor: move;
 }
 

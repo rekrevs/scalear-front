@@ -106,6 +106,8 @@ var translation_sv=function(){
     pause: "Paus",
     resume: "Återuppta",
     leave_feedback:"Lämna dina synpunkter",
+    start: "Start",
+    end: "Slut",
     support:{
         ipad:"iPad stöd är för närvarande i beta.",
         mobiles:"Mobila enheter är för närvarande inte fullt stöd.",
@@ -493,6 +495,7 @@ var translation_sv=function(){
       quiz_question: "Quiz-fråga",
       quiz_time: "Quiz-tid",
       student_link_lecture:"Student länk till video",
+      drag_instruction: "Ange namn för dragbara objekt och placera sina Start och Slut platser på skärmen."
     },
     online_quiz:{
       you_sure_delete_quiz: "Är du säker på att du vill radera quizen '{{quiz}}'?",

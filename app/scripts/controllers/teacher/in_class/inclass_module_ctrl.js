@@ -553,7 +553,7 @@ angular.module('scalearAngularApp')
         }
         text = data[ind][2]
         console.log(text)
-        tooltip_text +=data[ind][0]+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
+        tooltip_text +=data[ind][0]+"</div>" //+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
         var row = {
             "c": [
               {"v": text}, 

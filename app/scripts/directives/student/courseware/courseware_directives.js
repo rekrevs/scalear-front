@@ -150,7 +150,7 @@ angular.module('scalearAngularApp')
 					total++;
 				}
 			}
-	  		scope.$watch('module.items', function() {
+	  		var unwatch = scope.$watch('module.items', function() {
 				scope.module_done = calculateDone()
 			},true)
 
@@ -163,6 +163,10 @@ angular.module('scalearAngularApp')
 				})
 				return done_count == total
 			}
+
+			scope.$on('$destroy', function(){
+         		unwatch()
+         	});
 			
 		}
 	}

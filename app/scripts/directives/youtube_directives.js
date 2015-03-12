@@ -338,7 +338,7 @@ angular.module('scalearAngularApp')
 					parent.focus()
 					if(player_events.onSlow){
 						player_events.onSlow(data);
-						scope.$apply();
+						// scope.$apply();
 					}
 				})
 			}

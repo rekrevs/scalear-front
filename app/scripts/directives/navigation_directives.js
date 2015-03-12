@@ -426,26 +426,28 @@ angular.module('scalearAngularApp')
 	// }
 
   	scope.showModuleCourseware = function(module, event){
-        if(module.id != $state.params.module_id){
-          scope.currentmodule = module//$scope.module_obj[module_id];
-          Module.getLastWatched(
-            {
-            	course_id: $stateParams.course_id, 
-            	module_id: module.id
-            }, 
-            function(data){
-              if(data.last_watched != -1){
-                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
-                scope.currentitem = {id:data.last_watched}
-              }
-              else{
-                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
-                scope.currentitem = {id:module.quizzes[0].id}
-              }
-          }) 
-        }
-        else
-          event.stopPropagation()
+  		if(module.items.length > 0){
+	        if(module.id != $state.params.module_id){
+	          scope.currentmodule = module//$scope.module_obj[module_id];
+	          Module.getLastWatched(
+	            {
+	            	course_id: $stateParams.course_id, 
+	            	module_id: module.id
+	            }, 
+	            function(data){
+	              if(data.last_watched != -1){
+	                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
+	                scope.currentitem = {id:data.last_watched}
+	              }
+	              else{
+	                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
+	                scope.currentitem = {id:module.quizzes[0].id}
+	              }
+	          }) 
+	        }
+	        // else
+	        //   event.stopPropagation()
+	  	}
   	}
                
   	scope.showItem = function(item, type){

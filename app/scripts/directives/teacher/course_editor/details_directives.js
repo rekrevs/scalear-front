@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
     .directive('detailsText', ['$timeout',
         function($timeout) {
             return {
-                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message ||("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message ||("empty"|translate) }} <i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
     .directive('detailsUrl', ['$timeout','$translate',
         function($timeout,$translate) {
             return {
-                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -94,7 +94,7 @@ angular.module('scalearAngularApp')
     .directive('detailsLink', ['$timeout',
         function($timeout) {
             return {
-                template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'"  editable-text="value" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ short_url || "http://" }} <i ng-class="overclass"></i></a>',
+                template: '<a href="#" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-text="value" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ short_url || "http://" }} <i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -156,7 +156,7 @@ angular.module('scalearAngularApp')
     .directive('detailsCheck', ['$timeout',
         function($timeout) {
             return {
-                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" editable-checkbox="checked" blur="submit" e-title="{{title}}" class="editable-checkbox" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ checked && yes || no }}<i ng-class="overclass"></i></a>',
+                template: '<a href="#" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'" editable-checkbox="checked" blur="submit" e-title="{{title}}" class="editable-checkbox" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ checked && yes || no }}<i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     checked: "=",
@@ -180,7 +180,7 @@ angular.module('scalearAngularApp')
     .directive('detailsDate', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" blur="submit" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (date | date:"dd/MM/yyyy") || ("empty"|translate) }}<i ng-class="overclass"></i></a>',
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'" href="#" editable-bsdate="date" blur="submit" e-datepicker-popup="dd-MMMM-yyyy" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (date | date:"dd/MM/yyyy") || ("empty"|translate) }}<i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     date: "=",
@@ -213,7 +213,7 @@ angular.module('scalearAngularApp')
     .directive('detailsArea', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message }}<i ng-class="overclass"></i></a> ',
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -240,7 +240,7 @@ angular.module('scalearAngularApp')
     .directive('bigArea', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="100" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message ||("empty"|translate)  }}<i ng-class="overclass"></i></a> ',
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-textarea="value" e-rows="5" e-cols="100" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value || empty_message ||("empty"|translate)  }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -267,7 +267,7 @@ angular.module('scalearAngularApp')
     .directive('detailsNumber', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField();" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-number="value" e-min="min" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value }}<i ng-class="overclass"></i></a> ',
+                template: '<a onshow="selectField();" ng-mouseover="overclass = \'fi-pencil size-14\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-number="value" e-min="min" onbeforesave="validate()(column,$data)" onaftersave="saveData()">{{ value }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -295,7 +295,7 @@ angular.module('scalearAngularApp')
     .directive('detailsSelect', ['$timeout', '$filter',
         function($timeout, $filter) {
             return {
-                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" blur="submit" editable-select="value" buttons="no" e-ng-options="s.value as (s.text|translate) for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px !important;height:34px">{{ showStatus() }}<i ng-class="overclass"></i></a> ',
+                template: '<a href="#" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'" blur="submit" editable-select="value" buttons="no" e-ng-options="s.value as (s.text|translate) for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" e-style="width:120px !important;height:34px">{{ showStatus() }}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -325,7 +325,7 @@ angular.module('scalearAngularApp')
         function($timeout, $filter) {
             return {
 
-                template: '<a href="#" ng-mouseover="overclass = \'icon-pencil\'" ng-mouseleave="overclass= \'\'" blur="submit" editable-select="value" buttons="no" e-ng-options="s.value for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" >{{ showStatus()}}<i ng-class="overclass"></i></a> ',
+                template: '<a href="#" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'" blur="submit" editable-select="value" buttons="no" e-ng-options="s.value for s in options" onbeforesave="validate()(column,$data)" onaftersave="saveData()" >{{ showStatus()}}<i ng-class="overclass"></i></a> ',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -390,7 +390,7 @@ angular.module('scalearAngularApp')
     ]).directive('detailsTime', ['$timeout',
         function($timeout) {
             return {
-                template: '<a onshow="selectField()" ng-mouseover="overclass = \'icon-pencil\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-bstime="time" e-show-meridian="false" e-minute-step="15" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (time | date:"HH:mm") || ("empty"|translate) }}<i ng-class="overclass"></i></a><timepicker ng-hide="true" />',
+                template: '<a onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" blur="submit" ng-mouseleave="overclass= \'\'" href="#" editable-bstime="time" e-show-meridian="false" e-minute-step="15" onbeforesave="validate()(column,$data)" onaftersave="saveData($data)">{{ (time | date:"HH:mm") || ("empty"|translate) }}<i ng-class="overclass"></i></a><timepicker ng-hide="true" />',
                 restrict: 'E',
                 scope: {
                     time: "=",

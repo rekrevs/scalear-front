@@ -196,10 +196,10 @@ li{
 
 
 .accordion-group .content > ul{
-  font-size: 13px !important;
+  font-size: 12px !important;
   color: black !important;
   text-align: left !important;
-  padding: 2px !important;
+  /*padding: 2px !important;*/
   margin: 0px 0px 0px 0px !important;
   cursor: pointer !important;
 }

@@ -1080,13 +1080,13 @@ var translation_sv=function(){
       interactive_desc: "Frivilliga interaktiva frågor och betygssättning",
       types:{
         video: "Video",
-        video_desc: "Du kan lägga till quizfrågor ovanpå videon",
+        video_desc: "Du kan lägga till quizfrågor ovanpå videon.",
         quiz: "Quiz",            
         survey: "Enkät",
         link: "Kurs Länk",
-        link_desc: "Länk till andra webbplatser eller sidor",
+        link_desc: "Länk till andra webbplatser eller sidor.",
         quiz_or_survey: "Quiz eller enkät",
-        quiz_or_survey_desc: "Text-baserad, kan vara obligatorisk eller frivillig",
+        quiz_or_survey_desc: "Text-baserad, kan vara obligatorisk eller frivillig.",
       },
       questions:{
         choose_question_type: "Välj frågetyp",
@@ -1094,15 +1094,15 @@ var translation_sv=function(){
         categories:{
           on_video:{
             title: "Video-quiz",
-            desc: "Placera quizzen på videon. Quiz måste synas i videon",
+            desc: "Placera quizzen på videon. Använd detta om svaren är synliga i videon.",
           },
           text_quiz:{
             title: "Text-quiz",
-            desc: "Text-quiz på en vit bakgrund. Använd detta om quiz inte syns i videon",
+            desc: "Text-quiz på en vit bakgrund. Använd detta om frågesport svaren inte syns i videon",
           },
           on_video_survey:{
             title: "Video-enkät",
-            desc: "Placera enkäten på videon. Enkät måste synas i videon"
+            desc: "Enkäter har inget rätt svar. Använd detta om undersöknings val syns i videon."
           }
         },
         types:{

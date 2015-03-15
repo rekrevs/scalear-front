@@ -1077,13 +1077,13 @@ var translation_en=function(){
       interactive_desc: "Optional interactive questions and grading",
       types:{
         video: "Video",
-        video_desc: "You can add quiz questions on top of the video",
+        video_desc: "You can add quiz questions on top of the video.",
         quiz: "Quiz",
         survey: "Survey",
         link: "Course Link",
-        link_desc: "Web link to other sites or pages",
+        link_desc: "Web link to other sites or pages.",
         quiz_or_survey: "Quiz or Survey",
-        quiz_or_survey_desc: "Text-based, not part of a video. Can be graded or optional",
+        quiz_or_survey_desc: "Text-based, not part of a video. Can be graded or optional.",
       },
       questions:{
         choose_question_type: "Choose Question Type",
@@ -1091,15 +1091,15 @@ var translation_en=function(){
         categories:{
           on_video:{
             title: "On-video Quiz",
-            desc: "Place quiz choices on top of the video. The quiz must be visible in the video",
+            desc: "Place quiz choices on top of the video. Use this if the answers are visible in the video.",
           },
           text_quiz:{
             title: "Text Quiz",
-            desc: "Text quiz on a white background. Use this if the quiz is not visible in the video",
+            desc: "Text quiz on a white background. Use this if the quiz answers are not visible in the video.",
           },
           on_video_survey:{
             title: "On-video Survey",
-            desc: "Place survey choices on top of the video. The survey must be visible in the video"
+            desc: "Surveys have no correct answer. Use this if the survey choices are visible in the video."
           }
         },
         types:{

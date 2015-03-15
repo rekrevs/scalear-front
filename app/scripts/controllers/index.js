@@ -35,7 +35,6 @@ angular.module('scalearAngularApp')
                         Course.currentCourses({},
                             function(data){
                                 $scope.current_courses = data
-                                // console.log($scope.courses)
                                 unwatch()
                             }
                         );
@@ -51,7 +50,6 @@ angular.module('scalearAngularApp')
                 $window.moment.locale(key);
             };
 
-            $scope.changeLanguage($translate.uses());
             
 
             $scope.notificationsNumber = function(){
@@ -63,60 +61,12 @@ angular.module('scalearAngularApp')
                 $rootScope.clipboard.show_msg = false
             }
 
-            $scope.login = function() {
-                //$log.debug("in login");
-                //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
-                $state.go("login");
-            }
-            // $scope.toggleCollapse = function(){
-            //     $window.scrollTo(0, 0);
-            //     $scope.$broadcast('mainMenuToggled', $rootScope.iscollapsed);
-            //     $rootScope.iscollapsed = !$rootScope.iscollapsed
-                
-            //     console.log($rootScope.iscollapsed)
+            // $scope.login = function() {
+            //     //$log.debug("in login");
+            //     //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
+            //     $state.go("login");
             // }
-
-            $scope.logout = function() {
-                $rootScope.logging_out = true;
-                $rootScope.iscollapsed = true;
-                $timeout(function() {
-                    User.sign_out({}, function() {
-                        $rootScope.show_alert = "";
-                        $rootScope.current_user = null
-                        $scope.current_courses=null
-                        $state.go("login");
-                        $rootScope.logging_out = false;
-                    });
-                }, 200);
-                
-
-                //window.location=scalear_api.host+"/"+$scope.current_lang+"/users/sign_out"; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
-            }
-
-            // $scope.coursePage = function() {
-            //    $state.go("course_list");
-            // }
-
-            // $scope.open = function() {
-            //     var modalInstance = $modal.open({
-            //         templateUrl: '/views/invitation.html',
-            //         controller: "InvitationModalCtrl",
-            //         // resolve: {
-            //         // items: function () {
-            //         // return $scope.items;
-            //         // }
-            //         //}
-            //     });
-
-            //     modalInstance.result.then(function(course_id) {
-            //         if (course_id)
-            //             $state.go("course.course_editor", {
-            //                 course_id: course_id
-            //             })
-            //     }, function() {
-            //         $log.info('Modal dismissed at: ' + new Date());
-            //     });
-            // };
+            
 
             var isMobile=function(){
                 var iOS = false,
@@ -128,8 +78,9 @@ angular.module('scalearAngularApp')
             }
 
             $rootScope.is_mobile= isMobile()
-
+            $scope.changeLanguage($translate.uses());
             getCurrentCourses()
+
 
         }
     ]);

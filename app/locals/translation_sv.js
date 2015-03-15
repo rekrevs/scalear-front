@@ -133,6 +133,7 @@ var translation_sv=function(){
       in_class: "I klassrummet",
       calendar: "Kalender",
       announcements: "Meddelanden",
+      calendar_and_announcements: "Kalender och Meddelanden",
       content: "Kursinnehåll",
       course_content: "Mitt kursinnehåll",
       system: "Scalable Learnings webbplats",

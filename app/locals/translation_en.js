@@ -134,6 +134,7 @@ var translation_en=function(){
         in_class: "In-class",
         calendar: "Calendar",
         announcements: "Announcements",
+        calendar_and_announcements: "Calendar and Announcements",
         content: "Content",
         course_content: "My Course Contents",
         system: "The ScalableLearning Website",

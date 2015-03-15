@@ -34,12 +34,10 @@
 
 
   <body>
-    <div class="errorpageserver" ng-show="logging_out">
-        <loading size="big" show="true" style="position: relative;"></loading>
-    </div>
+    <loading class="errorpageserver" size="big" show="logging_out" ></loading>
     <div id="error_container" ng-show="show_alert!=''" style="height: 0px;" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
         <div style="text-align: center; display:block; height: 0px;">
-            <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
+            <div id='server_error' app-messages status="show_alert" style="z-index: 20000;"></div>
         </div>
     </div>
 
@@ -52,7 +50,7 @@
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
      <header>
-        <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage" courses="current_courses"></main-navigation>
+        <main-navigation user="current_user" courses="current_courses"></main-navigation>
     </header> 
     <div id="main" role="main"> 
         <div class="header">

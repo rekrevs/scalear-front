@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout','$cookieStore', '$rootScope', 'Impersonate', 'ContentNavigator', function($state, $tour, scalear_api, $timeout, $cookieStore, $rootScope, Impersonate, ContentNavigator){
+	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout','$cookieStore', '$rootScope', 'Impersonate', 'ContentNavigator','User', function($state, $tour, scalear_api, $timeout, $cookieStore, $rootScope, Impersonate, ContentNavigator, User){
 		return {
 			replace: true,
 			restrict: "E",
 			transclude: "true",
 			scope:{
 			  user: '=',
-			  logout: '=',
-			  changelanguage: '=',
+			  // logout: '&',
+			  // changelanguage: '=',
 			  courses:'='
 			},
 			templateUrl: "/views/main_navigation.html",
@@ -19,6 +19,19 @@ angular.module('scalearAngularApp')
 				$rootScope.$watch('preview_as_student', function(){
 					scope.preview_as_student = $rootScope.preview_as_student
 				})
+
+				scope.logout = function() {
+	                $rootScope.logging_out = true;
+	                $timeout(function() {
+	                    User.sign_out({}, function() {
+	                        $rootScope.show_alert = "";
+	                        $rootScope.current_user = null
+	                        $state.go("login");
+	                        $rootScope.logging_out = false;
+	                    });
+	                }, 200);  
+	            }
+
 				
 				scope.areShared = function(){
 					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared

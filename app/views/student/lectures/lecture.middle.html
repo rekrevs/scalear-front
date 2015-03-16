@@ -39,7 +39,7 @@
 									</center>
 								</div> -->
 								<youtube class="flex-video widescreen no-margin-bottom" ng-class="video_class" id="lecture_video" url="lecture.url" player="lecture_player" autoplay='0' ng-style="video_layer" style="margin: 0 auto;">
-									<quiz ng-style="quiz_layer" ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (slow && !video_ready)" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1; width: 100% !important;">
+									<quiz ng-style="quiz_layer" ng-show="quiz_mode || (lecture.url!='none' && !slow && !video_ready) || (slow && !video_ready) || video_end" resizable-video quiz-layer="quiz_layer" aspect-ratio="widescreen" video-layer="video_layer" active="fullscreen" resize="resize" max-width='0' style="z-index: 1; width: 100% !important;">
 										<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="top: 150px;">
 										</loading>
 										<div class="slow-message text-center" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="slow">

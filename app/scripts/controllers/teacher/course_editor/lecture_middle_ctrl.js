@@ -83,6 +83,9 @@ angular.module('scalearAngularApp')
         // $scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  		$scope.lecture_player.controls.pause()
         $scope.lecture_player.controls.seek(0)
+        $scope.total_duration = $scope.lecture.duration
+        if($scope.lecture_player.controls.youtube)
+        	$scope.total_duration-=1
         // $scope.lecture_player.controls.volume(0.5);
      	//$scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  	}
@@ -130,7 +133,7 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.timeUpdate = function(){
         $scope.current_time = $scope.lecture_player.controls.getTime()
-        $scope.elapsed_width = (($scope.current_time/($scope.lecture.duration -1))*100) + '%'
+        $scope.elapsed_width = (($scope.current_time/($scope.total_duration))*100) + '%'
     }
 
     $scope.lecture_player.events.seeked=function(){

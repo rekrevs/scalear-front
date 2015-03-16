@@ -195,7 +195,9 @@ angular.module('scalearAngularApp')
 
      $scope.lecture_player.events.onReady = function() {
         $scope.slow = false
-        $scope.total_duration = $scope.lecture_player.controls.getDuration() - 1
+        $scope.total_duration = $scope.lecture_player.controls.getDuration()
+        if($scope.lecture_player.controls.youtube)
+            $scope.total_duration-=1
         var duration_milestones = [25, 75]
         $scope.lecture.online_quizzes.forEach(function(quiz) {
             $scope.lecture_player.controls.cue(quiz.time-0.15, function() {                
@@ -243,6 +245,8 @@ angular.module('scalearAngularApp')
                 $scope.scrollIntoView()
             },500)
         }
+        if($scope.replay_play)
+            $scope.lecture_player.controls.play()
     }
 
     var updateViewPercentage = function(milestone) {
@@ -288,11 +292,27 @@ angular.module('scalearAngularApp')
     }
 
     $scope.replay=function(){
-        $scope.seek(0)
-        $timeout(function(){
-            $scope.lecture_player.controls.play()
-            $scope.play_pause_class = "pause"
-        },1000)
+        $scope.studentAnswers = {}
+        $scope.explanation = {}
+        $scope.fullscreen = false
+        $scope.current_time = 0
+        $scope.total_duration = 0
+        $scope.elapsed_width =0
+        $scope.slow = false
+        $scope.course.warning_message=null
+        $scope.video_class = 'flex-video'
+        $scope.container_class=''
+        $scope.play_pause_class = 'play'
+        $scope.video_end = false
+        clearQuiz()
+        $scope.refreshVideo()
+        $scope.replay_play = true
+        $scope.lecture_player.controls.play()
+        // $scope.seek(0)
+        // $timeout(function(){
+        //     $scope.lecture_player.controls.play()
+        //     $scope.play_pause_class = "pause"
+        // },1000)
     }
 
      $scope.refreshVideo=function(){

@@ -6,7 +6,7 @@
 	</br>
 	<div class="row" ng-show="courses && courses.length">
 		<div class="small-12 columns">
-			<span ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
+			<span ng-show="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
 				<div class="small-4 columns">
 					<a ng-show="courses.length" class="button tiny dropdown" dropdown-toggle="#sort_list"><span translate>courses.sort_by</span></a>
 				  	<ul id="sort_list" class="f-dropdown">
@@ -27,7 +27,7 @@
 						<a ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
 					</span>
 				</div>
-			</span>				
+			</span>	
 			<div class="small-4 right columns button-group" step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="{{current}}">
 			    <button type="button" class="right button tiny" ng-class="{active: course_filter == true}" ng-click="filterCourse(true)" translate>finished</button>
 			    <button type="button" class="right button tiny" ng-class="{active: course_filter == false}" ng-click="filterCourse(false)" translate>current</button>

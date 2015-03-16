@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive('sharedItem', ['$rootScope', 'Module', 'Lecture', 'Quiz', 'SharedItem', '$state', function($rootScope, Module, Lecture, Quiz, SharedItem, $state){
+.directive('sharedItem', ['$rootScope', 'Module', 'Lecture', 'Quiz', 'SharedItem', 'CustomLink', '$state', function($rootScope, Module, Lecture, Quiz, SharedItem, CustomLink, $state){
   return{
     restrict: 'E',
     scope:{
@@ -24,7 +24,7 @@ angular.module('scalearAngularApp')
 				delete shared_copy.id
 				delete shared_copy.teacher
 				console.log(shared_copy)			
-				if(shared_copy.modules.length == 0 && shared_copy.lectures.length == 0 && shared_copy.quizzes.length == 0){				
+				if(shared_copy.modules.length == 0 && shared_copy.lectures.length == 0 && shared_copy.quizzes.length == 0 && shared_copy.customlinks.length == 0){				
 					SharedItem.destroy(
 						{shared_item_id: scope.data[shared_item_index].id},
 						function(){
@@ -56,7 +56,7 @@ angular.module('scalearAngularApp')
 					delete shared_copy.created_at
 					delete shared_copy.id
 					delete shared_copy.teacher
-					if(shared_copy.modules.length == 0 && shared_copy.lectures.length == 0 && shared_copy.quizzes.length == 0){				
+					if(shared_copy.modules.length == 0 && shared_copy.lectures.length == 0 && shared_copy.quizzes.length == 0 && shared_copy.customlinks.length == 0){				
 						SharedItem.destroy(
 							{shared_item_id:scope.data[shared_item_index].id},
 							function(){
@@ -88,7 +88,42 @@ angular.module('scalearAngularApp')
 					delete shared_copy.created_at
 					delete shared_copy.id
 					delete shared_copy.teacher
-					if(shared_copy.modules.length == 0 && shared_copy.lectures.length == 0 && shared_copy.quizzes.length == 0){				
+					if(shared_copy.modules.length == 0 && shared_copy.lectures.length == 0 && shared_copy.quizzes.length == 0 && shared_copy.customlinks.length == 0){				
+						SharedItem.destroy(
+							{shared_item_id:scope.data[shared_item_index].id},
+							function(){
+							scope.data.splice(shared_item_index,1)
+						})
+					}
+					else{
+						SharedItem.updateSharedData(
+							{shared_item_id:scope.data[shared_item_index].id},
+							{data: shared_copy}
+						)
+					}
+	  			},
+	  			function(){}
+			)
+	  	}
+
+	  	scope.addLink =function(shared_item_index, link_index,course_id, module_id){
+	  		console.log(scope.data)
+	  		console.log(shared_item_index)
+	  		CustomLink.linkCopy(
+	  			{
+	  				link_id:scope.data[shared_item_index].customlinks[link_index].id, 
+	  				course_id:course_id,
+	  				module_id:module_id
+	  			},
+	  			{},
+	  			function(data){
+	  				console.log(data)
+					scope.data[shared_item_index].customlinks.splice(link_index,1)
+					var shared_copy = angular.copy(scope.data[shared_item_index])
+					delete shared_copy.created_at
+					delete shared_copy.id
+					delete shared_copy.teacher
+					if(shared_copy.modules.length == 0 && shared_copy.lectures.length == 0 && shared_copy.quizzes.length == 0 && shared_copy.customlinks.length == 0){				
 						SharedItem.destroy(
 							{shared_item_id:scope.data[shared_item_index].id},
 							function(){

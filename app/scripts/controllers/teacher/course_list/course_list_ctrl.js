@@ -9,7 +9,6 @@ angular.module('scalearAngularApp')
 
 		$scope.column='name'
     $scope.course_filter = '!!'
-
     var getAllCourses=function(){
       $scope.courses=null
       Course.index({},

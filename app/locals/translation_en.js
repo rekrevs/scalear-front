@@ -566,7 +566,7 @@ var translation_en=function(){
         sign_up_teacher: "Sign up as a teacher",
       },
       groups:{
-      	link:"Link",
+      	customlink:"Link",
       	quiz: "Quiz",
         survey: "Survey",
         module_name: "Module Name",

@@ -54,7 +54,7 @@
 							</div>
 							<a ng-if="item.class_name == 'customlink'" class="position-relative" style="height: 20px;" bo-href="item.url" target="_blank">
 								<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
-								<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.link' | translate"></i>
+								<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.customlink' | translate"></i>
 								<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name"></div>
 							</a>
 						</li>
@@ -63,7 +63,7 @@
 						<li bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'" class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;">
 							<div class="position-relative" style="height: 20px;">
 								<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
-								<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.link' | translate"></i>
+								<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.customlink' | translate"></i>
 								<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name">
 									<a class="dark-text" bo-href="link.url" target="_blank" bo-text="link.name"></a>
 								</div>

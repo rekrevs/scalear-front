@@ -43,7 +43,7 @@ angular.module('scalearAngularApp')
 
 			var loadVideo = function(){
 				scope.kill_popcorn()
-
+				player_controls.youtube = false
                 if(!scope.controls || scope.controls==undefined)
                     scope.controls=0;   
                 if(!scope.autoplay || scope.autoplay==undefined)
@@ -233,18 +233,18 @@ angular.module('scalearAngularApp')
 			}
 
 			player_controls.getSpeeds = function(){
-      return player.media.getSpeeds();
+      			return player.media.getSpeeds();
 			}
 
 			player_controls.changeSpeed = function(value, youtube){
-      if(youtube){
-        if(player_controls.getSpeeds().indexOf(value) != -1){
-          player.media.setSpeed(value)
-        }
-      }
-      else{
-        player.video.playbackRate = value
-      }
+				if(youtube){
+					if(player_controls.getSpeeds().indexOf(value) != -1){
+						player.media.setSpeed(value)
+					}
+				}
+				else{
+					player.video.playbackRate = value
+				}
 			}
 
 
@@ -633,10 +633,11 @@ return {
         scope.chosen_speed = val;
         $cookieStore.put('mp4_speed', scope.chosen_speed)
       }
-      scope.$watch('videoready', function(){
+      var unwatch = scope.$watch('videoready', function(){
         if(scope.videoready == true){
           if(scope.player.controls.youtube){
             scope.speeds = scope.player.controls.getSpeeds();
+            console.log("Speed", scope.speeds)
             scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
             console.log('the chosen speed is '+scope.chosen_speed)
             scope.setSpeed(scope.chosen_speed)
@@ -650,6 +651,7 @@ return {
             scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
             scope.setSpeedMp4(scope.chosen_speed)
           }
+          unwatch()
         }
       })
 
@@ -700,7 +702,8 @@ return {
 	        var element = angular.element('.progressBar');
 	        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
 	        scope.seek()(scope.total_duration*ratio)
-	        scrollToNearestEvent(scope.total_duration*ratio)
+	        if(scope.timeline)
+	        	scrollToNearestEvent(scope.total_duration*ratio)
         }
 
       	scope.showQuality = function(){
@@ -730,7 +733,7 @@ return {
   			console.log(time)
   			console.log(scope.timeline.getNearestEvent(time))
   			var nearest_item= scope.timeline.getNearestEvent(time)
-  			if(Math.abs(nearest_item.time - time) <=30)
+  			if(nearest_item.data && Math.abs(nearest_item.time - time) <=30)
   				scrollToItem(nearest_item.type, nearest_item.data.id)
   		}
 

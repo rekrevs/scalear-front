@@ -523,7 +523,6 @@
     };
 
     self.getSpeeds = function(){
-      console.log('getting speed')
       return player.getAvailablePlaybackRates();
     };
     self.setSpeed = function(speed){

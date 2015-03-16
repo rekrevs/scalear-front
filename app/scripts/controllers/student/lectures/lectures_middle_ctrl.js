@@ -183,9 +183,9 @@ angular.module('scalearAngularApp')
                 if($scope.should_play)
                     setShortcuts()
 
-                if($rootScope.is_mobile){
-                    $scope.video_ready=true
-                }
+                // if($rootScope.is_mobile){
+                //     $scope.video_ready=true
+                // }
                 $timeout(function(){
                     $scope.scrollIntoView()
                 },500)
@@ -234,6 +234,8 @@ angular.module('scalearAngularApp')
         })
 
         $scope.video_ready=true
+        if(!$scope.lecture_player.controls.youtube)
+            $scope.show_progressbar = true
         var time =$state.params.time        
         if(time){
             $scope.seek(parseInt(time));
@@ -408,7 +410,9 @@ angular.module('scalearAngularApp')
     } 
 
     $scope.lecture_player.events.waiting=function(){
-        $scope.show_progressbar = true
+        $scope.video_ready=true
+
+        $scope.show_progressbar=true
     }
 
     var showNotification=function(msg, sub_msg, middle_msg){

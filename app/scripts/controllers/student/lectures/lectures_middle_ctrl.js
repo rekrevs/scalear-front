@@ -377,6 +377,8 @@ angular.module('scalearAngularApp')
         $scope.play_pause_class = "play"
         if(!$scope.quiz_mode && !$scope.preview_as_student) //not a quiz
             $scope.submitPause();
+
+        updateViewPercentage(Math.round($scope.elapsed_width))
     }
 
     $scope.lecture_player.events.timeUpdate = function(){

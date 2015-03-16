@@ -341,6 +341,8 @@ angular.module('scalearAngularApp')
                 pasteLecture(clipboard, module_id)
             else if(clipboard.type == 'quiz')
                 pasteQuiz(clipboard, module_id)
+            else if(clipboard.type == 'customlink')
+                pastLink(clipboard, module_id)
         } 
     }
 
@@ -400,23 +402,27 @@ angular.module('scalearAngularApp')
 		)
     }
 
-    var quizCopy=function(quiz_id,module_index){
-    	console.log("quiz copy")
-    	$scope.item_overlay = true  
-    	Quiz.quizCopy(
-    		{
-    			course_id: $stateParams.course_id, 
-    			quiz_id: quiz_id
-    		},{},
-    		function(data){
-    			console.log(data)
-    			$scope.item_overlay = false 
-    			data.quiz.class_name='quiz'
-    			$scope.modules[module_index].items.push(data.quiz)
-                $scope.items_obj["quiz"][data.quiz.id] = data.quiz
-    		}, 
-    		function(){}
-		)
+
+    var pastLink=function(item,module_id){
+        console.log("link copy")
+        console.log(item)
+        $scope.item_overlay = true  
+        CustomLink.linkCopy(
+            {
+                link_id: item.id,
+                course_id: $stateParams.course_id,
+                module_id:module_id
+            },
+            {},
+            function(data){
+                console.log(data)
+                $scope.item_overlay = false 
+                data.link.class_name='customlink'
+                $scope.module_obj[module_id].items.push(data.link)
+                $scope.items_obj["customlink"][data.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
+            }, 
+            function(){}
+        )
     }
 
 	var selectNone = function(){
@@ -444,13 +450,18 @@ angular.module('scalearAngularApp')
     }
 
     $scope.removeCustomLink=function (elem) {
-        // $scope.link_overlay=true
+        console.log(elem)
         CustomLink.destroy(
             {link_id: elem.id},{},
             function(){
-                $scope.course.custom_links.splice($scope.course.custom_links.indexOf(elem), 1)
-                // $scope.module_obj[$stateParams.module_id].custom_links.splice($scope.module_obj[$stateParams.module_id].custom_links.indexOf(elem), 1)
-                // $scope.link_overlay=false
+                if(elem.group_id){
+                    // $scope.module_obj[$stateParams.module_id].custom_links.splice($scope.module_obj[$stateParams.module_id].custom_links.indexOf(elem), 1)
+                    $scope.module_obj[elem.group_id].items.splice($scope.module_obj[elem.group_id].items.indexOf(elem),1)
+                    delete $scope.items_obj["customlink"][elem.id];
+                    emptyClipboard()
+                }
+                else
+                    $scope.course.custom_links.splice($scope.course.custom_links.indexOf(elem), 1)
             }, 
             function(){}
         );

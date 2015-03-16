@@ -33,11 +33,13 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('scroll_to_item',function(ev, item){
-      var type = item.class_name == "quiz"? item.quiz_type: item.class_name
-      scrollToItem("#"+type+"_"+item.id, 100)
-      removeHightlight()
-      var ul = angular.element("#"+type+"_"+item.id).find('.ul_item')[0]
-      $scope.highlight_index = angular.element('.ul_item').index(ul)-1
+      if(item.class_name !="customlink"){
+        var type = item.class_name == "quiz"? item.quiz_type: item.class_name
+        scrollToItem("#"+type+"_"+item.id, 100)
+        removeHightlight()
+        var ul = angular.element("#"+type+"_"+item.id).find('.ul_item')[0]
+        $scope.highlight_index = angular.element('.ul_item').index(ul)-1
+      }
     })
     // $scope.filters=
     // {

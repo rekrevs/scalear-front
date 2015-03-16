@@ -57,7 +57,7 @@ angular.module('scalearAngularApp')
 			 		$scope.course.custom_links = data.links
 			 		$scope.course.modules=data.groups
 			 		$scope.module_obj ={}
-			 		$scope.items_obj ={lecture:{}, quiz:{}}
+			 		$scope.items_obj ={lecture:{}, quiz:{}, customlink:{}}
 			 		$scope.course.modules.forEach(function(module){
 			 			$scope.module_obj[module.id] = module
 			 			module.items.forEach(function(item){

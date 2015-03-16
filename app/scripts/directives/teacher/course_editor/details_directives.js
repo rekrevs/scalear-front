@@ -415,44 +415,40 @@ angular.module('scalearAngularApp')
                 }
             };
         }
-    ]).directive('linkItem', ['$q','$rootScope',function($q, $rootScope){
+    ]).directive('linkItem', ['$q','$rootScope','CustomLink',function($q, $rootScope, CustomLink){
         return{
             templateUrl: '/views/link_item.html',
             restrict: 'E',
             scope: {
                 link: "=",
                 // update: "=",
-                remove: "=",
+                // remove: "=",
                 // validate: "=",
                 small:"="
             },
             link: function(scope, element){
-                scope.validate= function(data, elem){
+                scope.validate= function(column, data){
+                    console.log(scope.link)
                     var d = $q.defer();
                     var doc={}
-                    doc.url=data;
+                    doc[column]=data;
                     CustomLink.validate(
-                        {link_id: elem.id},
-                        doc,
+                        {link_id: scope.link.id},
+                        {link:doc},
                         function(data){
                             d.resolve()
                         },function(data){
-                            $log.debug(data.status);
-                            $log.debug(data);
-                        if(data.status==422)
-                            d.resolve(data.data.errors.join());
-                        else
-                            d.reject('Server Error');
+                            if(data.status==422)
+                                d.resolve(data.data.errors[0]);
+                            else
+                                d.reject('Server Error');
                         }
                     )
                     return d.promise;
                 }
 
                 scope.removeLink=function(){
-                    if(scope.remove)
-                        scope.remove(scope.link)
-                    else
-                        $rootScope.$broadcast('remove_link', scope.link)
+                    $rootScope.$broadcast('remove_link', scope.link)
                 }
 
                 scope.update=function(){

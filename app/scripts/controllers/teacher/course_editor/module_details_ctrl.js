@@ -49,7 +49,7 @@ angular.module('scalearAngularApp')
                 var modified_module = angular.copy($scope.module);
                 delete modified_module.id;
                 delete modified_module.items;
-                delete modified_module.custom_links;
+                // delete modified_module.custom_links;
                 delete modified_module.created_at;
                 delete modified_module.updated_at;
                 delete modified_module.total_time;

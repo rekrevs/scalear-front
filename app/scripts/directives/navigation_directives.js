@@ -202,12 +202,12 @@ angular.module('scalearAngularApp')
 						$state.go("course.module.progress")
 				}
 				scope.copyItem = function(){
-					if($state.params.lecture_id){
+					if($state.params.link_id)
+						var item = {class_name: 'customlink', id: $state.params.link_id}
+					else if($state.params.lecture_id)
 						var item = {class_name: 'lecture', id: $state.params.lecture_id}
-					}
-					else if($state.params.quiz_id){
+					else if($state.params.quiz_id)
 						var item = {class_name: 'quiz', id: $state.params.quiz_id}
-					}
 					$rootScope.$broadcast('copy_item', item)
 				}
 
@@ -439,8 +439,8 @@ angular.module('scalearAngularApp')
 	// }
 
   	scope.showModuleCourseware = function(module, event){
-  		if(module.items.length > 0){
-	        if(module.id != $state.params.module_id){
+  		if((module.lectures.length + module.quizzes.length) > 0){
+	        if(!scope.currentmodule || scope.currentmodule.id != module.id){
 	          scope.currentmodule = module//$scope.module_obj[module_id];
 	          Module.getLastWatched(
 	            {
@@ -458,9 +458,11 @@ angular.module('scalearAngularApp')
 	              }
 	          }) 
 	        }
-	        // else
-	        //   event.stopPropagation()
+	        else
+	          event.stopPropagation()
 	  	}
+	  	else
+	  		scope.currentmodule = null
   	}
                
   	scope.showItem = function(item, type){
@@ -469,25 +471,39 @@ angular.module('scalearAngularApp')
   				$rootScope.$broadcast("scroll_to_item",item)
   		}
   		else{
-	 		var params = {'module_id': $state.params.module_id}    
-		    params[item.class_name.toLowerCase()+'_id'] = item.id
-		    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
-		    scope.currentitem = {id:item.id}
+  			if(item.class_name!='customlink'){
+		 		var params = {'module_id': $state.params.module_id}    
+			    params[item.class_name.toLowerCase()+'_id'] = item.id
+			    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
+			}
+			if(!(type =='courseware' && item.class_name=='customlink')){
+		    	scope.currentitem = {id:item.id}
+		    	$state.params.link_id = item.id
+			}
 		}
   	}
 
  	scope.showModule=function(module, event){
- 		if($state.includes("course.module.progress") || $state.includes("course.progress"))
- 			$state.go('course.module.progress',{module_id: module.id})
- 		else if ($state.includes("course.module.progress_details")){
- 			$state.go('course.module.progress_details',{module_id: module.id})
- 		}
- 		else
-    		$state.go('course.module.course_editor.overview',{module_id: module.id})
-    	scope.currentmodule = module
-    	if($state.params.module_id == module.id){
+ 		console.log(scope.currentmodule)
+ 		if(scope.currentmodule && scope.currentmodule.id == module.id)
         	event.stopPropagation()
-        }
+        else{
+	 		if($state.includes("course.module.progress") || $state.includes("course.progress"))
+	 			$state.go('course.module.progress',{module_id: module.id})
+	 		else if ($state.includes("course.module.progress_details")){
+	 			$state.go('course.module.progress_details',{module_id: module.id})
+	 		}
+	 		else if($state.includes("course.module.inclass")){
+	 			$state.go('course.module.inclass',{module_id: module.id})
+	 		}
+	 		else
+	    		$state.go('course.module.course_editor.overview',{module_id: module.id})
+	    	scope.currentmodule = module
+	    }    	
+    }
+
+    scope.showCourseLinks=function(){
+    	scope.currentmodule = null
     }
 
   	scope.goToCourseInfoStudent=function(){

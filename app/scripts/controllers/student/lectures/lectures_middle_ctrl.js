@@ -292,27 +292,27 @@ angular.module('scalearAngularApp')
     }
 
     $scope.replay=function(){
-        $scope.studentAnswers = {}
-        $scope.explanation = {}
-        $scope.fullscreen = false
-        $scope.current_time = 0
-        $scope.total_duration = 0
-        $scope.elapsed_width =0
-        $scope.slow = false
-        $scope.course.warning_message=null
-        $scope.video_class = 'flex-video'
-        $scope.container_class=''
-        $scope.play_pause_class = 'play'
-        $scope.video_end = false
-        clearQuiz()
-        $scope.refreshVideo()
-        $scope.replay_play = true
-        $scope.lecture_player.controls.play()
-        // $scope.seek(0)
-        // $timeout(function(){
-        //     $scope.lecture_player.controls.play()
-        //     $scope.play_pause_class = "pause"
-        // },1000)
+        // $scope.studentAnswers = {}
+        // $scope.explanation = {}
+        // $scope.fullscreen = false
+        // $scope.current_time = 0
+        // $scope.total_duration = 0
+        // $scope.elapsed_width =0
+        // $scope.slow = false
+        // $scope.course.warning_message=null
+        // $scope.video_class = 'flex-video'
+        // $scope.container_class=''
+        // $scope.play_pause_class = 'play'
+        // $scope.video_end = false
+        // clearQuiz()
+        // $scope.refreshVideo()
+        // $scope.replay_play = true
+        // $scope.lecture_player.controls.play()
+        $scope.seek(0)
+        $timeout(function(){
+            $scope.lecture_player.controls.play()
+            // $scope.play_pause_class = "pause"
+        },1000)
     }
 
      $scope.refreshVideo=function(){
@@ -399,8 +399,8 @@ angular.module('scalearAngularApp')
         $scope.play_pause_class = "play"
         if(!$scope.quiz_mode && !$scope.preview_as_student) //not a quiz
             $scope.submitPause();
-
-        updateViewPercentage(Math.round($scope.elapsed_width))
+        console.log(Math.round((($scope.current_time/$scope.total_duration)*100)))
+        updateViewPercentage(Math.round((($scope.current_time/$scope.total_duration)*100)))
     }
 
     $scope.lecture_player.events.timeUpdate = function(){
@@ -506,7 +506,7 @@ angular.module('scalearAngularApp')
         $scope.resize.big()
         // $scope.video_class = 'video_class_full'        
         $scope.fullscreen= true
-        $scope.container_class="black"
+        $scope.container_class="in_fullscreen black"
     }
 
     var goMobileSmallScreen=function(){

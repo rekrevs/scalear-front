@@ -469,8 +469,8 @@
         changeCurrentTime( 0 );
         impl.ended = false;
       }
-      if(timeUpdateInterval)
-      clearInterval( timeUpdateInterval );
+      if(timeUpdateInterval && !impl.ended)
+        clearInterval( timeUpdateInterval );
       timeUpdateInterval = setInterval( onTimeUpdate,
                                         self._util.TIMEUPDATE_MS );
       impl.paused = false;

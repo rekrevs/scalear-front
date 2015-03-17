@@ -472,7 +472,8 @@ angular.module('scalearAngularApp')
   		}
   		else{
   			if(item.class_name!='customlink'){
-		 		var params = {'module_id': $state.params.module_id}    
+		 		var params = {'module_id': $state.params.module_id}  
+		 		console.log(item)  
 			    params[item.class_name.toLowerCase()+'_id'] = item.id
 			    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
 			}

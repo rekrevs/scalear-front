@@ -9,6 +9,6 @@
 
 	<div class="position-relative" ng-if="!('**.course_editor.**' | includedByState)" >
 		<div class="truncate-70 show-inline left text-left module_name" bindonce bo-text="module.name"></div>	
-		<small class="color-grey" bo-text="module.total_time | formattime:'h:mm:ss'"></small>
+		<small class="color-grey" style="padding:1px"><span bo-text="module.total_time | formattime:'h:mm:ss'" ng-show="module.total_time" ></span></small>
 	</div>
 </div>

@@ -66,13 +66,17 @@
 					<td class="right-border"translate>groups.surveys</td>
 					<td ><b>{{module.total_surveys || 0}} ({{module.total_survey_questions || 0}} <span translate>courses.questions</span>)</b></td>
 				</tr>
+				<tr>
+					<td class="right-border"translate>groups.customlink</td>
+					<td ><b>{{module.total_links || 0}}</b></td>
+				</tr>
 			</tbody>
 		</table>
 	</div>	
 </div>
 <div class="row">
 	<center class="small-block-grid-3">
-		<button id="add_module_link" class="button small green-color-white no-margin" ng-click="addCustomLink()" translate>groups.add_module_link</button>
+		<!-- <button id="add_module_link" class="button small green-color-white no-margin" ng-click="addCustomLink()" translate>groups.add_module_link</button> -->
 		<button id="new_item"class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>add_content</span></button>
 		<button id="new_module" class="button small green-color-white no-margin" ng-click="addModule()" translate>courses.add_module</button>
 	</center>

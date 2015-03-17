@@ -54,7 +54,7 @@ angular.module('scalearAngularApp')
 	 			{course_id:id},
 	 			function(data){
 			 		$scope.course=data.course
-			 		$scope.course.custom_links = data.links
+			 		// $scope.course.custom_links = data.links
 			 		$scope.course.modules=data.groups
 			 		$scope.module_obj ={}
 			 		$scope.items_obj ={lecture:{}, quiz:{}, customlink:{}}
@@ -79,8 +79,7 @@ angular.module('scalearAngularApp')
 		    	{course_id: id},
 		    	function(data){
 					$scope.course= JSON.parse(data.course);
-					$scope.course.custom_links = data.links
-					$scope.today = data.today;	
+					// $scope.course.custom_links = data.links
 					$scope.next_item = data.next_item
 					$scope.module_obj = scalear_utils.toObjectById($scope.course.groups)
 					$scope.course.markDone=function(module_id, item_id){

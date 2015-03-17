@@ -185,9 +185,9 @@ angular.module('scalearAngularApp')
 		            )
 				}
 
-				scope.addLink=function(){
-					$rootScope.$broadcast('add_link')
-				}
+				// scope.addLink=function(){
+				// 	$rootScope.$broadcast('add_link')
+				// }
 				scope.goToContentEditor=function(){
 					if(!$state.includes("**.course_editor.**")){
 						if($state.params.module_id)
@@ -330,7 +330,7 @@ angular.module('scalearAngularApp')
     replace: true,
     transclude: true,
     scope:{
-      links:'=',
+      // links:'=',
       modules: '=',
       mode: '@',
       open_navigator:'=open'
@@ -414,26 +414,26 @@ angular.module('scalearAngularApp')
 		},
  	}
 
- 	scope.listSortableOptions={
-		axis: 'y',
-		dropOnEmpty: false,
-		handle: '.handle',
-		cursor: 'crosshair',
-		items: '.links',
-		opacity: 0.4,
-		scroll: true,
-		update: function(e, ui) {
-			Course.sortCourseLinks({course_id:$state.params.course_id},
-				{links: scope.links},
-				function(response){
-					// $log.debug(response)
-				},
-				function(){
-					// $log.debug('Error')
-				}
-			);
-		},
- 	}
+ 	// scope.listSortableOptions={
+		// axis: 'y',
+		// dropOnEmpty: false,
+		// handle: '.handle',
+		// cursor: 'crosshair',
+		// items: '.links',
+		// opacity: 0.4,
+		// scroll: true,
+		// update: function(e, ui) {
+		// 	Course.sortCourseLinks({course_id:$state.params.course_id},
+		// 		{links: scope.links},
+		// 		function(response){
+		// 			// $log.debug(response)
+		// 		},
+		// 		function(){
+		// 			// $log.debug('Error')
+		// 		}
+		// 	);
+		// },
+ 	// }
 	// scope.toggleNavigator = function(){
 	// 	scope.open_navigator = !scope.open_navigator
 	// }
@@ -502,9 +502,9 @@ angular.module('scalearAngularApp')
 	    }    	
     }
 
-    scope.showCourseLinks=function(){
-    	scope.currentmodule = null
-    }
+    // scope.showCourseLinks=function(){
+    // 	scope.currentmodule = null
+    // }
 
   	scope.goToCourseInfoStudent=function(){
 	  	scope.currentmodule = null

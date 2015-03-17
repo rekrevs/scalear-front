@@ -37,27 +37,7 @@ angular.module('scalearAngularApp')
             //     return new Date(appearance_time) <= new Date()
             // }
 
-            $scope.addCustomLink=function(){
-                // $log.debug($scope.module.id)
-                // $scope.link_overlay=true
-                Module.newCustomLink(
-                    {
-                        course_id:$stateParams.course_id, 
-                        module_id:$scope.module.id
-                    },
-                    {},
-                    function(doc){
-                        // $log.debug(doc)
-                        doc.link.url = "http://"
-                        doc.link.class_name="customlink"
-                        $scope.module.items.push(doc.link)
-                        $scope.items_obj["customlink"][doc.link.id] = $scope.module.items[$scope.module.items.length-1]
-                        // $scope.module.custom_links.push(doc.link)
-                        // $scope.link_overlay=false
-                    }, 
-                    function(){}
-                );
-            }
+        
 
             // $scope.removeCustomLink=function (elem) {
             //     $scope.link_overlay=true

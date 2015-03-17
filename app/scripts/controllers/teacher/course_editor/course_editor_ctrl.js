@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('add_item', function(event, type){
-        if(!$state.params.module_id && type != "link"){
+        if(!$state.params.module_id){
             $scope.addModule(function(module_id){
                 $timeout(function(){
                     addItemBytype(type, module_id)
@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
         if(type=='video')
              $scope.addLecture(module_id || $state.params.module_id)
         else if(type == 'link')
-            $scope.addCustomLink()            
+            $scope.addCustomLink(module_id || $state.params.module_id)            
         else
             $scope.addQuiz(module_id || $state.params.module_id, type)
     }
@@ -434,16 +434,33 @@ angular.module('scalearAngularApp')
 		})
 	}
 
-	$scope.addCustomLink=function(){
-        Course.newCustomLink({course_id:$stateParams.course_id},
+	// $scope.addCustomLink=function(){
+ //        Course.newCustomLink({course_id:$stateParams.course_id},
+ //            {},
+ //            function(doc){
+ //                // $log.debug(doc)
+ //                console.log(doc)
+ //                doc.link.url = "http://"
+ //                // $scope.module.custom_links.push(doc.link)
+ //                $scope.course.custom_links.push(doc.link)
+ //                ContentNavigator.open()
+ //            }, 
+ //            function(){}
+ //        );
+ //    }
+
+     $scope.addCustomLink=function(module_id){
+        Module.newCustomLink(
+            {
+                course_id:$stateParams.course_id, 
+                module_id:module_id
+            },
             {},
             function(doc){
-                // $log.debug(doc)
-                console.log(doc)
                 doc.link.url = "http://"
-                // $scope.module.custom_links.push(doc.link)
-                $scope.course.custom_links.push(doc.link)
-                ContentNavigator.open()
+                doc.link.class_name="customlink"
+                $scope.module_obj[module_id].items.push(doc.link)
+                $scope.items_obj["customlink"][doc.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
             }, 
             function(){}
         );

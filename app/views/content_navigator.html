@@ -9,7 +9,7 @@
 					</div>		
 					</accordion-heading>
 				</accordion-group>
-				<accordion-group ng-show="links" class="accordion-group links_accordion">
+				<!-- <accordion-group ng-show="links" class="accordion-group links_accordion">
 					<accordion-heading class="accordion-heading">
 						<div ng-click="showCourseLinks()" style="padding: 5px;border-bottom: 1px solid white;">
 							<div class="show-inline" translate>courses.course_links</div>
@@ -20,7 +20,7 @@
 							<a class="with-margin-left" bo-href="link.url" target="_blank"  class="truncate-70 show-inline" bo-text="link.name"></a>
 						</div>
 					</ul>
-				</accordion-group>
+				</accordion-group> -->
 				<center><loading size="small" show="!modules"></loading></center>
 				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="$state.params.module_id == module.id">
 					<accordion-heading class="accordion-heading">
@@ -84,7 +84,7 @@
 					</div>						
 					</accordion-heading>
 				</accordion-group>
-				<accordion-group ng-show="links.length" class="accordion-group links_accordion soft-border-bottom border-light-grey" open="links.length">
+				<!-- <accordion-group ng-show="links.length" class="accordion-group links_accordion soft-border-bottom border-light-grey" open="links.length">
 					<accordion-heading class="accordion-heading " >
 						<div style="padding: 5px;border-bottom: 1px solid white;" ng-click="showCourseLinks()">
 							<div class="show-inline" ng-class="{'with-bigger-margin-left': ('**.course_editor.**' | includedByState)}" translate>courses.course_links</div>
@@ -95,7 +95,7 @@
 	            			<link-item link="link" small="true">
 	            		</li>
 	            	</span>
-				</accordion-group>
+				</accordion-group> -->
 				<span ui-sortable="moduleSortableOptions" ng-model='modules'>
 					<accordion-group ng-show="modules.length" class="module accordion-group" ng-repeat="module in modules" close="currentmodule.id != module.id" is-open="{{currentmodule.id == module.id}}">
 						<accordion-heading class="accordion-heading">

@@ -83,9 +83,7 @@ angular.module('scalearAngularApp')
         // $scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  		$scope.lecture_player.controls.pause()
         $scope.lecture_player.controls.seek(0)
-        $scope.total_duration = $scope.lecture.duration
-        if($scope.lecture_player.controls.youtube)
-        	$scope.total_duration-=1
+    	$scope.total_duration=$scope.lecture_player.controls.youtube? $scope.lecture.duration - 1 : $scope.lecture.duration 
         // $scope.lecture_player.controls.volume(0.5);
      	//$scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  	}
@@ -134,6 +132,7 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.timeUpdate = function(){
         $scope.current_time = $scope.lecture_player.controls.getTime()
         $scope.elapsed_width = (($scope.current_time/($scope.total_duration))*100) + '%'
+        
     }
 
     $scope.lecture_player.events.seeked=function(){
@@ -173,7 +172,7 @@ angular.module('scalearAngularApp')
 
 		promise.then(function(){
 			var insert_time= $scope.lecture_player.controls.getTime()
-			var duration = $scope.lecture_player.controls.getDuration()
+			var duration = $scope.total_duration
 
 			if(insert_time < 1 )
 				insert_time = 1
@@ -182,8 +181,11 @@ angular.module('scalearAngularApp')
 
 			if(old_insert_time)
 				insert_time = old_insert_time
-			else
+			else{
 				insert_time = checkQuizTimeConflict(insert_time)
+				if (insert_time >= duration)
+					insert_time = duration - 1
+			}
 			
 			$scope.lecture_player.controls.seek_and_pause(insert_time)
 

@@ -535,6 +535,8 @@
         self.play();
       } else {
         impl.ended = true;
+        
+        player.pauseVideo()
         onPause();
         // YouTube will fire a Playing State change after the video has ended, causing it to loop.
         catchRoguePlayEvent = true;

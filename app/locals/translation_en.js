@@ -109,6 +109,7 @@ var translation_en=function(){
       leave_feedback:"Leave your feedback",
       start: "Start",
       end: "End",
+      select_module_progress:"Select a module to see its progress",
       support:{
         ipad:"iPad support is currently in beta.",
         mobiles:"Mobile devices are not currently fully supported.",

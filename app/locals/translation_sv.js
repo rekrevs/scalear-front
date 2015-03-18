@@ -108,6 +108,7 @@ var translation_sv=function(){
     leave_feedback:"Lämna dina synpunkter",
     start: "Start",
     end: "Slut",
+    select_module_progress:"Välj en modul för att se sina framsteg",
     support:{
         ipad:"iPad stöd är för närvarande i beta.",
         mobiles:"Mobila enheter är för närvarande inte fullt stöd.",

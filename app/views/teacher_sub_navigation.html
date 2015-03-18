@@ -82,14 +82,14 @@
                                     <a id="review_module_progress" ng-class="{'disabled': !in_module_state}" class="lighter-grey dark-text sub-header-component has-description" ui-sref="course.module.progress" ui-sref-active="nav-inner-item-active">
                                         <span translate>review_module_progress</span>
                                         <h5 ng-show="in_module_state" class="dark-description"><small translate>choose_inclass_material</small></h5>
-                                        <h5 ng-show="!in_module_state" class="dark-description"><small>Select a module to see its progress</small></h5>
+                                        <h5 ng-show="!in_module_state" class="dark-description"><small translate>select_module_progress</small></h5>
 
                                     </a>
                                 </li>                        
                                 <li ng-class="{'disabled': !in_module_state}">
                                     <a id="detail_module_progress" ng-class="{'disabled has-description': !in_module_state}" ui-sref="course.module.progress_details" ui-sref-active="nav-inner-item-active" class="lighter-grey dark-text sub-header-component">
                                         <span translate>courses.view_detailed_progress</span>
-                                        <h5 ng-show="!in_module_state" class="dark-description"><small>Select a module to see its progress</small></h5>
+                                        <h5 ng-show="!in_module_state" class="dark-description"><small translate>select_module_progress</small></h5>
                                     </a>
                                 </li>
                             <li>                        
@@ -112,7 +112,7 @@
                                 </li>
                                 <li>
                                     <div class="divider border-grey medium-opacity"></div>
-                                    <a id="sub_new_item" module-content-modal open-modal="openOnlineContentModal" ng-click="addModule();openOnlineContentModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
+                                    <a id="sub_new_item" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" class="lighter-grey dark-text sub-header-component has-description" href="">
                                         <span translate>new_online_content</span>
                                         <h5 class="dark-description"><small translate>online_content_description</small></h5>
                                     </a>

@@ -27,18 +27,19 @@ angular.module('scalearAngularApp')
     var removeFromCourseList=function(course){
       $scope.courses.splice($scope.courses.indexOf(course), 1)
       var course_index = $scope.current_courses.map(function(x){
-        return course.id
-      }).indexOf(course.id)
+        return x.id
+      })
+      .indexOf(course.id)
       if(course_index > -1)
         $scope.current_courses.splice(course_index, 1)
     }
 
 		$scope.deleteCourse=function(course){
-			Course.destroy({course_id: course.id},{},
-				function(response){
+			// Course.destroy({course_id: course.id},{},
+			// 	function(response){
 					removeFromCourseList(course)
-				},
-				function(){})
+				// },
+				// function(){})
 		}
 
     $scope.unenrollCourse=function(course){

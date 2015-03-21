@@ -498,7 +498,9 @@ var translation_en=function(){
         click_or_type_fullscreen: "Click or type F to enter fullscreen",
         click_or_type_smallscreen: "Click or type F to enter smallscreen",
         student_link_lecture:"Student link to lecture",
-        drag_instruction: "Enter the name for draggable item and position its Start and End locations on the screen."
+        drag_instruction: "Enter the name for draggable item and position its Start and End locations on the screen.",
+        drag_correct: "This item is correct here because",
+        drag_incorrect: "Item {{num}} would be incorrect here because"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",

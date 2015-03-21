@@ -297,7 +297,7 @@ angular.module('scalearAngularApp')
 		 replace:true,
 		 restrict: 'E',
 		 template: "<div>"+
-		 				"<div class='component dropped answer_drag' style='background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 40px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
+		 				"<div class='component dropped answer_drag' style='border: 1px solid #ddd;background-color:white;padding:0px;position:absolute; min-height:40px; min-width: 20px;' ng-style=\"{width: (data.width*100)+'%', height: (data.height*100)+'%', left: (data.xcoor*100)+'%', top: (data.ycoor*100)+'%'}\" data-drag='true' data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
 		 					// "<div class='input-prepend'>"+
 		 					// 	"<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} End</span>"+
 			 				// 	// "<h6 style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 14px; min-height: 40px; min-width: 40px;margin:0' ng-style='{max_width: width, max_height: height}' ng-class='{error: !data.answer}' ng-model='data.answer' pop-over='popover_options' unique='true' >{{data.answer}}</h6>"+
@@ -398,11 +398,11 @@ angular.module('scalearAngularApp')
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.answer" />'+
 							'</label>'+	
 							'<label>'+
-								'<span translate>groups.correct_because</span>'+
+								'<span translate>lectures.drag_correct</span>:'+
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
 							'</label>'+							
 							'<label ng-repeat=\'num in list|filter:"!"+data.pos\' >'+
-								'{{num+1}} <span translate>groups.incorrect_because</span>'+
+								'<span translate translate-value="{num:num+1}">lectures.drag_incorrect</span>:'+
 								'<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />'+
 							'</label>'+
 							// "<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save_close</span></button>"+

@@ -319,12 +319,9 @@ angular.module('scalearAngularApp')
 
  	$scope.addDoubleClickBind= function(event){
 	  if ($scope.editing_mode) {
-	    
-	  
- 		console.log("hell worll.ds")
  		var answer_width, answer_height
  		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
- 			answer_width = 300
+ 			answer_width = 150
  			answer_height= 40
  		}
  		else{

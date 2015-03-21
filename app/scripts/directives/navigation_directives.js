@@ -172,6 +172,8 @@ angular.module('scalearAngularApp')
 		                	params['module_id']= $state.params.module_id
 		                	$state.go('course.module.courseware',params,{reload:true})
 		                }
+		                else if($state.includes("course.edit_course_information"))
+		                	$state.go('course.course_information',params,{reload:true})
 		                else{
 		                	$state.go('course',params,{reload:true})
 		                }

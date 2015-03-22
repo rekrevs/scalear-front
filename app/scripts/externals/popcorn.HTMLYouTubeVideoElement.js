@@ -287,11 +287,14 @@
       }
       durationReady = false;
       firstPlay = false;
+      console.log("YES I AM ALIVE!!!!")
       clearInterval( currentTimeInterval );
       clearInterval( bufferedInterval );
       player.stopVideo();
       player.clearVideo();
+    }
 
+    function destroyElement(){
       parent.removeChild( elem );
       elem = document.createElement( "div" );
     }
@@ -317,6 +320,7 @@
 
       if( playerReady ) {
         destroyPlayer();
+        destroyElement();
       }
 
       parent.appendChild( elem );
@@ -469,7 +473,7 @@
         changeCurrentTime( 0 );
         impl.ended = false;
       }
-      if(timeUpdateInterval && !impl.ended)
+      if(timeUpdateInterval)
         clearInterval( timeUpdateInterval );
       timeUpdateInterval = setInterval( onTimeUpdate,
                                         self._util.TIMEUPDATE_MS );
@@ -527,6 +531,9 @@
     };
     self.setSpeed = function(speed){
       player.setPlaybackRate(speed)
+    }
+    self.destroy = function(){
+      destroyPlayer()
     }
 
     function onEnded() {

@@ -116,6 +116,8 @@ angular.module('scalearAngularApp')
             scope.kill_popcorn = function(){
                 if(player){
                      Popcorn.destroy( player );
+                     if(player.media.destroy)
+                     	player.media.destroy()
                  }
                 element.find('iframe').remove();
                 element.find('video').remove()

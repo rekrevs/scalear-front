@@ -21,7 +21,6 @@
 						</div>
 					</ul>
 				</accordion-group> -->
-				<center><loading size="small" show="!modules"></loading></center>
 				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="$state.params.module_id == module.id">
 					<accordion-heading class="accordion-heading">
 						<div bindonce class="valign-middle" ng-click="showModuleCourseware(module, $event)" bo-title="module.name" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">

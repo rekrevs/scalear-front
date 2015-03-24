@@ -228,7 +228,7 @@ angular.module('scalearAngularApp')
                         $rootScope.$broadcast("add_item", type)
                         $modalInstance.close()
                     }
-                  $scope.cancel = $modalInstance.dismiss
+                    $scope.cancel = $modalInstance.dismiss
                 }]
             }]
         }

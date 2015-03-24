@@ -41,9 +41,9 @@ width: 78%;
 .containeropen.small-12{
   max-width: none !important;
 }
-/*.content-navigator-container{
+.content-navigator-container{
   width: 300px;
-}*/
+}
 
 .details-navigator-container{
   /*top:-15px;*/
@@ -51,7 +51,7 @@ width: 78%;
   overflow-y: auto;
   /*z-index: 1 !important;*/
   /*top: -5px;*/
-  right: -0.6em;
+  /*right: -0.6em;*/
   -webkit-overflow-scrolling: touch;
 }
 
@@ -108,6 +108,14 @@ width: 78%;
   max-width: 300px !important;
   /*width: 300px !important;*/
 }
+
+.ngTruncateToggleText {
+    color: rgb(0, 140, 186);
+    font-size: 90%;
+    font-style: italic;
+    cursor: pointer;
+}
+
 
 /******Content Navigator*******/
 li{
@@ -188,16 +196,24 @@ li{
 
 
 .accordion-group .content > ul{
-  font-size: 13px !important;
+  font-size: 12px !important;
   color: black !important;
   text-align: left !important;
-  padding: 2px !important;
+  /*padding: 2px !important;*/
   margin: 0px 0px 0px 0px !important;
   cursor: pointer !important;
 }
 /*.accordion-group .content > ul:hover, .currentitem, .selectedmodule{
   background-color: rgba(0,0,0,0.2) !important;
 }*/
+
+.handle{
+  vertical-align: top;
+}
+.handle:hover{
+  cursor: move;
+  vertical-align: top;
+}
 
 .currentitem, .selectedmodule{
   background-color: rgba(0,0,0,0.2) !important;
@@ -358,8 +374,7 @@ span.error, small.error{
 
 /*MODAL*/
 .reveal-modal{
-	/*position: absolute !important;*/
-	height: 70%;
+	height: 80%;
 	/*top: 4.25rem;*/
 	overflow-y: auto; 
 
@@ -482,7 +497,7 @@ span.error, small.error{
 	color: #2ba6cb !important;
 }
 
-.color-editable-blue{
+.color-editable-blue, .editable-click, .editable{
   color:#428bca !important;
 }
 
@@ -727,11 +742,20 @@ font-weight: 300 !important
 	overflow: hidden;
 	text-overflow: ellipsis;
 }
+.truncate-90{
+  width: 90%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
 .truncate-70{
   width: 70%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis; 
+}
+.break-word{
+  overflow-wrap: break-word;
 }
 
 /*LAYERING*/
@@ -1090,6 +1114,7 @@ td.right-border{
   z-index: 1;
   left: 0px;
   top: 0px;
+  border-radius: 2px;
 }
 .delete-overlay.count-padding{
   width: calc(100% + 10px);
@@ -1234,9 +1259,7 @@ button.active{
 .auto-right{
   right: auto !important;
 }
-.position-relative{
-  position: relative !important;
-}
+
 label{
 	cursor: text;
 }
@@ -1270,9 +1293,9 @@ label{
 	z-index: 10;
 }*/
 
-.top-bar input[type="checkbox"]{
+/*.top-bar input[type="checkbox"]{
   top:0;
-}
+}*/
 
 .top-bar .dropdown{
   box-shadow:0 3px 6px rgba(0, 0, 0, 0.2);
@@ -1471,6 +1494,7 @@ label{
   filter: alpha(opacity=50);
   opacity: .5;
 }
+
 
 h2 .editable-click{
 	color: #5da423 !important;
@@ -1797,10 +1821,10 @@ a.editable-click{
 }
 
 .width-max-heigh{
-    max-width:114vh
+    max-width:120vh
 }
 
-@media only screen and (orientation:landscape) and (max-width: 48.063em){
+@media only screen and (orientation:landscape) and (device-width:768px){
   .ipad .land-medium-4 {
     position: relative;
     width: 33.33333%; 
@@ -1821,13 +1845,17 @@ a.editable-click{
     position: relative;
     width: 95.66667%; 
   }
+  .ipad .land-medium-12 {
+    position: relative;
+    width: 100%; 
+  }
 
   .ipad .land-no-padding{
     padding: 0px !important; 
   }
   
   .ipad .land-height{
-    height: 75vh !important;
+    height: 80vh !important;
     -webkit-overflow-scrolling: touch;
   }
 
@@ -1850,11 +1878,11 @@ a.editable-click{
   }
 
   .ipad .width-max-heigh{
-    max-width:initial
+    max-width:134vh
   }
 }
 
-@media screen and (orientation:portrait){
+@media only screen and (orientation:portrait) and (device-width:768px){
   .ipad .portrait-medium-11{
     position: relative;
     width: 91.66667%; 
@@ -1899,7 +1927,7 @@ a.editable-click{
 
 @media only screen and (min-width:64.063em) {
   .large-height-big{
-    height: 78vh !important;
+    height: 82vh !important;
   }
   .with-huge-padding-side{
     padding-left: 10.5rem !important;
@@ -1911,7 +1939,7 @@ a.editable-click{
 
 @media only screen and (min-width:84.063em) {
   .large-height-big{
-    height: 80vh !important;
+    height: 82vh !important;
   }
   .with-huge-padding-side{
     padding-left: 10.5rem !important;

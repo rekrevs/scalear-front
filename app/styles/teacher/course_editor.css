@@ -2,14 +2,6 @@
 	z-index: 0;
 }
 
-.handle{
-	vertical-align: top;
-}
-.handle:hover{
-	cursor: move;
-	vertical-align: top;
-}
-
 .overlay {
   width: 95%;
   height: 100%;
@@ -26,9 +18,8 @@ input[type="checkbox"].editable-input.editable-has-buttons{
 }
 
 .details_accordian details-date > form > span > ul.f-dropdown{
-	/*left:0% !important;*/
-  left: 37% !important;
-  top: 12rem !important;
+  left: 35% !important;
+  /*top: 12rem !important;*/
 }
 
 #module details-date > form > span > ul.f-dropdown{
@@ -232,8 +223,8 @@ label{
 
 .position-header{
   position: absolute;
-  left: -25px;
-  font-style: bold;
+  left: -49px;
+  font-weight: bold;
   cursor: move;
 }
 

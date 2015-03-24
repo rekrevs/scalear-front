@@ -30,14 +30,26 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('add_item', function(event, type){
-        if(type=='video')
-             $scope.addLecture($stateParams.module_id)
-        else if(type == 'link')
-            $scope.addCustomLink()            
+        if(!$state.params.module_id){
+            $scope.addModule(function(module_id){
+                $timeout(function(){
+                    addItemBytype(type, module_id)
+                })
+            })
+        }
         else
-            $scope.addQuiz($stateParams.module_id, type)
+            addItemBytype(type)
         ContentNavigator.open()
     })
+
+    var addItemBytype = function(type,module_id){
+        if(type=='video')
+             $scope.addLecture(module_id || $state.params.module_id)
+        else if(type == 'link')
+            $scope.addCustomLink(module_id || $state.params.module_id)            
+        else
+            $scope.addQuiz(module_id || $state.params.module_id, type)
+    }
     
     $scope.$on('share_copy', function(event, data){
         // console.log(data)
@@ -178,48 +190,35 @@ angular.module('scalearAngularApp')
  		return CourseEditor.capitalize(s)
  	}
 
- 	$scope.impersonate = function(){
- 		emptyClipboard()
-        var module_id = $stateParams.module_id
-        if($scope.module_obj[module_id].items.length){
-            $cookieStore.put('old_user_id', $rootScope.current_user.id)
-            $cookieStore.put('state', $state.current.name)
-            $cookieStore.put('params', $state.params)
-            // $cookieStore.put('course_id', $stateParams.course_id)
-            // $cookieStore.put('module_id', module_id)
-           // $cookieStore.put()
+ 	// $scope.impersonate = function(){
+ 	// 	emptyClipboard()
+  //       var module_id = $stateParams.module_id
+  //       if($scope.module_obj[module_id].items.length){
+  //           $cookieStore.put('old_user_id', $rootScope.current_user.id)
+  //           $cookieStore.put('state', $state.current.name)
+  //           $cookieStore.put('params', $state.params)
+  //           $scope.disable_preview = true
+  //           var item = $scope.module_obj[module_id].items[0]
+  //           ContentNavigator.close()
+  //           Impersonate.create({},{course_id: $stateParams.course_id},
+  //             function(data){
+  //               $cookieStore.put('preview_as_student', true)            
+  //               $cookieStore.put('new_user_id', data.user.id) 
+  //               var params={course_id: $stateParams.course_id, module_id: module_id}
+  //               params[item.class_name+'_id'] = item.id
+  //               $rootScope.current_user= null
+  //               $state.go('course.module.courseware.'+item.class_name,params,{reload:true})
+  //               $rootScope.preview_as_student = true
+  //               $scope.$emit('get_current_courses')
+  //             },
+  //             function(){
+  //               console.log("Failed")
+  //             }
+  //           )
+  //       }
+  // 	}
 
-           console.log($state.current)
-            $scope.disable_preview = true
-            var item = $scope.module_obj[module_id].items[0]
-            ContentNavigator.close()
-            Impersonate.create({},{course_id: $stateParams.course_id},
-              function(data){
-                console.log(data)
-                console.log("good")            
-                $cookieStore.put('preview_as_student', true)            
-                $cookieStore.put('new_user_id', data.user.id) 
-                var params={course_id: $stateParams.course_id, module_id: module_id}
-                params[item.class_name+'_id'] = item.id
-                // $scope.course= null
-                $rootScope.current_user= null
-                $state.go('course.module.courseware.'+item.class_name,params,{reload:true})
-                $rootScope.preview_as_student = true
-                $scope.$emit('get_current_courses')
-                // UserSession.getRole().then(function(result) {                    
-                    // courseResolver.init($stateParams.course_id).then(function(){
-                    // })
-                // })
-                
-              },
-              function(){
-                console.log("Failed")
-              }
-            )
-        }
-  	}
-
- 	$scope.addModule=function(){
+ 	$scope.addModule=function(callback){
     	Module.newModule({course_id: $stateParams.course_id, lang:$translate.uses()},{},
 	    	function(data){
                 data.group.items=[]
@@ -228,6 +227,8 @@ angular.module('scalearAngularApp')
 	    		$scope.module_obj[data.group.id] = $scope.course.modules[$scope.course.modules.length-1]
                 $state.go('course.module.course_editor.overview', {module_id: data.group.id})
                 ContentNavigator.open()
+                if(callback)
+                    callback(data.group.id)
 	    	}, 
 	    	function(){}
 		);
@@ -340,6 +341,8 @@ angular.module('scalearAngularApp')
                 pasteLecture(clipboard, module_id)
             else if(clipboard.type == 'quiz')
                 pasteQuiz(clipboard, module_id)
+            else if(clipboard.type == 'customlink')
+                pastLink(clipboard, module_id)
         } 
     }
 
@@ -399,23 +402,27 @@ angular.module('scalearAngularApp')
 		)
     }
 
-    var quizCopy=function(quiz_id,module_index){
-    	console.log("quiz copy")
-    	$scope.item_overlay = true  
-    	Quiz.quizCopy(
-    		{
-    			course_id: $stateParams.course_id, 
-    			quiz_id: quiz_id
-    		},{},
-    		function(data){
-    			console.log(data)
-    			$scope.item_overlay = false 
-    			data.quiz.class_name='quiz'
-    			$scope.modules[module_index].items.push(data.quiz)
-                $scope.items_obj["quiz"][data.quiz.id] = data.quiz
-    		}, 
-    		function(){}
-		)
+
+    var pastLink=function(item,module_id){
+        console.log("link copy")
+        console.log(item)
+        $scope.item_overlay = true  
+        CustomLink.linkCopy(
+            {
+                link_id: item.id,
+                course_id: $stateParams.course_id,
+                module_id:module_id
+            },
+            {},
+            function(data){
+                console.log(data)
+                $scope.item_overlay = false 
+                data.link.class_name='customlink'
+                $scope.module_obj[module_id].items.push(data.link)
+                $scope.items_obj["customlink"][data.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
+            }, 
+            function(){}
+        )
     }
 
 	var selectNone = function(){
@@ -427,29 +434,51 @@ angular.module('scalearAngularApp')
 		})
 	}
 
-	$scope.addCustomLink=function(){
-        Course.newCustomLink({course_id:$stateParams.course_id},
+	// $scope.addCustomLink=function(){
+ //        Course.newCustomLink({course_id:$stateParams.course_id},
+ //            {},
+ //            function(doc){
+ //                // $log.debug(doc)
+ //                console.log(doc)
+ //                doc.link.url = "http://"
+ //                // $scope.module.custom_links.push(doc.link)
+ //                $scope.course.custom_links.push(doc.link)
+ //                ContentNavigator.open()
+ //            }, 
+ //            function(){}
+ //        );
+ //    }
+
+     $scope.addCustomLink=function(module_id){
+        Module.newCustomLink(
+            {
+                course_id:$stateParams.course_id, 
+                module_id:module_id
+            },
             {},
             function(doc){
-                // $log.debug(doc)
-                console.log(doc)
                 doc.link.url = "http://"
-                // $scope.module.custom_links.push(doc.link)
-                $scope.course.custom_links.push(doc.link)
-                ContentNavigator.open()
+                doc.link.class_name="customlink"
+                $scope.module_obj[module_id].items.push(doc.link)
+                $scope.items_obj["customlink"][doc.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
             }, 
             function(){}
         );
     }
 
     $scope.removeCustomLink=function (elem) {
-        // $scope.link_overlay=true
+        console.log(elem)
         CustomLink.destroy(
             {link_id: elem.id},{},
             function(){
-                $scope.course.custom_links.splice($scope.course.custom_links.indexOf(elem), 1)
-                // $scope.module_obj[$stateParams.module_id].custom_links.splice($scope.module_obj[$stateParams.module_id].custom_links.indexOf(elem), 1)
-                // $scope.link_overlay=false
+                if(elem.group_id){
+                    // $scope.module_obj[$stateParams.module_id].custom_links.splice($scope.module_obj[$stateParams.module_id].custom_links.indexOf(elem), 1)
+                    $scope.module_obj[elem.group_id].items.splice($scope.module_obj[elem.group_id].items.indexOf(elem),1)
+                    delete $scope.items_obj["customlink"][elem.id];
+                    emptyClipboard()
+                }
+                else
+                    $scope.course.custom_links.splice($scope.course.custom_links.indexOf(elem), 1)
             }, 
             function(){}
         );

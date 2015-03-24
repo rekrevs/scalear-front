@@ -9,7 +9,6 @@ angular.module('scalearAngularApp')
         $scope.selected_module= selected_module
         $scope.selected_item= selected_item
         $scope.deSelectAll($scope.selected_module)
-        console.log('hello theereerewrwerwer')
         console.log($scope.selected_item)
         if($scope.selected_item){
           $scope.selectItem($scope.selected_module, $scope.selected_item, null);
@@ -26,18 +25,24 @@ angular.module('scalearAngularApp')
 
 
   		$scope.shareItem= function(){
-  			var selected = {modules:[], lecture:[], quiz:[]}
+  			var selected = {modules:[], lectures:[], quizzes:[], customlinks:[]}
   			// $scope.modules.forEach(function(module){
   				if($scope.selected_module.selected)
   					selected.modules.push($scope.selected_module.id)
   				else
   					$scope.selected_module.items.forEach(function(item){
-  						if(item.selected)
-  							selected[item.class_name].push(item.id)
+  						if(item.selected){
+                if(item.class_name == 'lecture')
+                  selected['lectures'].push(item.id)
+                else if (item.class_name == 'quiz')
+                  selected['quizzes'].push(item.id)
+                else if (item.class_name == 'customlink')
+                  selected['customlinks'].push(item.id)
+              }
   					})
   			// })
 
-        if(!selected.modules.length && !selected.lecture.length && !selected.quiz.length){
+        if(!selected.modules.length && !selected.lectures.length && !selected.quizzes.length && !selected.customlinks.length){
           $scope.errors = $translate('sharing.nothing_selected')
         }
         else if(!$scope.selected_teacher)

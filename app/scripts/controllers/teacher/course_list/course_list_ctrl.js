@@ -8,46 +8,44 @@ angular.module('scalearAngularApp')
     $rootScope.subheader_message = $translate("navigation.courses")
 
 		$scope.column='name'
-    $scope.filterChoice = false
-    $scope.$on('course_filter_update',function(ev, filter){
-      $scope.filterChoice = filter
-    })
-
-    $scope.$on('get_all_courses', function(){
-      getAllCourses()
-    })
-
-    // $rootScope.$broadcast("get_all_courses")
+    $scope.course_filter = '!!'
     var getAllCourses=function(){
-        $scope.courses=null
-          Course.index({},
-              function(data){
-                  $scope.courses = data
-              }
-          )           
+      $scope.courses=null
+      Course.index({},
+      function(data){
+        $scope.courses = data
+        console.log($scope.courses)
+        $scope.courses.forEach(function(course){
+          if(!course.ended){
+            $scope.course_filter = false
+            return 
+          }
+        })
+      })           
     }
 
-    var deleteCourseLocally=function(course){
+    var removeFromCourseList=function(course){
       $scope.courses.splice($scope.courses.indexOf(course), 1)
       var course_index = $scope.current_courses.map(function(x){
-        return course.id
-      }).indexOf(course.id)
+        return x.id
+      })
+      .indexOf(course.id)
       if(course_index > -1)
         $scope.current_courses.splice(course_index, 1)
     }
 
 		$scope.deleteCourse=function(course){
-			Course.destroy({course_id: course.id},{},
-				function(response){
-					deleteCourseLocally(course)
-				},
-				function(){})
+			// Course.destroy({course_id: course.id},{},
+			// 	function(response){
+					removeFromCourseList(course)
+				// },
+				// function(){})
 		}
 
     $scope.unenrollCourse=function(course){
       Course.unenroll({course_id: course.id},{},
         function(response){
-          deleteCourseLocally(course)
+          removeFromCourseList(course)
         },
         function(){})
     }
@@ -55,8 +53,11 @@ angular.module('scalearAngularApp')
 		$scope.filterTeacher=function(teacher_name, teacher_email){
 			$scope.filtered_teacher_name = teacher_name
       $scope.filtered_teacher = teacher_email;
-
 		}
+
+    $scope.filterCourse=function(val){
+      $scope.course_filter = val
+    }
 
     $scope.removeFilter=function(){
       $scope.filtered_teacher = ''

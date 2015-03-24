@@ -43,8 +43,8 @@ angular.module('scalearAngularApp')
 				            if(options.displayontop){
 				            	angular.element('.popover').css('z-index', '999999');
 				            }
-				            if(options.rightcut)
-				            	adjustLeft(pop)
+				            // if(options.rightcut)
+				            // 	adjustLeft(pop)
 				            if(options.topcut)
 				            	adjustTop(pop)
 			
@@ -82,6 +82,14 @@ angular.module('scalearAngularApp')
 			          		})
 			          		options.instant_show =false
 			          	}
+
+			          	$(document).on("click", function (e) {
+						    var target = $(e.target)
+						    var inPopover = target.closest('.popover').length > 0
+						    var isElem = target.is(element)
+						    if (!inPopover && !isElem)
+						    	element.popover('hide');
+						});	     
 			        }
 			    }
 		    })

@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
 	    'newModule':{method:'POST', params:{action:'new_module_angular'}, headers:headers},
 	    'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},
 	    'saveSort':{method:'POST', params:{action:'sort'}, headers:headers},
-          'getModules':{method:'GET', params:{action:'get_group_angular'},headers:headers},
+          'getModuleStatistics':{method:'GET', params:{action:'get_group_statistics'},headers:headers},
 	    'validateModule': {method: 'PUT', params: {action: 'validate_group_angular'},headers: headers},
 	      'getLectureProgress': {method: 'GET', params: {action: 'get_lecture_progress_angular'}, headers:headers},
             'getQuizzesProgress': {method: 'GET', params: {action: 'get_quizzes_progress_angular'}, headers:headers},

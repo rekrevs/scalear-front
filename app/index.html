@@ -8,7 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title ng-bind="'ScalableLearning'+' - '+Page.title()">ScalableLearning</title>
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
+    <meta content="width=device-width, initial-scale=1" name="viewport"/>
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="shortcut icon" type="image/x-icon" href="/logo.ico">
 
@@ -28,18 +28,16 @@
     <link rel="stylesheet" href="bower_components/angular-macgyver/lib/macgyver.css">
     <!-- endbuild -->
     <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
-    <link rel='stylesheet prefetch' href='http://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
+    <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
     
   </head>
 
 
   <body>
-    <div class="errorpageserver" ng-show="logging_out">
-        <loading size="big" show="true" style="position: relative;"></loading>
-    </div>
+    <loading class="errorpageserver" size="big" show="logging_out" ></loading>
     <div id="error_container" ng-show="show_alert!=''" style="height: 0px;" ng-class="{errorpageserver: server_error, errorpageclass: changeError, errorpage: true}">
         <div style="text-align: center; display:block; height: 0px;">
-            <div id='server_error' app-messages status="show_alert" ng-show="show_alert!=''" style="z-index: 20000;"></div>
+            <div id='server_error' app-messages status="show_alert" style="z-index: 20000;"></div>
         </div>
     </div>
 
@@ -52,7 +50,7 @@
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
      <header>
-        <main-navigation user="current_user" logout="logout" changelanguage="changeLanguage" courses="current_courses"></main-navigation>
+        <main-navigation user="current_user" courses="current_courses"></main-navigation>
     </header> 
     <div id="main" role="main"> 
         <div class="header">
@@ -64,14 +62,14 @@
             </div>
         </div>
         <div class="container row"> 
-            <content-navigator ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="course.modules" links="course.custom_links" mode="editor" open="ContentNavigator.status">
+            <content-navigator ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="course.modules" mode="editor" open="ContentNavigator.status">
             </content-navigator>
-            <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" links="course.custom_links" open="ContentNavigator.status">
+            <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
             </content-navigator>
-            <br ng-hide="('**.course.**' | includedByState) && !('**.course_editor.overview' | includedByState) && !('**.progress' | includedByState)"/>
-            <div ng-show="ContentNavigator.delayed_navigator_open || ('**.course_editor.overview' | includedByState)" class="containeropen small-12 medium-4 large-2 columns no-padding no-margin">
+            <br ng-hide="('**.course.**' | includedByState) "/>
+            <div ng-show="ContentNavigator.delayed_navigator_open" class="containeropen small-12 medium-4 large-2 columns no-padding no-margin">
             </div>
-            <div class="land-min-height land-no-padding" ng-class="{'small-12 medium-8 large-10 columns max-width-me': ContentNavigator.delayed_navigator_open || ('**.course_editor.overview' | includedByState),'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
+            <div class="land-min-height no-padding" ng-class="{'small-12 medium-9 large-10 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
             </div>
         </div> 
         <footer class="small-12 columns footer">
@@ -103,6 +101,7 @@
     <script src="bower_components/angular-resource/angular-resource.min.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.min.js"></script>
     <script src="bower_components/angular-sanitize/angular-sanitize.min.js"></script>
+    <script src="bower_components/angular-touch/angular-touch.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.min.js"></script>
     <script src="bower_components/angular-ui-calendar/src/calendar.js"></script>
     <script src="bower_components/angular-ui-sortable/sortable.min.js"></script>
@@ -142,7 +141,6 @@
     <script src="bower_components/bootstrap-sass/js/bootstrap-dropdown.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-tooltip.js"></script>
     <script src="bower_components/bootstrap-sass/js/bootstrap-popover.js"></script>
-
     <script src="bower_components/js-md5/js/md5.min.js"></script>
     <script src="bower_components/angular-loading-bar/build/loading-bar.min.js"></script>
     <script src="bower_components/angu-fixed-header-table/angu-fixed-header-table.js"></script>
@@ -150,9 +148,9 @@
     <script src="scripts/externals/mm-foundation.js"></script>
     <script src="bower_components/zeroclipboard/dist/ZeroClipboard.min.js"></script>
     <script src="bower_components/ng-clip/dest/ng-clip.min.js"></script>
-
+    <script src="bower_components/angular-truncate/ng-text-truncate.js"></script>
+    <script src="bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.js"></script>
     <!-- endbuild -->
-
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/externals/shortcut.js"></script>
     <script src="scripts/externals/scrollToThis.js"></script>

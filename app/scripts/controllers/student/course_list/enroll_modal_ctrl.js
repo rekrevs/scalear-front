@@ -19,7 +19,6 @@ angular.module('scalearAngularApp')
         function(data){
           console.log(data)
       		$scope.form.processing=false;
-          // $rootScope.$broadcast('get_all_courses')
           $state.go("course.course_information", {course_id: data.course.id})
           $rootScope.$broadcast('get_current_courses')
       		$modalInstance.close($scope.enrollment.key);	

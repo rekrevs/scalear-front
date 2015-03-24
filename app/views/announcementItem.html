@@ -4,7 +4,7 @@
 		</delete_button>
 	</div>
 	<div class="time-label uppercase blue color-white">
-		<small>{{announcement.created_at | timeAgo}}</small>
+		<small>{{announcement.created_at | fromNow}}</small>
 	</div>	
 	<div ng-click="showannouncement(announcement)" ng-mouseover="announcement.overclass = 'icon-pencil'" ng-mouseleave="announcement.overclass= ''" ng-if="!announcement.show">	
 		<blockquote class="announcement-body dark-text with-padding">

@@ -16,7 +16,7 @@
 				</div> -->
 				<div class="panel row with-margin-top">
 					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | timeAgo}}
+						{{item.created_at | fromNow}}
 					</div>
 					<center>
 	<!-- 					Module: “test” shared by David Black-Schaffer from course COURSE_NAME -->
@@ -43,7 +43,7 @@
 			<li ng-repeat="lecture in item.lectures">
 				<div class="panel row with-margin-top">
 					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | timeAgo}}
+						{{item.created_at | fromNow}}
 					</div>
 					<div class="small-12 with-margin-bottom">
 						<div class="alert-box color-white show-inline no-margin"><b>{{'groups.lecture' | translate}}:</b> {{lecture.name}}</div>
@@ -85,7 +85,7 @@
 				</div> -->
 				<div class="panel row with-margin-top">
 					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | timeAgo}}
+						{{item.created_at | fromNow}}
 					</div>
 					<div class="small-12 with-margin-bottom">
 						<div class="alert-box color-white no-margin show-inline"><b>{{'groups.'+quiz.quiz_type | translate}}:</b> {{quiz.name}}</div>
@@ -96,6 +96,24 @@
 		          	<select class="small-8 medium-8  large-3 columns left" ng-disabled="!selected_course" ng-model="selected_module" ng-options="module.name for module in selected_course.modules"></select>
 		          	<div class="small-3 medium-1 large-1 column left">
 			          	<button ng-click="addQuiz($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="button tiny success left">{{'copy' | translate}}</button>
+		          	</div>
+				</div>
+				<!-- <hr /> -->
+			</li>
+			<li ng-repeat="link in item.customlinks">
+				<div class="panel row with-margin-top">
+					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
+						{{item.created_at | fromNow}}
+					</div>
+					<div class="small-12 with-margin-bottom">
+						<div class="alert-box color-white no-margin show-inline"><b>{{'groups.customlink' | translate}}:</b> {{link.name}}</div>
+					</div>
+			        <label class="small-12 medium-12 large-2 columns">{{'copy' | translate}} {{'sharing.to_course' | translate}}:</label>
+			        <select class="small-8 medium-8 large-4 columns" ng-model="selected_course" ng-options="course.name for course in courses"></select>
+		          	<label class="small-12 medium-12 large-1 columns">{{'sharing.to_module' | translate}}:</label>
+		          	<select class="small-8 medium-8  large-3 columns left" ng-disabled="!selected_course" ng-model="selected_module" ng-options="module.name for module in selected_course.modules"></select>
+		          	<div class="small-3 medium-1 large-1 column left">
+			          	<button ng-click="addLink($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="button tiny success left">{{'copy' | translate}}</button>
 		          	</div>
 				</div>
 				<!-- <hr /> -->

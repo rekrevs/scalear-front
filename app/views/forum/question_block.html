@@ -1,10 +1,15 @@
 <div id="show_question"> <!-- For question -->
-    <table class="table" style="margin-top: 10px;">
+    <table class="table" style="margin-top: 10px;background: rgb(249, 249, 249);">
         <tr>
             <td colspan="2" style="padding:5px">
-                <div><i ng-show="error_message" style="color:red; font-size:12px"><br>{{error_message}}<br></i></div>
-                <textarea class="text_block" placeholder="{{'lectures.ask_question' | translate}}" ng-model="current_question" style="width: 96%; height: 100%;"></textarea>
+                <div><i ng-show="error_message" class="size-12 color-red"><br>{{error_message}}<br></i></div>
+                <textarea ng-disabled="preview_as_student" class="text_block" placeholder="{{'lectures.ask_question' | translate}}" ng-model="current_question" style="width: 96%; height: 100%;"></textarea>
             </td>
+        </tr>
+        <tr ng-if="preview_as_student">
+            <td colspan="2" style="padding:5px">
+                <div><i class="size-12 color-red" translate>cannot_ask_question_preview</i></div>
+             </td>
         </tr>
         <tr>
             <td style="width:70%;padding:5px">
@@ -12,7 +17,7 @@
                 <select ng-model='privacy' ng-disabled="item.data.isEdit" ng-options="f.text for f in choices" style="width: 100%;"></select>
             </td>
             <td ng-if="!item.data.isEdit" stlye="padding:0">
-                <button type="button" class="button tiny" ng-click="postQuestion(item)" translate>youtube.ask</button>
+                <button  ng-disabled="preview_as_student" type="button" class="button tiny" ng-click="postQuestion(item)" translate>youtube.ask</button>
                 <button type="button" class="button tiny alert" ng-click="cancelQuestion(item)" translate>lectures.cancel</button>
             </td>
             <td ng-if="item.data.isEdit">

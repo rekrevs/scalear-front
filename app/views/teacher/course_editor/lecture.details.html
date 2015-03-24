@@ -14,17 +14,17 @@
       </tr>
       <tr>
         <td ng-class='{"color-red": lecture.url == "none"}' class="right-border">
-          <span translate>lectures.url</span>:
+          <span translate>lectures.video</span>:
           <i class='fi-info' tooltip='{{"youtube.info"|translate}}'></i>
         </td>
         <td class="break-text">
-            <details-text id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture" column="url"></details-text> 
+            <details-url id="url" value="lecture.url" save="updateLectureUrl()" validate="validateLecture"></details-text> 
         </td>
       </tr>
       <tr>
         <td class="right-border"><span translate>lectures.description</span>:</td>
         <td>
-          <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description"></details-area>
+          <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description" empty_message="({{ 'lectures.add_description' | translate}}...)"></details-area>
         </td>
       </tr>
       <tr>
@@ -60,7 +60,7 @@
       <tr>
         <td class="right-border"><span translate>lectures.student_link_lecture</span>:</td>
         <td class="break-text">
-          <span class="color-editable-blue">{{link_url}}</span>
+          <span >{{link_url}}</span>
         </td>
       </tr>
     </table>
@@ -118,8 +118,10 @@
           <input type="checkbox" ng-model="lecture.due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
           <span class="size-12" >has due date</span>
           <div ng-show="lecture.due_date_enabled">
-            <input type="checkbox" ng-disabled="lecture.disable_due_controls" ng-model="lecture.due_date_module" ng-change="updateLecture()" class="no-margin">
-            <span class="size-12" translate>lectures.use_module_due</span>
+            <span ng-hide="lecture.disable_module_due_controls">
+              <input type="checkbox" ng-model="lecture.due_date_module" ng-change="updateLecture()" class="no-margin">
+              <span class="size-12" translate>lectures.use_module_due</span>
+            </span>
             <br />
             <div ng-hide="!lecture.due_date_module">
               <div style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">

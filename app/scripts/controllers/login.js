@@ -6,6 +6,7 @@ angular.module('scalearAngularApp')
   $scope.user={}
   Page.setTitle('navigation.login')
   $('#user_email').select()
+
   $scope.login = function(){
     $scope.sending = true;
     User.sign_in({},
@@ -26,6 +27,16 @@ angular.module('scalearAngularApp')
         $scope.sending = false;
     });
   }
+
+  var isMobile=function(){
+      var iOS = false,
+          iDevice = ['iPad', 'iPhone', 'iPod','Android'];
+      for ( var i = 0; i < iDevice.length ; i++ ) {
+          if( navigator.platform === iDevice[i] ){ iOS = true; break; }
+      }
+      return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
+  }
+  $scope.is_mobile= isMobile()
 
    
 }]);

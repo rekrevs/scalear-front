@@ -27,6 +27,7 @@ angular.module('scalearAngularApp', [
     'ngResource',
     'ngSanitize',
     'ui.router',
+    // 'ngTouch',
     // 'ui.bootstrap.accordion',
     // 'ui.bootstrap.tabs',
     // 'ui.bootstrap.collapse',
@@ -70,7 +71,8 @@ angular.module('scalearAngularApp', [
     // 'mm.foundation.topbar',
     'Mac',
     'dcbImgFallback',
-    'ngClipboard'
+    'ngClipboard',
+    'ngTextTruncate'
     // 'duScroll',
     // 'ngAnimate'
 ])
@@ -88,7 +90,7 @@ angular.module('scalearAngularApp', [
             editableOptions.theme = 'default';
             editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 success check" type="submit"><i class="fi-check"></i></button>';
             editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert cancel" type="button" ng-click="$form.$cancel()"><i class="fi-x"></i></button>';
-            editableThemes['default'].errorTpl = '<small class="error position-absolute z-one with-tiny-padding" ng-show="$error" ng-bind="$error"></small>'
+            editableThemes['default'].errorTpl = '<small class="error with-tiny-padding position-relative" ng-show="$error" ng-bind="$error" style="z-index:90"></small>'
             $rootScope.textAngularOpts = {
                 toolbar: [
                     ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],
@@ -391,10 +393,10 @@ angular.module('scalearAngularApp', [
             .state('course.module.course_editor.overview', {
                 url: '',
                 views: {
-                    // 'details': {
-                    //     templateUrl: '/views/teacher/course_editor/module.details.html',
-                    //     controller: 'moduleDetailsCtrl'
-                    // },
+                    'details': {
+                        templateUrl: '/views/teacher/course_editor/module.details.html',
+                        controller: 'moduleDetailsCtrl'
+                    },
                     'module': {
                         templateUrl: '/views/teacher/course_editor/module.middle.html',
                         controller: 'moduleMiddleCtrl'

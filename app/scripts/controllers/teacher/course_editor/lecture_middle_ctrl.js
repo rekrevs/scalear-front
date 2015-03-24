@@ -83,6 +83,7 @@ angular.module('scalearAngularApp')
         // $scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  		$scope.lecture_player.controls.pause()
         $scope.lecture_player.controls.seek(0)
+    	$scope.total_duration=$scope.lecture_player.controls.youtube? $scope.lecture.duration - 1 : $scope.lecture.duration 
         // $scope.lecture_player.controls.volume(0.5);
      	//$scope.lecture.duration = $scope.lecture_player.controls.getDuration()
  	}
@@ -130,7 +131,8 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.timeUpdate = function(){
         $scope.current_time = $scope.lecture_player.controls.getTime()
-        $scope.elapsed_width = (($scope.current_time/($scope.lecture.duration -1))*100) + '%'
+        $scope.elapsed_width = (($scope.current_time/($scope.total_duration))*100) + '%'
+        
     }
 
     $scope.lecture_player.events.seeked=function(){
@@ -170,7 +172,7 @@ angular.module('scalearAngularApp')
 
 		promise.then(function(){
 			var insert_time= $scope.lecture_player.controls.getTime()
-			var duration = $scope.lecture_player.controls.getDuration()
+			var duration = $scope.total_duration
 
 			if(insert_time < 1 )
 				insert_time = 1
@@ -179,8 +181,11 @@ angular.module('scalearAngularApp')
 
 			if(old_insert_time)
 				insert_time = old_insert_time
-			else
+			else{
 				insert_time = checkQuizTimeConflict(insert_time)
+				if (insert_time >= duration)
+					insert_time = duration - 1
+			}
 			
 			$scope.lecture_player.controls.seek_and_pause(insert_time)
 
@@ -218,7 +223,7 @@ angular.module('scalearAngularApp')
 			$scope.submitted= false
 			$scope.editing_mode = true;
 			$scope.selected_quiz = quiz
-			$scope.$parent.selected_quiz_id = quiz.id
+			$scope.$parent.$parent.selected_quiz_id = quiz.id
 			$scope.lecture_player.controls.seek_and_pause(quiz.time)
 
 			if(quiz.quiz_type =="html"){
@@ -286,9 +291,9 @@ angular.module('scalearAngularApp')
 
 	var mergeDragPos=function(answers){
 		var all_pos=[]
-		answers.forEach(function(elem){
+		answers.forEach(function(elem, i){
+			elem.pos = i
 			all_pos.push(parseInt(elem.pos))
-			$log.debug(all_pos)
 		});
 		return all_pos
 	}
@@ -314,12 +319,9 @@ angular.module('scalearAngularApp')
 
  	$scope.addDoubleClickBind= function(event){
 	  if ($scope.editing_mode) {
-	    
-	  
- 		console.log("hell worll.ds")
  		var answer_width, answer_height
  		if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
- 			answer_width = 300
+ 			answer_width = 150
  			answer_height= 40
  		}
  		else{
@@ -374,33 +376,26 @@ angular.module('scalearAngularApp')
 
 
 	$scope.addAnswer= function(ans,h,w,l,t){
-		$log.debug("adding answer")
   		$scope.new_answer=CourseEditor.newAnswer(ans,h,w,l,t,"lecture", $scope.selected_quiz.id)
   		$scope.selected_quiz.answers.push($scope.new_answer)
   		if($scope.selected_quiz.question_type.toLowerCase() =="drag"){
 			//$scope.new_answer.pos = data.current.pos
 			var max = Math.max.apply(Math,$scope.allPos)
-			max = max ==-Infinity? -1 : max
-			$log.debug("max= "+max)
-			$scope.new_answer.pos=max+1
+			$scope.new_answer.pos = max ==-Infinity? 0 : max+1
 		    $scope.allPos=mergeDragPos($scope.selected_quiz.answers)
 		}
 	}
 	
 	$scope.removeAnswer = function(index){
-		$log.debug("removing answer")
-		var backup = angular.copy($scope.selected_quiz.answers[index])
 		$scope.selected_quiz.answers.splice(index, 1);
-		$log.debug(backup)
 		 if($scope.selected_quiz.question_type.toLowerCase()=="drag"){
 			$scope.allPos=mergeDragPos($scope.selected_quiz.answers)
-			$log.debug($scope.allPos)
 		}
 	}
 
 	var updateAnswers=function(ans, quiz, options){
 		$log.debug("savingAll")
-		$scope.disable_save_button = true
+		// $scope.disable_save_button = true
 		var selected_quiz = angular.copy($scope.selected_quiz)
 		if(options && options.exit)
 				$scope.exitBtn()
@@ -412,7 +407,7 @@ angular.module('scalearAngularApp')
 			},
 			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type },
 			function(data){
-				$scope.disable_save_button = false
+				// $scope.disable_save_button = false
 				if(!(options && options.exit))
 					if(selected_quiz.quiz_type =="invideo")
 						getQuizData();
@@ -487,7 +482,7 @@ angular.module('scalearAngularApp')
 	var clearQuizVariables= function(){
 		$scope.selected_quiz={}	
 		// $scope.$parent.selected_quiz= {}
-		$scope.$parent.selected_quiz_id = null
+		$scope.$parent.$parent.selected_quiz_id = null
 		$scope.quiz_deletable = false
 	}
 

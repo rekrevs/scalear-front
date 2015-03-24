@@ -9,31 +9,31 @@
 					</div>		
 					</accordion-heading>
 				</accordion-group>
-				<accordion-group ng-show="links" class="accordion-group links_accordion">
+				<!-- <accordion-group ng-show="links" class="accordion-group links_accordion">
 					<accordion-heading class="accordion-heading">
-						<div style="padding: 5px;border-bottom: 1px solid white;">
-							<div class="show-inline">{{'courses.course_links' | translate}}</div>
+						<div ng-click="showCourseLinks()" style="padding: 5px;border-bottom: 1px solid white;">
+							<div class="show-inline" translate>courses.course_links</div>
 						</div>							
 					</accordion-heading>
 					<ul ng-repeat="link in links">
-						<div  style="padding:0 4px;">
+						<div  class="with-small-padding">
 							<a class="with-margin-left" bo-href="link.url" target="_blank"  class="truncate-70 show-inline" bo-text="link.name"></a>
 						</div>
 					</ul>
-				</accordion-group>
-				<center><loading size="small" show="!modules"></loading></center>
+				</accordion-group> -->
 				<accordion-group class="accordion-group" ng-repeat="module in modules | orderBy: 'position'" is-open="$state.params.module_id == module.id">
 					<accordion-heading class="accordion-heading">
-						<div bindonce class="valign-middle" ng-click="showModuleCourseware(module, $event)" bo-title="module.name" ng-class="{currentmodule: currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
-							<div class="row" style="width: 100%;width: 100%;margin-left: auto;margin-right: auto;margin-top: 0;margin-bottom: 0;">
+						<div bindonce class="valign-middle" ng-click="showModuleCourseware(module, $event)" bo-title="module.name" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" style="padding: 5px;border-bottom: 1px solid white;">
+							<div class="row" style="width: 100%;margin-left: auto;margin-right: auto;margin-top: 0;margin-bottom: 0;">
 								<div class="small-1 no-padding columns no-padding-left" style="min-height: 1px;">
-									<module-progress-check class="left" module="module"></module-progress-check>		
+									<module-progress-check class="left" module="module" ng-if="(module.lectures.length + module.quizzes.length) > 0"></module-progress-check>		
 								</div>
-								<div class="small-9 columns no-padding-left">
-									<div class="truncate module_name" bo-text="module.name"></div>
+								<div class="small-9 columns no-padding">
+									<i bo-hide="module.appearance_time | visible" style="margin-right:5px;float:left" class="fi-alert" tooltip="{{'invisible'|translate}} {{module.appearance_time| fromNow}}"></i>
+									<div bo-class="{'truncate-90':!(module.appearance_time | visible), 'truncate':(module.appearance_time | visible)}" class=" module_name" bo-text="module.name"></div>
 								</div>
 								<div class="small-2 no-padding text-right columns">
-									<small class="color-grey" bo-text="module.total_time | formattime:'h:mm'"></small>
+									<small class="color-grey" bo-text="module.total_time | formattime:'h:mm:ss'"></small>
 								</div>
 							</div>
 						</div>
@@ -41,7 +41,7 @@
 					</accordion-heading>
 					<ul>
 						<li class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;" bo-show="module.items" bo-title="item.name" ng-class="{currentitem: currentitem.id == item.id,'blink_btn':item.blink}" ng-repeat="item in module.items" ng-click="showItem(item, 'courseware')">
-							<div class="position-relative" style="height: 20px;">
+							<div ng-if="item.class_name != 'customlink'" class="position-relative" style="height: 20px;">
 								<i class="no-padding fi-check color-green left with-tiny-margin-right ease_in_out" ng-class="{'no-opacity':!item.is_done}" ></i>
 
 								<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'groups.lecture' | translate"></i>
@@ -49,22 +49,27 @@
 								<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'courses.survey' | translate"></i>
 
 								<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name"></div>
-								<div class="color-dark-grey" bo-text="item.duration | formattime:'h:mm'"></div>
+								<div class="color-dark-grey" ng-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div>
 							</div>
+							<a ng-if="item.class_name == 'customlink'" class="position-relative" style="height: 20px;" bo-href="item.url" target="_blank">
+								<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
+								<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.customlink' | translate"></i>
+								<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name"></div>
+							</a>
 						</li>
 					</ul>
-					<ul>
+					<!-- <ul>
 						<li bo-show="module.custom_links" ng-repeat="link in module.custom_links|orderBy: 'group_position'" class="disable_selection size-13 text-right last-child item looks-like-a-link" style="padding: 2px; min-height: 24px;">
 							<div class="position-relative" style="height: 20px;">
 								<i class="no-padding fi-check color-green left with-tiny-margin-right no-opacity"></i>
-								<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.link' | translate"></i>
+								<i class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.customlink' | translate"></i>
 								<div class="truncate-70 show-inline valign-middle left text-left" bo-text="item.name">
 									<a class="dark-text" bo-href="link.url" target="_blank" bo-text="link.name"></a>
 								</div>
 								
 							</div>
 						</li>
-					</ul>
+					</ul> -->
 
 				</accordion-group>
 			</accordion>
@@ -78,9 +83,9 @@
 					</div>						
 					</accordion-heading>
 				</accordion-group>
-				<accordion-group ng-show="links.length" class="accordion-group links_accordion soft-border-bottom border-light-grey" open="links.length">
+				<!-- <accordion-group ng-show="links.length" class="accordion-group links_accordion soft-border-bottom border-light-grey" open="links.length">
 					<accordion-heading class="accordion-heading " >
-						<div style="padding: 5px;border-bottom: 1px solid white;">
+						<div style="padding: 5px;border-bottom: 1px solid white;" ng-click="showCourseLinks()">
 							<div class="show-inline" ng-class="{'with-bigger-margin-left': ('**.course_editor.**' | includedByState)}" translate>courses.course_links</div>
 						</div>
 					</accordion-heading>
@@ -89,16 +94,17 @@
 	            			<link-item link="link" small="true">
 	            		</li>
 	            	</span>
-				</accordion-group>
+				</accordion-group> -->
 				<span ui-sortable="moduleSortableOptions" ng-model='modules'>
 					<accordion-group ng-show="modules.length" class="module accordion-group" ng-repeat="module in modules" close="currentmodule.id != module.id" is-open="{{currentmodule.id == module.id}}">
 						<accordion-heading class="accordion-heading">
-							<module data="module" ng-class="{currentmodule: currentmodule.id == module.id, selectedmodule: ('**.overview' | includedByState)&&  currentmodule.id == module.id}" ng-click="showModule(module,$event)" >
+							<module data="module" ng-class="{'currentmodule selectedmodule': currentmodule.id == module.id}" ng-click="showModule(module,$event)" >
 							</module>
 						</accordion-heading>
 	          			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 		            		<li class="last-child item looks-like-a-link" ng-repeat="item in module.items" ng-class="{currentitem: currentitem.id == item.id}">
-	             				<item data="item" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ng-click="showItem(item, 'course_editor')"></item>
+	             				<item ng-if="item.class_name!='customlink'" data="item" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ng-click="showItem(item, 'course_editor')" />
+	             				<link-item ng-if="item.class_name=='customlink'" link="item" small="true" ng-click="showItem(item, 'course_editor')"/>
 		            		</li>
 		            	</span>
 					</accordion-group>

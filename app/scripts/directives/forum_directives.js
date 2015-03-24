@@ -9,6 +9,7 @@ angular.module('scalearAngularApp')
                 pref: '='
             },
             link:function(scope,element,attrs){
+                scope.preview_as_student = $rootScope.preview_as_student
                 scope.choices= [{text:$translate('discussion.private_discussion'),value:0},{text:$translate('discussion.public_discussion'), value:1}];
                 scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
                 $('.text_block').focus();
@@ -21,7 +22,6 @@ angular.module('scalearAngularApp')
                 //     scope.privacy = scope.choices[$rootScope.current_user.discussion_pref];   
 
                 scope.postQuestion=function(item){
-                    scope.$emit("question_updated")
                     if(scope.current_question && scope.current_question.length && scope.current_question.trim()!=""){
                         if($rootScope.current_user.discussion_pref != scope.privacy.value){
                             $rootScope.current_user.discussion_pref = scope.privacy.value;                                
@@ -42,6 +42,7 @@ angular.module('scalearAngularApp')
                                 item.data= response.post
                                 scope.error_message=null
                                 scope.current_question = ''
+                                scope.$emit("discussion_updated")
                             }, 
                             function(){
                                 console.log("failure")
@@ -49,7 +50,8 @@ angular.module('scalearAngularApp')
                         )
                     }
                     else
-                        scope.error_message = $translate("discussion.cannot_be_empty")
+                        scope.$emit('remove_from_timeline', item)
+                        // scope.error_message = $translate("discussion.cannot_be_empty")
                 }
 
                 scope.updateQuestion= function(question){
@@ -67,13 +69,21 @@ angular.module('scalearAngularApp')
                         )
                     }
                     else
-                        scope.error_message = $translate("discussion.cannot_be_empty")
+                        question.isEdit = false
+                        // scope.error_message = $translate("discussion.cannot_be_empty")
                 }
 
                 scope.cancelQuestion=function(question){
-                    scope.$emit("question_updated")
-                    scope.$emit('update_timeline', question)
+                    scope.$emit("discussion_updated")
+                    scope.$emit('remove_from_timeline', question)
                 }
+
+                scope.$on('post_question', function(ev, item) {
+                   if(!item.data || !item.data.isEdit)
+                        scope.postQuestion(item)
+                    else
+                        scope.updateQuestion(item.data)
+                });
 
                 shortcut.add("enter", function(){
                     if(!scope.item.data || !scope.item.data.isEdit)
@@ -100,6 +110,7 @@ angular.module('scalearAngularApp')
         templateUrl:'/views/forum/discussion_timeline.html',
         link: function(scope, element, attrs) {
             scope.current_user = $rootScope.current_user
+            scope.preview_as_student = $rootScope.preview_as_student
             scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
             scope.private_text = $translate("discussion.private_post")
             scope.public_text = $translate("discussion.public_post")
@@ -108,7 +119,7 @@ angular.module('scalearAngularApp')
                     {post_id: discussion.data.id}, 
                     function(response){
                         scope.error_message = null
-                        scope.$emit('update_timeline', discussion)
+                        scope.$emit('remove_from_timeline', discussion)
                     }, 
                     function(){}
                 )
@@ -212,7 +223,7 @@ angular.module('scalearAngularApp')
         templateUrl:'/views/forum/discussion_comment.html',
         link: function(scope, element, attrs) {
             scope.current_user = $rootScope.current_user
-
+            scope.preview_as_student = $rootScope.preview_as_student
             scope.flagComment = function(comment){
                 Forum.flagComment(
                     {comment_flag:{comment_id: comment.id}}, 
@@ -335,32 +346,32 @@ angular.module('scalearAngularApp')
 
             var template ='<span ng-init="initFilters()">'+
                             '<li>'+
-                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'note\')">'+
-                                    '<input id="showNotesCheckbox" type="checkbox" ng-checked="lecture_filter.note" />'+
-                                    '<span translate>course_settings.show_notes</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'note\')">'+
+                                    '<input id="showNotesCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.note" />'+
+                                    '<span style="font-size:14px" translate>course_settings.show_notes</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'discussion\')">'+
-                                    '<input id="showQuestionsCheckbox" type="checkbox" ng-checked="lecture_filter.discussion" />'+
-                                    '<span translate>course_settings.show_discussion</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'discussion\')">'+
+                                    '<input id="showQuestionsCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.discussion" />'+
+                                    '<span style="font-size:14px" translate>course_settings.show_discussion</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'quiz\')">'+
-                                    '<input id="showQuizzesCheckbox" type="checkbox" ng-checked="lecture_filter.quiz" />'+
-                                    '<span translate>course_settings.show_quizzes</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'quiz\')">'+
+                                    '<input id="showQuizzesCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.quiz" />'+
+                                    '<span style="font-size:14px" translate>course_settings.show_quizzes</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<div class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="updateLectureFilter(\'confused\')">'+
-                                    '<input id="showConfusedCheckbox" type="checkbox" ng-checked="lecture_filter.confused" />'+
-                                    '<span translate>course_settings.show_confused</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'confused\')">'+
+                                    '<input id="showConfusedCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.confused" />'+
+                                    '<span style="font-size:14px" translate>course_settings.show_confused</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<a class="settings-menu-item looks-like-a-link lighter-grey dark-text sub-header-component" ng-click="exportNotes()">'+
-                                    '<span translate>lectures.download_notes</span>'+
+                                '<a class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="exportNotes()">'+
+                                    '<span style="font-size:14px" translate>lectures.download_notes</span>'+
                                 '</a>'+
                             '</li>'+
                         '</span>'

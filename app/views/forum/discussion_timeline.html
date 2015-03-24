@@ -15,7 +15,7 @@
                         <b bo-text="item.data.screen_name" ></b>
                         <div class="timestamp with-small-margin-left">
                         <span ng-show="item.data.edited">edited</span>
-                        <span>{{ item.data.updated_at | timeAgo }}</span>
+                        <span>{{ item.data.updated_at | fromNow }}</span>
                         <span ng-if="item.data.flags_count > 0" style="color: red;">
                             <span style="color: #a1a1a1">  </span>
                             <span translate>discussion.flagged_post</span>
@@ -25,7 +25,7 @@
                             <delete_button size="small" action="deleteDiscussion(item)" vertical="false" text="false"></delete_button>
                             <!-- <delete_button class="hiddendeletebutton hide-for-touch" size="small" action="deleteDiscussion(item)" vertical="false" text="false" color="red"></delete_button> -->
                         </div>
-                        <span ng-if="item.data.user_id != current_user.id">
+                        <span ng-if="item.data.user_id != current_user.id && !preview_as_student">
                             <div style="display: inline-block; float: right;" >
                                 <flag-button name="flag" comment="item.data" flag="flagPost" unflag="unflagPost" type="icon"></flag-button>
                             </div>
@@ -41,9 +41,9 @@
                                     <img ng-show="item.data.privacy==1" src="/images/public.png" tooltip="{{public_text}}"/>
                                 </span>
                                 <span translate>q</span>
-                                <span ng-if="item.data.user_id != current_user.id" class="discussion_title" bo-text="item.data.content"></span>
+                                <span ng-if="item.data.user_id != current_user.id" class="discussion_title" ng-text-truncate="item.data.content" ng-tt-words-threshold="15"></span>
                                 <span ng-if="item.data.user_id == current_user.id" ng-mouseover="show_pencil = true;" ng-mouseleave="show_pencil = false;" style="padding-right: 20px;">
-                                    <span class="discussion_title">{{item.data.content}}</span>
+                                    <span class="discussion_title" >{{item.data.content}}</span>
                                     <span ng-show="show_pencil" class="fi-pencil size-18" style="position: absolute;" ng-click="item.data.isEdit=true"></span>
                                 </span>
                             </div>
@@ -58,7 +58,7 @@
             <discussion-comment item="comment_data" delete="deleteComment"/>
         </div>
         <span>
-            <comment-box discussion="item" submit="reply"></comment-box>
+            <comment-box ng-if="!preview_as_student" discussion="item" submit="reply"></comment-box>
         </span>
     </div>
 </td>

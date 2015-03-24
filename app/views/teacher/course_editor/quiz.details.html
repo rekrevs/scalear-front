@@ -81,8 +81,11 @@
 
 				<!-- <details-check checked="quiz.due_date_enabled" validate="updateDueDate" save="updateQuiz()" yes="has due date" no="without due date" title="has due date?" ></details-check>  -->
 				<div ng-show="quiz.due_date_enabled">
-					<input type="checkbox" ng-disabled="quiz.disable_due_controls" ng-model="quiz.due_date_module" ng-change="updateQuiz()" class="no-margin">
-					<span class="size-12" translate>lectures.use_module_due</span>
+					<span ng-hide="quiz.disable_module_due_controls">
+						<input type="checkbox" ng-model="quiz.due_date_module" ng-change="updateQuiz()" class="no-margin">
+						<span class="size-12" translate>lectures.use_module_due</span>
+					</span>
+					<br />
 					<!-- <details-check checked="quiz.due_date_module" save="updateQuiz()" yes="{{'lectures.using_module_due'|translate}}" no="{{'lectures.not_using_module_due'|translate}}" title="{{'lectures.use_module'|translate}}"  validate="validateQuiz" column="due_date_module"></details-check> <br /> -->
 					<div ng-hide="!quiz.due_date_module">
 						<!-- <input type='text' ng-model='quiz.due_date' ng-disabled='true' style="margin-top:10px;width: 67px;font-size: 12px;height: 15px;" /> -->
@@ -93,7 +96,7 @@
   					<span ng-hide="quiz.due_date_module">
   						<span translate>lectures.set_date</span>:<br>
   						<details-date date="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-date>
-  						<br>
+  						<br />
 						<details-time class="timepicker" time="quiz.due_date" save="updateQuiz(data, type)" validate="validateQuiz" column="due_date"></details-time>
   					</span>
   				</div>
@@ -108,7 +111,7 @@
 		<tr>
 			<td class="right-border"><span>Student link to quiz</span>:</td>
 			<td class="break-text">
-				<span class="color-editable-blue">{{link_url}}</span>
+				<span >{{link_url}}</span>
 			</td>
 		</tr>
 	</table>

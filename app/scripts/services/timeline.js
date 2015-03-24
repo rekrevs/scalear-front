@@ -18,13 +18,15 @@ angular.module('scalearAngularApp')
             this.items.push(new TimeItem())
 
             this.add=function(time, type, data){
+                var time_index = this.items.length - 1
                 var item = new TimeItem(time, type, data)
-                for ( var time_index = this.items.length - 1; time_index >= 0; time_index-- ) {
+                for ( ; time_index >= 0; time_index-- ) {
                     if ( item.time >= this.items[ time_index ].time ) {
                         this.items.splice( time_index + 1, 0, item );
                         break;
                     }
                 }
+                return time_index + 1
             }
 
             this.search_by_id = function(id, type){

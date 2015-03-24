@@ -4,57 +4,59 @@
         max-width: 200px;
     }
 </style>
-<h3><i class="fi-torsos-all size-30"></i> {{'head.enrolled_students' | translate}} <span class="info alert-box label looks-like-a-link" enroll-help-modal ng-click="openHelpModal(course)" style="vertical-align: bottom;">{{'enroll.help_enroll_student' | translate}}</span></h3>
-<center>
-    <div ng-show="students" id="invited_students">
-        <form name="email_form">
-            <div class="small-12 row">
-                <div class="small-12 medium-4 large-4 columns">
-                    <input id="search" type="search" placeholder="{{'courses.search'|translate}}..." name="search" ng-model="searchText"/>
-                </div>
-                <div class="small-12 medium-8 large-7 columns text-right">                    
-                    <div class="show-inline" ng-init="filterChoice = 'all'">
-                        <button type="button" class="button tiny" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length || delete_mode"><span translate>courses.select_all</span></button>
-                        <button type="button" class="button tiny alert" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0 || delete_mode"><span translate>courses.deselect_all</span></button>
-                        <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0 || delete_mode" ng-click="emailForm()"><span translate>email</span></button>
-                        <button id="delete_mode"class="tiny button alert with-tiny-margin-left" ng-hide="delete_mode" ng-click="toggleDeleteMode()"><span translate>courses.remove_from_course</span></button>
-                        <button class="tiny button success no-margin-left" ng-show="delete_mode" ng-click="toggleDeleteMode()"><span translate>events.done</span></button>
-                        <button class="button secondary tiny" ng-class="{'green color-white': list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(true)" tooltip="{{'list_view'|translate}}">
-                            <span class="fi-list-thumbnails size-21" style="position: relative;top: 3px;" ></span>
-                        </button>
-                        <button class="button secondary tiny" ng-class="{'green color-white': !list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(false)" tooltip="{{'grid_view'|translate}}" tooltip-append-to-body="true">
-                            <span class="fi-braille size-21" style="position: relative;top: 3px;" ></span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-            <div class="small-12" ng-if="!list_view">
-                <user-item ng-repeat="student in students | filter: searchText" user="student" select="toggleSelect" emailsingle="emailSingle" removestudent="removeStudent" deletemode="delete_mode"></user-item>
-            </div>
-            <div class="small-12" ng-if="list_view">
-                <table role="grid" style="width: 100%;">
-                  <thead>
-                    <tr>
-                      <th style="width:50px">Thumbnail</th>
-                      <th>Name</th>
-                      <th>Email</th>
-                      <th class="text-center" ng-if="delete_mode" style="width:95px">Delete</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr ng-repeat="student in students | filter: searchText" ng-class="{'border-grey dark-medium-grey': student.checked}" ng-click="toggleSelect(student)">
-                      <td><profile-image class="small-12" email="student.email" imagesize="165"style="margin-bottom: 5px;"></profile-image></td>
-                      <td>{{student.full_name}}</td>
-                      <td><a href="" send-email ng-click="emailSingle(student)">{{student.email}}</a></td>
-                      <td ng-if="delete_mode" class="text-center no-padding">
-                        <delete_button size="big" color='dark' action="removestudent(student)" />
-                    </td>
-                    </tr>
-                  </tbody>
-                </table>
-            </div>
-        </form>
-    </div>
-    <loading size="big" show="loading_students">
-    </loading>
-</center>
+<div class="small-12 columns">
+  <h3><i class="fi-torsos-all size-30"></i> {{'head.enrolled_students' | translate}} <span class="info alert-box label looks-like-a-link" enroll-help-modal ng-click="openHelpModal(course)" style="vertical-align: bottom;">{{'enroll.help_enroll_student' | translate}}</span></h3>
+  <center>
+      <div ng-show="students" id="invited_students">
+          <form name="email_form">
+              <div class="small-12 row">
+                  <div class="small-12 medium-4 large-4 columns">
+                      <input id="search" type="search" placeholder="{{'courses.search'|translate}}..." name="search" ng-model="searchText"/>
+                  </div>
+                  <div class="small-12 medium-8 columns text-right">                    
+                      <div class="show-inline" ng-init="filterChoice = 'all'">
+                          <button type="button" class="button tiny" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length || delete_mode"><span translate>courses.select_all</span></button>
+                          <button type="button" class="button tiny alert" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0 || delete_mode"><span translate>courses.deselect_all</span></button>
+                          <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0 || delete_mode" ng-click="emailForm()"><span translate>email</span></button>
+                          <button id="delete_mode"class="tiny button alert with-tiny-margin-left" ng-hide="delete_mode" ng-click="toggleDeleteMode()"><span translate>courses.remove_from_course</span></button>
+                          <button class="tiny button success no-margin-left" ng-show="delete_mode" ng-click="toggleDeleteMode()"><span translate>events.done</span></button>
+                          <button class="button secondary tiny" ng-class="{'green color-white': list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(true)" tooltip="{{'list_view'|translate}}">
+                              <span class="fi-list-thumbnails size-21" style="position: relative;top: 3px;" ></span>
+                          </button>
+                          <button class="button secondary tiny" ng-class="{'green color-white': !list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(false)" tooltip="{{'grid_view'|translate}}" tooltip-append-to-body="true">
+                              <span class="fi-braille size-21" style="position: relative;top: 3px;" ></span>
+                          </button>
+                      </div>
+                  </div>
+              </div>
+              <div class="small-12" ng-if="!list_view">
+                  <user-item ng-repeat="student in students | filter: searchText" user="student" select="toggleSelect" emailsingle="emailSingle" removestudent="removeStudent" deletemode="delete_mode"></user-item>
+              </div>
+              <div class="small-12" ng-if="list_view">
+                  <table role="grid" style="width: 100%;">
+                    <thead>
+                      <tr>
+                        <th style="width:50px">Thumbnail</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th class="text-center" ng-if="delete_mode" style="width:95px">Delete</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr ng-repeat="student in students | filter: searchText" ng-class="{'border-grey dark-medium-grey': student.checked}" ng-click="toggleSelect(student)">
+                        <td><profile-image class="small-12" email="student.email" imagesize="165"style="margin-bottom: 5px;"></profile-image></td>
+                        <td>{{student.full_name}}</td>
+                        <td><a href="" send-email ng-click="emailSingle(student)">{{student.email}}</a></td>
+                        <td ng-if="delete_mode" class="text-center no-padding">
+                          <delete_button size="big" color='dark' action="removestudent(student)" />
+                      </td>
+                      </tr>
+                    </tbody>
+                  </table>
+              </div>
+          </form>
+      </div>
+      <loading size="big" show="loading_students">
+      </loading>
+  </center>
+</div>

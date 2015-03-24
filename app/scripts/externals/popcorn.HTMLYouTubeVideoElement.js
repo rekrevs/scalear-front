@@ -291,7 +291,9 @@
       clearInterval( bufferedInterval );
       player.stopVideo();
       player.clearVideo();
+    }
 
+    function destroyElement(){
       parent.removeChild( elem );
       elem = document.createElement( "div" );
     }
@@ -317,6 +319,7 @@
 
       if( playerReady ) {
         destroyPlayer();
+        destroyElement();
       }
 
       parent.appendChild( elem );
@@ -470,7 +473,7 @@
         impl.ended = false;
       }
       if(timeUpdateInterval)
-      clearInterval( timeUpdateInterval );
+        clearInterval( timeUpdateInterval );
       timeUpdateInterval = setInterval( onTimeUpdate,
                                         self._util.TIMEUPDATE_MS );
       impl.paused = false;
@@ -523,11 +526,13 @@
     };
 
     self.getSpeeds = function(){
-      console.log('getting speed')
       return player.getAvailablePlaybackRates();
     };
     self.setSpeed = function(speed){
       player.setPlaybackRate(speed)
+    }
+    self.destroy = function(){
+      destroyPlayer()
     }
 
     function onEnded() {
@@ -536,6 +541,8 @@
         self.play();
       } else {
         impl.ended = true;
+        
+        player.pauseVideo()
         onPause();
         // YouTube will fire a Playing State change after the video has ended, causing it to loop.
         catchRoguePlayEvent = true;

@@ -1,6 +1,7 @@
 var translation_en=function(){
     return {
       tellus: 'Tell us about yourself...',
+      cannot_ask_question_preview: "You cannot ask questions while previewing as a student",
       online_name_comment: 'Used when you make comments or ask questions. To be anonymous, use the default or a pseudonym.',
       new_module_instructions: "Add a new module or selected an existing by clicking on the content navigator from the left",
       use_modules_organize: "Use modules to organize your videos and quizzes",
@@ -51,7 +52,7 @@ var translation_en=function(){
       welcome: "Welcome to ",
       or: "or",
       visible: "Visible",
-      invisible: "Not currently visible to the students. Will be visible on this date.",
+      invisible: "Not currently visible to the students. Will be visible",
       adding_teacher: "A teacher or TA must have a teacher account on",
       create_account: "To create a teacher account visit",
       all: "All",
@@ -85,6 +86,7 @@ var translation_en=function(){
       Insert_a_question: "Insert a question in a video",
       new_video_question:"New Video Question",
       new_video: "New Video",
+      add_content: "Add Content",
       copy: "Copy",
       due:"Due",
       my: "My",
@@ -105,6 +107,14 @@ var translation_en=function(){
       pause: "Pause",
       resume: "Resume",
       leave_feedback:"Leave your feedback",
+      start: "Start",
+      end: "End",
+      select_module_progress:"Select a module to see its progress",
+      support:{
+        ipad:"iPad support is currently in beta.",
+        mobiles:"Mobile devices are not currently fully supported.",
+        issue_and_recommendation:"Videos will not autoplay and you may run into other issues. We recommend using this site on a desktop/laptop"
+      },
       errors_messages:{
         the_form_contains: "The form contains",
         error: "error",
@@ -125,6 +135,7 @@ var translation_en=function(){
         in_class: "In-class",
         calendar: "Calendar",
         announcements: "Announcements",
+        calendar_and_announcements: "Calendar and Announcements",
         content: "Content",
         course_content: "My Course Contents",
         system: "The ScalableLearning Website",
@@ -354,6 +365,10 @@ var translation_en=function(){
         lecture_details: "Lecture Details",
         lecture_title: "Lecture Title",
         url: "Video URL",
+        video: "Video",
+        videos: "Videos",
+        add_video: "Add link to video",
+        add_description: "Add description",
         video_title: "Video Title",
         provider: "Provider",
         thumbnail: "Thumbnail",
@@ -483,6 +498,9 @@ var translation_en=function(){
         click_or_type_fullscreen: "Click or type F to enter fullscreen",
         click_or_type_smallscreen: "Click or type F to enter smallscreen",
         student_link_lecture:"Student link to lecture",
+        drag_instruction: "Enter the name for draggable item and position its Start and End locations on the screen.",
+        drag_correct: "This item is correct here because",
+        drag_incorrect: "Item {{num}} would be incorrect here because"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -551,7 +569,7 @@ var translation_en=function(){
         sign_up_teacher: "Sign up as a teacher",
       },
       groups:{
-      	link:"Link",
+      	customlink:"Link",
       	quiz: "Quiz",
         survey: "Survey",
         module_name: "Module Name",
@@ -573,10 +591,12 @@ var translation_en=function(){
         must_choose_answer: "Must choose at least one answer",
         add_link: "Add Link",
         new_link: "New Link",
+        add_module_link: "Add Module Link",
         new_course_link: "New Course Link",
         please_wait: "Please Wait",
         lectures: "Lectures",
         quizzes: "Quizzes",
+        surveys: "Surveys",
         new_quiz: "New Quiz",
         answer_question: "Please answer the question",
         choose_correct_answer: "Please choose the correct answer(s)",
@@ -635,6 +655,7 @@ var translation_en=function(){
         see_related: "See related answers to student",
         has_due_date: "Has Due Date",
         student_link_module:"Student link to module",
+        video_quizzes: "Video Quizzes",
       },
       courses:{
         course_links: 'Course Links',
@@ -648,7 +669,6 @@ var translation_en=function(){
         statistics: "Statistics",
         lecture_quizzes: "Lecture Quizzes",
         lecture_statistics: "Lecture Statistics",
-        surveys: "Surveys",
         export_all: "Export all",
         quiz: "Quiz",
         survey: "Survey",
@@ -1060,30 +1080,29 @@ var translation_en=function(){
       interactive_desc: "Optional interactive questions and grading",
       types:{
         video: "Video",
-        video_desc: "You can add quiz questions on top of the video",
+        video_desc: "You can add quiz questions on top of the video.",
         quiz: "Quiz",
-        quiz_desc: "Text-based, can be graded or optional",
         survey: "Survey",
-        link: "Link",
-        link_desc: "Web link to other sites or pages",
+        link: "Course Link",
+        link_desc: "Web link to other sites or pages.",
         quiz_or_survey: "Quiz or Survey",
-        quiz_or_survey_desc: "Text-based, can be graded or optional",
+        quiz_or_survey_desc: "Text-based, not part of a video. Can be graded or optional.",
       },
       questions:{
         choose_question_type: "Choose Question Type",
         insert_video_question: "Insert a Video Question",
         categories:{
           on_video:{
-            title: "In-video Quiz",
-            desc: "Place quiz choices on top of the video",
+            title: "On-video Quiz",
+            desc: "Place quiz choices on top of the video. Use this if the answers are visible in the video.",
           },
           text_quiz:{
             title: "Text Quiz",
-            desc: "Text quiz on a white background",
+            desc: "Text quiz on a white background. Use this if the quiz answers are not visible in the video.",
           },
           on_video_survey:{
             title: "On-video Survey",
-            desc: "Place survey choices on top of the video"
+            desc: "Surveys have no correct answer. Use this if the survey choices are visible in the video."
           }
         },
         types:{
@@ -1091,6 +1110,16 @@ var translation_en=function(){
           mcq: "Multiple answers",
           drag: "Drag and drop",
           text: "Free text answer"
+        },
+        quiz_types:{
+          mcq: "Multiple Choice (multiple correct answers)",
+          ocq: "Multiple Choice (one correct answer)",
+          drag: "Drag-and-Drop (ordering)",
+          text: "Free Answer (text answer)"
+        },
+        survey_types:{
+          mcq: "Multiple Choice (multiple selections)",
+          ocq: "Multiple Choice (one selection)",
         }
       }
     },

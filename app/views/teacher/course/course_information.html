@@ -1,5 +1,5 @@
 <center><loading size="big" show="!course"></loading></center>
-<div ng-show="course">
+<div ng-show="course" class="small-12 columns">
     <div class="large-3 columns no-padding">
         <img class="small-10 medium-6 large-10 columns with-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
         <div class="small-12 columns no-padding" step-text="This section allows you to change the course start date, duration, course image, etc... You can also get the course enrollment key to provide it to your students." step-index="3" step-placement="right" step-append-to-body="flase" page-name="head.information">
@@ -9,7 +9,7 @@
             </span>
             <div class="small-12 column with-margin-bottom no-padding">
                 <i class="fi-photo size-18"></i><small class="with-tiny-margin-left" translate>courses.course_image_url</small>
-                <div><details-link value="course.image_url" save="updateCourse()" validate="validateCourse" column="image_url"></details-link></div>
+                <div><details-link value="course.image_url" save="updateCourse()" validate="validateCourse" column="image_url" shorten="30"></details-link></div>
             </div>
             <div class="small-12 column with-margin-bottom no-padding">
                 <i class="fi-key size-18"></i><small class="with-tiny-margin-left" translate>courses.enrollment_key</small>
@@ -45,7 +45,7 @@
         </div>
     </div>
     <div class="small-12 medium-12 large-9 columns">        
-        <h2 class="title color-green" title="{{course.name}}">
+        <h2 class="title color-editable-blue">
             <details-text id='short_name' value="course.short_name" save="updateCourse()" validate="validateCourse" column="short_name"></details-text> 
              | 
             <details-text id='course_name' value="course.name" save="updateCourse()" validate="validateCourse" column="name"></details-text>
@@ -60,11 +60,11 @@
         </p>
         <h5 translate class="subheader" page-name="head.information" step-text="You can also manage the teachers in this course, you can add new teachers/TAs using this section." step-index="5" step-placement="top" step-append-to-body="flase">courses.taught_by</h5>
         <p style="font-weight: 200;">
-            <div class="small-12 medium-6 large-4 columns with-small-margin-bottom" ng-repeat="teacher in teachers">
-                <profile-image class="small-2 medium-2 large-2 no-padding columns" email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
-                <div class="small-10 medium-10 large-10 columns with-small-padding-left">
-                    <li class="fn truncate" title="{{teacher.name+' '+teacher.last_name}}">{{teacher.name+' '+teacher.last_name}}</li>
-                    <li class="email break-text"><a href="">{{teacher.email}}</a></li>
+            <div class="small-12 medium-6 large-5 columns with-small-margin-bottom" ng-repeat="teacher in teachers">
+                <profile-image class="small-2 no-padding columns" email="teacher.email" imagesize="165" style="margin-bottom: 5px;"></profile-image>
+                <div class="small-10 columns with-small-padding-left">
+                    <li class="fn truncate">{{teacher.name+' '+teacher.last_name}}</li>
+                    <li class="email break-text">{{teacher.email}}</li>
                     <li class="locality">
                         <details-select value="teacher.role" options="roles" save="updateTeacher($index)" column="role" style="width: 120px;" ></details-select>
                         <div style="color: dimgrey; min-height: 18px;">{{teacher.status}}</div>

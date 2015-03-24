@@ -43,12 +43,12 @@ angular.module('scalearAngularApp')
 
 			var loadVideo = function(){
 				scope.kill_popcorn()
-
+				player_controls.youtube = false
                 if(!scope.controls || scope.controls==undefined)
                     scope.controls=0;   
                 if(!scope.autoplay || scope.autoplay==undefined)
                     scope.autoplay=0; 
-                if(isiPad())
+                if($rootScope.is_mobile)
                 	scope.autoplay=1; 
 
                 if(isYoutube(scope.url)){
@@ -71,7 +71,7 @@ angular.module('scalearAngularApp')
                     player = Popcorn(video,{});
                     video.src = scope.url
                     player.video.className = "fit-inside"
-                    if(isiPad() || scope.controls == "default")
+                    if($rootScope.is_mobile || scope.controls == "default")
                     	player.controls(true);
                     player.autoplay(false);
                 }
@@ -82,21 +82,21 @@ angular.module('scalearAngularApp')
 				parent.focus()
 
 				scope.timeout_promise = $interval(function(){
-					if(player_controls.readyState() == 0 && !(isiPad() && isMP4(scope.url)))
+					if(player_controls.readyState() == 0 && !$rootScope.is_mobile)
 						scope.$emit('slow', isYoutube(scope.url))
 				},15000, 1)
 			}
 
-		   	var isiPad=function(){
-		        var i = 0,
-		            iOS = false,
-		            iDevice = ['iPad', 'iPhone', 'iPod','Android'];
+		   	// var isiPad=function(){
+		    //     var i = 0,
+		    //         iOS = false,
+		    //         iDevice = ['iPad', 'iPhone', 'iPod','Android'];
 
-		        for ( ; i < iDevice.length ; i++ ) {
-		            if( navigator.platform === iDevice[i] ){ iOS = true; break; }
-		        }
-		        return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
-		    }
+		    //     for ( ; i < iDevice.length ; i++ ) {
+		    //         if( navigator.platform === iDevice[i] ){ iOS = true; break; }
+		    //     }
+		    //     return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
+		    // }
 
 			var formatYoutubeURL=function(url,vq,time, autoplay, controls){
 				var short_url = isShortYoutube(url)
@@ -110,12 +110,14 @@ angular.module('scalearAngularApp')
 					base_url = splitted_url[0]
 					query = '&'+splitted_url[1]	
 				}
-				return base_url+"?start="+time+"&vq="+vq+"&fs=0&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+autoplay+"&controls="+controls+"&origin=https://www.youtube.com&theme=light"+query;
+				return base_url+"?start="+time+"&vq="+vq+"&modestbranding=0&showinfo=0&rel=0&autohide=0&autoplay="+autoplay+"&controls="+controls+"&origin=https://www.youtube.com&theme=light"+query;
 			}
 
             scope.kill_popcorn = function(){
                 if(player){
                      Popcorn.destroy( player );
+                     if(player.media.destroy)
+                     	player.media.destroy()
                  }
                 element.find('iframe').remove();
                 element.find('video').remove()
@@ -233,18 +235,18 @@ angular.module('scalearAngularApp')
 			}
 
 			player_controls.getSpeeds = function(){
-      return player.media.getSpeeds();
+      			return player.media.getSpeeds();
 			}
 
 			player_controls.changeSpeed = function(value, youtube){
-      if(youtube){
-        if(player_controls.getSpeeds().indexOf(value) != -1){
-          player.media.setSpeed(value)
-        }
-      }
-      else{
-        player.video.playbackRate = value
-      }
+				if(youtube){
+					if(player_controls.getSpeeds().indexOf(value) != -1){
+						player.media.setSpeed(value)
+					}
+				}
+				else{
+					player.video.playbackRate = value
+				}
 			}
 
 
@@ -252,7 +254,7 @@ angular.module('scalearAngularApp')
 				player.on("loadeddata", 
 					function(){
 						console.log("Video data loaded and ready")
-						if(isiPad())
+						if($rootScope.is_mobile)
 							player.controls(false);
 						if(player_events.onReady){
 							player_events.onReady();
@@ -338,7 +340,7 @@ angular.module('scalearAngularApp')
 					parent.focus()
 					if(player_events.onSlow){
 						player_events.onSlow(data);
-						scope.$apply();
+						// scope.$apply();
 					}
 				})
 			}
@@ -475,9 +477,10 @@ return{
 				$scope.unregister_state_event()	
 		}
 
-		$scope.resize.big = function()
-		{
-            $rootScope.changeError = true;
+		$scope.resize.big = function(){
+
+			console.log("resizing big")
+            // $rootScope.changeError = true;
 			//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 			var factor=16.0/9.0
             var win = angular.element($window)
@@ -485,7 +488,7 @@ return{
             var progressbar_height = 80
 
 			$scope.fullscreen = true
-			angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
+			// angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
 			angular.element("body").css("overflow","hidden");
 			angular.element("body").css("position","fixed")
 
@@ -604,23 +607,15 @@ return {
     restrict: 'E',
     replace:false,
     scope:{
-        // view:'@',
-        // active:'=',
-        // play_btn:'&playBtn',
         player:'=',
         play_pause_class:'=playPauseClass',
-        // updateProgress:'&',
         elapsed_width: '=elapsedWidth',
         current_time: '=currentTime',
         total_duration: '=totalDuration',
         seek: "&",
-        // confused_areas: '=confusedAreas',
-        // progressEvents: '=',
         timeline: '=',
         videoready: '=',
         blink : "="
-        // lecture: '='
-       // autoplay:'@'
     },
     templateUrl:"/views/progress_bar.html",
     link: function(scope, element, attrs){
@@ -640,10 +635,11 @@ return {
         scope.chosen_speed = val;
         $cookieStore.put('mp4_speed', scope.chosen_speed)
       }
-      scope.$watch('videoready', function(){
+      var unwatch = scope.$watch('videoready', function(){
         if(scope.videoready == true){
           if(scope.player.controls.youtube){
             scope.speeds = scope.player.controls.getSpeeds();
+            console.log("Speed", scope.speeds)
             scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
             console.log('the chosen speed is '+scope.chosen_speed)
             scope.setSpeed(scope.chosen_speed)
@@ -657,6 +653,7 @@ return {
             scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
             scope.setSpeedMp4(scope.chosen_speed)
           }
+          unwatch()
         }
       })
 
@@ -707,7 +704,8 @@ return {
 	        var element = angular.element('.progressBar');
 	        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
 	        scope.seek()(scope.total_duration*ratio)
-	        scrollToNearestEvent(scope.total_duration*ratio)
+	        if(scope.timeline)
+	        	scrollToNearestEvent(scope.total_duration*ratio)
         }
 
       	scope.showQuality = function(){
@@ -737,7 +735,7 @@ return {
   			console.log(time)
   			console.log(scope.timeline.getNearestEvent(time))
   			var nearest_item= scope.timeline.getNearestEvent(time)
-  			if(Math.abs(nearest_item.time - time) <=30)
+  			if(nearest_item.data && Math.abs(nearest_item.time - time) <=30)
   				scrollToItem(nearest_item.type, nearest_item.data.id)
   		}
 
@@ -760,7 +758,7 @@ return {
 
       	scope.$on("blink_blink", function(){
       		scope.blink = "blink_btn";
-      		scope.timeout_f = $timeout(function(){
+      		$timeout(function(){
       			scope.blink = "";
 			},2000)
       	})

@@ -1,17 +1,65 @@
-<div>
-    <overlay ng-show="link_overlay">
-      <loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
-    </overlay>
-    <br />
-
-    <big><b translate>groups.external_link</b></big>
-    <br /><br />
-    <link-item ng-repeat="doc in module.custom_links" link="doc" update="updateCustomLink" remove="removeCustomLink" nameval="validateName" urlval="validateURL">
-    </link-item>
-    <loading size="small" show="link_loading" />
-    <br />
-    <button ng-click="addCustomLink()" ng-disabled="link_overlay" class="btn btn-success" style="background-image: initial; float: right; margin-right: 15px;">
-        <img src="../images/add_link.png" /> {{'groups.add_link' | translate}}
-    </button>
-    <br />
-  </div>
+<accordion class="details_accordian" close-others="true">
+  <accordion-group class="accordion-group" is-open="true">
+    <accordion-heading class="accordion-heading">
+      <div style="padding: 5px;border-bottom: 1px solid white;">
+        <div id="video_settings" class="show-inline" translate>lectures.module</div>
+      </div>              
+    </accordion-heading>
+    <table class="table small-12 no-margin" style="border-top:none">
+      <tr>
+        <td class="right-border"><span translate>lectures.title</span>:</td>
+        <td >
+            <details-text value="module.name" save="updateModule()" validate="validateModule" column="name" open="module.new"></details-text>            
+        </td>
+      </tr>
+      <tr>
+        <td class="right-border"><span translate>lectures.description</span>:</td>
+        <td>          
+          <details-area value="module.description" save="updateModule()" validate="validateModule" column="description" empty_message="({{ 'lectures.add_description' | translate}}...)"></details-area>
+        </td>
+      </tr>
+      <tr>
+        <td class="right-border"><span translate>groups.student_link_module</span>:</td>
+        <td class="break-text">
+          <span >{{link_url}}</span>
+        </td>
+      </tr>
+    </table>
+  </accordion-group>
+  <accordion-group class="accordion-group">
+    <accordion-heading class="accordion-heading">
+      <div style="padding: 5px;border-bottom: 1px solid white;">
+        <div id="lec_settings" class="show-inline" translate>settings.settings</div>
+      </div>              
+    </accordion-heading>
+    <table class="table small-12 no-margin">
+      <tr>
+        <td class="right-border"><span translate>groups.appearance_date</span></td>
+        <td>
+          <span>
+            <span translate>lectures.set_date</span>:<br>
+            <details-date date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date>
+            <span tooltip-placement="left" tooltip="{{'invisible' | translate}} {{module.appearance_time| fromNow}}" ng-hide="module.appearance_time | visible" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
+            <br>
+            <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
+          </span>
+        </td>
+      </tr>
+      <tr>
+        <td class="right-border"><span translate>groups.due_date</span></td>
+        <td>
+          <input type="checkbox" ng-model="module.due_date_enabled" ng-change="updateDueDate();updateModule()" class="no-margin">
+          <span class="size-12" >has due date</span>
+          <div ng-show="module.due_date_enabled">
+            <span >
+              <span translate>lectures.set_date</span>:<br>
+              <details-date date="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-date>
+              <br>
+              <details-time class="timepicker" time="module.due_date" save="updateModule(data, type)" validate="validateModule" column="due_date"></details-time>
+            </span> 
+          </div>
+        </td>
+      </tr>
+    </table>
+  </accordion-group>
+</accordion>

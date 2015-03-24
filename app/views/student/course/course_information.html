@@ -1,6 +1,6 @@
 <center><loading size="big" show="!course"></loading></center>
-<span ng-show="course">
-    <div class="large-3 columns no-padding">
+<span ng-show="course" class="small-12 columns">
+    <div class="small-3 columns no-padding">
         <!-- <div class="course-image left show-for-large-up">
             <span></span>
             <img ng-src="{{course.image_url || '../images/course_image.png'}}" />
@@ -80,7 +80,8 @@
             
             <h5 translate class="subheader" page-name="{{current}}"step-text="Here you will find the latest announcements posted by your teachers for this course." step-index="6" step-placement="top" step-append-to-body="false">head.announcements</h5>
             <p style="font-weight: 200;">
-                <student-announcement-item announcement="announcement" ng-repeat="announcement in announcements"></student-announcement-item>
+                <!-- <student-announcement-item announcement="announcement" ng-repeat="announcement in announcements"></student-announcement-item> -->
+                <event-item ng-repeat="announcement in announcements | orderBy:'timestamp':'reverse'" event="announcement" role="2"></event-item>
             </p>
         </div>
     </div>
@@ -94,13 +95,3 @@
         </ul>
     </div> -->
 </span>
-
-
-
-
-
-
-
-
-
-

@@ -1,20 +1,37 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout', function($state, $tour, scalear_api, $timeout){
+	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout','$cookieStore', '$rootScope', 'Impersonate', 'ContentNavigator','User', function($state, $tour, scalear_api, $timeout, $cookieStore, $rootScope, Impersonate, ContentNavigator, User){
 		return {
 			replace: true,
 			restrict: "E",
 			transclude: "true",
 			scope:{
 			  user: '=',
-			  logout: '=',
-			  changelanguage: '=',
+			  // logout: '&',
+			  // changelanguage: '=',
 			  courses:'='
 			},
 			templateUrl: "/views/main_navigation.html",
 			link: function (scope, element) {
 				scope.scalear_api = scalear_api
+
+				$rootScope.$watch('preview_as_student', function(){
+					scope.preview_as_student = $rootScope.preview_as_student
+				})
+
+				scope.logout = function() {
+	                $rootScope.logging_out = true;
+	                $timeout(function() {
+	                    User.sign_out({}, function() {
+	                        $rootScope.show_alert = "";
+	                        $rootScope.current_user = null
+	                        $state.go("login");
+	                        $rootScope.logging_out = false;
+	                    });
+	                }, 200);  
+	            }
+
 				
 				scope.areShared = function(){
 					return scope.user && scope.user.roles[0].id!=2 && scope.user.accepted_shared
@@ -39,10 +56,45 @@ angular.module('scalearAngularApp')
 							angular.element('.toggle-topbar').click();
 						})							
 				}
+
+				scope.disablePreview=function(){
+	                if($cookieStore.get('preview_as_student')){
+	                  ContentNavigator.close()
+	                  $rootScope.$broadcast("exit_preview")
+	                  Impersonate.destroy(
+	                    {
+	                        old_user_id:$cookieStore.get('old_user_id'),
+	                        new_user_id:$cookieStore.get('new_user_id')
+	                    },
+	                    function(){
+	                      var params = $cookieStore.get('params')
+	                      var state = $cookieStore.get('state')
+	                      $rootScope.preview_as_student = false
+	                      $cookieStore.remove('preview_as_student')
+	                      $cookieStore.remove('old_user_id')
+	                      $cookieStore.remove('new_user_id')
+	                      $cookieStore.remove('params')
+	                      $cookieStore.remove('state')
+	                      $rootScope.current_user= null
+	                      $state.go(state, params,{reload:true})
+			              $rootScope.$broadcast('get_current_courses')
+	                    },
+	                    function(){
+	                      console.log("Failed Closing Preview")
+	                      $rootScope.preview_as_student = false
+	                      $cookieStore.remove('preview_as_student')
+	                      $cookieStore.remove('old_user_id')
+	                      $cookieStore.remove('new_user_id')
+	                      $cookieStore.remove('params')
+	                      $cookieStore.remove('state')
+	                    }
+	                  )
+	                }
+	            }
 			}
 		};
 	 }])
-	.directive('teacherNavigation', ['$rootScope','$state','ContentNavigator','DetailsNavigator', function($rootScope, $state, ContentNavigator, DetailsNavigator) {
+	.directive('teacherNavigation', ['$rootScope','$state','ContentNavigator','DetailsNavigator','Impersonate','$cookieStore', function($rootScope, $state, ContentNavigator, DetailsNavigator, Impersonate, $cookieStore) {
            return{
 			replace:true,
 			restrict: "E",
@@ -101,11 +153,43 @@ angular.module('scalearAngularApp')
 					$rootScope.$broadcast('add_module')
 				}	
 				scope.preview=function(){
-					$rootScope.$broadcast('activate_preview')
+					// $rootScope.$broadcast('activate_preview')
+					// emptyClipboard()
+			        // var module_id = $state.params.module_id
+		            $cookieStore.put('old_user_id', $rootScope.current_user.id)
+		            $cookieStore.put('state', $state.current.name)
+		            $cookieStore.put('params', $state.params)
+		            scope.disable_preview = true
+		            // var item = $scope.module_obj[module_id].items[0]
+		            setNavigator(false)
+		            Impersonate.create({},{course_id: $state.params.course_id},
+		              function(data){
+		                $cookieStore.put('preview_as_student', true)            
+		                $cookieStore.put('new_user_id', data.user.id)
+		                $rootScope.current_user= null 
+		                var params={course_id: $state.params.course_id}
+		                if($state.params.module_id){
+		                	params['module_id']= $state.params.module_id
+		                	$state.go('course.module.courseware',params,{reload:true})
+		                }
+		                else if($state.includes("course.edit_course_information"))
+		                	$state.go('course.course_information',params,{reload:true})
+		                else{
+		                	$state.go('course',params,{reload:true})
+		                }
+
+		                $rootScope.preview_as_student = true
+		                scope.$emit('get_current_courses')
+		              },
+		              function(){
+		                console.log("Failed")
+		              }
+		            )
 				}
-				scope.addLink=function(){
-					$rootScope.$broadcast('add_link')
-				}
+
+				// scope.addLink=function(){
+				// 	$rootScope.$broadcast('add_link')
+				// }
 				scope.goToContentEditor=function(){
 					if(!$state.includes("**.course_editor.**")){
 						if($state.params.module_id)
@@ -120,12 +204,12 @@ angular.module('scalearAngularApp')
 						$state.go("course.module.progress")
 				}
 				scope.copyItem = function(){
-					if($state.params.lecture_id){
+					if($state.params.link_id)
+						var item = {class_name: 'customlink', id: $state.params.link_id}
+					else if($state.params.lecture_id)
 						var item = {class_name: 'lecture', id: $state.params.lecture_id}
-					}
-					else if($state.params.quiz_id){
+					else if($state.params.quiz_id)
 						var item = {class_name: 'quiz', id: $state.params.quiz_id}
-					}
 					$rootScope.$broadcast('copy_item', item)
 				}
 
@@ -173,29 +257,7 @@ angular.module('scalearAngularApp')
 				// scope.open_navigator = $rootScope.open_navigator
 				scope.ContentNavigator = ContentNavigator
 				scope.TimelineNavigator = TimelineNavigator
-				$rootScope.$watch('preview_as_student', function(){
-					scope.preview_as_student = $rootScope.preview_as_student
-				})
-
-				// $rootScope.$on('open_navigator', function(){
-				// 	setNavigator(true)
-				// })
-
-				// $rootScope.$on('close_navigator', function(){
-				// 	setNavigator(false)
-				// })
-
-				// $rootScope.$on('open_timeline', function(){
-				// 	setNavigator(true)
-				// })
-
-				// $rootScope.$on('close_timeline', function(){
-				// 	setTimeline(false)
-				// })
-
-				scope.initFilters=function(){
-					scope.course_filter = false
-				}
+				
 
 				scope.toggleNavigator=function(){
 					ContentNavigator.setStatus(!ContentNavigator.getStatus())
@@ -207,59 +269,13 @@ angular.module('scalearAngularApp')
 
 				scope.toggleTimeline=function(){
 					TimelineNavigator.setStatus(!TimelineNavigator.getStatus())
-					// scope.open_timeline = !scope.open_timeline
-					// $rootScope.$broadcast('timeline_change', scope.open_timeline)
 				}
 
 				var setTimeline=function(val){
 					TimelineNavigator.setStatus(val)
-					// scope.open_timeline = val
-					// $rootScope.$broadcast('timeline_change', scope.open_timeline)
 				}
 
-				scope.disablePreview=function(){
-	                if($cookieStore.get('preview_as_student')){
-	                  setNavigator(false)
-	                  $rootScope.$broadcast("exit_preview")
-	                  Impersonate.destroy(
-	                    {
-	                        old_user_id:$cookieStore.get('old_user_id'),
-	                        new_user_id:$cookieStore.get('new_user_id')
-	                    },
-	                    function(d){
-	                      console.log(d)
-	                      console.log("good")
-	                      // var course_id = $cookieStore.get('course_id')
-	                      // var module_id = $cookieStore.get('module_id')
-	                      var params = $cookieStore.get('params')
-	                      var state = $cookieStore.get('state')
-	                      $rootScope.preview_as_student = false
-	                      $cookieStore.remove('preview_as_student')
-	                      $cookieStore.remove('old_user_id')
-	                      $cookieStore.remove('new_user_id')
-	                      $cookieStore.remove('params')
-	                      $cookieStore.remove('state')
-	                      $rootScope.current_user= null
-	                      $state.go(state, params,{reload:true})
-			              $rootScope.$broadcast('get_current_courses')
-	                    },
-	                    function(){
-	                      console.log("bad")
-	                      $rootScope.preview_as_student = false
-	                      $cookieStore.remove('preview_as_student')
-	                      $cookieStore.remove('old_user_id')
-	                      $cookieStore.remove('new_user_id')
-	                      $cookieStore.remove('params')
-	                      $cookieStore.remove('state')
-	                    }
-	                  )
-	                }
-	            }	            
-
-				scope.updateCourseFilter=function(value){
-					scope.course_filter= value
-					$rootScope.$broadcast('course_filter_update', scope.course_filter)
-				}	
+				
 				// setNavigator(true)
 			}
 		};
@@ -310,13 +326,13 @@ angular.module('scalearAngularApp')
 				})
 			}
 		};
- }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator){
+ }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator','$rootScope',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope){
   return{
     restrict:'E',
     replace: true,
     transclude: true,
     scope:{
-      links:'=',
+      // links:'=',
       modules: '=',
       mode: '@',
       open_navigator:'=open'
@@ -400,68 +416,99 @@ angular.module('scalearAngularApp')
 		},
  	}
 
- 	scope.listSortableOptions={
-		axis: 'y',
-		dropOnEmpty: false,
-		handle: '.handle',
-		cursor: 'crosshair',
-		items: '.links',
-		opacity: 0.4,
-		scroll: true,
-		update: function(e, ui) {
-			Course.sortCourseLinks({course_id:$state.params.course_id},
-				{links: scope.links},
-				function(response){
-					// $log.debug(response)
-				},
-				function(){
-					// $log.debug('Error')
-				}
-			);
-		},
- 	}
+ 	// scope.listSortableOptions={
+		// axis: 'y',
+		// dropOnEmpty: false,
+		// handle: '.handle',
+		// cursor: 'crosshair',
+		// items: '.links',
+		// opacity: 0.4,
+		// scroll: true,
+		// update: function(e, ui) {
+		// 	Course.sortCourseLinks({course_id:$state.params.course_id},
+		// 		{links: scope.links},
+		// 		function(response){
+		// 			// $log.debug(response)
+		// 		},
+		// 		function(){
+		// 			// $log.debug('Error')
+		// 		}
+		// 	);
+		// },
+ 	// }
 	// scope.toggleNavigator = function(){
 	// 	scope.open_navigator = !scope.open_navigator
 	// }
 
   	scope.showModuleCourseware = function(module, event){
-        if(module.id != $state.params.module_id){
-          scope.currentmodule = module//$scope.module_obj[module_id];
-          Module.getLastWatched(
-            {
-            	course_id: $stateParams.course_id, 
-            	module_id: module.id
-            }, 
-            function(data){
-              if(data.last_watched != -1){
-                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
-                scope.currentitem = {id:data.last_watched}
-              }
-              else{
-                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
-                scope.currentitem = {id:module.quizzes[0].id}
-              }
-          }) 
-        }
-        else
-          event.stopPropagation()
+  		if((module.lectures.length + module.quizzes.length) > 0){
+	        if(!scope.currentmodule || scope.currentmodule.id != module.id){
+	          scope.currentmodule = module//$scope.module_obj[module_id];
+	          Module.getLastWatched(
+	            {
+	            	course_id: $stateParams.course_id, 
+	            	module_id: module.id
+	            }, 
+	            function(data){
+	              if(data.last_watched != -1){
+	                $state.go('course.module.courseware.lecture', {'module_id': module.id, 'lecture_id': data.last_watched})
+	                scope.currentitem = {id:data.last_watched}
+	              }
+	              else{
+	                $state.go('course.module.courseware.quiz', {'module_id': module.id, 'quiz_id': module.quizzes[0].id})
+	                scope.currentitem = {id:module.quizzes[0].id}
+	              }
+	          }) 
+	        }
+	        else
+	          event.stopPropagation()
+	  	}
+	  	else
+	  		scope.currentmodule = null
   	}
                
   	scope.showItem = function(item, type){
- 		var params = {'module_id': $state.params.module_id}    
-	    params[item.class_name.toLowerCase()+'_id'] = item.id
-	    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
-	    scope.currentitem = {id:item.id}
+  		if($state.includes("**.progress.**")){
+  			if($state.includes("course.module.progress"))
+  				$rootScope.$broadcast("scroll_to_item",item)
+  		}
+  		else{
+  			if(item.class_name!='customlink'){
+		 		var params = {'module_id': $state.params.module_id}  
+		 		console.log(item)  
+			    params[item.class_name.toLowerCase()+'_id'] = item.id
+			    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
+			}
+			if(!(type =='courseware' && item.class_name=='customlink')){
+		    	scope.currentitem = {id:item.id}
+		    	$state.params.link_id = item.id
+			}
+		}
   	}
 
  	scope.showModule=function(module, event){
-    	$state.go('course.module.course_editor.overview',{module_id: module.id})
-    	scope.currentmodule = module
-    	if($state.params.module_id == module.id){
+ 		console.log(scope.currentmodule)
+ 		if(scope.currentmodule && scope.currentmodule.id == module.id)
         	event.stopPropagation()
-        }
-
+        else{
+	 		if($state.includes("course.module.progress") || $state.includes("course.progress"))
+	 			$state.go('course.module.progress',{module_id: module.id})
+	 		else if ($state.includes("course.module.progress_details")){
+	 			$state.go('course.module.progress_details',{module_id: module.id})
+	 		}
+	 		else if($state.includes("course.module.inclass")){
+	 			$state.go('course.module.inclass',{module_id: module.id})
+	 		}
+	 		else
+	    		$state.go('course.module.course_editor.overview',{module_id: module.id})
+	    	scope.currentmodule = module
+	    }    	
     }
+
+    // scope.showCourseLinks=function(){
+    // 	scope.currentmodule = null
+    // }
+
   	scope.goToCourseInfoStudent=function(){
 	  	scope.currentmodule = null
 	  	$state.go("course.course_information")

@@ -287,7 +287,6 @@
       }
       durationReady = false;
       firstPlay = false;
-      console.log("YES I AM ALIVE!!!!")
       clearInterval( currentTimeInterval );
       clearInterval( bufferedInterval );
       player.stopVideo();

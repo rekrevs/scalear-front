@@ -258,7 +258,7 @@ angular.module('scalearAngularApp')
         {percent:milestone},function(data){
             $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
             if(data.done && !$scope.lecture.is_done){            
-                $scope.course.markDone($state.params.module_id,$state.params.lecture_id)
+                $scope.course.markDone($scope.lecture.group_id,$scope.lecture.id)
                 $scope.lecture.is_done = data.done
             }
             else if(milestone == 100)
@@ -267,11 +267,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.scrollIntoView=function(){
-        console.log("scroll to view")
-        if($scope.lecture && !$rootScope.is_mobile){
-            console.log($('.student_timeline'))
+        if($scope.lecture && !$rootScope.is_mobile)
             $('.student_timeline').scrollToThis('#outline_'+$scope.lecture.id, {offsetTop: $('.student_timeline').offset().top, duration: 400});
-        }
+        
     }
 
     $scope.nextItem=function(){

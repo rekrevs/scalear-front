@@ -487,22 +487,22 @@ angular.module('scalearAngularApp')
   	}
 
  	scope.showModule=function(module, event){
- 		console.log(scope.currentmodule)
+ 		// console.log(scope.currentmodule)
  		if(scope.currentmodule && scope.currentmodule.id == module.id)
         	event.stopPropagation()
-        else{
-	 		if($state.includes("course.module.progress") || $state.includes("course.progress"))
-	 			$state.go('course.module.progress',{module_id: module.id})
-	 		else if ($state.includes("course.module.progress_details")){
-	 			$state.go('course.module.progress_details',{module_id: module.id})
-	 		}
-	 		else if($state.includes("course.module.inclass")){
-	 			$state.go('course.module.inclass',{module_id: module.id})
-	 		}
-	 		else
-	    		$state.go('course.module.course_editor.overview',{module_id: module.id})
-	    	scope.currentmodule = module
-	    }    	
+        // else{
+ 		if($state.includes("course.module.progress") || $state.includes("course.progress"))
+ 			$state.go('course.module.progress',{module_id: module.id})
+ 		else if ($state.includes("course.module.progress_details")){
+ 			$state.go('course.module.progress_details',{module_id: module.id})
+ 		}
+ 		else if($state.includes("course.module.inclass")){
+ 			$state.go('course.module.inclass',{module_id: module.id})
+ 		}
+ 		else
+    		$state.go('course.module.course_editor.overview',{module_id: module.id})
+    	scope.currentmodule = module
+	    // }    	
     }
 
     // scope.showCourseLinks=function(){

@@ -257,12 +257,13 @@ angular.module('scalearAngularApp')
         },
         {percent:milestone},function(data){
             $scope.last_navigator_state = $scope.ContentNavigator.getStatus()
-            if(data.done && !$scope.lecture.is_done){            
+            if(data.lecture_done && !$scope.lecture.is_done){            
                 $scope.course.markDone($scope.lecture.group_id,$scope.lecture.id)
-                $scope.lecture.is_done = data.done
+                $scope.lecture.is_done = data.lecture_done
             }
             else if(milestone == 100)
                 $scope.not_done_msg = true
+            console.log("Watched:"+data.watched+"%"+" solved:"+data.quizzes_done[0]+" total:"+data.quizzes_done[1])
         })
     }
 
@@ -502,7 +503,7 @@ angular.module('scalearAngularApp')
 
     var goDesktopFullscreen=function(){
         $scope.resize.big()
-        // $scope.video_class = 'video_class_full'        
+        $scope.video_class = ''//'video_class_full'        
         $scope.fullscreen= true
         $scope.container_class="in_fullscreen black"
     }

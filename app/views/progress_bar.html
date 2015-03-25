@@ -70,7 +70,7 @@
 
         <div class="controlDiv show-inline left {{blink}}" ng-class="play_pause_class" ng-click="playBtn()"></div>
 
-        <span class="hide-for-medium-down"><div id="volume" class="volumeDiv show-inline left" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)"></div>
+        <span ng-hide="is_mobile"><div id="volume" class="volumeDiv show-inline left" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)"></div>
         <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-right: 15px;margin-top: 14px;"/></span>
         <div class="timer color-grey show-inline size-14" style="margin-top:7px;text-align: left">
             <span class="hide-for-small-only">

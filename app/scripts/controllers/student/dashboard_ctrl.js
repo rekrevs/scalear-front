@@ -135,8 +135,8 @@ angular.module('scalearAngularApp')
         doc +=  "fireOnThis.fireEvent('on'+evt);\n";
         doc +=  "}\n}";
         doc += '</script>'
-        doc +=('<a id="download" href='+"'"+'data:Application/ics,'+encodeURIComponent(ics_file)+"'"+ 'Download = "calendar.ics">download</a>');
-        doc += "<script> fireEvent(document.getElementBy_id('download'),'click')</script>";
+        doc +=('<a id="download" style="display:none" href='+"'"+'data:Application/ics,'+encodeURIComponent(ics_file)+"'"+ 'Download = "calendar.ics">download</a>');
+        doc += "<script> fireEvent(document.getElementById('download'),'click')</script>";
         win.document.write(doc);
         win.document.close();
         $timeout(function(){

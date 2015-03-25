@@ -623,6 +623,7 @@ return {
         scope.quality=false;
   		scope.chosen_quality='hd720';
   		scope.chosen_speed=1
+  		scope.is_mobile = $rootScope.is_mobile
       scope.setSpeed = function(val){
         console.log('setting youtube speed to '+val)
         scope.player.controls.changeSpeed(val, true)

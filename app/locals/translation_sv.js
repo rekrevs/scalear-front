@@ -565,7 +565,8 @@ var translation_sv=function(){
       sign_up_teacher: "Registrera dig som lärare",
     },
     groups:{
-      link:"Länk",
+      customlink:"Länk",
+      customlinks:"Länkar",
       quiz: "Quiz",
       survey: "Enkät",
       module_name: "Modulnamn",

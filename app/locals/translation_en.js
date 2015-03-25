@@ -570,6 +570,7 @@ var translation_en=function(){
       },
       groups:{
       	customlink:"Link",
+        customlinks:"Links",
       	quiz: "Quiz",
         survey: "Survey",
         module_name: "Module Name",

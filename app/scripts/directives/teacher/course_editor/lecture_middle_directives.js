@@ -402,7 +402,7 @@ angular.module('scalearAngularApp')
 								'<textarea rows=3 type="text" class="must_save" ng-model="data.explanation[pos]" />'+
 							'</label>'+							
 							'<label ng-repeat=\'num in list|filter:"!"+data.pos\' >'+
-								'<span translate translate-value="{num:num+1}">lectures.drag_incorrect</span>:'+
+								'<span translate translate-values="{num:num+1}">lectures.drag_incorrect</span>:'+
 								'<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />'+
 							'</label>'+
 							// "<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save_close</span></button>"+

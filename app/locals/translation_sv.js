@@ -497,7 +497,9 @@ var translation_sv=function(){
       quiz_question: "Quiz-fråga",
       quiz_time: "Quiz-tid",
       student_link_lecture:"Student länk till video",
-      drag_instruction: "Ange namn för dragbara objekt och placera sina Start och Slut platser på skärmen."
+      drag_instruction: "Ange namn för dragbara objekt och placera sina Start och Slut platser på skärmen.",
+      drag_correct: "Denna post är korrekt här eftersom",
+      drag_incorrect: "Punkt {{num}} skulle vara felaktig här eftersom"
     },
     online_quiz:{
       you_sure_delete_quiz: "Är du säker på att du vill radera quizen '{{quiz}}'?",

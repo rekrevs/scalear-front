@@ -3,7 +3,7 @@
 		position: absolute;
 		top: -82px;
 		width: 189px;
-		left: 38%;
+		left: -55%;
 		height: 82px;
 		margin: 0;
 		padding: 10px;
@@ -11,10 +11,10 @@
 		color: black;
 		z-index: 1035;
 	}
-	.in_fullscreen .notification_panel{
+	/*.in_fullscreen .notification_panel{
 		left: 41%
-	}
-	@-moz-document url-prefix() {
+	}*/
+	/*@-moz-document url-prefix() {
 		.notification_panel{
 			position: relative;
 			top: -90px;
@@ -22,7 +22,7 @@
 			left: -10%;
 			height: 90px;
 		}
-	}
+	}*/
 </style>
 
 <div ng-show="message" class="panel secondary notification_panel with-tiny-padding" ng-class="{'color-green': message==correct_notify,'color-red': message==incorrect_notify}">

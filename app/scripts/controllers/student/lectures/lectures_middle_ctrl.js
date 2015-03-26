@@ -236,7 +236,7 @@ angular.module('scalearAngularApp')
         })
 
         $scope.video_ready=true
-        if(!$scope.lecture_player.controls.youtube)
+        if(!$scope.lecture_player.controls.youtube || navigator.userAgent.search("Firefox")>-1)
             $scope.show_progressbar = true
         var time =$state.params.time        
         if(time){
@@ -434,7 +434,6 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.waiting=function(){
         $scope.video_ready=true
-
         $scope.show_progressbar=true
     }
 

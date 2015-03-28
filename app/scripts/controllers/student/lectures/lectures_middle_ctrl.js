@@ -408,7 +408,8 @@ angular.module('scalearAngularApp')
 
     $scope.lecture_player.events.timeUpdate = function(){
         $scope.current_time = $scope.lecture_player.controls.getTime()
-        $scope.elapsed_width = (($scope.current_time/$scope.total_duration)*100) + '%'
+        var time = ($scope.current_time/$scope.total_duration)*100
+        $scope.elapsed_width = (time>100? 100 : time) + '%'
     }
 
     $scope.lecture_player.events.onEnd= function() {

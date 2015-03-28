@@ -281,7 +281,15 @@
       playerState = event.data;
     }
 
-    function destroyPlayer() {
+    function destroyPlayer() { 
+      if( !( playerReady && player ) ) {
+        return;
+      }     
+      player.stopVideo();
+      player.clearVideo();
+    }
+
+    function resetPlayer(){
       if( !( playerReady && player ) ) {
         return;
       }
@@ -289,11 +297,12 @@
       firstPlay = false;
       clearInterval( currentTimeInterval );
       clearInterval( bufferedInterval );
-      player.stopVideo();
-      player.clearVideo();
     }
 
     function destroyElement(){
+      if( !( playerReady && player ) ) {
+        return;
+      }
       parent.removeChild( elem );
       elem = document.createElement( "div" );
     }
@@ -318,7 +327,8 @@
       }
 
       if( playerReady ) {
-        destroyPlayer();
+        resetPlayer();
+        resetPlayer();
         destroyElement();
       }
 
@@ -532,7 +542,7 @@
       player.setPlaybackRate(speed)
     }
     self.destroy = function(){
-      destroyPlayer()
+      resetPlayer()
     }
 
     function onEnded() {

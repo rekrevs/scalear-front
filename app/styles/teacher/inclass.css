@@ -54,6 +54,7 @@
 	vertical-align: -webkit-baseline-middle;
 	background:black;
 	padding:0;
+	max-width: 100%;
 }
 
 .review{

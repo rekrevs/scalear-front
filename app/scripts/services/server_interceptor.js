@@ -103,8 +103,6 @@ angular.module('scalearAngularApp')
                     }
 
                     if (rejection.status == 404 && rejection.config.url.search(re) != -1) {
-                        $log.debug("rootscope is ");
-                        $log.debug($rootScope);
                         var $state = $injector.get('$state'); //test connection every 10 seconds.
                         if ($rootScope.current_user) 
                             $state.go("course_list") //check
@@ -152,7 +150,9 @@ angular.module('scalearAngularApp')
                             console.log("preview_as_student")
                           $cookieStore.remove('preview_as_student')
                           $cookieStore.remove('old_user_id')
-                          $cookieStore.remove('course_id')
+                          $cookieStore.remove('new_user_id')
+                          $cookieStore.remove('params')
+                          $cookieStore.remove('state')
                           $rootScope.preview_as_student= false
                         }
                         if (angular.isDefined($rootScope.stop)) {

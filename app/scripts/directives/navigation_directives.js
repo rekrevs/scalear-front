@@ -401,11 +401,11 @@ angular.module('scalearAngularApp')
 		scroll: true,
 		update: function(e, ui) {
 			var group_id=ui.item.scope().item.group_id
-			var group_position=ui.item.scope().$parent.module.position -1
+			var items=ui.item.scope().$parent.module.items
 			Lecture.saveSort(
 				{course_id:$state.params.course_id, 
 				 group: group_id},
-				{items: scope.modules[group_position].items},
+				{items: items},
 				function(response){
 					// $log.debug(response)
 				},

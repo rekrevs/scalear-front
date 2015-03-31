@@ -338,11 +338,10 @@ angular.module('scalearAngularApp')
             html:true,
             trigger:$rootScope.is_mobile? 'click' : 'hover',
             placement:(scope.data.xcoor > 0.5)? "left":"right"
-            // container: 'body'
           }
-          // if(ontop.css('position') != 'fixed'){
-          //    scope.explanation_pop["container"] = 'body'
-          // }
+          if(ontop.css('position') != 'fixed'){
+             scope.explanation_pop["container"] = 'body'
+          }
 
         } 
       })
@@ -512,6 +511,9 @@ angular.module('scalearAngularApp')
             // rightcut: (ontop.css('position') == 'fixed')
             placement:(scope.data.xcoor > 0.5)? "left":"right"
             // container: 'body'
+          }
+          if(ontop.css('position') != 'fixed'){
+            scope.explanation_pop["container"] = 'body'
           }
           var bg_color = scope.explanation[scope.data.id][0]? "darkseagreen": "orangered"
           angular.element('#'+scope.data.id).css('background-color', bg_color)

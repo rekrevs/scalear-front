@@ -351,7 +351,7 @@ angular.module('scalearAngularApp')
         checkIfQuizSolved()            
     }
 
-    $scope.submitPause= function(quiz_mode){
+    $scope.submitPause= function(quiz_mode, time){
         Lecture.pause(
             {
                 course_id:$state.params.course_id, 
@@ -359,7 +359,7 @@ angular.module('scalearAngularApp')
                 
             },
             {
-                time:$scope.lecture_player.controls.getTime(),
+                time:time,
                 quiz_mode:quiz_mode
             });
     }
@@ -401,9 +401,12 @@ angular.module('scalearAngularApp')
         console.log("pausing")
         $scope.play_pause_class = "play"
         // if(!$scope.preview_as_student)
-        $scope.submitPause($scope.quiz_mode);
-        console.log("current watched: "+Math.round((($scope.current_time/$scope.total_duration)*100)))
-        updateViewPercentage(Math.round((($scope.current_time/$scope.total_duration)*100)))
+        if($scope.current_time != null){
+            var percent_view = Math.round((($scope.current_time/$scope.total_duration)*100))
+            $scope.submitPause($scope.quiz_mode,$scope.current_time);
+            console.log("current watched: "+percent_view)
+            updateViewPercentage(percent_view)
+        }
     }
 
     $scope.lecture_player.events.timeUpdate = function(){

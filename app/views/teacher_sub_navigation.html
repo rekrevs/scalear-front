@@ -75,9 +75,11 @@
 
                 <!-- Left Nav Section -->
                 <ul class="left" id="teacher_left_nav">
-                    <li has-dropdown>
-                        <a id="progress" class="whitesmoke-hover dark-text sub-header-component size-14" ng-class="{'nav-item-active': ('course.progress' | includedByState) || ('course.module.progress' | includedByState) || ('course.module.progress_details' | includedByState)}" ng-click="goToProgress()" page-name="head.information" translate>head.progress</a>
-                        <ul class="lighter-grey-no-hover" top-bar-dropdown>
+                    <li>
+                        <a id="content"  class="whitesmoke dark-text with-tiny-padding-left with-tiny-padding-right"  page-name="head.information" >
+                            <div ng-class="{'subnav-item-active': ('course.course_editor' | includedByState) || ('course.module.course_editor.**' | includedByState)}" ng-click="goToContentEditor()" class="whitesmoke-hover round-subheader size-14" translate>Edit</div>
+                        </a>
+                        <!-- <ul class="lighter-grey-no-hover" top-bar-dropdown>
                                 <li ng-class="{'disabled': !in_module_state}">
                                     <a id="review_module_progress" ng-class="{'disabled': !in_module_state}" class="lighter-grey dark-text sub-header-component has-description" ui-sref="course.module.progress" ui-sref-active="nav-inner-item-active">
                                         <span translate>review_module_progress</span>
@@ -95,14 +97,18 @@
                             <li>                        
                                 <a id="all_student_progress" class="lighter-grey dark-text sub-header-component" ui-sref="course.progress" ui-sref-active="nav-inner-item-active" translate>all_students_progress</a>
                             </li>
-                        </ul>
+                        </ul> -->
                     </li>
-                    <li ng-show="in_module_state">
-                        <a id="inclass" class="whitesmoke-hover dark-text sub-header-component size-14" ui-sref="course.module.inclass" ui-sref-active="nav-item-active" translate>head.in_class</a>
+                    <li>
+                        <a id="progress" class="whitesmoke dark-text with-tiny-padding-left with-tiny-padding-right" >
+                            <div class="whitesmoke-hover round-subheader size-14" ng-click="goToProgress()" ng-class="{'subnav-item-active': ('course.progress' | includedByState) || ('course.module.progress.**' | includedByState) }"  translate>Review</div>
+                        </a>
                     </li>
-                    <li has-dropdown>
-                        <a id="content" class="whitesmoke-hover dark-text sub-header-component size-14" ng-class="{'nav-item-active': ('course.course_editor' | includedByState) || ('course.module.course_editor' | includedByState) || ('course.module.course_editor.overview' | includedByState) || ('course.module.course_editor.lecture' | includedByState) || ('course.module.course_editor.quiz' | includedByState)}" ng-click="goToContentEditor()" translate>head.content</a>
-                        <ul class="lighter-grey-no-hover" top-bar-dropdown >
+                    <li>
+                        <a id="inclass" class="whitesmoke dark-text with-tiny-padding-left with-tiny-padding-right" >
+                            <div class="whitesmoke-hover round-subheader size-14" ui-sref="course.module.inclass" ui-sref-active="subnav-item-active" translate>In-class</div>
+                        </a>
+                        <!-- <ul class="lighter-grey-no-hover" top-bar-dropdown >
                             <span ng-show="'**.course_editor.**' | includedByState">
                                 <li>
                                     <a id="sub_new_module" class="lighter-grey dark-text sub-header-component has-description" ng-click="addModule()">
@@ -129,7 +135,6 @@
                                     <li >                                
                                         <a id="copy" class="lighter-grey dark-text sub-header-component" ng-click="copyItem()">
                                             <span translate>menu.copy</span>
-                                            <!-- <h5 class="dark-description"><small translate>menu.copy_describtion</small></h5> -->
                                         </a>
                                     </li>
                                 </span>
@@ -161,14 +166,20 @@
                                 </a>
                             </li>
                             
-                        </ul>
+                        </ul> -->
                     </li>
                     <li has-dropdown>
-                        <a id="settings" class="whitesmoke-hover dark-text sub-header-component size-14" ui-sref="course.enrolled_students" ng-class="{'nav-item-active': ('course.enrolled_students' | includedByState) || ('course.announcements' | includedByState)}" translate>courses.students</a>
+                        <a id="settings" class="whitesmoke dark-text with-tiny-padding-left with-tiny-padding-right"  >
+                            <div class="whitesmoke-hover round-subheader size-14" ui-sref="course.enrolled_students" ng-class="{'subnav-item-active': ('course.enrolled_students' | includedByState) || ('course.announcements' | includedByState) || ('course.edit_course_information' | includedByState)}" translate>Administration</div>
+                        </a>
                         <ul class="lighter-grey-no-hover" top-bar-dropdown>
-                            <li><a id="announcements" class="lighter-grey dark-text sub-header-component" ui-sref="course.announcements" ui-sref-active="nav-inner-item-active" translate>head.announcements</a></li>
-                            <li><a id="enrolled_students" class="lighter-grey dark-text sub-header-component" ui-sref="course.enrolled_students" ui-sref-active="nav-inner-item-active" translate>head.enrolled_students</a></li>
+                            <li><a id="announcements" class="lighter-grey dark-text sub-header-component" ui-sref="course.edit_course_information" ui-sref-active="nav-inner-item-active" translate>head.course_information</a></li>
+                            <li><a id="announcements" class="lighter-grey dark-text sub-header-component" ui-sref="course.announcements" ui-sref-active="nav-inner-item-active" translate>Add Teacher/TA</a></li>
+                            <div class="divider border-grey medium-opacity"></div>
+                            <li><a id="enrolled_students" class="lighter-grey dark-text sub-header-component" ui-sref="course.enrolled_students" ui-sref-active="nav-inner-item-active" translate>Student List</a></li> 
                             <li><a id="add_students" enroll-help-modal ng-click="openHelpModal(course)" class="lighter-grey dark-text sub-header-component"><span translate>head.add_students</span></a></li>
+                            <div class="divider border-grey medium-opacity"></div>
+                            <li><a id="announcements" class="lighter-grey dark-text sub-header-component" ui-sref="course.announcements" ui-sref-active="nav-inner-item-active" translate>head.announcements</a></li>
                         </ul>
                     </li>
                 </ul>

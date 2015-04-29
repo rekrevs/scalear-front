@@ -356,6 +356,15 @@ footer{
 	/*line-height: 45px !important;*/
 
 }
+.round-subheader{
+    line-height: 2rem;
+  vertical-align: middle;
+  border-radius: 5px;
+  padding: 1px 12px;
+  display: inline-block;
+  text-align: center;
+}
+
 .has-description{
 	height: 45px !important; 
 	line-height: 30px !important; 
@@ -421,7 +430,7 @@ span.error, small.error{
 .medium-grey{
   background-color: #bdbdbd !important;
 }
-.whitesmoke-hover:hover, .medium-grey:hover, .dark-medium-grey, .dark-medium-grey-hover, .dark-medium-grey-blue-hover{
+.medium-grey:hover, .dark-medium-grey, .dark-medium-grey-hover, .dark-medium-grey-blue-hover{
   background-color: #a3a3a3 !important;
 }
 .dark-blue{
@@ -434,7 +443,7 @@ span.error, small.error{
 .light-grey, .light-grey-hover{
 	background-color: #ececea !important;
 }
-.white-with-hover:hover, .light-grey-hover:hover{
+.whitesmoke-hover:hover, .white-with-hover:hover, .light-grey-hover:hover{
   background-color: #d4d4d2 !important;
 }
 .lightgrey-with-hover:hover{
@@ -485,7 +494,7 @@ span.error, small.error{
   background-color: #92AB57 !important;
 }
 
-.color-gray{
+.color-gray, .color-gray-hover{
   color: gray !important;
 }
 
@@ -504,7 +513,7 @@ span.error, small.error{
 .color-green, .color-green-hover{
 	color: #5da423 !important;
 }
-.color-lightgreen-hover:hover, .color-green-hover:hover{
+.color-lightgreen-hover:hover, .color-green-hover:hover, .color-gray-hover:hover{
   color: #4e8a1d !important;
 }
 .color-red{
@@ -732,6 +741,11 @@ select{
 
 .size-18-light{
 font-size: 18px !important;
+font-weight: 300 !important
+}
+
+.size-16-light{
+font-size: 16px !important;
 font-weight: 300 !important
 }
 
@@ -1039,7 +1053,20 @@ td.right-border{
 }
 .top-bar{
   z-index: 11 !important;
+ 
 }
+.main-nav .top-bar, .main-nav .top-bar .name {
+   height: 2rem !important;
+  line-height:2rem;
+}
+
+.main-nav .top-bar .name h1, .top-bar .name h2, .top-bar .name h3, .top-bar .name h4, .top-bar .name p, .top-bar .name span{
+  line-height: 2rem
+}
+.main-nav .top-bar-section li:not(.has-form) a:not(.button){
+  line-height: 2rem
+}
+
 .top-bar .toggle-topbar.menu-icon a::after{
   -webkit-box-shadow: 0 10px 0 1px black, 0 16px 0 1px black, 0 22px 0 1px black;
   box-shadow: 0 10px 0 1px black, 0 16px 0 1px black, 0 22px 0 1px black;
@@ -1055,11 +1082,11 @@ td.right-border{
   padding-right: 15px !important;
 }
 
-.no-js .top-bar-section ul li:hover > a{
+/*.no-js .top-bar-section ul li:hover > a{
   background-color: #ededeb !important;
   color: #222 !important;
-}
-.top-bar-section li:not(.has-form) a:not(.button):hover{
+}*/
+.top-bar-section li:not(.has-form) a:not(.button):not(.round-header):hover,{
   background-color: #d4d4d2 !important;
 }
 .side-nav li a{
@@ -1304,6 +1331,10 @@ label{
 .nav-item-active, .nav-item-active:hover{
   background-color: #ededeb !important;
   /*color: black !important;*/
+}
+.subnav-item-active, .subnav-item-active:hover{
+  background-color:#5da423 !important;
+  color:white !important;
 }
 .nav-inner-item-active, .nav-inner-item-active:hover{
   background-color: #d4d4d2 !important;

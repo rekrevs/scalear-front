@@ -43,6 +43,19 @@ width: 78%;
 }
 .content-navigator-container{
   width: 300px;
+  position: fixed;min-height: 88%;
+  border: rgb(93, 164, 35) 3px solid;
+  border-top: none;
+}
+
+.content-navigator-bottom-container{
+  border-top: 2px groove lightgray;
+  height: 8%;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  padding: 8px;
 }
 
 .details-navigator-container{

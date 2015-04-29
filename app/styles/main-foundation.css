@@ -1082,11 +1082,11 @@ td.right-border{
   padding-right: 15px !important;
 }
 
-/*.no-js .top-bar-section ul li:hover > a{
+.main-nav .top-bar-section ul li:hover > a{
   background-color: #ededeb !important;
   color: #222 !important;
-}*/
-.top-bar-section li:not(.has-form) a:not(.button):not(.round-header):hover,{
+}
+.main-nav .top-bar-section li:not(.has-form) a:not(.button):not(.round-subheader):hover{
   background-color: #d4d4d2 !important;
 }
 .side-nav li a{

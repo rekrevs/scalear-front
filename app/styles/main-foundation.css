@@ -43,14 +43,13 @@ width: 78%;
 }
 .content-navigator-container{
   width: 300px;
-  position: fixed;min-height: 88%;
-  border: rgb(93, 164, 35) 3px solid;
-  border-top: none;
+  position: fixed;  
+  overflow-y: hidden !important;
 }
 
 .content-navigator-bottom-container{
   border-top: 2px groove lightgray;
-  height: 8%;
+  height: 11%;
   position: absolute;
   bottom: 0;
   left: 0;
@@ -86,6 +85,7 @@ width: 78%;
   background-color: white;
   /*box-shadow: 1px 1px 1px lightgrey;*/
   height: 0;
+  border: none;
   overflow-y: auto;
   z-index: 2 !important;
   -webkit-transition: all 0.1s ease-in-out;
@@ -99,6 +99,8 @@ width: 78%;
 }
 .containeropen{
   height: 88%;
+  border: rgb(93, 164, 35) 3px solid;
+  border-top: none;
   /*width: 300px;*/
   /*left: 0px;*/
   /*display: inline-block;*/

@@ -307,6 +307,37 @@
       elem = document.createElement( "div" );
     }
 
+    parseDuration = function(DurationString) {
+      var matches = DurationString.match(/^P([0-9]+Y|)?([0-9]+M|)?([0-9]+D|)?T?([0-9]+H|)?([0-9]+M|)?([0-9]+S|)?$/),
+          result = {};
+   
+      if (matches) {
+          result.year = parseInt(matches[1]) || 0;
+          result.month = parseInt(matches[2]) || 0;
+          result.day = parseInt(matches[3]) || 0;
+          result.hour = parseInt(matches[4]) || 0;
+          result.minute = parseInt(matches[5]) || 0;
+          result.second = parseInt(matches[6]) || 0;
+   
+          result.toString = function() {
+              var string = '';
+   
+              if (this.year) string += this.year + ' Year' + (this.year == 1 ? '': 's') + ' ';
+              if (this.month) string += this.month + ' Month' + (this.month == 1 ? '': 's') + ' ';
+              if (this.day) string += this.day + ' Day' + (this.day == 1 ? '': 's') + ' ';
+              if (this.hour) string += this.hour + ' Hour' + (this.hour == 1 ? '': 's') + ' ';
+              if (this.minute) string += this.minute + ' Minute' + (this.minute == 1 ? '': 's') + ' ';
+              if (this.second) string += this.second + ' Second' + (this.second == 1 ? '': 's') + ' ';
+   
+              return string;
+          }
+   
+          return result;
+      } else {
+          return false;
+      }
+    }
+
     function changeSrc( aSrc ) {
       if( !self._canPlaySrc( aSrc ) ) {
         impl.error = {
@@ -375,18 +406,22 @@
       // Get video ID out of youtube url
       aSrc = regexYouTube.exec( aSrc )[ 1 ];
 
-      var xhrURL = "https://gdata.youtube.com/feeds/api/videos/" + aSrc + "?v=2&alt=jsonc&callback=?";
+      // var xhrURL = "https://gdata.youtube.com/feeds/api/videos/" + aSrc + "?v=2&alt=jsonc&callback=?";
+      var xhrURL = "https://www.googleapis.com/youtube/v3/videos?id=" + aSrc + "&part=contentDetails&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk&fields=items(contentDetails(duration))"
       // Get duration value.
+
       Popcorn.getJSONP( xhrURL, function( resp ) {
         var warning = "failed to retreive duration data, reason: ";
         if ( resp.error ) {
           console.warn( warning + resp.error.message );
           return ;
-        } else if ( !resp.data ) {
+        } else if ( !resp.items || resp.items.length ==0 ) {
           console.warn( warning + "no response data" );
           return;
         }
-        impl.duration = resp.data.duration;
+
+        var duration = parseDuration(resp.items[0].contentDetails.duration)
+        impl.duration = duration.hour*(60*60)+duration.minute*(60)+duration.second//resp.data.duration;
         self.dispatchEvent( "durationchange" );
         durationReady = true;
 

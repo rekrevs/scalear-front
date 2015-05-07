@@ -1,18 +1,18 @@
 <center>
-    <div class="small-12 large-8 large-centered column" style="box-shadow: 0 1px 3px #5F5F5F;background: rgb(240, 240, 240);padding: 30px 0">
+    <div class="small-10 medium-8 large-8 small-centered column" style="box-shadow: 0 1px 3px #5F5F5F;background: rgb(240, 240, 240);padding: 30px 0">
         <form class="row" ng-submit="login()" novalidate>
             <h2><span translate>welcome</span>Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></h2>
-            <h6  ng-show="is_mobile" class="show-for-medium-only text-italic break-word small-8 small-centered columns size-14">
+            <h6  ng-if="is_mobile" class="show-for-medium-only text-italic break-word small-8 small-centered columns size-14">
                 <span translate>lectures.note</span>:
                 <span translate>support.ipad</span>
                 <span translate>support.issue_and_recommendation</span>
             </h6>
-            <h6 ng-show="is_mobile" class="show-for-small-only text-italic break-word small-10 small-centered columns size-12">
+            <h6 ng-if="is_mobile" class="show-for-small-only text-italic break-word small-10 small-centered columns size-12">
                 <span translate>lectures.note</span>:
                 <span translate>support.mobiles</span> 
                 <span translate>support.issue_and_recommendation</span>
             </h6>
-            <br ng-show="!is_mobile"/>
+            <br ng-if="!is_mobile"/>
             <br/>
             <div class="small-12 medium-10 large-8 small-centered medium-centered large-centered columns">
                 
@@ -41,15 +41,24 @@
                     </div>
 
                     <div class="row">
-                        <div class="small-12 medium-12 large-12 small-centered columns">
+                        <div class="small-4 medium-6 large-6 columns with-small-margin-top">
+                            <label class="left" translate>remember_me</label>
+                        </div>
+                        <div class="small-1 medium-1 large-1 columns left">
+                            <input type="checkbox" ng-model="user.remember_me">
+                        </div>
+                    </div>
+<!-- 
+                    <div class="row">
+                        <div class="small-12 medium-8 large-9 columns">
                             <label class="right hide-for-small-only">{{'remember_me' | translate}}
                                 <input type="checkbox" ng-model="user.remember_me">
                             </label>
-                            <label class="show-for-small-only">{{'remember_me' | translate}}
-                                <input type="checkbox" ng-model="user.remember_me">
+                            <label >
+                                
                             </label>
                         </div>
-                    </div>
+                    </div> -->
 
                     <div class="row ">
                         <div class="small-12 medium-4 large-4 columns">

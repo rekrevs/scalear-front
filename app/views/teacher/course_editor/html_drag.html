@@ -2,14 +2,16 @@
 	<ng-form name='aform'>					
 		<div class='row' style='padding: 5px 12px;'>
 			<div class="small-12 columns no-padding">
-				<div class='small-1 columns'>
+				<div class='small-1 columns' style="margin-top: 7px;">
 					<img class='drag-item looks-like-a-hook' src='images/move2.png' />
 				</div>
 				<div class='small-9 columns'>
 					<input type='text' required name='answer' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' style='margin-bottom:0'/>
 					<small class='error' ng-show='submitted && aform.answer.$error.required && !hide_valid' ><span translate>courses.required</span>!</small>
 				</div>
-				<delete_button size='small' mode="content_navigator" color='dark' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' />
+				<div style="margin-top: 7px;">
+					<delete_button size='small' mode="content_navigator" color='dark' action='removeAnswer($index, quiz)' ng-click='aform.answer.$error.required && submitted && (hide_valid=!hide_valid)' />
+				</div>
 			</div>
 		</div>
 	</ng-form>

@@ -607,14 +607,14 @@ angular.module('scalearAngularApp')
 							"<div class='small-2 columns' style='padding: 10px 0;'>"+
 								"<label class='text-left' translate>groups.answer</label>"+
 							"</div>"+
-							"<div class='small-7 columns no-padding'>"+
+							"<div class='small-7 columns left no-padding'>"+
 								"<input class='no-margin' required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
 								"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
 							"</div>"+
 							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<div class='small-2 columns' ng-if='!isSurvey()'>"+
-								"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
-								"<input ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+ //atleastone
+								"<label><span translate>answer.correct</span></label>"+
+								"<input class='valign-middle' ng-change='updateValues()' type='checkbox' name='mcq' ng-model='answer.correct' ng-checked='answer.correct' />"+ //atleastone
 							"</div>"+
 							// "<div class='small-1 left columns' style='padding: 10px 0;'>"+
 							// 	"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+
@@ -643,14 +643,14 @@ angular.module('scalearAngularApp')
 							"<div class='small-2 columns' style='padding: 10px 0;'>"+
 								"<label class='text-left' translate>groups.answer</label>"+
 							"</div>"+
-							"<div class='small-7 columns no-padding'>"+
+							"<div class='small-7 columns left no-padding'>"+
 								"<input class='no-margin' required name='answer' type='text' placeholder={{'groups.answer'|translate}} ng-model='answer[columna]' ng-class='{error: (submitted && aform.answer.$error.required) }' />"+ //|| (submitted && aform.$error.atleastone)
 								"<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.answer.$error.required' ><span translate>courses.required</span>!</small>"+
 							"</div>"+
 							// "<small class='error with-tiny-margin-bottom' ng-show='submitted && aform.$error.atleastone' translate>lectures.choose_atleast_one</small>"+
 							"<div class='small-2 columns' ng-if='!isSurvey()'>"+
-								"<label class='with-tiny-margin-bottom'><span translate>answer.correct</span></label>"+
-								"<input id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+ //atleastone
+								"<label><span translate>answer.correct</span></label>"+
+								"<input class='valign-middle' id='radio_correct' type='radio' ng-model='answer.correct' ng-value=true ng-click='radioChange(answer)'/>"+ //atleastone
 							"</div>"+
 							// "<div class='small-1 left columns' style='padding: 10px 0;'>"+
 							// 	"<delete_button size='small' color='dark' action='removeAnswer($index, quiz)' />"+

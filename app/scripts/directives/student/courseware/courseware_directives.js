@@ -170,7 +170,7 @@ angular.module('scalearAngularApp')
 			
 		}
 	}
- }).directive('coursewareItem',['CourseEditor','$state', '$anchorScroll', '$location', function(CourseEditor, $state, $anchorScroll, $location){
+ }).directive('coursewareItem',['$state', '$anchorScroll', '$location','scalear_utils', function($state, $anchorScroll, $location, scalear_utils){
 	return {
 		 scope: {
 		 	circlesize: '@',
@@ -206,7 +206,7 @@ angular.module('scalearAngularApp')
 
 		 	})
 
-		 	scope.type= scope.className=="Quiz"? CourseEditor.capitalize(scope.quizType): scope.className;
+		 	scope.type= scope.className=="Quiz"? scalear_utils.capitalize(scope.quizType): scope.className;
              scope.url_with_protocol = function(url)
              {
                  if(url)

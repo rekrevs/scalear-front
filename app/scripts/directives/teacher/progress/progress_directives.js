@@ -219,7 +219,7 @@ angular.module('scalearAngularApp')
 	    controller: "quizzesCtrl",
 	    templateUrl:'/views/teacher/progress/quizzes_tab.html' 
     };
-}).directive('progressItem',['CourseEditor','$state', function(CourseEditor, $state){
+}).directive('progressItem',['scalear_utils','$state', function(scalear_utils, $state){
 	return {
 		 scope: {
 		 	circlesize: '@',
@@ -234,7 +234,7 @@ angular.module('scalearAngularApp')
 		 restrict: 'E', 
 		 templateUrl: '/views/teacher/progress/progress_item.html',
 		 link: function(scope, element){
-		 	scope.type= scope.className=="Quiz"? CourseEditor.capitalize(scope.quizType): scope.className;
+		 	scope.type= scope.className=="Quiz"? scalear_utils.capitalize(scope.quizType): scope.className;
              scope.url_with_protocol = function(url)
              {
                  if(url)
@@ -248,7 +248,7 @@ angular.module('scalearAngularApp')
 		 	}
 		 }
 	};
-}]).directive('progressNavigator',['CourseEditor','$state', function(CourseEditor, $state){
+}]).directive('progressNavigator',['scalear_utils','$state', function(scalear_utils, $state){
 	return {
 		 scope: {
 		 	circlesize: '@',
@@ -276,7 +276,7 @@ angular.module('scalearAngularApp')
 
 		 	})
 
-		 	scope.type= scope.className=="Quiz"? CourseEditor.capitalize(scope.quizType): scope.className;
+		 	scope.type= scope.className=="Quiz"? scalear_utils.capitalize(scope.quizType): scope.className;
              scope.url_with_protocol = function(url)
              {
                  if(url)

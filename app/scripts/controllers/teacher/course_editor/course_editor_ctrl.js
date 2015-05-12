@@ -2,7 +2,7 @@
 
 angular.module('scalearAngularApp')
 
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','CourseEditor','$translate','$log','Page','$modal','Impersonate', '$cookieStore', '$timeout','$filter','CustomLink','courseResolver','UserSession','ContentNavigator','DetailsNavigator', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz,CourseEditor, $translate, $log, Page,$modal,Impersonate, $cookieStore, $timeout, $filter, CustomLink, courseResolver, UserSession, ContentNavigator, DetailsNavigator) {
+.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','$translate','$log','Page','$modal', '$timeout','$filter','CustomLink','ContentNavigator','DetailsNavigator','Preview','scalear_utils', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz, $translate, $log, Page,$modal, $timeout, $filter, CustomLink, ContentNavigator, DetailsNavigator, Preview, scalear_utils) {
 
  	// $window.scrollTo(0, 0);
  	Page.setTitle('head.content')
@@ -83,9 +83,9 @@ angular.module('scalearAngularApp')
          $scope.addModule()
     })
 
-     $scope.$on('activate_preview',function(){
-        $scope.impersonate()
-     })
+     // $scope.$on('activate_preview',function(){
+     //    $scope.impersonate()
+     // })
 
      $scope.$on('delete_module',function(event, module){
         $scope.removeModule(module)
@@ -187,7 +187,7 @@ angular.module('scalearAngularApp')
  	// }
  	
  	$scope.capitalize = function(s){
- 		return CourseEditor.capitalize(s)
+ 		return scalear_utils.capitalize(s)
  	}
 
  	// $scope.impersonate = function(){
@@ -500,6 +500,10 @@ angular.module('scalearAngularApp')
                 elem.errors=resp.data.errors;
             }
         );
+    }
+
+    $scope.preview=function(){
+        Preview.start()
     }
 
 }]);

@@ -88,12 +88,14 @@ angular.module('scalearAngularApp')
           open = function open(event, element) {
             angular.element('.open').removeClass('open').css('display', 'none')
             scope.opened = true;
-            element.css('top', event.clientY + 'px');
+            // element.css("position", "absolute")
+            element.css('width', "10%");
+            element.css('top', event.clientY+ 'px');
             element.css('left', event.clientX + 'px');
             element.css('zIndex', 1)
             element.addClass('open');
             element.css('display', 'block')
-            angular.element('body').css('overflow', 'hidden')
+            // angular.element('body').css('overflow', 'hidden')
             angular.element($window).on('click', function(event) {
               console.log(event)
               if (scope.opened && event.which !=3) {
@@ -109,33 +111,38 @@ angular.module('scalearAngularApp')
             scope.opened = false;
             element.removeClass('open');
             element.css('display', 'none')
-            angular.element('body').css('overflow', 'auto')
+            // angular.element('body').css('overflow', 'auto')
             angular.element($window).off('click')
           };
 
       menuElement.css('position', 'fixed');
       menuElement.css('cursor', 'pointer');
 
-      scope.$watch('opened',function(){
-        if(!scope.opened)
-        //   open(event, menuElement);
-        // else
-          close(menuElement);
-      })
+      // scope.$watch('opened',function(){
+      //   if(!scope.opened)
+      //   //   open(event, menuElement);
+      //   // else
+      //     close(menuElement);
+      // })
 
-      element.bind('contextmenu', function(event) { 
-        if (scope.opened) {
-          scope.$apply(function() {
-            event.preventDefault();
-            close(menuElement);
-          });
-        }
-        else{
-          scope.$apply(function() {
-            event.preventDefault();
-            open(event, menuElement);
-          });
-        }
+      element.bind('contextmenu', function(event) {
+        scope.$apply(function() {
+          event.preventDefault();
+          close(menuElement);
+          open(event, menuElement); 
+        });
+        // if (scope.opened) {
+        //   scope.$apply(function() {
+        //     event.preventDefault();
+        //     close(menuElement);
+        //   });
+        // }
+        // else{
+        //   scope.$apply(function() {
+        //     event.preventDefault();
+        //     open(event, menuElement);
+        //   });
+        // }
       });      
     }
   };

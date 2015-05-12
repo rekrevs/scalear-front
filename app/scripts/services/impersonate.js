@@ -10,4 +10,70 @@ angular.module('scalearAngularApp')
       	 'destroy': { method: 'DELETE' , headers:headers},
       });
 
-}]);
+}]).factory("Preview",['Impersonate','$state','$cookieStore','ContentNavigator', '$rootScope',function(Impersonate,$state, $cookieStore, ContentNavigator, $rootScope){
+	var Preview={
+		start:function(){
+	        $cookieStore.put('old_user_id', $rootScope.current_user.id)
+	        $cookieStore.put('state', $state.current.name)
+	        $cookieStore.put('params', $state.params)
+	        ContentNavigator.close()
+	        Impersonate.create({},{course_id: $state.params.course_id},
+	      		function(data){
+		            $cookieStore.put('preview_as_student', true)            
+		            $cookieStore.put('new_user_id', data.user.id)
+		            $rootScope.current_user= null 
+		            var params={course_id: $state.params.course_id}
+		            if($state.params.module_id){
+		            	params['module_id']= $state.params.module_id
+		            	$state.go('course.module.courseware',params,{reload:true})
+		            }
+		            else if($state.includes("course.edit_course_information"))
+		            	$state.go('course.course_information',params,{reload:true})
+		            else
+		            	$state.go('course',params,{reload:true})
+
+		            $rootScope.preview_as_student = true
+		            $rootScope.$broadcast('get_current_courses')
+	          	},
+	          	function(){
+	            	console.log("Failed to Preview")
+            		clean()
+	          	}
+	    	)
+		},
+
+		stop:function(){
+			if($cookieStore.get('preview_as_student')){
+				ContentNavigator.close()
+				$rootScope.$broadcast("exit_preview")
+				Impersonate.destroy(
+				{
+					old_user_id:$cookieStore.get('old_user_id'),
+					new_user_id:$cookieStore.get('new_user_id')
+				},function(){
+					var params = $cookieStore.get('params')
+					var state = $cookieStore.get('state')
+					clean()
+					$rootScope.current_user= null
+					$state.go(state, params,{reload:true})
+					$rootScope.$broadcast('get_current_courses')
+				},function(){
+					console.log("Failed Closing Preview")
+					clean()
+				})
+			}
+		}
+	}
+
+	var clean=function(){
+		$rootScope.preview_as_student = false
+		$cookieStore.remove('preview_as_student')
+		$cookieStore.remove('old_user_id')
+		$cookieStore.remove('new_user_id')
+		$cookieStore.remove('params')
+		$cookieStore.remove('state')
+	}
+
+	return Preview
+ 	
+}])

@@ -4,7 +4,7 @@
 		<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'groups.lecture' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'courses.quiz' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'courses.survey' | translate"></i>
-		<div class="truncate-70 show-inline valign-middle left text-left" style="width: 66%">{{item.name}}</div>
+		<div class="truncate-70 show-inline valign-middle left text-left" style="width: 65%">{{item.name}}</div>
 		<div class="color-dark-grey left" ng-show="item.duration" ng-bind="item.duration | formattime:'h:mm:ss'"></div>
 		<delete_button class="right z-one" size='small' color='dark' action='remove(event)' mode="content_navigator" moduleitem="true" />
 	</div>
@@ -15,7 +15,7 @@
 		<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'groups.lecture' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'courses.quiz' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'courses.survey' | translate"></i>
-		<div class="truncate-70 show-inline valign-middle left text-left"  bo-text="item.name" style="width: 66%"></div>
+		<div class="truncate-70 show-inline valign-middle left text-left"  bo-text="item.name" style="width: 65%"></div>
 		<div class="color-dark-grey with-small-margin-right" ng-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div>
 	</div>
 </li>

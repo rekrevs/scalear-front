@@ -1,8 +1,9 @@
-// 'use strict';
+'use strict';
 
-// angular.module('scalearAngularApp')
-//   .controller('inclassCtrl', ['$scope', '$filter', '$state', '$stateParams', '$location', 'Course','$log', '$window','Page', '$rootScope', function ($scope, $filter, $state, $stateParams, $location, Course, $log, $window,Page, $rootScope) {
-
+angular.module('scalearAngularApp')
+  .controller('inclassCtrl', ['ContentNavigator','Page', function (ContentNavigator, Page) {
+		Page.setTitle('head.in_class')
+  		ContentNavigator.open()
 //     // $window.scrollTo(0, 0);
 //     Page.setTitle('head.in_class')
 //     // $scope.close_selector = false;
@@ -66,4 +67,4 @@
 // 		}
 // 	})
 
-//   }]);
+  }]);

@@ -35,8 +35,8 @@
 				<li ng-if="user.invitations > 0 || user.shared > 0" has-dropdown>
 					<a class="white-with-hover color-gray-hover size-16-light" id="notifications" ng-show="user.intro_watched && user.info_complete" translate>navigation.notifications</a>
 					<ul class="lighter-grey-no-hover" top-bar-dropdown>
-                        <notification-item ng-repeat="(id, invitation) in user.invitation_items" notification="invitation" id="id" />
-                        <shared-item-notification ng-repeat="(id, item) in user.shared_items" notification="item" id="id" />
+                        <notification-item ng-repeat="(id, invitation) in user.invitation_items" notification="invitation" id="id"></notification-item>
+                        <shared-item-notification ng-repeat="(id, item) in user.shared_items" notification="item" id="id"></shared-item-notification>
 					</ul>
 				</li>
 				<li has-dropdown>

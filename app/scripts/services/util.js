@@ -29,6 +29,37 @@ angular.module('scalearAngularApp')
       }
   },
 
+  parseDuration: function(DurationString) {
+    var matches = DurationString.match(/^P([0-9]+Y|)?([0-9]+M|)?([0-9]+D|)?T?([0-9]+H|)?([0-9]+M|)?([0-9]+S|)?$/),
+        result = {};
+ 
+    if (matches) {
+        result.year = parseInt(matches[1]) || 0;
+        result.month = parseInt(matches[2]) || 0;
+        result.day = parseInt(matches[3]) || 0;
+        result.hour = parseInt(matches[4]) || 0;
+        result.minute = parseInt(matches[5]) || 0;
+        result.second = parseInt(matches[6]) || 0;
+ 
+        result.toString = function() {
+            var string = '';
+ 
+            if (this.year) string += this.year + ' Year' + (this.year == 1 ? '': 's') + ' ';
+            if (this.month) string += this.month + ' Month' + (this.month == 1 ? '': 's') + ' ';
+            if (this.day) string += this.day + ' Day' + (this.day == 1 ? '': 's') + ' ';
+            if (this.hour) string += this.hour + ' Hour' + (this.hour == 1 ? '': 's') + ' ';
+            if (this.minute) string += this.minute + ' Minute' + (this.minute == 1 ? '': 's') + ' ';
+            if (this.second) string += this.second + ' Second' + (this.second == 1 ? '': 's') + ' ';
+ 
+            return string;
+        }
+ 
+        return result;
+    } else {
+        return false;
+    }
+  },
+
   hour12: function(hour){
     //var hours = new Date().getHours();
     var hours = hour%24; 

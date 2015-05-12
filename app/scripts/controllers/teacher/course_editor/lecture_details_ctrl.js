@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope',
-        function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope) {
+    .controller('lectureDetailsCtrl', ['$stateParams', '$scope', '$http', '$q', '$state', 'Lecture', '$translate', '$log', '$filter','$rootScope','scalear_utils',
+        function($stateParams, $scope, $http, $q, $state, Lecture, $translate, $log, $filter, $rootScope, scalear_utils) {
 
             var item_unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
                 if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
@@ -65,9 +65,11 @@ angular.module('scalearAngularApp')
                             if(type) {
                                 var id = type[1]//lecture.url.split("v=")[1].split("&")[0]
                                 console.log(id)
-                                var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
+                                // var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
+                                var url = "https://www.googleapis.com/youtube/v3/videos?id=" + id + "&part=status&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk"
                                 $http.jsonp(url).success(function(data) {
-                                    if(parseInt(data.entry.media$group.yt$duration.seconds)<1){
+                                    // if(parseInt(data.entry.media$group.yt$duration.seconds)<1){
+                                    if(data.items[0].status.uploadStatus != "processed"){
                                         d.reject($translate('lectures.vidoe_not_exist'));
                                         return d.promise
                                     }
@@ -158,11 +160,7 @@ angular.module('scalearAngularApp')
                 $scope.lecture.due_date_module = !$scope.lecture.disable_module_due_controls && $scope.lecture.due_date_enabled
             }
             $scope.visible = function(appearance_time) {
-                if (new Date(appearance_time) <= new Date()) {
-                    return true;
-                } else {
-                    return false;
-                }
+                return new Date(appearance_time) <= new Date()
             }
 
             $scope.updateLectureUrl= function(){                
@@ -215,15 +213,20 @@ angular.module('scalearAngularApp')
             var getYoutubeDetails= function(id){
                 $scope.is_youtube = true
                 var d = $q.defer()
-                var url="https://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
+                // var url="https://gdata.youtube.com/feeds/api/videos/"+id+"?alt=json&v=2&callback=JSON_CALLBACK"
+                var url="https://www.googleapis.com/youtube/v3/videos?id=" + id + "&part=contentDetails,snippet&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk&callback=JSON_CALLBACK"
+                         // https://www.googleapis.com/youtube/v3/videos?id=xU5TBS_MsA&part=contentDetails        &key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk&fields=items(contentDetails(duration))&callback=jsonp1431029921616
                 $http.jsonp(url)
                     .success(function (data) {
                         $log.debug(data.entry)
+                        console.log(data)
                         $scope.video={}
-                        $scope.video.title = data.entry.title.$t;
-                        $scope.video.author = data.entry.author[0].name.$t;
-        		        $scope.lecture.duration = data.entry.media$group.yt$duration.seconds
-                        $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";  
+                        $scope.video.title = data.items[0].snippet.title//data.entry.title.$t;
+                        $scope.video.author =data.items[0].snippet.channelTitle//data.entry.author[0].name.$t;
+        		        var duration = scalear_utils.parseDuration(data.items[0].contentDetails.duration)
+                        console.log(duration.hour*(60*60)+duration.minute*(60)+duration.second)
+                        $scope.lecture.duration = duration.hour*(60*60)+duration.minute*(60)+duration.second//data.entry.media$group.yt$duration.seconds
+                        // $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";  
                         d.resolve()                   
                     });
                 return d.promise;

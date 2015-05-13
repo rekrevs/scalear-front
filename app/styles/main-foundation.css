@@ -56,6 +56,10 @@ width: 78%;
   width: 100%;
   padding: 8px;
 }
+.content-navigator-bottom-container-height{
+  height: 89%;
+  overflow: auto;
+}
 
 /*.details-navigator-container.large-height-big{
   height:84vh !important;
@@ -1934,7 +1938,7 @@ a.editable-click{
 }
 
 .width-max-heigh{
-    max-width:120vh
+    max-width:112vh
 }
 
 @media only screen and (orientation:landscape) and (device-width:768px){

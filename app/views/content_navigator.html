@@ -73,7 +73,7 @@
 			</accordion-group>
 		</accordion>
 	</div>
-	<div ng-switch-when="editor" style="height: 89%;overflow: auto;">
+	<div ng-switch-when="editor" ng-class="{'content-navigator-bottom-container-height':('**.course_editor.**' | includedByState)}">
 		<accordion class="accordion no-margin">
 			<!-- <accordion-group class="accordion-group">
 				<accordion-heading class="accordion-heading" >

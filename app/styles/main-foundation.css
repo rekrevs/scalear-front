@@ -44,7 +44,7 @@ width: 78%;
 .content-navigator-container{
   width: 300px;
   position: fixed;  
-  overflow-y: hidden !important;
+  /*overflow-y: hidden !important;*/
 }
 
 .content-navigator-bottom-container{

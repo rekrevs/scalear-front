@@ -322,6 +322,12 @@ angular.module('scalearAngularApp')
 			);
     }
 
+    $scope.previewStudent=function(){
+        Preview.start()
+    }
+
+
+
     $scope.copy=function(item){
     	$rootScope.clipboard = {id:item.id, name:item.name, type:item.class_name||'module', show_msg:true}
     }
@@ -500,10 +506,6 @@ angular.module('scalearAngularApp')
                 elem.errors=resp.data.errors;
             }
         );
-    }
-
-    $scope.preview=function(){
-        Preview.start()
     }
 
 }]);

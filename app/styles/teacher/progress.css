@@ -31,12 +31,12 @@
 	width: 100px;
 	right: 38px;
 	position: relative;
-	bottom: -40px;
+	bottom: -30px;
 	}
 
 #second_label {
 	margin-bottom: 120px;
-	bottom: 0px;
+	bottom: 15px;
 	position: relative;
 	width: 100px;
 	right: 38px;
@@ -49,11 +49,11 @@
 	position: relative;
 	margin-right: 10px;
 	right: 38px;
-	bottom: 40px;
+	bottom: 60px;
 }
 
 #fourth_label {
-	bottom: 80px;
+	bottom: 110px;
 	width: 150px;
 	right: 63px;
 	position: relative;

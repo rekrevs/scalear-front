@@ -426,6 +426,19 @@ angular.module('scalearAngularApp', [
                     }
                 }
             })
+            .state('course.module.course_editor.customlink', {
+                url: '/link/:customlink_id',
+                views: {
+                    'details': {
+                        templateUrl: '/views/teacher/course_editor/customlink.details.html',
+                        controller: 'customLinkDetailsCtrl'
+                    },
+                    'middle': {
+                        templateUrl: '/views/teacher/course_editor/customlink.middle.html',
+                        controller: 'customLinkMiddleCtrl'
+                    }
+                }
+            })
             .state('course.course_editor', {
                 url: '/course_editor',
                 // templateUrl: '/views/teacher/course_editor/module.middle.html',

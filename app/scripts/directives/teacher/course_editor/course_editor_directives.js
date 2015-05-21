@@ -26,11 +26,34 @@ angular.module('scalearAngularApp')
                         calculateTime()
                     }
                 })
+                $rootScope.$watch('clipboard', function(){
+                    scope.clipboard = $rootScope.clipboard
+                })
+
                 scope.remove=function(event){
                     event.preventDefault();
                     event.stopPropagation();  
                     $rootScope.$broadcast("delete_module", scope.module)
                 }
+
+                scope.copy=function(){
+                    console.log("copy")
+                    event.preventDefault();
+                    $rootScope.$broadcast('copy_item', scope.module)
+                }
+
+                scope.paste=function(){
+                    console.log("Paste")
+                    event.preventDefault();
+                    $rootScope.$broadcast('paste_item', scope.module.id)
+                }
+
+                scope.share=function(){
+                    console.log("Share")
+                    event.preventDefault();
+                    $rootScope.$broadcast('share_copy', {module_id:scope.module.id})
+                }
+
             }
         }
     }]).directive('item', ['$rootScope','$timeout','$anchorScroll','$location','$state', function($rootScope, $timeout, $anchorScroll,$location,$state) {
@@ -41,10 +64,31 @@ angular.module('scalearAngularApp')
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/item.html',
             link: function(scope,element) {
+                $rootScope.$watch('clipboard', function(){
+                    scope.clipboard = $rootScope.clipboard
+                })
                 scope.remove=function(event){
                     event.stopPropagation()
                     event.preventDefault() 
                     $rootScope.$broadcast("delete_item", scope.item)
+                }
+
+                scope.copy=function(){
+                    console.log("copy")
+                    event.preventDefault();
+                    $rootScope.$broadcast('copy_item', scope.item)
+                }
+
+                scope.paste=function(){
+                    console.log("Paste")
+                    event.preventDefault();
+                    $rootScope.$broadcast('paste_item', scope.item.group_id)
+                }
+
+                scope.share=function(){
+                    console.log("Share")
+                    event.preventDefault();
+                    $rootScope.$broadcast('share_copy', {module_id:scope.item.group_id, item: scope.item})
                 }
             }
         };

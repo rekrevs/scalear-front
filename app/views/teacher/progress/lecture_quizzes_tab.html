@@ -1,4 +1,4 @@
-<div ng-if="lecture_data.question_ids">
+<!-- <div ng-if="lecture_data.question_ids">
     <div class="row">
         <div class="small-6 small-centered columns">
             <center>
@@ -16,13 +16,13 @@
             		<a><span translate>answer.question</span> {{$index+1}}: {{getLectureTitle(id)}}</a>
                     <a class="button really-tiny secondary" ng-click="saveAsImg($event)" translate>groups.export_chart</a>
             	</div>
-                <div class="small-12 columns" google-chart chart="chart" ></div>
+                <div class="small-12 columns" google-chart chart="chart" ></div> -->
                 <!-- <button_link title="{{'groups.export_chart'|translate}}" action="saveAsImg($event)" /> -->
-            </div>
+            <!-- </div> -->
 
        <!-- lectures_data.lectures feeha el lectures -->
             <!-- Over here, give lecture_id and then over there check if invideo quiz, then free_online_quiz_grades.online_answer instead of answer -->
-            <div class="small-12 columns" ng-if="lecture_data.questions[id][2]=='Free Text Question'">
+<!--             <div class="small-12 columns" ng-if="lecture_data.questions[id][2]=='Free Text Question'">
                 <div class="small-12 columns" ng-click="seek(id)" style="cursor:pointer">
                     <a><span translate>answer.question</span> {{$index+1}}: {{getLectureTitle(id)}}</a>
                 </div>
@@ -37,4 +37,4 @@
         <loading size="small" show="loading_lectures_chart" />
         <div ng-if="!lecture_data.question_ids.length && !loading_lectures_chart" translate>courses.no_lecture_quizzes</div>
     </center>
-</div>  
+</div>  --> 

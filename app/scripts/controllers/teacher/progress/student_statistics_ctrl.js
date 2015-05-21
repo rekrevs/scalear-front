@@ -7,8 +7,8 @@ angular.module('scalearAngularApp')
 		$scope.statistics_player.events={}
 		
   		$scope.studentStatisticsTab = function(){
-  			$scope.tabState(2)
-	   		$scope.disableInfinitScrolling()
+  			// $scope.tabState(2)
+	   		// $scope.disableInfinitScrolling()
 	   		$scope.types=['confused', 'back', 'pauses', 'questions']
        		getStudentStatistics()   
 	    } 

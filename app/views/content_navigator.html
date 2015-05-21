@@ -73,7 +73,16 @@
 			</accordion-group>
 		</accordion>
 	</div>
-	<div ng-switch-when="editor" ng-class="{'content-navigator-bottom-container-height':('**.course_editor.**' | includedByState)}">
+	<div ng-switch-when="editor" ng-class="{'content-navigator-bottom-container-height':('**.course_editor.**' | includedByState)}" context-menu data-target="content-menu" opened='menu_status'>
+		<ul class="content-menu dropdown-menu text-left">
+			<li><a ng-click="addModule()" >New Module</a></li>
+			<!-- <li><a ng-click='share($event)'>New Content</a></li> -->
+			<li ng-show="clipboard.type == 'module'">
+				<div class="divider border-grey medium-opacity"></div>
+				<a ng-click='paste($event)'>Paste</a>
+			</li>
+			
+		</ul>
 		<accordion class="accordion no-margin">
 			<!-- <accordion-group class="accordion-group">
 				<accordion-heading class="accordion-heading" >
@@ -102,8 +111,8 @@
 					</accordion-heading>
           			<span class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
 	            		<li class="last-child item looks-like-a-link" ng-repeat="item in module.items" ng-class="{currentitem: currentitem.id == item.id}">
-             				<item ng-if="item.class_name!='customlink'" data="item" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ng-click="showItem(item, 'course_editor')" />
-             				<link-item ng-if="item.class_name=='customlink'" link="item" small="true" ng-click="showItem(item, 'course_editor')"/>
+             				<item data="item" ng-click="showItem(item, 'course_editor')" />
+             				<!-- <link-item ng-if="item.class_name=='customlink'" link="item" small="true" ng-click="showItem(item, 'course_editor')"/> -->
 	            		</li>
 	            	</span>
 	            	<button ng-if="'**.course_editor.**' | includedByState" class="button tiny green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" style="margin: 8px 16px;"><span translate>add_content</span></button>

@@ -109,7 +109,7 @@
                     </li>
                     <li>
                         <a id="progress" class="whitesmoke dark-text with-tiny-padding-left with-tiny-padding-right" >
-                            <div class="whitesmoke-hover round-subheader size-14" ng-click="goToProgress()" ng-class="{'subnav-item-active': ('course.progress' | includedByState) || ('course.progress_main' | includedByState) || ('course.module.progress.**' | includedByState) }"  translate>Review</div>
+                            <div class="whitesmoke-hover round-subheader size-14" ng-click="goToProgress()" ng-class="{'subnav-item-active': ('course.progress' | includedByState) || ('course.progress_main' | includedByState) || ('course.module.progress.**' | includedByState) || ('course.module.progress_details' | includedByState) }"  translate>Review</div>
                         </a>
                     </li>
                     <li>
@@ -178,7 +178,7 @@
                     </li>
                     <li has-dropdown>
                         <a id="settings" class="whitesmoke dark-text with-tiny-padding-left with-tiny-padding-right"  >
-                            <div class="whitesmoke-hover round-subheader size-14" ui-sref="course.enrolled_students" ng-class="{'subnav-item-active': ('course.enrolled_students' | includedByState) || ('course.announcements' | includedByState) || ('course.edit_course_information' | includedByState)}" ><span translate>Administration</span><i class="dropdown_arrow"></i></div>
+                            <div class="whitesmoke-hover round-subheader size-14" ng-class="{'subnav-item-active': ('course.enrolled_students' | includedByState) || ('course.announcements' | includedByState) || ('course.edit_course_information' | includedByState)}" ><span translate>Administration</span><i class="dropdown_arrow"></i></div>
                             
                         </a>
                         <ul class="lighter-grey-no-hover" top-bar-dropdown>

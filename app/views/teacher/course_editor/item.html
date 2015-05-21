@@ -1,20 +1,28 @@
-<li ng-if="'**.course_editor.**' | includedByState" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;">
+<li ng-if="'**.course_editor.**' | includedByState" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;" context-menu data-target="item-menu" opened='menu_status'>
 	<div class="position-relative" style="height: 20px;" bindonce>
 		<img class="left handle" src="images/move2.png" bo-title='"courses.drag_to_reorder"|translate' />
 		<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'groups.lecture' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'courses.quiz' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'courses.survey' | translate"></i>
+		<i bo-if="item.class_name == 'customlink'" class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.customlink' | translate"></i>
 		<div class="truncate-70 show-inline valign-middle left text-left" style="width: 65%">{{item.name}}</div>
 		<div class="color-dark-grey left" ng-show="item.duration" ng-bind="item.duration | formattime:'h:mm:ss'"></div>
 		<delete_button class="right z-one" size='small' color='dark' action='remove(event)' mode="content_navigator" moduleitem="true" />
 	</div>
+	<ul class="item-menu dropdown-menu text-left">
+		<li><a ng-click='copy($event)' >Copy</a></li>
+		<li ng-show="clipboard.type && clipboard.type != 'module'"><a ng-click='paste($event)'>Paste</a></li>	
+		<li><a ng-click='share($event)'>Share</a></li>		   
+	</ul>
 </li>
+
 
 <li ng-if="!('**.course_editor.**' | includedByState)" class="disable_selection size-13 text-right" style="padding: 2px; min-height: 24px;">
 	<div class="position-relative" style="height: 20px;" bindonce>
 		<i bo-if="item.class_name == 'lecture'" class="fi-video with-tiny-margin-right left color-gray" bo-title="'groups.lecture' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'quiz'" class="fi-clipboard-notes with-tiny-margin-right left color-gray" bo-title="'courses.quiz' | translate"></i>
 		<i bo-if="item.class_name == 'quiz' && item.quiz_type == 'survey'" class="fi-clipboard-pencil with-tiny-margin-right left color-gray" bo-title="'courses.survey' | translate"></i>
+		<i bo-if="item.class_name == 'customlink'" class="fi-link with-tiny-margin-right left color-gray" bo-title="'groups.customlink' | translate"></i>
 		<div class="truncate-70 show-inline valign-middle left text-left"  bo-text="item.name" style="width: 65%"></div>
 		<div class="color-dark-grey with-small-margin-right" ng-show="item.duration" bo-text="item.duration | formattime:'h:mm:ss'"></div>
 	</div>

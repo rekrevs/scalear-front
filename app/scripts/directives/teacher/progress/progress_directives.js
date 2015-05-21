@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
 	        totalLecQuiz:"=",
 	        action:"&",
 	        show_popover:'=showPopover',
-	        remaining: "=",
+	        remaining: "&",
 	        scrolldisabled: "=",
 	        modstatus: "="
 	    },
@@ -290,17 +290,18 @@ angular.module('scalearAngularApp')
 		 	}
 		 }
 	};
-}]).directive('whenScrolled', function() {
-    return function(scope, elm, attr) {
-        var raw = elm[0];
+}])
+// .directive('whenScrolled', function() {
+//     return function(scope, elm, attr) {
+//         var raw = elm[0];
         
-        elm.bind('scroll', function() {
-        	console.log('scrolled')
-            if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
-                scope.$apply(attr.whenScrolled);
-            }
-        });
-    };
-});;
+//         elm.bind('scroll', function() {
+//         	console.log('scrolled')
+//             if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+//                 scope.$apply(attr.whenScrolled);
+//             }
+//         });
+//     };
+// });
 
 

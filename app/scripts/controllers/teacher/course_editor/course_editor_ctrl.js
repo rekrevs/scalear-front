@@ -29,6 +29,22 @@ angular.module('scalearAngularApp')
         }
     })
 
+
+
+    
+    
+    $scope.$on('share_copy', function(event, data){
+        openSharingModal(data)      
+    })
+
+     $scope.$on('add_module', function(event){
+         $scope.addModule()
+    })
+
+     // $scope.$on('activate_preview',function(){
+     //    $scope.impersonate()
+     // })
+
     $scope.$on('add_item', function(event, type){
         if(!$state.params.module_id){
             $scope.addModule(function(module_id){
@@ -42,51 +58,6 @@ angular.module('scalearAngularApp')
         ContentNavigator.open()
     })
 
-    var addItemBytype = function(type,module_id){
-        if(type=='video')
-             $scope.addLecture(module_id || $state.params.module_id)
-        else if(type == 'link')
-            $scope.addCustomLink(module_id || $state.params.module_id)            
-        else
-            $scope.addQuiz(module_id || $state.params.module_id, type)
-    }
-    
-    $scope.$on('share_copy', function(event, data){
-        // console.log(data)
-        // console.log('caught sharing modal event')
-        // console.log($scope.course.selected_module)
-        var modalInstance = $modal.open({
-          templateUrl: '/views/teacher/course_editor/sharing_modal.html',
-          controller: "sharingModalCtrl",
-          resolve: {
-            selected_module: function(){
-                return $scope.course.selected_module
-            },
-            selected_item: function(){
-                if(data.selected_item){
-                    return $scope.items_obj[data.selected_item.class_name][data.selected_item.id]
-                }
-            }
-          }
-        });
-
-        // modalInstance.result.then(function () {
-        //     console.log("shared")
-        //     // selectNone()
-        // },function () {
-        //     console.log("close")
-        //     // selectNone()
-        // });
-    })
-
-     $scope.$on('add_module', function(event){
-         $scope.addModule()
-    })
-
-     // $scope.$on('activate_preview',function(){
-     //    $scope.impersonate()
-     // })
-
      $scope.$on('delete_module',function(event, module){
         $scope.removeModule(module)
      })
@@ -94,6 +65,8 @@ angular.module('scalearAngularApp')
      $scope.$on('delete_item',function(event, item){
         if(item.class_name == 'lecture')
             $scope.removeLecture(item)
+        else if(item.class_name == 'customlink')
+            $scope.removeCustomLink(item)
         else
             $scope.removeQuiz(item)
      })
@@ -102,29 +75,24 @@ angular.module('scalearAngularApp')
      //    $scope.addCustomLink()
      // })
 
-    $scope.$on('remove_link',function(event, link){
-        $scope.removeCustomLink(link)
-     })
+    // $scope.$on('remove_link',function(event, link){
+    //     $scope.removeCustomLink(link)
+    //  })
 
-    $scope.$on('update_link',function(event, link){
-        $scope.updateCustomLink(link)
-    })
+    // $scope.$on('update_link',function(event, link){
+    //     $scope.updateCustomLink(link)
+    // })
 
     $scope.$on('copy_item', function(event, item){
         console.log('caught copy')
         console.log(item)
-        if(item){
-            $scope.copy($scope.items_obj[item.class_name][item.id])
-        }
-        else{
-            $scope.copy($scope.course.selected_module)
-        }
+        $scope.copy(item)
         console.log($rootScope.clipboard)
      })
     
-     $scope.$on('paste_item', function(event, current_item){
+     $scope.$on('paste_item', function(event, module_id){
         console.log('pasting')
-        $scope.paste()
+        $scope.paste(module_id)
         console.log($rootScope.clipboard)
      })
  	// $scope.tree_toggled = false 
@@ -252,6 +220,15 @@ angular.module('scalearAngularApp')
 		);
     }
 
+    var addItemBytype = function(type,module_id){
+        if(type=='video')
+             $scope.addLecture(module_id || $state.params.module_id)
+        else if(type == 'link')
+            $scope.addCustomLink(module_id || $state.params.module_id)            
+        else
+            $scope.addQuiz(module_id || $state.params.module_id, type)
+    }
+
     $scope.addLecture=function(module_id){
     	$log.debug("adding lec "+ module_id)
     	$log.debug($scope.modules)
@@ -326,8 +303,6 @@ angular.module('scalearAngularApp')
         Preview.start()
     }
 
-
-
     $scope.copy=function(item){
     	$rootScope.clipboard = {id:item.id, name:item.name, type:item.class_name||'module', show_msg:true}
     }
@@ -336,13 +311,13 @@ angular.module('scalearAngularApp')
     	$rootScope.clipboard = null
     }
 
-    $scope.paste=function(){
+    $scope.paste=function(module_id){
     	var clipboard = $rootScope.clipboard
         
     	if(clipboard.type == 'module')
 	 		pasteModule(clipboard)
         else{
-            var module_id = $scope.course.selected_module.id
+            // var module_id = $scope.course.selected_module.id
             if(clipboard.type == 'lecture')
                 pasteLecture(clipboard, module_id)
             else if(clipboard.type == 'quiz')
@@ -431,6 +406,24 @@ angular.module('scalearAngularApp')
         )
     }
 
+    var openSharingModal = function(data){
+        var modalInstance = $modal.open({
+            templateUrl: '/views/teacher/course_editor/sharing_modal.html',
+            controller: "sharingModalCtrl",
+            resolve: {
+                selected_module: function(){
+                    // return $scope.course.selected_module
+                    return $scope.module_obj[data.module_id]
+                },
+                selected_item: function(){
+                    if(data.item){
+                        return $scope.items_obj[data.item.class_name][data.item.id]
+                    }
+                }
+            }
+        });
+    }
+
 	var selectNone = function(){
 		$scope.modules.forEach(function(module){
 			module.selected = false
@@ -490,22 +483,6 @@ angular.module('scalearAngularApp')
         );
     }
 
-    $scope.updateCustomLink=function(elem){
-        elem.url = $filter("formatURL")(elem.url)
-        CustomLink.update(
-            {link_id: elem.id},
-            {"link":{
-                url: elem.url,
-                name: elem.name
-                }
-            },
-            function(resp){
-                elem.errors=""
-            },
-            function(resp){
-                elem.errors=resp.data.errors;
-            }
-        );
-    }
+   
 
 }]);

@@ -427,26 +427,7 @@ angular.module('scalearAngularApp')
                 small:"="
             },
             link: function(scope, element){
-                scope.validate= function(column, data){
-                    console.log(scope.link)
-                    var d = $q.defer();
-                    var doc={}
-                    doc[column]=data;
-                    CustomLink.validate(
-                        {link_id: scope.link.id},
-                        {link:doc},
-                        function(data){
-                            d.resolve()
-                        },function(data){
-                            if(data.status==422)
-                                d.resolve(data.data.errors[0]);
-                            else
-                                d.reject('Server Error');
-                        }
-                    )
-                    return d.promise;
-                }
-
+                
                 scope.removeLink=function(){
                     $rootScope.$broadcast('remove_link', scope.link)
                 }

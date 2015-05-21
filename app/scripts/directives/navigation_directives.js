@@ -117,9 +117,9 @@ angular.module('scalearAngularApp')
 					scope.in_module_state = value
 				})
 
-				$rootScope.$watch('clipboard', function(){
-					scope.clipboard = $rootScope.clipboard
-				})
+				// $rootScope.$watch('clipboard', function(){
+				// 	scope.clipboard = $rootScope.clipboard
+				// })
 
 				// $rootScope.$on('open_navigator', function(){
 				// 	 setNavigator(true)
@@ -207,15 +207,15 @@ angular.module('scalearAngularApp')
 				scope.goToClass=function(){
 					$state.includes("**.module.**")? $state.go("course.module.inclass") : $state.go("course.inclass")
 				}
-				scope.copyItem = function(){
-					if($state.params.link_id)
-						var item = {class_name: 'customlink', id: $state.params.link_id}
-					else if($state.params.lecture_id)
-						var item = {class_name: 'lecture', id: $state.params.lecture_id}
-					else if($state.params.quiz_id)
-						var item = {class_name: 'quiz', id: $state.params.quiz_id}
-					$rootScope.$broadcast('copy_item', item)
-				}
+				// scope.copyItem = function(){
+				// 	if($state.params.link_id)
+				// 		var item = {class_name: 'customlink', id: $state.params.link_id}
+				// 	else if($state.params.lecture_id)
+				// 		var item = {class_name: 'lecture', id: $state.params.lecture_id}
+				// 	else if($state.params.quiz_id)
+				// 		var item = {class_name: 'quiz', id: $state.params.quiz_id}
+				// 	$rootScope.$broadcast('copy_item', item)
+				// }
 
 				scope.pasteItem = function(){
 					$rootScope.$broadcast('paste_item')
@@ -355,6 +355,10 @@ angular.module('scalearAngularApp')
 	  	}
    	  })
 
+	  	$rootScope.$watch('clipboard', function(){
+			scope.clipboard = $rootScope.clipboard
+		})
+
    		scope.$on('item_done',function(ev,item){
    			var time = 0
    			if(!ContentNavigator.getStatus()){
@@ -477,15 +481,15 @@ angular.module('scalearAngularApp')
   				$rootScope.$broadcast("scroll_to_item",item)
   		}
   		else{
-  			if(item.class_name!='customlink'){
+  			// if(item.class_name!='customlink'){
 		 		var params = {'module_id': $state.params.module_id}  
 		 		console.log(item)  
 			    params[item.class_name.toLowerCase()+'_id'] = item.id
 			    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
-			}
+			// }
 			if(!(type =='courseware' && item.class_name=='customlink')){
 		    	scope.currentitem = {id:item.id}
-		    	$state.params.link_id = item.id
+		    	// $state.params.link_id = item.id
 			}
 		}
   	}
@@ -516,6 +520,11 @@ angular.module('scalearAngularApp')
     scope.addModule=function(){
 		$rootScope.$broadcast('add_module')
 	}	
+
+	scope.paste=function(){
+		if(scope.clipboard.type == 'module')
+			$rootScope.$broadcast('paste_item')
+	}
 
     // scope.showCourseLinks=function(){
     // 	scope.currentmodule = null

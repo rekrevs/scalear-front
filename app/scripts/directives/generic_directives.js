@@ -84,65 +84,42 @@ angular.module('scalearAngularApp')
       opened:'='
     },
     link: function(scope, element, attrs) {
-         var menuElement = angular.element(element.find('.'+attrs.target)),
-          open = function open(event, element) {
-            angular.element('.open').removeClass('open').css('display', 'none')
-            scope.opened = true;
-            // element.css("position", "absolute")
-            element.css('width', "10%");
-            element.css('top', event.clientY+ 'px');
-            element.css('left', event.clientX + 'px');
-            element.css('zIndex', 1)
-            element.addClass('open');
-            element.css('display', 'block')
-            // angular.element('body').css('overflow', 'hidden')
-            angular.element($window).on('click', function(event) {
-              console.log(event)
-              if (scope.opened && event.which !=3) {
-                scope.$apply(function() {
-                  event.preventDefault();
-                  close(menuElement); 
-                  angular.element($window).off('click')
-                });
-              }
-            });
-          },
-          close = function close(element) {
-            scope.opened = false;
-            element.removeClass('open');
-            element.css('display', 'none')
-            // angular.element('body').css('overflow', 'auto')
-            angular.element($window).off('click')
-          };
-
+      var menuElement = angular.element(element.find('.'+attrs.target))
       menuElement.css('position', 'fixed');
       menuElement.css('cursor', 'pointer');
 
-      // scope.$watch('opened',function(){
-      //   if(!scope.opened)
-      //   //   open(event, menuElement);
-      //   // else
-      //     close(menuElement);
-      // })
+      var close = function() {
+        scope.opened = false;
+        angular.element('.open').removeClass('open').css('display', 'none')
+        angular.element($window).add(element).off('click')
+      };
+      var open = function(event) {
+        close(); 
+        scope.opened = true;
+        menuElement.css('width', "10%");
+        menuElement.css('top', event.clientY+5+ 'px');
+        menuElement.css('left', event.clientX-10 + 'px');
+        menuElement.css('zIndex', 10000)
+        menuElement.addClass('open');
+        menuElement.css('display', 'block')
+        angular.element($window).add(element).on('click', function(event) {
+          console.log(event)              
+          if(scope.opened) {
+            scope.$apply(function() {
+              event.preventDefault();
+              event.stopPropagation();
+              close(); 
+            });
+          }
+        });
+      }
 
       element.bind('contextmenu', function(event) {
         scope.$apply(function() {
           event.preventDefault();
-          close(menuElement);
-          open(event, menuElement); 
+          event.stopPropagation();
+          open(event); 
         });
-        // if (scope.opened) {
-        //   scope.$apply(function() {
-        //     event.preventDefault();
-        //     close(menuElement);
-        //   });
-        // }
-        // else{
-        //   scope.$apply(function() {
-        //     event.preventDefault();
-        //     open(event, menuElement);
-        //   });
-        // }
       });      
     }
   };
@@ -391,4 +368,18 @@ angular.module('scalearAngularApp')
     }
   }
 
-}]);
+}]).directive('embedSrc', function () {
+  return {
+    restrict: 'A',
+    link: function (scope, element, attrs) {
+      var current = element;
+      scope.$watch(function() { return attrs.embedSrc; }, function () {
+        var clone = element
+                      .clone()
+                      .attr('src', attrs.embedSrc);
+        current.replaceWith(clone);
+        current = clone;
+      });
+    }
+  };
+})

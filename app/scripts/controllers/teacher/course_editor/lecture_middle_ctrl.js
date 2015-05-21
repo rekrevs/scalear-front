@@ -510,6 +510,13 @@ angular.module('scalearAngularApp')
 		$rootScope.$broadcast('add_module')
 	}	
 
+	$scope.openQuizList=function(){
+		$scope.quiz_list.push({})
+		$timeout(function(){
+			$scope.quiz_list.pop()				
+		})		
+	}
+
 }]);
 
 

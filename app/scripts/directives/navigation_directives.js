@@ -191,22 +191,22 @@ angular.module('scalearAngularApp')
 				// scope.addLink=function(){
 				// 	$rootScope.$broadcast('add_link')
 				// }
-				scope.goToContentEditor=function(){
-					if(!$state.includes("**.course_editor.**")){
-						if($state.params.module_id)
-							$state.go("course.module.course_editor.overview")
-						else
-							$state.go("course.course_editor")
-					}
-				}
+				// scope.goToContentEditor=function(){
+				// 	if(!$state.includes("**.course_editor.**")){
+				// 		if($state.params.module_id)
+				// 			$state.go("course.module.course_editor.overview")
+				// 		else
+				// 			$state.go("course.course_editor")
+				// 	}
+				// }
 
-				scope.goToProgress=function(){
-					$state.includes("**.module.**")? $state.go("course.module.progress") : $state.go("course.progress")
-				}
+				// scope.goToProgress=function(){
+				// 	$state.includes("**.module.**")? $state.go("course.module.progress") : $state.go("course.progress")
+				// }
 
-				scope.goToClass=function(){
-					$state.includes("**.module.**")? $state.go("course.module.inclass") : $state.go("course.inclass")
-				}
+				// scope.goToClass=function(){
+				// 	$state.includes("**.module.**")? $state.go("course.module.inclass") : $state.go("course.inclass")
+				// }
 				// scope.copyItem = function(){
 				// 	if($state.params.link_id)
 				// 		var item = {class_name: 'customlink', id: $state.params.link_id}

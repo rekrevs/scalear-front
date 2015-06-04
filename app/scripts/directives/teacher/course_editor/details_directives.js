@@ -250,11 +250,15 @@ angular.module('scalearAngularApp')
                     empty_message:"@emptyMessage"
                 },
                 link: function(scope, element) {
-            // scope.selectField = function() {
-            //     $timeout(function() {
-            //         element.find('.editable-input').select();
-            //     });
-            // },
+                    scope.selectField = function() {
+                        var elem= element.find('.editable-input')
+                        $timeout(function() {
+                            elem.select();
+                            if(scope.value =="none")
+                                elem.val("")
+                        });
+
+                    },
                     scope.saveData = function() {
                         $timeout(function() {
                             scope.save()

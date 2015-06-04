@@ -52,7 +52,7 @@ var translation_en=function(){
       welcome: "Welcome to ",
       or: "or",
       visible: "Visible",
-      invisible: "Not currently visible to the students. Will be visible",
+      invisible: "Not currently visible to students. Will be visible",
       adding_teacher: "A teacher or TA must have a teacher account on",
       create_account: "To create a teacher account visit",
       all: "All",

@@ -510,11 +510,12 @@ angular.module('scalearAngularApp')
 		$rootScope.$broadcast('add_module')
 	}	
 
-	$scope.openQuizList=function(){
+	$scope.openQuizList=function(ev){
+		angular.element(ev.target).blur()
 		$scope.quiz_list.push({})
 		$timeout(function(){
 			$scope.quiz_list.pop()				
-		})		
+		})
 	}
 
 }]);

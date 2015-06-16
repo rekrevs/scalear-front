@@ -31,8 +31,7 @@ describe("Course Validation",function(){
 		it('should open course information', function(){
 			course_list.open()
 			course_list.open_course(1)
-			// navigator.open()
-			course_info.open()
+			course_info.student().open()
 		})
 		it('should check course information', function(){
 			expect(course_info.student().course_name).toContain(params.short_name)

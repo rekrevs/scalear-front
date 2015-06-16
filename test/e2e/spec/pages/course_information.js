@@ -1,10 +1,21 @@
 'use strict';
+
+var SubHeader = require('./sub_header');
+var sub_header = new SubHeader()
 var StudentCourseInformation= function(){}
 StudentCourseInformation.prototype = Object.create({},{
 	course_name:{get:function(){return element(by.id('course_code_name')).getText()}},
 	description:{get:function(){return element(by.binding('course.description')).getText()}},
 	prerequisites:{get:function(){return element(by.binding('course.prerequisites')).getText()}},
 	duration:{get:function(){return element(by.binding('course.duration')).getText()}},
+	open:{value:function(){
+		element(by.id('course_info')).click();
+		browser.driver.wait(function() {
+	      return browser.driver.getCurrentUrl().then(function(url) {
+	        return /information/.test(url);
+	      });
+	    });
+	}},
 })
 
 var CourseInformation = function () {};
@@ -23,7 +34,7 @@ CourseInformation.prototype = Object.create({}, {
 	invite:{value:function(){this.invite_button.click()}},
 	delete_teacher_button:{get:function(){return element(by.id("delete_teacher"))}},
 	open:{value:function(){
-		element(by.id('course_info')).click();
+		sub_header.open_course_info()
 		browser.driver.wait(function() {
 	      return browser.driver.getCurrentUrl().then(function(url) {
 	        return /information/.test(url);

@@ -46,7 +46,7 @@ describe("Module Statistics",function(){
 		it("should add lecture",function(){
 			course_editor.add_lecture()
 	        course_editor.rename_item("lecture7")
-	        course_editor.change_video_url(params.url2)
+	        course_editor.change_item_url(params.url2)
 		})
 		it("should open module ", function(){
 	    	navigator.module(3).open()

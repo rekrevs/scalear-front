@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
     .directive('detailsUrl', ['$timeout','$translate',
         function($timeout,$translate) {
             return {
-                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     value: "=",

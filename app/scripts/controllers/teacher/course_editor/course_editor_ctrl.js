@@ -260,7 +260,7 @@ angular.module('scalearAngularApp')
 				if($state.params.lecture_id == item.id)
                     $state.go('course.module.course_editor.overview')
                 $rootScope.$broadcast("update_module_time", item.group_id)
-                $scope.$broadcast('update_numbers')
+                $scope.$broadcast('update_module_statistics')
     		},
     		function(){}
 		);
@@ -294,6 +294,7 @@ angular.module('scalearAngularApp')
                     emptyClipboard()
                     if($state.params.quiz_id == item.id)
                         $state.go('course.module.course_editor.overview')
+                    $scope.$broadcast('update_module_statistics')
 	    		},
 	    		function(){}
 			);
@@ -455,11 +456,12 @@ angular.module('scalearAngularApp')
                 module_id:module_id
             },
             {},
-            function(doc){
-                doc.link.url = "http://"
-                doc.link.class_name="customlink"
-                $scope.module_obj[module_id].items.push(doc.link)
-                $scope.items_obj["customlink"][doc.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
+            function(data){
+                data.link.url = "http://"
+                data.link.class_name="customlink"
+                $scope.module_obj[module_id].items.push(data.link)
+                $scope.items_obj["customlink"][data.link.id] = $scope.module_obj[module_id].items[$scope.module_obj[module_id].items.length-1]
+                $state.go('course.module.course_editor.customlink', {customlink_id: data.link.id})
             }, 
             function(){}
         );
@@ -470,14 +472,12 @@ angular.module('scalearAngularApp')
         CustomLink.destroy(
             {link_id: elem.id},{},
             function(){
-                if(elem.group_id){
-                    // $scope.module_obj[$stateParams.module_id].custom_links.splice($scope.module_obj[$stateParams.module_id].custom_links.indexOf(elem), 1)
-                    $scope.module_obj[elem.group_id].items.splice($scope.module_obj[elem.group_id].items.indexOf(elem),1)
-                    delete $scope.items_obj["customlink"][elem.id];
-                    emptyClipboard()
-                }
-                else
-                    $scope.course.custom_links.splice($scope.course.custom_links.indexOf(elem), 1)
+                $scope.module_obj[elem.group_id].items.splice($scope.module_obj[elem.group_id].items.indexOf(elem),1)
+                delete $scope.items_obj["customlink"][elem.id];
+                emptyClipboard()
+                if($state.params.customlink_id == elem.id)
+                    $state.go('course.module.course_editor.overview')
+                $scope.$broadcast('update_module_statistics')
             }, 
             function(){}
         );

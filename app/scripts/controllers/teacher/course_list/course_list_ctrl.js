@@ -35,11 +35,11 @@ angular.module('scalearAngularApp')
     }
 
 		$scope.deleteCourse=function(course){
-			// Course.destroy({course_id: course.id},{},
-			// 	function(response){
+			Course.destroy({course_id: course.id},{},
+				function(response){
 					removeFromCourseList(course)
-				// },
-				// function(){})
+				},
+				function(){})
 		}
 
     $scope.unenrollCourse=function(course){

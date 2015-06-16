@@ -344,15 +344,16 @@ angular.module('scalearAngularApp')
     templateUrl:"/views/content_navigator.html",
 	link:function(scope, element, attr){
    	  scope.$state = $state
-	  scope.$watch('$state.params',function(){
+	  var unwatch = scope.$watch('$state.params',function(){
 	  	if($state.params.module_id){
 	  		scope.currentmodule = {id: $state.params.module_id}
-   	  		scope.currentitem = {id: $state.params.lecture_id || $state.params.quiz_id}
+   	  		scope.currentitem = {id: $state.params.lecture_id || $state.params.quiz_id || $state.params.customlink_id}
 	  	}
 	  	else{
 	  		scope.currentmodule = null
 	  		scope.currentitem = null
 	  	}
+
    	  })
 
 	  	$rootScope.$watch('clipboard', function(){
@@ -530,10 +531,10 @@ angular.module('scalearAngularApp')
     // 	scope.currentmodule = null
     // }
 
-  	// scope.goToCourseInfoStudent=function(){
-	  // 	scope.currentmodule = null
-	  // 	$state.go("course.course_information")
-  	// }
+  	scope.goToCourseInfoStudent=function(){
+	  	scope.currentmodule = null
+	  	$state.go("course.course_information")
+  	}
 
   	// scope.goToCourseInfoTeacher=function(){
    //    	scope.currentmodule = null

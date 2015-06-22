@@ -38,6 +38,10 @@ Module.prototype = Object.create({}, {
 	paste:{value:function(){
 		right_click(this.name_field)
 		this.context_menu_items.get(1).click()
+	}},
+	open_share_window:{value:function(){
+		right_click(this.name_field)
+		this.context_menu_items.last().click()
 	}}
 })
 

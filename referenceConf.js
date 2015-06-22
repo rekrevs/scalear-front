@@ -123,10 +123,10 @@ exports.config = {
         // 'test/e2e/spec/account_information_validation.spec.js',
         // 'test/e2e/spec/enrollment_help.spec.js',
         // 'test/e2e/spec/course_editor_basic.spec.js',
-        'test/e2e/spec/course_editor_copy.spec.js',
-        // 'test/e2e/spec/module_statistics.spec.js',
+        // 'test/e2e/spec/course_editor_copy.spec.js',
+        // 'test/e2e/spec/module_statistics.spec.js', //revisit
         // 'test/e2e/spec/course_editor_sharing.spec.js',
-        // 'test/e2e/spec/announcements.spec.js',
+        'test/e2e/spec/announcements.spec.js',
         // 'test/e2e/spec/teacher-managment.spec.js',
         // 'test/e2e/spec/students_solve_course.spec.js',
         // 'test/e2e/spec/discussions.spec.js',

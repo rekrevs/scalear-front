@@ -16,7 +16,7 @@ ContentNavigator.prototype = Object.create({}, {
 	toggle:{value:function(){this.navigator.click();this.status=!this.status}},
 	modules:{get:function(){return this.navigator_container.all(by.repeater('module in modules'))}},
 	module:{value:function(num){return new Module(this.modules.get(num-1))}},
-	new_module_button:{get:function(){return this.navigator_container.element(by.id('new_module'))}},
+	new_module_button:{get:function(){return this.navigator_container.element(by.id('add_module'))}},
 	items:{get:function(){return this.navigator_container.all(by.repeater('item in module.items'))}},
 	// course_links:{get:function(){return this.navigator_container.all(by.repeater('link in links'))}},
 	// course_link:{value:function(num){return new Link(this.course_links.get(num-1))}},
@@ -28,9 +28,7 @@ ContentNavigator.prototype = Object.create({}, {
 	}},
 	paste:{value:function(){
 		right_click(this.modules_container)
-		// sleep(10000)
 		this.context_menu_items.last().click()
-
 	}}
 	// sort_links:{value:function(){
 	// 	var handle_1 = this.course_link(1).field.element(by.className('handle')) 

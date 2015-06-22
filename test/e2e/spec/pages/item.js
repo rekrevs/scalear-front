@@ -22,6 +22,10 @@ Item.prototype = Object.create({}, {
 	copy:{value:function(){
 		right_click(this.name_field)
 		this.context_menu_items.first().click()
+	}},
+	open_share_window:{value:function(){
+		right_click(this.name_field)
+		this.context_menu_items.last().click()
 	}}
 })
 

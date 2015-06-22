@@ -10,7 +10,7 @@ Announcement.prototype = Object.create({}, {
 	posts:{get:function(){return element.all(by.repeater('announcement in announcements'))}},
 	open:{value:function(){
 		var sub_header = new SubHeader()
-		sub_header.show_students_menu()
+		sub_header.show_administrator_menu()
 		element(by.id('announcements')).click()
 		browser.driver.wait(function() {
 	      return browser.driver.getCurrentUrl().then(function(url) {

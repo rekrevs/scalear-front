@@ -17,6 +17,7 @@ angular.module('scalearAngularApp')
 	        $cookieStore.put('state', $state.current.name)
 	        $cookieStore.put('params', $state.params)
 	        ContentNavigator.close()
+	        
 	        Impersonate.create({},{course_id: $state.params.course_id},
 	      		function(data){
 		            $cookieStore.put('preview_as_student', true)            
@@ -24,8 +25,10 @@ angular.module('scalearAngularApp')
 		            $rootScope.current_user= null 
 		            var params={course_id: $state.params.course_id}
 		            if($state.params.module_id){
-		            	params['module_id']= $state.params.module_id
-		            	$state.go('course.module.courseware',params,{reload:true})
+		            	if($state.current.name.indexOf("customlink") == -1 && $state.current.name.indexOf("overview") == -1)
+		            		$state.go($state.current.name.replace("course_editor", "courseware"),$state.params,{reload:true})
+		            	else
+		            		$state.go('course.module.courseware',$state.params,{reload:true})
 		            }
 		            else if($state.includes("course.edit_course_information"))
 		            	$state.go('course.course_information',params,{reload:true})

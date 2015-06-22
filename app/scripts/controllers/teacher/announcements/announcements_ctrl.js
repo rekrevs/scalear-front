@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('announcementsCtrl',['$scope', 'Announcement','$stateParams','$translate', '$log','$window','Page',  function ($scope, Announcement, $stateParams, $translate ,$log, $window,Page) {
+  .controller('announcementsCtrl',['$scope', 'Announcement','$stateParams','$translate', '$log','$window','Page','ContentNavigator',  function ($scope, Announcement, $stateParams, $translate ,$log, $window,Page, ContentNavigator) {
   	
     $log.debug("in announcements");
-
+    ContentNavigator.close()
     Page.setTitle('head.announcements')
   	$scope.disable_new = false;
 

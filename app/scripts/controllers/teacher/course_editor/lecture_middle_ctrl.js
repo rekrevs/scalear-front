@@ -48,15 +48,6 @@ angular.module('scalearAngularApp')
     	$scope.deleteQuizButton(quiz)
     })
 
-    // $scope.call = function() {
-    //     $scope.fnInCtrl();
-    // };
-	
-    // $state.go('course.course_editor.lecture.quizList');
-
-
-//////////////////////////////////////FUNCTIONS/////////////////////////////////////////////
-
 	$scope.closeAlerts= function(){
  		$scope.hide_alerts=true;
  	}
@@ -511,6 +502,7 @@ angular.module('scalearAngularApp')
 	}	
 
 	$scope.openQuizList=function(ev){
+		DetailsNavigator.open()
 		angular.element(ev.target).blur()
 		$scope.quiz_list.push({})
 		$timeout(function(){

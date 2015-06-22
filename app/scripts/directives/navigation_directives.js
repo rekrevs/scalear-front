@@ -261,6 +261,7 @@ angular.module('scalearAngularApp')
 				// scope.open_navigator = $rootScope.open_navigator
 				scope.ContentNavigator = ContentNavigator
 				scope.TimelineNavigator = TimelineNavigator
+				scope.preview = $rootScope.preview_as_student
 				
 
 				scope.toggleNavigator=function(){

@@ -25,7 +25,7 @@ angular.module('scalearAngularApp')
             $scope.delayed_details_status = true
             $timeout(function(){
                 $scope.delayed_details_status2 = true
-            },300)
+            },350)
         }
     })
 

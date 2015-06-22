@@ -14,7 +14,7 @@
       <ul class="title-area right" ng-if="('**.courseware.lecture.**' | includedByState)">
         <li class="name" step-text="Use the course menu to navigate. Click on the title to hide it and make the video larger." step-index="4" step-placement="bottom" step-append-to-body="true" page-name="head.lectures" >
           <h1 class="disable_selection right truncate dark-text sub-header-component dark-medium-grey" ng-class="{'blue-color-white': TimelineNavigator.status, 'dark-medium-grey-blue-hover': !TimelineNavigator.status}" style="width: 300px;">
-            <span><timeline-filters class="settings hide-for-medium-down" /></span>
+            <div ng-show="!preview"><timeline-filters class="settings hide-for-small" /></div>
             <a id="timeline_navigator" ng-click="toggleTimeline()" style="color: inherit;"><i ng-class="{'arrow_down_icon': !TimelineNavigator.status, 'arrow_up_white_icon': TimelineNavigator.status }"></i><i ng-class="{'arrow_down_icon': !TimelineNavigator.status, 'arrow_up_white_icon': TimelineNavigator.status }" style="position:absolute;top:2px;left:15px"></i> <span translate>lectures.timeline</span></a>            
           </h1>
         </li>

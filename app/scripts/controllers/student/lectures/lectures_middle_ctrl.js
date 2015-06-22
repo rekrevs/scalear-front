@@ -18,6 +18,10 @@ angular.module('scalearAngularApp')
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
     $scope.ContentNavigator.open()
+    if($scope.preview_as_student){
+        $scope.TimelineNavigator.open()
+        $scope.checkModel={quiz:true,confused:false, discussion:false, note:false};
+    }
     $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
     $scope.$on('$destroy', function() {
         if($scope.course && $scope.course.warning_message)

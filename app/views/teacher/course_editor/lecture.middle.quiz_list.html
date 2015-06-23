@@ -12,7 +12,7 @@
 		<tr ng-repeat="quiz in quiz_list| filter:'!!'|orderBy:'time'" ng-class="{wheat: quiz.id == selected_quiz_id}">
 			<td style="padding: 0.3625rem 0.3rem;">
 				<div class="small-12 columns no-padding">
-					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteQuiz(quiz)" />
+					<delete_button class="right with-small-margin-right" size="small" color='dark' mode="content_navigator" action="deleteQuiz(quiz)" padded="true" />
 
 						<div class="small-4 columns size-10">
 							<span ng-show="quiz.quiz_type=='survey'">Survey</span>

@@ -10,8 +10,10 @@
 			<span bo-if="text != true">
 				<a class="delete" ng-hide="displayDeletePopup" style="margin: 0 auto; width:20px;cursor:pointer;" tooltip="{{tooltiptext_translated}}" ng-click="!hideConfirm?showDeletePopup(true, $event):action({event:$event})">
 
-					<img alt="Trash" bo-if="size == 'big'" bo-src="color=='red' && 'images/red_trash_big.png' || 'images/trash_big.png'" >
-					<img alt="Trash" bo-if="size != 'big'" bo-src="color=='red' && 'images/red_trash_small.png' || 'images/trash_small.png'" >
+					<!-- <img alt="Trash" bo-if="size == 'big'" bo-src="color=='red' && 'images/red_trash_big.png' || 'images/trash_big.png'" >
+					<img alt="Trash" bo-if="size != 'big'" bo-src="color=='red' && 'images/red_trash_small.png' || 'images/trash_small.png'" > -->
+					<i ng-hide="displayDeletePopup" bo-if="size == 'big'" class="fi-trash color-gray size-18"></i>
+					<i ng-hide="displayDeletePopup" bo-if="size != 'big'" class="fi-trash color-gray size-14"></i>
 				</a>
 			</span>
 			<span bo-if="text == true">
@@ -33,11 +35,13 @@
 		</div>
 	</span>
 	<span bo-if="mode == 'content_navigator'" bindonce>
-		<a class="delete" style="margin: 0 auto; width:20px;cursor:pointer;" title="delete" tooltip="{{tooltiptext_translated}}" ng-click="!hideConfirm?showDeletePopup(true, $event):action({event:$event})">
-			<img alt="Trash" bo-if="size == 'big'" bo-src="color=='red' && 'images/red_trash_big.png' || 'images/trash_big.png'" >
-			<img alt="Trash" bo-if="size != 'big'" bo-src="color=='red' && 'images/red_trash_small.png' || 'images/trash_small.png'" >
+		<a class="delete" style="margin: 0 auto; width:20px;cursor:pointer;" title="Delete" tooltip="{{tooltiptext_translated}}" ng-click="!hideConfirm?showDeletePopup(true, $event):action({event:$event})">
+			<!-- <img alt="Trash" bo-if="size == 'big'" bo-src="color=='red' && 'images/red_trash_big.png' || 'images/trash_big.png'" >
+			<img alt="Trash" bo-if="size != 'big'" bo-src="color=='red' && 'images/red_trash_small.png' || 'images/trash_small.png'" > -->
+			<i ng-hide="displayDeletePopup" bo-if="size == 'big'" class="fi-trash color-gray size-18"></i>
+			<i ng-hide="displayDeletePopup" bo-if="size != 'big'" class="fi-trash color-gray size-14"></i>
 		</a>
-		<span ng-show="displayDeletePopup" bo-class="{'count-item-padding': moduleitem}" style="padding: 3px;text-align:center;min-width: 65px;" class="delete-overlay count-padding ease_in_out">
+		<span ng-show="displayDeletePopup" bo-class="{'count-padding':padded,'count-item-padding': moduleitem}" style="padding: 3px;text-align:center;min-width: 65px;" class="delete-overlay ease_in_out">
 			<!-- <div class="fade in" ng-show="displayDeletePopup" bo-class="{varticaldeletecontainer: vertical}" style="padding: 3px;text-align:center;min-width: 65px;"> -->
 		        <span class="form-controls-alert align-center" style="height: 85%;">
 		            <button ng-if="displayDeletePopup" bo-class="{varticaldeletebutton: vertical}" class="button success tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom" ng-click="action({event:$event});showDeletePopup(false, $event)"><i class="fi-check"></i></button>

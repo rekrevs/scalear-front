@@ -1264,9 +1264,9 @@ td.right-border{
     /*z-index: 5000;*/
     position: absolute;
 }
-.scrollable-if-tall{
+.not-click .scrollable-if-tall{
   max-height: 90vh !important;
-  overflow-y: auto; 
+  overflow-y: auto !important; 
 }
 .tooltip{
   padding: 0.25rem;

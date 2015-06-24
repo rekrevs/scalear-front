@@ -32,6 +32,9 @@ describe("Sharing a module",function(){
             course_list.open()
             course_list.open_course(1)
         })
+        it("should go to edit mode",function(){
+            sub_header.open_edit_mode()
+        })
         it('should open second module', function(){
             navigator.module(2).open()
         })
@@ -79,6 +82,9 @@ describe("Sharing a module",function(){
             course_list.open()
             course_list.open_course(1)
         })
+        it("should go to edit mode",function(){
+            sub_header.open_edit_mode()
+        })
         it('should open first module', function(){
             navigator.module(1).open()
         })
@@ -123,6 +129,9 @@ describe("Sharing a module",function(){
         it("should open course",function(){
             course_list.open()
             course_list.open_course(1)
+        })
+        it("should go to edit mode",function(){
+            sub_header.open_edit_mode()
         })
         it("should check course content with updated data",function(){
             expect(navigator.modules.count()).toEqual(1)
@@ -223,6 +232,9 @@ describe("Sharing a non existing module",function(){
         it("should open course",function(){
             course_list.open()
             course_list.open_course(1)
+        })
+        it("should go to edit mode",function(){
+            sub_header.open_edit_mode()
         })
         it("should delete third module",function(){
             var module = navigator.module(3)
@@ -355,6 +367,9 @@ describe("Sharing single items",function(){
             course_list.open()
             course_list.open_course(1)
         })
+        it("should go to edit mode",function(){
+            sub_header.open_edit_mode()
+        })
         it('should open second module', function(){
             navigator.module(2).open()
             expect(navigator.module(2).items.count()).toEqual(1)
@@ -375,6 +390,9 @@ describe("Sharing single items",function(){
             course_list.open()
             course_list.open_course(1)
         })
+        it("should go to edit mode",function(){
+            sub_header.open_edit_mode()
+        })
         it('should open second module', function(){
             navigator.module(2).open()
             expect(navigator.module(2).items.count()).toEqual(2)
@@ -392,6 +410,9 @@ describe("Rollback changes",function(){
         it("should open course",function(){
             course_list.open()
             course_list.open_course(1)
+        })
+        it("should go to edit mode",function(){
+            sub_header.open_edit_mode()
         })
         it("should delete items and module",function(){
             var module = navigator.module(2)
@@ -426,6 +447,9 @@ describe("Rollback changes",function(){
         it("should open course",function(){
             course_list.open()
             course_list.open_course(1)
+        })
+        it("should go to edit mode",function(){
+            sub_header.open_edit_mode()
         })
         it("should delete items and module",function(){
             var module = navigator.module(4)

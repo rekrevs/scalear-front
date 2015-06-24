@@ -24,7 +24,7 @@ CourseInformation.prototype = Object.create({}, {
 	enrollmentkey_field:{get: function(){return element(by.binding('course.unique_identifier'))}},
 	enrollmentkey: {get:function(){return this.enrollmentkey_field.getText() }},
 	teachers:{get:function(){return element.all(by.repeater('teacher in teachers'))}},
-	student:{value:function(){return new StudentCourseInformation()}},
+	student:{get:function(){return new StudentCourseInformation()}},
 	add_teacher_button:{get:function(){return element(by.className('add-teacher-button'))}},
 	email_field:{get:function(){return element(by.model('new_teacher.email'))}},
 	role_field:{get:function(){return element(by.model('new_teacher.role'))}},

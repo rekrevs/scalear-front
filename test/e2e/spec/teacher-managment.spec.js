@@ -35,7 +35,7 @@ describe("Teacher Management",function(){
 	    })
 	    var navigator = new ContentNavigator(1)
 		it('should check number of teachers intially', function(){
-			course_info.open()
+			// course_info.open()
 			expect(course_info.teachers.count()).toEqual(1)
 		})
 		it('should add a teacher', function(){
@@ -61,8 +61,7 @@ describe("Teacher Management",function(){
             header.show_notification()
             expect(header.invitation_notifications.count()).toEqual(1)
             header.accept_invitation_notification(1)
-            header.show_notification()
-            expect(header.invitation_notifications.count()).toEqual(0)
+            expect(header.notification_menu.isPresent()).toBe(false)
         })
         it('should check that it redirected to the course information page', function(){
             expect(browser.driver.getCurrentUrl()).toContain('information')
@@ -79,7 +78,7 @@ describe("Teacher Management",function(){
 		it('should open course information', function(){
 			course_list.open()
 			course_list.open_course(1)
-			course_info.open()
+			course_info.student.open()
 			expect(course_info.teachers.count()).toEqual(4)
 		})
 		it("should logout",function(){

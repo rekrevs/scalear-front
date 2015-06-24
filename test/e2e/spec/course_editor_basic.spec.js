@@ -8,10 +8,12 @@ var StudentLecture = require('./pages/student/lecture');
 var scroll = require('./lib/utils').scroll;
 var sleep = require('./lib/utils').sleep;
 var ContentItems = require('./pages/content_items');
+var SubHeader = require('./pages/sub_header');
 
 var params = browser.params;
 
 var header = new Header()
+var sub_header = new SubHeader()
 var login_page = new Login()
 var course_editor = new CourseEditor()
 var course_info = new CourseInformation()
@@ -29,6 +31,10 @@ describe("Teacher in the course editor", function(){
         course_list.open_course(1)
     })
 
+	it("should go to edit mode",function(){
+		sub_header.open_edit_mode()
+	})
+	
 	it('should open first module', function(){
 		navigator.module(1).open()
 	})
@@ -89,6 +95,7 @@ describe("Student", function(){
 		course_list.open_course(1)
 		expect(navigator.modules.count()).toEqual(2)
 		var module1 = navigator.module(1)
+		module1.open()
 		expect(module1.items.count()).toEqual(6)
 		expect(module1.name).toContain("module 2")
 		expect(module1.item(1).text).toContain("lecture4 video quizzes")
@@ -126,9 +133,11 @@ describe("Revert Changes - Teacher", function(){
 		login_page.sign_in(params.teacher_mail, params.password)
 		course_list.open()
 		course_list.open_course(1)
+	})	
+	it("should go to edit mode",function(){
+		sub_header.open_edit_mode()
 	})
 	var navigator = new ContentNavigator(1)
-
 	it('should revert modules sort', function(){
 		var module = navigator.module(2)
 		module.open()

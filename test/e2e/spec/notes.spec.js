@@ -30,7 +30,7 @@ describe("Notes",function(){
 		})
 		it('should open first lecture in first module', function(){
 			navigator.open()
-			navigator.module(1).open_item(3)
+			navigator.module(1).item(3).open()
 			navigator.close()
 		})
 		it("should seek to 67%",function(){

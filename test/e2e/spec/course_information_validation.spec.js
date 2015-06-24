@@ -18,11 +18,6 @@ var course_list = new CourseList()
 var student_lec = new StudentLecture()
 
 describe("Course Validation",function(){
-	// describe("Teacher",function(){
-	// 	it("should logout", function(){
-	// 		header.logout()
-	// 	})
-	// })
 	describe("Student",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student_mail, params.password)
@@ -31,14 +26,14 @@ describe("Course Validation",function(){
 		it('should open course information', function(){
 			course_list.open()
 			course_list.open_course(1)
-			course_info.student().open()
+			course_info.student.open()
 		})
 		it('should check course information', function(){
-			expect(course_info.student().course_name).toContain(params.short_name)
-			expect(course_info.student().course_name).toContain(params.course_name)
-			expect(course_info.student().description).toEqual(params.course_description)
-			expect(course_info.student().prerequisites).toEqual(params.prerequisites)
-			expect(course_info.student().duration).toEqual(params.course_duration)
+			expect(course_info.student.course_name).toContain(params.short_name)
+			expect(course_info.student.course_name).toContain(params.course_name)
+			expect(course_info.student.description).toEqual(params.course_description)
+			expect(course_info.student.prerequisites).toEqual(params.prerequisites)
+			expect(course_info.student.duration).toEqual(params.course_duration)
 		})
 		it("should logout",function(){
 			header.logout()

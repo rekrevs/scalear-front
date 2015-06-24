@@ -66,7 +66,7 @@ describe("Student",function(){
 	it('should check announcements in first course information', function(){
 		course_list.open()
 		course_list.open_course(1)
-		course_info.open()
+		course_info.student.open()
 		expect(announcement.posts.count()).toEqual(3)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 1")
 		expect(announcement.posts.get(1).getText()).toContain("announcement 2")
@@ -129,7 +129,7 @@ describe("Student",function(){
 	it('should check announcements in first course information', function(){
 		course_list.open()
 		course_list.open_course(1)
-		course_info.open()
+		course_info.student.open()
 		expect(announcement.posts.count()).toEqual(2)
 		expect(announcement.posts.get(0).getText()).toContain("announcement 2")
 		expect(announcement.posts.get(1).getText()).toContain("announcement 3")

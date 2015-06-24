@@ -132,7 +132,7 @@ describe("Filling Course",function(){
 
 		it("should open first lecture in first module",function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(1)
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 
@@ -182,7 +182,7 @@ describe("Filling Course",function(){
 		it("should open second lecture in first module",function(){
 			navigator.open()
 			navigator.module(1).open()
-			navigator.module(1).open_item(2)
+			navigator.module(1).item(2).open()
 			navigator.close()
 		})
 
@@ -236,7 +236,7 @@ describe("Filling Course",function(){
 		it("should open third lecture in first module",function(){
 			navigator.open()
 			navigator.module(1).open()
-			navigator.module(1).open_item(3)
+			navigator.module(1).item(3).open()
 			navigator.close()
 		})
 
@@ -265,7 +265,7 @@ describe("Filling Course",function(){
 		it("should open first quiz in first module",function(){
 			navigator.open()
 			navigator.module(1).open()
-			navigator.module(1).open_item(4)
+			navigator.module(1).item(4).open()
 		})
 
 		it("should add questions to quiz",function(){
@@ -337,7 +337,7 @@ describe("Filling Course",function(){
 
 		it("should open second quiz in first module",function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(5)
+			navigator.module(1).item(5).open()
 		})
 
 		it("should add questions to quiz",function(){
@@ -403,7 +403,7 @@ describe("Filling Course",function(){
 
 		it("should open survey in first module",function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(6)
+			navigator.module(1).item(6).open()
 		})
 
 		it("should add questions to survey",function(){
@@ -450,7 +450,7 @@ describe("Filling Course",function(){
 
 		it("should open first lecture in second module",function(){
 			navigator.module(2).open()
-			navigator.module(2).open_item(1)
+			navigator.module(2).item(1).open()
 			navigator.close()
 		})
 
@@ -497,7 +497,7 @@ describe("Filling Course",function(){
 		it("should open second lecture in second module",function(){
 			navigator.open()
 			navigator.module(2).open()
-			navigator.module(2).open_item(2)
+			navigator.module(2).item(2).open()
 			navigator.close()
 		})
 
@@ -545,7 +545,7 @@ describe("Filling Course",function(){
 		it("should open third lecture in second module",function(){
 			navigator.open()
 			navigator.module(2).open()
-			navigator.module(2).open_item(3)
+			navigator.module(2).item(3).open()
 			navigator.close()
 		})
 
@@ -570,7 +570,7 @@ describe("Filling Course",function(){
 		it("should open quiz in second module",function(){
 			navigator.open()
 			navigator.module(2).open()
-			navigator.module(2).open_item(4)
+			navigator.module(2).item(4).open()
 		})
 
 		it("should add questions to quiz",function(){
@@ -637,7 +637,7 @@ describe("Filling Course",function(){
 
 		it("should open second quiz in second module",function(){
 			navigator.module(2).open()
-			navigator.module(2).open_item(5)
+			navigator.module(2).item(5).open()
 		})
 
 		it("should add questions to quiz",function(){
@@ -703,7 +703,7 @@ describe("Filling Course",function(){
 
 		it("should open survey in second module",function(){
 			navigator.module(2).open()
-			navigator.module(2).open_item(6)
+			navigator.module(2).item(6).open()
 		})
 
 		it("should add questions to survey",function(){

@@ -811,6 +811,7 @@ var translation_en=function(){
         progress_graph: "Progress Graph",
         progress_graph_desc: "Lecture and quiz completion percentages for all students",
         course_progress: "Course Progress",
+        module_completion:"Module Completion",
         lecture_progress: "Lecture Progress",
         quizzes_progress: "Quizzes Progress",
         surveys_progress: "Surveys Progress",

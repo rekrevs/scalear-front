@@ -809,6 +809,7 @@ var translation_sv=function(){
       progress_graph: "Framstegs-diagram",
       progress_graph_desc: "Videos och quizzar klara, procentsatser för alla studenter",
       course_progress: "Kurs-framsteg",
+      module_completion: "Modul-framsteg",
       lecture_progress: "Video-framsteg",
       quizzes_progress: "Quiz-framsteg",
       surveys_progress: "Enkät-framsteg",

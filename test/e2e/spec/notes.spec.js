@@ -14,11 +14,6 @@ var login_page = new Login()
 var student_lec = new StudentLecture()
 
 describe("Notes",function(){
-	// describe("Teacher",function(){
-	// 	it("should logout",function(){
-	// 		header.logout()
-	// 	})
-	// })
 	describe("Student",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student_mail, params.password)

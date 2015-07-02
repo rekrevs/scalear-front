@@ -19,19 +19,19 @@
 			{{course.description}}
 		</p>
 		<div class="bottom-bar">
-			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom">
+			<div class="small-6 medium-4 large-4 columns with-small-margin-bottom">
 				<i class="fi-calendar size-18"></i><small class="with-small-margin-left" translate>courses.start_date</small>
 				<div class="with-medium-margin-left">
 					<small class="truncate" title="{{course.start_date | amDateFormat:'MMMM Do YYYY'}}">{{course.start_date | amDateFormat:'MMMM Do YYYY'}}</small>
 				</div>
 			</div>
-			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom">
+			<div class="small-6 medium-4 large-4 columns with-small-margin-bottom">
 				<i class="fi-clock size-18"></i><small class="with-small-margin-left" translate>lectures.duration</small>
 				<div class="with-medium-margin-left">
 					<small class="truncate" title="{{course.duration}} {{'courses.weeks' | translate}}">{{course.duration}} {{'courses.weeks' | translate}}</small>
 				</div>
 			</div>
-			<div class="small-6 medium-6 large-4 columns with-small-margin-bottom left" ng-if="course.ended">
+			<div class="small-6 medium-4 large-4 columns with-small-margin-bottom left" ng-if="course.ended">
 				<i class="fi-check size-18"></i></i><small class="with-small-margin-left" translate>finished</small>
 			</div>
 		</div>

@@ -295,26 +295,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.replay=function(){
-        // $scope.studentAnswers = {}
-        // $scope.explanation = {}
-        // $scope.fullscreen = false
-        // $scope.current_time = 0
-        // $scope.total_duration = 0
-        // $scope.elapsed_width =0
-        // $scope.slow = false
-        // $scope.course.warning_message=null
-        // $scope.video_class = 'flex-video'
-        // $scope.container_class=''
-        // $scope.play_pause_class = 'play'
-        // $scope.video_end = false
-        // clearQuiz()
-        // $scope.refreshVideo()
-        // $scope.replay_play = true
-        // $scope.lecture_player.controls.play()
         $scope.seek(0)
         $timeout(function(){
             $scope.lecture_player.controls.play()
-            // $scope.play_pause_class = "pause"
         },1000)
     }
 
@@ -404,7 +387,6 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onPause= function(){
         console.log("pausing")
         $scope.play_pause_class = "play"
-        // if(!$scope.preview_as_student)
         if($scope.current_time != null){
             var percent_view = Math.round((($scope.current_time/$scope.total_duration)*100))
             $scope.submitPause($scope.quiz_mode,$scope.current_time);
@@ -462,8 +444,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.addConfused= function(){
-        console.log("caosdnsakn")
-        console.log($state.params.lecture_id)
         var time=$scope.lecture_player.controls.getTime()
         Lecture.confused(
         {
@@ -520,6 +500,7 @@ angular.module('scalearAngularApp')
     }
 
     var goMobileSmallScreen=function(){
+        $scope.resize.small()
         $scope.video_class = 'flex-video'
         $scope.container_class=''
         $scope.video_layer ={}
@@ -536,6 +517,7 @@ angular.module('scalearAngularApp')
     }
 
     var goMobileFullscreen=function(){
+        $scope.resize.big()
         $scope.video_class = ''
         $scope.container_class='mobile_video_full'
         $scope.video_layer ={'width':'100%','height': '90%', 'position': 'relative'}
@@ -842,20 +824,14 @@ angular.module('scalearAngularApp')
     })
 
     var returnToState=function(){
-        if($scope.last_fullscreen_state && !$scope.fullscreen){
-            goFullscreen();
-        }
-
-        if($scope.last_play_state == "pause" && ($scope.play_pause_class != "pause" && !$scope.quiz_mode)){
-            $scope.lecture_player.controls.play();
-        }
-
-        if($scope.last_timeline_state == false && $scope.TimelineNavigator.getStatus()){
+        if($scope.last_fullscreen_state && !$scope.fullscreen)
+            goFullscreen()
+        if($scope.last_play_state == "pause" && ($scope.play_pause_class != "pause" && !$scope.quiz_mode))
+            $scope.lecture_player.controls.play()
+        if($scope.last_timeline_state == false && $scope.TimelineNavigator.getStatus())
             $timeout(function(){
                $scope.TimelineNavigator.close() 
            },400)
-        }
-
         $scope.last_fullscreen_state = null
         $scope.last_play_state = null
     }

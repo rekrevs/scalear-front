@@ -12,8 +12,6 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events={}
     $scope.resize = {}
     $scope.tabs=[true,false,false]
-    $scope.editors={}
-    $scope.blink_class = "";
 
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
@@ -240,7 +238,7 @@ angular.module('scalearAngularApp')
         })
 
         $scope.video_ready=true
-        if(!($scope.lecture_player.controls.youtube &&$rootScope.is_mobile))
+        if(!($scope.lecture_player.controls.youtube && $rootScope.is_mobile))
             $scope.show_progressbar = true
         var time =$state.params.time        
         if(time){

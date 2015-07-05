@@ -61,8 +61,8 @@
     background: url('/images/quality.png') no-repeat center center;
 }
 .control-button{
-    width: 32px;
-    height: 32px;
+    width: 27px;
+    height: 27px;
     /*background: black;*/
     background-size: 20px 20px !important;
     cursor: pointer;
@@ -88,8 +88,8 @@
     float: left;
     opacity: 0.9;
     cursor:pointer;*/
-    width: 30px;
-    height: 30px;
+    width: 27px;
+    height: 27px;
     background: black;
     background: url('/images/link_icon_dark.png') no-repeat center center;
     background-size: 20px 20px;
@@ -146,8 +146,8 @@ li{
 .controlDiv{
     /* Centering the control div */
     /*position:absolute;*/
-    width:30px;
-    height:30px;
+    width:27px;
+    height:27px;
     cursor:pointer;
    
    /* bottom: 4px;
@@ -193,13 +193,14 @@ li{
     height:100%;
     background-color:#1fa2f6;
     border-right:1px solid #49AFF0;
+    float:left;
 }
 
 .volumeDiv{
     /* Centering the control div */
     /*position:absolute;*/
-    width:30px;
-    height:30px;
+    width:27px;
+    height:27px;
     cursor:pointer;
     left: 35px;
     /*top:50%;

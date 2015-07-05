@@ -1,10 +1,9 @@
-<div id="controls" class="light-grey" style="height:40px; margin: 0 auto;">
+<div id="controls" class="light-grey disable_selection">
     <style>
         input[type='range']::-webkit-slider-thumb {
             -webkit-appearance: none;
             -moz-appearance:none;
             background-color: #dfdfdf;
-            /*background-color: darkgreen;*/
             width: 5px;
             height: 15px;
         }
@@ -14,10 +13,58 @@
         .normal_confused{
             background-color: orange;
         }
+
+
+        #audioplayer{
+            width: 480px;
+            height: 60px;
+            margin: 50px auto auto auto;
+        border: solid;
+        }
+
+        #pButton{
+            height:60px; 
+            width: 60px;
+            border: none;
+            background-size: 50% 50%;
+            background-repeat: no-repeat;
+            background-position: center;
+            float:left;
+            outline:none;
+        }
+
+        .play{background: url('http://www.alexkatz.me/codepen/images/play.png') ;}
+        .pause{background: url('http://www.alexkatz.me/codepen/images/pause.png') ;}
+
+        #timeline{
+            width: 400px;
+            height: 20px;
+            margin-top: 20px;
+            float: left;
+            border-radius: 15px;
+            background: rgba(0,0,0,.3);
+          
+        }
+        .playhead{
+          width: 8px;
+          height: 8px;
+          border-radius: 100%;
+          background: rgba(153, 153, 153, 1);
+          position: relative;          
+          margin-left: 0%;
+          z-index: 1;
+        }
+        .playhead:hover, .playhead_big{
+            width: 12px;
+            height: 12px;
+            top: -2px;
+            background:rgba(226, 226, 226, 1);
+        }
     </style>
-    <div class="progressBar" ng-click="progress($event)">
+    <div class="progressBar" ng-click="progressSeek($event)">
         <div class="elapsed" ng-style="{width: elapsed_width}" >
         </div>
+        <div class="playhead ease-in-out" ng-class="playhead_class" ng-mousedown="playHeadMouseDown()" ng-style="{marginLeft: elapsed_head }"></div>
         <div class="progress-events-container" ng-show="timeline.items.length>1">
              <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/total_duration)*100)+'%'}" ng-click="scrollEvent(element.type, element.data.id)">
                 <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'answer.question'|translate}}: {{element.data.content}}"  tooltip-append-to-body="true"></span>
@@ -27,10 +74,8 @@
             </div>
         </div>
     </div>
-    <div style="height: 32px;">
-        <div class="right">  
-            <!-- <controls ng-if="('**.courseware.lecture' | includedByState)" class="show-inline"> -->
-            <!-- </controls> -->
+    <div style="height: 27px;">
+        <div class="right">
             <button ng-show="player.controls.youtube" class="qualityDiv no-padding control-button show-inline drop-top right" dropdown-toggle="#quality_list" title="{{'youtube.click_video_quality'|translate}}">
                 <ul id="quality_list" class="f-dropdown quality-dropdown top-dropdown" style="min-width: 210px;display: block;left: -115px;top: -48px;background: rgb(245, 245, 245);">
                     <div class="small-6 columns no-padding" style="border-right: 1px solid rgb(174, 174, 174);">
@@ -68,16 +113,16 @@
             </button>            
         </div>
         <div ng-transclude></div>
-        <div class="controlDiv show-inline left {{blink}}" ng-class="play_pause_class" ng-click="playBtn()"></div>
+        <div class="controlDiv show-inline left {{blink}}" ng-class="play_class" ng-click="play()"></div>
 
         <span ng-hide="is_mobile">
-            <div id="volume" class="volumeDiv show-inline left" ng-class="mute_unmute_class" ng-click="mute_btn(mute_unmute_class)"></div>
-            <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-right: 15px;margin-top: 14px;"/>
+            <div id="volume" class="volumeDiv show-inline left" ng-class="volume_class" ng-click="muteToggle()"></div>
+            <input type="range" min="0" max="1" step="0.01" ng-model="volume" style="width: 60px;height: 4px;background-image: url('images/volume_bar.png');float: left;margin-top: 12px;"/>
         </span>
-        <div class="timer left color-grey show-inline size-14" style="margin-top:7px;text-align: left">
+        <div class="timer left color-grey show-inline size-12" style="margin-top:6px;text-align: left;margin-left: 10px;">
             <span class="hide-for-small-only">
-                <span style="float:left;">{{current_time|format:'h:mm:ss'}}</span>
-                <span class="hide-for-semi-medium"> / {{total_duration|format:'h:mm:ss'}}</span>
+                <span style="float:left;color: rgb(100, 100, 100);">{{current_time|format:'h:mm:ss'}}</span>
+                <span class="hide-for-semi-medium"> / {{duration|format:'h:mm:ss'}}</span>
             </span>
         </div>
         

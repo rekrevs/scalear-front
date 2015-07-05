@@ -87,17 +87,6 @@ angular.module('scalearAngularApp')
 				},15000, 1)
 			}
 
-		   	// var isiPad=function(){
-		    //     var i = 0,
-		    //         iOS = false,
-		    //         iDevice = ['iPad', 'iPhone', 'iPod','Android'];
-
-		    //     for ( ; i < iDevice.length ; i++ ) {
-		    //         if( navigator.platform === iDevice[i] ){ iOS = true; break; }
-		    //     }
-		    //     return navigator.userAgent.match(/(iPhone|iPod|iPad|Android)/i) || iOS
-		    // }
-
 			var formatYoutubeURL=function(url,vq,time, autoplay, controls){
 				var short_url = isShortYoutube(url)
 				var base_url, query
@@ -160,6 +149,8 @@ angular.module('scalearAngularApp')
 			player_controls.readyState=function(){
 				return player.readyState()
 			}
+
+
 
 			player_controls.seek = function(time){
 				console.log("entering sekking ")
@@ -391,6 +382,7 @@ angular.module('scalearAngularApp')
 					scope.player.controls=player_controls
 					if(scope.player.events)
                     	player_events = scope.player.events
+                    scope.player.element= player
                     scope.$emit("player ready")
                     unwatch()
 				}
@@ -608,103 +600,163 @@ return {
     replace:false,
     scope:{
         player:'=',
-        play_pause_class:'=playPauseClass',
-        elapsed_width: '=elapsedWidth',
-        current_time: '=currentTime',
-        total_duration: '=totalDuration',
+        // play_pause_class:'=playPauseClass',
+        // elapsed_width: '=elapsedWidth',
+        // current_time: '=currentTime',
+        // total_duration: '=totalDuration',
         seek: "&",
         timeline: '=',
-        videoready: '=',
-        blink : "="
+        // videoready: '=',
+        // blink : "="
     },
     templateUrl:"/views/progress_bar.html",
     link: function(scope, element, attrs){
-        scope.mute_unmute_class="mute";
+    	var player = scope.player.element
+		var progress_bar= angular.element('.progressBar');
+    	scope.current_time=0
+    	scope.volume_class="mute";
         scope.quality=false;
   		scope.chosen_quality='hd720';
   		scope.chosen_speed=1
   		scope.is_mobile = $rootScope.is_mobile
-      scope.setSpeed = function(val){
-        console.log('setting youtube speed to '+val)
-        scope.player.controls.changeSpeed(val, true)
-        scope.chosen_speed = val;
-        $cookieStore.put('youtube_speed', scope.chosen_speed)
-      }
-      scope.setSpeedMp4 = function(val){
-        console.log('setting mp4 speed to '+val)
-        scope.player.controls.changeSpeed(val, false)
-        scope.chosen_speed = val;
-        $cookieStore.put('mp4_speed', scope.chosen_speed)
-      }
-      var unwatch = scope.$watch('videoready', function(){
-        if(scope.videoready == true){
-          if(scope.player.controls.youtube){
+  		scope.duration = player.duration();
+		scope.play_class = "play";		
+
+      	if(scope.player.controls.youtube){
             scope.speeds = scope.player.controls.getSpeeds();
             console.log("Speed", scope.speeds)
             scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
             console.log('the chosen speed is '+scope.chosen_speed)
-            scope.setSpeed(scope.chosen_speed)
-          }
-          else{
+            scope.player.controls.changeSpeed(scope.chosen_speed, true)
+      	}
+      	else{
             scope.speeds = [{name:'0.8', value: 0.8},
                             {name:'1', value: 1},
                             {name:'1.2', value: 1.2},
                             {name:'1.5', value: 1.5},
                             {name:'1.8', value: 1.8}]
             scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
-            scope.setSpeedMp4(scope.chosen_speed)
-          }
-          unwatch()
-        }
-      })
+            scope.player.controls.changeSpeed(scope.chosen_speed, false)
+      	}
 
-        scope.playBtn = function(){
-            if(scope.player.controls.paused()){
-		        scope.player.controls.play()
-		        // scope.play_pause_class = "pause"
-	      	}
-	      	else{
-		        scope.player.controls.pause()
-		        // scope.play_pause_class = "play"
-	      	}
+		// music.on("timeupdate", timeUpdate, false);
+
+		
+		// timeline.addEventListener("click", function (event) {
+		// 	moveplayhead(event);
+		// 	music.currentTime = scope.duration * clickPercent(event);
+		// }, false);
+
+		// playhead.addEventListener('mousedown', mouseDown, false);
+		
+
+		
+		var onplayhead = false;
+
+		scope.setSpeed = function(val){
+	        console.log('setting youtube speed to '+val)
+	        scope.player.controls.changeSpeed(val, true)
+	        scope.chosen_speed = val;
+	        $cookieStore.put('youtube_speed', scope.chosen_speed)
+		}
+      	scope.setSpeedMp4 = function(val){
+	        console.log('setting mp4 speed to '+val)
+	        scope.player.controls.changeSpeed(val, false)
+	        scope.chosen_speed = val;
+	        $cookieStore.put('mp4_speed', scope.chosen_speed)
+      	}
+		
+		scope.playHeadMouseDown=function() {
+			onplayhead = true;
+			scope.playhead_class="playhead_big"
+			window.addEventListener('mousemove', scope.moveplayhead, true);
+			window.addEventListener('mouseup', scope.playHeadMouseUp, false);
+			// music.removeEventListener('timeupdate', timeUpdate, false);
+		}
+		
+		scope.playHeadMouseUp=function(e){
+			if (onplayhead == true) {
+				scope.playhead_class=""
+				window.removeEventListener('mousemove', scope.moveplayhead, true);
+				scope.progress(e)
+			}
+			onplayhead = false;
+		}
+		
+		scope.moveplayhead=function(e) {
+	        var ratio= (event.pageX-progress_bar.offset().left)/progress_bar.outerWidth()
+	        var position = ratio*100 
+			if (position >= 0 && position <= 100){
+				scope.elapsed_head = position + "%";
+				scope.elapsed_width =position+0.7  + '%'
+				scope.current_time = scope.duration* ratio
+			}
+			if (position < 0){
+				scope.elapsed_head = "0%";
+				scope.elapsed_width = "0%"
+				scope.current_time = 0
+			}
+			if (position > 100){
+				scope.elapsed_head = "98.8%";
+				scope.elapsed_width = "100%"
+				scope.current_time = scope.duration
+			}
+			scope.$apply()
+		}
+
+		scope.play=function(){
+			if (scope.player.controls.paused()) {
+				scope.player.controls.play()
+				scope.play_class = "pause";
+			} else {
+				scope.player.controls.pause()
+				scope.play_class = "play";
+			}
+		}
+
+		player.on('timeupdate', function(){
+			scope.current_time = player.currentTime()
+			var elapsed = ((scope.current_time/scope.duration)*100)
+	        scope.elapsed_width =elapsed  + '%'
+	        scope.elapsed_head = elapsed>1? elapsed-0.7+ '%' : 0
+	        scope.elapsed_head = scope.elapsed_head>98? 98.8 : scope.elapsed_head
+			scope.$apply()
+	    })
+
+	    player.on('ended',function(){
+	    	scope.play_class = "play";
+	    })
+
+        scope.muteToggle = function(){
+        	scope.volume_class=="mute"? scope.mute():scope.unmute()
         }
 
-        scope.mute_btn = function(type)
-        {
-            if(type=="mute")
-                scope.mute();
-            else
-                scope.unmute();
-        }
-
-        scope.$watch("volume",function()
+        var unwatchMute = scope.$watch("volume",function()
         {
             if(scope.volume){
                 scope.player.controls.volume(scope.volume);
                 if(scope.volume!=0)
-                    scope.mute_unmute_class="mute";
+                    scope.volume_class="mute";
                 else
-                    scope.mute_unmute_class="unmute";
+                    scope.volume_class="unmute";
             }
         });
-        scope.mute= function()
-        {
+        scope.mute= function(){
             scope.player.controls.mute();
-            scope.mute_unmute_class="unmute";
+            scope.volume_class="unmute";
             scope.volume=0;
         }
 
-        scope.unmute = function()
-        {
+        scope.unmute = function(){
             scope.player.controls.unmute();
-            scope.mute_unmute_class="mute";
+            scope.volume_class="mute";
             scope.volume=0.8;
         }
 
-        scope.progress = function(event){
+        scope.progressSeek = function(event){
 	        var element = angular.element('.progressBar');
 	        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
-	        scope.seek()(scope.total_duration*ratio)
+	        scope.seek()(scope.duration*ratio)
 	        if(scope.timeline)
 	        	scrollToNearestEvent(scope.total_duration*ratio)
         }
@@ -719,6 +771,7 @@ return {
           scope.chosen_quality=quality;
           scope.quality=false;
   		}
+
   		scope.scrollEvent = function(type, id){
   			scrollToItem(type, id)
   			addHighlight(type, id)
@@ -755,6 +808,7 @@ return {
 	   	scope.$on('$destroy', function(){
          	shortcut.remove("b");
       		shortcut.remove("Space");
+  				unwatchMute()
       	});
 
       	scope.$on("blink_blink", function(){

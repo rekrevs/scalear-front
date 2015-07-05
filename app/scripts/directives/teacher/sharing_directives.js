@@ -142,22 +142,23 @@ angular.module('scalearAngularApp')
 	  	}
     }
   }
-}]).directive('sharingModal', ['$modal', '$rootScope', '$state', function($modal, $rootScope, $state){
-  return{
-    restrict: 'A',
-    replace: true,
-    link: function(scope, element){
-  		scope.openSharingModal = function(){
-  			if($state.params.lecture_id){
-  				var item = {class_name: 'lecture', id: $state.params.lecture_id}
-  			}
-  			else if($state.params.quiz_id){
-  				var item = {class_name: 'quiz', id: $state.params.quiz_id}	
-  			}
-  			$rootScope.$broadcast('share_copy', {module_id: $state.params.module_id, selected_item: item || null})
-  		}
+}])
+// .directive('sharingModal', ['$modal', '$rootScope', '$state', function($modal, $rootScope, $state){
+//   return{
+//     restrict: 'A',
+//     replace: true,
+//     link: function(scope, element){
+//   		scope.openSharingModal = function(){
+//   			if($state.params.lecture_id){
+//   				var item = {class_name: 'lecture', id: $state.params.lecture_id}
+//   			}
+//   			else if($state.params.quiz_id){
+//   				var item = {class_name: 'quiz', id: $state.params.quiz_id}	
+//   			}
+//   			$rootScope.$broadcast('share_copy', {module_id: $state.params.module_id, selected_item: item || null})
+//   		}
 
-    }
-  }
+//     }
+//   }
 
-}]);
+// }]);

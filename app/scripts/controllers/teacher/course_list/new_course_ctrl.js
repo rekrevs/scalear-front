@@ -12,15 +12,15 @@ angular.module('scalearAngularApp')
 				//$scope.course=data.course;
 				$scope.importing=data.importing;
 				$scope.timezones=scalear_utils.listTimezones()
-				$scope.course.time_zone = $scope.timezones[0]
+				$scope.course.time_zone = $scope.timezones[11] //GMT+0
 				$scope.course.start_date = new Date()
-				var zone = $scope.course.start_date.getTimezoneOffset()/60 * -1
-				for(var tz in $scope.timezones){
-					if(parseInt($scope.timezones[tz].offset) == zone){
-						$scope.course.time_zone = $scope.timezones[tz]
-						break;
-					}
-				}
+				// var zone = $scope.course.start_date.getTimezoneOffset()/60 * -1
+				// for(var tz in $scope.timezones){
+				// 	if(parseInt($scope.timezones[tz].offset) == zone){
+				// 		$scope.course.time_zone = $scope.timezones[tz]
+				// 		break;
+				// 	}
+				// }
 				$scope.import_from=""				
 
 			}

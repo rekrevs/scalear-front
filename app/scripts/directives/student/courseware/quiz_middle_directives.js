@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive('studentQuiz', ['Lecture','$stateParams','CourseEditor','$log',function(Lecture, $stateParams, CourseEditor, $log){
+.directive('studentQuiz', ['Lecture','$stateParams','$log',function(Lecture, $stateParams, $log){
 	return {
 		scope: {
 			quiz:"=",

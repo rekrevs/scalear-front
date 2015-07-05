@@ -3,38 +3,41 @@
 <!-- endbuild -->
 <div class="small-12 columns">
     <div class="row">
-        <div class="small-4 small-centered columns text-center">
-            <h5><b>{{module.name}}</b></h5>
+        <div class="small-12 columns">
+            <h4 class="left"><b>Student Details: </b>{{course.selected_module.name}}</h4>
+            <a class="button tiny size-12 color-white right with-tiny-margin-top" ui-sref="course.module.progress">
+                <span translate>Show Progress</span>
+            </a>
         </div>
-        <div class="small-12 small-centered columns" style="height: 200px;">
+        <!-- <div class="small-12 small-centered columns" style="height: 200px;">
             <center>
                 <loading size="small" show="loading_module_chart" style="top:50px;position:relative">
             </center>
             <div google-chart chart="module_chart"></div>
-        </div>
+        </div> -->
     </div>
-
-    <tabset >
-        <tab heading="{{'courses.lecture_quizzes'|translate}}" select="lectureQuizzesTab()">
+    <br/>
+    <tabset  >
+       <!--  <tab heading="{{'courses.lecture_quizzes'|translate}}" select="lectureQuizzesTab()">
         	<tab1 />
-        </tab>
+        </tab> -->
         <tab heading="{{'courses.lecture_statistics'|translate}}" select="studentStatisticsTab()">
             <tab2 />
         </tab>
-        <tab heading="{{'courses.lecture_progress'|translate}}" select="lectureProgressTab()">
+        <tab heading="Student Progress Details" select="lectureProgressTab()">
     		<tab3 />
         </tab>
-        <tab heading="{{'courses.quizzes_progress'|translate}}" select="quizzesProgressTab();">
+       <!--  <tab heading="{{'courses.quizzes_progress'|translate}}" select="quizzesProgressTab();">
        		<tab4 />
         </tab>
         <tab heading="{{'courses.surveys_progress'|translate}}" select="surveysProgressTab();">
             <tab5 />
-        </tab>
-        <tab heading="{{'groups.surveys'|translate}}" select="surveysTab()">
+        </tab> -->
+        <!-- <tab heading="{{'groups.surveys'|translate}}" select="surveysTab()">
             <tab6 />
         </tab>
         <tab heading="{{'groups.quizzes'|translate}}" select="quizzesTab()">
             <tab7 />
-        </tab>
+        </tab> -->
     </tabset>
 </div>

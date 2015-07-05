@@ -4934,14 +4934,14 @@ meta.foundation-mq-topbar {
   .no-js .top-bar-section ul li:active > a {
     background: #008CBA;
     color: #FFFFFF; }
-  .no-js .top-bar-section .has-dropdown:hover > .dropdown {
+  /*.no-js .top-bar-section .has-dropdown:hover > .dropdown {
     display: block;
     position: static !important;
     height: auto;
     width: auto;
     overflow: visible;
     clip: auto;
-    position: absolute !important; }
+    position: absolute !important; }*/
  /* .no-js .top-bar-section .has-dropdown > a:focus + .dropdown {
     display: block;
     position: static !important;

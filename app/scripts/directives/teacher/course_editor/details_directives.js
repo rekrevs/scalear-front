@@ -48,7 +48,7 @@ angular.module('scalearAngularApp')
     .directive('detailsUrl', ['$timeout','$translate',
         function($timeout,$translate) {
             return {
-                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || ("empty"|translate) }} <i ng-class="overclass"></i></a>',
+                template: '<a ng-click="show()" onshow="selectField()" ng-mouseover="overclass = \'fi-pencil size-14\'" ng-mouseleave="overclass= \'\'"  editable-text="value" e-form="textBtnForm" blur="submit" onbeforesave="validate()(column,$data)" onaftersave="saveData()" ng-class={"text-italic":value=="none"}>{{ text || "http://" }} <i ng-class="overclass"></i></a>',
                 restrict: 'E',
                 scope: {
                     value: "=",
@@ -250,11 +250,15 @@ angular.module('scalearAngularApp')
                     empty_message:"@emptyMessage"
                 },
                 link: function(scope, element) {
-            // scope.selectField = function() {
-            //     $timeout(function() {
-            //         element.find('.editable-input').select();
-            //     });
-            // },
+                    scope.selectField = function() {
+                        var elem= element.find('.editable-input')
+                        $timeout(function() {
+                            elem.select();
+                            if(scope.value =="none")
+                                elem.val("")
+                        });
+
+                    },
                     scope.saveData = function() {
                         $timeout(function() {
                             scope.save()
@@ -427,26 +431,7 @@ angular.module('scalearAngularApp')
                 small:"="
             },
             link: function(scope, element){
-                scope.validate= function(column, data){
-                    console.log(scope.link)
-                    var d = $q.defer();
-                    var doc={}
-                    doc[column]=data;
-                    CustomLink.validate(
-                        {link_id: scope.link.id},
-                        {link:doc},
-                        function(data){
-                            d.resolve()
-                        },function(data){
-                            if(data.status==422)
-                                d.resolve(data.data.errors[0]);
-                            else
-                                d.reject('Server Error');
-                        }
-                    )
-                    return d.promise;
-                }
-
+                
                 scope.removeLink=function(){
                     $rootScope.$broadcast('remove_link', scope.link)
                 }

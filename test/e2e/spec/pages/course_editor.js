@@ -11,10 +11,10 @@ CourseEditor.prototype = Object.create({}, {
 	new_item_button:{get:function(){return element(by.id("new_item"))}},
 	new_item_sub_button:{get:function(){return element(by.id("sub_new_item"))}},
 	new_question_button:{get:function(){return element(by.id("new_question"))}},
-	video_item:{get: function(){return element(by.id('video_item'))}},
-	quiz_item:{get: function(){return element(by.id('quiz_item'))}},
-	survey_item:{get: function(){return element(by.id('survey_item'))}},
-	link_item:{get: function(){return element(by.id('link_item'))}},
+	// video_item:{get: function(){return element(by.id('video_item'))}},
+	// quiz_item:{get: function(){return element(by.id('quiz_item'))}},
+	// survey_item:{get: function(){return element(by.id('survey_item'))}},
+	// link_item:{get: function(){return element(by.id('link_item'))}},
 	module:{get:function(){return element(by.id("module")) }},
 	module_links:{get:function(){return element.all(by.repeater('doc in module.custom_links'))}},
 	module_link:{value:function(num){return new Link(this.module_links.get(num-1))}},
@@ -51,37 +51,37 @@ CourseEditor.prototype = Object.create({}, {
 	}},
 	add_module: {value: function(){this.new_module_button.click()}},
 	rename_module:{value:function(name){
-		this.module.element(by.tagName("details-text")).click().then(function(){
+		element(by.tagName("details-text")).click().then(function(){
 			element(by.className('editable-input')).clear().sendKeys(name)
 			element(by.className('check')).click()
 		})
 	}},
-	add_lecture: {value: function(){
-		this.new_item_button.click()
-		this.video_item.click()
-	}},
-	add_quiz: {value: function(){
-		this.new_item_button.click()
-		this.quiz_item.click()
-	}},
-	add_survey: {value: function(){
-		this.new_item_button.click()
-		this.survey_item.click()
-	}},
-	add_course_link: {value: function(){
-		this.new_item_button.click()
-		this.link_item.click()
-	}},
-	add_module_link:{value:function(){
-		element(by.id('add_module_link')).click()
-	}},
+	// add_lecture: {value: function(){
+	// 	this.new_item_button.click()
+	// 	this.video_item.click()
+	// }},
+	// add_quiz: {value: function(){
+	// 	this.new_item_button.click()
+	// 	this.quiz_item.click()
+	// }},
+	// add_survey: {value: function(){
+	// 	this.new_item_button.click()
+	// 	this.survey_item.click()
+	// }},
+	// add_course_link: {value: function(){
+	// 	this.new_item_button.click()
+	// 	this.link_item.click()
+	// }},
+	// add_module_link:{value:function(){
+	// 	element(by.id('add_module_link')).click()
+	// }},
 	rename_item:{value: function(name){
 		element(by.id('item_name')).click().then(function(){
 			element(by.className('editable-input')).clear().sendKeys(name)
 			element(by.className('check')).click()
 		})
 	}},
-	change_video_url:{value: function(url){
+	change_item_url:{value: function(url){
 		element(by.id('url')).click().then(function(){
 			element(by.className('editable-input')).clear().sendKeys(url)
 			element(by.className('check')).click()

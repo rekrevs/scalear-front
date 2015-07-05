@@ -3,12 +3,13 @@
 angular.module('scalearAngularApp')
   .controller('teacherCourseInformationCtrl', ['$scope', '$stateParams', 'Course','$q', '$translate', '$log','$window','Page','scalear_utils','ContentNavigator', function ($scope, $stateParams, Course, $q, $translate, $log, $window,Page, scalear_utils, ContentNavigator) {
 
+  $window.scrollTo(0, 0);
   $scope.in_delete = false;
   $scope.toggle_message = 'courses.remove_teacher'
   $scope.roles = [{value:3, text:'courses.professor'}, {value:4, text:'courses.ta'}];
   Page.setTitle('head.information')
   Page.startTour()
-  ContentNavigator.open()
+  ContentNavigator.close()
   $scope.timezones=scalear_utils.listTimezones()
 
   $scope.timezones.forEach(function(zone){

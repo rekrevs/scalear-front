@@ -10,6 +10,7 @@ var StudentQuiz = require('./pages/student/quiz');
 var scroll_top = require('./lib/utils').scroll_top;
 var scroll_bottom = require('./lib/utils').scroll_bottom;
 var sleep = require('./lib/utils').sleep;
+var SubHeader = require('./pages/sub_header');
 
 var params = browser.params;
 
@@ -17,6 +18,7 @@ var course_list = new CourseList()
 var video = new Video();
 var quiz = new NormalQuiz();
 var header = new Header()
+var sub_header = new SubHeader()
 var login_page = new Login()
 var course_editor = new CourseEditor()
 var student_lec = new StudentLecture()
@@ -31,10 +33,13 @@ describe("Solve Course",function(){
 		it("should open course",function(){
 	        course_list.open()
 	        course_list.open_course(1)
-	    })	    
+	    })	
+	    it("should go to edit mode",function(){
+			sub_header.open_edit_mode()
+		})    
 	    it("should open first quiz in first module",function(){
 	    	navigator.module(1).open()
-	    	navigator.module(1).open_item(4)
+	    	navigator.module(1).item(4).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
@@ -50,7 +55,7 @@ describe("Solve Course",function(){
 	    })
 	    it("should open second lecture in second module",function(){
 	    	navigator.module(2).open()
-	    	navigator.module(2).open_item(2)
+	    	navigator.module(2).item(2).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
@@ -59,7 +64,7 @@ describe("Solve Course",function(){
 	        course_editor.change_lecture_inorder()
 	    })
 	    it("should open first quiz in second module",function(){
-	    	navigator.module(2).open_item(4)
+	    	navigator.module(2).item(4).open()
 	    	sleep(3000)
 	    	scroll_top()
 	    })
@@ -561,7 +566,7 @@ describe("Solve Course",function(){
 
 			it("should navigate to second lectue in second module",function(){
 				navigator.open()
-				navigator.module(2).open_item(2)
+				navigator.module(2).item(2).open()
 				navigator.close()
 			})
 			it("should seek video to 9%",function(){
@@ -651,7 +656,7 @@ describe("Solve Course",function(){
 
 			it("should navigate to third lectue in second module",function(){
 				navigator.open()
-				navigator.module(2).open_item(3)
+				navigator.module(2).item(3).open()
 				navigator.close()
 			})
 
@@ -898,7 +903,7 @@ describe("Solve Course",function(){
 
 			it("should navigate to second quiz in first module",function(){
 				navigator.open()
-				navigator.module(1).open_item(5)
+				navigator.module(1).item(5).open()
 				navigator.close()
 			})
 			it('should answer mcq incorrect', function(){
@@ -925,7 +930,7 @@ describe("Solve Course",function(){
 
 			// it("should open first lecture again",function(){
 			// 	navigator.open()
-			// 	navigator.module(1).open_item(1)
+			// 	navigator.module(1).item(1).open()
 			// 	navigator.close()
 			// })
 			// it('should seek to 45%', function(){
@@ -939,7 +944,7 @@ describe("Solve Course",function(){
 			// })
 			// it('should move to the second lecture', function(){
 			// 	navigator.open()
-			// 	navigator.module(1).open_item(2)
+			// 	navigator.module(1).item(2).open()
 			// 	navigator.close()
 			// })
 			// it('should seek to 25%', function(){
@@ -981,7 +986,7 @@ describe("Solve Course",function(){
 	// 	it('should open third lecture in first module', function(){
 	// 		navigator.open()
 	// 		navigator.module(1).open()
-	// 		navigator.module(1).open_item(3)
+	// 		navigator.module(1).item(3).open()
 	// 		navigator.close()
 	// 	})
 	// 	it('should seek to 25%', function(){

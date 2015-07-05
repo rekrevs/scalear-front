@@ -1,52 +1,15 @@
-<!-- build:css(.tmp/styles) styles/progress.css -->
-<link rel="stylesheet" href="styles/teacher/teacher_common.css"/>
-<link rel="stylesheet" href="styles/teacher/progress.css"/>
-<!-- <link rel="stylesheet" href="styles/modules_selector.css"/> -->
-<!-- endbuild -->
-<style>
-	.accordion{
-		margin-top: 0px;
-	}
-	.accordion-inner{
-		padding: 0px;
-	}
-</style>
-
-<div class="small-12 columns">        
-	<!-- <div ng-hide="!iscollapsed" style="position: fixed; padding-left: 30px; height: 40px; left: 0px; right; 0px; top: 40px; padding-top: 10px; background-color: white; width: 100%; box-shadow: 1px 1px 1px lightgrey; z-index: 2;">
-		<table style="width: 95%;">
-			<tr>
-				<td style="width: 170px;">
-					<div style="float: left; display: inline-block;">
-						<button type="button" class="btn modules-collapser btn-success" style="background-image: initial; width: 170px; max-width: 170px;" ng-click="toggleSelector()" ng-disabled="!modules" title="{{selected_module.name}}">{{shortenModuleName(selected_module.name) || 'courses.select_module' | translate}}<span class="caret" style="margin-left: 5px;"></span></button>
-				    </div>
-				</td>
-				<td style="min-width: 15px;">
-					<a ui-sref="course.progress.main" ng-click="clearCurrent()" ng-show="selected_module" tooltip-placement="bottom" tooltip="Back to main progress page"><small translate>main</small></a>
-				</td>
-				<td style="width: {{80/selected_module.items.length}}%;" ng-repeat="item in selected_module.items | orderBy:'position'">
-					<div style="text-align: left;">
-				    	<progress-item style="display: inline-block;" selected="item.id == selected_item" name="item.name" id="item.id" circlesize="13" group_id="selected_module.id" class_name="item.class_name" quiz_type="item.quiz_type" ng-click="showItem(item)"></progress-item>
-				    </div>
-				    <hr style="width: 100%; margin: 0; position: relative; top: -9px; z-index: -1;">
-				</td>
-			</tr>
-		</table>
-	</div>
-	<div class="modules-selector-dropdown" collapse="!close_selector" ng-hide="hide || hide_all" style="z-index: 1; top: 30px; background-color: whitesmoke; border: none; width: 0;">
-		<div class="multicol" style="{{dropdown_styling || '-webkit-column-count:1;-moz-column-count:1;column-count:1;'}}">
-			<div ng-repeat="module in modules | orderBy:'position'">
-				<a ui-sref="course.progress.lecture({module_id:module.id})" ng-click="showModule($index)">
-					<ul style="float: left; margin: 0; color: #2d2d2d;" ng-class="{moduleactive: current_module.id == module.id}">
-						{{module.name}}
-					</ul>
-				</a>
+<div>
+	<br/>
+	<div class="small-8 columns">
+		<div class="small-12 columns"><h5><b>Review Module Completion</b></h5></div>
+		<div class="small-12 columns"><p>Choose a module to review the students’ online progress, respond  to questions, and select material for in-class review. </p></div>
+		<div class="small-12 columns">
+			<div class="small-4 columns no-padding">
+				<a class="button small" ui-sref="course.progress_main" translate>View Module Completion</a>
+			</div>
+			<div class="small-8 columns left">
+				<p class="no-margin">View which students have completed each module on-time or late.</p>
 			</div>
 		</div>
-	</div> -->
-	<content-navigator modules="modules" mode="progress" currentmodule="selected_module" currentitem="selectd_item" style="z-index: 1;" scrollto="scrollTo"></content-navigator>
-	<div id='details'>
-	    <ui-view/>
 	</div>
 </div>
-<!-- ui-sref="course.progress.lecture({module_id:module.id})" -->

@@ -25,11 +25,11 @@ Question.prototype= Object.create({},{
 	change_type_drag:{value:function(){this.types.get(3).click()}},
 	delete:{value:function(){
 		this.field.element(by.className('delete')).click()
-		this.field.element(by.className('fi-check')).click()
+		this.field.element(by.className('alert')).click()
 	}},
 	delete_answer:{value:function(num){
 		this.answer(num).element(by.className('delete')).click()
-		this.answer(num).element(by.className('fi-check')).click()
+		this.answer(num).element(by.className('alert')).click()
 	}}
 })
 

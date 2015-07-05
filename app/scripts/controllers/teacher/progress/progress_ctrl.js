@@ -1,8 +1,9 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressCtrl', ['$scope', '$stateParams', '$location','Course','$log', '$window','Page','$anchorScroll','$timeout', '$filter', '$state',function ($scope, $stateParams, $location, Course, $log, $window,Page,$anchorScroll,$timeout, $filter, $state) {
+  .controller('progressCtrl', ['ContentNavigator','Page',function (ContentNavigator, Page) {
   		Page.setTitle('head.progress')
+  		ContentNavigator.open()
 			
   }]);
 	   	

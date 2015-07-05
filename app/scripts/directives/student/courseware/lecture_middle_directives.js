@@ -134,7 +134,7 @@ angular.module('scalearAngularApp')
   	link: function(scope, element, attrs) {}
   }
 }])
-.directive('studentAnswerForm', ['Lecture','$stateParams','CourseEditor','$log',function(Lecture, $stateParams, CourseEditor, $log){
+.directive('studentAnswerForm', ['Lecture','$stateParams','$log',function(Lecture, $stateParams, $log){
 	return {
 		scope: {
 			quiz:"=",

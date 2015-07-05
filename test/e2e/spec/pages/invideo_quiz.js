@@ -40,11 +40,11 @@ InvideoQuiz.prototype = Object.create({}, {
 	open:{value:function(num){this.quiz(num).element(by.className("quiz_title")).click()}},
 	delete:{value:function(num){
 		this.quiz(num).element(by.className('delete')).click()
-		this.quiz(num).element(by.className('fi-check')).click()
+		this.quiz(num).element(by.className('alert')).click()
 	}},
 	delete_from_editor:{value:function(){
 		this.editor_panel.element(by.className('delete')).click()
-		this.editor_panel.element(by.className('fi-check')).click()
+		this.editor_panel.element(by.className('alert')).click()
 	}},
 	add_answer:{value:function(x,y,correct,explanation){
 		browser.driver.actions().mouseMove(this.quiz_layer).perform();

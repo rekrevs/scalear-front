@@ -3,7 +3,7 @@
 <!-- endbuild -->
 <div class="small-12 columns">
 <tabset>
-    <tab heading="{{'courses.course_progress'|translate}}" select="moduleProgressTab()" style="cursor:pointer">
+    <tab heading="{{'courses.module_completion'|translate}}" select="moduleProgressTab()" style="cursor:pointer">
 		<div style="overflow:auto" ng-if="module_status">
 			<progress_matrix column_names='module_names' students='module_students' status="module_status" action="updateStatus(student_id, module_id, module_status)" show_popover="true" remaining="getRemainingModuleProgress" scrolldisabled="module_scroll_disable" modstatus="module_status"></progress_matrix>
 		</div>

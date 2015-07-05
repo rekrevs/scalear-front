@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module', '$translate','$log','Page', function ($scope, $timeout, $stateParams, Course, Module, $translate, $log, Page) {
+  .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module', '$translate','$log','Page','ContentNavigator', function ($scope, $timeout, $stateParams, Course, Module, $translate, $log, Page, ContentNavigator) {
 
         Page.setTitle('head.progress')
 
-
+        ContentNavigator.close()
   	  	$scope.moduleProgressTab=function(){
   	  		enableModuleScrolling()
 	        if($scope.module_offset == null)

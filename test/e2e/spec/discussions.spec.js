@@ -31,7 +31,7 @@ describe("Discussions",function(){
 		it('should open first lecture in first module', function(){
 			navigator.open()
 			navigator.module(1).open()
-			navigator.module(1).open_item(1)
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 		it("should seek to 15%",function(){
@@ -77,7 +77,7 @@ describe("Discussions",function(){
 		it('should open first lecture in first module', function(){
 			navigator.open()
 			navigator.module(1).open()
-			navigator.module(1).open_item(1)
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 		it("should open timeline",function(){
@@ -118,7 +118,7 @@ describe("Discussions",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(1)
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 		it("should open timeline",function(){
@@ -160,7 +160,7 @@ describe("Discussions",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(1)
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 		it("should open timeline",function(){
@@ -193,7 +193,7 @@ describe("Discussions",function(){
         })
         it('should move to the second lecture', function(){
 			navigator.open()
-			navigator.module(1).open_item(2)
+			navigator.module(1).item(2).open()
 			navigator.close()
 		})
 		it('should seek to 40%', function(){
@@ -224,7 +224,7 @@ describe("Discussions",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(1)
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 		it("should open timeline",function(){
@@ -270,7 +270,7 @@ describe("Discussions",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(1)
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 		it("should open timeline",function(){
@@ -300,7 +300,7 @@ describe("Discussions",function(){
 		var navigator = new ContentNavigator(1)
 		it('should open first lecture in first module', function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(1)
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 		it("should open timeline",function(){

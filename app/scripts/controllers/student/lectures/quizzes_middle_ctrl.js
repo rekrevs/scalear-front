@@ -21,8 +21,8 @@ angular.module('scalearAngularApp')
            if(!$scope.preview_as_student){
                 for(var item in $scope.quiz.requirements){
                     for(var id in $scope.quiz.requirements[item]){
-                        var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-                        var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, $scope.quiz.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                        var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.getIndexById($scope.$parent.$parent.course.groups, data.done[1])
+                        var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, $scope.quiz.requirements[item][id])//CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                         if(item_index!=-1 && group_index!=-1)
                             if(!$scope.course.groups[group_index].items[item_index].is_done)
                                 $scope.passed_requirments = false
@@ -73,8 +73,8 @@ angular.module('scalearAngularApp')
     			if(data.correct)
     				$scope.correct=data.correct; 
 				
-                // var group_index= scalear_utils.getIndexById($scope.course.groups, data.done[1])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-                // var quiz_index= scalear_utils.getIndexById($scope.course.groups[group_index].quizzes, data.done[0])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                // var group_index= scalear_utils.getIndexById($scope.course.groups, data.done[1])//CourseEditor.getIndexById($scope.$parent.$parent.course.groups, data.done[1])
+                // var quiz_index= scalear_utils.getIndexById($scope.course.groups[group_index].quizzes, data.done[0])//CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                 // if(quiz_index!=-1 && group_index!=-1)
                 //     $scope.course.groups[group_index].quizzes[quiz_index].is_done= data.done[2]
                 $scope.course.markDone(data.done[1],data.done[0], data.done[2])

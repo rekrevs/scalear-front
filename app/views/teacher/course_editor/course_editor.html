@@ -3,18 +3,43 @@
 <link rel="stylesheet" href="styles/controls.css" type="text/css" media="screen" />
 <!-- endbuild -->
 <div ng-if="!('*.module.**' | includedByState)">
-	<br/><br/>
-	<div class="small-8 small-centered columns">
-		<center>
-			<h5 class="muted" translate>use_modules_organize</h5>
-			<br/><br/>
-			<button id="new_item" class="button green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>add_content</span></button>
-			<button id="new_module" class="button green-color-white" ng-click="addModule()" translate>courses.add_module</button>
-		</center>
+	<br/>
+	<div class="small-9 columns">
+		<div class="small-12 columns"><h5><b>Course Editor</b></h5></div>
+		<div class="small-12 columns"><p class="no-margin">Choose a module to the left view and edit its contents.</p></div>
+		<div class="small-12 columns"><p>Drag modules around to re-order them.</p></div>
+		<br />
+		<div class="small-12 columns">
+			<div class="small-3 columns">
+				<button id="new_module" class="button small green-color-white" ng-click="addModule()"translate>courses.add_module</button>
+			</div>
+			<div class="small-9 columns">
+				<p class="no-margin">Create modules to organize your course contents.</p>
+			</div>
+		</div>
+		<div class="small-12 columns">
+			<div class="small-3 columns">
+				<button class="button small green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>add_content</span></button>
+			</div>
+			<div class="small-9 columns">
+				<p class="no-margin">Choose a module to add videos, quizzes, surveys, and links.</p>
+			</div>
+		</div>
+		<div class="small-12 columns">
+			<div class="small-3 columns">
+				<button class="button small orange" ng-click="previewStudent()" translate>preview_student</button>
+			</div>
+			<div class="small-9 columns">
+				<p class="no-margin">Preview as Student to see how your content will appear to students</p>
+			</div>
+		</div>
+		<br />
+		<div class="small-12 columns"><p>Right-click on an item to Copy, Paste, or Share it with other teachers.</p></div>
 	</div>
+
 </div>
 <div id="module"  ng-if="('**.overview' | includedByState)" class="small-12 large-7 columns with-small-padding-top" ui-view="module" >	
 </div>
-<div id="middle" ng-if="('**.lecture' | includedByState) || ('**.quiz' | includedByState)" class="small-12 large-7 columns ease_in_out width-max-heigh with-small-padding-top" ng-class="{'large-12 large-centered': !delayed_details_status}" ui-view="middle"/>
+<div id="middle" ng-if="('**.lecture' | includedByState) || ('**.quiz' | includedByState)|| ('**.customlink' | includedByState)" class="small-12 large-7 columns ease_in_out width-max-heigh with-small-padding-top" ng-class="{'large-12 large-centered': !delayed_details_status}" ui-view="middle"/>
 
-<div id="details" ng-show="!('course.course_editor' | includedByState)" class="details-navigator-container no-padding ease_in_out small-12 large-5 columns" ui-view="details" ng-class="{'large-height-big small-height-big ':delayed_details_status2}"/>
+<div id="details" ng-show="!('course.course_editor' | includedByState)" class="details-navigator-container no-padding ease_in_out small-12 large-5 columns" ui-view="details" ng-class="{'details-containeropen large-height-big small-height-big ':delayed_details_status2}"/>

@@ -1,4 +1,5 @@
 var ContentNavigator = require('./pages/content_navigator');
+var CourseEditor = require('./pages/course_editor');
 var CourseList = require('./pages/course_list');
 var InvideoQuiz = require('./pages/invideo_quiz');
 var NormalQuiz = require('./pages/normal_quiz');
@@ -6,13 +7,19 @@ var Video = require('./pages/video');
 var sleep = require('./lib/utils').sleep;
 var Login = require('./pages/login');
 var Header = require('./pages/header');
+var SubHeader = require('./pages/sub_header');
+var ContentItems = require('./pages/content_items');
+
 var params = browser.params;
 var header = new Header()
+var sub_header = new SubHeader()
+var course_editor = new CourseEditor()
 var login_page = new Login()
 var course_list = new CourseList()
 var video = new Video();
 var invideo_quiz = new InvideoQuiz();
 var quiz = new NormalQuiz();
+var content_items= new ContentItems()
 var navigator = new ContentNavigator(1)
 
 var q1_x = 169;
@@ -35,12 +42,15 @@ var d_q3_y = 190;
 
 describe("Filling Course",function(){
 	describe("Teacher",function(){
-		it("should login as teacher",function(){
+		it("should login",function(){
 			login_page.sign_in(params.teacher_mail, params.password)
 		})
 		it("should open course",function(){
 			course_list.open()
 			course_list.open_course(1)
+		})
+		it("should go to edit mode",function(){
+			sub_header.open_edit_mode()
 		})
 	
 		it("should create modules",function(){
@@ -48,72 +58,81 @@ describe("Filling Course",function(){
 			course_editor.add_module();
 			course_editor.rename_module("module 1")
 			expect(navigator.modules.count()).toEqual(1)
-			sleep(50000)
-			course_editor.add_module();
+			navigator.add_module();
 			course_editor.rename_module("module 2")
 			expect(navigator.modules.count()).toEqual(2)
 		})
 		it("should add items to the first module",function(){
-			navigator.module(1).open()
-			course_editor.add_lecture()
+			var module = navigator.module(1)
+			module.open()
+			module.open_content_items()
+			content_items.add_video()
 	        course_editor.rename_item("lecture1 video quizzes")
-	        course_editor.change_video_url(params.url1)
+	        course_editor.change_item_url(params.url1)
 	        video.wait_till_ready()
 
-	        course_editor.add_lecture()
+	        module.open_content_items()
+			content_items.add_video()
 	        course_editor.rename_item("lecture2 text quizzes")
-	        course_editor.change_video_url(params.url1)
+	        course_editor.change_item_url(params.url1)
 	        video.wait_till_ready()
 
-	        course_editor.add_lecture()
+	        module.open_content_items()
+			content_items.add_video()
 	        course_editor.rename_item("lecture3 video surveys")
-	        course_editor.change_video_url(params.url1)
+	        course_editor.change_item_url(params.url1)
 			video.wait_till_ready()
 
-	        course_editor.add_quiz()
+	        module.open_content_items()
+			content_items.add_quiz()
 	        course_editor.rename_item("quiz1")
 
-	        navigator.module(1).open()
-	        course_editor.add_quiz()
+	        module.open_content_items()
+			content_items.add_quiz()
 	        course_editor.rename_item("quiz2")
 
-	        navigator.module(1).open()
-	        course_editor.add_survey()
+	        module.open_content_items()
+			content_items.add_survey()
 	        course_editor.rename_item("survey1")     
 		})
 
 		it("should add items to the second module",function(){
-			navigator.module(2).open()
-			course_editor.add_lecture()
+			var module = navigator.module(2)
+			module.open()
+			module.open_content_items()
+			content_items.add_video()
 	        course_editor.rename_item("lecture4 video quizzes")
-	        course_editor.change_video_url(params.url1)
+	        course_editor.change_item_url(params.url1)
 	        video.wait_till_ready()
 
-	        course_editor.add_lecture()
+	        module.open_content_items()
+			content_items.add_video()
 	        course_editor.rename_item("lecture5 text quizzes")
-	        course_editor.change_video_url(params.url1)
+	        course_editor.change_item_url(params.url1)
 	        video.wait_till_ready()
 
-	        course_editor.add_lecture()
+	        module.open_content_items()
+			content_items.add_video()
 	        course_editor.rename_item("lecture6 video surveys")
-	        course_editor.change_video_url(params.url1)
+	        course_editor.change_item_url(params.url1)
 			video.wait_till_ready()
 
-	        course_editor.add_quiz()
+	        module.open_content_items()
+			content_items.add_quiz()
 	        course_editor.rename_item("quiz3")
 
-	        navigator.module(2).open()
-	        course_editor.add_quiz()
+	        module.open_content_items()
+			content_items.add_quiz()
 	        course_editor.rename_item("quiz4")
 
-			navigator.module(2).open()
-	        course_editor.add_survey()
+			module.open_content_items()
+			content_items.add_survey()
 	        course_editor.rename_item("survey2")     
 		})
 
 		it("should open first lecture in first module",function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(1)
+			navigator.module(1).item(1).open()
 			navigator.close()
 		})
 
@@ -128,9 +147,9 @@ describe("Filling Course",function(){
 			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q2_x, q2_y)
 			invideo_quiz.type_explanation("explanation 2")
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q3_x, q3_y)
 			invideo_quiz.mark_correct()
-			invideo_quiz.hide_popover()
 			invideo_quiz.type_explanation("explanation 3")
 			invideo_quiz.save_quiz()
 			expect(invideo_quiz.editor_panel.isPresent()).toEqual(false);
@@ -163,7 +182,7 @@ describe("Filling Course",function(){
 		it("should open second lecture in first module",function(){
 			navigator.open()
 			navigator.module(1).open()
-			navigator.module(1).open_item(2)
+			navigator.module(1).item(2).open()
 			navigator.close()
 		})
 
@@ -217,7 +236,7 @@ describe("Filling Course",function(){
 		it("should open third lecture in first module",function(){
 			navigator.open()
 			navigator.module(1).open()
-			navigator.module(1).open_item(3)
+			navigator.module(1).item(3).open()
 			navigator.close()
 		})
 
@@ -246,7 +265,7 @@ describe("Filling Course",function(){
 		it("should open first quiz in first module",function(){
 			navigator.open()
 			navigator.module(1).open()
-			navigator.module(1).open_item(4)
+			navigator.module(1).item(4).open()
 		})
 
 		it("should add questions to quiz",function(){
@@ -318,7 +337,7 @@ describe("Filling Course",function(){
 
 		it("should open second quiz in first module",function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(5)
+			navigator.module(1).item(5).open()
 		})
 
 		it("should add questions to quiz",function(){
@@ -384,7 +403,7 @@ describe("Filling Course",function(){
 
 		it("should open survey in first module",function(){
 			navigator.module(1).open()
-			navigator.module(1).open_item(6)
+			navigator.module(1).item(6).open()
 		})
 
 		it("should add questions to survey",function(){
@@ -427,11 +446,11 @@ describe("Filling Course",function(){
 			quiz.save()
 		})
 
-		/////////////////////////////////////
+		// /////////////////////////////////////
 
 		it("should open first lecture in second module",function(){
 			navigator.module(2).open()
-			navigator.module(2).open_item(1)
+			navigator.module(2).item(1).open()
 			navigator.close()
 		})
 
@@ -446,9 +465,9 @@ describe("Filling Course",function(){
 			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q2_x, q2_y)
 			invideo_quiz.type_explanation("explanation 2")
+			invideo_quiz.hide_popover()
 			invideo_quiz.add_answer(q3_x, q3_y)
 			invideo_quiz.mark_correct()
-			invideo_quiz.hide_popover()
 			invideo_quiz.type_explanation("explanation 3")
 			invideo_quiz.save_quiz()
 
@@ -478,7 +497,7 @@ describe("Filling Course",function(){
 		it("should open second lecture in second module",function(){
 			navigator.open()
 			navigator.module(2).open()
-			navigator.module(2).open_item(2)
+			navigator.module(2).item(2).open()
 			navigator.close()
 		})
 
@@ -526,7 +545,7 @@ describe("Filling Course",function(){
 		it("should open third lecture in second module",function(){
 			navigator.open()
 			navigator.module(2).open()
-			navigator.module(2).open_item(3)
+			navigator.module(2).item(3).open()
 			navigator.close()
 		})
 
@@ -551,7 +570,7 @@ describe("Filling Course",function(){
 		it("should open quiz in second module",function(){
 			navigator.open()
 			navigator.module(2).open()
-			navigator.module(2).open_item(4)
+			navigator.module(2).item(4).open()
 		})
 
 		it("should add questions to quiz",function(){
@@ -618,7 +637,7 @@ describe("Filling Course",function(){
 
 		it("should open second quiz in second module",function(){
 			navigator.module(2).open()
-			navigator.module(2).open_item(5)
+			navigator.module(2).item(5).open()
 		})
 
 		it("should add questions to quiz",function(){
@@ -684,7 +703,7 @@ describe("Filling Course",function(){
 
 		it("should open survey in second module",function(){
 			navigator.module(2).open()
-			navigator.module(2).open_item(6)
+			navigator.module(2).item(6).open()
 		})
 
 		it("should add questions to survey",function(){

@@ -7,7 +7,7 @@ Students.prototype= Object.create({}, {
 	add_student_button:{get:function(){return element(by.id("add_students"))}},
 	enrollment_message:{get:function(){return element(by.id("enrollment_message"))}},
 	open_add_student_modal:{value:function(){
-		sub_header.show_students_menu()
+		sub_header.show_administrator_menu()
 		this.add_student_button.click()
 	}},
 	enrollment_key:{get:function(){return this.enrollment_message.element(by.binding("course.unique_identifier")).getText()}},

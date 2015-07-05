@@ -426,6 +426,19 @@ angular.module('scalearAngularApp', [
                     }
                 }
             })
+            .state('course.module.course_editor.customlink', {
+                url: '/link/:customlink_id',
+                views: {
+                    'details': {
+                        templateUrl: '/views/teacher/course_editor/customlink.details.html',
+                        controller: 'customLinkDetailsCtrl'
+                    },
+                    'middle': {
+                        templateUrl: '/views/teacher/course_editor/customlink.middle.html',
+                        controller: 'customLinkMiddleCtrl'
+                    }
+                }
+            })
             .state('course.course_editor', {
                 url: '/course_editor',
                 // templateUrl: '/views/teacher/course_editor/module.middle.html',
@@ -435,14 +448,14 @@ angular.module('scalearAngularApp', [
             })
             .state('course.progress', {
                 url: '/progress',
+                templateUrl: '/views/teacher/progress/progress.html',
+                controller: 'progressCtrl'
+            })
+            .state('course.progress_main', {
+                url: "/progress/main",
                 templateUrl: '/views/teacher/progress/progress_main.html',
                 controller: 'progressMainCtrl'
             })
-            // .state('course.progress.main', {
-            //     url: "/main",
-            //     templateUrl: '/views/teacher/progress/progress_main.html',
-            //     controller: 'progressMainCtrl'
-            // })
             .state('course.module.progress', {
                 url: "/progress",
                 templateUrl: '/views/teacher/progress/progress_lecture.html',
@@ -529,11 +542,11 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/course/teachers.html',
                 controller: 'courseTeachersCtrl'
             })
-            // .state('course.inclass', {
-            //     url: '/inclass',
-            //     templateUrl: '/views/teacher/in_class/inclass.html',
-            //     controller: 'inclassCtrl'
-            // })
+            .state('course.inclass', {
+                url: '/inclass',
+                templateUrl: '/views/teacher/in_class/inclass.html',
+                controller: 'inclassCtrl'
+            })
             .state('course.module.inclass', {
                 url: "/inclass",
                 templateUrl: '/views/teacher/in_class/inclass_module.html',

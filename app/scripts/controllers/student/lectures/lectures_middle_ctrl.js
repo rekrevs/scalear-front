@@ -18,6 +18,10 @@ angular.module('scalearAngularApp')
     $scope.TimelineNavigator = TimelineNavigator
     $scope.ContentNavigator = ContentNavigator
     $scope.ContentNavigator.open()
+    if($scope.preview_as_student){
+        $scope.TimelineNavigator.open()
+        $scope.checkModel={quiz:true,confused:false, discussion:false, note:false};
+    }
     $scope.delayed_timeline_open = $scope.TimelineNavigator.getStatus()
     $scope.$on('$destroy', function() {
         if($scope.course && $scope.course.warning_message)
@@ -170,8 +174,8 @@ angular.module('scalearAngularApp')
                 if(!$scope.preview_as_student){
                     for(var item in lec.requirements){
                         for(var id in lec.requirements[item]){
-                            var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups, data.done[1])
-                            var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, lec.requirements[item][id])//CourseEditor.get_index_by_id($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
+                            var group_index= scalear_utils.getIndexById($scope.course.groups, $stateParams.module_id)//CourseEditor.getIndexById($scope.$parent.$parent.course.groups, data.done[1])
+                            var item_index= scalear_utils.getIndexById($scope.course.groups[group_index].items, lec.requirements[item][id])//CourseEditor.getIndexById($scope.$parent.$parent.course.groups[group_index].lectures, data.done[0])
                             if(item_index!=-1 && group_index!=-1)
                                 if(!$scope.course.groups[group_index].items[item_index].is_done)
                                     $scope.passed_requirments = false
@@ -291,26 +295,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.replay=function(){
-        // $scope.studentAnswers = {}
-        // $scope.explanation = {}
-        // $scope.fullscreen = false
-        // $scope.current_time = 0
-        // $scope.total_duration = 0
-        // $scope.elapsed_width =0
-        // $scope.slow = false
-        // $scope.course.warning_message=null
-        // $scope.video_class = 'flex-video'
-        // $scope.container_class=''
-        // $scope.play_pause_class = 'play'
-        // $scope.video_end = false
-        // clearQuiz()
-        // $scope.refreshVideo()
-        // $scope.replay_play = true
-        // $scope.lecture_player.controls.play()
         $scope.seek(0)
         $timeout(function(){
             $scope.lecture_player.controls.play()
-            // $scope.play_pause_class = "pause"
         },1000)
     }
 
@@ -400,7 +387,6 @@ angular.module('scalearAngularApp')
     $scope.lecture_player.events.onPause= function(){
         console.log("pausing")
         $scope.play_pause_class = "play"
-        // if(!$scope.preview_as_student)
         if($scope.current_time != null){
             var percent_view = Math.round((($scope.current_time/$scope.total_duration)*100))
             $scope.submitPause($scope.quiz_mode,$scope.current_time);
@@ -458,8 +444,6 @@ angular.module('scalearAngularApp')
     }
 
     $scope.addConfused= function(){
-        console.log("caosdnsakn")
-        console.log($state.params.lecture_id)
         var time=$scope.lecture_player.controls.getTime()
         Lecture.confused(
         {
@@ -516,6 +500,7 @@ angular.module('scalearAngularApp')
     }
 
     var goMobileSmallScreen=function(){
+        $scope.resize.small()
         $scope.video_class = 'flex-video'
         $scope.container_class=''
         $scope.video_layer ={}
@@ -532,6 +517,7 @@ angular.module('scalearAngularApp')
     }
 
     var goMobileFullscreen=function(){
+        $scope.resize.big()
         $scope.video_class = ''
         $scope.container_class='mobile_video_full'
         $scope.video_layer ={'width':'100%','height': '90%', 'position': 'relative'}
@@ -838,20 +824,14 @@ angular.module('scalearAngularApp')
     })
 
     var returnToState=function(){
-        if($scope.last_fullscreen_state && !$scope.fullscreen){
-            goFullscreen();
-        }
-
-        if($scope.last_play_state == "pause" && ($scope.play_pause_class != "pause" && !$scope.quiz_mode)){
-            $scope.lecture_player.controls.play();
-        }
-
-        if($scope.last_timeline_state == false && $scope.TimelineNavigator.getStatus()){
+        if($scope.last_fullscreen_state && !$scope.fullscreen)
+            goFullscreen()
+        if($scope.last_play_state == "pause" && ($scope.play_pause_class != "pause" && !$scope.quiz_mode))
+            $scope.lecture_player.controls.play()
+        if($scope.last_timeline_state == false && $scope.TimelineNavigator.getStatus())
             $timeout(function(){
                $scope.TimelineNavigator.close() 
            },400)
-        }
-
         $scope.last_fullscreen_state = null
         $scope.last_play_state = null
     }

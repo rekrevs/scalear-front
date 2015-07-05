@@ -31,6 +31,10 @@ angular.module('scalearAngularApp')
             $scope.link_url=$state.href('course.module.courseware', {module_id: $scope.module.id}, {absolute: true})
             
         }
+
+        $scope.$on("update_module_statistics",function(){
+            init()
+        })
         
 
             // $scope.visible = function(appearance_time) {

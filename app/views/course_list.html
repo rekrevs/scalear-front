@@ -4,7 +4,7 @@
 <center ng-show="!courses"><br/><br/><loading size="big" show="true"/></center>
 <div id="main_course_list">
 	</br>
-	<div class="row" ng-show="courses && courses.length">
+	<div ng-show="courses && courses.length">
 		<div class="small-12 columns">
 			<span ng-show="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
 				<div class="small-4 columns">
@@ -36,7 +36,7 @@
 		</div>
 	</div>
 	<div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
-		<div class="row" ng-show="courses && !courses.length">
+		<div ng-show="courses && !courses.length">
 			<center  style="height:70px">
 				<h5 class="muted" translate>courses.no_courses</h5>
 			</center>
@@ -46,12 +46,12 @@
 	</div>
 
 	<div ng-if="current_user.roles[0].id == 2">
-		<div class="row" ng-show="courses && !courses.length">
+		<div ng-show="courses && !courses.length">
 			<center style="height:70px">
 				<h5 class="dark-text" translate>courses.enroll_instruction</h5>
 			</center>
 		</div>
-		<div class="row" ng-if="courses.length > 0" step-text="These are the courses you're enrolled in. Click the name of a course for access." step-index="2" step-placement="top" step-append-to-body="false" page-name="{{current}}">
+		<div ng-if="courses.length > 0" step-text="These are the courses you're enrolled in. Click the name of a course for access." step-index="2" step-placement="top" step-append-to-body="false" page-name="{{current}}">
 			<course-item ng-repeat="course in courses | filter:{ended:course_filter}" course='course' teachers='course.teacher_enrollments' unenroll="unenrollCourse"></course-item>
 		</div>
 	</div>

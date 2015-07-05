@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="small-12 columns">
-		<h3 >{{module.name}}</h3>
+		<h4><b>Module Editor: </b>{{module.name}}</h4>
 	</div>
 </div>
 <!-- <div class="row" style="margin-bottom:10px">
@@ -74,12 +74,20 @@
 		</table>
 	</div>	
 </div>
-<div class="row">
-	<center class="small-block-grid-3">
-		<!-- <button id="add_module_link" class="button small green-color-white no-margin" ng-click="addCustomLink()" translate>groups.add_module_link</button> -->
-		<button id="new_item"class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>add_content</span></button>
-		<button id="new_module" class="button small green-color-white no-margin" ng-click="addModule()" translate>courses.add_module</button>
-	</center>
+<br />
+<div >
+	<!-- <center> -->
+		<!-- <button id="new_item"class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>add_content</span></button>
+		<button id="new_module" class="button small green-color-white no-margin" ng-click="addModule()" translate>courses.add_module</button> -->
+		<div class="small-12 columns">
+			<div class="small-4 columns no-padding">
+				<button class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>add_content</span></button>
+			</div>
+			<div class="small-7 columns left no-padding">
+				<p class="no-margin-bottom with-small-margin-top">Add videos, quizzes, surveys, and links.</p>
+			</div>
+		</div>
+	<!-- </center> -->
 </div>
 <!-- <br />
 <div class="row">

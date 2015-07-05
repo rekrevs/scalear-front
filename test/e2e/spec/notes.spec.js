@@ -14,11 +14,6 @@ var login_page = new Login()
 var student_lec = new StudentLecture()
 
 describe("Notes",function(){
-	// describe("Teacher",function(){
-	// 	it("should logout",function(){
-	// 		header.logout()
-	// 	})
-	// })
 	describe("Student",function(){
 		it("should login", function(){
 			login_page.sign_in(params.student_mail, params.password)
@@ -30,7 +25,7 @@ describe("Notes",function(){
 		})
 		it('should open first lecture in first module', function(){
 			navigator.open()
-			navigator.module(1).open_item(3)
+			navigator.module(1).item(3).open()
 			navigator.close()
 		})
 		it("should seek to 67%",function(){

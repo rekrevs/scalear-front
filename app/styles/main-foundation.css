@@ -1275,7 +1275,7 @@ td.right-border{
   height: 8px;
   position: absolute;
   top: 0px;
-  z-index: 1;
+  /*z-index: 1;*/
   width: 100%;
 }
 @-moz-document url-prefix() {

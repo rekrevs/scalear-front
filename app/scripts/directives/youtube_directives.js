@@ -678,7 +678,7 @@ return {
 			if (onplayhead == true) {
 				scope.playhead_class=""
 				window.removeEventListener('mousemove', scope.moveplayhead, true);
-				scope.progress(e)
+				scope.progressSeek(e)
 			}
 			onplayhead = false;
 		}
@@ -687,18 +687,18 @@ return {
 	        var ratio= (event.pageX-progress_bar.offset().left)/progress_bar.outerWidth()
 	        var position = ratio*100 
 			if (position >= 0 && position <= 100){
-				scope.elapsed_head = position + "%";
-				scope.elapsed_width =position+0.7  + '%'
+				scope.elapsed_head = position>98.8? 98.8 : position
+				scope.elapsed_width =position+0.7
 				scope.current_time = scope.duration* ratio
 			}
 			if (position < 0){
-				scope.elapsed_head = "0%";
-				scope.elapsed_width = "0%"
+				scope.elapsed_head = 0;
+				scope.elapsed_width = 0
 				scope.current_time = 0
 			}
 			if (position > 100){
-				scope.elapsed_head = "98.8%";
-				scope.elapsed_width = "100%"
+				scope.elapsed_head = 98.8;
+				scope.elapsed_width = 100
 				scope.current_time = scope.duration
 			}
 			scope.$apply()
@@ -715,16 +715,28 @@ return {
 		}
 
 		player.on('timeupdate', function(){
-			scope.current_time = player.currentTime()
-			var elapsed = ((scope.current_time/scope.duration)*100)
-	        scope.elapsed_width =elapsed  + '%'
-	        scope.elapsed_head = elapsed>1? elapsed-0.7+ '%' : 0
-	        scope.elapsed_head = scope.elapsed_head>98? 98.8 : scope.elapsed_head
+			if (onplayhead == false) {
+				scope.current_time = player.currentTime()
+				scope.elapsed_width = ((scope.current_time/scope.duration)*100)
+		        scope.elapsed_head = scope.elapsed_width>1? scope.elapsed_width-0.7 : 0
+		        scope.elapsed_head = scope.elapsed_head>98.8? 98.8 : scope.elapsed_head
+		    }
 			scope.$apply()
 	    })
 
 	    player.on('ended',function(){
 	    	scope.play_class = "play";
+	    	scope.$apply()
+	    })
+
+	    player.on('pause',function(){
+	    	scope.play_class = "play";
+	    	scope.$apply()
+	    })
+
+	    player.on('playing',function(){
+	    	scope.play_class = "pause";
+	    	scope.$apply()
 	    })
 
         scope.muteToggle = function(){
@@ -808,15 +820,15 @@ return {
 	   	scope.$on('$destroy', function(){
          	shortcut.remove("b");
       		shortcut.remove("Space");
-  				unwatchMute()
+			unwatchMute()
       	});
 
-      	scope.$on("blink_blink", function(){
-      		scope.blink = "blink_btn";
-      		$timeout(function(){
-      			scope.blink = "";
-			},2000)
-      	})
+   //    	scope.$on("blink_blink", function(){
+   //    		scope.blink = "blink_btn";
+   //    		$timeout(function(){
+   //    			scope.blink = "";
+			// },2000)
+   //    	})
     }
 }
 }])

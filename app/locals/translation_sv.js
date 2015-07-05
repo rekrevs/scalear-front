@@ -877,7 +877,7 @@ var translation_sv=function(){
       requested_quiz_not_exist: "Begärd quiz existerar inte",
       succefully_submitted: "Inskickat",
       already_answered_question: "Du har redan besvarat denna fråga",
-      really_confused_use_question: "Om du är mycket förvirrad, använd fråge-knappen för att ställa en fråga så att läraren kan hjälpa dig.",
+      really_confused_use_question: "Du kan ställa en fråga så att läraren kan hjälpa dig.",
       group_not_found: "Gruppen inte hittad.",
       group_successfully_created: "Gruppen har skapats.",
       group_successfully_updated: "Gruppen har uppdaterats.",

@@ -879,7 +879,7 @@ var translation_en=function(){
         requested_quiz_not_exist: "Requested quiz does not exist",
         succefully_submitted: "Successfully Submitted",
         already_answered_question: "Sorry, you already answered this question",
-        really_confused_use_question: "If you're really confused, please use the question button to ask a question so the teacher can help you.",
+        really_confused_use_question: "You could ask a question so the teacher can help you.",
         group_not_found: "Group not found",
         group_successfully_created: "Group was successfully created.",
         group_successfully_updated: "Group was successfully updated.",

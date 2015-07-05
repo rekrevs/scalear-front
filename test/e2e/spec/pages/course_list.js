@@ -23,7 +23,7 @@ CourseList.prototype = Object.create({}, {
 	delete_course:{value:function(num){
 		var course = this.courses.get(num-1)
 		course.element(by.className('delete')).click()
-		course.element(by.className('fi-check')).click()
+		course.element(by.className('alert')).click()
 	}}
 
 });

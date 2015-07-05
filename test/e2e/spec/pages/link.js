@@ -22,7 +22,7 @@
 // 	}},
 // 	delete:{value:function(){
 // 		this.field.element(by.className('delete')).click()
-// 		this.field.element(by.className('fi-check')).click()
+// 		this.field.element(by.className('alert')).click()
 // 	}}
 // })
 

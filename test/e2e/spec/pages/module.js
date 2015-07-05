@@ -25,11 +25,11 @@ Module.prototype = Object.create({}, {
 	// delete_item:{value:function(num){
 	// 	var item = this.items.get(num-1)
 	// 	item.element(by.className('delete')).click()
-	// 	item.element(by.className('fi-check')).click()
+	// 	item.element(by.className('alert')).click()
 	// }},
 	delete:{value:function(){
 		this.field.element(by.className('delete')).click()
-		this.field.element(by.className('fi-check')).click()
+		this.field.element(by.className('alert')).click()
 	}},
 	copy:{value:function(){
 		right_click(this.name_field)

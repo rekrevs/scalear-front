@@ -26,7 +26,7 @@ Announcement.prototype = Object.create({}, {
 	delete:{value:function(num){
 		var post = this.posts.get(num-1)
 		post.element(by.className('delete')).click()
-		post.element(by.className('fi-check')).click()
+		post.element(by.className('alert')).click()
 	}}
 
 });

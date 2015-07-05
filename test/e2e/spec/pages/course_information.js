@@ -46,7 +46,7 @@ CourseInformation.prototype = Object.create({}, {
 		this.delete_teacher_button.click()
 		var teacher = this.teachers.get(num-1)
 		teacher.element(by.className('delete')).click()
-		teacher.element(by.className('fi-check')).click()
+		teacher.element(by.className('alert')).click()
 	}}
 });
 

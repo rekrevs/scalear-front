@@ -18,7 +18,7 @@ Comment.prototype = Object.create({}, {
 	vote_count:{get:function(){return this.field.element(by.binding("votes_count")).getText()}},
 	delete:{value:function(){
 		this.field.element(by.className('delete')).click()
-		this.field.element(by.className('fi-check')).click()
+		this.field.element(by.className('alert')).click()
 	}},
 })
 
@@ -48,7 +48,7 @@ Discussion.prototype = Object.create({}, {
 	vote_count:{get:function(){return this.field.element(by.binding("votes_count")).getText()}},	
 	delete:{value:function(){
 		this.field.element(by.className('delete')).click()
-		this.field.element(by.className('fi-check')).click()
+		this.field.element(by.className('alert')).click()
 	}},
 });
 
@@ -68,7 +68,7 @@ Lecture.prototype = Object.create({}, {
 	}},
 	delete_note:{value:function(num){
 		this.note(num).element(by.className('delete')).click()
-		this.note(num).element(by.className('fi-check')).click()
+		this.note(num).element(by.className('alert')).click()
 	}},
 	discussions:{get:function(){return this.field.all(by.name('discussion-timeline-item'))}},
 	discussion:{value:function(num){return new Discussion(this.discussions.get(num-1))}},

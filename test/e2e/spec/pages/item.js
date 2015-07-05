@@ -17,7 +17,7 @@ Item.prototype = Object.create({}, {
 	}},
 	delete:{value:function(){
 		this.field.element(by.className('delete')).click()
-		this.field.element(by.className('fi-check')).click()
+		this.field.element(by.className('alert')).click()
 	}},
 	copy:{value:function(){
 		right_click(this.name_field)

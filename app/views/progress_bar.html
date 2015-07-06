@@ -64,7 +64,7 @@
     <div class="progressBar" ng-click="progressSeek($event)">
         <div class="elapsed" ng-style="{width: elapsed_width + '%'}" >
         </div>
-        <div class="playhead ease-in-out" ng-class="playhead_class" ng-mousedown="playHeadMouseDown()" ng-style="{marginLeft: elapsed_head + '%' }"></div>
+        <div class="playhead ease-in-out" ng-class="playhead_class" ng-style="{marginLeft: elapsed_head + '%' }" ></div>
         <div class="progress-events-container" ng-show="timeline.items.length>1">
              <div class="progress-events" ng-repeat="element in timeline.items" ng-style="{'left':((element['time']/total_duration)*100)+'%'}" ng-click="scrollEvent(element.type, element.data.id)">
                 <span class="progress-events" ng-if="element.type=='discussion'" style="background-color: black;" tooltip="{{'answer.question'|translate}}: {{element.data.content}}"  tooltip-append-to-body="true"></span>

@@ -578,7 +578,7 @@ angular.module('scalearAngularApp')
           }, true);
       }
   };
-}]).directive('studentTimeline', ['$timeout',function($timeout) {
+}]).directive('studentTimeline', ['$timeout', 'ContentNavigator',function($timeout, ContentNavigator) {
   return {
     replace: true,
     restrict:"E",
@@ -592,7 +592,7 @@ angular.module('scalearAngularApp')
     templateUrl:'/views/student/lectures/student_timeline.html',
     link: function(scope, element, attrs) {
       // scope.checkModel={quiz:true,confused:true, discussion:true};
-
+      scope.ContentNavigator= ContentNavigator
       scope.$watch('open_timeline',function(status){
         if(status){
             $timeout(function(){

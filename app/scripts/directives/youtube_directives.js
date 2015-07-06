@@ -75,12 +75,10 @@ angular.module('scalearAngularApp')
                     	player.controls(true);
                     player.autoplay(false);
                 }
-				$log.debug("loading!!!")
-				$log.debug(scope.url);
+                if(scope.player)
+                	scope.player.element= player
 				setupEvents()
-
 				parent.focus()
-
 				scope.timeout_promise = $interval(function(){
 					if(player_controls.readyState() == 0 && !$rootScope.is_mobile)
 						scope.$emit('slow', isYoutube(scope.url))
@@ -477,7 +475,7 @@ return{
 			var factor=16.0/9.0
             var win = angular.element($window)
 
-            var progressbar_height = 80
+            var progressbar_height = 70
 
 			$scope.fullscreen = true
 			// angular.element(".quiz_list").removeClass('quiz_list').addClass('sidebar')//.children().appendTo(".sidebar");
@@ -613,15 +611,17 @@ return {
     link: function(scope, element, attrs){
     	var player = scope.player.element
 		var progress_bar= angular.element('.progressBar');
+		var playhead=document.getElementsByClassName("playhead")[0]
+		var onplayhead = false;
     	scope.current_time=0
     	scope.volume_class="mute";
         scope.quality=false;
   		scope.chosen_quality='hd720';
   		scope.chosen_speed=1
   		scope.is_mobile = $rootScope.is_mobile
-  		scope.duration = player.duration();
-		scope.play_class = "play";		
-
+  		scope.duration = scope.player.controls.getDuration();
+		scope.play_class = scope.is_mobile? "pause":"play";		
+      	
       	if(scope.player.controls.youtube){
             scope.speeds = scope.player.controls.getSpeeds();
             console.log("Speed", scope.speeds)
@@ -637,21 +637,7 @@ return {
                             {name:'1.8', value: 1.8}]
             scope.chosen_speed = $cookieStore.get('mp4_speed') || 1
             scope.player.controls.changeSpeed(scope.chosen_speed, false)
-      	}
-
-		// music.on("timeupdate", timeUpdate, false);
-
-		
-		// timeline.addEventListener("click", function (event) {
-		// 	moveplayhead(event);
-		// 	music.currentTime = scope.duration * clickPercent(event);
-		// }, false);
-
-		// playhead.addEventListener('mousedown', mouseDown, false);
-		
-
-		
-		var onplayhead = false;
+      	}		
 
 		scope.setSpeed = function(val){
 	        console.log('setting youtube speed to '+val)
@@ -671,13 +657,22 @@ return {
 			scope.playhead_class="playhead_big"
 			window.addEventListener('mousemove', scope.moveplayhead, true);
 			window.addEventListener('mouseup', scope.playHeadMouseUp, false);
-			// music.removeEventListener('timeupdate', timeUpdate, false);
-		}
+
+			window.addEventListener('touchmove', scope.moveplayhead, true);
+			window.addEventListener('touchend', scope.playHeadMouseUp, false);
+		}		
 		
+		playhead.addEventListener('mousedown', scope.playHeadMouseDown, false);
+		playhead.addEventListener('touchstart', scope.playHeadMouseDown, false);
+
 		scope.playHeadMouseUp=function(e){
 			if (onplayhead == true) {
 				scope.playhead_class=""
 				window.removeEventListener('mousemove', scope.moveplayhead, true);
+				window.removeEventListener('touchmove', scope.moveplayhead, true);
+
+				window.removeEventListener('mouseup', scope.moveplayhead, true);
+				window.removeEventListener('touchend', scope.moveplayhead, true);
 				scope.progressSeek(e)
 			}
 			onplayhead = false;
@@ -688,17 +683,17 @@ return {
 	        var position = ratio*100 
 			if (position >= 0 && position <= 100){
 				scope.elapsed_head = position>98.8? 98.8 : position
-				scope.elapsed_width =position+0.7
+				scope.elapsed_width= position+0.7
 				scope.current_time = scope.duration* ratio
 			}
 			if (position < 0){
 				scope.elapsed_head = 0;
-				scope.elapsed_width = 0
+				scope.elapsed_width= 0
 				scope.current_time = 0
 			}
 			if (position > 100){
 				scope.elapsed_head = 98.8;
-				scope.elapsed_width = 100
+				scope.elapsed_width= 100
 				scope.current_time = scope.duration
 			}
 			scope.$apply()

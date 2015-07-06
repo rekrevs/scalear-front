@@ -1,4 +1,9 @@
-<div bindonce id="student-accordion" ng-class="{'land-height medium-height-small large-height-big small-height-big portrait-medium-height':delayed_timeline_open, 'no-height': !delayed_timeline_open}" class="student_timeline lightgrey timeline_container ease_in_out large-5 small-12 land-medium-12 portrait-medium-12 columns no-padding-right portrait-no-padding no-padding-left">
+<div bindonce id="student-accordion" ng-class="{
+'land-height medium-height-small large-height-big small-height-big portrait-medium-height':delayed_timeline_open, 
+'no-height': !delayed_timeline_open,
+'land-medium-12':ContentNavigator.status,
+'land-medium-4':!ContentNavigator.status
+}" class="student_timeline lightgrey timeline_container ease_in_out large-5 small-12  portrait-medium-12 columns no-padding-right portrait-no-padding no-padding-left">
 <!-- has all discussions -->      
     <div ng-repeat="l in items" class="with-light-border no-border-top no-border-bottom no-border-right small-12" ng-class="{'border-left border-2 border-black': l.id == lecture.id}" bo-id='"outline_"+l.id'> 
         <span bo-if="l.class_name =='lecture'">

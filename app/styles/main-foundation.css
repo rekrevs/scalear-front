@@ -1275,7 +1275,7 @@ td.right-border{
   height: 8px;
   position: absolute;
   top: 0px;
-  /*z-index: 1;*/
+  z-index: 0;
   width: 100%;
 }
 @-moz-document url-prefix() {
@@ -1683,6 +1683,10 @@ input.editable-input{
 textarea.editable-input{
   font-size: 14px !important;
 }
+.check_answer_button{
+  padding-top:0.5625rem !important;
+  padding-bottom: 0.4rem !important;
+}
 /*borders*/
 .soft-border{
 	border: 1px solid #ddd;
@@ -1937,7 +1941,7 @@ a.editable-click{
 }
 
 .width-max-heigh{
-    max-width:112vh
+    max-width:128vh
 }
 
 @media only screen and (orientation:landscape) and (device-width:768px){
@@ -1995,6 +1999,11 @@ a.editable-click{
 
   .ipad .width-max-heigh{
     max-width:134vh
+  }
+
+  .ipad .check_answer_button{
+    padding-top:0.5rem !important;
+    padding-bottom: 0.28rem !important;
   }
 }
 

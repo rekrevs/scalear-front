@@ -52,9 +52,9 @@ angular.module('scalearAngularApp')
     	$scope.deleteQuizButton(quiz)
     })	
 
- 	$scope.$on('content_navigator_change',function(ev, status){
-       $timeout(function(){$scope.$emit("updatePosition")})
-    })
+ 	// $scope.$on('content_navigator_change',function(){
+  //      $timeout(function(){$scope.$emit("updatePosition")})
+  //   })
 
  	$scope.$on("add_online_quiz",function(event, quiz_type, question_type){
  		$scope.insertQuiz(quiz_type, question_type)
@@ -139,7 +139,6 @@ angular.module('scalearAngularApp')
 
  	var checkQuizTimeConflict=function(time){
  		var new_time = time 
- 		var inc = 0
  		$scope.quiz_list.forEach(function(quiz){
  		    if(quiz.time == parseInt(new_time+1))
  				new_time+= 3
@@ -401,13 +400,9 @@ angular.module('scalearAngularApp')
 				online_quiz_id: selected_quiz.id
 			},
 			{answer: ans, quiz_title:quiz.question, match_type: quiz.match_type },
-			function(data){
-				// $scope.disable_save_button = false
+			function(){
 				if(!(options && options.exit))
-					if(selected_quiz.quiz_type =="invideo")
-						getQuizData();
-					else
-						getHTMLData();
+					selected_quiz.quiz_type =="invideo"? getQuizData() : getHTMLData()						
 			},
 			function(){}
 		);

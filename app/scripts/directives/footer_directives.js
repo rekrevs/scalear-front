@@ -31,7 +31,7 @@ angular.module('scalearAngularApp')
                 link: function(scope, element) {
                     scope.toggleTechnicalDisplay = function() {
                         angular.element('.btn').blur()
-                        var modalInstance = $modal.open({
+                        $modal.open({
                             templateUrl: '/views/report_technical.html',
                             controller: "ReportTechnicalCtrl"
                         })

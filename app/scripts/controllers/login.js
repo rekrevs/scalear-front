@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler', '$timeout', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler, $timeout) {
+  .controller('LoginCtrl',['$state','$scope','$rootScope', 'scalear_api','$location','$log', '$translate', 'User', 'Page', 'ErrorHandler', function ($state, $scope, $rootScope,scalear_api, $location, $log, $translate, User, Page, ErrorHandler) {
   
   $scope.user={}
   Page.setTitle('navigation.login')

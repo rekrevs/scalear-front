@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
             CustomLink.validate(
                 {link_id: $scope.link.id},
                 {link:doc},
-                function(data){
+                function(){
                     d.resolve()
                 },function(data){
                     if(data.status==422)
@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
             return d.promise;
         }
 
-        $scope.updateLink=function(data, type){
+        $scope.updateLink=function(){
             $scope.link.url = $filter("formatURL")($scope.link.url)
             CustomLink.update(
                 {link_id: $scope.link.id},
@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
                     name: $scope.link.name
                     }
                 },
-                function(resp){
+                function(){
                     $scope.link.errors=""
                 },
                 function(resp){

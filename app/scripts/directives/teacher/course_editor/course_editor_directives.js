@@ -263,7 +263,7 @@ angular.module('scalearAngularApp')
             replace: true,
             controller: ['$scope', function($scope){
                 $scope.openModal = function () {
-                    var modalInstance = $modal.open({
+                    $modal.open({
                         templateUrl: '/views/teacher/course_editor/online_content_modal.html',
                         controller: ModalInstanceCtrl
                     })
@@ -287,7 +287,7 @@ angular.module('scalearAngularApp')
             replace: true,
             controller: ['$scope',function($scope){
                 $scope.openModal = function () {
-                    var modalInstance = $modal.open({
+                    $modal.open({
                         templateUrl: '/views/teacher/course_editor/question_types_modal.html',
                         controller: ModalInstanceCtrl,
                         windowClass: 'large'

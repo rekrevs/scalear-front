@@ -1,7 +1,7 @@
-'use strict';
+// 'use strict';
 
-angular.module('scalearAngularApp')
-  .controller('surveysProgressCtrl', ['$scope','$stateParams','$timeout','Module','$log', function ($scope, $stateParams, $timeout, Module, $log) {
+// angular.module('scalearAngularApp')
+//   .controller('surveysProgressCtrl', ['$scope','$stateParams','$timeout','Module','$log', function ($scope, $stateParams, $timeout, Module, $log) {
     
     // $scope.surveysProgressTab = function(){
     //     $scope.tabState(4)
@@ -70,4 +70,4 @@ angular.module('scalearAngularApp')
     	
     // }
 
-  }]);
+  // }]);

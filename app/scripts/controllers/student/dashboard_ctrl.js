@@ -14,13 +14,11 @@ angular.module('scalearAngularApp')
         })
     }
     var changeLang = function() {
-        if ($scope.eventSources) {
-            if($scope.myCalendar){
-                angular.element($scope.myCalendar.children()).remove();
-                var obj = ($scope.current_lang == "en") ? full_calendar_en() : full_calendar_sv();
-                obj.eventSources = $scope.eventSources;
-                $scope.myCalendar.fullCalendar(obj);
-            }
+        if ($scope.eventSources && $scope.myCalendar) {
+            angular.element($scope.myCalendar.children()).remove();
+            var obj = ($scope.current_lang == "en") ? full_calendar_en() : full_calendar_sv();
+            obj.eventSources = $scope.eventSources;
+            $scope.myCalendar.fullCalendar(obj);
         }
     }
 
@@ -28,7 +26,7 @@ angular.module('scalearAngularApp')
         angular.element('#studentCalendar').fullCalendar('render');
     }
 
-    $scope.eventRender = function( event, element, view ) { 
+    $scope.eventRender = function( event, element ) { 
          var tooltip_string = event.course_short_name+": "+event.item_title+"<br />"+$translate('controller_msg.due')+" "+$translate('at')+" "+$filter('date')(event.start, 'HH:mm')
         if(event.status==1)
             tooltip_string+="<br />"+$translate("courses.completed_on_time")
@@ -119,10 +117,6 @@ angular.module('scalearAngularApp')
         var win = window.open('', '_blank');
         if(win){ 
             win.focus();
-        }
-        else{
-            //Broswer has blocked it
-            alert('Please allow popups for Scalable Learning');
         }
         var doc = '<script>';
         doc +=  "function fireEvent(obj,evt){\n";

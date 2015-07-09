@@ -104,7 +104,6 @@ angular.module('scalearAngularApp')
                 $scope.student_progress = data.student_progress
     			$scope.total_chart = createTotalChart($scope.student_progress)	
     			$scope.loading_total_charts = false
-                $scope.$watch("current_lang", redrawChart);
     		},
     		function(){
     			//alert("Failed to load student progress, please check your internet connection")
@@ -165,14 +164,6 @@ angular.module('scalearAngularApp')
 	  	return chart
     }
     
-    var redrawChart = function(new_val, old_val){ 
-        if(new_val != old_val){
-            $scope.total_chart = {}
-            $timeout(function(){
-                $scope.total_chart = createTotalChart($scope.student_progress)
-            })
-        }
-    }
     $scope.moduleProgressTab()
 
 

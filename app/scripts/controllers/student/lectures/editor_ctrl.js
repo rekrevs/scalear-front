@@ -1,7 +1,7 @@
-'use strict';
+// 'use strict';
 
-angular.module('scalearAngularApp')
-    .controller('EditorCtrl', ['$scope','editor','doc','$stateParams','$rootScope', '$log','$window', function ($scope, editor,doc, $stateParams, $rootScope, $log, $window) {
+// angular.module('scalearAngularApp')
+    // .controller('EditorCtrl', ['$scope','editor','doc','$stateParams','$rootScope', '$log','$window', function ($scope, editor,doc, $stateParams, $rootScope, $log, $window) {
 
 //    $scope.editor = editor;
 //    $scope.doc = doc;
@@ -29,4 +29,4 @@ angular.module('scalearAngularApp')
 //    $scope.$on('loaded', $scope.init);
 //
 //    $scope.init();
-}]);
+// }]);

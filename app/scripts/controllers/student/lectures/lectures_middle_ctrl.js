@@ -534,8 +534,7 @@ angular.module('scalearAngularApp')
                 course_id:$state.params.course_id, 
                 lecture_id:$state.params.lecture_id
             },
-            {time:time}, 
-            function(data){}
+            {time:time}
         );
     })
 
@@ -765,10 +764,6 @@ angular.module('scalearAngularApp')
               win.document.write(doc);
               win.document.close();
           }
-          else{
-            //Broswer has blocked it
-            alert('Please allow popups for Scalable Learning');
-          }
         },function(){
 
         })
@@ -778,7 +773,7 @@ angular.module('scalearAngularApp')
         returnToState()
     })
 
-    $scope.$on('discussion_updated',function(ev, canceled){
+    $scope.$on('discussion_updated',function(){
         returnToState()
     })
 

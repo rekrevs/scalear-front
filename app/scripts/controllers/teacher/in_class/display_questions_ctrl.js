@@ -1,9 +1,9 @@
-'use strict';
+// 'use strict';
 
-angular.module('scalearAngularApp')
-  .controller('displayQuestionsCtrl', ['$scope','$stateParams','Module','$log', '$window','Timeline', function ($scope, $stateParams, Module, $log, $window,Timeline){
+// angular.module('scalearAngularApp')
+//   .controller('displayQuestionsCtrl', ['$scope','$stateParams','Module','$log', '$window','Timeline', function ($scope, $stateParams, Module, $log, $window,Timeline){
 
- 	$window.scrollTo(0, 0);
+//  	$window.scrollTo(0, 0);
   	// var init = function(){
   // 		Module.displayQuestions(
 	 //  		{
@@ -61,4 +61,4 @@ angular.module('scalearAngularApp')
 
 
 	// init()
-  }]);
+  // }]);

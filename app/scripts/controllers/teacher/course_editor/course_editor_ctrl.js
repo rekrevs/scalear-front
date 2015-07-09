@@ -37,7 +37,7 @@ angular.module('scalearAngularApp')
         openSharingModal(data)      
     })
 
-     $scope.$on('add_module', function(event){
+     $scope.$on('add_module', function(){
          $scope.addModule()
     })
 
@@ -208,7 +208,7 @@ angular.module('scalearAngularApp')
     			course_id: $stateParams.course_id,
     			module_id: module.id
     		},{},
-    		function(response){
+    		function(){
 				$scope.course.modules.splice($scope.course.modules.indexOf(module), 1)
 				delete $scope.module_obj[module.id]
                 emptyClipboard()
@@ -253,7 +253,7 @@ angular.module('scalearAngularApp')
     			lecture_id: item.id
     		},
     		{},
-    		function(response){
+    		function(){
                 $scope.module_obj[item.group_id].items.splice($scope.module_obj[item.group_id].items.indexOf(item),1)
                 delete $scope.items_obj["lecture"][item.id];
                 emptyClipboard()
@@ -288,7 +288,7 @@ angular.module('scalearAngularApp')
 	    		{course_id: $stateParams.course_id,
 	    		 quiz_id: item.id},
 	    		{},
-	    		function(response){
+	    		function(){
                     $scope.module_obj[item.group_id].items.splice($scope.module_obj[item.group_id].items.indexOf(item),1)
                     delete $scope.items_obj["quiz"][item.id];
                     emptyClipboard()
@@ -408,7 +408,7 @@ angular.module('scalearAngularApp')
     }
 
     var openSharingModal = function(data){
-        var modalInstance = $modal.open({
+        $modal.open({
             templateUrl: '/views/teacher/course_editor/sharing_modal.html',
             controller: "sharingModalCtrl",
             resolve: {
@@ -425,14 +425,6 @@ angular.module('scalearAngularApp')
         });
     }
 
-	var selectNone = function(){
-		$scope.modules.forEach(function(module){
-			module.selected = false
-			module.items.forEach(function(item){
-				item.selected = false
-			})
-		})
-	}
 
 	// $scope.addCustomLink=function(){
  //        Course.newCustomLink({course_id:$stateParams.course_id},

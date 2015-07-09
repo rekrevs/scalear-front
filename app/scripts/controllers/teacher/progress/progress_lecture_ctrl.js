@@ -239,13 +239,6 @@ angular.module('scalearAngularApp')
       }
       else
         $scope.selected_item =null
-      var view_index
-      if($scope.highlight_index-1 < 0)
-        view_index = 0
-      else if ($scope.selected_item && $scope.selected_item.type=="Free Text Question")
-        view_index = $scope.highlight_index
-      else
-        view_index = $scope.highlight_index-1
       scrollToItem(divs[$scope.highlight_index])
 	    $scope.inner_highlight_index = 0
       setupRemoveHightlightEvent()
@@ -267,17 +260,8 @@ angular.module('scalearAngularApp')
           $scope.manageHighlight(1)
           return
         }
-          // $scope.inner_highlight_index = inner_li.length-1
-  			// $scope.inner_highlight_index = (($scope.inner_highlight_index+x)%inner_li.length);
-    		// $scope.inner_highlight_index = $scope.inner_highlight_index < 0 ? inner_li.length+$scope.inner_highlight_index : $scope.inner_highlight_index;	    
-	    
   			angular.element(inner_li[$scope.inner_highlight_index]).addClass('highlight')
         $scope.highlight_level = 2
-        // if ($scope.selected_item && $scope.selected_item.type=="Free Text Question"){
-        //   var view_index = $scope.inner_highlight_index-3 < 0? 0: $scope.inner_highlight_index - 3
-        //   inner_li[view_index].scrollIntoView()
-        //   $timeout(function(){$window.scrollTo($window.ScrollX,150)})
-        // }
   		}
       scrollToItem(inner_li[$scope.inner_highlight_index])
 	    seekToItem()
@@ -559,7 +543,7 @@ angular.module('scalearAngularApp')
      var discussion = items[index]
      Forum.deletePost(
       {post_id: discussion.post.id}, 
-      function(response){
+      function(){
         items.splice(index,1)
       },
       function(){}
@@ -570,7 +554,7 @@ angular.module('scalearAngularApp')
   $scope.deleteComment=function(comment, discussion){
     Forum.deleteComment(
       {comment_id: comment.comment.id, post_id: discussion.id}, 
-      function(response){
+      function(){
         discussion.comments.splice(discussion.comments.indexOf(comment),1)
       }, 
       function(){}

@@ -51,14 +51,14 @@ angular.module('scalearAngularApp')
 				            return pop;
 			          	};
 
-			          	var adjustLeft = function(pop){			          		
-				            var win = angular.element($window)
-			          		if(pop.right + angular.element('.popover').width() + 15  >  win.width()){
-								pop.left = pop.left -((pop.right + angular.element('.popover').width()) - win.width()+20) 
-								angular.element('.popover').css('z-index', '10000')
-								angular.element('.popover').css('position', 'absolute')
-							}
-			          	}
+			    //       	var adjustLeft = function(pop){			          		
+				   //          var win = angular.element($window)
+			    //       		if(pop.right + angular.element('.popover').width() + 15  >  win.width()){
+							// 	pop.left = pop.left -((pop.right + angular.element('.popover').width()) - win.width()+20) 
+							// 	angular.element('.popover').css('z-index', '10000')
+							// 	angular.element('.popover').css('position', 'absolute')
+							// }
+			    //       	}
 
 			          	var adjustTop=function(pop){
 			          		console.log("topcut")
@@ -66,7 +66,7 @@ angular.module('scalearAngularApp')
 				            var arrow = angular.element(".arrow")
 							var elem_top= element.offset().top
 							console.log(elem_top)
-							var elem_bottom= win.height() - elem_top;
+							// var elem_bottom= win.height() - elem_top;
 							var arrow_pos
 							if(elem_top<225){ //too close to top
 								console.log(angular.element('.popover').parent().position())

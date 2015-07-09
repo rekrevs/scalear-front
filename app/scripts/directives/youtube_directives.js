@@ -419,7 +419,7 @@ return{
 		$scope.resize.small = function()
 		{
             $rootScope.changeError = false;
-			var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
+			// var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 			$scope.fullscreen = false
 
 
@@ -460,7 +460,7 @@ return{
             // angular.extend($scope.ontop_layer, layer)
             // angular.extend($scope.ontop_layer, {"z-index":0})
 			
-			$timeout(function(){$scope.$emit("updatePosition")})
+			// $timeout(function(){$scope.$emit("updatePosition")})
 			if($scope.unregister_back_event)
 				$scope.unregister_back_event()
 			if($scope.unregister_state_event)	
@@ -549,7 +549,7 @@ return{
             // angular.extend($scope.ontop_layer, layer)
             // angular.extend($scope.ontop_layer,{"z-index":1031});
 
-		 	$timeout(function(){$scope.$emit("updatePosition")})
+		 	// $timeout(function(){$scope.$emit("updatePosition")})
 
 		 	$scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
 		        event.preventDefault()

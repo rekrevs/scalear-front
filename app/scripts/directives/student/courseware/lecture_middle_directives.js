@@ -422,7 +422,7 @@ angular.module('scalearAngularApp')
       }
 
       scope.setDropped=function(event, ui){
-        var drop_elem = angular.element(elem[0]).find('div')
+        // var drop_elem = angular.element(elem[0]).find('div')
         if(!scope.studentAnswers[scope.quiz.id][scope.data.id]){
           ui.draggable.css('background-color', 'lightblue')          
           ui.draggable.css('width', (scope.data.width*100)+'%')          
@@ -491,13 +491,13 @@ angular.module('scalearAngularApp')
           	draggable.popover("destroy")
       }
       
-      var resizeAnswer= function(draggable){
-        $log.debug('in resize answer')
-        draggable.width(scope.width);
-        draggable.height(scope.height);
-        draggable.css('left', scope.xcoor+2)
-        draggable.css('top', scope.ycoor+2)
-      }
+      // var resizeAnswer= function(draggable){
+      //   $log.debug('in resize answer')
+      //   draggable.width(scope.width);
+      //   draggable.height(scope.height);
+      //   draggable.css('left', scope.xcoor+2)
+      //   draggable.css('top', scope.ycoor+2)
+      // }
      
       scope.$watch('explanation[data.id]', function(newval){
         if(scope.explanation && scope.explanation[scope.data.id]){
@@ -537,48 +537,49 @@ angular.module('scalearAngularApp')
 //     link: function(scope, elem, attrsß) {}
 //   }
 // }])
-.directive('aceEditor',['editor','$interval', function (editor, $interval) {
-  return {
-      restrict: 'A',
-      scope: {
-          sync: "=",
-          player: "=",
-          lecture:"=",
-          editors:"=",
-          seek:"&"
-      },
-      link: function (scope, element) {
-          scope.$on('$destroy', function() {
-              //editor.destroy();
-              $interval.cancel(scope.editor.autosave);
-              scope.editor.doc.dirty=false;
-              scope.editor.doc.lastSave = 0;
-              scope.editor.doc.info=null;
-              delete scope.editor;
-          });
+// .directive('aceEditor',['editor','$interval', function (editor, $interval) {
+//   return {
+//       restrict: 'A',
+//       scope: {
+//           sync: "=",
+//           player: "=",
+//           lecture:"=",
+//           editors:"=",
+//           seek:"&"
+//       },
+//       link: function (scope, element) {
+//           scope.$on('$destroy', function() {
+//               //editor.destroy();
+//               $interval.cancel(scope.editor.autosave);
+//               scope.editor.doc.dirty=false;
+//               scope.editor.doc.lastSave = 0;
+//               scope.editor.doc.info=null;
+//               delete scope.editor;
+//           });
 
-          scope.editor = new editor();
-          scope.editor.rebind(element[0]);
-          scope.editors[scope.lecture.id]=scope.editor;
-          //scope.editor.resize();
+//           scope.editor = new editor();
+//           scope.editor.rebind(element[0]);
+//           scope.editors[scope.lecture.id]=scope.editor;
+//           //scope.editor.resize();
 
-          scope.$watch("lecture", function(val){
-              if(scope.lecture){
-                  //editor.create(scope.url);
-                  console.log(scope.lecture.name)
-                 scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note, scope.seek);
-              }
-          })
+//           scope.$watch("lecture", function(val){
+//               if(scope.lecture){
+//                   //editor.create(scope.url);
+//                   console.log(scope.lecture.name)
+//                  scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note, scope.seek);
+//               }
+//           })
 
-          scope.$watch('sync', function (newValue, oldValue) {
-              if (newValue !== oldValue) {
-                  var gutter = $(element).find('.ace_gutter');
-                  newValue ? gutter.removeClass('inactive') : gutter.addClass('inactive');
-              }
-          }, true);
-      }
-  };
-}]).directive('studentTimeline', ['$timeout', 'ContentNavigator',function($timeout, ContentNavigator) {
+//           scope.$watch('sync', function (newValue, oldValue) {
+//               if (newValue !== oldValue) {
+//                   var gutter = $(element).find('.ace_gutter');
+//                   newValue ? gutter.removeClass('inactive') : gutter.addClass('inactive');
+//               }
+//           }, true);
+//       }
+//   };
+// }])
+.directive('studentTimeline', ['$timeout', 'ContentNavigator',function($timeout, ContentNavigator) {
   return {
     replace: true,
     restrict:"E",

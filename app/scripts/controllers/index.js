@@ -9,9 +9,7 @@ angular.module('scalearAngularApp')
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
             $scope.ContentNavigator = ContentNavigator
             
-            $scope.$on("get_current_courses",function(){
-                getCurrentCourses()
-            })
+            
             $scope.ContentNavigator.delayed_navigator_open = $scope.ContentNavigator.status
 
             $scope.$on('content_navigator_change',function(ev, status){
@@ -41,6 +39,10 @@ angular.module('scalearAngularApp')
                     }
                 });                
             }
+
+            $scope.$on("get_current_courses",function(){
+                getCurrentCourses()
+            })
             
             $scope.changeLanguage = function(key) {
                 $log.debug("in change language " + key);

@@ -1,4 +1,4 @@
-.header-container{
+/*.header-container{
 	width: 100%;
 	background-color: currentcolor;
 	box-shadow: 1px 1px 1px black;
@@ -33,13 +33,10 @@
 	min-width: 40%;
 	max-width: 100%;
 	overflow-x: auto;
-	/*overflow-y: auto; */
 	height: auto;
 	
-	/*max-height: 400px;*/
 	
 	
-	/*display: -webkit-box;*/
 	padding-left: 5px;
 	padding-right: 5px;
 	margin-top: -10px;
@@ -60,59 +57,46 @@
 		
 		height: auto;
 		
-		/*max-height: 400px;*/
+
 		
 		
-		/*display: -webkit-box;*/
+
 		padding-left: 5px;
 		padding-right: 5px;
 		margin-top: -10px;
 		z-index: 1;
 	}
-}
-/*.multicol > div{
+
 	margin-top: 5px;
 	margin-bottom: 5px;
 	text-align: center;
 	width: 150px;
 	position: relative;
 	border-right: 2px dotted rgb(0, 162, 86);
-}*/
+}
 
 
 .multicol {
 	margin: 10px;
 	padding: 10px;
 	padding-bottom: 15px;
-	/* CSS3 */
-	/*column-count: 3; */
 	column-rule: 2px dotted rgb(0, 162, 86);
 
-	/* Safari and Chrome */
-	/*-webkit-column-count: 3;*/
 	-webkit-column-rule: 2px dotted rgb(0, 162, 86);
 
-	/* Firefox */
-	/*-moz-column-count: 3; */
 	-moz-column-rule: 2px dotted rgb(0, 162, 86);
 
-	/* Internet Explorer */
-	/*-ms-column-count: 3; */
 	-ms-column-rule: 2px dotted rgb(0, 162, 86);
 
-	/* Opera */
-	/*-o-column-count: 3; */
 	-o-column-rule: 2px dotted rgb(0, 162, 86);
 
 	vertical-align:text-top;
-	/*max-height:100px;*/
 }
 
 .multicol div {
 	margin-top: 5px;
 	margin-bottom: 5px;
 	text-align: center;
-	/*width: 150px;*/
 	width: 90%;
 	position: relative;
 	break-before: column;
@@ -139,4 +123,4 @@
 }
 .bar-container{
 	width: 100%;
-}
+}*/

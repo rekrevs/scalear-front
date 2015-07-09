@@ -21,28 +21,18 @@ angular.module('scalearAngularApp')
 	                module_id:$stateParams.module_id
 	            },
 	    		function(data){
-	    			$log.debug(data)
-	    			console.log("student statistics")
-	    			console.log(data)
 	    			$scope.statistics = data
     			 	$scope.lecture_url =($scope.statistics.lecture_url == "none") ? "" : $scope.statistics.lecture_url
-            if(isYoutube($scope.lecture_url)){
-              $scope.lecture_url += "&controls=1&autohide=1&fs=1&theme=light"
-            }
+		            if(isYoutube($scope.lecture_url)){
+		              $scope.lecture_url += "&controls=1&autohide=1&fs=1&theme=light"
+		            }
 	    			$scope.loading_statistics_chart=false
 	    			var win = angular.element($window)
 					$scope.win_width = (90.5*win.width())/100
-					console.log(win.width())
-	    			console.log($scope.win_width)
-	    			console.log($scope.statistics.width)
 	    			var scale = $scope.win_width/$scope.statistics.width
 	    			$scope.statistics.lecture_names.forEach(function(name){
-	    				console.log(name[0])
-			    		name[0] = (name[0]* scale)
-	    				console.log(name[0])
-	    				console.log("-------")
+						name[0]*= scale
 			    	})
-	    			$scope.$watch("current_lang", redrawChart);
 	    		},
 	    		function(){}
     		)
@@ -205,16 +195,5 @@ angular.module('scalearAngularApp')
 	        else
              	$scope.statistics_player.controls.seek_and_pause(to_seek)
 		  }
-
-
-	    var redrawChart = function(new_val, old_val){ 
-	        if(new_val != old_val){
-	            var temp = angular.copy($scope.types)
-	            $scope.types = {}
-	            $timeout(function(){
-	                $scope.types = temp
-	            })
-	        }
-	    }
 
   }]);

@@ -295,12 +295,12 @@ input[type="checkbox"], input[type="radio"] {
 /*.currentitem{*/
       /*background-color: #2d2d2d !important;*/
 /*}*/
-.courseware-item-circle{
+/*.courseware-item-circle{
     background: darkgrey;
     border-radius: 200px;
     margin-top: 2px;
     vertical-align: text-bottom;
-}
+}*/
 .itemdone{
   /*border: 2px solid rgb(0, 162, 86);*/
   /*border: 2px solid lightgreen;*/

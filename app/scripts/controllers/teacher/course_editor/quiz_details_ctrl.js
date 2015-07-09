@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
                 }
             })
 
-            $scope.updateQuiz = function(data, type) {
+            $scope.updateQuiz = function() {
                 var modified_quiz = angular.copy($scope.quiz);
                 delete modified_quiz.class_name;
                 delete modified_quiz.created_at;
@@ -105,7 +105,7 @@ angular.module('scalearAngularApp')
                 Quiz.validateQuiz({
                     course_id: $stateParams.course_id,
                     quiz_id: $scope.quiz.id
-                }, quiz, function(data) {
+                }, quiz, function() {
                     d.resolve()
                 }, function(data) {
                     $log.debug(data.status);

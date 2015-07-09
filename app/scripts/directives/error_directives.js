@@ -9,7 +9,7 @@ angular.module('scalearAngularApp')
             	 },
             	 replace:true,
             	 templateUrl: "/views/app_messages.html",
-                 link: function(scope, element, attrs) {
+                 link: function(scope, element) {
                 	 ErrorHandler.elementsList.push($(element));
                  }
             };
@@ -23,7 +23,7 @@ angular.module('scalearAngularApp')
     	},
     	replace:true,
     	template: "<div ng-if='error' class='errormessage valign-super'>{{error}}</div>",
-        link: function(scope, element, attrs) {
+        link: function(scope) {
         	$log.debug("in error directive")
         	scope.$watch(function(){
         		if(scope.data)

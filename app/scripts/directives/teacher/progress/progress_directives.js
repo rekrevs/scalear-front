@@ -171,13 +171,13 @@ angular.module('scalearAngularApp')
 	    }
     };
 })
-.directive("tab1",function(){
-    return{
-	    restrict: "E",
-	    controller: "lectureQuizzesCtrl",
-	    templateUrl:'/views/teacher/progress/lecture_quizzes_tab.html' 
-    };
-})
+// .directive("tab1",function(){
+//     return{
+// 	    restrict: "E",
+// 	    controller: "lectureQuizzesCtrl",
+// 	    templateUrl:'/views/teacher/progress/lecture_quizzes_tab.html' 
+//     };
+// })
 .directive("tab2",function(){
     return{
 	    restrict: "E",
@@ -192,20 +192,20 @@ angular.module('scalearAngularApp')
 	    templateUrl:'/views/teacher/progress/lecture_progress_tab.html' 
     };
 })
-.directive("tab4",function(){
-    return{
-	    restrict: "E",
-	    controller: "quizzesProgressCtrl",
-	    templateUrl:'/views/teacher/progress/quizzes_progress_tab.html' 
-    };
-})
-.directive("tab5",function(){
-    return{
-	    restrict: "E",
-	    controller: "surveysProgressCtrl",
-	    templateUrl:'/views/teacher/progress/surveys_progress_tab.html' 
-    };
-})
+// .directive("tab4",function(){
+//     return{
+// 	    restrict: "E",
+// 	    controller: "quizzesProgressCtrl",
+// 	    templateUrl:'/views/teacher/progress/quizzes_progress_tab.html' 
+//     };
+// })
+// .directive("tab5",function(){
+//     return{
+// 	    restrict: "E",
+// 	    controller: "surveysProgressCtrl",
+// 	    templateUrl:'/views/teacher/progress/surveys_progress_tab.html' 
+//     };
+// })
 .directive("tab6",function(){
     return{
 	    restrict: "E",
@@ -213,84 +213,86 @@ angular.module('scalearAngularApp')
 	    templateUrl:'/views/teacher/progress/surveys_tab.html' 
     };
 })
-.directive("tab7",function(){
-    return{
-	    restrict: "E",
-	    controller: "quizzesCtrl",
-	    templateUrl:'/views/teacher/progress/quizzes_tab.html' 
-    };
-}).directive('progressItem',['scalear_utils','$state', function(scalear_utils, $state){
-	return {
-		 scope: {
-		 	circlesize: '@',
-		 	name:'=',
-		 	id:'=',
-            groupId: '=',
-		 	className:'=',
-		 	quizType:"=",
-		 	spacing: '=',
-		 	selected: '='
-		 },
-		 restrict: 'E', 
-		 templateUrl: '/views/teacher/progress/progress_item.html',
-		 link: function(scope, element){
-		 	scope.type= scope.className=="Quiz"? scalear_utils.capitalize(scope.quizType): scope.className;
-             scope.url_with_protocol = function(url)
-             {
-                 if(url)
-                     return url.match(/^http/)? url: 'http://'+url;
-                 else
-                     return url;
-             }
-            scope.showItem= function(item_id)
-		 	{	
+// .directive("tab7",function(){
+//     return{
+// 	    restrict: "E",
+// 	    controller: "quizzesCtrl",
+// 	    templateUrl:'/views/teacher/progress/quizzes_tab.html' 
+//     };
+// })
+// .directive('progressItem',['scalear_utils','$state', function(scalear_utils, $state){
+// 	return {
+// 		 scope: {
+// 		 	circlesize: '@',
+// 		 	name:'=',
+// 		 	id:'=',
+//             groupId: '=',
+// 		 	className:'=',
+// 		 	quizType:"=",
+// 		 	spacing: '=',
+// 		 	selected: '='
+// 		 },
+// 		 restrict: 'E', 
+// 		 templateUrl: '/views/teacher/progress/progress_item.html',
+// 		 link: function(scope, element){
+// 		 	scope.type= scope.className=="Quiz"? scalear_utils.capitalize(scope.quizType): scope.className;
+//              scope.url_with_protocol = function(url)
+//              {
+//                  if(url)
+//                      return url.match(/^http/)? url: 'http://'+url;
+//                  else
+//                      return url;
+//              }
+//             scope.showItem= function(item_id)
+// 		 	{	
 		 		
-		 	}
-		 }
-	};
-}]).directive('progressNavigator',['scalear_utils','$state', function(scalear_utils, $state){
-	return {
-		 scope: {
-		 	circlesize: '@',
-		 	modules: '='
-		 },
-		 restrict: 'E', 
-		 templateUrl: '/views/teacher/progress/progress_navigator.html',
-		 link: function(scope, element){
-		 	scope.$watch('done', function(){
-		 		var canvas;
-				var ctx;
-				// console.log(element.children())
-				var bg = element.children()[1].children[0]
-				var ctx = ctx = bg.getContext('2d');
-		 		if(scope.done == true){
-					ctx.clearRect(0, 0, bg.width, bg.height);
-					ctx.fillStyle = 'lightgreen';
-					ctx.beginPath();
-					ctx.moveTo(bg.width/2,bg.height/2);
-					// console.log(scope.percentage)
-					ctx.arc(bg.width/2,bg.height/2,bg.height/2,0,(Math.PI*2*(1)),false);
-					ctx.lineTo(bg.width/2,bg.height/2);
-					ctx.fill();
-		 		}
+// 		 	}
+// 		 }
+// 	};
+// }])
+// .directive('progressNavigator',['scalear_utils','$state', function(scalear_utils, $state){
+// 	return {
+// 		 scope: {
+// 		 	circlesize: '@',
+// 		 	modules: '='
+// 		 },
+// 		 restrict: 'E', 
+// 		 templateUrl: '/views/teacher/progress/progress_navigator.html',
+// 		 link: function(scope, element){
+// 		 	scope.$watch('done', function(){
+// 		 		var canvas;
+// 				var ctx;
+// 				// console.log(element.children())
+// 				var bg = element.children()[1].children[0]
+// 				var ctx = ctx = bg.getContext('2d');
+// 		 		if(scope.done == true){
+// 					ctx.clearRect(0, 0, bg.width, bg.height);
+// 					ctx.fillStyle = 'lightgreen';
+// 					ctx.beginPath();
+// 					ctx.moveTo(bg.width/2,bg.height/2);
+// 					// console.log(scope.percentage)
+// 					ctx.arc(bg.width/2,bg.height/2,bg.height/2,0,(Math.PI*2*(1)),false);
+// 					ctx.lineTo(bg.width/2,bg.height/2);
+// 					ctx.fill();
+// 		 		}
 
-		 	})
+// 		 	})
 
-		 	scope.type= scope.className=="Quiz"? scalear_utils.capitalize(scope.quizType): scope.className;
-             scope.url_with_protocol = function(url)
-             {
-                 if(url)
-                     return url.match(/^http/)? url: 'http://'+url;
-                 else
-                     return url;
-             }
-            scope.showItem= function(item_id)
-		 	{	
+// 		 	scope.type= scope.className=="Quiz"? scalear_utils.capitalize(scope.quizType): scope.className;
+//              scope.url_with_protocol = function(url)
+//              {
+//                  if(url)
+//                      return url.match(/^http/)? url: 'http://'+url;
+//                  else
+//                      return url;
+//              }
+//             scope.showItem= function(item_id)
+// 		 	{	
 		 		
-		 	}
-		 }
-	};
-}])
+// 		 	}
+// 		 }
+// 	};
+// }])
 // .directive('whenScrolled', function() {
 //     return function(scope, elm, attr) {
 //         var raw = elm[0];

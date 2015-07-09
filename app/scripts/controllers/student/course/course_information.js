@@ -32,26 +32,24 @@ angular.module('scalearAngularApp')
             return url;
     }
     $scope.shorten = function(url, l){
-        var l = typeof(l) != "undefined" ? l : 50;
-        var chunk_l = (l/2);
-        var url = url.replace("http://","").replace("https://","");
-
-        if(url.length <= l){ return url; }
-
-        var start_chunk = shortString(url, chunk_l, false);
-        var end_chunk = shortString(url, chunk_l, true);
+        var length = typeof(l) != "undefined" ? l : 50;
+        var link = url.replace("http://","").replace("https://","");
+        if(link.length <= length)
+            return link
+        var chunk_length = length/2
+        var start_chunk = shortString(link, chunk_length, false);
+        var end_chunk = shortString(link, chunk_length, true);
         return start_chunk + ".." + end_chunk;
     }
 
     var shortString = function(s, l, reverse){
         var stop_chars = [' ','/', '&'];
         var acceptable_shortness = l * 0.80; // When to start looking for stop characters
-        var reverse = typeof(reverse) != "undefined" ? reverse : false;
-        var s = reverse ? s.split("").reverse().join("") : s;
+        var text = reverse? s.split("").reverse().join("") : s;
         var short_s = "";
 
         for(var i=0; i < l-1; i++){
-            short_s += s[i];
+            short_s += text[i];
             if(i >= acceptable_shortness && stop_chars.indexOf(s[i]) >= 0){
                 break;
             }

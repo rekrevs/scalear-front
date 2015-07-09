@@ -25,14 +25,14 @@ angular.module('scalearAngularApp')
     });
 
     $scope.open = function () {
-        var modalInstance = $modal.open({
+        $modal.open({
             templateUrl: '/views/users/confirm_delete.html',
             controller: "ConfirmDeleteCtrl"
         })
     }
 
     $scope.open_require_password = function () {
-        var modalInstance = $modal.open({
+        $modal.open({
             templateUrl: '/views/users/update_account_info.html',
             controller: 'SaveAccountCtrl',
             resolve: {

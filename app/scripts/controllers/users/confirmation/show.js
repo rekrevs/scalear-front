@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
         if(result==0)
         {
 
-        User.show_confirmation({confirmation_token: $stateParams.confirmation_token }, function(data){
+        User.show_confirmation({confirmation_token: $stateParams.confirmation_token }, function(){
 
                 $timeout(function(){
                    //$state.go("login",{},{reload:true})

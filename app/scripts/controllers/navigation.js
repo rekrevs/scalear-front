@@ -1,7 +1,7 @@
-'use strict';
+// 'use strict';
 
-angular.module('scalearAngularApp')
-  .controller('navigationCtrl', ['$scope', '$state','$stateParams', 'Course', '$log', '$rootScope', function ($scope, $state, $stateParams, Course, $log, $rootScope) {
+// angular.module('scalearAngularApp')
+//   .controller('navigationCtrl', ['$scope', '$state','$stateParams', 'Course', '$log', '$rootScope', function ($scope, $state, $stateParams, Course, $log, $rootScope) {
 // console.log('-------->')
 //   	console.log($rootScope)
   	// $scope.current_course_id= $stateParams.course_id;
@@ -25,4 +25,4 @@ angular.module('scalearAngularApp')
  //            return url;
  //    }
   	
-  }]);
+  // }]);

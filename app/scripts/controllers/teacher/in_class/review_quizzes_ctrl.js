@@ -51,15 +51,15 @@ angular.module('scalearAngularApp')
             var formated_data = {}
             formated_data.cols =
                 [{
-                "label": $translate('courses.students'),
-                "type": "string"
-            }, {
-                "label": $translate('lectures.correct'),
-                "type": "number"
-            }, {
-                "label": $translate('lectures.incorrect'),
-                "type": "number"
-            }, ]
+                    "label": $translate('courses.students'),
+                    "type": "string"
+                },{
+                    "label": $translate('lectures.correct'),
+                    "type": "number"
+                },{
+                    "label": $translate('lectures.incorrect'),
+                    "type": "number"
+                }]
             formated_data.rows = []
             for (var ind in data) {
                 var text, correct, incorrect
@@ -79,7 +79,7 @@ angular.module('scalearAngularApp')
                         "v": correct
                     }, {
                         "v": incorrect
-                    }, ]
+                    }]
                 }
                 formated_data.rows.push(row)
             }
@@ -104,7 +104,7 @@ angular.module('scalearAngularApp')
                         "count": 9
                     },
                     "maxValue": student_count
-                },
+                }
             };
             chart.data = $scope.formatLectureChartData(chart_data[id])
             return chart

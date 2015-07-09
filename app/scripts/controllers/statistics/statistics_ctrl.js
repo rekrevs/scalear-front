@@ -1,7 +1,7 @@
 
 
 angular.module('scalearAngularApp')
-  .controller('statisticsCtrl',['$scope', 'Kpi','$translate','Page','$rootScope','$translate', function ($scope, Kpi,$translate, Page, $rootScope, $translate) {
+  .controller('statisticsCtrl',['$scope', 'Kpi','Page','$rootScope','$translate', function ($scope, Kpi, Page, $rootScope, $translate) {
 
     Page.setTitle('courses.statistics');
     $rootScope.subheader_message = $translate("statistics.statistics_dashboard")
@@ -94,7 +94,7 @@ angular.module('scalearAngularApp')
                 type: 'line',
                 name: '#',
                 pointInterval: 24 * 3600 * 1000,
-                pointStart: Date.UTC(2013, 0, 1),
+                pointStart: Date.UTC(2013, 0, 1)
             }],
             title: {
                 text: null
@@ -112,7 +112,7 @@ angular.module('scalearAngularApp')
                     text: null
                 }
             },
-            loading: false,
+            loading: false
         }
     }
 

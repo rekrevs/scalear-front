@@ -662,7 +662,7 @@ angular.module('scalearAngularApp')
 		}, {
 		    "label": $translate('lectures.incorrect'),
 		    "type": "number"
-		}, ]
+		}]
 		formated_data.rows = []
 		for (var ind in data) {
 		    var text, correct, incorrect
@@ -686,7 +686,7 @@ angular.module('scalearAngularApp')
 		            "v": correct
 		        }, {
 		            "v": incorrect
-		        }, ]
+		        }]
 		    }
 		    formated_data.rows.push(row)
 		}
@@ -705,7 +705,7 @@ angular.module('scalearAngularApp')
       }, {
           "label": $translate('lectures.incorrect'),
           "type": "number"
-      }, ]
+      }]
       formated_data.rows = []
       var text, correct, incorrect
       for (var ind in data) {
@@ -725,7 +725,7 @@ angular.module('scalearAngularApp')
                   "v": correct
               }, {
                   "v": incorrect
-              }, ]
+              }]
           }
           formated_data.rows.push(row)
       }
@@ -738,7 +738,7 @@ angular.module('scalearAngularApp')
     formated_data.cols=
         [
             {"label": $translate('courses.students'),"type": "string"},
-            {"label": $translate('controller_msg.answered'),"type": "number"},
+            {"label": $translate('controller_msg.answered'),"type": "number"}
         ]
     formated_data.rows= []
     for(var ind in data)
@@ -806,7 +806,7 @@ angular.module('scalearAngularApp')
 		            "count": 7
 		        },
 		        "viewWindow":{"max":student_count}
-		    },
+		    }
 		};
 		angular.extend(chart.options,options)
 

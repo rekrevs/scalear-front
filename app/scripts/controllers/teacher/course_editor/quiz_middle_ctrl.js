@@ -56,7 +56,7 @@ angular.module('scalearAngularApp')
 					cursor: 'crosshair',
 					items: '.quiz_sort',
 					opacity: 0.4,
-					scroll: true,
+					scroll: true
 			 	}
 				 
 		    });

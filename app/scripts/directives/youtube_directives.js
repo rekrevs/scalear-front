@@ -517,7 +517,7 @@ return{
 					"width":win.width()-$scope.max_width,
 					"height":video_height,
 					"margin-top": margin_top+"px",
-					"margin-left":"0px",
+					"margin-left":"0px"
 					// "z-index": 1531
 				}		
 			}
@@ -535,7 +535,7 @@ return{
 					"width":video_width,
 					"height":video_height,
 					"margin-left": margin_left+"px",
-					"margin-top":"0px",
+					"margin-top":"0px"
 					// "z-index": 1531
 				}		
 			 }
@@ -603,7 +603,7 @@ return {
         // current_time: '=currentTime',
         // total_duration: '=totalDuration',
         seek: "&",
-        timeline: '=',
+        timeline: '='
         // videoready: '=',
         // blink : "="
     },
@@ -816,6 +816,8 @@ return {
          	shortcut.remove("b");
       		shortcut.remove("Space");
 			unwatchMute()
+			playhead.removeEventListener('mousedown', scope.playHeadMouseDown, false);
+			playhead.removeEventListener('touchstart', scope.playHeadMouseDown, false);
       	});
 
    //    	scope.$on("blink_blink", function(){

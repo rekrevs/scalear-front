@@ -33,7 +33,7 @@ angular.module('scalearAngularApp')
                         angular.element('.btn').blur()
                         var modalInstance = $modal.open({
                             templateUrl: '/views/report_technical.html',
-                            controller: "ReportTechnicalCtrl",
+                            controller: "ReportTechnicalCtrl"
                         })
                     }
                 }

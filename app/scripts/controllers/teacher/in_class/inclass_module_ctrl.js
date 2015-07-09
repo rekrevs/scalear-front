@@ -573,7 +573,7 @@ angular.module('scalearAngularApp')
     formated_data.cols=
         [
             {"label": $translate('courses.students'),"type": "string"},
-            {"label": $translate('controller_msg.answered'),"type": "number"},
+            {"label": $translate('controller_msg.answered'),"type": "number"}
         ]
     formated_data.rows= []
     for(var ind in data)
@@ -582,7 +582,7 @@ angular.module('scalearAngularApp')
       {"c":
           [
             {"v": data[ind][1]},
-            {"v": data[ind][0]},
+            {"v": data[ind][0]}
           ]
       }
       formated_data.rows.push(row)

@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
     $scope.open = function () {
         var modalInstance = $modal.open({
             templateUrl: '/views/users/confirm_delete.html',
-            controller: "ConfirmDeleteCtrl",
+            controller: "ConfirmDeleteCtrl"
         })
     }
 

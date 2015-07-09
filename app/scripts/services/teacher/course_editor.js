@@ -76,7 +76,7 @@ angular.module('scalearAngularApp')
 			var y={
 				content: ans || "",
 				correct:false,
-				question_id:question_id,
+				question_id:question_id
 			}
 		}
 		return y;

@@ -289,7 +289,7 @@ angular.module('scalearAngularApp')
         angular.element('.button').blur()
         var modalInstance = $modal.open({
             templateUrl: '/views/student/course_list/enroll_modal.html',
-            controller: "StudentEnrollModalCtrl",
+            controller: "StudentEnrollModalCtrl"
         })
 
         // modalInstance.result.then(function (enrollment_key) {
@@ -321,7 +321,7 @@ angular.module('scalearAngularApp')
         angular.element('.button').blur()
         var modalInstance = $modal.open({
             templateUrl: '/views/student/calendar/calendar.html',
-            controller: "CalendarModalCtrl",
+            controller: "CalendarModalCtrl"
         })
       }
 
@@ -337,7 +337,7 @@ angular.module('scalearAngularApp')
         angular.element('.button').blur()
         var modalInstance = $modal.open({
             templateUrl: '/views/student/calendar/calendar.html',
-            controller: "dashboardCtrl",
+            controller: "dashboardCtrl"
         })
       }
 

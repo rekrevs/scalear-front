@@ -155,7 +155,7 @@ angular.module('scalearAngularApp')
             Lecture.getLectureStudent(
             {
                 course_id: $state.params.course_id,
-                lecture_id: id,
+                lecture_id: id
             },
             function(data) {
                 var lec = data.lecture
@@ -340,7 +340,7 @@ angular.module('scalearAngularApp')
         Lecture.pause(
             {
                 course_id:$state.params.course_id, 
-                lecture_id:$state.params.lecture_id,
+                lecture_id:$state.params.lecture_id
                 
             },
             {

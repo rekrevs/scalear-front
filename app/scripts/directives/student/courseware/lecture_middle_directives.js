@@ -264,7 +264,7 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		replace:true,
-		templateUrl: '/views/student/lectures/html_drag.html', 
+		templateUrl: '/views/student/lectures/html_drag.html'
 	}
 	
 }).directive('studentHtmlFree',['$translate','$log',function($translate, $log){
@@ -659,7 +659,7 @@ angular.module('scalearAngularApp')
     // replace:true,
     scope:{
       item:'=',
-      seek:'&',
+      seek:'&'
     },
     templateUrl: '/views/student/lectures/quiz_timeline.html',
     link:function(scope, element, attrs){

@@ -362,7 +362,7 @@ angular.module('scalearAngularApp', [
                     course_data:['courseResolver','$stateParams',function(courseResolver, $stateParams){
                         return courseResolver.init($stateParams.course_id)
                     }]
-                },
+                }
             })           
             .state('course.module',{
                 url:'/modules/:module_id',
@@ -444,7 +444,7 @@ angular.module('scalearAngularApp', [
                 // templateUrl: '/views/teacher/course_editor/module.middle.html',
                 // controller: 'moduleMiddleCtrl'
                 templateUrl: '/views/teacher/course_editor/course_editor.html',
-                controller: 'courseEditorCtrl',
+                controller: 'courseEditorCtrl'
             })
             .state('course.progress', {
                 url: '/progress',

@@ -386,7 +386,7 @@ angular.module('scalearAngularApp')
 		cursor: 'crosshair',
 		items: '.module',
 		opacity: 0.4,
-		scroll: true
+		scroll: true,
 		update: function(e, ui) {
 			// scope.$apply()
 			// console.log(scope.modules)
@@ -399,7 +399,7 @@ angular.module('scalearAngularApp')
 					// $log.debug('Error')
 				}
 			);
-		},
+		}
  	}
  	scope.itemSortableOptions={
 		axis: 'y',
@@ -408,7 +408,7 @@ angular.module('scalearAngularApp')
 		cursor: 'crosshair',
 		items: '.item',
 		opacity: 0.4,
-		scroll: true
+		scroll: true,
 		update: function(e, ui) {
 			var group_id=ui.item.scope().item.group_id
 			var items=ui.item.scope().$parent.module.items
@@ -423,7 +423,7 @@ angular.module('scalearAngularApp')
 					// $log.debug('error')
 				}
 			);
-		},
+		}
  	}
 
  	// scope.listSortableOptions={

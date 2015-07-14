@@ -794,6 +794,12 @@ font-weight: 300 !important
   overflow: hidden;
   text-overflow: ellipsis; 
 }
+.truncate-65{
+  width: 65%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis; 
+}
 .break-word{
   overflow-wrap: break-word;
 }

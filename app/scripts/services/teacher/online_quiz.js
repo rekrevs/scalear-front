@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
 	  'validateName':{method:'PUT', params:{action:'validate_name'}, headers:headers},
 	  'voteForReview':{method:'POST', params:{action:'vote_for_review'}, headers:headers},
 	  'unvoteForReview':{method:'POST', params:{action:'unvote_for_review'}, headers:headers},
-	  'hideResponses':{method:'POST', params:{action:'hide_responses'}, headers:headers},
+	  'hideResponses':{method:'POST', params:{action:'hide_responses'}, headers:headers}
 	});
 
 }])

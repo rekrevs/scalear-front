@@ -5,15 +5,13 @@ angular.module('scalearAngularApp')
     $window.scrollTo(0, 0);
     Page.setTitle('head.in_class')
     $scope.inclass_player={}
-    $scope.inclass_player.events={}   
-    // $scope.fullscreen_user_settings = false
-    // $scope.initial_display_done = false
+    $scope.inclass_player.events={} 
     $scope.time_parameters={
       quiz: 3,
       question: 2
     } 
 
-  	$scope.display = function (disabled) {
+  	$scope.display = function () {
         resetVariables()
         openModal()
         changeButtonsSize()
@@ -47,46 +45,23 @@ angular.module('scalearAngularApp')
         });
   	};
 
-    // $scope.initialDisplay = function(disabled,fullscreen){
-    //    $scope.fullscreen_user_settings  = fullscreen
-    //    $scope.initial_display_done = true
-    //    $scope.inclass_setting = false
-    //    $scope.display(disabled,fullscreen)
-    // }
-
-    // $scope.showInitialDisplay=function(){
-    //    if($scope.initial_display_done){
-    //      $scope.display(!$scope.inclass_ready,$scope.fullscreen_user_settings)
-    //   }
-    //   else
-    //     $scope.inclass_setting=!$scope.inclass_setting
-    // }
-
     var resetVariables=function(){
-        $scope.play_pause_class = "fi-play"
-        $scope.mute_class = "fi-volume"
-        $scope.loading_video=true
-        $scope.lecture_url=""
-        // $scope.question_title=""
-        // $scope.quiz_id=""
-        // $scope.questions=[]
-        // $scope.lecture_list = []
-        // $scope.display_data = {}
-        // $scope.total_num_lectures = 0
-        // $scope.total_num_quizzes  = 0
-        // $scope.current_lecture = 0
-        $scope.current_quiz = 0
-        $scope.item_itr = 0
-        $scope.timeline_itr= 0
-        $scope.show_black_screen= false
-        $scope.hide_questions = false  
-        $scope.dark_buttons="dark_button" 
-        $scope.fullscreen = false 
-        $scope.selected_item=null
-        $scope.selected_timeline_item=null
-        $scope.quality_set ='color-blue'
-        $scope.counting = true;
-        $scope.counting_finished=false
+      $scope.play_pause_class = "fi-play"
+      $scope.mute_class = "fi-volume"
+      $scope.loading_video=true
+      $scope.lecture_url=""
+      $scope.current_quiz = 0
+      $scope.item_itr = 0
+      $scope.timeline_itr= 0
+      $scope.show_black_screen= false
+      $scope.hide_questions = false  
+      $scope.dark_buttons="dark_button" 
+      $scope.fullscreen = false 
+      $scope.selected_item=null
+      $scope.selected_timeline_item=null
+      $scope.quality_set ='color-blue'
+      $scope.counting = true;
+      $scope.counting_finished=false
     }
 
     var init = function(){
@@ -172,10 +147,7 @@ angular.module('scalearAngularApp')
       angular.element("#main").css("overflow","hidden");
       angular.element("html").css("overflow","hidden");
       var win = angular.element($window)
-      win.scrollTop("0px")
-      // var filename='inclass_display'+view
-      // if(view == "review")
-      //    filename+= "_"+type.toLowerCase()       
+      win.scrollTop("0px")       
       
       $scope.modalInstance = $modal.open({
         templateUrl: '/views/teacher/in_class/inclass_display.html',
@@ -185,35 +157,22 @@ angular.module('scalearAngularApp')
       });
 
       $scope.modalInstance.result.then(
-      function(){},
-      function(){
+        function(){},
+        function(){
+          cleanUp()
+      });
+
+      $scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event) {
+        event.preventDefault()
         cleanUp()
-        //$scope.exitBtn()
+        $scope.$apply()
       });
 
-      $scope.unregister_back_event = $scope.$on("$locationChangeStart", function(event, next, current) {
-          event.preventDefault()
-         cleanUp()
+      $scope.unregister_state_event = $scope.$on("$stateChangeStart", function() {
+        cleanUp()
+        $scope.$apply()
       });
-
-      $scope.unregister_state_event = $scope.$on("$stateChangeStart", function(event, next, current) {
-              cleanUp()
-              $scope.$apply()
-        });
     }
-
-    // $scope.review=function(type, disabled){
-    //   if(!disabled){
-    //     openModal('review', type)
-    //   }
-    // }
-
-    // $scope.survey=function(disabled, state){
-    //   if(!disabled){
-    //     $scope.in_review= state
-    //     openModal('review','Surveys')
-    //   }
-    // }
 
     $scope.exitBtn = function () {
       screenfull.exit()
@@ -272,8 +231,7 @@ angular.module('scalearAngularApp')
       $scope.blurButtons()
     }
 
-    $scope.seek=function(time,first){
-      $log.debug("seeking")
+    $scope.seek=function(time){
       $scope.inclass_player.controls.seek(time)
     }
 
@@ -359,9 +317,6 @@ angular.module('scalearAngularApp')
                   else
                     $scope.chart = $scope.createChart($scope.selected_timeline_item.data.answers, {'backgroundColor': 'white'},'formatSurveyChartData')
                 }
-
-                // if(type == 'survey')
-                //   $scope.timeline_itr=-1
               }
               else{
                 $scope.item_itr+=1
@@ -376,12 +331,8 @@ angular.module('scalearAngularApp')
             $scope.nextQuiz()
           }
         }
-        else{
-          // if($scope.selected_item.class_name == 'quiz')
-          //   $scope.item_itr = $scope.module.items.length-1
+        else
           $scope.showBlackScreen('groups.blackscreen_done')
-          // $scope.item_itr+=1
-        }
       }
 
       $timeout(function(){
@@ -406,11 +357,6 @@ angular.module('scalearAngularApp')
               if($scope.timeline[type] && $scope.timeline[type][$scope.selected_item.id]){
                 $scope.timeline_itr-=1 
                 if($scope.timeline_itr > 0){
-
-                  // if(type == 'survey'){
-                  //   $scope.timeline_itr=-1
-                  // }
-
                   if($scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr] != $scope.selected_timeline_item){
                     $scope.selected_timeline_item = $scope.timeline[type][$scope.selected_item.id].items[$scope.timeline_itr]
                     $scope.lecture_name = $scope.module.items[$scope.item_itr].name
@@ -573,7 +519,7 @@ angular.module('scalearAngularApp')
     formated_data.cols=
         [
             {"label": $translate('courses.students'),"type": "string"},
-            {"label": $translate('controller_msg.answered'),"type": "number"},
+            {"label": $translate('controller_msg.answered'),"type": "number"}
         ]
     formated_data.rows= []
     for(var ind in data)
@@ -582,7 +528,7 @@ angular.module('scalearAngularApp')
       {"c":
           [
             {"v": data[ind][1]},
-            {"v": data[ind][0]},
+            {"v": data[ind][0]}
           ]
       }
       formated_data.rows.push(row)
@@ -662,8 +608,9 @@ angular.module('scalearAngularApp')
     $scope.show_black_screen = true
     $scope.blackscreen_msg = msg
   }
-   $scope.hideBlackScreen=function(msg){
-    $scope.show_black_screen = false    
+   $scope.hideBlackScreen=function(){
+    $scope.show_black_screen = false
+    $scope.blackscreen_msg = ""    
   }
 
   $scope.isBlackScreenOn=function(){
@@ -676,26 +623,9 @@ angular.module('scalearAngularApp')
     $scope.chart_class = 'original_chart'
     $scope.student_question_class = 'original_student_question'
     $scope.question_block = 'question_block'
-    // $scope.question_block_free_text = 'question_block_free_text'
-    // $scope.question_block={
-    //   'overflowY':'visible'
-    // }
     showQuestions()
     $scope.blurButtons()
   }
-
-  // $scope.setZoomClass=function(){
-  //   $scope.video_class = 'zoom_video'
-  //   $scope.question_class = 'zoom_question'
-  //   $scope.chart_class = 'zoom_chart'
-  //   $scope.student_question_class = 'zoom_question'
-  //   $scope.question_block = 'zoom_question_block'
-  //   // $scope.question_block={
-  //   //   'overflowY':'visible'
-  //   // }
-  //   $scope.adjustTextSize()
-  //   $scope.blurButtons()
-  // }
 
   $scope.toggleHideQuestions=function(){
     $scope.hide_questions = !$scope.hide_questions
@@ -717,7 +647,7 @@ angular.module('scalearAngularApp')
     var win = angular.element($window)
     var win_width= win.width()
     if(win_width < 660 ){
-      $scope.button_names=['Ex', 'Ov', 'Un','H','U','', 'P', 'R']
+      $scope.button_names=['Ex', 'Ov', 'Sh','H','U','', 'P', 'R']
       if(win_width <510)
         $scope.button_class = 'smallest_font_button' 
       else
@@ -725,7 +655,7 @@ angular.module('scalearAngularApp')
     }
     else{
       $scope.button_class = 'big_font_button' 
-      $scope.button_names=[$translate('groups.exit'), '', '',$translate('groups.hide'), $translate('groups.hide'), '5sec', $translate('pause'), $translate('resume')]
+      $scope.button_names=[$translate('groups.exit'), '', '',$translate('groups.hide'), $translate('answer.show'), '5sec', $translate('pause'), $translate('resume')]
     }
     $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
   }
@@ -734,7 +664,9 @@ angular.module('scalearAngularApp')
     var question_block = angular.element('.question_block').not('.ng-hide');
     var chars = question_block.text().trim().length;
     var space = question_block.height() * question_block.width();
-    
+    $scope.fontsize = Math.min(Math.sqrt(space/chars), 30)+'px';
+    if($scope.chart)
+      $scope.chart.options.height=question_block.height() - 5
     // var lines_text = question_block.text().split('\n');
     // var longest_line = lines_text.sort(function (a, b) { return b.length - a.length; })[0];
     
@@ -778,7 +710,7 @@ angular.module('scalearAngularApp')
 
     // console.log($scope.disclineheight);
   
-    $scope.fontsize = Math.min(Math.sqrt(space/chars), 30)+'px';
+    
     // $scope.sub_fontsize =(((question_block.height()-10)*23)/100) -5 +'px';
 
     // if(Math.sqrt(space/chars) > 30){
@@ -803,8 +735,7 @@ angular.module('scalearAngularApp')
     // }
     //$scope.student_question_class = $scope.question_class.split('_')[0]+'_student_'+$scope.question_class.split('_')[1]
     
-    if($scope.chart)
-      $scope.chart.options.height=question_block.height() - 5
+    
   }
 
   $scope.lightUpButtons=function(){
@@ -817,11 +748,6 @@ angular.module('scalearAngularApp')
         
     },5000,1)
   }
-
-  // $scope.toggleFullscreen=function(){
-  //   $scope.fullscreen = !$scope.fullscreen
-  //   $scope.blurButtons()
-  // }
 
   $scope.blurButtons=function(){
     angular.element('.button').blur()

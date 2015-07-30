@@ -138,9 +138,9 @@ angular.module('scalearAngularApp')
 					ContentNavigator.setStatus(!ContentNavigator.getStatus())
 				}
 
-				var setNavigator=function(val){
-					ContentNavigator.setStatus(val)
-				}
+				// var setNavigator=function(val){
+				// 	ContentNavigator.setStatus(val)
+				// }
 
 				scope.toggleDetails=function(){
 					DetailsNavigator.setStatus(!DetailsNavigator.getStatus())
@@ -268,17 +268,17 @@ angular.module('scalearAngularApp')
 					ContentNavigator.setStatus(!ContentNavigator.getStatus())
 				}
 
-				var setNavigator=function(val){
-					ContentNavigator.setStatus(val)
-				}
+				// var setNavigator=function(val){
+				// 	ContentNavigator.setStatus(val)
+				// }
 
 				scope.toggleTimeline=function(){
 					TimelineNavigator.setStatus(!TimelineNavigator.getStatus())
 				}
 
-				var setTimeline=function(val){
-					TimelineNavigator.setStatus(val)
-				}
+				// var setTimeline=function(val){
+				// 	TimelineNavigator.setStatus(val)
+				// }
 
 				
 				// setNavigator(true)
@@ -345,7 +345,7 @@ angular.module('scalearAngularApp')
     templateUrl:"/views/content_navigator.html",
 	link:function(scope, element, attr){
    	  scope.$state = $state
-	  var unwatch = scope.$watch('$state.params',function(){
+	  scope.$watch('$state.params',function(){
 	  	if($state.params.module_id){
 	  		scope.currentmodule = {id: $state.params.module_id}
    	  		scope.currentitem = {id: $state.params.lecture_id || $state.params.quiz_id || $state.params.customlink_id}
@@ -399,7 +399,7 @@ angular.module('scalearAngularApp')
 					// $log.debug('Error')
 				}
 			);
-		},
+		}
  	}
  	scope.itemSortableOptions={
 		axis: 'y',
@@ -423,7 +423,7 @@ angular.module('scalearAngularApp')
 					// $log.debug('error')
 				}
 			);
-		},
+		}
  	}
 
  	// scope.listSortableOptions={

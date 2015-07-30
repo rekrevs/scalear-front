@@ -62,7 +62,7 @@ var app = angular.module('scalearAngularApp')
               $scope.emails.push(student.email);
             })
             batchEmailService.setEmails($scope.emails)
-            var modalInstance = $modal.open({
+            $modal.open({
                 templateUrl: '/views/teacher/course/send_emails.html',
                 controller: 'sendEmailsCtrl'
             })

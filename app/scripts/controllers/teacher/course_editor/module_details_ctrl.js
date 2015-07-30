@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$q', '$stateParams', '$log', '$filter',function($scope, $state, Module, CustomLink, $q, $stateParams, $log, $filter) {
+    .controller('moduleDetailsCtrl', ['$scope', '$state', 'Module', 'CustomLink', '$q', '$stateParams', '$log', function($scope, $state, Module, CustomLink, $q, $stateParams, $log) {
         
 
             // $scope.$watch('module_obj[' + $stateParams.module_id + ']', function() {
@@ -30,7 +30,7 @@ angular.module('scalearAngularApp')
                         module_id: $scope.module.id
                     },
                     group,
-                    function(data) {
+                    function() {
                         d.resolve()
                     }, function(data) {
                         $log.debug(data.status);
@@ -44,12 +44,11 @@ angular.module('scalearAngularApp')
                 return d.promise;
             };
 
-            $scope.updateModule = function(data, type) {
+            $scope.updateModule = function() {
                 delete $scope.module.new
                 var modified_module = angular.copy($scope.module);
                 delete modified_module.id;
                 delete modified_module.items;
-                // delete modified_module.custom_links;
                 delete modified_module.created_at;
                 delete modified_module.updated_at;
                 delete modified_module.total_time;
@@ -70,7 +69,7 @@ angular.module('scalearAngularApp')
                     },
                     function(response) {
                         $log.debug(response)
-                        $scope.module.items.forEach(function(item, i) {
+                        $scope.module.items.forEach(function(item) {
                             if (item.appearance_time_module) {
                                 item.appearance_time = $scope.module.appearance_time;
                             }

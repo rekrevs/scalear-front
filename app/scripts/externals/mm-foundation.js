@@ -2420,7 +2420,7 @@ angular.module("mm.foundation.topbar", [])
                 customBackText: '=',
                 isHover: '=',
                 mobileShowParentLink: '=',
-                scrolltop : '=',
+                scrolltop : '='
             },
             restrict: 'EA',
             replace: true,

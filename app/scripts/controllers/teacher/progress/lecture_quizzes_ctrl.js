@@ -1,8 +1,8 @@
-'use strict';
+// 'use strict';
 
-angular.module('scalearAngularApp')
-    .controller('lectureQuizzesCtrl', ['$scope', '$stateParams', '$timeout', 'Module', '$translate', '$log',
-        function($scope, $stateParams, $timeout, Module, $translate, $log) {
+// angular.module('scalearAngularApp')
+//     .controller('lectureQuizzesCtrl', ['$scope', '$stateParams', '$timeout', 'Module', '$translate', '$log',
+//         function($scope, $stateParams, $timeout, Module, $translate, $log) {
 
         //     $scope.lecture_player = {}
         //     $scope.lecture_player.events = {}
@@ -211,5 +211,5 @@ angular.module('scalearAngularApp')
         //         }
         //     }
 
-        }
-    ]);
+    //     }
+    // ]);

@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
 				          left: 'title'
 				        },
 				        eventDrop: $scope.alertOnDrop,
-				        eventResize: $scope.alertOnResize,
+				        eventResize: $scope.alertOnResize
 				    }
 			  	};
 				$scope.calendar = data;

@@ -59,7 +59,7 @@ angular.module('scalearAngularApp')
     }]).directive('item', ['$rootScope','$timeout','$anchorScroll','$location','$state', function($rootScope, $timeout, $anchorScroll,$location,$state) {
         return {
             scope: {
-                item:'=data',
+                item:'=data'
             },
             restrict: 'E',
             templateUrl: '/views/teacher/course_editor/item.html',
@@ -181,7 +181,7 @@ angular.module('scalearAngularApp')
             },
             restrict: 'E',
             replace: true,
-            templateUrl: '/views/teacher/course_editor/loading.html',
+            templateUrl: '/views/teacher/course_editor/loading.html'
         };
     }).directive('deleteButton', ['$translate',function($translate) {
         return {
@@ -197,7 +197,7 @@ angular.module('scalearAngularApp')
                 mode: '@',
                 moduleitem: '@',
                 tooltiptext: "@",
-                padded: '@',
+                padded: '@'
             },
             replace: true,
             restrict: 'E',
@@ -263,9 +263,9 @@ angular.module('scalearAngularApp')
             replace: true,
             controller: ['$scope', function($scope){
                 $scope.openModal = function () {
-                    var modalInstance = $modal.open({
+                    $modal.open({
                         templateUrl: '/views/teacher/course_editor/online_content_modal.html',
-                        controller: ModalInstanceCtrl,
+                        controller: ModalInstanceCtrl
                     })
                 }
                 var ModalInstanceCtrl = ['$scope', '$modalInstance', '$rootScope',function ($scope, $modalInstance, $rootScope) {
@@ -287,7 +287,7 @@ angular.module('scalearAngularApp')
             replace: true,
             controller: ['$scope',function($scope){
                 $scope.openModal = function () {
-                    var modalInstance = $modal.open({
+                    $modal.open({
                         templateUrl: '/views/teacher/course_editor/question_types_modal.html',
                         controller: ModalInstanceCtrl,
                         windowClass: 'large'

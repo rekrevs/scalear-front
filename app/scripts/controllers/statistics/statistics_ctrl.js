@@ -1,7 +1,7 @@
 
 
 angular.module('scalearAngularApp')
-  .controller('statisticsCtrl',['$scope', 'Kpi','$translate','Page','$rootScope','$translate', function ($scope, Kpi,$translate, Page, $rootScope, $translate) {
+  .controller('statisticsCtrl',['$scope', 'Kpi','Page','$rootScope','$translate', function ($scope, Kpi, Page, $rootScope, $translate) {
 
     Page.setTitle('courses.statistics');
     $rootScope.subheader_message = $translate("statistics.statistics_dashboard")
@@ -24,7 +24,6 @@ angular.module('scalearAngularApp')
 	  			$scope.collection = data.series
 	  			$scope.selected_series = $scope.collection[0]
 	  			$scope.getSeriesData($scope.selected_series)
-                // $scope.$watch("current_lang", redrawChart);
 	  		},
 	  		function(){}
 		)
@@ -94,7 +93,7 @@ angular.module('scalearAngularApp')
                 type: 'line',
                 name: '#',
                 pointInterval: 24 * 3600 * 1000,
-                pointStart: Date.UTC(2013, 0, 1),
+                pointStart: Date.UTC(2013, 0, 1)
             }],
             title: {
                 text: null
@@ -112,18 +111,10 @@ angular.module('scalearAngularApp')
                     text: null
                 }
             },
-            loading: false,
+            loading: false
         }
     }
-
-    var redrawChart=function(new_val, old_val){
-        if(new_val != old_val){
-            $scope.chartConfig = {}
-            createChart()
-            $scope.getSeriesData($scope.selected_series)
-        }
-    }
-
+    
 	$scope.getSeriesData=function(key){
 		$scope.selected_series= key
 		var chart_data=[]

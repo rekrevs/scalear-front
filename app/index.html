@@ -69,7 +69,7 @@
             <br ng-hide="('**.course.**' | includedByState) "/>
             <div ng-show="ContentNavigator.delayed_navigator_open" class=" small-12 medium-4 large-2 columns no-padding no-margin">
             </div>
-            <div class="land-min-height no-padding" ng-class="{'small-12 medium-9 large-10 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
+            <div class="land-min-height no-padding" ng-class="{'small-12 medium-10 large-12 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
             </div>
         </div> 
         <footer class="small-12 columns footer">
@@ -249,8 +249,7 @@
     <script src="scripts/controllers/teacher/progress/quizzes_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/free_text_table_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course/enrolled_students.js"></script>
-    <script src="scripts/controllers/teacher/course/course_information.js"></script>
-    <script src="scripts/controllers/teacher/course/teachers.js"></script>
+    <script src="scripts/controllers/teacher/course/course_information_ctrl.js"></script>
     <script src="scripts/controllers/teacher/course/send_emails.js"></script>
 
     <script src="scripts/controllers/teacher/in_class/inclass_ctrl.js"></script>
@@ -259,7 +258,7 @@
 
     <script src="scripts/controllers/student/course_list/course_list_ctrl.js"></script>
     <script src="scripts/controllers/student/course_list/enroll_modal_ctrl.js"></script>
-    <script src="scripts/controllers/student/course/course_information.js"></script>
+    <script src="scripts/controllers/student/course/course_information_ctrl.js"></script>
     <script src="scripts/controllers/student/calendar/calendar_ctrl.js"></script> 
 
     <script src="scripts/controllers/student/lectures/courseware_ctrl.js"></script>

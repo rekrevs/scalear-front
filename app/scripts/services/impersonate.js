@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
     return $resource(scalear_api.host+'/en/impressionate/:action', {},
       { 
       	 'create': { method: 'POST', headers:headers},
-      	 'destroy': { method: 'DELETE' , headers:headers},
+      	 'destroy': { method: 'DELETE' , headers:headers}
       });
 
 }]).factory("Preview",['Impersonate','$state','$cookieStore','ContentNavigator', '$rootScope',function(Impersonate,$state, $cookieStore, ContentNavigator, $rootScope){

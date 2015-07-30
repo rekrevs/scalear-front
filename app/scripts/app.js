@@ -1,33 +1,11 @@
 'use strict';
 
-// var EditorState = {
-//     CLEAN: 0, // NO CHANGES
-//     DIRTY: 1, // UNSAVED CHANGES
-//     SAVE: 2, // SAVE IN PROGRESS
-//     LOAD: 3, // LOADING
-//     READONLY: 4
-// };
-
-// var Actions = {
-//     LOAD: "load",
-//     CREATE: "create"
-// };
-
-if (!String.prototype.format) {
-    String.prototype.format = function () {
-        var args = arguments;
-        return this.replace(/{(\d+)}/g, function (match, number) {
-            return typeof args[number] != 'undefined'? args[number]: match
-        });
-    };
-}
-
 angular.module('scalearAngularApp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
     'ui.router',
-    // 'ngTouch',
+    'ngTouch',
     // 'ui.bootstrap.accordion',
     // 'ui.bootstrap.tabs',
     // 'ui.bootstrap.collapse',
@@ -81,8 +59,8 @@ angular.module('scalearAngularApp', [
         'X-Requested-With': 'XMLHttpRequest'
     })
    // .value('$anchorScroll', angular.noop)
-    .run(['$http', '$rootScope', 'scalear_api', 'editableOptions', 'editableThemes', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour',
-        function($http, $rootScope, scalear_api, editableOptions, editableThemes, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour) {
+    .run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour',
+        function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour) {
 
 
             $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
@@ -119,7 +97,7 @@ angular.module('scalearAngularApp', [
             var stateNoAuth = function(state) {
                 for (var element in statesThatRequireNoAuth) {
                     var input = statesThatRequireNoAuth[element];
-                    if (state.substring(0, input.length) == input)
+                    if (state.substring(0, input.length) === input)
                         return true;
                 }
                 return false;
@@ -129,7 +107,7 @@ angular.module('scalearAngularApp', [
             var routeClean = function(state) {
                 for (var element in statesThatDontRequireAuth) {
                     var input = statesThatDontRequireAuth[element];
-                    if (state.substring(0, input.length) == input)
+                    if (state.substring(0, input.length) === input)
                         return true
                 }
                 return false;
@@ -138,7 +116,7 @@ angular.module('scalearAngularApp', [
             var stateStudent = function(state) {
                 for (var element in statesThatForStudents) {
                     var input = statesThatForStudents[element];
-                    if (state.substring(0, input.length) == input)
+                    if (state.substring(0, input.length) === input)
                         return true
                 }
                 return false;
@@ -147,7 +125,7 @@ angular.module('scalearAngularApp', [
             var stateTeacher = function(state) {
                 for (var element in statesThatForTeachers) {
                     var input = statesThatForTeachers[element];
-                    if (state.substring(0, input.length) == input)
+                    if (state.substring(0, input.length) === input)
                         return true
                 }
                 return false;
@@ -156,25 +134,24 @@ angular.module('scalearAngularApp', [
                 $rootScope.unload = true;
             }
 
-            $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
-                //$rootScope.start_loading=true;
+            $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from) {
                 if($tour.isActive()){
                     $tour.end();
                 }                
 
                UserSession.getRole().then(function(result) {
                     var s = 1;
-                    if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name != "home") {
+                    if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
                         $state.go("ie");
                     }
 
-                    if($rootScope.current_user && $rootScope.current_user.info_complete == false){
+                    if($rootScope.current_user && $rootScope.current_user.info_complete === false){
                         $state.go('edit_account')
                         s = 2;
                     }
                     else{
-                        if(to.name == 'confirmed'){
-                            if(from.name == 'show_confirmation'){
+                        if(to.name === 'confirmed'){
+                            if(from.name === 'show_confirmation'){
                                 $state.go("confirmed")
                             }
                             else{
@@ -182,55 +159,47 @@ angular.module('scalearAngularApp', [
                                 s = 0;
                             }
                         }
-                        if($rootScope.current_user && $rootScope.current_user.intro_watched == false && to.name != "edit_account"){
+                        if($rootScope.current_user && !$rootScope.current_user.intro_watched && to.name !== "edit_account"){
                             $state.go('confirmed')
                             s = 1;
                         }
-                        if (!routeClean(to.name) && result == 0 ) // user not logged in trying to access a page that needs authentication.
-                        {
-                            console.log(to.name)
+                        if (!routeClean(to.name) && result === 0 ){ // user not logged in trying to access a page that needs authentication.
                             $state.go("login");
                             s = 0;
-                        } else if ((stateTeacher(to.name) && result == 2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
-                        {
+                        } else if ((stateTeacher(to.name) && result === 2)){ // student trying to access teacher page //routeTeacher($location.url()) && result ||
                             $state.go("course_list");
                             s = 0;
                         } 
-                        else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
-                        {
+                        else if ((stateStudent(to.name) && result === 1)){ // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
                             $state.go("course_list");
                             s = 0;
                         } 
-                        else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
-                        {
-                            console.log("herefef coud")
+                        else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 1)// teacher going to home, redirected to courses page
                             $state.go("course_list");
-                        } else if ((to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
-                        {
+                        else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 2)// student going to home, redirected to student courses page
                             $state.go("course_list");
-                        } else if (stateNoAuth(to.name)) {
-                            if (result == 1 || result == 2) {
+                        else if (stateNoAuth(to.name)) {
+                            if (result === 1 || result === 2) {
                                 $state.go("home");
                                 s = 0;
                             }
                         }
                     }
 
-                    if (s == 0) {
+                    if (s === 0) {
                         $rootScope.show_alert = "error";
                         ErrorHandler.showMessage('Error ' + ': ' + $translate("controller_msg.you_are_not_authorized"), 'errorMessage', 8000);
                         $timeout(function() {
                             $rootScope.show_alert = "";
                         }, 4000);
                     }
-                    if(s == 2){
+                    if(s === 2){
                         $rootScope.show_alert = "error";
                         ErrorHandler.showMessage($translate("controller_msg.update_account_information"), 'errorMessage', 8000);
-                        // $timeout(function() {
-                        //     $rootScope.show_alert = "";
-                        // }, 7000);
+                        $timeout(function() {
+                            $rootScope.show_alert = "";
+                        }, 4000);
                     }
-                    // success
                })
 
         });
@@ -242,17 +211,14 @@ angular.module('scalearAngularApp', [
     function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider) {
         cfpLoadingBarProvider.includeSpinner = true;
         // cfpLoadingBarProvider.color = 'black';
-        console.log(cfpLoadingBarProvider)
 
         $logProvider.debugEnabled(false)
 
-        //**********Translations*********
         $translateProvider
             .translations('en', translation_en())
             .translations('sv', translation_sv());
         $translateProvider.preferredLanguage('en');
         $translateProvider.useCookieStorage();
-        //**********END*********
 
         //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');        
 
@@ -362,7 +328,7 @@ angular.module('scalearAngularApp', [
                     course_data:['courseResolver','$stateParams',function(courseResolver, $stateParams){
                         return courseResolver.init($stateParams.course_id)
                     }]
-                },
+                }
             })           
             .state('course.module',{
                 url:'/modules/:module_id',
@@ -444,7 +410,7 @@ angular.module('scalearAngularApp', [
                 // templateUrl: '/views/teacher/course_editor/module.middle.html',
                 // controller: 'moduleMiddleCtrl'
                 templateUrl: '/views/teacher/course_editor/course_editor.html',
-                controller: 'courseEditorCtrl',
+                controller: 'courseEditorCtrl'
             })
             .state('course.progress', {
                 url: '/progress',
@@ -537,11 +503,11 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/course/course_information.html',
                 controller: 'teacherCourseInformationCtrl'
             })
-            .state('course.teachers', {
-                url: '/teachers',
-                templateUrl: '/views/teacher/course/teachers.html',
-                controller: 'courseTeachersCtrl'
-            })
+            // .state('course.teachers', {
+            //     url: '/teachers',
+            //     templateUrl: '/views/teacher/course/teachers.html',
+            //     controller: 'courseTeachersCtrl'
+            // })
             .state('course.inclass', {
                 url: '/inclass',
                 templateUrl: '/views/teacher/in_class/inclass.html',

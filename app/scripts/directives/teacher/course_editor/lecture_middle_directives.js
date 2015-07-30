@@ -146,7 +146,7 @@ angular.module('scalearAngularApp')
 		 				"<answer ng-switch-when='MCQ' />"+
 		 				"<answer ng-switch-when='OCQ' />"+
 		 				"<drag ng-switch-when='DRAG' />"+
-	 				"</div>",
+	 				"</div>"
 	};
 }]).directive('answer', ['$rootScope','$log','$timeout', function($rootScope,$log,$timeout){
 	return {
@@ -486,7 +486,7 @@ angular.module('scalearAngularApp')
 				scope.quiz_types=[
 					{value:"MCQ", text:$translate('content.questions.survey_types.mcq')},
 					{value:"OCQ", text:$translate('content.questions.survey_types.ocq')},
-					{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')},
+					{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')}
 				]
 			}
 
@@ -676,7 +676,7 @@ angular.module('scalearAngularApp')
 	return {
 		restrict:'E',
 		replace:true,
-		templateUrl: '/views/teacher/course_editor/html_drag.html',
+		templateUrl: '/views/teacher/course_editor/html_drag.html'
 	}
 	
 }).directive('atleastone', ['$log', function($log) {

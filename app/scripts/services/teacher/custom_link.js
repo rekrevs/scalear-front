@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
         'destroy': { method: 'DELETE', headers:headers },
         'show':{method: 'GET', headers:headers},
         'validate':{method: 'PUT', headers:headers, params: {action: 'validate_custom_link'} },
-        "linkCopy":{method:'POST', params:{action:'link_copy'}, headers:headers},
+        "linkCopy":{method:'POST', params:{action:'link_copy'}, headers:headers}
       });
 
 }])

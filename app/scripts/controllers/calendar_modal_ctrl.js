@@ -4,7 +4,7 @@ angular.module('scalearAngularApp')
   .controller('CalendarModalCtrl',['$state','$stateParams','$scope','$modalInstance','Course','$window','$rootScope','$timeout', '$filter', '$compile', function ($state,$stateParams ,$scope, $modalInstance, Course, $window, $rootScope, $timeout, $filter, $compile) {
 
 
-  	$scope.eventRender = function( event, element, view ) { 
+  	$scope.eventRender = function( event, element ) { 
          var tooltip_string = event.course_short_name+": "+event.item_title+"<br />Due at  "+$filter('date')(event.start, 'HH:mm')
         if(event.status==1)
             tooltip_string+="<br />Completed on time"

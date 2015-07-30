@@ -5,7 +5,7 @@
 <div class="small-12 medium-4 large-3 columns with-small-padding-top">
 	<center>
 		<!-- <div class="row"> -->
-			<video_container  ng-class="{'large_player':large_player}" style="width:101%">
+			<video_container  ng-class="{'large_player':large_player}" style="width:100%">
 				<youtube id="progress_lec_video" url="url" player="progress_player" class="flex-video" style="z-index: 1;" controls="default">
 				</youtube>
 			</video_container>
@@ -14,20 +14,22 @@
 		<div class="row shortcuts size-10 hide-for-medium-down" >
 			<div class="shortcuts_label size-12">Shortcuts:</div>
 			<div>
-				<div class="small-6 columns">
+				<div class="small-6 columns no-padding-right">
 					<i class="fi-arrow-up"></i> - <span translate>lectures.go_next_item</span><br />
 					<i class="fi-arrow-down"></i> - <span translate>lectures.go_previous_item</span>
-				</div>				
-				<div class="small-6 columns">
-					<i style="font-weight:bold">r</i> - <span translate>lectures.reply</span><br />
-					<i style="font-weight:bold">m</i> - <span translate>lectures.mark</span>
-				</div>
-				<div class="small-6 columns">
+				</div>	
+				<div class="small-6 columns no-padding-right">
 					<i class="fi-arrow-left"></i> - <span translate>lectures.go_inside_item</span><br />
 					<i class="fi-arrow-right"></i> - <span translate>lectures.go_outside_item</span>
+				</div>			
+				<div class="small-6 columns">
+					<i style="font-weight:bold">r</i> - <span translate>lectures.reply</span><br />
 				</div>
 				<div class="small-6 columns">
-					<i style="font-weight:bold">space</i> - <span translate>lectures.seek_to_location</span>
+					<i style="font-weight:bold">m</i> - <span translate>lectures.mark</span>
+				</div>				
+				<div class="small-12 left columns">
+					<i style="font-weight:bold">space</i> - <span translate>lectures.resize_video</span>
 				</div>
 			</div>
 		</div>
@@ -91,12 +93,12 @@
 						</div>
 						<div class="row"><div google-chart chart="quiz_chart" class="small-12 columns progress_chart" ></div></div>
 					</li>
-					<li ng-if="item.type=='free_question'" class="li_inner color-coral">
+					<li ng-if="item.type=='free_question'" class="li_inner color-coral" ng-class="{'light-yellow':item.data.show}">
 						<inner_title type="'groups.free_text_question' | translate" itemtitle="item.data.title" class="left" style="margin-right:5px"/>
 						<show_box  bo-show="module_item.quiz_type == 'survey'" value="item.data.show" action="updateHideSurveyQuestion(quiz.meta.id,item.data.id,!item.data.show, item.type)"/>
 						</br>
 						<ul style="padding:5px;color:black;font-weight:normal;font-size:14px;clear:both">							
-							<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" class="li_item" ng-class="{'light-yellow':item.data.show && answer.hide}" style="padding:8px 10px">
+							<li ng-repeat="answer in item.data.answers|filter:{user_id:quiz.filtered_user}:quiz.filter_strict" class="li_item" ng-class="{'light-yellow':item.data.show && answer.hide, 'white':item.data.show && !answer.hide}" style="padding:8px 10px">
 								<div class="controls" >
 									<show_box bo-show="module_item.quiz_type == 'survey'" value="answer.hide" action="updateHideResponse(quiz.meta.id,item,answer)" style="float:right"/>
 								    <div ng-show="!quiz.filtered_user || quiz.filtered_user==''" tooltip="{{'groups.see_related'|translate}}" tooltip-placement="top" style="float:right">
@@ -162,11 +164,11 @@
 								 		<span  bo-text="discussion.post.screen_name"></span>:
 							 		</b>
 						 		 	<span class="disc_content" bo-text="discussion.post.content"></span>
-						 		 	<span style="float: right;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
+						 		 	<span bo-show="discussion.post.flags_count>0" style="float: right;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 										<img bo-src='discussion.post.flags_count>0?"../images/flag-red.png":"../images/flag-grey.png"'/>
 										<span class="disc_flags_count" bo-text="discussion.post.flags_count"></span>
 									</span>
-									<span style="float: right; margin-right: 10px;" tooltip="{{'discussion.likes' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
+									<span bo-show="discussion.post.votes_count>0" style="float: right; margin-right: 10px;" tooltip="{{'discussion.likes' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 										<img src='../images/likes.png'/>
 										<span class="disc_votes_count" bo-text="discussion.post.votes_count"></span>
 									</span>
@@ -176,18 +178,18 @@
 										<span class="controls">
 											<show_box value="comment.comment.hide" action="updateHideComment(comment.comment, discussion.post)" style="float:right"/>
 											<span style="float:right">
-												<span ng-show="comment.comment.flags_count > 0"><a ng-click="removeCommentFlag(comment, discussion.post)" class="button really-tiny" style="margin:0 5px" translate>discussion.remove_flags</a></span>
+												<span bo-show="comment.comment.flags_count > 0"><a ng-click="removeCommentFlag(comment, discussion.post)" class="button really-tiny" style="margin:0 5px" translate>discussion.remove_flags</a></span>
 												<span ng-show="comment.comment.flags_count > 0 || comment.comment.user_id == current_user.id" ><a ng-click="deleteComment(comment, discussion.post)" class="button really-tiny alert" style="margin:0 5px" translate>delete</a></span>
 											</span>	
 										</span>										
 										<div>
 											<b><span class="comment_screen_name" bo-text="comment.comment.screen_name"></span>:</b>
 											<span class="comment_content" bo-text="comment.comment.content"></span>
-										 	<span style="float: right; color: black;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
+										 	<span bo-show="comment.comment.flags_count>0" style="float: right; color: black;" tooltip="{{'discussion.flags' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 												<img bo-src='comment.comment.flags_count>0?"../images/flag-red.png":"../images/flag-grey.png"'/>
 												<span class="comment_flags_count" bo-text="comment.comment.flags_count"></span>
 											</span>
-											<span style="float: right; color: black; margin-right: 10px;" tooltip="{{'discussion.likes' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
+											<span bo-show="comment.comment.votes_count>0" style="float: right; color: black; margin-right: 10px;" tooltip="{{'discussion.likes' | translate}}" tooltip-placement="top" tooltip-append-to-body="true">
 												<img src='../images/likes.png'/>
 												<span class="comment_votes_count" bo-text="comment.comment.votes_count"></span>
 											</span>		

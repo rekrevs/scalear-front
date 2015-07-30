@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="styles/teacher/teacher_common.css"/>
 <!-- endbuild -->
 <br>
-<div>
+<div class="inclass">
 	<div class="small-12 medium-12 large-3 columns" id='details' >
 		<center>
 		<div class="row">
@@ -49,7 +49,7 @@
 				<ul class="ul_item vline_slim inner_content" ng-repeat="item in timeline['lecture'][lec.id].items|filter:data:'!!'" style="clear:both">
 					<li ng-if="item.type=='discussion'" class="li_inner color-coral">
 						<inner_title type="'lectures.discussion' | translate" />
-						<ul style="padding:5px;padding-left: 40px;color:black;font-weight:normal;font-size: 14px;">
+						<ul style="padding:5px;color:black;font-weight:normal;font-size: 14px;">
 							<li ng-repeat="question in item.data" >
 								<div style="width: 80%;">{{question.post.content}}</div>
 								<ul>
@@ -63,7 +63,7 @@
 					</li>
 					<li ng-if="item.type=='free_question'" class="li_inner color-coral">
 						<inner_title  type="'groups.free_text_question' | translate" itemtitle="item.data.title"/>
-						<ul style="clear:both;padding:5px;padding-left: 20px;color:black;font-weight:normal;font-size: 14px;">
+						<ul style="clear:both;padding:5px;color:black;font-weight:normal;font-size: 14px;">
 							<li ng-repeat="answer in item.data.answers" style="list-style-position:inside; padding:3px 10px">
 								<div style="width:70%">{{answer.online_answer}}</div>
 							</li>

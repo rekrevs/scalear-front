@@ -58,7 +58,7 @@ angular.module('scalearAngularApp')
       formated_data.cols=
           [
               {"label": $translate('courses.students'),"type": "string"},
-              {"label": $translate('controller_msg.answered'),"type": "number"},
+              {"label": $translate('controller_msg.answered'),"type": "number"}
           ]
       formated_data.rows= []
       for(var ind in data)
@@ -67,7 +67,7 @@ angular.module('scalearAngularApp')
           {"c":
               [
                   {"v": data[ind][1]},
-                  {"v": data[ind][0]},
+                  {"v": data[ind][0]}
               ]
           }
           formated_data.rows.push(row)
@@ -92,7 +92,7 @@ angular.module('scalearAngularApp')
                   "count":9
               },
               "maxValue": student_count
-          },
+          }
       };
       chart.data = $scope.formatSurveyChartData(chart_data)
       return chart
@@ -105,12 +105,13 @@ angular.module('scalearAngularApp')
     	$scope.getSurveyCharts()
     }
 
-    $scope.makeVisibleBtn=function(visible){
+    $scope.makeVisibleBtn=function(){
     	var survey_id = $scope.selected_survey[1]
     	$scope.selected_survey[2] = !$scope.selected_survey[2]
-    	Quiz.makeVisible({quiz_id:survey_id},
+    	Quiz.makeVisible(
+        {quiz_id:survey_id},
     		{visible:$scope.selected_survey[2]},
-    		function(data){
+    		function(){
     			$scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"
     		}
     	)

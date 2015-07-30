@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
     $scope.change_password = function(){
         delete $scope.user.errors;
         User.change_password({},{user:$scope.user}, 
-        function(data){
+        function(){
             $state.go("dashboard");
         }, 
         function(data){

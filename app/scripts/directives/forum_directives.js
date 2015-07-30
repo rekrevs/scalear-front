@@ -285,7 +285,7 @@ angular.module('scalearAngularApp')
             voted: '=',
             up: '=',
             down: '=',
-            direction: '@',
+            direction: '@'
 
         },
         templateUrl: '/views/forum/like_button.html',
@@ -308,7 +308,7 @@ angular.module('scalearAngularApp')
             comment: '=',
             flag: '=',
             unflag: '=',
-            type: '@',
+            type: '@'
 
         },
         templateUrl: '/views/forum/flag_button.html',

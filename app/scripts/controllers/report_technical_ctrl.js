@@ -23,11 +23,6 @@ angular.module('scalearAngularApp')
   // 		$scope.form.submitted=true	
   // };
   $scope.send_technical = function(type, data, user) {
-      $log.debug("in sending");
-      // if(!$rootScope.current_user){
-          // var user_name = angular.element('#report_name').val();
-          // var user_email = angular.element('#report_email').val();
-      // }
       if(!user){
         user = {name: $rootScope.current_user.full_name, email: $rootScope.current_user.email}
       }
@@ -51,7 +46,7 @@ angular.module('scalearAngularApp')
                   lang: $rootScope.current_lang,
                   agent: navigator.userAgent
               },
-              function(data) {
+              function() {
                 angular.element('.reveal-modal').css('height', 'auto');
                   $scope.hide_content = true;
                   $scope.technical_data = null;                                    

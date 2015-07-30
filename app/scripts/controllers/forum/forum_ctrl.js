@@ -16,27 +16,26 @@ angular.module('scalearAngularApp')
             console.log("neW vote is "+new_vote)
             if(new_vote > 1 || new_vote<-1)
                 console.log("outside limit")
-            else
-            {
+            else{
                 comment.user_vote=new_vote
-
-                Forum.vote({vote: comment.user_vote, post_id:comment.id}, function(response){
-                    comment.votes_count+=vote;
-            }, function(){
-                console.log("failure");
-            })
+                Forum.vote({
+                        vote: comment.user_vote, 
+                        post_id:comment.id
+                    }, 
+                    function(response){
+                        comment.votes_count+=vote;
+                    }, 
+                    function(){
+                        console.log("failure");
+                    }
+                )
             }
         }
 
-        $scope.flag= function(comment){
+        $scope.flag= function(comment){            
+            Forum.flag({post_id:comment.id},function(){
                 comment.user_flag=1-comment.user_flag
-
-                Forum.flag({post_id:comment.id}, function(response){
-                    console.log("success")
-                }, function(){
-                    console.log("failure");
-                })
-
+            })
         }
 
 

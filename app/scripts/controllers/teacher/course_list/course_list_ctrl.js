@@ -36,7 +36,7 @@ angular.module('scalearAngularApp')
 
 		$scope.deleteCourse=function(course){
 			Course.destroy({course_id: course.id},{},
-				function(response){
+				function(){
 					removeFromCourseList(course)
 				},
 				function(){})
@@ -44,7 +44,7 @@ angular.module('scalearAngularApp')
 
     $scope.unenrollCourse=function(course){
       Course.unenroll({course_id: course.id},{},
-        function(response){
+        function(){
           removeFromCourseList(course)
         },
         function(){})

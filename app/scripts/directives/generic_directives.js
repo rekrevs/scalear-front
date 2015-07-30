@@ -287,9 +287,9 @@ angular.module('scalearAngularApp')
     link: function(scope, element){
       scope.open = function () {
         angular.element('.button').blur()
-        var modalInstance = $modal.open({
+        $modal.open({
             templateUrl: '/views/student/course_list/enroll_modal.html',
-            controller: "StudentEnrollModalCtrl",
+            controller: "StudentEnrollModalCtrl"
         })
 
         // modalInstance.result.then(function (enrollment_key) {
@@ -319,9 +319,9 @@ angular.module('scalearAngularApp')
     link: function(scope, element){
       scope.openCalendar = function () {
         angular.element('.button').blur()
-        var modalInstance = $modal.open({
+        $modal.open({
             templateUrl: '/views/student/calendar/calendar.html',
-            controller: "CalendarModalCtrl",
+            controller: "CalendarModalCtrl"
         })
       }
 
@@ -335,9 +335,9 @@ angular.module('scalearAngularApp')
     link: function(scope, element){
       scope.openCalendar = function () {
         angular.element('.button').blur()
-        var modalInstance = $modal.open({
+        $modal.open({
             templateUrl: '/views/student/calendar/calendar.html',
-            controller: "dashboardCtrl",
+            controller: "dashboardCtrl"
         })
       }
 
@@ -359,7 +359,7 @@ angular.module('scalearAngularApp')
            $('#enrollment_message').select()
            $('#enrollment_message, #enrollment_message p').animate({ color: "#428bca" }, "fast").delay(400).animate({ color: "black" }, "fast");
         }
-        var modalInstance = $modal.open({
+        $modal.open({
             templateUrl: '/views/modals/help_enroll.html',
             scope: scope
         })

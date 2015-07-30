@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
     Course.update(
       {course_id:$stateParams.course_id},
       {course:modified_course},
-      function(response){
+      function(){
         $scope.$emit('get_current_courses')
       }
     );
@@ -49,25 +49,24 @@ angular.module('scalearAngularApp')
     var d = $q.defer();
     var course={}
     course[column]=data;
-    Course.validateCourse({course_id:$stateParams.course_id},course,function(data){
-      d.resolve()
-    },function(data){
-      if(data.status==422)
-        d.resolve(data.data.errors.join());
-      else
-        d.reject('Server Error');
+    Course.validateCourse(
+      {course_id:$stateParams.course_id},
+      course,
+      function(){
+        d.resolve()
+      },
+      function(data){
+        if(data.status==422)
+          d.resolve(data.data.errors.join());
+        else
+          d.reject('Server Error');
       }
     )
     return d.promise;
 	};
 
-  $scope.exportCourse = function(course){;
-    Course.exportCsv(
-      {course_id: $stateParams.course_id}, 
-      function(){
-        console.log("success");
-      }
-    )
+  $scope.exportCourse = function(){
+    Course.exportCsv({course_id: $stateParams.course_id})
   }
 
   $scope.url_with_protocol = function(url){
@@ -83,8 +82,7 @@ angular.module('scalearAngularApp')
       function(value){
            $scope.teachers = value.data;
            $scope.new_teacher = {};
-       },
-       function(value){}
+       }
     )
   }
 
@@ -118,10 +116,9 @@ angular.module('scalearAngularApp')
         course_id:$stateParams.course_id, 
         email:$scope.teachers[index].email
       }, {},
-      function(value){
+      function(){
         $scope.teachers.splice(index, 1);
-      },
-      function(value) {}
+      }
     )
   }
 
@@ -129,14 +126,13 @@ angular.module('scalearAngularApp')
     Course.saveTeacher(
       {course_id:$stateParams.course_id},
       {new_teacher:$scope.new_teacher},
-        function(value) {
-            $scope.getTeachers();
-            $scope.teacher_forum = false
-        },
-        function(value) {
-          console.log(value)
-          $scope.new_teacher.errors=value.data.errors
-        }
+      function() {
+          $scope.getTeachers();
+          $scope.teacher_forum = false
+      },
+      function(value) {
+        $scope.new_teacher.errors=value.data.errors
+      }
     )
   }
 

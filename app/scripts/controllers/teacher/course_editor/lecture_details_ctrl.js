@@ -102,7 +102,7 @@ angular.module('scalearAngularApp')
                 return d.promise;
             };
 
-            $scope.$parent.updateLecture = function(data, type) {
+            $scope.$parent.updateLecture = function() {
                 var modified_lecture = angular.copy($scope.lecture);
                 delete modified_lecture.id;
                 delete modified_lecture.created_at;

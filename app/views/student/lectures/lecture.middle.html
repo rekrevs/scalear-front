@@ -1,4 +1,4 @@
-<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-medium-down" style="margin:0px">
+<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-small-down" style="margin:0px">
 	 <span ng-show='key=="due"'>
 	 	<span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span >{{ "controller_msg."+alert_message[2] | translate}}</span>) 
 	 	<span translate>controller_msg.ago</span>
@@ -8,10 +8,11 @@
 	 </span>
 </span>
 <span id="lecture_container" style="overflow:hidden">
-	<div class="ease_in_out small-centered small-12 land-medium-12 portrait-medium-12 large-7 columns width-max-heigh" ng-class="{
+	<div class="ease_in_out small-centered small-12 portrait-medium-12 large-7 columns width-max-heigh" ng-class="{
 	'large-12 land-medium-12 large-centered': !delayed_timeline_open, 
 	'large-uncentered land-uncentered': delayed_timeline_open, 		 
-	'land-medium-12 land-uncentered':ContentNavigator.status && !delayed_timeline_open	
+	'land-medium-12 land-uncentered':ContentNavigator.status && !delayed_timeline_open,
+	'land-medium-8':!ContentNavigator.status && delayed_timeline_open
 	}">
 <!-- 'large-uncentered':delayed_navigator_open || delayed_timeline_open,
 	'large-10':ContentNavigator.status && !delayed_timeline_open -->
@@ -56,7 +57,7 @@
 										<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: 40%;position: relative;text-align: center;background: whitesmoke;z-index: 1;margin:0 10%;font-size:14px;font-weight: 300;"><b><span translate>lectures.note</span>:</b> <span translate>did_not_get_credit</span></div>
 									</quiz>
 								</youtube>
-								<progress-bar ng-if="!slow && lecture.url && show_progressbar" play_pause_class="play_pause_class"  elapsed_width="elapsed_width" seek="progress_seek" current_time='current_time' blink="blink_class" total_duration='total_duration' player="lecture_player" timeline="timeline['lecture'][lecture.id]" videoready="video_ready" style="position: relative;">
+								<progress-bar ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
 									<div ng-show="video_end" style="position: relative;top: -78px;left: 47%;z-index:1">
 										<button id="replay_button" type="button" ng-click="replay()" class="button" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
 								    	<button id="next_button" ng-show='next_item.id' type="button" ng-click="nextItem()" class="button" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span></button>
@@ -64,7 +65,7 @@
 						    		<!-- <controls id="controls-bar" class="progress_controls" ng-class="{'push-from-left': !quiz_mode}" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
 									</controls> -->
 									<div ng-show="quiz_mode" class="right" style="position:relative;right:30%">
-										<button type="button"  class="tiny success button no-margin" style="padding-top:0.525rem"ng-click="checkAnswer()" translate>youtube.check_answer</button>
+										<button type="button"  class="tiny success button no-margin check_answer_button" ng-click="checkAnswer()" translate>youtube.check_answer</button>
 										<notification message="notification_message" submessage="notification_submessage" middle-message="notification_middle_message"/> 
 									</div>									
 						    	</progress-bar>

@@ -353,17 +353,17 @@ angular.module('scalearAngularApp')
                             scope.save()
                         })
                     }
-                    var shorten = function(url, l){
-                        var l = typeof(l) != "undefined" ? l : 50;
-                        var chunk_l = (l/2);
-                        var url = url.replace("http://","").replace("https://","");
+                    // var shorten = function(url, l){
+                    //     var l = typeof(l) != "undefined" ? l : 50;
+                    //     var chunk_l = (l/2);
+                    //     var url = url.replace("http://","").replace("https://","");
 
-                        if(url.length <= l){ return url; }
+                    //     if(url.length <= l){ return url; }
 
-                        var start_chunk = shortString(url, chunk_l, false);
-                        var end_chunk = shortString(url, chunk_l, true);
-                        return start_chunk + ".." + end_chunk;
-                    }
+                    //     var start_chunk = shortString(url, chunk_l, false);
+                    //     var end_chunk = shortString(url, chunk_l, true);
+                    //     return start_chunk + ".." + end_chunk;
+                    // }
                     var shortString = function(s, l, reverse){
                         var stop_chars = [' ','/', '&'];
                         var acceptable_shortness = l * 0.80; // When to start looking for stop characters

@@ -118,9 +118,9 @@ angular.module('scalearAngularApp')
 	    	question_count:'=questionCount',
 	    	survey_count:'=surveyCount'
 	    },
-	    template:'<div class="row panel with-small-margin text-center time_estimate">'+
+	    template:'<div class="panel with-small-margin-top text-center time_estimate">'+
 					'<div>'+
-						'<h6 ng-style="{color: color}">In-class <span translate>courses.time_estimate</span>: <b>{{inclass_estimate || 0}} <span translate>minutes</span></b></h6>'+
+						'<h6 ng-style="{color: color}">In-class <span translate>courses.time_estimate</span>: <br /><b>{{inclass_estimate || 0}} <span translate>minutes</span></b></h6>'+
 					'</div>'+
 					'<div><h6 class="size-14">({{quiz_count || 0}} quizzes, {{question_count || 0}} discussions and {{survey_count || 0}} surveys) </h6></div>'+
 					'<div>'+
@@ -138,8 +138,14 @@ angular.module('scalearAngularApp')
   	 		var template = "<div style='min-width: 235px;'>"+
   	 						// "<label class='small-12 columns no-padding'><span translate>courses.quizzes_for_review</span>: {{quiz_count}}</label>"+
   	 						// "<label class='small-12 columns no-padding'><span translate>courses.questions_for_review</span>: {{question_count}}</label>"+
-  	 						"<label class='small-12 columns no-padding'><span translate>courses.time_per_quiz</span><select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_quiz' ng-options='i for i in numbers'></select></label>"+
-  	 						"<label class='small-12 columns no-padding'><span translate>courses.time_per_question</span><select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_question' ng-options='i for i in numbers'></select></label>"+	  	 						
+  	 						"<label class='small-12 columns no-padding'>"+
+  	 							"<span translate>courses.time_per_quiz</span>"+
+  	 							"<select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_quiz' ng-options='i for i in numbers'></select>"+
+  	 						"</label>"+
+  	 						"<label class='small-12 columns no-padding with-small-margin-bottom'>"+
+  	 							"<span translate>courses.time_per_question</span>"+
+  	 							"<select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_question' ng-options='i for i in numbers'></select>"+
+	 						"</label>"+	  	 						
   	 						// "<label translate>formula</label>:"+
   	 					 //    "<h4 class='subheader'><small>( #<span translate>courses.quizzes_for_review</span> * {{time_quiz}} ) + ( #<span translate>courses.questions_for_review</span> * {{time_question}} )<small></h4>"+
   	 					   "</div>"

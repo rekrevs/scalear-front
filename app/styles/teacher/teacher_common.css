@@ -69,6 +69,10 @@ ul.highlight, li.highlight{
 	font-weight:bold
 }
 
+.inclass .li_inner{
+	padding-left: 25px;
+}
+
 .maroon{	
 	color: maroon;
 }

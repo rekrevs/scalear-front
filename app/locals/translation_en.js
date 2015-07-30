@@ -479,6 +479,7 @@ var translation_en=function(){
         go_inside_item: "Go inside an item",
         go_outside_item:"Go outside an item",
         seek_to_location: "Seek to location",
+        resize_video: "Resize video",
         mark: "Mark",
         reply: "Reply",
         download_notes: "Download Notes",

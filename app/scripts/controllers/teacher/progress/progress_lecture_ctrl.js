@@ -457,9 +457,9 @@ angular.module('scalearAngularApp')
       console.log(item)
       console.log(type)
       if(value)
-        $scope.review_survey_count+= (type == "charts")? 1 : $scope.review_survey_reply_count[survey_id][id]
+        $scope.review_survey_count+= (type == "charts")? 1 : $scope.review_survey_reply_count[survey_id][id]+1
       else
-        $scope.review_survey_count-= (type == "charts")? 1 : $scope.review_survey_reply_count[survey_id][id]
+        $scope.review_survey_count-= (type == "charts")? 1 : $scope.review_survey_reply_count[survey_id][id]+1
       Quiz.showInclass(
         {
           course_id:$stateParams.course_id,

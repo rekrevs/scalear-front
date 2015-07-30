@@ -478,6 +478,7 @@ var translation_sv=function(){
       go_inside_item: "Gå in ett objekt",
       go_outside_item:"Gå utanför ett objekt",
       seek_to_location: "Sök till plats",
+      resize_video: "Ändra storlek video",
       mark: "Markera",
       reply: "Svara",
       download_notes: "Ladda ner anteckningar",

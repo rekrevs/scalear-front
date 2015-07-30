@@ -1127,10 +1127,10 @@ td.right-border{
   z-index: 11 !important;
  
 }
-.main-nav .top-bar, .main-nav .top-bar .name {
-   height: 2rem !important;
+/*.main-nav .top-bar, .main-nav .top-bar .name {
+   height: 2rem;
   line-height:2rem;
-}
+}*/
 
 .main-nav .top-bar .name h1, .top-bar .name h2, .top-bar .name h3, .top-bar .name h4, .top-bar .name p, .top-bar .name span{
   line-height: 2rem
@@ -2056,6 +2056,13 @@ a.editable-click{
   }
 }
 
+@media only screen and (min-width:40.063em){
+  .main-nav .top-bar, .main-nav .top-bar .name {
+    height: 2rem !important;
+    line-height:2rem;
+  }
+}
+
 @media only screen and (min-width:64.063em) {
   .large-height-big{
     height: 82vh !important;
@@ -2063,9 +2070,7 @@ a.editable-click{
   .with-huge-padding-side{
     padding-left: 10.5rem !important;
     padding-right: 10.5rem !important;
-  }
-
-  
+  }  
 }
 
 @media only screen and (min-width:84.063em) {
@@ -2087,6 +2092,7 @@ a.editable-click{
   .hide-for-semi-medium{
     display: none !important;
   }
+
 }
 
 @media only screen and (max-width:15.063em){

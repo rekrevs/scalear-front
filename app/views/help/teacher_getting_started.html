@@ -1,7 +1,10 @@
 <!-- <h5 class="show-for-medium-down"><i class="fi-page-multiple size-18"></i> {{'help.getting_started' | translate}}</h5> -->
 <div class="left-navigation hide-for-small-only left medium-3 large-3 columns" mac-affix>
 	<ul class="side-nav">
-	  <h3 ng-if="!current_user"><i class="fi-page-multiple size-18"></i> {{'help.getting_started' | translate}}</h3>
+	  <h3 ng-if="!current_user">
+	  	<i class="fi-page-multiple size-18"></i>
+	  	<span translate>help.getting_started</span>
+	  </h3>
 	  <li><a ng-click="scroll('intro')">Introduction</a></li>
 	  <li><a ng-click="scroll('create')">Create a course, add a video, and add quizzes</a></li>
 	  <li><a ng-click="scroll('review')">Review student progress and prepare for in-class review</a></li>
@@ -17,11 +20,23 @@
 	</div></center>
 	<center><div id="create" class="small-10 with-margin-bottom">
 		<h2 class="color-green text-left">Getting Started: Create a course, add a video, and add quizzes</h2>
-		<youtube id="create_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_new_course_video" autoplay='0' controls='1' style="z-index: 1;">		
+		<div>
+			<youtube id="create_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_new_course_video" autoplay='0' controls='1' style="z-index: 1;">
+		</div>
+		<br />
+		<div>
+			<youtube id="add_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_add_quiz_video" autoplay='0' controls='1' style="z-index: 1;">	
+		</div>		
 	</div></center>
 	<center><div id="review" class="small-10 with-margin-bottom">
 		<h2 class="color-green text-left">Getting Started: Review student progress and prepare for in-class review</h2>
-		<youtube id="review_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_review_course_video" autoplay='0' controls='1' style="z-index: 1;">
+		<div>
+			<youtube id="review_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_review_course_video" autoplay='0' controls='1' style="z-index: 1;">
+		</div>
+		<br />
+		<div>
+			<youtube id="inclass_video" class="flex-video widescreen with-light-border" url="scalear_api.teacher_inclass_video" autoplay='0' controls='1' style="z-index: 1;">
+		</div>
 	</div></center>
 	<div id="instructions">
 		<h2 class="color-green">ScalableLearning Instructions Manual</h2>

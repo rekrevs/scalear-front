@@ -51,8 +51,8 @@ angular.module('scalearAngularApp')
 				if($scope.user.link){
 					$scope.short_url = $scope.shorten($scope.url_with_protocol($scope.user.link), 20);
 				}
-  				// console.log(data.user)
-  				// console.log(data.profile_image)
+  				// $log.debug(data.user)
+  				// $log.debug(data.profile_image)
   			}
 		)
     }

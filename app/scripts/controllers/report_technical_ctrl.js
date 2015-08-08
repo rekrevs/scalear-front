@@ -31,8 +31,8 @@ angular.module('scalearAngularApp')
         if(data){
           $scope.no_text = null;
           $scope.sending_technical = true;
-          console.log($scope.selected_type.value)
-          console.log($scope.technical_data)
+          $log.debug($scope.selected_type.value)
+          $log.debug($scope.technical_data)
           Home.technicalProblem({
                   name: user.name,
                   email: user.email,

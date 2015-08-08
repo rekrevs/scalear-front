@@ -59,15 +59,15 @@ angular.module('scalearAngularApp')
     }    
 
     $scope.getRemainingLectureProgress = function(){
-        console.log("getting remaining")
-        console.log($scope.total)
-        console.log($scope.lecture_offset)
-        console.log($scope.lecture_limit)
+        $log.debug("getting remaining")
+        $log.debug($scope.total)
+        $log.debug($scope.lecture_offset)
+        $log.debug($scope.lecture_limit)
 
         if($scope.lecture_offset+$scope.lecture_limit<=parseInt($scope.total))
             $scope.getAllItemsProgress($scope.lecture_offset+$scope.lecture_limit,$scope.lecture_limit) 
         else{
-            console.log("no more")
+            $log.debug("no more")
         	disableInfinitScrolling()
         }
     }

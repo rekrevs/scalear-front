@@ -86,7 +86,7 @@ angular.module('scalearAngularApp')
 				'</div>', 
 	    link:function(scope,element){
 	    	scope.change=function(){
-	    		// console.log("changes here")
+	    		// $log.debug("changes here")
 	    	 	scope.action()
 	    	 	angular.element('input.show_inclass').blur()
 	    	}
@@ -108,7 +108,7 @@ angular.module('scalearAngularApp')
 	    controller:'freeTextTableCtrl'
 	}
 })
-.directive("inclassEstimate",function(){
+.directive("inclassEstimate",['$log',function($log){
     return{
 	    restrict: "E",
 	    scope: {
@@ -161,7 +161,7 @@ angular.module('scalearAngularApp')
 		    }
 
 		    var getColor=function(estimate){
-		    	console.log(estimate)
+		    	$log.debug(estimate)
 		    	if(estimate > 25)
 		    		return 'red'
 		    	else if(estimate > 15)
@@ -176,7 +176,7 @@ angular.module('scalearAngularApp')
 			});
 	    }
     };
-})
+}])
 // .directive("tab1",function(){
 //     return{
 // 	    restrict: "E",
@@ -268,7 +268,7 @@ angular.module('scalearAngularApp')
 // 		 	scope.$watch('done', function(){
 // 		 		var canvas;
 // 				var ctx;
-// 				// console.log(element.children())
+// 				// $log.debug(element.children())
 // 				var bg = element.children()[1].children[0]
 // 				var ctx = ctx = bg.getContext('2d');
 // 		 		if(scope.done == true){
@@ -276,7 +276,7 @@ angular.module('scalearAngularApp')
 // 					ctx.fillStyle = 'lightgreen';
 // 					ctx.beginPath();
 // 					ctx.moveTo(bg.width/2,bg.height/2);
-// 					// console.log(scope.percentage)
+// 					// $log.debug(scope.percentage)
 // 					ctx.arc(bg.width/2,bg.height/2,bg.height/2,0,(Math.PI*2*(1)),false);
 // 					ctx.lineTo(bg.width/2,bg.height/2);
 // 					ctx.fill();
@@ -304,7 +304,7 @@ angular.module('scalearAngularApp')
 //         var raw = elm[0];
         
 //         elm.bind('scroll', function() {
-//         	console.log('scrolled')
+//         	$log.debug('scrolled')
 //             if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
 //                 scope.$apply(attr.whenScrolled);
 //             }

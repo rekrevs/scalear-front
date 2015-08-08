@@ -16,8 +16,8 @@ angular.module('scalearAngularApp')
                         }
                         if(isDueDateDisabled($scope.module_obj[$scope.quiz.group_id].due_date)){
                             $scope.quiz.disable_module_due_controls = true//isDueDateDisabled($scope.module_obj[$scope.quiz.group_id].due_date)
-                            // console.log("whne to diable controls here !!!!")
-                            // console.log($scope.module_obj[$scope.quiz.group_id].due_date)
+                            // $log.debug("whne to diable controls here !!!!")
+                            // $log.debug($scope.module_obj[$scope.quiz.group_id].due_date)
                             // $scope.quiz.due_date_module = false
                         }
                         else{
@@ -53,7 +53,7 @@ angular.module('scalearAngularApp')
                     },
                     function(data) {
                         $log.debug(data)
-                        console.log(data)
+                        $log.debug(data)
                         $scope.quiz.appearance_time = data.quiz.appearance_time
                         $scope.quiz.due_date = data.quiz.due_date
                     }

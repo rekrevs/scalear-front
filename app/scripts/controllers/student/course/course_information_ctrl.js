@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page', '$filter', '$state', '$timeout','$rootScope','ContentNavigator', function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout,$rootScope,ContentNavigator) {
+    .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page', '$filter', '$state', '$timeout','$rootScope','ContentNavigator','$log', function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout,$rootScope,ContentNavigator, $log) {
 
     Page.setTitle('head.information');
     Page.startTour();
@@ -62,7 +62,7 @@ angular.module('scalearAngularApp')
         Course.getAnnouncements(
             {course_id: $stateParams.course_id},
             function(data){
-                console.log("data",data)
+                $log.debug("data",data)
                 $scope.announcements = data
             }
         )

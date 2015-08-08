@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page','scalear_api','$translate', function ($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api, $translate) {
+	.controller('UsersConfirmedCtrl', ['$scope', '$rootScope', 'User', 'UserSession', '$state', '$interval', 'Page','scalear_api','$translate','$log', function ($scope, $rootScope, User, UserSession, $state, $interval, Page, scalear_api, $translate, $log) {
 		$scope.can_proceed = false 
 		$scope.remaining = 5;
 		$scope.player={}
@@ -42,12 +42,12 @@ angular.module('scalearAngularApp')
 				{id: $rootScope.current_user.id},
 				{completion_wizard: completion}, 
 				function(){
-					console.log('SUCCEEDED')
+					$log.debug('SUCCEEDED')
 					$rootScope.current_user.completion_wizard = {}
 					$rootScope.current_user.completion_wizard.intro_watched = true;
 					$state.go('course_list');
 				}, function(){
-					console.log('failed')
+					$log.debug('failed')
 				});
 			}
 	}]);

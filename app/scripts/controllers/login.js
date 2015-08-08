@@ -12,7 +12,7 @@ angular.module('scalearAngularApp')
     User.sign_in({},
       {"user":$scope.user}, 
       function(data){
-        console.log("login success")
+        $log.debug("login success")
         $scope.sending = false;
         $rootScope.$broadcast("get_current_courses")
         if(!data.info_complete){

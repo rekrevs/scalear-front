@@ -1,8 +1,7 @@
 'use strict';
 
-var app = angular.module('scalearAngularApp')
-
-  app.controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', '$filter', '$modal','$cookieStore','ContentNavigator', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page, $filter, $modal,$cookieStore, ContentNavigator) {
+angular.module('scalearAngularApp')
+  .controller('enrolledStudentsCtrl', ['$scope', '$state', 'Course', 'batchEmailService','$stateParams', '$translate','$log','$window','Page', '$filter', '$modal','$cookieStore','ContentNavigator', function ($scope, $state, Course, batchEmailService, $stateParams, $translate, $log, $window, Page, $filter, $modal,$cookieStore, ContentNavigator) {
  
         ContentNavigator.close()
         $log.debug("in enrolled students");
@@ -43,14 +42,14 @@ var app = angular.module('scalearAngularApp')
         }
 
         $scope.emailSingle=function(student){
-          console.log("HFGfsda")
+          $log.debug("HFGfsda")
           $scope.deSelectAll()
           $scope.toggleSelect(student)
           $scope.emailForm()
         }
 
         // $scope.emailSingle=function(){
-        //   console.log("HFGfsda")
+        //   $log.debug("HFGfsda")
         //   $scope.deSelectAll()
         //   $scope.toggleSelect(student)
         //   $scope.emailForm()
@@ -73,10 +72,10 @@ var app = angular.module('scalearAngularApp')
         }
         $scope.selectAll = function(){
           var filtered_students = $filter('filter')($scope.students, $scope.searchText)
-          // console.log('filtered students')
-          // console.log(filtered_students.length)
+          // $log.debug('filtered students')
+          // $log.debug(filtered_students.length)
           filtered_students.forEach(function(item){
-            console.log('1')
+            $log.debug('1')
             $filter('filter')($scope.students, {'id': item.id}, true)[0].checked = true;
 
           })

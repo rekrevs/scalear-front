@@ -15,7 +15,7 @@
  //                // arrange timeline
  //                $scope.timeline = {}
  //                $scope.timeline['lecture']={}
- //                console.log("timeline")
+ //                $log.debug("timeline")
  //                for(var l in $scope.module_lectures)
  //                {
  //                    var lec= $scope.module_lectures[l]
@@ -43,7 +43,7 @@
  //                        $scope.timeline['lecture'][lec.id].add(lec.notes[i].time, "note", lec.notes[i])
  //                    }
  //                }
- //                console.log($scope.timeline)
+ //                $log.debug($scope.timeline)
                 
  //            }
  //        );

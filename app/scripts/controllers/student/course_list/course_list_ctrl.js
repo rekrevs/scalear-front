@@ -12,7 +12,7 @@
 //   	// 			$log.debug(data)
 //   	// 			$scope.all_courses = data
 //    //        $scope.courses = $scope.all_courses
-//    //        console.log($scope.courses)
+//    //        $log.debug($scope.courses)
 //   	// 		},
 //   	// 		function(){}
 //    //    )
@@ -30,10 +30,10 @@
 //       //     $scope.events.push(announcement);
 //       //   })
 //       //   // $scope.coming_up = data.coming_up
-//       //   console.log('got these')
-//       //   console.log($scope.events)
+//       //   $log.debug('got these')
+//       //   $log.debug($scope.events)
 //       // }, function(){
-//       //   console.log('Couldn\'t get the data');
+//       //   $log.debug('Couldn\'t get the data');
 //       // })
 // 		// }
 //     // $scope.all_courses = $scope.courses
@@ -66,7 +66,7 @@
 //    //  	})
 
 //    //  	modalInstance.result.then(function (enrollment_key) {
-//    //    //   console.log($scope.course)
+//    //    //   $log.debug($scope.course)
 //    //  		// $rootScope.show_alert="success";	
 //    //  		// ErrorHandler.showMessage($translate('controller_msg.enrolled_in', {course: $scope.course.name}), 'errorMessage', 2000);
 //    //  		// $timeout(function(){

@@ -26,7 +26,7 @@ angular.module('scalearAngularApp')
  	var init = function(){
  		Quiz.getQuestions({course_id:$stateParams.course_id, quiz_id: $stateParams.quiz_id},
  			function(data){
- 				console.log(data)
+ 				$log.debug(data)
 	 			$log.debug("init data is");
 	 			$log.debug(data);
 		 		$scope.questions=data.questions
@@ -110,7 +110,7 @@ angular.module('scalearAngularApp')
 			}
 			else if($scope.questions[elem].question_type == 'Free Text Question' && $scope.questions[elem].match_type =='Free Text')
 			{
-				console.log("I enterd here removing answer")
+				$log.debug("I enterd here removing answer")
 				var y=angular.copy($scope.questions[elem])
 				y.answers=[]
 				data[elem]= y

@@ -61,15 +61,15 @@ angular.module('scalearAngularApp')
 			    //       	}
 
 			          	var adjustTop=function(pop){
-			          		console.log("topcut")
+			          		$log.debug("topcut")
 				            var win = angular.element($window)
 				            var arrow = angular.element(".arrow")
 							var elem_top= element.offset().top
-							console.log(elem_top)
+							$log.debug(elem_top)
 							// var elem_bottom= win.height() - elem_top;
 							var arrow_pos
 							if(elem_top<225){ //too close to top
-								console.log(angular.element('.popover').parent().position())
+								$log.debug(angular.element('.popover').parent().position())
 								arrow_pos = angular.element('.popover').parent().position().top + pop.height 
 						 		arrow.css("top",arrow_pos+'px');
 								pop.top = angular.element('.popover').height() - (angular.element('.popover').height()/4) +pop.height 

@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
     .controller('studentLectureMiddleCtrl', ['$anchorScroll','$scope', 'Course', '$stateParams', 'Lecture', '$window', '$interval', '$translate', '$state', '$log', 'CourseEditor','$location','$timeout','doc','Page', '$filter','Forum','OnlineQuiz','scalear_utils', '$tour', 'ContentNavigator', 'TimelineNavigator', '$rootScope',function($anchorScroll,$scope, Course, $stateParams, Lecture, $window, $interval, $translate, $state, $log, CourseEditor, $location, $timeout,doc,Page, $filter,Forum, OnlineQuiz, scalear_utils, $tour, ContentNavigator, TimelineNavigator, $rootScope) {
 
-    console.log("lect mid ctlr")
+    $log.debug("lect mid ctlr")
     $scope.checkModel={quiz:true,confused:true, discussion:true, note:true};
     $scope.video_layer = {}
     $scope.quiz_layer = {}
@@ -34,7 +34,7 @@ angular.module('scalearAngularApp')
     })
 
     $scope.$on('take_note', function(){
-        console.log('taking note')
+        $log.debug('taking note')
         $scope.addNote();
     })
 
@@ -265,7 +265,7 @@ angular.module('scalearAngularApp')
             }
             else if(milestone == 100)
                 $scope.not_done_msg = true
-            console.log("Watched:"+data.watched+"%"+" solved:"+data.quizzes_done[0]+" total:"+data.quizzes_done[1])
+            $log.debug("Watched:"+data.watched+"%"+" solved:"+data.quizzes_done[0]+" total:"+data.quizzes_done[1])
         })
     }
 
@@ -323,7 +323,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.seek_and_pause=function(time,lecture_id){
-        console.log($scope.lecture_player)
+        $log.debug($scope.lecture_player)
         if($scope.lecture_player.controls.getTime() != time)
             clearQuiz()
         $scope.seek(time,lecture_id)
@@ -375,7 +375,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onPlay = function() {  
-        console.log("playing ")
+        $log.debug("playing ")
         // $scope.play_pause_class = 'pause'  
         checkIfQuizSolved()
         $scope.video_end = false
@@ -383,11 +383,11 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onPause= function(){
-        console.log("pausing")
+        $log.debug("pausing")
         // $scope.play_pause_class = "play"
         if($scope.current_time != null){
             var percent_view = Math.round((($scope.current_time/$scope.total_duration)*100))
-            console.log("current watched: "+percent_view)
+            $log.debug("current watched: "+percent_view)
             updateViewPercentage(percent_view)
             $scope.submitPause($scope.quiz_mode,$scope.current_time);
         }
@@ -405,15 +405,15 @@ angular.module('scalearAngularApp')
     }
 
     $scope.lecture_player.events.onSlow=function(is_youtube){
-        console.log("youtube is")
-        console.log(is_youtube)
+        $log.debug("youtube is")
+        $log.debug(is_youtube)
         $scope.is_youtube = is_youtube
         $scope.slow = true
     }
 
     $scope.lecture_player.events.canPlay=function(){
         if($scope.go_to_time && !$rootScope.is_mobile){
-            console.log("can play")
+            $log.debug("can play")
             if($scope.go_to_time >=0)
                 $scope.seek_and_pause($scope.go_to_time)
             $scope.go_to_time = null
@@ -450,7 +450,7 @@ angular.module('scalearAngularApp')
         },
         {time:time}, 
         function(data){
-            console.log(data)
+            $log.debug(data)
             if(data.msg=="ask"){
                 showNotification("controller_msg.really_confused_use_question")
             }
@@ -517,7 +517,7 @@ angular.module('scalearAngularApp')
 
     $scope.addNote=function(){
         var time=$scope.lecture_player.controls.getTime()
-        console.log($scope.timeline['lecture'][$state.params.lecture_id])
+        $log.debug($scope.timeline['lecture'][$state.params.lecture_id])
         $scope.timeline['lecture'][$state.params.lecture_id].add(time, "note",  null);
         $scope.last_fullscreen_state = $scope.fullscreen;
         $scope.last_play_state = $scope.play_pause_class;
@@ -528,7 +528,7 @@ angular.module('scalearAngularApp')
     }    
 
     $scope.$on('video_back',function(ev, time){
-        console.log(time)
+        $log.debug(time)
         Lecture.back(
             {
                 course_id:$state.params.course_id, 
@@ -654,7 +654,7 @@ angular.module('scalearAngularApp')
         var max_time = 10
         var close_time= 7.5
         if($scope.selected_quiz.quiz_type != 'survey' && !$scope.review_inclass && !$scope.review_inclass_inprogress){
-            console.log("review inclass")
+            $log.debug("review inclass")
             $scope.review_inclass_inprogress = true
             var time = max_time
             var next_time = getNextQuizTime($scope.selected_quiz.time, max_time)
@@ -681,7 +681,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.voteForReview=function(){
-        console.log("vote review")
+        $log.debug("vote review")
         OnlineQuiz.voteForReview(
         {online_quizzes_id:$scope.last_quiz.id},{},
         function(res){
@@ -710,7 +710,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.closeReviewNotify=function(){
-        console.log("close")
+        $log.debug("close")
         $( "#review_inclass" ).fadeOut( "fast" )
     }
 

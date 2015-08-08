@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
           var completion = $rootScope.current_user.completion_wizard
           if(completion.intro_watched == true){
             completion[Page.pageName()] = true;
-            console.log(completion)
+            $log.debug(completion)
             User.updateCompletionWizard(
               {id: $rootScope.current_user.id},
               {completion_wizard: completion}, 

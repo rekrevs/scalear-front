@@ -83,7 +83,7 @@ angular.module('scalearAngularApp')
         function(data){
           angular.extend($scope, data)
           $scope.module= $scope.course.selected_module
-          console.log("moduel ", $scope.course.selected_module)
+          $log.debug("moduel ", $scope.course.selected_module)
           if($scope.progress_player.controls.isYoutube($scope.first_lecture)){
             $scope.url = $scope.first_lecture+"&controls=1&fs=1&theme=light"
           }
@@ -114,7 +114,7 @@ angular.module('scalearAngularApp')
                 }
            }           
           }
-          console.log($scope.timeline)          
+          $log.debug($scope.timeline)          
         },  
         function(){}        
       )      
@@ -143,7 +143,7 @@ angular.module('scalearAngularApp')
           module_id:$stateParams.module_id
       },
       function(resp){
-        console.log(resp)
+        $log.debug(resp)
         var quizzes=resp.quizzes
       	$scope.timeline['quiz'] ={}
   	 		
@@ -174,7 +174,7 @@ angular.module('scalearAngularApp')
             module_id:$stateParams.module_id
         },
         function(resp){
-          console.log(resp)
+          $log.debug(resp)
           var surveys = resp.surveys
           $scope.review_survey_count = resp.review_survey_count
           $scope.review_survey_reply_count = {}
@@ -247,7 +247,7 @@ angular.module('scalearAngularApp')
 
   	$scope.manageInnerHighlight=function(x){
       // resizePlayerSmall()
-      console.log("mangae inner higligh")
+      $log.debug("mangae inner higligh")
   		var inner_ul= angular.element('ul.highlight').find('ul')
   		if(inner_ul.length){
   			var inner_li = inner_ul.find('li').not('.no_highlight')
@@ -310,7 +310,7 @@ angular.module('scalearAngularApp')
     // }
 
    var setupRemoveHightlightEvent=function(){
-    console.log("adding")
+    $log.debug("adding")
       $(document).click(function(e){
         if(angular.element(e.target).find('.inner_content').length){
           removeHightlight()
@@ -325,7 +325,7 @@ angular.module('scalearAngularApp')
       $(".highlight").removeClass("highlight");
       angular.element('.ul_item').removeClass('low-opacity').addClass('full-opacity')
       $scope.highlight_level = 0
-      console.log("removing")
+      $log.debug("removing")
     }
 
     $scope.resetHighlightVariables=function(){
@@ -393,7 +393,7 @@ angular.module('scalearAngularApp')
           hide:comment.hide
         },
         function(){
-          console.log(comment.hide)
+          $log.debug(comment.hide)
           if(comment.hide && !discussion.hide){
             discussion.hide= true
             $scope.updateHideDiscussion(discussion.id,!discussion.hide)
@@ -404,9 +404,9 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateHideResponse = function(survey_id, item, answer){
-      console.log(survey_id)
-      console.log(item)
-      console.log(answer)
+      $log.debug(survey_id)
+      $log.debug(item)
+      $log.debug(answer)
       if(!answer.hide){
         $scope.review_survey_reply_count[survey_id][item.data.id]++
         if(item.data.show)
@@ -429,7 +429,7 @@ angular.module('scalearAngularApp')
           }                
         },
         function(){
-          console.log(answer.hide)
+          $log.debug(answer.hide)
           if(answer.hide && !item.data.show){
             item.data.show = true
             $scope.updateHideSurveyQuestion(survey_id, item.data.id, item.data.show, item.type)
@@ -454,8 +454,8 @@ angular.module('scalearAngularApp')
     }
 
     $scope.updateHideSurveyQuestion=function(survey_id,id, value, type, item){
-      console.log(item)
-      console.log(type)
+      $log.debug(item)
+      $log.debug(type)
       if(value)
         $scope.review_survey_count+= (type == "charts")? 1 : $scope.review_survey_reply_count[survey_id][id]+1
       else
@@ -482,7 +482,7 @@ angular.module('scalearAngularApp')
        Forum.createComment(
         {comment: {content: discussion.temp_response, post_id:discussion.id, lecture_id:discussion.lecture_id}}, 
         function(response){
-          console.log(response)
+          $log.debug(response)
           response.comment.hide=false
           discussion.comments.push(response)
           discussion.temp_response = null
@@ -589,8 +589,8 @@ angular.module('scalearAngularApp')
   }
 
 	$scope.seek=function(time, url){
-    console.log(url)
-    console.log($scope.url)
+    $log.debug(url)
+    $log.debug($scope.url)
     if($scope.url.indexOf(url) == -1){
       if($scope.progress_player.controls.isYoutube(url)){
         $scope.progress_player.controls.setStartTime(time)
@@ -761,13 +761,13 @@ angular.module('scalearAngularApp')
   // }
 
   var seekToItem=function(){
-    console.log("seeking to item",$scope.selected_item )
+    $log.debug("seeking to item",$scope.selected_item )
     if($scope.selected_item && $scope.selected_item.time>=0 && $scope.lectures[$scope.selected_item.lec_id]){          
         var time = $scope.selected_item.time             
         if ($scope.selected_item.type == "discussion"){
           var q_ind = $scope.inner_highlight_index
           time = $scope.selected_item.data[q_ind].post.time
-          console.log(time)
+          $log.debug(time)
         }  
         $scope.seek(time, $scope.lectures[$scope.selected_item.lec_id].meta.url)
     }
@@ -854,8 +854,8 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("m",function(){
-      console.log($scope.selected_item)
-      console.log($scope.selected_item.data.quiz_type)
+      $log.debug($scope.selected_item)
+      $log.debug($scope.selected_item.data.quiz_type)
       if($scope.selected_item){        
   			if ($scope.selected_item.type == "discussion"){
   				var q_ind = $scope.inner_highlight_index
@@ -874,7 +874,7 @@ angular.module('scalearAngularApp')
   			}
         else if($scope.selected_item.type == "free_question"){
           if($scope.selected_item.data.quiz_type == 'survey'){
-            console.log($scope.inner_highlight_index)
+            $log.debug($scope.inner_highlight_index)
             if($scope.highlight_level == 1){
               $scope.selected_item.data.show = !$scope.selected_item.data.show
               $scope.updateHideSurveyQuestion($scope.selected_item.data.answers[0].quiz_id,$scope.selected_item.data.id, $scope.selected_item.data.show, $scope.selected_item.type)
@@ -902,7 +902,7 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : true, "propagate":false});
 
     shortcut.add("ESC",function(){
-      console.log($scope.selected_item)
+      $log.debug($scope.selected_item)
       resizePlayerSmall()
       if($scope.selected_item.type == 'discussion'){
         $scope.selected_item.data.forEach(function(discussion){
@@ -920,13 +920,13 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : false, "propagate":false});
 
     shortcut.add("enter",function(){
-      console.log($scope.selected_item)
+      $log.debug($scope.selected_item)
       if($scope.selected_item.type == 'discussion'){
         var q_ind = $scope.inner_highlight_index
         $scope.sendComment($scope.selected_item.data[q_ind].post)
         $scope.selected_item.data[q_ind].post.show_feedback = false
       }else if($scope.selected_item.type == "free_question"){
-        console.log("free text")
+        $log.debug("free text")
         var q_ind = $scope.inner_highlight_index
         $scope.sendFeedback($scope.selected_item.data.answers[q_ind])
         $scope.selected_item.data.answers[q_ind].show_feedback = false

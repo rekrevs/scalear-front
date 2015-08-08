@@ -2,8 +2,8 @@
 
 // angular.module('scalearAngularApp')
 //   .controller('navigationCtrl', ['$scope', '$state','$stateParams', 'Course', '$log', '$rootScope', function ($scope, $state, $stateParams, Course, $log, $rootScope) {
-// console.log('-------->')
-//   	console.log($rootScope)
+// $log.debug('-------->')
+//   	$log.debug($rootScope)
   	// $scope.current_course_id= $stateParams.course_id;
  //  	Course.show(
  //  		{course_id: $stateParams.course_id},

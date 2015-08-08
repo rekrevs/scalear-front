@@ -142,7 +142,7 @@ angular.module('scalearAngularApp')
 	// 			ctx.fillStyle = scope.innercolor;
 	// 			ctx.beginPath();
 	// 			ctx.moveTo(bg.width/2,bg.height/2);
-	// 			// console.log(scope.percentage)
+	// 			// $log.debug(scope.percentage)
 	// 			ctx.arc(bg.width/2,bg.height/2,bg.height/2,0,(Math.PI*2*(scope.calculatePercentageDone())),false);
 	// 			ctx.lineTo(bg.width/2,bg.height/2);
 	// 			ctx.fill();
@@ -192,7 +192,7 @@ angular.module('scalearAngularApp')
 // 		 	scope.$watch('done', function(){
 // 		 		var canvas;
 // 				var ctx;
-// 				// console.log(element.children())
+// 				// $log.debug(element.children())
 // 				var bg = element.children()[0].children[0].children[0]
 // 				var ctx = ctx = bg.getContext('2d');
 // 		 		if(scope.done == true && scope.current!=scope.id){
@@ -200,7 +200,7 @@ angular.module('scalearAngularApp')
 // 					// ctx.fillStyle = 'rgb(0, 162, 86)';
 // 					ctx.beginPath();
 // 					ctx.moveTo(bg.width/2,bg.height/2);
-// 					// console.log(scope.percentage)
+// 					// $log.debug(scope.percentage)
 // 					ctx.arc(bg.width/2,bg.height/2,bg.height/2,0,(Math.PI*2*(1)),false);
 // 					ctx.lineTo(bg.width/2,bg.height/2);
 // 					ctx.fill();
@@ -239,8 +239,8 @@ angular.module('scalearAngularApp')
 // 		 			var to={}
 // 		 			to[s] = scope.id
 // 		 			// to['module_id'] = scope.groupId;
-//                     console.log("group id iss");
-//                     console.log(scope.groupId)
+//                     $log.debug("group id iss");
+//                     $log.debug(scope.groupId)
 //                     to["module_id"]=scope.groupId
 // 		 			$state.go(next_state, to);
 // 		 		}

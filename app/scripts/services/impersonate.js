@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
 		            $rootScope.$broadcast('get_current_courses')
 	          	},
 	          	function(){
-	            	console.log("Failed to Preview")
+	            	$log.debug("Failed to Preview")
             		clean()
 	          	}
 	    	)
@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
 					$state.go(state, params,{reload:true})
 					$rootScope.$broadcast('get_current_courses')
 				},function(){
-					console.log("Failed Closing Preview")
+					$log.debug("Failed Closing Preview")
 					clean()
 				})
 			}

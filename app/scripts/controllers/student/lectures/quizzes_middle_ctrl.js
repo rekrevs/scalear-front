@@ -14,10 +14,10 @@ angular.module('scalearAngularApp')
 
  		Quiz.getQuestions({quiz_id: $stateParams.quiz_id, course_id: $stateParams.course_id},function(data){
             $scope.quiz= data.quiz
-            console.log($scope.quiz)
+            $log.debug($scope.quiz)
             Page.setTitle($scope.quiz.name)
 
-           console.log($scope.preview_as_student)
+           $log.debug($scope.preview_as_student)
            if(!$scope.preview_as_student){
                 for(var item in $scope.quiz.requirements){
                     for(var id in $scope.quiz.requirements[item]){
@@ -57,7 +57,7 @@ angular.module('scalearAngularApp')
         var to = {}
         to[s] = $scope.next_item.id
         to["module_id"]=$scope.next_item.group_id
-        console.log(next_state)
+        $log.debug(next_state)
         $state.go(next_state, to);
     }
 

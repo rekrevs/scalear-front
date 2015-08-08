@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-
-.controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','$translate','$log','Page','$modal', '$timeout','$filter','CustomLink','ContentNavigator','DetailsNavigator','Preview','scalear_utils', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz, $translate, $log, Page,$modal, $timeout, $filter, CustomLink, ContentNavigator, DetailsNavigator, Preview, scalear_utils) {
+    .controller('courseEditorCtrl', ['$rootScope', '$stateParams', '$scope', '$state', 'Course', 'Module', 'Lecture','Quiz','$translate','$log','Page','$modal', '$timeout','$filter','CustomLink','ContentNavigator','DetailsNavigator','Preview','scalear_utils', function ($rootScope, $stateParams, $scope, $state, Course, Module, Lecture,Quiz, $translate, $log, Page,$modal, $timeout, $filter, CustomLink, ContentNavigator, DetailsNavigator, Preview, scalear_utils) {
 
  	// $window.scrollTo(0, 0);
  	Page.setTitle('head.content')
@@ -14,7 +13,7 @@ angular.module('scalearAngularApp')
     $scope.delayed_details_status = DetailsNavigator.getStatus()
     $scope.delayed_details_status2 = DetailsNavigator.getStatus()
     $scope.$on('details_navigator_change',function(ev, status){
-        console.log("datails status event", status)
+        $log.debug("datails status event", status)
         if(!status){
             $scope.delayed_details_status2 = false
             $timeout(function(){
@@ -84,16 +83,16 @@ angular.module('scalearAngularApp')
     // })
 
     $scope.$on('copy_item', function(event, item){
-        console.log('caught copy')
-        console.log(item)
+        $log.debug('caught copy')
+        $log.debug(item)
         $scope.copy(item)
-        console.log($rootScope.clipboard)
+        $log.debug($rootScope.clipboard)
      })
     
      $scope.$on('paste_item', function(event, module_id){
-        console.log('pasting')
+        $log.debug('pasting')
         $scope.paste(module_id)
-        console.log($rootScope.clipboard)
+        $log.debug($rootScope.clipboard)
      })
  	// $scope.tree_toggled = false 
  	// $scope.details_toggled = false
@@ -130,7 +129,7 @@ angular.module('scalearAngularApp')
 		//  		})
 
 		//  		$scope.init_loading=false
-		//  		console.log($scope.course)
+		//  		$log.debug($scope.course)
 		//     },
 		//     function(){
 		//     }
@@ -141,11 +140,11 @@ angular.module('scalearAngularApp')
  	// 	// var menu = angular.element('#tree'), value;
  	// 	// if($scope.tree_toggled == false){
 		// 	// menu.css('left', '30px')	
- 	// 	// 	console.log('first');
+ 	// 	// 	$log.debug('first');
  	// 	// }
  	// 	// else{
 		// 	// menu.css('left', '-238px')
- 	// 	// 	console.log('second');
+ 	// 	// 	$log.debug('second');
  	// 	// }
  	// 	$scope.tree_toggled = !$scope.tree_toggled;
 
@@ -180,7 +179,7 @@ angular.module('scalearAngularApp')
   //               $scope.$emit('get_current_courses')
   //             },
   //             function(){
-  //               console.log("Failed")
+  //               $log.debug("Failed")
   //             }
   //           )
   //       }
@@ -334,7 +333,7 @@ angular.module('scalearAngularApp')
 		{course_id: $stateParams.course_id	},
 		{module_id: module.id},
 		function(data){
-			console.log(data)
+			$log.debug(data)
             $scope.course.modules.push(data.group)
     		$scope.module_obj[data.group.id] = data.group
     		$scope.module_obj[data.group.id].items.forEach(function(item){
@@ -374,7 +373,7 @@ angular.module('scalearAngularApp')
     			module_id:module_id
     		},
     		function(data){
-    			console.log(data)
+    			$log.debug(data)
     			$scope.item_overlay = false 
     			data.quiz.class_name='quiz'
     			$scope.module_obj[module_id].items.push(data.quiz)
@@ -386,8 +385,8 @@ angular.module('scalearAngularApp')
 
 
     var pastLink=function(item,module_id){
-        console.log("link copy")
-        console.log(item)
+        $log.debug("link copy")
+        $log.debug(item)
         $scope.item_overlay = true  
         CustomLink.linkCopy(
             {
@@ -397,7 +396,7 @@ angular.module('scalearAngularApp')
             },
             {},
             function(data){
-                console.log(data)
+                $log.debug(data)
                 $scope.item_overlay = false 
                 data.link.class_name='customlink'
                 $scope.module_obj[module_id].items.push(data.link)
@@ -431,7 +430,7 @@ angular.module('scalearAngularApp')
  //            {},
  //            function(doc){
  //                // $log.debug(doc)
- //                console.log(doc)
+ //                $log.debug(doc)
  //                doc.link.url = "http://"
  //                // $scope.module.custom_links.push(doc.link)
  //                $scope.course.custom_links.push(doc.link)
@@ -460,7 +459,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.removeCustomLink=function (elem) {
-        console.log(elem)
+        $log.debug(elem)
         CustomLink.destroy(
             {link_id: elem.id},{},
             function(){

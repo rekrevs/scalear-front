@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-.directive('sharedItem', ['$rootScope', 'Module', 'Lecture', 'Quiz', 'SharedItem', 'CustomLink', '$state', function($rootScope, Module, Lecture, Quiz, SharedItem, CustomLink, $state){
+.directive('sharedItem', ['$rootScope', 'Module', 'Lecture', 'Quiz', 'SharedItem', 'CustomLink', '$state','$log', function($rootScope, Module, Lecture, Quiz, SharedItem, CustomLink, $state, $log){
   return{
     restrict: 'E',
     scope:{
@@ -11,19 +11,19 @@ angular.module('scalearAngularApp')
     templateUrl: '/views/teacher/sharing/shared_item.html',
     link: function(scope, element){
     	scope.addModule=function(shared_item_index, module_index,course_id){
-	  		console.log(shared_item_index)
-	  		console.log(module_index)
-	  		console.log(scope.data[shared_item_index].modules[module_index])
+	  		$log.debug(shared_item_index)
+	  		$log.debug(module_index)
+	  		$log.debug(scope.data[shared_item_index].modules[module_index])
 	  		Module.moduleCopy(
 			{course_id: course_id},
 			{module_id: scope.data[shared_item_index].modules[module_index].id},
 			function(data){
-				console.log(data)
+				$log.debug(data)
 				scope.data[shared_item_index].modules.splice(module_index,1)
 				var shared_copy = angular.copy(scope.data[shared_item_index])
 				delete shared_copy.id
 				delete shared_copy.teacher
-				console.log(shared_copy)			
+				$log.debug(shared_copy)			
 				if(shared_copy.modules.length == 0 && shared_copy.lectures.length == 0 && shared_copy.quizzes.length == 0 && shared_copy.customlinks.length == 0){				
 					SharedItem.destroy(
 						{shared_item_id: scope.data[shared_item_index].id},
@@ -41,8 +41,8 @@ angular.module('scalearAngularApp')
 	  	}
 
 	  	scope.addLecture =function(shared_item_index, lecture_index,course_id, module_id){
-	  		console.log(scope.data)
-	  		console.log(shared_item_index)
+	  		$log.debug(scope.data)
+	  		$log.debug(shared_item_index)
 	  		Lecture.lectureCopy(
 	  			{course_id:course_id},
 	  			{
@@ -50,7 +50,7 @@ angular.module('scalearAngularApp')
 	  				module_id:module_id
 	  			},
 	  			function(data){
-	  				console.log(data)
+	  				$log.debug(data)
 					scope.data[shared_item_index].lectures.splice(lecture_index,1)
 					var shared_copy = angular.copy(scope.data[shared_item_index])
 					delete shared_copy.created_at
@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
 	  				module_id:module_id
 	  			},
 	  			function(data){
-	  				console.log(data)
+	  				$log.debug(data)
 					scope.data[shared_item_index].quizzes.splice(quiz_index,1)
 					var shared_copy = angular.copy(scope.data[shared_item_index])
 					delete shared_copy.created_at
@@ -107,8 +107,8 @@ angular.module('scalearAngularApp')
 	  	}
 
 	  	scope.addLink =function(shared_item_index, link_index,course_id, module_id){
-	  		console.log(scope.data)
-	  		console.log(shared_item_index)
+	  		$log.debug(scope.data)
+	  		$log.debug(shared_item_index)
 	  		CustomLink.linkCopy(
 	  			{
 	  				link_id:scope.data[shared_item_index].customlinks[link_index].id, 
@@ -117,7 +117,7 @@ angular.module('scalearAngularApp')
 	  			},
 	  			{},
 	  			function(data){
-	  				console.log(data)
+	  				$log.debug(data)
 					scope.data[shared_item_index].customlinks.splice(link_index,1)
 					var shared_copy = angular.copy(scope.data[shared_item_index])
 					delete shared_copy.created_at

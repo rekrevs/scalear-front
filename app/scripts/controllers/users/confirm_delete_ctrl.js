@@ -13,7 +13,7 @@ angular.module('scalearAngularApp')
   	{
   	$scope.form.processing=true;
     User.delete_account({password:$scope.enrollment.key}, {}, function() {
-        // //console.log("deleted ");
+        // //$log.debug("deleted ");
         $rootScope.current_user = null;
         $scope.form.processing=false;
         $modalInstance.close();

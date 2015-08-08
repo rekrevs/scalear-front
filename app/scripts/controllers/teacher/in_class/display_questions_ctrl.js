@@ -30,7 +30,7 @@
 	 //  		},
 	 //  		function(data){
 	 //  			angular.extend($scope.$parent, data)
-	 //  			console.log(data)
+	 //  			$log.debug(data)
 	 //  	 		// $scope.url = $scope.first_lecture
 	 //  	 		$scope.timeline['lecture'] = {}
 	 //  	 		for(var lec_id in $scope.$parent.lectures){
@@ -44,7 +44,7 @@
 	 //  	 		}
 	 //  	 		$scope.$parent.mytimeline = $scope.timeline
 	 //  	 		$scope.nextQuiz()
-	 //  	 		//console.log($scope.timeline)
+	 //  	 		//$log.debug($scope.timeline)
 	 //  		},	
 	 //  		function(){}
 		// )

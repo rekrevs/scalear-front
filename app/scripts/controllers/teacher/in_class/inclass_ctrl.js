@@ -35,7 +35,7 @@ angular.module('scalearAngularApp')
 // 	// 	return $filter('filter')($scope.modules, {'id': parseInt(id)}, true)[0]
 // 	// }
 // 	// $scope.toggleSelector = function(){
-// 	// 	// console.log('toggling')
+// 	// 	// $log.debug('toggling')
 // 	// 	$scope.close_selector = !$scope.close_selector;
 // 	// }
 // 	// $scope.initSelector = function(){
@@ -61,7 +61,7 @@ angular.module('scalearAngularApp')
 // 		// $scope.toggleSelector();
 // 	}
 // 	$scope.$on('mainMenuToggled', function(event, collapsed){
-// 		console.log(collapsed)
+// 		$log.debug(collapsed)
 // 		if(collapsed == true){
 // 			$scope.close_selector = false;
 // 		}

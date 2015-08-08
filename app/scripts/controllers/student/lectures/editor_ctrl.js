@@ -13,7 +13,7 @@
 //            $scope.sync.enabled = doc.info.syncNotesVideo;
 //        }
 //        else {
-//            console.log("here!")
+//            $log.debug("here!")
 //            $scope.sync.enabled = true;
 //        }
 //

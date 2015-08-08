@@ -38,14 +38,14 @@ angular.module('scalearAngularApp')
                                 }
                             }, 
                             function(response){
-                                console.log("success");
+                                $log.debug("success");
                                 item.data= response.post
                                 scope.error_message=null
                                 scope.current_question = ''
                                 scope.$emit("discussion_updated")
                             }, 
                             function(){
-                                console.log("failure")
+                                $log.debug("failure")
                             }
                         )
                     }
@@ -99,7 +99,7 @@ angular.module('scalearAngularApp')
             }
         }
     }])
-    .directive('discussionTimeline',["Forum","Timeline","$translate",'$rootScope','$filter', function(Forum, Timeline, $translate, $rootScope,$filter) {
+    .directive('discussionTimeline',["Forum","Timeline","$translate",'$rootScope','$filter','$log', function(Forum, Timeline, $translate, $rootScope,$filter, $log) {
     return {
         restrict:"A",
         scope:{
@@ -133,7 +133,7 @@ angular.module('scalearAngularApp')
                         discussion.flags_count++;
                     },
                     function(){
-                        console.log("failure");
+                        $log.debug("failure");
                     }
                 )
             }
@@ -145,7 +145,7 @@ angular.module('scalearAngularApp')
                         discussion.flags_count--;
                     }, 
                     function(){
-                        console.log("failure");
+                        $log.debug("failure");
                     }
                 )
             }
@@ -161,7 +161,7 @@ angular.module('scalearAngularApp')
                         scope.item.data.votes_count++;
                     }, 
                     function(){
-                        console.log("failure");
+                        $log.debug("failure");
                     }
                 )
             }
@@ -177,7 +177,7 @@ angular.module('scalearAngularApp')
                         scope.item.data.votes_count--;
                     }, 
                     function(){
-                        console.log("failure");
+                        $log.debug("failure");
                     }
                 )
             }
@@ -189,15 +189,14 @@ angular.module('scalearAngularApp')
                     scope.error_message = null
                 },
                 function(){
-                    console.log("failure");
+                    $log.debug("failure");
                 })
             }
 
             scope.reply=function(discussion, current_reply){
                 if (current_reply && current_reply.length && current_reply.trim()!=""){
                     scope.error_message = null
-                    console.log("discussion")
-                    console.log(discussion)
+                    $log.debug("discussion", discussion)
                     Forum.createComment({comment: {content: current_reply, post_id:discussion.data.id, lecture_id:discussion.data.lecture_id}}, function(response){
                         if(discussion.data.comments)
                             discussion.data.comments.push(response)
@@ -213,7 +212,7 @@ angular.module('scalearAngularApp')
             }
         }
     }
-}]).directive('discussionComment',["Forum","Timeline","$translate",'$rootScope', function(Forum, Timeline, $translate, $rootScope) {
+}]).directive('discussionComment',["Forum","Timeline","$translate",'$rootScope','$log', function(Forum, Timeline, $translate, $rootScope, $log) {
     return {
         restrict:"E",
         scope:{
@@ -232,7 +231,7 @@ angular.module('scalearAngularApp')
                         comment.flags_count++;
                     }, 
                     function(){
-                        console.log("failure");
+                        $log.debug("failure");
                     }
                 )
             }
@@ -244,7 +243,7 @@ angular.module('scalearAngularApp')
                         comment.flags_count--;
                     }, 
                     function(){
-                        console.log("failure");
+                        $log.debug("failure");
                     }
                 )
             }
@@ -257,7 +256,7 @@ angular.module('scalearAngularApp')
                         scope.item.comment.votes_count++;
                     }, 
                     function(){
-                        console.log("failure");
+                        $log.debug("failure");
                     }
                 )
             }
@@ -270,14 +269,14 @@ angular.module('scalearAngularApp')
                         scope.item.comment.votes_count--;
                     }, 
                     function(){
-                        console.log("failure");
+                        $log.debug("failure");
                     }
                 )
 
             }
         }
     }
-}]).directive('votingButton', ['$translate',function($translate){
+}]).directive('votingButton', ['$translate', '$log',function($translate, $log){
     return{
         restrict: 'E',
         scope:{            
@@ -300,7 +299,7 @@ angular.module('scalearAngularApp')
                 // scope.display_style= 'block'
         }
     }
-}]).directive('flagButton', ['$translate',function($translate){
+}]).directive('flagButton', ['$translate', '$log',function($translate, $log){
     return{
         restrict: 'E',
         scope:{            
@@ -318,7 +317,7 @@ angular.module('scalearAngularApp')
 
         }
     }
-}]).directive("timelineFilters",['$rootScope',function($rootScope){
+}]).directive("timelineFilters",['$rootScope', '$log', function($rootScope, $log){
     return{
         restrict: "E",
         scope: {
@@ -383,7 +382,7 @@ angular.module('scalearAngularApp')
             }
         }
     };
-}]).directive('commentBox', function(){
+}]).directive('commentBox', ['$log',function($log){
     return{
         restrict: 'E',
         scope:{            
@@ -397,7 +396,7 @@ angular.module('scalearAngularApp')
                 scope.submit(scope.discussion, scope.comment);
                 scope.comment = null;
                 scope.hideField();
-                console.log(scope.showfield)
+                $log.debug(scope.showfield)
             }
             scope.toggleField = function(){
                 scope.showfield = !scope.showfield
@@ -409,7 +408,7 @@ angular.module('scalearAngularApp')
             }
         }
     }
-}).directive('ngAutoExpand', function() {
+}]).directive('ngAutoExpand', function() {
     return {
         restrict: 'A',
         link: function( $scope, elem, attrs) {

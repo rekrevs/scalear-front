@@ -72,7 +72,7 @@ angular.module('scalearAngularApp')
           module_id: $stateParams.module_id
         },
         function(data){
-          console.log(data)
+          $log.debug(data)
           angular.extend($scope, data)
           $scope.timeline['lecture'] = {}
           for(var lec_id in $scope.lectures){
@@ -98,7 +98,7 @@ angular.module('scalearAngularApp')
           module_id:$stateParams.module_id
         },
         function(data){
-          console.log(data)
+          $log.debug(data)
           $scope.quizzes=angular.extend({}, data.surveys, $scope.quizzes)
           $scope.review_survey_count = data.review_survey_count
           $scope.timeline["survey"]={}
@@ -115,7 +115,7 @@ angular.module('scalearAngularApp')
           
           if($scope.review_question_count || $scope.review_quizzes_count || $scope.review_survey_count)
             $scope.inclass_ready = true
-          console.log($scope.timeline)
+          $log.debug($scope.timeline)
         },
         function(){}
       )
@@ -340,8 +340,8 @@ angular.module('scalearAngularApp')
       })
       $scope.blurButtons()
 
-      console.log("timeline item")
-      console.log($scope.selected_timeline_item)
+      $log.debug("timeline item")
+      $log.debug($scope.selected_timeline_item)
     }
 
     $scope.prevQuiz = function(){
@@ -498,7 +498,7 @@ angular.module('scalearAngularApp')
               tooltip_text +="Correct: "
         }
         text = data[ind][2]
-        console.log(text)
+        $log.debug(text)
         tooltip_text +=data[ind][0]+"</div>" //+" answers "+"("+ Math.floor((data[ind][0]/$scope.students_count)*100 ) +"%)</div>"
         var row = {
             "c": [
@@ -708,7 +708,7 @@ angular.module('scalearAngularApp')
     //   $scope.disclineheight = 3 +'px';
     // }
 
-    // console.log($scope.disclineheight);
+    // $log.debug($scope.disclineheight);
   
     
     // $scope.sub_fontsize =(((question_block.height()-10)*23)/100) -5 +'px';
@@ -718,7 +718,7 @@ angular.module('scalearAngularApp')
     // }
     
 
-    // console.log(question_block)
+    // $log.debug(question_block)
     // if(question_block.get(0).scrollHeight > question_block.height()){
     //   if(question_block.get(0).scrollHeight - question_block.height() >=10)
     //     $scope.question_class = 'smallest_question' 

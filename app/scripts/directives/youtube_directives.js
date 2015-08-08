@@ -52,21 +52,21 @@ angular.module('scalearAngularApp')
                 	scope.autoplay=1; 
 
                 if(isYoutube(scope.url)){
-                	console.log("youtube")
+                	$log.debug("youtube")
                 	player_controls.youtube = true
                 	var video = Popcorn.HTMLYouTubeVideoElement('#'+scope.id)
                 	player = Popcorn(video,{frameAnimation:true});
                 	video.src = formatYoutubeURL(scope.url, scope.vq, scope.start_time, scope.autoplay, scope.controls)
-                	console.log(video.src)
+                	$log.debug(video.src)
                 }
                 else if(isVimeo(scope.url)){
-                	console.log("vimeo")
+                	$log.debug("vimeo")
                     player = Popcorn.smart( '#'+scope.id, scope.url+"?autoplay=true&controls=0&portrait=0&byline=0&title=0&fs=0",{ width: '100%', height:'100%', controls: 0});
                     player.controls(scope.controls);
                     player.autoplay(scope.autoplay);
                 }
                 else if(isMP4(scope.url)){
-                	console.log("mp4")
+                	$log.debug("mp4")
                     var video = Popcorn.HTMLVideoElement('#'+scope.id)//Popcorn.smart( '#'+scope.id, scope.url)//, scope.url,{ width: '100%', height:'100%', controls: 0});
                     player = Popcorn(video,{});
                     video.src = scope.url
@@ -149,7 +149,7 @@ angular.module('scalearAngularApp')
 			}
 
 			player_controls.seek = function(time){
-				console.log("entering sekking")
+				$log.debug("entering sekking")
 				if(time<0)
 					time = 0
 				if(time > player_controls.getDuration())
@@ -157,12 +157,12 @@ angular.module('scalearAngularApp')
 				if(player_controls.readyState() == 0 && !(scope.start_time || scope.start_time == 0)){
 					player.on("loadeddata", 
 					function(){
-						console.log("seek after load")
+						$log.debug("seek after load")
 						player.currentTime(time);
 					});
 				}
 				else{
-					console.log("seeking now")
+					$log.debug("seeking now")
 					player.currentTime(time);
 				}
 				parent.focus()
@@ -229,7 +229,7 @@ angular.module('scalearAngularApp')
 			var setupEvents=function(){
 				player.on("loadeddata", 
 					function(){
-						console.log("Video data loaded and ready")
+						$log.debug("Video data loaded and ready")
 						if($rootScope.is_mobile)
 							player.controls(false);
 						if(player_events.onReady){
@@ -240,7 +240,7 @@ angular.module('scalearAngularApp')
 
 				player.on('playing',
 					function(){
-						console.log("youtube playing")							
+						$log.debug("youtube playing")							
 						parent.focus()
 						if(player_events.onPlay){								
 							player_events.onPlay();
@@ -456,7 +456,7 @@ return{
 
 		$scope.resize.big = function(){
 
-			console.log("resizing big")
+			$log.debug("resizing big")
             // $rootScope.changeError = true;
 			//var factor= $scope.aspect_ratio=="widescreen"? 16.0/9.0 : 4.0/3.0;
 			var factor=16.0/9.0
@@ -493,7 +493,7 @@ return{
 			var layer={}
 			if(video_width>win.width()-$scope.max_width){ // if width will get cut out.
 				$log.debug("width cutt offff")
-				console.log("width cutt offff")
+				$log.debug("width cutt offff")
 				video_height= (win.width()-$scope.max_width)*1.0/factor;
 				var margin_top = ((win.height()-progressbar_height) - (video_height))/2.0; //+30
 
@@ -509,10 +509,10 @@ return{
 				}		
 			}
 			else{		
-				console.log("height cutt offff")
-				console.log(win.width())
-				console.log(video_width)
-				console.log(((win.width()-$scope.max_width) - video_width)/2.0)
+				$log.debug("height cutt offff")
+				$log.debug(win.width())
+				$log.debug(video_width)
+				$log.debug(((win.width()-$scope.max_width) - video_width)/2.0)
 				// video_width = (win.height()-progressbar_height)*factor
 				var margin_left= ((win.width()-$scope.max_width) - video_width)/2.0;
 				layer={
@@ -613,9 +613,9 @@ return {
       	
       	if(scope.player.controls.youtube){
             scope.speeds = scope.player.controls.getSpeeds();
-            console.log("Speed", scope.speeds)
+            $log.debug("Speed", scope.speeds)
             scope.chosen_speed = $cookieStore.get('youtube_speed') || 1;
-            console.log('the chosen speed is '+scope.chosen_speed)
+            $log.debug('the chosen speed is '+scope.chosen_speed)
             scope.player.controls.changeSpeed(scope.chosen_speed, true)
       	}
       	else{
@@ -629,13 +629,13 @@ return {
       	}		
 
 		scope.setSpeed = function(val){
-	        console.log('setting youtube speed to '+val)
+	        $log.debug('setting youtube speed to '+val)
 	        scope.player.controls.changeSpeed(val, true)
 	        scope.chosen_speed = val;
 	        $cookieStore.put('youtube_speed', scope.chosen_speed)
 		}
       	scope.setSpeedMp4 = function(val){
-	        console.log('setting mp4 speed to '+val)
+	        $log.debug('setting mp4 speed to '+val)
 	        scope.player.controls.changeSpeed(val, false)
 	        scope.chosen_speed = val;
 	        $cookieStore.put('mp4_speed', scope.chosen_speed)
@@ -782,8 +782,8 @@ return {
   		}
 
   		var scrollToNearestEvent=function(time){
-  			console.log(time)
-  			console.log(scope.timeline.getNearestEvent(time))
+  			$log.debug(time)
+  			$log.debug(scope.timeline.getNearestEvent(time))
   			var nearest_item= scope.timeline.getNearestEvent(time)
   			if(nearest_item.data && Math.abs(nearest_item.time - time) <=30)
   				scrollToItem(nearest_item.type, nearest_item.data.id)

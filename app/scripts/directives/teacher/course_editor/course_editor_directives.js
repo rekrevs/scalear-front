@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive("module", ['$rootScope','$timeout','$state',function($rootScope, $timeout,$state) {
+    .directive("module", ['$rootScope','$timeout','$state', '$log', function($rootScope, $timeout,$state, $log) {
         return {
             restrict: "E",
             replace:true,
@@ -37,26 +37,26 @@ angular.module('scalearAngularApp')
                 }
 
                 scope.copy=function(){
-                    console.log("copy")
+                    $log.debug("copy")
                     event.preventDefault();
                     $rootScope.$broadcast('copy_item', scope.module)
                 }
 
                 scope.paste=function(){
-                    console.log("Paste")
+                    $log.debug("Paste")
                     event.preventDefault();
                     $rootScope.$broadcast('paste_item', scope.module.id)
                 }
 
                 scope.share=function(){
-                    console.log("Share")
+                    $log.debug("Share")
                     event.preventDefault();
                     $rootScope.$broadcast('share_copy', {module_id:scope.module.id})
                 }
 
             }
         }
-    }]).directive('item', ['$rootScope','$timeout','$anchorScroll','$location','$state', function($rootScope, $timeout, $anchorScroll,$location,$state) {
+    }]).directive('item', ['$rootScope','$timeout','$anchorScroll','$location','$state','$log', function($rootScope, $timeout, $anchorScroll,$location,$state,$log) {
         return {
             scope: {
                 item:'=data'
@@ -74,19 +74,19 @@ angular.module('scalearAngularApp')
                 }
 
                 scope.copy=function(){
-                    console.log("copy")
+                    $log.debug("copy")
                     event.preventDefault();
                     $rootScope.$broadcast('copy_item', scope.item)
                 }
 
                 scope.paste=function(){
-                    console.log("Paste")
+                    $log.debug("Paste")
                     event.preventDefault();
                     $rootScope.$broadcast('paste_item', scope.item.group_id)
                 }
 
                 scope.share=function(){
-                    console.log("Share")
+                    $log.debug("Share")
                     event.preventDefault();
                     $rootScope.$broadcast('share_copy', {module_id:scope.item.group_id, item: scope.item})
                 }
@@ -154,7 +154,7 @@ angular.module('scalearAngularApp')
             template: '<div class="overlay" ng-transclude></div>',
             link: function(scope, element) {
                 var parent = element.parent()
-                // console.log(element.parent())
+                // $log.debug(element.parent())
                 // scope.getWidth = function() {
                 //     return element.parent().width()
                 // };
@@ -166,7 +166,7 @@ angular.module('scalearAngularApp')
                 // });
                 // $timeout(function(){
                 //     scope.$watch(scope.getHeight, function(newValue, oldValue) {
-                //         console.log(parent.height())
+                //         $log.debug(parent.height())
                 //         element.css("height", parent.height())
                 //     })
                 // },1000);

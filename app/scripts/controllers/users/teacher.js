@@ -1,8 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('UsersTeacherCtrl', ['$scope', 'User', '$state','Page',
-        function($scope, User, $state, Page) {
+    .controller('UsersTeacherCtrl', ['$scope', 'User', '$state','Page','$log', function($scope, User, $state, Page, $log) {
             Page.setTitle('sign_up')
             $scope.user = {
                 "role_ids": "1"
@@ -18,7 +17,7 @@ angular.module('scalearAngularApp')
                 }
             })
             $scope.sign_up = function() {
-                console.log('came here')
+                $log.debug('came here')
                 $scope.sending = true;
                 $scope.final_user = angular.copy($scope.user)
                 if(!$scope.final_user.password_confirmation){
@@ -29,13 +28,13 @@ angular.module('scalearAngularApp')
                     user: $scope.final_user
                 }, function() {
                     $scope.sending = false;
-                    //console.log("signed up");
+                    //$log.debug("signed up");
                     // $state.go("home");
                     $state.go('thanks_for_registering',{type:0});
                 }, function(response) {
                     $scope.user.errors = response.data.errors
                     $scope.sending = false;
-                    //console.log("sign up failed")
+                    //$log.debug("sign up failed")
                 })
             }
 

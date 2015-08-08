@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout','$cookieStore', '$rootScope', 'Impersonate', 'ContentNavigator','User','Preview', function($state, $tour, scalear_api, $timeout, $cookieStore, $rootScope, Impersonate, ContentNavigator, User, Preview){
+	.directive('mainNavigation', ['$state', '$tour','scalear_api','$timeout','$cookieStore', '$rootScope', 'Impersonate', 'ContentNavigator','User','Preview','$log', function($state, $tour, scalear_api, $timeout, $cookieStore, $rootScope, Impersonate, ContentNavigator, User, Preview, $log){
 		return {
 			replace: true,
 			restrict: "E",
@@ -47,7 +47,7 @@ angular.module('scalearAngularApp')
 				// scope.startTour = $tour.start
 				// scope.endTour = $tour.end
 				scope.startTour = function(){
-					console.log($state.current.name)
+					$log.debug($state.current.name)
 					scope.$emit('start_tour', {state: $state.current.name})
 				}
 				scope.closeMenu=function(event){
@@ -81,7 +81,7 @@ angular.module('scalearAngularApp')
 			              // $rootScope.$broadcast('get_current_courses')
 	                //     },
 	                //     function(){
-	                //       console.log("Failed Closing Preview")
+	                //       $log.debug("Failed Closing Preview")
 	                //       $rootScope.preview_as_student = false
 	                //       $cookieStore.remove('preview_as_student')
 	                //       $cookieStore.remove('old_user_id')
@@ -183,7 +183,7 @@ angular.module('scalearAngularApp')
 		  //               scope.$emit('get_current_courses')
 		  //             },
 		  //             function(){
-		  //               console.log("Failed")
+		  //               $log.debug("Failed")
 		  //             }
 		  //           )
 				// }
@@ -317,12 +317,12 @@ angular.module('scalearAngularApp')
 	                    user: $rootScope.current_user
 	                }, function() {
 	                    scope.sending = false;
-	                    //console.log("signed up");
+	                    //$log.debug("signed up");
 	                    scope.iscollapsed=true;
 	                }, function(response) {
 	                    scope.sending = false;
 	                    $rootScope.current_user.errors = response.data.errors
-	                    //console.log("sign up failed")
+	                    //$log.debug("sign up failed")
 	                })
 	            };
 	            scope.$on('mainMenuToggled', function(event, collapsed){
@@ -331,7 +331,7 @@ angular.module('scalearAngularApp')
 				})
 			}
 		};
- }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator','$rootScope','Preview',function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview){
+ }]).directive('contentNavigator',['Module', '$stateParams', '$state', '$timeout','Lecture','Course','ContentNavigator','$rootScope','Preview','$log', function(Module, $stateParams, $state, $timeout, Lecture, Course, ContentNavigator, $rootScope, Preview, $log){
   return{
     restrict:'E',
     replace: true,
@@ -389,7 +389,7 @@ angular.module('scalearAngularApp')
 		scroll: true,
 		update: function(e, ui) {
 			// scope.$apply()
-			// console.log(scope.modules)
+			// $log.debug(scope.modules)
 			Module.saveSort({course_id:$state.params.course_id},
 				{group: scope.modules},
 				function(response){
@@ -485,7 +485,7 @@ angular.module('scalearAngularApp')
   		else{
   			// if(item.class_name!='customlink'){
 		 		var params = {'module_id': $state.params.module_id}  
-		 		console.log(item)  
+		 		$log.debug(item)  
 			    params[item.class_name.toLowerCase()+'_id'] = item.id
 			    $state.go('course.module.'+type+'.'+ item.class_name.toLowerCase(), params)
 			// }
@@ -497,7 +497,7 @@ angular.module('scalearAngularApp')
   	}
 
  	scope.showModule=function(module, event){
- 		// console.log(scope.currentmodule)
+ 		// $log.debug(scope.currentmodule)
  		if(scope.currentmodule && scope.currentmodule.id == module.id)
         	event.stopPropagation()
         // else{

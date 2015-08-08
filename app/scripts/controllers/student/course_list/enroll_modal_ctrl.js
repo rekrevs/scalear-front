@@ -17,7 +17,7 @@ angular.module('scalearAngularApp')
     	Course.enroll({},
         {unique_identifier : $scope.enrollment.key},
         function(data){
-          console.log(data)
+          $log.debug(data)
       		$scope.form.processing=false;
           $state.go("course.course_information", {course_id: data.course.id})
           $rootScope.$broadcast('get_current_courses')

@@ -2,7 +2,7 @@
 //     ['$state','$q', '$rootScope', '$log', '$timeout', 'doc','$stateParams','Lecture','$window','$interval','scalear_utils', function ($state,$q, $rootScope, $log, $timeout, doc, $stateParams, Lecture, $window, $interval, scalear_utils) {
 //         return function() {
 
-//         //console.log("new editor");
+//         //$log.debug("new editor");
 
 //         var ONE_HOUR_IN_MS = 1000 * 60 * 60;
 //         var saveInterval=15000;
@@ -11,7 +11,7 @@
 //             //Tooltip= require("ace/mouse/default_gutter_handler").GutterHandler,
 //             service = $rootScope.$new(true);
 
-//         //console.log(Tooltip);
+//         //$log.debug(Tooltip);
 //         service.doc = new doc();
 //         //service.loading = false;
 //         //service.saving = false;
@@ -23,15 +23,15 @@
 
 
 
-//         //console.log(doc);
+//         //$log.debug(doc);
 
 //         service.focusEditor = function () {
-//             //console.log("focuseditor")
+//             //$log.debug("focuseditor")
 //             editor && editor.focus();
 //         };
 
 //         service.rebind = function (element) {
-//             //console.log("rebind")
+//             //$log.debug("rebind")
 //             editor = ace.edit(element);
 //             editor.commands.removeCommand('splitline');
 //             editor.commands.removeCommand('golinedown');
@@ -44,7 +44,7 @@
 //                 //}
 //             });
 // //            editor.on("guttermousemove", function(e){
-// //                console.log("row "+ service.getCurrentSync(e.getDocumentPosition().row).time);
+// //                $log.debug("row "+ service.getCurrentSync(e.getDocumentPosition().row).time);
 // //                //var tooltip = Tooltip(editor);
 // //
 // ////                var target = e.domEvent.target;
@@ -63,14 +63,14 @@
 //         };
 
 //         service.snapshot = function () {
-//             //console.log("snapshot!!!!!!!!!!!!!!!!!!!!!");
+//             //$log.debug("snapshot!!!!!!!!!!!!!!!!!!!!!");
 
 //             service.doc.dirty = false;
 //             var data = angular.extend({}, service.doc.info);
 //             //if (service.doc.info.editable) {
 //                 data.content = service.doc.info.content;
 //             //}
-//             //console.log(data);
+//             //$log.debug(data);
 //             return data;
 //         };
 //         service.create = function (url, player,lecture_id,cumulative_duration,lecture_name,note, seek, parentId) {
@@ -138,8 +138,8 @@
 
 
 
-//             //console.log(player);
-//             //console.log(player.controls.getDuration());
+//             //$log.debug(player);
+//             //$log.debug(player.controls.getDuration());
 
 
 
@@ -147,7 +147,7 @@
 
 //         };
 //         service.copy = function (templateId) {
-//             //console.log("copy")
+//             //$log.debug("copy")
 //             //$log.info("Copying template", templateId);
 // //            backend.copy(templateId).then(angular.bind(service,
 // //                function (result) {
@@ -163,9 +163,9 @@
 // //                }));
 //         };
 //         service.load = function (id, reload) {
-// //            console.log("load");
+// //            $log.debug("load");
 //             //$log.info("Loading resource", id, doc && doc.info && doc.info.id);
-// //            console.log("Loading resource", id, doc && doc.info && doc.info.id);
+// //            $log.debug("Loading resource", id, doc && doc.info && doc.info.id);
 // //            if (!reload && doc.info ) { //&& doc.info.id === id
 // //                service.updateEditor(doc.info);
 // //                return $q.when(doc.info);
@@ -204,17 +204,17 @@
 // //                });
 //         };
 //         service.save = function (newRevision) {
-//             //console.log("save")
+//             //$log.debug("save")
 //             //$log.info("Saving file", newRevision);
 // //            if (service.saving || service.loading) {
 // //                throw 'Save called from incorrect state';
 // //            }
 // //            service.saving = true;
 //             var file = service.snapshot();
-//             //console.log("saving file ");
-//             //console.log(file);
-//             //console.log("file is");
-//             //console.log(file);
+//             //$log.debug("saving file ");
+//             //$log.debug(file);
+//             //$log.debug("file is");
+//             //$log.debug(file);
 
 //             // what is saved is the file, along with its revision. (as a param)
 // //            if (!service.doc.info.id) {
@@ -289,9 +289,9 @@
 //         };
 
 //         service.jump = function (line) {
-//             //console.log("jump")
+//             //$log.debug("jump")
 //             var timestamp, videoUrl;
-//             //console.log(service.doc.info.videos);
+//             //$log.debug(service.doc.info.videos);
 //             for(var sync in service.doc.info.videos) {
 //                 if(service.doc.info.videos[sync][line]) {
 //                     timestamp = service.doc.info.videos[sync][line]['time'];
@@ -319,7 +319,7 @@
 //                         //     service.video.controls.seek(timestamp);
 //                         // }
 //                         // else{
-//                         //     // console.log("switch to different")
+//                         //     // $log.debug("switch to different")
 //                         //     // $state.go("course.module.courseware.lecture", {"lecture_id":service.lecture_id, "tab":1});
 //                         //     $state.go("course.module.courseware.lecture", {lecture_id:lecture_id}, {reload:false, notify:false});  
 //                         //     return;
@@ -337,7 +337,7 @@
 
 //         // To insert text manually.
 //         service.insert = function (time, question, note) {
-// //            console.log(line);
+// //            $log.debug(line);
 
 //             var position=-1;
 //              var text= question.toUpperCase();
@@ -350,12 +350,12 @@
 //             var currentSync= service.getCurrentSync();
 //             var element=-1;
 //             for(element in currentSync){
-//                 //console.log("element "+element+" time is ");
-//                 //console.log(currentSync[element].time)
+//                 //$log.debug("element "+element+" time is ");
+//                 //$log.debug(currentSync[element].time)
 //                 if(parseInt(currentSync[element].time)>parseInt(time))
 //                 {
 //                     position=element
-//                   //  console.log("position isssssssssssss "+position);
+//                   //  $log.debug("position isssssssssssss "+position);
 //                     break;
 //                 }
 //             }
@@ -367,20 +367,20 @@
 //             {
 //                 // if currentSync not empty, want to push time one row ta7t
 
-//                 //console.log("element is "+parseInt(element+1))
-//                 // console.log("hello")
+//                 //$log.debug("element is "+parseInt(element+1))
+//                 // $log.debug("hello")
 //                 session.insert({row:(element+1), column:0}, "\n");
 //                 service.doc.info.videos[service.doc.info.currentVideo][parseInt(element+1)]={time:parseInt(time)};
 //                 session.insert({row:(parseInt(element+1)), column:0},  " \n");
 //                 currentSyncLine = service.getCurrentSync(parseInt(element+1));
 //                 currentSyncLine.time=time;
-//                 //console.log(currentSyncLine);
+//                 //$log.debug(currentSyncLine);
 
 
 //             }else{
 
 //                 // here need to move everything down one row first.
-//                 console.log("world")
+//                 $log.debug("world")
 
 //                 position=parseInt(position);
 //                 session.insert({row:(position), column:0}, "\n");
@@ -394,7 +394,7 @@
 //         }
 
 //         service.updateEditor = function (fileInfo) {
-//             //console.log("woohoo!" + fileInfo)
+//             //$log.debug("woohoo!" + fileInfo)
 
 //             if (!fileInfo) {
 //                 return;
@@ -407,12 +407,12 @@
 //             session.setWrapLimitRange(80);
 
 //             session.on('change', function () {
-//                 //console.log("in change")
+//                 //$log.debug("in change")
 //                 if (service.doc && service.doc.info) {
 //                     scalear_utils.safeApply(function () {
 //                         service.doc.info.content = session.getValue();
-//                         ///console.log("in change!!!!!!")
-//                         //console.log(service.doc.info);
+//                         ///$log.debug("in change!!!!!!")
+//                         //$log.debug(service.doc.info);
 //                     });
 //                 }
 //             });
@@ -425,19 +425,19 @@
 //                     return;
 //                 var delta = e.data;
 //                 var range = delta.range;
-//                 //console.log(range.end.row);
-//                 //console.log(range.start.row);
+//                 //$log.debug(range.end.row);
+//                 //$log.debug(range.start.row);
 //                 if (range.end.row == range.start.row) {
 //                     // Removing sync mark if line is now empty
-//                     //console.log("line is")
-//                     //console.log(session.getLine(range.start.row));
+//                     //$log.debug("line is")
+//                     //$log.debug(session.getLine(range.start.row));
 //                     if (session.getLine(range.start.row).trim() === '') {
 //                         service.unsync(range.start.row);
 //                     }
 //                     else if (!(range.start.row in currentSync)) {
-//                         //console.log(currentSync);
-//                         //console.log("wll call sync")
-//                         //console.log(range.start.row );
+//                         //$log.debug(currentSync);
+//                         //$log.debug("wll call sync")
+//                         //$log.debug(range.start.row );
 //                         service.syncLine(range.start.row, false);
 //                     }
 
@@ -456,8 +456,8 @@
 
 //                 var shiftedSyncNotesVideo = {};
 //                 for (var line in currentSync) {// here
-//                     //console.log("line: "+line)
-//                     //console.log(currentSync[line]);
+//                     //$log.debug("line: "+line)
+//                     //$log.debug(currentSync[line]);
 //                     var intLine = parseInt(line);
 //                     if (!isNaN(intLine)) {
 //                         if (line < firstRow) {
@@ -477,8 +477,8 @@
 
 //             session.getSelection().on('changeCursor', function (e) {
 //                 var lineCursorPosition = editor.getCursorPosition().row;
-//                 //console.log("in get selection");
-//                 //console.log(lineCursorPosition);
+//                 //$log.debug("in get selection");
+//                 //$log.debug(lineCursorPosition);
 //                 if (lineCursorPosition != service.lastRow) {
 //                     service.lastRow = lineCursorPosition;
 
@@ -493,7 +493,7 @@
 //                 editor.focus();
 //             }
 
-//             //console.log("over here")
+//             //$log.debug("over here")
 //             service.doc.lastSave = 0;
 //             service.doc.info = fileInfo;
 
@@ -501,7 +501,7 @@
 //             //service.jump(0); //jumps to time of line 0, so if not 0, video jumps from the beginning, don't want that.
 //         };
 //         service.updateBreakpoints = function () {
-//             //console.log("update breakpoints")
+//             //$log.debug("update breakpoints")
 //             if (service.doc.info) {
 //                 var session = editor.getSession(),
 //                     annotations = [],
@@ -534,9 +534,9 @@
 //         };
 
 //         service.getCurrentSync = function (line) {
-// //            console.log(line);
-//             //console.log("getcurrentsync");
-//             //console.log(service.doc.info.videos[service.doc.info.currentVideo])
+// //            $log.debug(line);
+//             //$log.debug("getcurrentsync");
+//             //$log.debug(service.doc.info.videos[service.doc.info.currentVideo])
 //             if (service.doc.info.currentVideo) {
 //                 var currentSync = service.doc.info.videos[service.doc.info.currentVideo];
 //                 if(service.doc.info.content.trim()==='') // This condition here to empty everything on ctrl+a delete.
@@ -545,14 +545,14 @@
 //                     return {}
 //                 }
 //                 if (undefined != line) {
-//                     //console.log("not undefined it is");
-//                     //console.log(currentSync);
+//                     //$log.debug("not undefined it is");
+//                     //$log.debug(currentSync);
 //                     if(!currentSync[line]) {
 //                         currentSync[line] = {
 //                             time: null
 //                         };
 //                     }
-//                 //console.log(currentSync);
+//                 //$log.debug(currentSync);
 //                     return currentSync[line];
 //                 }
 
@@ -561,16 +561,16 @@
 //         };
 
 //         service.syncLine = function (line, shift) {
-//             //console.log("syncline");
+//             //$log.debug("syncline");
 //             // Is there a video loaded?
-//             //console.log("in sync lineeeee");
+//             //$log.debug("in sync lineeeee");
 //             var currentSync = service.getCurrentSync(),
 //                 currentSyncLine = service.getCurrentSync(line),
 //                 currentTime = service.video.controls.getTime();
 
-//             //console.log(currentTime);
-//             //console.log("current sync issss");
-//             //console.log(currentSync)
+//             //$log.debug(currentTime);
+//             //$log.debug("current sync issss");
+//             //$log.debug(currentSync)
 //             if (service.doc.info && service.doc.info.currentVideo) {
 //                 //$log.info('Video loaded');
 
@@ -582,9 +582,9 @@
 //                     if (lineSynced < line) { //!isLineBefore &&
 //                         //isLineBefore = true;
 
-//                        // console.log("in before here");
-//                         //console.log(lineSynced);
-//                         //console.log(currentSync[lineSynced].time);
+//                        // $log.debug("in before here");
+//                         //$log.debug(lineSynced);
+//                         //$log.debug(currentSync[lineSynced].time);
 //                         timestampBefore = currentSync[lineSynced].time;
 //                     }
 //                     else if (!isLineAfter && lineSynced > line) {
@@ -604,26 +604,26 @@
 //                     // Text before and after and video currently further (refactoring mode)
 //                     // Timestamp for this line must be average time between nearest line before/after
 //                     currentSyncLine.time = (timestampBefore + timestampAfter) / 2;
-//                    // console.log(timestampBefore);
-//                    // console.log(timestampAfter);
-//                    // console.log("in second one  "+currentSyncLine.time);
+//                    // $log.debug(timestampBefore);
+//                    // $log.debug(timestampAfter);
+//                    // $log.debug("in second one  "+currentSyncLine.time);
 //                 }
 //                 else {
 //                     // No text or only before / after
 //                     // Using current player time minus a delta
 //                     if(shift) {
 //                         if(parseInt(currentTime - 3, 10) > 0) {
-//                            // console.log("first condition" +currentTime);
+//                            // $log.debug("first condition" +currentTime);
 //                             currentSyncLine.time = currentTime - 3;
 //                         }
 //                         else {
 //                             currentSyncLine.time = currentTime - currentTime;
-//                             //console.log("second condition" +currentSyncLine.time);
+//                             //$log.debug("second condition" +currentSyncLine.time);
 //                         }
 //                     }
 //                     else {
 //                         currentSyncLine.time = currentTime;
-//                         //console.log("no shift "+currentSyncLine.time)
+//                         //$log.debug("no shift "+currentSyncLine.time)
 //                     }
 //                 }
 
@@ -638,7 +638,7 @@
 //         };
 
 //         service.setSnapshot = function (snapshot) {
-//             //console.log("snap");
+//             //$log.debug("snap");
 //             var lineCursorPosition = editor.getCursorPosition().row,
 //                 currentSync = service.getCurrentSync(lineCursorPosition),
 //                 snapshotSymbol = '<snapshot>',
@@ -654,7 +654,7 @@
 //         };
 
 //         service.unsync = function (line) {
-//             //console.log("unsync");
+//             //$log.debug("unsync");
 //             var currentSync = service.getCurrentSync(line),
 //                 session = editor.getSession();
 
@@ -665,7 +665,7 @@
 //         };
 
 // //        service.state = function () {
-// //            //console.log("state")
+// //            //$log.debug("state")
 // //            if (service.loading) {
 // //                return EditorState.LOAD;
 // //            } else if (service.saving) {
@@ -737,15 +737,15 @@
 // //        })
 
 //         service.saveFn = function () {
-//            // console.log(service.doc.dirty);
+//            // $log.debug(service.doc.dirty);
 //             if (service.doc.dirty) {
 //                 service.save(false);
 //             }
 //         };
 
 //         service.initTimeout = function () {
-//             //console.log("info is");
-//             //console.log(service.doc.info);
+//             //$log.debug("info is");
+//             //$log.debug(service.doc.info);
 //             if (service.doc.info) {
 //                 var createTimeout = function () {
 //                     service.autosave=$interval(service.saveFn, saveInterval)

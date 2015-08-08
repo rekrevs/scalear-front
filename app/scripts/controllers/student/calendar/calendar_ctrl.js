@@ -39,7 +39,7 @@ angular.module('scalearAngularApp')
 			  	})
 			  	$scope.calendar.events = $scope.filtered_events
 			   	for (var element in $scope.calendar.events){
-			   		console.log(new Date($scope.calendar.events[element].start))
+			   		$log.debug(new Date($scope.calendar.events[element].start))
 			   		$scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
 			   		$scope.calendar.events[element].title +=  ' @'+$filter('date')($scope.calendar.events[element].start, 'h:mma')//' @'+scalear_utils.hour12($scope.calendar.events[element].start.getHours())
 			   		if($scope.calendar.events[element].quizId)
@@ -58,7 +58,7 @@ angular.module('scalearAngularApp')
 					}  
 				}
 				$scope.eventSources.push($scope.calendar); 
-				console.log($scope.eventSources)
+				$log.debug($scope.eventSources)
 				$timeout(function(){$(window).resize()})
 			},
 			function(){}

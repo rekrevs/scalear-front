@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('customLinkDetailsCtrl', ['$stateParams', '$scope', '$q', '$filter','CustomLink', function($stateParams, $scope, $q, $filter, CustomLink) {
+    .controller('customLinkDetailsCtrl', ['$stateParams', '$scope', '$q', '$filter','CustomLink','$log', function($stateParams, $scope, $q, $filter, CustomLink,$log) {
         
         $scope.$watch('items_obj["customlink"]['+$stateParams.customlink_id+']', function(){
             if($scope.items_obj && $scope.items_obj["customlink"][$stateParams.customlink_id]){
@@ -11,7 +11,7 @@ angular.module('scalearAngularApp')
 
 
         $scope.validateLink= function(column, data){
-            console.log($scope.link)
+            $log.debug($scope.link)
             var d = $q.defer();
             var doc={}
             doc[column]=data;

@@ -217,28 +217,19 @@ angular.module('scalearAngularApp')
 				})
 				
 			}
-			scope.updateValues= function()
-			{
-				$log.debug("in value update")
-				$log.debug(scope.quiz);
-				$log.debug(scope.quiz.answers);
+			scope.updateValues= function(){
 				scope.values=0
-				for(var element in scope.quiz.answers)
-				{
-					$log.debug(scope.quiz.answers[element].correct)
-					if(scope.quiz.answers[element].correct==true)
-					{
-						$log.debug("in true");
+				for(var element in scope.quiz.answers){
+					if(scope.quiz.answers[element].correct){
 						scope.values+=1
 					}
 				}
-				$log.debug(scope.values)
 			}
-			//==========//
 	
 			$rootScope.$on("radioChange",function(){
 				scope.setAnswerColor()
 			})
+			
 			// $rootScope.$on("updatePosition",function(){
 			// 	$log.debug("event emiited updated position")
 			// 	setAnswerLocation()
@@ -346,13 +337,13 @@ angular.module('scalearAngularApp')
 				scope.data.ycoor= parseFloat(main.position().top)/ ontop.height();
 				scope.data.sub_xcoor= parseFloat(sub.position().left)/ontop.width();
 				scope.data.sub_ycoor= parseFloat(sub.position().top)/ ontop.height();
-				console.log(scope.data)
+				$log.debug(scope.data)
 				scope.calculateSize()
 			}
 			scope.calculateSize=function(){
 				var ontop=angular.element('.ontop');
 				var main = angular.element(element.children()[0])
-				console.log(scope.area_width+", "+scope.area_height)
+				$log.debug(scope.area_width+", "+scope.area_height)
 				scope.data.width= main.width()/ontop.width();
 				scope.data.height= main.height()/(ontop.height());
 			}	
@@ -470,7 +461,7 @@ angular.module('scalearAngularApp')
 				{value:"Free Text Question", text:$translate('content.questions.quiz_types.text')}
 			]
 			scope.match_types =['Free Text', 'Match Text']
-			console.log(scope.quiz)
+			$log.debug(scope.quiz)
 			if(!scope.quiz.match_type)
 				scope.quiz.match_type = scope.match_types[0]
 

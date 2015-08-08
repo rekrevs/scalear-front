@@ -14,7 +14,7 @@ angular.module('scalearAngularApp')
       Course.index({},
       function(data){
         $scope.courses = data
-        console.log($scope.courses)
+        $log.debug($scope.courses)
         $scope.courses.forEach(function(course){
           if(!course.ended){
             $scope.course_filter = false

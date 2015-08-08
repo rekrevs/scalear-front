@@ -9,8 +9,8 @@ angular.module('scalearAngularApp')
     var init = function()
     {
     	$scope.module_items = $scope.module_obj[$stateParams.module_id].items
-    	console.log("items are")
-    	console.log($scope.module_items)
+    	$log.debug("items are")
+    	$log.debug($scope.module_items)
 	    Module.getStudentModule(
 	    	{course_id: $stateParams.course_id, module_id:$stateParams.module_id}, 
             function(data){
@@ -19,7 +19,7 @@ angular.module('scalearAngularApp')
                 // arrange timeline
                 $scope.timeline = {}
                 $scope.timeline['lecture']={}
-                console.log("timeline")
+                $log.debug("timeline")
                 for(var l in $scope.module_lectures)
                 {
                     var lec= $scope.module_lectures[l]
@@ -47,7 +47,7 @@ angular.module('scalearAngularApp')
                         $scope.timeline['lecture'][lec.id].add(lec.notes[i].time, "note", lec.notes[i])
                     }
                 }
-                console.log($scope.timeline)
+                $log.debug($scope.timeline)
                 showModuleCourseware($scope.module_obj[$stateParams.module_id])
                 
             }

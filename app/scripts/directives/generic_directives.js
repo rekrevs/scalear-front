@@ -77,7 +77,7 @@ angular.module('scalearAngularApp')
         });
       }
     };
-}]).directive('contextMenu', ['$window', function($window) {
+}]).directive('contextMenu', ['$window','$log', function($window,$log) {
   return {
     restrict: 'A',
     scope:{
@@ -103,7 +103,7 @@ angular.module('scalearAngularApp')
         menuElement.addClass('open');
         menuElement.css('display', 'block')
         angular.element($window).add(element).on('click', function(event) {
-          console.log(event)              
+          $log.debug(event)              
           if(scope.opened) {
             scope.$apply(function() {
               event.preventDefault();
@@ -219,7 +219,7 @@ angular.module('scalearAngularApp')
           
     }
   }
-}).directive('smartImage', ['$http', function($http){
+}).directive('smartImage', ['$http','$log', function($http, $log){
   return{
     restrict: 'E',
     scope:{
@@ -236,7 +236,7 @@ angular.module('scalearAngularApp')
         smart_image[0].src = scope.defaultimage
         scope.$apply();
       }
-      console.log(smart_image[0])
+      $log.debug(smart_image[0])
       scope.$watch('desiredimage', function(){
         if(!scope.desiredimage){
           scope.finalimage = scope.defaultimage;
@@ -293,7 +293,7 @@ angular.module('scalearAngularApp')
         })
 
         // modalInstance.result.then(function (enrollment_key) {
-        //   console.log($scope.course)
+        //   $log.debug($scope.course)
           // $rootScope.show_alert="success"; 
           // ErrorHandler.showMessage($translate('controller_msg.enrolled_in', {course: $scope.course.name}), 'errorMessage', 2000);
           // $timeout(function(){

@@ -15,11 +15,11 @@ angular.module('scalearAngularApp').factory('doc',
                 service.$watch('info',
                     function (newValue, oldValue) {
                         if (oldValue != null && newValue !== oldValue && newValue!= null) {
-//                            console.log("old value");
-//                            console.log(oldValue);
-//                            console.log("new value");
-//                            console.log(newValue);
-//                            console.log(newValue.content)
+//                            $log.debug("old value");
+//                            $log.debug(oldValue);
+//                            $log.debug("new value");
+//                            $log.debug(newValue);
+//                            $log.debug(newValue.content)
                             service.dirty = true;
                         }
                     },

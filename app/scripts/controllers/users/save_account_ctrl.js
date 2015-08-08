@@ -8,7 +8,7 @@ angular.module('scalearAngularApp')
     $scope.form={}  
     $scope.user = user_new
     $scope.update_account = function(){
-        console.log($scope.user);
+        $log.debug($scope.user);
         $scope.sending = true;
         delete $scope.user.errors
         User.update_account({}, {
@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
         }, function() {
             $scope.sending = false;
             $scope.show_settings = false;
-            console.log($rootScope.current_user.info_complete)
+            $log.debug($rootScope.current_user.info_complete)
             $rootScope.show_alert = "";
             if($rootScope.current_user.intro_watched == false){
                 $state.go('confirmed')

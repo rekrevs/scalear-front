@@ -49,10 +49,10 @@
         //     $scope.getRemainingLectureCharts = function() {
         //         $log.debug("get remaining")
         //         $scope.chart_offset += $scope.chart_limit
-        //         console.log("chart scrolling")
-        //         console.log($scope.chart_scroll_disable)
-        //         console.log("offset= "+ $scope.chart_offset)
-        //         console.log("total= "+ $scope.total)
+        //         $log.debug("chart scrolling")
+        //         $log.debug($scope.chart_scroll_disable)
+        //         $log.debug("offset= "+ $scope.chart_offset)
+        //         $log.debug("total= "+ $scope.total)
         //         if ($scope.chart_offset <= parseInt($scope.total)) {
         //             $scope.loading_lectures_chart = true
         //             $scope.disableInfinitScrolling()
@@ -69,7 +69,7 @@
         //     }
 
         //     $scope.enableChartsScrolling = function() {
-        //         console.log("infinit scrolling enabled")
+        //         $log.debug("infinit scrolling enabled")
         //         if ($scope.tabState() == 1) {
         //             $log.debug("enabling chart scrolling")
         //             $scope.lecture_scroll_disable = true
@@ -174,7 +174,7 @@
         //     }
 
         //     $scope.createLectureChart = function(data, id, student_count) {
-        //         //console.log(student_count)
+        //         //$log.debug(student_count)
         //         var chart_data = data
         //         var chart = {};
         //         chart.type = "ColumnChart"

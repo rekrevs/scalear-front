@@ -5,11 +5,11 @@ angular.module('scalearAngularApp')
     
   		var init =function(){  	
   			// $scope.item= selected_item
-        console.log(selected_module)
+        $log.debug(selected_module)
         $scope.selected_module= selected_module
         $scope.selected_item= selected_item
         $scope.deSelectAll($scope.selected_module)
-        console.log($scope.selected_item)
+        $log.debug($scope.selected_item)
         if($scope.selected_item){
           $scope.selectItem($scope.selected_module, $scope.selected_item, null);
         }
@@ -18,7 +18,7 @@ angular.module('scalearAngularApp')
         }
   			// courses.getAllTeachers({course_id:null}, function(response){
      //        // $scope.courses=JSON.parse(response.courses);
-     //        	console.log(response)
+     //        	$log.debug(response)
 	    //         $scope.teachers = response.teachers;
 	    //     });
   		}
@@ -54,9 +54,9 @@ angular.module('scalearAngularApp')
                 // selectNone()
             },
             function(response){
-              // console.log(data)
+              // $log.debug(data)
               $scope.errors = response.data.errors
-              console.log($scope.errors)
+              $log.debug($scope.errors)
             })
           }
         }

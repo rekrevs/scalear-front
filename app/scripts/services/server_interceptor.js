@@ -29,9 +29,9 @@ angular.module('scalearAngularApp')
                 // optional method
                 'response': function(response) {
                     // do something on success
-                    //console.log(response);
-                    //console.log("headers are");
-                    //console.log(response.headers());
+                    //$log.debug(response);
+                    //$log.debug("headers are");
+                    //$log.debug(response.headers());
                     var re = new RegExp("^" + scalear_api.host)
                     if ($rootScope.server_error == true && response.config.url.search(re) != -1) // if response coming from server, and connection was bad
                     {
@@ -147,7 +147,7 @@ angular.module('scalearAngularApp')
                         var $state = $injector.get('$state'); //test connection every 10 seconds.
                         $state.go("login")
                         if($cookieStore.get('preview_as_student')){
-                            console.log("preview_as_student")
+                            $log.debug("preview_as_student")
                           $cookieStore.remove('preview_as_student')
                           $cookieStore.remove('old_user_id')
                           $cookieStore.remove('new_user_id')

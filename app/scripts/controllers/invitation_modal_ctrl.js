@@ -15,7 +15,7 @@
 //     Home.getNotifications({},function(response){
 //         $scope.invitations=response.invitations
 //         $scope.shared_items = JSON.parse(response.shared_items)
-//         console.log($scope.shared_items)
+//         $log.debug($scope.shared_items)
 //     })
 	
 //   $scope.acceptInvitation = function (id) {

@@ -111,7 +111,7 @@ angular.module('scalearAngularApp')
     }
 
     // $scope.playBtn = function(){
-    //     console.log($scope.play_pause_class)
+    //     $log.debug($scope.play_pause_class)
     //     if($scope.play_pause_class == "play"){
     //         $scope.lecture_player.controls.play()
     //     }
@@ -131,7 +131,7 @@ angular.module('scalearAngularApp')
     // }
 
     $scope.lecture_player.events.seeked=function(){
-    	console.log("seeking")
+    	$log.debug("seeking")
         if($scope.editing_mode && $scope.selected_quiz && Math.floor($scope.lecture_player.controls.getTime()) != Math.floor($scope.selected_quiz.time)){
         	$scope.saveBtn({exit:true})
     	}
@@ -193,7 +193,7 @@ angular.module('scalearAngularApp')
 			},
 			function(data){ //success
 				$log.debug(data);
-				// console.log(data)
+				// $log.debug(data)
 				$scope.editing_mode= false
 				$scope.showOnlineQuiz(data.quiz)
 				$scope.quiz_list.push(data.quiz)
@@ -233,7 +233,7 @@ angular.module('scalearAngularApp')
 				$scope.quiz_layer.backgroundColor="transparent"
 				$scope.quiz_layer.overflowX= ''
 				$scope.quiz_layer.overflowY= ''
-				console.log($scope.selected_quiz)
+				$log.debug($scope.selected_quiz)
 				getQuizData();				
 			}
 			// }
@@ -250,7 +250,7 @@ angular.module('scalearAngularApp')
 			function(data){ //success
 				$log.debug(data)
 				$scope.selected_quiz.answers= data.answers
-				console.log($scope.selected_quiz)
+				$log.debug($scope.selected_quiz)
 				if($scope.selected_quiz.question_type.toLowerCase()=="drag"){
 					$scope.allPos=mergeDragPos(data.answers)
 					$log.debug($scope.allPos)
@@ -264,7 +264,7 @@ angular.module('scalearAngularApp')
 		Lecture.getHtmlData(
 			{"course_id":$stateParams.course_id, "lecture_id":$scope.lecture.id ,"quiz":  $scope.selected_quiz.id},
 			function(data){ //success	
-				console.log($scope.selected_quiz.question_type)
+				$log.debug($scope.selected_quiz.question_type)
 				if($scope.selected_quiz.question_type.toLowerCase() == 'drag'){
 					$log.debug(data)
 					$scope.selected_quiz.answers = []
@@ -458,9 +458,9 @@ angular.module('scalearAngularApp')
 	}
 
 	$scope.exitBtn = function(){
-		console.log($scope.selected_quiz)
+		$log.debug($scope.selected_quiz)
 		if($scope.quiz_deletable){
-			console.log($scope.selected_quiz)
+			$log.debug($scope.selected_quiz)
 			$scope.deleteQuiz($scope.selected_quiz)
 		}
 		closeQuizMode()

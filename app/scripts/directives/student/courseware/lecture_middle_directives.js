@@ -361,7 +361,7 @@ angular.module('scalearAngularApp')
       // var setAnswerLocation=function(){
       //   $log.debug("setAnswerLocation")
       //   var ontop=angular.element('.ontop');
-      //   console.log(scope.data)
+      //   $log.debug(scope.data)
       //   scope.width  = scope.data.width * ontop.width();
       //   scope.height = scope.data.height* (ontop.height());
       //   scope.xcoor = (scope.data.xcoor * ontop.width())
@@ -430,7 +430,7 @@ angular.module('scalearAngularApp')
           
           ui.draggable.css('word-wrap', 'break-word')
           ui.draggable.css('overflow', 'hidden')
-          console.log("ontop.width");
+          $log.debug("ontop.width");
           var ontop_w = angular.element('#ontop').width();
           var ontop_h = angular.element('#ontop').height();
           var ui_w = ((scope.data.width)*ontop_w)
@@ -565,7 +565,7 @@ angular.module('scalearAngularApp')
 //           scope.$watch("lecture", function(val){
 //               if(scope.lecture){
 //                   //editor.create(scope.url);
-//                   console.log(scope.lecture.name)
+//                   $log.debug(scope.lecture.name)
 //                  scope.editor.create(scope.lecture.url, scope.player, scope.lecture.id, scope.lecture.cumulative_duration, scope.lecture.name, scope.lecture.note, scope.seek);
 //               }
 //           })
@@ -641,7 +641,7 @@ angular.module('scalearAngularApp')
           confused_id: confused.data.id
         }, 
         function(response){
-          // console.log("deleted");
+          // $log.debug("deleted");
           // unwatch()
           // delete scope.item
           scope.$emit('remove_from_timeline', confused)
@@ -654,7 +654,7 @@ angular.module('scalearAngularApp')
     }
   }
 }])
-.directive('quizTimeline',['OnlineQuiz','$filter','$rootScope','$translate', function(OnlineQuiz,$filter, $rootScope, $translate){
+.directive('quizTimeline',['OnlineQuiz','$filter','$rootScope','$translate','$log', function(OnlineQuiz,$filter, $rootScope, $translate,$log){
   return{
     restrict:"A",
     // replace:true,
@@ -668,7 +668,7 @@ angular.module('scalearAngularApp')
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.unsolved_msg = $translate("lectures.unsolved_quiz")
       scope.voteForReview=function(){
-        console.log("vote review")
+        $log.debug("vote review")
         OnlineQuiz.voteForReview(
         {online_quizzes_id:scope.item.data.id},{},
         function(res){
@@ -682,7 +682,7 @@ angular.module('scalearAngularApp')
       }
 
       scope.unvoteForReview=function(){
-        console.log("unvote review")
+        $log.debug("unvote review")
         OnlineQuiz.unvoteForReview(
         {online_quizzes_id:scope.item.data.id},{},
         function(res){
@@ -708,7 +708,7 @@ angular.module('scalearAngularApp')
     link:function(scope,element,attrs){
       scope.formattedTime = $filter('format','hh:mm:ss')(scope.item.time)
       scope.deleteNote=function(){
-        // console.log(scope.item)
+        // $log.debug(scope.item)
         if(scope.item.data && scope.item.data.id){
           Lecture.deleteNote(
             {
@@ -728,7 +728,7 @@ angular.module('scalearAngularApp')
       }
 
       scope.saveNote=function(note_text){
-        console.log(scope.item)
+        $log.debug(scope.item)
         Lecture.saveNote(
           {
             course_id: $state.params.course_id,
@@ -742,7 +742,7 @@ angular.module('scalearAngularApp')
           function(response){
             // scope.$emit("note_updated")
             scope.item.data = response.note
-            //console.log(response.note)
+            //$log.debug(response.note)
           }, 
           function(response){}
         );

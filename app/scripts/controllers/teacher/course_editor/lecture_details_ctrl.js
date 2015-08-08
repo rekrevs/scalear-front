@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
             var item_unwatch = $scope.$watch('items_obj["lecture"]['+$stateParams.lecture_id+']', function(){
                 if($scope.items_obj && $scope.items_obj["lecture"][$stateParams.lecture_id]){
                     $scope.lecture=$scope.items_obj["lecture"][$stateParams.lecture_id]
-                    console.log($scope.items_obj["lecture"][$stateParams.lecture_id])
+                    $log.debug($scope.items_obj["lecture"][$stateParams.lecture_id])
                     if($scope.lecture.url && $scope.lecture.url!="none"){
                         var video_id = $scope.isYoutube($scope.lecture.url)
                         if(video_id)
@@ -46,7 +46,7 @@ angular.module('scalearAngularApp')
             $scope.validateLecture = function(column, data) {
                 var d = $q.defer();
                 var lecture = {}
-                console.log(data)
+                $log.debug(data)
                 lecture[column] = data;
                 if (column == 'url' && invalid_url(data)) {
                     $log.debug(data)
@@ -61,10 +61,10 @@ angular.module('scalearAngularApp')
                     function() {                        
                         if(column == 'url'){
                             var type = $scope.isYoutube(data)
-                            console.log(type)
+                            $log.debug(type)
                             if(type) {
                                 var id = type[1]//lecture.url.split("v=")[1].split("&")[0]
-                                console.log(id)
+                                $log.debug(id)
                                 // var url = "http://gdata.youtube.com/feeds/api/videos/" + id + "?alt=json&v=2&callback=JSON_CALLBACK"
                                 var url = "https://www.googleapis.com/youtube/v3/videos?id=" + id + "&part=status&key=AIzaSyAztqrTO5FZE2xPI4XDYbLeOXE0vtWoTMk"
                                 $http.jsonp(url).success(function(data) {
@@ -168,7 +168,7 @@ angular.module('scalearAngularApp')
                 if($scope.lecture.url){
                     var type = $scope.isYoutube($scope.lecture.url)
                     if(type){
-                        console.log('type initialized')  
+                        $log.debug('type initialized')  
                         if(!isFinalUrl($scope.lecture.url))
                             $scope.lecture.url = "https://www.youtube.com/watch?v="+type[1];                                         
                         getYoutubeDetails(type[1]).then(function(){
@@ -177,7 +177,7 @@ angular.module('scalearAngularApp')
                         })
                     }
                     else{
-                        console.log('type not initialized')  
+                        $log.debug('type not initialized')  
                         $scope.updateLecture();
                         $rootScope.$broadcast("update_module_time", $scope.lecture.group_id)
                     }
@@ -219,12 +219,12 @@ angular.module('scalearAngularApp')
                 $http.jsonp(url)
                     .success(function (data) {
                         $log.debug(data.entry)
-                        console.log(data)
+                        $log.debug(data)
                         $scope.video={}
                         $scope.video.title = data.items[0].snippet.title//data.entry.title.$t;
                         $scope.video.author =data.items[0].snippet.channelTitle//data.entry.author[0].name.$t;
         		        var duration = scalear_utils.parseDuration(data.items[0].contentDetails.duration)
-                        console.log(duration.hour*(60*60)+duration.minute*(60)+duration.second)
+                        $log.debug(duration.hour*(60*60)+duration.minute*(60)+duration.second)
                         $scope.lecture.duration = duration.hour*(60*60)+duration.minute*(60)+duration.second//data.entry.media$group.yt$duration.seconds
                         // $scope.video.thumbnail = "<img class=bigimg src="+data.entry.media$group.media$thumbnail[0].url+" />";  
                         d.resolve()                   

@@ -122,7 +122,7 @@ angular.module('scalearAngularApp')
 					'<div>'+
 						'<h6 ng-style="{color: color}">In-class <span translate>courses.time_estimate</span>: <br /><b>{{inclass_estimate || 0}} <span translate>minutes</span></b></h6>'+
 					'</div>'+
-					'<div><h6 class="size-14">({{quiz_count || 0}} quizzes, {{question_count || 0}} discussions and {{survey_count || 0}} surveys) </h6></div>'+
+					'<div><h6 class="size-14">({{quiz_count || 0}} <span translate>groups.quizzes</span>, {{question_count || 0}} <span translate>lectures.discussion</span> <span translate>and</span> {{survey_count || 0}} <span translate>groups.surveys</span>) </h6></div>'+
 					'<div>'+
 						'<div>'+
 							'<a pop-over="popover_options" class="color-green">{{"more" | translate}}...</a>'+

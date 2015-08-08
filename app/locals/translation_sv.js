@@ -147,7 +147,10 @@ var translation_sv=function(){
       discussion_forum: "Diskussionsforum",
       course_information: "Kursinformation",
       help: "Hjälp",
-      add_students:"Lägg till studenter"
+      add_students:"Lägg till studenter",
+      administration: "Administrering",
+      add_teacher: "Lägg Lärare/TA",
+      student_list: "Studenten Lista"
     },
     discussion:{
       private_post: "Privat inlägg",
@@ -500,7 +503,10 @@ var translation_sv=function(){
       student_link_lecture:"Student länk till video",
       drag_instruction: "Ange namn för dragbara objekt och placera sina Start och Slut platser på skärmen.",
       drag_correct: "Denna post är korrekt här eftersom",
-      drag_incorrect: "Punkt {{num}} skulle vara felaktig här eftersom"
+      drag_incorrect: "Punkt {{num}} skulle vara felaktig här eftersom",
+      add_video_quiz: "Lägg till Video Quiz Här",
+      show_all_quizzes: "Visa Alla Frågesporter",
+      edited: "redigerad"
     },
     online_quiz:{
       you_sure_delete_quiz: "Är du säker på att du vill radera quizen '{{quiz}}'?",
@@ -767,6 +773,7 @@ var translation_sv=function(){
       send: "Skicka",
       send_reply: "Skicka svar och skicka meddelande till elev",
       subject: "Ämne",
+      email_body: "Kropp",
       all_students_in: "Alla studenter i",
       number_of_questions: "Antal frågor",
       lecture_evaluations: "Videoutvärderingar",
@@ -839,7 +846,26 @@ var translation_sv=function(){
       view_detailed_progress: "Framsteg, detaljer",
       no_courses: "Just nu har du inte några kurser som du kan komma åt. Du kan börja genom att lägga till en.",
       invite: "Bjud in",
-      graded: "Betygssatt"
+      graded: "Betygssatt",
+      course_editor: "Kurs Redaktör",
+      choose_module: "Välj en modul till vänster visa och redigera dess innehåll.",
+      drag_module: "Dra moduler runt att sortera dem.",
+      create_module: "Skapa moduler för att organisera dina kursinnehåll.",
+      choose_add: "Lägg till videor, frågesporter, undersökningar och länkar.",
+      preview_see: "Förhandsvisning som student för att se hur ditt innehåll kommer att visas för studenter",
+      right_click: "Högerklicka på ett objekt för att kopiera, klistra, eller dela det med andra lärare.",
+      link_editor:"Länk Redaktör",
+      video_editor:"Video Redaktör",
+      review_module: "Recension Modul",
+      choose_review_module: "Välj en modul för att granska elevernas nätet framsteg, svara på frågor, och väljer material i klass översyn.",
+      view_module_completion: "Se Modul Slutförande",
+      module_completion_desc: "Se där studenter har avslutat varje modul i tid eller sent.",
+      show_student_details: "Visa Student Detaljer",
+      student_details: "Student Detaljer",
+      show_progress: "Visa framsteg",
+      student_progress_details: "Student framsteg Detaljer",
+      inclass_content: "Visa I-klassinnehåll",
+      choose_inclass_module: "Välj en modul för att visa utvalda material I-klass"
     },
     controller_msg:{
       announcement_successfully_created: "Meddelande har skapats.",
@@ -1054,7 +1080,8 @@ var translation_sv=function(){
     },
     announcements:
     {
-      empty: 'Inga meddelanden ännu'
+      empty: 'Inga meddelanden ännu',
+      post: "Inlägg meddelanden till klass här"
     },
     help:{
       getting_started: "Komma igång",

@@ -1,6 +1,9 @@
 <div class="row">
 	<div class="small-12 small-centered columns">
-		<h4><b>Video Editor: </b>{{lecture.name}}</h4>
+		<h4>
+			<b><span translate>courses.video_editor</span>: </b>
+			<span>{{lecture.name}}</span>
+		</h4>
 		<overlay ng-show="lecture.url=='none'">
 			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.enter_url</h3>
 			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.enter_url_continue</h3>
@@ -37,8 +40,8 @@
 <div class="row with-small-margin-top disable_selection">
 	<center class="small-block-grid-3" ng-show="!editing_mode">
 		<span ng-show="lecture.url!='none'" >
-			<button id="new_question" class="button small no-margin" lecture-questions-modal open-modal="openQuestionsModal" ng-click="addQuestion()"><span tooltip="Click or type i to add a question" tooltip-placement="bottom" tooltip-append-to-body="true" translate>Add Video Quiz Here</span></button>
-			<button class="button small no-margin" ng-click="openQuizList($event)" translate>Show All Quizzes</button>
+			<button id="new_question" class="button small no-margin" lecture-questions-modal open-modal="openQuestionsModal" ng-click="addQuestion()"><span tooltip="Click or type i to add a question" tooltip-placement="bottom" tooltip-append-to-body="true" translate>lectures.add_video_quiz</span></button>
+			<button class="button small no-margin" ng-click="openQuizList($event)" translate>lectures.show_all_quizzes</button>
 			<!-- <button id="new_item" class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" ><span translate>add_content</span></button>
 			<button id="new_module" class="button small green-color-white no-margin" ng-click="addModule()" translate>courses.add_module</button> -->
 		</span>

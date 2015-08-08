@@ -4,9 +4,9 @@
 <div class="small-12 columns">
     <div class="row">
         <div class="small-12 columns">
-            <h4 class="left"><b>Student Details: </b>{{course.selected_module.name}}</h4>
+            <h4 class="left"><b><span translate>courses.student_details</span>: </b>{{course.selected_module.name}}</h4>
             <a class="button tiny size-12 color-white right with-tiny-margin-top" ui-sref="course.module.progress">
-                <span translate>Show Progress</span>
+                <span translate>courses.show_progress</span>
             </a>
         </div>
         <!-- <div class="small-12 small-centered columns" style="height: 200px;">
@@ -24,7 +24,7 @@
         <tab heading="{{'courses.lecture_statistics'|translate}}" select="studentStatisticsTab()">
             <tab2 />
         </tab>
-        <tab heading="Student Progress Details" select="lectureProgressTab()">
+        <tab heading="{{'courses.student_progress_details'|translate}}" select="lectureProgressTab()">
     		<tab3 />
         </tab>
        <!--  <tab heading="{{'courses.quizzes_progress'|translate}}" select="quizzesProgressTab();">

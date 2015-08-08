@@ -146,7 +146,10 @@ var translation_en=function(){
         lectures: "Lectures",
         discussion_forum: "Discussion Forum",
         help: "Help",
-        add_students:"Add Students"
+        add_students:"Add Students",
+        administration: "Administration",
+        add_teacher: "Add Teacher/TA",
+        student_list: "Student List"
       },
       discussion:{
         private_post: "Private Post",
@@ -501,7 +504,10 @@ var translation_en=function(){
         student_link_lecture:"Student link to lecture",
         drag_instruction: "Enter the name for draggable item and position its Start and End locations on the screen.",
         drag_correct: "This item is correct here because",
-        drag_incorrect: "Item {{num}} would be incorrect here because"
+        drag_incorrect: "Item {{num}} would be incorrect here because",
+        add_video_quiz: "Add Video Quiz Here",
+        show_all_quizzes: "Show All Quizzes",
+        edited: "edited"
       },
       online_quiz:{
         you_sure_delete_quiz: "Are you sure you want to delete quiz '{{quiz}}'?",
@@ -769,6 +775,7 @@ var translation_en=function(){
         send: "Send",
         send_reply: "Post reply and send message to student",
         subject: "Subject",
+        email_body: "Body",
         all_students_in: "All Students in",
         number_of_questions: "Number of questions",
         lecture_evaluations: "Lecture Evaluations",
@@ -841,7 +848,26 @@ var translation_en=function(){
         view_detailed_progress: "Progress Details",
         no_courses: "Currently, you don't have any courses you can access. You can start by adding one.",
         invite: "Invite to Join",
-        graded: "Graded"
+        graded: "Graded",
+        course_editor: "Course Editor",
+        choose_module: "Choose a module to the left view and edit its contents.",
+        drag_module: "Drag modules around to re-order them.",
+        create_module: "Create modules to organize your course contents.",
+        choose_add: " Add videos, quizzes, surveys, and links.",
+        preview_see: "Preview as Student to see how your content will appear to students",
+        right_click: "Right-click on an item to Copy, Paste, or Share it with other teachers.",
+        link_editor:"Link Editor",
+        video_editor:"Video Editor",
+        review_module: "Review Module Completion",
+        choose_review_module: "Choose a module to review the students’ online progress, respond to questions, and select material for in-class review.",
+        view_module_completion: "View Module Completion",
+        module_completion_desc: "View which students have completed each module on-time or late.",
+        show_student_details: "Show Student Details",
+        student_details: "Student Details",
+        show_progress: "Show Progress",
+        student_progress_details: "Student Progress Details",
+        inclass_content: "Display In-class Content",
+        choose_inclass_module: "Choose a module to display selected materials In-class"
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",
@@ -1051,7 +1077,8 @@ var translation_en=function(){
     },
     announcements:
     {
-      empty: 'No announcements yet.'
+      empty: 'No announcements yet.',
+      post: "Post announcements to the class here"
     },
     help:{
       getting_started: "Getting Started",

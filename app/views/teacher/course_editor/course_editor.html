@@ -4,17 +4,17 @@
 <!-- endbuild -->
 <div ng-if="!('*.module.**' | includedByState)">
 	<br/>
-	<div class="large-9 columns">
-		<div class="small-12 columns"><h5><b>Course Editor</b></h5></div>
-		<div class="small-12 columns"><p class="no-margin">Choose a module to the left view and edit its contents.</p></div>
-		<div class="small-12 columns"><p>Drag modules around to re-order them.</p></div>
+	<div class="small-9 columns">
+		<div class="small-12 columns"><h5><b translate>courses.course_editor</b></h5></div>
+		<div class="small-12 columns"><p class="no-margin" translate>courses.choose_module</p></div>
+		<div class="small-12 columns"><p translate>courses.drag_module</p></div>
 		<br />
 		<div class="small-12 columns no-padding">
 			<div class="small-12 medium-3 columns">
 				<button id="new_module" class="button small green-color-white" ng-click="addModule()"translate>courses.add_module</button>
 			</div>
 			<div class="small-12 medium-9 columns">
-				<p class="no-margin">Create modules to organize your course contents.</p>
+				<p class="no-margin" translate>courses.create_module</p>
 			</div>
 		</div>
 		<div class="small-12 columns no-padding">
@@ -22,7 +22,7 @@
 				<button class="button small green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>add_content</span></button>
 			</div>
 			<div class="small-12 medium-9 columns">
-				<p class="no-margin">Choose a module to add videos, quizzes, surveys, and links.</p>
+				<p class="no-margin" translate>courses.choose_add</p>
 			</div>
 		</div>
 		<div class="small-12 columns no-padding">
@@ -30,11 +30,11 @@
 				<button class="button small orange" ng-click="previewStudent()" translate>preview_student</button>
 			</div>
 			<div class="small-12 medium-9 columns">
-				<p class="no-margin">Preview as Student to see how your content will appear to students</p>
+				<p class="no-margin" translate>courses.preview_see</p>
 			</div>
 		</div>
 		<br />
-		<div class="small-12 columns"><p>Right-click on an item to Copy, Paste, or Share it with other teachers.</p></div>
+		<div class="small-12 columns"><p translate>courses.right_click</p></div>
 	</div>
 </div>
 <div id="module"  ng-if="('**.overview' | includedByState)" class="small-12 large-7 columns with-small-padding-top" ui-view="module" >	

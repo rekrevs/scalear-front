@@ -753,8 +753,8 @@ angular.module('scalearAngularApp')
 }]).directive('notesArea', ['$timeout',
     function($timeout) {
         return {
-            template: '<div onshow="moveCursorToEnd()" e-rows="3" e-cols="50" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal;" style="padding:0 9px">'+
-                        '<div style="word-break: break-word; padding: 3px; margin: 0px;width:85%; cursor: text;float:left">'+
+            template: '<div onshow="moveCursorToEnd()" e-rows="3" e-cols="100" blur="submit" editable-textarea="value" e-form="myform" buttons="no" onaftersave="saveData()" e-placeholder="Note..." ng-click="show()" e-style="width:95% !important; font-size: 13px;color: teal;" style="padding:0 9px">'+
+                        '<div style="word-break: break-word; margin: 0px;cursor: text;float:left">'+
                           '{{ value }}'+
                           // '<span ng-show="overclass" style="float: right;font-size: 9px;bottom: -8px;position: relative;">click to edit</span>'+
                         '</div>'+

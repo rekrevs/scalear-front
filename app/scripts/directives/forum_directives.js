@@ -344,37 +344,37 @@ angular.module('scalearAngularApp')
                 $rootScope.$broadcast('lecture_filter_update', scope.lecture_filter)
             }
 
-            var template ='<span ng-init="initFilters()">'+
+            var template ='<ul ng-init="initFilters()" class="no-margin">'+
                             '<li>'+
-                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'note\')">'+
-                                    '<input id="showNotesCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.note" />'+
-                                    '<span style="font-size:14px" translate>course_settings.show_notes</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'note\')">'+
+                                    '<input id="showNotesCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.note" />'+
+                                    '<span style="font-size:12px" translate>course_settings.show_notes</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'discussion\')">'+
-                                    '<input id="showQuestionsCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.discussion" />'+
-                                    '<span style="font-size:14px" translate>course_settings.show_discussion</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'discussion\')">'+
+                                    '<input id="showQuestionsCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.discussion" />'+
+                                    '<span style="font-size:12px" translate>course_settings.show_discussion</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'quiz\')">'+
-                                    '<input id="showQuizzesCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.quiz" />'+
-                                    '<span style="font-size:14px" translate>course_settings.show_quizzes</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'quiz\')">'+
+                                    '<input id="showQuizzesCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.quiz" />'+
+                                    '<span style="font-size:12px" translate>course_settings.show_quizzes</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<div class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="updateLectureFilter(\'confused\')">'+
-                                    '<input id="showConfusedCheckbox" class="valign-top with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.confused" />'+
-                                    '<span style="font-size:14px" translate>course_settings.show_confused</span>'+
+                                '<div class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="updateLectureFilter(\'confused\')">'+
+                                    '<input id="showConfusedCheckbox" class="with-tiny-margin-right" type="checkbox" ng-checked="lecture_filter.confused" />'+
+                                    '<span style="font-size:12px" translate>course_settings.show_confused</span>'+
                                 '</div>'+
                             '</li>'+
                             '<li>'+
-                                '<a class="looks-like-a-link lighter-grey dark-text with-padding-left with-padding-right" ng-click="exportNotes()">'+
-                                    '<span style="font-size:14px" translate>lectures.download_notes</span>'+
+                                '<a class="looks-like-a-link lighter-grey dark-text with-small-padding-left with-small-padding-right" ng-click="exportNotes()">'+
+                                    '<span style="font-size:12px" translate>lectures.download_notes</span>'+
                                 '</a>'+
                             '</li>'+
-                        '</span>'
+                        '</ul>'
 
             scope.popover_options={
                 content: template,

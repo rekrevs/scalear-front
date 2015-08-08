@@ -3,11 +3,29 @@
     <img src="../images/confused-timeline.png" />                  
   </div>
 </td>
-<td style="padding:0 10px;" colspan="2">
-  <p class="solved size-14" ng-show="item.data.very"  ng-click="seek()(item.time, item.data.lecture_id)" style="margin-bottom:5px" translate>courses.really_confused</p>
-  <p class="solved size-14" ng-show="!item.data.very" ng-click="seek()(item.time, item.data.lecture_id)" style="margin-bottom:5px" translate>courses.confused</p>
+
+<td style="ppadding: 0 12px;" colspan="3">
+	<div class="solved size-14" ng-click="seek()(item.time, item.data.lecture_id)" style="margin-bottom:5px;float:left">
+		<span ng-show="item.data.very" translate>courses.really_confused</span>
+		<span ng-show="!item.data.very" translate>courses.confused</span	>
+	</div>
+  	<div style="font-size: 10px; float: right; display: inline-block;">
+		<delete_button size="small" action="delete()" vertical="false" text="false" ></delete_button>
+	</div>
 </td>
-<td style="min-width:95px; padding: 0px; padding-right: 18px;">                 
+<!-- <td style="min-width:95px; padding: 0px; padding-right: 18px;">                  -->
   <!-- <delete_button size="small" color='dark' action="deleteConfused(item)" vertical="false" text="false" color="red" style="float: right;"></delete_button> -->
-  <delete_button size="small" action="deleteConfused(item)" vertical="false" text="false" style="float: right;"></delete_button>
-</td>
+  <!-- <delete_button size="small" action="deleteConfused(item)" vertical="false" text="false" style="float: right;"></delete_button> -->
+<!-- </td> -->
+
+
+<!-- <td style="padding: 0px; padding-right: 8px;" style="width:20px;" colspan="3">   
+	<div id="show_note"> 
+	    <div class="table">
+        	<div style="word-break: break-word; padding: 3px; margin: 0px;width:85%; cursor: text;float:left">{{ value }}</div>
+        	<div style="font-size: 10px; float: right; display: inline-block;">
+          		<delete_button size="small" action="delete()" vertical="false" text="false" ></delete_button>
+        	</div>
+	    </div>
+	</div>        
+</td> -->

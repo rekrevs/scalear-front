@@ -148,26 +148,13 @@ angular.module('scalearAngularApp')
 				return player.readyState()
 			}
 
-
-
 			player_controls.seek = function(time){
-				console.log("entering sekking ")
+				console.log("entering sekking")
 				if(time<0)
 					time = 0
 				if(time > player_controls.getDuration())
 					time = player_controls.getDuration()
 				if(player_controls.readyState() == 0 && !(scope.start_time || scope.start_time == 0)){
-					// scope.readyState = player_controls.readyState
-					// var unwatch = scope.$watch('readyState()',function(){
-					// 	console.log("ready state=")
-					// 	console.log(scope.readyState())
-					// 	if (scope.readyState() == 4){
-					// 		console.log("chanign time hopefully")
-					// 		player.currentTime(time);
-					// 		unwatch()
-					// 		scope.readyState = null
-					// 	}
-					// })
 					player.on("loadeddata", 
 					function(){
 						console.log("seek after load")
@@ -619,7 +606,9 @@ return {
   		scope.chosen_quality='hd720';
   		scope.chosen_speed=1
   		scope.is_mobile = $rootScope.is_mobile
-  		scope.duration = scope.player.controls.getDuration();
+  		$timeout(function(){
+  			scope.duration = scope.player.controls.getDuration();	
+  		})
 		scope.play_class = scope.is_mobile? "pause":"play";		
       	
       	if(scope.player.controls.youtube){
@@ -738,8 +727,7 @@ return {
         	scope.volume_class=="mute"? scope.mute():scope.unmute()
         }
 
-        var unwatchMute = scope.$watch("volume",function()
-        {
+        var unwatchMute = scope.$watch("volume",function(){
             if(scope.volume){
                 scope.player.controls.volume(scope.volume);
                 if(scope.volume!=0)
@@ -748,6 +736,7 @@ return {
                     scope.volume_class="unmute";
             }
         });
+
         scope.mute= function(){
             scope.player.controls.mute();
             scope.volume_class="unmute";
@@ -765,7 +754,7 @@ return {
 	        var ratio = (event.pageX-element.offset().left)/element.outerWidth(); 
 	        scope.seek()(scope.duration*ratio)
 	        if(scope.timeline)
-	        	scrollToNearestEvent(scope.total_duration*ratio)
+	        	scrollToNearestEvent(scope.duration*ratio)
         }
 
       	scope.showQuality = function(){

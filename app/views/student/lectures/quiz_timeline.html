@@ -1,0 +1,17 @@
+<td style="padding: 0px;" class="timeline-icon-container text-right valign-top">
+  <div ng-show="item.data.is_quiz_solved || preview_as_student"  ng-click="seek()(item.time, item.data.lecture_id)" class="solved timeline-item" tooltip-placement="left" tooltip="{{formattedTime}}" tooltip-append-to-body="true" >
+    <img src="../images/quiz-timeline.png" />
+  </div>
+  <div ng-show="!item.data.is_quiz_solved && !preview_as_student" class="timeline-item" style="cursor: initial;" tooltip-placement="left" tooltip="{{unsolved_msg}}" tooltip-append-to-body="true">
+    <img src="../images/quiz-timeline.png" />
+  </div>
+</td>
+<td style="padding:0 12px;" bindonce>
+  <p ng-show="item.data.is_quiz_solved || preview_as_student" class="solved size-14 color-black text-italic" ng-click="seek()(item.time, item.data.lecture_id)" bo-text="item.data.question" style="margin-bottom:5px"></p>
+  <p ng-show="!item.data.is_quiz_solved && !preview_as_student" class="size-14 color-grey text-italic"  tooltip-placement="left" tooltip="{{unsolved_msg}}" tooltip-append-to-body="true" bo-text="item.data.question" style="margin-bottom:5px"></p>
+</td>
+<td style="padding: 0px; padding-right: 8px;min-width: 80px;" class="valign-top" colspan="2" ng-show="item.data.is_quiz_solved">
+  <img style="float: right;" src="images/check7.png" />
+  <voting-button votes-count="item.data.votes_count" voted="item.data.reviewed" up="voteForReview" down="unvoteForReview" direction="horizontal" class="right"></voting-button>
+</td>
+<td style="padding: 0px; padding-right: 8px;min-width: 80px;" class="valign-top" colspan="2" ng-show="!item.data.is_quiz_solved"></td>

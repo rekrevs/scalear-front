@@ -1,31 +1,113 @@
 <center>
-<overlay ng-show="sending">
-            <loading size="big" show="true" style="position:relative; top:40%;" />
-</overlay>
-    <form ng-submit="login()" novalidate>
-        <h2 translate="welcome"></h2>
-        <br />
-        <p translate="email"></p>
-        <input type="email" ng-model="user.email" id="user_email" class="string email optional" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" size="50" auto-fill-sync/>
-        <p translate="password"></p>
-        <input type="password" ng-model="user.password" id="user_passowrd" class="password optional" name="user[password]" size="50" auto-fill-sync/>
-        <br />
-        <p translate="remember_me"></p>
-        <input type="checkbox" ng-model="user.remember_me">
-        <br />
-        <br />
-        <input type="submit" ng-disabled="sending" value="{{'sign_in' | translate}}" class="btn btn-primary"/>
-        <br />
-        <br />
-    </form>
-    
-    <a href="/#/users/password/new" translate="password_edit.forgot_password"></a>
+    <div class="small-10 medium-10 large-8 small-centered column" style="box-shadow: 0 1px 3px #5F5F5F;background: rgb(240, 240, 240);padding: 30px 0">
+        <form class="row" ng-submit="login()" novalidate>
+            <h2><span translate>welcome</span>Scalable<span class="no-padding color-green" style="font-weight: 200;">Learning</span></h2>
+            <!-- <h4><span class="no-padding color-green" style="font-weight: 200;">Version 3: test.scalable-learning.com</span></h4> -->
+            <h6  ng-if="is_mobile" class="show-for-medium-only text-italic break-word small-8 small-centered columns size-14">
+                <span translate>lectures.note</span>:
+                <span translate>support.ipad</span>
+                <span translate>support.issue_and_recommendation</span>
+            </h6>
+            <h6 ng-if="is_mobile" class="show-for-small-only text-italic break-word small-10 small-centered columns size-12">
+                <span translate>lectures.note</span>:
+                <span translate>support.mobiles</span> 
+                <span translate>support.issue_and_recommendation</span>
+            </h6>
+            <!-- <br ng-if="!is_mobile"/> -->
+            <br ng-if="!is_mobile"/>
+            <br/>
+            <div class="small-12 medium-10 large-8 small-centered medium-centered large-centered columns">
+                
+                <div class="small-12 medium-4 large-4 columns show-for-small-only">
+                    <profile-image email="user.email" imagesize="175"></profile-image>
+                </div>
+                
+                <div class="small-12 medium-8 large-8 columns">
+                    
+                    <div class="row">
+                        <div class="small-12 medium-4 large-3 columns with-small-margin-top">
+                            <label class="left">{{'email' | translate}}</label>
+                        </div>
+                        <div class="small-12 medium-8 large-9 columns">
+                            <input placeholder="{{'email' | translate}}" type="email" ng-model="user.email" id="user_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" name="user[email]" auto-fill-sync autocomplete="off"/>
+                        </div>
+                    </div>
 
-    <br/>
-    {{'or' | translate}}
-    <br/>
-    <a href="/#/users/confirmation/new" translate="password_edit.didnt_receive_confirmation"></a>
+                    <div class="row">
+                        <div class="small-12 medium-4 large-3 columns with-small-margin-top">
+                            <label class="left">{{'password' | translate}}</label>
+                        </div>
+                        <div class="small-12 medium-8 large-9 columns ">
+                            <input placeholder="{{'password' | translate}}" type="password" ng-model="user.password" id="user_passowrd" class="password optional modern-input" name="user[password]" size="50" auto-fill-sync/>
+                        </div>
+                    </div>
 
-<!--<input type="button" ng-click="login()" value="Scalable Learning" class="btn"/>-->
+                    <div class="row">
+                        <div class="small-4 medium-6 large-6 columns with-small-margin-top">
+                            <label class="left" translate>remember_me</label>
+                        </div>
+                        <div class="small-1 medium-1 large-1 columns left">
+                            <input type="checkbox" ng-model="user.remember_me">
+                        </div>
+                    </div>
+<!-- 
+                    <div class="row">
+                        <div class="small-12 medium-8 large-9 columns">
+                            <label class="right hide-for-small-only">{{'remember_me' | translate}}
+                                <input type="checkbox" ng-model="user.remember_me">
+                            </label>
+                            <label >
+                                
+                            </label>
+                        </div>
+                    </div> -->
 
+                    <div class="row ">
+                        <div class="small-12 medium-4 large-4 columns">
+                            <a style="display: inline-block !important;" type="button" class="tiny button dropdown under-the-other" dropdown-toggle="#languages_list">{{'languages.'+current_lang | translate}}</a>
+                            <ul id="languages_list" class="f-dropdown">
+                                <li>
+                                    <a ng-click="$parent.changeLanguage('en')">{{'languages.en' | translate}} <img src="images/uk.png" style="width:25px;height:15px;" /></a>
+                                </li>
+                                <li>
+                                    <a ng-click="$parent.changeLanguage('sv')">{{'languages.sv' | translate}} <img src="images/sweden.png" style="width:25px;height:15px;" /></a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="small-12 medium-8 large-8 columns">
+                            <button id="login_btn" type="submit" class="tiny expand button">{{'sign_in' | translate}}</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="small-12 medium-4 large-4 columns hide-for-small-only">
+                    <profile-image email="user.email" imagesize="175"></profile-image>
+                </div>
+            </div>
+            <div ng-show="sending" class="small-12 with-margin-top columns">
+             <loading size="small" show="sending"></loading>
+        </div>
+        </form> 
+        <div class="row">
+            <div class="small-8 small-centered with-margin-top columns">
+                <div class="row">
+                    <div class="small-12 columns">
+                        <label class="left" translate>password_edit.help</label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="small-12 columns">
+                        <a class="left with-margin-left" ui-sref="forgot_password" id="forget_password" translate="password_edit.forgot_password"></a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="small-12 column">
+                        <a class="left with-margin-left with-tiny-margin-top" ui-sref="new_confirmation" id="resend_conf" translate="password_edit.didnt_receive_confirmation"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </center>

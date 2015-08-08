@@ -1,22 +1,18 @@
-<!-- build:css(.tmp/styles) styles/controls.css -->
-<link rel="stylesheet" href="styles/student/controls.css" type="text/css" media="screen" title="no title" charset="utf-8" />
-<!-- endbuild -->
+<!-- <div page-name="{{$root.current}}" step-text="Click here to ask a question (or type Q), take a note (or type N), or go into fullscreen mode (or type F)." step-index="2" step-placement="bottom" step-append-to-body="true"> -->
+	
+	<!-- show_message -->
+	<!-- <button type="button" class="notesDiv no-padding control-button show-inline" ng-click="notesBtn()" tooltip="{{'lectures.video_notes'|translate}}" tooltip-append-to-body="true"></button> -->
 
-<div ng-if="!ipad" class='fullscreenDiv' ng-class="{'full':!fullscreen, 'small':fullscreen}" ng-click='full()'></div>
-<div class='alert alert-success fading' ng-show='show_message' translate="lectures.thanks"></div>
-<div class='hidden_div' ng-show='show_question'>
-	<input class='question' maxlength="140" name='ask' required="true" ng-model='question_asked' placeholder="{{'youtube.enter_question'|translate}}"/>
-	<input ng-click="submit_question()" class='btn btn-primary submit_question' type='button' value="{{'youtube.ask' | translate}}"/>
-</div>
-<div class="hidden_shortcuts well" ng-show='show_shortcuts'>
-	{{'lectures.keyboard_controls'|translate}}<br>
-	<ul>
-		<li><b>b:</b> {{'lectures.back_10s' | translate}}</li>
-		<li><b>space:</b> {{'lectures.play_pause' | translate}}</li>
-		<li><b>q:</b> {{'lectures.ask_question' | translate}}</li>
-		<li><b>c:</b> {{'lectures.confused' | translate}}</li>
-	</ul>
-</div>
-<div class="confusedDiv" ng-click= 'confused()' title="{{'youtube.click_tell_confused'|translate}}"></div>
-<div class="questionDiv" ng-click= 'question()' title="{{'youtube.click_ask_question'|translate}}"></div>
-<div class="shortcutDiv" ng-click= 'showShortcuts()' title="{{'youtube.click_video_shortcuts'|translate}}"></div>
+	<!-- <button type="button" class="questionDiv no-padding control-button show-inline" ng-click="questionsBtn()" tooltip="{{'youtube.click_ask_question'|translate}}" tooltip-append-to-body="true"></button> -->
+
+	<!-- <button type="button" class="confusedDiv no-padding control-button show-inline" ng-click="confusedBtn()" tooltip="{{'youtube.click_tell_confused'|translate}}" tooltip-append-to-body="true"></button> -->
+
+	<!-- <button type="button" class="shortcutDiv no-padding control-button show-inline" pop-over="popover_options" tooltip="{{'youtube.click_video_shortcuts'|translate}}" tooltip-append-to-body="true"></button> -->
+	
+	<!-- <button type="button" class="fullscreenDiv no-padding control-button show-inline" ng-class="{'full':!screenfull.isFullscreen, 'small':screenfull.isFullscreen}" ng-click="fullscreenBtn()"></button> -->
+
+
+
+
+
+<!-- </div> -->

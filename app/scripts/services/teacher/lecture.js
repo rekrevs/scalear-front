@@ -22,13 +22,24 @@ angular.module('scalearAngularApp')
 		'saveSort':{method:'POST', params:{action:'sort'}, headers:headers},
 		"validateLecture": {method: 'PUT', params: {action: 'validate_lecture_angular'},headers: headers},
 		"getLectureStudent":{method:'GET', params:{action:'get_lecture_data_angular'}, headers:headers},
+        "switchQuiz":{method:'GET', params:{action:'switch_quiz'}, headers:headers},
 		"confused":{method:'POST', params:{action:'confused'}, headers:headers},
 		"back":{method:'POST', params:{action:'back'}, headers:headers},
 		"pause":{method:'POST', params:{action:'pause'}, headers:headers},
 		"confusedQuestion":{method:'POST', params:{action:'confused_question'}, headers:headers},
 		"saveOnline":{method:'POST', params:{action:'save_online'}, headers:headers},
 		"saveHtml":{method:'POST', params:{action:'save_html'}, headers:headers},
-		
+        "deleteConfused":{method:'DELETE', params:{action:'delete_confused'}, headers:headers},
+        "saveNote":{method:'POST', params:{action:'save_note'}, headers:headers},
+        "deleteNote":{method:'DELETE', params:{action:'delete_note'}, headers:headers},
+        "loadNote":{method:'GET', params:{action:'load_note'}, headers:headers},
+        "lectureCopy":{method:'POST', params:{action:'lecture_copy'}, headers:headers},
+        "lastViewed":{method: 'GET', params:{action:'last_viewed'}, headers:headers},
+		// "hideResponses":{method:'POST',params:{action:'hide_responses'},headers:headers},
+		// "sendFeedback":{method:'POST', params:{action:'create_or_update_survey_responses'},headers:headers},
+		// "deleteFeedback":{method:'DELETE',params:{action:'delete_response'},headers:headers}
+		"exportNotes":{method: 'GET', params:{action:'export_notes'}, headers:headers},
+		"updatePercentView":{method: 'POST', params:{action:'update_percent_view'}, headers:headers}
 	});
 
 }]) 

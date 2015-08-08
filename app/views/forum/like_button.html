@@ -1,0 +1,9 @@
+<div  style="text-align: center; display: inline-block; margin-right:15px">
+	<span>{{votes_count}}</span>
+	<div ng-show="!voted" class="upvote looks-like-a-link"  tooltip="{{like_text}}" tooltip-placement="left" tooltip-append-to-body="false" ng-click="up()">
+		<img src="images/chevron_up.png" />
+	</div>
+	<div ng-show="voted" class="downvote looks-like-a-link"  tooltip="{{unlike_text}}" tooltip-placement="left" tooltip-append-to-body="false" ng-click="down()">
+		<img src="images/chevron_down.png" />
+	</div>
+</div>

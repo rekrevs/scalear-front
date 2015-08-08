@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
   
   var x={	
-  	get_index_by_id:function(groups, group_id) // returns index of an object in an array by searching for its id
+  	getIndexById:function(groups, group_id) // returns index of an object in an array by searching for its id
  	{
  		for(var element in groups)
  		{
@@ -57,7 +57,6 @@ angular.module('scalearAngularApp')
 	},
 	
 	newAnswer: function(ans, h, w,l, t, type, question_id){
-		
 		if(type!="quiz")
 		{
 			var y={
@@ -68,14 +67,16 @@ angular.module('scalearAngularApp')
 				height:h || 0,
 				width:w  || 0,
 				xcoor:l  || 0,
-				ycoor:t  || 0
+				ycoor:t  || 0,
+				sub_xcoor:l  || 0,
+				sub_ycoor:(t-0.09)  || 0
 			}
 		}
 		else{
 			var y={
 				content: ans || "",
 				correct:false,
-				question_id:question_id,
+				question_id:question_id
 			}
 		}
 		return y;

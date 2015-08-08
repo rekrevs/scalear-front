@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate',
-        function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate) { //server and also front end requests (requesting partials and so on..)
+    .factory('ServerInterceptor', ['$rootScope', '$q', '$timeout', '$interval', 'ErrorHandler', '$injector', 'scalear_api', 'headers', '$log', '$translate','$cookieStore',
+        function($rootScope, $q, $timeout, $interval, ErrorHandler, $injector, scalear_api, headers, $log, $translate,$cookieStore) { //server and also front end requests (requesting partials and so on..)
             return {
                 // optional method
                 'request': function(config) {
@@ -29,9 +29,9 @@ angular.module('scalearAngularApp')
                 // optional method
                 'response': function(response) {
                     // do something on success
-                    //console.log(response);
-                    //console.log("headers are");
-                    //console.log(response.headers());
+                    //$log.debug(response);
+                    //$log.debug("headers are");
+                    //$log.debug(response.headers());
                     var re = new RegExp("^" + scalear_api.host)
                     if ($rootScope.server_error == true && response.config.url.search(re) != -1) // if response coming from server, and connection was bad
                     {
@@ -47,27 +47,27 @@ angular.module('scalearAngularApp')
                         }, 4000, 1);
                     }
 
-                    if (response.data.notice && response.config.url.search(re) != -1) {
-                        if (angular.isDefined($rootScope.stop)) {
-                            $interval.cancel($rootScope.stop);
-                            $rootScope.stop = undefined;
-                        }
-                        $rootScope.show_alert = "success";
-                        ErrorHandler.showMessage(response.data.notice, 'errorMessage');
-                        $rootScope.stop = $interval(function() {
-                            $rootScope.show_alert = "";
-                        }, 4000, 1);
-                    } else if (response.headers()["x-flash-notice"] || response.headers()["x-flash-message"] && response.config.url.search(re) != -1) {
-                        if (angular.isDefined($rootScope.stop)) {
-                            $interval.cancel($rootScope.stop);
-                            $rootScope.stop = undefined;
-                        }
-                        $rootScope.show_alert = "success";
-                        ErrorHandler.showMessage(response.headers()["x-flash-notice"] || response.headers()["x-flash-message"], 'errorMessage');
-                        $rootScope.stop = $interval(function() {
-                            $rootScope.show_alert = "";
-                        }, 4000, 1);
-                    }
+                    // if (response.data.notice && response.config.url.search(re) != -1) {
+                    //     if (angular.isDefined($rootScope.stop)) {
+                    //         $interval.cancel($rootScope.stop);
+                    //         $rootScope.stop = undefined;
+                    //     }
+                    //     $rootScope.show_alert = "success";
+                    //     ErrorHandler.showMessage(response.data.notice, 'errorMessage');
+                    //     $rootScope.stop = $interval(function() {
+                    //         $rootScope.show_alert = "";
+                    //     }, 4000, 1);
+                    // } else if (response.headers()["x-flash-notice"] || response.headers()["x-flash-message"] && response.config.url.search(re) != -1) {
+                    //     if (angular.isDefined($rootScope.stop)) {
+                    //         $interval.cancel($rootScope.stop);
+                    //         $rootScope.stop = undefined;
+                    //     }
+                    //     $rootScope.show_alert = "success";
+                    //     ErrorHandler.showMessage(response.headers()["x-flash-notice"] || response.headers()["x-flash-message"], 'errorMessage');
+                    //     $rootScope.stop = $interval(function() {
+                    //         $rootScope.show_alert = "";
+                    //     }, 4000, 1);
+                    // }
 
                     return response || $q.when(response);
                 },
@@ -103,12 +103,8 @@ angular.module('scalearAngularApp')
                     }
 
                     if (rejection.status == 404 && rejection.config.url.search(re) != -1) {
-                        $log.debug("rootscope is ");
-                        $log.debug($rootScope);
                         var $state = $injector.get('$state'); //test connection every 10 seconds.
-                        if ($rootScope.current_user.roles[0].id == 2) // student
-                            $state.go("student_courses") //check
-                        else if ($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5) // teacher
+                        if ($rootScope.current_user) 
                             $state.go("course_list") //check
                         else
                             $state.go("login") //check
@@ -127,9 +123,7 @@ angular.module('scalearAngularApp')
 
                     if (rejection.status == 403 && rejection.config.url.search(re) != -1) {
                         var $state = $injector.get('$state'); //test connection every 10 seconds.
-                        if ($rootScope.current_user.roles[0].id == 2) // student
-                            $state.go("student_courses") //check
-                        else if ($rootScope.current_user.roles[0].id == 1 || $rootScope.current_user.roles[0].id == 5) // teacher
+                        if ($rootScope.current_user)
                             $state.go("course_list") //check
                         else
                             $state.go("login") //check
@@ -152,6 +146,15 @@ angular.module('scalearAngularApp')
 
                         var $state = $injector.get('$state'); //test connection every 10 seconds.
                         $state.go("login")
+                        if($cookieStore.get('preview_as_student')){
+                            $log.debug("preview_as_student")
+                          $cookieStore.remove('preview_as_student')
+                          $cookieStore.remove('old_user_id')
+                          $cookieStore.remove('new_user_id')
+                          $cookieStore.remove('params')
+                          $cookieStore.remove('state')
+                          $rootScope.preview_as_student= false
+                        }
                         if (angular.isDefined($rootScope.stop)) {
                             $interval.cancel($rootScope.stop);
                             $rootScope.stop = undefined;

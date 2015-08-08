@@ -1,21 +1,15 @@
-<!-- build:css(.tmp/styles) styles/progress.css -->
-<link rel="stylesheet" href="styles/teacher/progress.css"/>
-<!-- endbuild -->
-
-<div class="row">        
-	<div class="span3">
-	    <ul class="nav nav-list">
-			<li class="nav-header" translate>courses.total_progress</li>    
-			<li ng-class="{active: getLocation() == 0}">
-			    <a ui-sref="course.progress.main()" class="lecture" id="progress_chart" translate>courses.progress_chart</a>
-			</li>           
-	        <li class="nav-header" translate>courses.modules</li>
-			<li bindonce ng-repeat="module in modules" style="cursor:pointer" ng-class="{active: module.id == getLocation()}">
-			    <a ui-sref="course.progress.module({ module_id: module.id })" class="module" bo-text="module.name" ></a>
-			</li>
-	    </ul>                   
-	</div>
-	<div id='details' class="span11" >
-	    <ui-view/>
+<div>
+	<br/>
+	<div class="small-8 columns">
+		<div class="small-12 columns"><h5><b translate>courses.review_module</b></h5></div>
+		<div class="small-12 columns"><p translate>courses.choose_review_module</p></div>
+		<div class="small-12 columns no-padding">
+			<div class="small-12 medium-4 columns">
+				<a class="button small" ui-sref="course.progress_main" translate>courses.view_module_completion</a>
+			</div>
+			<div class="small-12 medium-8 columns">
+				<p class="no-margin" translate>courses.module_completion_desc</p>
+			</div>
+		</div>
 	</div>
 </div>

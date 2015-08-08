@@ -13,7 +13,8 @@ shortcut = {
 			'propagate':false,
 			'disable_in_input':false,
 			'target':document,
-			'keycode':false
+			'keycode':false,
+            'disable_in_editable':false
 		}
 		if(!opt) opt = default_options;
 		else {
@@ -38,7 +39,19 @@ shortcut = {
 				if(element.nodeType==3) element=element.parentNode;
 
 				if(element.tagName == 'INPUT' || element.tagName == 'TEXTAREA') return;
+                if(element.tagName == 'DIV' && element.contentEditable) return;
+
 			}
+
+            if(opt['disable_in_editable']){
+                var element;
+                if(e.target) element=e.target;
+                else if(e.srcElement) element=e.srcElement;
+                if(element.nodeType==3) element=element.parentNode;
+
+                if(element.tagName == 'DIV' && element.contentEditable) return;
+                if(element.tagName == 'TEXTAREA') return;
+            }
 	
 			//Find Which key is pressed
 			if (e.keyCode) code = e.keyCode;

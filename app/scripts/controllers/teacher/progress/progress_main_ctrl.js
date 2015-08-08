@@ -1,8 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module', '$translate','$log', function ($scope, $timeout, $stateParams, Course, Module, $translate, $log) {
+  .controller('progressMainCtrl', ['$scope','$timeout','$stateParams','Course','Module', '$translate','$log','Page','ContentNavigator', function ($scope, $timeout, $stateParams, Course, Module, $translate, $log, Page, ContentNavigator) {
 
+        Page.setTitle('head.progress')
+
+        ContentNavigator.close()
   	  	$scope.moduleProgressTab=function(){
   	  		enableModuleScrolling()
 	        if($scope.module_offset == null)
@@ -74,7 +77,10 @@ angular.module('scalearAngularApp')
             module_status = 0
 
         Module.changeModuleStatus(
-            {module_id:module_id},
+            {
+                course_id: $stateParams.course_id,
+                module_id:module_id
+            },
             {
                 user_id: student_id,
                 status: module_status
@@ -98,7 +104,6 @@ angular.module('scalearAngularApp')
                 $scope.student_progress = data.student_progress
     			$scope.total_chart = createTotalChart($scope.student_progress)	
     			$scope.loading_total_charts = false
-                $scope.$watch("current_lang", redrawChart);
     		},
     		function(){
     			//alert("Failed to load student progress, please check your internet connection")
@@ -138,7 +143,7 @@ angular.module('scalearAngularApp')
     	var chart = {};
         chart.type = "BarChart"
         chart.options = {
-            "colors": ['#0c81c8','darkred'],
+            "colors": ['#195a92','#759c45'],
             "title": "Student Progress",
             "isStacked": "false",
             "fill": 20,
@@ -152,21 +157,14 @@ angular.module('scalearAngularApp')
             },
             chartArea:{top: 10},
             "vAxis": {
-                "title": $translate("courses.statistics")
+                // "title": $translate("courses.statistics")
             }
         };
 	  	chart.data = $scope.formatTotalChartData(chart_data)
 	  	return chart
     }
     
-    var redrawChart = function(new_val, old_val){ 
-        if(new_val != old_val){
-            $scope.total_chart = {}
-            $timeout(function(){
-                $scope.total_chart = createTotalChart($scope.student_progress)
-            })
-        }
-    }
+    $scope.moduleProgressTab()
 
 
   }]);

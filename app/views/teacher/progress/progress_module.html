@@ -1,27 +1,43 @@
-<center><b>{{module.name}}</b></center><br />
-<div style='min-width: 300px; height: 200px;'>
-    <center><loading size="big" show="loading_module_chart" style="top:50px;position:relative"></center>
-    <div ng-if="module_chart" google-chart chart="module_chart"></div>
+<!--build:css(.tmp/styles) styles/progress.css -->
+<link rel="stylesheet" href="styles/teacher/progress.css"/>
+<!-- endbuild -->
+<div class="small-12 columns">
+    <div class="row">
+        <div class="small-12 columns">
+            <h4 class="left"><b><span translate>courses.student_details</span>: </b>{{course.selected_module.name}}</h4>
+            <a class="button tiny size-12 color-white right with-tiny-margin-top" ui-sref="course.module.progress">
+                <span translate>courses.show_progress</span>
+            </a>
+        </div>
+        <!-- <div class="small-12 small-centered columns" style="height: 200px;">
+            <center>
+                <loading size="small" show="loading_module_chart" style="top:50px;position:relative">
+            </center>
+            <div google-chart chart="module_chart"></div>
+        </div> -->
+    </div>
+    <br/>
+    <tabset  >
+       <!--  <tab heading="{{'courses.lecture_quizzes'|translate}}" select="lectureQuizzesTab()">
+        	<tab1 />
+        </tab> -->
+        <tab heading="{{'courses.lecture_statistics'|translate}}" select="studentStatisticsTab()">
+            <tab2 />
+        </tab>
+        <tab heading="{{'courses.student_progress_details'|translate}}" select="lectureProgressTab()">
+    		<tab3 />
+        </tab>
+       <!--  <tab heading="{{'courses.quizzes_progress'|translate}}" select="quizzesProgressTab();">
+       		<tab4 />
+        </tab>
+        <tab heading="{{'courses.surveys_progress'|translate}}" select="surveysProgressTab();">
+            <tab5 />
+        </tab> -->
+        <!-- <tab heading="{{'groups.surveys'|translate}}" select="surveysTab()">
+            <tab6 />
+        </tab>
+        <tab heading="{{'groups.quizzes'|translate}}" select="quizzesTab()">
+            <tab7 />
+        </tab> -->
+    </tabset>
 </div>
-<br /><br /><br />
-
-<tabset >
-    <tab heading="{{'courses.lecture_quizzes'|translate}}" select="lectureQuizzesTab()" style="cursor:pointer">
-    	<tab1 />
-    </tab>
-    <tab heading="{{'courses.lecture_statistics'|translate}}" select="studentStatisticsTab()" style="cursor:pointer">
-        <tab2 />
-    </tab>
-    <tab heading="{{'courses.lecture_progress'|translate}}" select="lectureProgressTab()" style="cursor:pointer">
-		<tab3 />
-    </tab>
-    <tab heading="{{'courses.quizzes_progress'|translate}}" select="quizzesProgressTab();" style="cursor:pointer">
-   		<tab4 />
-    </tab>
-    <tab heading="{{'courses.surveys'|translate}}" select="surveysTab()" style="cursor:pointer">
-        <tab5 />
-    </tab>
-    <tab heading="{{'groups.quizzes'|translate}}" select="quizzesTab()" style="cursor:pointer">
-        <tab6 />
-    </tab>
-</tabset>

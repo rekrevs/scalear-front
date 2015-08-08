@@ -10,7 +10,7 @@ angular.module('scalearAngularApp')
       'create': { method: 'POST', headers:headers},
       'update': { method: 'PUT' , headers:headers},
       'destroy': { method: 'DELETE' , headers:headers},
-      'show':{method: 'GET', headers:headers},
+      'show':{method: 'GET', headers:headers}
     });
 
 }])

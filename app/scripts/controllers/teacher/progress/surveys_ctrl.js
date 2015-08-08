@@ -16,7 +16,7 @@ angular.module('scalearAngularApp')
     		selected_id=$scope.selected_survey? $scope.selected_survey[1] : ""
       var id = survey_id || selected_id
     	$scope.loading_surveys_chart = true
-  		Module.getSurveyCharts(
+  		Module.getSurveyChart(
   			{
           course_id: $stateParams.course_id,
   				module_id: $stateParams.module_id || module_id,
@@ -25,6 +25,7 @@ angular.module('scalearAngularApp')
   			},
   			function(data){
   				$log.debug(data)
+          $scope.current_survey = data.survey
           $scope.ordered_survey= data.ordered_survey
           $scope.survey_chart_data = data.chart_data
           $scope.survey_chart_questions = data.chart_questions
@@ -32,12 +33,11 @@ angular.module('scalearAngularApp')
           $scope.related_answers = data.related
           $scope.student_count = data.students_count
           if(!$scope.selected_survey){
-      		$scope.all_surveys = data.all_surveys                
+      		  $scope.all_surveys = data.all_surveys                
           	$scope.selected_survey = $scope.all_surveys? $scope.all_surveys[0] : ""
           }
           $scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"
           $scope.loading_surveys_chart = false
-          $scope.$watch("current_lang", redrawChart);
   			}, 
   			function(){
   				//alert("Failed to load survyes, please check your internet connection")
@@ -58,7 +58,7 @@ angular.module('scalearAngularApp')
       formated_data.cols=
           [
               {"label": $translate('courses.students'),"type": "string"},
-              {"label": $translate('controller_msg.answered'),"type": "number"},
+              {"label": $translate('controller_msg.answered'),"type": "number"}
           ]
       formated_data.rows= []
       for(var ind in data)
@@ -67,7 +67,7 @@ angular.module('scalearAngularApp')
           {"c":
               [
                   {"v": data[ind][1]},
-                  {"v": data[ind][0]},
+                  {"v": data[ind][0]}
               ]
           }
           formated_data.rows.push(row)
@@ -92,7 +92,7 @@ angular.module('scalearAngularApp')
                   "count":9
               },
               "maxValue": student_count
-          },
+          }
       };
       chart.data = $scope.formatSurveyChartData(chart_data)
       return chart
@@ -105,25 +105,29 @@ angular.module('scalearAngularApp')
     	$scope.getSurveyCharts()
     }
 
-    $scope.makeVisibleBtn=function(visible){
+    $scope.makeVisibleBtn=function(){
     	var survey_id = $scope.selected_survey[1]
     	$scope.selected_survey[2] = !$scope.selected_survey[2]
-    	Quiz.makeVisible({quiz_id:survey_id},
+    	Quiz.makeVisible(
+        {quiz_id:survey_id},
     		{visible:$scope.selected_survey[2]},
-    		function(data){
+    		function(){
     			$scope.button_msg = $scope.selected_survey[2]? "groups.hide" : "groups.make_visible"
     		}
     	)
     }
 
-    var redrawChart = function(new_val, old_val){ 
-      if(new_val != old_val){
-          var temp = angular.copy( $scope.survey_chart_data)
-          $scope.survey_chart_data = {}
-          $timeout(function(){
-               $scope.survey_chart_data = temp
-          })
-      }
+    $scope.updateHideSurveyQuestion=function(quiz_id,id, value){
+      Quiz.showStudent(
+        {
+          course_id:$stateParams.course_id,
+          quiz_id:quiz_id
+        },
+        {
+          question:id,
+          show:value
+        }
+      )
     }
 
 

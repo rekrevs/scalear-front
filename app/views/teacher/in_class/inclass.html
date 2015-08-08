@@ -1,17 +1,7 @@
-<!-- build:css(.tmp/styles) styles/inclass.css -->
-<link rel="stylesheet" href="styles/teacher/inclass.css"/>
-<!-- endbuild -->
-
-<div class="row">        
-	<div class="span3">
-	    <ul class="nav nav-list">        
-	        <li class="nav-header" translate>courses.modules</li>
-			<li bindonce ng-repeat="module in modules" style="cursor:pointer" ng-class="{active: module.id == getLocation()}" ng-init="$parent.selected_module=(modules|filter:{id:getLocation()})[0]">
-			    <a ui-sref="course.inclass.module({ module_id: module.id })" class="module" bo-text="module.name" ng-click="$parent.selected_module=module"></a>
-			</li>
-	    </ul>                   
-	</div>
-	<div id='details' class="span11" >
-	    <ui-view/>
+<div>
+	<br/>
+	<div class="small-8 columns">
+		<div class="small-12 columns"><h5><b translate>courses.inclass_content</b></h5></div>
+		<div class="small-12 columns"><p translate>courses.choose_inclass_module</p></div>
 	</div>
 </div>

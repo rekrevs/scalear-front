@@ -1,54 +1,45 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state','$modal',
-        function($rootScope, $scope, User, $state, $modal) {
-
-            $scope.user = {};
-
-            $scope.$watch('current_user', function(val) {
-                if (val)
-                    $scope.user = {
-                        name: $rootScope.current_user.name,
-                        email: $rootScope.current_user.email
-                    }
-            })
-
-            $scope.update_account = function() {
-                $scope.sending = true;
-                delete $scope.user.errors
-                User.update_account({}, {
-                    user: $scope.user
-                }, function() {
-                    $scope.sending = false;
-                    //console.log("signed up");
-                    $state.go("home");
-                }, function(response) {
-                    $scope.sending = false;
-                    $scope.user.errors = response.data.errors
-                    //console.log("sign up failed")
-                })
+    .controller('UsersEditCtrl', ['$rootScope', '$scope', 'User', '$state','$modal','Page','$translate',function($rootScope, $scope, User, $state, $modal,Page, $translate) {
+    
+    Page.setTitle('navigation.edit_account')
+    $rootScope.subheader_message = $translate('navigation.edit_account')
+    $scope.user = {}
+    $rootScope.$watch('current_user', function(val) {
+        if (val)
+            $scope.user = {
+                screen_name: $rootScope.current_user.screen_name,
+                name: $rootScope.current_user.name,
+                last_name: $rootScope.current_user.last_name,
+                university: $rootScope.current_user.university,
+                email: $rootScope.current_user.email,
+                link: $rootScope.current_user.link,
+                bio: $rootScope.current_user.bio
             }
+    })
 
+    $rootScope.$watch('current_lang', function(newval, oldval) {
+        if (newval != oldval)
+            delete $scope.user.errors
+    });
 
-            $scope.open = function () {
-                var modalInstance = $modal.open({
-                    templateUrl: '/views/users/confirm_delete.html',
-                    controller: "ConfirmDeleteCtrl"
-                })
+    $scope.open = function () {
+        $modal.open({
+            templateUrl: '/views/users/confirm_delete.html',
+            controller: "ConfirmDeleteCtrl"
+        })
+    }
 
-                modalInstance.result.then(function (enrollment_key) {
-                        $state.go("login");
-                    },
-                    function () {
- //                       $log.info('Modal dismissed at: ' + new Date());
-                    })
+    $scope.open_require_password = function () {
+        $modal.open({
+            templateUrl: '/views/users/update_account_info.html',
+            controller: 'SaveAccountCtrl',
+            resolve: {
+                user_new: function () {
+                  return $scope.user;
+                }
             }
-            
-            $scope.$watch('current_lang', function(newval, oldval) {
-                if (newval != oldval)
-                    delete $scope.user.errors
-            });
-
-        }
-    ]);
+        })
+    }
+}]);

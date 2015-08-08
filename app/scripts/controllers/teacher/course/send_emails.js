@@ -1,9 +1,10 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams','$log','$window', function ($scope, $state, Course, batchEmailService, $stateParams,$log, $window) {
+  .controller('sendEmailsCtrl', ['$scope', '$state', 'Course', 'batchEmailService', '$stateParams','$log','$window','Page','$modalInstance', function ($scope, $state, Course, batchEmailService, $stateParams,$log, $window,Page, $modalInstance) {
 
         $window.scrollTo(0, 0);
+        Page.setTitle('email')
         $log.debug("in sending emails");
         $scope.batch_emails = batchEmailService.getEmails();
         $log.debug($scope.batch_emails.length);
@@ -26,7 +27,6 @@ angular.module('scalearAngularApp')
         $log.debug($scope.final_emails)
 
         $scope.sendBatchEmail = function(title, body){
-
             $log.debug($scope.batch_emails);
             Course.send_batch_email_through(
                 {
@@ -38,13 +38,9 @@ angular.module('scalearAngularApp')
                     message:body
                 },
             function(){
-                $state.go('course.enrolled_students')
+                $modalInstance.close();
             },
             function(){
             });
-
         }
-        
-
-       
   }]);

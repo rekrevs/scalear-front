@@ -1,21 +1,34 @@
 <div ng-if="statistics.lecture_names.length" ng-show="lecture_url">
-	<center >
-			<video_container class="largescreen">
-				<youtube  id="statistics_video" url="lecture_url" player="statistics_player" class="largescreen"/>
-			</video_container>
-			<br><br>		
-	</center> 
-	<div style="overflow-x:auto; overflow-y:hidden;" >
-		<div style="margin-left:85px;" ng-style="{width:statistics.width}"> 
-			<div class="lecture_name" ng-repeat="name in statistics.lecture_names" ng-style="{width:name[0], backgroundColor:($index%2)?'':'rgb(242,242,242)'}" style="display:inline-block;text-align:center">{{name[1]}}</div>
+	<div class="row">
+		<div class="small-6 small-centered columns">
+			<center >
+				<video_container >
+					<youtube  id="statistics_video" url="lecture_url" controls="default" player="statistics_player" class="flex-video widescreen">
+					</youtube>
+				</video_container>
+			</center>
 		</div>
-		<div ng-repeat="type in types" ng-init="chart=createStatisticsChart(type)">
-			<div google-chart chart="chart" select="skipToTime(selectedItem, type)"></div>
+	</div>
+	<div class="row">
+		<div id="labels">
+			<div id="first_label"  class="inverted">#<span translate>courses.confused</span></div>
+			<div id="second_label" class="inverted">#<span translate>courses.back</span></div>
+			<div id="third_label"  class="inverted">#<span translate>courses.pauses</span></div>
+			<div id="fourth_label" class="inverted">#<span translate>courses.questions</span></div>
+		</div>
+		<div style="overflow-x:auto; overflow-y:hidden;" >
+			<div style="margin-left:35px;" ng-style="{width: win_width}"> 
+				<div class="lecture_name truncate" ng-repeat="name in statistics.lecture_names" ng-style="{width:name[0], backgroundColor:($index%2)?'':'rgb(242,242,242)'}" style="display:inline-block;text-align:center">{{name[1]}}</div>
+			</div>
+			<div ng-repeat="type in types" ng-init="chart=createStatisticsChart(type)">
+				<div google-chart chart="chart" select="skipToTime(selectedItem, type)"></div>
+			</div>
 		</div>
 	</div>
 </div>
-<center>
-	<br><br>
-	<loading size="small" show="loading_statistics_chart" />
-	<div ng-show="(!statistics.lecture_names.length || !lecture_url) && !loading_statistics_chart" translate>courses.no_lectures</div>
-</center>
+<div class="row">
+	<center>
+		<loading size="small" show="loading_statistics_chart" />
+		<div ng-show="(!statistics.lecture_names.length || !lecture_url) && !loading_statistics_chart" translate>courses.no_lectures</div>
+	</center>
+</div>

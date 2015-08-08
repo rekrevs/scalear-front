@@ -1,0 +1,25 @@
+<div class="announcement-box panel no-padding">
+	<div>
+		<delete_button class="right with-tiny-margin-right" size="big" color='dark' action="deleteannouncement(announcement)" ng-hide="announcement.show"/>
+		</delete_button>
+	</div>
+	<div class="time-label uppercase blue color-white">
+		<small>{{announcement.created_at | fromNow}}</small>
+	</div>	
+	<div ng-click="showannouncement(announcement)" ng-mouseover="announcement.overclass = 'icon-pencil'" ng-mouseleave="announcement.overclass= ''" ng-if="!announcement.show">	
+		<blockquote class="announcement-body dark-text with-padding">
+			<span ng-bind-html='announcement.announcement'></span>
+		</blockquote>
+		<center class="large-12 coulmns" ng-if="announcement.announcement.trim()==''" translate>empty</center>
+		<i ng-if="!announcement.show" ng-class="announcement.overclass"></i>
+		<span class="errormessage" ng-show="announcement.errors">{{announcement.errors.announcement.join()}}</span>
+	</div>	
+	<div ng-if="announcement.show">
+    	<div text-angular ng-model="announcement.announcement" ta-toolbar-button-class="button secondary tiny"></div>
+    	<div class = "with-margin-left">
+			<br>			
+			<button id="save_button" class="button tiny" ng-click="saveannouncement(announcement)" ng-disabled="saving" translate>save</button>
+			<button id="close_button" class="button alert tiny" ng-click="hideannouncement(announcement)" ng-disabled="saving" translate>close</button>
+		</div>
+	</div>
+</div>

@@ -1,42 +1,55 @@
-<overlay ng-hide="hide_overlay || lecture.url!='none'" style="height:90%">
-	<h3 style="position:absolute;top:20%;padding: 0 100px;z-index: 1;" translate>lectures.provide_url</h3>
-</overlay>
-<center><h3>{{lecture.name}}</h3></center>
-<center resizable-video video-layer='video_layer' quiz-layer='quiz_layer' active="fullscreen" resize='resize' aspect-ratio='lecture.aspect_ratio' max-width='400' ><a ng-click="resize.big()" class ="btn big fullscreenLink" translate>groups.edit_fullscreen</a></center>
-<center>
-	<form name="answer_form" novalidate style="margin:0">
-	<video_container ng-style="video_layer" ng-class="lecture.aspect_ratio">
-		<overlay ng-show="slow_message">
-			<div style='color:gray'>
-				<h3 style="position:relative;top:70px" translate>lectures.server_slow</h3>
-				<h3 style="position:relative;top:30px" translate>lectures.try_reload</h3>
-				<loading size='small' show='true' style="position:relative;top:30px;" />
-			</div>
-		</overlay>
-		<div ng-show="editing_mode">
-			<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer">
-				<answervideo ng-if="selected_quiz.quiz_type == 'invideo'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)"/>
-				<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
-			</quiz>
-		</div>
-		<youtube ng-show="lecture.url" id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" ng-class="lecture.aspect_ratio"/>		
-	</video_container>
-	</form>
-	</br>
-	<div class="quiz_list" >
-		<overlay ng-hide="quiz_overlay || lecture.url=='none'">
-			<loading size="small" show="true" style="position:absolute;top:30%;left:44%;z-index: 1;" />
-		</overlay>
-		<center ng-show="fullscreen"><a class='btn small fullscreenLink' ng-click="resize.small()" translate>groups.exit_fullscreen</a></center>
-		<edit_panel ng-show="editing_mode" />
-		<div ng-show="submitted && !hide_alerts">
-			<alert type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
-		</div>
-		<div id="foo" class="btn-toolbar">
-			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="invideo" title="{{'lectures.insert_invideo_quiz'|translate}}" />
-			<dropdown_list  list="quiz_types_list" action="insertQuiz" quiztype="html" title="{{'lectures.insert_html_quiz'|translate}}" />
-		</div>
-		<br />
-		<div ui-view="quizList"></div>
+<div class="row">
+	<div class="small-12 small-centered columns">
+		<h4>
+			<b><span translate>courses.video_editor</span>: </b>
+			<span>{{lecture.name}}</span>
+		</h4>
+		<overlay ng-show="lecture.url=='none'">
+			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.enter_url</h3>
+			<h3 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.enter_url_continue</h3>
+			<br/>
+			<br/>
+			<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.for_help</h5>
+			<h5 class="color-grey no-margin" style="position:relative;top:25%" translate>lectures.for_help_continue</h5>
+		</overlay>		
+		<form name="answer_form" novalidate >
+			<center>
+				<video_container class="ease_in_out disable_selection" ng-style="container_layer" class="small-12">
+					<youtube id="lecture_video" ng-style="video_layer" url="lecture.url" player="lecture_player" class="flex-video widescreen" style="overflow:visible">
+						<quiz ng-dblclick="addDoubleClickBind($event)" ng-style="quiz_layer" style="z-index: 1;" class="disable_selection">
+							<loading class="small-12 columns color-blue" size='big' show="lecture.url!='none' && !slow && !video_ready" style="font-weight:300;font-size:12px;top: 150px;" />
+							<div class="slow-message" style='width:100%; height: 100%; background-color: rgba(255,255,255,0.8); position: absolute;' ng-show="!lecture.url || (!video_ready)">
+								<span ng-show="slow">
+									<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.server</span><span ng-show="is_youtube"> 'Youtube' </span> <span translate>lectures.is_slow</span></h3>
+									<h3 style="position:relative;top:70px;font-weight:300;font-size:16px" ><span translate>lectures.try_reload</span><i class="fi-refresh" style="margin-left: 8px;margin-top: 3px;cursor:pointer" title="reload" ng-click="refreshVideo()"></i></h3>
+									<loading size='small' show='true' style="position:relative;top:70px;" />
+								</span>	
+							</div>
+							<answervideo ng-if="selected_quiz.quiz_type != 'html'" ng-repeat="answer in selected_quiz.answers" data="answer" list="allPos" quiz="selected_quiz" remove="removeAnswer($index)" save="saveBtn()"/>
+							<answerform  ng-if="selected_quiz.quiz_type == 'html'" submitted="submitted" quiz="selected_quiz" column="question" columna="answer" add="addHtmlAnswer" remove="removeHtmlAnswer"/>
+						</quiz>
+					</youtube>
+			        <progress-bar ng-if="!slow && lecture.url && video_ready && !editing_mode" player="lecture_player" seek="seek" class="text-left">
+			        	<controls-teacher link="createVideoLink()" />
+			    	</progress-bar>
+				</video_container>
+			</center>
+		</form>
 	</div>
-</center>
+</div>
+<div class="row with-small-margin-top disable_selection">
+	<center class="small-block-grid-3" ng-show="!editing_mode">
+		<span ng-show="lecture.url!='none'" >
+			<button id="new_question" class="button small no-margin" lecture-questions-modal open-modal="openQuestionsModal" ng-click="addQuestion()"><span tooltip="Click or type i to add a question" tooltip-placement="bottom" tooltip-append-to-body="true" translate>lectures.add_video_quiz</span></button>
+			<button class="button small no-margin" ng-click="openQuizList($event)" translate>lectures.show_all_quizzes</button>
+			<!-- <button id="new_item" class="button small green-color-white no-margin" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()" ><span translate>add_content</span></button>
+			<button id="new_module" class="button small green-color-white no-margin" ng-click="addModule()" translate>courses.add_module</button> -->
+		</span>
+	</center>
+	<div class="small-12 small-centered columns">
+		<center ng-if="editing_mode" style="margin-bottom:10px">
+			<edit_panel  />		
+			<alert ng-show="!hide_alerts" type="alert.type" close="closeAlerts()">{{alert.msg| translate}}</alert>
+		</center>
+	</div>
+</div>

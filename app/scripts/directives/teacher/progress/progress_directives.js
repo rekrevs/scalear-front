@@ -11,20 +11,25 @@ angular.module('scalearAngularApp')
 	        solvedCount:"=",
 	        totalLecQuiz:"=",
 	        action:"&",
-	        popover:'='
+	        show_popover:'=showPopover',
+	        remaining: "&",
+	        scrolldisabled: "=",
+	        modstatus: "="
 	    },
 	    templateUrl:'/views/teacher/progress/progress_matrix.html', 
 	    link:function(scope){
-	    	if(scope.popover){
-	    		var template="<div style='font-size:14px'>"+
-    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:4px'><span translate>courses.original</span>"+
-    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:4px' value='Finished on Time' translate><span translate>courses.on_time</span>"+
-    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:4px' value='Not Finished' translate><span translate>courses.not_done</span>"+
+	    	// scope.columnNames.splice(0, 0, ' ')
+	    	if(scope.show_popover){
+	    		var template="<div style='font-size:14px; color: black;'>"+
+    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px'><span translate>courses.original</span> "+
+    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px' value='Finished on Time' translate><span translate>courses.on_time</span> "+
+    							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px' value='Not Finished' translate><span translate>courses.not_done</span>"+
     						"</div>"
 		    	scope.popover_options={
 		        	content: template,
-		        	title: "<span translate>courses.change_status</span>",
-		        	html:true
+		        	title: "<span style='color: black;' translate>courses.change_status</span>",
+		        	html:true,
+		        	placement: 'top'
 		        }
 		    }
             scope.getImg = function(module)
@@ -40,26 +45,145 @@ angular.module('scalearAngularApp')
 	    }
     };
 })
+.directive("innerTitle",function(){
+    return{
+	    restrict: "E",
+	    scope: {
+	    	time:'=',
+	    	type:'=',
+	    	itemtitle:'=',
+	    	color: "="
+	    },
+	    template:'<span class="inner_title" bindonce>'+
+					'<span style="cursor:pointer"><span ng-show="time!=null" bo-text=\'"["+(time|format:"mm:ss")+"]"\'></span> <span bo-text="type"></span>: '+ 
+						'<span ng-style="title_style" bo-text="itemtitle"></span>'+
+					'</span>'+
+				'</span>', 
+	    link:function(scope){
+	    	scope.title_style = {"color":"black", "fontWeight":"normal"}
+	    	var unwatch =scope.$watch('color',function(){
+	    		if(scope.color){
+	    			scope.title_style.color = scope.color
+	    			unwatch()
+	    		}
+	    			
+	    	})
+	    }
+    };
+})
+.directive("showBox",function(){
+    return{
+	    restrict: "E",
+	    scope: {
+	    	value:"=",
+	    	action:"&"
+	    },
+	    template:'<div style="margin-left:4px">'+
+					'<div class="left no-padding" style="margin-right:3px;margin-left:2px">'+
+						'<input class="show_inclass no-margin" type="checkbox" ng-model="value" ng-change="change()" />'+
+					'</div>'+
+					'<div class="left size-12 no-padding" style="color:black;font-weight:normal;margin-top: 3px;" translate>courses.show_in_class</div>'+
+				'</div>', 
+	    link:function(scope,element){
+	    	scope.change=function(){
+	    		// $log.debug("changes here")
+	    	 	scope.action()
+	    	 	angular.element('input.show_inclass').blur()
+	    	}
+	    }
+    };
+})
 .directive("freeTextTable", function(){
 	return {
 		restrict:'E',
 		scope:{
 			question:'=',
 			survey_id:'=surveyId',
+			lecture_id:'=lectureId',
 			related_answers:'=relatedAnswers',
-			display_only:'=displayOnly'
+			display_only:'=displayOnly',
+			graded: '@'
 		},
 	    templateUrl:'/views/teacher/progress/free_text_table.html', 
 	    controller:'freeTextTableCtrl'
 	}
 })
-.directive("tab1",function(){
+.directive("inclassEstimate",['$log',function($log){
     return{
 	    restrict: "E",
-	    controller: "lectureQuizzesCtrl",
-	    templateUrl:'/views/teacher/progress/lecture_quizzes_tab.html' 
+	    scope: {
+	    	time_quiz:'=timeQuiz',
+	    	time_question:'=timeQuestion',
+	    	quiz_count:'=quizCount',
+	    	question_count:'=questionCount',
+	    	survey_count:'=surveyCount'
+	    },
+	    template:'<div class="panel with-small-margin-top text-center time_estimate">'+
+					'<div>'+
+						'<h6 ng-style="{color: color}">In-class <span translate>courses.time_estimate</span>: <br /><b>{{inclass_estimate || 0}} <span translate>minutes</span></b></h6>'+
+					'</div>'+
+					'<div><h6 class="size-14">({{quiz_count || 0}} <span translate>groups.quizzes</span>, {{question_count || 0}} <span translate>lectures.discussion</span> <span translate>and</span> {{survey_count || 0}} <span translate>groups.surveys</span>) </h6></div>'+
+					'<div>'+
+						'<div>'+
+							'<a pop-over="popover_options" class="color-green">{{"more" | translate}}...</a>'+
+						'</div>'+
+					'</div>'+
+					// '<div class="small-1 inline right columns"></div>'+
+				'</div>', 
+	    link:function(scope){
+	    	scope.numbers = []
+  	 		for (var i = 0; i <= 6; i++) {
+		        scope.numbers.push(i);
+		    }
+  	 		var template = "<div style='min-width: 235px;'>"+
+  	 						// "<label class='small-12 columns no-padding'><span translate>courses.quizzes_for_review</span>: {{quiz_count}}</label>"+
+  	 						// "<label class='small-12 columns no-padding'><span translate>courses.questions_for_review</span>: {{question_count}}</label>"+
+  	 						"<label class='small-12 columns no-padding'>"+
+  	 							"<span translate>courses.time_per_quiz</span>"+
+  	 							"<select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_quiz' ng-options='i for i in numbers'></select>"+
+  	 						"</label>"+
+  	 						"<label class='small-12 columns no-padding with-small-margin-bottom'>"+
+  	 							"<span translate>courses.time_per_question</span>"+
+  	 							"<select style='height: 20px;font-size: 12px;padding: 0 18px;margin: 0;margin-left: 10px;width: 25%;float: right;' ng-model='time_question' ng-options='i for i in numbers'></select>"+
+	 						"</label>"+	  	 						
+  	 						// "<label translate>formula</label>:"+
+  	 					 //    "<h4 class='subheader'><small>( #<span translate>courses.quizzes_for_review</span> * {{time_quiz}} ) + ( #<span translate>courses.questions_for_review</span> * {{time_question}} )<small></h4>"+
+  	 					   "</div>"
+
+           	scope.popover_options={
+            	content: template,
+            	html:true,
+            	placement:"bottom"
+            }
+
+            var estimateCalculator=function(){
+		    	return scope.quiz_count * scope.time_quiz + scope.question_count * scope.time_question + scope.survey_count * scope.time_question
+		    }
+
+		    var getColor=function(estimate){
+		    	$log.debug(estimate)
+		    	if(estimate > 25)
+		    		return 'red'
+		    	else if(estimate > 15)
+		    		return 'orange'
+		    	else
+		    		return 'black'
+		    }
+
+            scope.$watchCollection('[time_quiz, time_question,quiz_count,question_count, survey_count]', function(newValues){
+  	 			scope.inclass_estimate = estimateCalculator()	
+  	 			scope.color= getColor(scope.inclass_estimate)
+			});
+	    }
     };
-})
+}])
+// .directive("tab1",function(){
+//     return{
+// 	    restrict: "E",
+// 	    controller: "lectureQuizzesCtrl",
+// 	    templateUrl:'/views/teacher/progress/lecture_quizzes_tab.html' 
+//     };
+// })
 .directive("tab2",function(){
     return{
 	    restrict: "E",
@@ -74,24 +198,118 @@ angular.module('scalearAngularApp')
 	    templateUrl:'/views/teacher/progress/lecture_progress_tab.html' 
     };
 })
-.directive("tab4",function(){
-    return{
-	    restrict: "E",
-	    controller: "quizzesProgressCtrl",
-	    templateUrl:'/views/teacher/progress/quizzes_progress_tab.html' 
-    };
-})
-.directive("tab5",function(){
+// .directive("tab4",function(){
+//     return{
+// 	    restrict: "E",
+// 	    controller: "quizzesProgressCtrl",
+// 	    templateUrl:'/views/teacher/progress/quizzes_progress_tab.html' 
+//     };
+// })
+// .directive("tab5",function(){
+//     return{
+// 	    restrict: "E",
+// 	    controller: "surveysProgressCtrl",
+// 	    templateUrl:'/views/teacher/progress/surveys_progress_tab.html' 
+//     };
+// })
+.directive("tab6",function(){
     return{
 	    restrict: "E",
 	    controller: "surveysCtrl",
 	    templateUrl:'/views/teacher/progress/surveys_tab.html' 
     };
 })
-.directive("tab6",function(){
-    return{
-	    restrict: "E",
-	    controller: "quizzesCtrl",
-	    templateUrl:'/views/teacher/progress/quizzes_tab.html' 
-    };
-})
+// .directive("tab7",function(){
+//     return{
+// 	    restrict: "E",
+// 	    controller: "quizzesCtrl",
+// 	    templateUrl:'/views/teacher/progress/quizzes_tab.html' 
+//     };
+// })
+// .directive('progressItem',['scalear_utils','$state', function(scalear_utils, $state){
+// 	return {
+// 		 scope: {
+// 		 	circlesize: '@',
+// 		 	name:'=',
+// 		 	id:'=',
+//             groupId: '=',
+// 		 	className:'=',
+// 		 	quizType:"=",
+// 		 	spacing: '=',
+// 		 	selected: '='
+// 		 },
+// 		 restrict: 'E', 
+// 		 templateUrl: '/views/teacher/progress/progress_item.html',
+// 		 link: function(scope, element){
+// 		 	scope.type= scope.className=="Quiz"? scalear_utils.capitalize(scope.quizType): scope.className;
+//              scope.url_with_protocol = function(url)
+//              {
+//                  if(url)
+//                      return url.match(/^http/)? url: 'http://'+url;
+//                  else
+//                      return url;
+//              }
+//             scope.showItem= function(item_id)
+// 		 	{	
+		 		
+// 		 	}
+// 		 }
+// 	};
+// }])
+// .directive('progressNavigator',['scalear_utils','$state', function(scalear_utils, $state){
+// 	return {
+// 		 scope: {
+// 		 	circlesize: '@',
+// 		 	modules: '='
+// 		 },
+// 		 restrict: 'E', 
+// 		 templateUrl: '/views/teacher/progress/progress_navigator.html',
+// 		 link: function(scope, element){
+// 		 	scope.$watch('done', function(){
+// 		 		var canvas;
+// 				var ctx;
+// 				// $log.debug(element.children())
+// 				var bg = element.children()[1].children[0]
+// 				var ctx = ctx = bg.getContext('2d');
+// 		 		if(scope.done == true){
+// 					ctx.clearRect(0, 0, bg.width, bg.height);
+// 					ctx.fillStyle = 'lightgreen';
+// 					ctx.beginPath();
+// 					ctx.moveTo(bg.width/2,bg.height/2);
+// 					// $log.debug(scope.percentage)
+// 					ctx.arc(bg.width/2,bg.height/2,bg.height/2,0,(Math.PI*2*(1)),false);
+// 					ctx.lineTo(bg.width/2,bg.height/2);
+// 					ctx.fill();
+// 		 		}
+
+// 		 	})
+
+// 		 	scope.type= scope.className=="Quiz"? scalear_utils.capitalize(scope.quizType): scope.className;
+//              scope.url_with_protocol = function(url)
+//              {
+//                  if(url)
+//                      return url.match(/^http/)? url: 'http://'+url;
+//                  else
+//                      return url;
+//              }
+//             scope.showItem= function(item_id)
+// 		 	{	
+		 		
+// 		 	}
+// 		 }
+// 	};
+// }])
+// .directive('whenScrolled', function() {
+//     return function(scope, elm, attr) {
+//         var raw = elm[0];
+        
+//         elm.bind('scroll', function() {
+//         	$log.debug('scrolled')
+//             if (raw.scrollTop + raw.offsetHeight >= raw.scrollHeight) {
+//                 scope.$apply(attr.whenScrolled);
+//             }
+//         });
+//     };
+// });
+
+

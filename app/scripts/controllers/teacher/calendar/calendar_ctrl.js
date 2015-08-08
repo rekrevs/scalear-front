@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('teacherCalendarCtrl', ['$scope','$state', '$stateParams','Course', '$log','$window', function ($scope, $state, $stateParams, Course, $log, $window) {
+  .controller('teacherCalendarCtrl', ['$scope','$state', '$stateParams','Course', '$log','$window','Page','scalear_utils', function ($scope, $state, $stateParams, Course, $log, $window,Page, scalear_utils) {
     $log.debug("in calendar ctrl")
 
 	$window.scrollTo(0, 0);
+	Page.setTitle('head.calendar')
     var change_lang = function(){
     	if($scope.eventSources){
     		angular.element($scope.myCalendar.children()).remove();
@@ -31,6 +32,8 @@ angular.module('scalearAngularApp')
 					}
 				};
 				for (var element in $scope.calendar.events){
+					$scope.calendar.events[element].start = new Date($scope.calendar.events[element].start)
+			   		$scope.calendar.events[element].title +=  ' @'+scalear_utils.hour12($scope.calendar.events[element].start.getHours())
 					$scope.calendar.events[element].url=$state.href("course.progress.module", {course_id: $scope.calendar.events[element].courseId, module_id: $scope.calendar.events[element].groupId})
 				}
 				$scope.eventSources.push($scope.calendar)

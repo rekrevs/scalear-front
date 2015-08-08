@@ -1,11 +1,22 @@
-.btn-xlarge {
+.row{
+	/*max-width: 74.5rem !important;*/
+}
+
+.button{
+	margin-bottom: 0
+}
+
+.modal{
+	border:none;
+}
+/*.btn-xlarge {
     padding: 28px 28px;
     font-size: 22px;
     line-height: normal;
     -webkit-border-radius: 8px;
        -moz-border-radius: 8px;
             border-radius: 8px;
-}
+}*/
 
 .play_button{
 	position:absolute;
@@ -40,6 +51,10 @@
 	top: 0 !important;
 	margin-left: 0;
 	left: 0;
+	vertical-align: -webkit-baseline-middle;
+	background:black;
+	padding:0;
+	max-width: 100%;
 }
 
 .review{
@@ -47,11 +62,19 @@
 	overflow: auto;
 }
 
-.inclass{
+/*.inclass{
 	width:100%;
 	height:100%; 
 	background-color:white;
+}*/
+
+.inclass_sceen{
+  /*display: inline-block;*/
+  width:100%;
+  height: 100%;
+  padding:0;
 }
+
 
 .inclass_top{
 	display: block; 
@@ -95,22 +118,33 @@
 	cursor:pointer;
 }
 
-.inclass_chart{
+/*.inclass_chart{
 	overflow:auto;
 	width:60%;
 	height:90%;
 	background-color:white;
 	float:right;
 	display:inline;
-}
+}*/
 
 .exit_btn{
-	display:inline;
+/*	display:inline;
 	font-size:16px;
 	position:absolute;
 	bottom:0;
 	left:0;
-	cursor:pointer
+	cursor:pointer*/
+
+	float: left;
+	margin-left: 2%;
+	
+}
+
+.dark_button{
+	background: #1a1a1a !important;
+	border:none;
+	color: black !important;
+	text-shadow: 0 1px 1px rgba(93, 93, 93, 0.75);
 }
 
 .lecture_count{
@@ -118,4 +152,299 @@
 	position:absolute;
 	bottom:0;
 	margin-left:35px;
+}
+
+.blackscreen{
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	background: black;
+	position: absolute;
+	color:white;
+	top: 0;
+	left: 0;
+}
+.original_video{
+	max-height:75%;
+	min-height:75%;
+	height:75%;
+	position: relative;
+	margin-bottom:0;
+}
+
+.zoom_video{
+	max-height:99.6%;
+	min-height:99.6%;
+	height:99.6%;
+	position: absolute;
+	margin-bottom:0;
+}
+
+.original_question{
+	max-width: 60%;
+	min-width: 60%;
+	/*height:20%;*/
+	float: left;
+	padding-top: 0.5%;
+	padding-left: 1%;
+	font-size: 40px;
+	line-height:40px;
+	opacity:1;
+	left:0 !important;
+	top:0 !important;
+	/*overflow-y: auto;*/
+}
+
+.small_question{
+	max-width: 60%;
+	min-width: 60%;
+	/*height:20%;*/
+	float: left;
+	padding-top: 1%;
+	padding-left: 1%;
+	font-size: 35px;
+	line-height:35px;
+	opacity:1;
+	left:0 !important;
+	top:0 !important;
+	/*overflow-y: auto;*/
+}
+
+.smallest_question{
+	max-width: 60%;
+	min-width: 60%;
+	/*height:20%;*/
+	float: left;
+	padding-top: 1%;
+	padding-left: 1%;
+	font-size: 29px;
+	line-height:29px;
+	opacity:1;
+	left:0 !important;
+	top:0 !important;
+	/*overflow-y: auto;*/
+}
+
+.zoom_question{
+	background:beige;
+
+	max-width: 50%;
+    min-width: 25%;
+    float: left;
+    padding-top: 1%;
+    padding-left: 3%;
+    font-size: 25px;
+    padding-bottom: 1%;
+    line-height: 30px;
+    list-style:none;
+    /*overflow-y: hidden;*/
+    /*background: whitesmoke;*/
+    border: 1px solid black;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow: 0 0.4em 1.3em rgba(0, 0, 0, .8);;
+    -webkit-box-shadow: 0 0.4em 1.3em rgba(0, 0, 0, .8);;
+    box-shadow: 0 0.4em 1.3em rgba(0, 0, 0, .8);;
+}
+
+.original_chart{
+	max-width: 40%;
+	min-width: 40%;
+	float:right;
+	/*padding-top: 20px;*/
+	opacity:1;
+	/*overflow-y: auto;*/
+	left:0 !important;
+	top:0 !important;
+}
+
+.zoom_chart{
+	background:beige;
+	max-width: 40%;
+	min-width: 40%;
+	float:left;
+	padding-top: 5px;
+	padding-bottom: 1%;
+	/*background: white;*/
+    border: 1px solid black;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius: 10px;
+    -moz-box-shadow: 0 0.4em 1.3em rgba(0, 0, 0, .8);;
+    -webkit-box-shadow: 0 0.4em 1.3em rgba(0, 0, 0, .8);;
+    box-shadow: 0 0.4em 1.3em rgba(0, 0, 0, .8);;
+    /*overflow-y: hidden;*/
+}
+
+.question_block{
+	position:relative;
+	border: 1px solid darkgrey; 
+	max-height: 24%;
+	min-height: 24%;
+	overflow-y: hidden;
+	background:beige;
+}
+/*.question_block_free_text{
+	position:relative;
+	border: 1px solid darkgrey; 
+	max-height: 24%;
+	min-height: 24%;
+	overflow-y: auto;
+	background:beige;
+}*/
+.zoom_question_block{
+	position:relative;
+	/*border: 1px solid darkgrey; */
+	max-height: 24%;
+	min-height: 24%;
+	/*overflow-y: auto;
+	background:beige;*/
+}
+.disucssion.original_question{
+	max-width: 98%;
+	min-width: 98%;
+	font-size: 40px;
+	line-height: 32px;
+	opacity: 1;
+	left: 0 !important;
+	top: 0 !important;
+	padding-top: 0%;
+	/*max-width: initial;
+	min-width: initial;*/
+	float: none;
+}
+
+.disucssion.small_question{
+	max-width: 98%;
+	min-width: 98%;
+	font-size: 35px;
+	line-height: 30px;
+	opacity: 1;
+	left: 0 !important;
+	top: 0 !important;
+	padding-top: 1%;
+	/*max-width: initial;
+	min-width: initial;*/
+	float: none;
+}
+
+.disucssion.smallest_question{
+	max-width: 98%;
+	min-width: 98%;
+	font-size: 29px;
+	line-height: 27px;
+	opacity: 1;
+	left: 0 !important;
+	top: 0 !important;
+	padding-top: 1%;
+	/*max-width: initial;
+	min-width: initial;*/
+	float: none;
+}
+
+.student_padding{	
+	padding-left: 1%;
+}
+
+.big_font_button{
+	/*font-size: 20px;*/
+	padding: 2px 20px;
+	background-image: initial;
+}
+.small_font_button{
+	font-size: 13px;
+	padding: 3px 20px;
+	font-weight:200 !important;
+	background-image: initial;
+}
+
+.smallest_font_button{
+	font-size: 10px;
+	padding: 3px 14px;
+	font-weight:200 !important;
+	background-image: initial;
+	border: none;
+}
+
+.blue_font{
+	color:blue ;
+}
+
+/*.time_estimate{
+	border: 2px solid rgb(0, 162, 86) !important;
+	color: black;
+	padding:5px;
+	text-align:center;
+	margin-bottom:15px !important;
+}*/
+
+/*.time_estimate a{
+	color:orange;
+	float:right;
+	cursor:pointer;
+	right: 5px;
+}*/
+
+.main_content{
+	overflow-y:auto; 
+	overflow-x:hidden; 
+	height:79vh;
+	/*height:100%; 
+	width:100%;*/
+	/*margin-left:20px;*/
+	background:white
+}
+
+.module-title{
+	margin-top: 5px; 
+	display: inline-block; 
+	margin-left: -260px;
+}
+
+@media (max-width: 1024px) {
+	.module-title{
+		margin-left: 10px;	
+		float: right;
+		margin-right: 60px;	
+	}
+}
+.bottom-left{
+	display: inline-block;
+	width: 25%;
+	padding-left: 2%;
+	text-align: left;
+	vertical-align: bottom;
+}
+.bottom-middle{
+	display: inline-block;
+	width: 35%;
+}
+.bottom-right{
+	display: inline-block;
+	width: 25%;
+	padding-right: 2%;
+	text-align: right;
+	padding-top: 10px;
+	vertical-align: bottom;
+}
+@media (max-width: 1000px) {
+	.bottom-right{
+		width: 30%;
+	}
+}
+@media (max-width: 790px) {
+	.bottom-middle{
+		width: 43%;
+	}
+	.bottom-right{
+		width: 36%;
+		padding-right: 10px;
+	}
+	.bottom-left{
+		padding-top: 10px;
+		float: left;
+		width: 10%;
+		padding-left: 10px;
+	}
 }

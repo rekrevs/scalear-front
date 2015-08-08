@@ -1,5 +1,9 @@
-<div class='navigation' ng-switch="current_user.roles[0].id">
-<teacher_navigation ng-switch-when="1"></teacher_navigation>
-<teacher_navigation ng-switch-when="5"></teacher_navigation>
-<student_navigation ng-switch-when="2"></student_navigation>
+<!--build:css(.tmp/styles) styles/navigation.css -->
+<link rel="stylesheet" href="styles/content_navigator.css"/>
+<!-- endbuild -->
+<div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
+	<teacher-navigation course="course"></teacher-navigation>
+</div>
+<div ng-if="current_user.roles[0].id == 2">
+	<student-navigation course="course"></student-navigation>
 </div>

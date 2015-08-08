@@ -1,27 +1,21 @@
-<!--<div class="well">-->
+<h3><i class="fi-mail size-30"></i> <span translate>send_email</span></h3>
 
-<form method="post" style="text-align: left;">
-    <table style="width: 100%;">
-        <tr>
-            <td style="width: 70px;">
-                <b><span translate>courses.to</span>:</b>
-            </td>
-            <td>
-                <textarea id="to" name="emails" title="{{'courses.to'|translate}}" style="width: 80%; resize: none;" readonly="readonly" rows="2" >{{final_emails}}</textarea>
-                <input class="btn" id="send_emails" type="button" ng-click="sendBatchEmail(subject, message)" style="float: right; width: 10%" value="{{'courses.send'|translate}}" ng-disabled="!final_emails || !subject || !message" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <b><span translate>courses.subject</span>: </b>
-            </td>
-            <td style="width: 100%">
-                <input id="subject" type="text" name="subject" style="width: 80%;" ng-model="subject"/>
-            </td>
-        </tr>
-    </table>
-    <br />
-    <div text-angular ng-model="message" ta-toolbar-button-class="btn btn-default btn-mini"></div>
-    <br />
-</form>
-<!--</div>-->
+<div class="large-12 columns">
+    <label><span translate>courses.to</span>
+        <div class="panel with-tiny-padding overflow-y-auto" style="max-height: 70px;">
+            <span id="to" name="emails" class="secondary alert-box label with-tiny-margin" ng-repeat="email in batch_emails">{{email}}</span> 
+        </div> 
+    </label>
+</div>
+<div class="large-12 columns">
+    <label><span translate>courses.subject</span>
+      <input id="subject" type="text" name="subject" ng-model="subject" placeholder="Input your email subject..." />
+    </label>
+</div>
+<div class="large-12 columns">
+    <label><span translate>courses.email_body</span>
+      <div class="panel" text-angular ng-model="message" ta-toolbar-button-class="button secondary tiny"></div>
+    </label>
+</div>
+<br />
+<button type="button" class="button right" id="send_emails"  ng-click="sendBatchEmail(subject, message)" ng-disabled="!final_emails || !subject || !message"><span translate>courses.send</span></button>

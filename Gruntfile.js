@@ -15,7 +15,8 @@ module.exports = function(grunt) {
         yeoman: {
             // configurable paths
             app: require('./bower.json').appPath || 'app',
-            dist: 'dist'
+            dist: 'dist',
+            coverageE2E: 'coverageE2E'
         },
         watch: {
             coffee: {
@@ -83,7 +84,15 @@ module.exports = function(grunt) {
                 options: {
                     base: '<%= yeoman.dist %>'
                 }
-            }
+            },
+            coverageE2E: {
+                options: {
+                  open: false,
+                  base: [
+                        '<%= yeoman.coverageE2E %>/app'
+                    ]
+                }
+            },
         },
         clean: {
             dist: {
@@ -100,6 +109,15 @@ module.exports = function(grunt) {
             bower: {
                 files: [{
                     src: ['<%= yeoman.dist %>/bower_components', '<%= yeoman.dist %>/views']
+                }]
+            },
+            coverageE2E:{
+                files: [{
+                    dot: true,
+                    src: [
+                        '.tmp',
+                        '<%= yeoman.coverageE2E %>/*',
+                    ]
                 }]
             }
 
@@ -297,11 +315,12 @@ module.exports = function(grunt) {
                         'bower_components/**/*',
                         //'scripts/externals/shortcut.js',
                         'images/{,*/}*.{gif,webp}',
-                        'styles/fonts/*',
+                        'styles/externals/**/*',
                         'template/**/*',
                         '*.html',
                         'views/**/*.html',
-                        'scripts/externals/popcorn-complete.min.js'
+                        'external_documents/**/*'
+                        // 'scripts/externals/popcorn-complete.min.js'
                     ]
                 }, {
                     expand: true,
@@ -316,8 +335,35 @@ module.exports = function(grunt) {
                 expand: true,
                 cwd: '<%= yeoman.app %>',
                 dest: '.tmp/styles/',
-                src: ['styles/**/*.css', 'bower_components/**/*.css']
-            }
+                src: ['styles/**/*', 'bower_components/**/*.css']
+            },
+            coverageE2E: {
+                files: [{
+                    expand: true,
+                    dot: true,
+                    cwd: '<%= yeoman.app %>',
+                    dest: '<%= yeoman.coverageE2E %>/app',
+                    src: [
+                        '*.{ico,png,txt}',
+                        '.htaccess',
+                        'bower_components/**/*',
+                        'images/**/*',
+                        'fonts/**/*',
+                        'views/**/*',
+                        'template/**/*',
+                        'styles/**/*',
+                        '*.html',
+                        'locals/*'
+                    ]
+                }]
+            },
+        },
+        instrument: {
+          files: '<%= yeoman.app %>/scripts/**/*.js',
+          options: {
+              lazy: true,
+              basePath: '<%= yeoman.coverageE2E %>/'
+          }
         },
         concurrent: {
             server: [
@@ -347,6 +393,7 @@ module.exports = function(grunt) {
                 configFile: "node_modules/protractor/referenceConf.js", // Default config file
                 keepAlive: true, // If false, the grunt process stops when the test fails.
                 noColor: false, // If true, protractor will not use colors in its output.
+                debug:false,
                 args: {
                     // Arguments passed to the command
                 }
@@ -358,6 +405,31 @@ module.exports = function(grunt) {
                 }
             },
         },
+        protractor_coverage: {
+            options: {
+                configFile: "node_modules/protractor/referenceConf.js", // Default config file
+                keepAlive: true, // If false, the grunt process stops when the test fails.
+                noColor: false, // If true, protractor will not use colors in its output.
+                coverageDir: '<%= yeoman.coverageE2E %>',
+                args: {
+                    // Arguments passed to the command
+                }
+            },
+            coverageE2E: {
+                options: {
+                    configFile: "referenceConf.js", // Target-specific config file
+                    args: {} // Target-specific arguments
+                }
+            },
+        },
+        makeReport: {
+          src: '<%= yeoman.coverageE2E %>/*.json',
+          options: {
+            type: 'html',
+            dir: '<%= yeoman.coverageE2E %>/reports',
+            print: 'detail'
+          }
+        },
         cdnify: {
             dist: {
                 html: ['<%= yeoman.dist %>/*.html']
@@ -368,7 +440,7 @@ module.exports = function(grunt) {
                 files: [{
                     expand: true,
                     cwd: '.tmp/concat/scripts/',
-                    src: 'scripts.js',
+                    src: '*.js',
                     dest: '.tmp/concat/scripts/'
                 }]
             }
@@ -547,10 +619,18 @@ module.exports = function(grunt) {
                 name: 'config',
                 constants: {
                     scalear_api: {
-                        host: 'http://localhost:3000',
-                        redirection_url: 'http://localhost:3000/#/',
-                        version: '2.1.12 (' + new Date().toUTCString() + ')',
-                        help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
+                        host: 'http://0.0.0.0:3000',
+                        redirection_url: 'http://0.0.0.0:3000/#/',
+                        version: '3.14.1 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.0.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
+                        teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
+                        // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
+                        // teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        teacher_new_course_video:     "https://www.youtube.com/watch?v=rDWIUYybFPs",
+                        teacher_review_course_video:      "https://www.youtube.com/watch?v=DhJgqWBm0XY",
+                        student_welcom_video:       "https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:         "https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
                     },
 
                 }
@@ -563,9 +643,39 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '2.1.12 (' + new Date().toUTCString() + ')',
-                        help_link: 'http://www.it.uu.se/katalog/davbl791/scalable-learning-manual.pdf'
+                        version: '3.14.1 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.0.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
+                        teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
+                        // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
+                        // teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        teacher_new_course_video:     "https://www.youtube.com/watch?v=rDWIUYybFPs",
+                        teacher_review_course_video:      "https://www.youtube.com/watch?v=DhJgqWBm0XY",
+                        student_welcom_video:       "https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:         "https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
                     }
+
+                }
+            }],
+            coverageE2E:[{
+                dest: '<%= yeoman.coverageE2E %>/app/scripts/config.js',
+                wrap: '"use strict";\n\n <%= __ngModule %>',
+                name: 'config',
+                constants: {
+                    scalear_api: {
+                        host: 'http://0.0.0.0:3000',
+                        redirection_url: 'http://0.0.0.0:3000/#/',
+                        version: '3.14.1 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.0.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
+                        teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
+                        // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
+                        // teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        teacher_new_course_video:     "https://www.youtube.com/watch?v=rDWIUYybFPs",
+                        teacher_review_course_video:      "https://www.youtube.com/watch?v=DhJgqWBm0XY",
+                        student_welcom_video:       "https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:         "https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
+                    },
 
                 }
             }]
@@ -619,6 +729,15 @@ module.exports = function(grunt) {
     grunt.registerTask('staging', ['ngconstant:staging', 'build', 'aws_s3:staging', 's3:staging'])
     grunt.registerTask('staging2', ['ngconstant:staging2', 'build'])
     grunt.registerTask('production', ['ngconstant:prod', 'build'])
+    grunt.registerTask('coverage', [
+      'clean:coverageE2E',
+      'copy:coverageE2E',
+      'ngconstant:coverageE2E',
+      'instrument',
+      'connect:coverageE2E',
+      'protractor_coverage:coverageE2E',
+      'makeReport'
+    ]);
 
     grunt.registerTask('default', [
         'jshint',

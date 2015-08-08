@@ -11,13 +11,15 @@ angular.module('scalearAngularApp')
       'validateCourse':{method: 'PUT', params: {action: 'validate_course_angular'}, headers:headers},
       'send_email_through':{method: 'POST', params: {action: 'send_email_through'}, headers:headers},
       'send_batch_email_through':{method: 'POST', params: {action: 'send_batch_email_through'}, headers:headers},
-      'remove_student' : { method: 'POST', params: {action: 'remove_student'}, headers:headers},
+      'removeStudent' : { method: 'POST', params: {action: 'remove_student'}, headers:headers},
+      'unenroll' : { method: 'POST', params: {action: 'unenroll'}, headers:headers},
       'destroy': { method: 'DELETE' , headers:headers},
       'show':{method: 'GET', headers:headers},
-      'saveTeachers':{ method: 'POST', params: {action: 'save_teachers'}, headers:headers},
+      'saveTeacher':{ method: 'POST', params: {action: 'save_teachers'}, headers:headers},
       'updateTeacher':{ method: 'POST', params: {action: 'update_teacher'}, headers:headers},
       'deleteTeacher':{ method: 'DELETE', params: {action: 'delete_teacher'}, headers:headers},
       'getCalendarEvents':{ method: 'GET', params: {action: 'events'}, headers:headers},
+      'getAnnouncements':{ method: 'GET', isArray: true , params: {action: 'announcements'}, headers:headers},
       'newCourse':{method:'GET', headers:headers, params:{action: 'new', course_id:null}},
       'getCourse': {method: 'GET', params: {action: 'get_course_angular'}, headers:headers},
       'getCourseEditor': {method: 'GET', params: {action: 'course_editor_angular'}, headers:headers},
@@ -27,7 +29,13 @@ angular.module('scalearAngularApp')
       'getModuleProgress': {method: 'GET', params: {action: 'module_progress_angular'}, headers:headers},
       'getTotalChart':{method:'GET', params:{action:'get_total_chart_angular'},headers:headers},
       'getCourseware':{method:'GET', params:{action:'courseware_angular'},headers:headers},
-      'getEnrolledStudents':{method:'GET', params:{action:'enrolled_students'},headers:headers, isArray: true}
+      'getEnrolledStudents':{method:'GET', params:{action:'enrolled_students'},headers:headers, isArray: true},
+      'exportCsv':{method:'GET', params:{action:'export_csv'},headers:headers},
+      'courseCopy': {method: 'GET', params: {action: 'course_copy_angular', course_id:null}, headers:headers},
+      'getAllTeachers':{method:'GET', headers:headers,params:{action: 'get_all_teachers'}},
+      'newCustomLink':{method:'POST', params:{action:'new_link_angular'}, headers:headers},
+      'sortCourseLinks':{method: 'POST', headers:headers, params: {action: 'sort_course_links'}},
+      'currentCourses':{method: 'GET', isArray: true, headers:headers, params: {action: 'current_courses'}}
     });
 
 }])

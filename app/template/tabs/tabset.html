@@ -1,12 +1,10 @@
-
-<div class="tabbable" ng-class="{'tabs-right': direction == 'right', 'tabs-left': direction == 'left', 'tabs-below': direction == 'below'}">
-  <div tabset-titles="tabsAbove"></div>
-  <div class="tab-content">
-    <div class="tab-pane" 
-         ng-repeat="tab in tabs" 
-         ng-class="{active: tab.active}"
-         tab-content-transclude="tab">
+<div class="tabbable">
+  <dl class="tabs" ng-class="{'vertical': vertical}" ng-transclude></dl>
+  <div class="tabs-content" ng-class="{'vertical': vertical}">
+    <div class="content" 
+      ng-repeat="tab in tabs" 
+      ng-class="{active: tab.active}">
+      <div tab-content-transclude="tab"></div>
     </div>
   </div>
-  <div tabset-titles="!tabsAbove"></div>
 </div>

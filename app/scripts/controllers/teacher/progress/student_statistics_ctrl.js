@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('studentStatisticsCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log', function ($scope, $stateParams, $timeout, Module, $translate, $log){
+  .controller('studentStatisticsCtrl', ['$scope','$stateParams','$timeout','Module', '$translate','$log','$window', function ($scope, $stateParams, $timeout, Module, $translate, $log, $window){
   		
 		$scope.statistics_player={}
 		$scope.statistics_player.events={}
 		
   		$scope.studentStatisticsTab = function(){
-  			$scope.tabState(2)
-	   		$scope.disableInfinitScrolling()
+  			// $scope.tabState(2)
+	   		// $scope.disableInfinitScrolling()
 	   		$scope.types=['confused', 'back', 'pauses', 'questions']
        		getStudentStatistics()   
 	    } 
@@ -21,22 +21,33 @@ angular.module('scalearAngularApp')
 	                module_id:$stateParams.module_id
 	            },
 	    		function(data){
-	    			$log.debug(data)
 	    			$scope.statistics = data
     			 	$scope.lecture_url =($scope.statistics.lecture_url == "none") ? "" : $scope.statistics.lecture_url
+		            if(isYoutube($scope.lecture_url)){
+		              $scope.lecture_url += "&controls=1&autohide=1&fs=1&theme=light"
+		            }
 	    			$scope.loading_statistics_chart=false
-	    			$scope.$watch("current_lang", redrawChart);
+	    			var win = angular.element($window)
+					$scope.win_width = (90.5*win.width())/100
+	    			var scale = $scope.win_width/$scope.statistics.width
+	    			$scope.statistics.lecture_names.forEach(function(name){
+						name[0]*= scale
+			    	})
 	    		},
 	    		function(){}
     		)
 	    }
+      var isYoutube= function(url){
+          var video_url = url || scope.url || ""
+          return video_url.match(/(?:https?:\/{2})?(?:w{3}\.)?(?:youtu|y2u)(?:be)?\.(?:com|be)(?:\/watch\?v=|\/).*(?:v=)?([^\s&]{11})/);
+      }
 
 	    $scope.getStatisticsType=function(ind){
 	    	return $scope.types[ind]
 	    }
 
 	    var getChartWidth=function(){
-	    	return $scope.statistics.width+85
+	    	return $scope.win_width//$scope.statistics.width+85
 	    	// var width = 0
 	    	// $scope.statistics.lecture_names.forEach(function(name){
 	    	// 	width+= name[0]
@@ -49,7 +60,7 @@ angular.module('scalearAngularApp')
 			formated_data.cols=
 				[
 					{"label": $translate('courses.students'),"type": "timeofday"},
-					{"label": "#"+$translate('courses.students'),"type": "number"},
+					{"label": "#"+$translate('courses.students'),"type": "number"}
 				]
 			formated_data.rows= []
 			for(var ind in data)
@@ -59,7 +70,7 @@ angular.module('scalearAngularApp')
 				{"c":
 					[
 						{"v":[d.getUTCHours(),d.getMinutes(),d.getSeconds(),0]},
-						{"v":data[ind][1]},
+						{"v":data[ind][1]}
 					]
 				}
 				formated_data.rows.push(row)
@@ -77,8 +88,8 @@ angular.module('scalearAngularApp')
 	            "colors": ['#0c81c8', 'darkred'],
 	            "isStacked": "true",
 	            "fill": 20,
-	            "height": 150,
-	            "width": getChartWidth(),
+	            "height": 100,
+	            "width": getChartWidth()+100,
 	            "displayExactValues": true,
 	            "fontSize" : 12,
 	           // "chartArea":{"width":"95%"},
@@ -88,11 +99,11 @@ angular.module('scalearAngularApp')
                         "max":[max.getUTCHours(),max.getMinutes(),max.getSeconds(),0]
                     }
 	            },
-	            "legend": 'none', 
-	            chartArea:{left: 85, width:getChartWidth()},   
-	            "vAxis": {
-	                "title": "#"+$translate('courses.'+type),
-	            },
+	            "legend": 'none',
+	            chartArea:{left: 35, width:getChartWidth() },   
+	            // "vAxis": {
+	            //     "title": "#"+$translate('courses.'+type),
+	            // },
 	            "bar":{"groupWidth":5}
 	        };
 		  	chart.data = $scope.formatStatisticsChartData(chart_data)
@@ -106,7 +117,7 @@ angular.module('scalearAngularApp')
 		  	return chart
 	    }
 
-	 	     var getReallyConfused= function(data){
+ 		var getReallyConfused= function(data){
 	     	data.cols.push({"label": $translate('courses.really_confused'),"type": "number"})
 	     	for (var i in data.rows)
 	     		if($scope.statistics.really_confused[i]){
@@ -173,21 +184,16 @@ angular.module('scalearAngularApp')
         		before=parseInt(time)
         	}
         	if($scope.lecture_url.indexOf(lec) == -1){
-	            $scope.lecture_url = lec+'&start='+Math.round(to_seek)
+        		$scope.statistics_player.controls.setStartTime(to_seek)
+	            if(isYoutube($scope.lecture_url)){
+                $scope.lecture_url = lec+"&controls=1&autohide=1&fs=1&theme=light"
+              }
+              else{
+                $scope.lecture_url = lec 
+              }
 	        }
 	        else
              	$scope.statistics_player.controls.seek_and_pause(to_seek)
-		}
-
-
-	    var redrawChart = function(new_val, old_val){ 
-	        if(new_val != old_val){
-	            var temp = angular.copy($scope.types)
-	            $scope.types = {}
-	            $timeout(function(){
-	                $scope.types = temp
-	            })
-	        }
-	    }
+		  }
 
   }]);

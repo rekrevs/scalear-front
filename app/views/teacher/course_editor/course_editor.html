@@ -1,40 +1,44 @@
 <!-- build:css(.tmp/styles) styles/course_editor.css -->
 <link rel="stylesheet" href="styles/teacher/course_editor.css"/>
-<link rel="stylesheet" href="styles/teacher/course_editor.details.css" type="text/css" media="screen" title="no title" charset="utf-8" />
-<link rel="stylesheet" href="styles/teacher/course_editor.lecture.css" type="text/css" media="screen" />
+<link rel="stylesheet" href="styles/controls.css" type="text/css" media="screen" />
 <!-- endbuild -->
-
-<div class="row" style="width:1230px;">
-	<div class="span3" id="tree">
-		<center><loading size="small" show="init_loading" /></center>
-		<overlay ng-show="module_overlay" style="height:80%">
-			<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
-		</overlay>
-		<ul ui-sortable="moduleSortableOptions" ng-model='modules' id="acc1" class="accordion">
-			<li ng-repeat="module in modules" class='module accordion-group' ng-init="module.open = false">
-				<module name="module.name" id="module.id" remove="removeModule(event, $index)" open="open" ng-click="closeAll($index)" class="accordion-heading" />
-				<div class="outer" collapse="!(module.open || module.id==open_id)">
-					<overlay ng-show="item_overlay" style="height:100%">
-						<loading size='small' show='true' style="position:absolute;top:40%;left:35%;z-index: 1;" />
-					</overlay>
-		        	<div class="inner" id="modules">
-	          			<ul class="items" ui-sortable="itemSortableOptions" ng-model='module.items'>
-		            		<li class="last-child item" ng-repeat="item in module.items" >
-	             				<item name="item.name" id="item.id" class_name="item.class_name" remove="$parent['remove'+capitalize(item.class_name)]($parent.$index, $index)" ></item>
-		            		</li>
-		            	</ul>
-			            <center class="item-buttons">
-			            	<button_link title="{{'courses.add_lecture'|translate}}" class="btn-mini adding" action="addLecture($index)" />
-			            	<button_link title="{{'lectures.add_quiz'|translate}}"    class="btn-mini adding" action="addQuiz($index, 'quiz')"/>
-			            	<button_link title="{{'courses.add_survey'|translate}}"  class="btn-mini adding" action="addQuiz($index, 'survey')"/>
-		                </center>
-		        	</div>
-		    	</div>
-			</li>
-		</ul>
-		<button_link ng-show="!module_loading" title="{{'courses.add_module'|translate}}" action="addModule()" class="adding_module" style="float:right;margin-bottom:20px;margin-top:20px;margin-right:10px;"/>
-		<hr />
+<div ng-if="!('*.module.**' | includedByState)">
+	<br/>
+	<div class="small-9 columns">
+		<div class="small-12 columns"><h5><b translate>courses.course_editor</b></h5></div>
+		<div class="small-12 columns"><p class="no-margin" translate>courses.choose_module</p></div>
+		<div class="small-12 columns"><p translate>courses.drag_module</p></div>
+		<br />
+		<div class="small-12 columns no-padding">
+			<div class="small-12 medium-3 columns">
+				<button id="new_module" class="button small green-color-white" ng-click="addModule()"translate>courses.add_module</button>
+			</div>
+			<div class="small-12 medium-9 columns">
+				<p class="no-margin" translate>courses.create_module</p>
+			</div>
+		</div>
+		<div class="small-12 columns no-padding">
+			<div class="small-12 medium-3 columns">
+				<button class="button small green-color-white" module-content-modal open-modal="openOnlineContentModal" ng-click="openOnlineContentModal()"><span translate>add_content</span></button>
+			</div>
+			<div class="small-12 medium-9 columns">
+				<p class="no-margin" translate>courses.choose_add</p>
+			</div>
+		</div>
+		<div class="small-12 columns no-padding">
+			<div class="small-12 medium-3 columns">
+				<button class="button small orange" ng-click="previewStudent()" translate>preview_student</button>
+			</div>
+			<div class="small-12 medium-9 columns">
+				<p class="no-margin" translate>courses.preview_see</p>
+			</div>
+		</div>
+		<br />
+		<div class="small-12 columns"><p translate>courses.right_click</p></div>
 	</div>
-	<div class="span6" id="middle"  ui-view="middle"></div>
-	<div class="span3" id="details" ui-view="details"></div>
 </div>
+<div id="module"  ng-if="('**.overview' | includedByState)" class="small-12 large-7 columns with-small-padding-top" ui-view="module" >	
+</div>
+<div id="middle" ng-if="('**.lecture' | includedByState) || ('**.quiz' | includedByState)|| ('**.customlink' | includedByState)" class="small-12 large-7 columns ease_in_out width-max-heigh with-small-padding-top" ng-class="{'large-12 large-centered': !delayed_details_status}" ui-view="middle"/>
+
+<div id="details" ng-show="!('course.course_editor' | includedByState)" class="details-navigator-container no-padding ease_in_out small-12 large-5 columns" ui-view="details" ng-class="{'details-containeropen large-height-big small-height-big ':delayed_details_status2}"/>

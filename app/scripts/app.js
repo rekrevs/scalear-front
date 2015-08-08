@@ -1,19 +1,21 @@
 'use strict';
 
-
 angular.module('scalearAngularApp', [
     'ngCookies',
     'ngResource',
     'ngSanitize',
     'ui.router',
-    'ui.bootstrap.accordion',
-    'ui.bootstrap.tabs',
-    'ui.bootstrap.collapse',
-    'ui.bootstrap.transition',
+    'ngTouch',
+    // 'ui.bootstrap.accordion',
+    // 'ui.bootstrap.tabs',
+    // 'ui.bootstrap.collapse',
+    // 'ui.bootstrap.transition',
     'ui.bootstrap.datepicker',
-    'ui.bootstrap.alert',
-    'ui.bootstrap.modal',
-    'ui.bootstrap.tooltip',
+    // 'ui.bootstrap.alert',
+    // 'ui.bootstrap.modal',
+    // 'ui.bootstrap.tooltip',
+    'ui.bootstrap.timepicker',
+    // 'ui.bootstrap.popover',
     'ui.sortable',
     'ui.calendar',
     'ngDragDrop',
@@ -26,46 +28,76 @@ angular.module('scalearAngularApp', [
     'textAngular',
     'highcharts-ng',
     'config',
+    'chieffancypants.loadingBar',
+    'anguFixedHeaderTable',
+    'mm.foundation',
+    // 'mm.foundation.accordion',
+    // 'mm.foundation.alert',
+    // 'mm.foundation.bindHtml',
+    // 'mm.foundation.buttons',
+    // 'mm.foundation.dropdownToggle',
+    // 'mm.foundation.modal',
+    // 'mm.foundation.offcanvas',
+    // 'mm.foundation.popover',
+    // 'mm.foundation.position',
+    // 'mm.foundation.progressbar',
+    // 'mm.foundation.tabs',
+    // 'mm.foundation.tooltip',
+    // 'mm.foundation.tour',
+    // 'mm.foundation.transition',
+    // 'mm.foundation.typeahead',
+    // 'mm.foundation.topbar',
+    'Mac',
+    'dcbImgFallback',
+    'ngClipboard',
+    'ngTextTruncate'
+    // 'duScroll',
+    // 'ngAnimate'
 ])
     .constant('headers', {
         withCredentials: true,
         'X-Requested-With': 'XMLHttpRequest'
     })
-    .value('$anchorScroll', angular.noop)
-    .run(['$http', '$rootScope', 'scalear_api', 'editableOptions', '$location', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies',
-        function($http, $rootScope, scalear_api, editableOptions, $location, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies) {
+   // .value('$anchorScroll', angular.noop)
+    .run(['$http', '$rootScope', 'editableOptions', 'editableThemes', 'UserSession', '$state', 'ErrorHandler', '$timeout', '$window', '$log', '$translate', '$cookies', '$tour',
+        function($http, $rootScope, editableOptions, editableThemes, UserSession, $state, ErrorHandler, $timeout, $window, $log, $translate, $cookies, $tour) {
+
 
             $http.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']
             $rootScope.show_alert = "";
-            editableOptions.theme = 'bs2';
+            editableOptions.theme = 'default';
+            editableThemes['default'].submitTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 success check" type="submit"><i class="fi-check"></i></button>';
+            editableThemes['default'].cancelTpl = '<button class="button tiny with-tiny-padding with-medium-padding-right with-medium-padding-left no-margin-bottom size-1 alert cancel" type="button" ng-click="$form.$cancel()"><i class="fi-x"></i></button>';
+            editableThemes['default'].errorTpl = '<small class="error with-tiny-padding position-relative" ng-show="$error" ng-bind="$error" style="z-index:90"></small>'
             $rootScope.textAngularOpts = {
                 toolbar: [
                     ['h1', 'h2', 'h3', 'p', 'pre', 'quote'],
                     ['bold', 'italics', 'underline', 'ul', 'ol', 'redo', 'undo', 'clear'],
-                    ['html', 'insertLink', 'unlink', 'insertImage']
+                    ['insertLink', 'unlink', 'insertImage']
                 ],
                 classes: {
-                    focussed: "focussed",
-                    toolbar: "btn-toolbar",
-                    toolbarGroup: "btn-group",
-                    toolbarButton: "btn btn-default",
-                    toolbarButtonActive: "active",
+                    // focussed: "focussed",
+                    // toolbar: "btn-toolbar",
+                    toolbarGroup: "button-group tiny custom_button_group",
+                    toolbarButton: "button tiny secondary",
+                    // toolbarButtonActive: "active",
                     textEditor: 'form-control',
                     htmlEditor: 'form-control'
                 }
             }
 
+
             $log.debug("lang is " + $rootScope.current_lang);
-            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie']
-            var statesThatForStudents = ['student_courses', 'course.student_calendar', 'course.course_information', 'course.lectures']
-            var statesThatForTeachers = ['course_list', 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
-            var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
+            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie', 'student_getting_started', 'teacher_getting_started']
+            var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
+            var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
+            var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
 
             //check if route requires no auth
             var stateNoAuth = function(state) {
                 for (var element in statesThatRequireNoAuth) {
                     var input = statesThatRequireNoAuth[element];
-                    if (state.substring(0, input.length) == input)
+                    if (state.substring(0, input.length) === input)
                         return true;
                 }
                 return false;
@@ -75,7 +107,7 @@ angular.module('scalearAngularApp', [
             var routeClean = function(state) {
                 for (var element in statesThatDontRequireAuth) {
                     var input = statesThatDontRequireAuth[element];
-                    if (state.substring(0, input.length) == input)
+                    if (state.substring(0, input.length) === input)
                         return true
                 }
                 return false;
@@ -84,7 +116,7 @@ angular.module('scalearAngularApp', [
             var stateStudent = function(state) {
                 for (var element in statesThatForStudents) {
                     var input = statesThatForStudents[element];
-                    if (state.substring(0, input.length) == input)
+                    if (state.substring(0, input.length) === input)
                         return true
                 }
                 return false;
@@ -93,7 +125,7 @@ angular.module('scalearAngularApp', [
             var stateTeacher = function(state) {
                 for (var element in statesThatForTeachers) {
                     var input = statesThatForTeachers[element];
-                    if (state.substring(0, input.length) == input)
+                    if (state.substring(0, input.length) === input)
                         return true
                 }
                 return false;
@@ -102,98 +134,91 @@ angular.module('scalearAngularApp', [
                 $rootScope.unload = true;
             }
 
-            //          $rootScope.$on('$viewContentLoading',
-            //              function(event, viewConfig){
-            //                  $rootScope.start_loading=true;
-            //                  // Access to all the view config properties.
-            //                  // and one special property 'targetView'
-            //                  // viewConfig.targetView
-            //              });
-            //          $rootScope.$on('$viewContentLoaded',
-            //              function(event){
-            //                  $rootScope.start_loading=false;
-            //              });
-            //
-            //          $rootScope.$on('stateChangeSuccess', function (ev, to, toParams, from, fromParams) {
-            //              $rootScope.start_loading=false;
-            //            });
-            //
-            //          $rootScope.$on('stateChangeError', function (ev, to, toParams, from, fromParams) {
-            //              $rootScope.start_loading=false;
-            //          });
+            $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from) {
+                if($tour.isActive()){
+                    $tour.end();
+                }                
 
-            $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from, fromParams) {
-
-                //$rootScope.start_loading=true;
-                if(from.url != '/'){
-                UserSession.getRole().then(function(result) {
+               UserSession.getRole().then(function(result) {
                     var s = 1;
+                    if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent) && to.name !== "home") {
+                        $state.go("ie");
+                    }
 
-//                    if (result == 0 && !stateNoAuth(to.name)) {
-//                        // window.location=scalear_api.host+"/"+$rootScope.current_lang+"/users/sign_angular_in?angular_redirect="+scalear_api.redirection_url; //http://localhost:9000/#/ //http://angular-edu.herokuapp.com/#/
-//                        $state.go("login", {},{notify: false });
-//
-//                    }
-                    if (/MSIE (\d+\.\d+);/.test($window.navigator.userAgent)) {
-                        $state.go("ie", {},{notify: false });
+                    if($rootScope.current_user && $rootScope.current_user.info_complete === false){
+                        $state.go('edit_account')
+                        s = 2;
                     }
-                    if((to.name=='home' && result == 0))
-                    {
-                        $state.go("login", {},{notify: false });
-                    }
-                    if (!routeClean(to.name) && result == 0 ) // user not logged in trying to access a page that needs authentication.
-                    {
-                        $state.go("login", {},{notify: false });
-                        s = 0;
-                    } else if ((stateTeacher(to.name) && result == 2)) // student trying to access teacher page //routeTeacher($location.url()) && result ||
-                    {
-                        $state.go("student_courses", {},{notify: false });
-                        s = 0;
-                    } else if ((stateStudent(to.name) && result == 1)) // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
-                    {
-                        $state.go("course_list", {},{notify: false });
-                        s = 0;
-                    } else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 1) // teacher going to home, redirected to courses page
-                    {
-                        $state.go("course_list", {},{notify: false });
-                    } else if ((to.name == "home" || to.name == "login" || to.name == "teacher_signup" || to.name == "student_signup") && result == 2) // student going to home, redirected to student courses page
-                    {
-                        $state.go("student_courses", {},{notify: false });
-                    } else if (stateNoAuth(to.name)) {
-                        if (result == 1 || result == 2) {
-                            $state.go("home", {},{notify: false });
+                    else{
+                        if(to.name === 'confirmed'){
+                            if(from.name === 'show_confirmation'){
+                                $state.go("confirmed")
+                            }
+                            else{
+                                $state.go("home");
+                                s = 0;
+                            }
+                        }
+                        if($rootScope.current_user && !$rootScope.current_user.intro_watched && to.name !== "edit_account"){
+                            $state.go('confirmed')
+                            s = 1;
+                        }
+                        if (!routeClean(to.name) && result === 0 ){ // user not logged in trying to access a page that needs authentication.
+                            $state.go("login");
                             s = 0;
+                        } else if ((stateTeacher(to.name) && result === 2)){ // student trying to access teacher page //routeTeacher($location.url()) && result ||
+                            $state.go("course_list");
+                            s = 0;
+                        } 
+                        else if ((stateStudent(to.name) && result === 1)){ // teacher trying to access student page //(routeStudent($location.url()) && !result) ||
+                            $state.go("course_list");
+                            s = 0;
+                        } 
+                        else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 1)// teacher going to home, redirected to courses page
+                            $state.go("course_list");
+                        else if ((to.name === "login" || to.name === "teacher_signup" || to.name === "student_signup") && result === 2)// student going to home, redirected to student courses page
+                            $state.go("course_list");
+                        else if (stateNoAuth(to.name)) {
+                            if (result === 1 || result === 2) {
+                                $state.go("home");
+                                s = 0;
+                            }
                         }
                     }
 
-                    if (s == 0) {
+                    if (s === 0) {
                         $rootScope.show_alert = "error";
                         ErrorHandler.showMessage('Error ' + ': ' + $translate("controller_msg.you_are_not_authorized"), 'errorMessage', 8000);
                         $timeout(function() {
                             $rootScope.show_alert = "";
                         }, 4000);
                     }
-                    // success
-                })
-            }
+                    if(s === 2){
+                        $rootScope.show_alert = "error";
+                        ErrorHandler.showMessage($translate("controller_msg.update_account_information"), 'errorMessage', 8000);
+                        $timeout(function() {
+                            $rootScope.show_alert = "";
+                        }, 4000);
+                    }
+               })
 
         });
 
     }
 ])
 
-.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider',
-    function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider',
+    function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider) {
+        cfpLoadingBarProvider.includeSpinner = true;
+        // cfpLoadingBarProvider.color = 'black';
 
         $logProvider.debugEnabled(false)
 
-        //**********Translations*********
         $translateProvider
             .translations('en', translation_en())
             .translations('sv', translation_sv());
         $translateProvider.preferredLanguage('en');
         $translateProvider.useCookieStorage();
-        //**********END*********
 
         //$httpProvider.defaults.headers.common['X-CSRF-Token'] = $cookies['XSRF-TOKEN']//$('meta[name=csrf-token]').attr('content');        
 
@@ -211,6 +236,11 @@ angular.module('scalearAngularApp', [
                 url: '/ie',
                 templateUrl: '/views/ie.html'
             })
+            .state('forum', {
+                url: '/forum',
+                templateUrl: '/views/forum/forum.html',
+                controller: 'forumCtrl'
+            })
             .state('login', {
                 url: '/users/login',
                 templateUrl: '/views/login.html',
@@ -218,18 +248,42 @@ angular.module('scalearAngularApp', [
             })
             .state('teacher_signup', {
                 url: '/users/teacher',
-                templateUrl: '/views/users/teacher.html',
+                templateUrl: '/views/users/signup.html',
                 controller: 'UsersTeacherCtrl'
             })
             .state('student_signup', {
                 url: '/users/student',
-                templateUrl: '/views/users/student.html',
+                templateUrl: '/views/users/signup.html',
                 controller: 'UsersStudentCtrl'
+            })
+            .state('thanks_for_registering', {
+                url: '/users/thanks?type',
+                templateUrl: '/views/users/thanks.html',
+                controller: 'ThanksForRegisteringCtrl'
+            })
+            .state('confirmed', {
+                url: '/users/confirmed',
+                templateUrl: '/views/users/confirmed.html',
+                controller: 'UsersConfirmedCtrl'
             })
             .state('edit_account', {
                 url: '/users/edit',
                 templateUrl: '/views/users/edit.html',
                 controller: 'UsersEditCtrl'
+                // views:{
+                //     // 'user_navigation':{
+                //     //     templateUrl: '/views/user_navigation.html',
+                //     //     controller: 'navigationCtrl'
+                //     // },
+                //     '':{
+                        
+                //     }
+                // }
+            })
+            .state('profile', {
+                url: '/users/profile/:user_id',
+                templateUrl: '/views/users/profile.html',
+                controller: 'UsersProfileCtrl'
             })
             .state('forgot_password', {
                 url: '/users/password/new',
@@ -258,7 +312,7 @@ angular.module('scalearAngularApp', [
             })
             .state('course_list', {
                 url: '/courses',
-                templateUrl: '/views/teacher/course_list/course_list.html',
+                templateUrl: '/views/course_list.html',
                 controller: 'courseListCtrl'
             })
             .state('new_course', {
@@ -268,59 +322,42 @@ angular.module('scalearAngularApp', [
             })
             .state('course', {
                 url: '/courses/:course_id',
-                views: {
-                    'navigation': {
-                        templateUrl: '/views/navigation.html',
-                        controller: 'navigationCtrl'
-                    },
-                    '': {
-                        template: '<ui-view/>'
-                    }
-                },
-                abstract: true
-            })
-            .state('course.lectures', {
-                url: '/courseware',
-                templateUrl: '/views/student/lectures/lectures.html',
-                controller: 'studentLecturesCtrl'
-            })
-            .state('course.lectures.lecture', {
-                url: '/lectures/:lecture_id',
-                views: {
-                    'middle': {
-                        templateUrl: '/views/student/lectures/lecture.middle.html',
-                        controller: 'studentLectureMiddleCtrl'
-                    }
+                template: '<ui-view/>',
+                controller: 'courseCtrl',
+                resolve:{
+                    course_data:['courseResolver','$stateParams',function(courseResolver, $stateParams){
+                        return courseResolver.init($stateParams.course_id)
+                    }]
                 }
+            })           
+            .state('course.module',{
+                url:'/modules/:module_id',
+                templateUrl: '/views/empty_view.html',
+                controller: 'moduleCtrl',
+                abstract:true
             })
-            .state('course.lectures.quiz', {
-                url: '/quizzes/:quiz_id',
-                views: {
-                    'middle': {
-                        templateUrl: '/views/student/lectures/quiz.middle.html',
-                        controller: 'studentQuizMiddleCtrl'
-                    }
-                }
-            })
-            .state('course.course_editor', {
+            .state('course.module.course_editor', {
                 url: '/course_editor',
+                // templateUrl: '/views/teacher/course_editor/module.middle.html',
+                // controller: 'moduleMiddleCtrl'
                 templateUrl: '/views/teacher/course_editor/course_editor.html',
-                controller: 'courseEditorCtrl'
+                controller: 'courseEditorCtrl',
+                abstract:true
             })
-            .state('course.course_editor.module', {
-                url: '/modules/:module_id',
+            .state('course.module.course_editor.overview', {
+                url: '',
                 views: {
                     'details': {
                         templateUrl: '/views/teacher/course_editor/module.details.html',
                         controller: 'moduleDetailsCtrl'
                     },
-                    'middle': {
+                    'module': {
                         templateUrl: '/views/teacher/course_editor/module.middle.html',
                         controller: 'moduleMiddleCtrl'
                     }
                 }
             })
-            .state('course.course_editor.lecture', {
+            .state('course.module.course_editor.lecture', {
                 url: '/lectures/:lecture_id',
                 views: {
                     'details': {
@@ -333,15 +370,16 @@ angular.module('scalearAngularApp', [
                     }
                 }
             })
-            .state('course.course_editor.lecture.quizList', {
-                views: {
-                    'quizList': {
-                        templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
-                        controller: 'lectureQuizListCtrl'
-                    }
-                }
-            })
-            .state('course.course_editor.quiz', {
+            // .state('course.course_editor.lecture.quizList', {
+            //     url: '/qy',
+            //     views: {
+            //         'quizList': {
+            //             templateUrl: '/views/teacher/course_editor/lecture.middle.quiz_list.html',
+            //             controller: 'lectureQuizListCtrl'
+            //         }
+            //     }
+            // })
+            .state('course.module.course_editor.quiz', {
                 url: '/quizzes/:quiz_id',
                 views: {
                     'details': {
@@ -354,20 +392,81 @@ angular.module('scalearAngularApp', [
                     }
                 }
             })
+            .state('course.module.course_editor.customlink', {
+                url: '/link/:customlink_id',
+                views: {
+                    'details': {
+                        templateUrl: '/views/teacher/course_editor/customlink.details.html',
+                        controller: 'customLinkDetailsCtrl'
+                    },
+                    'middle': {
+                        templateUrl: '/views/teacher/course_editor/customlink.middle.html',
+                        controller: 'customLinkMiddleCtrl'
+                    }
+                }
+            })
+            .state('course.course_editor', {
+                url: '/course_editor',
+                // templateUrl: '/views/teacher/course_editor/module.middle.html',
+                // controller: 'moduleMiddleCtrl'
+                templateUrl: '/views/teacher/course_editor/course_editor.html',
+                controller: 'courseEditorCtrl'
+            })
             .state('course.progress', {
                 url: '/progress',
                 templateUrl: '/views/teacher/progress/progress.html',
                 controller: 'progressCtrl'
             })
-            .state('course.progress.main', {
-                url: "/main",
+            .state('course.progress_main', {
+                url: "/progress/main",
                 templateUrl: '/views/teacher/progress/progress_main.html',
                 controller: 'progressMainCtrl'
             })
-            .state('course.progress.module', {
-                url: "/modules/:module_id",
+            .state('course.module.progress', {
+                url: "/progress",
+                templateUrl: '/views/teacher/progress/progress_lecture.html',
+                controller: 'progressLectureCtrl'
+            })
+            .state('course.module.progress_details', {
+                url: "/progress/details",
                 templateUrl: '/views/teacher/progress/progress_module.html',
                 controller: 'progressModuleCtrl'
+            })
+            .state('course.module.courseware', {
+                url: '/courseware',
+                templateUrl: '/views/student/lectures/courseware.html',
+                controller: 'coursewareCtrl'
+            })
+            // .state('course.module.courseware',{
+            //     url:'/modules/:module_id',
+            //     templateUrl: '/views/empty_view.html',
+            //     controller: 'studentModulesCtrl',
+            // })
+            .state('course.module.courseware.lecture', {
+                url: '/lectures/:lecture_id?time',
+                // views: {
+                //     'middle': {
+                //         templateUrl: '/views/student/lectures/lecture.middle.html',
+                //         controller: 'studentLectureMiddleCtrl'
+                //     },
+                //     'right': {
+                //         templateUrl: '/views/student/lectures/lecture.right.html',
+                //         controller: 'studentLectureMiddleCtrl'
+                //     }
+                // }
+                templateUrl: '/views/student/lectures/lecture.middle.html',
+                controller: 'studentLectureMiddleCtrl'
+            })
+            .state('course.module.courseware.quiz', {
+                url: '/quizzes/:quiz_id',
+                // views: {
+                //     'quiz': {
+                //         templateUrl: '/views/student/lectures/quiz.middle.html',
+                //         controller: 'studentQuizMiddleCtrl'
+                //     }
+                // }
+                templateUrl: '/views/student/lectures/quiz.middle.html',
+                controller: 'studentQuizMiddleCtrl'
             })
             .state('course.calendar', {
                 url: '/events',
@@ -400,39 +499,59 @@ angular.module('scalearAngularApp', [
                 controller: 'studentCourseInformationCtrl'
             })
             .state('course.edit_course_information', {
-                url: '',
+                url: '/information',
                 templateUrl: '/views/teacher/course/course_information.html',
                 controller: 'teacherCourseInformationCtrl'
             })
-            .state('course.teachers', {
-                url: '/teachers',
-                templateUrl: '/views/teacher/course/teachers.html',
-                controller: 'courseTeachersCtrl'
-            })
+            // .state('course.teachers', {
+            //     url: '/teachers',
+            //     templateUrl: '/views/teacher/course/teachers.html',
+            //     controller: 'courseTeachersCtrl'
+            // })
             .state('course.inclass', {
                 url: '/inclass',
                 templateUrl: '/views/teacher/in_class/inclass.html',
                 controller: 'inclassCtrl'
             })
-            .state('course.inclass.module', {
-                url: "/modules/:module_id",
+            .state('course.module.inclass', {
+                url: "/inclass",
                 templateUrl: '/views/teacher/in_class/inclass_module.html',
                 controller: 'inclassModuleCtrl'
             })
-            .state('course.inclass.display_quizzes', {
+            .state('course.module.inclass.display_quizzes', {
                 url: '/display_quizzes',
                 templateUrl: '/views/teacher/in_class/display_quizzes.html',
                 controller: 'displayQuizzesCtrl'
             })
-            .state('student_courses', {
-                url: '/student_courses',
-                templateUrl: '/views/student/course_list/course_list.html',
-                controller: 'studentCourseListCtrl'
+            .state('dashboard', {
+                url: '/dashboard',
+                templateUrl: '/views/dashboard.html',
+                controller: 'dashboardCtrl'
             })
+            // .state('student_courses', {
+            //     url: '/student_courses',
+            //     templateUrl: '/views/student/course_list/course_list.html',
+            //     controller: 'studentCourseListCtrl'
+            // })
             .state('statistics', {
               url: '/statistics',
               templateUrl: '/views/statistics/statistics.html',
               controller: 'statisticsCtrl'
+            })
+            .state('show_shared', {
+              url: '/show_shared',
+              templateUrl: '/views/shared.html',
+              controller: 'sharedCtrl'
+            })
+            .state('student_getting_started', {
+              url: '/help/student/getting_started',
+              templateUrl: '/views/help/student_getting_started.html',
+              controller: 'StudentGettingStartedCtrl'
+            })
+            .state('teacher_getting_started', {
+              url: '/help/teacher/getting_started',
+              templateUrl: '/views/help/teacher_getting_started.html',
+              controller: 'TeacherGettingStartedCtrl'
             })
     }
 ])

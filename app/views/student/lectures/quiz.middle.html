@@ -1,15 +1,18 @@
 <div class="small-12 column">
-    <div ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="small-12 large-6 columns right warning alert-box with-margin-right with-tiny-padding show-for-medium-down">
-    	 <p class="no-margin" ng-show='key=="due"'>
-            <span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span >{{ "controller_msg."+alert_message[2] | translate }})</span> <span translate>controller_msg.ago</span>
-        </p>
-    	 <p class="no-margin" ng-show='key=="submit"'>
+    <span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-medium-down show-for-portrait no-margin">
+        <span ng-show='key=="due"'>
+            <span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span>{{ "controller_msg."+alert_message[2] | translate}}</span>) 
+            <span translate>controller_msg.ago</span>
+        </span>
+        <span class="no-margin" ng-show='key=="submit"'>
             <span translate>controller_msg.already_submitted</span> {{quiz.quiz_type}} <span translate>controller_msg.no_more_attempts</span> 
-        </p>
-    	 <p class="no-margin" ng-show='key=="today"'>
-            <span translate>controller_msg.due</span><span translate>controller_msg.today</span> <span translate>at</span> <b>{{alert_message| date:'h:mma'}}</b>
-         </p>
-    </div>
+        </span>
+        <span ng-show='key=="today"'>
+            <span translate>controller_msg.due</span> <span translate>controller_msg.today</span> <span translate>at</span> <span>{{alert_message| date:'h:mma'}}</span>
+        </span>
+    </span>
+
+
     <!-- <span class="label size-10 round alert with-tiny-padding with-tiny-margin right" ng-show="quiz.required" translate><small>courses.required</small></span> -->
     <span class="label size-10 round blue with-tiny-padding with-tiny-margin right" ng-if="quiz && !quiz.graded" ><span translate>courses.optional</span></span>
 

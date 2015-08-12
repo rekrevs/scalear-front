@@ -34,7 +34,8 @@
                 </div>
             </div>
             <br />
-            <div class="small-12 columns no-padding">                
+            <div class="small-12 columns no-padding">
+            <br />                
                 <button id="delete_teacher" ng-show="!teacher_forum" ng-click="toggleDelete()" class="button tiny" ng-class="{'alert': !in_delete, 'success': in_delete}">{{toggle_message | translate}}</button>
                 <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button" translate>courses.add_teacher</button>
                 <form name='email_form' ng-show="teacher_forum" novalidate>

@@ -621,8 +621,8 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '3.14.2 (' + new Date().toUTCString() + ')',
-                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.0.pdf',
+                        version: '3.14.3 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.1.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
                         // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
@@ -643,8 +643,8 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
-                        version: '3.14.2 (' + new Date().toUTCString() + ')',
-                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.0.pdf',
+                        version: '3.14.3 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.1.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
                         // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
@@ -665,8 +665,8 @@ module.exports = function(grunt) {
                     scalear_api: {
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
-                        version: '3.14.2 (' + new Date().toUTCString() + ')',
-                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.0.pdf',
+                        version: '3.14.3 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.1.pdf',
                         flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
                         teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
                         // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",

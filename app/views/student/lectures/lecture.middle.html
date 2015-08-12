@@ -1,4 +1,4 @@
-<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-small-down" style="margin:0px">
+<span ng-repeat="(key,alert_message) in alert_messages" ng-show="alert_messages" class="warning alert-box label radius show-for-medium-down show-for-portrait" style="margin:0px">
 	 <span ng-show='key=="due"'>
 	 	<span translate>controller_msg.due_date_passed</span>{{' - '+alert_message[0]+'('+alert_message[1]}} <span >{{ "controller_msg."+alert_message[2] | translate}}</span>) 
 	 	<span translate>controller_msg.ago</span>

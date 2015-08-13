@@ -95,7 +95,7 @@ angular.module('scalearAngularApp')
     $scope.teacher_forum = true
   }
 
-  $scope.updateTeacher = function(){
+  $scope.updateTeacher = function(index){
     Course.updateTeacher(
       {course_id:$stateParams.course_id},
       {

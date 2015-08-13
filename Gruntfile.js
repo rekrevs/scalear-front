@@ -619,6 +619,8 @@ module.exports = function(grunt) {
                 name: 'config',
                 constants: {
                     scalear_api: {
+                        debug: true,
+                        ga_token: "",
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
                         version: '3.14.3 (' + new Date().toUTCString() + ')',
@@ -641,6 +643,8 @@ module.exports = function(grunt) {
                 name: 'config',
                 constants: {
                     scalear_api: {
+                        debug: false,
+                        ga_token: "UA-66097980-1",
                         host: '', //'http://angular-learning.herokuapp.com',
                         redirection_url: '',
                         version: '3.14.3 (' + new Date().toUTCString() + ')',
@@ -663,6 +667,8 @@ module.exports = function(grunt) {
                 name: 'config',
                 constants: {
                     scalear_api: {
+                        debug: false,
+                        ga_token: "",
                         host: 'http://0.0.0.0:3000',
                         redirection_url: 'http://0.0.0.0:3000/#/',
                         version: '3.14.3 (' + new Date().toUTCString() + ')',

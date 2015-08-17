@@ -1,14 +1,14 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour', 'ContentNavigator',
-        function($scope, $timeout,$state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate,$cookieStore,Course, ScalTour, ContentNavigator) {
+    .controller('indexCtrl', ['$scope', '$timeout', '$state', 'User', '$rootScope', '$translate', '$window', '$modal', '$log', 'Page','Impersonate','$cookieStore','Course', 'ScalTour', 'ContentNavigator','scalear_api',
+                        function($scope, $timeout, $state, User, $rootScope, $translate, $window, $modal, $log, Page, Impersonate, $cookieStore, Course, ScalTour, ContentNavigator, scalear_api) {
 
-            FastClick.attach(document.body);
+            // FastClick.attach(document.body);
             $scope.Page = Page;
             $rootScope.preview_as_student = $cookieStore.get('preview_as_student')
             $scope.ContentNavigator = ContentNavigator
-            
+            $scope.scalear_api = scalear_api
             
             $scope.ContentNavigator.delayed_navigator_open = $scope.ContentNavigator.status
 
@@ -82,6 +82,10 @@ angular.module('scalearAngularApp')
             $rootScope.is_mobile= isMobile()
             $scope.changeLanguage($translate.uses());
             getCurrentCourses()
+
+            //Google Analytics
+            ga('create', scalear_api.ga_token); //UA-66097980-1
+            ga('send', 'pageview');
 
 
         }

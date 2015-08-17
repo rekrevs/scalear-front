@@ -320,7 +320,7 @@ li{
   vertical-align: top;
 }
 .last-child{
-  padding-left: 15px !important;
+  padding-left: 8px !important;
 }
 .h:hover, .last-child:hover, .inneritemopen{
   background-color: rgba(0,0,0,0.1);

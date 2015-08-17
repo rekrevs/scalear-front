@@ -207,12 +207,11 @@ angular.module('scalearAngularApp', [
     }
 ])
 
-.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider',
-    function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider) {
+.config(['$stateProvider', '$urlRouterProvider', '$httpProvider', '$translateProvider', '$logProvider', 'cfpLoadingBarProvider', 'scalear_api',function($stateProvider, $urlRouterProvider, $httpProvider, $translateProvider, $logProvider, cfpLoadingBarProvider, scalear_api) {
         cfpLoadingBarProvider.includeSpinner = true;
         // cfpLoadingBarProvider.color = 'black';
 
-        $logProvider.debugEnabled(false)
+        $logProvider.debugEnabled(scalear_api.debug)
 
         $translateProvider
             .translations('en', translation_en())

@@ -661,6 +661,30 @@ module.exports = function(grunt) {
 
                 }
             }],
+            staging: [{
+                dest: '<%= yeoman.app %>/scripts/config.js',
+                wrap: '"use strict";\n\n <%= __ngModule %>',
+                name: 'config',
+                constants: {
+                    scalear_api: {
+                        debug: true,
+                        ga_token: "",
+                        host: '', //'http://angular-learning.herokuapp.com',
+                        redirection_url: '',
+                        version: '3.14.4 (' + new Date().toUTCString() + ')',
+                        instruction_manual: 'external_documents/Manual - Using Scalable Learning v.3.1.pdf',
+                        flipped_manual: 'external_documents/Manual - Flipped Teaching v.1.0.pdf',
+                        teacher_welcome_video:      "https://www.youtube.com/watch?v=tqE7wRQCgmU",
+                        // teacher_new_course_video:   "https://www.youtube.com/watch?v=D7BINlTL35g",
+                        // teacher_review_course_video:"https://www.youtube.com/watch?v=bvo9hWsb5Ss",
+                        teacher_new_course_video:     "https://www.youtube.com/watch?v=rDWIUYybFPs",
+                        teacher_review_course_video:      "https://www.youtube.com/watch?v=DhJgqWBm0XY",
+                        student_welcom_video:       "https://www.youtube.com/watch?v=bLiZfyBuFkc",
+                        teacher_forum_link:         "https://groups.google.com/forum/#!forum/scalablelearning-teachers-forum"
+                    }
+
+                }
+            }],
             coverageE2E:[{
                 dest: '<%= yeoman.coverageE2E %>/app/scripts/config.js',
                 wrap: '"use strict";\n\n <%= __ngModule %>',
@@ -732,8 +756,8 @@ module.exports = function(grunt) {
         'clean:bower'
     ]);
 
-    grunt.registerTask('staging', ['ngconstant:staging', 'build', 'aws_s3:staging', 's3:staging'])
-    grunt.registerTask('staging2', ['ngconstant:staging2', 'build'])
+    grunt.registerTask('staging_aws', ['ngconstant:staging', 'build', 'aws_s3:staging', 's3:staging'])
+    grunt.registerTask('staging', ['ngconstant:staging', 'build'])
     grunt.registerTask('production', ['ngconstant:prod', 'build'])
     grunt.registerTask('coverage', [
       'clean:coverageE2E',

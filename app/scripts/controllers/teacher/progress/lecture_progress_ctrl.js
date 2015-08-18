@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
    //      if($scope.lecture_offset == null)
             
    //  }
-
+   $scope.module= $scope.course.selected_module
   	$scope.getAllItemsProgress = function(offset, limit){
         $scope.lecture_limit =  limit
         $scope.lecture_offset = offset

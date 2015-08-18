@@ -22,6 +22,10 @@
     line-height: 22px;
 }
 
+a.page-scroll{
+    font-size: 14px
+}
+
 p {
     font-size: 14px;
     line-height: 1.75;
@@ -303,7 +307,8 @@ header {
     text-align: center;
     color: #fff;
     background-attachment: scroll;
-    background-image: url(../images/landing/header-bg.jpg);
+    background-color: green;
+    /*background-image: url(../images/landing/header-bg.jpg);*/
     background-position: center center;
     background-repeat: none;
     -webkit-background-size: cover;

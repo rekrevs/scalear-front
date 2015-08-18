@@ -228,8 +228,14 @@ angular.module('scalearAngularApp', [
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: '/views/main.html',
-                controller: 'MainCtrl'
+                 views:{
+                    'landing':{
+                        templateUrl: '/views/main.html',
+                        controller: 'MainCtrl'
+                    },
+                }
+                // templateUrl: '/views/main.html',
+                // controller: 'MainCtrl'
             })
             .state('ie', {
                 url: '/ie',

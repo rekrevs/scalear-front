@@ -426,6 +426,16 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/progress/progress_lecture.html',
                 controller: 'progressLectureCtrl'
             })
+            .state('course.progress_overview', {
+                url: "/progress_overview",
+                templateUrl: '/views/teacher/progress/progress_overview.html',
+                controller: 'progressOverviewCtrl'
+            })
+            .state('course.module.progress_overview', {
+                url: "/progress_overview",
+                templateUrl: '/views/teacher/progress/progress_overview.html',
+                controller: 'progressOverviewCtrl'
+            })
             .state('course.module.progress_details', {
                 url: "/progress/details",
                 templateUrl: '/views/teacher/progress/progress_module.html',

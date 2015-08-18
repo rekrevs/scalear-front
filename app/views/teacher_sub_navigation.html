@@ -85,7 +85,7 @@
                 <ul class="left" id="teacher_left_nav">
                     <li>
                         <a id="content"  class="whitesmoke dark-text with-tiny-padding-left with-tiny-padding-right"  page-name="head.information" >
-                            <div ng-class="{'subnav-item-active': ('course.course_editor' | includedByState) || ('course.module.course_editor.**' | includedByState)}" ui-sref="course.course_editor" class="whitesmoke-hover round-subheader size-14" translate>edit</div>
+                            <div ng-class="{'subnav-item-active': ('course.course_editor' | includedByState) || ('course.module.course_editor.**' | includedByState)}" ng-click="goToEditor()" class="whitesmoke-hover round-subheader size-14" translate>edit</div>
                         </a>
                         <!-- <ul class="lighter-grey-no-hover" top-bar-dropdown>
                                 <li ng-class="{'disabled': !in_module_state}">
@@ -109,12 +109,12 @@
                     </li>
                     <li>
                         <a id="progress" class="whitesmoke dark-text with-tiny-padding-left with-tiny-padding-right" >
-                            <div class="whitesmoke-hover round-subheader size-14" ui-sref="course.progress" ng-class="{'subnav-item-active': ('course.progress' | includedByState) || ('course.progress_main' | includedByState) || ('course.module.progress.**' | includedByState) || ('course.module.progress_details' | includedByState) }"  translate>courses.review</div>
+                            <div class="whitesmoke-hover round-subheader size-14" ng-class="{'subnav-item-active': ('course.progress' | includedByState) ||('**.progress_overview' | includedByState) || ('course.progress_main' | includedByState) || ('course.module.progress.**' | includedByState) || ('course.module.progress_details' | includedByState) }"  ng-click="goToProgress()" translate>courses.review</div>
                         </a>
                     </li>
                     <li>
                         <a id="inclass" class="whitesmoke dark-text with-tiny-padding-left with-tiny-padding-right" >
-                            <div class="whitesmoke-hover round-subheader size-14" ui-sref="course.inclass" ng-class="{'subnav-item-active': ('course.inclass' | includedByState) || ('course.module.inclass.**' | includedByState) }"  translate>head.in_class</div>
+                            <div class="whitesmoke-hover round-subheader size-14" ng-click="goToClass()" ng-class="{'subnav-item-active': ('course.inclass' | includedByState) || ('course.module.inclass.**' | includedByState) }"  translate>head.in_class</div>
                         </a>
                         <!-- <ul class="lighter-grey-no-hover" top-bar-dropdown >
                             <span ng-show="'**.course_editor.**' | includedByState">

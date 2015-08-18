@@ -5,6 +5,7 @@ angular.module('scalearAngularApp')
   var x={
     elementsList: $(),
     showMessage: function(content, cl, time){
+      console.log("trying to see message")
       angular.element('.message').remove()
       $('<div/>').addClass('message')
       .addClass('valign-super')

@@ -191,22 +191,17 @@ angular.module('scalearAngularApp')
 				// scope.addLink=function(){
 				// 	$rootScope.$broadcast('add_link')
 				// }
-				// scope.goToContentEditor=function(){
-				// 	if(!$state.includes("**.course_editor.**")){
-				// 		if($state.params.module_id)
-				// 			$state.go("course.module.course_editor.overview")
-				// 		else
-				// 			$state.go("course.course_editor")
-				// 	}
-				// }
+				scope.goToEditor=function(){
+					$state.includes("**.module.**")? $state.go("course.module.course_editor.overview") : $state.go("course.course_editor")					
+				}
 
-				// scope.goToProgress=function(){
-				// 	$state.includes("**.module.**")? $state.go("course.module.progress") : $state.go("course.progress")
-				// }
+				scope.goToProgress=function(){
+					$state.includes("**.module.**")? $state.go("course.module.progress_overview") : $state.go("course.progress_overview")
+				}
 
-				// scope.goToClass=function(){
-				// 	$state.includes("**.module.**")? $state.go("course.module.inclass") : $state.go("course.inclass")
-				// }
+				scope.goToClass=function(){
+					$state.includes("**.module.**")? $state.go("course.module.inclass") : $state.go("course.inclass")
+				}
 				// scope.copyItem = function(){
 				// 	if($state.params.link_id)
 				// 		var item = {class_name: 'customlink', id: $state.params.link_id}
@@ -478,7 +473,7 @@ angular.module('scalearAngularApp')
   	}
                
   	scope.showItem = function(item, type){
-  		if($state.includes("**.progress.**")){
+  		if($state.includes("**.progress.**") || $state.includes("**.progress_overview")){
   			if($state.includes("course.module.progress"))
   				$rootScope.$broadcast("scroll_to_item",item)
   		}
@@ -498,14 +493,14 @@ angular.module('scalearAngularApp')
 
  	scope.showModule=function(module, event){
  		// $log.debug(scope.currentmodule)
+ 		console.log($state)
  		if(scope.currentmodule && scope.currentmodule.id == module.id)
         	event.stopPropagation()
         // else{
- 		if($state.includes("course.module.progress") || $state.includes("course.progress") || $state.includes("course.progress_main"))
- 			$state.go('course.module.progress',{module_id: module.id})
- 		else if ($state.includes("course.module.progress_details")){
- 			$state.go('course.module.progress_details',{module_id: module.id})
- 		}
+    	if($state.includes("course.progress_overview") || $state.includes("course.progress_main"))
+    		$state.go('course.module.progress_overview',{module_id: module.id})
+ 		else if($state.includes("course.module.progress")  || $state.includes("course.module.progress_overview") || $state.includes("course.module.progress_details"))
+ 			$state.go('.',{module_id: module.id})
  		else if($state.includes("course.module.inclass") || $state.includes("course.inclass")){
  			$state.go('course.module.inclass',{module_id: module.id})
  		}

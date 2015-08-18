@@ -416,15 +416,15 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/progress/progress.html',
                 controller: 'progressCtrl'
             })
+            .state('course.progress_graph', {
+                url: "/progress/graph",
+                templateUrl: '/views/teacher/progress/progress_graph.html',
+                controller: 'progressGraphCtrl'
+            })
             .state('course.progress_main', {
                 url: "/progress/main",
                 templateUrl: '/views/teacher/progress/progress_main.html',
                 controller: 'progressMainCtrl'
-            })
-            .state('course.module.progress', {
-                url: "/progress",
-                templateUrl: '/views/teacher/progress/progress_lecture.html',
-                controller: 'progressLectureCtrl'
             })
             .state('course.progress_overview', {
                 url: "/progress_overview",
@@ -436,10 +436,25 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/progress/progress_overview.html',
                 controller: 'progressOverviewCtrl'
             })
+            .state('course.module.progress', {
+                url: "/progress",
+                templateUrl: '/views/teacher/progress/progress_lecture.html',
+                controller: 'progressLectureCtrl'
+            })            
             .state('course.module.progress_details', {
                 url: "/progress/details",
                 templateUrl: '/views/teacher/progress/progress_module.html',
                 controller: 'progressModuleCtrl'
+            })
+            .state('course.module.progress_statistics', {
+                url: "/progress/statistics",
+                templateUrl: '/views/teacher/progress/student_statistics_tab.html',
+                controller: 'studentStatisticsCtrl'
+            })
+            .state('course.module.progress_students', {
+                url: "/progress/students",
+                templateUrl: '/views/teacher/progress/lecture_progress_tab.html',
+                controller: 'lectureProgressCtrl'
             })
             .state('course.module.courseware', {
                 url: '/courseware',

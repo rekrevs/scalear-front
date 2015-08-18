@@ -3,13 +3,10 @@
 angular.module('scalearAngularApp')
   .controller('lectureProgressCtrl', ['$scope','$stateParams','$timeout','Module','$log', function ($scope, $stateParams, $timeout, Module, $log) {
   	
-  	 $scope.lectureProgressTab = function(){
-        // $scope.tabState(3)
-        // enableInfinitScrolling() 
-        if($scope.lecture_offset == null)
-            $scope.getAllItemsProgress(0,20)
-        enableInfinitScrolling()     
-    }
+  	// $scope.lectureProgressTab = function(){
+   //      if($scope.lecture_offset == null)
+            
+   //  }
 
   	$scope.getAllItemsProgress = function(offset, limit){
         $scope.lecture_limit =  limit
@@ -51,9 +48,6 @@ angular.module('scalearAngularApp')
                     // $('.state').tooltip({"placement": "top", container: 'body'}) 
                 })
                     
-            },
-            function(){
-                //alert('Could not load data, please check your internet connection')
             }
         );
     }    
@@ -73,23 +67,13 @@ angular.module('scalearAngularApp')
     }
 
  	var enableInfinitScrolling = function(){
-        // if($scope.tabState() == 3){
-            $scope.lecture_scroll_disable = false
-            // $scope.quiz_scroll_disable = true
-            // $scope.chart_scroll_disable= true
-            // $scope.survey_scroll_disable = true
-        // }
-       
+        $scope.lecture_scroll_disable = false
     }
 
     var disableInfinitScrolling = function(){
-        // if($scope.tabState() == 3){
-            $scope.lecture_scroll_disable = true
-            // $scope.quiz_scroll_disable = true
-            // $scope.chart_scroll_disable= true
-            // $scope.survey_scroll_disable = true
-        // }
-       
+        $scope.lecture_scroll_disable = true
     }
+    
+    $scope.getAllItemsProgress(0,20)
 
   }]);

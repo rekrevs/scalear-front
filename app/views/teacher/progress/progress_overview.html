@@ -1,7 +1,6 @@
-<div>
-	<br/>
-	<div class="small-8 columns" style="margin-bottom: 15px;">
-		<div class="small-12 columns" style="margin-bottom: 15px;"><h4 class="subheader"><span translate>Review Module</span></h4></div>
+<div style="margin-top:10px">
+	<div class="small-8 columns" style="margin-bottom: 10px;">
+		<div class="small-12 columns" style="margin-bottom: 10px;"><h4 class="subheader"><span translate>Review Module</span></h4></div>
 		<br />
 		<!-- <div class="small-12 columns"><p translate>courses.choose_review_module</p></div> -->
 		<div class="small-12 columns no-padding">
@@ -14,19 +13,43 @@
 		</div>
 		<div class="small-12 columns no-padding">
 			<div class="small-12 medium-4 columns">
-				<a class="button small" ng-click='goTo("course.module.progress_details")' translate>courses.show_student_details</a>
+				<a class="button small" ng-click='goTo("course.module.progress_statistics")' translate>View Lecture Statistics</a>
+			</div>
+			<div class="small-12 medium-8 columns">
+				<p class="no-margin" translate>courses.module_completion_desc</p>
+			</div>
+		</div>
+		<div class="small-12 columns no-padding">
+			<div class="small-12 medium-4 columns">
+				<a class="button small" ng-click='goTo("course.module.progress_students")' translate>View Students Progress</a>
 			</div>
 			<div class="small-12 medium-8 columns">
 				<p class="no-margin" translate>courses.module_completion_desc</p>
 			</div>
 		</div>
 	</div>
-	<hr  style="margin:15px 30px"/>
+	<hr  style="margin:10px 30px"/>
 	<div class="small-8 columns">
-		<div class="small-12 columns" style="margin-bottom: 15px;"><h4 class="subheader"><span translate>Review Course</span></h4></div>
-		<div class="small-12 columns no-padding">
+		<div class="small-12 columns" style="margin-bottom: 10px;"><h4 class="subheader"><span translate>Review Course</span></h4></div>
+		<!-- <div class="small-12 columns no-padding">
 			<div class="small-12 medium-4 columns">
 				<a class="button small" ui-sref="course.progress_main" translate>courses.view_module_completion</a>
+			</div>
+			<div class="small-12 medium-8 columns">
+				<p class="no-margin" translate>courses.module_completion_desc</p>
+			</div>
+		</div> -->
+		<div class="small-12 columns no-padding">
+			<div class="small-12 medium-4 columns">
+				<a class="button small" ui-sref="course.progress" translate>View Module Completion</a>
+			</div>
+			<div class="small-12 medium-8 columns">
+				<p class="no-margin" translate>courses.module_completion_desc</p>
+			</div>
+		</div>
+		<div class="small-12 columns no-padding">
+			<div class="small-12 medium-4 columns">
+				<a class="button small" ui-sref="course.progress_graph" translate>View Progress Graph</a>
 			</div>
 			<div class="small-12 medium-8 columns">
 				<p class="no-margin" translate>courses.module_completion_desc</p>

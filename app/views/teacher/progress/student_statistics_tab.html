@@ -1,3 +1,6 @@
+<!--build:css(.tmp/styles) styles/progress.css -->
+<link rel="stylesheet" href="styles/teacher/progress.css"/>
+<!-- endbuild -->
 <div ng-if="statistics.lecture_names.length" ng-show="lecture_url">
 	<div class="row">
 		<div class="small-6 small-centered columns">
@@ -28,7 +31,7 @@
 </div>
 <div class="row">
 	<center>
-		<loading size="small" show="loading_statistics_chart" />
+		<loading size="big" show="loading_statistics_chart" />
 		<div ng-show="(!statistics.lecture_names.length || !lecture_url) && !loading_statistics_chart" translate>courses.no_lectures</div>
 	</center>
 </div>

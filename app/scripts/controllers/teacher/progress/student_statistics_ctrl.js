@@ -13,6 +13,7 @@ angular.module('scalearAngularApp')
        		getStudentStatistics()   
 	    } 
 
+
 	    var getStudentStatistics = function(){
 	    	$scope.loading_statistics_chart=true
 	    	Module.getStudentStatistics(
@@ -196,4 +197,5 @@ angular.module('scalearAngularApp')
              	$scope.statistics_player.controls.seek_and_pause(to_seek)
 		  }
 
+		  $scope.studentStatisticsTab()
   }]);

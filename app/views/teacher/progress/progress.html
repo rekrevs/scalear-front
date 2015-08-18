@@ -1,4 +1,4 @@
-<div>
+<!-- <div>
 	<br/>
 	<div class="small-8 columns">
 		<div class="small-12 columns" style="margin-bottom:15px"><h4 class="subheader"><span translate>courses.review_module</span></h4></div>
@@ -12,4 +12,7 @@
 			</div>
 		</div>
 	</div>
+</div> -->
+<div style="overflow:auto" ng-if="module_status">
+	<progress_matrix column_names='module_names' students='module_students' status="module_status" action="updateStatus(student_id, module_id, module_status)" show_popover="true" remaining="getRemainingModuleProgress" scrolldisabled="module_scroll_disable" modstatus="module_status"></progress_matrix>
 </div>

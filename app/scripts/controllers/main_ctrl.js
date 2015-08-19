@@ -1,31 +1,62 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('MainCtrl', ['$scope','$log','Page','$rootScope','$timeout', function ($scope, $log,Page, $rootScope, $timeout) {   
-	Page.setTitle('Home')
-	$rootScope.subheader_message = null
-	$scope.show_content = true
- 	// $scope.$on('$viewContentLoaded', function(){
+  .controller('MainCtrl', ['$scope','$log','Page','$rootScope','Home','$state','$location', function ($scope, $log,Page, $rootScope, Home, $state, $location) { 
+	Page.setTitle('Welcome!')
+  $scope.play_teacher= false
+  $scope.play_student= false
+  $('a.page-scroll').bind('click', function(event) {
+      $('html, body').stop().animate({scrollTop: $($(this).attr('href')).offset().top}, 1500, 'easeInOutExpo');
+      event.preventDefault();
+  });
 
- 		
-  // 	});
-  	// $('.body').ready(function(){
- 		// $timeout(function(){$scope.show_content = true},1000)
-  	// })
+	$('.navbar-collapse ul li a').click(function() {
+	    $('.navbar-toggle:visible').click();
+	});
 
-    // $('a.page-scroll').bind('click', function(event) {
-    //     $('html, body').stop().animate({scrollTop: $($(this).attr('href')).offset().top}, 1500, 'easeInOutExpo');
-    //     event.preventDefault();
-    // });
+  $('body').scrollspy({
+    target: '.navbar-fixed-top'
+  })
 
-	// $('.navbar-collapse ul li a').click(function() {
-	//     $('.navbar-toggle:visible').click();
-	// });
+  $scope.goTo=function(state){
+    $state.go(state)
+  }
 
- //  // Highlight the top nav as scrolling occurs
- //  $('.body').scrollspy({
- //      target: '.navbar-fixed-top'
- //  })
+  $scope.playerTeacher=function(){
+    $scope.play_teacher= true
+  }
+
+  $scope.playerStudent=function(){
+    $scope.play_student= true
+  }
+
+
+
+  $scope.send_technical=function() {
+    $scope.submitted = true
+    if($scope.user && $scope.user.name && $scope.user.email && $scope.technical_data){
+      $scope.sending_technical = true;      
+      Home.technicalProblem({
+        name: $scope.user.name,
+        email: $scope.user.email,
+        issue_type: "system",
+        course: -1,
+        module: -1,
+        lecture: -1,
+        quiz: -1,
+        url: $location.url(),
+        problem: $scope.technical_data,
+        lang: $rootScope.current_lang,
+        agent: navigator.userAgent
+      },function() {
+        $scope.user={}
+        $scope.technical_data = null; 
+        $scope.sending_technical = false; 
+        $scope.show_thanks = true 
+        $scope.submitted = false         
+      });
+    }
+  }
    
 }]);
 

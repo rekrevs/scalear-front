@@ -13,14 +13,19 @@ angular.module('scalearAngularApp')
  		// $timeout(function(){$scope.show_content = true},1000)
   	// })
 
-    $('a.page-scroll').bind('click', function(event) {
-        $('html, body').stop().animate({scrollTop: $($(this).attr('href')).offset().top}, 1500, 'easeInOutExpo');
-        event.preventDefault();
-    });
+    // $('a.page-scroll').bind('click', function(event) {
+    //     $('html, body').stop().animate({scrollTop: $($(this).attr('href')).offset().top}, 1500, 'easeInOutExpo');
+    //     event.preventDefault();
+    // });
 
-	$('.navbar-collapse ul li a').click(function() {
-	    $('.navbar-toggle:visible').click();
-	});
+	// $('.navbar-collapse ul li a').click(function() {
+	//     $('.navbar-toggle:visible').click();
+	// });
+
+ //  // Highlight the top nav as scrolling occurs
+ //  $('.body').scrollspy({
+ //      target: '.navbar-fixed-top'
+ //  })
    
-  }]);
+}]);
 

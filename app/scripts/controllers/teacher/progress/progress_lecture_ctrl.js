@@ -67,7 +67,7 @@ angular.module('scalearAngularApp')
     }]
   	var init= function(){
   		$scope.timeline = new Timeline()
-      $scope.module= $scope.course.selected_module
+
       getModuleCharts()
       getLectureCharts()
       getQuizCharts()
@@ -82,7 +82,7 @@ angular.module('scalearAngularApp')
         },
         function(data){
           angular.extend($scope, data)
-          
+          $scope.module= $scope.course.selected_module
           $log.debug("moduel ", $scope.course.selected_module)
           if($scope.progress_player.controls.isYoutube($scope.first_lecture)){
             $scope.url = $scope.first_lecture+"&controls=1&fs=1&theme=light"

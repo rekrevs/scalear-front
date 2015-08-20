@@ -29,12 +29,6 @@
                 <tbody class="with-small-padding-left lightgrey-with-hover" name="confused-timeline-item" confused_timeline bo-if="item.type=='confused'" data='item' seek='seek()' bo-id='"confused_"+item.data.id' />
                 <tbody class="with-small-padding-left lightgrey-with-hover" name="discussion-timeline-item" discussion_timeline ng-if="item.type=='discussion'" data='item' seek='seek()' bo-id='"discussion_"+item.data.id'/>
                 <tbody class="with-small-padding-left lightgrey-with-hover" name="notes-timeline-item" notes_timeline bo-if="item.type=='note'" data="item" seek='seek()' bo-id='"note_"+item.data.id'/>
-                <!-- <tbody class="with-small-padding-left" ng-repeat="item in timeline[l.id].items | filter:filterType"> -->
-                    <!-- <tr name="quiz-timeline-item" quiz_timeline bo-if="item.type=='quiz'" data='item' seek='seek()' bo-id='"quiz_"+item.data.id' ng-class="{'lightgrey-with-hover': item.data.is_quiz_solved, 'lightgrey':!item.data.is_quiz_solved}" /> -->
-                    <!-- <tr name="confused-timeline-item" confused_timeline ng-if="item.type=='confused'" item='item' seek='seek()' id='{{"confused_"+item.data.id}}' class="lightgrey-with-hover" /> -->
-                    <!-- <tr name="discussion-timeline-item" discussion_timeline ng-if="item.type=='discussion'" item='item' seek='seek()' id='{{"discussion_"+item.data.id}}'class="lightgrey-with-hover"/> -->
-                    <!-- <tr name="notes-timeline-item" notes_timeline ng-if="item.type=='note'" item="item" seek='seek()' id='{{"note_"+item.data.id}}' class="lightgrey-with-hover"/> -->
-                <!-- </tbody> -->
             </table>
         </span>
         <span bo-if="l.class_name =='quiz'">

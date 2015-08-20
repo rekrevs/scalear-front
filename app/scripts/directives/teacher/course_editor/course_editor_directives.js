@@ -188,12 +188,9 @@ angular.module('scalearAngularApp')
             scope: {
                 size: "@",
                 action: "&",
-                hideConfirm: '=',
-                placement: '=',
-                vertical: '=',
-                text: '=',
-                color: '@',
-                overlaymode: '=',
+                vertical: '&',
+                text: '&',
+                overlaymode: '&',
                 mode: '@',
                 moduleitem: '@',
                 tooltiptext: "@",
@@ -204,6 +201,9 @@ angular.module('scalearAngularApp')
             templateUrl: '/views/teacher/course_editor/delete_button.html',
             link: function(scope) {
                 scope.tooltiptext_translated = $translate(scope.tooltiptext)
+                scope.overlay = scope.overlaymode()
+                scope.display_vertical = scope.vertical()
+                scope.text_mode = scope.text()
                 scope.showDeletePopup = function(value,ev) {
                     scope.displayDeletePopup = value
                     ev.stopPropagation()

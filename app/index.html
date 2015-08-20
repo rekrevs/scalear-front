@@ -54,8 +54,8 @@
       <script src="bower_components/es5-shim/es5-shim.js"></script>
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
-     <div ng-if="!current_user" ui-view="landing"></div>
-     <span ng-if="!('home'| includedByState)">
+     <div ui-view="landing"></div>
+     <span ng-if="!('landing'| includedByState) && !('home'| includedByState) ">
          <header>
             <main-navigation user="current_user" courses="current_courses"></main-navigation>
         </header> 
@@ -220,6 +220,7 @@
     <script src="scripts/services/details_navigator.js"></script>
 
     <script src="scripts/controllers/main_ctrl.js"></script>
+    <script src="scripts/controllers/home_ctrl.js"></script>
     <script src="scripts/controllers/index_ctrl.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/navigation.js"></script>

@@ -2546,11 +2546,7 @@
 .landing .affix {
   position: fixed;
 }
-@-ms-viewport {
-  .landing {
-    width: device-width;
-  }
-}
+
 .landing .visible-xs,
 .landing .visible-sm,
 .landing .visible-md,

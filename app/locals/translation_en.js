@@ -858,7 +858,7 @@ var translation_en=function(){
         right_click: "Right-click on an item to Copy, Paste, or Share it with other teachers.",
         link_editor:"Link Editor",
         video_editor:"Video Editor",
-        review_module: "Review Module Completion",
+        review_module_completion: "Review Module Completion",
         choose_review_module: "Choose a module to review the students’ online progress, respond to questions, and select material for in-class review.",
         view_module_completion: "View Modules Completion",
         module_completion_desc: "View which students have completed each module on-time or late.",
@@ -867,7 +867,18 @@ var translation_en=function(){
         show_progress: "Show Progress",
         student_progress_details: "Student Progress Details",
         inclass_content: "Display In-class Content",
-        choose_inclass_module: "Choose a module to display selected materials In-class"
+        choose_inclass_module: "Choose a module to display selected materials In-class",
+        view_respond_students:"View and respond to students’ quizzes and questions, and choose material for in-class.",
+        view_interaction: "View student interactions across a module.",
+        view_module_completed: "View which students have completed each video in a module on-time or late.",
+        view_course_completed: "View which students have completed each module on-time or late.",
+        view_course_graph: "View a percentage graph of overall lectures and quizzes completion.",
+        review_module:"Review Module",
+        module_review: "Module Review",
+        module_timeline:"Module Timeline",
+        review_course:"Review Course",
+        course_completion:"Course Completion",
+        course_graph: "Course Graph"
       },
       controller_msg:{
         announcement_successfully_created: "Announcement was successfully created.",

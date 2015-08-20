@@ -1650,7 +1650,7 @@ h2 .editable-click{
 }
 
 /*forum elements*/
-.form-control{
+.container .form-control{
 	padding: 10px;
 	min-height: 150px;
 	border: 1px solid grey;

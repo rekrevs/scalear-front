@@ -44,6 +44,10 @@ angular.module('scalearAngularApp')
 					if(course.id != $state.params.course_id)
 						$state.go('course', {course_id: course.id})
 				}
+
+				scope.goHome=function(){
+					scope.user? $state.go("dashboard") : $state.go("home")
+				}
 				// scope.startTour = $tour.start
 				// scope.endTour = $tour.end
 				scope.startTour = function(){

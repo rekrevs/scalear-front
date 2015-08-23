@@ -34,23 +34,17 @@ angular.module('scalearAngularApp')
 
   $scope.send_technical=function() {
     $scope.submitted = true
-    if($scope.user && $scope.user.name && $scope.user.email && $scope.technical_data){
+    if($scope.user && $scope.user.name && $scope.user.email && $scope.comment_data){
       $scope.sending_technical = true;      
-      Home.technicalProblem({
+      Home.contactUs({
         name: $scope.user.name,
         email: $scope.user.email,
-        issue_type: "system",
-        course: -1,
-        module: -1,
-        lecture: -1,
-        quiz: -1,
         url: $location.url(),
-        problem: $scope.technical_data,
-        lang: $rootScope.current_lang,
+        comment: $scope.comment_data,
         agent: navigator.userAgent
       },function() {
         $scope.user={}
-        $scope.technical_data = null; 
+        $scope.comment_data = null; 
         $scope.sending_technical = false; 
         $scope.show_thanks = true 
         $scope.submitted = false         

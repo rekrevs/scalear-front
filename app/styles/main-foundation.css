@@ -681,6 +681,16 @@ select{
 	margin: 0 0 1rem 0;
 }
 
+input.answer_input{
+  width: 2%; 
+  max-width: 12px;
+}
+
+.ipad input.answer_input{
+  width: 100%;
+  max-width: none;
+}
+
 /*@media only screen and (max-width:40.063em) {
 	.left-navigation{
 		display: none;

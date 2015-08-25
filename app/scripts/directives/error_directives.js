@@ -26,9 +26,10 @@ angular.module('scalearAngularApp')
         link: function(scope) {
         	$log.debug("in error directive")
         	scope.$watch(function(){
-        		if(scope.data)
-        		{var arr=scope.data[scope.column]
-        	 	scope.error=arr.join();}	
+        		if(scope.data){
+                    var arr=scope.data[scope.column]
+                    scope.error=arr.join();
+                }	
         	});               	 
         }
     };

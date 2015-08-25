@@ -1,7 +1,7 @@
-<div>
+<!-- <div>
 	<br/>
 	<div class="small-8 columns">
-		<div class="small-12 columns"><h5><b translate>courses.review_module</b></h5></div>
+		<div class="small-12 columns" style="margin-bottom:15px"><h4 class="subheader"><span translate>courses.review_module_completion</span></h4></div>
 		<div class="small-12 columns"><p translate>courses.choose_review_module</p></div>
 		<div class="small-12 columns no-padding">
 			<div class="small-12 medium-4 columns">
@@ -11,5 +11,14 @@
 				<p class="no-margin" translate>courses.module_completion_desc</p>
 			</div>
 		</div>
+	</div>
+</div> -->
+<div style="overflow:auto" ng-if="module_status">
+	<h4 class="small-12 columns with-small-padding-top">
+		<b><span translate>courses.course_completion</span>:</b>
+		<span>{{course.short_name+" "+course.name}}</span>
+	</h4>
+	<div class="small-12 columns">
+		<progress_matrix column_names='module_names' students='module_students' status="module_status" action="updateStatus(student_id, module_id, module_status)" show_popover="true" remaining="getRemainingModuleProgress" scrolldisabled="module_scroll_disable" modstatus="module_status"></progress_matrix>
 	</div>
 </div>

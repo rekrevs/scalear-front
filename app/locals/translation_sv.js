@@ -856,7 +856,7 @@ var translation_sv=function(){
       right_click: "Högerklicka på ett objekt för att kopiera, klistra, eller dela det med andra lärare.",
       link_editor:"Länk Redaktör",
       video_editor:"Video Redaktör",
-      review_module: "Recension Modul",
+      review_module_completion: "Recension Modul Fullbordan",
       choose_review_module: "Välj en modul för att granska elevernas nätet framsteg, svara på frågor, och väljer material i klass översyn.",
       view_module_completion: "Se Modul Slutförande",
       module_completion_desc: "Se där studenter har avslutat varje modul i tid eller sent.",
@@ -865,7 +865,18 @@ var translation_sv=function(){
       show_progress: "Visa framsteg",
       student_progress_details: "Student framsteg Detaljer",
       inclass_content: "Visa I-klassinnehåll",
-      choose_inclass_module: "Välj en modul för att visa utvalda material I-klass"
+      choose_inclass_module: "Välj en modul för att visa utvalda material I-klass",
+      view_respond_students:"Visa och svara på elevernas frågesporter och frågor, och välj material i-klassen.",
+      view_interaction: "Visa elevinteraktioner över en modul.",
+      view_module_completed: "Visa där studenter har avslutat varje video i en modul i tid eller sent.",
+      view_course_completed: "Visa där studenter har avslutat varje modul i tid eller sent.",
+      view_course_graph: "Visa en procentsats graf av den totala föreläsningar och frågesporter slutförande.",
+      review_module:"Omdöme Modul",
+      module_review: "Modul Omdöme",
+      module_timeline:"modul tidslinje",
+      review_course:"Omdöme Kurs",
+      course_completion:"Kurs Fullbordan",
+      course_graph: "Kurs Graf"
     },
     controller_msg:{
       announcement_successfully_created: "Meddelande har skapats.",

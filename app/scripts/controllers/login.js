@@ -6,13 +6,7 @@ angular.module('scalearAngularApp')
   $scope.user={}
   Page.setTitle('navigation.login')
   $('#user_email').select()
-  var dialog_options={
-              template: 'mobileSupport',
-              className: 'ngdialog-theme-default ngdialog-theme-custom',
-              preCloseCallback: function(value) {
-                next()
-              }
-            }
+
   $scope.login = function(){
     $scope.sending = true;
     User.signIn({},
@@ -20,24 +14,15 @@ angular.module('scalearAngularApp')
       function(data){
         $log.debug("login success")
         $scope.sending = false;
-        $rootScope.$broadcast("get_current_courses")
-        if($scope.is_mobile[0]){
-          if(data.roles[0].id != 2 &&  $scope.is_mobile[0] == "iPad")
-            ngDialog.open({
-              template: 'mobileSupport',
-              className: 'ngdialog-theme-default ngdialog-theme-custom',
-              preCloseCallback: function(value) {
-                next(data)
-              }
-            });
-          else if($scope.is_mobile[0] != "iPad")
-             ngDialog.open({
-              template: 'mobileSupport',
-              className: 'ngdialog-theme-default ngdialog-theme-custom',
-              preCloseCallback: function(value) {
-                next(data)
-              }
-            });
+        $rootScope.$broadcast("get_current_courses")        
+        if( ($scope.is_mobile[0] && data.roles[0].id != 2 &&  $scope.is_mobile[0] == "iPad") || ($scope.is_mobile[0] && $scope.is_mobile[0] != "iPad") ){
+          ngDialog.open({
+            template: 'mobileSupport',
+            className: 'ngdialog-theme-default ngdialog-theme-custom',
+            preCloseCallback: function(value) {
+              next(data)
+            }
+          });
         }
         else        
           next(data)

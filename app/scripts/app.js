@@ -50,7 +50,8 @@ angular.module('scalearAngularApp', [
     'Mac',
     'dcbImgFallback',
     'ngClipboard',
-    'ngTextTruncate'
+    'ngTextTruncate',
+    'ngDialog'
     // 'duScroll',
     // 'ngAnimate'
 ])

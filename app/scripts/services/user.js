@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
     return $resource(scalear_api.host+'/:lang/users/:id/:action', {lang:$translate.uses()},
       { 
         'getCurrentUser': { method: 'GET', headers: headers , params: {action: 'get_current_user'}},
-        'sign_in': { method: 'POST', headers: headers , params: {action: 'sign_in'}},
+        'signIn': { method: 'POST', headers: headers , params: {action: 'sign_in'}},
         'sign_out': { method: 'DELETE', headers: headers , params: {action: 'sign_out'}}, //make delete
         'sign_up': { method: 'POST', headers: headers},
         'reset_password':{method:'POST', headers:headers, params:{action: 'password'}},

@@ -1218,7 +1218,7 @@ td.right-border{
 .details_accordian .content {
   padding:0!important;
   background: white !important;
-  max-height: 62vh;
+  max-height: 66vh;
   
 }
 .details_accordian .overflow-auto .content{
@@ -2065,7 +2065,7 @@ a.editable-click{
 
 @media only screen and (min-width:64.063em) {
   .large-height-big{
-    height: 82vh !important;
+    height: 84vh !important;
   }
   .with-huge-padding-side{
     padding-left: 10.5rem !important;
@@ -2074,9 +2074,7 @@ a.editable-click{
 }
 
 @media only screen and (min-width:84.063em) {
-  .large-height-big{
-    height: 82vh !important;
-  }
+  
   .with-huge-padding-side{
     padding-left: 10.5rem !important;
     padding-right: 10.5rem !important;

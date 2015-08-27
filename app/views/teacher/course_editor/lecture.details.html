@@ -1,4 +1,4 @@
-<accordion class="details_accordian" close-others="true">
+<accordion class="details_accordian" close-others="false">
   <accordion-group class="accordion-group" is-open="lecture && lecture.url == 'none'">
     <accordion-heading class="accordion-heading">
       <div style="padding: 5px;border-bottom: 1px solid white;">
@@ -7,13 +7,13 @@
     </accordion-heading>
     <table class="table small-12 no-margin" style="border-top:none">
       <tr>
-        <td class="right-border"><span translate>lectures.title</span>:</td>
-        <td >
+        <td class="right-border small-4"><span translate>lectures.title</span>:</td>
+        <td class="small-8">
             <details-text id="item_name" value="lecture.name" save="updateLecture()" validate="validateLecture" column="name" open="lecture.url == 'none'"></details-text>
         </td>
       </tr>
       <tr>
-        <td ng-class='{"color-red": lecture.url == "none"}' class="right-border">
+        <td ng-class='{"color-red": lecture.url == "none"}' class="right-border small-4">
           <span translate>lectures.video</span>:
           <i class='fi-info' tooltip='{{"youtube.info"|translate}}'></i>
         </td>
@@ -22,14 +22,14 @@
         </td>
       </tr>
       <tr>
-        <td class="right-border"><span translate>lectures.description</span>:</td>
-        <td>
+        <td class="right-border small-4"><span translate>lectures.description</span>:</td>
+        <td class="small-8">
           <details-area value="lecture.description" save="updateLecture()" validate="validateLecture" column="description" empty_message="({{ 'lectures.add_description' | translate}}...)"></details-area>
         </td>
       </tr>
       <tr>
-        <td class="right-border"><span translate>lectures.duration</span>:</td>
-        <td>
+        <td class="right-border small-4"><span translate>lectures.duration</span>:</td>
+        <td class="small-8">
           <label>{{lecture.duration|format}}</label>
         </td>
       </tr>
@@ -41,25 +41,25 @@
           </center>
         </td>
       </tr> -->
-      <tr ng-show="lecture.url == 'none'">
-        <td class="right-border"><span translate>lectures.provider</span>:</td>
-        <td ng-if="is_youtube">
+      <!-- <tr ng-show="lecture.url == 'none'">
+        <td class="right-border small-4"><span translate>lectures.provider</span>:</td>
+        <td class="small-8" ng-if="is_youtube">
           <label >Youtube</label>
           <label >{{is_youtube}} {{video.title}} by {{video.author}}</label>
         </td>
-        <td ng-if="!is_youtube">
+        <td class="small-8" ng-if="!is_youtube">
           <label>Server</label>
         </td>
-      </tr>
+      </tr> -->
       <!-- <tr ng-show="video.author">
-        <td class="right-border"><span translate>lectures.author</span>:</td>
+        <td class="right-border small-4"><span translate>lectures.author</span>:</td>
         <td>
           <label>{{video.author}}</label>
         </td>
       </tr> -->
       <tr>
-        <td class="right-border"><span translate>lectures.student_link_lecture</span>:</td>
-        <td class="break-text">
+        <td class="right-border small-4"><span translate>lectures.student_link_lecture</span>:</td>
+        <td class="break-text small-8" >
           <span >{{link_url}}</span>
         </td>
       </tr>
@@ -73,7 +73,7 @@
     </accordion-heading>
     <table class="table small-12 no-margin">
       <tr>
-        <!-- <td class="right-border">
+        <!-- <td class="right-border small-4">
           <span translate>settings.settings</span>:
         </td> -->
         <td colspan="2">
@@ -90,9 +90,9 @@
         </center>
         </td>
       </tr>
-      <tr>
-        <td class="right-border"><span translate>groups.appearance_date</span></td>
-        <td > 
+      <tr id="bg_fix" style="height:130px">
+        <td class="right-border small-4"><span translate>groups.appearance_date</span></td>
+        <td class="small-8"> 
           <input type="checkbox" ng-model="lecture.appearance_time_module" ng-change="updateLecture()" class="no-margin">
           <span class="size-12" translate>lectures.use_module</span>
           
@@ -112,9 +112,9 @@
           </span>
         </td>
       </tr>
-      <tr>
-        <td class="right-border"><span translate>groups.due_date</span></td>
-        <td>
+      <tr style="height:130px">
+        <td class="right-border small-4"><span translate>groups.due_date</span></td>
+        <td class="small-8">
           <input type="checkbox" ng-model="lecture.due_date_enabled" ng-change="updateDueDate();updateLecture()" class="no-margin">
           <span class="size-12" >has due date</span>
           <div ng-show="lecture.due_date_enabled">

@@ -20,7 +20,7 @@ var translation_en={
   },
   mailer:{
     send_email: "Send an Email",
-  }
+  },
   subheader:{
     messages:{
       whats_new: "What's New",

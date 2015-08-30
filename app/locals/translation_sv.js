@@ -20,7 +20,7 @@ var translation_sv={
   },
   mailer:{
     send_email: "Skicka ett mail",
-  }
+  },
   subheader:{
     messages:{
       whats_new: "Nyheter",
@@ -251,7 +251,7 @@ var translation_sv={
     large_calendar:"Stor kalender",
     small_calendar:"Liten kalender",
     export_calendar: "Exportera kalender",
-  }
+  },
   inclass:{
     more: "mer",
     pause: "Paus",
@@ -263,7 +263,7 @@ var translation_sv={
       students_must_complete_inorder:"Studenter måste avsluta detta moment innan de går vidare",
       students_must_complete_required:"Studenter måste avsluta detta moment för att slutföra modulen",
     }
-  }
+  },
   lectures:{
     messages:{
       thank_you_answer: "Tack för ditt svar",
@@ -272,7 +272,7 @@ var translation_sv={
     drag:{
       start: "Start",
       end: "Slut",
-    }
+    },
     duration: "Längd",
     details: "Detaljer",
     timeline: "Tidslinje",

@@ -241,10 +241,10 @@ angular.module('scalearAngularApp')
 			if(scope.quiz.quiz_type == 'survey')
 				template = "<form name='aform'>"+								
 								"<label class='show-inline'><span translate>groups.answer</span><h6 class='no-margin-bottom'><small translate>lectures.shown_in_graph</small></h6></label>"+ 
-								"<span class='right' tooltip-append-to-body='true' tooltip={{'click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>"+
+								"<span class='right' tooltip-append-to-body='true' tooltip={{'tooltip.click_to_delete'|translate}}><delete_button class='right' size='big' hide-confirm='false' color='dark' action='remove()'></delete_button></span>"+
 								"<textarea rows=3 class='must_save' ng-class='{error: aform.answer.$error.required}' type='text' ng-model='data.answer' ng-init='selectField()' value={{data.answer}} name='answer' required></textarea>"+
 								"<small class='error' ng-show='aform.answer.$error.required' style='padding-top: 5px;'><span translate>courses.required</span>!</small>"+
-								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-12'><span translate>save_close</span></button>"+
+								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-12'><span translate>button.save_close</span></button>"+
 								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+
 							"</form>"
 			else
@@ -261,7 +261,7 @@ angular.module('scalearAngularApp')
 								"<h6 class='subheader no-margin'><small style='text-transform: initial;' translate>lectures.shown_to_student</small></h6>"+
 								"<textarea rows=3 class='must_save' type='text' ng-model='data.explanation' value={{data.explanation}}></textarea>"+
 								"</label>"+
-								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-8'><span translate>close</span></button>"+
+								"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-8'><span translate>button.close</span></button>"+
 								'<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;float:right"></delete_button>'+
 								// "<button type='button' ng-click='remove()' class='button tiny alert with-tiny-margin remove_button' translate>lectures.remove</button>"+
 							"</form>"
@@ -296,12 +296,12 @@ angular.module('scalearAngularApp')
 			 				// 	"<small class='error' ng-show='!data.answer' translate>courses.required</small>"+
 		 					// "</div>"+
 		 					"<div>"+
-	 							"<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>end</span></span>"+
+	 							"<span class='position-header error light-grey dark-text no-margin'>{{data.pos+1}} <span translate>lectures.drag.end</span></span>"+
 	 							"<h6 class='no-margin' style='resize:none;display: inline-block;width:100%;height:100%;padding:10px;font-size: 0.1rem;min-height: 40px; min-width: 40px;' ng-style='{max_width: width, max_height: height}' pop-over='popover_options' unique='true'>{{data.answer}}</h6>"+
 	 						"</div>"+
 	 					"</div>"+
 	 					"<div class='dragged handle' data-drag='true' style='height: 31px;' ng-style=\"{left: (data.sub_xcoor*100)+'%', top: (data.sub_ycoor*100)+'%'}\" data-jqyoui-options=\"{containment:'.ontop'}\" jqyoui-draggable=\"{animate:true, onStop:'calculatePosition'}\" >"+
-	 						"<span class='position-header error light-grey dark-text no-margin' style='top: -1px;left: -48px;padding: 6px;'>{{data.pos+1}} <span>Start</span></span>"+
+	 						"<span class='position-header error light-grey dark-text no-margin' style='top: -1px;left: -48px;padding: 6px;'>{{data.pos+1}} <span translate>lectures.drag.start</span></span>"+
 	 						"<h6 class='no-margin' style='font-size: 0.1rem !important;'>{{data.answer}}</h6>"+
 	 					"</div>"+
  					"</div>",
@@ -397,7 +397,7 @@ angular.module('scalearAngularApp')
 								'<textarea rows=3 class="must_save" style="resize:vertical;" ng-model="data.explanation[num]" />'+
 							'</label>'+
 							// "<button type='button' ng-click='save()' class='button tiny success with-tiny-margin small-12'><span translate>save_close</span></button>"+
-							"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-8'><span translate>close</span></button>"+
+							"<button type='button' ng-click='save()' class='button tiny success with-small-margin-top small-8'><span translate>button.close</span></button>"+
 							'<delete_button size="big" action="remove()" vertical="false" text="true" style="margin:8px 0;float:right"></delete_button>'+
 							// '<button type="button" ng-click="remove()" class="button tiny alert with-tiny-margin remove_button" translate>lectures.remove</button>'+
 						'</ul>'

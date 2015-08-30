@@ -1,10 +1,11 @@
 <center>
 	<div class="small-8">
-		<h2>Welcome to
-			<span  style="font-weight: 300;">Scalable<span class="no-padding color-green" style="font-weight: 400;">Learning</span></span>!</h2>
-			<youtube id="intro_video" class="flex-video widescreen with-light-border" url="intro_url" player="player" autoplay='1' controls='1' style="z-index: 1;">
+		<h2><span translate>global.welcome</span>
+			<span  style="font-weight: 300;">Scalable<span class="no-padding color-green" style="font-weight: 400;">Learning</span></span>!
+		</h2>
+		<youtube id="intro_video" class="flex-video widescreen with-light-border" url="intro_url" player="player" autoplay='1' controls='1' style="z-index: 1;">
 	</div>
-	<h5 class="subheader" ng-show="can_proceed"><span translate>redirect_courselist</span>{{remaining}}<span class="with-small-margin-left" translate>lectures.seconds</span>...</h5>
+	<h5 class="subheader" ng-show="can_proceed"><span translate>intro.redirect_courselist</span>{{remaining}}<span class="with-small-margin-left" translate>lectures.seconds</span>...</h5>
 	<div class="small-8 with-margin-top">
 		<p ng-if="role!=2">
 			<span translate>intro.teacher_introduction</span>
@@ -18,7 +19,7 @@
 			(<a class="color-green" ng-click="watchedIntro()" translate>groups.skip</a>)
 			<!-- <span translate>intro.student_skip_intro</span> -->
 		</p>
-		<button type="button" ng-show="can_proceed" class="button success" ng-click="watchedIntro()"><span class="with-small-margin-left" translate>enroll.go_to</span><span class="with-small-margin-left" translate>my</span><span class="with-small-margin-left" translate>navigation.courses</span></button>
+		<button type="button" ng-show="can_proceed" class="button success" ng-click="watchedIntro()"><span class="with-small-margin-left" translate>enroll.go_to</span><span class="with-small-margin-left" translate>navigation.courses</span></button>
 	</div>
 	<div>
 		<span translate>intro.by_using_service</span>

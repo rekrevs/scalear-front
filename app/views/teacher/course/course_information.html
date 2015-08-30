@@ -40,13 +40,13 @@
                 <button ng-click="addNewTeacher()" ng-hide="teacher_forum || in_delete" class="button successs tiny add-teacher-button" translate>courses.add_teacher</button>
                 <form name='email_form' ng-show="teacher_forum" novalidate>
                     <div class="small-12 columns size-12 with-small-margin-bottom">
-                        <span translate>adding_teacher</span> scalable-learning.<br>
-                        <span translate>create_account</span><span>: <a ui-sref="teacher_signup" ui-sref-opts="{absolute: true}">{{'teacher_signup'| href}}</a></span>
+                        <span translate>courses.information.adding_teacher</span> scalable-learning.<br>
+                        <span translate>courses.information.create_account</span><span>: <a ui-sref="teacher_signup" ui-sref-opts="{absolute: true}">{{'teacher_signup'| href}}</a></span>
                     </div>
                     <div class="small-12 medium-8 large-5 left columns">
                         <div>
-                            <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'email'|translate}}" ng-model="new_teacher.email" ng-class="{'error': (email_form.email.$dirty && email_form.email.$invalid)}" class="with-tiny-margin-bottom"/>
-                            <small ng-show='email_form.email.$dirty && email_form.email.$invalid' class="error" translate>invalid_email</small>
+                            <input name='email' type="email" id="new_email" pattern="^[-aA-zZ0-9_+\.]+\@([-aA-zZ0-9]+\.)+[aA-zZ0-9]{2,4}$" placeholder="{{'global.email'|translate}}" ng-model="new_teacher.email" ng-class="{'error': (email_form.email.$dirty && email_form.email.$invalid)}" class="with-tiny-margin-bottom"/>
+                            <small ng-show='email_form.email.$dirty && email_form.email.$invalid' class="error" translate>error_message.invalid_email</small>
                             <small class="error" ng-show="!(email_form.email.$dirty && email_form.email.$invalid)&& new_teacher.errors.email">{{new_teacher.errors.email}}</small>
                         </div>
                         <div>
@@ -69,7 +69,7 @@
         <img class="small-9 columns with-small-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
         <div class="small-12 columns no-padding" step-text="This section allows you to change the course start date, duration, course image, etc... You can also get the course enrollment key to provide it to your students." step-index="3" step-placement="right" step-append-to-body="flase" page-name="head.information">
             <div page-name="head.information" step-text="Click this button to view the course calendar." step-index="1" step-placement="top" step-append-to-body="false">
-                <a ui-sref="course.course_editor" id="edit_btn" class="button green tiny" translate>edit_course</a>
+                <a ui-sref="course.course_editor" id="edit_btn" class="button green tiny" translate>courses.information.edit_course</a>
                 <button type="button" id="calendar_btn" class="button tiny with-tiny-margin-right" calendar-modal ng-click="openCalendar()" translate>head.calendar</button>
             </div>
             <div class="with-small-margin-bottom">

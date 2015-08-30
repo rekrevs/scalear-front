@@ -28,14 +28,14 @@
 		<span ng-show="events.length" >
 			<button ng-show="!large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()">
 				<i class="fi-zoom-in size-10"/>
-				<span translate>large_calendar</span>
+				<span translate>dashboard.large_calendar</span>
 			</button>
 			<button ng-show="large_calendar" class="show-inline button really-tiny" ng-click="toggleLargeCalendar()">
 				<i class="fi-zoom-out size-10"/>
-				<span translate>small_calendar</span>
+				<span translate>dashboard.small_calendar</span>
 			</button>
 		</span>
-		<button class="really-tiny button secondary no-margin" ng-click="export_calendar()" translate>export_calendar</button>
+		<button class="really-tiny button secondary no-margin" ng-click="export_calendar()" translate>dashboard.export_calendar</button>
         <span ng-show="current_user.roles[0].id == 2" class="right">
         	<span class="calendar_color done alert-box label radius" translate="events.done"></span>
 			<span class="calendar_color done_late alert-box label radius" translate="events.done_late"></span>

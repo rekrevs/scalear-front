@@ -79,7 +79,7 @@
         <img class="small-9 columns with-small-margin-bottom no-padding" ng-src="{{course.image_url || '../images/course_image.png'}}" />
         <div class="small-12 columns  no-padding">
             <div>
-                <button id="course_content" type="button" class="button green tiny" ng-click="goToContent()" ng-disabled="!course.groups.length" page-name="{{current}}"step-text="Click this button to go to the course content and start learning." step-index="2" step-placement="right" step-append-to-body="false" translate>go_to_course</button>
+                <button id="course_content" type="button" class="button green tiny" ng-click="goToContent()" ng-disabled="!course.groups.length" page-name="{{current}}"step-text="Click this button to go to the course content and start learning." step-index="2" step-placement="right" step-append-to-body="false" translate>courses.information.go_to_course</button>
                 <button type="button" calendar-modal class="button tiny with-tiny-margin-right"  ng-click="openCalendar()" page-name="{{current}}"step-text="Click this button to view the course calendar." step-index="1" step-placement="right" step-append-to-body="false"><span translate>head.calendar</span></button>
             </div>
             <div page-name="{{current}}" step-text="Here you will find various information about the course." step-index="3" step-placement="top" step-append-to-body="false">

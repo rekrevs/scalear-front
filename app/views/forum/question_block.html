@@ -8,7 +8,7 @@
         </tr>
         <tr ng-if="preview_as_student">
             <td colspan="2" style="padding:5px">
-                <div><i class="size-12 color-red" translate>cannot_ask_question_preview</i></div>
+                <div><i class="size-12 color-red" translate>discussion.cannot_ask_question_preview</i></div>
              </td>
         </tr>
         <tr>
@@ -21,7 +21,7 @@
                 <button type="button" class="button tiny alert" ng-click="cancelQuestion(item)" translate>lectures.cancel</button>
             </td>
             <td ng-if="item.data.isEdit">
-                <button type="button" class="button tiny" ng-click="updateQuestion(item.data)" translate>edit</button>
+                <button type="button" class="button tiny" ng-click="updateQuestion(item.data)" translate>global.edit</button>
                 <button type="button" class="button tiny alert" ng-click="item.data.isEdit=false" translate>lectures.cancel</button>
             </td>
         </tr>

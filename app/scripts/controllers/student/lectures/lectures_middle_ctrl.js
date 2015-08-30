@@ -165,7 +165,7 @@ angular.module('scalearAngularApp')
                     if(key=="due")
                         $scope.course.warning_message = $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$translate("controller_msg."+$scope.alert_messages[key][2])+") "+$translate("controller_msg.ago")
                     else if(key=="today")
-                        $scope.course.warning_message = $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$filter("date")($scope.alert_messages[key],'shortTime')
+                        $scope.course.warning_message = $translate("time.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$filter("date")($scope.alert_messages[key],'shortTime')
                 }
                                
                 if(!$scope.preview_as_student){
@@ -616,7 +616,7 @@ angular.module('scalearAngularApp')
         if(data.msg!="Empty"){  // he chose sthg
             if($scope.selected_quiz.quiz_type == 'survey' || ($scope.selected_quiz.question_type.toUpperCase() == 'FREE TEXT QUESTION' && data.review) ){                
                 $scope.selected_quiz.is_quiz_solved=true;
-                showNotification('thank_you_answer')
+                showNotification('lectures.messages.thank_you_answer')
             }
             else{
                 for(var el in data.detailed_exp)

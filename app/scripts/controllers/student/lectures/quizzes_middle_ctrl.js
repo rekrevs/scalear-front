@@ -92,7 +92,7 @@ angular.module('scalearAngularApp')
             else if(key=="due")
                 return $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$scope.alert_messages[key][2]+") "+$translate("controller_msg.ago")
             else if(key=="today")
-                return $translate("controller_msg.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
+                return $translate("time.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
         }
     }
 

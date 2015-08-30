@@ -17,15 +17,15 @@
         <div class='row'>
             <div class="large-6 large-centered medium-9 medium-centered small-12 columns">
                 <fieldset class="with-margin-bottom">
-                    <legend><i class="fi-lock size-21"></i> {{'account_edit.security' | translate}}</legend>
+                    <legend><i class="fi-lock size-21"></i><span translate>account_edit.security</span></legend>
                     <div class="large-12 columns">
-                        <label>{{'password' | translate}}
+                        <label><span translate>global.password</span>
                             <input ng-disabled="sending" type="password" id="setting_user_password" ng-model="user.password" ng-class="{error: user.errors.password}" autocomplete="off" placeholder="Password" />
                             <small ng-show="user.errors.password" class="error with-tiny-padding">{{user.errors.password.join()}}</small>
                         </label>
                     </div>
                     <div class="large-12 columns">
-                        <label>{{'password_confirmation' | translate}}
+                        <label><span translate>global.password_confirmation</span>
                             <input ng-disabled="sending" type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" placeholder="Password confirmation"/>
                             <small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
                         </label>

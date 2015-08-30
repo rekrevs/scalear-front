@@ -655,7 +655,7 @@ angular.module('scalearAngularApp')
     }
     else{
       $scope.button_class = 'big_font_button' 
-      $scope.button_names=[$translate('groups.exit'), '', '',$translate('groups.hide'), $translate('answer.show'), '5sec', $translate('pause'), $translate('resume')]
+      $scope.button_names=[$translate('groups.exit'), '', '',$translate('groups.hide'), $translate('answer.show'), '5sec', $translate('inclass.pause'), $translate('inclass.resume')]
     }
     $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
   }

@@ -3,9 +3,9 @@
 angular.module('scalearAngularApp')
 .controller('dashboardCtrl', ['$scope', '$state', '$stateParams', 'Dashboard', 'NewsFeed', 'Page', '$timeout', '$rootScope','$compile','$translate','$filter', function($scope, $state, $stateParams, Dashboard, NewsFeed, Page, $timeout, $rootScope, $compile, $translate, $filter) {
 
-    Page.setTitle('dashboard');
+    Page.setTitle('navigation.dashboard');
     Page.startTour();
-    $rootScope.subheader_message = $translate("whats_new")
+    $rootScope.subheader_message = $translate("subheader.messages.whats_new")
     
     $scope.toggleLargeCalendar=function(){
         $scope.large_calendar=!$scope.large_calendar
@@ -27,7 +27,7 @@ angular.module('scalearAngularApp')
     }
 
     $scope.eventRender = function( event, element ) { 
-         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />"+$translate('controller_msg.due')+" "+$translate('at')+" "+$filter('date')(event.start, 'HH:mm')
+         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />"+$translate('time.due')+" "+$translate('at')+" "+$filter('date')(event.start, 'HH:mm')
         if(event.status==1)
             tooltip_string+="<br />"+$translate("courses.completed_on_time")
         else if(event.status==2)

@@ -114,7 +114,7 @@ angular.module('scalearAngularApp')
                 },
                 restrict: 'E',
                 template: '<a onshow="selectField()" ng-mouseover="show_pencil = true;" blur="submit" ng-mouseleave="show_pencil = false;"  editable-text="value" e-form="textBtnForm" onbeforesave="validation()($data, elem)" onaftersave="saveData()" ng-click="action()" style="cursor:pointer;padding-right: 20px;" e-class="editable-input-large">' +
-                    '{{ value || ("empty"|translate) }}' +
+                    '{{ value || ("global.empty"|translate) }}' +
                     '<i ng-class="overclass" ></i>' +
                     ' <span ng-show="show_pencil" class="fi-pencil size-21" style="position: absolute;" ng-click="textBtnForm.$show()"></span>' +
                     '</a>',

@@ -7,8 +7,8 @@
         <div class="small-6 columns small-centered">
             <form name="form.key">
                 <label>
-                    <div class="text-left with-tiny-margin-bottom" ><span translate>password</span>:</div>
-                    <input type="password" id="del_con_pwd" class="no-margin" ng-model="enrollment.key" name="key" placeholder="{{'current_password'|translate}}" ng-class="{error: form.server_error}" required/>
+                    <div class="text-left with-tiny-margin-bottom" ><span translate>global.password</span>:</div>
+                    <input type="password" id="del_con_pwd" class="no-margin" ng-model="enrollment.key" name="key" placeholder="{{'global.current_password'|translate}}" ng-class="{error: form.server_error}" required/>
                     <small class='error' ng-if='form.submitted && form.key.key.$error.required' translate="courses.required"></small>
                     <small class='error' ng-if='form.server_error'>{{form.server_error}}</small>
                 </label>

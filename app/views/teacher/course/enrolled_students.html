@@ -17,13 +17,13 @@
                       <div class="show-inline" ng-init="filterChoice = 'all'">
                           <button type="button" class="button tiny" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length || delete_mode"><span translate>courses.select_all</span></button>
                           <button type="button" class="button tiny alert" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0 || delete_mode"><span translate>courses.deselect_all</span></button>
-                          <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0 || delete_mode" ng-click="emailForm()"><span translate>email</span></button>
+                          <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0 || delete_mode" ng-click="emailForm()"><span translate>global.email</span></button>
                           <button id="delete_mode"class="tiny button alert with-tiny-margin-left" ng-hide="delete_mode" ng-click="toggleDeleteMode()"><span translate>courses.remove_from_course</span></button>
                           <button class="tiny button success no-margin-left" ng-show="delete_mode" ng-click="toggleDeleteMode()"><span translate>events.done</span></button>
-                          <button class="button secondary tiny" ng-class="{'green color-white': list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(true)" tooltip="{{'list_view'|translate}}">
+                          <button class="button secondary tiny" ng-class="{'green color-white': list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(true)" tooltip="{{'tooltip.list_view'|translate}}">
                               <span class="fi-list-thumbnails size-21" style="position: relative;top: 3px;" ></span>
                           </button>
-                          <button class="button secondary tiny" ng-class="{'green color-white': !list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(false)" tooltip="{{'grid_view'|translate}}" tooltip-append-to-body="true">
+                          <button class="button secondary tiny" ng-class="{'green color-white': !list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(false)" tooltip="{{'tooltip.grid_view'|translate}}" tooltip-append-to-body="true">
                               <span class="fi-braille size-21" style="position: relative;top: 3px;" ></span>
                           </button>
                       </div>
@@ -37,9 +37,9 @@
                     <thead>
                       <tr>
                         <th style="width:50px">Thumbnail</th>
-                        <th>Name</th>
-                        <th>Email</th>
-                        <th class="text-center" ng-if="delete_mode" style="width:95px">Delete</th>
+                        <th translate>global.name</th>
+                        <th translate>global.email</th>
+                        <th class="text-center" ng-if="delete_mode" style="width:95px" translate>globale.delete</th>
                       </tr>
                     </thead>
                     <tbody>

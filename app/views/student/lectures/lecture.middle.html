@@ -4,7 +4,7 @@
 	 	<span translate>controller_msg.ago</span>
 	 </span>
 	 <span ng-show='key=="today"'>
-	 	<span translate>controller_msg.due</span> <span translate>controller_msg.today</span> <span translate>at</span> <span>{{alert_message| date:'h:mma'}}</span>
+	 	<span translate>time.due</span> <span translate>controller_msg.today</span> <span translate>global.at</span> <span>{{alert_message| date:'h:mma'}}</span>
 	 </span>
 </span>
 <span id="lecture_container" style="overflow:hidden">
@@ -54,13 +54,13 @@
 										<div ng-if="selected_quiz.quiz_type != 'html'">
 										 	<student-answer-video ng-repeat="answer in selected_quiz.online_answers" data="answer" quiz="selected_quiz" explanation="explanation" student-answers="studentAnswers"/>
 										</div>
-										<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: 40%;position: relative;text-align: center;background: whitesmoke;z-index: 1;margin:0 10%;font-size:14px;font-weight: 300;"><b><span translate>lectures.note</span>:</b> <span translate>did_not_get_credit</span></div>
+										<div ng-show="video_end && !lecture.is_done && not_done_msg" class="dark-text" style="border: 2px groove rgb(229, 81, 87);padding: 10px;top: 40%;position: relative;text-align: center;background: whitesmoke;z-index: 1;margin:0 10%;font-size:14px;font-weight: 300;"><b><span translate>lectures.note</span>:</b> <span translate>lectures.messages.did_not_get_credit</span></div>
 									</quiz>
 								</youtube>
 								<progress-bar ng-if="!slow && lecture.url && show_progressbar" seek="progressSeek" player="lecture_player" timeline="timeline['lecture'][lecture.id]" style="position: relative;">
 									<div ng-show="video_end" style="position: relative;top: -78px;left: 47%;z-index:1">
 										<button id="replay_button" type="button" ng-click="replay()" class="button" style="position: absolute;left: -171px;height:70px;width:180px;" translate>lectures.replay</button>
-								    	<button id="next_button" ng-show='next_item.id' type="button" ng-click="nextItem()" class="button" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>next</span></button>
+								    	<button id="next_button" ng-show='next_item.id' type="button" ng-click="nextItem()" class="button" style="position: absolute;left: 10px;height: 70px;width: 180px;"><span translate>button.next</span></button>
 									</div>
 						    		<!-- <controls id="controls-bar" class="progress_controls" ng-class="{'push-from-left': !quiz_mode}" confused="addConfused()" fullscreen="toggleFullscreen()" ask="addQuestionBlock()" note="addNote()">
 									</controls> -->

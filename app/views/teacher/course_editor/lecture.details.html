@@ -78,12 +78,12 @@
         </td> -->
         <td colspan="2">
           <center>
-            <span tooltip="{{'students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
+            <span tooltip="{{'editor.tooltip.students_must_complete_inorder'| translate}}" tooltip-placement="left" tooltip-append-to-body="true">
               <input type="checkbox" ng-model="lecture.required"  ng-change='updateLecture()'>
               <span class="size-12" translate>courses.in_order</span>
             </span>
             <br />
-            <span tooltip="{{'students_must_complete_required'| translate}}" tooltip-placement="left" tooltip-append-to-body="true" >
+            <span tooltip="{{'editor.tooltip.students_must_complete_required'| translate}}" tooltip-placement="left" tooltip-append-to-body="true" >
               <input type="checkbox" ng-model="lecture.graded" ng-change="updateLecture()">
               <span class="size-12" translate>courses.required</span>
             </span>
@@ -97,7 +97,7 @@
           <span class="size-12" translate>lectures.use_module</span>
           
           <span ng-hide="!lecture.appearance_time_module">
-            <span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
+            <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="width:20px; height:20px;"><img src='images/error.png'/></span>
             <div  style="border-radius: 3px; border: 1px darkgrey solid; background-color: lightgrey; margin-top: 10px; font-size: 12px; color: #555; text-align: center;">
             {{lecture.appearance_time | amDateFormat:'MMM Do YYYY, HH:mm'}}
             </div>
@@ -106,7 +106,7 @@
           <span ng-hide="lecture.appearance_time_module">
             <span translate>lectures.set_date</span>:<br>
             <details-date date="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-date>
-            <span tooltip-placement="left" tooltip="{{'invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
+            <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}}" ng-hide="visible(lecture.appearance_time)" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
             <br>
             <details-time class="timepicker" time="lecture.appearance_time" save="updateLecture(data, type)" validate="validateLecture" column="appearance_time"></details-time>
           </span>

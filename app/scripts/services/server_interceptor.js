@@ -40,7 +40,7 @@ angular.module('scalearAngularApp')
                             $rootScope.stop = undefined;
                         }
                         $rootScope.show_alert = "success";
-                        ErrorHandler.showMessage("Connected", 'errorMessage', 2000);
+                        ErrorHandler.showMessage($translate("error_message.connected"), 'errorMessage', 2000);
                         $rootScope.stop = $interval(function() {
                             $rootScope.server_error = false;
                             $rootScope.show_alert = "";
@@ -177,7 +177,7 @@ angular.module('scalearAngularApp')
                             $rootScope.show_alert = "error";
 
                             if (rejection.data == "")
-                                ErrorHandler.showMessage('Error ' + rejection.status + ': ' + $translate('cant_connect_to_server'), 'errorMessage', 8000);
+                                ErrorHandler.showMessage('Error ' + rejection.status + ': ' + $translate('error_message.cant_connect_to_server'), 'errorMessage', 8000);
                             else
                                 ErrorHandler.showMessage('Error ' + ': ' + rejection.data, 'errorMessage', 8000);
                         }

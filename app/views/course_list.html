@@ -24,14 +24,14 @@
 					<input type="search" ng-model="searchText" placeholder="{{'courses.search' | translate}}" />
 					<span ng-show="filtered_teacher">
 						<br />
-						<a ng-click="removeFilter()" style="cursor:pointer" translate>back</a><br>
+						<a ng-click="removeFilter()" style="cursor:pointer" translate>global.back</a><br>
 					</span>
 				</div>
 			</span>	
 			<div class="small-4 right columns button-group" step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="{{current}}">
-			    <button type="button" class="right button tiny" ng-class="{active: course_filter == true}" ng-click="filterCourse(true)" translate>finished</button>
-			    <button type="button" class="right button tiny" ng-class="{active: course_filter == false}" ng-click="filterCourse(false)" translate>current</button>
-			    <button type="button" class="right button tiny" ng-class="{active: course_filter == '!!'}" ng-click="filterCourse('!!')" translate>all</button>
+			    <button type="button" class="right button tiny" ng-class="{active: course_filter == true}" ng-click="filterCourse(true)" translate>courses.list.filter.finished</button>
+			    <button type="button" class="right button tiny" ng-class="{active: course_filter == false}" ng-click="filterCourse(false)" translate>courses.list.filtercurrent</button>
+			    <button type="button" class="right button tiny" ng-class="{active: course_filter == '!!'}" ng-click="filterCourse('!!')" translate>courses.list.filter.all</button>
 			</div>
 		</div>
 	</div>

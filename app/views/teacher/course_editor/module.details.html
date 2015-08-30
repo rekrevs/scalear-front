@@ -39,7 +39,7 @@
           <span>
             <span translate>lectures.set_date</span>:<br>
             <details-date date="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-date>
-            <span tooltip-placement="left" tooltip="{{'invisible' | translate}} {{module.appearance_time| fromNow}}" ng-hide="module.appearance_time | visible" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
+            <span tooltip-placement="left" tooltip="{{'editor.tooltip.invisible' | translate}} {{module.appearance_time| fromNow}}" ng-hide="module.appearance_time | visible" class="pull-right" style="position: relative; width:20px; height:20px;"><img src='images/error.png' /></span>
             <br>
             <details-time class="timepicker" time="module.appearance_time" save="updateModule(data, type)" validate="validateModule" column="appearance_time"></details-time>
           </span>

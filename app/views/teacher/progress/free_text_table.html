@@ -1,4 +1,3 @@
-<!-- <div class="small-12 columns"><h4 ng-show="question" translate>groups.free_text_question</h4></div> -->
 <style>
 td{
 	padding:4px 10px !important;
@@ -6,11 +5,6 @@ td{
 </style>
 <div class="small-12 columns">
 	<table style="width:100%">
-		<!-- <tr>
-			<td colspan="5">
-				<b><span translate>answer.question</span>: {{question.title}}</b>
-			</td>
-		</tr> -->
 		<thead>
 			<tr>
 				<th ng-show="!display_only" style="border-right: 1px gray solid;"><b translate>answer.show</b></th>
@@ -43,7 +37,6 @@ td{
 					<div ng-show="answer.show_feedback && !display_only">
 						<textarea ng-model="answer.response" />
 						<a ng-click="sendFeedback(question.answers,$index)" class="button success really-tiny" translate>courses.send</a>
-						<!-- <button_link title="{{'courses.send'|translate}}" class="btn-mini" action="sendFeedback(question.answers,$index)" /> -->
 					</div>
 				</td>
 		        <td ng-show="!display_only && graded" style="border-left: 1px gray solid;">

@@ -6,9 +6,9 @@
 		<div style="width:67%" class="truncate-70 show-inline left text-left module_name">{{module.name}}</div>
 		<small class="color-grey" style="padding:1px"><span ng-show="module.total_time" >{{module.total_time | formattime:'h:mm:ss'}}</span></small>
 		<ul class="module-menu dropdown-menu text-left">
-			<li><a ng-click='copy($event)' >Copy </a></li>
-			<li ng-show="clipboard.type"><a ng-click='paste($event)'>Paste</a></li>	
-			<li><a ng-click='share($event)'>Share</a></li>		   
+			<li><a ng-click='copy($event)' translate>copy</a></li>
+			<li ng-show="clipboard.type"><a ng-click='paste($event)' translate>paste</a></li>	
+			<li><a ng-click='share($event)' translate>share</a></li>		   
 		</ul>
 	</div>
 

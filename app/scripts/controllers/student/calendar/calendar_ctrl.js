@@ -7,7 +7,7 @@ angular.module('scalearAngularApp')
     var change_lang = function(){
     	if($scope.eventSources){
 	    	angular.element($scope.myCalendar.children()).remove();
-	    	var obj=($scope.current_lang=="en")?full_calendar_en():full_calendar_sv();
+	    	var obj=($scope.current_lang=="en")?full_calendar_en:full_calendar_sv;
 	    	obj.eventSources=$scope.eventSources;
 	    	$scope.myCalendar.fullCalendar(obj);   
     	}

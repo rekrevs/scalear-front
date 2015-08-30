@@ -10,9 +10,9 @@
 		<small class="color-dark-grey" style="padding:1px"><span ng-show="item.duration" ng-bind="item.duration | formattime:'h:mm:ss'"></span></small>
 	</div>
 	<ul class="item-menu dropdown-menu text-left">
-		<li><a ng-click='copy($event)' >Copy</a></li>
-		<li ng-show="clipboard.type && clipboard.type != 'module'"><a ng-click='paste($event)'>Paste</a></li>	
-		<li><a ng-click='share($event)'>Share</a></li>		   
+		<li><a ng-click='copy($event)' translate>copy</a></li>
+		<li ng-show="clipboard.type && clipboard.type != 'module'"><a ng-click='paste($event)' translate>paste</a></li>	
+		<li><a ng-click='share($event)' translate>share</a></li>		   
 	</ul>
 </li>
 

@@ -50,7 +50,8 @@ angular.module('scalearAngularApp', [
     'Mac',
     'dcbImgFallback',
     'ngClipboard',
-    'ngTextTruncate'
+    'ngTextTruncate',
+    'ngDialog'
     // 'duScroll',
     // 'ngAnimate'
 ])
@@ -88,7 +89,7 @@ angular.module('scalearAngularApp', [
 
 
             $log.debug("lang is " + $rootScope.current_lang);
-            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie', 'student_getting_started', 'teacher_getting_started']
+            var statesThatDontRequireAuth = ['login', 'teacher_signup', 'student_signup', 'thanks_for_registering', 'forgot_password', 'change_password', 'show_confirmation', 'new_confirmation', 'home', 'privacy', 'ie', 'student_getting_started', 'teacher_getting_started', 'landing']
             var statesThatForStudents = ['course.student_calendar', 'course.course_information', 'course.courseware']
             var statesThatForTeachers = [ 'new_course', 'course.course_editor', 'course.calendar', 'course.enrolled_students', 'send_email', 'send_emails', 'course.announcements', 'course.edit_course_information', 'course.teachers', 'course.progress', 'course.progress.main', 'course.progress.module', 'statistics']
             var statesThatRequireNoAuth = ['login','student_signup', 'teacher_signup', 'thanks_for_registering', 'new_confirmation', 'forgot_password', 'change_password', 'show_confirmation']
@@ -137,7 +138,7 @@ angular.module('scalearAngularApp', [
             $rootScope.$on('$stateChangeStart', function(ev, to, toParams, from) {
                 if($tour.isActive()){
                     $tour.end();
-                }                
+                }             
 
                UserSession.getRole().then(function(result) {
                     var s = 1;
@@ -150,6 +151,12 @@ angular.module('scalearAngularApp', [
                         s = 2;
                     }
                     else{
+                        if($rootScope.current_user && to.name === 'home'){
+                            $state.go("dashboard")
+                        } 
+                        else if(!$rootScope.current_user && to.name === 'home'){
+                            $state.go("landing")
+                        }   
                         if(to.name === 'confirmed'){
                             if(from.name === 'show_confirmation'){
                                 $state.go("confirmed")
@@ -228,8 +235,19 @@ angular.module('scalearAngularApp', [
         $stateProvider
             .state('home', {
                 url: '/',
-                templateUrl: '/views/main.html',
-                controller: 'MainCtrl'
+                templateUrl: '/views/empty_view.html',
+                controller: 'HomeCtrl'
+            })
+            .state('landing', {
+                url: '/home',
+                 views:{
+                    'landing':{
+                        templateUrl: '/views/main.html',
+                        controller: 'MainCtrl'
+                    },
+                }
+                // templateUrl: '/views/main.html',
+                // controller: 'MainCtrl'
             })
             .state('ie', {
                 url: '/ie',
@@ -416,20 +434,45 @@ angular.module('scalearAngularApp', [
                 templateUrl: '/views/teacher/progress/progress.html',
                 controller: 'progressCtrl'
             })
+            .state('course.progress_graph', {
+                url: "/progress/graph",
+                templateUrl: '/views/teacher/progress/progress_graph.html',
+                controller: 'progressGraphCtrl'
+            })
             .state('course.progress_main', {
                 url: "/progress/main",
                 templateUrl: '/views/teacher/progress/progress_main.html',
                 controller: 'progressMainCtrl'
             })
+            .state('course.progress_overview', {
+                url: "/progress_overview",
+                templateUrl: '/views/teacher/progress/progress_overview.html',
+                controller: 'progressOverviewCtrl'
+            })
+            .state('course.module.progress_overview', {
+                url: "/progress_overview",
+                templateUrl: '/views/teacher/progress/progress_overview.html',
+                controller: 'progressOverviewCtrl'
+            })
             .state('course.module.progress', {
                 url: "/progress",
                 templateUrl: '/views/teacher/progress/progress_lecture.html',
                 controller: 'progressLectureCtrl'
-            })
+            })            
             .state('course.module.progress_details', {
                 url: "/progress/details",
                 templateUrl: '/views/teacher/progress/progress_module.html',
                 controller: 'progressModuleCtrl'
+            })
+            .state('course.module.progress_statistics', {
+                url: "/progress/statistics",
+                templateUrl: '/views/teacher/progress/student_statistics_tab.html',
+                controller: 'studentStatisticsCtrl'
+            })
+            .state('course.module.progress_students', {
+                url: "/progress/students",
+                templateUrl: '/views/teacher/progress/lecture_progress_tab.html',
+                controller: 'lectureProgressCtrl'
             })
             .state('course.module.courseware', {
                 url: '/courseware',

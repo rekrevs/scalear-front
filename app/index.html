@@ -17,15 +17,19 @@
     <!-- <link rel="stylesheet" href="styles/toggle-switch.css"> -->
     <!-- <link rel="stylesheet" href="bower_components/ngAnimate/css/ng-animation.css"> -->
 
-    <!-- build:css(.tmp/styles) styles/main.css -->
+    <!-- build:css(.tmp/styles) styles/main.css -->    
+    <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog.min.css">
+    <link rel="stylesheet" href="bower_components/ngDialog/css/ngDialog-theme-default.css">
     <link rel="stylesheet" href="styles/foundation.css"/>
     <link rel="stylesheet" href="styles/normalize.css"/>
     <link rel="stylesheet" href="styles/main-foundation.css">
+    <link rel="stylesheet" href="styles/landing.css"/>
     <link rel="stylesheet" href="styles/jquery-ui.css" />    
     <link rel="stylesheet" href="bower_components/angular-xeditable/dist/css/xeditable.css" >
     <link rel="stylesheet" href="bower_components/fullcalendar/fullcalendar.css">
     <link rel="stylesheet" href="bower_components/angular-loading-bar/build/loading-bar.min.css">
     <link rel="stylesheet" href="bower_components/angular-macgyver/lib/macgyver.css">
+    
     <!-- endbuild -->
     <link rel="stylesheet" href="styles/externals/foundation-icons/foundation-icons.css">
     <link rel='stylesheet prefetch' href='https://netdna.bootstrapcdn.com/font-awesome/4.0.0/css/font-awesome.min.css'>
@@ -49,33 +53,36 @@
       <script src="bower_components/es5-shim/es5-shim.js"></script>
       <script src="bower_components/json3/lib/json3.min.js"></script>
     <![endif]-->
-     <header>
-        <main-navigation user="current_user" courses="current_courses"></main-navigation>
-    </header> 
-    <div id="main" role="main"> 
-        <div class="header">
-            <div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
-                <teacher-navigation course="course" message="subheader_message" />
+     <div ui-view="landing"></div>
+     <span ng-if="!('landing'| includedByState) && !('home'| includedByState) ">
+         <header>
+            <main-navigation user="current_user" courses="current_courses"></main-navigation>
+        </header> 
+        <div id="main" role="main"> 
+            <div class="header">
+                <div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
+                    <teacher-navigation course="course" message="subheader_message" />
+                </div>
+                <div ng-if="current_user.roles[0].id == 2">
+                    <student-navigation course="course" message="subheader_message" />
+                </div>
             </div>
-            <div ng-if="current_user.roles[0].id == 2">
-                <student-navigation course="course" message="subheader_message" />
-            </div>
-        </div>
-        <div class="container row"> 
-            <content-navigator ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="course.modules" mode="editor" open="ContentNavigator.status">
-            </content-navigator>
-            <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
-            </content-navigator>
-            <br ng-hide="('**.course.**' | includedByState) "/>
-            <div ng-show="ContentNavigator.delayed_navigator_open" class=" small-12 medium-4 large-2 columns no-padding no-margin">
-            </div>
-            <div class="land-min-height no-padding" ng-class="{'small-12 medium-10 large-12 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
-            </div>
+            <div class="container row"> 
+                <content-navigator ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5" modules="course.modules" mode="editor" open="ContentNavigator.status">
+                </content-navigator>
+                <content-navigator ng-if="current_user.roles[0].id == 2" modules="course.groups" mode="courseware" open="ContentNavigator.status">
+                </content-navigator>
+                <br ng-hide="('**.course.**' | includedByState) "/>
+                <div ng-show="ContentNavigator.delayed_navigator_open" class=" small-12 medium-4 large-2 columns no-padding no-margin">
+                </div>
+                <div class="land-min-height no-padding" ng-class="{'small-12 medium-10 large-12 columns max-width-me': ContentNavigator.delayed_navigator_open,'no-padding-right':('**.courseware.**' | includedByState)}" style="padding:0 10px" ui-view>
+                </div>
+            </div> 
+            <footer class="small-12 columns footer">
+               <scalear_footer />
+            </footer>
         </div> 
-        <footer class="small-12 columns footer">
-           <scalear_footer />
-        </footer>
-    </div> 
+    </span>
     
     
 
@@ -125,9 +132,6 @@
     <script src="bower_components/textAngular/textAngular.min.js"></script>
     <script src="bower_components/screenfull/dist/screenfull.min.js"></script>
 
-    <script src="bower_components/canvg-1.3.zip/canvg.js"></script>
-    <script src="bower_components/canvg-1.3.zip/rgbcolor.js"></script>
-    <script src="bower_components/canvg-1.3.zip/StackBlur.js"></script>
     <script src="bower_components/angular-google-chart/ng-google-chart.js"></script>
     <script src="bower_components/highcharts/highcharts.js"></script>
     <script src="bower_components/highcharts-ng/dist/highcharts-ng.js"></script>
@@ -150,9 +154,11 @@
     <script src="bower_components/ng-clip/dest/ng-clip.min.js"></script>
     <script src="bower_components/angular-truncate/ng-text-truncate.js"></script>
     <script src="bower_components/jqueryui-touch-punch/jquery.ui.touch-punch.min.js"></script>
-    <script src="bower_components/angular-smart-table/dist/smart-table.min.js"></script>
+    <script src="bower_components/jquery-easing-original/jquery.easing.min.js"></script>
+    <script src="bower_components/ngDialog/js/ngDialog.min.js"></script>
     <!-- endbuild -->
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
+    <script src="scripts/externals/bootstrap_plugins.js"></script>
     <script src="scripts/externals/shortcut.js"></script>
     <script src="scripts/externals/scrollToThis.js"></script>
     <script src="locals/translation_en.js"></script>
@@ -209,7 +215,8 @@
     <script src="scripts/services/timeline_navigator.js"></script>
     <script src="scripts/services/details_navigator.js"></script>
 
-    <script src="scripts/controllers/main.js"></script>
+    <script src="scripts/controllers/main_ctrl.js"></script>
+    <script src="scripts/controllers/home_ctrl.js"></script>
     <script src="scripts/controllers/index_ctrl.js"></script>
     <script src="scripts/controllers/login.js"></script>
     <script src="scripts/controllers/navigation.js"></script>
@@ -237,7 +244,9 @@
     <script src="scripts/controllers/teacher/course_editor/customlink_middle_ctrl.js"></script> 
     <script src="scripts/controllers/teacher/course_editor/sharing_modal_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/progress_overview_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_main_ctrl.js"></script>
+    <script src="scripts/controllers/teacher/progress/progress_graph_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_module_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/progress_lecture_ctrl.js"></script>
     <script src="scripts/controllers/teacher/progress/lecture_quizzes_ctrl.js"></script>

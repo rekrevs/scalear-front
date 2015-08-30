@@ -2,15 +2,16 @@
 <link rel="stylesheet" href="styles/teacher/inclass.css"/>
 <link rel="stylesheet" href="styles/teacher/teacher_common.css"/>
 <!-- endbuild -->
-<br>
 <div class="inclass">
+	<h4 ng-show="module.name" class="small-12 columns with-small-padding-top with-margin-bottom">
+		<b><span translate>In-class Review</span>: </b>
+		<span>{{module.name}}</span>
+	</h4>
 	<div class="small-12 medium-12 large-3 columns" id='details' >
 		<center>
-		<div class="row">
-			<button class="display_inclass button success" ng-click="display()" ng-disabled="!inclass_ready" translate>groups.display_inclass</button>
-		</div>
-		<br>
-	</center>
+			<button class="display_inclass button green-color-white" ng-click="display()" ng-disabled="!inclass_ready" translate>Start In-class Review</button>
+			<br>
+		</center>
 
 		<inclass_estimate time-quiz="time_parameters.quiz", time-question="time_parameters.question", quiz-count="review_quizzes_count", question-count="review_question_count" survey-count="review_survey_count"/>
 		<!-- <button_link title="{{'groups.display_inclass' | translate }}"   action="display(!inclass_ready)" class="btn-xlarge btn-success" ng-disabled="!inclass_ready" style="background-image: initial; min-width: 205px;max-width: 220px;"/> -->

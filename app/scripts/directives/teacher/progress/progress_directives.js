@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .directive("progressMatrix",function(){
+  .directive("progressMatrix",['$window', function($window){
     return{
 	    restrict: "E",
 	    scope: {
@@ -17,8 +17,9 @@ angular.module('scalearAngularApp')
 	        modstatus: "="
 	    },
 	    templateUrl:'/views/teacher/progress/progress_matrix.html', 
-	    link:function(scope){
+	    link:function(scope, element){
 	    	// scope.columnNames.splice(0, 0, ' ')
+	    	// scope.table_height= $window.innerHeight - element.find("tbody").offset().top - 158
 	    	if(scope.show_popover){
 	    		var template="<div style='font-size:14px; color: black;'>"+
     							"<input type='radio' name='stat' ng-model='student.status[module[0]]' ng-change='action({student_id:student.id, module_id:module[0], module_status:student.status[module[0]]})' style='margin:0 4px 4px 4px'><span translate>courses.original</span> "+
@@ -44,7 +45,7 @@ angular.module('scalearAngularApp')
             }
 	    }
     };
-})
+}])
 .directive("innerTitle",function(){
     return{
 	    restrict: "E",

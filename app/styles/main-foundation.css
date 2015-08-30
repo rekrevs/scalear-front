@@ -1218,7 +1218,7 @@ td.right-border{
 .details_accordian .content {
   padding:0!important;
   background: white !important;
-  max-height: 62vh;
+  max-height: 66vh;
   
 }
 .details_accordian .overflow-auto .content{
@@ -1650,7 +1650,7 @@ h2 .editable-click{
 }
 
 /*forum elements*/
-.form-control{
+.container .form-control{
 	padding: 10px;
 	min-height: 150px;
 	border: 1px solid grey;
@@ -2065,7 +2065,7 @@ a.editable-click{
 
 @media only screen and (min-width:64.063em) {
   .large-height-big{
-    height: 82vh !important;
+    height: 84vh !important;
   }
   .with-huge-padding-side{
     padding-left: 10.5rem !important;
@@ -2074,9 +2074,7 @@ a.editable-click{
 }
 
 @media only screen and (min-width:84.063em) {
-  .large-height-big{
-    height: 82vh !important;
-  }
+  
   .with-huge-padding-side{
     padding-left: 10.5rem !important;
     padding-right: 10.5rem !important;
@@ -2140,3 +2138,46 @@ a.active{
     50% { opacity: 0.0; }
     100% { opacity: 1.0; }
 }
+
+/*****ngDialog-Custom****/
+
+.ngdialog.ngdialog-theme-custom {
+  padding-top: 125px;
+  padding-bottom: 125px;
+}
+
+.ngdialog.ngdialog-theme-custom .ngdialog-overlay {
+  background: rgba(255,255,255,.5);
+}
+
+.ngdialog.ngdialog-theme-custom .ngdialog-content {
+  background: rgba(255,255,255,.9);
+  padding: 1.8em 2em;
+  width: 440px;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+
+.ngdialog.ngdialog-theme-custom .ngdialog-message h2 {
+  font-size: 26px;
+  font-family: 'Montserrat', 'Helvetica', Arial, sans-serif;
+  line-height: 30px;
+  margin-bottom: 20px;
+}
+
+.ngdialog.ngdialog-theme-custom .ngdialog-message {
+  font-size: 16px;
+  font-family: 'Source Sans Pro';
+  line-height: 22px;
+}
+
+.ngdialog.ngdialog-theme-custom .ngdialog-message ul {
+  padding: 0 0 5px 35px;
+}
+
+.ngdialog.ngdialog-theme-custom .ngdialog-button.ngdialog-button-primary {
+  background: #27ae60;
+  -webkit-border-radius: 0;
+  border-radius: 0;
+}
+/****************************/

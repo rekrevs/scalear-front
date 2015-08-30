@@ -5,13 +5,15 @@ angular.module('scalearAngularApp')
   		
 		$scope.statistics_player={}
 		$scope.statistics_player.events={}
-		
-  		$scope.studentStatisticsTab = function(){
-  			// $scope.tabState(2)
-	   		// $scope.disableInfinitScrolling()
-	   		$scope.types=['confused', 'back', 'pauses', 'questions']
-       		getStudentStatistics()   
-	    } 
+		$scope.module= $scope.course.selected_module
+		$scope.types=['confused', 'back', 'pauses', 'questions']
+  		// $scope.studentStatisticsTab = function(){
+  		// 	// $scope.tabState(2)
+	   // 		// $scope.disableInfinitScrolling()
+	   		
+       		
+	   //  } 
+
 
 	    var getStudentStatistics = function(){
 	    	$scope.loading_statistics_chart=true
@@ -196,4 +198,5 @@ angular.module('scalearAngularApp')
              	$scope.statistics_player.controls.seek_and_pause(to_seek)
 		  }
 
+		  getStudentStatistics()   
   }]);

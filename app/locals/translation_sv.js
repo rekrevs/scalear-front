@@ -668,7 +668,7 @@ var translation_sv=function(){
       image_not_found: "Bild inte hittad...",
       you_asked: "Du frågade: ",
       confused: "Förvirrad",
-      confuse_pl: "Förvirrade"
+      confuse_pl: "Förvirrade",
       really_confused: "Verkligen förvirrad",
       really_confused_pl: "Verkligen förvirrade",
       back: "Tillbaka",
@@ -876,7 +876,7 @@ var translation_sv=function(){
       review_module:"Bedöm en modul",
       module_review: "Bedöm quizzar och frågor",
       module_timeline: "Bedöm interaktion med videos",
-      module_completion2: "Bedöm slutförande av modul"
+      module_completion2: "Bedöm slutförande av modul",
       review_course:"Bedöm hela kursen",
       course_completion:"Bedöm slutförande av moduler",
       course_graph: "Bedöm slutförande av videos och quizzar"

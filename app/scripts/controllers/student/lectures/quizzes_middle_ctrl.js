@@ -88,11 +88,11 @@ angular.module('scalearAngularApp')
     var setupWarningMsg=function(alert_messages){
         for(var key in alert_messages){
             if(key=="submit")
-                return $translate('controller_msg.already_submitted')+' '+$scope.quiz.quiz_type+' '+$translate("controller_msg.no_more_attempts")
+                return $translate('quizzes.already_submitted')+' '+$scope.quiz.quiz_type+' '+$translate("quizzes.no_more_attempts")
             else if(key=="due")
-                return $translate("controller_msg.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$scope.alert_messages[key][2]+") "+$translate("controller_msg.ago")
+                return $translate("events.due_date_passed")+" - "+$scope.alert_messages[key][0]+" ("+$scope.alert_messages[key][1]+" "+$scope.alert_messages[key][2]+") "+$translate("time.ago")
             else if(key=="today")
-                return $translate("time.due")+" "+ $translate("controller_msg.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
+                return $translate("events.due")+" "+ $translate("time.today")+" "+ $translate("at")+" "+$scope.alert_messages[key]
         }
     }
 

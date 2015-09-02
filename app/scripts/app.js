@@ -195,14 +195,14 @@ angular.module('scalearAngularApp', [
 
                     if (s === 0) {
                         $rootScope.show_alert = "error";
-                        ErrorHandler.showMessage('Error ' + ': ' + $translate("controller_msg.you_are_not_authorized"), 'errorMessage', 8000);
+                        ErrorHandler.showMessage('Error ' + ': ' + $translate("error_message.you_are_not_authorized"), 'errorMessage', 8000);
                         $timeout(function() {
                             $rootScope.show_alert = "";
                         }, 4000);
                     }
                     if(s === 2){
                         $rootScope.show_alert = "error";
-                        ErrorHandler.showMessage($translate("controller_msg.update_account_information"), 'errorMessage', 8000);
+                        ErrorHandler.showMessage($translate("error_message.update_account_information"), 'errorMessage', 8000);
                         $timeout(function() {
                             $rootScope.show_alert = "";
                         }, 4000);

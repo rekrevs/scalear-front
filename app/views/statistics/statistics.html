@@ -6,7 +6,7 @@
 <center>
 	<loading size="big" show="loading_totals && chartConfig.loading"/>
 	<div  class="small-12 medium-6 large-6 columns with-margin-bottom">
-		<button class="tiny button dropdown under-the-other left" dropdown-toggle="#charts_dropdown_list">{{'statistics.'+selected_series.toLowerCase() || 'courses.charts' | translate}}</button>
+		<button class="tiny button dropdown under-the-other left" dropdown-toggle="#charts_dropdown_list">{{'statistics.'+selected_series.toLowerCase() | translate}}</button>
 		<ul id="charts_dropdown_list" class="f-dropdown" style="text-align: left;z-index: 1;">
 			<li ng-repeat="series in collection">
 		  		<a ng-click="getSeriesData(series)" translate>{{'statistics.'+series.toLowerCase()}}</a>

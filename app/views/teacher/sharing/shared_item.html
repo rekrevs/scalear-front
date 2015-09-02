@@ -1,59 +1,61 @@
 <div ng-show="data.length>0" class="large-12 column">
-	<!-- <div class="shared-item-header"> -->
 	<h5 ><i class="fi-social-skillshare"></i> <span translate>sharing.shared_from</span></b>{{data[0].teacher.name}}</h5>
-		
-	<!-- </div> -->
 	<div class="shared-tree">
 		<ul ng-repeat="item in data" class="shared-row">
 			<li ng-repeat="module in item.modules">
-				<!-- <div class="alert-box secondary with-margin">
-				<h5 class="subheader" translate>sharing.destination</h5>
-					<label>{{'groups.course' | translate}}
-						<select ng-model="selected_course" ng-options="course.name for course in courses">
-						</select>
-					</label>
-					<button ng-click="addModule($parent.$index, $index,selected_course.id)" ng-disabled="!selected_course" class="btn btn-success">{{'sharing.add' | translate}}</button>
-				</div> -->
 				<div class="panel row with-margin-top">
-					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | fromNow}}
-					</div>
+					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">{{item.created_at | fromNow}}</div>
 					<center>
-	<!-- 					Module: “test” shared by David Black-Schaffer from course COURSE_NAME -->
 						<div class="time-label shared-at blue color-white uppercase no-margin-top">
-							<b> Module: “{{module.name}}” shared by {{data[0].teacher.name}} from {{module.description}}</b>
+							<b>
+								<span translate>groups.module</span>
+								<span>: “{{module.name}}” </span>
+								<span translate>sharing.shared_by</span><span> {{data[0].teacher.name}} </span>
+								<span translate>from</span>
+								<span> {{module.description}}</span>
+							</b>
 						</div>
 					</center>
 					<div class="small-12 with-margin-bottom">
-						<div class="alert-box color-white no-margin show-inline"><b>{{'lectures.module' | translate}}:</b> {{module.name}}</div>
+						<div class="alert-box color-white no-margin show-inline">
+							<b><span translate>groups.module</span>:</b>
+							<span>{{module.name}}</span>
+						</div>
 						<ul>
 							<li ng-repeat="child in module.items">
-								<a class="disabled" ng-if="!child.quiz_type"><b>{{'groups.lecture' | translate}}:</b> {{child.name}}</a>
+								<a class="disabled" ng-if="!child.quiz_type">
+									<b><span translate>sharing.items</span>:</b>
+									<span>{{child.name}}</span>
+								</a>
 								<a class="disabled" ng-if="child.quiz_type"><b>{{'groups.'+child.quiz_type | translate}}:</b> {{child.name}}</a>
 							</li>
 						</ul>
 					</div>
-			        <label class="small-12 medium-12 large-2 columns">{{'copy' | translate}} {{'sharing.to_course' | translate}}:</label>
+			        <label class="small-12 medium-12 large-2 columns">
+			        	<span translate>sharing.copy</span>
+			        	<span translate>sharing.to_course</span>:
+			        </label>
 			        <select class="small-9 medium-8 large-6 columns" ng-model="selected_course" ng-options="course.name for course in courses"></select>
 			        <div class="small-3 medium-1 large-1 column left">
-			          	<button ng-click="addModule($parent.$index, $index,selected_course.id)" ng-disabled="!selected_course" class="button tiny success">{{'copy' | translate}}</button>
+			          	<button ng-click="addModule($parent.$index, $index,selected_course.id)" ng-disabled="!selected_course" class="button tiny success" translate>sharing.copy</button>
 		          	</div>
 				</div>
 			</li>
 			<li ng-repeat="lecture in item.lectures">
 				<div class="panel row with-margin-top">
-					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | fromNow}}
-					</div>
+					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">{{item.created_at | fromNow}}</div>
 					<div class="small-12 with-margin-bottom">
-						<div class="alert-box color-white show-inline no-margin"><b>{{'groups.lecture' | translate}}:</b> {{lecture.name}}</div>
+						<div class="alert-box color-white show-inline no-margin"><b><span translate>sharing.lecture</span>:</b> {{lecture.name}}</div>
 					</div>
-			        <label class="small-12 medium-12 large-2 columns">{{'copy' | translate}} {{'sharing.to_course' | translate}}:</label>
+			         <label class="small-12 medium-12 large-2 columns">
+			        	<span translate>sharing.copy</span>
+			        	<span translate>sharing.to_course</span>:
+			        </label>
 			        <select class="small-8 medium-8 large-4 columns" ng-model="selected_course" ng-options="course.name for course in courses"></select>
-		          	<label class="small-12 medium-12 large-1 columns">{{'sharing.to_module' | translate}}:</label>
+		          	<label class="small-12 medium-12 large-1 columns"><span translate>sharing.to_module</span>:</label>
 		          	<select class="small-8 medium-8  large-3 columns left" ng-disabled="!selected_course" ng-model="selected_module" ng-options="module.name for module in selected_course.modules"></select>
 		          	<div class="small-3 medium-1 large-1 column left">
-			          	<button ng-click="addLecture($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="button tiny success left">{{'copy' | translate}}</button>
+			          	<button ng-click="addLecture($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="button tiny success left" translate>sharing.copy</button>
 		          	</div>
 				</div>
 					<!-- <div class="alert-box secondary with-margin"> -->
@@ -84,36 +86,38 @@
 					<button ng-click="addQuiz($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="btn btn-success">{{'sharing.add' | translate}}</button>
 				</div> -->
 				<div class="panel row with-margin-top">
-					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | fromNow}}
-					</div>
+					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">{{item.created_at | fromNow}}</div>
 					<div class="small-12 with-margin-bottom">
 						<div class="alert-box color-white no-margin show-inline"><b>{{'groups.'+quiz.quiz_type | translate}}:</b> {{quiz.name}}</div>
 					</div>
-			        <label class="small-12 medium-12 large-2 columns">{{'copy' | translate}} {{'sharing.to_course' | translate}}:</label>
+			         <label class="small-12 medium-12 large-2 columns">
+			        	<span translate>sharing.copy</span>
+			        	<span translate>sharing.to_course</span>:
+			        </label>
 			        <select class="small-8 medium-8 large-4 columns" ng-model="selected_course" ng-options="course.name for course in courses"></select>
-		          	<label class="small-12 medium-12 large-1 columns">{{'sharing.to_module' | translate}}:</label>
+		          	<label class="small-12 medium-12 large-1 columns"><span translate>sharing.to_module</span>:</label>
 		          	<select class="small-8 medium-8  large-3 columns left" ng-disabled="!selected_course" ng-model="selected_module" ng-options="module.name for module in selected_course.modules"></select>
 		          	<div class="small-3 medium-1 large-1 column left">
-			          	<button ng-click="addQuiz($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="button tiny success left">{{'copy' | translate}}</button>
+			          	<button ng-click="addQuiz($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="button tiny success left" translate>sharing.copy</button>
 		          	</div>
 				</div>
 				<!-- <hr /> -->
 			</li>
 			<li ng-repeat="link in item.customlinks">
 				<div class="panel row with-margin-top">
-					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">
-						{{item.created_at | fromNow}}
-					</div>
+					<div class="time-label blue color-white uppercase shared-at with-margin-bottom">{{item.created_at | fromNow}}</div>
 					<div class="small-12 with-margin-bottom">
-						<div class="alert-box color-white no-margin show-inline"><b>{{'groups.customlink' | translate}}:</b> {{link.name}}</div>
+						<div class="alert-box color-white no-margin show-inline"><b><span translate>global.customlink</span>:</b> {{link.name}}</div>
 					</div>
-			        <label class="small-12 medium-12 large-2 columns">{{'copy' | translate}} {{'sharing.to_course' | translate}}:</label>
+			         <label class="small-12 medium-12 large-2 columns">
+			        	<span translate>sharing.copy</span>
+			        	<span translate>sharing.to_course</span>:
+			        </label>
 			        <select class="small-8 medium-8 large-4 columns" ng-model="selected_course" ng-options="course.name for course in courses"></select>
-		          	<label class="small-12 medium-12 large-1 columns">{{'sharing.to_module' | translate}}:</label>
+		          	<label class="small-12 medium-12 large-1 columns"><span translate>sharing.to_module</span>:</label>
 		          	<select class="small-8 medium-8  large-3 columns left" ng-disabled="!selected_course" ng-model="selected_module" ng-options="module.name for module in selected_course.modules"></select>
 		          	<div class="small-3 medium-1 large-1 column left">
-			          	<button ng-click="addLink($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="button tiny success left">{{'copy' | translate}}</button>
+			          	<button ng-click="addLink($parent.$index,$index,selected_course.id,selected_module.id)" ng-disabled="!selected_course || !selected_module" class="button tiny success left" translate>sharing.copy</button>
 		          	</div>
 				</div>
 				<!-- <hr /> -->

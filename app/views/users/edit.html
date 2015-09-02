@@ -5,13 +5,13 @@
 </style>
 <center>
 <!-- <h5 class="show-inline show-for-medium-down" style="margin-left: 15px;"><profile-image email="user.email" class="valign-top" imagesize="26"></profile-image> {{'account_edit.edit_account' | translate}}</h5> -->
-<button type="button" id="del_acc_btn" class="right tiny button alert" ng-click="open()">{{'account_edit.cancel_account' | translate}}</button>
+<button type="button" id="del_acc_btn" class="right tiny button alert" ng-click="open()" translate>account.cancel_account</button>
     <form class="large-6 medium-8 small-12" ng-submit="open_require_password()">
           <div class="row">
             <div class="large-12 medium-12 small-12 columns">
                 <div class="row">
                     <div class="small-4 columns">
-                      <label class="with-small-margin-top right" for="setting_user_name">{{'account_edit.first_name' | translate}}</label>
+                      <label class="with-small-margin-top right" for="setting_user_name" translate>account.first_name</label>
                 </div>
                 <div class="small-8 columns">
                     <div class="row">
@@ -20,7 +20,7 @@
                              <small ng-show="user.errors.name" class="error with-tiny-padding">{{user.errors.name.join()}}</small>
                         </div>
                         <div class="with-small-margin-top small-3 columns">
-                            <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.name}" translate>courses.required</small></label>
+                            <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.name}" translate>error_message.required</small></label>
                         </div>
                     </div>
                 </div>
@@ -32,7 +32,7 @@
             <div class="large-12 medium-12 small-12 columns">
                 <div class="row">
                     <div class="small-4 columns">
-                       <label class="with-small-margin-top right">{{'account_edit.last_name' | translate}}</label>
+                       <label class="with-small-margin-top right" translate>account.last_name</label>
                    </div>
                    <div class="small-8 columns">
                     <div class="row">
@@ -41,7 +41,7 @@
                            <small ng-show="user.errors.last_name" class="error with-tiny-padding">{{user.errors.last_name.join()}}</small>
                           </div>
                         <div class="with-small-margin-top small-3 columns">
-                            <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.last_name}" translate>courses.required</small></label>
+                            <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.last_name}" translate>error_message.required</small></label>
                         </div>
                   </div>
                 </div>
@@ -53,7 +53,7 @@
             <div class="large-12 medium-12 small-12 columns">
                 <div class="row">
                     <div class="small-4 columns">
-                       <label class="with-small-margin-top right" translate>account_edit.school_email</label>
+                       <label class="with-small-margin-top right" translate>account.school_email</label>
                    </div>
                    <div class="small-8 columns">
                     <div class="row">
@@ -62,7 +62,7 @@
                         <small ng-show="user.errors.email" class="error with-tiny-padding">{{user.errors.email.join()}}</small>
                     </div>
                     <div class="with-small-margin-top small-3 columns">
-                              <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.email}" translate>courses.required</small></label>
+                              <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.email}" translate>error_message.required</small></label>
                       </div>
                     </div>
                   </div>
@@ -74,7 +74,7 @@
             <div class="large-12 medium-12 small-12 columns">
                 <div class="row">
                     <div class="small-4 columns">
-                       <label class="with-small-margin-top right">{{'account_edit.university' | translate}} </label>
+                       <label class="with-small-margin-top right">{{'account.university' | translate}} </label>
                    </div>
                    <div class="small-8 columns">
                     <div class="row">
@@ -83,7 +83,7 @@
                         <small ng-show="user.errors.university" class="error with-tiny-padding">{{user.errors.university.join()}}</small>
                       </div>
                       <div class="with-small-margin-top small-3 columns">
-                              <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.university}" translate>courses.required</small></label>
+                              <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.university}" translate>error_message.required</small></label>
                       </div>
                     </div>
                   </div>
@@ -95,7 +95,7 @@
             <div class="large-12 medium-12 small-12 columns">
                 <div class="row">
                     <div class="small-4 columns">
-                       <label class="with-small-margin-top right">{{'account_edit.screen_name' | translate}}</label>
+                       <label class="with-small-margin-top right" translate>account.screen_name</label>
                     </div>
                     <div class="small-8 columns">
                       <div class="row">
@@ -104,7 +104,7 @@
                           <small ng-show="user.errors.screen_name" class="error with-tiny-padding">{{user.errors.screen_name.join()}}</small>
                           </div>
                       <div class="with-small-margin-top small-3 columns">
-                            <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.screen_name}" translate>courses.required</small></label>
+                            <label><small style="font-style:italic;" ng-class="{'color-red text-bold': !user.screen_name}" translate>error_message.required</small></label>
                       </div>
                     </div>
                   </div>
@@ -116,7 +116,7 @@
           <div class="large-12 medium-12 small-12 columns">
             <div class="row">
                 <div class="small-push-1 small-centered small-8 columns">
-                      <h5 style="line-height:1"><small translate>account_edit.online_name_comment</small></h5>            
+                      <h5 style="line-height:1"><small translate>account.online_name_comment</small></h5>            
                 </div>
               </div>
             </div>
@@ -126,7 +126,7 @@
             <div class="large-12 medium-12 small-12 columns">
                 <div class="row">
                         <div class="small-4 columns">
-                            <label class="with-small-margin-top  right" translate>account_edit.link</label>
+                            <label class="with-small-margin-top  right" translate>account.link</label>
                         </div>
                         <div class="small-6 columns left">
                               <input type="text" id="setting_user_link" ng-model="user.link" />
@@ -164,24 +164,24 @@
 
         <div class="row">
             <div class="large-12 medium-12 small-12 columns">
-                <div class="row">
-                        <div class="small-4 columns">
-                            <label class="with-small-margin-top  right">{{'password_confirmation' | translate}}</label>
-                        </div>
-                        <div class="small-6 columns left">
-                            <input type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" />
-                             <small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
-                         </div>
-                     </div>
+              <div class="row">
+                <div class="small-4 columns">
+                    <label class="with-small-margin-top  right" translate>account.password.password_confirmation</label>
+                </div>
+                <div class="small-6 columns left">
+                    <input type="password" id="setting_user_password_confirmation" ng-model="user.password_confirmation" ng-class="{error: user.errors.password_confirmation}" autocomplete="off" />
+                     <small ng-show="user.errors.password_confirmation" class="error with-tiny-padding">{{user.errors.password_confirmation.join()}}</small>
+                 </div>
+              </div>
             </div>
         </div>
         <div class="row">
             <div class="large-12 medium-12 small-12 columns">
               <div class="row">
-                <div class="small-5 columns">
-                  <label class="with-small-margin-top"translate>global.pref_language</label>
+                <div class="small-4 columns">
+                  <label class="with-small-margin-top right"translate>global.pref_language</label>
                 </div>
-                <div class="small-6 columns left">
+                <div class="small-6 small-push-2 columns left">
                   <button class="tiny button dropdown under-the-other left" dropdown-toggle="#languages_list">{{'languages.'+current_lang | translate}}</button>
                     <ul id="languages_list" class="f-dropdown">
                         <li>
@@ -197,10 +197,14 @@
             </div>
 
             <div class="row">
-                <center>
-                <button type="submit" id="update_info" class="tiny button success">{{'online_quiz.save_changes' | translate}}</button>
-                </center>
-            </div>
+              <div class="large-12 medium-12 small-12 columns">
+                <div class="row">
+                  <div class="small-6 small-push-6 columns left">
+                      <button type="submit" id="update_info" class="tiny button success under-the-other left" translate>button.save_changes</button>
+                   </div>
+                </div>
+              </div>
+          </div>
     </form>
 </center>
 
@@ -237,14 +241,14 @@
                     </label>
                 </div>
                 <div class="small-12 medium-12 large-6 columns">
-                    <label>{{'account_edit.university' | translate}}
+                    <label>{{'account.university' | translate}}
                       <input type="text" id="setting_user_university" ng-model="user.university" ng-class="{error: user.errors.university}" placeholder="Input your university name..." />
                       <small ng-show="user.errors.university" class="error with-tiny-padding">{{user.errors.university.join()}}</small>
                     </label>
                 </div>
                 <div class="small-12 medium-12 large-6 columns">
                     <div class="row collapse">
-                        <label translate>account_edit.link</label>
+                        <label translate>account.link</label>
                         <div class="small-3 columns">
                           <span class="prefix">http://</span>
                         </div>

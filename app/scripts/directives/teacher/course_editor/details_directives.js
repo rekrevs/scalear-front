@@ -58,7 +58,7 @@ angular.module('scalearAngularApp')
                 },
                 link: function(scope, element, attr) {
                     scope.$watch('value',function(){
-                        scope.text = scope.value == "none"? "("+$translate("lectures.add_video")+"...)" : scope.value
+                        scope.text = scope.value == "none"? "("+$translate("editor.details.add_video")+"...)" : scope.value
                     })
                     scope.selectField = function() {
                         $timeout(function() {

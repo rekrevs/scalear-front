@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
   .controller('inclassModuleCtrl', ['$scope','$rootScope','$modal','$timeout','$window','$log','Module','$stateParams','scalear_utils','$translate','Timeline','Page','$interval', function ($scope, $rootScope, $modal, $timeout,$window, $log, Module, $stateParams, scalear_utils,$translate, Timeline,Page, $interval) {
     $window.scrollTo(0, 0);
-    Page.setTitle('head.in_class')
+    Page.setTitle('navigation.in_class')
     $scope.inclass_player={}
     $scope.inclass_player.events={} 
     $scope.time_parameters={
@@ -332,7 +332,7 @@ angular.module('scalearAngularApp')
           }
         }
         else
-          $scope.showBlackScreen('groups.blackscreen_done')
+          $scope.showBlackScreen('inclass.blackscreen_done')
       }
 
       $timeout(function(){
@@ -456,7 +456,7 @@ angular.module('scalearAngularApp')
     formated_data.cols =
         [
           {
-            "label": $translate('courses.students'),
+            "label": $translate('global.students'),
             "type": "string"
         }, 
         {
@@ -518,8 +518,8 @@ angular.module('scalearAngularApp')
     var formated_data ={}
     formated_data.cols=
         [
-            {"label": $translate('courses.students'),"type": "string"},
-            {"label": $translate('controller_msg.answered'),"type": "number"}
+            {"label": $translate('global.students'),"type": "string"},
+            {"label": $translate('progress.chart.answered'),"type": "number"}
         ]
     formated_data.rows= []
     for(var ind in data)
@@ -567,7 +567,7 @@ angular.module('scalearAngularApp')
     },{"disable_in_input" : false, 'propagate':false});
 
      shortcut.add("b",function() {
-       $scope.toggleBlackScreen('groups.blackscreen_close')
+       $scope.toggleBlackScreen('inclass.blackscreen_close')
        $scope.$apply()
     },{"disable_in_input" : false, 'propagate':false});
 
@@ -655,7 +655,7 @@ angular.module('scalearAngularApp')
     }
     else{
       $scope.button_class = 'big_font_button' 
-      $scope.button_names=[$translate('groups.exit'), '', '',$translate('groups.hide'), $translate('answer.show'), '5sec', $translate('inclass.pause'), $translate('inclass.resume')]
+      $scope.button_names=[$translate('inclass.exit'), '', '',$translate('inclass.hide'), $translate('inclass.show'), '5sec', $translate('inclass.pause'), $translate('inclass.resume')]
     }
     $scope.hide_text = $scope.hide_questions? $scope.button_names[4] : $scope.button_names[3]
   }

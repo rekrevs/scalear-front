@@ -8,37 +8,37 @@
 		<div class="small-12 columns">
 			<span ng-show="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
 				<div class="small-4 columns">
-					<a ng-show="courses.length" class="button tiny dropdown" dropdown-toggle="#sort_list"><span translate>courses.sort_by</span></a>
+					<a ng-show="courses.length" class="button tiny dropdown" dropdown-toggle="#sort_list"><span translate>courses.list.button.sort_by</span></a>
 				  	<ul id="sort_list" class="f-dropdown">
 				  		<li><a href="" ng-click="order('start_date')" translate>courses.start_date</a></li>
 				    	<li><a href="" ng-click="order('short_name')" translate>courses.course_code</a></li>
 						<li><a href="" ng-click="order('name')" translate>courses.course_name</a></li>
-						<li><a href="" ng-click="order('enrollments')" >#<span translate>courses.students</span></a></li>
-						<li><a href="" ng-click="order('lectures')" >#<span translate>groups.lectures</span></a></li>
-						<li><a href="" ng-click="order('quiz')" >#<span translate>groups.quizzes</span></a></li>
-						<li><a href="" ng-click="order('survey')" >#<span translate>groups.surveys</span></a></li>
+						<li><a href="" ng-click="order('enrollments')" >#<span translate>global.students</span></a></li>
+						<li><a href="" ng-click="order('lectures')" >#<span translate>courses.list.lectures</span></a></li>
+						<li><a href="" ng-click="order('quiz')" >#<span translate>courses.list.quizzes</span></a></li>
+						<li><a href="" ng-click="order('survey')" >#<span translate>courses.list.surveys</span></a></li>
 				  	</ul>
-					<a class="button tiny" ng-hide="!courses" ui-sref="new_course" translate>courses.new_course</a><br />
+					<a class="button tiny" ng-hide="!courses" ui-sref="new_course" translate>courses.list.button.new_course</a><br />
 				</div>
 				<div class="small-4 left columns" ng-show="courses.length">
-					<input type="search" ng-model="searchText" placeholder="{{'courses.search' | translate}}" />
+					<input type="search" ng-model="searchText" placeholder="{{'global.search' | translate}}" />
 					<span ng-show="filtered_teacher">
 						<br />
-						<a ng-click="removeFilter()" style="cursor:pointer" translate>global.back</a><br>
+						<a ng-click="removeFilter()" style="cursor:pointer" translate>courses.list.button.back</a><br>
 					</span>
 				</div>
 			</span>	
 			<div class="small-4 right columns button-group" step-text="You can filter the list of courses by selecting different filters." step-index="1" step-placement="bottom" step-append-to-body="flase" page-name="{{current}}">
-			    <button type="button" class="right button tiny" ng-class="{active: course_filter == true}" ng-click="filterCourse(true)" translate>courses.list.filter.finished</button>
-			    <button type="button" class="right button tiny" ng-class="{active: course_filter == false}" ng-click="filterCourse(false)" translate>courses.list.filtercurrent</button>
-			    <button type="button" class="right button tiny" ng-class="{active: course_filter == '!!'}" ng-click="filterCourse('!!')" translate>courses.list.filter.all</button>
+			    <button type="button" class="right button tiny" ng-class="{active: course_filter == true}" ng-click="filterCourse(true)" translate>courses.list.finished</button>
+			    <button type="button" class="right button tiny" ng-class="{active: course_filter == false}" ng-click="filterCourse(false)" translate>courses.list.current</button>
+			    <button type="button" class="right button tiny" ng-class="{active: course_filter == '!!'}" ng-click="filterCourse('!!')" translate>courses.list.all</button>
 			</div>
 		</div>
 	</div>
 	<div ng-if="current_user.roles[0].id == 1 || current_user.roles[0].id == 5">
 		<div ng-show="courses && !courses.length">
 			<center  style="height:70px">
-				<h5 class="muted" translate>courses.no_courses</h5>
+				<h5 class="muted" translate>courses.list.messages.no_courses</h5>
 			</center>
 		</div>
 		<br />

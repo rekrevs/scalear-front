@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     Page.setTitle('navigation.dashboard');
     Page.startTour();
-    $rootScope.subheader_message = $translate("subheader.messages.whats_new")
+    $rootScope.subheader_message = $translate("discussion.whats_new")
     
     $scope.toggleLargeCalendar=function(){
         $scope.large_calendar=!$scope.large_calendar
@@ -27,11 +27,11 @@ angular.module('scalearAngularApp')
     }
 
     $scope.eventRender = function( event, element ) { 
-         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />"+$translate('time.due')+" "+$translate('at')+" "+$filter('date')(event.start, 'HH:mm')
+         var tooltip_string = event.course_short_name+": "+event.item_title+"<br />"+$translate('events.due')+" "+$translate('global.at')+" "+$filter('date')(event.start, 'HH:mm')
         if(event.status==1)
-            tooltip_string+="<br />"+$translate("courses.completed_on_time")
+            tooltip_string+="<br />"+$translate("events.completed_on_time")
         else if(event.status==2)
-            tooltip_string+="<br />"+$translate("courses.completed")+" "+event.days+" "+$translate("controller_msg.days")+" "+$translate("controller_msg.late")
+            tooltip_string+="<br />"+$translate("events.completed")+" "+event.days+" "+$translate("time.days")+" "+$translate("events.late")
 
         element.attr({'tooltip-html-unsafe': tooltip_string,'tooltip-append-to-body': true});
         $compile(element)($scope);

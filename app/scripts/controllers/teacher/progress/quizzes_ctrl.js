@@ -52,7 +52,7 @@
         //         var formated_data = {}
         //         formated_data.cols =
         //             [{
-        //             "label": $translate('courses.students'),
+        //             "label": $translate('global.students'),
         //             "type": "string"
         //         }, {
         //             "label": $translate('lectures.correct'),
@@ -99,7 +99,7 @@
         //             "displayExactValues": true,
         //             "fontSize": 12,
         //             "vAxis": {
-        //                 "title": $translate("quizzes.number_of_students") + " (" + $translate("groups.out_of") + " " + student_count + ")",
+        //                 "title": $translate("global.number_of_students") + " (" + $translate("groups.out_of") + " " + student_count + ")",
         //                 "gridlines": {
         //                     "count": 9
         //                 },

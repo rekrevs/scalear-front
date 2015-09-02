@@ -5,21 +5,27 @@
     }
 </style>
 <div class="small-12 columns">
-  <h3><i class="fi-torsos-all size-30"></i><span translate>head.enrolled_students</span><span class="info alert-box label looks-like-a-link" enroll-help-modal ng-click="openHelpModal(course)" style="vertical-align: bottom;"><span translate>enroll.help_enroll_student</span></span></h3>
+  <h3>
+    <i class="fi-torsos-all size-30"></i>
+    <span translate>enrolled_students</span>
+    <span class="info alert-box label looks-like-a-link" enroll-help-modal ng-click="openHelpModal(course)" style="vertical-align: middle;">
+      <span translate>enrolled_students.help_enroll_student</span>
+    </span>
+  </h3>
   <center>
       <div ng-show="students" id="invited_students">
           <form name="email_form">
               <div class="small-12 row">
                   <div class="small-12 medium-4 large-4 columns">
-                      <input id="search" type="search" placeholder="{{'courses.search'|translate}}..." name="search" ng-model="searchText"/>
+                      <input id="search" type="search" placeholder="{{'global.search'|translate}}..." name="search" ng-model="searchText"/>
                   </div>
                   <div class="small-12 medium-8 columns text-right">                    
                       <div class="show-inline" ng-init="filterChoice = 'all'">
-                          <button type="button" class="button tiny" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length || delete_mode"><span translate>courses.select_all</span></button>
-                          <button type="button" class="button tiny alert" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0 || delete_mode"><span translate>courses.deselect_all</span></button>
-                          <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0 || delete_mode" ng-click="emailForm()"><span translate>global.email</span></button>
-                          <button id="delete_mode"class="tiny button alert with-tiny-margin-left" ng-hide="delete_mode" ng-click="toggleDeleteMode()"><span translate>courses.remove_from_course</span></button>
-                          <button class="tiny button success no-margin-left" ng-show="delete_mode" ng-click="toggleDeleteMode()"><span translate>events.done</span></button>
+                          <button type="button" class="button tiny" ng-click="selectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == students.length || delete_mode"><span translate>enrolled_students.select_all</span></button>
+                          <button type="button" class="button tiny alert" ng-click="deSelectAll()" ng-disabled="(students | filter:searchText).length==0 || (students | filter:{checked: true}).length == 0 || delete_mode"><span translate>enrolled_students.deselect_all</span></button>
+                          <button type="button" class="button tiny" ng-disabled="(students | filter:{'checked':true}).length == 0 || delete_mode" ng-click="emailForm()"><span translate>enrolled_students.email</span></button>
+                          <button id="delete_mode"class="tiny button alert with-tiny-margin-left" ng-hide="delete_mode" ng-click="toggleDeleteMode()"><span translate>enrolled_students.remove_student</span></button>
+                          <button class="tiny button success no-margin-left" ng-show="delete_mode" ng-click="toggleDeleteMode()"><span translate>enrolled_students.done</span></button>
                           <button class="button secondary tiny" ng-class="{'green color-white': list_view}" style="border: 1px solid grey;padding-top: 0px;padding-bottom: 7px;" ng-click="listView(true)" tooltip="{{'tooltip.list_view'|translate}}">
                               <span class="fi-list-thumbnails size-21" style="position: relative;top: 3px;" ></span>
                           </button>
@@ -37,9 +43,9 @@
                     <thead>
                       <tr>
                         <th style="width:50px">Thumbnail</th>
-                        <th translate>global.name</th>
-                        <th translate>global.email</th>
-                        <th class="text-center" ng-if="delete_mode" style="width:95px" translate>globale.delete</th>
+                        <th translate>enrolled_students.name</th>
+                        <th translate>enrolled_students.email</th>
+                        <th class="text-center" ng-if="delete_mode" style="width:95px" translate>button.delete</th>
                       </tr>
                     </thead>
                     <tbody>

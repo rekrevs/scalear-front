@@ -3,7 +3,7 @@
 angular.module('scalearAngularApp')
     .controller('studentCourseInformationCtrl', ['$scope', '$stateParams', 'Course', '$window','Page', '$filter', '$state', '$timeout','$rootScope','ContentNavigator','$log', function($scope, $stateParams, Course, $window, Page, $filter, $state, $timeout,$rootScope,ContentNavigator, $log) {
 
-    Page.setTitle('head.information');
+    Page.setTitle('navigation.information');
     Page.startTour();
     ContentNavigator.open()
     $scope.init = function(){

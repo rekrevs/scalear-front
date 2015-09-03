@@ -5,7 +5,7 @@ angular.module('scalearAngularApp')
 
     Page.setTitle('navigation.dashboard');
     Page.startTour();
-    $rootScope.subheader_message = $translate("discussion.whats_new")
+    $rootScope.subheader_message = $translate("dashboard.whats_new")
     
     $scope.toggleLargeCalendar=function(){
         $scope.large_calendar=!$scope.large_calendar

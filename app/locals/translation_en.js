@@ -80,7 +80,6 @@ var translation_en={
     ago: "ago",
   },
   tooltip:{    
-    
     list_view: "List View",
     grid_view: "Grid View",
   },
@@ -176,7 +175,6 @@ var translation_en={
     cannot_ask_question_preview: "You cannot ask questions while previewing as a student",
     q: "Q.",
     edited: "edited",
-    whats_new: "What's New",
     button:{
         ask: "Ask",
         cancel:"@:button.cancel",
@@ -313,6 +311,7 @@ var translation_en={
     large_calendar:"Large Calendar",
     small_calendar:"Small Calendar",
     export_calendar: "Export Calendar",
+    whats_new: "What's New",
   },
   inclass:{
     more: "more",
@@ -352,6 +351,7 @@ var translation_en={
     correct: "@:global.correct",
     incorrect: "@:global.incorrect",
     quiz_editor: "Quiz Editor",
+    module_editor:"Module Editor",
     tooltip:{
         invisible: "Not currently visible to students. Will be visible",
         students_must_complete_inorder:"Students must complete this item before going on to the next item in the module",
@@ -590,7 +590,6 @@ var translation_en={
   groups:{
     module: "Module",
     groups: "Groups",
-    module_editor:"Module Editor",
     statistics:{
         videos:"@:global.videos",
         customlinks:"@:global.customlinks",

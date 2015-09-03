@@ -80,7 +80,6 @@ var translation_sv={
     ago: "sedan",
   },
   tooltip:{    
-    
     list_view: "Listvy",
     grid_view: "Rutnätsvy",    
   },
@@ -176,7 +175,6 @@ var translation_sv={
     cannot_ask_question_preview: "Du kan inte ställa frågor medan du förhandsgranskar som student",
     q: "F.",
     edited: "redigerad",
-    whats_new: "Nyheter",  
     button:{
         ask: "Fråga",
         cancel:"@:button.cancel",
@@ -313,6 +311,7 @@ var translation_sv={
     large_calendar:"Stor kalender",
     small_calendar:"Liten kalender",
     export_calendar: "Exportera kalender",
+    whats_new: "Nyheter",
   },
   inclass:{
     more: "mer",
@@ -470,7 +469,8 @@ var translation_sv={
     },
     correct: "@:global.correct",
     incorrect: "@:global.incorrect",    
-    confused: "@:global.confused",    
+    confused: "@:global.confused", 
+    really_confused: "@:global.really_confused",   
     hover_for_details: "Peka på alternativen för mer information",
     multiple_correct: "Det kan finnas flera rätta svar",
     other_correct_answers: "Det kan finnas fler rätta svar",
@@ -490,6 +490,7 @@ var translation_sv={
     questions: "@:global.questions",
     lecture:"@:global.lecture",
     quiz:"@:global.quiz",
+    survey: "@:global.survey",
     out_of: "Av",
     number_of_students:"@:number_of_students",
     confused:"@:global.confused",

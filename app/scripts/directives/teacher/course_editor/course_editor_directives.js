@@ -36,8 +36,13 @@ angular.module('scalearAngularApp')
                     ngDialog.open({
                         template:'\
                             <div class="ngdialog-message">\
-                                <h2><b>Warning!</b></h2>\
-                                <span>Deleting the module <b>"'+scope.module.name+'"</b> will delete all items inside it. Are you sure you want to proceed?</span>\
+                                <h2><b><span translate>groups.delete_popup.warning</span>!</b></h2>\
+                                <span>\
+                                    <span translate>groups.delete_popup.delete_module</span>\
+                                    <b>"'+scope.module.name+'"</b>\
+                                    <span translate>groups.delete_popup.will_delete</span>\
+                                    <span translate>groups.delete_popup.are_you_sure</span>\
+                                </span>\
                             </div>\
                             <div class="ngdialog-buttons">\
                                 <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\

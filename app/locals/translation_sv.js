@@ -46,6 +46,8 @@ var translation_sv={
     done: "Klart",
     correct: "Korrekt",
     incorrect: "Felaktig",
+    warning:"Warning (t)",
+    are_you_sure:"Are you sure you want to proceed? (t)"
   },
   mailer:{
     send_email: "Skicka ett mail",
@@ -598,6 +600,12 @@ var translation_sv={
         video_quizzes: "Video-quiz-frågor",
         questions: "@:global.questions",
     },
+    delete_popup:{
+        warning:"@:global.warning",
+        delete_module: "Deleting the module (t)",
+        will_delete: "will delete all items inside it. (t)",
+        are_you_sure: "@:global.are_you_sure"
+    }
   },
   courses:{
     information:{
@@ -643,6 +651,16 @@ var translation_sv={
         },
         tooltip:{
             unenroll: "Avregistrera",
+        },
+        delete_popup:{
+            warning:"@:global.warning",
+            delete_course:"Deleting the course (t)",
+            will_delete: "will delete (t)",
+            all_modules:"All modules (t)",
+            all_items:"All items inside each modules (t)",
+            all_progress: "All students progress (t)",
+            are_you_sure: "Are you sure you want to proceed? (t)",
+            cannot_undo: "This cannot be undone! (t)"
         }
     },
     new:{

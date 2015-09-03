@@ -35,15 +35,19 @@ angular.module('scalearAngularApp')
       ngDialog.open({
           template:'\
               <div class="ngdialog-message">\
-                  <h2><b>Warning!</b></h2>\
+                  <h2><b><span translate>courses.list.delete_popup.warning</span>!</b></h2>\
                   <span>\
-                    <span>Deleting the course <b>"'+course.short_name+' | '+course.name+'"</b> will delete</span>\
+                    <span>\
+                      <span translate>courses.list.delete_popup.delete_course</span>\
+                      <b> "'+course.short_name+' | '+course.name+'" </b>\
+                      <span translate>courses.list.delete_popup.will_delete</span></span>\
                     <ul>\
-                      <li>All modules</li>\
-                      <li>All items inside each modules</li>\
-                      <li>All students progress</li>\
+                      <li translate>courses.list.delete_popup.all_modules</li>\
+                      <li translate>courses.list.delete_popup.all_items</li>\
+                      <li translate>courses.list.delete_popup.all_progress</li>\
                     </ul>\
-                    <span>Are you sure you want to proceed? This cannot be undone!</span>\
+                    <span translate>courses.list.delete_popup.are_you_sure</span>\
+                    <span translate>courses.list.delete_popup.cannot_undo</span>\
                   </span>\
               </div>\
               <div class="ngdialog-buttons">\

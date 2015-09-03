@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-    .directive("module", ['$rootScope','$timeout','$state', '$log', function($rootScope, $timeout,$state, $log) {
+    .directive("module", ['$rootScope','$timeout','$state', '$log','ngDialog', function($rootScope, $timeout,$state, $log,ngDialog) {
         return {
             restrict: "E",
             replace:true,
@@ -32,8 +32,28 @@ angular.module('scalearAngularApp')
 
                 scope.remove=function(event){
                     event.preventDefault();
-                    event.stopPropagation();  
-                    $rootScope.$broadcast("delete_module", scope.module)
+                    event.stopPropagation();
+                    ngDialog.open({
+                        template:'\
+                            <div class="ngdialog-message">\
+                                <h2><b>Warning!</b></h2>\
+                                <span>Deleting the module <b>"'+scope.module.name+'"</b> will delete all items inside it. Are you sure you want to proceed?</span>\
+                            </div>\
+                            <div class="ngdialog-buttons">\
+                                <button type="button" class="ngdialog-button ngdialog-button-secondary" ng-click="closeThisDialog(0)" translate>button.cancel</button>\
+                                <button type="button" class="ngdialog-button ngdialog-button-alert" ng-click="delete()" translate>button.delete</button>\
+                            </div>',
+                        plain: true,
+                        className: 'ngdialog-theme-default ngdialog-dark_overlay ngdialog-theme-custom',
+                        showClose:false,
+                        controller: ['$scope', function($scope) {
+                            $scope.delete=function(){
+                                $rootScope.$broadcast("delete_module", scope.module)
+                                $scope.closeThisDialog()
+                            }
+                        }]
+
+                    });
                 }
 
                 scope.copy=function(){

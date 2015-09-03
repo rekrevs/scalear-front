@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('scalearAngularApp')
-  .controller('MainCtrl', ['$scope','$log','Page','$rootScope','Home','$state','$location', function ($scope, $log,Page, $rootScope, Home, $state, $location) { 
+  .controller('MainCtrl', ['$scope','$log','Page','$rootScope','Home','$state','$location', 'scalear_api', function ($scope, $log,Page, $rootScope, Home, $state, $location, scalear_api) { 
 	Page.setTitle('Welcome!')
   $scope.play_teacher= false
   $scope.play_student= false
+  $scope.beta = scalear_api.beta
   $('a.page-scroll').bind('click', function(event) {
       $('html, body').stop().animate({scrollTop: $($(this).attr('href')).offset().top}, 1500, 'easeInOutExpo');
       event.preventDefault();

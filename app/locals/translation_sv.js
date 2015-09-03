@@ -63,7 +63,7 @@ var translation_sv={
     invalid_input: "Ogiltiga indata",
     you_are_not_authorized: "Du har inte behörighet att visa den begärda sidan",
     update_account_information: "Vänligen uppdatera din kontoinformation för att använda den nya versionen av Scalable Learning.",
-    select_module_first:"Please Select A Module First (t)",
+    select_module_first:"Välj först en modul i menyn.",
     slow:{
         server: "Videoservern",
         is_slow: " tar lång tid på sig för att visa den här videon",
@@ -185,7 +185,7 @@ var translation_sv={
   },
   context_menu:{
     copy: "@:global.copy",
-    paste: "Paste (t)",
+    paste: "Klistra in",
     share: "Dela",
     share_copy: "Dela markerat objekt",
   },
@@ -337,7 +337,7 @@ var translation_sv={
   editor:{
     explanation: "Förklaring",
     quiz_question: "Quiz-fråga",
-    quiz_time: "Quiz-tid",
+    quiz_time: "Quiz-tidpunkt",
     incorrect_format_time: "Felaktigt format på tiden",
     time_outside_range: "Tid utanför videons speltid",
     cannot_delete_alteast_one_answer: "Kan inte ta bort; det måste finnas minst ett svar",
@@ -360,12 +360,12 @@ var translation_sv={
         click_to_delete: "Klicka här för att ta bort, klicka utanför för att stänga",
         create_link_time: "Skapa en länk till den här tidpunkten i videon",
         video_info: "Endast YouTube-webbadresser och MP4-H.264-kodade videofilmer tillåts",
-        click_add_question:"Click or type i to add a question (t)"
+        click_add_question:"Klicka eller skriv i för att lägga till en fråga."
     },
     drag:{
-        start: "Start (t)",
+        start: "Start",
         end: "Slut",
-        instruction: "Ange namn för dragbara objekt och placera sina Start och Slut platser på skärmen.",
+        instruction: "Ange namn för dragbara objekt och placera Start och Slut på skärmen.",
         correct: "Denna post är korrekt här eftersom",
         incorrect: "Punkt {{num}} skulle vara felaktig här eftersom",
     },
@@ -390,7 +390,7 @@ var translation_sv={
     },
     regex:{
         enter_string:"Ange strängen för att matcha eller ett reguljärt uttryck",
-        correct_if: "kommer endast vara korrekt om studenten kommer in",
+        correct_if: "kommer endast vara korrekt för",
         correct_for: "kommer att vara korrekt för",
         any_integer: "varje heltal mellan 0 och 9",
         numbers: "siffrorna 10, 14 och 29"
@@ -445,7 +445,7 @@ var translation_sv={
     },    
     timeline:{
         timeline: "Tidslinje",
-        slides: "Slides (t)",
+        slides: "Bilder",
         description:"@:global.description",
         question:"@:global.question",
         confused:"@:global.confused",
@@ -513,11 +513,11 @@ var translation_sv={
     },
     tooltip:{
         see_related: "Se relaterade svar för elev",
-        quizzes_solved: "quizzes solved (t)"
+        quizzes_solved: "quizzar lösta"
     },
     popover:{
         change_status: "Ändra status",
-        original: "Original (t)",
+        original: "Original",
         on_time: "I tid",
         not_done: "Ej utfört",
     },
@@ -759,9 +759,9 @@ var translation_sv={
         mcq: "Flervals (flera korrekta svar)",
         ocq: "Flervals (ett korrekta svar)",
         drag: "Dra-och-släpp (ordnad lista)",
-        text: "Fritext svar (text)",
-        free_text: "Free Text (t)",
-        match_text: "Match Text (t)"
+        text: "Text (fritext eller matcha text)",
+        free_text: "Fritext",
+        match_text: "Matcha text"
       },
       survey_types:{
         mcq: "Flervals (flera korrekta svar)",
